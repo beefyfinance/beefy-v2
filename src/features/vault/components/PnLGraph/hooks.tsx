@@ -16,10 +16,10 @@ import {
   selectDepositTokenByVaultId,
   selectTokenPriceByAddress,
 } from '../../../data/selectors/tokens';
-import { selectUserBalanceOfTokensIncludingBoostsBridged } from '../../../data/selectors/balance';
 import { fetchShareToUnderlying, fetchUnderlyingToUsd } from '../../../data/actions/analytics';
 import { selectWalletAddress } from '../../../data/selectors/wallet';
 import type { VaultTimelineAnalyticsEntity } from '../../../data/entities/analytics';
+import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../data/selectors/balance';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], minUnderlying: 0, maxUnderlying: 0, minUsd: 0, maxUsd: 0 };
@@ -44,13 +44,7 @@ export const usePnLChartData = (
     selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const currentMooTokenBalance = useAppSelector(state =>
-    selectUserBalanceOfTokensIncludingBoostsBridged(
-      state,
-      vault.id,
-      vault.chainId,
-      vault.earnContractAddress,
-      walletAddress
-    )
+    selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vault.id, walletAddress)
   );
   const vaultLastDeposit = useAppSelector(state =>
     selectLastVaultDepositStart(state, vaultId, walletAddress)

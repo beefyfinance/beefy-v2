@@ -6,5 +6,5 @@ import { ExposureChart } from '../ExposureChart';
 export const TreasuryChainExposure = () => {
   const exposureByChain = useAppSelector(selectTreasuryExposureByChain);
 
-  return <ExposureChart data={exposureByChain} type="chain" />;
+  return <ExposureChart data={exposureByChain} type="generic" />;
 };

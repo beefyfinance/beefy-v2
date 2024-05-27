@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { isAfter } from 'date-fns';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { formatLargeUsd } from '../../../helpers/format';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
 import type { VaultEntity } from '../entities/vault';
 import { selectLastVaultDepositStart, selectUserDepositedTimelineByVaultId } from './analytics';
-import { selectClmTokenWithPricesByVaultId, selectVaultById } from './vaults';
+import { selectVaultById } from './vaults';
 import { sortBy } from 'lodash-es';
-import { selectUserBalanceOfTokensIncludingBoostsBridged } from './balance';
-import { selectVaultTokenSymbols } from './tokens';
+import { selectUserVaultBalanceInShareToken } from './balance';
+import { selectCowcentratedVaultDepositTokensWithPrices } from './tokens';
 
 export const selectClmHasHarvestByVaultAddress = (
   state: BeefyState,
@@ -52,13 +51,7 @@ export const selectClmAutocompundedFeesByVaultAddress = (
   );
 
   const timeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
-  const currentMooTokenBalance = selectUserBalanceOfTokensIncludingBoostsBridged(
-    state,
-    vault.id,
-    vault.chainId,
-    vault.earnContractAddress,
-    walletAddress
-  );
+  const currentMooTokenBalance = selectUserVaultBalanceInShareToken(state, vault.id, walletAddress);
 
   const { fees0, fees1, totalSupply } = pendingRewards ?? {
     fees0: BIG_ZERO,
@@ -66,7 +59,7 @@ export const selectClmAutocompundedFeesByVaultAddress = (
     totalSupply: BIG_ZERO,
   };
 
-  const { token0, token1 } = selectClmTokenWithPricesByVaultId(state, vault.chainId, vaultId);
+  const { token0, token1 } = selectCowcentratedVaultDepositTokensWithPrices(state, vaultId);
 
   const { price: token0Price, symbol: token0Symbol, decimals: token0Decimals } = token0;
   const { price: token1Price, symbol: token1Symbol, decimals: token1Decimals } = token1;

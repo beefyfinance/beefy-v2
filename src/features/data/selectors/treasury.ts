@@ -411,7 +411,7 @@ export const selectTreasuryExposureByChain = (state: BeefyState) => {
   const treasuryExposureBychain = Object.keys(chains).map(chainId => {
     const chain = selectChainById(state, chainId);
     return {
-      key: chainId,
+      key: chain.id,
       value: chains[chainId],
       percentage: chains[chainId].dividedBy(totalTreasury).toNumber(),
       label: chain.name,

@@ -2,12 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import type { VaultEntity } from '../../features/data/entities/vault';
-import { isGovVault } from '../../features/data/entities/vault';
 import {
-  selectGovVaultUserStakedBalanceInDepositToken,
   selectHasUserBalanceInActiveBoost,
-  selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged,
-  selectUserVaultDepositInUsd,
+  selectUserVaultBalanceInUsdIncludingBoostsBridged,
+  selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken,
 } from '../../features/data/selectors/balance';
 import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
 import { selectVaultById } from '../../features/data/selectors/vaults';
@@ -20,7 +18,6 @@ import { formatLargeUsd } from '../../helpers/format';
 import type { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { useAppSelector } from '../../store';
-import { selectTokenByAddress } from '../../features/data/selectors/tokens';
 import type { TokenEntity } from '../../features/data/entities/token';
 import type BigNumber from 'bignumber.js';
 import { TokenAmountFromEntity } from '../TokenAmount';
@@ -28,13 +25,12 @@ import { TokenAmountFromEntity } from '../TokenAmount';
 const _BoostedVaultDepositedLarge = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
     const vault = selectVaultById(state, vaultId);
-    // deposit can be moo or oracle
-    const deposit = isGovVault(vault)
-      ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
-      : selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(state, vault.id);
-    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const { amount: deposit, token: depositToken } =
+      selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken(state, vault.id);
     const hasDeposit = deposit.gt(0);
-    const depositUsd = formatLargeUsd(selectUserVaultDepositInUsd(state, vaultId));
+    const depositUsd = formatLargeUsd(
+      selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vaultId)
+    );
     const blurred = selectIsBalanceHidden(state);
     const walletAddress = selectWalletAddress(state);
     const isLoaded =
@@ -87,13 +83,12 @@ const BoostedVaultDepositedLarge = React.memo(_BoostedVaultDepositedLarge);
 const _NonBoostedVaultDeposited = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
     const vault = selectVaultById(state, vaultId);
-    // deposit can be moo or oracle
-    const deposit = isGovVault(vault)
-      ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
-      : selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(state, vault.id);
-    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const { amount: deposit, token: depositToken } =
+      selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken(state, vault.id);
     const hasDeposit = deposit.gt(0);
-    const depositUsd = formatLargeUsd(selectUserVaultDepositInUsd(state, vaultId));
+    const depositUsd = formatLargeUsd(
+      selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vaultId)
+    );
     const blurred = selectIsBalanceHidden(state);
     const walletAddress = selectWalletAddress(state);
     const isLoaded =

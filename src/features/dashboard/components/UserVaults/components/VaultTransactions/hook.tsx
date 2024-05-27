@@ -19,7 +19,16 @@ export type SortedOptions = {
   sortDirection: 'asc' | 'desc';
 };
 
-export function useSortedTimeline(vaultId: VaultEntity['id'], address: string) {
+type VaultTransactionHistory = {
+  sortedOptions: SortedOptions;
+  handleSort: (field: SortedOptions['sort']) => void;
+  sortedTimeline: (VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity)[];
+};
+
+export function useSortedTransactionHistory(
+  vaultId: VaultEntity['id'],
+  address: string
+): VaultTransactionHistory {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const currentOraclePrice = useAppSelector(state =>
     selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
@@ -29,32 +38,24 @@ export function useSortedTimeline(vaultId: VaultEntity['id'], address: string) {
   );
 
   // Replace nulls with current price or 0
-  const vaultTimelineFixed = useMemo((): (
-    | VaultTimelineAnalyticsEntity
-    | CLMTimelineAnalyticsEntity
-  )[] => {
-    if (vaultTimeline.every(isVaultTimelineAnalyticsEntity)) {
-      const oneDayAgo = subDays(new Date(), 1);
-      return vaultTimeline.map(
-        (row: VaultTimelineAnalyticsEntity): VaultTimelineAnalyticsEntity => {
-          if (!row.underlyingToUsdPrice) {
-            const underlyingToUsdPrice =
-              row.underlyingToUsdPrice ??
-              (isBefore(row.datetime, oneDayAgo) ? BIG_ZERO : currentOraclePrice);
+  const vaultTimelineFixed = useMemo(() => {
+    const oneDayAgo = subDays(new Date(), 1);
+    return vaultTimeline.map((row: VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity) => {
+      if (isVaultTimelineAnalyticsEntity(row) && !row.underlyingToUsdPrice) {
+        const underlyingToUsdPrice =
+          row.underlyingToUsdPrice ??
+          (isBefore(row.datetime, oneDayAgo) ? BIG_ZERO : currentOraclePrice);
 
-            return {
-              ...row,
-              underlyingToUsdPrice,
-              usdBalance: row.underlyingBalance.times(underlyingToUsdPrice),
-              usdDiff: row.underlyingDiff.times(underlyingToUsdPrice),
-            };
-          }
+        return {
+          ...row,
+          underlyingToUsdPrice,
+          usdBalance: row.underlyingBalance.times(underlyingToUsdPrice),
+          usdDiff: row.underlyingDiff.times(underlyingToUsdPrice),
+        };
+      }
 
-          return row;
-        }
-      );
-    }
-    return vaultTimeline;
+      return row;
+    });
   }, [vaultTimeline, currentOraclePrice]);
 
   const [sortedOptions, setSortedOptions] = useState<SortedOptions>({

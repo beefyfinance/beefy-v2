@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
-import type { TokenErc20, TokenEntity } from '../entities/token';
+import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenErc20 } from '../entities/token';
 import type { VaultCowcentrated, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
@@ -16,9 +16,7 @@ import {
   selectIsBeefyToken,
   selectIsTokenBluechip,
   selectIsTokenStable,
-  selectTokenByAddress,
   selectTokenByIdOrUndefined,
-  selectTokenPriceByAddress,
 } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE } from '../../../helpers/big-number';
@@ -68,8 +66,8 @@ export const selectIsVaultGov = createCachedSelector(
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectCowcentratedVaultDepositTokenAddresses = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
-  vault => (vault as VaultCowcentrated).depositTokenAddresses
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectCowcentratedVaultById(state, vaultId),
+  vault => vault.depositTokenAddresses
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectVaultExistsById = createSelector(
@@ -93,13 +91,13 @@ export const selectGovVaultById = (state: BeefyState, vaultId: VaultEntity['id']
   return vault;
 };
 
-export const selectCowVaultById = (
+export const selectCowcentratedVaultById = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ): VaultCowcentrated => {
   const vault = selectVaultById(state, vaultId);
   if (!isCowcentratedVault(vault)) {
-    throw new Error(`selectCowVaultById: Vault ${vaultId} is not a cowcentrated vault`);
+    throw new Error(`selectCowcentratedVaultById: Vault ${vaultId} is not a cowcentrated vault`);
   }
   return vault;
 };
@@ -107,11 +105,22 @@ export const selectCowVaultById = (
 export const selectStandardVaultById = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   standardVault => {
-    // if (!isStandardVault(standardVault)) {
-    if (isGovVault(standardVault)) {
+    if (!isStandardVault(standardVault)) {
       throw new Error(`selectStandardVaultById: Vault ${standardVault.id} is not a standard vault`);
     }
     return standardVault;
+  }
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectStandardOrCowcentratedVaultById = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  vault => {
+    if (!isStandardVault(vault) && !isCowcentratedVault(vault)) {
+      throw new Error(
+        `selectStandardOrCowcentratedVaultById: Vault ${vault.id} is not a standard or cowcentrated vault`
+      );
+    }
+    return vault;
   }
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
@@ -346,42 +355,4 @@ export const selectVaultHasPlatformWithRisks = (
   } else {
     return { risks: false };
   }
-};
-
-export const selectClmTokens = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const vault = selectVaultById(state, vaultId);
-
-  if (!isCowcentratedVault(vault)) {
-    throw new Error(`selectClmTokens: Vault ${vaultId} is not a cowcentrated vault`);
-  }
-  const tokenAddresses = isCowcentratedVault(vault) && vault.depositTokenAddresses;
-
-  const token0 = selectTokenByAddress(state, vault.chainId, tokenAddresses[0]);
-  const token1 = selectTokenByAddress(state, vault.chainId, tokenAddresses[1]);
-
-  return {
-    token0,
-    token1,
-  };
-};
-
-export const selectClmTokenWithPricesByVaultId = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  vaultId: VaultEntity['id']
-) => {
-  const { token1, token0 } = selectClmTokens(state, vaultId);
-  const token0Price = selectTokenPriceByAddress(state, chainId, token0.address);
-  const token1Price = selectTokenPriceByAddress(state, chainId, token1.address);
-
-  return {
-    token0: {
-      ...token0,
-      price: token0Price,
-    },
-    token1: {
-      ...token1,
-      price: token1Price,
-    },
-  };
 };

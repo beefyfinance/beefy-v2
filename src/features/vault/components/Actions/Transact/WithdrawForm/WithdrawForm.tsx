@@ -10,13 +10,11 @@ import {
   selectTransactOptionsStatus,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
-import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
-import { selectUserVaultDepositInDepositTokenExcludingBoostsBridged } from '../../../../../data/selectors/balance';
+import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance';
 import { errorToString } from '../../../../../../helpers/format';
 import { TextLoader } from '../../../../../../components/TextLoader';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
 import { TransactQuote } from '../TransactQuote';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { AlertError } from '../../../../../../components/Alerts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { WithdrawTokenAmountInput } from '../WithdrawTokenAmountInput';
@@ -31,38 +29,34 @@ const useStyles = makeStyles(styles);
 
 const DepositedInVault = memo(function DepositedInVault() {
   const vaultId = useAppSelector(selectTransactVaultId);
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const dispatch = useDispatch();
-  const token = useAppSelector(state =>
-    vault ? selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress) : null
-  );
-  const balance = useAppSelector(state =>
-    vault && token
-      ? selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId)
-      : null
+  const tokenAmount = useAppSelector(state =>
+    vaultId ? selectUserVaultBalanceInDepositTokenWithToken(state, vaultId) : undefined
   );
   const forceSelection = useAppSelector(selecTransactForceSelection);
 
   const handleMax = useCallback(() => {
-    token &&
-      balance &&
+    if (tokenAmount) {
       dispatch(
         transactActions.setInputAmount({
-          amount: balance,
+          amount: tokenAmount.amount,
           max: true,
         })
       );
-  }, [balance, dispatch, token]);
+    }
+  }, [dispatch, tokenAmount]);
 
-  if (!vault || !token || !balance) {
+  if (!vaultId || !tokenAmount) {
     return <TextLoader placeholder="0.0000000 BNB-BIFI" />;
   }
 
-  if (forceSelection) {
-    return <TokenAmountFromEntity amount={balance} token={token} />;
-  }
-
-  return <TokenAmountFromEntity onClick={handleMax} amount={balance} token={token} />;
+  return (
+    <TokenAmountFromEntity
+      onClick={forceSelection ? undefined : handleMax}
+      amount={tokenAmount.amount}
+      token={tokenAmount.token}
+    />
+  );
 });
 
 export const WithdrawFormLoader = memo(function WithdrawFormLoader() {

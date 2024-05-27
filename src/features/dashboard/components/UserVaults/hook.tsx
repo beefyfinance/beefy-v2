@@ -4,6 +4,7 @@ import { useAppSelector } from '../../../../store';
 import { selectUserVaultsPnl } from '../../../data/selectors/balance';
 import { selectUserDashboardFilteredVaults } from '../../../data/selectors/filtered-vaults';
 import { isUserClmPnl } from '../../../data/selectors/analytics-types';
+import { isVaultActive } from '../../../data/entities/vault';
 
 export type SortedOptions = {
   sort: 'atDeposit' | 'now' | 'yield' | 'pnl' | 'apy' | 'dailyYield' | 'default';
@@ -67,30 +68,30 @@ export function useSortedDashboardVaults(address: string) {
                 return vaultPnl.totalPnlUsd.toNumber();
               }
               case 'apy': {
-                if (apy) {
-                  if (apy.boostedTotalApy !== undefined) {
-                    return apy.boostedTotalApy;
-                  } else if (apy.totalApy !== undefined) {
-                    return apy.totalApy;
-                  } else if (apy.vaultApr !== undefined) {
-                    return apy.vaultApr;
-                  } else {
-                    throw new Error('Apy type not supported');
-                  }
+                if (!isVaultActive(vault) || !apy) {
+                  return -1;
                 }
-                return -1;
+                if (apy.boostedTotalApy !== undefined) {
+                  return apy.boostedTotalApy;
+                } else if (apy.totalApy !== undefined) {
+                  return apy.totalApy;
+                } else if (apy.vaultApr !== undefined) {
+                  return apy.vaultApr;
+                } else {
+                  throw new Error('Apy type not supported');
+                }
               }
               case 'dailyYield': {
-                if (apy) {
-                  if (isUserClmPnl(vaultPnl)) {
-                    return vaultPnl.sharesNowToUsd.times(apy.totalDaily).toNumber();
-                  }
-                  return vaultPnl.deposit
-                    .times(vaultPnl.oraclePrice)
-                    .times(apy.totalDaily)
-                    .toNumber();
+                if (!isVaultActive(vault) || !apy) {
+                  return -1;
                 }
-                return -1;
+                if (isUserClmPnl(vaultPnl)) {
+                  return vaultPnl.sharesNowToUsd.times(apy.totalDaily).toNumber();
+                }
+                return vaultPnl.deposit
+                  .times(vaultPnl.oraclePrice)
+                  .times(apy.totalDaily)
+                  .toNumber();
               }
             }
           },
