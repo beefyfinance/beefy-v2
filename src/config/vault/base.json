@@ -1,5 +1,36 @@
 [
   {
+    "id": "aura-base-weeth-weth",
+    "name": "weETH-ETH",
+    "type": "standard",
+    "token": "weETH-ETH Base",
+    "tokenAddress": "0xaB99a3e856dEb448eD99713dfce62F937E2d4D74",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraBaseweETH-WETH",
+    "earnedTokenAddress": "0xc52393b27FeE4355Fe6a5DC92D25BC2Ed1B418Cb",
+    "earnContractAddress": "0xc52393b27FeE4355Fe6a5DC92D25BC2Ed1B418Cb",
+    "oracle": "lps",
+    "oracleId": "aura-base-weeth-weth",
+    "status": "active",
+    "createdAt": 1716557368,
+    "platformId": "aura",
+    "assets": ["weETH", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xab99a3e856deb448ed99713dfce62f937e2d4d74000000000000000000000118/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xab99a3e856deb448ed99713dfce62f937e2d4d74000000000000000000000118/withdraw",
+    "network": "base",
+    "earningPoints": true
+  },
+  {
     "id": "aerodrome-weth-ghst",
     "name": "ETH-GHST vLP",
     "type": "standard",
