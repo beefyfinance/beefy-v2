@@ -1,5 +1,125 @@
 [
   {
+    "id": "uniswap-gamma-polygon-matic-usdc",
+    "name": "MATIC-USDC LP",
+    "type": "standard",
+    "token": "xMATIC-USDC",
+    "tokenAddress": "0xE583b04b9a8F576aa7F17ECc6eB662499B5A8793",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooUniswapGammaMATIC-USDC",
+    "earnedTokenAddress": "0x1B197B90c86BF04D221D94F773e5C7984d6a1D4c",
+    "earnContractAddress": "0x1B197B90c86BF04D221D94F773e5C7984d6a1D4c",
+    "oracle": "lps",
+    "oracleId": "uniswap-gamma-polygon-matic-usdc",
+    "status": "active",
+    "createdAt": 1716899978,
+    "platformId": "gamma",
+    "assets": ["MATIC", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/wmatic-usdc-500-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/wmatic-usdc-500-narrow",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-uniswap-v3",
+        "tokenHolder": "0x144Dc3396976Aa0955Ca6Ee1aC4a2f9842198BA0"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-gamma-polygon-usdc-weth",
+    "name": "USDC-ETH LP",
+    "type": "standard",
+    "token": "xUSDC-ETH",
+    "tokenAddress": "0x1Fd452156b12FB5D74680C5Ff166303E6dd12A78",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooUniswapGammaUSDC-ETH",
+    "earnedTokenAddress": "0xf9Ba6b4f3386BEe60fE1f20e82CbEce530f6cbe1",
+    "earnContractAddress": "0xf9Ba6b4f3386BEe60fE1f20e82CbEce530f6cbe1",
+    "oracle": "lps",
+    "oracleId": "uniswap-gamma-polygon-usdc-weth",
+    "status": "active",
+    "createdAt": 1716899978,
+    "platformId": "gamma",
+    "assets": ["USDC", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/usdc-weth-500-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/usdc-weth-500-narrow",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-uniswap-v3",
+        "tokenHolder": "0x4215bc71b52ef6D0D31046d66eE0eD9A84744Eb6"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-gamma-polygon-usdc-usdt",
+    "name": "USDC-USDT LP",
+    "type": "standard",
+    "token": "xUSDC-USDT",
+    "tokenAddress": "0x8c6FE430cf06e56BE7c092AD3A249BF0BcB388B9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooUniswapGammaUSDC-USDT",
+    "earnedTokenAddress": "0x86aAd005769D9aedeb59df6e4B4b68974Bdd86fD",
+    "earnContractAddress": "0x86aAd005769D9aedeb59df6e4B4b68974Bdd86fD",
+    "oracle": "lps",
+    "oracleId": "uniswap-gamma-polygon-usdc-usdt",
+    "status": "active",
+    "createdAt": 1716899978,
+    "platformId": "gamma",
+    "assets": ["USDC", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/usdc-usdt-100-stable",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/usdc-usdt-100-stable",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-uniswap-v3",
+        "tokenHolder": "0xABc34b7cBE6e850694A1D8cE7C5FE88e2f1E7097"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-gamma-polygon-usdc-dai",
+    "name": "USDC-DAI LP",
+    "type": "standard",
+    "token": "xUSDC-DAI",
+    "tokenAddress": "0x831231E16D95Eb3D54Bf2C80968F35A5F4483447",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooUniswapGammaUSDC-DAI",
+    "earnedTokenAddress": "0x0Aa691fE4188F6D6467269a401af393869C6e982",
+    "earnContractAddress": "0x0Aa691fE4188F6D6467269a401af393869C6e982",
+    "oracle": "lps",
+    "oracleId": "uniswap-gamma-polygon-usdc-dai",
+    "status": "active",
+    "createdAt": 1716899978,
+    "platformId": "gamma",
+    "assets": ["USDC", "DAI"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/usdc-dai-100-stable",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/usdc-dai-100-stable",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-uniswap-v3",
+        "tokenHolder": "0xf45c2Cb5E8145E820365618188E54F869A92B7Cb"
+      }
+    ]
+  },
+  {
     "id": "curve-poly-asdcrv",
     "name": "CRV/asdCRV",
     "token": "asdCRVCRV-f",
