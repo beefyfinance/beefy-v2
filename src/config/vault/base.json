@@ -1,5 +1,36 @@
 [
   {
+    "id": "aura-base-weeth-weth",
+    "name": "weETH-ETH",
+    "type": "standard",
+    "token": "weETH-ETH Base",
+    "tokenAddress": "0xaB99a3e856dEb448eD99713dfce62F937E2d4D74",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraBaseweETH-WETH",
+    "earnedTokenAddress": "0xc52393b27FeE4355Fe6a5DC92D25BC2Ed1B418Cb",
+    "earnContractAddress": "0xc52393b27FeE4355Fe6a5DC92D25BC2Ed1B418Cb",
+    "oracle": "lps",
+    "oracleId": "aura-base-weeth-weth",
+    "status": "active",
+    "createdAt": 1716557368,
+    "platformId": "aura",
+    "assets": ["weETH", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xab99a3e856deb448ed99713dfce62f937e2d4d74000000000000000000000118/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/base/pool/0xab99a3e856deb448ed99713dfce62f937e2d4d74000000000000000000000118/withdraw",
+    "network": "base",
+    "earningPoints": true
+  },
+  {
     "id": "aerodrome-weth-ghst",
     "name": "ETH-GHST vLP",
     "type": "standard",
@@ -124,6 +155,42 @@
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "earningPoints": true,
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-dola-rgusd",
+    "name": "DOLA-rgUSD sLP",
+    "type": "standard",
+    "token": "sAMM-DOLA/rgUSD",
+    "tokenAddress": "0xBA15D0494fE4f0cAECD7730F6D77BeB6DD0feca9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroDOLA-rgUSD",
+    "earnedTokenAddress": "0xE7A8955c4D8FC271bf9b51ad7dC4c665b199C2B3",
+    "earnContractAddress": "0xE7A8955c4D8FC271bf9b51ad7dC4c665b199C2B3",
+    "oracle": "lps",
+    "oracleId": "aerodrome-dola-rgusd",
+    "status": "active",
+    "createdAt": 1716446393,
+    "platformId": "aerodrome",
+    "assets": ["DOLA", "rgUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4621b7A9c75199271F773Ebd9A499dbd165c3191&token1=0x8E5E9DF4F0EA39aE5270e79bbABFCc34203A3470&type=0",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4381,9 +4448,8 @@
     "earnContractAddress": "0xE6345a32eBF5e36a8FCc13610967127a67d077eF",
     "oracle": "lps",
     "oracleId": "alienbase-dai-usdbc",
-    "status": "eol",
-    "retireReason": "tvl",
-    "retiredAt": 1709759896,
+    "status": "active",
+    "updatedAt": 1716417830,
     "createdAt": 1692384702,
     "platformId": "alienbase",
     "assets": ["DAI", "USDbC"],
@@ -4472,9 +4538,8 @@
     "earnContractAddress": "0x1E8Be52feFa2131CE60889FB0E7438c340D4b7f4",
     "oracle": "lps",
     "oracleId": "alienbase-dai+-usd+",
-    "status": "eol",
-    "retireReason": "rewards",
-    "retiredAt": 1708974810,
+    "status": "active",
+    "updatedAt": 1716417830,
     "createdAt": 1692128324,
     "platformId": "alienbase",
     "assets": ["DAI+", "USD+"],
