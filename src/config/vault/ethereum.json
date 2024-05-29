@@ -13,7 +13,7 @@
     "oracleId": "curve-lend-pufeth-crvusd",
     "status": "active",
     "createdAt": 1716534698,
-    "platformId": "curve-lend",
+    "platformId": "convex",
     "assets": ["crvUSD"],
     "migrationIds": ["ethereum-convex"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],

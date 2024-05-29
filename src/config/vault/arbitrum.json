@@ -1,5 +1,84 @@
 [
   {
+    "id": "stakedao-arb-fraxbp",
+    "name": "FRAX/USDC.e",
+    "token": "FRAXBP-f",
+    "tokenAddress": "0xC9B8a3FDECB9D5b218d02555a8Baf332E5B740d5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooStakeDaoFRAX-USDCe",
+    "earnedTokenAddress": "0x5B87581324115EfF1FCb64A39BD032B1c1556AAb",
+    "earnContractAddress": "0x5B87581324115EfF1FCb64A39BD032B1c1556AAb",
+    "oracle": "lps",
+    "oracleId": "curve-arb-f-fraxbp",
+    "status": "active",
+    "createdAt": 1716969268,
+    "platformId": "stakedao",
+    "assets": ["FRAX", "arbUSDCe"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-41/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-v2-41/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xC9B8a3FDECB9D5b218d02555a8Baf332E5B740d5",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0xC9B8a3FDECB9D5b218d02555a8Baf332E5B740d5",
+            "coins": [
+              "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
+              "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "stakedao-arb-asdcrv",
+    "name": "CRV/asdCRV/vsdCRV",
+    "token": "VASDCRV",
+    "tokenAddress": "0xB85246768Cfea42b0c935265Db798C9Ae457646f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooStakeDaoAsdCRV",
+    "earnedTokenAddress": "0x9227d33Fb11a7e7C905809e70c017ee9DB719ba0",
+    "earnContractAddress": "0x9227d33Fb11a7e7C905809e70c017ee9DB719ba0",
+    "oracle": "lps",
+    "oracleId": "curve-arb-asdcrv",
+    "status": "active",
+    "createdAt": 1716969269,
+    "platformId": "stakedao",
+    "assets": ["CRV", "asdCRV", "vsdCRV"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-20/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-20/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xB85246768Cfea42b0c935265Db798C9Ae457646f",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0xB85246768Cfea42b0c935265Db798C9Ae457646f",
+            "coins": [
+              "0x11cDb42B0EB46D95f990BeDD4695A6e3fA034978",
+              "0x75289388d50364c3013583d97bd70cED0e183e32",
+              "0x62d5a59E0d67c0381aAd53B201B4A1B8Dcd2C833"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "equilibria-arb-rseth-26sep24",
     "name": "rsETH 26Sep24",
     "token": "rsETH-26Sep24",
