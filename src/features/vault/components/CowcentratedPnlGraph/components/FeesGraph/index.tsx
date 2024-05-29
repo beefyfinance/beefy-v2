@@ -9,7 +9,7 @@ import {
   YAxis,
   type TooltipProps,
 } from 'recharts';
-import { usePnLChartData } from './hooks';
+import { useFeesChartData } from './hooks';
 import type { Theme } from '@material-ui/core';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { GraphLoader } from '../../../GraphLoader';
@@ -24,24 +24,30 @@ import {
 } from '../../../../../../helpers/graph';
 import { styles } from './styles';
 import { XAxisTick } from '../../../../../../components/XAxisTick';
-import { OverviewTooltip } from '../Tooltips';
+import { FeesTooltip } from '../Tooltips';
+import { useAppSelector } from '../../../../../../store';
+import { selectCowcentratedVaultDepositTokens } from '../../../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
-interface CLMOverviewGraphProps {
+interface CLMFeesGraphProps {
   vaultId: string;
   period: number;
   address?: string;
 }
 
-export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverviewGraph({
+export const CLMFeesGraph = memo<CLMFeesGraphProps>(function CLMFeesGraph({
   vaultId,
   period,
   address,
 }) {
   const classes = useStyles();
 
-  const { chartData, isLoading } = usePnLChartData(TIME_BUCKET[period], vaultId, address);
+  const { token0, token1 } = useAppSelector(state =>
+    selectCowcentratedVaultDepositTokens(state, vaultId)
+  );
+
+  const { chartData, isLoading } = useFeesChartData(TIME_BUCKET[period], vaultId, address);
 
   const { data, minUsd, maxUsd } = chartData;
 
@@ -76,8 +82,10 @@ export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverview
   }, [xsDown]);
 
   const tooltipContentCreator = useCallback(
-    (props: TooltipProps<number, string>) => <OverviewTooltip {...props} />,
-    []
+    (props: TooltipProps<number, string>) => (
+      <FeesTooltip token0Symbol={token0.symbol} token1Symbol={token1.symbol} {...props} />
+    ),
+    [token0.symbol, token1.symbol]
   );
 
   if (isLoading) {
@@ -107,8 +115,16 @@ export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverview
           <Line
             yAxisId="usd"
             strokeWidth={1.5}
-            dataKey="v"
+            dataKey="v0"
             stroke="#5C70D6"
+            dot={false}
+            type="linear"
+          />
+          <Line
+            yAxisId="usd"
+            strokeWidth={1.5}
+            dataKey="v1"
+            stroke="#4DB258"
             dot={false}
             type="linear"
           />

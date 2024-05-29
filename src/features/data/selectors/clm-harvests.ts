@@ -66,41 +66,54 @@ export const selectClmAutocompundedFeesByVaultAddress = (
 
   const firstDeposit = selectLastVaultDepositStart(state, vaultId, walletAddress);
 
-  const filteredHarvests = sortBy(harvests, 'timestamp').filter(harvest => {
-    return isAfter(harvest.timestamp * 1000, firstDeposit);
+  const filteredHarvests = sortBy(harvests, 'date').filter(harvest => {
+    return isAfter(harvest.date, firstDeposit);
   });
 
   let timelineIdx = 0;
 
-  const { token0AccruedRewards, token1AccruedRewards } = filteredHarvests.reduce(
+  const {
+    token0AccruedRewards,
+    token1AccruedRewards,
+    token0AccruedRewardsToUsd,
+    token1AccruedRewardsToUsd,
+  } = filteredHarvests.reduce(
     (acc, harvest) => {
-      const { totalSupply, compoundedAmount0, compoundedAmount1 } = harvest;
+      const { totalSupply, compoundedAmount0, compoundedAmount1, token0ToUsd, token1ToUsd } =
+        harvest;
 
       if (
         timelineIdx < timeline.length - 1 &&
-        isAfter(harvest.timestamp * 1000, timeline[timelineIdx + 1].datetime)
+        isAfter(harvest.date, timeline[timelineIdx + 1].datetime)
       ) {
         timelineIdx++;
       }
 
-      acc.token0AccruedRewards = acc.token0AccruedRewards.plus(
+      const accruedRewardsToken0 = acc.token0AccruedRewards.plus(
         timeline[timelineIdx].shareBalance.dividedBy(totalSupply).times(compoundedAmount0)
       );
-      acc.token1AccruedRewards = acc.token1AccruedRewards.plus(
+      const accruedRewardsToken1 = acc.token1AccruedRewards.plus(
         timeline[timelineIdx].shareBalance.dividedBy(totalSupply).times(compoundedAmount1)
       );
+
+      acc.token0AccruedRewards = accruedRewardsToken0;
+      acc.token0AccruedRewardsToUsd = accruedRewardsToken0.times(token0ToUsd);
+      acc.token1AccruedRewards = accruedRewardsToken1;
+      acc.token1AccruedRewardsToUsd = accruedRewardsToken1.times(token1ToUsd);
+
       return acc;
     },
     {
       token0AccruedRewards: BIG_ZERO,
       token1AccruedRewards: BIG_ZERO,
+      token0AccruedRewardsToUsd: BIG_ZERO,
+      token1AccruedRewardsToUsd: BIG_ZERO,
     }
   );
-  const pendingRewards0 = currentMooTokenBalance.dividedBy(totalSupply).times(fees0);
-  const pendingRewards1 = currentMooTokenBalance.dividedBy(totalSupply).times(fees1);
 
-  const token0AccruedRewardsToUsd = token0AccruedRewards.times(token0Price);
-  const token1AccruedRewardsToUsd = token1AccruedRewards.times(token1Price);
+  //apply beefy fee of 9.5%
+  const pendingRewards0 = currentMooTokenBalance.dividedBy(totalSupply).times(fees0).times(0.905);
+  const pendingRewards1 = currentMooTokenBalance.dividedBy(totalSupply).times(fees1).times(0.905);
   const pendingRewards0ToUsd = pendingRewards0.times(token0Price);
   const pendingRewards1ToUsd = pendingRewards1.times(token1Price);
 

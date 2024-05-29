@@ -38,9 +38,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   timestamp: {},
 }));
 
-type OverviewTooltipProps = TooltipProps<number, string>;
+type GraphTooltipProps = TooltipProps<number, string>;
 
-export const OverviewTooltip = memo<OverviewTooltipProps>(function OverviewTooltip({
+export const OverviewTooltip = memo<GraphTooltipProps>(function OverviewTooltip({
   active,
   payload,
 }) {
@@ -69,3 +69,35 @@ export const OverviewTooltip = memo<OverviewTooltipProps>(function OverviewToolt
     </div>
   );
 });
+
+export const FeesTooltip = memo<GraphTooltipProps & { token1Symbol: string; token0Symbol: string }>(
+  function OverviewTooltip({ active, payload, token1Symbol, token0Symbol }) {
+    const classes = useStyles();
+
+    const [valueLine] = payload!;
+
+    if (!active) {
+      return null;
+    }
+
+    const { t: timestamp, v0, v1 } = valueLine.payload;
+
+    const value = valueLine?.value;
+
+    return (
+      <div className={classes.content}>
+        <div className={classes.timestamp}>
+          {format(fromUnixTime(timestamp), 'MMM d, yyyy h:mm a')}
+        </div>
+        <div className={classes.itemContainer}>
+          <div className={classes.label}>{token0Symbol}:</div>
+          {value ? <div className={classes.value}>{formatUsd(v0)}</div> : null}
+        </div>
+        <div className={classes.itemContainer}>
+          <div className={classes.label}>{token1Symbol}:</div>
+          {value ? <div className={classes.value}>{formatUsd(v1)}</div> : null}
+        </div>
+      </div>
+    );
+  }
+);
