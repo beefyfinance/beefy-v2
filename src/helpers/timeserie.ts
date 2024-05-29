@@ -13,6 +13,7 @@ import { BIG_ZERO } from './big-number';
 import { roundDownMinutes } from './date';
 import { samplingPeriodMs } from './sampling-period';
 import { timeBucketToSamplingPeriod } from './time-bucket';
+import type { Harvest } from '../features/data/reducers/clm-harvests';
 
 // simulate a join between the 3 price series locally
 export interface PriceTsRow {
@@ -63,7 +64,7 @@ export function getInvestorTimeserie(
 
   let balanceIdx = 0;
   let sharesIdx = 0;
-  let underlyingIdx = 0;
+  let harvestIdx = 0;
   let currentDate = fixedDate;
 
   const pricesTs: PriceTsRow[] = [];
@@ -105,10 +106,10 @@ export function getInvestorTimeserie(
       }
       // find the corresponding underlying row
       while (
-        underlyingIdx < sortedUnderlyingToUsd.length - 1 &&
-        isAfter(currentDate, sortedUnderlyingToUsd[underlyingIdx + 1].date)
+        harvestIdx < sortedUnderlyingToUsd.length - 1 &&
+        isAfter(currentDate, sortedUnderlyingToUsd[harvestIdx + 1].date)
       ) {
-        underlyingIdx++;
+        harvestIdx++;
       }
 
       // now we have the correct rows for this date
@@ -118,7 +119,7 @@ export function getInvestorTimeserie(
         const shares = sortedSharesToUnderlying[sharesIdx];
         const underlyingBalance = shareBalance.times(shares.value);
         // Underlying to usd
-        const underlying = sortedUnderlyingToUsd[underlyingIdx];
+        const underlying = sortedUnderlyingToUsd[harvestIdx];
         const usdBalance = underlyingBalance.times(underlying.value);
 
         pricesTs.push({
@@ -169,7 +170,7 @@ export function getClmInvestorTimeserie(
   const sortedUnderlyingToUsd = sortAndFixPrices(underlyingToUsd, currentPrice);
 
   let balanceIdx = 0;
-  let underlyingIdx = 0;
+  let harvestIdx = 0;
   let currentDate = fixedDate;
 
   const pricesTs: { t: number; v: number }[] = [];
@@ -203,10 +204,10 @@ export function getClmInvestorTimeserie(
 
       // find the corresponding underlying row
       while (
-        underlyingIdx < sortedUnderlyingToUsd.length - 1 &&
-        isAfter(currentDate, sortedUnderlyingToUsd[underlyingIdx + 1].date)
+        harvestIdx < sortedUnderlyingToUsd.length - 1 &&
+        isAfter(currentDate, sortedUnderlyingToUsd[harvestIdx + 1].date)
       ) {
-        underlyingIdx++;
+        harvestIdx++;
       }
 
       // now we have the correct rows for this date
@@ -215,7 +216,7 @@ export function getClmInvestorTimeserie(
         // Shares to underlying
 
         // Underlying to usd
-        const underlying = sortedUnderlyingToUsd[underlyingIdx];
+        const underlying = sortedUnderlyingToUsd[harvestIdx];
         const usdBalance = timeline[balanceIdx].shareBalance.times(underlying.value);
 
         pricesTs.push({
@@ -234,6 +235,132 @@ export function getClmInvestorTimeserie(
     t: roundDownMinutes(new Date()).getTime(),
     v: currentShareBalance.times(currentPrice).toNumber(),
   });
+
+  return pricesTs;
+}
+
+export function getClmInvestorFeesTimeserie(
+  timeBucket: TimeBucketType,
+  timeline: CLMTimelineAnalyticsEntity[],
+  harvests: Harvest[],
+  firstDate: Date,
+  currentPriceToken0: BigNumber,
+  currentPriceToken1: BigNumber
+): { t: number; v0: number; v1: number }[] {
+  // so, first we need to generate datetime keys for each row
+  const { bucketSize: bucketSizeStr, timeRange: timeRangeStr } =
+    timeBucketToSamplingPeriod(timeBucket);
+  const bucketSize = samplingPeriodMs[bucketSizeStr];
+  const timeRange = samplingPeriodMs[timeRangeStr];
+
+  const lastDate = new Date(Math.floor(new Date().getTime() / bucketSize) * bucketSize);
+  const firstDate1 = new Date(lastDate.getTime() - timeRange);
+
+  const fixedDate = max([firstDate, firstDate1]);
+
+  const oneDayAgo = subDays(new Date(), 1);
+
+  // Use the current price to fill in any missing prices in the past 24 hours (otherwise set to 0)
+
+  const sortedHarvests = sortBy(harvests, 'timestamp').map(
+    ({ timestamp, token0ToUsd, token1ToUsd, ...rest }): Harvest => ({
+      ...rest,
+      timestamp: timestamp / 1000,
+      token0ToUsd: token0ToUsd ?? (isBefore(timestamp, oneDayAgo) ? BIG_ZERO : currentPriceToken0),
+      token1ToUsd: token1ToUsd ?? (isBefore(timestamp, oneDayAgo) ? BIG_ZERO : currentPriceToken1),
+    })
+  );
+
+  let balanceIdx = 0;
+  let harvestIdx = 0;
+  let currentDate = fixedDate;
+  let culmutativeFees0 = BIG_ZERO;
+  let culmutativeFees1 = BIG_ZERO;
+
+  const pricesTs: { t: number; v0: number; v1: number }[] = [];
+
+  //We should be adding precise initial ppfs and price as first data point
+  if (isEqual(timeline[0].datetime, fixedDate)) {
+    const { shareBalance, token1ToUsd, token0ToUsd } = timeline[0];
+
+    const { totalSupply, compoundedAmount0, compoundedAmount1 } = sortedHarvests[harvestIdx];
+
+    const token0HarvestedRewardsToUsd = shareBalance
+      .dividedBy(totalSupply)
+      .times(compoundedAmount0)
+      .times(token0ToUsd);
+
+    const token1HarvestedRewardsToUsd = culmutativeFees1.plus(
+      shareBalance.dividedBy(totalSupply).times(compoundedAmount1).times(token1ToUsd)
+    );
+
+    pricesTs.push({
+      //return date on seconds
+      t: currentDate.getTime(),
+      v0: token0HarvestedRewardsToUsd.toNumber(),
+      v1: token1HarvestedRewardsToUsd.toNumber(),
+    });
+
+    culmutativeFees0 = token0HarvestedRewardsToUsd;
+    culmutativeFees1 = token1HarvestedRewardsToUsd;
+
+    currentDate = new Date(currentDate.getTime() + bucketSize);
+  }
+
+  // Need at least one row in each series to work from
+  if (sortedHarvests.length) {
+    while (currentDate <= lastDate) {
+      // add a row for each date
+      // find the corresponding balance row
+      while (
+        balanceIdx < timeline.length - 1 &&
+        isAfter(currentDate, timeline[balanceIdx + 1].datetime)
+      ) {
+        balanceIdx++;
+      }
+
+      // find the corresponding underlying row
+      while (
+        harvestIdx < sortedHarvests.length - 1 &&
+        isAfter(currentDate, sortedHarvests[harvestIdx + 1].timestamp)
+      ) {
+        harvestIdx++;
+      }
+
+      // now we have the correct rows for this date
+      const shareBalance = timeline[balanceIdx].shareBalance;
+      if (shareBalance && !shareBalance.isEqualTo(BIG_ZERO)) {
+        // harvest
+        const { totalSupply, token0ToUsd, token1ToUsd, compoundedAmount0, compoundedAmount1 } =
+          sortedHarvests[harvestIdx];
+
+        const token0HarvestedRewardsToUsd = culmutativeFees0.plus(
+          timeline[balanceIdx].shareBalance
+            .dividedBy(totalSupply)
+            .times(compoundedAmount0)
+            .times(token0ToUsd)
+        );
+        const token1HarvestedRewardsToUsd = culmutativeFees1.plus(
+          timeline[balanceIdx].shareBalance
+            .dividedBy(totalSupply)
+            .times(compoundedAmount1)
+            .times(token1ToUsd)
+        );
+
+        pricesTs.push({
+          //return date on seconds
+          t: currentDate.getTime() / 1000,
+          v0: token0HarvestedRewardsToUsd.toNumber(),
+          v1: token1HarvestedRewardsToUsd.toNumber(),
+        });
+
+        culmutativeFees0 = token0HarvestedRewardsToUsd;
+        culmutativeFees1 = token1HarvestedRewardsToUsd;
+      }
+
+      currentDate = new Date(currentDate.getTime() + bucketSize);
+    }
+  }
 
   return pricesTs;
 }

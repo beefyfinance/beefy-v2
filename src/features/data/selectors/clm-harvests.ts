@@ -67,7 +67,7 @@ export const selectClmAutocompundedFeesByVaultAddress = (
   const firstDeposit = selectLastVaultDepositStart(state, vaultId, walletAddress);
 
   const filteredHarvests = sortBy(harvests, 'timestamp').filter(harvest => {
-    return isAfter(harvest.timestamp * 1000, firstDeposit);
+    return isAfter(harvest.timestamp, firstDeposit);
   });
 
   let timelineIdx = 0;
@@ -78,7 +78,7 @@ export const selectClmAutocompundedFeesByVaultAddress = (
 
       if (
         timelineIdx < timeline.length - 1 &&
-        isAfter(harvest.timestamp * 1000, timeline[timelineIdx + 1].datetime)
+        isAfter(harvest.timestamp, timeline[timelineIdx + 1].datetime)
       ) {
         timelineIdx++;
       }
@@ -101,8 +101,9 @@ export const selectClmAutocompundedFeesByVaultAddress = (
 
   const token0AccruedRewardsToUsd = token0AccruedRewards.times(token0Price);
   const token1AccruedRewardsToUsd = token1AccruedRewards.times(token1Price);
-  const pendingRewards0ToUsd = pendingRewards0.times(token0Price);
-  const pendingRewards1ToUsd = pendingRewards1.times(token1Price);
+  //apply beefy fee of 9.5%
+  const pendingRewards0ToUsd = pendingRewards0.times(token0Price).times(0.905);
+  const pendingRewards1ToUsd = pendingRewards1.times(token1Price).times(0.905);
 
   return {
     token0AccruedRewards,

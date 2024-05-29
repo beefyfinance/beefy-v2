@@ -16,9 +16,10 @@ import {
 import { selectHasDataToShowGraphByVaultId } from '../../../data/selectors/analytics';
 import { CLMOverviewGraph } from './components/OverviewGraph';
 import { useVaultPeriods } from './components/OverviewGraph/hooks';
-import { Footer } from './components/Footer';
+import { FeesFooter, OverviewFooter } from './components/Footers';
 import { fetchClmHarvests, fetchClmPendingRewards } from '../../../data/actions/clm-harvests';
 import { FeesGraphHeader } from './components/FeesGraphHeader';
+import { CLMFeesGraph } from './components/FeesGraph';
 
 const useStyles = makeStyles(styles);
 
@@ -74,20 +75,25 @@ export const OverviewGraph = memo<CowcentratedPnlGraphProps>(function OverviewGr
         <div className={classes.graphContainer}>
           <CLMOverviewGraph period={period} address={address} vaultId={vaultId} />
         </div>
-        <Footer labels={labels} vaultId={vaultId} period={period} handlePeriod={setPeriod} />
+        <OverviewFooter labels={labels} period={period} handlePeriod={setPeriod} />
       </CardContent>
     </>
   );
 });
 
-export const FeesGraph = memo<CowcentratedPnlGraphProps>(function FeesGraph({ vaultId }) {
+export const FeesGraph = memo<CowcentratedPnlGraphProps>(function FeesGraph({ vaultId, address }) {
   const classes = useStyles();
+  const labels = useVaultPeriods(vaultId, address);
+  const [period, setPeriod] = useState<number>(labels.length - 1);
 
   return (
     <>
       <CardContent className={classes.content}>
         <FeesGraphHeader vaultId={vaultId} />
-        <div className={classes.graphContainer}></div>
+        <div className={classes.graphContainer}>
+          <CLMFeesGraph vaultId={vaultId} period={period} />
+        </div>
+        <FeesFooter labels={labels} vaultId={vaultId} period={period} handlePeriod={setPeriod} />
       </CardContent>
     </>
   );
@@ -149,10 +155,9 @@ export const DashboardCowcentratedPnLGraph = memo<CowcentratedPnlGraphProps>(
     return (
       <div className={classes.dashboardPnlContainer}>
         <CLMOverviewGraph address={address} period={period} vaultId={vaultId} />
-        <Footer
+        <OverviewFooter
           tabsClassName={classes.tabsDashboard}
           labels={labels}
-          vaultId={vaultId}
           period={period}
           handlePeriod={setPeriod}
         />

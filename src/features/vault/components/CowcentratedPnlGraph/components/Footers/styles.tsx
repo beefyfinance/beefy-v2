@@ -29,6 +29,12 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#606FCF',
     borderRadius: '4px',
   },
+  token1ReferenceLine: {
+    height: '2px',
+    width: '12px',
+    backgroundColor: theme.palette.background.cta,
+    borderRadius: '4px',
+  },
   tabsContainer: {
     '& .MuiTabs-root': {
       minHeight: '24px',

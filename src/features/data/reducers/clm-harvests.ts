@@ -4,7 +4,7 @@ import type { VaultEntity } from '../entities/vault';
 import BigNumber from 'bignumber.js';
 import { fetchClmHarvests, fetchClmPendingRewards } from '../actions/clm-harvests';
 
-interface Harvest {
+export interface Harvest {
   timestamp: number;
   compoundedAmount0: BigNumber;
   compoundedAmount1: BigNumber;
@@ -47,7 +47,7 @@ export const clmHarvestsSlice = createSlice({
       const { data, vaultAddress, chainId } = action.payload;
 
       const harvests: Harvest[] = data.map(row => ({
-        timestamp: new BigNumber(row.timestamp).toNumber(),
+        timestamp: new BigNumber(row.timestamp).toNumber() * 1000,
         compoundedAmount0: new BigNumber(row.compoundedAmount0),
         compoundedAmount1: new BigNumber(row.compoundedAmount1),
         token0ToUsd: new BigNumber(row.token0ToUsd),
