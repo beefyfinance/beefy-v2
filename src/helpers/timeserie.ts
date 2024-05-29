@@ -213,8 +213,6 @@ export function getClmInvestorTimeserie(
       // now we have the correct rows for this date
       const shareBalance = timeline[balanceIdx].shareBalance;
       if (shareBalance && !shareBalance.isEqualTo(BIG_ZERO)) {
-        // Shares to underlying
-
         // Underlying to usd
         const underlying = sortedUnderlyingToUsd[harvestIdx];
         const usdBalance = timeline[balanceIdx].shareBalance.times(underlying.value);
@@ -261,13 +259,12 @@ export function getClmInvestorFeesTimeserie(
   const oneDayAgo = subDays(new Date(), 1);
 
   // Use the current price to fill in any missing prices in the past 24 hours (otherwise set to 0)
-
-  const sortedHarvests = sortBy(harvests, 'timestamp').map(
-    ({ timestamp, token0ToUsd, token1ToUsd, ...rest }): Harvest => ({
+  const sortedHarvests = sortBy(harvests, 'date').map(
+    ({ date, token0ToUsd, token1ToUsd, ...rest }): Harvest => ({
       ...rest,
-      timestamp: timestamp / 1000,
-      token0ToUsd: token0ToUsd ?? (isBefore(timestamp, oneDayAgo) ? BIG_ZERO : currentPriceToken0),
-      token1ToUsd: token1ToUsd ?? (isBefore(timestamp, oneDayAgo) ? BIG_ZERO : currentPriceToken1),
+      date,
+      token0ToUsd: token0ToUsd ?? (isBefore(date, oneDayAgo) ? BIG_ZERO : currentPriceToken0),
+      token1ToUsd: token1ToUsd ?? (isBefore(date, oneDayAgo) ? BIG_ZERO : currentPriceToken1),
     })
   );
 
@@ -296,7 +293,7 @@ export function getClmInvestorFeesTimeserie(
 
     pricesTs.push({
       //return date on seconds
-      t: currentDate.getTime(),
+      t: roundDownMinutes(timeline[0].datetime).getTime(),
       v0: token0HarvestedRewardsToUsd.toNumber(),
       v1: token1HarvestedRewardsToUsd.toNumber(),
     });
@@ -322,7 +319,7 @@ export function getClmInvestorFeesTimeserie(
       // find the corresponding underlying row
       while (
         harvestIdx < sortedHarvests.length - 1 &&
-        isAfter(currentDate, sortedHarvests[harvestIdx + 1].timestamp)
+        isAfter(currentDate, sortedHarvests[harvestIdx + 1].date)
       ) {
         harvestIdx++;
       }
@@ -349,7 +346,7 @@ export function getClmInvestorFeesTimeserie(
 
         pricesTs.push({
           //return date on seconds
-          t: currentDate.getTime() / 1000,
+          t: currentDate.getTime(),
           v0: token0HarvestedRewardsToUsd.toNumber(),
           v1: token1HarvestedRewardsToUsd.toNumber(),
         });

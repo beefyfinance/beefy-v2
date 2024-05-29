@@ -48,9 +48,7 @@ export const useFeesChartData = (
 
   const chartData = useMemo(() => {
     if (harvests && harvests!.length > 0) {
-      const filteredHarvests = harvests.filter(harvest =>
-        isAfter(harvest.timestamp, vaultLastDeposit)
-      );
+      const filteredHarvests = harvests.filter(harvest => isAfter(harvest.date, vaultLastDeposit));
 
       const data = getClmInvestorFeesTimeserie(
         timebucket,

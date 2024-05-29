@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js';
 import { fetchClmHarvests, fetchClmPendingRewards } from '../actions/clm-harvests';
 
 export interface Harvest {
-  timestamp: number;
+  date: Date;
   compoundedAmount0: BigNumber;
   compoundedAmount1: BigNumber;
   token0ToUsd: BigNumber;
@@ -47,7 +47,7 @@ export const clmHarvestsSlice = createSlice({
       const { data, vaultAddress, chainId } = action.payload;
 
       const harvests: Harvest[] = data.map(row => ({
-        timestamp: new BigNumber(row.timestamp).toNumber() * 1000,
+        date: new Date(Math.floor(Number(row.timestamp) * 1000)),
         compoundedAmount0: new BigNumber(row.compoundedAmount0),
         compoundedAmount1: new BigNumber(row.compoundedAmount1),
         token0ToUsd: new BigNumber(row.token0ToUsd),
