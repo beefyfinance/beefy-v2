@@ -34,11 +34,11 @@ const _BoostedVaultDepositedLarge = connect(
     const blurred = selectIsBalanceHidden(state);
     const walletAddress = selectWalletAddress(state);
     const isLoaded =
-      state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
+      state.ui.dataLoader.global.prices.lastFulfilled !== undefined &&
       selectIsWalletKnown(state) &&
       walletAddress
         ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
-            .alreadyLoadedOnce
+            .lastFulfilled !== undefined
         : true;
     return {
       hasDeposit,
@@ -92,11 +92,11 @@ const _NonBoostedVaultDeposited = connect(
     const blurred = selectIsBalanceHidden(state);
     const walletAddress = selectWalletAddress(state);
     const isLoaded =
-      state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
+      state.ui.dataLoader.global.prices.lastFulfilled !== undefined &&
       selectIsWalletKnown(state) &&
       walletAddress
         ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
-            .alreadyLoadedOnce
+            .lastFulfilled !== undefined
         : true;
     return {
       hasDeposit,

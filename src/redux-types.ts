@@ -36,7 +36,6 @@ import type { TooltipsState } from './features/data/reducers/tooltips';
 import type { AddToWalletState } from './features/data/reducers/add-to-wallet';
 import type { ArticlesState } from './features/data/reducers/articles';
 import type { RewardsState } from './features/data/reducers/wallet/rewards';
-import type { ClmHarvestsState } from './features/data/reducers/clm-harvests';
 
 export interface BeefyState {
   entities: {
@@ -51,7 +50,6 @@ export interface BeefyState {
     proposals: ProposalsState;
     bridges: BridgesState;
     articles: ArticlesState;
-    harvests: ClmHarvestsState;
   };
   biz: {
     tvl: TvlState;

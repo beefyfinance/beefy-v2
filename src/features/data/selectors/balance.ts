@@ -863,8 +863,9 @@ export const selectUserTotalYieldUsd = (state: BeefyState, walletAddress?: strin
 
   let totalYieldUsd = BIG_ZERO;
   for (const vaultPnl of Object.values(vaultPnls)) {
-    // TODO fix for CLM
-    totalYieldUsd = totalYieldUsd.plus(isUserClmPnl(vaultPnl) ? BIG_ZERO : vaultPnl.totalYieldUsd);
+    totalYieldUsd = totalYieldUsd.plus(
+      isUserClmPnl(vaultPnl) ? vaultPnl.totalCompoundedUsd : vaultPnl.totalYieldUsd
+    );
   }
 
   return totalYieldUsd;
@@ -876,7 +877,7 @@ export const selectUserRewardsByVaultId = (
   walletAddress?: string
 ) => {
   const rewards: {
-    rewardToken: TokenEntity['oracleId'];
+    rewardToken: TokenEntity['symbol'];
     rewardTokenDecimals: TokenEntity['decimals'];
     rewards: BigNumber;
     rewardsUsd: BigNumber;
@@ -892,10 +893,10 @@ export const selectUserRewardsByVaultId = (
     const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id, walletAddress);
 
     totalRewardsUsd = rewardsEarnedUsd;
-    rewardsTokens.push(earnedToken.oracleId);
+    rewardsTokens.push(earnedToken.symbol);
 
     rewards.push({
-      rewardToken: earnedToken.oracleId,
+      rewardToken: earnedToken.symbol,
       rewardTokenDecimals: earnedToken.decimals,
       rewards: rewardsEarnedToken,
       rewardsUsd: rewardsEarnedUsd,
@@ -903,18 +904,17 @@ export const selectUserRewardsByVaultId = (
   } else {
     const boosts = selectAllVaultBoostIds(state, vaultId);
     for (const boostId of boosts) {
-      const rewardToken = selectBoostRewardsTokenEntity(state, boostId);
       const boostPendingRewards = selectBoostUserRewardsInToken(state, boostId, walletAddress);
-      const oraclePrice = selectTokenPriceByTokenOracleId(state, rewardToken.oracleId);
       if (boostPendingRewards.isGreaterThan(BIG_ZERO)) {
-        const tokenOracleId = rewardToken.oracleId;
+        const rewardToken = selectBoostRewardsTokenEntity(state, boostId);
+        const oraclePrice = selectTokenPriceByTokenOracleId(state, rewardToken.oracleId);
         const tokenRewardsUsd = boostPendingRewards.times(oraclePrice);
 
-        rewardsTokens.push(tokenOracleId);
+        rewardsTokens.push(rewardToken.symbol);
         totalRewardsUsd = totalRewardsUsd.plus(tokenRewardsUsd);
 
         rewards.push({
-          rewardToken: tokenOracleId,
+          rewardToken: rewardToken.symbol,
           rewardTokenDecimals: rewardToken.decimals,
           rewards: boostPendingRewards,
           rewardsUsd: tokenRewardsUsd,

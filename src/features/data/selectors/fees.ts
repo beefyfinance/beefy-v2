@@ -17,7 +17,7 @@ const GOV_FEES: Readonly<VaultFee> = {
 };
 
 export const selectAreFeesLoaded = (state: BeefyState) =>
-  state.ui.dataLoader.global.fees.alreadyLoadedOnce;
+  state.ui.dataLoader.global.fees.lastFulfilled !== undefined;
 
 export const selectShouldInitFees = (state: BeefyState) =>
   isInitialLoader(state.ui.dataLoader.global.fees);

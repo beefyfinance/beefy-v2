@@ -6,16 +6,20 @@ import { Stat } from '../Stat';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
-import { selectClmAutocompundedFeesByVaultAddress } from '../../../../../data/selectors/clm-harvests';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../../../../../helpers/format';
+import { selectClmAutocompoundedPendingFeesByVaultId } from '../../../../../data/selectors/analytics';
 
 interface FeesGraphHeaderProps {
   vaultId: VaultEntity['id'];
+  address?: string;
 }
 
 const useStyles = makeStyles(styles);
 
-export const FeesGraphHeader = memo<FeesGraphHeaderProps>(function FeesGraphHeader({ vaultId }) {
+export const FeesGraphHeader = memo<FeesGraphHeaderProps>(function FeesGraphHeader({
+  vaultId,
+  address,
+}) {
   const classes = useStyles();
 
   const { t } = useTranslation();
@@ -33,9 +37,9 @@ export const FeesGraphHeader = memo<FeesGraphHeaderProps>(function FeesGraphHead
     token1Symbol,
     token0Decimals,
     token1Decimals,
-    totalAutocompouned,
+    totalAutocompounded,
     totalPending,
-  } = useAppSelector(state => selectClmAutocompundedFeesByVaultAddress(state, vaultId));
+  } = useAppSelector(state => selectClmAutocompoundedPendingFeesByVaultId(state, vaultId, address));
 
   return (
     <div className={classes.statsContainer}>
@@ -73,7 +77,7 @@ export const FeesGraphHeader = memo<FeesGraphHeaderProps>(function FeesGraphHead
       <Stat
         label={t('Total fees')}
         value0={t('Autocompounded')}
-        subValue0={formatLargeUsd(totalAutocompouned)}
+        subValue0={formatLargeUsd(totalAutocompounded)}
         value1={t('Pending')}
         subValue1={formatLargeUsd(totalPending)}
       />

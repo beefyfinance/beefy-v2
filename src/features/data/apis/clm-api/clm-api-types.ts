@@ -12,7 +12,12 @@ export type ApiClmHarvestPriceRow = {
   totalSupply: string;
 };
 
-export type ClmHarvestsResponse = ApiClmHarvestPriceRow[];
+export type ClmVaultHarvestsResponse = ApiClmHarvestPriceRow[];
+
+export type ClmVaultsHarvestsResponse = {
+  vaultAddress: string;
+  harvests: ApiClmHarvestPriceRow[];
+}[];
 
 export type ClmPendingRewardsResponse = {
   fees0: BigNumber;
@@ -21,10 +26,16 @@ export type ClmPendingRewardsResponse = {
 };
 
 export interface IClmApi {
-  getClmHarvests(
+  getHarvestsForVault(
     chainId: ChainEntity['id'],
     vaultAddress: VaultEntity['earnContractAddress']
-  ): Promise<ClmHarvestsResponse>;
+  ): Promise<ClmVaultHarvestsResponse>;
+
+  getHarvestsForVaultsSince(
+    chainId: ChainEntity['id'],
+    vaultAddresses: VaultEntity['earnContractAddress'][],
+    since: Date
+  ): Promise<ClmVaultsHarvestsResponse>;
 
   getClmPendingRewards(
     state: BeefyState,

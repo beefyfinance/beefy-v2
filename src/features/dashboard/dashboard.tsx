@@ -16,7 +16,6 @@ import { isMaybeDomain, isValidAddress } from '../../helpers/addresses';
 import { isFulfilledStatus, isRejectedStatus } from '../data/reducers/wallet/resolver-types';
 import { useTranslation } from 'react-i18next';
 import { useResolveDomain } from '../data/hooks/resolver';
-import { selectIsDashboardDataLoadedByAddress } from '../data/selectors/analytics';
 
 const useStyles = makeStyles(styles);
 
@@ -101,16 +100,13 @@ const DashboardForAddress = memo<DashboardForAddressProps>(function DashboardFor
   address,
   addressLabel,
 }) {
-  useInitDashboard(address);
+  const loading = useInitDashboard(address);
   const userVaults = useAppSelector(state => selectAddressDepositedVaultIds(state, address));
-  const dashboardDataAvilable = useAppSelector(state =>
-    selectIsDashboardDataLoadedByAddress(state, address)
-  );
 
   return (
     <DashboardContainer>
       <DepositSummary address={address} addressLabel={addressLabel} />
-      {!dashboardDataAvilable ? (
+      {loading ? (
         <TechLoader />
       ) : userVaults.length > 0 ? (
         <>

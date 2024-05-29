@@ -15,7 +15,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { valueOrThrow } from '../utils/selector-utils';
 
 export const selectIsBridgeConfigLoaded = (state: BeefyState) =>
-  state.ui.dataLoader.global.bridgeConfig.alreadyLoadedOnce;
+  state.ui.dataLoader.global.bridgeConfig.lastFulfilled !== undefined;
 
 export const selectShouldLoadBridgeConfig = (state: BeefyState) =>
   isInitialLoader(state.ui.dataLoader.global.bridgeConfig);

@@ -9,6 +9,7 @@ import {
 } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import {
+  selectUserClmHarvestTimelineByVaultId,
   selectIsAnalyticsLoadedByAddress,
   selectUserDepositedTimelineByVaultId,
 } from '../../features/data/selectors/analytics';
@@ -55,9 +56,26 @@ function mapStateToProps(
 
   let value: string, subValue: string | null, tooltip: ReactNode | null;
   if (isUserClmPnl(pnlData)) {
-    value = 'N/A';
+    const clmYield = selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress);
     subValue = null;
-    tooltip = null;
+
+    if (clmYield) {
+      value = formatLargeUsd(clmYield.totalUsd);
+      tooltip = (
+        <BasicTooltipContent
+          title={`${formatTokenDisplayCondensed(
+            clmYield.totals[0],
+            clmYield.tokens[0].decimals
+          )} (${formatLargeUsd(clmYield.totalsUsd[0])})/${formatTokenDisplayCondensed(
+            clmYield.totals[0],
+            clmYield.tokens[1].decimals
+          )} (${formatLargeUsd(clmYield.totalsUsd[0])})`}
+        />
+      );
+    } else {
+      value = '-';
+      tooltip = null;
+    }
   } else {
     const { totalYield, totalYieldUsd, tokenDecimals } = pnlData;
     value = formatTokenDisplayCondensed(totalYield, tokenDecimals);

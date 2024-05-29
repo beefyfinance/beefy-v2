@@ -258,7 +258,7 @@ export const selectHasBreakdownDataByOracleId = (
   oracleId: TokenEntity['oracleId'],
   chainId: ChainEntity['id']
 ) => {
-  const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
+  const isPricesLoaded = state.ui.dataLoader.global.prices.lastFulfilled !== undefined;
   const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
   const breakdown = selectLpBreakdownByOracleId(state, oracleId);
 

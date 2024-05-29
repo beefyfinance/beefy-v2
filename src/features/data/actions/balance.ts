@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { FetchAllBalancesResult } from '../apis/balance/balance-types';
 import { getBalanceApi } from '../apis/instances';
@@ -8,6 +8,7 @@ import {
   selectBoostUserBalanceInToken,
   selectGovVaultUserStakedBalanceInDepositToken,
   selectUserBalanceOfToken,
+  selectUserDepositedVaultIds,
 } from '../selectors/balance';
 import {
   selectAllVaultBoostIds,
@@ -15,7 +16,7 @@ import {
   selectBoostsByChainId,
 } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
-import { selectTokenByAddress } from '../selectors/tokens';
+import { selectCowcentratedVaultDepositTokens, selectTokenByAddress } from '../selectors/tokens';
 import {
   selectAllGovVaultsByChainId,
   selectAllVaultIds,
@@ -106,7 +107,11 @@ export const fetchBalanceAction = createAsyncThunk<
         if (isGovVault(vault)) {
           govVaults.push(vault);
         } else {
-          if (!isCowcentratedVault(vault)) {
+          if (isCowcentratedVault(vault)) {
+            Object.values(selectCowcentratedVaultDepositTokens(state, vault.id)).forEach(token =>
+              tokens.push(token)
+            );
+          } else {
             tokens.push(selectTokenByAddress(state, chain.id, vault.depositTokenAddress));
           }
           tokens.push(selectTokenByAddress(state, chain.id, vault.earnedTokenAddress));
@@ -140,11 +145,16 @@ export type RecalculateDepositedVaultsPayload = {
   vaultIds: VaultEntity['id'][];
 };
 
+export const depositedVaultsAddedAction = createAction<{
+  walletAddress: string;
+  vaultIds: VaultEntity['id'][];
+}>('balance/depositedVaultsAddedAction');
+
 export const recalculateDepositedVaultsAction = createAsyncThunk<
   RecalculateDepositedVaultsPayload,
   RecalculateDepositedVaultsParams,
   { state: BeefyState }
->('balance/recalculateDepositedVaultsAction', async ({ walletAddress }, { getState }) => {
+>('balance/recalculateDepositedVaultsAction', async ({ walletAddress }, { getState, dispatch }) => {
   const state = getState();
   const allVaultIds = selectAllVaultIds(state);
   const depositedIds: VaultEntity['id'][] = [];
@@ -198,6 +208,12 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
         depositedIds.push(vault.id);
       }
     }
+  }
+
+  const existing = selectUserDepositedVaultIds(state, walletAddress);
+  const added = depositedIds.filter(id => !existing.includes(id));
+  if (added.length) {
+    dispatch(depositedVaultsAddedAction({ walletAddress, vaultIds: added }));
   }
 
   return {

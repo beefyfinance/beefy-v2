@@ -34,7 +34,7 @@ export const selectMinterTotalSupply = (state: BeefyState, minterId: MinterEntit
 };
 
 export const selectAreMintersLoaded = (state: BeefyState) =>
-  state.ui.dataLoader.global.minters.alreadyLoadedOnce;
+  state.ui.dataLoader.global.minters.lastFulfilled !== undefined;
 
 export const selectShouldInitMinters = (state: BeefyState) =>
   isInitialLoader(state.ui.dataLoader.global.minters);

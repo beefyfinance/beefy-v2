@@ -17,16 +17,16 @@ export type VaultRewardsStatProps = {
 export const VaultRewardsStat = memo(connect(mapStateToProps)(VaultValueStat));
 
 function mapStateToProps(state: BeefyState, { vaultId, walletAddress }: VaultRewardsStatProps) {
-  const label = 'VaultStat-Claimable Rewards';
+  const label = 'VaultStat-Claimable-Rewards';
 
   const vault = selectVaultById(state, vaultId);
 
   const isLoaded =
-    state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
+    state.ui.dataLoader.global.prices.lastFulfilled !== undefined &&
     selectIsWalletKnown(state) &&
     walletAddress
       ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
-          .alreadyLoadedOnce
+          .lastFulfilled !== undefined
       : true;
 
   if (!isLoaded) {
