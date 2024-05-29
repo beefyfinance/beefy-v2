@@ -1,6 +1,11 @@
 import type { AxiosInstance } from 'axios';
 import axios from 'axios';
-import type { ClmHarvestsResponse, ClmPendingRewardsResponse, IClmApi } from './clm-api-types';
+import type {
+  ClmVaultHarvestsResponse,
+  ClmPendingRewardsResponse,
+  IClmApi,
+  ClmVaultsHarvestsResponse,
+} from './clm-api-types';
 import type { VaultEntity } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import { selectChainById } from '../../selectors/chains';
@@ -10,6 +15,7 @@ import { makeBatchRequest, viemToWeb3Abi, type Web3Call } from '../../../../help
 import type { BeefyState } from '../../../../redux-types';
 import BigNumber from 'bignumber.js';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
+import { getUnixTime } from 'date-fns';
 
 const ClmStrategyAbi = [
   {
@@ -56,12 +62,28 @@ export class ClmApi implements IClmApi {
     });
   }
 
-  public async getClmHarvests(
+  public async getHarvestsForVault(
     chainId: ChainEntity['id'],
     vaultAddress: VaultEntity['earnContractAddress']
-  ): Promise<ClmHarvestsResponse> {
-    const res = await this.api.get(
+  ): Promise<ClmVaultHarvestsResponse> {
+    const res = await this.api.get<ClmVaultHarvestsResponse>(
       `/v1/vault/${chainId}/${vaultAddress.toLocaleLowerCase()}/harvests`
+    );
+    return res.data;
+  }
+
+  public async getHarvestsForVaultsSince(
+    chainId: ChainEntity['id'],
+    vaultAddresses: VaultEntity['earnContractAddress'][],
+    since: Date
+  ): Promise<ClmVaultsHarvestsResponse> {
+    const res = await this.api.get<ClmVaultsHarvestsResponse>(
+      `http://127.0.0.1:4000/api/v1/vaults/${chainId}/harvests/${getUnixTime(since)}`,
+      {
+        params: new URLSearchParams(
+          vaultAddresses.map(addr => ['vaults', addr.toLocaleLowerCase()])
+        ),
+      }
     );
     return res.data;
   }

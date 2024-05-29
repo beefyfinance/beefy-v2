@@ -56,8 +56,7 @@ export function useSortedDashboardVaults(address: string) {
               }
               case 'yield': {
                 if (isUserClmPnl(vaultPnl)) {
-                  // TODO fix once we have yield for clm
-                  return vaultPnl.pnl.toNumber();
+                  return vaultPnl.totalCompoundedUsd.toNumber();
                 }
                 return vaultPnl.totalYieldUsd.toNumber();
               }

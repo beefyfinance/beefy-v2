@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useState, type FC } from 'react';
+import { type FC, memo, useEffect, useMemo, useState } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { useTranslation } from 'react-i18next';
@@ -17,38 +17,46 @@ import { selectHasDataToShowGraphByVaultId } from '../../../data/selectors/analy
 import { CLMOverviewGraph } from './components/OverviewGraph';
 import { useVaultPeriods } from './components/OverviewGraph/hooks';
 import { FeesFooter, OverviewFooter } from './components/Footers';
-import { fetchClmHarvests, fetchClmPendingRewards } from '../../../data/actions/clm-harvests';
 import { FeesGraphHeader } from './components/FeesGraphHeader';
+import {
+  fetchClmHarvestsForUserVault,
+  fetchClmPendingRewards,
+} from '../../../data/actions/analytics';
+import { selectWalletAddress } from '../../../data/selectors/wallet';
 import { CLMFeesGraph } from './components/FeesGraph';
 
 const useStyles = makeStyles(styles);
 
-interface CowcentratedPnlGraphProps {
+interface CowcentratedPnlGraphLoaderProps {
   vaultId: VaultEntity['id'];
   address?: string;
 }
 
-export const CowcentratedPnlGraphLoader = memo<CowcentratedPnlGraphProps>(
+export const CowcentratedPnlGraphLoader = memo<CowcentratedPnlGraphLoaderProps>(
   function CowcentratedPnlGraphLoader({ vaultId, address }) {
+    const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
     const haveBreakdownData = useAppSelector(state =>
       selectHasBreakdownDataByTokenAddress(state, vault.depositTokenAddress, vault.chainId)
     );
-
     const isContractDataLoaded = useAppSelector(state =>
       selectIsContractDataLoadedOnChain(state, vault.chainId)
     );
-
     const hasData = useAppSelector(state =>
-      selectHasDataToShowGraphByVaultId(state, vaultId, address)
+      selectHasDataToShowGraphByVaultId(state, vaultId, walletAddress)
+    );
+    const isAddressBookLoaded = useAppSelector(state =>
+      selectIsAddressBookLoaded(state, vault.chainId)
     );
 
-    const chainId = vault.chainId;
-    const isAddressBookLoaded = useAppSelector(state => selectIsAddressBookLoaded(state, chainId));
-
-    if (haveBreakdownData && isAddressBookLoaded && hasData && isContractDataLoaded) {
-      return <CowcentratedPnlGraph vaultId={vaultId} address={address} />;
+    if (
+      haveBreakdownData &&
+      isAddressBookLoaded &&
+      hasData &&
+      isContractDataLoaded &&
+      walletAddress
+    ) {
+      return <CowcentratedPnlGraph vaultId={vaultId} address={walletAddress} />;
     }
 
     return null;
@@ -58,6 +66,11 @@ export const CowcentratedPnlGraphLoader = memo<CowcentratedPnlGraphProps>(
 enum ChartEnum {
   Overview = 1,
   Fees,
+}
+
+interface CowcentratedPnlGraphProps {
+  vaultId: VaultEntity['id'];
+  address: string;
 }
 
 export const OverviewGraph = memo<CowcentratedPnlGraphProps>(function OverviewGraph({
@@ -89,9 +102,9 @@ export const FeesGraph = memo<CowcentratedPnlGraphProps>(function FeesGraph({ va
   return (
     <>
       <CardContent className={classes.content}>
-        <FeesGraphHeader vaultId={vaultId} />
+        <FeesGraphHeader vaultId={vaultId} address={address} />
         <div className={classes.graphContainer}>
-          <CLMFeesGraph vaultId={vaultId} period={period} />
+          <CLMFeesGraph vaultId={vaultId} period={period} address={address} />
         </div>
         <FeesFooter labels={labels} vaultId={vaultId} period={period} handlePeriod={setPeriod} />
       </CardContent>
@@ -106,6 +119,7 @@ const chartToComponent: Record<ChartEnum, FC<CowcentratedPnlGraphProps>> = {
 
 export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function CowcentratedPnlGraph({
   vaultId,
+  address,
 }) {
   const dispatch = useAppDispatch();
   const [stat, setStat] = useState<string>('Overview');
@@ -113,10 +127,9 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
   const classes = useStyles();
 
   useEffect(() => {
-    dispatch(fetchClmHarvests({ vaultId }));
-
+    dispatch(fetchClmHarvestsForUserVault({ vaultId, walletAddress: address }));
     dispatch(fetchClmPendingRewards({ vaultId }));
-  }, [dispatch, vaultId]);
+  }, [dispatch, vaultId, address]);
 
   const options = useMemo(() => {
     return {
@@ -141,7 +154,7 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
         <CardTitle title={t('Graph-PositionPerformance')} />
         <StatSwitcher stat={stat} options={options} onChange={setStat} />
       </CardHeader>
-      <GraphComponent vaultId={vaultId} />
+      <GraphComponent vaultId={vaultId} address={address} />
     </Card>
   );
 });

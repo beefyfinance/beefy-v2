@@ -81,7 +81,7 @@ export const usePnLChartData = (
   }, [underlyingStatus]);
 
   const chartData = useMemo(() => {
-    if (underlyingStatus === 'fulfilled') {
+    if (underlyingStatus === 'fulfilled' && vaultTimeline && underlyingToUsd) {
       const filteredUnderlyingToUsd = underlyingToUsd.filter(price =>
         isAfter(price.date, vaultLastDeposit)
       );

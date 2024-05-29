@@ -14,7 +14,6 @@ import { selectVaultById } from '../../../../../../../data/selectors/vaults';
 import { VaultRewardsStat } from '../../../../../../../../components/VaultStats/VaultRewardsStat';
 import { selectUserRewardsByVaultId } from '../../../../../../../data/selectors/balance';
 import { selectIsVaultPreStakedOrBoosted } from '../../../../../../../data/selectors/boosts';
-import clsx from 'clsx';
 import { selectVaultPnl } from '../../../../../../../data/selectors/analytics';
 
 const useStyles = makeStyles(styles);
@@ -29,7 +28,7 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
     const classes = useStyles();
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
-    const isVaultBoostedOrPrestake = useAppSelector(state =>
+    const _isVaultBoostedOrPrestake = useAppSelector(state =>
       selectIsVaultPreStakedOrBoosted(state, vaultId)
     );
 
@@ -84,9 +83,7 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
           <VaultYearlyStat
             className={classes.statMobile}
             contentClassName={classes.valueContainer}
-            triggerClassName={clsx(classes.value, {
-              [classes.valueBoosted]: isVaultBoostedOrPrestake,
-            })}
+            triggerClassName={classes.value}
             labelClassName={classes.label}
             vaultId={vaultId}
           />

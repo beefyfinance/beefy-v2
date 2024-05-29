@@ -20,7 +20,7 @@ import { explorerAddressUrl } from '../../../helpers/url';
 import { entries, keys } from '../../../helpers/object';
 
 export const selectIsTreasuryLoaded = (state: BeefyState) =>
-  state.ui.dataLoader.global.treasury.alreadyLoadedOnce;
+  state.ui.dataLoader.global.treasury.lastFulfilled !== undefined;
 
 export const selectShouldInitTreasury = (state: BeefyState) =>
   isInitialLoader(state.ui.dataLoader.global.treasury);

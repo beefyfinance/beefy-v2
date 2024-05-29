@@ -13,7 +13,7 @@ import { BIG_ZERO } from './big-number';
 import { roundDownMinutes } from './date';
 import { samplingPeriodMs } from './sampling-period';
 import { timeBucketToSamplingPeriod } from './time-bucket';
-import type { Harvest } from '../features/data/reducers/clm-harvests';
+import type { ClmHarvestsTimeline } from '../features/data/actions/analytics';
 
 // simulate a join between the 3 price series locally
 export interface PriceTsRow {
@@ -239,125 +239,42 @@ export function getClmInvestorTimeserie(
 
 export function getClmInvestorFeesTimeserie(
   timeBucket: TimeBucketType,
-  timeline: CLMTimelineAnalyticsEntity[],
-  harvests: Harvest[],
-  firstDate: Date,
-  currentPriceToken0: BigNumber,
-  currentPriceToken1: BigNumber
-): { t: number; v0: number; v1: number }[] {
-  // so, first we need to generate datetime keys for each row
-  const { bucketSize: bucketSizeStr, timeRange: timeRangeStr } =
-    timeBucketToSamplingPeriod(timeBucket);
-  const bucketSize = samplingPeriodMs[bucketSizeStr];
+  timeline: ClmHarvestsTimeline,
+  _currentPriceToken0: BigNumber,
+  _currentPriceToken1: BigNumber
+): { t: number; v0: number; v1: number }[] | undefined {
+  const { timeRange: timeRangeStr } = timeBucketToSamplingPeriod(timeBucket);
   const timeRange = samplingPeriodMs[timeRangeStr];
+  const now = new Date();
+  const firstHarvest = timeline.harvests[0];
+  const startDate = max([firstHarvest.timestamp, new Date(now.getTime() - timeRange)]);
+  const firstHarvestIdx = timeline.harvests.findIndex(h => isAfter(h.timestamp, startDate));
+  const lastHarvestIdx = timeline.harvests.length - 1;
+  const lastHarvest = timeline.harvests[lastHarvestIdx];
+  if (firstHarvestIdx === -1) {
+    // no harvests in the requested bucket, return last point so there is at least one point on graph
+    return [
+      {
+        t: lastHarvest.timestamp.getTime(),
+        v0: lastHarvest.cumulativeAmountsUsd[0].toNumber(),
+        v1: lastHarvest.cumulativeAmountsUsd[1].toNumber(),
+      },
+    ];
+  }
+  const harvestsInBucket = timeline.harvests.slice(firstHarvestIdx, lastHarvestIdx + 1);
+  const priorHarvest = timeline.harvests[firstHarvestIdx - 1];
+  const cumulativeAmountsUsd = priorHarvest
+    ? [...priorHarvest.cumulativeAmountsUsd]
+    : timeline.tokens.map(() => BIG_ZERO);
 
-  const lastDate = new Date(Math.floor(new Date().getTime() / bucketSize) * bucketSize);
-  const firstDate1 = new Date(lastDate.getTime() - timeRange);
-
-  const fixedDate = max([firstDate, firstDate1]);
-
-  const oneDayAgo = subDays(new Date(), 1);
-
-  // Use the current price to fill in any missing prices in the past 24 hours (otherwise set to 0)
-  const sortedHarvests = sortBy(harvests, 'date').map(
-    ({ date, token0ToUsd, token1ToUsd, ...rest }): Harvest => ({
-      ...rest,
-      date,
-      token0ToUsd: token0ToUsd ?? (isBefore(date, oneDayAgo) ? BIG_ZERO : currentPriceToken0),
-      token1ToUsd: token1ToUsd ?? (isBefore(date, oneDayAgo) ? BIG_ZERO : currentPriceToken1),
-    })
-  );
-
-  let balanceIdx = 0;
-  let harvestIdx = 0;
-  let currentDate = fixedDate;
-  let culmutativeFees0 = BIG_ZERO;
-  let culmutativeFees1 = BIG_ZERO;
-
-  const pricesTs: { t: number; v0: number; v1: number }[] = [];
-
-  //We should be adding precise initial ppfs and price as first data point
-  if (isEqual(timeline[0].datetime, fixedDate)) {
-    const { shareBalance, token1ToUsd, token0ToUsd } = timeline[0];
-
-    const { totalSupply, compoundedAmount0, compoundedAmount1 } = sortedHarvests[harvestIdx];
-
-    const token0HarvestedRewardsToUsd = shareBalance
-      .dividedBy(totalSupply)
-      .times(compoundedAmount0)
-      .times(token0ToUsd);
-
-    const token1HarvestedRewardsToUsd = culmutativeFees1.plus(
-      shareBalance.dividedBy(totalSupply).times(compoundedAmount1).times(token1ToUsd)
-    );
-
-    pricesTs.push({
-      //return date on seconds
-      t: roundDownMinutes(timeline[0].datetime).getTime(),
-      v0: token0HarvestedRewardsToUsd.toNumber(),
-      v1: token1HarvestedRewardsToUsd.toNumber(),
+  return harvestsInBucket.map(harvest => {
+    harvest.amountsUsd.forEach((amount, i) => {
+      cumulativeAmountsUsd[i] = cumulativeAmountsUsd[i].plus(amount);
     });
-
-    culmutativeFees0 = token0HarvestedRewardsToUsd;
-    culmutativeFees1 = token1HarvestedRewardsToUsd;
-
-    currentDate = new Date(currentDate.getTime() + bucketSize);
-  }
-
-  // Need at least one row in each series to work from
-  if (sortedHarvests.length) {
-    while (currentDate <= lastDate) {
-      // add a row for each date
-      // find the corresponding balance row
-      while (
-        balanceIdx < timeline.length - 1 &&
-        isAfter(currentDate, timeline[balanceIdx + 1].datetime)
-      ) {
-        balanceIdx++;
-      }
-
-      // find the corresponding underlying row
-      while (
-        harvestIdx < sortedHarvests.length - 1 &&
-        isAfter(currentDate, sortedHarvests[harvestIdx + 1].date)
-      ) {
-        harvestIdx++;
-      }
-
-      // now we have the correct rows for this date
-      const shareBalance = timeline[balanceIdx].shareBalance;
-      if (shareBalance && !shareBalance.isEqualTo(BIG_ZERO)) {
-        // harvest
-        const { totalSupply, token0ToUsd, token1ToUsd, compoundedAmount0, compoundedAmount1 } =
-          sortedHarvests[harvestIdx];
-
-        const token0HarvestedRewardsToUsd = culmutativeFees0.plus(
-          timeline[balanceIdx].shareBalance
-            .dividedBy(totalSupply)
-            .times(compoundedAmount0)
-            .times(token0ToUsd)
-        );
-        const token1HarvestedRewardsToUsd = culmutativeFees1.plus(
-          timeline[balanceIdx].shareBalance
-            .dividedBy(totalSupply)
-            .times(compoundedAmount1)
-            .times(token1ToUsd)
-        );
-
-        pricesTs.push({
-          //return date on seconds
-          t: currentDate.getTime(),
-          v0: token0HarvestedRewardsToUsd.toNumber(),
-          v1: token1HarvestedRewardsToUsd.toNumber(),
-        });
-
-        culmutativeFees0 = token0HarvestedRewardsToUsd;
-        culmutativeFees1 = token1HarvestedRewardsToUsd;
-      }
-
-      currentDate = new Date(currentDate.getTime() + bucketSize);
-    }
-  }
-
-  return pricesTs;
+    return {
+      t: harvest.timestamp.getTime(),
+      v0: cumulativeAmountsUsd[0].toNumber(),
+      v1: cumulativeAmountsUsd[1].toNumber(),
+    };
+  });
 }

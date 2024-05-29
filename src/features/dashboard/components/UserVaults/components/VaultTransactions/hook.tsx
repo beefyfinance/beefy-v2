@@ -39,6 +39,8 @@ export function useSortedTransactionHistory(
 
   // Replace nulls with current price or 0
   const vaultTimelineFixed = useMemo(() => {
+    if (!vaultTimeline) return [];
+
     const oneDayAgo = subDays(new Date(), 1);
     return vaultTimeline.map((row: VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity) => {
       if (isVaultTimelineAnalyticsEntity(row) && !row.underlyingToUsdPrice) {

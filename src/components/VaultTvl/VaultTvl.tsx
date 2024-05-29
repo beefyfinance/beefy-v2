@@ -22,8 +22,8 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
   const label = 'VaultStat-TVL';
   const vault = selectVaultById(state, vaultId);
   const isLoaded =
-    state.ui.dataLoader.byChainId[vault.chainId]?.contractData.alreadyLoadedOnce &&
-    state.ui.dataLoader.global.prices.alreadyLoadedOnce;
+    state.ui.dataLoader.byChainId[vault.chainId]?.contractData.lastFulfilled !== undefined &&
+    state.ui.dataLoader.global.prices.lastFulfilled !== undefined;
 
   if (!isLoaded) {
     return {

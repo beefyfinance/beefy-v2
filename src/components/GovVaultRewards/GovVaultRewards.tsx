@@ -26,11 +26,11 @@ const _GovVaultRewards = connect((state: BeefyState, { vaultId }: { vaultId: Vau
   const blurred = selectIsBalanceHidden(state);
   const walletAddress = selectWalletAddress(state);
   const isLoaded =
-    state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
+    state.ui.dataLoader.global.prices.lastFulfilled !== undefined &&
     selectIsWalletKnown(state) &&
     walletAddress
       ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
-          .alreadyLoadedOnce
+          .lastFulfilled !== undefined
       : true;
   const hasRewards = rewardsEarnedUsd.gt(0);
   return {

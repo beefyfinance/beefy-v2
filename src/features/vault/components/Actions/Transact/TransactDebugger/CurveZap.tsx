@@ -56,11 +56,11 @@ const ZapLoader = memo<ZapLoaderProps>(function ZapLoader({ vault, zap }) {
   const store = useAppStore();
   const swapLoaded = useAppSelector(
     state =>
-      state.ui.dataLoader.global.zapAggregatorTokenSupport?.alreadyLoadedOnce === true &&
-      state.ui.dataLoader.global.zapAmms?.alreadyLoadedOnce === true &&
-      state.ui.dataLoader.global.zapConfigs?.alreadyLoadedOnce === true &&
-      state.ui.dataLoader.global.zapSwapAggregators?.alreadyLoadedOnce === true &&
-      state.ui.dataLoader.global.addressBook?.alreadyLoadedOnce === true
+      state.ui.dataLoader.global.zapAggregatorTokenSupport?.lastFulfilled !== undefined &&
+      state.ui.dataLoader.global.zapAmms?.lastFulfilled !== undefined &&
+      state.ui.dataLoader.global.zapConfigs?.lastFulfilled !== undefined &&
+      state.ui.dataLoader.global.zapSwapAggregators?.lastFulfilled !== undefined &&
+      state.ui.dataLoader.global.addressBook?.lastFulfilled !== undefined
   );
   const tokens = useAppSelector(state =>
     uniqBy(

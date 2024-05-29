@@ -7,7 +7,7 @@ import type { ChainEntity } from '../entities/chain';
 import { valueOrThrow } from '../utils/selector-utils';
 
 export const selectIsOnRampLoaded = (state: BeefyState) =>
-  state.ui.dataLoader.global.onRamp.alreadyLoadedOnce;
+  state.ui.dataLoader.global.onRamp.lastFulfilled !== undefined;
 
 export const selectShouldInitOnRamp = (state: BeefyState) =>
   isInitialLoader(state.ui.dataLoader.global.onRamp);

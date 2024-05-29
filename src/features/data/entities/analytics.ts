@@ -70,14 +70,16 @@ export type CLMTimelineAnalyticsEntity = CLMTimelineAnalyticsEntityWithoutVaultI
   vaultId: string;
 };
 
+export type AnyTimelineAnalyticsEntity = VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity;
+
 export function isVaultTimelineAnalyticsEntity(
-  entity: VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity
+  entity: AnyTimelineAnalyticsEntity
 ): entity is VaultTimelineAnalyticsEntity {
   return entity.type === 'standard';
 }
 
 export function isCLMTimelineAnalyticsEntity(
-  entity: VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity
+  entity: AnyTimelineAnalyticsEntity
 ): entity is CLMTimelineAnalyticsEntity {
   return entity.type === 'cowcentrated';
 }

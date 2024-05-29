@@ -41,6 +41,11 @@ export type UserClmPnl = {
   pnlPercentage: BigNumber;
   hold: BigNumber;
   holdDiff: BigNumber;
+  total0Compounded: BigNumber;
+  total1Compounded: BigNumber;
+  total0CompoundedUsd: BigNumber;
+  total1CompoundedUsd: BigNumber;
+  totalCompoundedUsd: BigNumber;
 };
 
 export type UserVaultPnl = UserStandardPnl | UserGovPnl | UserClmPnl;

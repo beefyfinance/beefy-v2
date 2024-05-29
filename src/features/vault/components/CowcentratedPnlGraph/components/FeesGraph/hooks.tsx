@@ -4,16 +4,13 @@ import type { TimeBucketType } from '../../../../../data/apis/analytics/analytic
 import type { VaultEntity } from '../../../../../data/entities/vault';
 import {
   selectLastVaultDepositStart,
-  selectUserDepositedTimelineByVaultId,
+  selectUserClmHarvestTimelineByVaultId,
 } from '../../../../../data/selectors/analytics';
 import { selectCowcentratedVaultDepositTokensWithPrices } from '../../../../../data/selectors/tokens';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet';
-import { eachDayOfInterval, isAfter } from 'date-fns';
+import { eachDayOfInterval } from 'date-fns';
 import { maxBy, minBy } from 'lodash';
 import { getClmInvestorFeesTimeserie } from '../../../../../../helpers/timeserie';
-import type { CLMTimelineAnalyticsEntity } from '../../../../../data/entities/analytics';
-import { selectClmHarvestsByVaultAddress } from '../../../../../data/selectors/clm-harvests';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], minUsd: 0, maxUsd: 0 };
@@ -24,51 +21,33 @@ export const useFeesChartData = (
   address?: string
 ) => {
   const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
-
-  const vaultTimeline = useAppSelector(state =>
-    selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress)
+  const userHarvestTimeline = useAppSelector(state =>
+    selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress)
   );
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
-  const vaultLastDeposit = useAppSelector(state =>
-    selectLastVaultDepositStart(state, vaultId, walletAddress)
-  );
-
-  const harvests = useAppSelector(state =>
-    selectClmHarvestsByVaultAddress(state, vault.chainId, vault.earnContractAddress)
-  );
-
+  const isLoading = !userHarvestTimeline;
   const { token0, token1 } = useAppSelector(state =>
     selectCowcentratedVaultDepositTokensWithPrices(state, vaultId)
   );
 
-  const isLoading = useMemo(() => {
-    return !harvests;
-  }, [harvests]);
-
   const chartData = useMemo(() => {
-    if (harvests && harvests!.length > 0) {
-      const filteredHarvests = harvests.filter(harvest => isAfter(harvest.date, vaultLastDeposit));
-
+    if (userHarvestTimeline && userHarvestTimeline.harvests.length > 0) {
       const data = getClmInvestorFeesTimeserie(
         timebucket,
-        vaultTimeline as CLMTimelineAnalyticsEntity[],
-        filteredHarvests,
-        vaultLastDeposit,
+        userHarvestTimeline,
         token0.price,
         token1.price
       );
 
-      const minV0Usd = minBy(data, 'v0')?.v0 || 0;
-      const minV1Usd = minBy(data, 'v1')?.v1 || 0;
-
-      const maxV0Usd = maxBy(data, 'v0')?.v0 || 0;
-      const maxV1Usd = maxBy(data, 'v1')?.v1 || 0;
-
-      const minUsd = minV0Usd < minV1Usd ? minV0Usd : minV1Usd;
-      const maxUsd = maxV0Usd > maxV1Usd ? maxV0Usd : maxV1Usd;
-
       if (data && data.length > 0) {
+        const minV0Usd = minBy(data, 'v0')?.v0 || 0;
+        const minV1Usd = minBy(data, 'v1')?.v1 || 0;
+
+        const maxV0Usd = maxBy(data, 'v0')?.v0 || 0;
+        const maxV1Usd = maxBy(data, 'v1')?.v1 || 0;
+
+        const minUsd = minV0Usd < minV1Usd ? minV0Usd : minV1Usd;
+        const maxUsd = maxV0Usd > maxV1Usd ? maxV0Usd : maxV1Usd;
+
         return { data, minUsd, maxUsd };
       }
     }
@@ -76,7 +55,7 @@ export const useFeesChartData = (
     // This save us from re-rendering when data is loading
     // We need to make sure this object is not modified elsewhere
     return NO_CHART_DATA;
-  }, [harvests, timebucket, token0.price, token1.price, vaultLastDeposit, vaultTimeline]);
+  }, [userHarvestTimeline, timebucket, token0.price, token1.price]);
 
   return { chartData, isLoading };
 };

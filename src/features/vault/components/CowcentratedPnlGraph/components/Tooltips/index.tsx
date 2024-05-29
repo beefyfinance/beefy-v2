@@ -71,24 +71,23 @@ export const OverviewTooltip = memo<GraphTooltipProps>(function OverviewTooltip(
 });
 
 export const FeesTooltip = memo<GraphTooltipProps & { token1Symbol: string; token0Symbol: string }>(
-  function OverviewTooltip({ active, payload, token1Symbol, token0Symbol }) {
+  function FeesTooltip({ active, payload, token1Symbol, token0Symbol }) {
     const classes = useStyles();
+    if (!active || !payload || !payload.length) {
+      return null;
+    }
 
-    const [valueLine] = payload!;
-
-    if (!active) {
+    const valueLine = payload[0];
+    if (!valueLine) {
       return null;
     }
 
     const { t: timestamp, v0, v1 } = valueLine.payload;
-
-    const value = valueLine?.value;
+    const value = valueLine.value;
 
     return (
       <div className={classes.content}>
-        <div className={classes.timestamp}>
-          {format(fromUnixTime(timestamp), 'MMM d, yyyy h:mm a')}
-        </div>
+        <div className={classes.timestamp}>{format(timestamp, 'MMM d, yyyy h:mm a')}</div>
         <div className={classes.itemContainer}>
           <div className={classes.label}>{token0Symbol}:</div>
           {value ? <div className={classes.value}>{formatUsd(v0)}</div> : null}
