@@ -125,8 +125,12 @@ export const selectIsClmHarvestsForUserPending = (state: BeefyState, walletAddre
   return isPending(state.ui.dataLoader.byAddress[walletAddress]?.global.clmHarvests);
 };
 
-export const selectIsDepositTimelineForUserPending = (state: BeefyState, walletAddress: string) => {
+export const selectIsWalletTimelineForUserPending = (state: BeefyState, walletAddress: string) => {
   return isPending(state.ui.dataLoader.byAddress[walletAddress]?.global.timeline);
+};
+
+export const selectIsWalletTimelineForUserRecent = (state: BeefyState, walletAddress: string) => {
+  return isRecent(state.ui.dataLoader.byAddress[walletAddress]?.global.timeline);
 };
 
 export const selectIsGlobalAddressBookAvailable = (state: BeefyState) =>

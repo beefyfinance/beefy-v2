@@ -45,7 +45,7 @@ import {
   selectDashboardShouldLoadBalanceForChainUser,
   selectIsClmHarvestsForUserChainPending,
   selectIsClmHarvestsForUserPending,
-  selectIsDepositTimelineForUserPending,
+  selectIsWalletTimelineForUserPending,
 } from '../selectors/data-loader';
 import { selectAllChainIds } from '../selectors/chains';
 import { fetchAllBalanceAction } from './balance';
@@ -269,7 +269,7 @@ export const fetchWalletTimeline = createAsyncThunk<
   },
   {
     condition: ({ walletAddress }, { getState }) => {
-      return !selectIsDepositTimelineForUserPending(getState(), walletAddress);
+      return !selectIsWalletTimelineForUserPending(getState(), walletAddress);
     },
   }
 );
@@ -590,7 +590,10 @@ export const recalculateClmHarvestsForUserVaultId = createAsyncThunk<
     let timelineIdx = firstDepositIndex;
     for (const harvest of harvestsAfterDeposit) {
       let currentDeposit = timeline[timelineIdx];
-      if (timelineIdx < lastTimelineIdx && isAfter(harvest.timestamp, currentDeposit.datetime)) {
+      if (
+        timelineIdx < lastTimelineIdx &&
+        isAfter(harvest.timestamp, timeline[timelineIdx + 1].datetime)
+      ) {
         currentDeposit = timeline[++timelineIdx];
       }
 

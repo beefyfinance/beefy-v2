@@ -53,12 +53,14 @@ const ClmStrategyAbi = [
   },
 ] as const satisfies Abi;
 
+const CLM_API = import.meta.env.VITE_CLM_API || 'https://clm-api.beefy.finance';
+
 export class ClmApi implements IClmApi {
   public api: AxiosInstance;
 
   constructor() {
     this.api = axios.create({
-      baseURL: 'https://clm-api.beefy.finance/api/',
+      baseURL: CLM_API,
     });
   }
 
@@ -67,7 +69,7 @@ export class ClmApi implements IClmApi {
     vaultAddress: VaultEntity['earnContractAddress']
   ): Promise<ClmVaultHarvestsResponse> {
     const res = await this.api.get<ClmVaultHarvestsResponse>(
-      `/v1/vault/${chainId}/${vaultAddress.toLocaleLowerCase()}/harvests`
+      `/api/v1/vault/${chainId}/${vaultAddress.toLocaleLowerCase()}/harvests`
     );
     return res.data;
   }
@@ -78,7 +80,7 @@ export class ClmApi implements IClmApi {
     since: Date
   ): Promise<ClmVaultsHarvestsResponse> {
     const res = await this.api.get<ClmVaultsHarvestsResponse>(
-      `http://127.0.0.1:4000/api/v1/vaults/${chainId}/harvests/${getUnixTime(since)}`,
+      `/api/v1/vaults/${chainId}/harvests/${getUnixTime(since)}`,
       {
         params: new URLSearchParams(
           vaultAddresses.map(addr => ['vaults', addr.toLocaleLowerCase()])
