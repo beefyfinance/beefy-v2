@@ -16,4 +16,8 @@ export const styles = (theme: Theme) => ({
   buttonText: {
     ...theme.typography['body-sm-med'],
   },
+  select: {
+    width: '100%',
+    backgroundColor: theme.palette.background.contentPrimary,
+  },
 });

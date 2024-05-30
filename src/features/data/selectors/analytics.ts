@@ -3,8 +3,17 @@ import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import { ClmPnl, PnL } from '../../../helpers/pnl';
 import type { BeefyState } from '../../../redux-types';
 import type { TimeBucketType } from '../apis/analytics/analytics-types';
-import { isCowcentratedVault, isGovVault, type VaultEntity } from '../entities/vault';
 import {
+  isCowcentratedVault,
+  isGovVault,
+  isStandardVault,
+  type VaultCowcentrated,
+  type VaultEntity,
+  type VaultGov,
+  type VaultStandard,
+} from '../entities/vault';
+import {
+  selectCowcentratedVaultDepositTokens,
   selectCowcentratedVaultDepositTokensWithPrices,
   selectLpBreakdownByTokenAddress,
   selectTokenByAddress,
@@ -14,10 +23,11 @@ import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import {
   selectUserDepositedVaultIds,
   selectUserLpBreakdownBalance,
+  selectUserRewardsByVaultId,
   selectUserVaultBalanceInShareToken,
 } from './balance';
 import { selectWalletAddress } from './wallet';
-import { selectIsConfigAvailable } from './data-loader';
+import { selectIsConfigAvailable, selectIsUserBalanceAvailable } from './data-loader';
 import type { AnalyticsBucketData, AnalyticsState } from '../reducers/analytics';
 import type {
   AnyTimelineAnalyticsEntity,
@@ -25,9 +35,18 @@ import type {
   VaultTimelineAnalyticsEntity,
 } from '../entities/analytics';
 import { createSelector } from '@reduxjs/toolkit';
-import type { UserClmPnl, UserGovPnl, UserStandardPnl, UserVaultPnl } from './analytics-types';
+import {
+  isUserClmPnl,
+  isUserGovPnl,
+  isUserStandardPnl,
+  type UserClmPnl,
+  type UserGovPnl,
+  type UserStandardPnl,
+  type UserVaultPnl,
+} from './analytics-types';
 import { selectFeesByVaultId } from './fees';
 import BigNumber from 'bignumber.js';
+import { pick } from 'lodash-es';
 
 export const selectUserAnalytics = createSelector(
   (state: BeefyState, address?: string) => address || selectWalletAddress(state),
@@ -448,3 +467,95 @@ export const selectClmAutocompoundedPendingFeesByVaultId = (
     token1Decimals,
   };
 };
+
+export enum DashboardDataStatus {
+  Loading,
+  Missing,
+  Available,
+}
+
+function selectDashboardYieldGovData(
+  state: BeefyState,
+  walletAddress: string,
+  vault: VaultGov,
+  _pnl: UserGovPnl
+) {
+  const { totalRewardsUsd } = selectUserRewardsByVaultId(state, vault.id, walletAddress);
+  return { type: vault.type, totalRewardsUsd, hasRewards: totalRewardsUsd.gt(BIG_ZERO) };
+}
+
+function selectDashboardYieldStandardData(
+  state: BeefyState,
+  walletAddress: string,
+  vault: VaultStandard,
+  pnl: UserStandardPnl
+) {
+  if (!selectIsAnalyticsLoadedByAddress(state, walletAddress)) {
+    return DashboardDataStatus.Loading;
+  }
+
+  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vault.id, walletAddress);
+  if (!vaultTimeline) {
+    return DashboardDataStatus.Missing;
+  }
+
+  const { rewards, totalRewardsUsd } = selectUserRewardsByVaultId(state, vault.id, walletAddress);
+  const { totalYield, totalYieldUsd, tokenDecimals } = pnl;
+  return {
+    type: vault.type,
+    totalRewardsUsd,
+    hasRewards: rewards.length > 0,
+    totalYield,
+    totalYieldUsd,
+    tokenDecimals,
+  };
+}
+
+function selectDashboardYieldCowcentratedData(
+  state: BeefyState,
+  walletAddress: string,
+  vault: VaultCowcentrated,
+  pnl: UserClmPnl
+) {
+  if (!selectIsAnalyticsLoadedByAddress(state, walletAddress)) {
+    return DashboardDataStatus.Loading;
+  }
+
+  const { rewards, totalRewardsUsd } = selectUserRewardsByVaultId(state, vault.id, walletAddress);
+  const tokens = selectCowcentratedVaultDepositTokens(state, vault.id);
+  return {
+    type: vault.type,
+    ...tokens,
+    ...pick(pnl, [
+      'total0Compounded',
+      'total1Compounded',
+      'total0CompoundedUsd',
+      'total1CompoundedUsd',
+      'totalCompoundedUsd',
+    ]),
+    totalRewardsUsd,
+    hasRewards: rewards.length > 0,
+  };
+}
+
+export function selectDashboardYieldVaultData(
+  state: BeefyState,
+  walletAddress: string,
+  vault: VaultEntity,
+  pnl: UserVaultPnl
+) {
+  // Common load check
+  if (!selectIsUserBalanceAvailable(state, walletAddress)) {
+    return DashboardDataStatus.Loading;
+  }
+
+  if (isGovVault(vault) && isUserGovPnl(pnl)) {
+    return selectDashboardYieldGovData(state, walletAddress, vault, pnl);
+  } else if (isStandardVault(vault) && isUserStandardPnl(pnl)) {
+    return selectDashboardYieldStandardData(state, walletAddress, vault, pnl);
+  } else if (isCowcentratedVault(vault) && isUserClmPnl(pnl)) {
+    return selectDashboardYieldCowcentratedData(state, walletAddress, vault, pnl);
+  }
+
+  throw new Error('Invalid vault/pnl type');
+}
