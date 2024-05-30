@@ -163,7 +163,7 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
 export const DashboardCowcentratedPnLGraph = memo<CowcentratedPnlGraphProps>(
   function DashboardCowcentratedPnLGraph({ vaultId, address }) {
     const classes = useStyles();
-    const labels = useVaultPeriodsFeesGraph(vaultId, address);
+    const labels = useVaultPeriodsOverviewGraph(vaultId, address);
     const [period, setPeriod] = useState<number>(labels.length - 1);
 
     return (
@@ -184,7 +184,7 @@ export const DashboardCowcentratedPnLGraph = memo<CowcentratedPnlGraphProps>(
 export const DashboardCowcentratedFeesGraph = memo<CowcentratedPnlGraphProps>(
   function DashboardCowcentratedFeesGraph({ vaultId, address }) {
     const classes = useStyles();
-    const labels = useVaultPeriodsOverviewGraph(vaultId, address);
+    const labels = useVaultPeriodsFeesGraph(vaultId, address);
     const [period, setPeriod] = useState<number>(labels.length - 1);
 
     return (
