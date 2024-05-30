@@ -9,9 +9,10 @@ import {
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import {
   selectIsConfigAvailable,
-  selectIsDepositTimelineForUserPending,
+  selectIsWalletTimelineForUserPending,
   selectIsGlobalAddressBookAvailable,
   selectIsUserBalanceAvailable,
+  selectIsWalletTimelineForUserRecent,
 } from '../selectors/data-loader';
 import { depositedVaultsAddedAction, recalculateDepositedVaultsAction } from '../actions/balance';
 import { createWalletDebouncer } from '../../../helpers/middleware';
@@ -20,7 +21,7 @@ import { selectIsVaultGov } from '../selectors/vaults';
 
 const analyticsListener = createListenerMiddleware<BeefyState>();
 
-const timelineDebouncer = createWalletDebouncer(500);
+const timelineDebouncer = createWalletDebouncer(100);
 
 /**
  * Fetch the user's wallet timeline after we detect a new vault with a deposit
@@ -30,10 +31,15 @@ analyticsListener.startListening({
   effect: async (action, { dispatch, getState, delay, condition }) => {
     const state = getState();
     const { walletAddress, vaultIds } = action.payload;
-    if (selectIsDepositTimelineForUserPending(state, walletAddress)) {
+    // Skip if already pending or fetched recently
+    if (
+      selectIsWalletTimelineForUserPending(state, walletAddress) ||
+      selectIsWalletTimelineForUserRecent(state, walletAddress)
+    ) {
       return;
     }
 
+    // Only if new standard or clm vault that we don't have timeline data for
     const missingVaultIds = vaultIds.filter(
       v =>
         !selectIsVaultGov(state, v) &&
@@ -44,7 +50,7 @@ analyticsListener.startListening({
       return;
     }
 
-    // Wait for needed data
+    // Make sure data that fetchWalletTimeline needs is available
     await condition(
       (_, currentState) =>
         selectIsConfigAvailable(currentState) &&
@@ -52,6 +58,7 @@ analyticsListener.startListening({
         selectIsUserBalanceAvailable(currentState, walletAddress)
     );
 
+    // Debounce the timeline fetch for the specified user
     if (await timelineDebouncer(walletAddress, delay)) {
       return;
     }
