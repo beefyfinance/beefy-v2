@@ -78,7 +78,7 @@ export class ClmApi implements IClmApi {
     since: Date
   ): Promise<ClmVaultsHarvestsResponse> {
     const res = await this.api.get<ClmVaultsHarvestsResponse>(
-      `http://127.0.0.1:4000/api/v1/vaults/${chainId}/harvests/${getUnixTime(since)}`,
+      `/v1/vaults/${chainId}/harvests/${getUnixTime(since)}`,
       {
         params: new URLSearchParams(
           vaultAddresses.map(addr => ['vaults', addr.toLocaleLowerCase()])
