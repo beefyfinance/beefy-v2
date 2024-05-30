@@ -1,7 +1,6 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { format, fromUnixTime } from 'date-fns';
+import { format } from 'date-fns';
 import type { TooltipProps } from 'recharts';
 import { formatUsd } from '../../../../../../helpers/format';
 import { makeStyles, type Theme } from '@material-ui/core';
@@ -59,9 +58,7 @@ export const OverviewTooltip = memo<GraphTooltipProps>(function OverviewTooltip(
 
   return (
     <div className={classes.content}>
-      <div className={classes.timestamp}>
-        {format(fromUnixTime(timestamp), 'MMM d, yyyy h:mm a')}
-      </div>
+      <div className={classes.timestamp}>{format(timestamp, 'MMM d, yyyy h:mm a')}</div>
       <div className={classes.itemContainer}>
         <div className={classes.label}>{t('Graph-cowcentrated-overview-tooltip')}:</div>
         {value ? <div className={classes.value}>{formatUsd(value)}</div> : null}
