@@ -1,5 +1,5 @@
 import { createCachedSelector } from 're-reselect';
-import { BIG_ZERO } from '../../../helpers/big-number';
+import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import { ClmPnl, PnL } from '../../../helpers/pnl';
 import type { BeefyState } from '../../../redux-types';
 import type { TimeBucketType } from '../apis/analytics/analytics-types';
@@ -26,6 +26,8 @@ import type {
 } from '../entities/analytics';
 import { createSelector } from '@reduxjs/toolkit';
 import type { UserClmPnl, UserGovPnl, UserStandardPnl, UserVaultPnl } from './analytics-types';
+import { selectFeesByVaultId } from './fees';
+import BigNumber from 'bignumber.js';
 
 export const selectUserAnalytics = createSelector(
   (state: BeefyState, address?: string) => address || selectWalletAddress(state),
@@ -441,8 +443,18 @@ export const selectClmAutocompoundedPendingFeesByVaultId = (
   const currentMooTokenBalance = selectUserVaultBalanceInShareToken(state, vaultId, walletAddress);
   if (pendingRewards && currentMooTokenBalance.gt(BIG_ZERO)) {
     const { fees0, fees1, totalSupply } = pendingRewards;
-    pendingYield.pendingRewards0 = currentMooTokenBalance.dividedBy(totalSupply).times(fees0);
-    pendingYield.pendingRewards1 = currentMooTokenBalance.dividedBy(totalSupply).times(fees1);
+    const vaultFees = selectFeesByVaultId(state, vaultId);
+    const afterFeesRatio = BIG_ONE.minus(vaultFees.total);
+    pendingYield.pendingRewards0 = currentMooTokenBalance
+      .times(fees0)
+      .times(afterFeesRatio)
+      .dividedBy(totalSupply)
+      .decimalPlaces(token0.decimals, BigNumber.ROUND_FLOOR);
+    pendingYield.pendingRewards1 = currentMooTokenBalance
+      .times(fees1)
+      .times(afterFeesRatio)
+      .dividedBy(totalSupply)
+      .decimalPlaces(token1.decimals, BigNumber.ROUND_FLOOR);
     pendingYield.pendingRewards0ToUsd = pendingYield.pendingRewards0.times(token0Price);
     pendingYield.pendingRewards1ToUsd = pendingYield.pendingRewards1.times(token1Price);
     pendingYield.totalPending = pendingYield.pendingRewards0ToUsd.plus(
