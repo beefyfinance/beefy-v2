@@ -1,5 +1,5 @@
 import React, { memo, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useMediaQuery, type Theme } from '@material-ui/core';
 import { styles } from './styles';
 import { VaultTag, VaultTagWithTooltip } from './VaultTag';
 import { useTranslation } from 'react-i18next';
@@ -106,15 +106,23 @@ const VaultPlatformTag = memo<VaultPlatformTagProps>(function VaultPlatformTag({
 
 export const CLMTag = memo(function CLMTag({ vault }: { vault: VaultEntity }) {
   const classes = useStyles();
+
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+
+  const tooltipContent = useMemo(() => {
+    return isMobile
+      ? `CLM | ${isCowcentratedVault(vault) && vault.feeTier}%`
+      : 'Cowcentrated Liquidity Manager';
+  }, [isMobile, vault]);
   return (
     <VaultTagWithTooltip
-      content={<BasicTooltipContent title={`Cowcentrated Liquidity Manager`} />}
+      content={<BasicTooltipContent title={tooltipContent} />}
       placement="bottom"
       className={classes.vaultTagClm}
     >
       <img src={getIcon('clm')} height={16} />
-      CLM
-      {isCowcentratedVault(vault) && vault.feeTier && (
+      <div className={classes.clm}>CLM</div>
+      {!isMobile && isCowcentratedVault(vault) && vault.feeTier && (
         <>
           <div className={classes.divider} /> <span>{`${vault.feeTier}%`}</span>
         </>
