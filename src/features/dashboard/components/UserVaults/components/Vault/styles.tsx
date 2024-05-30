@@ -31,17 +31,6 @@ export const styles = (theme: Theme) => ({
       gridTemplateColumns: 'minmax(0, 80fr) minmax(0, 20fr)',
     },
   },
-  collapseInner: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    rowGap: '16px',
-    backgroundColor: theme.palette.background.contentDark,
-    padding: '16px 24px',
-    marginTop: '2px',
-    [theme.breakpoints.down('md')]: {
-      padding: '16px',
-    },
-  },
   vaultEarnings: {
     backgroundColor: theme.palette.background.vaults.gov,
   },
@@ -53,14 +42,5 @@ export const styles = (theme: Theme) => ({
   },
   vaultClm: {
     backgroundColor: theme.palette.background.vaults.clm,
-  },
-  toggleContainer: {
-    padding: '16px',
-    backgroundColor: theme.palette.background.contentDark,
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    ...theme.typography['body-sm-med'],
   },
 });

@@ -59,7 +59,7 @@ export const selectUserDepositedTimelineByVaultId = createCachedSelector(
 
 /**
  * Selects the first deposit date of the user in a vault
- * If the user has fully withdrawn at any point, this will return the date of the first deposit after that
+ * If the user has fully withdrawn at any point, this will return the date of the first deposit after the last full withdrawal
  */
 export const selectUserFirstDepositDateByVaultId = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], address?: string) =>
@@ -280,29 +280,6 @@ export const selectVaultPnl = (
     return selectClmPnl(state, vaultId, walletAddress);
   }
   return selectStandardGovPnl(state, vaultId, walletAddress);
-};
-
-export const selectLastVaultDepositStart = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  walletAddress?: string
-) => {
-  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
-  let firstDepositDate = new Date();
-  if (!vaultTimeline) {
-    return firstDepositDate;
-  }
-
-  let previousBalance = BIG_ZERO;
-
-  for (const tx of vaultTimeline) {
-    if (previousBalance.isEqualTo(BIG_ZERO)) {
-      firstDepositDate = tx.datetime;
-    }
-    previousBalance = tx.shareBalance;
-  }
-
-  return firstDepositDate;
 };
 
 const EMPTY_TIMEBUCKET: AnalyticsBucketData = {

@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import {
-  selectLastVaultDepositStart,
+  selectUserFirstDepositDateByVaultId,
   selectShareToUnderlyingTimebucketByVaultId,
   selectUnderlyingToUsdTimebucketByVaultId,
   selectUserDepositedTimelineByVaultId,
@@ -47,7 +47,7 @@ export const usePnLChartData = (
     selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vault.id, walletAddress)
   );
   const vaultLastDeposit = useAppSelector(state =>
-    selectLastVaultDepositStart(state, vaultId, walletAddress)
+    selectUserFirstDepositDateByVaultId(state, vaultId, walletAddress)
   );
 
   const { data: sharesToUnderlying, status: sharesStatus } = useAppSelector(state =>
@@ -120,7 +120,13 @@ export const usePnLChartData = (
   }, [sharesStatus, underlyingStatus]);
 
   const chartData = useMemo(() => {
-    if (sharesStatus === 'fulfilled' && underlyingStatus === 'fulfilled') {
+    if (
+      sharesStatus === 'fulfilled' &&
+      underlyingStatus === 'fulfilled' &&
+      vaultLastDeposit &&
+      vaultTimeline &&
+      vaultTimeline.length
+    ) {
       const filteredSharesToUnderlying = sharesToUnderlying.filter(price =>
         isAfter(price.date, vaultLastDeposit)
       );
@@ -171,12 +177,12 @@ export const usePnLChartData = (
 
 export const useVaultPeriods = (vaultId: VaultEntity['id'], address?: string) => {
   const vaultDepositDate = useAppSelector(state =>
-    selectLastVaultDepositStart(state, vaultId, address)
+    selectUserFirstDepositDateByVaultId(state, vaultId, address)
   );
   const currentDate = new Date();
 
   const result = eachDayOfInterval({
-    start: vaultDepositDate,
+    start: vaultDepositDate || currentDate,
     end: currentDate,
   });
 

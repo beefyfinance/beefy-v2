@@ -1,20 +1,20 @@
 import React, { memo } from 'react';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
-import type { VaultEntity } from '../../../../../../../data/entities/vault';
-import { isGovVault } from '../../../../../../../data/entities/vault';
-import { VaultAtDepositStat } from '../../../../../../../../components/VaultStats/VaultAtDepositStat';
-import { VaultNowStat } from '../../../../../../../../components/VaultStats/VaultNowStat';
-import { RowMobile } from '../../../Row';
-import { VaultYieldStat } from '../../../../../../../../components/VaultStats/VaultYieldStat';
-import { VaultYearlyStat } from '../../../../../../../../components/VaultStats/VaultYearlyStat';
-import { VaultDailyUsdStat } from '../../../../../../../../components/VaultStats/VaultDailyUsdStat';
-import { useAppSelector } from '../../../../../../../../store';
-import { selectVaultById } from '../../../../../../../data/selectors/vaults';
-import { VaultRewardsStat } from '../../../../../../../../components/VaultStats/VaultRewardsStat';
-import { selectUserRewardsByVaultId } from '../../../../../../../data/selectors/balance';
-import { selectIsVaultPreStakedOrBoosted } from '../../../../../../../data/selectors/boosts';
-import { selectVaultPnl } from '../../../../../../../data/selectors/analytics';
+import type { VaultEntity } from '../../../../../../../../data/entities/vault';
+import { isGovVault } from '../../../../../../../../data/entities/vault';
+import { VaultAtDepositStat } from '../../../../../../../../../components/VaultStats/VaultAtDepositStat';
+import { VaultNowStat } from '../../../../../../../../../components/VaultStats/VaultNowStat';
+import { RowMobile } from '../../../../Row';
+import { VaultYieldStat } from '../../../../../../../../../components/VaultStats/VaultYieldStat';
+import { VaultYearlyStat } from '../../../../../../../../../components/VaultStats/VaultYearlyStat';
+import { VaultDailyUsdStat } from '../../../../../../../../../components/VaultStats/VaultDailyUsdStat';
+import { useAppSelector } from '../../../../../../../../../store';
+import { selectVaultById } from '../../../../../../../../data/selectors/vaults';
+import { VaultRewardsStat } from '../../../../../../../../../components/VaultStats/VaultRewardsStat';
+import { selectUserRewardsByVaultId } from '../../../../../../../../data/selectors/balance';
+import { selectIsVaultPreStakedOrBoosted } from '../../../../../../../../data/selectors/boosts';
+import { selectVaultPnl } from '../../../../../../../../data/selectors/analytics';
 
 const useStyles = makeStyles(styles);
 

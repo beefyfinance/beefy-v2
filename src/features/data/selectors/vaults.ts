@@ -65,6 +65,11 @@ export const selectIsVaultGov = createCachedSelector(
   vault => isGovVault(vault)
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
+export const selectVaultType = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  vault => vault.type
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
 export const selectCowcentratedVaultDepositTokenAddresses = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectCowcentratedVaultById(state, vaultId),
   vault => vault.depositTokenAddresses

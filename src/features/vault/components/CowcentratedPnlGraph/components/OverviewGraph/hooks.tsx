@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import type { TimeBucketType } from '../../../../../data/apis/analytics/analytics-types';
 import type { VaultEntity } from '../../../../../data/entities/vault';
 import {
-  selectLastVaultDepositStart,
+  selectUserFirstDepositDateByVaultId,
   selectUnderlyingToUsdTimebucketByVaultId,
   selectUserDepositedTimelineByVaultId,
 } from '../../../../../data/selectors/analytics';
@@ -40,7 +40,7 @@ export const usePnLChartData = (
     selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vault.id, walletAddress)
   );
   const vaultLastDeposit = useAppSelector(state =>
-    selectLastVaultDepositStart(state, vaultId, walletAddress)
+    selectUserFirstDepositDateByVaultId(state, vaultId, walletAddress)
   );
 
   const { data: underlyingToUsd, status: underlyingStatus } = useAppSelector(state =>
@@ -81,7 +81,13 @@ export const usePnLChartData = (
   }, [underlyingStatus]);
 
   const chartData = useMemo(() => {
-    if (underlyingStatus === 'fulfilled' && vaultTimeline && underlyingToUsd) {
+    if (
+      underlyingStatus === 'fulfilled' &&
+      vaultTimeline &&
+      vaultTimeline.length &&
+      underlyingToUsd &&
+      vaultLastDeposit
+    ) {
       const filteredUnderlyingToUsd = underlyingToUsd.filter(price =>
         isAfter(price.date, vaultLastDeposit)
       );
@@ -121,12 +127,12 @@ export const usePnLChartData = (
 
 export const useVaultPeriods = (vaultId: VaultEntity['id'], address?: string) => {
   const vaultDepositDate = useAppSelector(state =>
-    selectLastVaultDepositStart(state, vaultId, address)
+    selectUserFirstDepositDateByVaultId(state, vaultId, address)
   );
   const currentDate = new Date();
 
   const result = eachDayOfInterval({
-    start: vaultDepositDate,
+    start: vaultDepositDate || currentDate,
     end: currentDate,
   });
 

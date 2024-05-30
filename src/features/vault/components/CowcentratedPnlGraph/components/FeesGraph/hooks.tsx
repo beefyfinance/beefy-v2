@@ -2,13 +2,9 @@ import { useMemo } from 'react';
 import { useAppSelector } from '../../../../../../store';
 import type { TimeBucketType } from '../../../../../data/apis/analytics/analytics-types';
 import type { VaultEntity } from '../../../../../data/entities/vault';
-import {
-  selectLastVaultDepositStart,
-  selectUserClmHarvestTimelineByVaultId,
-} from '../../../../../data/selectors/analytics';
+import { selectUserClmHarvestTimelineByVaultId } from '../../../../../data/selectors/analytics';
 import { selectCowcentratedVaultDepositTokensWithPrices } from '../../../../../data/selectors/tokens';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet';
-import { eachDayOfInterval } from 'date-fns';
 import { maxBy, minBy } from 'lodash';
 import { getClmInvestorFeesTimeserie } from '../../../../../../helpers/timeserie';
 
@@ -58,24 +54,4 @@ export const useFeesChartData = (
   }, [userHarvestTimeline, timebucket, token0.price, token1.price]);
 
   return { chartData, isLoading };
-};
-
-export const useVaultPeriods = (vaultId: VaultEntity['id'], address?: string) => {
-  const vaultDepositDate = useAppSelector(state =>
-    selectLastVaultDepositStart(state, vaultId, address)
-  );
-  const currentDate = new Date();
-
-  const result = eachDayOfInterval({
-    start: vaultDepositDate,
-    end: currentDate,
-  });
-
-  return useMemo(() => {
-    if (result.length > 30) return ['1D', '1W', '1M', 'ALL'];
-    if (result.length > 7) return ['1D', '1W', 'ALL'];
-    if (result.length > 1) return ['1D', 'ALL'];
-    if (result.length === 1) return ['1D'];
-    return [];
-  }, [result.length]);
 };
