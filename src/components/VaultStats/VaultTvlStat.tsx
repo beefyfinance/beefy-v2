@@ -16,6 +16,10 @@ import type { PlatformEntity } from '../../features/data/entities/platform';
 import { selectPlatformById } from '../../features/data/selectors/platforms';
 import { useAppSelector } from '../../store';
 import { getVaultUnderlyingTvlAndBeefySharePercent } from '../../helpers/tvl';
+import {
+  selectIsChainDataAvailable,
+  selectIsGlobalDataAvailable,
+} from '../../features/data/selectors/data-loader';
 
 export type VaultTvlStatProps = {
   vaultId: VaultEntity['id'];
@@ -27,8 +31,8 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
   const label = 'VaultStat-TVL';
   const vault = selectVaultById(state, vaultId);
   const isLoaded =
-    state.ui.dataLoader.byChainId[vault.chainId]?.contractData.lastFulfilled !== undefined &&
-    state.ui.dataLoader.global.prices.lastFulfilled !== undefined;
+    selectIsGlobalDataAvailable(state, 'prices') &&
+    selectIsChainDataAvailable(state, vault.chainId, 'contractData');
 
   if (!isLoaded) {
     return {

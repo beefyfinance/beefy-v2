@@ -17,13 +17,17 @@ import { TvlShareTooltip } from '../VaultStats/VaultTvlStat';
 import type { PlatformEntity } from '../../features/data/entities/platform';
 import { getVaultUnderlyingTvlAndBeefySharePercent } from '../../helpers/tvl';
 import type BigNumber from 'bignumber.js';
+import {
+  selectIsChainDataAvailable,
+  selectIsGlobalDataAvailable,
+} from '../../features/data/selectors/data-loader';
 
 const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
   const label = 'VaultStat-TVL';
   const vault = selectVaultById(state, vaultId);
   const isLoaded =
-    state.ui.dataLoader.byChainId[vault.chainId]?.contractData.lastFulfilled !== undefined &&
-    state.ui.dataLoader.global.prices.lastFulfilled !== undefined;
+    selectIsChainDataAvailable(state, vault.chainId, 'contractData') &&
+    selectIsGlobalDataAvailable(state, 'prices');
 
   if (!isLoaded) {
     return {

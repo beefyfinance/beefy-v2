@@ -46,11 +46,6 @@ export type LoaderState =
   | LoaderStateRejected
   | LoaderStateFulfilled;
 
-export type LoaderStateOnceFulfilled = Omit<LoaderState, 'lastFulfilled'> & {
-  lastFulfilled: number;
-};
-
-// some example of a type guard
 export function isFulfilled(state: LoaderState | undefined): state is LoaderStateFulfilled {
   return !!state && state.status === 'fulfilled';
 }

@@ -9,18 +9,19 @@ import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectLpBreakdownBalance } from './balance';
 import { selectChainById } from './chains';
 import {
+  selectHasBreakdownDataByOracleId,
   selectIsTokenStable,
   selectLpBreakdownByOracleId,
-  selectHasBreakdownDataByOracleId,
-  selectWrappedToNativeSymbolOrTokenSymbol,
   selectVaultTokenSymbols,
+  selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens';
 import { selectIsVaultStable, selectVaultPricePerFullShare } from './vaults';
 import { explorerAddressUrl } from '../../../helpers/url';
 import { entries, keys } from '../../../helpers/object';
+import { selectIsGlobalDataAvailable } from './data-loader';
 
 export const selectIsTreasuryLoaded = (state: BeefyState) =>
-  state.ui.dataLoader.global.treasury.lastFulfilled !== undefined;
+  selectIsGlobalDataAvailable(state, 'treasury');
 
 export const selectShouldInitTreasury = (state: BeefyState) =>
   isInitialLoader(state.ui.dataLoader.global.treasury);

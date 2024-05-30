@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import {
-  selectUserVaultBalanceInUsdIncludingBoostsBridged,
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
+  selectUserVaultBalanceInUsdIncludingBoostsBridged,
 } from '../../features/data/selectors/balance';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
 import {
@@ -18,6 +18,10 @@ import {
 import { VaultValueStat } from '../VaultValueStat';
 import { VaultDepositedTooltip } from '../VaultDepositedTooltip';
 import { selectTokenByAddress } from '../../features/data/selectors/tokens';
+import {
+  selectIsAddressChainDataAvailable,
+  selectIsGlobalDataAvailable,
+} from '../../features/data/selectors/data-loader';
 
 export type VaultDepositStatProps = {
   vaultId: VaultEntity['id'];
@@ -33,11 +37,8 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDeposit
   const walletAddress = selectWalletAddress(state);
 
   const isLoaded =
-    state.ui.dataLoader.global.prices.lastFulfilled !== undefined &&
-    selectIsWalletKnown(state) &&
-    walletAddress
-      ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
-          .lastFulfilled !== undefined
+    selectIsGlobalDataAvailable(state, 'prices') && selectIsWalletKnown(state) && walletAddress
+      ? selectIsAddressChainDataAvailable(state, walletAddress, vault.chainId, 'balance')
       : true;
 
   if (!isLoaded) {
