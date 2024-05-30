@@ -1,7 +1,6 @@
 import React, { memo, useMemo, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { ToggleButtons } from '../../../../../../../components/ToggleButtons';
 import { VaultDashboardMobileStats } from './components/VaultDashboardMobileStats';
 import { VaultTransactions } from '../../VaultTransactions';
 import { DashboardPnLGraph } from '../../../../../../vault/components/PnLGraph';
@@ -14,6 +13,8 @@ import {
 } from '../../../../../../vault/components/CowcentratedPnlGraph';
 import type { VaultCollapseContentProps } from '../types';
 import { styles } from './styles';
+import { LabeledSelect } from '../../../../../../../components/LabeledSelect';
+import { ToggleButtons } from '../../../../../../../components/ToggleButtons';
 
 const useStyles = makeStyles(styles);
 
@@ -28,9 +29,10 @@ export const MobileCollapseContent = memo<VaultCollapseContentProps>(
       selectHasDataToShowGraphByVaultId(state, vaultId, address)
     );
     const [toggleTab, setToggleTab] = useState<ToggleTabOptions>('stats');
+    const useDropdown = useMediaQuery('(max-width: 700px)', { noSsr: true });
 
     const options = useMemo(() => {
-      const items = {
+      const items: Partial<Record<ToggleTabOptions, string>> = {
         stats: t('Dashboard-VaultData'),
         txHistory: t('Dashboard-TransactionHistory'),
       };
@@ -51,12 +53,20 @@ export const MobileCollapseContent = memo<VaultCollapseContentProps>(
     return (
       <div className={classes.container}>
         <div className={classes.toggleContainer}>
-          <ToggleButtons
-            buttonClass={classes.buttonText}
-            value={toggleTab}
-            onChange={setToggleTab as (v: string) => void}
-            options={options}
-          />
+          {useDropdown ? (
+            <LabeledSelect
+              selectClass={classes.select}
+              options={options}
+              value={toggleTab}
+              onChange={setToggleTab as (v: string) => void}
+            />
+          ) : (
+            <ToggleButtons
+              value={toggleTab}
+              onChange={setToggleTab as (v: string) => void}
+              options={options}
+            />
+          )}
         </div>
         {toggleTab === 'stats' ? (
           <VaultDashboardMobileStats address={address} vaultId={vaultId} />
