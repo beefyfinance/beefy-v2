@@ -16,6 +16,7 @@ import { getSwapAggregator } from '../../../../../data/apis/instances';
 import { uniqBy } from 'lodash-es';
 import { formatLargeUsd } from '../../../../../../helpers/format';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
+import { selectIsGlobalDataAvailable } from '../../../../../data/selectors/data-loader';
 
 const useStyles = makeStyles(styles);
 
@@ -56,11 +57,11 @@ const ZapLoader = memo<ZapLoaderProps>(function ZapLoader({ vault, zap }) {
   const store = useAppStore();
   const swapLoaded = useAppSelector(
     state =>
-      state.ui.dataLoader.global.zapAggregatorTokenSupport?.lastFulfilled !== undefined &&
-      state.ui.dataLoader.global.zapAmms?.lastFulfilled !== undefined &&
-      state.ui.dataLoader.global.zapConfigs?.lastFulfilled !== undefined &&
-      state.ui.dataLoader.global.zapSwapAggregators?.lastFulfilled !== undefined &&
-      state.ui.dataLoader.global.addressBook?.lastFulfilled !== undefined
+      selectIsGlobalDataAvailable(state, 'zapAggregatorTokenSupport') &&
+      selectIsGlobalDataAvailable(state, 'zapAmms') &&
+      selectIsGlobalDataAvailable(state, 'zapConfigs') &&
+      selectIsGlobalDataAvailable(state, 'zapSwapAggregators') &&
+      selectIsGlobalDataAvailable(state, 'addressBook')
   );
   const tokens = useAppSelector(state =>
     uniqBy(

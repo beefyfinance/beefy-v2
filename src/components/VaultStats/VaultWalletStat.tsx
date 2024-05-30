@@ -15,6 +15,10 @@ import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
 } from '../../features/data/selectors/tokens';
+import {
+  selectIsAddressChainDataAvailable,
+  selectIsGlobalDataAvailable,
+} from '../../features/data/selectors/data-loader';
 
 export type VaultWalletStatProps = {
   vaultId: VaultEntity['id'];
@@ -28,11 +32,8 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultWalletStatProps) {
   const hideBalance = selectIsBalanceHidden(state);
   const walletAddress = selectWalletAddress(state);
   const isLoaded =
-    state.ui.dataLoader.global.prices.lastFulfilled !== undefined &&
-    selectIsWalletKnown(state) &&
-    walletAddress
-      ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
-          .lastFulfilled !== undefined
+    selectIsGlobalDataAvailable(state, 'prices') && selectIsWalletKnown(state) && walletAddress
+      ? selectIsAddressChainDataAvailable(state, walletAddress, vault.chainId, 'balance')
       : true;
 
   if (!isLoaded) {

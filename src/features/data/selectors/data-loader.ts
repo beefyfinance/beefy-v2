@@ -6,33 +6,70 @@ import { shouldVaultShowInterest } from '../entities/vault';
 import { selectVaultById } from './vaults';
 import { createCachedSelector } from 're-reselect';
 import {
+  type ChainIdDataByAddressByChainEntity,
+  type ChainIdDataEntity,
+  type DataLoaderState,
+  type GlobalDataByAddressEntity,
   isInitialLoader,
   isPending,
   type LoaderState,
-  type LoaderStateOnceFulfilled,
 } from '../reducers/data-loader-types';
 
-function isAvailable(
-  state: LoaderState | LoaderStateOnceFulfilled | undefined
-): state is LoaderStateOnceFulfilled {
+export function isLoaderAvailable(state: LoaderState | undefined): boolean {
   return !!state && state.lastFulfilled !== undefined;
 }
 
-function isRecent(
-  state: LoaderState | LoaderStateOnceFulfilled | undefined,
+export function isLoaderRecent(
+  state: LoaderState | undefined,
   recentSeconds: number = 60
-): state is LoaderStateOnceFulfilled {
-  return isAvailable(state) && state.lastFulfilled > Date.now() - 1000 * recentSeconds;
+): boolean {
+  return (
+    !!state &&
+    state.lastFulfilled !== undefined &&
+    state.lastFulfilled > Date.now() - 1000 * recentSeconds
+  );
+}
+
+export function selectIsGlobalDataAvailable(
+  state: BeefyState,
+  key: keyof DataLoaderState['global']
+) {
+  return isLoaderAvailable(state.ui.dataLoader.global[key]);
+}
+
+export function selectIsChainDataAvailable(
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  key: keyof ChainIdDataEntity
+) {
+  return isLoaderAvailable(state.ui.dataLoader.byChainId[chainId]?.[key]);
+}
+
+export function selectIsAddressDataAvailable(
+  state: BeefyState,
+  walletAddress: string,
+  key: keyof GlobalDataByAddressEntity
+) {
+  return isLoaderAvailable(state.ui.dataLoader.byAddress[walletAddress]?.global[key]);
+}
+
+export function selectIsAddressChainDataAvailable(
+  state: BeefyState,
+  walletAddress: string,
+  chainId: ChainEntity['id'],
+  key: keyof ChainIdDataByAddressByChainEntity
+) {
+  return isLoaderAvailable(state.ui.dataLoader.byAddress[walletAddress]?.byChainId[chainId]?.[key]);
 }
 
 export const selectIsPriceAvailable = (state: BeefyState) =>
-  isAvailable(state.ui.dataLoader.global.prices);
+  selectIsGlobalDataAvailable(state, 'prices');
 
 export const selectIsConfigAvailable = (state: BeefyState) =>
-  isAvailable(state.ui.dataLoader.global.chainConfig) &&
-  isAvailable(state.ui.dataLoader.global.vaults) &&
-  isAvailable(state.ui.dataLoader.global.boosts) &&
-  isAvailable(state.ui.dataLoader.global.platforms);
+  selectIsGlobalDataAvailable(state, 'chainConfig') &&
+  selectIsGlobalDataAvailable(state, 'vaults') &&
+  selectIsGlobalDataAvailable(state, 'boosts') &&
+  selectIsGlobalDataAvailable(state, 'platforms');
 
 export const selectVaultApyAvailable = (state: BeefyState, vaultId: VaultEntity['id']) => {
   if (!selectIsConfigAvailable(state)) {
@@ -42,8 +79,8 @@ export const selectVaultApyAvailable = (state: BeefyState, vaultId: VaultEntity[
   const chainId = vault.chainId;
 
   return (
-    isAvailable(state.ui.dataLoader.byChainId[chainId]?.contractData) &&
-    isAvailable(state.ui.dataLoader.global.apy) !== undefined
+    selectIsChainDataAvailable(state, chainId, 'contractData') &&
+    selectIsGlobalDataAvailable(state, 'apy')
   );
 };
 
@@ -66,8 +103,8 @@ export const selectIsUserBalanceAvailable = createSelector(
     for (const chainId in byChainId) {
       // if any chain has balance data, then balance data is available
       if (
-        isAvailable(byChainId[chainId].contractData) &&
-        isAvailable(byAddress[walletAddress]?.byChainId[chainId]?.balance)
+        isLoaderAvailable(byChainId[chainId].contractData) &&
+        isLoaderAvailable(byAddress[walletAddress]?.byChainId[chainId]?.balance)
       ) {
         return true;
       }
@@ -89,8 +126,8 @@ export const selectShouldInitAddressBook = (state: BeefyState, chainId: ChainEnt
   isInitialLoader(state.ui.dataLoader.byChainId[chainId]?.addressBook);
 
 export const selectIsAddressBookLoaded = (state: BeefyState, chainId: ChainEntity['id']) =>
-  isAvailable(state.ui.dataLoader.global.addressBook) ||
-  isAvailable(state.ui.dataLoader.byChainId[chainId]?.addressBook);
+  selectIsGlobalDataAvailable(state, 'addressBook') ||
+  selectIsChainDataAvailable(state, chainId, 'addressBook');
 
 export const selectShouldInitProposals = (state: BeefyState) => {
   return isInitialLoader(state.ui.dataLoader.global.proposals);
@@ -101,17 +138,13 @@ export const selectShouldInitArticles = (state: BeefyState) => {
 };
 
 export const selectIsContractDataLoadedOnChain = (state: BeefyState, chainId: ChainEntity['id']) =>
-  isAvailable(state.ui.dataLoader.byChainId[chainId]?.contractData);
+  selectIsChainDataAvailable(state, chainId, 'contractData');
 
 export const selectIsZapLoaded = (state: BeefyState) =>
-  isAvailable(state.ui.dataLoader.global.zapConfigs) &&
-  isAvailable(state.ui.dataLoader.global.zapSwapAggregators) &&
-  isAvailable(state.ui.dataLoader.global.zapAggregatorTokenSupport) &&
-  isAvailable(state.ui.dataLoader.global.zapAmms);
-
-export const selectDepositedVaultsStatusForUser = (state: BeefyState, walletAddress: string) => {
-  return state.ui.dataLoader.byAddress[walletAddress]?.global.depositedVaults.status || 'idle';
-};
+  selectIsGlobalDataAvailable(state, 'zapConfigs') &&
+  selectIsGlobalDataAvailable(state, 'zapSwapAggregators') &&
+  selectIsGlobalDataAvailable(state, 'zapAggregatorTokenSupport') &&
+  selectIsGlobalDataAvailable(state, 'zapAmms');
 
 export const selectIsClmHarvestsForUserChainPending = (
   state: BeefyState,
@@ -130,11 +163,11 @@ export const selectIsWalletTimelineForUserPending = (state: BeefyState, walletAd
 };
 
 export const selectIsWalletTimelineForUserRecent = (state: BeefyState, walletAddress: string) => {
-  return isRecent(state.ui.dataLoader.byAddress[walletAddress]?.global.timeline);
+  return isLoaderRecent(state.ui.dataLoader.byAddress[walletAddress]?.global.timeline);
 };
 
 export const selectIsGlobalAddressBookAvailable = (state: BeefyState) =>
-  isAvailable(state.ui.dataLoader.global.addressBook);
+  selectIsGlobalDataAvailable(state, 'addressBook');
 
 export const selectShouldInitDashboardForUser = (state: BeefyState, walletAddress: string) => {
   if (!walletAddress) {
@@ -144,7 +177,7 @@ export const selectShouldInitDashboardForUser = (state: BeefyState, walletAddres
   return (
     selectIsConfigAvailable(state) &&
     selectIsGlobalAddressBookAvailable(state) &&
-    !isRecent(state.ui.dataLoader.byAddress[walletAddress]?.global.dashboard, 300)
+    !isLoaderRecent(state.ui.dataLoader.byAddress[walletAddress]?.global.dashboard, 300)
   );
 };
 
@@ -155,7 +188,7 @@ export const selectDashboardShouldLoadBalanceForChainUser = (
 ) => {
   const loader = state.ui.dataLoader.byAddress[walletAddress]?.byChainId[chainId]?.balance;
   // if never loaded, or not pending and not recently loaded
-  return isInitialLoader(loader) || (!isPending(loader) && !isRecent(loader));
+  return isInitialLoader(loader) || (!isPending(loader) && !isLoaderRecent(loader));
 };
 
 export const selectDashboardShouldLoadTimelineForUser = (
@@ -163,7 +196,7 @@ export const selectDashboardShouldLoadTimelineForUser = (
   walletAddress: string
 ) => {
   const loader = state.ui.dataLoader.byAddress[walletAddress]?.global.timeline;
-  return isInitialLoader(loader) || (!isPending(loader) && !isRecent(loader));
+  return isInitialLoader(loader) || (!isPending(loader) && !isLoaderRecent(loader));
 };
 
 export const selectDashboardShouldLoadClmHarvestsForUser = (
@@ -171,5 +204,5 @@ export const selectDashboardShouldLoadClmHarvestsForUser = (
   walletAddress: string
 ) => {
   const loader = state.ui.dataLoader.byAddress[walletAddress]?.global.clmHarvests;
-  return isInitialLoader(loader) || (!isPending(loader) && !isRecent(loader));
+  return isInitialLoader(loader) || (!isPending(loader) && !isLoaderRecent(loader));
 };

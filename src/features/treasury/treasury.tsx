@@ -9,6 +9,10 @@ import { DaoSummary } from './components/DaoSummary';
 import { styles } from './styles';
 import { TechLoader } from '../../components/TechLoader';
 import { useTranslation } from 'react-i18next';
+import {
+  selectIsGlobalAddressBookAvailable,
+  selectIsGlobalDataAvailable,
+} from '../data/selectors/data-loader';
 
 const useStyles = makeStyles(styles);
 
@@ -18,12 +22,8 @@ export const Treasury = memo(function Treasury() {
   const dispatch = useAppDispatch();
   const shouldInit = useAppSelector(selectShouldInitTreasury);
   const isLoaded = useAppSelector(selectIsTreasuryLoaded);
-  const isAddressBookLoaded = useAppSelector(
-    state => state.ui.dataLoader.global.addressBook.lastFulfilled !== undefined
-  );
-  const vaultsLoaded = useAppSelector(
-    state => state.ui.dataLoader.global.vaults.lastFulfilled !== undefined
-  );
+  const isAddressBookLoaded = useAppSelector(selectIsGlobalAddressBookAvailable);
+  const vaultsLoaded = useAppSelector(state => selectIsGlobalDataAvailable(state, 'vaults'));
 
   useEffect(() => {
     if (shouldInit && isAddressBookLoaded && vaultsLoaded) {

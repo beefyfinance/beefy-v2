@@ -27,7 +27,12 @@ import {
   selectUserVaultBalanceInShareToken,
 } from './balance';
 import { selectWalletAddress } from './wallet';
-import { selectIsConfigAvailable, selectIsUserBalanceAvailable } from './data-loader';
+import {
+  isLoaderAvailable,
+  selectIsConfigAvailable,
+  selectIsAddressDataAvailable,
+  selectIsUserBalanceAvailable,
+} from './data-loader';
 import type { AnalyticsBucketData, AnalyticsState } from '../reducers/analytics';
 import type {
   AnyTimelineAnalyticsEntity,
@@ -115,7 +120,7 @@ export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAd
   }
 
   for (const chainId of Object.values(dataByAddress.byChainId)) {
-    if (chainId.balance.lastFulfilled !== undefined) {
+    if (isLoaderAvailable(chainId.balance)) {
       // if any chain has already loaded, then data is available
       return true;
     }
@@ -124,12 +129,8 @@ export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAd
   return false;
 };
 
-export const selectIsAnalyticsLoadedByAddress = (state: BeefyState, walletAddress: string) => {
-  return (
-    state.ui.dataLoader.byAddress[walletAddress]?.global.timeline.lastFulfilled !== undefined ||
-    false
-  );
-};
+export const selectIsAnalyticsLoadedByAddress = (state: BeefyState, walletAddress: string) =>
+  selectIsAddressDataAvailable(state, walletAddress, 'timeline');
 
 export const selectStandardGovPnl = (
   state: BeefyState,

@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import type { VaultEntity } from '../../features/data/entities/vault';
 import {
   selectHasUserBalanceInActiveBoost,
-  selectUserVaultBalanceInUsdIncludingBoostsBridged,
   selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken,
+  selectUserVaultBalanceInUsdIncludingBoostsBridged,
 } from '../../features/data/selectors/balance';
 import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
 import { selectVaultById } from '../../features/data/selectors/vaults';
@@ -21,6 +21,10 @@ import { useAppSelector } from '../../store';
 import type { TokenEntity } from '../../features/data/entities/token';
 import type BigNumber from 'bignumber.js';
 import { TokenAmountFromEntity } from '../TokenAmount';
+import {
+  selectIsAddressChainDataAvailable,
+  selectIsGlobalDataAvailable,
+} from '../../features/data/selectors/data-loader';
 
 const _BoostedVaultDepositedLarge = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
@@ -34,11 +38,8 @@ const _BoostedVaultDepositedLarge = connect(
     const blurred = selectIsBalanceHidden(state);
     const walletAddress = selectWalletAddress(state);
     const isLoaded =
-      state.ui.dataLoader.global.prices.lastFulfilled !== undefined &&
-      selectIsWalletKnown(state) &&
-      walletAddress
-        ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
-            .lastFulfilled !== undefined
+      selectIsGlobalDataAvailable(state, 'prices') && selectIsWalletKnown(state) && walletAddress
+        ? selectIsAddressChainDataAvailable(state, walletAddress, vault.chainId, 'balance')
         : true;
     return {
       hasDeposit,
@@ -92,11 +93,8 @@ const _NonBoostedVaultDeposited = connect(
     const blurred = selectIsBalanceHidden(state);
     const walletAddress = selectWalletAddress(state);
     const isLoaded =
-      state.ui.dataLoader.global.prices.lastFulfilled !== undefined &&
-      selectIsWalletKnown(state) &&
-      walletAddress
-        ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
-            .lastFulfilled !== undefined
+      selectIsGlobalDataAvailable(state, 'prices') && selectIsWalletKnown(state) && walletAddress
+        ? selectIsAddressChainDataAvailable(state, walletAddress, vault.chainId, 'balance')
         : true;
     return {
       hasDeposit,
