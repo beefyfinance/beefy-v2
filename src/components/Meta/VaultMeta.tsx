@@ -1,14 +1,17 @@
+import {
+  isCowcentratedVault,
+  isGovVault,
+  type VaultEntity,
+} from '../../features/data/entities/vault';
 import * as React from 'react';
 import { memo } from 'react';
-import type { VaultEntity } from '../../../data/entities/vault';
-import { isCowcentratedVault, isGovVault } from '../../../data/entities/vault';
-import { Meta } from '../../../../components/Meta/Meta';
-import { selectVaultById } from '../../../data/selectors/vaults';
-import { useAppSelector } from '../../../../store';
-import { selectChainById } from '../../../data/selectors/chains';
 import { useTranslation } from 'react-i18next';
-import { selectTokenByAddress } from '../../../data/selectors/tokens';
-import { selectPlatformById } from '../../../data/selectors/platforms';
+import { useAppSelector } from '../../store';
+import { selectVaultById } from '../../features/data/selectors/vaults';
+import { selectChainById } from '../../features/data/selectors/chains';
+import { selectTokenByAddress } from '../../features/data/selectors/tokens';
+import { selectPlatformById } from '../../features/data/selectors/platforms';
+import { Meta } from './Meta';
 
 export type VaultMetaProps = {
   vaultId: VaultEntity['id'];

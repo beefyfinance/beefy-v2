@@ -17,7 +17,6 @@ import type { VaultEntity } from '../data/entities/vault';
 import { isCowcentratedVault, isGovVault } from '../data/entities/vault';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { TechLoader } from '../../components/TechLoader';
-import { VaultMeta } from './components/VaultMeta';
 import { useAppSelector } from '../../store';
 import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdown';
 import { AssetsCard } from './components/AssetsCard';
@@ -32,6 +31,7 @@ import { HistoricGraphsLoader } from './components/HistoricGraph';
 import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
 import { CLMBanner } from './components/CLMBanner';
 import { CowcentratedPnlGraphLoader } from './components/CowcentratedPnlGraph';
+import { VaultMeta } from '../../components/Meta/VaultMeta';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
