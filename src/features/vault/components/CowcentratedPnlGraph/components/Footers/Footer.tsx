@@ -14,6 +14,7 @@ interface CommonFooterProps {
   period: number;
   handlePeriod: (period: number) => void;
   labels: string[];
+  className?: string;
   tabsClassName?: string;
 }
 
@@ -21,13 +22,14 @@ export const OverviewFooter = memo<CommonFooterProps>(function Footer({
   period,
   handlePeriod,
   labels,
+  className,
   tabsClassName,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
   return (
-    <div className={classes.footer}>
+    <div className={clsx(classes.footer, className)}>
       <div className={classes.legendContainer}>
         <div className={classes.usdReferenceLine} />
         {t('Position Value')}
@@ -53,6 +55,7 @@ export const FeesFooter = memo<FooterProps>(function Footer({
   labels,
   tabsClassName,
   vaultId,
+  className,
 }) {
   const classes = useStyles();
   const { token0, token1 } = useAppSelector(state =>
@@ -60,7 +63,7 @@ export const FeesFooter = memo<FooterProps>(function Footer({
   );
 
   return (
-    <div className={classes.footer}>
+    <div className={clsx(classes.footer, className)}>
       <div className={classes.legendContainer}>
         <div className={classes.usdReferenceLine} />
         {token0.symbol}

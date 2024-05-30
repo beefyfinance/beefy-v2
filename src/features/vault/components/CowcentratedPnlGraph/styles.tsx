@@ -30,7 +30,6 @@ export const styles = (theme: Theme) => ({
   graphContainer: {
     backgroundColor: theme.palette.background.contentPrimary,
   },
-
   graph: {
     '& text': {
       ...theme.typography['subline-sm'],
@@ -62,5 +61,8 @@ export const styles = (theme: Theme) => ({
     '& .MuiTab-root': {
       ...theme.typography['subline-sm'],
     },
+  },
+  footerDashboard: {
+    borderTop: `2px solid ${theme.palette.background.border}`,
   },
 });

@@ -169,8 +169,31 @@ export const DashboardCowcentratedPnLGraph = memo<CowcentratedPnlGraphProps>(
       <div className={classes.dashboardPnlContainer}>
         <CLMOverviewGraph address={address} period={period} vaultId={vaultId} />
         <OverviewFooter
+          className={classes.footerDashboard}
           tabsClassName={classes.tabsDashboard}
           labels={labels}
+          period={period}
+          handlePeriod={setPeriod}
+        />
+      </div>
+    );
+  }
+);
+
+export const DashboardCowcentratedFeesGraph = memo<CowcentratedPnlGraphProps>(
+  function DashboardCowcentratedFeesGraph({ vaultId, address }) {
+    const classes = useStyles();
+    const labels = useVaultPeriods(vaultId, address);
+    const [period, setPeriod] = useState<number>(labels.length - 1);
+
+    return (
+      <div className={classes.dashboardPnlContainer}>
+        <CLMFeesGraph address={address} period={period} vaultId={vaultId} />
+        <FeesFooter
+          className={classes.footerDashboard}
+          tabsClassName={classes.tabsDashboard}
+          labels={labels}
+          vaultId={vaultId}
           period={period}
           handlePeriod={setPeriod}
         />

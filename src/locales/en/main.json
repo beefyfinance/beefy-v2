@@ -679,6 +679,8 @@
   "Dashboard-VaultData": "Vault Data",
   "Dashboard-TransactionHistory": "Transaction History",
   "Dashboard-Chart": "Chart",
+  "Dashboard-PositionChart": "Position Chart",
+  "Dashboard-CompoundsChart": "Compounds Chart",
   "Dashboard-SearchInput-Placeholder": "Search address / domain",
   "Clipboard-Copied": "Copied to clipboard!",
   "Dashboard-SearchInput-Invalid-Domain": "Unable to resolve domain",
