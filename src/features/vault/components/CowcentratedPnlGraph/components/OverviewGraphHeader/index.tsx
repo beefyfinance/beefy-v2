@@ -48,6 +48,7 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
   return (
     <div className={classes.statsContainer}>
       <Stat
+        tooltipText={t('pnl-graph-tooltip-deposit')}
         label={t('At Deposit')}
         value0={`${formatTokenDisplayCondensed(token0SharesAtDeposit, token0.decimals, 6)} ${
           token0.symbol
@@ -61,6 +62,7 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
         subValue2={formatLargeUsd(sharesAtDepositToUsd)}
       />
       <Stat
+        tooltipText={t('pnl-graph-tooltip-now-clm')}
         label={t('Now')}
         value0={`${formatTokenDisplayCondensed(token0.userAmount, token0.decimals, 6)} ${
           token0.symbol
@@ -74,6 +76,7 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
         subValue2={formatLargeUsd(sharesNowToUsd)}
       />
       <Stat
+        tooltipText={t('pnl-graph-tooltip-change-clm')}
         label={t('Change')}
         value0={formatPositiveOrNegative(
           token0Diff,

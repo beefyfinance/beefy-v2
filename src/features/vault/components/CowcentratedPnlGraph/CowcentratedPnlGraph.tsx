@@ -15,7 +15,7 @@ import {
 } from '../../../data/selectors/data-loader';
 import { selectHasDataToShowGraphByVaultId } from '../../../data/selectors/analytics';
 import { CLMOverviewGraph } from './components/OverviewGraph';
-import { useVaultPeriods } from './components/OverviewGraph/hooks';
+import { useVaultPeriodsOverviewGraph } from './components/OverviewGraph/hooks';
 import { FeesFooter, OverviewFooter } from './components/Footers';
 import { FeesGraphHeader } from './components/FeesGraphHeader';
 import {
@@ -24,6 +24,7 @@ import {
 } from '../../../data/actions/analytics';
 import { selectWalletAddress } from '../../../data/selectors/wallet';
 import { CLMFeesGraph } from './components/FeesGraph';
+import { useVaultPeriodsFeesGraph } from './components/FeesGraph/hooks';
 
 const useStyles = makeStyles(styles);
 
@@ -78,7 +79,7 @@ export const OverviewGraph = memo<CowcentratedPnlGraphProps>(function OverviewGr
   address,
 }) {
   const classes = useStyles();
-  const labels = useVaultPeriods(vaultId, address);
+  const labels = useVaultPeriodsOverviewGraph(vaultId, address);
   const [period, setPeriod] = useState<number>(labels.length - 1);
 
   return (
@@ -96,7 +97,7 @@ export const OverviewGraph = memo<CowcentratedPnlGraphProps>(function OverviewGr
 
 export const FeesGraph = memo<CowcentratedPnlGraphProps>(function FeesGraph({ vaultId, address }) {
   const classes = useStyles();
-  const labels = useVaultPeriods(vaultId, address);
+  const labels = useVaultPeriodsFeesGraph(vaultId, address);
   const [period, setPeriod] = useState<number>(labels.length - 1);
 
   return (
@@ -162,7 +163,7 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
 export const DashboardCowcentratedPnLGraph = memo<CowcentratedPnlGraphProps>(
   function DashboardCowcentratedPnLGraph({ vaultId, address }) {
     const classes = useStyles();
-    const labels = useVaultPeriods(vaultId, address);
+    const labels = useVaultPeriodsFeesGraph(vaultId, address);
     const [period, setPeriod] = useState<number>(labels.length - 1);
 
     return (
@@ -183,7 +184,7 @@ export const DashboardCowcentratedPnLGraph = memo<CowcentratedPnlGraphProps>(
 export const DashboardCowcentratedFeesGraph = memo<CowcentratedPnlGraphProps>(
   function DashboardCowcentratedFeesGraph({ vaultId, address }) {
     const classes = useStyles();
-    const labels = useVaultPeriods(vaultId, address);
+    const labels = useVaultPeriodsOverviewGraph(vaultId, address);
     const [period, setPeriod] = useState<number>(labels.length - 1);
 
     return (

@@ -60,7 +60,7 @@ export const Header = memo<HeaderProps>(function Header({ vaultId }) {
           minShortPlaces={4}
         />
       </HeaderItem>
-      <HeaderItem tooltipText={t('pnl-graph-tooltip-now')} label={t('Now')}>
+      <HeaderItem tooltipText={t('pnl-graph-tooltip-now-vault')} label={t('Now')}>
         <SharesValue
           amount={deposit}
           price={oraclePrice}

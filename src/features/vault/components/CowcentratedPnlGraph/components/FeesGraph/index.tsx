@@ -20,13 +20,13 @@ import {
   mapRangeToTicks,
   formatUsdTick,
   formatDateTimeTick,
-  TIME_BUCKET,
 } from '../../../../../../helpers/graph';
 import { styles } from './styles';
 import { XAxisTick } from '../../../../../../components/XAxisTick';
 import { FeesTooltip } from '../Tooltips';
 import { useAppSelector } from '../../../../../../store';
 import { selectCowcentratedVaultDepositTokens } from '../../../../../data/selectors/tokens';
+import type { TimeBucketType } from '../../../../../data/apis/analytics/analytics-types';
 
 const useStyles = makeStyles(styles);
 
@@ -35,6 +35,8 @@ interface CLMFeesGraphProps {
   period: number;
   address?: string;
 }
+
+const FEES_TIME_BUCKET: TimeBucketType[] = ['1h_1w', '1d_1M', '1d_all'];
 
 export const CLMFeesGraph = memo<CLMFeesGraphProps>(function CLMFeesGraph({
   vaultId,
@@ -47,7 +49,7 @@ export const CLMFeesGraph = memo<CLMFeesGraphProps>(function CLMFeesGraph({
     selectCowcentratedVaultDepositTokens(state, vaultId)
   );
 
-  const { chartData, isLoading } = useFeesChartData(TIME_BUCKET[period], vaultId, address);
+  const { chartData, isLoading } = useFeesChartData(FEES_TIME_BUCKET[period], vaultId, address);
 
   const { data, minUsd, maxUsd } = chartData;
 
@@ -68,7 +70,7 @@ export const CLMFeesGraph = memo<CLMFeesGraphProps>(function CLMFeesGraph({
   }, [maxUsd, startUsdDomain, usdDiff]);
 
   const dateTimeTickFormatter = useMemo(() => {
-    return (value: number) => formatDateTimeTick(value, TIME_BUCKET[period]);
+    return (value: number) => formatDateTimeTick(value, FEES_TIME_BUCKET[period]);
   }, [period]);
 
   const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });

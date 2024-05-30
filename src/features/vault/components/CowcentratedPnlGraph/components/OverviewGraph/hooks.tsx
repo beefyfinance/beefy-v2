@@ -125,7 +125,7 @@ export const usePnLChartData = (
   return { chartData, isLoading };
 };
 
-export const useVaultPeriods = (vaultId: VaultEntity['id'], address?: string) => {
+export const useVaultPeriodsOverviewGraph = (vaultId: VaultEntity['id'], address?: string) => {
   const vaultDepositDate = useAppSelector(state =>
     selectUserFirstDepositDateByVaultId(state, vaultId, address)
   );

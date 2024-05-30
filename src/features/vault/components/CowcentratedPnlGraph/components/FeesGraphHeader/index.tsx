@@ -44,6 +44,7 @@ export const FeesGraphHeader = memo<FeesGraphHeaderProps>(function FeesGraphHead
   return (
     <div className={classes.statsContainer}>
       <Stat
+        tooltipText={t('pnl-graph-tooltip-autocompounded-fees-clm')}
         label={t('Autocompounded fees')}
         value0={`${formatTokenDisplayCondensed(
           token0AccruedRewards,
@@ -59,6 +60,7 @@ export const FeesGraphHeader = memo<FeesGraphHeaderProps>(function FeesGraphHead
         subValue1={formatLargeUsd(token1AccruedRewardsToUsd)}
       />
       <Stat
+        tooltipText={t('pnl-graph-tooltip-pending-fees-clm')}
         label={t('Pending fees')}
         value0={`${formatTokenDisplayCondensed(
           pendingRewards0,
@@ -73,8 +75,8 @@ export const FeesGraphHeader = memo<FeesGraphHeaderProps>(function FeesGraphHead
         )} ${token1Symbol}`}
         subValue1={formatLargeUsd(pendingRewards1ToUsd)}
       />
-
       <Stat
+        tooltipText={t('pnl-graph-tooltip-total-fees-clm')}
         label={t('Total fees')}
         value0={t('Autocompounded')}
         subValue0={formatLargeUsd(totalAutocompounded)}
