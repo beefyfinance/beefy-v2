@@ -95,8 +95,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     } else {
       throw new Error('Cowcentrated strategy: Unsupported swap method');
     }
-
-    // return this.helpers.vaultType.fetchDepositQuote(inputs, option);
   }
 
   async fetchDepositStep(quote: DepositQuote, t: TFunction<Namespace>): Promise<Step> {
@@ -238,6 +236,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       lpTokenAmounts[0].amount,
       lpTokenAmounts[1].amount
     );
+    console.log('Deposit previewed');
     const liquidityAmount = fromWei(liquidity, 18);
 
     //build quote inputs

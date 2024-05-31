@@ -104,8 +104,8 @@ export class BeefyCLMPool {
     const calls: ShapeWithLabel[] = [
       {
         previewDeposit: contract.methods.previewDeposit(
-          inputAmount0Wei.toString(),
-          inputamount1Wei.toString()
+          inputAmount0Wei.toString(10),
+          inputamount1Wei.toString(10)
         ),
       },
     ];
