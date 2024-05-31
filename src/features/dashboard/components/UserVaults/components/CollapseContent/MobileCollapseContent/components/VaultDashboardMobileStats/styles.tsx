@@ -12,11 +12,7 @@ export const styles = (theme: Theme) => ({
   },
   value: {
     ...theme.typography['body-sm'],
-    color: theme.palette.text.middle,
     textAlign: 'end' as const,
-  },
-  valueBoosted: {
-    color: theme.palette.background.vaults.boost,
   },
   valueContainer: {
     display: 'flex',

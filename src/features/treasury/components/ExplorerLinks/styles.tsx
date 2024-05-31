@@ -3,7 +3,7 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   center: {
     display: 'flex',
-    alingItems: 'center',
+    alignItems: 'center',
     '&:hover': {
       cursor: 'pointer',
     },

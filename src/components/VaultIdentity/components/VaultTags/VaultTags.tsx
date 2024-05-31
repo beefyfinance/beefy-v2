@@ -16,7 +16,7 @@ import type { TokenEntity } from '../../../../features/data/entities/token';
 import { selectTokenByAddress } from '../../../../features/data/selectors/tokens';
 import type { VaultEntity } from '../../../../features/data/entities/vault';
 import {
-  isCowcentratedLiquidityVault,
+  isCowcentratedVault,
   isGovVault,
   isVaultEarningPoints,
   isVaultPaused,
@@ -106,15 +106,16 @@ const VaultPlatformTag = memo<VaultPlatformTagProps>(function VaultPlatformTag({
 
 export const CLMTag = memo(function CLMTag({ vault }: { vault: VaultEntity }) {
   const classes = useStyles();
+
   return (
     <VaultTagWithTooltip
-      content={<BasicTooltipContent title={`Cowcentrated Liquidity Manager`} />}
+      content={<BasicTooltipContent title={'Cowcentrated Liquidity Manager'} />}
       placement="bottom"
       className={classes.vaultTagClm}
     >
       <img src={getIcon('clm')} height={16} />
-      CLM
-      {isCowcentratedLiquidityVault(vault) && vault.feeTier && (
+      <div className={classes.clm}>CLM</div>
+      {isCowcentratedVault(vault) && vault.feeTier && (
         <>
           <div className={classes.divider} /> <span>{`${vault.feeTier}%`}</span>
         </>
@@ -156,7 +157,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   return (
     <div className={classes.vaultTags}>
       <VaultPlatformTag vaultId={vaultId} />
-      {isCowcentratedLiquidityVault(vault) && <CLMTag vault={vault} />}
+      {isCowcentratedVault(vault) && <CLMTag vault={vault} />}
       {isVaultRetired(vault) ? (
         <VaultTag className={classes.vaultTagRetired}>{t('VaultTag-Retired')}</VaultTag>
       ) : isVaultPaused(vault) ? (

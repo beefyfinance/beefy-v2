@@ -8,17 +8,22 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { useAppSelector } from '../../../../../../store';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { usePnLChartData } from '../../hooks';
 import { PnLTooltip } from '../PnLTooltip';
 import type { Theme } from '@material-ui/core';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { GraphLoader } from '../../../GraphLoader';
 import { max } from 'lodash-es';
-import { formatUnderlyingTick, formatUsdTick, formatDateTimeTick, TIME_BUCKET } from './helpers';
+import {
+  formatUnderlyingTick,
+  formatUsdTick,
+  formatDateTimeTick,
+  TIME_BUCKET,
+  domainOffSet,
+  getXInterval,
+  mapRangeToTicks,
+} from '../../../../../../helpers/graph';
 import { Legend } from '../Legend';
-import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../../helpers/graph';
 import { styles } from './styles';
 import { XAxisTick } from '../../../../../../components/XAxisTick';
 
@@ -31,20 +36,9 @@ interface GraphProps {
 }
 
 export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address }) {
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
   const classes = useStyles();
 
-  const productKey = useMemo(() => {
-    return `beefy:vault:${vault.chainId}:${vault.earnContractAddress.toLowerCase()}`;
-  }, [vault.chainId, vault.earnContractAddress]);
-
-  const { chartData, isLoading } = usePnLChartData(
-    TIME_BUCKET[period],
-    productKey,
-    vaultId,
-    address
-  );
+  const { chartData, isLoading } = usePnLChartData(TIME_BUCKET[period], vaultId, address);
 
   const { data, minUnderlying, maxUnderlying, minUsd, maxUsd } = chartData;
 

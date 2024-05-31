@@ -3,9 +3,9 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   footer: {
     display: 'flex',
-    alingItems: 'center',
+    alignItems: 'center',
     padding: '8px 24px',
-    borderTop: '2px solid #363B63',
+    borderTop: `2px solid ${theme.palette.background.border}`,
     borderRadius: '0px 0px 12px 12px',
     justifyContent: 'end',
     [theme.breakpoints.down('sm')]: {
