@@ -15,7 +15,7 @@ export class AnalyticsApi {
 
   constructor() {
     this.api = axios.create({
-      baseURL: 'https://beefy-investor-api-8bf56f27f89d.herokuapp.com/api',
+      baseURL: 'https://investor-api.beefy.finance/api',
     });
   }
 
