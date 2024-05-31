@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { FetchAllBalancesResult } from '../apis/balance/balance-types';
 import { getBalanceApi } from '../apis/instances';
@@ -138,23 +138,20 @@ export const fetchBalanceAction = createAsyncThunk<
 
 export type RecalculateDepositedVaultsParams = {
   walletAddress: string;
+  fromTimelineListener?: boolean;
 };
 
 export type RecalculateDepositedVaultsPayload = {
   walletAddress: string;
   vaultIds: VaultEntity['id'][];
+  addedVaultIds: VaultEntity['id'][];
 };
-
-export const depositedVaultsAddedAction = createAction<{
-  walletAddress: string;
-  vaultIds: VaultEntity['id'][];
-}>('balance/depositedVaultsAddedAction');
 
 export const recalculateDepositedVaultsAction = createAsyncThunk<
   RecalculateDepositedVaultsPayload,
   RecalculateDepositedVaultsParams,
   { state: BeefyState }
->('balance/recalculateDepositedVaultsAction', async ({ walletAddress }, { getState, dispatch }) => {
+>('balance/recalculateDepositedVaultsAction', async ({ walletAddress }, { getState }) => {
   const state = getState();
   const allVaultIds = selectAllVaultIds(state);
   const depositedIds: VaultEntity['id'][] = [];
@@ -210,14 +207,12 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
     }
   }
 
-  const existing = selectUserDepositedVaultIds(state, walletAddress);
-  const added = depositedIds.filter(id => !existing.includes(id));
-  if (added.length) {
-    dispatch(depositedVaultsAddedAction({ walletAddress, vaultIds: added }));
-  }
+  const existingVaultIds = selectUserDepositedVaultIds(state, walletAddress);
+  const addedVaultIds = depositedIds.filter(id => !existingVaultIds.includes(id));
 
   return {
     walletAddress,
     vaultIds: depositedIds,
+    addedVaultIds,
   };
 });

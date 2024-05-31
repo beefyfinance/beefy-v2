@@ -16,6 +16,7 @@ import { isMaybeDomain, isValidAddress } from '../../helpers/addresses';
 import { isFulfilledStatus, isRejectedStatus } from '../data/reducers/wallet/resolver-types';
 import { useTranslation } from 'react-i18next';
 import { useResolveDomain } from '../data/hooks/resolver';
+import { DashboardMeta } from '../../components/Meta/DashboardMeta';
 
 const useStyles = makeStyles(styles);
 
@@ -24,7 +25,12 @@ export type DashboardProps = {
 };
 
 export const Dashboard = memo<DashboardProps>(function Dashboard({ mode }) {
-  return mode === 'url' ? <DashboardFromUrl /> : <DashboardFromWallet />;
+  return (
+    <>
+      <DashboardMeta />
+      {mode === 'url' ? <DashboardFromUrl /> : <DashboardFromWallet />}
+    </>
+  );
 });
 
 const DashboardFromUrl = memo(function DashboardFromWallet() {
@@ -105,6 +111,7 @@ const DashboardForAddress = memo<DashboardForAddressProps>(function DashboardFor
 
   return (
     <DashboardContainer>
+      <DashboardMeta wallet={addressLabel || address} />
       <DepositSummary address={address} addressLabel={addressLabel} />
       {loading ? (
         <TechLoader />
