@@ -17,6 +17,7 @@ import { apyMiddleware } from './features/data/middlewares/apy';
 import { zapMiddleware } from './features/data/middlewares/zap';
 import { filteredVaultsMiddleware } from './features/data/middlewares/filtered-vaults';
 import { walletMiddleware } from './features/data/middlewares/wallet';
+import { analyticsMiddleware } from './features/data/middlewares/analytics';
 
 let middlewares: Middleware[] = [];
 
@@ -37,6 +38,7 @@ if (!featureFlag_replayReduxActions()) {
     zapMiddleware,
     filteredVaultsMiddleware,
     walletMiddleware,
+    analyticsMiddleware,
   ];
 }
 

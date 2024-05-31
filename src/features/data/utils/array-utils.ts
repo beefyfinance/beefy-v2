@@ -1,4 +1,4 @@
-import { isArray, isPlainObject, mapValues, sortBy } from 'lodash-es';
+import { isArray, isPlainObject, mapValues, orderBy } from 'lodash-es';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import type BigNumber from 'bignumber.js';
 import type { KeysOfType } from './types-utils';
@@ -38,26 +38,26 @@ export type BaseEntry = {
 };
 
 export function getTopNArray<T extends BaseEntry>(
-  arry: T[],
+  entries: T[],
   key: KeysOfType<T, string | number>,
-  N: number = 6 // by default get the first 6 results of the array
-): BaseEntry[] {
-  const sortedArray = sortBy(arry, [key]).reverse();
-
-  if (sortedArray.length <= N) {
-    return sortedArray;
+  topCount: number,
+  othersBase: T
+): T[] {
+  const sortedEntries = orderBy(entries, [key], ['desc']);
+  if (sortedEntries.length <= topCount) {
+    return sortedEntries;
   }
 
-  const other: BaseEntry = sortedArray.slice(N - 1, sortedArray.length).reduce(
+  const other: T = sortedEntries.slice(topCount - 1, sortedEntries.length).reduce(
     (tot, cur) => {
       tot.value = tot.value.plus(cur.value);
       tot.percentage += cur.percentage;
       return tot;
     },
-    { key: 'others', value: BIG_ZERO, percentage: 0 }
+    { ...othersBase, value: BIG_ZERO, percentage: 0 }
   );
 
-  const top: BaseEntry[] = sortedArray.slice(0, N - 1);
+  const top: T[] = sortedEntries.slice(0, topCount - 1);
   top.push(other);
   return top;
 }

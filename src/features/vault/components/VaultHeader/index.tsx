@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { memo } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
-import { isCowcentratedLiquidityVault, isGovVault } from '../../../data/entities/vault';
+import { isCowcentratedVault, isGovVault } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
 import { selectChainById } from '../../../data/selectors/chains';
@@ -35,7 +35,7 @@ export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId
         <div className={classes.title}>
           {punctuationWrap(vault.name)}{' '}
           {!isGovVault(vault) ? (
-            isCowcentratedLiquidityVault(vault) ? (
+            isCowcentratedVault(vault) ? (
               <CLMTag vault={vault} />
             ) : (
               t('Vault-vault')

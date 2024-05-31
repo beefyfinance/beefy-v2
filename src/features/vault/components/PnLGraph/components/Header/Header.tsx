@@ -15,7 +15,7 @@ import {
 } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
 import type { VaultEntity } from '../../../../../data/entities/vault';
-import { selectVaultPnl } from '../../../../../data/selectors/analytics';
+import { selectStandardGovPnl } from '../../../../../data/selectors/analytics';
 
 import { styles } from './styles';
 
@@ -41,7 +41,7 @@ export const Header = memo<HeaderProps>(function Header({ vaultId }) {
     yieldPercentage,
     totalPnlUsd,
     pnlPercentage,
-  } = useAppSelector(state => selectVaultPnl(state, vaultId));
+  } = useAppSelector(state => selectStandardGovPnl(state, vaultId));
 
   const classes = useStyles();
 
@@ -60,7 +60,7 @@ export const Header = memo<HeaderProps>(function Header({ vaultId }) {
           minShortPlaces={4}
         />
       </HeaderItem>
-      <HeaderItem tooltipText={t('pnl-graph-tooltip-now')} label={t('Now')}>
+      <HeaderItem tooltipText={t('pnl-graph-tooltip-now-vault')} label={t('Now')}>
         <SharesValue
           amount={deposit}
           price={oraclePrice}

@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { useAppSelector } from '../../../../store';
-import { selectUserExposureByKey } from '../../../data/selectors/balance';
+import { selectUserExposureByPlatform } from '../../../data/selectors/balance';
 import { selectIsUserBalanceAvailable } from '../../../data/selectors/data-loader';
 import { ExposureChart } from '../ExposureChart';
 import type { ExposureDashboardChartLoaderProps } from '../ExposureChart/types';
@@ -10,9 +10,8 @@ const PlatformExposure = memo<ExposureDashboardChartLoaderProps>(function Platfo
   address,
 }) {
   const platformExposureData = useAppSelector(state =>
-    selectUserExposureByKey(state, 'platformId', address)
+    selectUserExposureByPlatform(state, address)
   );
-
   return <ExposureChart title={title} type="platform" data={platformExposureData} />;
 });
 
