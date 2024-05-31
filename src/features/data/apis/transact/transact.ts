@@ -9,7 +9,7 @@ import type {
 } from './transact-types';
 import { partition } from 'lodash';
 import type { VaultEntity } from '../../entities/vault';
-import { isStandardVault } from '../../entities/vault';
+import { isCowcentratedLiquidityVault, isStandardVault } from '../../entities/vault';
 import type { GetStateFn } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
 import {
@@ -21,14 +21,14 @@ import {
 import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../reducers/wallet/stepper';
-import { isCowcentratedVaultType, type VaultType } from './vaults/IVaultType';
+import { type VaultType } from './vaults/IVaultType';
 import { strategyBuildersById } from './strategies';
 import { vaultTypeBuildersById } from './vaults';
 import { uniq } from 'lodash-es';
 import { VaultStrategy } from './strategies/vault/VaultStrategy';
 import { selectZapByChainId } from '../../selectors/zap';
 import { getSwapAggregator } from '../instances';
-import { CowcentratedStrategy } from './strategies/cowcentrated/CowcentratedStrategy';
+// import { CowcentratedStrategy } from './strategies/cowcentrated/CowcentratedStrategy';
 
 export class TransactApi implements ITransactApi {
   protected async getHelpersForVault(
@@ -273,12 +273,17 @@ export class TransactApi implements ITransactApi {
     const { vault } = helpers;
 
     // Only standard vault is supported so far
-    if (!isStandardVault(vault)) {
+    if (!isStandardVault(vault) && !isCowcentratedLiquidityVault(vault)) {
       return [];
     }
 
+    // CHEB
+    if (isCowcentratedLiquidityVault(vault)) {
+      console.log(vault);
+    }
+
     if (!vault.zaps || vault.zaps.length === 0) {
-      return [];
+      if (!isCowcentratedLiquidityVault(vault)) return [];
     }
 
     if (!isZapTransactHelpers(helpers)) {
@@ -286,8 +291,11 @@ export class TransactApi implements ITransactApi {
       return [];
     }
 
+    const cowStrats: StrategyOptions[] = [{ strategyId: 'cowcentrated' }];
+
     const strategies = await Promise.all(
-      vault.zaps.map(async zapConfig => {
+      // vault.zaps.map(async zapConfig => {
+      (isCowcentratedLiquidityVault(vault) ? cowStrats : vault.zaps).map(async zapConfig => {
         if (!zapConfig.strategyId) {
           console.warn(`Vault ${vault.id} has a zap config but no strategyId specified`);
           return undefined;
@@ -327,24 +335,29 @@ export class TransactApi implements ITransactApi {
       return new VaultStrategy(vaultType);
     }
 
-    if (strategyId === 'cowcentrated' && isCowcentratedVaultType(vaultType)) {
-      return new CowcentratedStrategy(vaultType);
-    }
+    // if (strategyId === 'cowcentrated' && isCowcentratedVaultType(vaultType)) {
+    //   console.log('returnning cow strat');
+    //   return new CowcentratedStrategy(vaultType);
+    // }
 
     if (!isZapTransactHelpers(helpers)) {
       throw new Error(`Strategy "${strategyId}" requires zap contract`);
     }
 
-    if (!isStandardVault(vault)) {
+    if (!isStandardVault(vault) && !isCowcentratedLiquidityVault(vault)) {
       // This should never happen
       throw new Error(`Vault ${vault.id} is not a standard vault and does not support zaps`);
     }
 
-    if (!vault.zaps) {
+    if (!vault.zaps && !isCowcentratedLiquidityVault(vault)) {
       throw new Error(`Vault ${vault.id} has no zaps`);
     }
 
-    const zap = vault.zaps.find(zap => zap.strategyId === strategyId);
+    const cowOptions: StrategyOptions[] = [{ strategyId: 'cowcentrated' }];
+
+    const zap = (isCowcentratedLiquidityVault(vault) ? cowOptions : vault.zaps).find(
+      zap => zap.strategyId === strategyId
+    );
     if (!zap) {
       throw new Error(`Vault ${vault.id} has no zap with strategy "${strategyId}"`);
     }

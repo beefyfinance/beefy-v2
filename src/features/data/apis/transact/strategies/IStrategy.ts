@@ -64,13 +64,18 @@ export type ConicStrategyOptions = {
   strategyId: 'conic';
 } & OptionalStrategySwapOption;
 
+export type CowcentratedStrategyOptions = {
+  strategyId: 'cowcentrated';
+} & OptionalStrategySwapOption;
+
 export type StrategyOptions =
   | SingleStrategyOptions
   | UniswapV2StrategyOptions
   | SolidlyStrategyOptions
   | CurveStrategyOptions
   | GammaStrategyOptions
-  | ConicStrategyOptions;
+  | ConicStrategyOptions
+  | CowcentratedStrategyOptions;
 
 export interface IStrategy {
   readonly id: string;

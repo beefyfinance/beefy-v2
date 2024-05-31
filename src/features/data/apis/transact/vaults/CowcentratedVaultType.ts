@@ -93,6 +93,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       strategyId: 'cowcentrated',
       vaultType: 'cowcentrated',
       mode: TransactMode.Deposit,
+      swapVia: undefined,
     };
   }
 
@@ -169,6 +170,9 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       allowances,
       priceImpact: 0,
       isCalm: resp.isCalm,
+      steps: [],
+      fee: { value: 0 },
+      lpQuotes: [],
     };
   }
 

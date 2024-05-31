@@ -104,7 +104,13 @@ export type GovVaultWithdrawOption = BaseWithdrawOption & {
   vaultType: 'gov';
 };
 
-export type CowcentratedDepositOption = BaseDepositOption & {
+export type CowcentratedDepositOption = ZapBaseDepositOption & {
+  strategyId: 'cowcentrated';
+  vaultType: 'cowcentrated';
+  swapVia: 'aggregator' | undefined;
+};
+
+export type SimpleCowcentratedDepositOption = BaseDepositOption & {
   strategyId: 'cowcentrated';
   vaultType: 'cowcentrated';
 };
@@ -186,6 +192,7 @@ export type DepositOption =
   | GammaDepositOption
   | SingleDepositOption
   | CurveDepositOption
+  | SimpleCowcentratedDepositOption
   | CowcentratedDepositOption
   | ConicDepositOption;
 
@@ -328,11 +335,13 @@ export type GovVaultDepositQuote = BaseQuote<GovVaultDepositOption> & {
   vaultType: 'gov';
 };
 
-export type CowcentratedVaultDepositQuote = BaseQuote<CowcentratedDepositOption> & {
+// export type CowcentratedVaultDepositQuote = BaseQuote<CowcentratedDepositOption> & {
+export type CowcentratedVaultDepositQuote = BaseZapQuote<CowcentratedDepositOption> & {
   vaultType: 'cowcentrated';
   amountsUsed: TokenAmount[];
   amountsReturned: TokenAmount[];
   isCalm: boolean;
+  lpQuotes: (QuoteResponse | undefined)[];
 };
 
 export type SingleDepositQuote = BaseZapQuote<SingleDepositOption> & {
