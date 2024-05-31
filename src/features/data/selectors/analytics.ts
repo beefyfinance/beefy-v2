@@ -29,8 +29,8 @@ import {
 import { selectWalletAddress } from './wallet';
 import {
   isLoaderAvailable,
-  selectIsConfigAvailable,
   selectIsAddressDataAvailable,
+  selectIsConfigAvailable,
   selectIsUserBalanceAvailable,
 } from './data-loader';
 import type { AnalyticsBucketData, AnalyticsState } from '../reducers/analytics';
@@ -518,7 +518,10 @@ function selectDashboardYieldCowcentratedData(
   vault: VaultCowcentrated,
   pnl: UserClmPnl
 ) {
-  if (!selectIsAnalyticsLoadedByAddress(state, walletAddress)) {
+  if (
+    !selectIsAnalyticsLoadedByAddress(state, walletAddress) ||
+    !selectIsAddressDataAvailable(state, walletAddress, 'clmHarvests')
+  ) {
     return DashboardDataStatus.Loading;
   }
 

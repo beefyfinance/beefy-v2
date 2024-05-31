@@ -553,11 +553,11 @@ export const recalculateClmHarvestsForUserVaultId = createAsyncThunk<
     const timeline = (
       selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress) || []
     ).filter(isCLMTimelineAnalyticsEntity);
-    if (!timeline.length) {
+    if (!timeline) {
       throw new Error(`No timeline data found for vault ${vaultId}`);
     }
     const harvests = selectClmHarvestsByVaultId(state, vaultId);
-    if (!harvests || !harvests.length) {
+    if (!harvests) {
       throw new Error(`No harvest data found for vault ${vaultId}`);
     }
 
