@@ -7,10 +7,7 @@ export const selectIsVaultQidao = (state: BeefyState, vaultId: VaultEntity['id']
 };
 export const selectIsOpenCover = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
-  return (
-    !isCowcentratedLiquidityVault(vault) &&
-    state.biz.partners.openCover.byChainId[vault.chainId] !== undefined
-  );
+  return state.biz.partners.openCover.byChainId[vault.chainId] !== undefined;
 };
 
 export const selectIsVaultNexus = (state: BeefyState, vaultId: VaultEntity['id']) => {
