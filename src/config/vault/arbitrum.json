@@ -220,7 +220,12 @@
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
     "type": "cowcentrated",
-    "feeTier": "1"
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "curve-arb-fethxeth",
@@ -355,7 +360,12 @@
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
     "type": "cowcentrated",
-    "feeTier": "0.05"
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "uniswap-cow-arb-wsteth-usdc.e",
@@ -381,7 +391,12 @@
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
     "type": "cowcentrated",
-    "feeTier": "0.05"
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "uniswap-cow-arb-eth-usdc.e",
@@ -407,7 +422,12 @@
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
     "type": "cowcentrated",
-    "feeTier": "0.05"
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "aura-arb-ezeth-wsteth",
@@ -627,7 +647,12 @@
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
     "type": "cowcentrated",
-    "feeTier": "0.05"
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "uniswap-cow-arb-magic-weth",
@@ -653,7 +678,12 @@
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
     "type": "cowcentrated",
-    "feeTier": "0.30"
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "uniswap-cow-arb-arb-usdc.e",
@@ -679,7 +709,12 @@
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
     "type": "cowcentrated",
-    "feeTier": "0.05"
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "equilibria-arb-eeth-27jun24",
@@ -751,7 +786,12 @@
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
     "type": "cowcentrated",
-    "feeTier": "0.05"
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "uniswap-cow-arb-eth-usdc",
@@ -777,7 +817,12 @@
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
     "type": "cowcentrated",
-    "feeTier": "0.05"
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "uniswap-cow-arb-pendle-eth",
@@ -803,7 +848,12 @@
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
     "type": "cowcentrated",
-    "feeTier": "0.30"
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "uniswap-cow-arb-arb-eth-t3",
@@ -829,7 +879,12 @@
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
     "type": "cowcentrated",
-    "feeTier": "0.05"
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "equilibria-arb-ezeth-27jun24",

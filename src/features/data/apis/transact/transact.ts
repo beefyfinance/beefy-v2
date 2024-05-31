@@ -291,11 +291,8 @@ export class TransactApi implements ITransactApi {
       return [];
     }
 
-    const cowStrats: StrategyOptions[] = [{ strategyId: 'cowcentrated' }];
-
     const strategies = await Promise.all(
-      // vault.zaps.map(async zapConfig => {
-      (isCowcentratedLiquidityVault(vault) ? cowStrats : vault.zaps).map(async zapConfig => {
+      vault.zaps.map(async zapConfig => {
         if (!zapConfig.strategyId) {
           console.warn(`Vault ${vault.id} has a zap config but no strategyId specified`);
           return undefined;
@@ -353,11 +350,7 @@ export class TransactApi implements ITransactApi {
       throw new Error(`Vault ${vault.id} has no zaps`);
     }
 
-    const cowOptions: StrategyOptions[] = [{ strategyId: 'cowcentrated' }];
-
-    const zap = (isCowcentratedLiquidityVault(vault) ? cowOptions : vault.zaps).find(
-      zap => zap.strategyId === strategyId
-    );
+    const zap = vault.zaps.find(zap => zap.strategyId === strategyId);
     if (!zap) {
       throw new Error(`Vault ${vault.id} has no zap with strategy "${strategyId}"`);
     }
