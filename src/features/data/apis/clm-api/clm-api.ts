@@ -53,7 +53,7 @@ const ClmStrategyAbi = [
   },
 ] as const satisfies Abi;
 
-const CLM_API = import.meta.env.VITE_CLM_API || 'https://clm-api.beefy.finance';
+const CLM_API = import.meta.env.VITE_CLM_URL || 'https://clm-api.beefy.finance';
 
 export class ClmApi implements IClmApi {
   public api: AxiosInstance;
