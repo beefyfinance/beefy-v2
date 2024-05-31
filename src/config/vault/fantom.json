@@ -355,8 +355,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://v2.spooky.fi/#/swap?outputCurrency=0x28a92dde19D9989F39A49905d7C9C2FAc7799bDf",
-    "addLiquidityUrl": "https://stargate.finance/farm/USDC-FANTOM/add",
-    "removeLiquidityUrl": "https://stargate.finance/farm/USDC-FANTOM/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/fantom:0xc647CE76ec30033Aa319d472Ae9f4462068f2AD7",
+    "removeLiquidityUrl": "https://stargate.finance/pool/fantom:0xc647CE76ec30033Aa319d472Ae9f4462068f2AD7/remove",
     "network": "fantom"
   },
   {

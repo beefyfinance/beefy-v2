@@ -21606,8 +21606,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
-    "addLiquidityUrl": "https://stargate.finance/pool/busd-bsc/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/busd-bsc/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/bsc:0x98a5737749490856b401DB5Dc27F522fC314A4e1",
+    "removeLiquidityUrl": "https://stargate.finance/pool/bsc:0x98a5737749490856b401DB5Dc27F522fC314A4e1/remove",
     "network": "bsc"
   },
   {
@@ -21637,8 +21637,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x55d398326f99059fF775485246999027B3197955",
-    "addLiquidityUrl": "https://stargate.finance/pool/usdt-bsc/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/usdt-bsc/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/bsc:0x9aA83081AA06AF7208Dcc7A4cB72C94d057D2cda",
+    "removeLiquidityUrl": "https://stargate.finance/pool/bsc:0x9aA83081AA06AF7208Dcc7A4cB72C94d057D2cda/remove",
     "network": "bsc"
   },
   {

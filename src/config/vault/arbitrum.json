@@ -7087,8 +7087,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/USDC/ETH",
-    "addLiquidityUrl": "https://stargate.finance/pool/eth-arbitrum/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/eth-arbitrum/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/arbitrum:0x915A55e36A01285A14f05dE6e81ED9cE89772f8e",
+    "removeLiquidityUrl": "https://stargate.finance/pool/arbitrum:0x915A55e36A01285A14f05dE6e81ED9cE89772f8e/remove",
     "network": "arbitrum"
   },
   {
@@ -7212,8 +7212,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/USDC",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDC-ARBITRUM/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDC-ARBITRUM/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/arbitrum:0x892785f33CdeE22A30AEF750F285E18c18040c3e",
+    "removeLiquidityUrl": "https://stargate.finance/pool/arbitrum:0x892785f33CdeE22A30AEF750F285E18c18040c3e/remove",
     "network": "arbitrum"
   },
   {
@@ -7243,8 +7243,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/USDT",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDT-ARBITRUM/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDT-ARBITRUM/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/arbitrum:0xB6CfcF89a7B22988bfC96632aC2A9D6daB60d641",
+    "removeLiquidityUrl": "https://stargate.finance/pool/arbitrum:0xB6CfcF89a7B22988bfC96632aC2A9D6daB60d641/remove",
     "network": "arbitrum"
   },
   {

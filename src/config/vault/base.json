@@ -5120,8 +5120,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.balancer.fi/#/base/swap?outputCurrency=0x4200000000000000000000000000000000000006",
-    "addLiquidityUrl": "https://stargate.finance/pool/ETH-BASE/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/ETH-BASE/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/base:0x28fc411f9e1c480AD312b3d9C60c22b965015c6B",
+    "removeLiquidityUrl": "https://stargate.finance/pool/base:0x28fc411f9e1c480AD312b3d9C60c22b965015c6B/remove",
     "network": "base"
   },
   {
@@ -5153,8 +5153,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.balancer.fi/#/base/swap?outputCurrency=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDC-BASE/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDC-BASE/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/base:0x4c80E24119CFB836cdF0a6b53dc23F04F7e652CA",
+    "removeLiquidityUrl": "https://stargate.finance/pool/base:0x4c80E24119CFB836cdF0a6b53dc23F04F7e652CA/remove",
     "network": "base"
   },
   {
