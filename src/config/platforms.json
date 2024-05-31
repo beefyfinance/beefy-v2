@@ -979,6 +979,11 @@
     "risks": ["NO_TIMELOCK"]
   },
   {
+    "id": "stakedao",
+    "name": "StakeDAO",
+    "risks": ["NO_TIMELOCK"]
+  },
+  {
     "id": "nile",
     "name": "Nile",
     "filter": true,

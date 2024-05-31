@@ -17,8 +17,8 @@
     "assets": ["USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDT-KAVA/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDT-KAVA/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/kava:0xAad094F6A75A14417d39f04E690fC216f080A41a",
+    "removeLiquidityUrl": "https://stargate.finance/pool/kava:0xAad094F6A75A14417d39f04E690fC216f080A41a/remove",
     "network": "kava"
   },
   {
