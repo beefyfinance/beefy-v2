@@ -1,4 +1,4 @@
-import { isCowcentratedVault, type VaultEntity } from '../../features/data/entities/vault';
+import { isCowcentratedLiquidityVault, type VaultEntity } from '../../features/data/entities/vault';
 import { memo, useMemo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
@@ -16,10 +16,6 @@ import type { PlatformEntity } from '../../features/data/entities/platform';
 import { selectPlatformById } from '../../features/data/selectors/platforms';
 import { useAppSelector } from '../../store';
 import { getVaultUnderlyingTvlAndBeefySharePercent } from '../../helpers/tvl';
-import {
-  selectIsChainDataAvailable,
-  selectIsGlobalDataAvailable,
-} from '../../features/data/selectors/data-loader';
 
 export type VaultTvlStatProps = {
   vaultId: VaultEntity['id'];
@@ -31,8 +27,8 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
   const label = 'VaultStat-TVL';
   const vault = selectVaultById(state, vaultId);
   const isLoaded =
-    selectIsGlobalDataAvailable(state, 'prices') &&
-    selectIsChainDataAvailable(state, vault.chainId, 'contractData');
+    state.ui.dataLoader.byChainId[vault.chainId]?.contractData.alreadyLoadedOnce &&
+    state.ui.dataLoader.global.prices.alreadyLoadedOnce;
 
   if (!isLoaded) {
     return {
@@ -53,7 +49,9 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
   );
 
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const platformId = isCowcentratedVault(vault) ? depositToken.providerId! : vault.platformId;
+  const platformId = isCowcentratedLiquidityVault(vault)
+    ? depositToken.providerId!
+    : vault.platformId;
 
   if (!breakdown) {
     return {

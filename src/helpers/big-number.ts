@@ -66,17 +66,13 @@ export function fromWeiString(value: string, decimals: number): BigNumber {
 
 /**
  * Recursively maps over an object and replaces any BigNumber object with string value
- * e.g. "BN(123.567)"
+ * e.g. "BigNumber(123.567)"
  * Use only for debugging
  */
 export function bigNumberToStringDeep(input: unknown) {
   if (input && typeof input === 'object') {
-    if (input instanceof Date) {
-      return input;
-    }
-
     if (BigNumber.isBigNumber(input)) {
-      return `BN(${input.toString(10)})`;
+      return `BigNumber(${input.toString(10)})`;
     }
 
     if (Array.isArray(input)) {

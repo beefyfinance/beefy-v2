@@ -31,10 +31,7 @@ export const StablesExposure = memo<StablesExposureProps>(function StablesExposu
         {stablecoinsExposureData.map(item => {
           return (
             <div key={item.key} className={classes.legendItem}>
-              <div
-                className={classes.square}
-                style={{ backgroundColor: item.key === 'stable' ? '#3D5CF5' : '#C2D65C' }}
-              />
+              <div className={classes.square} style={{ backgroundColor: item.color }} />
               <div className={classes.label}>
                 {item.key} <span>{formatLargePercent(item.percentage, 2, '0%')}</span>
               </div>

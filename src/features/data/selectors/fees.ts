@@ -4,7 +4,6 @@ import type { VaultEntity } from '../entities/vault';
 import type { VaultFee } from '../reducers/fees';
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectIsVaultGov, selectVaultDepositFee } from './vaults';
-import { selectIsGlobalDataAvailable } from './data-loader';
 
 const GOV_FEES: Readonly<VaultFee> = {
   id: 'gov-fees',
@@ -18,7 +17,7 @@ const GOV_FEES: Readonly<VaultFee> = {
 };
 
 export const selectAreFeesLoaded = (state: BeefyState) =>
-  selectIsGlobalDataAvailable(state, 'fees');
+  state.ui.dataLoader.global.fees.alreadyLoadedOnce;
 
 export const selectShouldInitFees = (state: BeefyState) =>
   isInitialLoader(state.ui.dataLoader.global.fees);

@@ -13,7 +13,7 @@ import type { HistoricalState, TimeBucketsState, TimeBucketState } from './histo
 import type { Draft } from 'immer';
 import { mapValues } from 'lodash-es';
 import { TIME_BUCKETS } from '../../vault/components/HistoricGraph/utils';
-import { isCowcentratedVault } from '../entities/vault';
+import { isCowcentratedLiquidityVault } from '../entities/vault';
 
 const initialState: HistoricalState = {
   ranges: {
@@ -73,7 +73,7 @@ export const historicalSlice = createSlice({
         initAllTimeBuckets(state, oracleId, vaultId);
         state.apys.byVaultId[vaultId].availableTimebuckets = getBucketsFromRange(ranges.apys);
         state.tvls.byVaultId[vaultId].availableTimebuckets = getBucketsFromRange(ranges.tvls);
-        if (isCowcentratedVault(vault)) {
+        if (isCowcentratedLiquidityVault(vault)) {
           state.clm.byVaultId[vaultId].availableTimebuckets = getBucketsFromRange(ranges.clm);
         }
         state.prices.byOracleId[oracleId].availableTimebuckets = getBucketsFromRange(ranges.prices);

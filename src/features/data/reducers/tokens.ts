@@ -489,11 +489,6 @@ function addVaultToState(
       existingDepositToken.providerId = depositToken.providerId;
     }
   }
-  if (vault.type === 'cowcentrated' && vault.depositTokenAddresses) {
-    vault.depositTokenAddresses.forEach(address =>
-      ensureInterestingToken(address, chainId, sliceState)
-    );
-  }
 
   //
   // Earned token

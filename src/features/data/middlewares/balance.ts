@@ -8,11 +8,8 @@ import {
 import { initiateBoostForm } from '../actions/boosts';
 import { initiateMinterForm } from '../actions/minters';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { createWalletDebouncer } from '../../../helpers/middleware';
 
 const balanceListener = createListenerMiddleware<BeefyState>();
-
-const depositedDebouncer = createWalletDebouncer(100);
 
 balanceListener.startListening({
   matcher: isFulfilled(
@@ -22,10 +19,12 @@ balanceListener.startListening({
     initiateMinterForm,
     reloadBalanceAndAllowanceAndGovRewardsAndBoostData
   ),
-  effect: async (action, { dispatch, delay }) => {
-    if (await depositedDebouncer(action.payload.walletAddress, delay)) {
-      return;
-    }
+  effect: async (action, { dispatch, delay, cancelActiveListeners }) => {
+    // Cancel other instances of this callback
+    cancelActiveListeners();
+
+    // Debounce
+    await delay(50);
 
     // Compute user deposited vaults
     dispatch(recalculateDepositedVaultsAction({ walletAddress: action.payload.walletAddress }));

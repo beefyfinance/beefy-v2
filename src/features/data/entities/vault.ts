@@ -158,7 +158,7 @@ export function isStandardVault(vault: VaultEntity): vault is VaultStandard {
   return vault.type === 'standard';
 }
 
-export function isCowcentratedVault(vault: VaultEntity): vault is VaultCowcentrated {
+export function isCowcentratedLiquidityVault(vault: VaultEntity): vault is VaultCowcentrated {
   return vault.type === 'cowcentrated';
 }
 

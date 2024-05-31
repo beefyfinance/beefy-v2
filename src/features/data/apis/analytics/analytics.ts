@@ -4,34 +4,28 @@ import BigNumber from 'bignumber.js';
 import type {
   AnalyticsPriceResponse,
   AnalyticsUserTimelineResponse,
+  ApiProductPriceRow,
   PriceType,
   TimeBucketType,
 } from './analytics-types';
-import type { VaultEntity } from '../../entities/vault';
-import type { ChainEntity } from '../../entities/chain';
-
-const INVESTOR_API = import.meta.env.VITE_INVESTOR_URL || 'https://investor-api.beefy.finance';
 
 export class AnalyticsApi {
   public api: AxiosInstance;
 
   constructor() {
     this.api = axios.create({
-      baseURL: INVESTOR_API,
+      baseURL: 'https://databarn.beefy.finance/api',
     });
   }
 
   public async getWalletTimeline(address: string): Promise<AnalyticsUserTimelineResponse> {
     try {
-      const res = await this.api.get('/api/v1/timeline', { params: { address } });
-      return res.data.result;
+      const res = await this.api.get('/v1/beefy/timeline', { params: { address } });
+      return res.data;
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response?.status === 404) {
-          return {
-            clmTimeline: [],
-            databarnTimeline: [],
-          };
+          return [];
         }
       }
       throw err;
@@ -39,28 +33,23 @@ export class AnalyticsApi {
   }
 
   public async getVaultPrices(
-    productType: 'vault' | 'boost',
+    productKey: string,
     priceType: PriceType,
-    timeBucket: TimeBucketType,
-    address: VaultEntity['earnContractAddress'],
-    chain: ChainEntity['id']
+    timeBucket: TimeBucketType
   ): Promise<AnalyticsPriceResponse> {
-    const res = await this.api.get('/api/v1/prices', {
-      params: { address: address.toLowerCase(), productType, priceType, bucket: timeBucket, chain },
+    const res = await this.api.get('/v1/price', {
+      params: { product_key: productKey, price_type: priceType, time_bucket: timeBucket },
     });
 
-    return res.data.result.map((row: { ts: number; value: number }) => {
-      return { date: new Date(row.ts * 1000), value: new BigNumber(row.value) };
-    });
-  }
+    // [datetime, open, high, low, close]
+    const datetimeIdx = 0;
+    const openIdx = 1;
 
-  public async getClmPrices(oracleId: string, timebucket: TimeBucketType) {
-    const res = await this.api.get('/api/v1/prices', {
-      params: { oracle: oracleId, bucket: timebucket },
-    });
-    return res.data.result.map((row: { ts: number; value: number }) => {
-      return { date: new Date(row.ts * 1000), value: new BigNumber(row.value) };
-    });
+    return res.data.map(
+      (row): ApiProductPriceRow => ({
+        date: new Date(row[datetimeIdx]),
+        value: new BigNumber(row[openIdx]),
+      })
+    );
   }
 }
-//

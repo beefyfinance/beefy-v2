@@ -69,9 +69,4 @@ export const styles = (theme: Theme) => ({
     borderRadius: '8px',
     backgroundColor: '#D9D9D94C',
   },
-  clm: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
-    },
-  },
 });

@@ -30,11 +30,6 @@ export const getAnalyticsApi = createDependencyFactory(
   () => import('./analytics/analytics')
 );
 
-export const getClmApi = createDependencyFactory(
-  async ({ ClmApi }) => new ClmApi(),
-  () => import('./clm-api/clm-api')
-);
-
 export const getBeefyDataApi = createDependencyFactory(
   async ({ BeefyDataApi }) => new BeefyDataApi(),
   () => import('./beefy/beefy-data-api')

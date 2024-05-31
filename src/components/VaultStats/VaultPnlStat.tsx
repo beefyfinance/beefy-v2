@@ -2,18 +2,19 @@ import type { VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
-import { formatLargePercent, formatLargeUsd } from '../../helpers/format';
+import { formatLargeUsd, formatLargePercent } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import {
   selectIsAnalyticsLoadedByAddress,
   selectUserDepositedTimelineByVaultId,
 } from '../../features/data/selectors/analytics';
-import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types';
+import type { VaultPnLDataType } from './types';
+import { selectIsVaultCowcentrated } from '../../features/data/selectors/vaults';
 
 export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
-  pnlData: UserVaultPnl;
+  pnlData: VaultPnLDataType;
   walletAddress: string;
 };
 
@@ -23,11 +24,15 @@ function mapStateToProps(
   state: BeefyState,
   { vaultId, className, pnlData, walletAddress }: VaultDailyStatProps
 ) {
-  const label = 'VaultStat-Pnl';
+  const label = '-';
+
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
+
   const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
 
-  if (!vaultTimeline || !vaultTimeline.length) {
+  const isCowcentratedVault = selectIsVaultCowcentrated(state, vaultId);
+
+  if (!vaultTimeline || isCowcentratedVault) {
     return {
       label,
       value: '-',
@@ -48,21 +53,12 @@ function mapStateToProps(
     };
   }
 
-  let value: string, subValue: string | null;
-  if (isUserClmPnl(pnlData)) {
-    const { pnl, pnlPercentage } = pnlData;
-    value = formatLargeUsd(pnl);
-    subValue = formatLargePercent(pnlPercentage);
-  } else {
-    const { totalPnlUsd, pnlPercentage } = pnlData;
-    value = formatLargeUsd(totalPnlUsd);
-    subValue = formatLargePercent(pnlPercentage);
-  }
+  const { totalPnlUsd, pnlPercentage } = pnlData;
 
   return {
     label,
-    value,
-    subValue,
+    value: formatLargeUsd(totalPnlUsd),
+    subValue: formatLargePercent(pnlPercentage),
     blur: false,
     loading: !isLoaded,
     boosted: false,

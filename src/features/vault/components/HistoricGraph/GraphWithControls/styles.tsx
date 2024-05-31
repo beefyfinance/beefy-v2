@@ -15,7 +15,7 @@ export const styles = (theme: Theme) => ({
     gap: '16px',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '12px 24px',
+    padding: '16px 24px',
     borderRadius: '0px 0px 12px 12px',
     backgroundColor: theme.palette.background.contentPrimary,
     [theme.breakpoints.down('sm')]: {

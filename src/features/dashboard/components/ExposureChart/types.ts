@@ -1,32 +1,10 @@
-import type {
-  ChainExposurePayloadData,
-  GenericExposurePayloadData,
-  TokenExposurePayloadData,
-} from '../../../../components/PieChart/types';
+import type BigNumber from 'bignumber.js';
 
-type BaseExposureDashboardChartProps = {
+export interface ExposureDashboardChartProps {
   title?: string;
-};
-
-type TokenExposurePieChartProps = BaseExposureDashboardChartProps & {
-  type: 'token';
-  data: TokenExposurePayloadData[];
-};
-
-type ChainExposurePieChartProps = BaseExposureDashboardChartProps & {
-  type: 'chain';
-  data: ChainExposurePayloadData[];
-};
-
-type PlatformExposurePieChartProps = BaseExposureDashboardChartProps & {
-  type: 'platform';
-  data: GenericExposurePayloadData[];
-};
-
-export type ExposureDashboardChartProps =
-  | TokenExposurePieChartProps
-  | ChainExposurePieChartProps
-  | PlatformExposurePieChartProps;
+  data: { key: string; value: BigNumber; percentage: number }[];
+  type: 'chain' | 'platform' | 'token';
+}
 
 export interface ExposureDashboardChartLoaderProps {
   title?: string;

@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
-  isCowcentratedVault,
+  isCowcentratedLiquidityVault,
   type VaultCowcentrated,
   type VaultEntity,
   type VaultStandard,
@@ -45,8 +45,8 @@ export const StrategyDescription = memo<StrategyDescriptionProps>(function Strat
   const chainName = chain.name;
   const chainNativeToken = chain.walletSettings.nativeCurrency.symbol;
 
-  const depositToken0 = isCowcentratedVault(vault) ? vault.assetIds[0] : null;
-  const depositToken1 = isCowcentratedVault(vault) ? vault.assetIds[1] : null;
+  const depositToken0 = isCowcentratedLiquidityVault(vault) ? vault.assetIds[0] : null;
+  const depositToken1 = isCowcentratedLiquidityVault(vault) ? vault.assetIds[1] : null;
 
   let i18nKey = `StrategyDescription-${vault.strategyTypeId}`;
 

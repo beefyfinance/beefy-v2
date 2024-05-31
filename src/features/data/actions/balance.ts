@@ -8,7 +8,6 @@ import {
   selectBoostUserBalanceInToken,
   selectGovVaultUserStakedBalanceInDepositToken,
   selectUserBalanceOfToken,
-  selectUserDepositedVaultIds,
 } from '../selectors/balance';
 import {
   selectAllVaultBoostIds,
@@ -16,7 +15,7 @@ import {
   selectBoostsByChainId,
 } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
-import { selectCowcentratedVaultDepositTokens, selectTokenByAddress } from '../selectors/tokens';
+import { selectTokenByAddress } from '../selectors/tokens';
 import {
   selectAllGovVaultsByChainId,
   selectAllVaultIds,
@@ -25,7 +24,7 @@ import {
 import { selectWalletAddress } from '../selectors/wallet';
 import type { TokenEntity } from '../entities/token';
 import {
-  isCowcentratedVault,
+  isCowcentratedLiquidityVault,
   isGovVault,
   isStandardVault,
   type VaultEntity,
@@ -107,11 +106,7 @@ export const fetchBalanceAction = createAsyncThunk<
         if (isGovVault(vault)) {
           govVaults.push(vault);
         } else {
-          if (isCowcentratedVault(vault)) {
-            Object.values(selectCowcentratedVaultDepositTokens(state, vault.id)).forEach(token =>
-              tokens.push(token)
-            );
-          } else {
+          if (!isCowcentratedLiquidityVault(vault)) {
             tokens.push(selectTokenByAddress(state, chain.id, vault.depositTokenAddress));
           }
           tokens.push(selectTokenByAddress(state, chain.id, vault.earnedTokenAddress));
@@ -138,13 +133,11 @@ export const fetchBalanceAction = createAsyncThunk<
 
 export type RecalculateDepositedVaultsParams = {
   walletAddress: string;
-  fromTimelineListener?: boolean;
 };
 
 export type RecalculateDepositedVaultsPayload = {
   walletAddress: string;
   vaultIds: VaultEntity['id'][];
-  addedVaultIds: VaultEntity['id'][];
 };
 
 export const recalculateDepositedVaultsAction = createAsyncThunk<
@@ -159,7 +152,7 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
   for (const vaultId of allVaultIds) {
     const vault = selectVaultById(state, vaultId);
 
-    if (isStandardVault(vault) || isCowcentratedVault(vault)) {
+    if (isStandardVault(vault) || isCowcentratedLiquidityVault(vault)) {
       // standard vaults via receipt tokens
       let deposited = false;
       const balance = selectUserBalanceOfToken(
@@ -207,12 +200,8 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
     }
   }
 
-  const existingVaultIds = selectUserDepositedVaultIds(state, walletAddress);
-  const addedVaultIds = depositedIds.filter(id => !existingVaultIds.includes(id));
-
   return {
     walletAddress,
     vaultIds: depositedIds,
-    addedVaultIds,
   };
 });

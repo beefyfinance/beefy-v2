@@ -30,14 +30,13 @@ import { RetirePauseReason } from '../../../RetirePauseReason';
 import { TokenAmount, TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
 import zapIcon from '../../../../../../images/icons/zap.svg';
 import {
-  isCowcentratedVault,
-  isVaultActive,
+  isCowcentratedLiquidityVault,
   type VaultCowcentrated,
 } from '../../../../../data/entities/vault';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import { BIG_ZERO } from '../../../../../../helpers/big-number';
+import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number';
 import { TextLoader } from '../../../../../../components/TextLoader';
 
 const useStyles = makeStyles(styles);
@@ -69,10 +68,12 @@ const SelectedInWallet = memo(function SelectedInWallet() {
   }
 
   if (forceSelection) {
-    return <TokenAmount amount={BIG_ZERO} decimals={18} />;
+    return <TokenAmount amount={BIG_ZERO} decimals={18} price={BIG_ONE} />;
   }
 
-  return <TokenAmountFromEntity onClick={handleMax} amount={balance} token={token} />;
+  return (
+    <TokenAmountFromEntity onClick={handleMax} amount={balance} token={token} minShortPlaces={4} />
+  );
 });
 
 export const DepositFormLoader = memo(function DepositFormLoader() {
@@ -82,7 +83,7 @@ export const DepositFormLoader = memo(function DepositFormLoader() {
   const error = useAppSelector(selectTransactOptionsError);
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const isCowVault = isCowcentratedVault(vault);
+  const isCowVault = isCowcentratedLiquidityVault(vault);
   const strategy = useAppSelector(state => selectVaultStrategyAddressOrUndefined(state, vaultId));
   const isLoading =
     status === TransactStatus.Idle ||
@@ -92,13 +93,13 @@ export const DepositFormLoader = memo(function DepositFormLoader() {
 
   return (
     <div className={classes.container}>
-      {!isVaultActive(vault) ? (
+      {vault.status !== 'active' ? (
         <RetirePauseReason vaultId={vaultId} />
       ) : isLoading ? (
         <LoadingIndicator text={t('Transact-Loading')} />
       ) : isError ? (
         <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
-      ) : isCowcentratedVault(vault) ? (
+      ) : isCowcentratedLiquidityVault(vault) ? (
         <CowcentratedDepositForm />
       ) : (
         <DepositForm />
@@ -208,7 +209,12 @@ export const V3TokenInput = memo<V3TokenInputProps>(function V3TokenInput({
         <div className={classes.availableLabel}>
           {t('Transact-Available')}{' '}
           <span className={classes.availableLabelAmount}>
-            <TokenAmountFromEntity onClick={handleMax} amount={balance} token={token} />
+            <TokenAmountFromEntity
+              onClick={handleMax}
+              amount={balance}
+              token={token}
+              minShortPlaces={4}
+            />
           </span>
         </div>
       </div>

@@ -5,10 +5,9 @@ import { isInitialLoader } from '../reducers/data-loader-types';
 import { orderBy } from 'lodash-es';
 import type { ChainEntity } from '../entities/chain';
 import { valueOrThrow } from '../utils/selector-utils';
-import { selectIsGlobalDataAvailable } from './data-loader';
 
 export const selectIsOnRampLoaded = (state: BeefyState) =>
-  selectIsGlobalDataAvailable(state, 'onRamp');
+  state.ui.dataLoader.global.onRamp.alreadyLoadedOnce;
 
 export const selectShouldInitOnRamp = (state: BeefyState) =>
   isInitialLoader(state.ui.dataLoader.global.onRamp);

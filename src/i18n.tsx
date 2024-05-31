@@ -38,7 +38,7 @@ type Namespace = keyof typeof en;
 function fetchLocale(
   language: LocaleCode,
   namespace: Namespace,
-  callback: (errorValue: unknown, translations: null | (typeof en)[Namespace]) => void
+  callback: (errorValue: unknown, translations: null | typeof en[Namespace]) => void
 ) {
   import(`./locales/${language}/${namespace}.json`)
     .then(translations => {

@@ -16,7 +16,7 @@ import { isMaybeDomain, isValidAddress } from '../../helpers/addresses';
 import { isFulfilledStatus, isRejectedStatus } from '../data/reducers/wallet/resolver-types';
 import { useTranslation } from 'react-i18next';
 import { useResolveDomain } from '../data/hooks/resolver';
-import { DashboardMeta } from '../../components/Meta/DashboardMeta';
+import { selectIsDashboardDataLoadedByAddress } from '../data/selectors/analytics';
 
 const useStyles = makeStyles(styles);
 
@@ -25,12 +25,7 @@ export type DashboardProps = {
 };
 
 export const Dashboard = memo<DashboardProps>(function Dashboard({ mode }) {
-  return (
-    <>
-      <DashboardMeta />
-      {mode === 'url' ? <DashboardFromUrl /> : <DashboardFromWallet />}
-    </>
-  );
+  return mode === 'url' ? <DashboardFromUrl /> : <DashboardFromWallet />;
 });
 
 const DashboardFromUrl = memo(function DashboardFromWallet() {
@@ -106,14 +101,16 @@ const DashboardForAddress = memo<DashboardForAddressProps>(function DashboardFor
   address,
   addressLabel,
 }) {
-  const loading = useInitDashboard(address);
+  useInitDashboard(address);
   const userVaults = useAppSelector(state => selectAddressDepositedVaultIds(state, address));
+  const dashboardDataAvilable = useAppSelector(state =>
+    selectIsDashboardDataLoadedByAddress(state, address)
+  );
 
   return (
     <DashboardContainer>
-      <DashboardMeta wallet={addressLabel || address} />
       <DepositSummary address={address} addressLabel={addressLabel} />
-      {loading ? (
+      {!dashboardDataAvilable ? (
         <TechLoader />
       ) : userVaults.length > 0 ? (
         <>
