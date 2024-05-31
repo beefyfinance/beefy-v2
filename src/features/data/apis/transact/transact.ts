@@ -28,7 +28,6 @@ import { uniq } from 'lodash-es';
 import { VaultStrategy } from './strategies/vault/VaultStrategy';
 import { selectZapByChainId } from '../../selectors/zap';
 import { getSwapAggregator } from '../instances';
-// import { CowcentratedStrategy } from './strategies/cowcentrated/CowcentratedStrategy';
 
 export class TransactApi implements ITransactApi {
   protected async getHelpersForVault(
@@ -272,18 +271,13 @@ export class TransactApi implements ITransactApi {
   private async getZapStrategiesForVault(helpers: TransactHelpers): Promise<IStrategy[]> {
     const { vault } = helpers;
 
-    // Only standard vault is supported so far
+    // Only standard/cow vaults are supported so far
     if (!isStandardVault(vault) && !isCowcentratedLiquidityVault(vault)) {
       return [];
     }
 
-    // CHEB
-    if (isCowcentratedLiquidityVault(vault)) {
-      console.log(vault);
-    }
-
     if (!vault.zaps || vault.zaps.length === 0) {
-      if (!isCowcentratedLiquidityVault(vault)) return [];
+      return [];
     }
 
     if (!isZapTransactHelpers(helpers)) {
