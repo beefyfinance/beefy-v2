@@ -1,23 +1,20 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { selectShouldInitDashboardForUser } from '../data/selectors/data-loader';
-import { selectIsDashboardDataLoadedByAddress } from '../data/selectors/analytics';
-import { initDashboardByAddress } from '../data/actions/analytics';
+import { initDashboardByAddress } from '../data/actions/wallet';
+import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
+import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 
 export function useInitDashboard(address: string) {
+  const isConfigAvailable = useAppSelector(selectIsConfigAvailable);
+  const connectedAddress = useAppSelector(selectWalletAddressIfKnown);
+  const addressBookLoaded = useAppSelector(
+    state => state.ui.dataLoader.global.addressBook.alreadyLoadedOnce
+  );
   const dispatch = useAppDispatch();
-  const canInitDashboard = useAppSelector(state =>
-    selectShouldInitDashboardForUser(state, address)
-  );
-  const isDashboardAvailable = useAppSelector(state =>
-    selectIsDashboardDataLoadedByAddress(state, address)
-  );
 
   useEffect(() => {
-    if (address && canInitDashboard) {
-      dispatch(initDashboardByAddress({ walletAddress: address }));
+    if (isConfigAvailable && addressBookLoaded && address && address !== connectedAddress) {
+      dispatch(initDashboardByAddress({ address }));
     }
-  }, [dispatch, address, canInitDashboard]);
-
-  return !isDashboardAvailable;
+  }, [dispatch, address, connectedAddress, addressBookLoaded, isConfigAvailable]);
 }

@@ -49,7 +49,15 @@ export const TokenAmountIcon = memo<TokenAmountIconProps>(function TokenAmountIc
     <TokenAmountIconComponent
       className={className}
       amountWithValueClassName={amountWithValueClassName}
-      amount={<TokenAmount amount={amount} decimals={token.decimals} className={classes.token} />}
+      amount={
+        <TokenAmount
+          amount={amount}
+          decimals={token.decimals}
+          price={tokenPrice}
+          className={classes.token}
+          minShortPlaces={4}
+        />
+      }
       value={`~${formatLargeUsd(valueInUsd)}`}
       tokenSymbol={showSymbol ? token.symbol : null}
       tokenIcon={

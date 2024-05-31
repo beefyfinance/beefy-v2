@@ -8,58 +8,51 @@ import type { ChainEntity } from '../entities/chain';
  * and this slice can focus on data fetching
  * maybe it's dumb though, but it can be refactored
  **/
-export interface LoaderStateIdle {
-  lastDispatched: undefined;
-  lastFulfilled: undefined;
-  lastRejected: undefined;
-  status: 'idle';
+interface LoaderStateInit {
+  alreadyLoadedOnce: boolean;
+  status: 'init';
   error: null;
 }
 
-export interface LoaderStatePending {
-  lastDispatched: number;
-  lastFulfilled: number | undefined;
-  lastRejected: number | undefined;
+interface LoaderStatePending {
+  alreadyLoadedOnce: boolean;
   status: 'pending';
   error: null;
 }
 
-export interface LoaderStateRejected {
-  lastDispatched: number;
-  lastFulfilled: number | undefined;
-  lastRejected: number;
+interface LoaderStateRejected {
+  alreadyLoadedOnce: boolean;
   status: 'rejected';
   error: string;
 }
 
-export interface LoaderStateFulfilled {
-  lastDispatched: number;
-  lastFulfilled: number;
-  lastRejected: number | undefined;
+interface LoaderStateFulfilled {
+  alreadyLoadedOnce: boolean;
   status: 'fulfilled';
   error: null;
 }
 
 export type LoaderState =
-  | LoaderStateIdle
+  | LoaderStateInit
   | LoaderStatePending
   | LoaderStateRejected
   | LoaderStateFulfilled;
 
-export function isFulfilled(state: LoaderState | undefined): state is LoaderStateFulfilled {
-  return !!state && state.status === 'fulfilled';
+// some example of a type guard
+export function isFulfilled(state: LoaderState): state is LoaderStateFulfilled {
+  return state.status === 'fulfilled';
 }
 
-export function isPending(state: LoaderState | undefined): state is LoaderStatePending {
-  return !!state && state.status === 'pending';
+export function isPending(state: LoaderState): state is LoaderStatePending {
+  return state.status === 'pending';
 }
 
-export function isInitialLoader(state: LoaderState | undefined): state is LoaderStateIdle {
-  return !state || state.status === 'idle';
+export function isInitialLoader(state: LoaderState): state is LoaderStateInit {
+  return state.status === 'init';
 }
 
-export function isRejected(state: LoaderState | undefined): state is LoaderStateRejected {
-  return !!state && state.status === 'rejected';
+export function isRejected(state: LoaderState): state is LoaderStateRejected {
+  return state.status === 'rejected';
 }
 
 export interface DataLoaderState {
@@ -119,12 +112,8 @@ export interface ChainIdDataEntity {
 export interface ChainIdDataByAddressByChainEntity {
   balance: LoaderState;
   allowance: LoaderState;
-  clmHarvests: LoaderState;
 }
 
 export interface GlobalDataByAddressEntity {
   timeline: LoaderState;
-  depositedVaults: LoaderState;
-  dashboard: LoaderState;
-  clmHarvests: LoaderState;
 }

@@ -342,11 +342,3 @@ function formatGrouped(value: BigNumber, decimals: number): string {
 function stripTrailingZeros(str: string) {
   return str.replace(/(\.[0-9]*?)(0+$)/, '$1').replace(/\.$/, '');
 }
-
-export function formatPositiveOrNegative(number: BigNumber, value: string, symbol = ''): string {
-  if (number.isNegative()) {
-    return `-${value.replace('-', '')} ${symbol}`;
-  } else {
-    return `+${value} ${symbol}`;
-  }
-}

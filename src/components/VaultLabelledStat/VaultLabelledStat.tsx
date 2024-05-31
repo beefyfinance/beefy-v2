@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
 import React, { memo, useCallback } from 'react';
-import type { Theme } from '@material-ui/core';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
-import { Tooltip, type TooltipProps, TRIGGERS } from '../Tooltip';
+import type { Theme } from '@material-ui/core';
+import { IconWithTooltip, Tooltip, type TooltipProps, TRIGGERS } from '../Tooltip';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
@@ -46,6 +46,9 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
       {!lgUp && showLabel ? (
         <div className={classes.label}>
           <div className={clsx(classes.labelText, labelClassName)}>{label}</div>
+          {tooltip && lgUp ? (
+            <IconWithTooltip content={tooltip} triggerClass={classes.tooltipTrigger} />
+          ) : null}
         </div>
       ) : null}
       {tooltip ? (

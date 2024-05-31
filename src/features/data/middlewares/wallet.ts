@@ -23,9 +23,6 @@ const hasWalletChanged = isAnyOf(
 
 const walletListener = createListenerMiddleware<BeefyState>();
 
-/**
- * When connected wallet address changes, fetch data for the new wallet address
- */
 walletListener.startListening({
   matcher: hasWalletChanged,
   effect: async (

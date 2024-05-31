@@ -5,10 +5,14 @@ import {
   selectTransactInputAmount,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
-import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance';
+import { selectUserVaultDepositInDepositTokenExcludingBoostsBridged } from '../../../../../data/selectors/balance';
 import type { AmountInputProps } from '../AmountInput';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens';
+import { selectVaultById } from '../../../../../data/selectors/vaults';
+import {
+  selectTokenByAddress,
+  selectTokenPriceByTokenOracleId,
+} from '../../../../../data/selectors/tokens';
 import BigNumber from 'bignumber.js';
 import { AmountInputWithSlider } from '../AmountInputWithSlider';
 import { TokenSelectButton } from '../TokenSelectButton';
@@ -22,8 +26,12 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
     const dispatch = useAppDispatch();
 
     const vaultId = useAppSelector(selectTransactVaultId);
-    const { token: depositToken, amount: userBalance } = useAppSelector(state =>
-      selectUserVaultBalanceInDepositTokenWithToken(state, vaultId)
+    const vault = useAppSelector(state => selectVaultById(state, vaultId));
+    const depositToken = useAppSelector(state =>
+      selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
+    );
+    const userBalance = useAppSelector(state =>
+      selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId)
     );
     const value = useAppSelector(selectTransactInputAmount);
     const price = useAppSelector(state =>

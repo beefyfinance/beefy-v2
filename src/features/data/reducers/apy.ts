@@ -25,7 +25,6 @@ interface AprData {
 // TODO: this should be reworked
 export interface TotalApy {
   totalApy: number;
-  totalMonthly: number;
   totalDaily: number;
   vaultApr?: number;
   vaultDaily?: number;
@@ -40,9 +39,9 @@ export interface TotalApy {
   boostedTotalApy?: number;
   boostedTotalDaily?: number;
   clmApr?: number;
-  clmDaily?: number;
+  clmAprDaily?: number;
   merklApr?: number;
-  merklDaily?: number;
+  merklAprDaily?: number;
 }
 
 /**

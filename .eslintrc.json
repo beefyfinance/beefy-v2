@@ -36,8 +36,7 @@
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
-        "argsIgnorePattern": "^_",
-        "varsIgnorePattern": "^_"
+        "argsIgnorePattern": "^_"
       }
     ],
     "@typescript-eslint/no-non-null-assertion": "off", // TODO fix

@@ -1,17 +1,14 @@
-import {
-  isCowcentratedVault,
-  isGovVault,
-  type VaultEntity,
-} from '../../features/data/entities/vault';
 import * as React from 'react';
 import { memo } from 'react';
+import type { VaultEntity } from '../../../data/entities/vault';
+import { isCowcentratedLiquidityVault, isGovVault } from '../../../data/entities/vault';
+import { Meta } from '../../../../components/Meta/Meta';
+import { selectVaultById } from '../../../data/selectors/vaults';
+import { useAppSelector } from '../../../../store';
+import { selectChainById } from '../../../data/selectors/chains';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../store';
-import { selectVaultById } from '../../features/data/selectors/vaults';
-import { selectChainById } from '../../features/data/selectors/chains';
-import { selectTokenByAddress } from '../../features/data/selectors/tokens';
-import { selectPlatformById } from '../../features/data/selectors/platforms';
-import { Meta } from './Meta';
+import { selectTokenByAddress } from '../../../data/selectors/tokens';
+import { selectPlatformById } from '../../../data/selectors/platforms';
 
 export type VaultMetaProps = {
   vaultId: VaultEntity['id'];
@@ -26,7 +23,7 @@ export const VaultMeta = memo<VaultMetaProps>(function VaultMeta({ vaultId }) {
   const platform = useAppSelector(state => selectPlatformById(state, vault.platformId));
   const titleKey = isGovVault(vault)
     ? 'Meta-Vault-Title-Gov'
-    : isCowcentratedVault(vault)
+    : isCowcentratedLiquidityVault(vault)
     ? 'Meta-Vault-Title-Cow'
     : 'Meta-Vault-Title';
 

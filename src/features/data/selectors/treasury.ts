@@ -9,19 +9,18 @@ import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectLpBreakdownBalance } from './balance';
 import { selectChainById } from './chains';
 import {
-  selectHasBreakdownDataByOracleId,
   selectIsTokenStable,
   selectLpBreakdownByOracleId,
-  selectVaultTokenSymbols,
+  selectHasBreakdownDataByOracleId,
   selectWrappedToNativeSymbolOrTokenSymbol,
+  selectVaultTokenSymbols,
 } from './tokens';
 import { selectIsVaultStable, selectVaultPricePerFullShare } from './vaults';
 import { explorerAddressUrl } from '../../../helpers/url';
 import { entries, keys } from '../../../helpers/object';
-import { selectIsGlobalDataAvailable } from './data-loader';
 
 export const selectIsTreasuryLoaded = (state: BeefyState) =>
-  selectIsGlobalDataAvailable(state, 'treasury');
+  state.ui.dataLoader.global.treasury.alreadyLoadedOnce;
 
 export const selectShouldInitTreasury = (state: BeefyState) =>
   isInitialLoader(state.ui.dataLoader.global.treasury);
@@ -412,7 +411,7 @@ export const selectTreasuryExposureByChain = (state: BeefyState) => {
   const treasuryExposureBychain = Object.keys(chains).map(chainId => {
     const chain = selectChainById(state, chainId);
     return {
-      key: chain.id,
+      key: chainId,
       value: chains[chainId],
       percentage: chains[chainId].dividedBy(totalTreasury).toNumber(),
       label: chain.name,

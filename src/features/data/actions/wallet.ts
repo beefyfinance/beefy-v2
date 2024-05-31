@@ -9,9 +9,11 @@ import {
   userDidConnect,
   walletHasDisconnected,
 } from '../reducers/wallet/wallet';
-import { selectAllChains } from '../selectors/chains';
+import { selectAllChainIds, selectAllChains } from '../selectors/chains';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 import { selectIsWalletConnected } from '../selectors/wallet';
+import { fetchWalletTimeline } from './analytics';
+import { fetchAllBalanceAction } from './balance';
 import { createWalletActionResetAction } from '../reducers/wallet/wallet-action';
 import { stepperActions } from '../reducers/wallet/stepper';
 
@@ -49,6 +51,22 @@ export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
     }, 500);
   }
 );
+
+export const initDashboardByAddress = createAsyncThunk<
+  { address: string },
+  { address: string },
+  { state: BeefyState }
+>('wallet/initDashboardByAddress', async ({ address }, { getState, dispatch }) => {
+  const state = getState();
+  const chains = selectAllChainIds(state);
+  const lowerCaseAddress = address.toLowerCase();
+  for (const chainId of chains) {
+    dispatch(fetchAllBalanceAction({ chainId, walletAddress: lowerCaseAddress }));
+  }
+  dispatch(fetchWalletTimeline({ walletAddress: lowerCaseAddress }));
+
+  return { address: lowerCaseAddress };
+});
 
 export const tryToAutoReconnect = createAsyncThunk<void, void, { state: BeefyState }>(
   'wallet/tryToAutoReconnect',

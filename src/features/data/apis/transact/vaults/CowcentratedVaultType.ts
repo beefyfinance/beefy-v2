@@ -9,7 +9,7 @@ import {
 } from '../../../entities/token';
 import {
   type VaultEntity,
-  isCowcentratedVault,
+  isCowcentratedLiquidityVault,
   type VaultCowcentrated,
 } from '../../../entities/vault';
 import { TransactMode } from '../../../reducers/wallet/transact-types';
@@ -59,7 +59,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
   protected readonly getState: GetStateFn;
 
   constructor(vault: VaultEntity, getState: GetStateFn) {
-    if (!isCowcentratedVault(vault)) {
+    if (!isCowcentratedLiquidityVault(vault)) {
       throw new Error('Vault is not a cowcentrated liquidity vault');
     }
 

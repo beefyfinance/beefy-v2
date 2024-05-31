@@ -72,7 +72,7 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
             toggles={lineToggles}
           />
         ) : (
-          <GraphLoader imgHeight={220} />
+          <GraphLoader />
         )}
       </div>
       <div className={classes.footer}>

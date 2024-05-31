@@ -6,8 +6,8 @@ import { useAppSelector } from '../../../../store';
 import { selectStandardVaultById } from '../../../data/selectors/vaults';
 import {
   selectStandardVaultUserBalanceInDepositTokenBreakdown,
-  selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
+  selectUserVaultDepositInDepositToken,
+  selectUserVaultDepositInDepositTokenExcludingBoostsBridged,
   type StandardVaultBalanceBreakdownBoost,
   type StandardVaultBalanceBreakdownBridged,
   type StandardVaultBalanceBreakdownEntry,
@@ -158,10 +158,10 @@ interface DisplacedBalancesProps {
 export const DisplacedBalances = memo<DisplacedBalancesProps>(function DisplacedBalances({
   vaultId,
 }) {
-  const total = useAppSelector(state =>
-    selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(state, vaultId)
+  const total = useAppSelector(state => selectUserVaultDepositInDepositToken(state, vaultId));
+  const vaultOnly = useAppSelector(state =>
+    selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId)
   );
-  const vaultOnly = useAppSelector(state => selectUserVaultBalanceInDepositToken(state, vaultId));
 
   if (vaultOnly.gte(total)) {
     return null;

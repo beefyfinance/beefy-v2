@@ -1,5 +1,5 @@
+import { sortBy } from 'lodash-es';
 import { useCallback, useMemo, useState } from 'react';
-import { orderBy } from 'lodash-es';
 import { useAppSelector } from '../../../../../../store';
 import type { VaultEntity } from '../../../../../data/entities/vault';
 import { selectUserDepositedTimelineByVaultId } from '../../../../../data/selectors/analytics';
@@ -7,28 +7,13 @@ import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
 import { isBefore, subDays } from 'date-fns';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import {
-  type CLMTimelineAnalyticsEntity,
-  isCLMTimelineAnalyticsEntity,
-  isVaultTimelineAnalyticsEntity,
-  type VaultTimelineAnalyticsEntity,
-} from '../../../../../data/entities/analytics';
 
 export type SortedOptions = {
   sort: 'datetime' | 'amount' | 'balance' | 'mooTokenBal' | 'usdBalance' | 'default';
-  sortDirection: 'asc' | 'desc';
+  sortDirection: 'asc' | 'desc' | 'none';
 };
 
-type VaultTransactionHistory = {
-  sortedOptions: SortedOptions;
-  handleSort: (field: SortedOptions['sort']) => void;
-  sortedTimeline: (VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity)[];
-};
-
-export function useSortedTransactionHistory(
-  vaultId: VaultEntity['id'],
-  address: string
-): VaultTransactionHistory {
+export function useSortedTimeline(vaultId: VaultEntity['id'], address: string) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const currentOraclePrice = useAppSelector(state =>
     selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
@@ -39,15 +24,12 @@ export function useSortedTransactionHistory(
 
   // Replace nulls with current price or 0
   const vaultTimelineFixed = useMemo(() => {
-    if (!vaultTimeline) return [];
-
     const oneDayAgo = subDays(new Date(), 1);
-    return vaultTimeline.map((row: VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity) => {
-      if (isVaultTimelineAnalyticsEntity(row) && !row.underlyingToUsdPrice) {
+    return vaultTimeline.map(row => {
+      if (!row.underlyingToUsdPrice) {
         const underlyingToUsdPrice =
           row.underlyingToUsdPrice ??
           (isBefore(row.datetime, oneDayAgo) ? BIG_ZERO : currentOraclePrice);
-
         return {
           ...row,
           underlyingToUsdPrice,
@@ -61,52 +43,44 @@ export function useSortedTransactionHistory(
   }, [vaultTimeline, currentOraclePrice]);
 
   const [sortedOptions, setSortedOptions] = useState<SortedOptions>({
-    sortDirection: 'desc',
+    sortDirection: 'none',
     sort: 'default',
   });
 
   const sortedTimeline = useMemo(() => {
-    switch (sortedOptions.sort) {
-      case 'datetime':
-        return orderBy(
-          vaultTimelineFixed,
-          [tx => tx.datetime.getTime()],
-          [sortedOptions.sortDirection]
-        );
-      case 'amount':
-        return orderBy(
-          vaultTimelineFixed,
-          tx => tx.shareDiff.toNumber(),
-          sortedOptions.sortDirection
-        );
-      case 'balance':
-        return orderBy(
-          vaultTimelineFixed,
-          tx =>
-            isCLMTimelineAnalyticsEntity(tx)
-              ? tx.usdBalance
-              : tx.shareBalance.times(tx.shareToUnderlyingPrice).toNumber(),
-          sortedOptions.sortDirection
-        );
-      case 'mooTokenBal':
-        return orderBy(
-          vaultTimelineFixed,
-          tx => tx.shareBalance.toNumber(),
-          sortedOptions.sortDirection
-        );
-      case 'usdBalance':
-        return orderBy(
-          vaultTimelineFixed,
-          tx => tx.usdBalance?.toNumber() || 0,
-          sortedOptions.sortDirection
-        );
-      default:
-        return vaultTimelineFixed;
+    const sortDirMul = sortedOptions.sortDirection === 'desc' ? -1 : 1;
+    let sortedResult = vaultTimelineFixed;
+    if (sortedOptions.sort === 'datetime') {
+      sortedResult = sortBy(vaultTimelineFixed, tx => {
+        return tx.datetime.getTime() * sortDirMul;
+      });
     }
+    if (sortedOptions.sort === 'amount') {
+      sortedResult = sortBy(vaultTimelineFixed, tx => {
+        return tx.shareDiff.toNumber() * sortDirMul;
+      });
+    }
+    if (sortedOptions.sort === 'balance') {
+      sortedResult = sortBy(vaultTimelineFixed, tx => {
+        return tx.shareBalance.times(tx.shareToUnderlyingPrice).toNumber() * sortDirMul;
+      });
+    }
+    if (sortedOptions.sort === 'mooTokenBal') {
+      sortedResult = sortBy(vaultTimelineFixed, tx => {
+        return tx.shareBalance.toNumber() * sortDirMul;
+      });
+    }
+    if (sortedOptions.sort === 'usdBalance') {
+      sortedResult = sortBy(vaultTimelineFixed, tx => {
+        return (tx.usdBalance?.toNumber() || 0) * sortDirMul;
+      });
+    }
+
+    return sortedResult;
   }, [sortedOptions.sort, sortedOptions.sortDirection, vaultTimelineFixed]);
 
   const handleSort = useCallback(
-    (field: SortedOptions['sort']) => {
+    field => {
       if (field === sortedOptions.sort) {
         setSortedOptions({
           ...sortedOptions,

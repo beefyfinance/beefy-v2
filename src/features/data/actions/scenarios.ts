@@ -32,6 +32,7 @@ import {
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
 } from './zap';
+import { fetchWalletTimeline } from './analytics';
 import { fetchAllRewardsAction } from './rewards';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
@@ -129,6 +130,7 @@ export async function initHomeDataV4(store: BeefyStore) {
   if (selectIsWalletKnown(store.getState())) {
     const walletAddress = selectWalletAddress(store.getState());
     if (walletAddress) {
+      store.dispatch(fetchWalletTimeline({ walletAddress }));
       store.dispatch(fetchAllRewardsAction({ walletAddress }));
     }
   }

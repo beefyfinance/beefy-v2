@@ -2,12 +2,21 @@ import type { Theme } from '@material-ui/core';
 import { useMediaQuery } from '@material-ui/core';
 import { memo, useMemo } from 'react';
 import { Cell, Pie, PieChart as RechartsPieChart, Tooltip } from 'recharts';
+import type { BaseEntry } from '../../features/data/utils/array-utils';
 import { PieChartTooltip } from '../PieChartTooltip';
 import { CHART_COLORS } from '../../helpers/charts';
-import type { PieChartProps } from './types';
 
-export const PieChart = memo<PieChartProps>(function PieChart({ data, type, formatter }) {
+export type TypeChart = 'chain' | 'platform' | 'token' | 'assetAvailability';
+
+interface ChartProps {
+  data: BaseEntry[];
+  type?: TypeChart;
+  formatter?: (s: string) => string;
+}
+
+export const PieChart = memo<ChartProps>(function PieChart({ data, type, formatter }) {
   const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'), { noSsr: true });
+
   const chartPxs = useMemo(() => {
     return smUp ? 164 : 124;
   }, [smUp]);

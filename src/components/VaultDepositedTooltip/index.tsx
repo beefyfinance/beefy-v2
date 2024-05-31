@@ -45,7 +45,7 @@ const EntryDisplay = memo<EntryDisplayProps>(function VaultEntry({
       <div className={classes.label}>{label}</div>
       <div className={classes.details}>
         <div className={classes.amount}>
-          <TokenAmount amount={entry.amount} decimals={depositToken.decimals} />
+          <TokenAmount amount={entry.amount} price={price} decimals={depositToken.decimals} />
         </div>
         <div className={classes.value}>{formatLargeUsd(value)}</div>
       </div>

@@ -140,20 +140,6 @@ const DailyContentTooltip = memo<DailyTooltipContentProps>(function DailyTooltip
         });
       }
 
-      if ('clmDaily' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-CLMDaily',
-          value: rates.clmDaily ?? '?',
-        });
-      }
-
-      if ('merklDaily' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-MerklDaily',
-          value: rates.merklDaily ?? '?',
-        });
-      }
-
       if ('boostDaily' in rates) {
         items.push({
           label: 'Vault-Breakdown-BoostDaily',

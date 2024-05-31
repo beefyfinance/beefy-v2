@@ -9,7 +9,7 @@ import { StrategyDescription } from './StrategyDescription';
 import { selectVaultTotalApy } from '../../../data/selectors/apy';
 import type { VaultEntity } from '../../../data/entities/vault';
 import {
-  isCowcentratedVault,
+  isCowcentratedLiquidityVault,
   isGovVault,
   shouldVaultShowInterest,
 } from '../../../data/entities/vault';
@@ -55,7 +55,9 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
           <div className={classes.cardAction}>
             <LinkButton
               href={explorerAddressUrl(chain, vault.earnContractAddress)}
-              text={t(isCowcentratedVault(vault) ? 'Strat-CLMContract' : 'Strat-ContractVault')}
+              text={t(
+                isCowcentratedLiquidityVault(vault) ? 'Strat-CLMContract' : 'Strat-ContractVault'
+              )}
             />
           </div>
         </div>
