@@ -9,15 +9,14 @@ import {
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import {
   selectIsConfigAvailable,
-  selectIsWalletTimelineForUserPending,
   selectIsGlobalAddressBookAvailable,
   selectIsUserBalanceAvailable,
+  selectIsWalletTimelineForUserPending,
   selectIsWalletTimelineForUserRecent,
 } from '../selectors/data-loader';
-import { depositedVaultsAddedAction, recalculateDepositedVaultsAction } from '../actions/balance';
+import { recalculateDepositedVaultsAction } from '../actions/balance';
 import { createWalletDebouncer } from '../../../helpers/middleware';
 import { selectUserDepositedTimelineByVaultId } from '../selectors/analytics';
-import { selectIsVaultGov } from '../selectors/vaults';
 
 const analyticsListener = createListenerMiddleware<BeefyState>();
 
@@ -27,11 +26,15 @@ const timelineDebouncer = createWalletDebouncer(100);
  * Fetch the user's wallet timeline after we detect a new vault with a deposit
  */
 analyticsListener.startListening({
-  actionCreator: depositedVaultsAddedAction,
+  actionCreator: recalculateDepositedVaultsAction.fulfilled,
   effect: async (action, { dispatch, getState, delay, condition }) => {
-    const state = getState();
-    const { walletAddress, vaultIds } = action.payload;
+    const { walletAddress, addedVaultIds } = action.payload;
+    if (!addedVaultIds.length || action.meta.arg.fromTimelineListener) {
+      return;
+    }
+
     // Skip if already pending or fetched recently
+    const state = getState();
     if (
       selectIsWalletTimelineForUserPending(state, walletAddress) ||
       selectIsWalletTimelineForUserRecent(state, walletAddress)
@@ -40,10 +43,8 @@ analyticsListener.startListening({
     }
 
     // Only if new standard or clm vault that we don't have timeline data for
-    const missingVaultIds = vaultIds.filter(
-      v =>
-        !selectIsVaultGov(state, v) &&
-        selectUserDepositedTimelineByVaultId(state, walletAddress, v) === undefined
+    const missingVaultIds = addedVaultIds.filter(
+      v => selectUserDepositedTimelineByVaultId(state, walletAddress, v) === undefined
     );
 
     if (!missingVaultIds.length) {
@@ -84,7 +85,7 @@ analyticsListener.startListening({
     );
 
     // Recalculate the user's deposited vaults
-    await dispatch(recalculateDepositedVaultsAction({ walletAddress }));
+    await dispatch(recalculateDepositedVaultsAction({ walletAddress, fromTimelineListener: true }));
 
     // Fetch the CLM harvests for vaults the user is deposited in
     dispatch(fetchClmHarvestsForUser({ walletAddress }));
