@@ -1,5 +1,239 @@
 [
   {
+    "id": "curve-arb-eusd-usdc",
+    "name": "eUSD/USDC",
+    "token": "eUSDUSDC",
+    "tokenAddress": "0x93a416206B4ae3204cFE539edfeE6BC05a62963e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveEUSD-USDC",
+    "earnedTokenAddress": "0x41c0d96f9c297Eb2216792a3CD50296638684705",
+    "earnContractAddress": "0x41c0d96f9c297Eb2216792a3CD50296638684705",
+    "oracle": "lps",
+    "oracleId": "curve-arb-eusd-usdc",
+    "status": "active",
+    "createdAt": 1717141169,
+    "platformId": "curve",
+    "assets": ["eUSD", "USDC"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-62/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-62/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x93a416206B4ae3204cFE539edfeE6BC05a62963e",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x93a416206B4ae3204cFE539edfeE6BC05a62963e",
+            "coins": [
+              "0x12275DCB9048680c4Be40942eA4D92c74C63b844",
+              "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-arb-eusd-crvusd",
+    "name": "eUSD/crvUSD",
+    "token": "eUSDcrvUSD",
+    "tokenAddress": "0x67D11005AF05Bb1e9fDb1CFc261C23DE3E1055a1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveEUSD-crvUSD",
+    "earnedTokenAddress": "0x6dB43DC0E5150586D80292C2c0888D5db43261DC",
+    "earnContractAddress": "0x6dB43DC0E5150586D80292C2c0888D5db43261DC",
+    "oracle": "lps",
+    "oracleId": "curve-arb-eusd-crvusd",
+    "status": "active",
+    "createdAt": 1717141161,
+    "platformId": "curve",
+    "assets": ["eUSD", "crvUSD"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-61/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-61/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x67D11005AF05Bb1e9fDb1CFc261C23DE3E1055a1",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x67D11005AF05Bb1e9fDb1CFc261C23DE3E1055a1",
+            "coins": [
+              "0x12275DCB9048680c4Be40942eA4D92c74C63b844",
+              "0x498Bf2B1e120FeD3ad3D42EA2165E9b73f99C1e5"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-arb-eusd-rgusd",
+    "name": "eUSD/rgUSD",
+    "token": "eUSDrgUSD",
+    "tokenAddress": "0xbdf44492aC1C81b1Bd9B9A8B075026d3E8A3225a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveEUSD-rgUSD",
+    "earnedTokenAddress": "0x5A8D2889A3135B8e0c7B3D6f55A88374804445d0",
+    "earnContractAddress": "0x5A8D2889A3135B8e0c7B3D6f55A88374804445d0",
+    "oracle": "lps",
+    "oracleId": "curve-arb-eusd-rgusd",
+    "status": "active",
+    "createdAt": 1717141148,
+    "platformId": "curve",
+    "assets": ["eUSD", "rgUSD"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-55/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-55/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xbdf44492aC1C81b1Bd9B9A8B075026d3E8A3225a",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xbdf44492aC1C81b1Bd9B9A8B075026d3E8A3225a",
+            "coins": [
+              "0x12275DCB9048680c4Be40942eA4D92c74C63b844",
+              "0x96a993f06951B01430523D0D5590192d650EBf3e"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-arb-knox-rgusd",
+    "name": "KNOX/rgUSD",
+    "token": "KNOXrgUSD",
+    "tokenAddress": "0x0aCacb4f6dB7708a5451B835acd39DFEbAC4EeB5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveKNOX-rgUSD",
+    "earnedTokenAddress": "0x8Cb60b895FBFDE711622370C7140b554AC3E62Dc",
+    "earnContractAddress": "0x8Cb60b895FBFDE711622370C7140b554AC3E62Dc",
+    "oracle": "lps",
+    "oracleId": "curve-arb-knox-rgusd",
+    "status": "active",
+    "createdAt": 1717141130,
+    "platformId": "curve",
+    "assets": ["KNOX", "rgUSD"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-56/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-56/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x0aCacb4f6dB7708a5451B835acd39DFEbAC4EeB5",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x0aCacb4f6dB7708a5451B835acd39DFEbAC4EeB5",
+            "coins": [
+              "0x0BBF664D46becc28593368c97236FAa0fb397595",
+              "0x96a993f06951B01430523D0D5590192d650EBf3e"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-arb-rgusd-usdc",
+    "name": "rgUSD/USDC",
+    "token": "rgUSDUSDC",
+    "tokenAddress": "0x3dcb7b53B6177a04a2AECE61d95bF577ECC02241",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveRgUSD-USDC",
+    "earnedTokenAddress": "0x447eEeB0bD7f6E93D0C1647498F88130603A9C61",
+    "earnContractAddress": "0x447eEeB0bD7f6E93D0C1647498F88130603A9C61",
+    "oracle": "lps",
+    "oracleId": "curve-arb-rgusd-usdc",
+    "status": "active",
+    "createdAt": 1717141111,
+    "platformId": "curve",
+    "assets": ["rgUSD", "USDC"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-53/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-53/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x3dcb7b53B6177a04a2AECE61d95bF577ECC02241",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x3dcb7b53B6177a04a2AECE61d95bF577ECC02241",
+            "coins": [
+              "0x96a993f06951B01430523D0D5590192d650EBf3e",
+              "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-arb-eth+-eth",
+    "name": "ETH+/WETH",
+    "token": "ETH+WETH",
+    "tokenAddress": "0x95F425c7d730Eb7673fca272c2c305f48Ed546c3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveETH+-ETH",
+    "earnedTokenAddress": "0x11F9DEB38e26b5025C915672CbaA202f2684d03B",
+    "earnContractAddress": "0x11F9DEB38e26b5025C915672CbaA202f2684d03B",
+    "oracle": "lps",
+    "oracleId": "curve-arb-eth+-eth",
+    "status": "active",
+    "createdAt": 1717141092,
+    "platformId": "curve",
+    "assets": ["ETH+", "ETH"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-57/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-57/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x95F425c7d730Eb7673fca272c2c305f48Ed546c3",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x95F425c7d730Eb7673fca272c2c305f48Ed546c3",
+            "coins": [
+              "0x18C14C2D707b2212e17d1579789Fc06010cfca23",
+              "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "stakedao-arb-fraxbp",
     "name": "FRAX/USDC.e",
     "token": "FRAXBP-f",
