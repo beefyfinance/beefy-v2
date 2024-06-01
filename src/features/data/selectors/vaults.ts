@@ -1,11 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
-import type { TokenErc20, TokenEntity } from '../entities/token';
+import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenErc20 } from '../entities/token';
 import type { VaultCowcentrated, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
-  isCowcentratedLiquidityVault,
+  isCowcentratedVault,
   isGovVault,
   isStandardVault,
   isVaultPaused,
@@ -57,7 +57,7 @@ export const selectIsVaultRetired = createCachedSelector(
 
 export const selectIsVaultCowcentrated = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
-  vault => isCowcentratedLiquidityVault(vault)
+  vault => isCowcentratedVault(vault)
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectIsVaultGov = createCachedSelector(
@@ -65,9 +65,14 @@ export const selectIsVaultGov = createCachedSelector(
   vault => isGovVault(vault)
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectCowcentratedVaultDepositTokenAddresses = createCachedSelector(
+export const selectVaultType = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
-  vault => (vault as VaultCowcentrated).depositTokenAddresses
+  vault => vault.type
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectCowcentratedVaultDepositTokenAddresses = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectCowcentratedVaultById(state, vaultId),
+  vault => vault.depositTokenAddresses
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectVaultExistsById = createSelector(
@@ -91,13 +96,13 @@ export const selectGovVaultById = (state: BeefyState, vaultId: VaultEntity['id']
   return vault;
 };
 
-export const selectCowVaultById = (
+export const selectCowcentratedVaultById = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ): VaultCowcentrated => {
   const vault = selectVaultById(state, vaultId);
-  if (!isCowcentratedLiquidityVault(vault)) {
-    throw new Error(`selectCowVaultById: Vault ${vaultId} is not a cowcentrated vault`);
+  if (!isCowcentratedVault(vault)) {
+    throw new Error(`selectCowcentratedVaultById: Vault ${vaultId} is not a cowcentrated vault`);
   }
   return vault;
 };
@@ -105,11 +110,22 @@ export const selectCowVaultById = (
 export const selectStandardVaultById = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   standardVault => {
-    // if (!isStandardVault(standardVault)) {
-    if (isGovVault(standardVault)) {
+    if (!isStandardVault(standardVault)) {
       throw new Error(`selectStandardVaultById: Vault ${standardVault.id} is not a standard vault`);
     }
     return standardVault;
+  }
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectStandardOrCowcentratedVaultById = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  vault => {
+    if (!isStandardVault(vault) && !isCowcentratedVault(vault)) {
+      throw new Error(
+        `selectStandardOrCowcentratedVaultById: Vault ${vault.id} is not a standard or cowcentrated vault`
+      );
+    }
+    return vault;
   }
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 

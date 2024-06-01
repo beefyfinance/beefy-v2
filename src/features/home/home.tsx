@@ -8,6 +8,7 @@ import { styles } from './styles';
 import { Vaults } from './components/Vaults';
 import { useAppSelector } from '../../store';
 import { Banners } from './components/Banners';
+import { HomeMeta } from '../../components/Meta/HomeMeta';
 
 const useStyles = makeStyles(styles);
 
@@ -16,11 +17,17 @@ export const Home = memo(function Home() {
   const isVaultListAvailable = useAppSelector(selectIsVaultListAvailable);
 
   if (!isVaultListAvailable) {
-    return <Loading />;
+    return (
+      <>
+        <HomeMeta />
+        <Loading />
+      </>
+    );
   }
 
   return (
     <>
+      <HomeMeta />
       <div className={classes.top}>
         <Banners />
         <Portfolio />

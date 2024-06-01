@@ -1,17 +1,17 @@
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from './big-number';
 import type { TokenLpBreakdown } from '../features/data/entities/token';
-import { isCowcentratedLiquidityVault, type VaultEntity } from '../features/data/entities/vault';
+import { isCowcentratedVault, type VaultEntity } from '../features/data/entities/vault';
 
 export function getVaultUnderlyingTvlAndBeefySharePercent(
   vault: VaultEntity,
   breakdown: TokenLpBreakdown,
   beefyTvl: BigNumber
 ) {
-  const underlyingPrice = isCowcentratedLiquidityVault(vault)
+  const underlyingPrice = isCowcentratedVault(vault)
     ? breakdown.underlyingPrice || 0
     : breakdown.price;
-  const underlyingLiquidity = isCowcentratedLiquidityVault(vault)
+  const underlyingLiquidity = isCowcentratedVault(vault)
     ? new BigNumber(breakdown.underlyingLiquidity || 0)
     : new BigNumber(breakdown.totalSupply);
   const underlyingTvl = underlyingLiquidity.times(underlyingPrice);

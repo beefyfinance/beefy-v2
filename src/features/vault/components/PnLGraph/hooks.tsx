@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import {
-  selectLastVaultDepositStart,
+  selectUserFirstDepositDateByVaultId,
   selectShareToUnderlyingTimebucketByVaultId,
   selectUnderlyingToUsdTimebucketByVaultId,
   selectUserDepositedTimelineByVaultId,
@@ -16,16 +16,16 @@ import {
   selectDepositTokenByVaultId,
   selectTokenPriceByAddress,
 } from '../../../data/selectors/tokens';
-import { selectUserBalanceOfTokensIncludingBoostsBridged } from '../../../data/selectors/balance';
 import { fetchShareToUnderlying, fetchUnderlyingToUsd } from '../../../data/actions/analytics';
 import { selectWalletAddress } from '../../../data/selectors/wallet';
+import type { VaultTimelineAnalyticsEntity } from '../../../data/entities/analytics';
+import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../data/selectors/balance';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], minUnderlying: 0, maxUnderlying: 0, minUsd: 0, maxUsd: 0 };
 
 export const usePnLChartData = (
   timebucket: TimeBucketType,
-  productKey: string,
   vaultId: VaultEntity['id'],
   address?: string
 ) => {
@@ -44,16 +44,10 @@ export const usePnLChartData = (
     selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const currentMooTokenBalance = useAppSelector(state =>
-    selectUserBalanceOfTokensIncludingBoostsBridged(
-      state,
-      vault.id,
-      vault.chainId,
-      vault.earnContractAddress,
-      walletAddress
-    )
+    selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vault.id, walletAddress)
   );
   const vaultLastDeposit = useAppSelector(state =>
-    selectLastVaultDepositStart(state, vaultId, walletAddress)
+    selectUserFirstDepositDateByVaultId(state, vaultId, walletAddress)
   );
 
   const { data: sharesToUnderlying, status: sharesStatus } = useAppSelector(state =>
@@ -69,7 +63,7 @@ export const usePnLChartData = (
       if (sharesStatus === 'idle') {
         dispatch(
           fetchShareToUnderlying({
-            productKey,
+            productType: 'vault',
             vaultId,
             walletAddress,
             timebucket,
@@ -79,7 +73,7 @@ export const usePnLChartData = (
       if (underlyingStatus === 'idle') {
         dispatch(
           fetchUnderlyingToUsd({
-            productKey,
+            productType: 'vault',
             vaultId,
             walletAddress,
             timebucket,
@@ -92,7 +86,7 @@ export const usePnLChartData = (
           () =>
             dispatch(
               fetchShareToUnderlying({
-                productKey,
+                productType: 'vault',
                 vaultId,
                 walletAddress,
                 timebucket,
@@ -108,7 +102,7 @@ export const usePnLChartData = (
           () =>
             dispatch(
               fetchUnderlyingToUsd({
-                productKey,
+                productType: 'vault',
                 vaultId,
                 walletAddress,
                 timebucket,
@@ -119,14 +113,20 @@ export const usePnLChartData = (
         return () => clearTimeout(handleUnderlyingToUsd);
       }
     }
-  }, [dispatch, sharesStatus, underlyingStatus, timebucket, productKey, vaultId, walletAddress]);
+  }, [dispatch, sharesStatus, underlyingStatus, timebucket, vaultId, walletAddress]);
 
   const isLoading = useMemo(() => {
     return underlyingStatus !== 'fulfilled' || sharesStatus !== 'fulfilled';
   }, [sharesStatus, underlyingStatus]);
 
   const chartData = useMemo(() => {
-    if (sharesStatus === 'fulfilled' && underlyingStatus === 'fulfilled') {
+    if (
+      sharesStatus === 'fulfilled' &&
+      underlyingStatus === 'fulfilled' &&
+      vaultLastDeposit &&
+      vaultTimeline &&
+      vaultTimeline.length
+    ) {
       const filteredSharesToUnderlying = sharesToUnderlying.filter(price =>
         isAfter(price.date, vaultLastDeposit)
       );
@@ -136,7 +136,7 @@ export const usePnLChartData = (
 
       const data = getInvestorTimeserie(
         timebucket,
-        vaultTimeline,
+        vaultTimeline as VaultTimelineAnalyticsEntity[],
         filteredSharesToUnderlying,
         filteredUnderlyingToUsd,
         vaultLastDeposit,
@@ -177,12 +177,12 @@ export const usePnLChartData = (
 
 export const useVaultPeriods = (vaultId: VaultEntity['id'], address?: string) => {
   const vaultDepositDate = useAppSelector(state =>
-    selectLastVaultDepositStart(state, vaultId, address)
+    selectUserFirstDepositDateByVaultId(state, vaultId, address)
   );
   const currentDate = new Date();
 
   const result = eachDayOfInterval({
-    start: vaultDepositDate,
+    start: vaultDepositDate || currentDate,
     end: currentDate,
   });
 
