@@ -43,7 +43,6 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
             <TokenAmount
               amount={asset[amountField]}
               decimals={asset.decimals}
-              price={asset.price}
               className={classes.tokenAmount}
             />
           </div>
@@ -63,7 +62,6 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
           <TokenAmount
             amount={breakdown[amountField]}
             decimals={token.decimals}
-            price={breakdown.oneValue}
             className={classes.tokenAmount}
           />
         </div>

@@ -13,9 +13,10 @@ import {
 import { StepContent } from '../reducers/wallet/stepper';
 import { createSelector } from '@reduxjs/toolkit';
 import { valueOrThrow } from '../utils/selector-utils';
+import { selectIsGlobalDataAvailable } from './data-loader';
 
 export const selectIsBridgeConfigLoaded = (state: BeefyState) =>
-  state.ui.dataLoader.global.bridgeConfig.alreadyLoadedOnce;
+  selectIsGlobalDataAvailable(state, 'bridgeConfig');
 
 export const selectShouldLoadBridgeConfig = (state: BeefyState) =>
   isInitialLoader(state.ui.dataLoader.global.bridgeConfig);

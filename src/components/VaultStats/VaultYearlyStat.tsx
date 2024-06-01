@@ -131,13 +131,6 @@ const YearlyTooltipContent = memo<YearlyTooltipContentProps>(function YearlyTool
         });
       }
 
-      if ('boostApr' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-BoostApr',
-          value: rates.boostApr ?? '?',
-        });
-      }
-
       if ('clmApr' in rates) {
         items.push({
           label: 'Vault-Breakdown-CLMApr',
@@ -149,6 +142,13 @@ const YearlyTooltipContent = memo<YearlyTooltipContentProps>(function YearlyTool
         items.push({
           label: 'Vault-Breakdown-MerklApr',
           value: rates.merklApr ?? '?',
+        });
+      }
+
+      if ('boostApr' in rates) {
+        items.push({
+          label: 'Vault-Breakdown-BoostApr',
+          value: rates.boostApr ?? '?',
         });
       }
 

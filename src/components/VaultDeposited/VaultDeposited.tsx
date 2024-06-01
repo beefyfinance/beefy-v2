@@ -2,12 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import type { VaultEntity } from '../../features/data/entities/vault';
-import { isGovVault } from '../../features/data/entities/vault';
 import {
-  selectGovVaultUserStakedBalanceInDepositToken,
   selectHasUserBalanceInActiveBoost,
-  selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged,
-  selectUserVaultDepositInUsd,
+  selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken,
+  selectUserVaultBalanceInUsdIncludingBoostsBridged,
 } from '../../features/data/selectors/balance';
 import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
 import { selectVaultById } from '../../features/data/selectors/vaults';
@@ -20,29 +18,28 @@ import { formatLargeUsd } from '../../helpers/format';
 import type { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { useAppSelector } from '../../store';
-import { selectTokenByAddress } from '../../features/data/selectors/tokens';
 import type { TokenEntity } from '../../features/data/entities/token';
 import type BigNumber from 'bignumber.js';
 import { TokenAmountFromEntity } from '../TokenAmount';
+import {
+  selectIsAddressChainDataAvailable,
+  selectIsGlobalDataAvailable,
+} from '../../features/data/selectors/data-loader';
 
 const _BoostedVaultDepositedLarge = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
     const vault = selectVaultById(state, vaultId);
-    // deposit can be moo or oracle
-    const deposit = isGovVault(vault)
-      ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
-      : selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(state, vault.id);
-    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const { amount: deposit, token: depositToken } =
+      selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken(state, vault.id);
     const hasDeposit = deposit.gt(0);
-    const depositUsd = formatLargeUsd(selectUserVaultDepositInUsd(state, vaultId));
+    const depositUsd = formatLargeUsd(
+      selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vaultId)
+    );
     const blurred = selectIsBalanceHidden(state);
     const walletAddress = selectWalletAddress(state);
     const isLoaded =
-      state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
-      selectIsWalletKnown(state) &&
-      walletAddress
-        ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
-            .alreadyLoadedOnce
+      selectIsGlobalDataAvailable(state, 'prices') && selectIsWalletKnown(state) && walletAddress
+        ? selectIsAddressChainDataAvailable(state, walletAddress, vault.chainId, 'balance')
         : true;
     return {
       hasDeposit,
@@ -74,7 +71,7 @@ const _BoostedVaultDepositedLarge = connect(
     return (
       <ValueBlock
         label={t('Vault-deposited')}
-        value={<TokenAmountFromEntity amount={deposit} token={depositToken} minShortPlaces={4} />}
+        value={<TokenAmountFromEntity amount={deposit} token={depositToken} />}
         usdValue={hasDeposit ? depositUsd : null}
         blurred={blurred}
         loading={loading}
@@ -87,21 +84,17 @@ const BoostedVaultDepositedLarge = React.memo(_BoostedVaultDepositedLarge);
 const _NonBoostedVaultDeposited = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
     const vault = selectVaultById(state, vaultId);
-    // deposit can be moo or oracle
-    const deposit = isGovVault(vault)
-      ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
-      : selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(state, vault.id);
-    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const { amount: deposit, token: depositToken } =
+      selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken(state, vault.id);
     const hasDeposit = deposit.gt(0);
-    const depositUsd = formatLargeUsd(selectUserVaultDepositInUsd(state, vaultId));
+    const depositUsd = formatLargeUsd(
+      selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vaultId)
+    );
     const blurred = selectIsBalanceHidden(state);
     const walletAddress = selectWalletAddress(state);
     const isLoaded =
-      state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
-      selectIsWalletKnown(state) &&
-      walletAddress
-        ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
-            .alreadyLoadedOnce
+      selectIsGlobalDataAvailable(state, 'prices') && selectIsWalletKnown(state) && walletAddress
+        ? selectIsAddressChainDataAvailable(state, walletAddress, vault.chainId, 'balance')
         : true;
     return {
       hasDeposit,
@@ -133,7 +126,7 @@ const _NonBoostedVaultDeposited = connect(
     return (
       <ValueBlock
         label={t('Vault-deposited')}
-        value={<TokenAmountFromEntity amount={deposit} token={depositToken} minShortPlaces={4} />}
+        value={<TokenAmountFromEntity amount={deposit} token={depositToken} />}
         usdValue={hasDeposit ? depositUsd : null}
         blurred={blurred}
         loading={loading}

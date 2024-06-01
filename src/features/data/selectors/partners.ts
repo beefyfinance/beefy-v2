@@ -1,5 +1,5 @@
 import type { BeefyState } from '../../../redux-types';
-import { isCowcentratedLiquidityVault, type VaultEntity } from '../entities/vault';
+import { isCowcentratedVault, type VaultEntity } from '../entities/vault';
 import { selectVaultById } from './vaults';
 
 export const selectIsVaultQidao = (state: BeefyState, vaultId: VaultEntity['id']) => {
@@ -13,8 +13,7 @@ export const selectIsOpenCover = (state: BeefyState, vaultId: VaultEntity['id'])
 export const selectIsVaultNexus = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
   return (
-    !isCowcentratedLiquidityVault(vault) &&
-    state.biz.partners.nexus.byChainId[vault.chainId] !== undefined
+    !isCowcentratedVault(vault) && state.biz.partners.nexus.byChainId[vault.chainId] !== undefined
   );
 };
 

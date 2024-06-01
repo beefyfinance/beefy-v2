@@ -1,11 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyDataApi } from '../apis/instances';
-import {
-  isCowcentratedLiquidityVault,
-  type VaultCowcentrated,
-  type VaultEntity,
-} from '../entities/vault';
+import { isCowcentratedVault, type VaultCowcentrated, type VaultEntity } from '../entities/vault';
 import type {
   ApiChartData,
   ApiCowcentratedChartData,
@@ -13,7 +9,7 @@ import type {
   ApiTimeBucket,
 } from '../apis/beefy/beefy-data-api-types';
 import { selectVaultById } from '../selectors/vaults';
-import { selectTokenByAddress } from '../selectors/tokens';
+import { selectCowcentratedVaultDepositTokens, selectTokenByAddress } from '../selectors/tokens';
 import type { TokenEntity } from '../entities/token';
 import type { ThunkAction } from 'redux-thunk';
 import type { Action } from 'redux';
@@ -44,8 +40,8 @@ export const fetchHistoricalRanges = createAsyncThunk<
   const ranges = await api.getAvailableRanges(
     vaultId,
     depositToken.oracleId,
-    isCowcentratedLiquidityVault(vault) ? vault.earnContractAddress : undefined,
-    isCowcentratedLiquidityVault(vault) ? vault.chainId : undefined
+    isCowcentratedVault(vault) ? vault.earnContractAddress : undefined,
+    isCowcentratedVault(vault) ? vault.chainId : undefined
   );
 
   return { vault, oracleId: depositToken.oracleId, ranges };
@@ -137,9 +133,7 @@ export const fetchHistoricalCowcentratedRanges = createAsyncThunk<
         ? bucket
         : ('1h_1M' as ApiTimeBucket);
     const rawData = await api.getCowcentratedRangesChartData(vaultAddress, bucketToUse, chainId);
-
-    const token0 = selectTokenByAddress(state, chainId, vault.depositTokenAddresses[0]);
-    const token1 = selectTokenByAddress(state, chainId, vault.depositTokenAddresses[1]);
+    const { token0, token1 } = selectCowcentratedVaultDepositTokens(state, vaultId);
 
     const data = rawData.map(item => {
       return {

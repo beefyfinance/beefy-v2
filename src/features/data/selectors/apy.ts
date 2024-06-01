@@ -3,9 +3,7 @@ import type { VaultEntity } from '../entities/vault';
 import { isGovVault, isVaultActive } from '../entities/vault';
 import {
   selectAddressDepositedVaultIds,
-  selectGovVaultUserStakedBalanceInDepositToken,
-  selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged,
-  selectUserVaultDepositInDepositToken,
+  selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
 } from './balance';
 import { selectIsUserBalanceAvailable } from './data-loader';
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
@@ -13,12 +11,13 @@ import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectUserActiveBoostBalanceInToken } from './boosts';
 import type { TotalApy } from '../reducers/apy';
-import { compoundInterest } from '../../../helpers/number';
 import { isEmpty } from '../../../helpers/utils';
 import { selectWalletAddress } from './wallet';
+import { BigNumber } from 'bignumber.js';
 
 const EMPTY_TOTAL_APY: TotalApy = {
   totalApy: 0,
+  totalMonthly: 0,
   totalDaily: 0,
 };
 
@@ -39,6 +38,10 @@ const EMPTY_GLOBAL_STATS = {
   apy: 0,
   depositedVaults: 0,
 };
+
+/**
+ * Ignores boost component of APY
+ */
 export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
   const walletAddress = address || selectWalletAddress(state);
   if (!walletAddress) {
@@ -63,13 +66,11 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
   const userVaults = userVaultIds.map(vaultId => selectVaultById(state, vaultId));
 
   for (const vault of userVaults) {
-    const tokenBalance = isGovVault(vault)
-      ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id, walletAddress)
-      : selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(
-          state,
-          vault.id,
-          walletAddress
-        );
+    const tokenBalance = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(
+      state,
+      vault.id,
+      walletAddress
+    );
 
     if (tokenBalance.lte(BIG_ZERO)) {
       continue;
@@ -85,51 +86,16 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
       continue;
     }
 
-    // Collect yield for each vault
+    // Add period totals for each vault
     const apyData = selectVaultTotalApy(state, vault.id);
 
     if (isEmpty(apyData)) {
       continue;
     }
 
-    if (isGovVault(vault)) {
-      newGlobalStats.daily += vaultUsdBalance * apyData.totalDaily;
-      newGlobalStats.monthly += vaultUsdBalance * apyData.totalDaily * 30;
-      newGlobalStats.yearly += vaultUsdBalance * apyData.totalApy;
-    } else {
-      const nonCompoundableComponents: (keyof TotalApy)[] = [
-        'tradingDaily',
-        'composablePoolDaily',
-        'liquidStakingDaily',
-      ];
-      // if none of the breakdown is available, we assume totalApy is 100% vault earnings (=compoundable)
-      const useBreakdown =
-        apyData.vaultDaily ||
-        apyData.tradingDaily ||
-        apyData.composablePoolDaily ||
-        apyData.liquidStakingApr;
-      const vaultDaily = useBreakdown ? apyData.vaultDaily || 0 : apyData.totalDaily;
-
-      // non-compoundable components
-      let totalNonCompoundableDaily = 0;
-      for (const key of nonCompoundableComponents) {
-        const daily = key in apyData ? apyData[key] || 0 : 0;
-        if (daily > 0) {
-          totalNonCompoundableDaily += daily;
-        }
-      }
-
-      // compoundable components
-      const totalCompoundableDaily = vaultDaily;
-
-      // total
-      newGlobalStats.daily +=
-        vaultUsdBalance * (totalNonCompoundableDaily + totalCompoundableDaily);
-      newGlobalStats.monthly +=
-        vaultUsdBalance * totalNonCompoundableDaily * 30 +
-        compoundInterest(totalCompoundableDaily, vaultUsdBalance, 1, 30);
-      newGlobalStats.yearly += vaultUsdBalance * apyData.totalApy;
-    }
+    newGlobalStats.daily += vaultUsdBalance * apyData.totalDaily;
+    newGlobalStats.monthly += vaultUsdBalance * apyData.totalMonthly;
+    newGlobalStats.yearly += vaultUsdBalance * apyData.totalApy;
   }
 
   // Skip yield calc if user has no deposits
@@ -150,24 +116,36 @@ export const selectVaultDailyYieldStats = (
 ) => {
   const vault = selectVaultById(state, vaultId);
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const ppfs = selectVaultPricePerFullShare(state, vaultId);
-  const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
-  const tokenBalance = selectUserVaultDepositInDepositToken(state, vault.id, walletAddress);
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+
+  if (!isVaultActive(vault)) {
+    return {
+      dailyUsd: BIG_ZERO,
+      dailyTokens: BIG_ZERO,
+      oraclePrice,
+      tokenDecimals: depositToken.decimals,
+    };
+  }
+
+  const tokenBalance = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(
+    state,
+    vault.id,
+    walletAddress
+  );
   const vaultUsdBalance = tokenBalance.times(oraclePrice);
   const apyData = selectVaultTotalApy(state, vault.id);
 
-  let dailyUsd = BIG_ZERO;
-  let dailyTokens = BIG_ZERO;
+  let dailyUsd: BigNumber;
+  let dailyTokens: BigNumber;
 
   if (isGovVault(vault)) {
     dailyUsd = vaultUsdBalance.times(apyData.totalDaily);
     dailyTokens = tokenBalance.times(apyData.totalDaily);
   } else {
-    const boostBalance = selectUserActiveBoostBalanceInToken(
-      state,
-      vaultId,
-      walletAddress
-    ).multipliedBy(ppfs);
+    const ppfs = selectVaultPricePerFullShare(state, vaultId);
+    const boostBalance = selectUserActiveBoostBalanceInToken(state, vaultId, walletAddress)
+      .multipliedBy(ppfs)
+      .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR);
     const boostBalanceUsd = boostBalance.times(oraclePrice);
 
     const nonBoostBalanceInTokens = tokenBalance.minus(boostBalance);
@@ -182,5 +160,5 @@ export const selectVaultDailyYieldStats = (
     }
   }
 
-  return { dailyUsd, dailyTokens, oraclePrice, tokenDecimals: token.decimals };
+  return { dailyUsd, dailyTokens, oraclePrice, tokenDecimals: depositToken.decimals };
 };

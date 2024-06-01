@@ -1,13 +1,10 @@
 import type { Theme } from '@material-ui/core';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
-import React, { memo, useMemo } from 'react';
-import { useAppSelector } from '../../../../../../store';
+import React, { memo } from 'react';
 import type { VaultEntity } from '../../../../../data/entities/vault';
-import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { Transaction, TransactionMobile } from './components/Transaction';
 import { TransactionsFilter } from './components/TransactionsFilter';
-import { useSortedTimeline } from './hook';
+import { useSortedTransactionHistory } from './hook';
 
 interface VaultTransactionsProps {
   vaultId: VaultEntity['id'];
@@ -27,32 +24,18 @@ export const VaultTransactions = memo<VaultTransactionsProps>(function VaultTran
   address,
 }) {
   const classes = useStyles();
-
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
-  const depositToken = useAppSelector(state =>
-    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
+  const { sortedTimeline, sortedOptions, handleSort } = useSortedTransactionHistory(
+    vaultId,
+    address
   );
-
-  const { sortedTimeline, sortedOptions, handleSort } = useSortedTimeline(vaultId, address);
-
-  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
-
-  const TxComponent = useMemo(() => {
-    return smDown ? TransactionMobile : Transaction;
-  }, [smDown]);
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
+  const TxComponent = isMobile ? TransactionMobile : Transaction;
 
   return (
     <div className={classes.transactionsGrid}>
       <TransactionsFilter sortOptions={sortedOptions} handleSort={handleSort} />
       {sortedTimeline.map(tx => {
-        return (
-          <TxComponent
-            key={tx.datetime.getTime()}
-            tokenDecimals={depositToken.decimals}
-            data={tx}
-          />
-        );
+        return <TxComponent key={tx.transactionId} tx={tx} />;
       })}
     </div>
   );
