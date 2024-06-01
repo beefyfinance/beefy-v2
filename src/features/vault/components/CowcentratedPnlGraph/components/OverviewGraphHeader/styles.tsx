@@ -30,14 +30,10 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     gap: '8px',
   },
-  tooltipTitle: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
-    color: theme.palette.text.primary,
-  },
   itemContainer: {
     display: 'flex',
     alignIterms: 'center',
+    gap: '8px',
     justifyContent: 'space-between',
   },
   label: {
