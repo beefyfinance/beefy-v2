@@ -17,6 +17,7 @@ import {
   selectHasBreakdownDataByTokenAddress,
   selectIsTokenStable,
   selectLpBreakdownByTokenAddress,
+  selectShareTokenByVaultId,
   selectTokenByAddress,
   selectTokenByIdOrUndefined,
   selectTokenPriceByAddress,
@@ -233,8 +234,9 @@ export const selectUserVaultBalanceInDepositToken: UserBalanceSelector = createC
     selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultPricePerFullShare(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id']) => selectDepositTokenByVaultId(state, vaultId),
-  (shares, ppfs, depositToken) =>
-    shares.multipliedBy(ppfs).decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR)
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectShareTokenByVaultId(state, vaultId),
+  (shares, ppfs, depositToken, shareToken) =>
+    shareToken ? mooAmountToOracleAmount(shareToken, depositToken, ppfs, shares) : shares
 )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
@@ -246,8 +248,9 @@ export const selectUserVaultBalanceInDepositTokenIncludingBoostsBridged: UserBal
       selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vaultId, maybeWalletAddress),
     (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultPricePerFullShare(state, vaultId),
     (state: BeefyState, vaultId: VaultEntity['id']) => selectDepositTokenByVaultId(state, vaultId),
-    (shares, ppfs, depositToken) =>
-      shares.multipliedBy(ppfs).decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR)
+    (state: BeefyState, vaultId: VaultEntity['id']) => selectShareTokenByVaultId(state, vaultId),
+    (shares, ppfs, depositToken, shareToken) =>
+      shareToken ? mooAmountToOracleAmount(shareToken, depositToken, ppfs, shares) : shares
   )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
@@ -260,9 +263,10 @@ export const selectUserVaultBalanceInDepositTokenWithToken: UserBalanceWithToken
       selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),
     (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultPricePerFullShare(state, vaultId),
     (state: BeefyState, vaultId: VaultEntity['id']) => selectDepositTokenByVaultId(state, vaultId),
-    (shares, ppfs, depositToken) => ({
+    (state: BeefyState, vaultId: VaultEntity['id']) => selectShareTokenByVaultId(state, vaultId),
+    (shares, ppfs, depositToken, shareToken) => ({
       token: depositToken,
-      amount: shares.multipliedBy(ppfs).decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR),
+      amount: shareToken ? mooAmountToOracleAmount(shareToken, depositToken, ppfs, shares) : shares,
     })
   )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
@@ -276,9 +280,10 @@ export const selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken
       selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vaultId, maybeWalletAddress),
     (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultPricePerFullShare(state, vaultId),
     (state: BeefyState, vaultId: VaultEntity['id']) => selectDepositTokenByVaultId(state, vaultId),
-    (shares, ppfs, depositToken) => ({
+    (state: BeefyState, vaultId: VaultEntity['id']) => selectShareTokenByVaultId(state, vaultId),
+    (shares, ppfs, depositToken, shareToken) => ({
       token: depositToken,
-      amount: shares.multipliedBy(ppfs).decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR),
+      amount: shareToken ? mooAmountToOracleAmount(shareToken, depositToken, ppfs, shares) : shares,
     })
   )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
