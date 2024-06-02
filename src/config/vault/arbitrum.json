@@ -772,6 +772,9 @@
     "zaps": [
       {
         "strategyId": "single"
+      },
+      {
+        "strategyId": "stargate-crosschain-single"
       }
     ],
     "lendingOracle": {
@@ -808,6 +811,9 @@
     "zaps": [
       {
         "strategyId": "single"
+      },
+      {
+        "strategyId": "stargate-crosschain-single"
       }
     ],
     "lendingOracle": {
@@ -1120,6 +1126,9 @@
     "zaps": [
       {
         "strategyId": "single"
+      },
+      {
+        "strategyId": "stargate-crosschain-single"
       }
     ],
     "lendingOracle": {
@@ -1194,6 +1203,9 @@
     "zaps": [
       {
         "strategyId": "single"
+      },
+      {
+        "strategyId": "stargate-crosschain-single"
       }
     ],
     "lendingOracle": {
@@ -1230,6 +1242,9 @@
     "zaps": [
       {
         "strategyId": "single"
+      },
+      {
+        "strategyId": "stargate-crosschain-single"
       }
     ],
     "lendingOracle": {
@@ -2492,6 +2507,9 @@
     "zaps": [
       {
         "strategyId": "single"
+      },
+      {
+        "strategyId": "stargate-crosschain-single"
       }
     ],
     "lendingOracle": {
@@ -3407,6 +3425,9 @@
     "zaps": [
       {
         "strategyId": "single"
+      },
+      {
+        "strategyId": "stargate-crosschain-single"
       }
     ],
     "lendingOracle": {

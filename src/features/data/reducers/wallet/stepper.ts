@@ -41,6 +41,7 @@ export type Step = {
     vaultId?: VaultEntity['id'];
     zap?: boolean;
     rewards?: { token: TokenEntity; amount: BigNumber };
+    stargate?: { from: TokenEntity; to: TokenEntity };
   };
 };
 

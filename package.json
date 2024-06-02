@@ -81,6 +81,7 @@
     "checkVaultTokenDecimals": "ts-node -r dotenv/config ./scripts/checkVaultTokenDecimals.ts && prettier --write ./src/config/vault/*.json",
     "checkZapAddresses": "ts-node -r dotenv/config ./scripts/checkZapAddresses.ts",
     "makeExcludeConfig": "ts-node -r dotenv/config ./scripts/makeExcludeConfig.ts",
+    "fetchStargatePaths": "ts-node -r dotenv/config ./scripts/fetchStargatePaths.ts",
     "prepare": "husky install",
     "tsc": "tsc",
     "tsc-watch": "tsc --watch",

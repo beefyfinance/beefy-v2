@@ -142,7 +142,7 @@ type SuccessContentProps = {
 const ZapSuccessContent = memo<SuccessContentProps>(function ZapSuccessContent({ step }) {
   const { t } = useTranslation();
   const returned = useAppSelector(selectZapReturned);
-
+  const isStargate = !!step.extraInfo?.stargate;
   const dust = useMemo(() => {
     if (returned.length) {
       return (
@@ -161,8 +161,16 @@ const ZapSuccessContent = memo<SuccessContentProps>(function ZapSuccessContent({
 
   return (
     <SuccessContentDisplay
-      title={t(`Stepper-${step.step}-Success-Title`)}
-      message={t(`Stepper-${step.step}-Success-Content`)}
+      title={t(
+        isStargate
+          ? `Stepper-${step.step}-stargate-Success-Title`
+          : `Stepper-${step.step}-Success-Title`
+      )}
+      message={t(
+        isStargate
+          ? `Stepper-${step.step}-stargate-Success-Content`
+          : `Stepper-${step.step}-Success-Content`
+      )}
       messageHighlight={
         dust ? <Trans t={t} i18nKey={`Stepper-Dust`} components={{ dust }} /> : undefined
       }

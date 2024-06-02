@@ -26,9 +26,10 @@ import { strategyBuildersById } from './strategies';
 import { vaultTypeBuildersById } from './vaults';
 import { uniq } from 'lodash-es';
 import { VaultStrategy } from './strategies/vault/VaultStrategy';
-import { selectZapByChainId } from '../../selectors/zap';
+import { selectZapByChainIdOrUndefined } from '../../selectors/zap';
 import { getSwapAggregator } from '../instances';
 import { CowcentratedStrategy } from './strategies/cowcentrated/CowcentratedStrategy';
+import { isDevelopment } from '../../utils/feature-flags';
 
 export class TransactApi implements ITransactApi {
   protected async getHelpersForVault(
@@ -38,7 +39,7 @@ export class TransactApi implements ITransactApi {
     const state = getState();
     const vault = selectVaultById(state, vaultId);
     const vaultType = await this.getVaultTypeFor(vault, getState);
-    const zap = selectZapByChainId(state, vault.chainId);
+    const zap = selectZapByChainIdOrUndefined(state, vault.chainId);
 
     return {
       vault,
@@ -62,11 +63,27 @@ export class TransactApi implements ITransactApi {
 
     // zaps
     const zapStrategies = await this.getZapStrategiesForVault(helpers);
+    if (vaultId === 'silo-usdce-arb') {
+      console.log(zapStrategies);
+    }
     if (zapStrategies.length) {
       const zapOptions = await allFulfilled(
         zapStrategies.map(zapStrategy => zapStrategy.fetchDepositOptions())
       );
       options.push(...zapOptions.flat());
+
+      if (isDevelopment) {
+        const strategiesWithNoOption = zapStrategies
+          .filter(s => !options.some(o => o.strategyId === s.id))
+          .map(s => s.id);
+        if (strategiesWithNoOption.length > 0) {
+          console.debug(
+            vaultId,
+            'no deposit options returned for',
+            strategiesWithNoOption.join(', ')
+          );
+        }
+      }
     }
 
     return options;
@@ -163,6 +180,18 @@ export class TransactApi implements ITransactApi {
         zapStrategies.map(zapStrategy => zapStrategy.fetchWithdrawOptions())
       );
       options.push(...zapOptions.flat());
+      if (isDevelopment) {
+        const strategiesWithNoOption = zapStrategies
+          .filter(s => !options.some(o => o.strategyId === s.id))
+          .map(s => s.id);
+        if (strategiesWithNoOption.length > 0) {
+          console.debug(
+            vaultId,
+            'no withdraw options returned for',
+            strategiesWithNoOption.join(', ')
+          );
+        }
+      }
     } else {
       console.debug('no zap strategies for', vaultId); // this is OK
     }
@@ -262,11 +291,24 @@ export class TransactApi implements ITransactApi {
       return false;
     }
 
-    const options = await allFulfilled(
-      zapStrategies.map(zapStrategy => zapStrategy.fetchDepositOptions())
-    );
+    const options = (
+      await allFulfilled(zapStrategies.map(zapStrategy => zapStrategy.fetchDepositOptions()))
+    ).flat();
 
-    return options.flat().length > 0;
+    if (isDevelopment) {
+      const strategiesWithNoOption = zapStrategies
+        .filter(s => !options.some(o => o.strategyId === s.id))
+        .map(s => s.id);
+      if (strategiesWithNoOption.length > 0) {
+        console.debug(
+          vaultId,
+          'no deposit options returned for',
+          strategiesWithNoOption.join(', ')
+        );
+      }
+    }
+
+    return options.length > 0;
   }
 
   private async getZapStrategiesForVault(helpers: TransactHelpers): Promise<IStrategy[]> {

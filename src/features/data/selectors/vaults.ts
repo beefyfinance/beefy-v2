@@ -29,7 +29,7 @@ import { valueOrThrow } from '../utils/selector-utils';
 export const selectAllVaultIds = (state: BeefyState) => state.entities.vaults.allIds;
 
 export const selectVaultById = createCachedSelector(
-  (state: BeefyState) => state.entities.vaults.byId,
+  (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.vaults.byId,
   (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
   (vaultsById, vaultId) => {
     const vault = vaultsById[vaultId];

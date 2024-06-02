@@ -5,9 +5,9 @@ import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectTransactDepositTokensForChainIdWithBalances,
+  selectTransactSelectedChainId,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { SearchInput } from '../../../../../../components/SearchInput';
 import { Scrollable } from '../../../../../../components/Scrollable';
 import type { ListItemProps } from './components/ListItem';
@@ -18,8 +18,8 @@ import type { ToggleProps } from '../../../../../../components/Toggle';
 import { Toggle } from '../../../../../../components/Toggle';
 import clsx from 'clsx';
 import buildLpIcon from '../../../../../../images/icons/build-lp.svg';
-import type { VaultEntity } from '../../../../../data/entities/vault';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
+import { selectVaultById } from '../../../../../data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 const DUST_HIDDEN_THRESHOLD = new BigNumber('0.01');
@@ -33,14 +33,11 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const classes = useStyles();
-    const vaultId = useAppSelector(selectTransactVaultId);
-    const vault = useAppSelector(state => selectVaultById(state, vaultId));
-    // const availableChains = useAppSelector(selectTransactTokenChains);
+    const selectedChainId = useAppSelector(selectTransactSelectedChainId);
     const [dustHidden, setDustHidden] = useState(false);
-    const [selectedChain] = useState(vault.chainId);
     const [search, setSearch] = useState('');
     const optionsForChain = useAppSelector(state =>
-      selectTransactDepositTokensForChainIdWithBalances(state, selectedChain)
+      selectTransactDepositTokensForChainIdWithBalances(state, selectedChainId)
     );
     const filteredOptionsForChain = useMemo(() => {
       let options = optionsForChain;
@@ -61,7 +58,6 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
 
       return options;
     }, [optionsForChain, search, dustHidden]);
-    // const hasMultipleChains = availableChains.length > 1;
     const handleTokenSelect = useCallback<ListItemProps['onSelect']>(
       tokenId => {
         dispatch(
@@ -95,7 +91,6 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
             />
           </div>
         </div>
-        {/*hasMultipleChains ? <div className={classes.chainSelector}>TODO {selectedChain}</div> : null*/}
         <Scrollable className={classes.listContainer}>
           <div className={classes.list}>
             {filteredOptionsForChain.length ? (
@@ -106,7 +101,7 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
                   tokens={option.tokens}
                   balance={option.balance}
                   decimals={option.decimals}
-                  chainId={selectedChain}
+                  chainId={selectedChainId}
                   onSelect={handleTokenSelect}
                 />
               ))
@@ -115,13 +110,14 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
             )}
           </div>
         </Scrollable>
-        {filteredOptionsForChain?.length > 1 && <BuildLpManually vaultId={vaultId} />}
+        {optionsForChain?.length > 1 && <BuildLpManually />}
       </div>
     );
   }
 );
 
-const BuildLpManually = memo(function BuildLpManually({ vaultId }: { vaultId: VaultEntity['id'] }) {
+const BuildLpManually = memo(function BuildLpManually() {
+  const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const { t } = useTranslation();
   const classes = useStyles();

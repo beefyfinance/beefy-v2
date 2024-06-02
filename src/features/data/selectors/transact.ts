@@ -49,7 +49,8 @@ export const selectTransactDualMaxAmount = (state: BeefyState, index: number) =>
 export const selectTransactDualMaxAmounts = (state: BeefyState) => state.ui.transact.dualInputMax;
 
 export const selectTransactSelectedChainId = (state: BeefyState) =>
-  state.ui.transact.selectedChainId;
+  valueOrThrow(state.ui.transact.selectedChainId, 'No chain selected');
+
 export const selectTransactSelectedSelectionId = (state: BeefyState) =>
   valueOrThrow(state.ui.transact.selectedSelectionId, 'No selected selection id found');
 export const selectTransactSelectedQuoteId = (state: BeefyState) =>
@@ -150,7 +151,7 @@ export const selectTransactCowcentratedDepositNotSingleSideAllowed = (state: Bee
   return { noSingleSideAllowed, inputToken, neededToken };
 };
 
-export const selectTransactTokenChains = (state: BeefyState) =>
+export const selectTransactTokenChainIds = (state: BeefyState) =>
   state.ui.transact.selections.allChainIds;
 
 export const selectTransactNumTokens = (state: BeefyState) =>

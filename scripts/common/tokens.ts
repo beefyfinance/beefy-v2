@@ -30,10 +30,10 @@ async function getChainTokens(chain: ChainEntity): Promise<TokenEntity[]> {
       oracleId: chain.walletSettings.nativeCurrency.symbol,
       address: 'native',
       decimals: chain.walletSettings.nativeCurrency.decimals,
-      buyUrl: null,
-      website: null,
-      description: null,
-      documentation: null,
+      buyUrl: undefined,
+      website: undefined,
+      description: undefined,
+      documentation: undefined,
     },
     {
       type: 'native',
@@ -43,10 +43,10 @@ async function getChainTokens(chain: ChainEntity): Promise<TokenEntity[]> {
       oracleId: chain.walletSettings.nativeCurrency.symbol,
       address: 'native',
       decimals: chain.walletSettings.nativeCurrency.decimals,
-      buyUrl: null,
-      website: null,
-      description: null,
-      documentation: null,
+      buyUrl: undefined,
+      website: undefined,
+      description: undefined,
+      documentation: undefined,
     },
   ];
 }
@@ -65,10 +65,11 @@ async function getVaultTokensForChain(chain: ChainEntity): Promise<TokenEntity[]
         address: vault.tokenAddress,
         decimals: vault.tokenDecimals,
         providerId: vault.tokenProviderId,
-        buyUrl: null,
-        website: null,
-        description: null,
-        documentation: null,
+        risks: [],
+        buyUrl: undefined,
+        website: undefined,
+        description: undefined,
+        documentation: undefined,
       });
     }
 
@@ -81,10 +82,11 @@ async function getVaultTokensForChain(chain: ChainEntity): Promise<TokenEntity[]
         oracleId: vault.earnedToken,
         address: vault.earnedTokenAddress,
         decimals: vault.earnedTokenDecimals || 18,
-        buyUrl: null,
-        website: null,
-        description: null,
-        documentation: null,
+        risks: [],
+        buyUrl: undefined,
+        website: undefined,
+        description: undefined,
+        documentation: undefined,
       });
     }
 
@@ -105,10 +107,11 @@ async function getBoostTokensForChain(chain: ChainEntity): Promise<TokenEntity[]
         oracleId: boost.earnedOracleId || boost.earnedToken,
         address: boost.earnedTokenAddress,
         decimals: boost.earnedTokenDecimals || 18,
-        buyUrl: null,
-        website: null,
-        description: null,
-        documentation: null,
+        risks: [],
+        buyUrl: undefined,
+        website: undefined,
+        description: undefined,
+        documentation: undefined,
       });
     }
 
@@ -129,10 +132,11 @@ async function getMinterTokensForChain(chain: ChainEntity): Promise<TokenEntity[
         oracleId: minter.depositToken.oracleId || minter.depositToken.symbol,
         address: minter.depositToken.contractAddress,
         decimals: minter.depositToken.decimals || 18,
-        buyUrl: null,
-        website: null,
-        description: null,
-        documentation: null,
+        risks: [],
+        buyUrl: undefined,
+        website: undefined,
+        description: undefined,
+        documentation: undefined,
       });
     }
 
@@ -145,10 +149,11 @@ async function getMinterTokensForChain(chain: ChainEntity): Promise<TokenEntity[
         oracleId: minter.mintedToken.oracleId || minter.mintedToken.symbol,
         address: minter.mintedToken.contractAddress,
         decimals: minter.mintedToken.decimals || 18,
-        buyUrl: null,
-        website: null,
-        description: null,
-        documentation: null,
+        risks: [],
+        buyUrl: undefined,
+        website: undefined,
+        description: undefined,
+        documentation: undefined,
       });
     }
 
@@ -232,11 +237,11 @@ function addToken(
 export async function getTokenById(
   id: TokenEntity['id'],
   chainId: ChainEntity['id']
-): Promise<TokenEntity | null> {
+): Promise<TokenEntity | undefined> {
   const { byId } = await getTokensForChain(chainId);
   const address = byId[id];
 
-  if (!address) return null;
+  if (!address) return undefined;
 
   return getTokenByAddress(address, chainId);
 }
@@ -244,13 +249,13 @@ export async function getTokenById(
 export async function getTokenByAddress(
   address: TokenEntity['address'],
   chainId: ChainEntity['id']
-): Promise<TokenEntity | null> {
+): Promise<TokenEntity | undefined> {
   const { byAddress } = await getTokensForChain(chainId);
   const token = byAddress[address.toLowerCase()];
-  return token || null;
+  return token || undefined;
 }
 
-export async function getNativeToken(chainId: ChainEntity['id']): Promise<TokenNative | null> {
+export async function getNativeToken(chainId: ChainEntity['id']): Promise<TokenNative | undefined> {
   const token = await getTokenById('native', chainId);
   if (!token || !isTokenNative(token)) {
     throw new Error(`No native token found for chain ${chainId}`);
@@ -260,7 +265,7 @@ export async function getNativeToken(chainId: ChainEntity['id']): Promise<TokenN
 
 export async function getWrappedNativeToken(
   chainId: ChainEntity['id']
-): Promise<TokenErc20 | null> {
+): Promise<TokenErc20 | undefined> {
   const token = await getTokenById('wnative', chainId);
   if (!token || !isTokenErc20(token)) {
     console.warn(token);

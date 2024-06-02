@@ -18,6 +18,7 @@ import type {
   TransactState,
 } from './transact-types';
 import { TransactMode, TransactStatus, TransactStep } from './transact-types';
+import type { ChainEntity } from '../../entities/chain';
 
 const initialTransactTokens: TransactSelections = {
   allSelectionIds: [],
@@ -98,6 +99,10 @@ const transactSlice = createSlice({
         sliceState.dualInputAmounts = [BIG_ZERO, BIG_ZERO];
         sliceState.dualInputMax = [false, false];
       }
+    },
+    selectChain(sliceState, action: PayloadAction<{ chainId: ChainEntity['id'] }>) {
+      sliceState.selectedChainId = action.payload.chainId;
+      sliceState.step = TransactStep.TokenSelect;
     },
     setInputAmount(sliceState, action: PayloadAction<{ amount: BigNumber; max: boolean }>) {
       if (!sliceState.inputAmount.isEqualTo(action.payload.amount)) {
@@ -199,6 +204,7 @@ const transactSlice = createSlice({
       })
       .addCase(transactInit.fulfilled, (sliceState, action) => {
         sliceState.vaultId = action.meta.arg.vaultId;
+        sliceState.selectedChainId = action.payload.chainId;
         sliceState.step = TransactStep.Form;
         sliceState.mode = TransactMode.Deposit;
       })
@@ -226,7 +232,7 @@ const transactSlice = createSlice({
           const defaultOption = first(options);
           if (defaultOption) {
             sliceState.selectedSelectionId = defaultOption.selectionId;
-            sliceState.selectedChainId = defaultOption.chainId;
+            sliceState.selectedChainId = defaultOption.selectionChainId ?? defaultOption.chainId;
             sliceState.forceSelection = options.length > 1;
           }
         }
@@ -356,10 +362,11 @@ function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOp
     }
 
     // Add chainId -> selectionId[] mapping
-    const byChainId = sliceState.selections.byChainId[option.chainId];
+    const selectionChainId = option.selectionChainId ?? option.chainId;
+    const byChainId = sliceState.selections.byChainId[selectionChainId];
     if (!byChainId) {
-      sliceState.selections.byChainId[option.chainId] = [option.selectionId];
-      sliceState.selections.allChainIds.push(option.chainId);
+      sliceState.selections.byChainId[selectionChainId] = [option.selectionId];
+      sliceState.selections.allChainIds.push(selectionChainId);
     } else if (!byChainId.includes(option.selectionId)) {
       byChainId.push(option.selectionId);
     }
