@@ -26,6 +26,10 @@ type PreviewDepositResponse = {
   previewDeposit: Record<number, string>;
 };
 
+type PreviewWithdrawResponse = {
+  previewDeposit: Record<number, string>;
+};
+
 export class BeefyCLMPool {
   public readonly type = 'uniswap-v2';
 
@@ -112,6 +116,19 @@ export class BeefyCLMPool {
     return calls;
   }
 
+  protected getPreviewWithdrawRequests(liquidityAmountWei: BigNumber): ShapeWithLabel[] {
+    const contract = createContract(
+      viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
+      this.address
+    );
+    const calls: ShapeWithLabel[] = [
+      {
+        previewDeposit: contract.methods.previewWithdraw(liquidityAmountWei.toString(10)),
+      },
+    ];
+    return calls;
+  }
+
   protected consumeStrategyData(untypedData: unknown[]) {
     const result = (untypedData as StrategyDataResponse[])[0];
     return {
@@ -141,6 +158,14 @@ export class BeefyCLMPool {
       liquidity: new BigNumber(result.previewDeposit[0]),
       amount0: new BigNumber(result.previewDeposit[1]),
       amount1: new BigNumber(result.previewDeposit[2]),
+    };
+  }
+
+  protected consumePreviewWithdraw(untypedData: unknown[]) {
+    const result = (untypedData as PreviewWithdrawResponse[])[0];
+    return {
+      amount0: new BigNumber(result.previewDeposit[0]),
+      amount1: new BigNumber(result.previewDeposit[1]),
     };
   }
 
@@ -335,5 +360,15 @@ export class BeefyCLMPool {
     const { isCalm } = this.consumeIsCalm(isCalmRequest);
 
     return { liquidity, amount0, amount1, isCalm };
+  }
+
+  public async previewWithdraw(liquidity: BigNumber) {
+    const multicall = await this.getMulticall();
+    const [previewWithdrawResponse] = await multicall.all([
+      this.getPreviewWithdrawRequests(toWei(liquidity, 18)),
+    ]);
+
+    const result = this.consumePreviewWithdraw(previewWithdrawResponse);
+    return result;
   }
 }

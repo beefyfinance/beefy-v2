@@ -48,6 +48,7 @@ import { getWeb3Instance } from '../../instances';
 import { selectChainById } from '../../../selectors/chains';
 import { MultiCall } from 'eth-multicall';
 import { first } from 'lodash-es';
+import { ZERO_FEE } from '../helpers/quotes';
 
 export class CowcentratedVaultType implements ICowcentratedVaultType {
   public readonly id = 'cowcentrated';
@@ -222,6 +223,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       strategyId: 'cowcentrated',
       vaultType: 'cowcentrated',
       mode: TransactMode.Withdraw,
+      swapVia: undefined,
     };
   }
 
@@ -265,6 +267,8 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       returned: [],
       allowances,
       priceImpact: 0,
+      steps: [],
+      fee: ZERO_FEE,
     };
   }
 

@@ -15,16 +15,23 @@ import {
   isZapQuoteStepSwapAggregator,
   type ZapQuoteStepSwapAggregator,
   type ZapQuoteStepBuild,
+  type CowcentratedWithdrawOption,
 } from '../../transact-types';
 import type { Step } from '../../../../reducers/wallet/stepper';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { CowcentratedVaultType } from '../../vaults/CowcentratedVaultType';
-import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../../entities/token';
+import {
+  isTokenEqual,
+  isTokenErc20,
+  isTokenNative,
+  type TokenErc20,
+} from '../../../../entities/token';
 import {
   createOptionId,
   createQuoteId,
   createSelectionId,
   onlyOneInput,
+  onlyOneToken,
 } from '../../helpers/options';
 import { TransactMode } from '../../../../reducers/wallet/transact-types';
 import {
@@ -40,7 +47,7 @@ import { BeefyCLMPool } from '../../../beefy/beefy-clm-pool';
 import { selectTokenPriceByAddress } from '../../../../selectors/tokens';
 import type { QuoteRequest } from '../../swap/ISwapProvider';
 import { first, uniqBy } from 'lodash-es';
-import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes';
+import { ZERO_FEE, calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes';
 import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
 import { selectTransactSlippage } from '../../../../selectors/transact';
 import type { ChainEntity } from '../../../../entities/chain';
@@ -60,6 +67,7 @@ import abiCoder from 'web3-eth-abi';
 import { slipAllBy, slipBy } from '../../helpers/amounts';
 import { walletActions } from '../../../../actions/wallet-actions';
 import type BigNumber from 'bignumber.js';
+import { isCowcentratedLiquidityVault } from '../../../../entities/vault';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -301,14 +309,131 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
   }
 
   async fetchWithdrawOptions(): Promise<WithdrawOption[]> {
-    return [await this.helpers.vaultType.fetchWithdrawOption()];
+    const { vault, vaultType } = this.helpers;
+    // const clmVault = vaultType as CowcentratedVaultType;
+
+    const supportedAggregatorTokens = await this.aggregatorTokenSupport();
+    const aggregatorTokens = supportedAggregatorTokens.map(token => ({
+      token,
+      swap: 'aggregator' as const,
+    }));
+
+    const zapTokens = aggregatorTokens;
+    const inputs = [vaultType.depositToken];
+
+    return zapTokens.map(({ token, swap }) => {
+      const outputs = [token];
+      const selectionId = createSelectionId(vault.chainId, outputs);
+
+      return {
+        id: createOptionId(this.id, vault.id, selectionId, swap),
+        vaultId: vault.id,
+        chainId: vault.chainId,
+        selectionId,
+        selectionOrder: 3,
+        inputs,
+        wantedOutputs: outputs,
+        mode: TransactMode.Withdraw,
+        depositToken: vaultType.depositToken,
+        swapVia: swap,
+        strategyId: 'cowcentrated',
+        vaultType: 'cowcentrated',
+      };
+    });
   }
 
   async fetchWithdrawQuote(
     inputs: InputTokenAmount[],
-    option: WithdrawOption
+    option: CowcentratedWithdrawOption
   ): Promise<WithdrawQuote> {
-    return this.helpers.vaultType.fetchWithdrawQuote(inputs, option);
+    const input = onlyOneInput(inputs);
+    if (input.amount.lte(BIG_ZERO)) {
+      throw new Error('Quote called with 0 input amount');
+    }
+
+    const { vault, vaultType, zap, getState } = this.helpers;
+    const clmVaultType = vaultType as CowcentratedVaultType;
+
+    console.log('Fetching withdraw quote');
+    if (!isCowcentratedLiquidityVault(vault)) {
+      throw new Error('Vault is not standard');
+    }
+
+    const state = getState();
+    const chain = selectChainById(getState(), vault.chainId);
+    const clmPool = new BeefyCLMPool(
+      vault.earnContractAddress,
+      selectVaultStrategyAddress(state, vault.id),
+      chain,
+      clmVaultType.depositTokens
+    );
+
+    const { amount0, amount1 } = await clmPool.previewWithdraw(input.amount);
+
+    const withdrawOutputs: TokenAmount[] = [
+      {
+        token: clmVaultType.depositTokens[0],
+        amount: fromWei(amount0, clmVaultType.depositTokens[0].decimals),
+      },
+      {
+        token: clmVaultType.depositTokens[1],
+        amount: fromWei(amount1, clmVaultType.depositTokens[1].decimals),
+      },
+    ];
+
+    const breakSteps: ZapQuoteStep[] = [
+      {
+        type: 'split',
+        outputs: withdrawOutputs,
+        inputToken: input.token,
+        inputAmount: input.amount,
+      },
+    ];
+
+    // Common: Token Allowances
+    const allowances = [
+      {
+        token: input.token as TokenErc20,
+        amount: input.amount,
+        spenderAddress: zap.manager,
+      },
+    ];
+
+    if (option.swapVia === 'aggregator') {
+      const { outputs, returned, steps, fee } = await this.fetchWithdrawQuoteAggregator(
+        option,
+        withdrawOutputs,
+        [],
+        breakSteps
+      );
+      return {
+        id: createQuoteId(option.id),
+        strategyId: this.id,
+        priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
+        option,
+        inputs,
+        outputs,
+        returned,
+        allowances,
+        steps,
+        fee,
+        vaultType: 'cowcentrated',
+      };
+    } else {
+      return {
+        id: createQuoteId(option.id),
+        strategyId: this.id,
+        priceImpact: 0,
+        option,
+        inputs,
+        outputs: withdrawOutputs,
+        returned: [],
+        allowances,
+        steps: breakSteps,
+        fee: ZERO_FEE,
+        vaultType: 'cowcentrated',
+      };
+    }
   }
 
   async fetchWithdrawStep(quote: WithdrawQuote, t: TFunction<Namespace>): Promise<Step> {
@@ -494,6 +619,80 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       amountsUsed: [],
       amountsReturned: [],
       isCalm,
+    };
+  }
+
+  protected async fetchWithdrawQuoteAggregator(
+    option: CowcentratedWithdrawOption,
+    breakOutputs: TokenAmount[],
+    breakReturned: TokenAmount[],
+    steps: ZapQuoteStep[]
+  ) {
+    const { wantedOutputs } = option;
+    const { swapAggregator, getState } = this.helpers;
+    const state = getState();
+    const wantedOutput = onlyOneToken(wantedOutputs);
+    const needsSwap = breakOutputs.map(
+      tokenAmount => !isTokenEqual(wantedOutput, tokenAmount.token)
+    );
+
+    const swapQuotes = await Promise.all(
+      breakOutputs.map(async (input, i) => {
+        if (needsSwap[i]) {
+          const quotes = await swapAggregator.fetchQuotes(
+            {
+              fromAmount: input.amount,
+              fromToken: input.token,
+              toToken: wantedOutput,
+              vaultId: option.vaultId,
+            },
+            state
+          );
+
+          if (!quotes || !quotes.length) {
+            throw new Error(`No quotes found for ${input.token.symbol} -> ${wantedOutput.symbol}`);
+          }
+
+          return first(quotes); // already sorted by toAmount
+        }
+
+        return undefined;
+      })
+    );
+
+    let outputTotal = BIG_ZERO;
+    breakOutputs.forEach((input, i) => {
+      if (needsSwap[i]) {
+        const swapQuote = swapQuotes[i];
+        if (!swapQuote) {
+          throw new Error('No swap quote found');
+        }
+
+        outputTotal = outputTotal.plus(swapQuote.toAmount);
+
+        steps.push({
+          type: 'swap',
+          fromToken: input.token,
+          fromAmount: input.amount,
+          toToken: swapQuote.toToken,
+          toAmount: swapQuote.toAmount,
+          via: 'aggregator',
+          providerId: swapQuote.providerId,
+          fee: swapQuote.fee,
+          quote: swapQuote,
+        });
+      } else {
+        outputTotal = outputTotal.plus(input.amount);
+      }
+    });
+
+    const outputs: TokenAmount[] = [{ token: wantedOutput, amount: outputTotal }];
+
+    return {
+      outputs,
+      returned: breakReturned,
+      steps,
+      fee: highestFeeOrZero(steps),
     };
   }
 
