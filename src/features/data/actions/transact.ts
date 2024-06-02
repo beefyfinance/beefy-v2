@@ -1,6 +1,6 @@
 import { type AnyAction, createAsyncThunk, miniSerializeError, nanoid } from '@reduxjs/toolkit';
 import type { BeefyState, BeefyThunk } from '../../../redux-types';
-import type { VaultEntity, VaultGov } from '../entities/vault';
+import { isCowcentratedLiquidityVault, type VaultEntity, type VaultGov } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
 import { selectShouldInitAddressBook } from '../selectors/data-loader';
 import { fetchAddressBookAction } from './tokens';
@@ -249,12 +249,18 @@ export const transactFetchQuotes = createAsyncThunk<
   // const vaultId = selectTransactVaultId(state);
   // const vault = selectVaultById(state, vaultId);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const shareToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
 
   // TODO handle differently for univ3 with multiple deposit tokens
   const inputAmounts: InputTokenAmount[] = [
     {
       amount: inputAmount,
-      token: mode === TransactMode.Withdraw ? depositToken : selection.tokens[0], // for withdraw this is always depositToken / deposit is only token of selection
+      token:
+        mode === TransactMode.Withdraw
+          ? isCowcentratedLiquidityVault(vault)
+            ? shareToken
+            : depositToken
+          : selection.tokens[0], // wouldn't it be the share token?
       max: inputMax,
     },
   ];

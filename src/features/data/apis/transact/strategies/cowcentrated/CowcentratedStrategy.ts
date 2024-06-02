@@ -16,22 +16,21 @@ import {
   type ZapQuoteStepSwapAggregator,
   type ZapQuoteStepBuild,
   type CowcentratedWithdrawOption,
+  isZapQuoteStepSplit,
+  type CowcentratedVaultWithdrawQuote,
+  type ZapQuoteStepSplit,
 } from '../../transact-types';
 import type { Step } from '../../../../reducers/wallet/stepper';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { CowcentratedVaultType } from '../../vaults/CowcentratedVaultType';
-import {
-  isTokenEqual,
-  isTokenErc20,
-  isTokenNative,
-  type TokenErc20,
-} from '../../../../entities/token';
+import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../../entities/token';
 import {
   createOptionId,
   createQuoteId,
   createSelectionId,
   onlyOneInput,
   onlyOneToken,
+  onlyOneTokenAmount,
 } from '../../helpers/options';
 import { TransactMode } from '../../../../reducers/wallet/transact-types';
 import {
@@ -68,6 +67,7 @@ import { slipAllBy, slipBy } from '../../helpers/amounts';
 import { walletActions } from '../../../../actions/wallet-actions';
 import type BigNumber from 'bignumber.js';
 import { isCowcentratedLiquidityVault } from '../../../../entities/vault';
+import { QuoteChangedError } from '../errors';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -385,7 +385,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       {
         type: 'split',
         outputs: withdrawOutputs,
-        inputToken: input.token,
+        inputToken: clmVaultType.shareToken,
         inputAmount: input.amount,
       },
     ];
@@ -393,7 +393,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     // Common: Token Allowances
     const allowances = [
       {
-        token: input.token as TokenErc20,
+        token: clmVaultType.shareToken,
         amount: input.amount,
         spenderAddress: zap.manager,
       },
@@ -436,8 +436,133 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     }
   }
 
-  async fetchWithdrawStep(quote: WithdrawQuote, t: TFunction<Namespace>): Promise<Step> {
-    return this.helpers.vaultType.fetchWithdrawStep(quote, t);
+  async fetchWithdrawStep(
+    quote: CowcentratedVaultWithdrawQuote,
+    t: TFunction<Namespace>
+  ): Promise<Step> {
+    const { vault, vaultType } = this.helpers;
+    const clmVault = vaultType as CowcentratedVaultType;
+
+    const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
+      console.log('fetchWithdrawStep::zapAction starting');
+      const state = getState();
+      const chain = selectChainById(state, vault.chainId);
+      const clmPool = new BeefyCLMPool(
+        clmVault.shareToken.address,
+        selectVaultStrategyAddress(state, vault.id),
+        chain,
+        clmVault.depositTokens
+      );
+      const slippage = selectTransactSlippage(state);
+      const zapHelpers: ZapHelpers = { chain, slippage, state, clmPool };
+
+      // Split quote steps
+      const splitQuote = quote.steps.find(isZapQuoteStepSplit);
+      const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
+
+      if (!splitQuote) {
+        throw new Error('Invalid withdraw quote: missing split step');
+      }
+
+      const steps: ZapStep[] = [];
+
+      console.log('fetchWithdrawStep::splitQuote', splitQuote);
+
+      // Step 1: Withdraw/split from CLM
+      const splitZap = await this.fetchZapWithdrawAndSplit(splitQuote, quote.inputs, zapHelpers);
+      splitZap.zaps.forEach(step => steps.push(step));
+
+      console.log('fetchWithdrawStep::splitZap', splitZap);
+
+      //Step 2: Swap(s)
+      if (swapQuotes.length > 0) {
+        if (swapQuotes.length > 2) {
+          throw new Error('Invalid withdraw quote: too many swap steps');
+        }
+
+        const insertBalance = allTokensAreDistinct(
+          swapQuotes.map(quoteStep => quoteStep.fromToken)
+        );
+
+        // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
+        const lastSwapIndex = swapQuotes.length - 1;
+        const swapZaps = await Promise.all(
+          swapQuotes.map((quoteStep, i) =>
+            this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i)
+          )
+        );
+        swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
+      }
+
+      // Build order
+      const inputs: OrderInput[] = splitZap.inputs.map(input => ({
+        token: getTokenAddress(input.token),
+        amount: toWeiString(input.amount, input.token.decimals),
+      }));
+
+      const requiredOutputs: OrderOutput[] = quote.outputs.map(output => ({
+        token: getTokenAddress(output.token),
+        minOutputAmount: toWeiString(
+          slipBy(output.amount, slippage, output.token.decimals),
+          output.token.decimals
+        ),
+      }));
+      console.log('Required outputs', bigNumberToStringDeep(requiredOutputs));
+
+      // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
+      const dustOutputs: OrderOutput[] = pickTokens(
+        splitZap.inputs,
+        quote.outputs,
+        quote.inputs,
+        quote.returned,
+        splitQuote.outputs
+      ).map(token => ({
+        token: getTokenAddress(token),
+        minOutputAmount: '0',
+      }));
+
+      swapQuotes.forEach(quoteStep => {
+        dustOutputs.push({
+          token: getTokenAddress(quoteStep.fromToken),
+          minOutputAmount: '0',
+        });
+        dustOutputs.push({
+          token: getTokenAddress(quoteStep.toToken),
+          minOutputAmount: '0',
+        });
+      });
+
+      // @dev uniqBy: first occurrence of each element is kept -> required outputs are kept
+      const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
+
+      // Perform TX
+      const zapRequest: UserlessZapRequest = {
+        order: {
+          inputs,
+          outputs,
+          relay: NO_RELAY,
+        },
+        steps,
+      };
+
+      const expectedTokens = quote.outputs.map(output => output.token);
+      console.log('Expected tokens', expectedTokens);
+      const walletAction = walletActions.zapExecuteOrder(
+        quote.option.vaultId,
+        zapRequest,
+        expectedTokens
+      );
+
+      return walletAction(dispatch, getState, extraArgument);
+    };
+
+    return {
+      step: 'zap-out',
+      message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+      action: zapAction,
+      pending: false,
+      extraInfo: { zap: true, vaultId: quote.option.vaultId },
+    };
   }
 
   async aggregatorTokenSupport() {
@@ -803,6 +928,182 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
         {
           token: tokenB,
           index: insertBalance ? getInsertIndex(1) : -1, // amountBDesired
+        },
+      ],
+    };
+  }
+
+  protected async fetchZapWithdrawAndSplit(
+    quoteStep: ZapQuoteStepSplit,
+    inputs: TokenAmount[],
+    zapHelpers: ZapHelpers
+  ): Promise<ZapStepResponse> {
+    const { zap, vaultType } = this.helpers;
+    const clmVaultType = vaultType as CowcentratedVaultType;
+    const { slippage, clmPool } = zapHelpers;
+
+    const { amount0, amount1 } = await clmPool.previewWithdraw(quoteStep.inputAmount);
+
+    const quoteIndexes = clmVaultType.depositTokens.map(token =>
+      quoteStep.outputs.findIndex(
+        output => output.token.address.toLocaleLowerCase() === token.address.toLowerCase()
+      )
+    );
+
+    const outputs = [amount0, amount1].map((amount, i) => {
+      if (quoteIndexes[i] === -1) {
+        throw new Error('Invalid output token');
+      }
+
+      const quoteOutput = quoteStep.outputs[quoteIndexes[i]];
+      const token = quoteOutput.token;
+      const amountOut = fromWei(amount, token.decimals);
+
+      if (amountOut.lt(quoteOutput.amount)) {
+        console.debug('fetchZapSplit', {
+          quote: quoteOutput.amount.toString(10),
+          now: amountOut.toString(10),
+        });
+        throw new QuoteChangedError(
+          'Expected output changed between quote and transaction when breaking LP.'
+        );
+      }
+
+      return {
+        token,
+        amount: amountOut,
+      };
+    });
+
+    return await this.getZapWithdrawAndSplit({
+      inputs,
+      outputs,
+      maxSlippage: slippage,
+      zapRouter: zap.router,
+      insertBalance: true,
+    });
+  }
+
+  protected async getZapWithdrawAndSplit(request: ZapStepRequest): Promise<ZapStepResponse> {
+    const { inputs, outputs, maxSlippage } = request;
+    const input = onlyOneTokenAmount(inputs);
+    const clmVault = this.helpers.vaultType as CowcentratedVaultType;
+
+    console.log('getting zap withdraw/split');
+    console.log(bigNumberToStringDeep(request.inputs));
+    console.log(clmVault.shareToken);
+
+    if (clmVault.shareToken.address.toLowerCase() !== input.token.address.toLowerCase()) {
+      throw new Error('Invalid input token');
+    }
+
+    if (outputs.length !== 2) {
+      throw new Error('Invalid output count');
+    }
+
+    for (const output of outputs) {
+      if (!clmVault.depositTokens.find(token => isTokenEqual(token, output.token))) {
+        throw new Error('Invalid output token');
+      }
+    }
+
+    const minOutputs = slipAllBy(outputs, maxSlippage);
+
+    return {
+      inputs,
+      outputs,
+      minOutputs,
+      returned: [],
+      zaps: [
+        this.buildZapWithdrawAndSplitTx(
+          input.token.address,
+          toWei(input.amount, input.token.decimals),
+          // toWei(minOutputs[0].amount, minOutputs[0].token.decimals),
+          // toWei(minOutputs[1].amount, minOutputs[1].token.decimals),
+          toWei(outputs[0].amount, minOutputs[0].token.decimals),
+          toWei(outputs[1].amount, minOutputs[1].token.decimals),
+          false
+        ),
+      ],
+    };
+  }
+
+  protected buildZapWithdrawAndSplitTx(
+    clmAddress: string,
+    amountToWithdrawWei: BigNumber,
+    minAmountAWei: BigNumber,
+    minAmountBWei: BigNumber,
+    withdrawAll: boolean
+  ): ZapStep {
+    console.log('withdrawAll', withdrawAll);
+    console.log('clmAddress', clmAddress);
+    console.log('amountToWithdrawWei', amountToWithdrawWei.toString(10));
+    if (withdrawAll) {
+      return {
+        target: clmAddress,
+        value: '0',
+        data: abiCoder.encodeFunctionCall(
+          {
+            constant: false,
+            inputs: [
+              {
+                name: '_minAmount0',
+                type: 'uint256',
+              },
+              {
+                name: '_minAmount1',
+                type: 'uint256',
+              },
+            ],
+            name: 'withdrawAll',
+            outputs: [],
+            payable: false,
+            stateMutability: 'nonpayable',
+            type: 'function',
+          },
+          [minAmountAWei.toString(10), minAmountBWei.toString(10)]
+        ),
+        tokens: [
+          {
+            token: clmAddress,
+            index: -1,
+          },
+        ],
+      };
+    }
+
+    return {
+      target: clmAddress,
+      value: '0',
+      data: abiCoder.encodeFunctionCall(
+        {
+          constant: false,
+          inputs: [
+            {
+              name: '_shares',
+              type: 'uint256',
+            },
+            {
+              name: '_minAmount0',
+              type: 'uint256',
+            },
+            {
+              name: '_minAmount1',
+              type: 'uint256',
+            },
+          ],
+          name: 'withdraw',
+          outputs: [],
+          payable: false,
+          stateMutability: 'nonpayable',
+          type: 'function',
+        },
+        [amountToWithdrawWei.toString(10), minAmountAWei.toString(10), minAmountBWei.toString(10)]
+      ),
+      tokens: [
+        {
+          token: clmAddress,
+          index: getInsertIndex(0),
         },
       ],
     };
