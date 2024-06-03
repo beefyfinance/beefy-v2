@@ -6,7 +6,7 @@ import { isTokenErc20, isTokenNative } from '../entities/token';
 import { selectAllChainIds, selectChainById } from './chains';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectIsAddressBookLoaded, selectIsGlobalDataAvailable } from './data-loader';
-import type { VaultEntity } from '../entities/vault';
+import { isGovVault, type VaultEntity } from '../entities/vault';
 import { createCachedSelector } from 're-reselect';
 import { selectCowcentratedVaultById, selectVaultById } from './vaults';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
@@ -97,6 +97,14 @@ export const selectTokensByChainId = (state: BeefyState, chainId: ChainEntity['i
 export const selectDepositTokenByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
   return selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+};
+
+export const selectShareTokenByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const vault = selectVaultById(state, vaultId);
+  if (isGovVault(vault)) {
+    return undefined;
+  }
+  return selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
 };
 
 export const selectErc20TokenByAddress = (

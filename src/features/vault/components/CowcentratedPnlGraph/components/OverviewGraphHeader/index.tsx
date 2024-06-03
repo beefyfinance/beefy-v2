@@ -102,13 +102,8 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
             }
             content={
               <div>
-                <div className={classes.tooltipTitle}>{t('CLM vs HOLD')}</div>
                 <div className={classes.itemContainer}>
-                  <div className={classes.label}>{t('IF HELD')}</div>
-                  <div className={classes.value}>{formatLargeUsd(hold)}</div>
-                </div>
-                <div className={classes.itemContainer}>
-                  <div className={classes.label}>{t('VS CLM')}</div>
+                  <div className={classes.label}>{t('CLM VS HOLD')}</div>
                   <div className={classes.value}>
                     {formatPositiveOrNegative(holdDiff, formatLargeUsd(holdDiff))}
                   </div>
