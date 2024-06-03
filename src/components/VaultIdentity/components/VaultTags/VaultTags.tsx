@@ -1,5 +1,5 @@
 import React, { memo, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
 import { VaultTag, VaultTagWithTooltip } from './VaultTag';
 import { useTranslation } from 'react-i18next';
@@ -104,18 +104,30 @@ const VaultPlatformTag = memo<VaultPlatformTagProps>(function VaultPlatformTag({
   );
 });
 
-export const CLMTag = memo(function CLMTag({ vault }: { vault: VaultEntity }) {
+export const CLMTag = memo(function CLMTag({
+  vault,
+  isMobile = false,
+}: {
+  vault: VaultEntity;
+  isMobile?: boolean;
+}) {
   const classes = useStyles();
+
+  const tooltipContent = useMemo(() => {
+    return isMobile
+      ? `CLM | ${isCowcentratedVault(vault) && vault.feeTier}%`
+      : 'Cowcentrated Liquidity Manager';
+  }, [isMobile, vault]);
 
   return (
     <VaultTagWithTooltip
-      content={<BasicTooltipContent title={'Cowcentrated Liquidity Manager'} />}
+      content={<BasicTooltipContent title={tooltipContent} />}
       placement="bottom"
       className={classes.vaultTagClm}
     >
       <img src={getIcon('clm')} height={16} />
       <div className={classes.clm}>CLM</div>
-      {isCowcentratedVault(vault) && vault.feeTier && (
+      {!isMobile && isCowcentratedVault(vault) && vault.feeTier && (
         <>
           <div className={classes.divider} /> <span>{`${vault.feeTier}%`}</span>
         </>
@@ -151,13 +163,15 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   const boostIds = useAppSelector(state => selectPreStakeOrActiveBoostIds(state, vaultId));
   const boostId = boostIds.length ? boostIds[0] : null;
 
+  const isMobile = useMediaQuery('(max-width: 360px)', { noSsr: true });
+
   // Tag 1: Platform
   // Tag 2: Retired -> Paused -> Boosted > Earnings
   // Tag 3: Points
   return (
     <div className={classes.vaultTags}>
       <VaultPlatformTag vaultId={vaultId} />
-      {isCowcentratedVault(vault) && <CLMTag vault={vault} />}
+      {isCowcentratedVault(vault) && <CLMTag isMobile={isMobile} vault={vault} />}
       {isVaultRetired(vault) ? (
         <VaultTag className={classes.vaultTagRetired}>{t('VaultTag-Retired')}</VaultTag>
       ) : isVaultPaused(vault) ? (
