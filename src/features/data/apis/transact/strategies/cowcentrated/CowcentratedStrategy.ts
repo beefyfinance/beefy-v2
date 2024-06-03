@@ -125,17 +125,12 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     inputs: InputTokenAmount[],
     option: CowcentratedDepositOption
   ): Promise<DepositQuote> {
-    // return this.helpers.vaultType.fetchDepositQuote(inputs, option);
-
-    console.log('fetching deposit quote!');
-    console.log(this.helpers);
     const input = onlyOneInput(inputs);
 
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Cowcentrated strategy: Quote called with 0 input amount');
     }
 
-    console.log('amount is ok');
     if (option.swapVia === 'aggregator') {
       return this.fetchDepositQuoteAggregator(input, option);
     } else {
@@ -149,8 +144,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
   ): Promise<Step> {
     const { vault } = this.helpers;
     const vaultType = this.helpers.vaultType as CowcentratedVaultType;
-
-    console.log('fetchDepositStep::quote', quote);
 
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
@@ -354,7 +347,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     const { vault, vaultType, zap, getState } = this.helpers;
     const clmVaultType = vaultType as CowcentratedVaultType;
 
-    console.log('Fetching withdraw quote');
     if (!isCowcentratedLiquidityVault(vault)) {
       throw new Error('Vault is not standard');
     }
@@ -444,7 +436,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     const clmVault = vaultType as CowcentratedVaultType;
 
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
-      console.log('fetchWithdrawStep::zapAction starting');
       const state = getState();
       const chain = selectChainById(state, vault.chainId);
       const clmPool = new BeefyCLMPool(
@@ -466,13 +457,9 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
 
       const steps: ZapStep[] = [];
 
-      console.log('fetchWithdrawStep::splitQuote', splitQuote);
-
       // Step 1: Withdraw/split from CLM
       const splitZap = await this.fetchZapWithdrawAndSplit(splitQuote, quote.inputs, zapHelpers);
       splitZap.zaps.forEach(step => steps.push(step));
-
-      console.log('fetchWithdrawStep::splitZap', splitZap);
 
       //Step 2: Swap(s)
       if (swapQuotes.length > 0) {
@@ -507,7 +494,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
           output.token.decimals
         ),
       }));
-      console.log('Required outputs', bigNumberToStringDeep(requiredOutputs));
 
       // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
       const dustOutputs: OrderOutput[] = pickTokens(
@@ -546,7 +532,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       };
 
       const expectedTokens = quote.outputs.map(output => output.token);
-      console.log('Expected tokens', expectedTokens);
       const walletAction = walletActions.zapExecuteOrder(
         quote.option.vaultId,
         zapRequest,
@@ -590,7 +575,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     input: InputTokenAmount,
     option: CowcentratedDepositOption
   ): Promise<CowcentratedVaultDepositQuote> {
-    console.log('Fetching aggretator quote');
     const { vault, getState, vaultType, zap, swapAggregator } = this.helpers;
     const clmVaultType = vaultType as CowcentratedVaultType;
     const state = getState();
@@ -612,8 +596,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     );
     const ratios = await clmPool.getDepositRatioData(input, inputPrice, token1Price);
 
-    console.log(`Deposit ratios: `, bigNumberToStringDeep(ratios));
-
     // Token allowances
     const allowances = isTokenErc20(input.token)
       ? [
@@ -627,8 +609,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
 
     // How much input to swap to each lp token
     const swapInAmounts = ratios.map(ratio => input.amount.times(ratio));
-
-    console.log('fetchDepositQuoteAggregator::swapInAmounts', bigNumberToStringDeep(swapInAmounts));
 
     // Swap quotes
     const quoteRequestsPerLpToken: (QuoteRequest | undefined)[] = clmVaultType.depositTokens.map(
@@ -676,16 +656,10 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       return { token: clmVaultType.depositTokens[i], amount: swapInAmounts[i] };
     });
 
-    console.log(
-      'fetchDepositQuoteAggregator::lpTokenAmounts',
-      bigNumberToStringDeep(lpTokenAmounts)
-    );
-
     const { liquidity, isCalm } = await clmPool.previewDeposit(
       lpTokenAmounts[0].amount,
       lpTokenAmounts[1].amount
     );
-    console.log('Deposit previewed');
     const liquidityAmount = fromWei(liquidity, 18);
 
     //build quote inputs
@@ -989,10 +963,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     const input = onlyOneTokenAmount(inputs);
     const clmVault = this.helpers.vaultType as CowcentratedVaultType;
 
-    console.log('getting zap withdraw/split');
-    console.log(bigNumberToStringDeep(request.inputs));
-    console.log(clmVault.shareToken);
-
     if (clmVault.shareToken.address.toLowerCase() !== input.token.address.toLowerCase()) {
       throw new Error('Invalid input token');
     }
@@ -1018,8 +988,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
         this.buildZapWithdrawAndSplitTx(
           input.token.address,
           toWei(input.amount, input.token.decimals),
-          // toWei(minOutputs[0].amount, minOutputs[0].token.decimals),
-          // toWei(minOutputs[1].amount, minOutputs[1].token.decimals),
+          // @ReflectiveChimp should we slip here too? or is slippage protection from zap enough?
           toWei(outputs[0].amount, minOutputs[0].token.decimals),
           toWei(outputs[1].amount, minOutputs[1].token.decimals),
           false
@@ -1035,9 +1004,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     minAmountBWei: BigNumber,
     withdrawAll: boolean
   ): ZapStep {
-    console.log('withdrawAll', withdrawAll);
-    console.log('clmAddress', clmAddress);
-    console.log('amountToWithdrawWei', amountToWithdrawWei.toString(10));
     if (withdrawAll) {
       return {
         target: clmAddress,

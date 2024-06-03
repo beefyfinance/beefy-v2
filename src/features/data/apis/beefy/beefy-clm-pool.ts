@@ -183,14 +183,7 @@ export class BeefyCLMPool {
     const { price } = this.consumeStrategyData(strategyResults);
     const { balance0, balance1, totalSupply } = this.consumeCLMData(clmResults);
 
-    console.log('Ratio data');
-    console.log(`Price: ${price.toString()}`);
-    console.log(`Balance0: ${balance0.toString()}`);
-    console.log(`Balance1: ${balance1.toString()}`);
-    console.log(`Total supply: ${totalSupply.toString()}`);
-
     const bal0inToken1 = balance0.times(price).div(this.PRECISION);
-    console.log(`Balance0 in token1: ${bal0inToken1.toString()}`);
 
     const balancingAmount: TokenAmount = balance1.gt(bal0inToken1)
       ? {
@@ -201,12 +194,6 @@ export class BeefyCLMPool {
           token: this.tokens[1],
           amount: bal0inToken1.minus(balance1),
         };
-
-    console.log(
-      `Need to add ${balancingAmount.amount
-        .shiftedBy(-balancingAmount.token.decimals)
-        .toString()} of ${balancingAmount.token.symbol}`
-    );
 
     // If the input token is one of these tokens we can calculate amounts based off clm price ratio
     const inputAmountInWei = toWei(inputToken.amount, inputToken.token.decimals);
@@ -261,11 +248,8 @@ export class BeefyCLMPool {
 
     // If we are depositing token1
     if (isTokenEqual(inputToken.token, this.tokens[1])) {
-      console.log('Input token matches token1, will use clm price to calculate ratio');
-      console.log(token1Price, ' token1Price', inputTokenPrice, ' inputTokenPrice');
       if (isTokenEqual(balancingAmount.token, inputToken.token)) {
         if (inputAmountInWei.lte(balancingAmount.amount)) {
-          console.log('Input amount is not enough to balance, just input that');
           return [BIG_ZERO, BIG_ONE];
         } else {
           const amountToBalance = balancingAmount.amount;
@@ -301,17 +285,13 @@ export class BeefyCLMPool {
       }
     }
 
-    console.log('Using local prices to start off');
-
     // If the input token is a different token we estimate based on local prices and convert to token1
     const inputAmountInBalance1 = inputTokenPrice
       .shiftedBy(-inputToken.token.decimals)
       .times(inputAmountInWei)
       .div(token1Price.shiftedBy(-this.tokens[1].decimals));
-    console.log(inputAmountInBalance1.toString(), 'inputAmountInBalance1');
     if (isTokenEqual(balancingAmount.token, this.tokens[1])) {
       if (inputAmountInBalance1.lte(balancingAmount.amount)) {
-        console.log('Input amount is not enough to balance, just input that');
         return [BIG_ZERO, BIG_ONE];
       } else {
         const amountToBalance = balancingAmount.amount;

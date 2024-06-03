@@ -172,7 +172,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       priceImpact: 0,
       isCalm: resp.isCalm,
       steps: [],
-      fee: { value: 0 },
+      fee: ZERO_FEE,
       lpQuotes: [],
     };
   }

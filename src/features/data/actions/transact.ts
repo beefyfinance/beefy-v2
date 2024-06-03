@@ -11,7 +11,6 @@ import { transactActions } from '../reducers/wallet/transact';
 import {
   selectTokenAmountsTotalValue,
   selectTransactDualInputAmounts,
-  // selectTransactDualMaxAmounts,
   selectTransactInputAmount,
   selectTransactInputMax,
   selectTransactOptionsForSelectionId,
@@ -202,13 +201,10 @@ export const transactFetchQuotes = createAsyncThunk<
   const mode = selectTransactOptionsMode(state);
   const inputAmount = selectTransactInputAmount(state);
   const inputMax = selectTransactInputMax(state);
-  // const dualInputAmounts = selectTransactDualInputAmounts(state);
-  // const dualMaxAmounts = selectTransactDualMaxAmounts(state);
   const walletAddress = selectWalletAddress(state);
 
   const vaultId = selectTransactVaultId(state);
   const vault = selectVaultById(state, vaultId);
-  // This can be improved, don't worry chimpo
 
   if (inputAmount.lte(BIG_ZERO)) {
     throw new Error(`Can not quote for 0`);
@@ -246,8 +242,6 @@ export const transactFetchQuotes = createAsyncThunk<
     throw new Error(`No tokens for selectionId ${selectionId}`);
   }
 
-  // const vaultId = selectTransactVaultId(state);
-  // const vault = selectVaultById(state, vaultId);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const shareToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
 
