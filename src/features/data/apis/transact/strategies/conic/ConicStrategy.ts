@@ -179,8 +179,7 @@ export class ConicStrategy implements IStrategy {
       },
       {
         type: 'deposit',
-        token: this.vaultType.depositToken,
-        amount: swapAmountOut,
+        inputs: [{ token: this.vaultType.depositToken, amount: swapAmountOut }],
       },
     ];
 
@@ -359,8 +358,12 @@ export class ConicStrategy implements IStrategy {
     const steps: ZapQuoteStep[] = [
       {
         type: 'withdraw',
-        token: withdrawnToken,
-        amount: withdrawnAmountAfterFee,
+        outputs: [
+          {
+            token: withdrawnToken,
+            amount: withdrawnAmountAfterFee,
+          },
+        ],
       },
       {
         type: 'split',

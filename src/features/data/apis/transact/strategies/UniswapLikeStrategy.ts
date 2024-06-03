@@ -347,8 +347,7 @@ export abstract class UniswapLikeStrategy<
 
     steps.push({
       type: 'deposit',
-      token: depositToken,
-      amount: liquidityAmount,
+      inputs: [{ token: depositToken, amount: liquidityAmount }],
     });
 
     // Build quote outputs
@@ -508,8 +507,7 @@ export abstract class UniswapLikeStrategy<
 
     steps.push({
       type: 'deposit',
-      token: depositToken,
-      amount: liquidityAmount,
+      inputs: [{ token: depositToken, amount: liquidityAmount }],
     });
 
     // Build quote outputs
@@ -900,8 +898,12 @@ export abstract class UniswapLikeStrategy<
     const breakSteps: ZapQuoteStep[] = [
       {
         type: 'withdraw',
-        token: this.vaultType.depositToken,
-        amount: withdrawnAmountAfterFee,
+        outputs: [
+          {
+            token: this.vaultType.depositToken,
+            amount: withdrawnAmountAfterFee,
+          },
+        ],
       },
     ];
 

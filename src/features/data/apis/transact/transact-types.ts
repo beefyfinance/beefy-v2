@@ -104,21 +104,26 @@ export type GovVaultWithdrawOption = BaseWithdrawOption & {
   vaultType: 'gov';
 };
 
-export type CowcentratedDepositOption = ZapBaseDepositOption & {
-  strategyId: 'cowcentrated';
-  vaultType: 'cowcentrated';
-  swapVia: 'aggregator' | undefined;
-};
-
-export type SimpleCowcentratedDepositOption = BaseDepositOption & {
-  strategyId: 'cowcentrated';
+export type CowcentratedVaultDepositOption = BaseDepositOption & {
+  strategyId: 'vault';
   vaultType: 'cowcentrated';
 };
 
-export type CowcentratedWithdrawOption = ZapBaseWithdrawOption & {
+export type CowcentratedVaultWithdrawOption = BaseWithdrawOption & {
+  strategyId: 'vault';
+  vaultType: 'cowcentrated';
+};
+
+export type CowcentratedZapDepositOption = ZapBaseDepositOption & {
   strategyId: 'cowcentrated';
   vaultType: 'cowcentrated';
-  swapVia: 'aggregator' | undefined;
+  swapVia: 'aggregator';
+};
+
+export type CowcentratedZapWithdrawOption = ZapBaseWithdrawOption & {
+  strategyId: 'cowcentrated';
+  vaultType: 'cowcentrated';
+  swapVia: 'aggregator';
 };
 
 export type UniswapLikeDepositOption<TAmm extends AmmEntity> = ZapBaseDepositOption & {
@@ -188,24 +193,25 @@ export type ConicWithdrawOption = ZapBaseWithdrawOption & {
 export type DepositOption =
   | StandardVaultDepositOption
   | GovVaultDepositOption
+  | CowcentratedVaultDepositOption
   | SolidlyDepositOption
   | UniswapV2DepositOption
   | GammaDepositOption
   | SingleDepositOption
   | CurveDepositOption
-  | SimpleCowcentratedDepositOption
-  | CowcentratedDepositOption
+  | CowcentratedZapDepositOption
   | ConicDepositOption;
 
 export type WithdrawOption =
   | StandardVaultWithdrawOption
   | GovVaultWithdrawOption
+  | CowcentratedVaultWithdrawOption
   | SolidlyWithdrawOption
   | UniswapV2WithdrawOption
   | GammaWithdrawOption
   | SingleWithdrawOption
   | CurveWithdrawOption
-  | CowcentratedWithdrawOption
+  | CowcentratedZapWithdrawOption
   | ConicWithdrawOption;
 
 export type TransactOption = DepositOption | WithdrawOption;
@@ -256,14 +262,12 @@ export type ZapQuoteStepBuild = {
 
 export type ZapQuoteStepWithdraw = {
   type: 'withdraw';
-  token: TokenEntity;
-  amount: BigNumber;
+  outputs: TokenAmount[];
 };
 
 export type ZapQuoteStepDeposit = {
   type: 'deposit';
-  token: TokenEntity;
-  amount: BigNumber;
+  inputs: TokenAmount[];
 };
 
 export type ZapQuoteStepSplit = {
@@ -292,6 +296,10 @@ export function isZapQuoteStepSwap(step: ZapQuoteStep): step is ZapQuoteStepSwap
 
 export function isZapQuoteStepWithdraw(step: ZapQuoteStep): step is ZapQuoteStepSwap {
   return step.type === 'withdraw';
+}
+
+export function isZapQuoteStepDeposit(step: ZapQuoteStep): step is ZapQuoteStepDeposit {
+  return step.type === 'deposit';
 }
 
 export function isZapQuoteStepBuild(step: ZapQuoteStep): step is ZapQuoteStepBuild {
@@ -336,12 +344,20 @@ export type GovVaultDepositQuote = BaseQuote<GovVaultDepositOption> & {
   vaultType: 'gov';
 };
 
-// export type CowcentratedVaultDepositQuote = BaseQuote<CowcentratedDepositOption> & {
-export type CowcentratedVaultDepositQuote = BaseZapQuote<CowcentratedDepositOption> & {
+export type CowcentratedVaultDepositQuote = BaseQuote<CowcentratedVaultDepositOption> & {
   vaultType: 'cowcentrated';
-  amountsUsed: TokenAmount[];
-  amountsReturned: TokenAmount[];
   isCalm: boolean;
+  used: TokenAmount[];
+  unused: TokenAmount[];
+  position: TokenAmount[];
+};
+
+export type CowcentratedZapDepositQuote = BaseZapQuote<CowcentratedZapDepositOption> & {
+  vaultType: 'cowcentrated';
+  isCalm: boolean;
+  used: TokenAmount[];
+  unused: TokenAmount[];
+  position: TokenAmount[];
   lpQuotes: (QuoteResponse | undefined)[];
 };
 
@@ -396,7 +412,8 @@ export type ZapDepositQuote =
   | SolidlyDepositQuote
   | CurveDepositQuote
   | GammaDepositQuote
-  | ConicDepositQuote;
+  | ConicDepositQuote
+  | CowcentratedZapDepositQuote;
 
 export type DepositQuote = VaultDepositQuote | ZapDepositQuote;
 
@@ -408,9 +425,11 @@ export type GovVaultWithdrawQuote = BaseQuote<GovVaultWithdrawOption> & {
   vaultType: 'gov';
 };
 
-export type CowcentratedVaultWithdrawQuote = BaseZapQuote<CowcentratedWithdrawOption> & {
+export type CowcentratedVaultWithdrawQuote = BaseQuote<CowcentratedVaultWithdrawOption> & {
   vaultType: 'cowcentrated';
 };
+
+export type CowcentratedZapWithdrawQuote = BaseZapQuote<CowcentratedZapWithdrawOption>;
 
 export type SingleWithdrawQuote = BaseZapQuote<SingleWithdrawOption>;
 
@@ -459,7 +478,8 @@ export type ZapWithdrawQuote =
   | SolidlyWithdrawQuote
   | CurveWithdrawQuote
   | GammaWithdrawQuote
-  | ConicWithdrawQuote;
+  | ConicWithdrawQuote
+  | CowcentratedZapWithdrawQuote;
 
 export type WithdrawQuote = VaultWithdrawQuote | ZapWithdrawQuote;
 
@@ -476,10 +496,37 @@ export function isZapQuote(quote: TransactQuote): quote is ZapQuote {
   return 'steps' in quote;
 }
 
-export function isCowcentratedDepositQuote(
+export function isCowcentratedVaultDepositQuote(
   quote: TransactQuote
 ): quote is CowcentratedVaultDepositQuote {
-  return isDepositQuote(quote) && quote.strategyId === 'cowcentrated' && 'amountsUsed' in quote;
+  return (
+    isDepositQuote(quote) && quote.strategyId === 'vault' && quote.vaultType === 'cowcentrated'
+  );
+}
+
+export function isCowcentratedZapDepositQuote(
+  quote: TransactQuote
+): quote is CowcentratedVaultDepositQuote {
+  return (
+    isDepositQuote(quote) &&
+    isZapQuote(quote) &&
+    quote.strategyId === 'cowcentrated' &&
+    quote.vaultType === 'cowcentrated'
+  );
+}
+
+export function isCowcentratedDepositQuote(
+  quote: TransactQuote
+): quote is CowcentratedVaultDepositQuote | CowcentratedZapDepositQuote {
+  return isCowcentratedVaultDepositQuote(quote) || isCowcentratedZapDepositQuote(quote);
+}
+
+export function isCowcentratedVaultWithdrawQuote(
+  quote: TransactQuote
+): quote is CowcentratedVaultWithdrawQuote {
+  return (
+    isWithdrawQuote(quote) && quote.strategyId === 'vault' && quote.vaultType === 'cowcentrated'
+  );
 }
 
 export function isVaultWithdrawQuote(quote: TransactQuote): quote is VaultWithdrawQuote {

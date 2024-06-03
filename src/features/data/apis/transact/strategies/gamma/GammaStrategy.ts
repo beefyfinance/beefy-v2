@@ -363,8 +363,12 @@ export class GammaStrategy implements IStrategy {
 
     steps.push({
       type: 'deposit',
-      token: depositToken,
-      amount: liquidity.amount,
+      inputs: [
+        {
+          token: depositToken,
+          amount: liquidity.amount,
+        },
+      ],
     });
 
     // Build quote outputs
@@ -660,8 +664,12 @@ export class GammaStrategy implements IStrategy {
     const breakSteps: ZapQuoteStep[] = [
       {
         type: 'withdraw',
-        token: this.vaultType.depositToken,
-        amount: withdrawnAmountAfterFee,
+        outputs: [
+          {
+            token: this.vaultType.depositToken,
+            amount: withdrawnAmountAfterFee,
+          },
+        ],
       },
     ];
 

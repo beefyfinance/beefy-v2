@@ -1,21 +1,16 @@
 import type { CowcentratedStrategyOptions, IStrategy, ZapTransactHelpers } from '../IStrategy';
 import {
-  type CowcentratedDepositOption,
-  type CowcentratedVaultDepositQuote,
-  type CowcentratedVaultWithdrawQuote,
-  type CowcentratedWithdrawOption,
-  type DepositOption,
+  type CowcentratedZapDepositOption,
+  type CowcentratedZapDepositQuote,
+  type CowcentratedZapWithdrawOption,
+  type CowcentratedZapWithdrawQuote,
   type InputTokenAmount,
-  isZapQuoteStepBuild,
-  isZapQuoteStepSplit,
+  isZapQuoteStepDeposit,
   isZapQuoteStepSwap,
   isZapQuoteStepSwapAggregator,
   type TokenAmount,
-  type WithdrawOption,
-  type WithdrawQuote,
   type ZapQuoteStep,
-  type ZapQuoteStepBuild,
-  type ZapQuoteStepSplit,
+  type ZapQuoteStepDeposit,
   type ZapQuoteStepSwap,
   type ZapQuoteStepSwapAggregator,
 } from '../../transact-types';
@@ -28,7 +23,6 @@ import {
   createSelectionId,
   onlyOneInput,
   onlyOneToken,
-  onlyOneTokenAmount,
 } from '../../helpers/options';
 import { TransactMode } from '../../../../reducers/wallet/transact-types';
 import { BIG_ZERO, fromWei, toWei, toWeiString } from '../../../../../../helpers/big-number';
@@ -38,7 +32,7 @@ import { BeefyCLMPool } from '../../../beefy/beefy-clm-pool';
 import { selectTokenPriceByAddress } from '../../../../selectors/tokens';
 import type { QuoteRequest } from '../../swap/ISwapProvider';
 import { first, uniqBy } from 'lodash-es';
-import { calculatePriceImpact, highestFeeOrZero, ZERO_FEE } from '../../helpers/quotes';
+import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes';
 import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
 import { selectTransactSlippage } from '../../../../selectors/transact';
 import type { ChainEntity } from '../../../../entities/chain';
@@ -55,11 +49,10 @@ import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens';
 import { fetchZapAggregatorSwap } from '../../zap/swap';
 import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap';
 import abiCoder from 'web3-eth-abi';
-import { slipAllBy, slipBy } from '../../helpers/amounts';
+import { mergeTokenAmounts, slipAllBy, slipBy } from '../../helpers/amounts';
 import { walletActions } from '../../../../actions/wallet-actions';
-import type BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { isCowcentratedLiquidityVault, type VaultCowcentrated } from '../../../../entities/vault';
-import { QuoteChangedError } from '../errors';
 import { type ICowcentratedVaultType, isCowcentratedVaultType } from '../../vaults/IVaultType';
 
 type ZapHelpers = {
@@ -88,7 +81,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     this.vaultType = vaultType;
   }
 
-  async fetchDepositOptions(): Promise<DepositOption[]> {
+  async fetchDepositOptions(): Promise<CowcentratedZapDepositOption[]> {
     // what tokens we can zap via swap aggregator with
     const supportedAggregatorTokens = await this.aggregatorTokenSupport();
     const zapTokens = supportedAggregatorTokens.map(token => ({
@@ -120,8 +113,8 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
 
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: CowcentratedDepositOption
-  ): Promise<CowcentratedVaultDepositQuote> {
+    option: CowcentratedZapDepositOption
+  ): Promise<CowcentratedZapDepositQuote> {
     const input = onlyOneInput(inputs);
 
     if (input.amount.lte(BIG_ZERO)) {
@@ -136,7 +129,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
   }
 
   async fetchDepositStep(
-    quote: CowcentratedVaultDepositQuote,
+    quote: CowcentratedZapDepositQuote,
     t: TFunction<Namespace>
   ): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
@@ -153,9 +146,9 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       const steps: ZapStep[] = [];
       const minBalances = new Balances(quote.inputs);
       const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
-      const buildQuote = quote.steps.find(isZapQuoteStepBuild);
+      const depositQuote = quote.steps.find(isZapQuoteStepDeposit);
 
-      if (!buildQuote || swapQuotes.length > 2) {
+      if (!depositQuote || swapQuotes.length > 2) {
         throw new Error('Invalid quote');
       }
 
@@ -163,7 +156,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       const insertBalance = allTokensAreDistinct(
         swapQuotes
           .map(quoteStep => quoteStep.fromToken)
-          .concat(buildQuote.inputs.map(({ token }) => token))
+          .concat(depositQuote.inputs.map(({ token }) => token))
       );
       const swapZaps = await Promise.all(
         swapQuotes.map(quoteStep => this.fetchZapSwap(quoteStep, zapHelpers, insertBalance))
@@ -176,18 +169,18 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
         minBalances.addMany(swap.minOutputs);
       });
 
-      // Build LP
-      const buildZap = await this.fetchZapBuildCLM(
-        buildQuote,
-        buildQuote.inputs.map(({ token }) => ({
+      // Deposit
+      const depositZap = await this.fetchZapDepositCLM(
+        depositQuote,
+        depositQuote.inputs.map(({ token }) => ({
           token,
           amount: minBalances.get(token), // we have to pass min expected in case swaps slipped
         })),
         zapHelpers
       );
-      buildZap.zaps.forEach(step => steps.push(step));
-      minBalances.subtractMany(buildZap.inputs);
-      minBalances.addMany(buildZap.minOutputs);
+      depositZap.zaps.forEach(step => steps.push(step));
+      minBalances.subtractMany(depositZap.inputs);
+      minBalances.addMany(depositZap.minOutputs);
 
       // Build order
       const inputs: OrderInput[] = quote.inputs.map(input => ({
@@ -195,7 +188,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
         amount: toWeiString(input.amount, input.token.decimals),
       }));
 
-      const requiredOutputs: OrderOutput[] = buildZap.outputs.map(output => ({
+      const requiredOutputs: OrderOutput[] = depositZap.outputs.map(output => ({
         token: getTokenAddress(output.token),
         minOutputAmount: toWeiString(
           slipBy(output.amount, slippage, output.token.decimals),
@@ -241,7 +234,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
         steps,
       };
 
-      const expectedTokens = buildZap.outputs.map(output => output.token);
+      const expectedTokens = depositZap.outputs.map(output => output.token);
       const walletAction = walletActions.zapExecuteOrder(
         quote.option.vaultId,
         zapRequest,
@@ -295,7 +288,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     );
   }
 
-  async fetchWithdrawOptions(): Promise<WithdrawOption[]> {
+  async fetchWithdrawOptions(): Promise<CowcentratedZapWithdrawOption[]> {
     const supportedAggregatorTokens = await this.aggregatorTokenSupport();
     const aggregatorTokens = supportedAggregatorTokens.map(token => ({
       token,
@@ -328,8 +321,8 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
 
   async fetchWithdrawQuote(
     inputs: InputTokenAmount[],
-    option: CowcentratedWithdrawOption
-  ): Promise<WithdrawQuote> {
+    option: CowcentratedZapWithdrawOption
+  ): Promise<CowcentratedZapWithdrawQuote> {
     const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Quote called with 0 input amount');
@@ -337,35 +330,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
 
     const { zap, getState } = this.helpers;
     const state = getState();
-    const chain = selectChainById(getState(), this.vault.chainId);
-    const clmPool = new BeefyCLMPool(
-      this.vault.earnContractAddress,
-      selectVaultStrategyAddress(state, this.vault.id),
-      chain,
-      this.vaultType.depositTokens
-    );
-
-    const { amount0, amount1 } = await clmPool.previewWithdraw(input.amount);
-
-    const withdrawOutputs: TokenAmount[] = [
-      {
-        token: this.vaultType.depositTokens[0],
-        amount: fromWei(amount0, this.vaultType.depositTokens[0].decimals),
-      },
-      {
-        token: this.vaultType.depositTokens[1],
-        amount: fromWei(amount1, this.vaultType.depositTokens[1].decimals),
-      },
-    ];
-
-    const breakSteps: ZapQuoteStep[] = [
-      {
-        type: 'split',
-        outputs: withdrawOutputs,
-        inputToken: this.vaultType.shareToken,
-        inputAmount: input.amount,
-      },
-    ];
 
     // Common: Token Allowances
     const allowances = [
@@ -376,45 +340,45 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       },
     ];
 
-    if (option.swapVia === 'aggregator') {
-      const { outputs, returned, steps, fee } = await this.fetchWithdrawQuoteAggregator(
-        option,
-        withdrawOutputs,
-        [],
-        breakSteps
-      );
-      return {
-        id: createQuoteId(option.id),
-        strategyId: this.id,
-        priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
-        option,
-        inputs,
-        outputs,
-        returned,
-        allowances,
-        steps,
-        fee,
-        vaultType: 'cowcentrated',
-      };
-    } else {
-      return {
-        id: createQuoteId(option.id),
-        strategyId: this.id,
-        priceImpact: 0,
-        option,
-        inputs,
-        outputs: withdrawOutputs,
-        returned: [],
-        allowances,
-        steps: breakSteps,
-        fee: ZERO_FEE,
-        vaultType: 'cowcentrated',
-      };
+    // Common: Withdraw as token0/1
+    const vaultWithdrawn = await this.vaultType.fetchWithdrawQuote(inputs, option);
+    const withdrawSteps: ZapQuoteStep[] = [
+      {
+        type: 'withdraw',
+        outputs: vaultWithdrawn.outputs,
+      },
+    ];
+
+    const { outputs, returned, steps, fee } = await this.fetchWithdrawQuoteAggregator(
+      option,
+      vaultWithdrawn.outputs,
+      [],
+      withdrawSteps
+    );
+
+    if (returned.length > 0) {
+      steps.push({
+        type: 'unused',
+        outputs: returned,
+      });
     }
+
+    return {
+      id: createQuoteId(option.id),
+      strategyId: this.id,
+      priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
+      option,
+      inputs,
+      outputs,
+      returned,
+      allowances,
+      steps,
+      fee,
+    };
   }
 
   async fetchWithdrawStep(
-    quote: CowcentratedVaultWithdrawQuote,
+    quote: CowcentratedZapWithdrawQuote,
     t: TFunction<Namespace>
   ): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
@@ -428,43 +392,36 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       );
       const slippage = selectTransactSlippage(state);
       const zapHelpers: ZapHelpers = { chain, slippage, state, clmPool };
-
-      // Split quote steps
-      const splitQuote = quote.steps.find(isZapQuoteStepSplit);
       const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
-
-      if (!splitQuote) {
-        throw new Error('Invalid withdraw quote: missing split step');
-      }
-
       const steps: ZapStep[] = [];
 
-      // Step 1: Withdraw/split from CLM
-      const splitZap = await this.fetchZapWithdrawAndSplit(splitQuote, quote.inputs, zapHelpers);
-      splitZap.zaps.forEach(step => steps.push(step));
+      // Step 1: Withdraw from CLM
+      const vaultWithdrawn = await this.vaultType.fetchZapWithdraw({
+        inputs: quote.inputs,
+      });
+      steps.push(vaultWithdrawn.zap);
 
-      //Step 2: Swap(s)
-      if (swapQuotes.length > 0) {
-        if (swapQuotes.length > 2) {
-          throw new Error('Invalid withdraw quote: too many swap steps');
-        }
-
-        const insertBalance = allTokensAreDistinct(
-          swapQuotes.map(quoteStep => quoteStep.fromToken)
-        );
-
-        // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
-        const lastSwapIndex = swapQuotes.length - 1;
-        const swapZaps = await Promise.all(
-          swapQuotes.map((quoteStep, i) =>
-            this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i)
-          )
-        );
-        swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
+      // Step 2: Swap(s)
+      if (swapQuotes.length < 1) {
+        throw new Error('Invalid withdraw quote: no swap steps');
+      }
+      if (swapQuotes.length > 2) {
+        throw new Error('Invalid withdraw quote: too many swap steps');
       }
 
+      const insertBalance = allTokensAreDistinct(swapQuotes.map(quoteStep => quoteStep.fromToken));
+
+      // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
+      const lastSwapIndex = swapQuotes.length - 1;
+      const swapZaps = await Promise.all(
+        swapQuotes.map((quoteStep, i) =>
+          this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i)
+        )
+      );
+      swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
+
       // Build order
-      const inputs: OrderInput[] = splitZap.inputs.map(input => ({
+      const inputs: OrderInput[] = quote.inputs.map(input => ({
         token: getTokenAddress(input.token),
         amount: toWeiString(input.amount, input.token.decimals),
       }));
@@ -479,11 +436,9 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
 
       // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
       const dustOutputs: OrderOutput[] = pickTokens(
-        splitZap.inputs,
         quote.outputs,
         quote.inputs,
-        quote.returned,
-        splitQuote.outputs
+        quote.returned
       ).map(token => ({
         token: getTokenAddress(token),
         minOutputAmount: '0',
@@ -555,8 +510,8 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
 
   protected async fetchDepositQuoteAggregator(
     input: InputTokenAmount,
-    option: CowcentratedDepositOption
-  ): Promise<CowcentratedVaultDepositQuote> {
+    option: CowcentratedZapDepositOption
+  ): Promise<CowcentratedZapDepositQuote> {
     const { getState, zap, swapAggregator } = this.helpers;
     const state = getState();
     const strategy = selectVaultStrategyAddress(state, this.vault.id);
@@ -589,7 +544,10 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       : [];
 
     // How much input to swap to each lp token
-    const swapInAmounts = ratios.map(ratio => input.amount.times(ratio));
+    const swapInAmount0 = input.amount
+      .times(ratios[0])
+      .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR);
+    const swapInAmounts = [swapInAmount0, input.amount.minus(swapInAmount0)];
 
     // Swap quotes
     const quoteRequestsPerLpToken: (QuoteRequest | undefined)[] = this.vaultType.depositTokens.map(
@@ -637,13 +595,22 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       return { token: this.vaultType.depositTokens[i], amount: swapInAmounts[i] };
     });
 
-    const { liquidity, isCalm } = await clmPool.previewDeposit(
-      lpTokenAmounts[0].amount,
-      lpTokenAmounts[1].amount
-    );
-    const liquidityAmount = fromWei(liquidity, 18);
+    const { isCalm, liquidity, used0, used1, unused0, unused1, position1, position0 } =
+      await clmPool.previewDeposit(lpTokenAmounts[0].amount, lpTokenAmounts[1].amount);
+    const depositUsed = [used0, used1].map((amount, i) => ({
+      token: this.vaultType.depositTokens[i],
+      amount: fromWei(amount, this.vaultType.depositTokens[i].decimals),
+    }));
+    const depositUnused = [unused0, unused1].map((amount, i) => ({
+      token: this.vaultType.depositTokens[i],
+      amount: fromWei(amount, this.vaultType.depositTokens[i].decimals),
+    }));
+    const depositPosition = [position0, position1].map((amount, i) => ({
+      token: this.vaultType.depositTokens[i],
+      amount: fromWei(amount, this.vaultType.depositTokens[i].decimals),
+    }));
 
-    //build quote inputs
+    // build quote inputs
     const inputs = [input];
 
     // Build quote steps
@@ -666,21 +633,24 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     });
 
     steps.push({
-      type: 'build',
-      inputs: lpTokenAmounts,
-      outputToken: this.vaultType.shareToken,
-      outputAmount: liquidityAmount,
+      type: 'deposit',
+      inputs: depositUsed,
     });
 
-    // Build quote outputs
     const outputs: TokenAmount[] = [
       {
         token: this.vaultType.shareToken,
-        amount: liquidityAmount,
+        amount: fromWei(liquidity, this.vaultType.shareToken.decimals),
       },
     ];
+    const returned: TokenAmount[] = depositUnused.filter(({ amount }) => amount.gt(BIG_ZERO));
 
-    const returned: TokenAmount[] = [];
+    if (returned.length) {
+      steps.push({
+        type: 'unused',
+        outputs: returned,
+      });
+    }
 
     // Build quote
     return {
@@ -696,14 +666,15 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       fee: highestFeeOrZero(steps),
       lpQuotes: quotePerLpToken,
       vaultType: 'cowcentrated',
-      amountsUsed: [],
-      amountsReturned: [],
       isCalm,
+      unused: depositUnused,
+      used: depositUsed,
+      position: depositPosition,
     };
   }
 
   protected async fetchWithdrawQuoteAggregator(
-    option: CowcentratedWithdrawOption,
+    option: CowcentratedZapWithdrawOption,
     breakOutputs: TokenAmount[],
     breakReturned: TokenAmount[],
     steps: ZapQuoteStep[]
@@ -711,6 +682,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     const { wantedOutputs } = option;
     const { swapAggregator, getState } = this.helpers;
     const state = getState();
+    const slippage = selectTransactSlippage(state);
     const wantedOutput = onlyOneToken(wantedOutputs);
     const needsSwap = breakOutputs.map(
       tokenAmount => !isTokenEqual(wantedOutput, tokenAmount.token)
@@ -721,7 +693,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
         if (needsSwap[i]) {
           const quotes = await swapAggregator.fetchQuotes(
             {
-              fromAmount: input.amount,
+              fromAmount: slipBy(input.amount, slippage, input.token.decimals),
               fromToken: input.token,
               toToken: wantedOutput,
               vaultId: option.vaultId,
@@ -741,6 +713,8 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     );
 
     let outputTotal = BIG_ZERO;
+    const unused: TokenAmount[] = [];
+
     breakOutputs.forEach((input, i) => {
       if (needsSwap[i]) {
         const swapQuote = swapQuotes[i];
@@ -761,6 +735,13 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
           fee: swapQuote.fee,
           quote: swapQuote,
         });
+
+        if (swapQuote.fromAmount.lt(breakOutputs[i].amount)) {
+          unused.push({
+            token: input.token,
+            amount: breakOutputs[i].amount.minus(swapQuote.fromAmount),
+          });
+        }
       } else {
         outputTotal = outputTotal.plus(input.amount);
       }
@@ -770,14 +751,14 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
 
     return {
       outputs,
-      returned: breakReturned,
+      returned: mergeTokenAmounts(breakReturned, unused),
       steps,
       fee: highestFeeOrZero(steps),
     };
   }
 
-  protected async fetchZapBuildCLM(
-    quoteStep: ZapQuoteStepBuild,
+  protected async fetchZapDepositCLM(
+    quoteStep: ZapQuoteStepDeposit,
     minInputs: TokenAmount[],
     zapHelpers: ZapHelpers
   ): Promise<ZapStepResponse> {
@@ -786,19 +767,19 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
 
     const {
       liquidity: liquidityWei,
-      amount0,
-      amount1,
+      used1,
+      used0,
     } = await clmPool.previewDeposit(minInputs[0].amount, minInputs[1].amount);
 
-    const liquidity = fromWei(liquidityWei, quoteStep.outputToken.decimals);
-    const addAmounts = [amount0, amount1].map((amount, i) => ({
+    const liquidity = fromWei(liquidityWei, this.vaultType.shareToken.decimals);
+    const addAmounts = [used0, used1].map((amount, i) => ({
       token: minInputs[i].token,
       amount: fromWei(amount, minInputs[i].token.decimals),
     }));
 
     return await this.getZapBuildCLM({
       inputs: addAmounts,
-      outputs: [{ token: quoteStep.outputToken, amount: liquidity }],
+      outputs: [{ token: this.vaultType.shareToken, amount: liquidity }],
       maxSlippage: slippage,
       zapRouter: zap.router,
       insertBalance: true,
@@ -882,172 +863,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
         {
           token: tokenB,
           index: insertBalance ? getInsertIndex(1) : -1, // amountBDesired
-        },
-      ],
-    };
-  }
-
-  protected async fetchZapWithdrawAndSplit(
-    quoteStep: ZapQuoteStepSplit,
-    inputs: TokenAmount[],
-    zapHelpers: ZapHelpers
-  ): Promise<ZapStepResponse> {
-    const { zap } = this.helpers;
-    const { slippage, clmPool } = zapHelpers;
-
-    const { amount0, amount1 } = await clmPool.previewWithdraw(quoteStep.inputAmount);
-
-    const quoteIndexes = this.vaultType.depositTokens.map(token =>
-      quoteStep.outputs.findIndex(
-        output => output.token.address.toLocaleLowerCase() === token.address.toLowerCase()
-      )
-    );
-
-    const outputs = [amount0, amount1].map((amount, i) => {
-      if (quoteIndexes[i] === -1) {
-        throw new Error('Invalid output token');
-      }
-
-      const quoteOutput = quoteStep.outputs[quoteIndexes[i]];
-      const token = quoteOutput.token;
-      const amountOut = fromWei(amount, token.decimals);
-
-      if (amountOut.lt(quoteOutput.amount)) {
-        console.debug('fetchZapSplit', {
-          quote: quoteOutput.amount.toString(10),
-          now: amountOut.toString(10),
-        });
-        throw new QuoteChangedError(
-          'Expected output changed between quote and transaction when breaking LP.'
-        );
-      }
-
-      return {
-        token,
-        amount: amountOut,
-      };
-    });
-
-    return await this.getZapWithdrawAndSplit({
-      inputs,
-      outputs,
-      maxSlippage: slippage,
-      zapRouter: zap.router,
-      insertBalance: true,
-    });
-  }
-
-  protected async getZapWithdrawAndSplit(request: ZapStepRequest): Promise<ZapStepResponse> {
-    const { inputs, outputs, maxSlippage } = request;
-    const input = onlyOneTokenAmount(inputs);
-
-    if (this.vaultType.shareToken.address.toLowerCase() !== input.token.address.toLowerCase()) {
-      throw new Error('Invalid input token');
-    }
-
-    if (outputs.length !== 2) {
-      throw new Error('Invalid output count');
-    }
-
-    for (const output of outputs) {
-      if (!this.vaultType.depositTokens.find(token => isTokenEqual(token, output.token))) {
-        throw new Error('Invalid output token');
-      }
-    }
-
-    const minOutputs = slipAllBy(outputs, maxSlippage);
-
-    return {
-      inputs,
-      outputs,
-      minOutputs,
-      returned: [],
-      zaps: [
-        this.buildZapWithdrawAndSplitTx(
-          input.token.address,
-          toWei(input.amount, input.token.decimals),
-          // @ReflectiveChimp should we slip here too? or is slippage protection from zap enough?
-          toWei(outputs[0].amount, minOutputs[0].token.decimals),
-          toWei(outputs[1].amount, minOutputs[1].token.decimals),
-          false
-        ),
-      ],
-    };
-  }
-
-  protected buildZapWithdrawAndSplitTx(
-    clmAddress: string,
-    amountToWithdrawWei: BigNumber,
-    minAmountAWei: BigNumber,
-    minAmountBWei: BigNumber,
-    withdrawAll: boolean
-  ): ZapStep {
-    if (withdrawAll) {
-      return {
-        target: clmAddress,
-        value: '0',
-        data: abiCoder.encodeFunctionCall(
-          {
-            constant: false,
-            inputs: [
-              {
-                name: '_minAmount0',
-                type: 'uint256',
-              },
-              {
-                name: '_minAmount1',
-                type: 'uint256',
-              },
-            ],
-            name: 'withdrawAll',
-            outputs: [],
-            payable: false,
-            stateMutability: 'nonpayable',
-            type: 'function',
-          },
-          [minAmountAWei.toString(10), minAmountBWei.toString(10)]
-        ),
-        tokens: [
-          {
-            token: clmAddress,
-            index: -1,
-          },
-        ],
-      };
-    }
-
-    return {
-      target: clmAddress,
-      value: '0',
-      data: abiCoder.encodeFunctionCall(
-        {
-          constant: false,
-          inputs: [
-            {
-              name: '_shares',
-              type: 'uint256',
-            },
-            {
-              name: '_minAmount0',
-              type: 'uint256',
-            },
-            {
-              name: '_minAmount1',
-              type: 'uint256',
-            },
-          ],
-          name: 'withdraw',
-          outputs: [],
-          payable: false,
-          stateMutability: 'nonpayable',
-          type: 'function',
-        },
-        [amountToWithdrawWei.toString(10), minAmountAWei.toString(10), minAmountBWei.toString(10)]
-      ),
-      tokens: [
-        {
-          token: clmAddress,
-          index: getInsertIndex(0),
         },
       ],
     };

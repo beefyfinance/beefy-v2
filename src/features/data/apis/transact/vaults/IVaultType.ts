@@ -26,6 +26,7 @@ export type VaultDepositRequest = {
 export type VaultDepositResponse = {
   inputs: InputTokenAmount[];
   outputs: TokenAmount[];
+  minOutputs: TokenAmount[];
   zap: ZapStep;
 };
 

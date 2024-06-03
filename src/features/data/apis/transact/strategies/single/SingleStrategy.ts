@@ -187,8 +187,7 @@ export class SingleStrategy implements IStrategy {
       },
       {
         type: 'deposit',
-        token: bestQuote.toToken,
-        amount: bestQuote.toAmount,
+        inputs: [{ token: bestQuote.toToken, amount: bestQuote.toAmount }],
       },
     ];
 
@@ -361,8 +360,12 @@ export class SingleStrategy implements IStrategy {
     const steps: ZapQuoteStep[] = [
       {
         type: 'withdraw',
-        token: withdrawnToken,
-        amount: withdrawnAmountAfterFee,
+        outputs: [
+          {
+            token: withdrawnToken,
+            amount: withdrawnAmountAfterFee,
+          },
+        ],
       },
     ];
 

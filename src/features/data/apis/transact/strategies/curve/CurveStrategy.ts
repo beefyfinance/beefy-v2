@@ -374,8 +374,12 @@ export class CurveStrategy implements IStrategy {
 
     steps.push({
       type: 'deposit',
-      token: depositLiquidity.output.token,
-      amount: depositLiquidity.output.amount,
+      inputs: [
+        {
+          token: depositLiquidity.output.token,
+          amount: depositLiquidity.output.amount,
+        },
+      ],
     });
 
     // Build quote outputs
@@ -780,8 +784,12 @@ export class CurveStrategy implements IStrategy {
     const steps: ZapQuoteStep[] = [
       {
         type: 'withdraw',
-        token: this.vaultType.depositToken,
-        amount: withdrawnAmountAfterFee,
+        outputs: [
+          {
+            token: this.vaultType.depositToken,
+            amount: withdrawnAmountAfterFee,
+          },
+        ],
       },
     ];
 

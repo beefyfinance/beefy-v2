@@ -156,8 +156,8 @@ export class BeefyCLMPool {
     const result = (untypedData as PreviewDepositResponse[])[0];
     return {
       liquidity: new BigNumber(result.previewDeposit[0]),
-      amount0: new BigNumber(result.previewDeposit[1]),
-      amount1: new BigNumber(result.previewDeposit[2]),
+      used0: new BigNumber(result.previewDeposit[1]),
+      used1: new BigNumber(result.previewDeposit[2]),
     };
   }
 
@@ -329,17 +329,27 @@ export class BeefyCLMPool {
 
   public async previewDeposit(inputAmount0: BigNumber, inputAmount1: BigNumber) {
     const multicall = await this.getMulticall();
-    const [previewDepositResponse, isCalmRequest] = await multicall.all([
-      this.getPreviewDepositRequests(
-        toWei(inputAmount0, this.tokens[0].decimals),
-        toWei(inputAmount1, this.tokens[1].decimals)
-      ),
+    const input0 = toWei(inputAmount0, this.tokens[0].decimals);
+    const input1 = toWei(inputAmount1, this.tokens[1].decimals);
+    const [previewDepositResponse, isCalmRequest, clmData] = await multicall.all([
+      this.getPreviewDepositRequests(input0, input1),
       this.getIsCalmRequests(),
+      this.getCLMDataRequests(),
     ]);
-    const { liquidity, amount0, amount1 } = this.consumePreviewDeposit(previewDepositResponse);
+    const { liquidity, used0, used1 } = this.consumePreviewDeposit(previewDepositResponse);
     const { isCalm } = this.consumeIsCalm(isCalmRequest);
+    const { balance0, balance1, totalSupply } = this.consumeCLMData(clmData);
 
-    return { liquidity, amount0, amount1, isCalm };
+    const newTotalSupply = totalSupply.plus(liquidity);
+    const newBalance0 = balance0.plus(used0);
+    const newBalance1 = balance1.plus(used1);
+    const ratio = liquidity.div(newTotalSupply);
+    const position0 = newBalance0.times(ratio).decimalPlaces(0, BigNumber.ROUND_FLOOR);
+    const position1 = newBalance1.times(ratio).decimalPlaces(0, BigNumber.ROUND_FLOOR);
+    const unused0 = input0.minus(used0);
+    const unused1 = input1.minus(used1);
+
+    return { liquidity, used0, used1, position0, position1, unused0, unused1, isCalm };
   }
 
   public async previewWithdraw(liquidity: BigNumber) {
