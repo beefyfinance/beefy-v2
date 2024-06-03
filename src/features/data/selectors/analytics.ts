@@ -143,6 +143,14 @@ export const selectStandardGovPnl = (
   }
 
   const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress) || [];
+  const currentPositionStartDate = selectUserFirstDepositDateByVaultId(
+    state,
+    vaultId,
+    walletAddress
+  );
+  const timelineSinceLastDeposit = sortedTimeline.filter((tx: VaultTimelineAnalyticsEntity) =>
+    currentPositionStartDate ? tx.datetime.getTime() >= currentPositionStartDate.getTime() : true
+  );
 
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
 
@@ -151,7 +159,7 @@ export const selectStandardGovPnl = (
   const ppfs = selectVaultPricePerFullShare(state, vault.id).shiftedBy(18 - depositToken.decimals);
 
   const pnl = new PnL();
-  for (const row of sortedTimeline as VaultTimelineAnalyticsEntity[]) {
+  for (const row of timelineSinceLastDeposit as VaultTimelineAnalyticsEntity[]) {
     if (row.shareDiff && row.shareToUnderlyingPrice && row.underlyingToUsdPrice) {
       pnl.addTransaction({
         shares: row.shareDiff,
@@ -204,6 +212,14 @@ export const selectClmPnl = (
   const vault = selectVaultById(state, vaultId);
 
   const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress) || [];
+  const currentPositionStartDate = selectUserFirstDepositDateByVaultId(
+    state,
+    vaultId,
+    walletAddress
+  );
+  const timelineSinceLastDeposit = sortedTimeline.filter((tx: CLMTimelineAnalyticsEntity) =>
+    currentPositionStartDate ? tx.datetime.getTime() >= currentPositionStartDate.getTime() : true
+  );
 
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
 
@@ -225,7 +241,7 @@ export const selectClmPnl = (
 
   const pnl = new ClmPnl();
 
-  for (const tx of sortedTimeline as CLMTimelineAnalyticsEntity[]) {
+  for (const tx of timelineSinceLastDeposit as CLMTimelineAnalyticsEntity[]) {
     pnl.addTransaction({
       shares: tx.shareDiff,
       token0ToUsd: tx.token0ToUsd,
