@@ -1,11 +1,11 @@
-import type { VaultType, VaultTypeConstructor } from './IVaultType';
+import type { VaultTypeConstructor } from './IVaultType';
 import type { VaultEntity } from '../../../entities/vault';
 import type { GetStateFn } from '../../../../../redux-types';
 
-function makeLazyLoader<T extends VaultType>(loader: () => Promise<VaultTypeConstructor<T>>) {
+function makeLazyLoader<T extends VaultEntity>(loader: () => Promise<VaultTypeConstructor<T>>) {
   let constructor: VaultTypeConstructor<T> | undefined;
 
-  return async (vault: VaultEntity, getState: GetStateFn) => {
+  return async (vault: T, getState: GetStateFn) => {
     if (!constructor) {
       constructor = await loader();
     }
@@ -14,13 +14,20 @@ function makeLazyLoader<T extends VaultType>(loader: () => Promise<VaultTypeCons
   };
 }
 
-export const vaultTypeBuildersById = {
+type VaultTypeBuilderFromVault<T extends VaultEntity> = ReturnType<typeof makeLazyLoader<T>>;
+
+type TypeToConstructorMap = {
+  [K in VaultEntity['type']]: VaultTypeBuilderFromVault<Extract<VaultEntity, { type: K }>>;
+};
+
+const vaultTypeBuildersById = {
   gov: makeLazyLoader(async () => (await import('./GovVaultType')).GovVaultType),
   standard: makeLazyLoader(async () => (await import('./StandardVaultType')).StandardVaultType),
   cowcentrated: makeLazyLoader(
     async () => (await import('./CowcentratedVaultType')).CowcentratedVaultType
   ),
-} as const satisfies Record<
-  VaultEntity['type'],
-  (vault: VaultEntity, getState: GetStateFn) => Promise<VaultType>
->;
+} as const satisfies TypeToConstructorMap;
+
+export function getVaultTypeBuilder<T extends VaultEntity>(vault: T): VaultTypeBuilderFromVault<T> {
+  return vaultTypeBuildersById[vault.type] as VaultTypeBuilderFromVault<T>;
+}

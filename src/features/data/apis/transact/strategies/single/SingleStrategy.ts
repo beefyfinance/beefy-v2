@@ -31,7 +31,6 @@ import {
   onlyAssetCount,
   onlyOneInput,
   onlyOneToken,
-  onlyVaultStandard,
 } from '../../helpers/options';
 import { first, uniqBy } from 'lodash-es';
 import { BIG_ZERO, fromWei, toWeiString } from '../../../../../../helpers/big-number';
@@ -49,7 +48,7 @@ import { getTokenAddress, NO_RELAY } from '../../helpers/zap';
 import type { Step } from '../../../../reducers/wallet/stepper';
 import type { Namespace, TFunction } from 'react-i18next';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
-import { isStandardVault } from '../../../../entities/vault';
+import { isStandardVault, type VaultStandard } from '../../../../entities/vault';
 import { slipBy } from '../../helpers/amounts';
 import { nativeAndWrappedAreSame, pickTokens } from '../../helpers/tokens';
 import {
@@ -59,6 +58,7 @@ import {
 import { fetchZapAggregatorSwap } from '../../zap/swap';
 import type { ChainEntity } from '../../../../entities/chain';
 import { selectChainById } from '../../../../selectors/chains';
+import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -70,28 +70,38 @@ export class SingleStrategy implements IStrategy {
   public readonly id = 'single';
   protected readonly wnative: TokenErc20;
   protected readonly native: TokenNative;
+  protected readonly vault: VaultStandard;
+  protected readonly vaultType: IStandardVaultType;
 
   constructor(protected options: SingleStrategyOptions, protected helpers: ZapTransactHelpers) {
     // Make sure zap was configured correctly for this vault
-    const { vault, getState } = this.helpers;
+    const { vault, vaultType, getState } = this.helpers;
 
-    onlyVaultStandard(vault);
+    if (!isStandardVault(vault)) {
+      throw new Error('Vault is not a standard vault');
+    }
+    if (!isStandardVaultType(vaultType)) {
+      throw new Error('Vault type is not standard');
+    }
+
     onlyAssetCount(vault, 1);
 
     // configure
     const state = getState();
+    this.vault = vault;
+    this.vaultType = vaultType;
     this.native = selectChainNativeToken(state, vault.chainId);
     this.wnative = selectChainWrappedNativeToken(state, vault.chainId);
   }
 
   async aggregatorTokenSupport() {
-    const { vault, vaultType, swapAggregator, getState } = this.helpers;
+    const { swapAggregator, getState } = this.helpers;
 
     const state = getState();
     const tokenSupport = await swapAggregator.fetchTokenSupport(
-      [vaultType.depositToken],
-      vault.id,
-      vault.chainId,
+      [this.vaultType.depositToken],
+      this.vault.id,
+      this.vault.chainId,
       state,
       this.options.swap
     );
@@ -99,21 +109,20 @@ export class SingleStrategy implements IStrategy {
   }
 
   async fetchDepositOptions(): Promise<SingleDepositOption[]> {
-    const { vault, vaultType } = this.helpers;
     const supportedAggregatorTokens = await this.aggregatorTokenSupport();
     const tokens = supportedAggregatorTokens.filter(
-      token => !isTokenEqual(token, vaultType.depositToken)
+      token => !isTokenEqual(token, this.vaultType.depositToken)
     );
-    const outputs = [vaultType.depositToken];
+    const outputs = [this.vaultType.depositToken];
 
     return tokens.map(token => {
       const inputs = [token];
-      const selectionId = createSelectionId(vault.chainId, inputs);
+      const selectionId = createSelectionId(this.vault.chainId, inputs);
 
       return {
-        id: createOptionId('single', vault.id, selectionId),
-        vaultId: vault.id,
-        chainId: vault.chainId,
+        id: createOptionId('single', this.vault.id, selectionId),
+        vaultId: this.vault.id,
+        chainId: this.vault.chainId,
         selectionId,
         selectionOrder: 3,
         inputs,
@@ -128,7 +137,7 @@ export class SingleStrategy implements IStrategy {
     inputs: InputTokenAmount[],
     option: SingleDepositOption
   ): Promise<SingleDepositQuote> {
-    const { vault, vaultType, swapAggregator, zap, getState } = this.helpers;
+    const { swapAggregator, zap, getState } = this.helpers;
 
     // Input
     const input = onlyOneInput(inputs);
@@ -151,10 +160,10 @@ export class SingleStrategy implements IStrategy {
     const state = getState();
     const swapQuotes = await swapAggregator.fetchQuotes(
       {
-        vaultId: vault.id,
+        vaultId: this.vault.id,
         fromToken: input.token,
         fromAmount: input.amount,
-        toToken: vaultType.depositToken,
+        toToken: this.vaultType.depositToken,
       },
       state
     );
@@ -163,7 +172,7 @@ export class SingleStrategy implements IStrategy {
       throw new Error('No swap quote found');
     }
 
-    const outputs = [{ token: vaultType.depositToken, amount: bestQuote.toAmount }];
+    const outputs = [{ token: this.vaultType.depositToken, amount: bestQuote.toAmount }];
     const steps: ZapQuoteStep[] = [
       {
         type: 'swap',
@@ -199,7 +208,7 @@ export class SingleStrategy implements IStrategy {
   }
 
   async fetchDepositStep(quote: SingleDepositQuote, t: TFunction<Namespace>): Promise<Step> {
-    const { vaultType, zap, swapAggregator } = this.helpers;
+    const { zap, swapAggregator } = this.helpers;
 
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
@@ -231,7 +240,7 @@ export class SingleStrategy implements IStrategy {
       ];
 
       // Step 2. Deposit to vault
-      const vaultDeposit = await vaultType.fetchZapDeposit({
+      const vaultDeposit = await this.vaultType.fetchZapDeposit({
         inputs: [
           {
             token: swap.toToken,
@@ -296,21 +305,20 @@ export class SingleStrategy implements IStrategy {
   }
 
   async fetchWithdrawOptions(): Promise<SingleWithdrawOption[]> {
-    const { vault, vaultType } = this.helpers;
     const supportedAggregatorTokens = await this.aggregatorTokenSupport();
     const tokens = supportedAggregatorTokens.filter(
-      token => !isTokenEqual(token, vaultType.depositToken)
+      token => !isTokenEqual(token, this.vaultType.depositToken)
     );
-    const inputs = [vaultType.depositToken];
+    const inputs = [this.vaultType.depositToken];
 
     return tokens.map(token => {
       const outputs = [token];
-      const selectionId = createSelectionId(vault.chainId, outputs);
+      const selectionId = createSelectionId(this.vault.chainId, outputs);
 
       return {
-        id: createOptionId('single', vault.id, selectionId),
-        vaultId: vault.id,
-        chainId: vault.chainId,
+        id: createOptionId('single', this.vault.id, selectionId),
+        vaultId: this.vault.id,
+        chainId: this.vault.chainId,
         selectionId,
         selectionOrder: 3,
         inputs,
@@ -360,14 +368,14 @@ export class SingleStrategy implements IStrategy {
 
     // Step 2. Wrap native if needed
     if (isTokenNative(withdrawnToken) && !nativeAndWrappedAreSame(withdrawnToken.chainId)) {
-      const { swapAggregator, getState, vault } = this.helpers;
+      const { swapAggregator, getState } = this.helpers;
       const state = getState();
       const wrapQuotes = await swapAggregator.fetchQuotes(
         {
           fromAmount: withdrawnAmountAfterFee,
           fromToken: withdrawnToken,
           toToken: this.wnative,
-          vaultId: vault.id,
+          vaultId: this.vault.id,
         },
         state
       );
@@ -399,7 +407,7 @@ export class SingleStrategy implements IStrategy {
     if (!isTokenEqual(swapInputToken, swapOutputToken)) {
       const swapQuotes = await swapAggregator.fetchQuotes(
         {
-          vaultId: vault.id,
+          vaultId: this.vault.id,
           fromToken: swapInputToken,
           fromAmount: swapInputAmount,
           toToken: swapOutputToken,
@@ -443,11 +451,9 @@ export class SingleStrategy implements IStrategy {
   }
 
   async fetchWithdrawStep(quote: SingleWithdrawQuote, t: TFunction<Namespace>): Promise<Step> {
-    const { vaultType, vault } = this.helpers;
-
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
-      const chain = selectChainById(state, vault.chainId);
+      const chain = selectChainById(state, this.vault.chainId);
       const slippage = selectTransactSlippage(state);
       const zapHelpers: ZapHelpers = { chain, slippage, state };
       const withdrawQuote = quote.steps.find(isZapQuoteStepWithdraw);
@@ -460,7 +466,7 @@ export class SingleStrategy implements IStrategy {
       }
 
       // Step 1. Withdraw from vault
-      const vaultWithdraw = await vaultType.fetchZapWithdraw({
+      const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
       });
       if (vaultWithdraw.outputs.length !== 1) {

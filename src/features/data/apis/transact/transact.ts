@@ -21,9 +21,9 @@ import {
 import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../reducers/wallet/stepper';
-import { type VaultType } from './vaults/IVaultType';
+import { type VaultTypeFromVault } from './vaults/IVaultType';
 import { strategyBuildersById } from './strategies';
-import { vaultTypeBuildersById } from './vaults';
+import { getVaultTypeBuilder } from './vaults';
 import { uniq } from 'lodash-es';
 import { VaultStrategy } from './strategies/vault/VaultStrategy';
 import { selectZapByChainId } from '../../selectors/zap';
@@ -222,8 +222,11 @@ export class TransactApi implements ITransactApi {
     throw new Error('No quotes succeeded');
   }
 
-  private async getVaultTypeFor(vault: VaultEntity, getState: GetStateFn): Promise<VaultType> {
-    const builder = vaultTypeBuildersById[vault.type];
+  private async getVaultTypeFor<T extends VaultEntity>(
+    vault: T,
+    getState: GetStateFn
+  ): Promise<VaultTypeFromVault<T>> {
+    const builder = getVaultTypeBuilder(vault);
     if (!builder) {
       throw new Error(
         `Vault ${vault.id} has type "${vault.type}", but there is no vault type builder`

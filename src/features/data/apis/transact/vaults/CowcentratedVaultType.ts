@@ -2,16 +2,12 @@ import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../../../helpers/big-number';
 import type { BeefyState, GetStateFn } from '../../../../../redux-types';
 import {
-  type TokenErc20,
+  isTokenEqual,
   isTokenErc20,
   type TokenEntity,
-  isTokenEqual,
+  type TokenErc20,
 } from '../../../entities/token';
-import {
-  type VaultEntity,
-  isCowcentratedLiquidityVault,
-  type VaultCowcentrated,
-} from '../../../entities/vault';
+import { isCowcentratedLiquidityVault, type VaultCowcentrated } from '../../../entities/vault';
 import { TransactMode } from '../../../reducers/wallet/transact-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import {
@@ -53,13 +49,11 @@ import { ZERO_FEE } from '../helpers/quotes';
 export class CowcentratedVaultType implements ICowcentratedVaultType {
   public readonly id = 'cowcentrated';
   public readonly vault: VaultCowcentrated;
-  public readonly depositToken: TokenEntity;
   public readonly depositTokens: TokenEntity[];
-  public readonly vaultToken: TokenEntity;
   public readonly shareToken: TokenErc20;
   protected readonly getState: GetStateFn;
 
-  constructor(vault: VaultEntity, getState: GetStateFn) {
+  constructor(vault: VaultCowcentrated, getState: GetStateFn) {
     if (!isCowcentratedLiquidityVault(vault)) {
       throw new Error('Vault is not a cowcentrated liquidity vault');
     }
@@ -70,7 +64,6 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     this.depositTokens = vault.depositTokenAddresses.map(tokenAddress =>
       selectTokenByAddress(state, vault.chainId, tokenAddress)
     );
-    this.vaultToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
 
     const shareToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
     if (!isTokenErc20(shareToken)) {
@@ -127,7 +120,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
 
     const outputs = [
       {
-        token: this.vaultToken,
+        token: this.shareToken,
         amount: resp.depositPreviewAmount.shiftedBy(-18),
       },
     ];

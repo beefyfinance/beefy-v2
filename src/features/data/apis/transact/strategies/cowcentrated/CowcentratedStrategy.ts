@@ -1,28 +1,26 @@
 import type { CowcentratedStrategyOptions, IStrategy, ZapTransactHelpers } from '../IStrategy';
 import {
-  isZapQuoteStepSwap,
   type CowcentratedDepositOption,
   type CowcentratedVaultDepositQuote,
+  type CowcentratedVaultWithdrawQuote,
+  type CowcentratedWithdrawOption,
   type DepositOption,
-  type DepositQuote,
   type InputTokenAmount,
+  isZapQuoteStepBuild,
+  isZapQuoteStepSplit,
+  isZapQuoteStepSwap,
+  isZapQuoteStepSwapAggregator,
   type TokenAmount,
   type WithdrawOption,
   type WithdrawQuote,
   type ZapQuoteStep,
-  isZapQuoteStepBuild,
-  type ZapQuoteStepSwap,
-  isZapQuoteStepSwapAggregator,
-  type ZapQuoteStepSwapAggregator,
   type ZapQuoteStepBuild,
-  type CowcentratedWithdrawOption,
-  isZapQuoteStepSplit,
-  type CowcentratedVaultWithdrawQuote,
   type ZapQuoteStepSplit,
+  type ZapQuoteStepSwap,
+  type ZapQuoteStepSwapAggregator,
 } from '../../transact-types';
 import type { Step } from '../../../../reducers/wallet/stepper';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { CowcentratedVaultType } from '../../vaults/CowcentratedVaultType';
 import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../../entities/token';
 import {
   createOptionId,
@@ -33,20 +31,14 @@ import {
   onlyOneTokenAmount,
 } from '../../helpers/options';
 import { TransactMode } from '../../../../reducers/wallet/transact-types';
-import {
-  BIG_ZERO,
-  bigNumberToStringDeep,
-  fromWei,
-  toWei,
-  toWeiString,
-} from '../../../../../../helpers/big-number';
+import { BIG_ZERO, fromWei, toWei, toWeiString } from '../../../../../../helpers/big-number';
 import { selectChainById } from '../../../../selectors/chains';
 import { selectVaultStrategyAddress } from '../../../../selectors/vaults';
 import { BeefyCLMPool } from '../../../beefy/beefy-clm-pool';
 import { selectTokenPriceByAddress } from '../../../../selectors/tokens';
 import type { QuoteRequest } from '../../swap/ISwapProvider';
 import { first, uniqBy } from 'lodash-es';
-import { ZERO_FEE, calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes';
+import { calculatePriceImpact, highestFeeOrZero, ZERO_FEE } from '../../helpers/quotes';
 import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
 import { selectTransactSlippage } from '../../../../selectors/transact';
 import type { ChainEntity } from '../../../../entities/chain';
@@ -61,13 +53,14 @@ import type {
 import { Balances } from '../../helpers/Balances';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens';
 import { fetchZapAggregatorSwap } from '../../zap/swap';
-import { NO_RELAY, getInsertIndex, getTokenAddress } from '../../helpers/zap';
+import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap';
 import abiCoder from 'web3-eth-abi';
 import { slipAllBy, slipBy } from '../../helpers/amounts';
 import { walletActions } from '../../../../actions/wallet-actions';
 import type BigNumber from 'bignumber.js';
-import { isCowcentratedLiquidityVault } from '../../../../entities/vault';
+import { isCowcentratedLiquidityVault, type VaultCowcentrated } from '../../../../entities/vault';
 import { QuoteChangedError } from '../errors';
+import { type ICowcentratedVaultType, isCowcentratedVaultType } from '../../vaults/IVaultType';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -76,22 +69,26 @@ type ZapHelpers = {
   clmPool: BeefyCLMPool;
 };
 
-/**
- * This is just a wrapper around IVaultType to make it an IStrategy
- */
-// export class CowcentratedStrategy<T extends ICowcentratedVaultType> implements IStrategy {
 export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
   implements IStrategy
 {
   public readonly id = 'cowcentrated';
+  protected readonly vault: VaultCowcentrated;
+  protected readonly vaultType: ICowcentratedVaultType;
 
-  constructor(protected options: TOptions, protected helpers: ZapTransactHelpers) {}
+  constructor(protected options: TOptions, protected helpers: ZapTransactHelpers) {
+    const { vault, vaultType } = this.helpers;
+    if (!isCowcentratedLiquidityVault(vault)) {
+      throw new Error('Vault is not a cowcentrated vault');
+    }
+    if (!isCowcentratedVaultType(vaultType)) {
+      throw new Error('Vault type is not cowcentrated');
+    }
+    this.vault = vault;
+    this.vaultType = vaultType;
+  }
 
   async fetchDepositOptions(): Promise<DepositOption[]> {
-    const { vault, vaultType } = this.helpers;
-
-    const clmVaultType = vaultType as CowcentratedVaultType;
-
     // what tokens we can zap via swap aggregator with
     const supportedAggregatorTokens = await this.aggregatorTokenSupport();
     const zapTokens = supportedAggregatorTokens.map(token => ({
@@ -101,22 +98,22 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
 
     return zapTokens.map(({ token, swap }) => {
       const inputs = [token];
-      const selectionId = createSelectionId(vault.chainId, inputs);
+      const selectionId = createSelectionId(this.vault.chainId, inputs);
 
       return {
-        id: createOptionId(this.id, vault.id, selectionId, swap),
-        vaultId: vault.id,
-        chainId: vault.chainId,
+        id: createOptionId(this.id, this.vault.id, selectionId, swap),
+        vaultId: this.vault.id,
+        chainId: this.vault.chainId,
         selectionId,
         selectionOrder: 3,
         inputs,
-        wantedOutputs: [clmVaultType.depositToken],
+        wantedOutputs: this.vaultType.depositTokens,
         mode: TransactMode.Deposit,
         strategyId: this.id,
-        depositToken: clmVaultType.depositToken,
-        lpTokens: (vaultType as CowcentratedVaultType).depositTokens,
+        depositToken: this.vaultType.shareToken,
+        lpTokens: this.vaultType.depositTokens,
         vaultType: 'cowcentrated',
-        swapVia: 'aggregator',
+        swapVia: swap,
       };
     });
   }
@@ -124,7 +121,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
     option: CowcentratedDepositOption
-  ): Promise<DepositQuote> {
+  ): Promise<CowcentratedVaultDepositQuote> {
     const input = onlyOneInput(inputs);
 
     if (input.amount.lte(BIG_ZERO)) {
@@ -142,17 +139,14 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     quote: CowcentratedVaultDepositQuote,
     t: TFunction<Namespace>
   ): Promise<Step> {
-    const { vault } = this.helpers;
-    const vaultType = this.helpers.vaultType as CowcentratedVaultType;
-
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
-      const chain = selectChainById(state, vault.chainId);
+      const chain = selectChainById(state, this.vault.chainId);
       const clmPool = new BeefyCLMPool(
-        vault.earnContractAddress,
-        selectVaultStrategyAddress(state, vault.id),
+        this.vault.earnContractAddress,
+        selectVaultStrategyAddress(state, this.vault.id),
         chain,
-        vaultType.depositTokens
+        this.vaultType.depositTokens
       );
       const slippage = selectTransactSlippage(state);
       const zapHelpers: ZapHelpers = { chain, slippage, state, clmPool };
@@ -302,9 +296,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
   }
 
   async fetchWithdrawOptions(): Promise<WithdrawOption[]> {
-    const { vault, vaultType } = this.helpers;
-    // const clmVault = vaultType as CowcentratedVaultType;
-
     const supportedAggregatorTokens = await this.aggregatorTokenSupport();
     const aggregatorTokens = supportedAggregatorTokens.map(token => ({
       token,
@@ -312,22 +303,22 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     }));
 
     const zapTokens = aggregatorTokens;
-    const inputs = [vaultType.depositToken];
+    const inputs = [this.vaultType.shareToken];
 
     return zapTokens.map(({ token, swap }) => {
       const outputs = [token];
-      const selectionId = createSelectionId(vault.chainId, outputs);
+      const selectionId = createSelectionId(this.vault.chainId, outputs);
 
       return {
-        id: createOptionId(this.id, vault.id, selectionId, swap),
-        vaultId: vault.id,
-        chainId: vault.chainId,
+        id: createOptionId(this.id, this.vault.id, selectionId, swap),
+        vaultId: this.vault.id,
+        chainId: this.vault.chainId,
         selectionId,
         selectionOrder: 3,
         inputs,
         wantedOutputs: outputs,
         mode: TransactMode.Withdraw,
-        depositToken: vaultType.depositToken,
+        depositToken: this.vaultType.shareToken,
         swapVia: swap,
         strategyId: 'cowcentrated',
         vaultType: 'cowcentrated',
@@ -344,32 +335,26 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       throw new Error('Quote called with 0 input amount');
     }
 
-    const { vault, vaultType, zap, getState } = this.helpers;
-    const clmVaultType = vaultType as CowcentratedVaultType;
-
-    if (!isCowcentratedLiquidityVault(vault)) {
-      throw new Error('Vault is not standard');
-    }
-
+    const { zap, getState } = this.helpers;
     const state = getState();
-    const chain = selectChainById(getState(), vault.chainId);
+    const chain = selectChainById(getState(), this.vault.chainId);
     const clmPool = new BeefyCLMPool(
-      vault.earnContractAddress,
-      selectVaultStrategyAddress(state, vault.id),
+      this.vault.earnContractAddress,
+      selectVaultStrategyAddress(state, this.vault.id),
       chain,
-      clmVaultType.depositTokens
+      this.vaultType.depositTokens
     );
 
     const { amount0, amount1 } = await clmPool.previewWithdraw(input.amount);
 
     const withdrawOutputs: TokenAmount[] = [
       {
-        token: clmVaultType.depositTokens[0],
-        amount: fromWei(amount0, clmVaultType.depositTokens[0].decimals),
+        token: this.vaultType.depositTokens[0],
+        amount: fromWei(amount0, this.vaultType.depositTokens[0].decimals),
       },
       {
-        token: clmVaultType.depositTokens[1],
-        amount: fromWei(amount1, clmVaultType.depositTokens[1].decimals),
+        token: this.vaultType.depositTokens[1],
+        amount: fromWei(amount1, this.vaultType.depositTokens[1].decimals),
       },
     ];
 
@@ -377,7 +362,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       {
         type: 'split',
         outputs: withdrawOutputs,
-        inputToken: clmVaultType.shareToken,
+        inputToken: this.vaultType.shareToken,
         inputAmount: input.amount,
       },
     ];
@@ -385,7 +370,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     // Common: Token Allowances
     const allowances = [
       {
-        token: clmVaultType.shareToken,
+        token: this.vaultType.shareToken,
         amount: input.amount,
         spenderAddress: zap.manager,
       },
@@ -432,17 +417,14 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     quote: CowcentratedVaultWithdrawQuote,
     t: TFunction<Namespace>
   ): Promise<Step> {
-    const { vault, vaultType } = this.helpers;
-    const clmVault = vaultType as CowcentratedVaultType;
-
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
-      const chain = selectChainById(state, vault.chainId);
+      const chain = selectChainById(state, this.vault.chainId);
       const clmPool = new BeefyCLMPool(
-        clmVault.shareToken.address,
-        selectVaultStrategyAddress(state, vault.id),
+        this.vaultType.shareToken.address,
+        selectVaultStrategyAddress(state, this.vault.id),
         chain,
-        clmVault.depositTokens
+        this.vaultType.depositTokens
       );
       const slippage = selectTransactSlippage(state);
       const zapHelpers: ZapHelpers = { chain, slippage, state, clmPool };
@@ -551,13 +533,13 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
   }
 
   async aggregatorTokenSupport() {
-    const { vault, vaultType, swapAggregator, getState } = this.helpers;
-    const depositTokens = (vaultType as CowcentratedVaultType).depositTokens;
+    const { swapAggregator, getState } = this.helpers;
+    const depositTokens = this.vaultType.depositTokens;
     const state = getState();
     const tokenSupport = await swapAggregator.fetchTokenSupport(
       depositTokens,
-      vault.id,
-      vault.chainId,
+      this.vault.id,
+      this.vault.chainId,
       state,
       this.options.swap
     );
@@ -575,16 +557,15 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     input: InputTokenAmount,
     option: CowcentratedDepositOption
   ): Promise<CowcentratedVaultDepositQuote> {
-    const { vault, getState, vaultType, zap, swapAggregator } = this.helpers;
-    const clmVaultType = vaultType as CowcentratedVaultType;
+    const { getState, zap, swapAggregator } = this.helpers;
     const state = getState();
-    const strategy = selectVaultStrategyAddress(state, vault.id);
-    const chain = selectChainById(state, vault.chainId);
+    const strategy = selectVaultStrategyAddress(state, this.vault.id);
+    const chain = selectChainById(state, this.vault.chainId);
     const clmPool = new BeefyCLMPool(
-      vault.earnContractAddress,
+      this.vault.earnContractAddress,
       strategy,
       chain,
-      clmVaultType.depositTokens
+      this.vaultType.depositTokens
     );
 
     // We want to be able to convert to token1
@@ -592,7 +573,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     const token1Price = selectTokenPriceByAddress(
       state,
       chain.id,
-      clmVaultType.depositTokens[1].address
+      this.vaultType.depositTokens[1].address
     );
     const ratios = await clmPool.getDepositRatioData(input, inputPrice, token1Price);
 
@@ -611,12 +592,12 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     const swapInAmounts = ratios.map(ratio => input.amount.times(ratio));
 
     // Swap quotes
-    const quoteRequestsPerLpToken: (QuoteRequest | undefined)[] = clmVaultType.depositTokens.map(
+    const quoteRequestsPerLpToken: (QuoteRequest | undefined)[] = this.vaultType.depositTokens.map(
       (lpTokenN, i) =>
         isTokenEqual(lpTokenN, input.token) || swapInAmounts[i].lte(BIG_ZERO)
           ? undefined
           : {
-              vaultId: vault.id,
+              vaultId: this.vault.id,
               fromToken: input.token,
               fromAmount: swapInAmounts[i],
               toToken: lpTokenN,
@@ -653,7 +634,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       if (quote) {
         return { token: quote.toToken, amount: quote.toAmount };
       }
-      return { token: clmVaultType.depositTokens[i], amount: swapInAmounts[i] };
+      return { token: this.vaultType.depositTokens[i], amount: swapInAmounts[i] };
     });
 
     const { liquidity, isCalm } = await clmPool.previewDeposit(
@@ -687,14 +668,14 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     steps.push({
       type: 'build',
       inputs: lpTokenAmounts,
-      outputToken: clmVaultType.shareToken,
+      outputToken: this.vaultType.shareToken,
       outputAmount: liquidityAmount,
     });
 
     // Build quote outputs
     const outputs: TokenAmount[] = [
       {
-        token: clmVaultType.shareToken,
+        token: this.vaultType.shareToken,
         amount: liquidityAmount,
       },
     ];
@@ -825,7 +806,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
   }
 
   protected async getZapBuildCLM(request: ZapStepRequest): Promise<ZapStepResponse> {
-    const clmVault = this.helpers.vaultType as CowcentratedVaultType;
     const { inputs, outputs, maxSlippage, insertBalance } = request;
 
     if (inputs.length !== 2) {
@@ -834,7 +814,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
 
     for (const input of inputs) {
       if (isTokenNative(input.token)) throw new Error('Invalid token');
-      if (!clmVault.depositTokens.find(token => isTokenEqual(token, input.token))) {
+      if (!this.vaultType.depositTokens.find(token => isTokenEqual(token, input.token))) {
         throw new Error('Invalid token');
       }
     }
@@ -846,7 +826,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       returned: [],
       zaps: [
         this.buildZapbuildCLMTx(
-          clmVault.shareToken.address,
+          this.vaultType.shareToken.address,
           toWei(inputs[0].amount, inputs[0].token.decimals),
           toWei(inputs[1].amount, inputs[1].token.decimals),
           toWei(outputs[0].amount, outputs[0].token.decimals),
@@ -912,13 +892,12 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     inputs: TokenAmount[],
     zapHelpers: ZapHelpers
   ): Promise<ZapStepResponse> {
-    const { zap, vaultType } = this.helpers;
-    const clmVaultType = vaultType as CowcentratedVaultType;
+    const { zap } = this.helpers;
     const { slippage, clmPool } = zapHelpers;
 
     const { amount0, amount1 } = await clmPool.previewWithdraw(quoteStep.inputAmount);
 
-    const quoteIndexes = clmVaultType.depositTokens.map(token =>
+    const quoteIndexes = this.vaultType.depositTokens.map(token =>
       quoteStep.outputs.findIndex(
         output => output.token.address.toLocaleLowerCase() === token.address.toLowerCase()
       )
@@ -961,9 +940,8 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
   protected async getZapWithdrawAndSplit(request: ZapStepRequest): Promise<ZapStepResponse> {
     const { inputs, outputs, maxSlippage } = request;
     const input = onlyOneTokenAmount(inputs);
-    const clmVault = this.helpers.vaultType as CowcentratedVaultType;
 
-    if (clmVault.shareToken.address.toLowerCase() !== input.token.address.toLowerCase()) {
+    if (this.vaultType.shareToken.address.toLowerCase() !== input.token.address.toLowerCase()) {
       throw new Error('Invalid input token');
     }
 
@@ -972,7 +950,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     }
 
     for (const output of outputs) {
-      if (!clmVault.depositTokens.find(token => isTokenEqual(token, output.token))) {
+      if (!this.vaultType.depositTokens.find(token => isTokenEqual(token, output.token))) {
         throw new Error('Invalid output token');
       }
     }

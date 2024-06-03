@@ -181,7 +181,7 @@ export class BeefyCLMPool {
     ]);
 
     const { price } = this.consumeStrategyData(strategyResults);
-    const { balance0, balance1, totalSupply } = this.consumeCLMData(clmResults);
+    const { balance0, balance1 } = this.consumeCLMData(clmResults);
 
     const bal0inToken1 = balance0.times(price).div(this.PRECISION);
 
