@@ -341,8 +341,10 @@
     "earnContractAddress": "0x56d19aD7D5178878480739aCbD4536Df3e1ce946",
     "oracle": "lps",
     "oracleId": "stargate-fantom-lzusdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1701358575,
+    "retireReason": "rewards",
+    "retiredAt": 1717514388,
     "platformId": "stargate",
     "assets": ["lzUSDC"],
     "risks": [
