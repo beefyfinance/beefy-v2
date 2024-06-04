@@ -110,7 +110,8 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ]
+    ],
+    "earningPoints": true
   },
   {
     "id": "velodrome-mode-weth-usdc",
@@ -147,7 +148,8 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ]
+    ],
+    "earningPoints": true
   },
   {
     "id": "velodrome-mode-weth-mode",
@@ -184,7 +186,8 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ]
+    ],
+    "earningPoints": true
   },
   {
     "id": "velodrome-mode-usdc-mode",
@@ -221,6 +224,7 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ]
+    ],
+    "earningPoints": true
   }
 ]
