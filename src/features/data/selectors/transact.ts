@@ -4,13 +4,10 @@ import type { ChainEntity } from '../entities/chain';
 import { first, orderBy } from 'lodash-es';
 import { selectTokenPriceByAddress } from './tokens';
 import { selectWalletAddressIfKnown } from './wallet';
+import { selectUserBalanceOfToken, selectUserVaultBalanceInDepositToken } from './balance';
 import {
-  selectUserBalanceOfToken,
-  selectUserVaultDepositInDepositTokenExcludingBoostsBridged,
-} from './balance';
-import {
-  isCowcentratedDepositQuote,
   type InputTokenAmount,
+  isCowcentratedDepositQuote,
   type TokenAmount,
   type TransactOption,
   type TransactQuote,
@@ -126,7 +123,7 @@ export const selectTransactDepositInputAmountsExceedBalances = (state: BeefyStat
 
 export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyState) => {
   const vaultId = selectTransactVaultId(state);
-  const userBalance = selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId);
+  const userBalance = selectUserVaultBalanceInDepositToken(state, vaultId);
   const value = selectTransactInputAmount(state);
 
   return value.gt(userBalance);

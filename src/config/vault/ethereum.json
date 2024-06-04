@@ -1,5 +1,44 @@
 [
   {
+    "id": "curve-crvusd-susde",
+    "name": "crvUSD/sUSDe",
+    "token": "crvU-sUSDe",
+    "tokenAddress": "0x57064F49Ad7123C92560882a45518374ad982e85",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveCrvUSD-sUSDe",
+    "earnedTokenAddress": "0xBF7fc2A3d96d80f47b3b89BE84afe10376CE96A5",
+    "earnContractAddress": "0xBF7fc2A3d96d80f47b3b89BE84afe10376CE96A5",
+    "oracle": "lps",
+    "oracleId": "curve-crvusd-susde",
+    "status": "active",
+    "createdAt": 1717410015,
+    "platformId": "curve",
+    "assets": ["crvUSD", "sUSDe"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-169/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-169/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x57064F49Ad7123C92560882a45518374ad982e85",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x57064F49Ad7123C92560882a45518374ad982e85",
+            "coins": [
+              "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
+              "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curve-lend-pufeth-crvusd",
     "name": "crvUSD (pufETH Market)",
     "token": "cvcrvUSD",
@@ -4563,8 +4602,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/1/unified/swap/ETH/USDC",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDC-ETHEREUM/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDC-ETHEREUM/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/ethereum:0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56",
+    "removeLiquidityUrl": "https://stargate.finance/pool/ethereum:0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56/remove",
     "network": "ethereum"
   },
   {
@@ -4594,8 +4633,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/1/unified/swap/ETH/USDT",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDT-ETHEREUM/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDT-ETHEREUM/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/ethereum:0x38EA452219524Bb87e18dE1C24D3bB59510BD783/add",
+    "removeLiquidityUrl": "https://stargate.finance/pool/ethereum:0x38EA452219524Bb87e18dE1C24D3bB59510BD783/remove",
     "network": "ethereum"
   },
   {
@@ -4625,8 +4664,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.1inch.io/#/1/unified/swap/USDC/ETH",
-    "addLiquidityUrl": "https://stargate.finance/pool/eth-ETHEREUM/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/eth-ETHEREUM/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/ethereum:0x101816545F6bd2b1076434B54383a1E633390A2E",
+    "removeLiquidityUrl": "https://stargate.finance/pool/ethereum:0x101816545F6bd2b1076434B54383a1E633390A2E/remove",
     "network": "ethereum"
   },
   {

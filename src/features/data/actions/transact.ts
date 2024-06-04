@@ -1,6 +1,6 @@
 import { type AnyAction, createAsyncThunk, miniSerializeError, nanoid } from '@reduxjs/toolkit';
 import type { BeefyState, BeefyThunk } from '../../../redux-types';
-import { isCowcentratedLiquidityVault, type VaultEntity, type VaultGov } from '../entities/vault';
+import { isCowcentratedVault, type VaultEntity, type VaultGov } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
 import { selectShouldInitAddressBook } from '../selectors/data-loader';
 import { fetchAddressBookAction } from './tokens';
@@ -251,7 +251,7 @@ export const transactFetchQuotes = createAsyncThunk<
       amount: inputAmount,
       token:
         mode === TransactMode.Withdraw
-          ? isCowcentratedLiquidityVault(vault)
+          ? isCowcentratedVault(vault)
             ? shareToken
             : depositToken
           : selection.tokens[0], // wouldn't it be the share token?

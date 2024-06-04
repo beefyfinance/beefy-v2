@@ -3138,8 +3138,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDC-POLYGON/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/usdc-polygon/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/polygon:0x1205f31718499dBf1fCa446663B532Ef87481fe1",
+    "removeLiquidityUrl": "https://stargate.finance/pool/polygon:0x1205f31718499dBf1fCa446663B532Ef87481fe1/remove",
     "network": "polygon"
   },
   {
@@ -3169,8 +3169,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDT-POLYGON/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/usdt-polygon/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/polygon:0x29e38769f23701A2e4A8Ef0492e19dA4604Be62c",
+    "removeLiquidityUrl": "https://stargate.finance/pool/polygon:0x29e38769f23701A2e4A8Ef0492e19dA4604Be62c/remove",
     "network": "polygon"
   },
   {

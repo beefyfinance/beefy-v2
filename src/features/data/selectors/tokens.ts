@@ -5,10 +5,10 @@ import type { TokenEntity } from '../entities/token';
 import { isTokenErc20, isTokenNative } from '../entities/token';
 import { selectAllChainIds, selectChainById } from './chains';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { selectIsAddressBookLoaded } from './data-loader';
-import type { VaultEntity } from '../entities/vault';
+import { selectIsAddressBookLoaded, selectIsGlobalDataAvailable } from './data-loader';
+import { isGovVault, type VaultEntity } from '../entities/vault';
 import { createCachedSelector } from 're-reselect';
-import { selectVaultById } from './vaults';
+import { selectCowcentratedVaultById, selectVaultById } from './vaults';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import {
   selectHistoricalPriceBucketData,
@@ -97,6 +97,14 @@ export const selectTokensByChainId = (state: BeefyState, chainId: ChainEntity['i
 export const selectDepositTokenByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
   return selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+};
+
+export const selectShareTokenByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const vault = selectVaultById(state, vaultId);
+  if (isGovVault(vault)) {
+    return undefined;
+  }
+  return selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
 };
 
 export const selectErc20TokenByAddress = (
@@ -258,7 +266,7 @@ export const selectHasBreakdownDataByOracleId = (
   oracleId: TokenEntity['oracleId'],
   chainId: ChainEntity['id']
 ) => {
-  const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
+  const isPricesLoaded = selectIsGlobalDataAvailable(state, 'prices');
   const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
   const breakdown = selectLpBreakdownByOracleId(state, oracleId);
 
@@ -404,4 +412,38 @@ export const selectCurrentCowcentratedRangesByVaultId = (
       priceRangeMin: BIG_ZERO,
     }
   );
+};
+
+export const selectCowcentratedVaultDepositTokens = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => {
+  const vault = selectCowcentratedVaultById(state, vaultId);
+  const token0 = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddresses[0]);
+  const token1 = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddresses[1]);
+
+  return {
+    token0,
+    token1,
+  };
+};
+
+export const selectCowcentratedVaultDepositTokensWithPrices = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => {
+  const { token1, token0 } = selectCowcentratedVaultDepositTokens(state, vaultId);
+  const token0Price = selectTokenPriceByTokenOracleId(state, token0.oracleId);
+  const token1Price = selectTokenPriceByTokenOracleId(state, token1.oracleId);
+
+  return {
+    token0: {
+      ...token0,
+      price: token0Price,
+    },
+    token1: {
+      ...token1,
+      price: token1Price,
+    },
+  };
 };

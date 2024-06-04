@@ -52,7 +52,7 @@ import abiCoder from 'web3-eth-abi';
 import { mergeTokenAmounts, slipAllBy, slipBy } from '../../helpers/amounts';
 import { walletActions } from '../../../../actions/wallet-actions';
 import BigNumber from 'bignumber.js';
-import { isCowcentratedLiquidityVault, type VaultCowcentrated } from '../../../../entities/vault';
+import { isCowcentratedVault, type VaultCowcentrated } from '../../../../entities/vault';
 import { type ICowcentratedVaultType, isCowcentratedVaultType } from '../../vaults/IVaultType';
 
 type ZapHelpers = {
@@ -71,7 +71,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
 
   constructor(protected options: TOptions, protected helpers: ZapTransactHelpers) {
     const { vault, vaultType } = this.helpers;
-    if (!isCowcentratedLiquidityVault(vault)) {
+    if (!isCowcentratedVault(vault)) {
       throw new Error('Vault is not a cowcentrated vault');
     }
     if (!isCowcentratedVaultType(vaultType)) {

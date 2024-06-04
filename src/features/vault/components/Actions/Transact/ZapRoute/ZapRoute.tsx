@@ -31,11 +31,7 @@ function useTokenAmounts(tokenAmounts: TokenAmount[]): ReactNode[] {
   return useMemo(() => {
     return tokenAmounts.map(tokenAmount => (
       <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
-        <TokenAmountFromEntity
-          amount={tokenAmount.amount}
-          token={tokenAmount.token}
-          minShortPlaces={4}
-        />{' '}
+        <TokenAmountFromEntity amount={tokenAmount.amount} token={tokenAmount.token} />{' '}
         {tokenAmount.token.symbol}
       </Fragment>
     ));
@@ -72,16 +68,8 @@ const StepContentSwap = memo<StepContentProps<ZapQuoteStepSwap>>(function StepCo
         via: platformName,
       }}
       components={{
-        fromAmount: (
-          <TokenAmountFromEntity
-            amount={step.fromAmount}
-            token={step.fromToken}
-            minShortPlaces={4}
-          />
-        ),
-        toAmount: (
-          <TokenAmountFromEntity amount={step.toAmount} token={step.toToken} minShortPlaces={4} />
-        ),
+        fromAmount: <TokenAmountFromEntity amount={step.fromAmount} token={step.fromToken} />,
+        toAmount: <TokenAmountFromEntity amount={step.toAmount} token={step.toToken} />,
       }}
     />
   );
@@ -178,11 +166,7 @@ const StepContentUnused = memo<StepContentProps<ZapQuoteStepUnused>>(function St
   const tokenAmounts = useMemo(() => {
     return step.outputs.map(tokenAmount => (
       <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
-        <TokenAmountFromEntity
-          amount={tokenAmount.amount}
-          token={tokenAmount.token}
-          minShortPlaces={4}
-        />{' '}
+        <TokenAmountFromEntity amount={tokenAmount.amount} token={tokenAmount.token} />{' '}
         {tokenAmount.token.symbol}
       </Fragment>
     ));

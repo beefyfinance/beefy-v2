@@ -126,6 +126,42 @@
     ]
   },
   {
+    "id": "aerodrome-weeth-aero",
+    "name": "weETH-AERO vLP",
+    "type": "standard",
+    "token": "vAMM-weETH/AERO",
+    "tokenAddress": "0xc5aDfb267a95df1233a2b5F7f48041E7Fb384BcA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroweETH-AERO",
+    "earnedTokenAddress": "0xb63682961B3dC55d2aD8AD756beAEcDDe8474E83",
+    "earnContractAddress": "0xb63682961B3dC55d2aD8AD756beAEcDDe8474E83",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weeth-aero",
+    "status": "active",
+    "createdAt": 1717052879,
+    "platformId": "aerodrome",
+    "assets": ["weETH", "AERO"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A&token1=0x940181a94A35A4569E4529A3CDfB74e38FD98631&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-wrseth",
     "name": "wrsETH-ETH vLP",
     "type": "standard",
@@ -5084,8 +5120,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.balancer.fi/#/base/swap?outputCurrency=0x4200000000000000000000000000000000000006",
-    "addLiquidityUrl": "https://stargate.finance/pool/ETH-BASE/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/ETH-BASE/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/base:0x28fc411f9e1c480AD312b3d9C60c22b965015c6B",
+    "removeLiquidityUrl": "https://stargate.finance/pool/base:0x28fc411f9e1c480AD312b3d9C60c22b965015c6B/remove",
     "network": "base"
   },
   {
@@ -5117,8 +5153,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://app.balancer.fi/#/base/swap?outputCurrency=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDC-BASE/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDC-BASE/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/base:0x4c80E24119CFB836cdF0a6b53dc23F04F7e652CA",
+    "removeLiquidityUrl": "https://stargate.finance/pool/base:0x4c80E24119CFB836cdF0a6b53dc23F04F7e652CA/remove",
     "network": "base"
   },
   {

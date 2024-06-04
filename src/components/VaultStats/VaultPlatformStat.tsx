@@ -5,6 +5,10 @@ import { selectVaultById } from '../../features/data/selectors/vaults';
 import { selectIsWalletKnown, selectWalletAddress } from '../../features/data/selectors/wallet';
 import { VaultValueStat } from '../VaultValueStat';
 import type { BeefyState } from '../../redux-types';
+import {
+  selectIsAddressChainDataAvailable,
+  selectIsGlobalDataAvailable,
+} from '../../features/data/selectors/data-loader';
 
 interface VaultPlatformProps {
   vaultId: VaultEntity['id'];
@@ -19,11 +23,8 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultPlatfor
 
   const vault = selectVaultById(state, vaultId);
   const isLoaded =
-    state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
-    selectIsWalletKnown(state) &&
-    walletAddress
-      ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
-          .alreadyLoadedOnce
+    selectIsGlobalDataAvailable(state, 'prices') && selectIsWalletKnown(state) && walletAddress
+      ? selectIsAddressChainDataAvailable(state, walletAddress, vault.chainId, 'balance')
       : true;
 
   if (!isLoaded) {

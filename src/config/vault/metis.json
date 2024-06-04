@@ -61,8 +61,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDT-METIS",
-    "removeLiquidityUrl": "https://stargate.finance/pool/usdt-metis/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/metis:0x2b60473a7C41Deb80EDdaafD5560e963440eb632",
+    "removeLiquidityUrl": "https://stargate.finance/pool/metis:0x2b60473a7C41Deb80EDdaafD5560e963440eb632/remove",
     "network": "metis"
   },
   {

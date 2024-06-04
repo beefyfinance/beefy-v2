@@ -12,7 +12,7 @@ import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenEqual, isTokenNative } from '../entities/token';
 import type { VaultCowcentrated, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
-import { isCowcentratedLiquidityVault, isStandardVault } from '../entities/vault';
+import { isCowcentratedVault, isStandardVault } from '../entities/vault';
 import {
   createWalletActionErrorAction,
   createWalletActionPendingAction,
@@ -1305,14 +1305,14 @@ function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
       }
     }
   }
-  if (isCowcentratedLiquidityVault(vault)) {
+  if (isCowcentratedVault(vault)) {
     vault.depositTokenAddresses.forEach(tokenAddress => {
       tokens.push(selectTokenByAddress(state, vault.chainId, tokenAddress));
     });
   }
 
   // clm deposit tokens aren't erc20 and don't share balanceOf
-  if (!isCowcentratedLiquidityVault(vault)) {
+  if (!isCowcentratedVault(vault)) {
     tokens.push(selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress));
   }
   tokens.push(selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress));

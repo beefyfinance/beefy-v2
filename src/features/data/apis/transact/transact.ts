@@ -9,7 +9,7 @@ import type {
 } from './transact-types';
 import { partition } from 'lodash';
 import type { VaultEntity } from '../../entities/vault';
-import { isCowcentratedLiquidityVault, isStandardVault } from '../../entities/vault';
+import { isCowcentratedVault, isStandardVault } from '../../entities/vault';
 import type { GetStateFn } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
 import {
@@ -275,7 +275,7 @@ export class TransactApi implements ITransactApi {
     const { vault } = helpers;
 
     // Only standard/cow vaults are supported so far
-    if (!isStandardVault(vault) && !isCowcentratedLiquidityVault(vault)) {
+    if (!isStandardVault(vault) && !isCowcentratedVault(vault)) {
       return [];
     }
 
@@ -329,7 +329,7 @@ export class TransactApi implements ITransactApi {
       return new VaultStrategy(vaultType);
     }
 
-    // if (strategyId === 'cowcentrated' && isCowcentratedVaultType(vaultType)) {
+    // if (strategyId === 'cowcentrated' && isCowcentratedVault(vaultType)) {
     //   console.log('returnning cow strat');
     //   return new CowcentratedStrategy(vaultType);
     // }
@@ -338,12 +338,12 @@ export class TransactApi implements ITransactApi {
       throw new Error(`Strategy "${strategyId}" requires zap contract`);
     }
 
-    if (!isStandardVault(vault) && !isCowcentratedLiquidityVault(vault)) {
+    if (!isStandardVault(vault) && !isCowcentratedVault(vault)) {
       // This should never happen
       throw new Error(`Vault ${vault.id} is not a standard vault and does not support zaps`);
     }
 
-    if (!vault.zaps && !isCowcentratedLiquidityVault(vault)) {
+    if (!vault.zaps && !isCowcentratedVault(vault)) {
       throw new Error(`Vault ${vault.id} has no zaps`);
     }
 
