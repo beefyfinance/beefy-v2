@@ -4,7 +4,12 @@ import { mooAmountToOracleAmount } from '../utils/ppfs';
 import type { Draft } from 'immer';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import type { BoostEntity } from '../entities/boost';
-import type { VaultCowcentrated, VaultEntity, VaultGov } from '../entities/vault';
+import {
+  isStandardVault,
+  type VaultCowcentrated,
+  type VaultEntity,
+  type VaultGov,
+} from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
 import { selectTokenByAddress, selectTokenPriceByAddress } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
@@ -12,7 +17,7 @@ import type { FetchAllContractDataResult } from '../apis/contract-data/contract-
 import type { BeefyState } from '../../../redux-types';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import type { ChainEntity } from '../entities/chain';
-import { BIG_ZERO } from '../../../helpers/big-number';
+import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import { selectActiveChainIds } from '../selectors/chains';
 
 /**
@@ -153,7 +158,8 @@ function addContractDataToState(
     const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
     // find vault price per full share for the vault
     const ppfs = ppfsPerVaultId[vault.id];
-    if (ppfs === undefined) {
+    // Only CLM vaults need/have ppfs
+    if (ppfs === undefined && isStandardVault(vault)) {
       throw new Error(`Could not find ppfs for vault id ${vault.id}`);
     }
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
@@ -161,7 +167,7 @@ function addContractDataToState(
     const totalStaked = mooAmountToOracleAmount(
       mooToken,
       depositToken,
-      ppfs,
+      ppfs || BIG_ONE,
       boostContractData.totalSupply
     );
     const tvl = totalStaked.times(oraclePrice);
