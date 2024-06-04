@@ -10,6 +10,17 @@ import { featureFlag_simUpdate } from '../../features/data/utils/feature-flags';
 
 const useStyles = makeStyles(styles);
 
+declare global {
+  interface Window {
+    __beefyHandleNewVersion?: (
+      currentVersion: BuildVersion,
+      newVersion: BuildVersion,
+      reloadFailed: boolean,
+      newVersionMessage: string
+    ) => Promise<boolean>;
+  }
+}
+
 export const AppVersionCheck = memo(function AppVersionCheck() {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -39,8 +50,7 @@ export const AppVersionCheck = memo(function AppVersionCheck() {
 
   useEffect(() => {
     if (window) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (window as any).__beefyHandleNewVersion = async (
+      window.__beefyHandleNewVersion = async (
         currentVersion: BuildVersion,
         newVersion: BuildVersion,
         reloadFailed: boolean
