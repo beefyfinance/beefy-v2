@@ -7,11 +7,7 @@ import {
   type TokenEntity,
   type TokenErc20,
 } from '../../../entities/token';
-import {
-  type VaultEntity,
-  isCowcentratedVault,
-  type VaultCowcentrated,
-} from '../../../entities/vault';
+import { isCowcentratedVault, type VaultCowcentrated } from '../../../entities/vault';
 import { TransactMode } from '../../../reducers/wallet/transact-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import {
