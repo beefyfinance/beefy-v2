@@ -110,10 +110,14 @@ export const usePnLChartData = (
         isAfter(price.date, vaultLastDeposit)
       );
 
+      const filteredHarvests = userHarvestTimeline.harvests.filter(harvest =>
+        isAfter(harvest.timestamp, vaultLastDeposit)
+      );
+
       const data = getClmInvestorTimeserie(
         timebucket,
         vaultTimeline as CLMTimelineAnalyticsEntity[],
-        userHarvestTimeline.harvests,
+        filteredHarvests,
         filteredUnderlyingToUsd,
         vaultLastDeposit,
         currentOraclePrice,
@@ -151,6 +155,7 @@ export const usePnLChartData = (
     token1SharesAtDeposit,
     underlyingStatus,
     underlyingToUsd,
+    userHarvestTimeline,
     vaultLastDeposit,
     vaultTimeline,
   ]);

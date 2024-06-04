@@ -107,16 +107,16 @@ export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverview
           <Line
             yAxisId="usd"
             strokeWidth={1.5}
-            dataKey="v"
-            stroke="#5C70D6"
+            dataKey="vHold"
+            stroke="#999CB3"
             dot={false}
             type="linear"
           />
           <Line
             yAxisId="usd"
             strokeWidth={1.5}
-            dataKey="vHold"
-            stroke="#999CB3"
+            dataKey="v"
+            stroke="#5C70D6"
             dot={false}
             type="linear"
           />

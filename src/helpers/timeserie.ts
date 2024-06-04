@@ -183,16 +183,27 @@ export function getClmInvestorTimeserie(
 
   //We should be adding precise initial ppfs and price as first data point
   if (isEqual(timeline[0].datetime, fixedDate)) {
-    const { underlying0Diff, underlying1Diff, token1ToUsd, token0ToUsd } = timeline[0];
+    const {
+      underlying0Diff,
+      underlying1Diff,
+      token1ToUsd,
+      token0ToUsd,
+      underlying0Balance,
+      underlying1Balance,
+    } = timeline[0];
 
     const priceAtDeposit = underlying0Diff
       .times(token0ToUsd)
       .plus(underlying1Diff.times(token1ToUsd));
 
+    const holdValue = underlying0Balance
+      .times(token0ToUsd)
+      .plus(underlying1Balance.times(token1ToUsd));
+
     pricesTs.push({
       t: roundDownMinutes(timeline[0].datetime).getTime(),
       v: priceAtDeposit.toNumber(),
-      vHold: priceAtDeposit.toNumber(),
+      vHold: holdValue.toNumber(),
     });
     currentDate = new Date(currentDate.getTime() + bucketSize);
   }
@@ -232,9 +243,9 @@ export function getClmInvestorTimeserie(
         const usdBalance = timeline[balanceIdx].shareBalance.times(underlying.value);
         const harvest = harvests[harvestIdx];
 
-        const holdValue = token0SharesAtDeposit
+        const holdValue = timeline[balanceIdx].underlying0Balance
           .times(harvest.prices[0])
-          .plus(token1SharesAtDeposit.times(harvest.prices[1]));
+          .plus(timeline[balanceIdx].underlying1Balance.times(harvest.prices[1]));
 
         pricesTs.push({
           //return date on seconds
