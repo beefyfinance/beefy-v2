@@ -255,7 +255,6 @@ const transactSlice = createSlice({
             sliceState.quotes.status = TransactStatus.Rejected;
             sliceState.quotes.error = { code: 'calm' };
           } else {
-            isCowcentratedDepositQuote(action.payload.quotes[0]);
             sliceState.quotes.status = TransactStatus.Fulfilled;
 
             addQuotesToState(sliceState, action.payload.quotes);

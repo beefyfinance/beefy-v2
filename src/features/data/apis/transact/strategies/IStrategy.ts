@@ -6,7 +6,7 @@ import type {
   WithdrawOption,
   WithdrawQuote,
 } from '../transact-types';
-import type { VaultType } from '../vaults/IVaultType';
+import type { VaultTypeFromVault } from '../vaults/IVaultType';
 import type { ISwapAggregator } from '../swap/ISwapAggregator';
 import type { VaultEntity } from '../../../entities/vault';
 import type { BeefyState } from '../../../../../redux-types';
@@ -64,13 +64,18 @@ export type ConicStrategyOptions = {
   strategyId: 'conic';
 } & OptionalStrategySwapOption;
 
+export type CowcentratedStrategyOptions = {
+  strategyId: 'cowcentrated';
+} & OptionalStrategySwapOption;
+
 export type StrategyOptions =
   | SingleStrategyOptions
   | UniswapV2StrategyOptions
   | SolidlyStrategyOptions
   | CurveStrategyOptions
   | GammaStrategyOptions
-  | ConicStrategyOptions;
+  | ConicStrategyOptions
+  | CowcentratedStrategyOptions;
 
 export interface IStrategy {
   readonly id: string;
@@ -92,10 +97,10 @@ export interface IStrategy {
   fetchWithdrawStep(quote: TransactQuote, t: TFunction<Namespace>): Promise<Step>;
 }
 
-type BaseTransactHelpers = {
+type BaseTransactHelpers<T extends VaultEntity = VaultEntity> = {
   swapAggregator: ISwapAggregator;
-  vault: VaultEntity;
-  vaultType: VaultType;
+  vault: T;
+  vaultType: VaultTypeFromVault<T>;
   getState: () => BeefyState;
 };
 

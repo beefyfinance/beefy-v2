@@ -26,6 +26,7 @@ export type VaultDepositRequest = {
 export type VaultDepositResponse = {
   inputs: InputTokenAmount[];
   outputs: TokenAmount[];
+  minOutputs: TokenAmount[];
   zap: ZapStep;
 };
 
@@ -69,16 +70,18 @@ export interface IGovVaultType extends IVaultType {
 export interface ICowcentratedVaultType extends IVaultType {
   readonly id: 'cowcentrated';
   readonly vault: VaultCowcentrated;
-  readonly depositToken: TokenEntity;
   readonly depositTokens: TokenEntity[];
+  readonly shareToken: TokenErc20;
 }
 
 export type VaultType = IStandardVaultType | IGovVaultType | ICowcentratedVaultType;
 
-export type VaultTypeConstructor<T extends VaultType = VaultType> = new (
-  vault: VaultEntity,
+export type VaultTypeFromVault<T extends VaultEntity> = Extract<VaultType, { id: T['type'] }>;
+
+export type VaultTypeConstructor<T extends VaultEntity> = new (
+  vault: T,
   getState: GetStateFn
-) => T;
+) => VaultTypeFromVault<T>;
 
 export function isStandardVaultType(vaultType: VaultType): vaultType is IStandardVaultType {
   return vaultType.id === 'standard';

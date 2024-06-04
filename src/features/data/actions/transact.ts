@@ -1,6 +1,6 @@
 import { type AnyAction, createAsyncThunk, miniSerializeError, nanoid } from '@reduxjs/toolkit';
 import type { BeefyState, BeefyThunk } from '../../../redux-types';
-import type { VaultEntity, VaultGov } from '../entities/vault';
+import { isCowcentratedVault, type VaultEntity, type VaultGov } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
 import { selectShouldInitAddressBook } from '../selectors/data-loader';
 import { fetchAddressBookAction } from './tokens';
@@ -11,7 +11,6 @@ import { transactActions } from '../reducers/wallet/transact';
 import {
   selectTokenAmountsTotalValue,
   selectTransactDualInputAmounts,
-  selectTransactDualMaxAmounts,
   selectTransactInputAmount,
   selectTransactInputMax,
   selectTransactOptionsForSelectionId,
@@ -202,24 +201,26 @@ export const transactFetchQuotes = createAsyncThunk<
   const mode = selectTransactOptionsMode(state);
   const inputAmount = selectTransactInputAmount(state);
   const inputMax = selectTransactInputMax(state);
-  const dualInputAmounts = selectTransactDualInputAmounts(state);
-  const dualMaxAmounts = selectTransactDualMaxAmounts(state);
   const walletAddress = selectWalletAddress(state);
 
   const vaultId = selectTransactVaultId(state);
   const vault = selectVaultById(state, vaultId);
-  // This can be improved, don't worry chimpo
 
-  if (vault.type !== 'cowcentrated' && inputAmount.lte(BIG_ZERO)) {
+  if (inputAmount.lte(BIG_ZERO)) {
     throw new Error(`Can not quote for 0`);
   }
-  if (vault.type === 'cowcentrated') {
-    if (mode === TransactMode.Deposit && dualInputAmounts.every(amount => amount.lte(BIG_ZERO))) {
-      throw new Error(`Can not quote for [0, 0]`);
-    } else if (mode === TransactMode.Withdraw && inputAmount.lte(BIG_ZERO)) {
-      throw new Error(`Can not quote for 0`);
-    }
-  }
+
+  // if (vault.type !== 'cowcentrated' && inputAmount.lte(BIG_ZERO)) {
+  //   throw new Error(`Can not quote for 0`);
+  // }
+
+  // if (vault.type === 'cowcentrated') {
+  //   if (mode === TransactMode.Deposit && dualInputAmounts.every(amount => amount.lte(BIG_ZERO))) {
+  //     // throw new Error(`Can not quote for [0, 0]`);
+  //   } else if (mode === TransactMode.Withdraw && inputAmount.lte(BIG_ZERO)) {
+  //     throw new Error(`Can not quote for 0`);
+  //   }
+  // }
 
   const selectionId = selectTransactSelectedSelectionId(state);
   if (!selectionId) {
@@ -241,32 +242,44 @@ export const transactFetchQuotes = createAsyncThunk<
     throw new Error(`No tokens for selectionId ${selectionId}`);
   }
 
-  // const vaultId = selectTransactVaultId(state);
-  // const vault = selectVaultById(state, vaultId);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const shareToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
 
   // TODO handle differently for univ3 with multiple deposit tokens
-  const inputAmounts: InputTokenAmount[] =
-    vault.type !== 'cowcentrated' || mode === TransactMode.Withdraw
-      ? [
-          {
-            amount: inputAmount,
-            token: mode === TransactMode.Withdraw ? depositToken : selection.tokens[0], // for withdraw this is always depositToken / deposit is only token of selection
-            max: inputMax,
-          },
-        ]
-      : [
-          {
-            amount: dualInputAmounts[0],
-            token: selection.tokens[0],
-            max: dualMaxAmounts[0],
-          },
-          {
-            amount: dualInputAmounts[1],
-            token: selection.tokens[1],
-            max: dualMaxAmounts[1],
-          },
-        ];
+  const inputAmounts: InputTokenAmount[] = [
+    {
+      amount: inputAmount,
+      token:
+        mode === TransactMode.Withdraw
+          ? isCowcentratedVault(vault)
+            ? shareToken
+            : depositToken
+          : selection.tokens[0], // wouldn't it be the share token?
+      max: inputMax,
+    },
+  ];
+
+  // const inputAmounts: InputTokenAmount[] =
+  //   vault.type !== 'cowcentrated' || mode === TransactMode.Withdraw
+  //     ? [
+  //         {
+  //           amount: inputAmount,
+  //           token: mode === TransactMode.Withdraw ? depositToken : selection.tokens[0], // for withdraw this is always depositToken / deposit is only token of selection
+  //           max: inputMax,
+  //         },
+  //       ]
+  //     : [
+  //         {
+  //           amount: dualInputAmounts[0],
+  //           token: selection.tokens[0],
+  //           max: dualMaxAmounts[0],
+  //         },
+  //         {
+  //           amount: dualInputAmounts[1],
+  //           token: selection.tokens[1],
+  //           max: dualMaxAmounts[1],
+  //         },
+  //       ];
 
   let quotes: TransactQuote[];
   if (options.every(isDepositOption)) {

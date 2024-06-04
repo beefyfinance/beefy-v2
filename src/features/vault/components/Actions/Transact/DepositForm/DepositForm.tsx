@@ -98,9 +98,9 @@ export const DepositFormLoader = memo(function DepositFormLoader() {
         <LoadingIndicator text={t('Transact-Loading')} />
       ) : isError ? (
         <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
-      ) : isCowcentratedVault(vault) ? (
-        <CowcentratedDepositForm />
       ) : (
+        // ) : isCowVault ? (
+        //   <CowcentratedDepositForm />
         <DepositForm />
       )}
     </div>

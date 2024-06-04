@@ -1,4 +1,4 @@
-import type { VaultEntity, VaultStandard } from '../../../entities/vault';
+import type { VaultStandard } from '../../../entities/vault';
 import { isStandardVault } from '../../../entities/vault';
 import type { BeefyState, GetStateFn } from '../../../../../redux-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
@@ -35,13 +35,7 @@ import type {
 } from '../transact-types';
 import { TransactMode } from '../../../reducers/wallet/transact-types';
 import { first } from 'lodash-es';
-import {
-  BIG_ZERO,
-  bigNumberToStringDeep,
-  fromWei,
-  toWei,
-  toWeiString,
-} from '../../../../../helpers/big-number';
+import { BIG_ZERO, fromWei, toWei, toWeiString } from '../../../../../helpers/big-number';
 import { selectFeesByVaultId } from '../../../selectors/fees';
 import { selectChainById } from '../../../selectors/chains';
 import { getWeb3Instance } from '../../instances';
@@ -65,7 +59,7 @@ export class StandardVaultType implements IStandardVaultType {
   public readonly shareToken: TokenErc20;
   protected readonly getState: GetStateFn;
 
-  constructor(vault: VaultEntity, getState: GetStateFn) {
+  constructor(vault: VaultStandard, getState: GetStateFn) {
     if (!isStandardVault(vault)) {
       throw new Error('Vault is not a standard vault');
     }
@@ -108,31 +102,23 @@ export class StandardVaultType implements IStandardVaultType {
     );
     const ppfsRaw = await vaultContract.methods.getPricePerFullShare().call();
     const ppfs = new BigNumber(ppfsRaw);
-    const inputWei = toWei(input.amount, input.token.decimals);
     const depositFee = this.calculateDepositFee(input, state);
     const inputWeiAfterFee = toWei(input.amount.minus(depositFee), input.token.decimals);
     const expectedShares = inputWeiAfterFee
       .shiftedBy(this.shareToken.decimals)
       .dividedToIntegerBy(ppfs);
 
-    console.log(
-      'fetchZapDeposit',
-      bigNumberToStringDeep({
-        ppfsRaw,
-        inputWei,
-        inputWeiAfterFee,
-        expectedShares,
-      })
-    );
+    const outputs = [
+      {
+        token: this.shareToken,
+        amount: fromWei(expectedShares, this.shareToken.decimals),
+      },
+    ];
 
     return {
       inputs: request.inputs,
-      outputs: [
-        {
-          token: this.shareToken,
-          amount: fromWei(expectedShares, this.shareToken.decimals),
-        },
-      ],
+      outputs,
+      minOutputs: outputs,
       zap: isTokenNative(input.token)
         ? this.fetchNativeZapDeposit(this.vault.earnContractAddress, input.token, input.amount)
         : this.fetchErc20ZapDeposit(
@@ -397,29 +383,24 @@ export class StandardVaultType implements IStandardVaultType {
       multicall
     );
 
-    console.log(
-      'fetchZapWithdraw',
-      bigNumberToStringDeep({
-        input: toWei(input.amount, input.token.decimals),
-        sharesToWithdrawWei,
-        withdrawnAmountAfterFeeWei,
-      })
-    );
+    const inputs = [
+      {
+        token: this.shareToken,
+        amount: fromWei(sharesToWithdrawWei, this.shareToken.decimals),
+        max: input.max,
+      },
+    ];
+    const outputs = [
+      {
+        token: this.depositToken,
+        amount: fromWei(withdrawnAmountAfterFeeWei, this.depositToken.decimals),
+      },
+    ];
 
     return {
-      inputs: [
-        {
-          token: this.shareToken,
-          amount: fromWei(sharesToWithdrawWei, this.shareToken.decimals),
-          max: input.max,
-        },
-      ],
-      outputs: [
-        {
-          token: this.depositToken,
-          amount: fromWei(withdrawnAmountAfterFeeWei, this.depositToken.decimals),
-        },
-      ],
+      inputs,
+      outputs,
+      minOutputs: outputs,
       zap: isTokenNative(this.depositToken)
         ? this.fetchNativeZapWithdraw(
             this.vault.earnContractAddress,

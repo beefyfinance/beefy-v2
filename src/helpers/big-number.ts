@@ -1,5 +1,6 @@
 import { BigNumber } from 'bignumber.js';
 import { mapValues } from 'lodash-es';
+import type { TokenAmount } from '../features/data/apis/transact/transact-types';
 
 export type BigNumberish = BigNumber.Value;
 
@@ -50,6 +51,10 @@ export function averageBigNumbers(values: BigNumber[]): BigNumber {
 
 export function toWei(value: BigNumber, decimals: number): BigNumber {
   return value.shiftedBy(decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
+}
+
+export function tokenAmountToWei(tokenAmount: TokenAmount): BigNumber {
+  return toWei(tokenAmount.amount, tokenAmount.token.decimals);
 }
 
 export function toWeiString(value: BigNumber, decimals: number): string {

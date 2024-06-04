@@ -23,9 +23,11 @@ import { transactFetchQuotesIfNeeded } from '../../../../../data/actions/transac
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { TokenAmountIcon, TokenAmountIconLoader } from '../TokenAmountIcon/TokenAmountIcon';
 import {
-  isCowcentratedDepositQuote,
-  isZapQuote,
   type CowcentratedVaultDepositQuote,
+  type CowcentratedZapDepositQuote,
+  isCowcentratedDepositQuote,
+  isCowcentratedVaultWithdrawQuote,
+  isZapQuote,
 } from '../../../../../data/apis/transact/transact-types';
 import { ZapRoute } from '../ZapRoute';
 import { QuoteTitleRefresh } from '../QuoteTitleRefresh';
@@ -173,6 +175,7 @@ const QuoteLoaded = memo(function QuoteLoaded() {
   const classes = useStyles();
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isZap = isZapQuote(quote);
+  const needsSlippage = isZap || isCowcentratedVaultWithdrawQuote(quote);
 
   return (
     <>
@@ -207,12 +210,8 @@ const QuoteLoaded = memo(function QuoteLoaded() {
           </div>
         </div>
       ) : null}*/}
-      {isZap ? (
-        <>
-          <ZapRoute quote={quote} className={classes.route} />
-          <ZapSlippage className={classes.slippage} />
-        </>
-      ) : null}
+      {isZap ? <ZapRoute quote={quote} className={classes.route} /> : null}
+      {needsSlippage ? <ZapSlippage className={classes.slippage} /> : null}
     </>
   );
 });
@@ -220,25 +219,24 @@ const QuoteLoaded = memo(function QuoteLoaded() {
 export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
   quote,
 }: {
-  quote: CowcentratedVaultDepositQuote;
+  quote: CowcentratedVaultDepositQuote | CowcentratedZapDepositQuote;
 }) {
   const { t } = useTranslation();
   const shares = quote.outputs[0];
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
   const classes = useStyles();
 
   return (
     <div className={classes.cowcentratedDepositContainer}>
       <div className={classes.amountReturned}>
-        {quote.amountsUsed.map(tokenReturned => {
+        {quote.used.map(used => {
           return (
             <TokenAmountIcon
-              key={tokenReturned.token.id}
-              amount={tokenReturned.amount}
-              chainId={tokenReturned.token.chainId}
-              tokenAddress={tokenReturned.token.address}
+              key={used.token.id}
+              amount={used.amount}
+              chainId={used.token.chainId}
+              tokenAddress={used.token.address}
               showSymbol={false}
               className={classes.fullWidth}
               tokenImageSize={28}
@@ -257,13 +255,13 @@ export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
           className={classes.mainLp}
         />
         <div className={classes.amountReturned}>
-          {quote.amountsReturned.map((tokenReturned, i) => {
+          {quote.position.map((position, i) => {
             return (
               <TokenAmountIcon
-                key={tokenReturned.token.id}
-                amount={tokenReturned.amount}
-                chainId={tokenReturned.token.chainId}
-                tokenAddress={tokenReturned.token.address}
+                key={position.token.id}
+                amount={position.amount}
+                chainId={position.token.chainId}
+                tokenAddress={position.token.address}
                 className={clsx(classes.fullWidth, classes[`borderRadiusToken${i}`])}
                 showSymbol={false}
                 tokenImageSize={28}
