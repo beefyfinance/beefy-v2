@@ -112,6 +112,14 @@ export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverview
             dot={false}
             type="linear"
           />
+          <Line
+            yAxisId="usd"
+            strokeWidth={1.5}
+            dataKey="vHold"
+            stroke="#999CB3"
+            dot={false}
+            type="linear"
+          />
           <YAxis
             stroke="#363B63"
             strokeWidth={1.5}

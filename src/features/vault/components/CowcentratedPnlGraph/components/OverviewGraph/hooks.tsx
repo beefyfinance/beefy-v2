@@ -6,9 +6,14 @@ import {
   selectUserFirstDepositDateByVaultId,
   selectUnderlyingToUsdTimebucketByVaultId,
   selectUserDepositedTimelineByVaultId,
+  selectClmPnl,
+  selectUserClmHarvestTimelineByVaultId,
 } from '../../../../../data/selectors/analytics';
 import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../../../data/selectors/balance';
-import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
+import {
+  selectCowcentratedVaultDepositTokensWithPrices,
+  selectTokenPriceByAddress,
+} from '../../../../../data/selectors/tokens';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet';
 import { fetchClmUnderlyingToUsd } from '../../../../../data/actions/analytics';
@@ -47,6 +52,17 @@ export const usePnLChartData = (
     selectUnderlyingToUsdTimebucketByVaultId(state, vaultId, timebucket, walletAddress)
   );
 
+  const { token0SharesAtDeposit, token1SharesAtDeposit } = useAppSelector(state =>
+    selectClmPnl(state, vaultId, address)
+  );
+
+  const { token0, token1 } = useAppSelector(state =>
+    selectCowcentratedVaultDepositTokensWithPrices(state, vaultId)
+  );
+  const userHarvestTimeline = useAppSelector(state =>
+    selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress)
+  );
+
   useEffect(() => {
     if (walletAddress) {
       if (underlyingStatus === 'idle') {
@@ -77,8 +93,8 @@ export const usePnLChartData = (
   }, [dispatch, timebucket, underlyingStatus, vaultId, walletAddress]);
 
   const isLoading = useMemo(() => {
-    return underlyingStatus !== 'fulfilled';
-  }, [underlyingStatus]);
+    return underlyingStatus !== 'fulfilled' || !userHarvestTimeline;
+  }, [underlyingStatus, userHarvestTimeline]);
 
   const chartData = useMemo(() => {
     if (
@@ -86,7 +102,9 @@ export const usePnLChartData = (
       vaultTimeline &&
       vaultTimeline.length &&
       underlyingToUsd &&
-      vaultLastDeposit
+      vaultLastDeposit &&
+      userHarvestTimeline &&
+      userHarvestTimeline.harvests.length > 0
     ) {
       const filteredUnderlyingToUsd = underlyingToUsd.filter(price =>
         isAfter(price.date, vaultLastDeposit)
@@ -95,16 +113,27 @@ export const usePnLChartData = (
       const data = getClmInvestorTimeserie(
         timebucket,
         vaultTimeline as CLMTimelineAnalyticsEntity[],
+        userHarvestTimeline.harvests,
         filteredUnderlyingToUsd,
         vaultLastDeposit,
         currentOraclePrice,
-        currentMooTokenBalance
+        currentMooTokenBalance,
+        token0SharesAtDeposit,
+        token1SharesAtDeposit,
+        token0.price,
+        token1.price
       );
 
-      const minUsd = minBy(data, 'v')?.v || 0;
-      const maxUsd = maxBy(data, 'v')?.v || 0;
-
       if (data && data.length > 0) {
+        const minV0Usd = minBy(data, 'v')?.v || 0;
+        const minV1Usd = minBy(data, 'v')?.v || 0;
+
+        const maxV0Usd = maxBy(data, 'vHold')?.vHold || 0;
+        const maxV1Usd = maxBy(data, 'vHold')?.vHold || 0;
+
+        const minUsd = minV0Usd < minV1Usd ? minV0Usd : minV1Usd;
+        const maxUsd = maxV0Usd > maxV1Usd ? maxV0Usd : maxV1Usd;
+
         return { data, minUsd, maxUsd };
       }
     }
@@ -116,6 +145,10 @@ export const usePnLChartData = (
     currentMooTokenBalance,
     currentOraclePrice,
     timebucket,
+    token0.price,
+    token0SharesAtDeposit,
+    token1.price,
+    token1SharesAtDeposit,
     underlyingStatus,
     underlyingToUsd,
     vaultLastDeposit,

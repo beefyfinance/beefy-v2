@@ -35,6 +35,12 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.cta,
     borderRadius: '4px',
   },
+  holdReferenceLine: {
+    height: '2px',
+    width: '12px',
+    backgroundColor: theme.palette.text.dark,
+    borderRadius: '4px',
+  },
   tabsContainer: {
     '& .MuiTabs-root': {
       minHeight: '24px',
