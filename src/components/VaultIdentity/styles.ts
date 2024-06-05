@@ -74,7 +74,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#70d44b',
   },
   'vaultNetwork-moonbeam': {
-    backgroundColor: '#211438',
+    backgroundColor: '#000',
   },
   'vaultNetwork-emerald': {
     backgroundColor: '#0192f6',
