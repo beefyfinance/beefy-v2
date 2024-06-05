@@ -242,19 +242,25 @@ export const transactFetchQuotes = createAsyncThunk<
     throw new Error(`No tokens for selectionId ${selectionId}`);
   }
 
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const shareToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
+  let inputToken: TokenEntity;
+  if (mode == TransactMode.Deposit) {
+    // For deposit, user enters number of the selected token to deposit
+    inputToken = selection.tokens[0];
+  } else {
+    if (isCowcentratedVault(vault)) {
+      // For CLM vaults, user enters number of shares to withdraw
+      inputToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
+    } else {
+      // For standard/gov vaults, user enters number of deposit token to withdraw
+      inputToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    }
+  }
 
   // TODO handle differently for univ3 with multiple deposit tokens
   const inputAmounts: InputTokenAmount[] = [
     {
       amount: inputAmount,
-      token:
-        mode === TransactMode.Withdraw
-          ? isCowcentratedVault(vault)
-            ? shareToken
-            : depositToken
-          : selection.tokens[0], // wouldn't it be the share token?
+      token: inputToken,
       max: inputMax,
     },
   ];
