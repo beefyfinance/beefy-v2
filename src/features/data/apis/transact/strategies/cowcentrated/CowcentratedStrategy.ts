@@ -853,7 +853,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
           ],
           outputs: [],
         },
-        [amountA.toString(10), amountB.toString(10), liquidity.toString()]
+        [amountA.toString(10), amountB.toString(10), liquidity.toString(10)]
       ),
       tokens: [
         {
