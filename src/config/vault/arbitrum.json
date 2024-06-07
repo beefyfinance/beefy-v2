@@ -25,7 +25,12 @@
     ],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/USDC/ETH",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "stargate-v2-arb-usdc",
@@ -53,7 +58,12 @@
     ],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/USDC",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "stargate-v2-arb-usdt",
@@ -81,7 +91,12 @@
     ],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://app.1inch.io/#/42161/unified/swap/ETH/USDT",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "curve-arb-eusd-usdc",
