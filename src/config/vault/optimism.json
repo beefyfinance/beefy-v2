@@ -1,5 +1,107 @@
 [
   {
+    "id": "stargate-v2-op-weth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0x4200000000000000000000000000000000000006",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stargate",
+    "earnedToken": "mooStargateV2WETH",
+    "earnedTokenAddress": "0xCF9381a9a363f8614f67323f7E0A1E257A438F73",
+    "earnContractAddress": "0xCF9381a9a363f8614f67323f7E0A1E257A438F73",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1717850348,
+    "platformId": "stargate",
+    "assets": ["WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/USDC/WETH",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "stargate-v2-op-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+    "tokenDecimals": 6,
+    "tokenProviderId": "stargate",
+    "earnedToken": "mooStargateV2USDC",
+    "earnedTokenAddress": "0x7Be8a466dA0eAef2101fDEa6DFc8d0E935A6eaE2",
+    "earnContractAddress": "0x7Be8a466dA0eAef2101fDEa6DFc8d0E935A6eaE2",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1717850348,
+    "platformId": "stargate",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/USDC",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "stargate-v2-op-usdt",
+    "name": "USDT",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+    "tokenDecimals": 6,
+    "tokenProviderId": "stargate",
+    "earnedToken": "mooStargateV2USDT",
+    "earnedTokenAddress": "0xFD1aa2CfC63AD0C8Fb7993041569fe58bbA11D65",
+    "earnContractAddress": "0xFD1aa2CfC63AD0C8Fb7993041569fe58bbA11D65",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1717850348,
+    "platformId": "stargate",
+    "assets": ["USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://app.1inch.io/#/10/unified/swap/ETH/USDT",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "velodrome-v2-op-kite",
     "name": "KITE-OP vLP V2",
     "type": "standard",
