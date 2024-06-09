@@ -5,7 +5,7 @@
     "type": "standard",
     "token": "USDT",
     "tokenAddress": "0x55d398326f99059fF775485246999027B3197955",
-    "tokenDecimals": 6,
+    "tokenDecimals": 18,
     "tokenProviderId": "stargate",
     "earnedToken": "mooStargateV2USDT",
     "earnedTokenAddress": "0x429A51C573027A974f99d2874CcAa39c2Af697A7",
