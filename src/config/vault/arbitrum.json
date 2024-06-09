@@ -2435,38 +2435,6 @@
     "network": "arbitrum"
   },
   {
-    "id": "uniswap-gamma-gdai-dai",
-    "name": "gDAI-DAI LP",
-    "type": "standard",
-    "token": "gDAI-DAI LP",
-    "tokenAddress": "0x33985Ca762541e2412F454c6F2e7EC677645D1dF",
-    "tokenDecimals": 18,
-    "tokenProviderId": "uniswap",
-    "earnedToken": "mooUniswapGammagDAI-DAI",
-    "earnedTokenAddress": "0x70b90B5607608e38aF0dB192b92Ea6aA430F2e90",
-    "earnContractAddress": "0x70b90B5607608e38aF0dB192b92Ea6aA430F2e90",
-    "oracle": "lps",
-    "oracleId": "uniswap-gamma-gdai-dai",
-    "status": "eol",
-    "createdAt": 1703942842,
-    "retireReason": "rewards",
-    "retiredAt": 1708113204,
-    "platformId": "gamma",
-    "assets": ["gDAI", "DAI"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gdai-dai-100-pegged-price",
-    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gdai-dai-100-pegged-price",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "arbitrum-gamma-uniswap-v3",
-        "tokenHolder": "0x8A8fDe5D57725f070bFc55cd022B924e1c36C8a0"
-      }
-    ]
-  },
-  {
     "id": "uniswap-gamma-gns-usdc-narrow",
     "name": "GNS-USDC Narrow LP",
     "type": "standard",
@@ -2489,38 +2457,6 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-usdc-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-usdc-500-narrow",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "arbitrum-gamma-uniswap-v3",
-        "tokenHolder": "0x8A8fDe5D57725f070bFc55cd022B924e1c36C8a0"
-      }
-    ]
-  },
-  {
-    "id": "uniswap-gamma-gns-weth-wide",
-    "name": "GNS-ETH Wide LP",
-    "type": "standard",
-    "token": "GNS-ETH Wide LP",
-    "tokenAddress": "0xDA002fb3601675BC6c2Ef9024Db27977cb194FC0",
-    "tokenDecimals": 18,
-    "tokenProviderId": "uniswap",
-    "earnedToken": "mooUniswapGammaGNS-ETHWide",
-    "earnedTokenAddress": "0xb58b387581BC44c00Cd90c1B998E6eE262419978",
-    "earnContractAddress": "0xb58b387581BC44c00Cd90c1B998E6eE262419978",
-    "oracle": "lps",
-    "oracleId": "uniswap-gamma-gns-weth-wide",
-    "status": "eol",
-    "createdAt": 1703942842,
-    "retireReason": "rewards",
-    "retiredAt": 1708113204,
-    "platformId": "gamma",
-    "assets": ["GNS", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-weth-3000-wide",
-    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/arbitrum/details/gns-weth-3000-wide",
     "network": "arbitrum",
     "zaps": [
       {
