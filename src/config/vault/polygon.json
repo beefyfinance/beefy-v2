@@ -1,5 +1,73 @@
 [
   {
+    "id": "stargate-v2-polygon-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+    "tokenDecimals": 6,
+    "tokenProviderId": "stargate",
+    "earnedToken": "mooStargateV2USDC",
+    "earnedTokenAddress": "0x8532cB33dD93e019913bC7b11324Aa19AAcF935D",
+    "earnContractAddress": "0x8532cB33dD93e019913bC7b11324Aa19AAcF935D",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1717933039,
+    "platformId": "stargate",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://app.1inch.io/#/137/advanced/swap/MATIC/USDC",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "stargate-v2-polygon-usdt",
+    "name": "USDT",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+    "tokenDecimals": 6,
+    "tokenProviderId": "stargate",
+    "earnedToken": "mooStargateV2USDT",
+    "earnedTokenAddress": "0xE97319aBA72938379c94fAe2C1fFfC40973c4A01",
+    "earnContractAddress": "0xE97319aBA72938379c94fAe2C1fFfC40973c4A01",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1717933039,
+    "platformId": "stargate",
+    "assets": ["USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://app.1inch.io/#/137/advanced/swap/MATIC/USDT",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "uniswap-gamma-polygon-matic-usdc",
     "name": "MATIC-USDC LP",
     "type": "standard",
