@@ -37,7 +37,7 @@
     "status": "active",
     "createdAt": 1695916394,
     "platformId": "kinetix",
-    "assets": ["WKAVA", "axlETH", "USDT", "ATOM", "axlWBTC"],
+    "assets": ["WKAVA", "axlETH", "USDT", "ATOM", "axlWBTC", "lzETH", "lzWBTC"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "klp",
     "addLiquidityUrl": "https://perps.kinetix.finance/#/liquidity",
