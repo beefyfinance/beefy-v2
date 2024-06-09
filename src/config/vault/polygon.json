@@ -1,5 +1,50 @@
 [
   {
+    "id": "curve-poly-mai-usdc.e",
+    "name": "MAI/USDC.e",
+    "token": "MAIUSDC.e-f",
+    "tokenAddress": "0x53C38755748745e2dd7D0a136FBCC9fB1A5B83b2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveMAI-USDC.e",
+    "earnedTokenAddress": "0x60bA66ed86B7455874CE49a72AcEc143292cdEC8",
+    "earnContractAddress": "0x60bA66ed86B7455874CE49a72AcEc143292cdEC8",
+    "oracle": "lps",
+    "oracleId": "curve-poly-mai-usdc.e",
+    "status": "active",
+    "createdAt": 1717963663,
+    "platformId": "curve",
+    "assets": ["MAI", "pUSDCe"],
+    "migrationIds": ["l2-curve"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-498/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-498/withdraw",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x53C38755748745e2dd7D0a136FBCC9fB1A5B83b2",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x53C38755748745e2dd7D0a136FBCC9fB1A5B83b2",
+            "coins": [
+              "0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
+              "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "stargate-v2-polygon-usdc",
     "name": "USDC",
     "type": "standard",
