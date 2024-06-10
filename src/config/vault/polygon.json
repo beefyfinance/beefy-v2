@@ -34,7 +34,7 @@
         "poolAddress": "0x53C38755748745e2dd7D0a136FBCC9fB1A5B83b2",
         "methods": [
           {
-            "type": "dynamic-deposit",
+            "type": "fixed-deposit-int128",
             "target": "0x53C38755748745e2dd7D0a136FBCC9fB1A5B83b2",
             "coins": [
               "0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
