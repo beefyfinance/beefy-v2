@@ -27,6 +27,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-498/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-498/withdraw",
+    "network": "polygon",
     "zaps": [
       {
         "strategyId": "curve",
