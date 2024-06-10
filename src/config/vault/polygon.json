@@ -12,7 +12,7 @@
     "oracle": "lps",
     "oracleId": "curve-poly-mai-usdc.e",
     "status": "active",
-    "createdAt": 1717963663,
+    "createdAt": 1718038164,
     "platformId": "curve",
     "assets": ["MAI", "pUSDCe"],
     "migrationIds": ["l2-curve"],
