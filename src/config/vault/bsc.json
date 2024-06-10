@@ -1,5 +1,38 @@
 [
   {
+    "id": "stargate-v2-bsc-usdt",
+    "name": "USDT",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0x55d398326f99059fF775485246999027B3197955",
+    "tokenDecimals": 18,
+    "earnedToken": "mooStargateV2USDT",
+    "earnedTokenAddress": "0x429A51C573027A974f99d2874CcAa39c2Af697A7",
+    "earnContractAddress": "0x429A51C573027A974f99d2874CcAa39c2Af697A7",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1717943466,
+    "platformId": "stargate",
+    "assets": ["USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x55d398326f99059fF775485246999027B3197955",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "thena-gamma-weeth-eth-narrow",
     "name": "weETH-ETH LP Narrow",
     "type": "standard",
@@ -12961,7 +12994,6 @@
     "token": "USDT",
     "tokenAddress": "0x55d398326f99059fF775485246999027B3197955",
     "tokenDecimals": 18,
-    "tokenProviderId": "venus",
     "earnedToken": "mooAutoUSDTv2",
     "earnedTokenAddress": "0xb0C71ae9a71bbf03BE6F33A29a71C485472f5a1F",
     "earnContractAddress": "0xb0C71ae9a71bbf03BE6F33A29a71C485472f5a1F",
@@ -14935,7 +14967,6 @@
     "token": "USDT",
     "tokenAddress": "0x55d398326f99059fF775485246999027B3197955",
     "tokenDecimals": 18,
-    "tokenProviderId": "venus",
     "earnedToken": "mooAutoUsdt",
     "earnedTokenAddress": "0x58327471A57EE89Aa4b91753fF9E09f7291236C7",
     "earnContractAddress": "0x58327471A57EE89Aa4b91753fF9E09f7291236C7",

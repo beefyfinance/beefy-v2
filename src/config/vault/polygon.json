@@ -1,5 +1,117 @@
 [
   {
+    "id": "curve-poly-mai-usdc.e",
+    "name": "MAI/USDC.e",
+    "token": "MAIUSDC.e-f",
+    "tokenAddress": "0x53C38755748745e2dd7D0a136FBCC9fB1A5B83b2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveMAI-USDC.e",
+    "earnedTokenAddress": "0x378FcE425239B0c6B43eF79E773794dd2e9979AD",
+    "earnContractAddress": "0x378FcE425239B0c6B43eF79E773794dd2e9979AD",
+    "oracle": "lps",
+    "oracleId": "curve-poly-mai-usdc.e",
+    "status": "active",
+    "createdAt": 1718038164,
+    "platformId": "curve",
+    "assets": ["MAI", "pUSDCe"],
+    "migrationIds": ["l2-curve"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-498/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-498/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x53C38755748745e2dd7D0a136FBCC9fB1A5B83b2",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x53C38755748745e2dd7D0a136FBCC9fB1A5B83b2",
+            "coins": [
+              "0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
+              "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "stargate-v2-polygon-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+    "tokenDecimals": 6,
+    "earnedToken": "mooStargateV2USDC",
+    "earnedTokenAddress": "0x8532cB33dD93e019913bC7b11324Aa19AAcF935D",
+    "earnContractAddress": "0x8532cB33dD93e019913bC7b11324Aa19AAcF935D",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1717933039,
+    "platformId": "stargate",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://app.1inch.io/#/137/advanced/swap/MATIC/USDC",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "stargate-v2-polygon-usdt",
+    "name": "USDT",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+    "tokenDecimals": 6,
+    "earnedToken": "mooStargateV2USDT",
+    "earnedTokenAddress": "0xE97319aBA72938379c94fAe2C1fFfC40973c4A01",
+    "earnContractAddress": "0xE97319aBA72938379c94fAe2C1fFfC40973c4A01",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1717933039,
+    "platformId": "stargate",
+    "assets": ["USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://app.1inch.io/#/137/advanced/swap/MATIC/USDT",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "uniswap-gamma-polygon-matic-usdc",
     "name": "MATIC-USDC LP",
     "type": "standard",
@@ -2543,39 +2655,6 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x7d60a4cb5ca92e2da965637025122296ea6854f900000000000000000000085e/invest",
     "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x7d60a4cb5ca92e2da965637025122296ea6854f900000000000000000000085e/withdraw",
-    "network": "polygon"
-  },
-  {
-    "id": "balancer-jeur-ageur",
-    "name": "jEUR-EURA",
-    "type": "standard",
-    "token": "jEUR-EURA",
-    "tokenAddress": "0xa48D164F6eB0EDC68bd03B56fa59E12F24499aD1",
-    "tokenDecimals": 18,
-    "tokenProviderId": "balancer",
-    "earnedToken": "mooBalancerjEUR-agEUR",
-    "earnedTokenAddress": "0xAcB4F57973A9B3274fb9ff5CE7c582Ab35ef8fc8",
-    "earnContractAddress": "0xAcB4F57973A9B3274fb9ff5CE7c582Ab35ef8fc8",
-    "oracle": "lps",
-    "oracleId": "balancer-jeur-ageur",
-    "status": "eol",
-    "createdAt": 1675704048,
-    "retireReason": "rewards",
-    "retiredAt": 1679770018,
-    "platformId": "balancer",
-    "assets": ["jEUR", "EURA"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0xa48d164f6eb0edc68bd03b56fa59e12f24499ad10000000000000000000007c4/invest",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0xa48d164f6eb0edc68bd03b56fa59e12f24499ad10000000000000000000007c4/withdraw",
     "network": "polygon"
   },
   {

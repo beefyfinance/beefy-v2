@@ -198,7 +198,6 @@ export class ClmPnl {
     }
 
     let remainingSharesToSell = transaction.shares.negated();
-
     let trxPnl = BIG_ZERO;
     let trxPnlUsd = BIG_ZERO;
     let idx = 0;

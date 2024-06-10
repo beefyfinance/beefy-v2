@@ -743,6 +743,7 @@ export const config = {
       'USDA',
       'EURA',
       'rgUSD',
+      'USDz',
     ],
   },
   gnosis: {

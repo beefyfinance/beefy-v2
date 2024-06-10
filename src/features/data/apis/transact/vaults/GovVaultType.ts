@@ -1,4 +1,4 @@
-import { isGovVault, type VaultEntity, type VaultGov } from '../../../entities/vault';
+import { isGovVault, type VaultGov } from '../../../entities/vault';
 import type { BeefyState, GetStateFn } from '../../../../../redux-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import type {
@@ -42,7 +42,7 @@ export class GovVaultType implements IGovVaultType {
   public readonly depositToken: TokenEntity;
   protected readonly getState: GetStateFn;
 
-  constructor(vault: VaultEntity, getState: GetStateFn) {
+  constructor(vault: VaultGov, getState: GetStateFn) {
     if (!isGovVault(vault)) {
       throw new Error('Vault is not a gov vault');
     }
