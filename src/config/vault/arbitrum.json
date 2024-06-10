@@ -1,5 +1,44 @@
 [
   {
+    "id": "curve-arb-knox-eusd",
+    "name": "KNOX/eUSD",
+    "token": "KNOXeUSD",
+    "tokenAddress": "0x6f33daF91d2aCAe10F5CD7BbE3f31716Ed123F1D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveKNOX-eUSD",
+    "earnedTokenAddress": "0xB59827f13466C8D4Dd76417011E9a2e8e3dfCFdC",
+    "earnContractAddress": "0xB59827f13466C8D4Dd76417011E9a2e8e3dfCFdC",
+    "oracle": "lps",
+    "oracleId": "curve-arb-knox-eusd",
+    "status": "active",
+    "createdAt": 1718018159,
+    "platformId": "curve",
+    "assets": ["KNOX", "eUSD"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-63/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-63/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x6f33daF91d2aCAe10F5CD7BbE3f31716Ed123F1D",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x6f33daF91d2aCAe10F5CD7BbE3f31716Ed123F1D",
+            "coins": [
+              "0x0BBF664D46becc28593368c97236FAa0fb397595",
+              "0x12275DCB9048680c4Be40942eA4D92c74C63b844"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "equilibria-arb-rseth-26sep24-new",
     "name": "rsETH 26Sep24",
     "token": "rsETH-26Sep24",
