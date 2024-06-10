@@ -1,5 +1,33 @@
 [
   {
+    "id": "aerodrome-hbr-usdc",
+    "name": "HBR-USDC vLP",
+    "token": "vAMM-HBR/USDC",
+    "tokenAddress": "0x68cfB52C74827f91E1F664fFeD634F849AEce455",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroHBR-USDC",
+    "earnedTokenAddress": "0xADa309b35f2a96f5B729BC8efA0E69ED449370B5",
+    "earnContractAddress": "0xADa309b35f2a96f5B729BC8efA0E69ED449370B5",
+    "oracle": "lps",
+    "oracleId": "aerodrome-hbr-usdc",
+    "status": "active",
+    "createdAt": 1718036268,
+    "platformId": "aerodrome",
+    "assets": ["HBR", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x416bd43Bc76D496ff49923c20eCaf86b52Ab078d&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-usdz-usdc",
     "name": "USDz-USDC sLP",
     "token": "sAMM-USDz/USDC",
