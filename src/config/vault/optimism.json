@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "aura-op-weth-wrseth",
     "status": "active",
-    "createdAt": 1717516992,
+    "createdAt": 1718038165,
     "platformId": "aura",
     "assets": ["wrsETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
