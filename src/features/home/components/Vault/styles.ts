@@ -19,11 +19,11 @@ export const styles = (theme: Theme) => ({
   vaultEarnings: {
     backgroundColor: theme.palette.background.vaults.gov,
   },
-  vaultRetired: {
-    backgroundColor: theme.palette.background.vaults.inactive,
-  },
   vaultCowcentrated: {
     backgroundColor: theme.palette.background.vaults.clm,
+  },
+  vaultRetired: {
+    backgroundColor: theme.palette.background.vaults.inactive,
   },
   vaultInner: {
     display: 'grid',

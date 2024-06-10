@@ -3,7 +3,7 @@ import React, { memo, useCallback } from 'react';
 import type { Theme } from '@material-ui/core';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
-import { Tooltip, type TooltipProps, TRIGGERS } from '../Tooltip';
+import { Tooltip, type TooltipProps } from '../Tooltip';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
@@ -38,7 +38,9 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
   const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
   const handleTooltipClick = useCallback<Exclude<TooltipProps['onTriggerClick'], undefined>>(e => {
     // don't bubble up to the link on whole row
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
   }, []);
 
   return (
@@ -54,7 +56,6 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
             triggerClass={triggerClassName}
             content={tooltip}
             onTriggerClick={handleTooltipClick}
-            triggers={TRIGGERS.HOVER}
           >
             {children}
             {subValue && (
