@@ -1,5 +1,67 @@
 [
   {
+    "id": "uniswap-cow-arb-wsteth-weth",
+    "name": "wstETH-ETH",
+    "token": "wstETH-ETH",
+    "tokenAddress": "0x35218a1cbaC5Bbc3E57fd9Bd38219D37571b3537",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x5979D7b546E38E414F7E9822514be443A4800529",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapArbwstETH-ETH",
+    "earnedTokenAddress": "0x63b54B0e06028802007c5f1eaeaC03d5472B904a",
+    "earnContractAddress": "0x63b54B0e06028802007c5f1eaeaC03d5472B904a",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-wsteth-weth",
+    "status": "active",
+    "createdAt": 1718042016,
+    "platformId": "beefy",
+    "assets": ["wstETH", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "type": "cowcentrated",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-eth-usdc-prod",
+    "name": "WETH-USDC",
+    "token": "WETH-USDC",
+    "tokenAddress": "0xC6962004f452bE9203591991D15f6b388e09E8D0",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapArbETH-USDC",
+    "earnedTokenAddress": "0x56637eF065dc19ED71B7bD8b60DBDa9A1ba12a7e",
+    "earnContractAddress": "0x56637eF065dc19ED71B7bD8b60DBDa9A1ba12a7e",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-eth-usdc-prod",
+    "status": "active",
+    "createdAt": 1718042016,
+    "platformId": "beefy",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "curve-arb-knox-eusd",
     "name": "KNOX/eUSD",
     "token": "KNOXeUSD",
@@ -596,7 +658,7 @@
   },
   {
     "id": "uniswap-cow-arb-silo-weth",
-    "name": "SILO-ETH",
+    "name": "SILO-ETH Beta",
     "token": "SILO-ETH",
     "tokenAddress": "0xd3E11119d2680c963F1CDCffeCe0c4adE823Fb58",
     "tokenDecimals": 18,
@@ -736,7 +798,7 @@
   },
   {
     "id": "uniswap-cow-arb-tbtc-weth",
-    "name": "tBTC-ETH",
+    "name": "tBTC-ETH Beta",
     "token": "tBTC-ETH",
     "tokenAddress": "0xCb198a55e2a88841E855bE4EAcaad99422416b33",
     "tokenDecimals": 18,
@@ -767,7 +829,7 @@
   },
   {
     "id": "uniswap-cow-arb-wsteth-usdc.e",
-    "name": "wstETH-USDC.e",
+    "name": "wstETH-USDC.e Beta",
     "token": "wstETH-USDC.e",
     "tokenAddress": "0xC7341e85996EeB05897d3DeC79448b6e4cCc09CF",
     "tokenDecimals": 18,
@@ -798,7 +860,7 @@
   },
   {
     "id": "uniswap-cow-arb-eth-usdc.e",
-    "name": "ETH-USDC.e",
+    "name": "ETH-USDC.e Beta",
     "token": "ETH-USDC.e",
     "tokenAddress": "0xC31E54c7a869B9FcBEcc14363CF510d1c41fa443",
     "tokenDecimals": 18,
@@ -1025,7 +1087,7 @@
   },
   {
     "id": "uniswap-cow-arb-eth-usdt",
-    "name": "WETH-USDT",
+    "name": "WETH-USDT Beta",
     "token": "WETH-USDT",
     "tokenAddress": "0x641C00A822e8b671738d32a431a4Fb6074E5c79d",
     "tokenDecimals": 18,
@@ -1056,7 +1118,7 @@
   },
   {
     "id": "uniswap-cow-arb-magic-weth",
-    "name": "MAGIC-WETH",
+    "name": "MAGIC-WETH Beta",
     "token": "MAGIC-WETH",
     "tokenAddress": "0x59D72DDB29Da32847A4665d08ffc8464A7185FAE",
     "tokenDecimals": 18,
@@ -1087,7 +1149,7 @@
   },
   {
     "id": "uniswap-cow-arb-arb-usdc.e",
-    "name": "ARB-USDC.e",
+    "name": "ARB-USDC.e Beta",
     "token": "ARB-USDC.e",
     "tokenAddress": "0xcDa53B1F66614552F834cEeF361A8D12a0B8DaD8",
     "tokenDecimals": 18,
@@ -1164,7 +1226,7 @@
   },
   {
     "id": "uniswap-cow-arb-wbtc-eth",
-    "name": "WBTC-WETH",
+    "name": "WBTC-WETH Beta",
     "token": "WBTC-WETH",
     "tokenAddress": "0x2f5e87C9312fa29aed5c179E456625D79015299c",
     "tokenDecimals": 18,
@@ -1195,7 +1257,7 @@
   },
   {
     "id": "uniswap-cow-arb-eth-usdc",
-    "name": "WETH-USDC",
+    "name": "WETH-USDC Beta",
     "token": "WETH-USDC",
     "tokenAddress": "0xC6962004f452bE9203591991D15f6b388e09E8D0",
     "tokenDecimals": 18,
@@ -1226,7 +1288,7 @@
   },
   {
     "id": "uniswap-cow-arb-pendle-eth",
-    "name": "PENDLE-WETH",
+    "name": "PENDLE-WETH Beta",
     "token": "PENDLE-WETH",
     "tokenAddress": "0xdbaeB7f0DFe3a0AAFD798CCECB5b22E708f7852c",
     "tokenDecimals": 18,
@@ -1257,7 +1319,7 @@
   },
   {
     "id": "uniswap-cow-arb-arb-eth-t3",
-    "name": "ARB-WETH",
+    "name": "ARB-WETH Beta",
     "token": "ARB-WETH",
     "tokenAddress": "0xC6F780497A95e246EB9449f5e4770916DCd6396A",
     "tokenDecimals": 18,
