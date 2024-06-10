@@ -11,5 +11,5 @@ export const CATEGORY_OPTIONS: Record<FilteredVaultsState['vaultCategory'], Vaul
   stable: { i18nKey: 'Filter-CategoryStable' },
   bluechip: { i18nKey: 'Filter-CategoryBlue' },
   correlated: { i18nKey: 'Filter-CategoryCorrelated' },
-  clm: { i18nKey: 'Filter-CategoryCLM', highlight: 'beta' },
+  clm: { i18nKey: 'Filter-CategoryCLM' },
 };
