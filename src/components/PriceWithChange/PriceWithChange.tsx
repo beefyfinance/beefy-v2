@@ -94,8 +94,10 @@ const WithChange = memo<WithChangeProps>(function WithChange({
     date: format(previousDate, 'MMM d, yyyy h:mm a'),
   });
   const handleTooltipClick = useCallback<Exclude<TooltipProps['onTriggerClick'], undefined>>(e => {
-    // don't bubble up
-    e.preventDefault();
+    if (e) {
+      // don't bubble up
+      e.preventDefault();
+    }
   }, []);
 
   return (

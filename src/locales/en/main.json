@@ -195,6 +195,7 @@
   "Vault-RetireReason-bifiV2-gov": "This pool has been retired. The BIFI token has migrated to a new version. <info>Read More</info>.",
   "Vault-RetireReason-bevelo": "This vault has been retired. You can migrate your beVELO tokens to the new <pool>pool</pool> to start earning VELOv2.",
   "Vault-RetireReason-scream": "This vault has been retired. As part of the <plan>compensation plan</plan> by Scream, users of this vault were <tx>sent bDEI</tx> in proportion to their deposit amounts.",
+  "Vault-RetireReason-beta": "This vault has been retired. This vault was part of CLM Beta, please withdraw your funds and migrate to the new CLM vaults.",
   "Vault-PauseReason-upgrade": "This vault is paused pending a strategy upgrade. New deposits are temporarily unavailable.",
   "Vault-PauseReason-rewards": "This vault is paused as the underlying platform has temporarily stopped rewards. New deposits are temporarily unavailable.",
   "Vault-PauseReason-viability": "This vault is paused while it's future viability is being investigated. New deposits are temporarily unavailable.",

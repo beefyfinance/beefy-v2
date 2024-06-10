@@ -29,9 +29,9 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
       to={`/vault/${vaultId}`}
       className={clsx({
         [classes.vault]: true,
+        [classes.vaultCowcentrated]: isCowcentrated,
         [classes.vaultRetired]: isRetired,
         [classes.vaultEarnings]: isGov,
-        [classes.vaultCowcentrated]: isCowcentrated,
       })}
     >
       <div className={classes.vaultInner}>
