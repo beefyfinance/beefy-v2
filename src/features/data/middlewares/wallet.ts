@@ -1,5 +1,4 @@
 import type { BeefyState } from '../../../redux-types';
-import { fetchWalletTimeline } from '../actions/analytics';
 import { createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit';
 import {
   accountHasChanged,
@@ -45,7 +44,6 @@ walletListener.startListening({
         for (const chainId of chains) {
           dispatch(fetchAllBalanceAction({ chainId, walletAddress }));
         }
-        dispatch(fetchWalletTimeline({ walletAddress }));
         dispatch(fetchAllRewardsAction({ walletAddress }));
       }
     }
