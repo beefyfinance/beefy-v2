@@ -67,6 +67,8 @@ export const config = {
       'PYUSD',
       'USDM',
       'ULTRA',
+      'USDe',
+      'sUSDe',
     ],
   },
   polygon: {
@@ -852,7 +854,19 @@ export const config = {
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
-    stableCoins: ['crvUSD', 'FRAX', 'frxUSDC', 'USDC', 'PYUSD', 'DAI', 'USDT'],
+    stableCoins: [
+      'crvUSD',
+      'FRAX',
+      'frxUSDC',
+      'USDC',
+      'PYUSD',
+      'DAI',
+      'USDT',
+      'sDAI',
+      'USDe',
+      'sUSDe',
+      'FXB_20261231',
+    ],
   },
   mode: {
     new: true,
