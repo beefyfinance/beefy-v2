@@ -5,7 +5,7 @@ import { Footer } from './components/Footer';
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import { ScrollToTop } from './components/ScrollToTop';
 import { theme } from './theme';
-import { initHomeDataV4 } from './features/data/actions/scenarios';
+import { initAppData } from './features/data/actions/scenarios';
 import { store } from './store';
 import { FullscreenTechLoader, TechLoader } from './components/TechLoader';
 import { Router } from './components/Router';
@@ -26,7 +26,7 @@ const PageNotFound = lazy(() => import(`./features/pagenotfound`));
 
 export const App = () => {
   useEffect(() => {
-    initHomeDataV4(store);
+    initAppData(store);
   }, []);
 
   return (

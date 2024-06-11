@@ -25,15 +25,15 @@ export const selectShouldInitFees = (state: BeefyState) =>
 
 export const selectFeesByVaultId = createCachedSelector(
   selectVaultDepositFee,
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectIsVaultGov(state, vaultId),
+  selectIsVaultGov,
   (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.fees.byId[vaultId],
-  (vaultDepositFee: number, isGov: boolean, fees: VaultFee): VaultFee => {
+  (vaultDepositFee: number, isGov: boolean, fees: VaultFee | undefined): VaultFee | undefined => {
     if (isGov) {
       return GOV_FEES;
     }
 
     // API vault fee overrides vault config fee
-    if (fees?.deposit === undefined) {
+    if (fees && fees.deposit === undefined) {
       return {
         ...fees,
         deposit: vaultDepositFee,

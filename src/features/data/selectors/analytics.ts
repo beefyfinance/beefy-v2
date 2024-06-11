@@ -457,7 +457,7 @@ export const selectClmAutocompoundedPendingFeesByVaultId = (
   if (pendingRewards && currentMooTokenBalance.gt(BIG_ZERO)) {
     const { fees0, fees1, totalSupply } = pendingRewards;
     const vaultFees = selectFeesByVaultId(state, vaultId);
-    const afterFeesRatio = BIG_ONE.minus(vaultFees.total);
+    const afterFeesRatio = BIG_ONE.minus(vaultFees?.total || 0);
     pendingYield.pendingRewards0 = currentMooTokenBalance
       .times(fees0)
       .times(afterFeesRatio)

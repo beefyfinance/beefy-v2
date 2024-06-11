@@ -77,8 +77,9 @@ export class StandardVaultType implements IStandardVaultType {
   }
 
   protected calculateDepositFee(input: TokenAmount, state: BeefyState): BigNumber {
-    const { deposit: depositFeePercent } = selectFeesByVaultId(state, this.vault.id);
-    return depositFeePercent && depositFeePercent > 0
+    const fees = selectFeesByVaultId(state, this.vault.id);
+    const depositFeePercent = fees?.deposit || 0;
+    return depositFeePercent > 0
       ? input.amount
           .multipliedBy(depositFeePercent)
           .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR)
