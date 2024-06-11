@@ -202,7 +202,7 @@ export const Tooltip = memo(
     }, [isOpen]);
 
     return (
-      <ClickAway onClickAway={handleClickAway}>
+      <>
         <div
           className={clsx(baseClasses.trigger, triggerClass)}
           onMouseEnter={handleMouseEnter}
@@ -212,6 +212,8 @@ export const Tooltip = memo(
           ref={setTriggerRef}
         >
           {children}
+        </div>
+        <ClickAway onClickAway={handleClickAway}>
           <Popper
             open={isOpen}
             className={clsx(baseClasses.tooltip, tooltipClass)}
@@ -223,8 +225,8 @@ export const Tooltip = memo(
             <div className={clsx(baseClasses.arrow, arrowClass)} ref={setArrowRef} />
             <div className={clsx(baseClasses.content, contentClass)}>{content}</div>
           </Popper>
-        </div>
-      </ClickAway>
+        </ClickAway>
+      </>
     );
   })
 );
