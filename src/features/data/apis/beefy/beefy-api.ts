@@ -266,9 +266,12 @@ export class BeefyAPI {
   }
 
   async getAllCowcentratedVaultRanges(): Promise<AllCowcentradedVaultRangesFullfiledPayload> {
-    const res = await this.api.get<AllCowcentradedVaultRangesFullfiledPayload>('cowData', {
-      params: { _: this.getCacheBuster('short') },
-    });
+    const res = await this.api.get<AllCowcentradedVaultRangesFullfiledPayload>(
+      '/cow-price-ranges',
+      {
+        params: { _: this.getCacheBuster('short') },
+      }
+    );
     return res.data;
   }
 
