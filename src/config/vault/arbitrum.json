@@ -4361,10 +4361,8 @@
     "earnContractAddress": "0xBDF4e730ED5152a7AC646BB7b514Ed624E1147C4",
     "oracle": "lps",
     "oracleId": "balancer-tbtc-wbtc",
-    "status": "eol",
+    "status": "active",
     "createdAt": 1689076794,
-    "retireReason": "rewards",
-    "retiredAt": 1718118985,
     "platformId": "aura",
     "assets": ["tBTC", "WBTC"],
     "risks": [
