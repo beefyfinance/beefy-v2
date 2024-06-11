@@ -14,7 +14,7 @@
     "earnedTokenAddress": "0x36183032f94652748Ab6F6ce503f801de9D1d8CB",
     "earnContractAddress": "0x36183032f94652748Ab6F6ce503f801de9D1d8CB",
     "oracle": "lps",
-    "oracleId": "uuniswap-cow-op-usdc-wld",
+    "oracleId": "uniswap-cow-op-usdc-wld",
     "status": "active",
     "createdAt": 1718042016,
     "platformId": "beefy",
