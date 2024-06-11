@@ -384,12 +384,18 @@ export const selectHasDataToShowGraphByVaultId = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress: string) => vaultId,
 
   (userVaults, isLoaded, timeline, vault, vaultId) => {
+    // show clm data for 1 month after vault is retired
+    const statusCondition = isCowcentratedVault(vault)
+      ? vault.status !== 'eol' ||
+        (vault.status === 'eol' && Date.now() / 1000 - (vault.retiredAt || 0) <= 60 * 60 * 24 * 30)
+      : vault.status === 'active';
+
     return (
       isLoaded &&
       userVaults.includes(vaultId) &&
       !!timeline &&
       timeline.length !== 0 &&
-      vault.status === 'active' &&
+      statusCondition &&
       !isGovVault(vault)
     );
   }
