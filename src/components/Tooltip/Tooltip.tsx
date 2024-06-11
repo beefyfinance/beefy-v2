@@ -93,20 +93,17 @@ export const Tooltip = memo(
 
     const handleMouseEnter = useCallback(() => {
       if (!disabled && triggers & TRIGGERS.HOVER) {
-        console.log(`setIsOpen(true) from handleMouseEnter`);
         setIsOpen(true);
       }
     }, [setIsOpen, disabled, triggers]);
 
     const handleMouseLeave = useCallback(() => {
       if (triggers & TRIGGERS.HOVER) {
-        console.log(`setIsOpen(false) from handleMouseLeave`);
         setIsOpen(false);
       }
     }, [setIsOpen, triggers]);
 
     const handleClickAway = useCallback(() => {
-      console.log(`setIsOpen(false) from handleClickAway`);
       setIsOpen(false);
     }, [setIsOpen]);
 
@@ -126,7 +123,6 @@ export const Tooltip = memo(
           }
 
           if (triggers & TRIGGERS.CLICK) {
-            console.log(`setIsOpen(!isOpen -> ${!isOpen}) from handleClick`);
             setIsOpen(!isOpen);
           }
         }
@@ -150,7 +146,6 @@ export const Tooltip = memo(
           }
 
           if (triggers & TRIGGERS.CLICK) {
-            console.log(`setIsOpen(!isOpen -> ${!isOpen}) from handleTouch`);
             setIsOpen(!isOpen);
           }
         }
