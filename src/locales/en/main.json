@@ -299,6 +299,7 @@
   "Graph-price": "Price",
   "Graph-cowcentrated-clm": "Position Price",
   "Graph-cowcentrated-overview-tooltip": "Position Value",
+  "Graph-cowcentrated-overview-tooltip-hold": "HOLD Value",
   "Graph-clm": "Position Range",
   "Graph-tvl": "TVL",
   "Graph-apy": "APY",
