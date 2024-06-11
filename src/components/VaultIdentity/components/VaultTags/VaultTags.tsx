@@ -132,7 +132,13 @@ export const VaultClmTag = memo(function VaultClmTag({
         [classes.vaultTagClmAutoHide]: hideFee === undefined && hideText === undefined,
       })}
     >
-      <img src={getIcon('clm')} height={16} />
+      <img
+        src={getIcon('clm')}
+        height={16}
+        width={16}
+        className={classes.vaultTagClmIcon}
+        alt={hideText ? 'CLM' : undefined}
+      />
       {!hideText && <div className={classes.vaultTagClmText}>CLM</div>}
       {!hideFee && vault.feeTier && (
         <>
