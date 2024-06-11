@@ -39,6 +39,7 @@ const DepositedInVault = memo(function DepositedInVault() {
     if (tokenAmount) {
       dispatch(
         transactActions.setInputAmount({
+          index: 0,
           amount: tokenAmount.amount,
           max: true,
         })

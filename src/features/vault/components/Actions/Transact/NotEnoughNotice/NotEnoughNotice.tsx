@@ -4,8 +4,6 @@ import { AlertError } from '../../../../../../components/Alerts';
 import { useAppSelector } from '../../../../../../store';
 import {
   selectTransactDepositInputAmountExceedsBalance,
-  selectTransactDepositInputAmountsExceedBalances,
-  selectTransactSelectedQuote,
   selectTransactWithdrawInputAmountExceedsBalance,
 } from '../../../../../data/selectors/transact';
 import { selectIsWalletConnected } from '../../../../../data/selectors/wallet';
@@ -22,13 +20,9 @@ export const NotEnoughNotice = memo<NotEnoughProps>(function NotEnoughNotice({
 }) {
   const { t } = useTranslation();
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
-  const selection = useAppSelector(selectTransactSelectedQuote);
-  const strategyId = selection.strategyId;
   const inputAmountExceedsBalance = useAppSelector(
     mode === 'deposit'
-      ? strategyId === 'cowcentrated'
-        ? selectTransactDepositInputAmountsExceedBalances
-        : selectTransactDepositInputAmountExceedsBalance
+      ? selectTransactDepositInputAmountExceedsBalance
       : selectTransactWithdrawInputAmountExceedsBalance
   );
 

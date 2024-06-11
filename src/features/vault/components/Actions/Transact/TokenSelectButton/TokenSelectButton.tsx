@@ -22,10 +22,12 @@ import type { TokenEntity } from '../../../../../data/entities/token';
 const useStyles = makeStyles(styles);
 
 export type TokenSelectButtonProps = {
+  index: number;
   className?: string;
 };
 
 export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSelectButton({
+  index,
   className,
 }) {
   const { t } = useTranslation();
@@ -37,26 +39,31 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
   const numTokenOptions = useAppSelector(selectTransactNumTokens);
   const forceSelection = useAppSelector(selecTransactForceSelection);
   const mode = useAppSelector(selectTransactOptionsMode);
-  const multipleOptions = numTokenOptions > 1;
+  const canSwitchToTokenSelect = index === 0 && numTokenOptions > 1;
 
   const handleClick = useCallback(() => {
     dispatch(transactActions.switchStep(TransactStep.TokenSelect));
   }, [dispatch]);
 
   const tokenSymbol = useMemo(() => {
-    return vault.assetIds.length > 1 && vault.depositTokenAddress === selection.tokens[0].address
+    return vault.assetIds.length > 1 &&
+      vault.depositTokenAddress === selection.tokens[index].address
       ? 'LP'
-      : selection.tokens[0].symbol;
-  }, [selection.tokens, vault.assetIds.length, vault.depositTokenAddress]);
+      : selection.tokens[index].symbol;
+  }, [selection.tokens, vault.assetIds.length, vault.depositTokenAddress, index]);
 
   const isBreakLp = useMemo(() => {
     return mode === TransactMode.Withdraw && selection.tokens.length > 1;
   }, [mode, selection.tokens.length]);
 
+  const isMultiDeposit = useMemo(() => {
+    return mode === TransactMode.Deposit && selection.tokens.length > 1;
+  }, [mode, selection.tokens.length]);
+
   return (
     <button
-      onClick={multipleOptions ? handleClick : undefined}
-      className={clsx(classes.button, className, { [classes.buttonMore]: multipleOptions })}
+      onClick={canSwitchToTokenSelect ? handleClick : undefined}
+      className={clsx(classes.button, className, { [classes.buttonMore]: canSwitchToTokenSelect })}
     >
       {forceSelection ? (
         <div className={clsx(classes.select, classes.forceSelection)}>
@@ -69,11 +76,15 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
         <BreakLp tokens={selection.tokens} />
       ) : (
         <div className={classes.select}>
-          <TokensImage tokens={selection.tokens} className={classes.iconAssets} size={24} />
+          <TokensImage
+            tokens={isMultiDeposit ? [selection.tokens[index]] : selection.tokens}
+            className={classes.iconAssets}
+            size={24}
+          />
           {tokenSymbol}
         </div>
       )}
-      {multipleOptions ? <ExpandMore className={classes.iconMore} /> : null}
+      {canSwitchToTokenSelect ? <ExpandMore className={classes.iconMore} /> : null}
     </button>
   );
 });
@@ -87,23 +98,6 @@ const BreakLp = memo(function BreakLp({ tokens }: { tokens: TokenEntity[] }) {
       <TokenImage tokenAddress={token0.address} chainId={token0.chainId} size={16} />
       +
       <TokenImage tokenAddress={token1.address} chainId={token1.chainId} size={16} />
-    </div>
-  );
-});
-
-type V3TokenButton = TokenSelectButtonProps & {
-  token: TokenEntity;
-};
-
-export const V3TokenButton = memo<V3TokenButton>(function V3TokenButton({ className, token }) {
-  const classes = useStyles();
-
-  return (
-    <div className={clsx(classes.button, className)}>
-      <div className={classes.select}>
-        <TokensImage tokens={[token]} className={classes.iconAssets} size={24} />
-        {token.symbol}
-      </div>
     </div>
   );
 });

@@ -1,8 +1,7 @@
 import React, { memo, useCallback } from 'react';
-
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectTransactInputAmount,
+  selectTransactInputIndexAmount,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance';
@@ -25,7 +24,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
     const { token: depositToken, amount: userBalance } = useAppSelector(state =>
       selectUserVaultBalanceInDepositTokenWithToken(state, vaultId)
     );
-    const value = useAppSelector(selectTransactInputAmount);
+    const value = useAppSelector(state => selectTransactInputIndexAmount(state, 0));
     const price = useAppSelector(state =>
       selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
     );
@@ -34,6 +33,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
       (value, isMax) => {
         dispatch(
           transactActions.setInputAmount({
+            index: 0,
             amount: value.decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR),
             max: isMax,
           })
@@ -46,6 +46,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
       (value: number) => {
         dispatch(
           transactActions.setInputAmount({
+            index: 0,
             amount: userBalance
               .multipliedBy(value / 100)
               .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR),
@@ -65,7 +66,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
         value={value}
         price={price}
         selectedToken={depositToken}
-        endAdornment={<TokenSelectButton />}
+        endAdornment={<TokenSelectButton index={0} />}
       />
     );
   }
