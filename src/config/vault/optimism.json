@@ -1,5 +1,191 @@
 [
   {
+    "id": "uniswap-cow-op-op-weth",
+    "name": "OP-WETH",
+    "token": "OP-WETH",
+    "tokenAddress": "0x68F5C0A2DE713a54991E01858Fd27a3832401849",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x4200000000000000000000000000000000000042"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpOP-WETH",
+    "earnedTokenAddress": "0xC884a956a18a4953356b87c1c968419c32FA4a73",
+    "earnContractAddress": "0xC884a956a18a4953356b87c1c968419c32FA4a73",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-op-weth",
+    "status": "active",
+    "createdAt": 1718042016,
+    "platformId": "beefy",
+    "assets": ["WETH", "OP"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-usdc-weth",
+    "name": "USDC-WETH",
+    "token": "USDC-WETH",
+    "tokenAddress": "0x1fb3cf6e48F1E7B10213E7b6d87D4c073C7Fdb7b",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpUSDC-WETH",
+    "earnedTokenAddress": "0xc0Fdb17dd0811e9a6855b9bb0C6c0bbC2194C98F",
+    "earnContractAddress": "0xc0Fdb17dd0811e9a6855b9bb0C6c0bbC2194C98F",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-usdc-weth",
+    "status": "active",
+    "createdAt": 1718042016,
+    "platformId": "beefy",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-tbtc-wbtc",
+    "name": "tBTC-WBTC",
+    "token": "tBTC-WBTC",
+    "tokenAddress": "0xD52533A3309b393AfEBE3176620E8cCFB6159f8a",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
+      "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOptBTC-WBTC",
+    "earnedTokenAddress": "0x25F25a45105Ea0Cad9cb116cc4f9b40124A7D02D",
+    "earnContractAddress": "0x25F25a45105Ea0Cad9cb116cc4f9b40124A7D02D",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-tbtc-wbtc",
+    "status": "active",
+    "createdAt": 1718042016,
+    "platformId": "beefy",
+    "assets": ["tBTC", "WBTC"],
+    "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-usde-wsteth",
+    "name": "USDe-wstETH",
+    "token": "USDe-wstETH",
+    "tokenAddress": "0xA19fb6B927cd7804C2E1c594D6888Ea4B1173e8A",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
+      "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpUSDe-wstETH",
+    "earnedTokenAddress": "0x80D438EEdb918207c2F7F7eAC31f2F8012923F76",
+    "earnContractAddress": "0x80D438EEdb918207c2F7F7eAC31f2F8012923F76",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-usde-wsteth",
+    "status": "active",
+    "createdAt": 1718042016,
+    "platformId": "beefy",
+    "assets": ["USDe", "wstETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-rseth-wsteth",
+    "name": "rsETH-wstETH",
+    "token": "rsETH-wstETH",
+    "tokenAddress": "0x83AFbd6C4E804Dd4dcCa7aceE967926bc3f408aC",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
+      "0x4186BFC76E2E237523CBC30FD220FE055156b41F"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOprsETH-wstETH",
+    "earnedTokenAddress": "0x0F46A74B01708E78c27DEF7160A5C5222f9dD157",
+    "earnContractAddress": "0x0F46A74B01708E78c27DEF7160A5C5222f9dD157",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-rseth-wsteth",
+    "status": "active",
+    "createdAt": 1718042016,
+    "platformId": "beefy",
+    "assets": ["rsETH", "wstETH"],
+    "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-usdc-wld",
+    "name": "WLD-USDC",
+    "token": "WLD-USDC",
+    "tokenAddress": "0xDc6cb16B8d635Ef255cEF370263C35ac0007186A",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+      "0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpWLD-USDC",
+    "earnedTokenAddress": "0x36183032f94652748Ab6F6ce503f801de9D1d8CB",
+    "earnContractAddress": "0x36183032f94652748Ab6F6ce503f801de9D1d8CB",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-usdc-wld",
+    "status": "active",
+    "createdAt": 1718042016,
+    "platformId": "beefy",
+    "assets": ["WLD", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aura-op-weth-wrseth",
     "name": "wrsETH-ETH",
     "type": "standard",

@@ -14,7 +14,7 @@ import { ShareButton } from '../ShareButton';
 import { punctuationWrap } from '../../../../helpers/string';
 import { SaveButton } from '../SaveButton';
 import { selectVaultTokenSymbols } from '../../../data/selectors/tokens';
-import { CLMTag } from '../../../../components/VaultIdentity/components/VaultTags';
+import { VaultClmTag } from '../../../../components/VaultIdentity/components/VaultTags';
 
 const useStyles = makeStyles(styles);
 
@@ -36,7 +36,7 @@ export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId
           {punctuationWrap(vault.name)}{' '}
           {!isGovVault(vault) ? (
             isCowcentratedVault(vault) ? (
-              <CLMTag vault={vault} />
+              <VaultClmTag vault={vault} />
             ) : (
               t('Vault-vault')
             )

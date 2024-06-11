@@ -35,17 +35,17 @@ export const styles = (theme: Theme) => ({
     marginRight: '4px',
     verticalAlign: 'bottom',
   },
-  vaultTagRetired: {
-    backgroundColor: theme.palette.background.tags.retired,
-  },
-  vaultTagPaused: {
-    backgroundColor: theme.palette.background.tags.paused,
-  },
   vaultTagEarn: {
     backgroundColor: theme.palette.background.tags.earnings,
   },
   vaultTagPoints: {
     backgroundColor: theme.palette.background.tags.earnings,
+  },
+  vaultTagRetired: {
+    backgroundColor: theme.palette.background.tags.retired,
+  },
+  vaultTagPaused: {
+    backgroundColor: theme.palette.background.tags.paused,
   },
   vaultTagClm: {
     display: 'flex',
@@ -55,6 +55,14 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.tags.clm,
     '& span': {
       fontWeight: 500,
+    },
+  },
+  vaultTagClmText: {},
+  vaultTagClmAutoHide: {
+    '& $vaultTagClmText': {
+      [theme.breakpoints.down('sm')]: {
+        display: 'none',
+      },
     },
   },
   platformTagGov: {
@@ -68,10 +76,5 @@ export const styles = (theme: Theme) => ({
     width: '1px',
     borderRadius: '8px',
     backgroundColor: '#D9D9D94C',
-  },
-  clm: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
-    },
   },
 });

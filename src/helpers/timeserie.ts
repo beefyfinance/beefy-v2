@@ -149,11 +149,16 @@ export function getInvestorTimeserie(
 export function getClmInvestorTimeserie(
   timeBucket: TimeBucketType,
   timeline: CLMTimelineAnalyticsEntity[],
+  harvests: ClmHarvestsTimeline['harvests'],
   underlyingToUsd: ApiProductPriceRow[],
   firstDate: Date,
   currentPrice: BigNumber,
-  currentShareBalance: BigNumber
-): { t: number; v: number }[] {
+  currentShareBalance: BigNumber,
+  token0SharesAtDeposit: BigNumber,
+  token1SharesAtDeposit: BigNumber,
+  currentPriceToken0: BigNumber,
+  currentPriceToken1: BigNumber
+): { t: number; v: number; vHold: number }[] {
   // so, first we need to generate datetime keys for each row
   const { bucketSize: bucketSizeStr, timeRange: timeRangeStr } =
     timeBucketToSamplingPeriod(timeBucket);
@@ -170,22 +175,35 @@ export function getClmInvestorTimeserie(
   const sortedUnderlyingToUsd = sortAndFixPrices(underlyingToUsd, currentPrice);
 
   let balanceIdx = 0;
+  let underlyingToUsdIdx = 0;
   let harvestIdx = 0;
   let currentDate = fixedDate;
 
-  const pricesTs: { t: number; v: number }[] = [];
+  const pricesTs: { t: number; v: number; vHold: number }[] = [];
 
   //We should be adding precise initial ppfs and price as first data point
   if (isEqual(timeline[0].datetime, fixedDate)) {
-    const { underlying0Diff, underlying1Diff, token1ToUsd, token0ToUsd } = timeline[0];
+    const {
+      underlying0Diff,
+      underlying1Diff,
+      token1ToUsd,
+      token0ToUsd,
+      underlying0Balance,
+      underlying1Balance,
+    } = timeline[0];
 
     const priceAtDeposit = underlying0Diff
       .times(token0ToUsd)
       .plus(underlying1Diff.times(token1ToUsd));
 
+    const holdValue = underlying0Balance
+      .times(token0ToUsd)
+      .plus(underlying1Balance.times(token1ToUsd));
+
     pricesTs.push({
       t: roundDownMinutes(timeline[0].datetime).getTime(),
       v: priceAtDeposit.toNumber(),
+      vHold: holdValue.toNumber(),
     });
     currentDate = new Date(currentDate.getTime() + bucketSize);
   }
@@ -204,8 +222,15 @@ export function getClmInvestorTimeserie(
 
       // find the corresponding underlying row
       while (
-        harvestIdx < sortedUnderlyingToUsd.length - 1 &&
-        isAfter(currentDate, sortedUnderlyingToUsd[harvestIdx + 1].date)
+        underlyingToUsdIdx < sortedUnderlyingToUsd.length - 1 &&
+        isAfter(currentDate, sortedUnderlyingToUsd[underlyingToUsdIdx + 1].date)
+      ) {
+        underlyingToUsdIdx++;
+      }
+
+      while (
+        harvestIdx < harvests.length - 1 &&
+        isAfter(currentDate, harvests[harvestIdx + 1].timestamp)
       ) {
         harvestIdx++;
       }
@@ -214,13 +239,19 @@ export function getClmInvestorTimeserie(
       const shareBalance = timeline[balanceIdx].shareBalance;
       if (shareBalance && !shareBalance.isEqualTo(BIG_ZERO)) {
         // Underlying to usd
-        const underlying = sortedUnderlyingToUsd[harvestIdx];
+        const underlying = sortedUnderlyingToUsd[underlyingToUsdIdx];
         const usdBalance = timeline[balanceIdx].shareBalance.times(underlying.value);
+        const harvest = harvests[harvestIdx];
+
+        const holdValue = timeline[balanceIdx].underlying0Balance
+          .times(harvest.prices[0])
+          .plus(timeline[balanceIdx].underlying1Balance.times(harvest.prices[1]));
 
         pricesTs.push({
           //return date on seconds
           t: currentDate.getTime(),
           v: usdBalance.toNumber(),
+          vHold: holdValue.toNumber(),
         });
       }
 
@@ -232,6 +263,10 @@ export function getClmInvestorTimeserie(
     //round down our to the last hours, since first item of the api do the same
     t: roundDownMinutes(new Date()).getTime(),
     v: currentShareBalance.times(currentPrice).toNumber(),
+    vHold: token0SharesAtDeposit
+      .times(currentPriceToken0)
+      .plus(token1SharesAtDeposit.times(currentPriceToken1))
+      .toNumber(),
   });
 
   return pricesTs;

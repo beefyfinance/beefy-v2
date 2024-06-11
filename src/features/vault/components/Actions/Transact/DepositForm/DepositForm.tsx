@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo } from 'react';
+import React, { memo, type ReactNode, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
@@ -9,67 +9,57 @@ import {
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactSelected,
-  selectTransactSelectedChainId,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import { errorToString } from '../../../../../../helpers/format';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
-import { DepositTokenAmountInput, V3DepositTokenAmountInput } from '../DepositTokenAmountInput';
+import { DepositTokenAmountInput } from '../DepositTokenAmountInput';
 import { DepositBuyLinks } from '../DepositBuyLinks';
 import { DepositActions } from '../DepositActions';
 import { TransactQuote } from '../TransactQuote';
 import { AlertError } from '../../../../../../components/Alerts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import {
-  selectCowcentratedVaultDepositTokenAddresses,
   selectVaultById,
   selectVaultStrategyAddressOrUndefined,
 } from '../../../../../data/selectors/vaults';
 import { RetirePauseReason } from '../../../RetirePauseReason';
 import { TokenAmount, TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
 import zapIcon from '../../../../../../images/icons/zap.svg';
-import {
-  isCowcentratedVault,
-  isVaultActive,
-  type VaultCowcentrated,
-} from '../../../../../data/entities/vault';
-import type { ChainEntity } from '../../../../../data/entities/chain';
-import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
+import { isCowcentratedVault, isVaultActive } from '../../../../../data/entities/vault';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { TextLoader } from '../../../../../../components/TextLoader';
+import type { TokenEntity } from '../../../../../data/entities/token';
 
 const useStyles = makeStyles(styles);
 
-const SelectedInWallet = memo(function SelectedInWallet() {
-  const chainId = useAppSelector(selectTransactSelectedChainId);
-  const selection = useAppSelector(selectTransactSelected);
-  const forceSelection = useAppSelector(selecTransactForceSelection);
-  const dispatch = useAppDispatch();
-  const token = selection?.tokens?.[0];
+type TokenInWalletProps = {
+  token: TokenEntity;
+  index: number;
+};
 
+const TokenInWallet = memo<TokenInWalletProps>(function TokenInWallet({ token, index }) {
+  const dispatch = useAppDispatch();
   const balance = useAppSelector(state =>
     token ? selectUserBalanceOfToken(state, token.chainId, token.address) : undefined
   );
 
   const handleMax = useCallback(() => {
-    token &&
-      balance &&
+    if (token && balance) {
       dispatch(
         transactActions.setInputAmount({
+          index,
           amount: balance,
           max: true,
         })
       );
-  }, [balance, dispatch, token]);
+    }
+  }, [balance, dispatch, token, index]);
 
-  if (!chainId || !selection || !token || !balance) {
+  if (!token || !balance) {
     return <TextLoader placeholder="0.0000000 BNB-BIFI" />;
-  }
-
-  if (forceSelection) {
-    return <TokenAmount amount={BIG_ZERO} decimals={18} />;
   }
 
   return <TokenAmountFromEntity onClick={handleMax} amount={balance} token={token} />;
@@ -99,8 +89,6 @@ export const DepositFormLoader = memo(function DepositFormLoader() {
       ) : isError ? (
         <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
       ) : (
-        // ) : isCowVault ? (
-        //   <CowcentratedDepositForm />
         <DepositForm />
       )}
     </div>
@@ -110,33 +98,11 @@ export const DepositFormLoader = memo(function DepositFormLoader() {
 export const DepositForm = memo(function DepositForm() {
   const { t } = useTranslation();
   const classes = useStyles();
-  const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
-  const forceSelection = useAppSelector(selecTransactForceSelection);
-
-  const i18key = useMemo(() => {
-    return hasOptions
-      ? forceSelection
-        ? 'Transact-SelectToken'
-        : 'Transact-SelectAmount'
-      : 'Transact-Deposit';
-  }, [forceSelection, hasOptions]);
 
   return (
     <>
-      <div className={classes.labels}>
-        <div className={classes.selectLabel}>
-          {hasOptions ? <img src={zapIcon} alt="Zap" height={12} /> : null}
-          {t(i18key)}
-        </div>
-        <div className={classes.availableLabel}>
-          {t('Transact-Available')}{' '}
-          <span className={classes.availableLabelAmount}>
-            <SelectedInWallet />
-          </span>
-        </div>
-      </div>
       <div className={classes.inputs}>
-        <DepositTokenAmountInput />
+        <DepositFormInputs />
       </div>
       <DepositBuyLinks className={classes.links} />
       <TransactQuote title={t('Transact-YouDeposit')} className={classes.quote} />
@@ -145,75 +111,87 @@ export const DepositForm = memo(function DepositForm() {
   );
 });
 
-export const CowcentratedDepositForm = memo(function V3DepositForm() {
+const DepositFormInputs = memo(function DepositFormInputs() {
   const { t } = useTranslation();
-  const classes = useStyles();
-  const vaultId = useAppSelector(selectTransactVaultId);
-  const vault = useAppSelector(state => selectVaultById(state, vaultId)) as VaultCowcentrated;
-  const vaultDepositTokenAddresses = useAppSelector(state =>
-    selectCowcentratedVaultDepositTokenAddresses(state, vaultId)
-  );
+  const selection = useAppSelector(selectTransactSelected);
+  const multipleInputs = selection.tokens.length > 1;
+  const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
+  const forceSelection = useAppSelector(selecTransactForceSelection);
+  const availableLabel = t('Transact-Available');
+  const firstSelectLabel = useMemo(() => {
+    return t(
+      hasOptions
+        ? forceSelection
+          ? 'Transact-SelectToken'
+          : 'Transact-SelectAmount'
+        : 'Transact-Deposit'
+    );
+  }, [forceSelection, hasOptions, t]);
 
-  return (
-    <>
-      <div className={classes.v3Inputs}>
-        {vaultDepositTokenAddresses.map((tokenAddress, index) => (
-          <V3TokenInput
-            key={tokenAddress}
-            tokenAddress={tokenAddress}
-            chainId={vault.chainId}
-            index={index}
-          />
-        ))}
-      </div>
-      <TransactQuote title={t('Transact-YouDeposit')} className={classes.quote} />
-      <DepositActions className={classes.actions} />
-    </>
-  );
+  if (forceSelection) {
+    return (
+      <DepositFormInput
+        index={0}
+        token={selection.tokens[0]}
+        availableLabel={availableLabel}
+        selectLabel={t('Transact-SelectToken')}
+        showZapIcon={hasOptions}
+        tokenAvailable={<TokenAmount amount={BIG_ZERO} decimals={18} />}
+      />
+    );
+  }
+
+  return selection.tokens.map((token, index) => (
+    <DepositFormInput
+      key={index}
+      index={index}
+      token={token}
+      availableLabel={availableLabel}
+      selectLabel={!multipleInputs && index === 0 ? firstSelectLabel : token.symbol}
+      showZapIcon={hasOptions && index === 0}
+      tokenAvailable={
+        forceSelection ? (
+          <TokenAmount amount={BIG_ZERO} decimals={18} />
+        ) : (
+          <TokenInWallet token={token} index={index} />
+        )
+      }
+    />
+  ));
 });
 
-interface V3TokenInputProps {
-  tokenAddress: string;
-  chainId: ChainEntity['id'];
+type DepositFormInputProps = {
+  token: TokenEntity;
   index: number;
-}
+  selectLabel: string;
+  availableLabel: string;
+  showZapIcon: boolean;
+  tokenAvailable: ReactNode;
+};
 
-export const V3TokenInput = memo<V3TokenInputProps>(function V3TokenInput({
-  tokenAddress,
-  chainId,
+const DepositFormInput = memo<DepositFormInputProps>(function DepositFormInput({
   index,
+  token,
+  selectLabel,
+  availableLabel,
+  showZapIcon,
+  tokenAvailable,
 }) {
-  const { t } = useTranslation();
-  const token = useAppSelector(state => selectTokenByAddress(state, chainId, tokenAddress));
   const classes = useStyles();
-  const balance = useAppSelector(state =>
-    selectUserBalanceOfToken(state, token.chainId, token.address)
-  );
-  const dispatch = useAppDispatch();
-
-  const handleMax = useCallback(() => {
-    dispatch(
-      transactActions.setDualInputAmount({
-        amount: balance,
-        max: true,
-        index,
-      })
-    );
-  }, [dispatch, balance, index]);
 
   return (
-    <div>
+    <div className={classes.input}>
       <div className={classes.labels}>
-        <div className={classes.selectLabel}>{token.symbol}</div>
+        <div className={classes.selectLabel}>
+          {showZapIcon ? <img src={zapIcon} alt="Zap" height={12} /> : null}
+          {selectLabel}
+        </div>
         <div className={classes.availableLabel}>
-          {t('Transact-Available')}{' '}
-          <span className={classes.availableLabelAmount}>
-            <TokenAmountFromEntity onClick={handleMax} amount={balance} token={token} />
-          </span>
+          {availableLabel} <span className={classes.availableLabelAmount}>{tokenAvailable}</span>
         </div>
       </div>
-      <div className={classes.inputs}>
-        <V3DepositTokenAmountInput index={index} />
+      <div className={classes.amount}>
+        <DepositTokenAmountInput token={token} index={index} />
       </div>
     </div>
   );

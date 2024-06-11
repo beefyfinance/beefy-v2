@@ -62,6 +62,35 @@ export function selectIsAddressChainDataAvailable(
   return isLoaderAvailable(state.ui.dataLoader.byAddress[walletAddress]?.byChainId[chainId]?.[key]);
 }
 
+export function selectIsGlobalDataIdle(state: BeefyState, key: keyof DataLoaderState['global']) {
+  return isInitialLoader(state.ui.dataLoader.global[key]);
+}
+
+export function selectIsChainDataIdle(
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  key: keyof ChainIdDataEntity
+) {
+  return isInitialLoader(state.ui.dataLoader.byChainId[chainId]?.[key]);
+}
+
+export function selectIsAddressDataIdle(
+  state: BeefyState,
+  walletAddress: string,
+  key: keyof GlobalDataByAddressEntity
+) {
+  return isInitialLoader(state.ui.dataLoader.byAddress[walletAddress]?.global[key]);
+}
+
+export function selectIsAddressChainDataIdle(
+  state: BeefyState,
+  walletAddress: string,
+  chainId: ChainEntity['id'],
+  key: keyof ChainIdDataByAddressByChainEntity
+) {
+  return isInitialLoader(state.ui.dataLoader.byAddress[walletAddress]?.byChainId[chainId]?.[key]);
+}
+
 export const selectIsPriceAvailable = (state: BeefyState) =>
   selectIsGlobalDataAvailable(state, 'prices');
 
@@ -145,6 +174,15 @@ export const selectIsZapLoaded = (state: BeefyState) =>
   selectIsGlobalDataAvailable(state, 'zapSwapAggregators') &&
   selectIsGlobalDataAvailable(state, 'zapAggregatorTokenSupport') &&
   selectIsGlobalDataAvailable(state, 'zapAmms');
+
+export const selectShouldInitZapAmms = (state: BeefyState) =>
+  selectIsGlobalDataIdle(state, 'zapAmms');
+export const selectShouldInitZapConfigs = (state: BeefyState) =>
+  selectIsGlobalDataIdle(state, 'zapConfigs');
+export const selectShouldInitZapSwapAggregators = (state: BeefyState) =>
+  selectIsGlobalDataIdle(state, 'zapSwapAggregators');
+export const selectShouldInitZapAggregatorTokenSupport = (state: BeefyState) =>
+  selectIsGlobalDataIdle(state, 'zapAggregatorTokenSupport');
 
 export const selectIsClmHarvestsForUserChainPending = (
   state: BeefyState,

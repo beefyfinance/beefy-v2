@@ -33,6 +33,8 @@ export const OverviewFooter = memo<CommonFooterProps>(function Footer({
       <div className={classes.legendContainer}>
         <div className={classes.usdReferenceLine} />
         {t('Position Value')}
+        <div className={classes.holdReferenceLine} />
+        {t('HOLD Value')}
       </div>
       <div className={clsx(classes.tabsContainer, tabsClassName)}>
         <BasicTabs

@@ -1,5 +1,16 @@
-import React, { forwardRef, memo, useCallback, useMemo, useState, useId } from 'react';
-import type { MouseEventHandler, MouseEvent, ReactNode } from 'react';
+import React, {
+  forwardRef,
+  memo,
+  type TouchEventHandler,
+  type MouseEvent,
+  type MouseEventHandler,
+  type ReactNode,
+  type TouchEvent as ReactTouchEvent,
+  useCallback,
+  useId,
+  useMemo,
+  useState,
+} from 'react';
 import type { PopperPlacementType } from '@material-ui/core';
 import { ClickAwayListener, makeStyles, Popper, setRef } from '@material-ui/core';
 import clsx from 'clsx';
@@ -26,8 +37,11 @@ export type TooltipProps = {
   children: ReactNode;
   content: ReactNode;
   placement?: PopperPlacementType;
-  onTriggerClick?: MouseEventHandler<HTMLDivElement>;
-  propagateTriggerClick?: boolean | ((e: MouseEvent<HTMLDivElement>) => boolean);
+  /** no event for touch devices as react adds the touch event passively */
+  onTriggerClick?: (e: MouseEvent<HTMLDivElement> | undefined) => void;
+  propagateTriggerClick?:
+    | boolean
+    | ((e: MouseEvent<HTMLDivElement> | ReactTouchEvent<HTMLDivElement>) => boolean);
   onTooltipClick?: MouseEventHandler<HTMLDivElement>;
   propagateTooltipClick?: boolean | ((e: MouseEvent<HTMLDivElement>) => boolean);
   triggerClass?: string;
@@ -108,7 +122,30 @@ export const Tooltip = memo(
             onTriggerClick(e);
           }
 
-          if (!e.defaultPrevented && triggers & TRIGGERS.CLICK) {
+          if (triggers & TRIGGERS.CLICK) {
+            setIsOpen(!isOpen);
+          }
+        }
+      },
+      [disabled, isOpen, onTriggerClick, triggers, setIsOpen, propagateTriggerClick]
+    );
+
+    const handleTouch = useCallback<TouchEventHandler<HTMLDivElement>>(
+      e => {
+        if (
+          !(typeof propagateTriggerClick === 'function'
+            ? propagateTriggerClick(e)
+            : propagateTriggerClick)
+        ) {
+          e.stopPropagation();
+        }
+
+        if (!disabled) {
+          if (onTriggerClick) {
+            onTriggerClick(undefined);
+          }
+
+          if (triggers & TRIGGERS.CLICK) {
             setIsOpen(!isOpen);
           }
         }
@@ -147,6 +184,9 @@ export const Tooltip = memo(
       (element: HTMLDivElement) => {
         setRef(ref, element);
         setAnchorEl(element);
+        if (element) {
+          element.addEventListener('touchstart', (e: TouchEvent) => e.preventDefault());
+        }
       },
       [setAnchorEl, ref]
     );
@@ -162,6 +202,7 @@ export const Tooltip = memo(
           className={clsx(baseClasses.trigger, triggerClass)}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouch}
           onClick={handleClick}
           ref={setTriggerRef}
         >

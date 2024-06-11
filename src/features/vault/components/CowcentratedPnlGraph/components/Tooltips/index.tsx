@@ -52,7 +52,7 @@ export const OverviewTooltip = memo<GraphTooltipProps>(function OverviewTooltip(
     return null;
   }
 
-  const { t: timestamp } = valueLine.payload;
+  const { t: timestamp, v, vHold } = valueLine.payload;
 
   const value = valueLine?.value;
 
@@ -61,7 +61,11 @@ export const OverviewTooltip = memo<GraphTooltipProps>(function OverviewTooltip(
       <div className={classes.timestamp}>{format(timestamp, 'MMM d, yyyy h:mm a')}</div>
       <div className={classes.itemContainer}>
         <div className={classes.label}>{t('Graph-cowcentrated-overview-tooltip')}:</div>
-        {value ? <div className={classes.value}>{formatUsd(value)}</div> : null}
+        {value ? <div className={classes.value}>{formatUsd(v)}</div> : null}
+      </div>
+      <div className={classes.itemContainer}>
+        <div className={classes.label}>{t('Graph-cowcentrated-overview-tooltip-hold')}:</div>
+        {value ? <div className={classes.value}>{formatUsd(vHold)}</div> : null}
       </div>
     </div>
   );

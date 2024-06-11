@@ -42,7 +42,7 @@ export class PromiseSettledAwaiter<T = unknown> {
   }
 
   async wait(): Promise<PromiseSettledResult<Awaited<T>>[]> {
-    const promises = this.promises;
+    const promises = [...this.promises];
     this.promises = [];
     return await Promise.allSettled(promises);
   }

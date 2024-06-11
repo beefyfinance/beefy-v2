@@ -1,5 +1,5 @@
 import React, { memo, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, type Theme, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
 import { VaultTag, VaultTagWithTooltip } from './VaultTag';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +14,11 @@ import { BasicTooltipContent } from '../../../Tooltip/BasicTooltipContent';
 import type { ChainEntity } from '../../../../features/data/entities/chain';
 import type { TokenEntity } from '../../../../features/data/entities/token';
 import { selectTokenByAddress } from '../../../../features/data/selectors/tokens';
-import type { VaultEntity } from '../../../../features/data/entities/vault';
+import {
+  isVaultActive,
+  type VaultCowcentrated,
+  type VaultEntity,
+} from '../../../../features/data/entities/vault';
 import {
   isCowcentratedVault,
   isGovVault,
@@ -104,20 +108,36 @@ const VaultPlatformTag = memo<VaultPlatformTagProps>(function VaultPlatformTag({
   );
 });
 
-export const CLMTag = memo(function CLMTag({ vault }: { vault: VaultEntity }) {
+export const VaultClmTag = memo(function VaultClmTag({
+  vault,
+  hideFee,
+  hideText,
+}: {
+  vault: VaultCowcentrated;
+  hideFee?: boolean;
+  hideText?: boolean;
+}) {
   const classes = useStyles();
+  const tooltipContent = useMemo(() => {
+    return hideFee
+      ? `Cowcentrated Liquidity Manager | ${vault.feeTier}%`
+      : 'Cowcentrated Liquidity Manager';
+  }, [hideFee, vault]);
 
   return (
     <VaultTagWithTooltip
-      content={<BasicTooltipContent title={'Cowcentrated Liquidity Manager'} />}
+      content={<BasicTooltipContent title={tooltipContent} />}
       placement="bottom"
-      className={classes.vaultTagClm}
+      className={clsx(classes.vaultTagClm, {
+        [classes.vaultTagClmAutoHide]: hideFee === undefined && hideText === undefined,
+      })}
     >
       <img src={getIcon('clm')} height={16} />
-      <div className={classes.clm}>CLM</div>
-      {isCowcentratedVault(vault) && vault.feeTier && (
+      {!hideText && <div className={classes.vaultTagClmText}>CLM</div>}
+      {!hideFee && vault.feeTier && (
         <>
-          <div className={classes.divider} /> <span>{`${vault.feeTier}%`}</span>
+          <div className={classes.divider} />
+          <span>{`${vault.feeTier}%`}</span>
         </>
       )}
     </VaultTagWithTooltip>
@@ -150,6 +170,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const boostIds = useAppSelector(state => selectPreStakeOrActiveBoostIds(state, vaultId));
   const boostId = boostIds.length ? boostIds[0] : null;
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
 
   // Tag 1: Platform
   // Tag 2: Retired -> Paused -> Boosted > Earnings
@@ -157,7 +178,13 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   return (
     <div className={classes.vaultTags}>
       <VaultPlatformTag vaultId={vaultId} />
-      {isCowcentratedVault(vault) && <CLMTag vault={vault} />}
+      {isCowcentratedVault(vault) && (
+        <VaultClmTag
+          vault={vault}
+          hideFee={isMobile || !isVaultActive(vault)}
+          hideText={isMobile}
+        />
+      )}
       {isVaultRetired(vault) ? (
         <VaultTag className={classes.vaultTagRetired}>{t('VaultTag-Retired')}</VaultTag>
       ) : isVaultPaused(vault) ? (

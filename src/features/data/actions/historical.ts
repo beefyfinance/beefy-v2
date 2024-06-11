@@ -9,13 +9,12 @@ import type {
   ApiTimeBucket,
 } from '../apis/beefy/beefy-data-api-types';
 import { selectVaultById } from '../selectors/vaults';
-import { selectCowcentratedVaultDepositTokens, selectTokenByAddress } from '../selectors/tokens';
+import { selectTokenByAddress } from '../selectors/tokens';
 import type { TokenEntity } from '../entities/token';
 import type { ThunkAction } from 'redux-thunk';
 import type { Action } from 'redux';
 import type { ChartStat } from '../reducers/historical-types';
 import type { ChainEntity } from '../entities/chain';
-import BigNumber from 'bignumber.js';
 
 export interface HistoricalRangesPayload {
   vault: VaultEntity;
@@ -133,14 +132,13 @@ export const fetchHistoricalCowcentratedRanges = createAsyncThunk<
         ? bucket
         : ('1h_1M' as ApiTimeBucket);
     const rawData = await api.getCowcentratedRangesChartData(vaultAddress, bucketToUse, chainId);
-    const { token0, token1 } = selectCowcentratedVaultDepositTokens(state, vaultId);
 
     const data = rawData.map(item => {
       return {
         ...item,
-        v: Number(decimalTranslateFunction(item.v, token0.decimals, token1.decimals)),
-        min: Number(decimalTranslateFunction(item.min, token0.decimals, token1.decimals)),
-        max: Number(decimalTranslateFunction(item.max, token0.decimals, token1.decimals)),
+        v: Number(item.v),
+        min: Number(item.min),
+        max: Number(item.max),
       };
     }) satisfies ApiCowcentratedChartData;
 
@@ -169,7 +167,3 @@ export function fetchHistoricalStat(
 
   throw new Error(`Unknown stat: ${stat}`);
 }
-
-const decimalTranslateFunction = (value: number, decimal0: number, decimal1: number) => {
-  return new BigNumber(value).shiftedBy(decimal0 - decimal1).toString(10);
-};

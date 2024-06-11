@@ -5,10 +5,8 @@ import React, { memo, useEffect, useMemo } from 'react';
 import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectTransactDualInputAmounts,
-  selectTransactDualMaxAmounts,
-  selectTransactInputAmount,
-  selectTransactInputMax,
+  selectTransactInputAmounts,
+  selectTransactInputMaxes,
   selectTransactMode,
   selectTransactQuoteError,
   selectTransactQuoteStatus,
@@ -32,7 +30,7 @@ import {
 import { ZapRoute } from '../ZapRoute';
 import { QuoteTitleRefresh } from '../QuoteTitleRefresh';
 import { AlertError } from '../../../../../../components/Alerts';
-import { TransactMode, TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
+import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { ZapSlippage } from '../ZapSlippage';
 import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
@@ -51,10 +49,8 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   const mode = useAppSelector(selectTransactMode);
   const selectionId = useAppSelector(selectTransactSelectedSelectionId);
   const selection = useAppSelector(selectTransactSelected);
-  const singleInputAmount = useAppSelector(selectTransactInputAmount);
-  const dualInputAmounts = useAppSelector(selectTransactDualInputAmounts);
-  const singleMaxAmount = useAppSelector(selectTransactInputMax);
-  const dualMaxAmounts = useAppSelector(selectTransactDualMaxAmounts);
+  const inputAmounts = useAppSelector(selectTransactInputAmounts);
+  const inputMaxes = useAppSelector(selectTransactInputMaxes);
   const chainId = useAppSelector(selectTransactSelectedChainId);
   const status = useAppSelector(selectTransactQuoteStatus);
   const debouncedFetchQuotes = useMemo(
@@ -74,13 +70,8 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   );
 
   useEffect(() => {
-    debouncedFetchQuotes(
-      dispatch,
-      selection && selection.tokens.length === 2 && mode === TransactMode.Deposit
-        ? dualInputAmounts
-        : [singleInputAmount]
-    );
-  }, [dispatch, mode, chainId, selectionId, selection, singleInputAmount, dualInputAmounts, singleMaxAmount, dualMaxAmounts, debouncedFetchQuotes]);
+    debouncedFetchQuotes(dispatch, inputAmounts);
+  }, [dispatch, mode, chainId, selectionId, selection, inputAmounts, inputMaxes, debouncedFetchQuotes]);
 
   if (status === TransactStatus.Idle) {
     return <QuoteIdle title={title} className={className} />;
@@ -103,14 +94,13 @@ const QuoteIdle = memo<TransactQuoteProps>(function QuoteIdle({ title, className
   const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const transactMode = useAppSelector(selectTransactMode);
 
   return (
     <div className={clsx(classes.container, classes.disabled, className)}>
       <QuoteTitleRefresh title={title} enableRefresh={true} />
       <div className={classes.tokenAmounts}>
-        {isCowcentratedVault(vault) && transactMode === TransactMode.Withdraw ? (
-          <>
+        {isCowcentratedVault(vault) ? (
+          <div className={classes.amountReturned}>
             {vault.depositTokenAddresses.map(tokenAddress => {
               return (
                 <TokenAmountIcon
@@ -118,10 +108,11 @@ const QuoteIdle = memo<TransactQuoteProps>(function QuoteIdle({ title, className
                   amount={BIG_ZERO}
                   chainId={vault.chainId}
                   tokenAddress={tokenAddress}
+                  className={classes.fullWidth}
                 />
               );
             })}
-          </>
+          </div>
         ) : (
           <TokenAmountIcon
             amount={BIG_ZERO}

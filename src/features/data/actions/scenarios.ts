@@ -53,7 +53,7 @@ export const chains = chainsConfig.map(id => ({ id }));
 /**
  * Fetch all necessary information for the home page
  */
-export async function initHomeDataV4(store: BeefyStore) {
+export async function initAppData(store: BeefyStore) {
   const captureFulfill = createFulfilledActionCapturer(store);
 
   // start fetching chain config

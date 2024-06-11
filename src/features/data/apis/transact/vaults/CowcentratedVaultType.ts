@@ -1,6 +1,6 @@
-import BigNumber from 'bignumber.js';
+import type { BigNumber } from 'bignumber.js';
 import { BIG_ZERO, fromWei, tokenAmountToWei } from '../../../../../helpers/big-number';
-import type { BeefyState, GetStateFn } from '../../../../../redux-types';
+import type { GetStateFn } from '../../../../../redux-types';
 import {
   isTokenEqual,
   isTokenErc20,
@@ -32,7 +32,6 @@ import type {
   VaultWithdrawRequest,
   VaultWithdrawResponse,
 } from './IVaultType';
-import { selectFeesByVaultId } from '../../../selectors/fees';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../reducers/wallet/stepper';
 import { walletActions } from '../../../actions/wallet-actions';
@@ -171,19 +170,6 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };
-  }
-
-  protected calculateDepositFee(inputs: TokenAmount[], state: BeefyState): BigNumber {
-    const { deposit: depositFeePercent } = selectFeesByVaultId(state, this.vault.id);
-    return depositFeePercent && depositFeePercent > 0
-      ? inputs
-          .map(input =>
-            input.amount
-              .multipliedBy(depositFeePercent)
-              .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR)
-          )
-          .reduce((a, b) => a.plus(b), BIG_ZERO)
-      : BIG_ZERO;
   }
 
   async fetchWithdrawOption(): Promise<CowcentratedVaultWithdrawOption> {
