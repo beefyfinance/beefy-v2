@@ -57,6 +57,11 @@ export const styles = (theme: Theme) => ({
       fontWeight: 500,
     },
   },
+  vaultTagClmIcon: {
+    width: 16,
+    height: 16,
+    display: 'block',
+  },
   vaultTagClmText: {},
   vaultTagClmAutoHide: {
     '& $vaultTagClmText': {
