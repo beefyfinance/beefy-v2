@@ -288,7 +288,9 @@ function addVaultToState(
       name: apiVault.name,
       type: 'cowcentrated',
       version: apiVault.version || 1,
-      depositTokenAddress: apiVault.tokenAddress ?? 'native',
+      depositTokenAddress: apiVault.tokenAddress
+        ? apiVault.tokenAddress + '-' + apiVault.id
+        : 'native',
       depositTokenAddresses: apiVault.depositTokenAddresses || [],
       zaps: apiVault.zaps || [],
       earnContractAddress: apiVault.earnContractAddress,

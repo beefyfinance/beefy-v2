@@ -46,7 +46,10 @@ export function getDepositTokenFromLegacyVaultConfig(chain: ChainEntity, apiVaul
       id: apiVault.token,
       chainId: chain.id,
       oracleId: apiVault.oracleId,
-      address: apiVault.tokenAddress,
+      address:
+        apiVault.type === 'cowcentrated'
+          ? apiVault.tokenAddress + '-' + apiVault.id
+          : apiVault.tokenAddress,
       decimals: apiVault.tokenDecimals,
       symbol: apiVault.token,
       providerId: apiVault.tokenProviderId,

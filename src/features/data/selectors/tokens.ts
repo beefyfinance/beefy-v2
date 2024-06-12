@@ -6,7 +6,7 @@ import { isTokenErc20, isTokenNative } from '../entities/token';
 import { selectAllChainIds, selectChainById } from './chains';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectIsAddressBookLoaded, selectIsGlobalDataAvailable } from './data-loader';
-import { isCowcentratedVault, isGovVault, type VaultEntity } from '../entities/vault';
+import { isGovVault, type VaultEntity } from '../entities/vault';
 import { createCachedSelector } from 're-reselect';
 import { selectCowcentratedVaultById, selectVaultById } from './vaults';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
@@ -243,11 +243,7 @@ export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEn
   state.entities.tokens.breakdown.byOracleId[oracleId];
 
 export const selectLpBreakdownForVault = (state: BeefyState, vault: VaultEntity) => {
-  if (isCowcentratedVault(vault)) {
-    return selectLpBreakdownByOracleId(state, vault.id);
-  } else {
-    return selectLpBreakdownByTokenAddress(state, vault.chainId, vault.depositTokenAddress);
-  }
+  return selectLpBreakdownByTokenAddress(state, vault.chainId, vault.depositTokenAddress);
 };
 
 export const selectLpBreakdownByTokenAddress = (
