@@ -1095,7 +1095,7 @@
     "name": "SILO-ETH Beta",
     "type": "cowcentrated",
     "token": "SILO-ETH",
-    "tokenAddress": "0xd3E11119d2680c963F1CDCffeCe0c4adE823Fb58",
+    "tokenAddress": "0xD3E11119d2680C963f1cdCffECE0C4ADE823Fb59",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
@@ -1565,7 +1565,7 @@
     "name": "MAGIC-WETH Beta",
     "type": "cowcentrated",
     "token": "MAGIC-WETH",
-    "tokenAddress": "0x59D72DDB29Da32847A4665d08ffc8464A7185FAE",
+    "tokenAddress": "0x59D72ddb29Da32847A4665d08Ffc8464a7185fAF",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
@@ -1598,7 +1598,7 @@
     "name": "ARB-USDC.e Beta",
     "type": "cowcentrated",
     "token": "ARB-USDC.e",
-    "tokenAddress": "0xcDa53B1F66614552F834cEeF361A8D12a0B8DaD8",
+    "tokenAddress": "0xCDa53b1f66614552F834Ceef361A8D12A0B8dAD9",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
@@ -1677,7 +1677,7 @@
     "name": "WBTC-WETH Beta",
     "type": "cowcentrated",
     "token": "WBTC-WETH",
-    "tokenAddress": "0x2f5e87C9312fa29aed5c179E456625D79015299c",
+    "tokenAddress": "0x2f5e87C9312FA29aED5c179E456625d79015299d",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
@@ -1710,7 +1710,7 @@
     "name": "WETH-USDC Beta",
     "type": "cowcentrated",
     "token": "WETH-USDC",
-    "tokenAddress": "0xC6962004f452bE9203591991D15f6b388e09E8D0",
+    "tokenAddress": "0xC6962004F452Be9203591991D15F6b388E09e8d1",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
@@ -1743,7 +1743,7 @@
     "name": "PENDLE-WETH Beta",
     "type": "cowcentrated",
     "token": "PENDLE-WETH",
-    "tokenAddress": "0xdbaeB7f0DFe3a0AAFD798CCECB5b22E708f7852c",
+    "tokenAddress": "0xdBAEB7f0DFE3A0AaFd798CCecB5b22E708F7852d",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
@@ -1776,7 +1776,7 @@
     "name": "ARB-WETH Beta",
     "type": "cowcentrated",
     "token": "ARB-WETH",
-    "tokenAddress": "0xC6F780497A95e246EB9449f5e4770916DCd6396A",
+    "tokenAddress": "0xC6f780497A95e246eB9449F5e4770916DCD6396b",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
