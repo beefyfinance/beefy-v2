@@ -13,7 +13,7 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import type { TokenLpBreakdown } from '../../../data/entities/token';
 import {
   selectHasBreakdownDataByTokenAddress,
-  selectLpBreakdownByTokenAddress,
+  selectLpBreakdownForVault,
 } from '../../../data/selectors/tokens';
 import { isCowcentratedVault, type VaultEntity } from '../../../data/entities/vault';
 import {
@@ -96,9 +96,7 @@ export const LiquidityPoolBreakdownLoader = memo<LiquidityPoolBreakdownLoaderPro
     const shouldInitAddressBook = useAppSelector(state =>
       selectShouldInitAddressBook(state, chainId)
     );
-    const breakdown = useAppSelector(state =>
-      selectLpBreakdownByTokenAddress(state, chainId, vault.depositTokenAddress)
-    );
+    const breakdown = useAppSelector(state => selectLpBreakdownForVault(state, vault));
     const haveBreakdownData = useAppSelector(state =>
       selectHasBreakdownDataByTokenAddress(state, vault.depositTokenAddress, vault.chainId)
     );

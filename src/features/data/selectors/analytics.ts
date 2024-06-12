@@ -15,7 +15,7 @@ import {
 import {
   selectCowcentratedVaultDepositTokens,
   selectCowcentratedVaultDepositTokensWithPrices,
-  selectLpBreakdownByTokenAddress,
+  selectLpBreakdownForVault,
   selectTokenByAddress,
   selectTokenPriceByAddress,
 } from './tokens';
@@ -223,11 +223,7 @@ export const selectClmPnl = (
 
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
 
-  const breakdown = selectLpBreakdownByTokenAddress(
-    state,
-    vault.chainId,
-    vault.depositTokenAddress
-  );
+  const breakdown = selectLpBreakdownForVault(state, vault);
 
   const { assets, userBalanceDecimal } = selectUserLpBreakdownBalance(
     state,

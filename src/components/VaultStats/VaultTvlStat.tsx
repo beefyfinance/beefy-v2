@@ -7,7 +7,7 @@ import { VaultValueStat } from '../VaultValueStat';
 import { selectVaultTvl } from '../../features/data/selectors/tvl';
 import { formatLargeUsd, formatPercent } from '../../helpers/format';
 import {
-  selectLpBreakdownByTokenAddress,
+  selectLpBreakdownForVault,
   selectTokenByAddress,
 } from '../../features/data/selectors/tokens';
 import type { BigNumber } from 'bignumber.js';
@@ -46,11 +46,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
 
   // deposit can be moo or oracle
   const tvl = selectVaultTvl(state, vaultId);
-  const breakdown = selectLpBreakdownByTokenAddress(
-    state,
-    vault.chainId,
-    vault.depositTokenAddress
-  );
+  const breakdown = selectLpBreakdownForVault(state, vault);
 
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const platformId = isCowcentratedVault(vault) ? depositToken.providerId! : vault.platformId;
