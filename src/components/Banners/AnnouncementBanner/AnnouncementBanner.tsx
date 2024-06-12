@@ -9,7 +9,7 @@ const useStyles = makeStyles(styles);
 
 export const AnnouncementBanner = memo(function AnnouncementBanner() {
   const classes = useStyles();
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideClmbanner', false);
+  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideClmbannerprod', false);
 
   const closeBanner = useCallback(() => {
     setHideBanner(true);
@@ -24,21 +24,10 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
       icon={<img alt="snapshot" src={clm} className={classes.icon} />}
       text={
         <>
-          {`Beefy's revolutionary Cowcentrated Liquidity Management beta is live! Discover a wealth of
-          features in a whole new approach to liquidity and learn more with our launch`}{' '}
-          <a className={classes.link} target="__blank" href="https://beefy.com/articles/clm/">
-            blog post
+          <a className={classes.link} target="__blank" href="https://beefy.com/articles/ltipp/">
+            Unleashing the CLM:
           </a>{' '}
-          and new{' '}
-          <a
-            className={classes.link}
-            href="https://docs.beefy.finance/beefy-products/clm"
-            target="_blank"
-            rel="noopener"
-          >
-            documentation
-          </a>
-          .
+          {`The full functionality of Beefy’s app arrives for CLM across the chains. ZAP, Yield Module, Dashboard, and 12 weeks of ARB incentives kick off to turbocharge CLM yields for users. Cowcentrate your liquidity today!`}
         </>
       }
       onClose={closeBanner}

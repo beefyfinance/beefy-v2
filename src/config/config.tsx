@@ -869,7 +869,6 @@ export const config = {
     ],
   },
   mode: {
-    new: true,
     name: 'Mode',
     chainId: 34443,
     rpc: ['https://mainnet.mode.network'],

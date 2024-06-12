@@ -435,9 +435,9 @@
   },
   {
     "id": "uniswap-cow-arb-wsteth-weth",
-    "name": "wstETH-ETH",
+    "name": "wstETH-WETH",
     "type": "cowcentrated",
-    "token": "wstETH-ETH",
+    "token": "wstETH-WETH",
     "tokenAddress": "0x35218a1cbaC5Bbc3E57fd9Bd38219D37571b3537",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
