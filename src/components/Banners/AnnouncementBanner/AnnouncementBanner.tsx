@@ -27,7 +27,7 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
           <a className={classes.link} target="__blank" href="https://beefy.com/articles/ltipp/">
             Unleashing the CLM:
           </a>{' '}
-          {`the full functionality of Beefy’s app arrive for CLM across the chains; ZAP, Yield Module, Dashboard and 12 weeks of ARB incentives kick off to turbocharge CLM yields for users. Cowcentrate your liquidity today! `}{' '}
+          {`The full functionality of Beefy’s app arrives for CLM across the chains. ZAP, Yield Module, Dashboard, and 12 weeks of ARB incentives kick off to turbocharge CLM yields for users. Cowcentrate your liquidity today!`}
         </>
       }
       onClose={closeBanner}
