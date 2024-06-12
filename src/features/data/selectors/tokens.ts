@@ -243,11 +243,7 @@ export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEn
   state.entities.tokens.breakdown.byOracleId[oracleId];
 
 export const selectLpBreakdownForVault = (state: BeefyState, vault: VaultEntity) => {
-  if (isCowcentratedVault(vault)) {
-    return selectLpBreakdownByOracleId(state, vault.id);
-  } else {
-    return selectLpBreakdownByTokenAddress(state, vault.chainId, vault.depositTokenAddress);
-  }
+  return selectLpBreakdownByTokenAddress(state, vault.chainId, vault.depositTokenAddress);
 };
 
 export const selectLpBreakdownByTokenAddress = (
