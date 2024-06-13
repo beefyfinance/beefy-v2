@@ -8,8 +8,8 @@
     "tokenDecimals": 18,
     "tokenProviderId": "stellaswap",
     "depositTokenAddresses": [
-      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
-      "0xCa5Ca9083702c56b481D1eec86F1776FDbd2e594"
+      "0xAcc15dC74880C9944775448304B263D191c6077F",
+      "0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080"
     ],
     "earnedToken": "cowStellaxcDOT-GLMR",
     "earnedTokenAddress": "0xB4ffA6d9017bfc0e1F2C80E4b5C168516455383b",
