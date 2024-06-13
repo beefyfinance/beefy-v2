@@ -1,5 +1,36 @@
 [
   {
+    "id": "uniswap-cow-arb-weth-rsr",
+    "name": "RSR-WETH",
+    "type": "cowcentrated",
+    "token": "RSR-WETH",
+    "tokenAddress": "0xF215CeDbAe999571e4BA5d80C10b6e835F88D5eC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xCa5Ca9083702c56b481D1eec86F1776FDbd2e594"
+    ],
+    "earnedToken": "cowUniswapArbRSR-WETH",
+    "earnedTokenAddress": "0xC942119Efb0Bee010F35d1cfCcCeb1230f2E172e",
+    "earnContractAddress": "0xC942119Efb0Bee010F35d1cfCcCeb1230f2E172e",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-weth-rsr",
+    "status": "active",
+    "createdAt": 1718291896,
+    "platformId": "beefy",
+    "assets": ["RSR", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arb-weth-uni",
     "name": "UNI-WETH",
     "type": "cowcentrated",
