@@ -1,5 +1,36 @@
 [
   {
+    "id": "lynex-gamma-ineth-wsteth",
+    "name": "inETH-wstETH LP",
+    "type": "standard",
+    "token": "inETH-wstETH LP",
+    "tokenAddress": "0xC491C1b173E932E97d9F739ccD9AE5b6d5FcE4ce",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lynex",
+    "earnedToken": "mooLynexGammainETH-wstWETH",
+    "earnedTokenAddress": "0xAA3b8C08e7Fe86E1dda8FA9FE7423561Ad316e3F",
+    "earnContractAddress": "0xAA3b8C08e7Fe86E1dda8FA9FE7423561Ad316e3F",
+    "oracle": "lps",
+    "oracleId": "lynex-gamma-ineth-wsteth",
+    "status": "active",
+    "createdAt": 1718284634,
+    "platformId": "gamma",
+    "assets": ["inETH", "wstETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ineth-wsteth-pegged-price",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ineth-wsteth-pegged-price",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "linea-gamma-lynex",
+        "tokenHolder": "0x26D9DaD34412bbA1C5aD4b78a272537eB0ABA836"
+      }
+    ],
+    "earningPoints": true
+  },
+  {
     "id": "nile-usdc-lusd",
     "name": "USDC-LUSD Correlated LP",
     "type": "standard",
