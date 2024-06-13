@@ -1,5 +1,31 @@
 [
   {
+    "id": "stella-cow-xcdot-glmr",
+    "name": "xcDOT-WGLMR",
+    "type": "cowcentrated",
+    "token": "xcDOT-WGLMR",
+    "tokenAddress": "0xB13B281503F6eC8A837Ae1a21e86a9caE368fCc5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xCa5Ca9083702c56b481D1eec86F1776FDbd2e594"
+    ],
+    "earnedToken": "cowStellaxcDOT-GLMR",
+    "earnedTokenAddress": "0xB4ffA6d9017bfc0e1F2C80E4b5C168516455383b",
+    "earnContractAddress": "0xB4ffA6d9017bfc0e1F2C80E4b5C168516455383b",
+    "oracle": "lps",
+    "oracleId": "stella-cow-xcdot-glmr",
+    "status": "active",
+    "createdAt": 1718291896,
+    "platformId": "beefy",
+    "assets": ["xcDOT", "WGLMR"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "moonbeam",
+    "feeTier": "Dynamic "
+  },
+  {
     "id": "uniswap-gamma-weth-wglmr",
     "name": "WETH-GLMR LP",
     "type": "standard",

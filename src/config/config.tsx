@@ -481,7 +481,7 @@ export const config = {
     explorerUrl: 'https://moonscan.io',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0xA4afDf57663951C6204E5110EE1741e8dfb0F3ec',
+    appMulticallContractAddress: '0x6B0A1644e662E63cC866A3F243d83a49e0818Aa1',
     providerName: 'Moonbeam',
     walletSettings: {
       chainId: `0x${parseInt('1284', 10).toString(16)}`,
