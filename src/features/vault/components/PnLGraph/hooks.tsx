@@ -16,7 +16,7 @@ import {
 import { selectWalletAddress } from '../../../data/selectors/wallet';
 import { isVaultTimelineAnalyticsEntity } from '../../../data/entities/analytics';
 import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../data/selectors/balance';
-import { useOracleIdToUsdPrices } from '../../../data/hooks/historical';
+import { useVaultIdToUnderlyingUsdPrices } from '../../../data/hooks/historical';
 import type { GraphBucket } from '../../../../helpers/graph';
 import { useVaultIdToShareToUnderlying } from '../../../data/hooks/analytics';
 
@@ -47,7 +47,7 @@ export const usePnLChartData = (
     vaultId,
     timebucket
   );
-  const { data: underlyingToUsd, loading: underlyingLoading } = useOracleIdToUsdPrices(
+  const { data: underlyingToUsd, loading: underlyingLoading } = useVaultIdToUnderlyingUsdPrices(
     vaultId,
     timebucket
   );
