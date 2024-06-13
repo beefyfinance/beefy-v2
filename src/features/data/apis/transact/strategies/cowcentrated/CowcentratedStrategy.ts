@@ -727,7 +727,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
         steps.push({
           type: 'swap',
           fromToken: input.token,
-          fromAmount: input.amount,
+          fromAmount: swapQuote.fromAmount,
           toToken: swapQuote.toToken,
           toAmount: swapQuote.toAmount,
           via: 'aggregator',
