@@ -1,126 +1,85 @@
-import { useEffect, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import type { TimeBucketType } from '../../../../../data/apis/analytics/analytics-types';
-import type { VaultEntity } from '../../../../../data/entities/vault';
+import { useMemo } from 'react';
+import { useAppSelector } from '../../../../../../store';
+import { type VaultEntity } from '../../../../../data/entities/vault';
 import {
-  selectUserFirstDepositDateByVaultId,
-  selectUnderlyingToUsdTimebucketByVaultId,
-  selectUserDepositedTimelineByVaultId,
   selectClmPnl,
-  selectUserClmHarvestTimelineByVaultId,
+  selectUserDepositedTimelineByVaultId,
+  selectUserFirstDepositDateByVaultId,
 } from '../../../../../data/selectors/analytics';
 import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../../../data/selectors/balance';
 import {
   selectCowcentratedVaultDepositTokensWithPrices,
-  selectTokenPriceByAddress,
+  selectTokenPriceByTokenOracleId,
 } from '../../../../../data/selectors/tokens';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet';
-import { fetchClmUnderlyingToUsd } from '../../../../../data/actions/analytics';
-import { eachDayOfInterval, isAfter } from 'date-fns';
+import { eachDayOfInterval, getUnixTime } from 'date-fns';
 import { maxBy, minBy } from 'lodash';
-import { getClmInvestorTimeserie } from '../../../../../../helpers/timeserie';
-import type { CLMTimelineAnalyticsEntity } from '../../../../../data/entities/analytics';
+import { getClmInvestorTimeSeries } from '../../../../../../helpers/timeserie';
+import { isCLMTimelineAnalyticsEntity } from '../../../../../data/entities/analytics';
+import { useOracleIdToUsdPrices } from '../../../../../data/hooks/historical';
+import type { GraphBucket } from '../../../../../../helpers/graph';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], minUsd: 0, maxUsd: 0 };
 
 export const usePnLChartData = (
-  timebucket: TimeBucketType,
+  timebucket: GraphBucket,
   vaultId: VaultEntity['id'],
   address?: string
 ) => {
-  const dispatch = useAppDispatch();
   const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
-
   const vaultTimeline = useAppSelector(state =>
     selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress)
   );
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
-  const currentOraclePrice = useAppSelector(state =>
-    selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
+  const currentSharePrice = useAppSelector(state =>
+    selectTokenPriceByTokenOracleId(state, vaultId)
   );
   const currentMooTokenBalance = useAppSelector(state =>
-    selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vault.id, walletAddress)
+    selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vaultId, walletAddress)
   );
-  const vaultLastDeposit = useAppSelector(state =>
-    selectUserFirstDepositDateByVaultId(state, vaultId, walletAddress)
-  );
-
-  const { data: underlyingToUsd, status: underlyingStatus } = useAppSelector(state =>
-    selectUnderlyingToUsdTimebucketByVaultId(state, vaultId, timebucket, walletAddress)
-  );
-
   const { token0SharesAtDeposit, token1SharesAtDeposit } = useAppSelector(state =>
     selectClmPnl(state, vaultId, address)
   );
-
   const { token0, token1 } = useAppSelector(state =>
     selectCowcentratedVaultDepositTokensWithPrices(state, vaultId)
   );
-  const userHarvestTimeline = useAppSelector(state =>
-    selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress)
+  const { data: sharesToUsd, loading: sharesToUsdLoading } = useOracleIdToUsdPrices(
+    vaultId,
+    timebucket
   );
-
-  useEffect(() => {
-    if (walletAddress) {
-      if (underlyingStatus === 'idle') {
-        dispatch(
-          fetchClmUnderlyingToUsd({
-            vaultId,
-            walletAddress,
-            timebucket,
-          })
-        );
-      }
-
-      if (underlyingStatus === 'rejected') {
-        const handleUnderlyingToUsd = setTimeout(
-          () =>
-            dispatch(
-              fetchClmUnderlyingToUsd({
-                vaultId,
-                walletAddress,
-                timebucket,
-              })
-            ),
-          5000
-        );
-        return () => clearTimeout(handleUnderlyingToUsd);
-      }
-    }
-  }, [dispatch, timebucket, underlyingStatus, vaultId, walletAddress]);
-
-  const isLoading = useMemo(() => {
-    return underlyingStatus !== 'fulfilled' || !userHarvestTimeline;
-  }, [underlyingStatus, userHarvestTimeline]);
+  const { data: token0ToUsd, loading: token0ToUsdLoading } = useOracleIdToUsdPrices(
+    token0.oracleId,
+    timebucket
+  );
+  const { data: token1ToUsd, loading: token1ToUsdLoading } = useOracleIdToUsdPrices(
+    token1.oracleId,
+    timebucket
+  );
+  const isLoading = sharesToUsdLoading || token0ToUsdLoading || token1ToUsdLoading;
 
   const chartData = useMemo(() => {
     if (
-      underlyingStatus === 'fulfilled' &&
-      vaultTimeline &&
-      vaultTimeline.length &&
-      underlyingToUsd &&
-      vaultLastDeposit &&
-      userHarvestTimeline &&
-      userHarvestTimeline.harvests.length > 0
+      !isLoading &&
+      isCLMTimelineAnalyticsEntity(vaultTimeline) &&
+      vaultTimeline.current.length &&
+      sharesToUsd &&
+      token0ToUsd &&
+      token1ToUsd
     ) {
-      const filteredUnderlyingToUsd = underlyingToUsd.filter(price =>
-        isAfter(price.date, vaultLastDeposit)
-      );
+      const vaultLastDeposit = vaultTimeline.current[0].datetime;
+      const vaultLastDepositUnix = getUnixTime(vaultLastDeposit);
+      const filteredSharesToUsd = sharesToUsd.filter(price => price.t >= vaultLastDepositUnix);
+      const filteredToken0ToUsd = token0ToUsd.filter(price => price.t >= vaultLastDepositUnix);
+      const filteredToken1ToUsd = token1ToUsd.filter(price => price.t >= vaultLastDepositUnix);
 
-      const filteredHarvests = userHarvestTimeline.harvests.filter(harvest =>
-        isAfter(harvest.timestamp, vaultLastDeposit)
-      );
-
-      const data = getClmInvestorTimeserie(
+      const data = getClmInvestorTimeSeries(
         timebucket,
-        vaultTimeline as CLMTimelineAnalyticsEntity[],
-        filteredHarvests,
-        filteredUnderlyingToUsd,
+        vaultTimeline.current,
+        filteredSharesToUsd,
+        filteredToken0ToUsd,
+        filteredToken1ToUsd,
         vaultLastDeposit,
-        currentOraclePrice,
+        currentSharePrice,
         currentMooTokenBalance,
         token0SharesAtDeposit,
         token1SharesAtDeposit,
@@ -146,18 +105,18 @@ export const usePnLChartData = (
     // We need to make sure this object is not modified elsewhere
     return NO_CHART_DATA;
   }, [
+    isLoading,
     currentMooTokenBalance,
-    currentOraclePrice,
+    currentSharePrice,
     timebucket,
     token0.price,
     token0SharesAtDeposit,
     token1.price,
     token1SharesAtDeposit,
-    underlyingStatus,
-    underlyingToUsd,
-    userHarvestTimeline,
-    vaultLastDeposit,
+    sharesToUsd,
     vaultTimeline,
+    token0ToUsd,
+    token1ToUsd,
   ]);
 
   return { chartData, isLoading };

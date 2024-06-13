@@ -24,7 +24,7 @@ type VTACOptionalBigNumber = ChangeTypeOfKeys<
 
 type VTACWithDateTime = ChangeTypeOfKeys<VTACOptionalBigNumber, 'datetime', Date>;
 
-export type VaultTimelineAnalyticsEntityWithoutVaultId = Prettify<
+export type VaultTimelineAnalyticsEntryWithoutVaultId = Prettify<
   VTACWithDateTime & {
     type: 'standard';
     transactionId: string;
@@ -36,7 +36,7 @@ export type VaultTimelineAnalyticsEntityWithoutVaultId = Prettify<
   }
 >;
 
-export type VaultTimelineAnalyticsEntity = VaultTimelineAnalyticsEntityWithoutVaultId & {
+export type VaultTimelineAnalyticsEntry = VaultTimelineAnalyticsEntryWithoutVaultId & {
   vaultId: string;
 };
 
@@ -59,27 +59,52 @@ type CLMABigNumber = ChangeTypeOfKeys<
   BigNumber
 >;
 
-export type CLMTimelineAnalyticsEntityWithoutVaultId = Prettify<
+export type CLMTimelineAnalyticsEntryWithoutVaultId = Prettify<
   ChangeTypeOfKeys<CLMABigNumber, 'datetime', Date> & {
     type: 'cowcentrated';
     transactionId: string;
   }
 >;
 
-export type CLMTimelineAnalyticsEntity = CLMTimelineAnalyticsEntityWithoutVaultId & {
+export type CLMTimelineAnalyticsEntry = CLMTimelineAnalyticsEntryWithoutVaultId & {
   vaultId: string;
 };
 
+export type AnyTimelineAnalyticsEntry = VaultTimelineAnalyticsEntry | CLMTimelineAnalyticsEntry;
+
+export type TimelineAnalyticsEntryToEntity<T extends AnyTimelineAnalyticsEntry> = {
+  type: T['type'];
+  current: T[];
+  past: T[];
+};
+
+export type VaultTimelineAnalyticsEntity =
+  TimelineAnalyticsEntryToEntity<VaultTimelineAnalyticsEntry>;
+
+export type CLMTimelineAnalyticsEntity = TimelineAnalyticsEntryToEntity<CLMTimelineAnalyticsEntry>;
+
 export type AnyTimelineAnalyticsEntity = VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity;
 
-export function isVaultTimelineAnalyticsEntity(
-  entity: AnyTimelineAnalyticsEntity
-): entity is VaultTimelineAnalyticsEntity {
+export function isVaultTimelineAnalyticsEntry(
+  entity: AnyTimelineAnalyticsEntry
+): entity is VaultTimelineAnalyticsEntry {
   return entity.type === 'standard';
 }
 
-export function isCLMTimelineAnalyticsEntity(
-  entity: AnyTimelineAnalyticsEntity
-): entity is CLMTimelineAnalyticsEntity {
+export function isCLMTimelineAnalyticsEntry(
+  entity: AnyTimelineAnalyticsEntry
+): entity is CLMTimelineAnalyticsEntry {
   return entity.type === 'cowcentrated';
+}
+
+export function isVaultTimelineAnalyticsEntity(
+  entity: AnyTimelineAnalyticsEntity | undefined
+): entity is VaultTimelineAnalyticsEntity {
+  return !!entity && entity.type === 'standard';
+}
+
+export function isCLMTimelineAnalyticsEntity(
+  entity: AnyTimelineAnalyticsEntity | undefined
+): entity is CLMTimelineAnalyticsEntity {
+  return !!entity && entity.type === 'cowcentrated';
 }

@@ -1,37 +1,34 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
-import { useAppDispatch, useAppSelector } from '../../../../store';
+import { useAppSelector } from '../../../../store';
 import {
-  selectUserFirstDepositDateByVaultId,
-  selectShareToUnderlyingTimebucketByVaultId,
-  selectUnderlyingToUsdTimebucketByVaultId,
   selectUserDepositedTimelineByVaultId,
+  selectUserFirstDepositDateByVaultId,
 } from '../../../data/selectors/analytics';
 import { getInvestorTimeserie } from '../../../../helpers/timeserie';
-import { eachDayOfInterval, isAfter } from 'date-fns';
+import { eachDayOfInterval, getUnixTime, isAfter } from 'date-fns';
 import { maxBy, minBy } from 'lodash-es';
-import type { TimeBucketType } from '../../../data/apis/analytics/analytics-types';
 import { selectVaultById, selectVaultPricePerFullShare } from '../../../data/selectors/vaults';
 import {
   selectDepositTokenByVaultId,
   selectTokenPriceByAddress,
 } from '../../../data/selectors/tokens';
-import { fetchShareToUnderlying, fetchUnderlyingToUsd } from '../../../data/actions/analytics';
 import { selectWalletAddress } from '../../../data/selectors/wallet';
-import type { VaultTimelineAnalyticsEntity } from '../../../data/entities/analytics';
+import { isVaultTimelineAnalyticsEntity } from '../../../data/entities/analytics';
 import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../data/selectors/balance';
+import { useOracleIdToUsdPrices } from '../../../data/hooks/historical';
+import type { GraphBucket } from '../../../../helpers/graph';
+import { useVaultIdToShareToUnderlying } from '../../../data/hooks/analytics';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], minUnderlying: 0, maxUnderlying: 0, minUsd: 0, maxUsd: 0 };
 
 export const usePnLChartData = (
-  timebucket: TimeBucketType,
+  timebucket: GraphBucket,
   vaultId: VaultEntity['id'],
   address?: string
 ) => {
-  const dispatch = useAppDispatch();
   const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
-
   const vaultTimeline = useAppSelector(state =>
     selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress)
   );
@@ -46,97 +43,37 @@ export const usePnLChartData = (
   const currentMooTokenBalance = useAppSelector(state =>
     selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vault.id, walletAddress)
   );
-  const vaultLastDeposit = useAppSelector(state =>
-    selectUserFirstDepositDateByVaultId(state, vaultId, walletAddress)
+  const { data: sharesToUnderlying, loading: sharesLoading } = useVaultIdToShareToUnderlying(
+    vaultId,
+    timebucket
+  );
+  const { data: underlyingToUsd, loading: underlyingLoading } = useOracleIdToUsdPrices(
+    vaultId,
+    timebucket
   );
 
-  const { data: sharesToUnderlying, status: sharesStatus } = useAppSelector(state =>
-    selectShareToUnderlyingTimebucketByVaultId(state, vaultId, timebucket, walletAddress)
-  );
-
-  const { data: underlyingToUsd, status: underlyingStatus } = useAppSelector(state =>
-    selectUnderlyingToUsdTimebucketByVaultId(state, vaultId, timebucket, walletAddress)
-  );
-
-  useEffect(() => {
-    if (walletAddress) {
-      if (sharesStatus === 'idle') {
-        dispatch(
-          fetchShareToUnderlying({
-            productType: 'vault',
-            vaultId,
-            walletAddress,
-            timebucket,
-          })
-        );
-      }
-      if (underlyingStatus === 'idle') {
-        dispatch(
-          fetchUnderlyingToUsd({
-            productType: 'vault',
-            vaultId,
-            walletAddress,
-            timebucket,
-          })
-        );
-      }
-
-      if (sharesStatus === 'rejected') {
-        const handleShareToUnderlying = setTimeout(
-          () =>
-            dispatch(
-              fetchShareToUnderlying({
-                productType: 'vault',
-                vaultId,
-                walletAddress,
-                timebucket,
-              })
-            ),
-          5000
-        );
-        return () => clearTimeout(handleShareToUnderlying);
-      }
-
-      if (underlyingStatus === 'rejected') {
-        const handleUnderlyingToUsd = setTimeout(
-          () =>
-            dispatch(
-              fetchUnderlyingToUsd({
-                productType: 'vault',
-                vaultId,
-                walletAddress,
-                timebucket,
-              })
-            ),
-          5000
-        );
-        return () => clearTimeout(handleUnderlyingToUsd);
-      }
-    }
-  }, [dispatch, sharesStatus, underlyingStatus, timebucket, vaultId, walletAddress]);
-
-  const isLoading = useMemo(() => {
-    return underlyingStatus !== 'fulfilled' || sharesStatus !== 'fulfilled';
-  }, [sharesStatus, underlyingStatus]);
+  const isLoading = underlyingLoading || sharesLoading;
 
   const chartData = useMemo(() => {
     if (
-      sharesStatus === 'fulfilled' &&
-      underlyingStatus === 'fulfilled' &&
-      vaultLastDeposit &&
+      !isLoading &&
       vaultTimeline &&
-      vaultTimeline.length
+      isVaultTimelineAnalyticsEntity(vaultTimeline) &&
+      vaultTimeline.current.length &&
+      underlyingToUsd
     ) {
+      const vaultLastDeposit = vaultTimeline.current[0].datetime;
+      const vaultLastDepositUnix = getUnixTime(vaultLastDeposit);
       const filteredSharesToUnderlying = sharesToUnderlying.filter(price =>
         isAfter(price.date, vaultLastDeposit)
       );
-      const filteredUnderlyingToUsd = underlyingToUsd.filter(price =>
-        isAfter(price.date, vaultLastDeposit)
+      const filteredUnderlyingToUsd = underlyingToUsd.filter(
+        price => price.t > vaultLastDepositUnix
       );
 
       const data = getInvestorTimeserie(
         timebucket,
-        vaultTimeline as VaultTimelineAnalyticsEntity[],
+        vaultTimeline.current,
         filteredSharesToUnderlying,
         filteredUnderlyingToUsd,
         vaultLastDeposit,
@@ -160,15 +97,13 @@ export const usePnLChartData = (
     // We need to make sure this object is not modified elsewhere
     return NO_CHART_DATA;
   }, [
+    isLoading,
     sharesToUnderlying,
     underlyingToUsd,
     currentMooTokenBalance,
     currentOraclePrice,
     currentPpfs,
-    vaultLastDeposit,
     vaultTimeline,
-    sharesStatus,
-    underlyingStatus,
     timebucket,
   ]);
 

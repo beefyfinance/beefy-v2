@@ -246,3 +246,8 @@ export function featureFlag_disableKyber(): boolean {
   const params = getSearchParams();
   return params.has('__disable_kyber');
 }
+
+export function featureFlag_debugGraph(): boolean {
+  const params = getSearchParams();
+  return params.has('__debug_graph');
+}

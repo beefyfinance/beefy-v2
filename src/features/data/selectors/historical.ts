@@ -4,9 +4,11 @@ import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import type { TokenEntity } from '../entities/token';
 import { createSelector } from '@reduxjs/toolkit';
 import type { ChartStat } from '../reducers/historical-types';
-import { mapValues } from 'lodash-es';
 import { selectVaultShouldShowInterest } from './data-loader';
-import { TIME_BUCKETS } from '../../vault/components/HistoricGraph/utils';
+import { allDataApiBuckets } from '../apis/beefy/beefy-data-api-helpers';
+import { fromKeys } from '../../../helpers/object';
+
+const unavailableBuckets = fromKeys(allDataApiBuckets, false);
 
 export function selectHistoricalRangesStatus(state: BeefyState, vaultId: VaultEntity['id']) {
   return state.biz.historical.ranges.byVaultId[vaultId]?.status || 'idle';
@@ -115,7 +117,7 @@ export function selectHistoricalApyBucketData(
   vaultId: VaultEntity['id'],
   bucket: ApiTimeBucket
 ) {
-  return state.biz.historical.apys.byVaultId[vaultId]?.byTimebucket[bucket]?.data || [];
+  return state.biz.historical.apys.byVaultId[vaultId]?.byTimebucket[bucket]?.data || undefined;
 }
 
 export function selectHistoricalTvlBucketData(
@@ -123,7 +125,7 @@ export function selectHistoricalTvlBucketData(
   vaultId: VaultEntity['id'],
   bucket: ApiTimeBucket
 ) {
-  return state.biz.historical.tvls.byVaultId[vaultId]?.byTimebucket[bucket]?.data || [];
+  return state.biz.historical.tvls.byVaultId[vaultId]?.byTimebucket[bucket]?.data || undefined;
 }
 
 export function selectHistoricalPriceBucketData(
@@ -131,7 +133,7 @@ export function selectHistoricalPriceBucketData(
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket
 ) {
-  return state.biz.historical.prices.byOracleId[oracleId]?.byTimebucket[bucket]?.data || [];
+  return state.biz.historical.prices.byOracleId[oracleId]?.byTimebucket[bucket]?.data || undefined;
 }
 
 export function selectHistoricalCowcentratedRangesBucketData(
@@ -139,10 +141,8 @@ export function selectHistoricalCowcentratedRangesBucketData(
   vaultId: VaultEntity['id'],
   bucket: ApiTimeBucket
 ) {
-  return state.biz.historical.clm.byVaultId[vaultId]?.byTimebucket[bucket]?.data || [];
+  return state.biz.historical.clm.byVaultId[vaultId]?.byTimebucket[bucket]?.data || undefined;
 }
-
-const unavailableBuckets = mapValues(TIME_BUCKETS, () => false);
 
 export function selectHistoricalPriceAvailableBuckets(
   state: BeefyState,

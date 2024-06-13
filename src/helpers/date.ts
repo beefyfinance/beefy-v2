@@ -1,4 +1,4 @@
-import { add, intervalToDuration } from 'date-fns';
+import { add, intervalToDuration, isAfter } from 'date-fns';
 import { zeroPad } from './format';
 
 export function datesAreEqual(a: Date | undefined, b: Date | undefined): boolean {
@@ -50,4 +50,28 @@ export function formatMinutesDuration(minutes: number): string {
   const now = new Date();
   const later = add(now, { minutes });
   return formatTimeUntil(later, 1, 1, 1, now);
+}
+
+const durationUnits = [
+  'years',
+  'months',
+  'weeks',
+  'days',
+  'hours',
+  'minutes',
+  'seconds',
+] as const satisfies (keyof Duration)[];
+
+export function isDurationEqual(base: Duration, compareTo: Duration): boolean {
+  return durationUnits.every(unit => base[unit] === compareTo[unit]);
+}
+
+export function isLonger(base: Duration, compareTo: Duration): boolean {
+  if (isDurationEqual(base, compareTo)) {
+    return false;
+  }
+  const now = new Date();
+  const baseDate = add(now, base);
+  const compareToDate = add(now, compareTo);
+  return isAfter(baseDate, compareToDate);
 }

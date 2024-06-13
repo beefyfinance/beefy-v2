@@ -64,11 +64,6 @@ export const CowcentratedPnlGraphLoader = memo<CowcentratedPnlGraphLoaderProps>(
   }
 );
 
-enum ChartEnum {
-  Overview = 1,
-  Fees,
-}
-
 interface CowcentratedPnlGraphProps {
   vaultId: VaultEntity['id'];
   address: string;
@@ -113,17 +108,19 @@ export const FeesGraph = memo<CowcentratedPnlGraphProps>(function FeesGraph({ va
   );
 });
 
-const chartToComponent: Record<ChartEnum, FC<CowcentratedPnlGraphProps>> = {
-  [ChartEnum.Overview]: OverviewGraph as FC<CowcentratedPnlGraphProps>,
-  [ChartEnum.Fees]: FeesGraph as FC<CowcentratedPnlGraphProps>,
-};
+const chartToComponent = {
+  overview: OverviewGraph,
+  fees: FeesGraph,
+} as const satisfies Record<string, FC<CowcentratedPnlGraphProps>>;
+
+type ChartType = keyof typeof chartToComponent;
 
 export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function CowcentratedPnlGraph({
   vaultId,
   address,
 }) {
   const dispatch = useAppDispatch();
-  const [stat, setStat] = useState<string>('Overview');
+  const [stat, setStat] = useState<ChartType>('overview');
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -134,26 +131,18 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
 
   const options = useMemo(() => {
     return {
-      Overview: t('Graph-Overview'),
-      Fees: t('Graph-Fees'),
-    };
+      overview: t('Graph-Overview'),
+      fees: t('Graph-Fees'),
+    } as const satisfies Record<ChartType, string>;
   }, [t]);
 
-  const chartStat = useMemo(() => {
-    if (stat === 'Overview') {
-      return ChartEnum.Overview;
-    } else {
-      return ChartEnum.Fees;
-    }
-  }, [stat]);
-
-  const GraphComponent = chartToComponent[chartStat];
+  const GraphComponent = chartToComponent[stat];
 
   return (
     <Card className={classes.card}>
       <CardHeader className={classes.header}>
         <CardTitle title={t('Graph-PositionPerformance')} />
-        <StatSwitcher stat={stat} options={options} onChange={setStat} />
+        <StatSwitcher<ChartType> stat={stat} options={options} onChange={setStat} />
       </CardHeader>
       <GraphComponent vaultId={vaultId} address={address} />
     </Card>

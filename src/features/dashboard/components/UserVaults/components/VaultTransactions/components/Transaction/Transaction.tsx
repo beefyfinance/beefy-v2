@@ -2,9 +2,9 @@ import React, { memo, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import {
-  type CLMTimelineAnalyticsEntity,
-  isVaultTimelineAnalyticsEntity,
-  type VaultTimelineAnalyticsEntity,
+  type CLMTimelineAnalyticsEntry,
+  isVaultTimelineAnalyticsEntry,
+  type VaultTimelineAnalyticsEntry,
 } from '../../../../../../../data/entities/analytics';
 import clsx from 'clsx';
 import { formatISO9075 } from 'date-fns';
@@ -34,19 +34,19 @@ import type BigNumber from 'bignumber.js';
 const useStyles = makeStyles(styles);
 
 type TransactionProps = {
-  tx: VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity;
+  tx: VaultTimelineAnalyticsEntry | CLMTimelineAnalyticsEntry;
 };
 
 type TransactionStatProps<
-  T extends VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity =
-    | VaultTimelineAnalyticsEntity
-    | CLMTimelineAnalyticsEntity
+  T extends VaultTimelineAnalyticsEntry | CLMTimelineAnalyticsEntry =
+    | VaultTimelineAnalyticsEntry
+    | CLMTimelineAnalyticsEntry
 > = {
   tx: T;
   mobile?: boolean;
 };
 
-const StandardAmountStat = memo<TransactionStatProps<VaultTimelineAnalyticsEntity>>(
+const StandardAmountStat = memo<TransactionStatProps<VaultTimelineAnalyticsEntry>>(
   function StandardAmountStat({ tx, mobile }) {
     const classes = useStyles();
     const { underlyingDiff } = tx;
@@ -65,7 +65,7 @@ const StandardAmountStat = memo<TransactionStatProps<VaultTimelineAnalyticsEntit
   }
 );
 
-const CowcentratedAmountStat = memo<TransactionStatProps<CLMTimelineAnalyticsEntity>>(
+const CowcentratedAmountStat = memo<TransactionStatProps<CLMTimelineAnalyticsEntry>>(
   function CowcentratedAmountStat({ tx, mobile }) {
     const classes = useStyles();
     const { underlying0Diff, underlying1Diff } = tx;
@@ -102,7 +102,7 @@ const CowcentratedAmountStat = memo<TransactionStatProps<CLMTimelineAnalyticsEnt
   }
 );
 
-const StandardBalanceStat = memo<TransactionStatProps<VaultTimelineAnalyticsEntity>>(
+const StandardBalanceStat = memo<TransactionStatProps<VaultTimelineAnalyticsEntry>>(
   function StandardBalanceStat({ tx, mobile }) {
     const classes = useStyles();
     const { shareBalance, shareToUnderlyingPrice } = tx;
@@ -152,7 +152,7 @@ const TokenIconAmount = memo<TokenIconAmountProps>(function IconTokenAmount({
   );
 });
 
-const CowcentratedBalanceStat = memo<TransactionStatProps<CLMTimelineAnalyticsEntity>>(
+const CowcentratedBalanceStat = memo<TransactionStatProps<CLMTimelineAnalyticsEntry>>(
   function CowcentratedBalanceStat({ tx, mobile }) {
     const classes = useStyles();
     const { underlying0Balance, underlying1Balance } = tx;
@@ -171,7 +171,7 @@ const CowcentratedBalanceStat = memo<TransactionStatProps<CLMTimelineAnalyticsEn
 
 export const Transaction = memo<TransactionProps>(function Transaction({ tx }) {
   const classes = useStyles();
-  const isStandard = isVaultTimelineAnalyticsEntity(tx);
+  const isStandard = isVaultTimelineAnalyticsEntry(tx);
   const chainId = isStandard ? tx.source?.chain || tx.chain : tx.chain;
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const { datetime, shareBalance, usdBalance, transactionHash } = tx;
@@ -225,7 +225,7 @@ export const Transaction = memo<TransactionProps>(function Transaction({ tx }) {
 export const TransactionMobile = memo<TransactionProps>(function TransactionMobile({ tx }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const isStandard = isVaultTimelineAnalyticsEntity(tx);
+  const isStandard = isVaultTimelineAnalyticsEntry(tx);
   const chainId = isStandard ? tx.source?.chain || tx.chain : tx.chain;
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const { datetime, shareBalance, usdBalance, transactionHash } = tx;

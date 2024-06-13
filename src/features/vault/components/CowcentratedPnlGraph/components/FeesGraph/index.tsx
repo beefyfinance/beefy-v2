@@ -7,7 +7,6 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  type TooltipProps,
 } from 'recharts';
 import { useFeesChartData } from './hooks';
 import type { Theme } from '@material-ui/core';
@@ -16,17 +15,17 @@ import { GraphLoader } from '../../../GraphLoader';
 import { max } from 'lodash-es';
 import {
   domainOffSet,
-  getXInterval,
-  mapRangeToTicks,
-  formatUsdTick,
   formatDateTimeTick,
+  formatUsdTick,
+  getXInterval,
+  type GraphBucket,
+  mapRangeToTicks,
 } from '../../../../../../helpers/graph';
 import { styles } from './styles';
 import { XAxisTick } from '../../../../../../components/XAxisTick';
-import { FeesTooltip } from '../Tooltips';
+import { FeesTooltip, type FeesTooltipProps } from '../Tooltips';
 import { useAppSelector } from '../../../../../../store';
 import { selectCowcentratedVaultDepositTokens } from '../../../../../data/selectors/tokens';
-import type { TimeBucketType } from '../../../../../data/apis/analytics/analytics-types';
 
 const useStyles = makeStyles(styles);
 
@@ -36,7 +35,7 @@ interface CLMFeesGraphProps {
   address?: string;
 }
 
-const FEES_TIME_BUCKET: TimeBucketType[] = ['1h_1w', '1d_1M', '1d_all'];
+const FEES_TIME_BUCKET: GraphBucket[] = ['1h_1w', '1d_1M', '1d_all'];
 
 export const CLMFeesGraph = memo<CLMFeesGraphProps>(function CLMFeesGraph({
   vaultId,
@@ -84,7 +83,7 @@ export const CLMFeesGraph = memo<CLMFeesGraphProps>(function CLMFeesGraph({
   }, [xsDown]);
 
   const tooltipContentCreator = useCallback(
-    (props: TooltipProps<number, string>) => (
+    (props: Omit<FeesTooltipProps, 'token0Symbol' | 'token1Symbol'>) => (
       <FeesTooltip token0Symbol={token0.symbol} token1Symbol={token1.symbol} {...props} />
     ),
     [token0.symbol, token1.symbol]

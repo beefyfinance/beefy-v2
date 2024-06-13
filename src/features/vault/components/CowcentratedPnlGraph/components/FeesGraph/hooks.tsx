@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { useAppSelector } from '../../../../../../store';
-import type { TimeBucketType } from '../../../../../data/apis/analytics/analytics-types';
 import type { VaultEntity } from '../../../../../data/entities/vault';
 import {
   selectUserClmHarvestTimelineByVaultId,
@@ -9,14 +8,15 @@ import {
 import { selectCowcentratedVaultDepositTokensWithPrices } from '../../../../../data/selectors/tokens';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet';
 import { maxBy, minBy } from 'lodash';
-import { getClmInvestorFeesTimeserie } from '../../../../../../helpers/timeserie';
+import { getClmInvestorFeesTimeSeries } from '../../../../../../helpers/timeserie';
 import { eachDayOfInterval } from 'date-fns';
+import type { GraphBucket } from '../../../../../../helpers/graph';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], minUsd: 0, maxUsd: 0 };
 
 export const useFeesChartData = (
-  timebucket: TimeBucketType,
+  timebucket: GraphBucket,
   vaultId: VaultEntity['id'],
   address?: string
 ) => {
@@ -31,7 +31,7 @@ export const useFeesChartData = (
 
   const chartData = useMemo(() => {
     if (userHarvestTimeline && userHarvestTimeline.harvests.length > 0) {
-      const data = getClmInvestorFeesTimeserie(
+      const data = getClmInvestorFeesTimeSeries(
         timebucket,
         userHarvestTimeline,
         token0.price,

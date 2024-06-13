@@ -233,6 +233,14 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       }
     }
 
+    if (pool.type === 'cowcentrated') {
+      if (pool.id !== pool.oracleId) {
+        // clm vaults do not have a unique deposit token to get the oracleId from
+        console.error(`Error: ${pool.id} : cowcentrated pool id and oracleId should be the same`);
+        exitCode = 1;
+      }
+    }
+
     if (!pool.createdAt) {
       console.error(
         `Error: ${pool.id} : Pool createdAt timestamp missing - required for UI: vault sorting`

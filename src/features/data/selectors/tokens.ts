@@ -18,7 +18,8 @@ import {
 import { orderBy } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { fromUnixTime, sub } from 'date-fns';
-import { TIME_BUCKETS } from '../../vault/components/HistoricGraph/utils';
+
+import { getDataApiBucket } from '../apis/beefy/beefy-data-api-helpers';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -341,7 +342,7 @@ export const selectPriceWithChange = createCachedSelector(
     selectHistoricalPriceBucketIsLoaded(state, oracleId, bucket),
   (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
     selectHistoricalPriceBucketData(state, oracleId, bucket),
-  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) => TIME_BUCKETS[bucket].range,
+  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) => getDataApiBucket(bucket).range,
   (price, status, loaded, data, range) => {
     if (!price) {
       return {

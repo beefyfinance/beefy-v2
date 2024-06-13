@@ -8,12 +8,18 @@ import {
   fetchHistoricalRanges,
   fetchHistoricalTvls,
 } from '../actions/historical';
-import { fromUnixTime, isAfter, isBefore, sub } from 'date-fns';
-import type { HistoricalState, TimeBucketsState, TimeBucketState } from './historical-types';
+import { fromUnixTime, getUnixTime, isAfter, isBefore, sub } from 'date-fns';
+import type {
+  HistoricalState,
+  HistoricalStateTimeBucketKeys,
+  TimeBucketsState,
+  TimeBucketState,
+} from './historical-types';
 import type { Draft } from 'immer';
-import { mapValues } from 'lodash-es';
-import { TIME_BUCKETS } from '../../vault/components/HistoricGraph/utils';
 import { isCowcentratedVault } from '../entities/vault';
+import { allDataApiBuckets, getDataApiBucket } from '../apis/beefy/beefy-data-api-helpers';
+import { fromKeys, fromKeysBy } from '../../../helpers/object';
+import { isDurationEqual, isLonger } from '../../../helpers/date';
 
 const initialState: HistoricalState = {
   ranges: {
@@ -34,8 +40,8 @@ const initialState: HistoricalState = {
 };
 
 const initialTimeBucketsState = (): TimeBucketsState => ({
-  availableTimebuckets: mapValues(TIME_BUCKETS, () => false),
-  loadedTimebuckets: mapValues(TIME_BUCKETS, () => false),
+  availableTimebuckets: fromKeys(allDataApiBuckets, false),
+  loadedTimebuckets: fromKeys(allDataApiBuckets, false),
   byTimebucket: {},
 });
 
@@ -130,7 +136,7 @@ export const historicalSlice = createSlice({
 });
 
 function getOrCreateTimeBucketFor(
-  key: 'tvls' | 'prices' | 'apys' | 'clm',
+  key: HistoricalStateTimeBucketKeys,
   oracleOrVaultIdOrVaultAddress: string,
   state: Draft<HistoricalState>
 ): Draft<TimeBucketsState> {
@@ -156,31 +162,50 @@ function getOrCreateTimeBucketBucket(
   return bucketState;
 }
 
-function setTimebucketPending(state: Draft<TimeBucketsState>, bucket: ApiTimeBucket) {
-  const bucketState = getOrCreateTimeBucketBucket(state, bucket);
+function setTimebucketPending(state: Draft<TimeBucketsState>, bucketKey: ApiTimeBucket) {
+  const bucketState = getOrCreateTimeBucketBucket(state, bucketKey);
   bucketState.status = 'pending';
 }
 
 function setTimebucketRejected(
   state: Draft<TimeBucketsState>,
-  bucket: ApiTimeBucket,
+  bucketKey: ApiTimeBucket,
   error: SerializedError
 ) {
-  const bucketState = getOrCreateTimeBucketBucket(state, bucket);
+  const bucketState = getOrCreateTimeBucketBucket(state, bucketKey);
   bucketState.status = 'rejected';
   bucketState.error = error;
 }
 
 function setTimebucketFulfilled(
   state: Draft<TimeBucketsState>,
-  bucket: ApiTimeBucket,
-  data: ApiChartData
+  bucketKey: ApiTimeBucket,
+  data: ApiChartData,
+  fillOtherBuckets: boolean = true
 ) {
-  const bucketState = getOrCreateTimeBucketBucket(state, bucket);
+  const bucketState = getOrCreateTimeBucketBucket(state, bucketKey);
   bucketState.status = 'fulfilled';
   bucketState.error = undefined;
   bucketState.data = data;
-  state.loadedTimebuckets[bucket] = data.length > 0;
+  state.loadedTimebuckets[bucketKey] = data.length > 0;
+
+  // Fill other buckets that have the same interval but a smaller range
+  if (fillOtherBuckets && data.length > 0) {
+    const now = new Date();
+    const bucket = getDataApiBucket(bucketKey);
+    const smallerBuckets = allDataApiBuckets
+      .map(getDataApiBucket)
+      .filter(b => isDurationEqual(bucket.interval, b.interval) && isLonger(bucket.range, b.range));
+    for (const smallerBucket of smallerBuckets) {
+      const startDate = getUnixTime(sub(sub(now, smallerBucket.range), smallerBucket.maPeriod));
+      setTimebucketFulfilled(
+        state,
+        smallerBucket.id,
+        data.filter(p => p.t >= startDate),
+        false
+      );
+    }
+  }
 }
 
 function initAllTimeBuckets(state: Draft<HistoricalState>, oracleId: string, vaultId: string) {
@@ -201,16 +226,16 @@ function initAllTimeBuckets(state: Draft<HistoricalState>, oracleId: string, vau
   }
 }
 
-function getBucketsFromRange(range: ApiRange): Record<ApiTimeBucket, boolean> {
-  if (range.min === 0) {
-    return mapValues(TIME_BUCKETS, () => false);
+function getBucketsFromRange(range: ApiRange | undefined): Record<ApiTimeBucket, boolean> {
+  if (!range || range.min === 0) {
+    return fromKeys(allDataApiBuckets, false);
   }
 
   const now = new Date();
   const min = fromUnixTime(range.min);
   const max = fromUnixTime(range.max);
-  return mapValues(
-    TIME_BUCKETS,
-    bucket => isBefore(min, sub(now, bucket.available)) && isAfter(max, sub(now, bucket.range))
-  );
+  return fromKeysBy(allDataApiBuckets, bucketKey => {
+    const bucket = getDataApiBucket(bucketKey);
+    return isBefore(min, sub(now, bucket.available)) && isAfter(max, sub(now, bucket.range));
+  });
 }

@@ -18,7 +18,7 @@ import {
   formatUnderlyingTick,
   formatUsdTick,
   formatDateTimeTick,
-  TIME_BUCKET,
+  GRAPH_TIME_BUCKETS,
   domainOffSet,
   getXInterval,
   mapRangeToTicks,
@@ -38,7 +38,7 @@ interface GraphProps {
 export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address }) {
   const classes = useStyles();
 
-  const { chartData, isLoading } = usePnLChartData(TIME_BUCKET[period], vaultId, address);
+  const { chartData, isLoading } = usePnLChartData(GRAPH_TIME_BUCKETS[period], vaultId, address);
 
   const { data, minUnderlying, maxUnderlying, minUsd, maxUsd } = chartData;
 
@@ -79,7 +79,7 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
   }, [underlyingAxisDomain]);
 
   const dateTimeTickFormatter = useMemo(() => {
-    return (value: number) => formatDateTimeTick(value, TIME_BUCKET[period]);
+    return (value: number) => formatDateTimeTick(value, GRAPH_TIME_BUCKETS[period]);
   }, [period]);
 
   const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });

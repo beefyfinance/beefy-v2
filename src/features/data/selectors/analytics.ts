@@ -34,10 +34,11 @@ import {
   selectIsUserBalanceAvailable,
 } from './data-loader';
 import type { AnalyticsBucketData, AnalyticsState } from '../reducers/analytics';
-import type {
-  AnyTimelineAnalyticsEntity,
-  CLMTimelineAnalyticsEntity,
-  VaultTimelineAnalyticsEntity,
+import {
+  type AnyTimelineAnalyticsEntity,
+  type AnyTimelineAnalyticsEntry,
+  isCLMTimelineAnalyticsEntity,
+  isVaultTimelineAnalyticsEntity,
 } from '../entities/analytics';
 import { createSelector } from '@reduxjs/toolkit';
 import {
@@ -69,15 +70,32 @@ export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], address?: string) =>
     selectUserAnalytics(state, address),
   (state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId,
-  (
-    userAnalytics,
-    vaultId
-  ): undefined | VaultTimelineAnalyticsEntity[] | CLMTimelineAnalyticsEntity[] => {
+  (userAnalytics, vaultId): undefined | AnyTimelineAnalyticsEntity => {
     if (!userAnalytics) {
       return undefined;
     }
 
     return userAnalytics.timeline.byVaultId[vaultId] || undefined;
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
+
+export const selectUserFullTimelineEntriesByVaultId = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], address?: string) =>
+    selectUserDepositedTimelineByVaultId(state, vaultId, address),
+  (timeline): undefined | AnyTimelineAnalyticsEntry[] => {
+    if (!timeline) {
+      return undefined;
+    }
+
+    return [...timeline.past, ...timeline.current];
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
+
+export const selectUserHasCurrentDepositTimelineByVaultId = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], address?: string) =>
+    selectUserDepositedTimelineByVaultId(state, vaultId, address),
+  timeline => {
+    return !!timeline && timeline.current.length > 0;
   }
 )((_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
 
@@ -89,13 +107,11 @@ export const selectUserFirstDepositDateByVaultId = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], address?: string) =>
     selectUserDepositedTimelineByVaultId(state, vaultId, address),
   timeline => {
-    if (!timeline || timeline.length === 0) {
+    if (!timeline || timeline.current.length === 0) {
       return undefined;
     }
 
-    const firstDepositIndex =
-      timeline.findLastIndex((tx: AnyTimelineAnalyticsEntity) => tx.shareBalance.isZero()) + 1;
-    return timeline[firstDepositIndex]?.datetime;
+    return timeline.current[0].datetime;
   }
 )((_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
 
@@ -142,30 +158,23 @@ export const selectStandardGovPnl = (
     throw new Error('This function should not be called for cowcentrated vaults');
   }
 
-  const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress) || [];
-  const currentPositionStartDate = selectUserFirstDepositDateByVaultId(
-    state,
-    vaultId,
-    walletAddress
-  );
-  const timelineSinceLastDeposit = sortedTimeline.filter((tx: VaultTimelineAnalyticsEntity) =>
-    currentPositionStartDate ? tx.datetime.getTime() >= currentPositionStartDate.getTime() : true
-  );
-
+  const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
-
-  //ppfs locally in app is stored as ppfs/1e18, we need to move it to same format as api
+  // ppfs locally in app is stored as ppfs/1e18, we need to move it to same format as api
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const ppfs = selectVaultPricePerFullShare(state, vault.id).shiftedBy(18 - depositToken.decimals);
 
   const pnl = new PnL();
-  for (const row of timelineSinceLastDeposit as VaultTimelineAnalyticsEntity[]) {
-    if (row.shareDiff && row.shareToUnderlyingPrice && row.underlyingToUsdPrice) {
-      pnl.addTransaction({
-        shares: row.shareDiff,
-        price: row.underlyingToUsdPrice,
-        ppfs: row.shareToUnderlyingPrice,
-      });
+
+  if (isVaultTimelineAnalyticsEntity(sortedTimeline) && sortedTimeline.current.length > 0) {
+    for (const row of sortedTimeline.current) {
+      if (row.shareDiff && row.shareToUnderlyingPrice && row.underlyingToUsdPrice) {
+        pnl.addTransaction({
+          shares: row.shareDiff,
+          price: row.underlyingToUsdPrice,
+          ppfs: row.shareToUnderlyingPrice,
+        });
+      }
     }
   }
 
@@ -210,21 +219,9 @@ export const selectClmPnl = (
   walletAddress?: string
 ): UserClmPnl => {
   const vault = selectVaultById(state, vaultId);
-
-  const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress) || [];
-  const currentPositionStartDate = selectUserFirstDepositDateByVaultId(
-    state,
-    vaultId,
-    walletAddress
-  );
-  const timelineSinceLastDeposit = sortedTimeline.filter((tx: CLMTimelineAnalyticsEntity) =>
-    currentPositionStartDate ? tx.datetime.getTime() >= currentPositionStartDate.getTime() : true
-  );
-
+  const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
-
   const breakdown = selectLpBreakdownForVault(state, vault);
-
   const { assets, userBalanceDecimal } = selectUserLpBreakdownBalance(
     state,
     vault,
@@ -237,28 +234,30 @@ export const selectClmPnl = (
 
   const pnl = new ClmPnl();
 
-  for (const tx of timelineSinceLastDeposit as CLMTimelineAnalyticsEntity[]) {
-    pnl.addTransaction({
-      shares: tx.shareDiff,
-      token0ToUsd: tx.token0ToUsd,
-      token1ToUsd: tx.token1ToUsd,
-      token0Amount: tx.underlying0Diff,
-      token1Amount: tx.underlying1Diff,
-    });
+  if (isCLMTimelineAnalyticsEntity(sortedTimeline) && sortedTimeline.current.length > 0) {
+    for (const tx of sortedTimeline.current) {
+      pnl.addTransaction({
+        shares: tx.shareDiff,
+        token0ToUsd: tx.token0ToUsd,
+        token1ToUsd: tx.token1ToUsd,
+        token0Amount: tx.underlying0Diff,
+        token1Amount: tx.underlying1Diff,
+      });
+    }
   }
 
-  const { token0Shares, token1Shares, remainingShares } = pnl.getRemainingShares();
+  const { remainingToken0, remainingToken1, remainingShares } = pnl.getRemainingShares();
   const { token0EntryPrice, token1EntryPrice } = pnl.getRemainingSharesAvgEntryPrice();
 
-  const oraclePriceAtDeposit = token0Shares
+  const oraclePriceAtDeposit = remainingToken0
     .times(token0EntryPrice)
-    .plus(token1Shares.times(token1EntryPrice));
+    .plus(remainingToken1.times(token1EntryPrice));
 
   const positionPnl = userBalanceDecimal.times(oraclePrice).minus(oraclePriceAtDeposit);
 
   const sharesNowToUsd = remainingShares.times(oraclePrice);
 
-  const hold = token0Shares.times(token0.price).plus(token1Shares.times(token1.price));
+  const hold = remainingToken0.times(token0.price).plus(remainingToken1.times(token1.price));
 
   const harvestTimeline = selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress);
 
@@ -283,17 +282,17 @@ export const selectClmPnl = (
     userSharesAtDeposit: remainingShares,
     token0EntryPrice,
     token1EntryPrice,
-    token0SharesAtDeposit: token0Shares,
-    token1SharesAtDeposit: token1Shares,
-    token0SharesAtDepositToUsd: token0Shares.times(token0EntryPrice),
-    token1SharesAtDepositToUsd: token1Shares.times(token1EntryPrice),
+    token0SharesAtDeposit: remainingToken0,
+    token1SharesAtDeposit: remainingToken1,
+    token0SharesAtDepositToUsd: remainingToken0.times(token0EntryPrice),
+    token1SharesAtDepositToUsd: remainingToken1.times(token1EntryPrice),
     sharesAtDepositToUsd: oraclePriceAtDeposit,
     shares: remainingShares,
     sharesNowToUsd,
     token0,
     token1,
-    token0Diff: token0.userAmount.minus(token0Shares),
-    token1Diff: token1.userAmount.minus(token1Shares),
+    token0Diff: token0.userAmount.minus(remainingToken0),
+    token1Diff: token1.userAmount.minus(remainingToken1),
     pnl: positionPnl,
     pnlPercentage: positionPnl.dividedBy(oraclePriceAtDeposit),
     hold,
@@ -314,7 +313,7 @@ export const selectVaultPnl = (
   return selectStandardGovPnl(state, vaultId, walletAddress);
 };
 
-const EMPTY_TIMEBUCKET: AnalyticsBucketData = {
+const EMPTY_TIMEBUCKET: Readonly<AnalyticsBucketData> = {
   data: [],
   status: 'idle',
 };
@@ -322,48 +321,11 @@ const EMPTY_TIMEBUCKET: AnalyticsBucketData = {
 export const selectShareToUnderlyingTimebucketByVaultId = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
-  timebucket: TimeBucketType,
-  address?: string
-): AnalyticsBucketData => {
-  const walletAddress = address || selectWalletAddress(state);
-  if (!walletAddress) {
-    return { ...EMPTY_TIMEBUCKET };
-  }
-
-  const addressKey = walletAddress.toLowerCase();
-  const addressState = state.user.analytics.byAddress[addressKey];
-
-  if (!addressState) {
-    return { ...EMPTY_TIMEBUCKET };
-  }
-
-  const vaultState = addressState.shareToUnderlying.byVaultId[vaultId];
-  if (!vaultState) {
-    return { ...EMPTY_TIMEBUCKET };
-  }
-
-  const bucketState = vaultState.byTimebucket[timebucket];
-  if (!bucketState) {
-    return { ...EMPTY_TIMEBUCKET };
-  }
-
-  return bucketState;
-};
-
-export const selectUnderlyingToUsdTimebucketByVaultId = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  timebucket: TimeBucketType,
-  address?: string
-) => {
-  const walletAddress = address || selectWalletAddress(state);
-  if (!walletAddress) {
-    return { ...EMPTY_TIMEBUCKET };
-  }
-
+  timebucket: TimeBucketType
+): Readonly<AnalyticsBucketData> => {
   return (
-    state.user.analytics.byAddress[walletAddress.toLowerCase()]?.underlyingToUsd.byVaultId[vaultId]
-      ?.byTimebucket[timebucket] || { ...EMPTY_TIMEBUCKET }
+    state.user.analytics.shareToUnderlying.byVaultId[vaultId]?.byTimebucket[timebucket] ||
+    EMPTY_TIMEBUCKET
   );
 };
 
@@ -376,10 +338,7 @@ export const selectHasDataToShowGraphByVaultId = createCachedSelector(
     selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress),
   (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress: string) =>
     selectVaultById(state, vaultId),
-
-  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress: string) => vaultId,
-
-  (userVaults, isLoaded, timeline, vault, vaultId) => {
+  (userVaults, isLoaded, timeline, vault) => {
     // show clm data for 1 month after vault is retired
     const statusCondition = isCowcentratedVault(vault)
       ? vault.status !== 'eol' ||
@@ -388,9 +347,9 @@ export const selectHasDataToShowGraphByVaultId = createCachedSelector(
 
     return (
       isLoaded &&
-      userVaults.includes(vaultId) &&
+      userVaults.includes(vault.id) &&
       !!timeline &&
-      timeline.length !== 0 &&
+      timeline.current.length !== 0 &&
       statusCondition &&
       !isGovVault(vault)
     );

@@ -2,16 +2,16 @@ import { useCallback, useMemo, useState } from 'react';
 import { orderBy } from 'lodash-es';
 import { useAppSelector } from '../../../../../../store';
 import type { VaultEntity } from '../../../../../data/entities/vault';
-import { selectUserDepositedTimelineByVaultId } from '../../../../../data/selectors/analytics';
+import { selectUserFullTimelineEntriesByVaultId } from '../../../../../data/selectors/analytics';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
 import { isBefore, subDays } from 'date-fns';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import {
-  type CLMTimelineAnalyticsEntity,
-  isCLMTimelineAnalyticsEntity,
-  isVaultTimelineAnalyticsEntity,
-  type VaultTimelineAnalyticsEntity,
+  type CLMTimelineAnalyticsEntry,
+  isCLMTimelineAnalyticsEntry,
+  isVaultTimelineAnalyticsEntry,
+  type VaultTimelineAnalyticsEntry,
 } from '../../../../../data/entities/analytics';
 
 export type SortedOptions = {
@@ -22,7 +22,7 @@ export type SortedOptions = {
 type VaultTransactionHistory = {
   sortedOptions: SortedOptions;
   handleSort: (field: SortedOptions['sort']) => void;
-  sortedTimeline: (VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity)[];
+  sortedTimeline: (VaultTimelineAnalyticsEntry | CLMTimelineAnalyticsEntry)[];
 };
 
 export function useSortedTransactionHistory(
@@ -33,32 +33,34 @@ export function useSortedTransactionHistory(
   const currentOraclePrice = useAppSelector(state =>
     selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
-  const vaultTimeline = useAppSelector(state =>
-    selectUserDepositedTimelineByVaultId(state, vaultId, address)
+  const fullTimelineEntries = useAppSelector(state =>
+    selectUserFullTimelineEntriesByVaultId(state, vaultId, address)
   );
 
   // Replace nulls with current price or 0
   const vaultTimelineFixed = useMemo(() => {
-    if (!vaultTimeline) return [];
+    if (!fullTimelineEntries) return [];
 
     const oneDayAgo = subDays(new Date(), 1);
-    return vaultTimeline.map((row: VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity) => {
-      if (isVaultTimelineAnalyticsEntity(row) && !row.underlyingToUsdPrice) {
-        const underlyingToUsdPrice =
-          row.underlyingToUsdPrice ??
-          (isBefore(row.datetime, oneDayAgo) ? BIG_ZERO : currentOraclePrice);
+    return fullTimelineEntries.map(
+      (row: VaultTimelineAnalyticsEntry | CLMTimelineAnalyticsEntry) => {
+        if (isVaultTimelineAnalyticsEntry(row) && !row.underlyingToUsdPrice) {
+          const underlyingToUsdPrice =
+            row.underlyingToUsdPrice ??
+            (isBefore(row.datetime, oneDayAgo) ? BIG_ZERO : currentOraclePrice);
 
-        return {
-          ...row,
-          underlyingToUsdPrice,
-          usdBalance: row.underlyingBalance.times(underlyingToUsdPrice),
-          usdDiff: row.underlyingDiff.times(underlyingToUsdPrice),
-        };
+          return {
+            ...row,
+            underlyingToUsdPrice,
+            usdBalance: row.underlyingBalance.times(underlyingToUsdPrice),
+            usdDiff: row.underlyingDiff.times(underlyingToUsdPrice),
+          };
+        }
+
+        return row;
       }
-
-      return row;
-    });
-  }, [vaultTimeline, currentOraclePrice]);
+    );
+  }, [fullTimelineEntries, currentOraclePrice]);
 
   const [sortedOptions, setSortedOptions] = useState<SortedOptions>({
     sortDirection: 'desc',
@@ -83,7 +85,7 @@ export function useSortedTransactionHistory(
         return orderBy(
           vaultTimelineFixed,
           tx =>
-            isCLMTimelineAnalyticsEntity(tx)
+            isCLMTimelineAnalyticsEntry(tx)
               ? tx.usdBalance
               : tx.shareBalance.times(tx.shareToUnderlyingPrice).toNumber(),
           sortedOptions.sortDirection

@@ -32,30 +32,37 @@ export type TimeBucketsState = {
   };
 };
 
+type HistoricalByVaultIdState<T> = {
+  byVaultId: {
+    [vaultId: VaultEntity['id']]: T;
+  };
+};
+
+type HistoricalByOracleIdState<T> = {
+  byOracleId: {
+    [oracleId: TokenEntity['oracleId']]: T;
+  };
+};
+
+type TimeBucketByVaultIdState = HistoricalByVaultIdState<TimeBucketsState>;
+type TimeBucketByOracleIdState = HistoricalByOracleIdState<TimeBucketsState>;
+
 export interface HistoricalState {
-  ranges: {
-    byVaultId: {
-      [vaultId: VaultEntity['id']]: RangeState;
-    };
-  };
-  prices: {
-    byOracleId: {
-      [oracleId: TokenEntity['oracleId']]: TimeBucketsState;
-    };
-  };
-  apys: {
-    byVaultId: {
-      [vaultId: VaultEntity['id']]: TimeBucketsState;
-    };
-  };
-  tvls: {
-    byVaultId: {
-      [vaultId: VaultEntity['id']]: TimeBucketsState;
-    };
-  };
-  clm: {
-    byVaultId: {
-      [vaultId: VaultEntity['id']]: TimeBucketsState;
-    };
-  };
+  ranges: HistoricalByVaultIdState<RangeState>;
+  /** prices by token oracle id */
+  prices: TimeBucketByOracleIdState;
+  /** apys by vault id */
+  apys: TimeBucketByVaultIdState;
+  /** tvl by vault id */
+  tvls: TimeBucketByVaultIdState;
+  /** clm position/range by vault id */
+  clm: TimeBucketByVaultIdState;
 }
+
+export type HistoricalStateTimeBucketKeys = {
+  [K in keyof HistoricalState]: HistoricalState[K] extends
+    | TimeBucketByVaultIdState
+    | TimeBucketByOracleIdState
+    ? K
+    : never;
+}[keyof HistoricalState];

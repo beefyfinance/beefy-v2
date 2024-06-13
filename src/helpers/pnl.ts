@@ -243,18 +243,18 @@ export class ClmPnl {
 
   getRemainingShares(): {
     remainingShares: BigNumber;
-    token0Shares: BigNumber;
-    token1Shares: BigNumber;
+    remainingToken0: BigNumber;
+    remainingToken1: BigNumber;
   } {
     let remainingShares = BIG_ZERO;
-    let token0Shares = BIG_ZERO;
-    let token1Shares = BIG_ZERO;
+    let remainingToken0 = BIG_ZERO;
+    let remainingToken1 = BIG_ZERO;
     for (const trx of this.state.sharesFifo) {
       remainingShares = remainingShares.plus(trx.remainingShares);
-      token0Shares = token0Shares.plus(trx.token0Amount);
-      token1Shares = token1Shares.plus(trx.token1Amount);
+      remainingToken0 = remainingToken0.plus(trx.token0Amount);
+      remainingToken1 = remainingToken1.plus(trx.token1Amount);
     }
-    return { remainingShares, token0Shares, token1Shares };
+    return { remainingShares, remainingToken0, remainingToken1 };
   }
 
   getRemainingSharesAvgEntryPrice(): { token0EntryPrice: BigNumber; token1EntryPrice: BigNumber } {
