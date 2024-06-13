@@ -1,5 +1,160 @@
 [
   {
+    "id": "uniswap-cow-base-usdc-wsteth",
+    "name": "USDC-wstETH",
+    "token": "USDC-wstETH",
+    "tokenAddress": "0x45837e65E4c44cA260aB40E6dc30fF1B466a00cA",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBasewstETH-USDC",
+    "earnedTokenAddress": "0xD07111A837F9D62bCa452132bDBEE2F1443666F6",
+    "earnContractAddress": "0xD07111A837F9D62bCa452132bDBEE2F1443666F6",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-wsteth",
+    "status": "active",
+    "createdAt": 1718153799,
+    "platformId": "beefy",
+    "assets": ["USDC", "wstETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-usdt",
+    "name": "USDT-WETH",
+    "token": "USDT-WETH",
+    "tokenAddress": "0xd92E0767473D1E3FF11Ac036f2b1DB90aD0aE55F",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBaseUSDT-WETH",
+    "earnedTokenAddress": "0xE4d02B7997635883bf68a810d1d781990006B58C",
+    "earnContractAddress": "0xE4d02B7997635883bf68a810d1d781990006B58C",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-usdt",
+    "status": "active",
+    "createdAt": 1718153799,
+    "platformId": "beefy",
+    "assets": ["USDT", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-cbeth-weth",
+    "name": "cbETH-WETH",
+    "token": "cbETH-WETH",
+    "tokenAddress": "0x10648BA41B8565907Cfa1496765fA4D95390aa0d",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBasecbETH-WETH",
+    "earnedTokenAddress": "0xe97383FFa8AbA69FB5f182CF35E31833250586E4",
+    "earnContractAddress": "0xe97383FFa8AbA69FB5f182CF35E31833250586E4",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-cbeth-weth",
+    "status": "active",
+    "createdAt": 1718153799,
+    "platformId": "beefy",
+    "assets": ["cbETH", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-aero-weth",
+    "name": "AERO-WETH",
+    "token": "AERO-WETH",
+    "tokenAddress": "0x3d5D143381916280ff91407FeBEB52f2b60f33Cf",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x940181a94A35A4569E4529A3CDfB74e38FD98631"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBaseAERO-WETH",
+    "earnedTokenAddress": "0xE39887EfF72d0AF25E4B90f52b6a6De82948D472",
+    "earnContractAddress": "0xE39887EfF72d0AF25E4B90f52b6a6De82948D472",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-aero-weth",
+    "status": "active",
+    "createdAt": 1718153799,
+    "platformId": "beefy",
+    "assets": ["WETH", "AERO"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-usdc-weth",
+    "name": "USDC-WETH",
+    "token": "USDC-WETH",
+    "tokenAddress": "0xd0b53D9277642d899DF5C87A3966A349A798F224",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBaseUSDC-WETH",
+    "earnedTokenAddress": "0xA05C5A7121B351aa7003C73Ae794Ec17995440C7",
+    "earnContractAddress": "0xA05C5A7121B351aa7003C73Ae794Ec17995440C7",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-weth",
+    "status": "active",
+    "createdAt": 1718153799,
+    "platformId": "beefy",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-hbr-usdc",
     "name": "HBR-USDC vLP",
     "token": "vAMM-HBR/USDC",
