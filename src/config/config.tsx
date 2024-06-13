@@ -238,6 +238,7 @@ export const config = {
       'MAI',
       'FRAX',
       'LUSD',
+      'USDM',
       'alUSD',
       'DOLA',
       'soUSDC',

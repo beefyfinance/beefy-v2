@@ -1,5 +1,44 @@
 [
   {
+    "id": "curve-op-usdc-usdm",
+    "name": "USDC/USDM",
+    "token": "usdc-usdm",
+    "tokenAddress": "0xb52c9213d318956bFa26Df2656B161e3cAcbB64d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveUSDC-USDM",
+    "earnedTokenAddress": "0x9567717a195D5B40f2e5B84E98B1595C72Dd1587",
+    "earnContractAddress": "0x9567717a195D5B40f2e5B84E98B1595C72Dd1587",
+    "oracle": "lps",
+    "oracleId": "curve-op-usdc-usdm",
+    "status": "active",
+    "createdAt": 1718273154,
+    "platformId": "curve",
+    "assets": ["USDC", "USDM"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-7/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-7/withdraw",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xb52c9213d318956bFa26Df2656B161e3cAcbB64d",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xb52c9213d318956bFa26Df2656B161e3cAcbB64d",
+            "coins": [
+              "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+              "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-op-op-weth",
     "name": "OP-WETH",
     "token": "OP-WETH",
