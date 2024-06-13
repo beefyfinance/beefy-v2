@@ -34,4 +34,8 @@ export type AsWeb3Result<T extends object> = Prettify<{
   [key in keyof T]: Web3ConvertType<T[key]>;
 }>;
 
-export type KeysOfUnion<T> = T extends T ? keyof T : never;
+export type KeysOfUnion<T> = T extends unknown ? keyof T : never;
+
+export type Intersect<T> = (T extends any ? (x: T) => 0 : never) extends (x: infer R) => 0
+  ? R
+  : never;

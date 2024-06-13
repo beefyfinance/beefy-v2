@@ -183,6 +183,7 @@ export function featureFlag_simulateBeefyApiError(
     | 'snapshot'
     | 'zap-support'
     | 'articles'
+    | 'historical-prices'
 ) {
   const isAuthorizedDomain =
     window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');

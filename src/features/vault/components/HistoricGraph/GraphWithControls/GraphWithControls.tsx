@@ -32,6 +32,7 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
   stat,
 }) {
   const classes = useStyles();
+  const { t } = useTranslation();
   const availableBuckets = useAppSelector(state =>
     selectHistoricalAvailableBuckets(state, stat, vaultId, oracleId)
   );
@@ -39,7 +40,7 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
   const availableRanges = useMemo(() => getAvailableRanges(availableBuckets), [availableBuckets]);
   const [range, setRange] = useState<TimeRange>(() => getDefaultTimeRange(availableRanges));
   const bucket = useMemo(() => timeRangeToBucket[range], [range]);
-  const { loading, haveData } = useHistoricalStatLoader(
+  const { loading, hasData } = useHistoricalStatLoader(
     stat,
     vaultId,
     oracleId,
@@ -55,7 +56,7 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
   return (
     <div className={classes.container}>
       <div className={classes.graph}>
-        {haveData ? (
+        {hasData ? (
           <Graph
             vaultId={vaultId}
             oracleId={oracleId}
@@ -66,7 +67,7 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
         ) : loading ? (
           <GraphLoader imgHeight={220} />
         ) : (
-          <AlertError>No data returned</AlertError>
+          <AlertError>{t('Graph-No-Data-Retry')}</AlertError>
         )}
       </div>
       <div className={classes.footer}>

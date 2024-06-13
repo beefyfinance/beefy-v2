@@ -26,6 +26,8 @@ import {
 import { Legend } from '../Legend';
 import { styles } from './styles';
 import { XAxisTick } from '../../../../../../components/XAxisTick';
+import { AlertError } from '../../../../../../components/Alerts';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(styles);
 
@@ -37,9 +39,8 @@ interface GraphProps {
 
 export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address }) {
   const classes = useStyles();
-
+  const { t } = useTranslation();
   const { chartData, isLoading } = usePnLChartData(GRAPH_TIME_BUCKETS[period], vaultId, address);
-
   const { data, minUnderlying, maxUnderlying, minUsd, maxUsd } = chartData;
 
   const underlyingDiff = useMemo(() => {
@@ -94,6 +95,10 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
 
   if (isLoading) {
     return <GraphLoader imgHeight={220} />;
+  }
+
+  if (!data.length) {
+    return <AlertError>{t('Graph-No-Data-Retry')}</AlertError>;
   }
 
   return (

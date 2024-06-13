@@ -2,8 +2,10 @@ import { useEffect } from 'react';
 import type { TokenEntity } from '../entities/token';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import {
-  selectHistoricalBucketIsLoaded,
+  selectHistoricalBucketAlreadyFulfilled,
+  selectHistoricalBucketHasData,
   selectHistoricalBucketStatus,
+  selectHistoricalPriceBucketAlreadyFulfilled,
   selectHistoricalPriceBucketData,
   selectHistoricalPriceBucketStatus,
 } from '../selectors/historical';
@@ -21,11 +23,14 @@ export function useOracleIdToUsdPrices(oracleId: TokenEntity['oracleId'], bucket
   const status = useAppSelector(state =>
     selectHistoricalPriceBucketStatus(state, oracleId, bucket)
   );
+  const alreadyFulfilled = useAppSelector(state =>
+    selectHistoricalPriceBucketAlreadyFulfilled(state, oracleId, bucket)
+  );
   const data = useAppSelector(state => selectHistoricalPriceBucketData(state, oracleId, bucket));
-  const hasData = status !== 'idle' && !!data && data.length > 0;
+  const hasData = alreadyFulfilled && !!data && data.length > 0;
 
   useEffect(() => {
-    if (!hasData) {
+    if (!alreadyFulfilled) {
       if (status === 'idle') {
         dispatch(fetchHistoricalPrices({ oracleId, bucket }));
       } else if (status === 'rejected') {
@@ -36,9 +41,14 @@ export function useOracleIdToUsdPrices(oracleId: TokenEntity['oracleId'], bucket
         return () => clearTimeout(handle);
       }
     }
-  }, [dispatch, oracleId, bucket, hasData, status]);
+  }, [dispatch, oracleId, bucket, alreadyFulfilled, status]);
 
-  return { data, loading: !hasData && status === 'pending' };
+  return {
+    data,
+    loading: !hasData && (status === 'pending' || status === 'idle'),
+    alreadyFulfilled,
+    hasData,
+  };
 }
 
 /**
@@ -64,21 +74,34 @@ export function useHistoricalStatLoader(
   vaultAddress: VaultEntity['earnContractAddress']
 ) {
   const dispatch = useAppDispatch();
-  const bucketStatus = useAppSelector(state =>
+  const status = useAppSelector(state =>
     selectHistoricalBucketStatus(state, stat, vaultId, oracleId, bucket)
   );
-  const haveData = useAppSelector(state =>
-    selectHistoricalBucketIsLoaded(state, stat, vaultId, oracleId, bucket)
+  const alreadyFulfilled = useAppSelector(state =>
+    selectHistoricalBucketAlreadyFulfilled(state, stat, vaultId, oracleId, bucket)
+  );
+  const hasData = useAppSelector(state =>
+    selectHistoricalBucketHasData(state, stat, vaultId, oracleId, bucket)
   );
 
   useEffect(() => {
-    if (bucketStatus === 'idle') {
-      dispatch(fetchHistoricalStat(stat, vaultId, oracleId, bucket, chainId, vaultAddress));
+    if (!alreadyFulfilled) {
+      if (status === 'idle') {
+        dispatch(fetchHistoricalStat(stat, vaultId, oracleId, bucket, chainId, vaultAddress));
+      } else if (status === 'rejected') {
+        const handle = setTimeout(
+          () =>
+            dispatch(fetchHistoricalStat(stat, vaultId, oracleId, bucket, chainId, vaultAddress)),
+          5000
+        );
+        return () => clearTimeout(handle);
+      }
     }
-  }, [dispatch, vaultId, oracleId, stat, bucket, bucketStatus, chainId, vaultAddress]);
+  }, [dispatch, vaultId, oracleId, stat, bucket, chainId, vaultAddress, alreadyFulfilled, status]);
 
   return {
-    loading: !haveData && (bucketStatus === 'pending' || bucketStatus === 'idle'),
-    haveData,
+    loading: !hasData && (status === 'pending' || status === 'idle'),
+    alreadyFulfilled,
+    hasData,
   };
 }

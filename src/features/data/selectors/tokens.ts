@@ -12,7 +12,7 @@ import { selectCowcentratedVaultById, selectVaultById } from './vaults';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import {
   selectHistoricalPriceBucketData,
-  selectHistoricalPriceBucketIsLoaded,
+  selectHistoricalPriceBucketHasData,
   selectHistoricalPriceBucketStatus,
 } from './historical';
 import { orderBy } from 'lodash-es';
@@ -335,7 +335,7 @@ export const selectPriceWithChange = createCachedSelector(
   (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
     selectHistoricalPriceBucketStatus(state, oracleId, bucket),
   (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
-    selectHistoricalPriceBucketIsLoaded(state, oracleId, bucket),
+    selectHistoricalPriceBucketHasData(state, oracleId, bucket),
   (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
     selectHistoricalPriceBucketData(state, oracleId, bucket),
   (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) => getDataApiBucket(bucket).range,
