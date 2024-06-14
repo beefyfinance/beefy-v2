@@ -444,7 +444,7 @@ export const selectGovVaultPendingRewardsInToken = (
   walletAddress?: string
 ) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
-  return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.rewards || BIG_ZERO;
+  return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.rewards[0] || BIG_ZERO; // TODO: support multiple rewards
 };
 
 export const selectGovVaultPendingRewardsInUsd = (
@@ -452,9 +452,9 @@ export const selectGovVaultPendingRewardsInUsd = (
   vaultId: VaultGov['id'],
   walletAddress?: string
 ) => {
-  const vault = selectVaultById(state, vaultId);
+  const vault = selectVaultById(state, vaultId) as VaultGov;
   const tokenRewards = selectGovVaultPendingRewardsInToken(state, vaultId, walletAddress);
-  const tokenPrice = selectTokenPriceByAddress(state, vault.chainId, vault.earnedTokenAddress);
+  const tokenPrice = selectTokenPriceByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); // TODO: support multiple rewards
   return tokenRewards.times(tokenPrice);
 };
 
@@ -465,7 +465,7 @@ export const selectGovVaultPendingRewardsInUsd = (
 export const selectBoostBalanceTokenEntity = (state: BeefyState, boostId: BoostEntity['id']) => {
   const boost = selectBoostById(state, boostId);
   const boostedVault = selectVaultById(state, boost.vaultId);
-  return selectTokenByAddress(state, boostedVault.chainId, boostedVault.earnedTokenAddress);
+  return selectTokenByAddress(state, boostedVault.chainId, boostedVault.earnContractAddress);
 };
 
 /**
@@ -491,8 +491,8 @@ export const selectGovVaultBalanceTokenEntity = (state: BeefyState, vaultId: Vau
  * for gov vault, rewards is an amount in earnedTokenId
  */
 export const selectGovVaultRewardsTokenEntity = (state: BeefyState, vaultId: VaultGov['id']) => {
-  const vault = selectVaultById(state, vaultId);
-  return selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+  const vault = selectVaultById(state, vaultId) as VaultGov;
+  return selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); // TODO: support multiple rewards
 };
 
 export const selectLpBreakdownBalance = (
@@ -885,19 +885,25 @@ export const selectUserRewardsByVaultId = (
   const vault = selectVaultById(state, vaultId);
 
   if (isGovVault(vault)) {
-    const earnedToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
-    const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(state, vault.id, walletAddress);
-    const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id, walletAddress);
+    for (const earnedTokenAddress of vault.earnedTokenAddresses) {
+      const earnedToken = selectTokenByAddress(state, vault.chainId, earnedTokenAddress);
+      const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(
+        state,
+        vault.id,
+        walletAddress
+      );
+      const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id, walletAddress);
 
-    totalRewardsUsd = rewardsEarnedUsd;
-    rewardsTokens.push(earnedToken.symbol);
+      totalRewardsUsd = rewardsEarnedUsd;
+      rewardsTokens.push(earnedToken.symbol);
 
-    rewards.push({
-      rewardToken: earnedToken.symbol,
-      rewardTokenDecimals: earnedToken.decimals,
-      rewards: rewardsEarnedToken,
-      rewardsUsd: rewardsEarnedUsd,
-    });
+      rewards.push({
+        rewardToken: earnedToken.symbol,
+        rewardTokenDecimals: earnedToken.decimals,
+        rewards: rewardsEarnedToken,
+        rewardsUsd: rewardsEarnedUsd,
+      });
+    }
   } else {
     const boosts = selectAllVaultBoostIds(state, vaultId);
     for (const boostId of boosts) {

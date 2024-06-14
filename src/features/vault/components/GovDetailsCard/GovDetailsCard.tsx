@@ -15,12 +15,12 @@ const useStyles = makeStyles(styles);
 export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId)) as VaultGov;
   const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
-  const earnedToken = useAppSelector(state =>
-    selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
+  const earnedToken = useAppSelector(
+    state => selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]) //TODO: handle multiple earned tokens
   );
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const i18nKeys = useMemo(

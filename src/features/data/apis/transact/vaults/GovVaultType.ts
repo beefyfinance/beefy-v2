@@ -197,7 +197,7 @@ export class GovVaultType implements IGovVaultType {
         const rewardToken = selectTokenByAddress(
           state,
           this.vault.chainId,
-          this.vault.earnedTokenAddress
+          this.vault.earnedTokenAddresses[0] // TODO: support multiple reward tokens
         );
         outputs.push({
           token: rewardToken,

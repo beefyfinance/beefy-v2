@@ -290,7 +290,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+    const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnContractAddress);
 
     const native = selectChainNativeToken(state, vault.chainId);
     const isNativeToken = depositToken.id === native.id;
@@ -577,7 +577,7 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+    const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
     const ppfs = selectVaultPricePerFullShare(state, vault.chainId);
 
     // amount is in oracle token, we need it in moo token
@@ -747,7 +747,7 @@ const exitBoost = (boost: BoostEntity) => {
 
     const boostAmount = selectBoostUserBalanceInToken(state, boost.id);
     const vault = selectVaultById(state, boost.vaultId);
-    const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+    const token = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
@@ -795,7 +795,7 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const vault = selectVaultById(state, boost.vaultId);
-    const inputToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+    const inputToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
 
     const contractAddr = boost.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
@@ -836,7 +836,7 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const vault = selectVaultById(state, boost.vaultId);
-    const inputToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+    const inputToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
 
     const contractAddr = boost.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
@@ -1315,7 +1315,7 @@ function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
   if (!isCowcentratedVault(vault)) {
     tokens.push(selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress));
   }
-  tokens.push(selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress));
+  tokens.push(selectTokenByAddress(state, vault.chainId, vault.earnContractAddress));
 
   // and native token because we spent gas
   tokens.push(selectChainNativeToken(state, vault.chainId));

@@ -505,44 +505,65 @@ function addVaultToState(
   if (existingEarnedToken === undefined) {
     // Do not add native token from configs, keep config as source of truth
     if (earnedAddressKey !== 'native') {
-      let token: TokenErc20;
+      let tokens: TokenErc20[] = [];
 
       if (vault.type === 'gov') {
         // Add earned token
-        token = {
-          type: 'erc20',
-          id: vault.earnedToken,
-          chainId: chainId,
-          oracleId: vault.oracleId,
-          decimals: vault.earnedTokenDecimals ?? 18,
-          address: vault.earnedTokenAddress,
-          symbol: vault.earnedToken,
-          buyUrl: undefined,
-          website: undefined,
-          description: undefined,
-          documentation: undefined,
-          risks: [],
-        };
+        if (vault.earnedTokenAddress) {
+          tokens.push({
+            type: 'erc20',
+            id: vault.earnedToken!,
+            chainId: chainId,
+            oracleId: vault.oracleId!,
+            decimals: vault.earnedTokenDecimals ?? 18,
+            address: vault.earnedTokenAddress,
+            symbol: vault.earnedToken!,
+            buyUrl: undefined,
+            website: undefined,
+            description: undefined,
+            documentation: undefined,
+            risks: [],
+          });
+        } else {
+          vault.earnedTokenAddresses!.forEach((_, i) => {
+            tokens.push({
+              type: 'erc20',
+              id: vault.earnedToken!,
+              chainId: chainId,
+              oracleId: vault.oracleIds![i],
+              decimals: vault.earnedTokensDecimals![i] ?? 18,
+              address: vault.earnedTokenAddresses![i],
+              symbol: vault.earnedTokens![i],
+              buyUrl: undefined,
+              website: undefined,
+              description: undefined,
+              documentation: undefined,
+              risks: [],
+            });
+          });
+        }
       } else if (
         vault.type === 'standard' ||
         vault.type === 'cowcentrated' ||
         vault.type === undefined
       ) {
         // Add receipt token
-        token = {
+        let token: TokenErc20 = {
           type: 'erc20',
-          id: vault.earnedToken,
+          id: vault.earnedToken!,
           chainId: chainId,
-          oracleId: vault.oracleId,
-          address: vault.earnedTokenAddress,
+          oracleId: vault.oracleId!,
+          address: vault.earnedTokenAddress!,
           decimals: 18, // receipt token always has 18 decimals
-          symbol: vault.earnedToken,
+          symbol: vault.earnedToken!,
           buyUrl: undefined,
           website: undefined,
           description: undefined,
           documentation: undefined,
           risks: [],
         };
+
+        tokens.push(token);
 
         // Add bridged versions of receipt token
         if (vault.bridged) {
@@ -552,7 +573,7 @@ function addVaultToState(
         throw new Error(`Unknown vault type ${vault.type}`);
       }
 
-      addTokenToState(sliceState, token, true);
+      tokens.forEach(token => addTokenToState(sliceState, token, true));
     }
   } else {
     /** address book loaded first, and the vault receipt token is in the address book */

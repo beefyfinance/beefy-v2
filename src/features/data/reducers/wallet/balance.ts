@@ -10,7 +10,12 @@ import {
 } from '../../actions/balance';
 import { initiateBoostForm } from '../../actions/boosts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
-import type { BoostBalance, GovVaultBalance, TokenBalance } from '../../apis/balance/balance-types';
+import type {
+  BoostBalance,
+  GovVaultBalance,
+  GovVaultV2Balance,
+  TokenBalance,
+} from '../../apis/balance/balance-types';
 import type { BoostEntity } from '../../entities/boost';
 import type { ChainEntity } from '../../entities/chain';
 import type { TokenEntity } from '../../entities/token';
@@ -68,7 +73,7 @@ export interface BalanceState {
         byGovVaultId: {
           [vaultId: VaultEntity['id']]: {
             balance: BigNumber;
-            rewards: BigNumber;
+            rewards: BigNumber[];
           };
         };
       };
@@ -215,22 +220,23 @@ function addTokenBalanceToState(
 
 function addGovVaultBalanceToState(
   walletState: Draft<BalanceState['byAddress']['0xABC']>,
-  govVaultBalance: GovVaultBalance[]
+  govVaultBalance: GovVaultV2Balance[]
 ) {
   for (const vaultBalance of govVaultBalance) {
     const vaultId = vaultBalance.vaultId;
 
     // bug with old bifi gov pool
     if (vaultId === 'bifi-gov-eol') {
-      vaultBalance.rewards = BIG_ZERO;
+      vaultBalance.rewards = [BIG_ZERO];
     }
 
     // only update data if necessary
     const stateForVault = walletState.tokenAmount.byGovVaultId[vaultId];
     if (
-      // state isn't already there if it's there, only if amount differ
+      // state isn't already there and if it's there, only if amount differ
       stateForVault === undefined ||
-      !stateForVault.rewards.isEqualTo(vaultBalance.rewards)
+      !stateForVault.balance.isEqualTo(vaultBalance.balance) ||
+      stateForVault.rewards.some((reward, i) => !reward.isEqualTo(vaultBalance.rewards[i]))
     ) {
       walletState.tokenAmount.byGovVaultId[vaultId] = {
         rewards: vaultBalance.rewards,

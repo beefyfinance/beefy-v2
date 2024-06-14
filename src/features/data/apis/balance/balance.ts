@@ -1,11 +1,17 @@
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi';
 import type Web3 from 'web3';
-import type { VaultGov } from '../../entities/vault';
+import {
+  isMultiGovVault,
+  isSingleGovVault,
+  type VaultGov,
+  type VaultGovMulti,
+  type VaultGovSingle,
+} from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import type { AsWeb3Result } from '../../utils/types-utils';
 import type { BoostEntity } from '../../entities/boost';
-import { chunk, groupBy } from 'lodash-es';
+import { chunk, groupBy, partition } from 'lodash-es';
 
 import type {
   BoostBalance,
@@ -31,6 +37,7 @@ import {
   type Web3Call,
   type Web3CallMethod,
 } from '../../../../helpers/web3';
+import { selectTokenByAddress } from '../../selectors/tokens';
 
 export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   constructor(protected web3: Web3, protected chain: T) {}
@@ -62,9 +69,8 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       }
     }
 
-    const govVaultsByVersion = groupBy(govVaults, 'version');
-    const govVaultsV1 = govVaultsByVersion['1'] || [];
-    const govVaultsV2 = govVaultsByVersion['2'] || [];
+    const govVaultsV1 = govVaults.filter(isSingleGovVault);
+    const govVaultsV2 = govVaults.filter(isMultiGovVault);
     const erc20TokensBatches = chunk(erc20Tokens, CHUNK_SIZE);
     const boostAndGovVaultBatches = chunk([...boosts, ...govVaultsV1], CHUNK_SIZE);
     const govVaultsV2Batches = chunk(govVaultsV2, CHUNK_SIZE);
@@ -189,8 +195,8 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   protected govVaultFormatter(
     state: BeefyState,
     result: AsWeb3Result<GovVaultBalance>,
-    govVault: VaultGov
-  ): GovVaultBalance {
+    govVault: VaultGovSingle
+  ): GovVaultV2Balance {
     const balanceToken = selectGovVaultBalanceTokenEntity(state, govVault.id);
     const rewardsToken = selectGovVaultRewardsTokenEntity(state, govVault.id);
     const rawBalance = new BigNumber(result.balance);
@@ -198,7 +204,8 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     return {
       vaultId: govVault.id,
       balance: rawBalance.shiftedBy(-balanceToken.decimals),
-      rewards: rawRewards.shiftedBy(-rewardsToken.decimals),
+      rewards: [rawRewards.shiftedBy(-rewardsToken.decimals)],
+      rewardTokens: govVault.earnedTokenAddresses,
     };
   }
 
@@ -224,25 +231,35 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   protected govVaultV2Formatter(
     state: BeefyState,
     result: AsWeb3Result<GovVaultV2Balance>,
-    govVault: VaultGov
-  ): GovVaultBalance {
+    govVault: VaultGovMulti
+  ): GovVaultV2Balance {
     if (result.rewards.length !== result.rewardTokens.length || result.rewards.length === 0) {
       throw new Error(`Invalid rewards and rewardTokens length`);
     }
 
     const balanceToken = selectGovVaultBalanceTokenEntity(state, govVault.id);
-    const rewardsToken = selectGovVaultRewardsTokenEntity(state, govVault.id);
+    const rewardTokens = govVault.earnedTokenAddresses;
+    const rewards: BigNumber[] = [];
+
     const rawBalance = new BigNumber(result.balance);
-    const index = result.rewardTokens.findIndex(token => token === govVault.earnedTokenAddress);
-    if (index === -1) {
-      throw new Error(`Config reward token not found in result`);
+
+    for (const rewardTokenAddress of rewardTokens) {
+      const rewardTokenEntity = selectTokenByAddress(state, govVault.chainId, rewardTokenAddress);
+      const index = result.rewardTokens.findIndex(
+        token => token.toLowerCase() === rewardTokenAddress.toLowerCase()
+      );
+      if (index === -1) {
+        throw new Error(`Config reward token not found in result`);
+      }
+      const rawRewards = new BigNumber(result.rewards[index]);
+      rewards.push(rawRewards.shiftedBy(-rewardTokenEntity.decimals));
     }
-    const rawRewards = new BigNumber(result.rewards[index]);
 
     return {
       vaultId: govVault.id,
       balance: rawBalance.shiftedBy(-balanceToken.decimals),
-      rewards: rawRewards.shiftedBy(-rewardsToken.decimals),
+      rewards,
+      rewardTokens,
     };
   }
 }

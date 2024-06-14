@@ -66,7 +66,7 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
     }
     for (const boost of boosts) {
       const vault = selectVaultById(state, boost.vaultId);
-      addTokenAddressesToCalls(vault.earnedTokenAddress, boost.earnContractAddress);
+      addTokenAddressesToCalls(vault.earnContractAddress, boost.earnContractAddress);
     }
 
     // if we send too much in a single call, we get "execution reversed"

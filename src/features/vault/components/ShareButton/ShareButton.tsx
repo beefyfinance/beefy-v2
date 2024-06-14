@@ -72,7 +72,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
     () =>
       (state: BeefyState): Types | BoostedVaultExtraDetails | GovVaultExtraDetails => {
         if (isGovVault(vault)) {
-          const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+          const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); //TODO: handle multiple earned tokens
           return {
             kind: 'gov',
             earnToken: token.symbol,

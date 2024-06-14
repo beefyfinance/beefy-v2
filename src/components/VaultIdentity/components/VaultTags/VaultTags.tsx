@@ -192,7 +192,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
       ) : boostId ? (
         <VaultBoostTag boostId={boostId} />
       ) : isGovVault(vault) ? (
-        <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddress} />
+        <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO: support multiple earned tokens
       ) : null}
       {isVaultEarningPoints(vault) && <PointsTag />}
     </div>

@@ -81,7 +81,7 @@ export interface VaultStandard {
   earningPoints: boolean;
 }
 
-export interface VaultGov {
+export interface VaultGovBase {
   id: string;
   name: string;
   type: 'gov';
@@ -97,7 +97,7 @@ export interface VaultGov {
 
   chainId: ChainEntity['id'];
 
-  earnedTokenAddress: string;
+  earnedTokenAddresses: string[];
 
   /**
    * Vault address "treasury", we ask this address about user balances
@@ -144,6 +144,16 @@ export interface VaultGov {
   migrationIds?: string[];
 }
 
+export interface VaultGovSingle extends VaultGovBase {
+  subType: 'single';
+}
+
+export interface VaultGovMulti extends VaultGovBase {
+  subType: 'multi';
+}
+
+export type VaultGov = VaultGovSingle | VaultGovMulti;
+
 export type VaultCowcentrated = Omit<VaultStandard, 'type'> & {
   type: 'cowcentrated';
   depositTokenAddresses: string[];
@@ -152,6 +162,14 @@ export type VaultCowcentrated = Omit<VaultStandard, 'type'> & {
 
 export function isGovVault(vault: VaultEntity): vault is VaultGov {
   return vault.type === 'gov';
+}
+
+export function isMultiGovVault(vault: VaultEntity): vault is VaultGovMulti {
+  return isGovVault(vault) && vault.subType === 'multi';
+}
+
+export function isSingleGovVault(vault: VaultEntity): vault is VaultGovSingle {
+  return isGovVault(vault) && vault.subType === 'single';
 }
 
 export function isStandardVault(vault: VaultEntity): vault is VaultStandard {

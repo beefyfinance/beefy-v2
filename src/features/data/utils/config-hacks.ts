@@ -45,7 +45,7 @@ export function getDepositTokenFromLegacyVaultConfig(chain: ChainEntity, apiVaul
     token = {
       id: apiVault.token,
       chainId: chain.id,
-      oracleId: apiVault.oracleId,
+      oracleId: apiVault.oracleId!,
       address:
         apiVault.type === 'cowcentrated'
           ? apiVault.tokenAddress + '-' + apiVault.id

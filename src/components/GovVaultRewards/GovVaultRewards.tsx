@@ -23,8 +23,8 @@ import {
 } from '../../features/data/selectors/data-loader';
 
 const _GovVaultRewards = connect((state: BeefyState, { vaultId }: { vaultId: VaultGov['id'] }) => {
-  const vault = selectVaultById(state, vaultId);
-  const earnedToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+  const vault = selectVaultById(state, vaultId) as VaultGov;
+  const earnedToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); // TODO: support multiple earned tokens
   const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(state, vault.id);
   const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id);
   const blurred = selectIsBalanceHidden(state);

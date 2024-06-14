@@ -21,12 +21,21 @@ export interface VaultConfig {
   depositTokenAddresses?: string[];
   tokenProviderId?: PlatformEntity['id'];
   zaps?: StrategyOptions[];
-  earnedToken: string;
-  earnedTokenAddress: string;
-  earnedTokenDecimals?: number | null;
+
+  earnedToken?: string; // only missing in multi gov vaults
+  earnedTokenAddress?: string; // only missing in multi gov vaults
+  earnedTokenDecimals?: number | null; // only missing in multi gov vaults
+
+  earnedTokens?: string[]; // only available in multi gov vaults
+  earnedTokensDecimals: (number | null)[]; // only available in multi gov vaults
+  earnedTokenAddresses?: string[]; // only available in multi gov vaults
+
   earnContractAddress: string;
   oracle: string; // 'tokens' | 'lps';
-  oracleId: TokenEntity['id'];
+
+  oracleId?: TokenEntity['id']; // only missing in multi gov vaults
+  oracleIds?: TokenEntity['id'][]; // only available in multi gov vaults
+
   status: string; // 'active' | 'eol' | 'paused';
   platformId: PlatformEntity['id'];
   assets?: TokenEntity['id'][];
