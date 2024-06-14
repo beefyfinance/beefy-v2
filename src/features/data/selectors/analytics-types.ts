@@ -33,8 +33,8 @@ export type UserClmPnl = {
   sharesAtDepositToUsd: BigNumber;
   shares: BigNumber;
   sharesNowToUsd: BigNumber;
-  token0: UserLpBreakdownBalanceAsset;
-  token1: UserLpBreakdownBalanceAsset;
+  token0: UserLpBreakdownBalanceAsset | undefined;
+  token1: UserLpBreakdownBalanceAsset | undefined;
   token0Diff: BigNumber;
   token1Diff: BigNumber;
   pnl: BigNumber;

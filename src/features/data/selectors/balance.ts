@@ -538,6 +538,23 @@ export const selectTreasuryV3PositionBreakdown = (
   return { assets };
 };
 
+export const selectUserLpBreakdownBalanceOrNull = (
+  state: BeefyState,
+  vault: VaultEntity,
+  walletAddress?: string
+) => {
+  const haveBreakdownData = selectHasBreakdownDataByTokenAddress(
+    state,
+    vault.depositTokenAddress,
+    vault.chainId
+  );
+
+  if (haveBreakdownData) {
+    const breakdown = selectLpBreakdownForVault(state, vault);
+    return selectUserLpBreakdownBalance(state, vault, breakdown, walletAddress);
+  }
+};
+
 export const selectUserLpBreakdownBalance = (
   state: BeefyState,
   vault: VaultEntity,

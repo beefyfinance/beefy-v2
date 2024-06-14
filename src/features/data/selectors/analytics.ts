@@ -15,14 +15,13 @@ import {
 import {
   selectCowcentratedVaultDepositTokens,
   selectCowcentratedVaultDepositTokensWithPrices,
-  selectLpBreakdownForVault,
   selectTokenByAddress,
   selectTokenPriceByAddress,
 } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import {
   selectUserDepositedVaultIds,
-  selectUserLpBreakdownBalance,
+  selectUserLpBreakdownBalanceOrNull,
   selectUserRewardsByVaultId,
   selectUserVaultBalanceInShareToken,
 } from './balance';
@@ -223,17 +222,11 @@ export const selectClmPnl = (
 
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
 
-  const breakdown = selectLpBreakdownForVault(state, vault);
+  const userLpBreakdown = selectUserLpBreakdownBalanceOrNull(state, vault, walletAddress);
 
-  const { assets, userBalanceDecimal } = selectUserLpBreakdownBalance(
-    state,
-    vault,
-    breakdown,
-    walletAddress
-  );
-
-  const token0 = assets[0];
-  const token1 = assets[1];
+  const { token0, token1 } = userLpBreakdown
+    ? { token1: userLpBreakdown.assets[1], token0: userLpBreakdown.assets[0] }
+    : { token0: undefined, token1: undefined };
 
   const pnl = new ClmPnl();
 
@@ -254,11 +247,15 @@ export const selectClmPnl = (
     .times(token0EntryPrice)
     .plus(token1Shares.times(token1EntryPrice));
 
-  const positionPnl = userBalanceDecimal.times(oraclePrice).minus(oraclePriceAtDeposit);
+  const positionPnl =
+    userLpBreakdown?.userBalanceDecimal?.times(oraclePrice).minus(oraclePriceAtDeposit) || BIG_ZERO;
 
   const sharesNowToUsd = remainingShares.times(oraclePrice);
 
-  const hold = token0Shares.times(token0.price).plus(token1Shares.times(token1.price));
+  const hold =
+    token0 && token1
+      ? token0Shares.times(token0.price).plus(token1Shares.times(token1.price))
+      : BIG_ZERO;
 
   const harvestTimeline = selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress);
 
@@ -292,8 +289,8 @@ export const selectClmPnl = (
     sharesNowToUsd,
     token0,
     token1,
-    token0Diff: token0.userAmount.minus(token0Shares),
-    token1Diff: token1.userAmount.minus(token1Shares),
+    token0Diff: token0 ? token0.userAmount.minus(token0Shares) : BIG_ZERO,
+    token1Diff: token1 ? token1.userAmount.minus(token1Shares) : BIG_ZERO,
     pnl: positionPnl,
     pnlPercentage: positionPnl.dividedBy(oraclePriceAtDeposit),
     hold,
