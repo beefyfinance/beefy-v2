@@ -1,7 +1,6 @@
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi';
 import type Web3 from 'web3';
 import {
-  isMultiGovVault,
   isSingleGovVault,
   type VaultGov,
   type VaultGovMulti,
@@ -11,7 +10,7 @@ import type { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import type { AsWeb3Result } from '../../utils/types-utils';
 import type { BoostEntity } from '../../entities/boost';
-import { chunk, groupBy, partition } from 'lodash-es';
+import { chunk, partition } from 'lodash-es';
 
 import type {
   BoostBalance,
@@ -69,8 +68,10 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       }
     }
 
-    const govVaultsV1 = govVaults.filter(isSingleGovVault);
-    const govVaultsV2 = govVaults.filter(isMultiGovVault);
+    const [govVaultsV1, govVaultsV2] = partition(govVaults, isSingleGovVault) as [
+      VaultGovSingle[],
+      VaultGovMulti[]
+    ];
     const erc20TokensBatches = chunk(erc20Tokens, CHUNK_SIZE);
     const boostAndGovVaultBatches = chunk([...boosts, ...govVaultsV1], CHUNK_SIZE);
     const govVaultsV2Batches = chunk(govVaultsV2, CHUNK_SIZE);

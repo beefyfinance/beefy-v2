@@ -12,7 +12,6 @@ import { initiateBoostForm } from '../../actions/boosts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
 import type {
   BoostBalance,
-  GovVaultBalance,
   GovVaultV2Balance,
   TokenBalance,
 } from '../../apis/balance/balance-types';

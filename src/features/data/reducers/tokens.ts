@@ -505,7 +505,7 @@ function addVaultToState(
   if (existingEarnedToken === undefined) {
     // Do not add native token from configs, keep config as source of truth
     if (earnedAddressKey !== 'native') {
-      let tokens: TokenErc20[] = [];
+      const tokens: TokenErc20[] = [];
 
       if (vault.type === 'gov') {
         // Add earned token
@@ -548,7 +548,7 @@ function addVaultToState(
         vault.type === undefined
       ) {
         // Add receipt token
-        let token: TokenErc20 = {
+        const token: TokenErc20 = {
           type: 'erc20',
           id: vault.earnedToken!,
           chainId: chainId,
