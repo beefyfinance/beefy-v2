@@ -261,7 +261,7 @@ function addVaultToState(
       subType: apiVault.earnedTokenAddresses ? 'multi' : 'single',
       version: apiVault.version || 1,
       depositTokenAddress: apiVault.tokenAddress || 'native',
-      earnedTokenAddresses: apiVault.depositTokenAddresses ?? [apiVault.earnedTokenAddress!],
+      earnedTokenAddresses: apiVault.earnedTokenAddresses ?? [apiVault.earnedTokenAddress!],
       earnContractAddress: apiVault.earnContractAddress,
       strategyTypeId: apiVault.strategyTypeId,
       excludedId: apiVault.excluded || null,
@@ -283,6 +283,7 @@ function addVaultToState(
       pauseReason: apiVault.pauseReason,
       pausedAt: apiVault.pausedAt,
     } satisfies VaultGov;
+    if (apiVault.id === 'bifi-pool') console.log(vault);
   } else if (apiVault.type === 'cowcentrated') {
     vault = {
       id: apiVault.id,
