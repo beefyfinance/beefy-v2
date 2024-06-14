@@ -242,6 +242,10 @@ export const selectTokenPriceByTokenOracleId = createCachedSelector(
 export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
   state.entities.tokens.breakdown.byOracleId[oracleId];
 
+export const selectLpBreakdownForVault = (state: BeefyState, vault: VaultEntity) => {
+  return selectLpBreakdownByTokenAddress(state, vault.chainId, vault.depositTokenAddress);
+};
+
 export const selectLpBreakdownByTokenAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],

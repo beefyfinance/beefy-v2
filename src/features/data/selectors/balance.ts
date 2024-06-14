@@ -16,7 +16,7 @@ import {
   selectDepositTokenByVaultId,
   selectHasBreakdownDataByTokenAddress,
   selectIsTokenStable,
-  selectLpBreakdownByTokenAddress,
+  selectLpBreakdownForVault,
   selectShareTokenByVaultId,
   selectTokenByAddress,
   selectTokenByIdOrUndefined,
@@ -745,11 +745,7 @@ const selectUserVaultTokenExposure: UserExposureVaultFn<UserTokenExposureVaultEn
     vault.chainId
   );
   if (haveBreakdownData) {
-    const breakdown = selectLpBreakdownByTokenAddress(
-      state,
-      vault.chainId,
-      vault.depositTokenAddress
-    );
+    const breakdown = selectLpBreakdownForVault(state, vault);
     const { assets } = selectUserLpBreakdownBalance(state, vault, breakdown, walletAddress);
     return assets.map(asset => {
       const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, asset.symbol);
@@ -809,11 +805,7 @@ const selectUserVaultStableExposure: UserExposureVaultFn = (
     vault.chainId
   );
   if (haveBreakdownData) {
-    const breakdown = selectLpBreakdownByTokenAddress(
-      state,
-      vault.chainId,
-      vault.depositTokenAddress
-    );
+    const breakdown = selectLpBreakdownForVault(state, vault);
     const { assets } = selectUserLpBreakdownBalance(state, vault, breakdown, walletAddress);
     return assets.map(asset => {
       const isStable = selectIsTokenStable(state, asset.chainId, asset.id);

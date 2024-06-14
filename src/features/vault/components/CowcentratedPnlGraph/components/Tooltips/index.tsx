@@ -46,6 +46,10 @@ export const OverviewTooltip = memo<GraphTooltipProps>(function OverviewTooltip(
   const classes = useStyles();
   const { t } = useTranslation();
 
+  if (!payload) {
+    return null;
+  }
+
   const [valueLine] = payload!;
 
   if (!active) {

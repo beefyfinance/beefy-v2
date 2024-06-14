@@ -9,7 +9,7 @@ import type { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { BIG_ZERO } from '../../helpers/big-number';
 import {
-  selectLpBreakdownByTokenAddress,
+  selectLpBreakdownForVault,
   selectTokenByAddress,
 } from '../../features/data/selectors/tokens';
 import type { LpData } from '../../features/data/apis/beefy/beefy-api';
@@ -40,11 +40,7 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
   }
   // deposit can be moo or oracle
   const tvl = selectVaultTvl(state, vaultId);
-  const breakdown = selectLpBreakdownByTokenAddress(
-    state,
-    vault.chainId,
-    vault.depositTokenAddress
-  );
+  const breakdown = selectLpBreakdownForVault(state, vault);
 
   const token = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
