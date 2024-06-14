@@ -81,7 +81,7 @@ export const OverviewTooltip = memo<OverviewTooltipProps>(function OverviewToolt
         ? Object.entries(rest).map(([key, value]) => (
             <div className={classes.itemContainer} key={key}>
               <div className={classes.label}>{key}:</div>
-              <div className={classes.value}>{value}</div>
+              <div className={classes.value}>{value.toString(10)}</div>
             </div>
           ))
         : null}

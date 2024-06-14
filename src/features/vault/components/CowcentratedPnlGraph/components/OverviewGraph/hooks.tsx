@@ -12,7 +12,7 @@ import {
   selectTokenPriceByTokenOracleId,
 } from '../../../../../data/selectors/tokens';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet';
-import { eachDayOfInterval, getUnixTime } from 'date-fns';
+import { eachDayOfInterval } from 'date-fns';
 import { maxBy, minBy } from 'lodash';
 import { getClmInvestorTimeSeries } from '../../../../../../helpers/timeserie';
 import { isCLMTimelineAnalyticsEntity } from '../../../../../data/entities/analytics';
@@ -64,20 +64,19 @@ export const usePnLChartData = (
       vaultTimeline.current.length &&
       sharesToUsd &&
       token0ToUsd &&
-      token1ToUsd
+      token1ToUsd &&
+      sharesToUsd.length > 0 &&
+      token0ToUsd.length > 0 &&
+      token1ToUsd.length > 0
     ) {
       const vaultLastDeposit = vaultTimeline.current[0].datetime;
-      const vaultLastDepositUnix = getUnixTime(vaultLastDeposit);
-      const filteredSharesToUsd = sharesToUsd.filter(price => price.t >= vaultLastDepositUnix);
-      const filteredToken0ToUsd = token0ToUsd.filter(price => price.t >= vaultLastDepositUnix);
-      const filteredToken1ToUsd = token1ToUsd.filter(price => price.t >= vaultLastDepositUnix);
 
       const data = getClmInvestorTimeSeries(
         timebucket,
         vaultTimeline.current,
-        filteredSharesToUsd,
-        filteredToken0ToUsd,
-        filteredToken1ToUsd,
+        sharesToUsd,
+        token0ToUsd,
+        token1ToUsd,
         vaultLastDeposit,
         currentSharePrice,
         currentMooTokenBalance,
