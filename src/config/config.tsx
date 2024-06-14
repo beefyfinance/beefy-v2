@@ -514,6 +514,8 @@ export const config = {
       'USDCwh',
       'USDTxc',
       'BUSDwh',
+      'xcUSDC',
+      'axlUSDC',
     ],
   },
   moonriver: {
