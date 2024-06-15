@@ -6,7 +6,7 @@ import {
   selectUserFirstDepositDateByVaultId,
 } from '../../../data/selectors/analytics';
 import { getInvestorTimeserie } from '../../../../helpers/timeserie';
-import { eachDayOfInterval, getUnixTime, isAfter } from 'date-fns';
+import { differenceInHours, getUnixTime, isAfter } from 'date-fns';
 import { maxBy, minBy } from 'lodash-es';
 import { selectVaultById, selectVaultPricePerFullShare } from '../../../data/selectors/vaults';
 import {
@@ -110,22 +110,33 @@ export const usePnLChartData = (
   return { chartData, isLoading };
 };
 
-export const useVaultPeriods = (vaultId: VaultEntity['id'], address?: string) => {
+/**
+ * The indexes of the array returned are used to index GRAPH_TIME_BUCKETS
+ */
+export const useVaultPeriods = (
+  vaultId: VaultEntity['id'],
+  address: string,
+  minHours: number = 4
+) => {
   const vaultDepositDate = useAppSelector(state =>
     selectUserFirstDepositDateByVaultId(state, vaultId, address)
   );
-  const currentDate = new Date();
-
-  const result = eachDayOfInterval({
-    start: vaultDepositDate || currentDate,
-    end: currentDate,
-  });
 
   return useMemo(() => {
-    if (result.length > 30) return ['1D', '1W', '1M', 'ALL'];
-    if (result.length > 7) return ['1D', '1W', 'ALL'];
-    if (result.length > 1) return ['1D', 'ALL'];
-    if (result.length === 1) return ['1D'];
+    if (!vaultDepositDate) return [];
+
+    const now = new Date();
+    const fullHours = differenceInHours(now, vaultDepositDate);
+    const fractionalDays = fullHours / 24;
+
+    if (fractionalDays > 366) return ['1D', '1W', '1M', '1Y', 'ALL'];
+    if (fractionalDays > 30) return ['1D', '1W', '1M', 'ALL'];
+    if (fractionalDays > 7) return ['1D', '1W', 'ALL'];
+    if (fractionalDays > 1) return ['1D', 'ALL'];
+
+    // smallest bucket is 1h, so wait until we have at least 4 hours to show on the graph
+    if (fullHours >= minHours) return ['ALL'];
+
     return [];
-  }, [result.length]);
+  }, [vaultDepositDate, minHours]);
 };

@@ -1,4 +1,4 @@
-import { add, intervalToDuration, isAfter } from 'date-fns';
+import { add, intervalToDuration, isAfter, sub } from 'date-fns';
 import { zeroPad } from './format';
 
 export function datesAreEqual(a: Date | undefined, b: Date | undefined): boolean {
@@ -74,4 +74,9 @@ export function isLonger(base: Duration, compareTo: Duration): boolean {
   const baseDate = add(now, base);
   const compareToDate = add(now, compareTo);
   return isAfter(baseDate, compareToDate);
+}
+
+/** whether it has been at least `duration` since `date` */
+export function isAtLeastDurationAgo(date: Date, duration: Duration): boolean {
+  return isAfter(date, sub(new Date(), duration));
 }

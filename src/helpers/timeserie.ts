@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { fromUnixTime, getUnixTime, isAfter, isBefore, isEqual, max, subDays } from 'date-fns';
-import { sortBy, sortedUniq } from 'lodash-es';
+import { pick, sortBy, sortedUniq } from 'lodash-es';
 import type { ApiProductPriceRow } from '../features/data/apis/analytics/analytics-types';
 import type {
   CLMTimelineAnalyticsEntry,
@@ -10,10 +10,15 @@ import { BIG_ZERO } from './big-number';
 import { roundDownMinutes } from './date';
 import { samplingPeriodMs } from './sampling-period';
 import { graphTimeBucketToSamplingPeriod } from './time-bucket';
-import type { ClmHarvestsTimeline } from '../features/data/actions/analytics';
+import type {
+  ClmUserHarvestsTimeline,
+  ClmUserHarvestsTimelineHarvest,
+} from '../features/data/actions/analytics';
 import type { ApiPoint } from '../features/data/apis/beefy/beefy-data-api-types';
 import { ClmPnl } from './pnl';
 import type { GraphBucket } from './graph';
+import type { TokenEntity } from '../features/data/entities/token';
+import { getBigNumberInterpolator, type Interpolator } from './math';
 
 // simulate a join between the 3 price series locally
 export interface PriceTsRow {
@@ -197,6 +202,11 @@ class TimeValueAfter<TValue> {
   }
 
   public getValueAfter(timestamp: number): TValue {
+    if (this.lastIndex === -1) {
+      console.debug('TimeValueAfter has no entries, returning defaultValue', timestamp);
+      return this.defaultValue;
+    }
+
     while (this.index < this.lastIndex && this.points[this.index + 1].t <= timestamp) {
       ++this.index;
     }
@@ -222,7 +232,13 @@ abstract class TimeValueInterpolator<TValue> {
   protected index: number;
   protected lastIndex: number;
 
-  constructor(unsortedPoints: TimeValuePoint<TValue>[]) {
+  constructor(
+    unsortedPoints: TimeValuePoint<TValue>[],
+    protected interpolator: Interpolator<TValue>
+  ) {
+    if (unsortedPoints.length === 0) {
+      throw new Error('TimeValueInterpolator needs at least one point');
+    }
     this.points = sortBy(unsortedPoints, p => p.t);
     this.index = 0;
     this.lastIndex = this.points.length - 1;
@@ -240,9 +256,11 @@ abstract class TimeValueInterpolator<TValue> {
       return after.v;
     }
 
-    if (timestamp > after.t) {
+    if (this.index === this.lastIndex) {
       console.debug(
-        'TimeValueInterpolator requested timestamp is after the last value',
+        `TimeValueInterpolator requested timestamp is ${
+          timestamp > after.t ? 'after the last value' : 'before all values'
+        }`,
         timestamp,
         after.t,
         after.v
@@ -251,12 +269,6 @@ abstract class TimeValueInterpolator<TValue> {
     }
 
     if (timestamp < after.t && this.index === this.lastIndex) {
-      console.debug(
-        'TimeValueInterpolator requested timestamp is before all values',
-        timestamp,
-        after.t,
-        after.v
-      );
       return after.v;
     }
 
@@ -272,39 +284,18 @@ abstract class TimeValueInterpolator<TValue> {
       return before.v;
     }
 
-    return this.interpolate(timestamp, before.t, after.t, before.v, after.v);
+    return this.interpolator.interpolate(timestamp, before.t, after.t, before.v, after.v);
   }
-
-  protected interpolate(t: number, t0: number, t1: number, v0: TValue, v1: TValue): TValue {
-    const r0 = t1 - t;
-    const r1 = t - t0;
-    const d = t1 - t0;
-    return this.div(this.add(this.mul(v0, r0), this.mul(v1, r1)), d);
-  }
-
-  protected abstract mul(value: TValue, by: number): TValue;
-
-  protected abstract div(value: TValue, by: number): TValue;
-
-  protected abstract add(value: TValue, by: TValue): TValue;
 }
 
 class TimeBigNumberInterpolator extends TimeValueInterpolator<BigNumber> {
-  protected mul(value: BigNumber, by: number): BigNumber {
-    return value.times(by);
-  }
-
-  protected div(value: BigNumber, by: number): BigNumber {
-    return value.div(by);
-  }
-
-  protected add(value: BigNumber, by: BigNumber): BigNumber {
-    return value.plus(by);
+  constructor(points: TimeValuePoint<BigNumber>[]) {
+    super(points, getBigNumberInterpolator());
   }
 }
 
-class ClmInvestorTimeSeriesGenerator {
-  protected readonly nowUnix = getUnixTime(new Date());
+class ClmInvestorOverviewTimeSeriesGenerator {
+  protected readonly nowUnix: number;
   protected readonly firstUnix: number;
   protected readonly lastUnix: number;
   protected readonly bucketSize: number;
@@ -325,8 +316,9 @@ class ClmInvestorTimeSeriesGenerator {
     lastDate: Date,
     bucketSizeMs: number
   ) {
+    this.nowUnix = getUnixTime(new Date());
     this.firstUnix = getUnixTime(firstDate);
-    this.lastUnix = getUnixTime(lastDate);
+    this.lastUnix = Math.min(this.nowUnix, getUnixTime(lastDate));
     this.bucketSize = bucketSizeMs / 1000;
     this.bucketBeforeFirstUnix = Math.floor(this.firstUnix / this.bucketSize) * this.bucketSize;
   }
@@ -404,6 +396,7 @@ class ClmInvestorTimeSeriesGenerator {
     const sharePoints: TimeValuePoint<BigNumber>[] = [];
     const underlying0Points: TimeValuePoint<BigNumber>[] = [];
     const underlying1Points: TimeValuePoint<BigNumber>[] = [];
+    const balanceTimestamps: number[] = [];
     const pnl = new ClmPnl();
 
     let hadFirstDeposit: boolean = false;
@@ -423,8 +416,8 @@ class ClmInvestorTimeSeriesGenerator {
       }
 
       const txUnix = getUnixTime(tx.datetime);
-      if (txUnix < this.bucketBeforeFirstUnix) {
-        continue;
+      if (txUnix >= this.bucketBeforeFirstUnix) {
+        balanceTimestamps.push(txUnix);
       }
 
       sharePoints.push({
@@ -447,15 +440,15 @@ class ClmInvestorTimeSeriesGenerator {
       shareBalance: new TimeValueAfter(sharePoints, BIG_ZERO),
       underlying0Balance: new TimeValueAfter(underlying0Points, BIG_ZERO),
       underlying1Balance: new TimeValueAfter(underlying1Points, BIG_ZERO),
+      balanceTimestamps,
     };
   }
 
-  protected getTimestamps(txTimestamps: number[]) {
-    const timestamps: number[] = [...txTimestamps];
-    const firstTxTimeStamp = txTimestamps[0];
+  protected getTimestamps(exactTxTimestamps: number[], firstTxInRangeTimestamp: number) {
+    const timestamps: number[] = [...exactTxTimestamps];
 
     for (let t = this.bucketBeforeFirstUnix; t <= this.lastUnix; t += this.bucketSize) {
-      if (t > firstTxTimeStamp) {
+      if (t > firstTxInRangeTimestamp) {
         timestamps.push(t);
       }
     }
@@ -469,8 +462,9 @@ class ClmInvestorTimeSeriesGenerator {
     const shareToUsd = this.getShareToUsd();
     const underlying0ToUsd = this.getUnderlying0ToUsd();
     const underlying1ToUsd = this.getUnderlying1ToUsd();
-    const { shareBalance, underlying0Balance, underlying1Balance } = this.getBalances();
-    const timestamps = this.getTimestamps(shareBalance.timestamps);
+    const { shareBalance, underlying0Balance, underlying1Balance, balanceTimestamps } =
+      this.getBalances();
+    const timestamps = this.getTimestamps(balanceTimestamps, shareBalance.timestamps[0]);
 
     return timestamps.map(t => {
       const shares = shareBalance.getValueAfter(t);
@@ -503,6 +497,73 @@ class ClmInvestorTimeSeriesGenerator {
   }
 }
 
+class ClmInvestorFeesTimeSeriesGenerator {
+  protected readonly nowUnix: number;
+  protected readonly firstUnix: number;
+  protected readonly lastUnix: number;
+  protected readonly bucketSize: number;
+  protected readonly bucketBeforeFirstUnix: number;
+
+  constructor(
+    protected timeline: ClmUserHarvestsTimelineHarvest[],
+    protected tokens: TokenEntity[],
+    firstDate: Date,
+    lastDate: Date,
+    bucketSizeMs: number
+  ) {
+    this.nowUnix = getUnixTime(new Date());
+    this.firstUnix = getUnixTime(firstDate);
+    this.lastUnix = Math.min(this.nowUnix, getUnixTime(lastDate));
+    this.bucketSize = bucketSizeMs / 1000;
+    this.bucketBeforeFirstUnix = Math.floor(this.firstUnix / this.bucketSize) * this.bucketSize;
+  }
+
+  protected getCumulative() {
+    return new TimeValueAfter(
+      this.timeline.map(h => {
+        return {
+          t: getUnixTime(h.timestamp),
+          v: pick(h, ['cumulativeAmountsUsd', 'cumulativeAmounts']),
+        };
+      }),
+      {
+        cumulativeAmountsUsd: this.tokens.map(() => BIG_ZERO),
+        cumulativeAmounts: this.tokens.map(() => BIG_ZERO),
+      }
+    );
+  }
+
+  protected getTimestamps(txTimestamps: number[]) {
+    const timestamps: number[] = [...txTimestamps];
+    const firstTxTimeStamp = txTimestamps[0];
+
+    for (let t = this.bucketBeforeFirstUnix; t <= this.lastUnix; t += this.bucketSize) {
+      if (t > firstTxTimeStamp) {
+        timestamps.push(t);
+      }
+    }
+
+    timestamps.push(this.nowUnix);
+
+    return sortedUniq(timestamps.sort((a, b) => a - b));
+  }
+
+  public generate(): ClmInvestorFeesTimeSeriesPoint[] {
+    const cumulative = this.getCumulative();
+    const timestamps = this.getTimestamps(cumulative.timestamps);
+
+    return timestamps.map(t => {
+      const { cumulativeAmounts, cumulativeAmountsUsd } = cumulative.getValueAfter(t);
+
+      return {
+        t: t * 1000, // graph UI wants timestamp in milliseconds
+        amounts: cumulativeAmounts,
+        values: cumulativeAmountsUsd.map(v => v.toNumber()),
+      };
+    });
+  }
+}
+
 export function getClmInvestorTimeSeries(
   timeBucket: GraphBucket,
   timeline: CLMTimelineAnalyticsEntry[],
@@ -526,7 +587,7 @@ export function getClmInvestorTimeSeries(
   const rangeStartDate = new Date(lastDate.getTime() - timeRange);
   const firstDate = max([firstDepositDate, rangeStartDate]);
 
-  const generator = new ClmInvestorTimeSeriesGenerator(
+  const generator = new ClmInvestorOverviewTimeSeriesGenerator(
     timeline,
     shareToUsd,
     underlying0ToUsd,
@@ -547,48 +608,30 @@ export function getClmInvestorTimeSeries(
 
 export type ClmInvestorFeesTimeSeriesPoint = {
   t: number;
-  v0: number;
-  v1: number;
+  /** cumulative usd per token */
+  values: number[];
+  /** cumulative amount per token */
+  amounts: BigNumber[];
 };
 
 export function getClmInvestorFeesTimeSeries(
   timeBucket: GraphBucket,
-  timeline: ClmHarvestsTimeline,
-  _currentPriceToken0: BigNumber,
-  _currentPriceToken1: BigNumber
+  timeline: ClmUserHarvestsTimeline,
+  firstDepositDate: Date
 ): ClmInvestorFeesTimeSeriesPoint[] | undefined {
-  const { timeRange: timeRangeStr } = graphTimeBucketToSamplingPeriod(timeBucket);
+  const { bucketSize: bucketSizeStr, timeRange: timeRangeStr } =
+    graphTimeBucketToSamplingPeriod(timeBucket);
+  const bucketSize = samplingPeriodMs[bucketSizeStr];
   const timeRange = samplingPeriodMs[timeRangeStr];
-  const now = new Date();
-  const firstHarvest = timeline.harvests[0];
-  const startDate = max([firstHarvest.timestamp, new Date(now.getTime() - timeRange)]);
-  const firstHarvestIdx = timeline.harvests.findIndex(h => isAfter(h.timestamp, startDate));
-  const lastHarvestIdx = timeline.harvests.length - 1;
-  const lastHarvest = timeline.harvests[lastHarvestIdx];
-  if (firstHarvestIdx === -1) {
-    // no harvests in the requested bucket, return last point so there is at least one point on graph
-    return [
-      {
-        t: lastHarvest.timestamp.getTime(),
-        v0: lastHarvest.cumulativeAmountsUsd[0].toNumber(),
-        v1: lastHarvest.cumulativeAmountsUsd[1].toNumber(),
-      },
-    ];
-  }
-  const harvestsInBucket = timeline.harvests.slice(firstHarvestIdx, lastHarvestIdx + 1);
-  const priorHarvest = timeline.harvests[firstHarvestIdx - 1];
-  const cumulativeAmountsUsd = priorHarvest
-    ? [...priorHarvest.cumulativeAmountsUsd]
-    : timeline.tokens.map(() => BIG_ZERO);
-
-  return harvestsInBucket.map(harvest => {
-    harvest.amountsUsd.forEach((amount, i) => {
-      cumulativeAmountsUsd[i] = cumulativeAmountsUsd[i].plus(amount);
-    });
-    return {
-      t: harvest.timestamp.getTime(),
-      v0: cumulativeAmountsUsd[0].toNumber(),
-      v1: cumulativeAmountsUsd[1].toNumber(),
-    };
-  });
+  const lastDate = new Date(Math.floor(new Date().getTime() / bucketSize) * bucketSize);
+  const rangeStartDate = new Date(lastDate.getTime() - timeRange);
+  const firstDate = max([firstDepositDate, rangeStartDate]);
+  const generator = new ClmInvestorFeesTimeSeriesGenerator(
+    timeline.harvests,
+    timeline.tokens,
+    firstDate,
+    lastDate,
+    bucketSize
+  );
+  return generator.generate();
 }

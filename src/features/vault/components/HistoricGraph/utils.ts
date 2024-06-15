@@ -1,8 +1,8 @@
 import type { ApiTimeBucket } from '../../../data/apis/beefy/beefy-data-api-types';
 import { fromUnixTime, getUnixTime, sub } from 'date-fns';
-import type { ChartStat } from '../../../data/reducers/historical-types';
 import { first } from 'lodash-es';
 import { getDataApiBucket } from '../../../data/apis/beefy/beefy-data-api-helpers';
+import type { ChartStat } from './types';
 
 // must match API
 export const SNAPSHOT_INTERVAL: number = 15 * 60;

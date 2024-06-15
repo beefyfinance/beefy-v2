@@ -29,7 +29,7 @@ export const PieChart = memo<PieChartProps>(function PieChart({ data, type, form
         {data.map((asset, i) => (
           <Cell
             key={asset.key}
-            fill={CHART_COLORS[i % data.length]}
+            fill={CHART_COLORS[i % CHART_COLORS.length]}
             stroke={'#242842'}
             strokeWidth={2}
           />

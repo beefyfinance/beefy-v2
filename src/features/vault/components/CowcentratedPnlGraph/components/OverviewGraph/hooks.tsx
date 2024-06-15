@@ -4,7 +4,6 @@ import { type VaultEntity } from '../../../../../data/entities/vault';
 import {
   selectClmPnl,
   selectUserDepositedTimelineByVaultId,
-  selectUserFirstDepositDateByVaultId,
 } from '../../../../../data/selectors/analytics';
 import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../../../data/selectors/balance';
 import {
@@ -12,12 +11,12 @@ import {
   selectTokenPriceByTokenOracleId,
 } from '../../../../../data/selectors/tokens';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet';
-import { eachDayOfInterval } from 'date-fns';
 import { maxBy, minBy } from 'lodash';
 import { getClmInvestorTimeSeries } from '../../../../../../helpers/timeserie';
 import { isCLMTimelineAnalyticsEntity } from '../../../../../data/entities/analytics';
 import { useOracleIdToUsdPrices } from '../../../../../data/hooks/historical';
 import type { GraphBucket } from '../../../../../../helpers/graph';
+import { useVaultPeriods } from '../../../PnLGraph/hooks';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], minUsd: 0, maxUsd: 0 };
@@ -121,22 +120,7 @@ export const usePnLChartData = (
   return { chartData, isLoading };
 };
 
-export const useVaultPeriodsOverviewGraph = (vaultId: VaultEntity['id'], address?: string) => {
-  const vaultDepositDate = useAppSelector(state =>
-    selectUserFirstDepositDateByVaultId(state, vaultId, address)
-  );
-  const currentDate = new Date();
-
-  const result = eachDayOfInterval({
-    start: vaultDepositDate || currentDate,
-    end: currentDate,
-  });
-
-  return useMemo(() => {
-    if (result.length > 30) return ['1D', '1W', '1M', 'ALL'];
-    if (result.length > 7) return ['1D', '1W', 'ALL'];
-    if (result.length > 1) return ['1D', 'ALL'];
-    if (result.length === 1) return ['1D'];
-    return [];
-  }, [result.length]);
-};
+/**
+ * The indexes of the array returned are used to index GRAPH_TIME_BUCKETS
+ */
+export const useVaultPeriodsOverviewGraph = useVaultPeriods;

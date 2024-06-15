@@ -36,6 +36,11 @@ export type AsWeb3Result<T extends object> = Prettify<{
 
 export type KeysOfUnion<T> = T extends unknown ? keyof T : never;
 
-export type Intersect<T> = (T extends any ? (x: T) => 0 : never) extends (x: infer R) => 0
-  ? R
-  : never;
+export type EnsureKeys<
+  TKey extends string,
+  TObj extends {
+    [key in TKey]: unknown;
+  }
+> = {
+  [key in TKey]: TObj[key];
+};

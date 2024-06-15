@@ -3,10 +3,10 @@ import type { VaultEntity } from '../entities/vault';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import type { TokenEntity } from '../entities/token';
 import { createSelector } from '@reduxjs/toolkit';
-import type { ChartStat } from '../reducers/historical-types';
 import { selectVaultShouldShowInterest } from './data-loader';
 import { allDataApiBuckets } from '../apis/beefy/beefy-data-api-helpers';
 import { fromKeys } from '../../../helpers/object';
+import type { ChartApiPoint, ChartStat } from '../../vault/components/HistoricGraph/types';
 
 const unavailableBuckets = fromKeys(allDataApiBuckets, false);
 
@@ -356,22 +356,27 @@ export function selectHistoricalBucketAlreadyFulfilled(
   throw new Error(`Unknown stat: ${stat}`);
 }
 
-export function selectHistoricalBucketData(
+type HistoricalBucketData<TStat extends ChartStat> = ChartApiPoint<TStat>[] | undefined;
+
+export function selectHistoricalBucketData<TStat extends ChartStat>(
   state: BeefyState,
-  stat: ChartStat,
+  stat: TStat,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket
-) {
-  switch (stat) {
-    case 'apy':
-      return selectHistoricalApyBucketData(state, vaultId, bucket);
-    case 'tvl':
-      return selectHistoricalTvlBucketData(state, vaultId, bucket);
-    case 'price':
-      return selectHistoricalPriceBucketData(state, oracleId, bucket);
-    case 'clm':
-      return selectHistoricalCowcentratedRangesBucketData(state, vaultId, bucket);
+): HistoricalBucketData<TStat> {
+  if (stat === 'apy') {
+    return selectHistoricalApyBucketData(state, vaultId, bucket) as HistoricalBucketData<TStat>;
+  } else if (stat === 'tvl') {
+    return selectHistoricalTvlBucketData(state, vaultId, bucket) as HistoricalBucketData<TStat>;
+  } else if (stat === 'price') {
+    return selectHistoricalPriceBucketData(state, oracleId, bucket) as HistoricalBucketData<TStat>;
+  } else if (stat === 'clm') {
+    return selectHistoricalCowcentratedRangesBucketData(
+      state,
+      vaultId,
+      bucket
+    ) as HistoricalBucketData<TStat>;
   }
 
   throw new Error(`Unknown stat: ${stat}`);

@@ -1,5 +1,31 @@
 import type { ChainEntity } from '../entities/chain';
 
+type FactoryFn<P, R> = (...props: P[]) => R;
+
+export function createFactory<P, R>(factoryFn: FactoryFn<P, R>): FactoryFn<P, R> {
+  let cache: R | undefined;
+  return (...args: P[]): R => {
+    if (cache === undefined) {
+      cache = factoryFn(...args);
+    }
+    return cache;
+  };
+}
+
+export function createCachedFactory<P, R>(
+  factoryFn: FactoryFn<P, R>,
+  keyFn: (...args: P[]) => string = (...args: P[]) => JSON.stringify(args)
+): FactoryFn<P, R> {
+  const cache: { [index: string]: R } = {};
+  return (...args: P[]): R => {
+    const index = keyFn(...args);
+    if (cache[index] === undefined) {
+      cache[index] = factoryFn(...args);
+    }
+    return cache[index]!;
+  };
+}
+
 /**
  * Creates a new factory function based on the input factory function,
  * that first resolves dependencies which are passed to the factory function

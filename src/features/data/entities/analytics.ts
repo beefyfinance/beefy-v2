@@ -5,6 +5,7 @@ import type {
 } from '../apis/analytics/analytics-types';
 import type { ChangeTypeOfKeys, Prettify, SnakeToCamelCase } from '../utils/types-utils';
 import type { ChainEntity } from './chain';
+import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 
 type VTACSnake = {
   [K in keyof TimelineAnalyticsConfig as SnakeToCamelCase<K>]: TimelineAnalyticsConfig[K];
@@ -74,8 +75,12 @@ export type AnyTimelineAnalyticsEntry = VaultTimelineAnalyticsEntry | CLMTimelin
 
 export type TimelineAnalyticsEntryToEntity<T extends AnyTimelineAnalyticsEntry> = {
   type: T['type'];
+  /** transactions since user last fully withdrew */
   current: T[];
+  /** any transactions prior to `current` */
   past: T[];
+  /** what buckets the current data transactions cover */
+  buckets: ApiTimeBucket[];
 };
 
 export type VaultTimelineAnalyticsEntity =

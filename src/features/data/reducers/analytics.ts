@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  type ClmHarvestsTimeline,
+  type ClmUserHarvestsTimeline,
   fetchClmHarvestsForUserChain,
   fetchClmHarvestsForUserVault,
   fetchClmPendingRewards,
@@ -49,7 +49,7 @@ export interface AnalyticsState {
       };
       clmHarvests: {
         byVaultId: {
-          [vaultId: VaultEntity['id']]: ClmHarvestsTimeline;
+          [vaultId: VaultEntity['id']]: ClmUserHarvestsTimeline;
         };
       };
     };

@@ -24,8 +24,8 @@ import {
 import { styles } from './styles';
 import { XAxisTick } from '../../../../../../components/XAxisTick';
 import { FeesTooltip, type FeesTooltipProps } from '../Tooltips';
-import { useAppSelector } from '../../../../../../store';
-import { selectCowcentratedVaultDepositTokens } from '../../../../../data/selectors/tokens';
+import type { ClmInvestorFeesTimeSeriesPoint } from '../../../../../../helpers/timeserie';
+import { LINE_COLORS } from '../../../../../../helpers/charts';
 
 const useStyles = makeStyles(styles);
 
@@ -35,7 +35,7 @@ interface CLMFeesGraphProps {
   address?: string;
 }
 
-const FEES_TIME_BUCKET: GraphBucket[] = ['1h_1w', '1d_1M', '1d_all'];
+const FEES_TIME_BUCKET: GraphBucket[] = ['1h_1w', '1d_1M', '1d_1Y', '1d_all'];
 
 export const CLMFeesGraph = memo<CLMFeesGraphProps>(function CLMFeesGraph({
   vaultId,
@@ -44,13 +44,9 @@ export const CLMFeesGraph = memo<CLMFeesGraphProps>(function CLMFeesGraph({
 }) {
   const classes = useStyles();
 
-  const { token0, token1 } = useAppSelector(state =>
-    selectCowcentratedVaultDepositTokens(state, vaultId)
-  );
-
   const { chartData, isLoading } = useFeesChartData(FEES_TIME_BUCKET[period], vaultId, address);
 
-  const { data, minUsd, maxUsd } = chartData;
+  const { data, tokens, minUsd, maxUsd } = chartData;
 
   const usdDiff = useMemo(() => {
     return domainOffSet(minUsd, maxUsd, 0.88);
@@ -83,14 +79,20 @@ export const CLMFeesGraph = memo<CLMFeesGraphProps>(function CLMFeesGraph({
   }, [xsDown]);
 
   const tooltipContentCreator = useCallback(
-    (props: Omit<FeesTooltipProps, 'token0Symbol' | 'token1Symbol'>) => (
-      <FeesTooltip token0Symbol={token0.symbol} token1Symbol={token1.symbol} {...props} />
-    ),
-    [token0.symbol, token1.symbol]
+    (props: Omit<FeesTooltipProps, 'tokens'>) => <FeesTooltip tokens={tokens} {...props} />,
+    [tokens]
   );
+
+  const valuePickers = useMemo(() => {
+    return tokens.map((_, i) => (p: ClmInvestorFeesTimeSeriesPoint) => p.values[i]);
+  }, [tokens]);
 
   if (isLoading) {
     return <GraphLoader imgHeight={220} />;
+  }
+
+  if (!chartData.data.length) {
+    return null;
   }
 
   return (
@@ -113,22 +115,17 @@ export const CLMFeesGraph = memo<CLMFeesGraphProps>(function CLMFeesGraph({
             interval={xInterval}
             tick={XAxisTick}
           />
-          <Line
-            yAxisId="usd"
-            strokeWidth={1.5}
-            dataKey="v0"
-            stroke="#5C70D6"
-            dot={false}
-            type="linear"
-          />
-          <Line
-            yAxisId="usd"
-            strokeWidth={1.5}
-            dataKey="v1"
-            stroke="#4DB258"
-            dot={false}
-            type="linear"
-          />
+          {tokens.map((token, i) => (
+            <Line
+              key={token.id}
+              yAxisId="usd"
+              strokeWidth={1.5}
+              dataKey={valuePickers[i]}
+              stroke={LINE_COLORS[i % LINE_COLORS.length]}
+              dot={false}
+              type="linear"
+            />
+          ))}
           <YAxis
             stroke="#363B63"
             strokeWidth={1.5}

@@ -15,7 +15,7 @@ import { makeBatchRequest, viemToWeb3Abi, type Web3Call } from '../../../../help
 import type { BeefyState } from '../../../../redux-types';
 import BigNumber from 'bignumber.js';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
-import { getUnixTime } from 'date-fns';
+import { getUnixTime, roundToNearestMinutes } from 'date-fns';
 
 const ClmStrategyAbi = [
   {
@@ -79,12 +79,13 @@ export class ClmApi implements IClmApi {
     vaultAddresses: VaultEntity['earnContractAddress'][],
     since: Date
   ): Promise<ClmVaultsHarvestsResponse> {
+    const nearestMinute = roundToNearestMinutes(since);
+    const orderedAddresses = vaultAddresses.map(addr => addr.toLowerCase()).sort();
+
     const res = await this.api.get<ClmVaultsHarvestsResponse>(
-      `/api/v1/vaults/${chainId}/harvests/${getUnixTime(since)}`,
+      `/api/v1/vaults/${chainId}/harvests/${getUnixTime(nearestMinute)}`,
       {
-        params: new URLSearchParams(
-          vaultAddresses.map(addr => ['vaults', addr.toLocaleLowerCase()])
-        ),
+        params: new URLSearchParams(orderedAddresses.map(addr => ['vaults', addr])),
       }
     );
     return res.data;

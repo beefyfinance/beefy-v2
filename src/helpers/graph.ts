@@ -28,6 +28,7 @@ export const GRAPH_TIME_BUCKETS = [
   '1h_1d',
   '1h_1w',
   '1d_1M',
+  '1d_1Y',
   '1d_all',
 ] as const satisfies GraphBucket[];
 

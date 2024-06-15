@@ -1,6 +1,5 @@
 import type { VaultEntity } from '../../../../data/entities/vault';
 import type { TokenEntity } from '../../../../data/entities/token';
-import type { ChartStat } from '../../../../data/reducers/historical-types';
 import React, { memo, useMemo, useState } from 'react';
 import { useAppSelector } from '../../../../../store';
 import { selectHistoricalAvailableBuckets } from '../../../../data/selectors/historical';
@@ -17,6 +16,8 @@ import { selectVaultById } from '../../../../data/selectors/vaults';
 import { useTranslation } from 'react-i18next';
 import { useHistoricalStatLoader } from '../../../../data/hooks/historical';
 import { AlertError } from '../../../../../components/Alerts';
+import type { ChartStat } from '../types';
+import { ErrorBoundary } from '../../../../../components/ErrorBoundary/ErrorBoundary';
 
 const useStyles = makeStyles(styles);
 
@@ -57,13 +58,15 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
     <div className={classes.container}>
       <div className={classes.graph}>
         {hasData ? (
-          <Graph
-            vaultId={vaultId}
-            oracleId={oracleId}
-            stat={stat}
-            bucket={bucket}
-            toggles={lineToggles}
-          />
+          <ErrorBoundary>
+            <Graph
+              vaultId={vaultId}
+              oracleId={oracleId}
+              stat={stat}
+              bucket={bucket}
+              toggles={lineToggles}
+            />
+          </ErrorBoundary>
         ) : loading ? (
           <GraphLoader imgHeight={220} />
         ) : (

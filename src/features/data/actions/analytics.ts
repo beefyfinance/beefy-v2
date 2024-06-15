@@ -55,6 +55,8 @@ import { selectAllChainIds } from '../selectors/chains';
 import { fetchAllBalanceAction } from './balance';
 import { PromiseSettledAwaiter } from '../../../helpers/promises';
 import { isDefined } from '../utils/array-utils';
+import { getDataApiBucketsFromDates } from '../apis/beefy/beefy-data-api-helpers';
+import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 
 export interface FetchWalletTimelineFulfilled {
   timelines: Record<VaultEntity['id'], AnyTimelineAnalyticsEntity>;
@@ -87,7 +89,15 @@ function partitionTimeline<T extends AnyTimelineAnalyticsEntry>(
   const currentStartingIndex = timeline.findLastIndex((tx: T) => tx.shareBalance.isZero()) + 1;
   const current = timeline.slice(currentStartingIndex);
   const past = timeline.slice(0, currentStartingIndex);
-  return { type: timeline[0].type, current, past };
+
+  let buckets: ApiTimeBucket[] = [];
+  if (current.length > 1) {
+    const oldest = current[0].datetime;
+    const newest = current[current.length - 1].datetime;
+    buckets = getDataApiBucketsFromDates(oldest, newest);
+  }
+
+  return { type: timeline[0].type, current, past, buckets };
 }
 
 function omitEmptyTimelines<T extends AnyTimelineAnalyticsEntry>(
@@ -472,7 +482,7 @@ export const fetchClmHarvestsForUserChain = createAsyncThunk<
   }
 );
 
-export type ClmHarvestsTimelineHarvest = {
+export type ClmUserHarvestsTimelineHarvest = {
   timestamp: Date;
   /** price of tokens at this harvest, one entry per ClmHarvestTimeline['tokens'] */
   prices: BigNumber[];
@@ -490,10 +500,10 @@ export type ClmHarvestsTimelineHarvest = {
   cumulativeTotalUsd: BigNumber;
 };
 
-export type ClmHarvestsTimeline = {
+export type ClmUserHarvestsTimeline = {
   tokens: TokenEntity[];
   /** one entry per harvest */
-  harvests: ClmHarvestsTimelineHarvest[];
+  harvests: ClmUserHarvestsTimelineHarvest[];
   /** total token amounts, one entry per tokens */
   totals: BigNumber[];
   /** total usd amounts, one entry per tokens */
@@ -505,7 +515,7 @@ export type ClmHarvestsTimeline = {
 export type RecalculateClmHarvestsForUserVaultIdPayload = {
   vaultId: VaultEntity['id'];
   walletAddress: string;
-  timeline: ClmHarvestsTimeline;
+  timeline: ClmUserHarvestsTimeline;
 };
 
 /**
@@ -520,18 +530,6 @@ export const recalculateClmHarvestsForUserVaultId = createAsyncThunk<
   async ({ walletAddress, vaultId }, { getState }) => {
     const state = getState();
     const { token0, token1 } = selectCowcentratedVaultDepositTokens(state, vaultId);
-    const timeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
-    if (!timeline) {
-      throw new Error(`No timeline data found for vault ${vaultId}`);
-    }
-    if (!isCLMTimelineAnalyticsEntity(timeline)) {
-      throw new Error(`Non CLM timeline found for vault ${vaultId}`);
-    }
-    const harvests = selectClmHarvestsByVaultId(state, vaultId);
-    if (!harvests) {
-      throw new Error(`No harvest data found for vault ${vaultId}`);
-    }
-
     const result: RecalculateClmHarvestsForUserVaultIdPayload = {
       vaultId,
       walletAddress,
@@ -543,6 +541,23 @@ export const recalculateClmHarvestsForUserVaultId = createAsyncThunk<
         totalUsd: BIG_ZERO,
       },
     };
+
+    const timeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
+    if (!timeline) {
+      console.warn(`No timeline data found for vault ${vaultId}`);
+      return result;
+    }
+
+    if (!isCLMTimelineAnalyticsEntity(timeline)) {
+      console.warn(`Non CLM timeline found for vault ${vaultId}`);
+      return result;
+    }
+
+    const harvests = selectClmHarvestsByVaultId(state, vaultId);
+    if (!harvests) {
+      console.warn(`No harvest data found for vault ${vaultId}`);
+      return result;
+    }
 
     if (timeline.current.length === 0) {
       console.warn(`No current timeline entries found for vault ${vaultId}`);

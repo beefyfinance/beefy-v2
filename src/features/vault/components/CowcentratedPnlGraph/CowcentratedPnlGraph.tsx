@@ -25,6 +25,7 @@ import {
 import { selectWalletAddress } from '../../../data/selectors/wallet';
 import { CLMFeesGraph } from './components/FeesGraph';
 import { useVaultPeriodsFeesGraph } from './components/FeesGraph/hooks';
+import { GraphNoData } from '../../../../components/GraphNoData/GraphNoData';
 
 const useStyles = makeStyles(styles);
 
@@ -76,15 +77,22 @@ export const OverviewGraph = memo<CowcentratedPnlGraphProps>(function OverviewGr
   const classes = useStyles();
   const labels = useVaultPeriodsOverviewGraph(vaultId, address);
   const [period, setPeriod] = useState<number>(labels.length - 1);
+  const canShowGraph = labels.length > 0;
 
   return (
     <>
       <CardContent className={classes.content}>
         <OverviewGraphHeader vaultId={vaultId} />
         <div className={classes.graphContainer}>
-          <CLMOverviewGraph period={period} address={address} vaultId={vaultId} />
+          {canShowGraph ? (
+            <CLMOverviewGraph period={period} address={address} vaultId={vaultId} />
+          ) : (
+            <GraphNoData reason="wait-collect" />
+          )}
         </div>
-        <OverviewFooter labels={labels} period={period} handlePeriod={setPeriod} />
+        {canShowGraph ? (
+          <OverviewFooter labels={labels} period={period} handlePeriod={setPeriod} />
+        ) : null}
       </CardContent>
     </>
   );
@@ -94,15 +102,22 @@ export const FeesGraph = memo<CowcentratedPnlGraphProps>(function FeesGraph({ va
   const classes = useStyles();
   const labels = useVaultPeriodsFeesGraph(vaultId, address);
   const [period, setPeriod] = useState<number>(labels.length - 1);
+  const canShowGraph = labels.length > 0;
 
   return (
     <>
       <CardContent className={classes.content}>
         <FeesGraphHeader vaultId={vaultId} address={address} />
         <div className={classes.graphContainer}>
-          <CLMFeesGraph vaultId={vaultId} period={period} address={address} />
+          {canShowGraph ? (
+            <CLMFeesGraph vaultId={vaultId} period={period} address={address} />
+          ) : (
+            <GraphNoData reason="wait-collect" />
+          )}
         </div>
-        <FeesFooter labels={labels} vaultId={vaultId} period={period} handlePeriod={setPeriod} />
+        {canShowGraph ? (
+          <FeesFooter labels={labels} vaultId={vaultId} period={period} handlePeriod={setPeriod} />
+        ) : null}
       </CardContent>
     </>
   );

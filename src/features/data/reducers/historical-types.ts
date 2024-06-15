@@ -7,11 +7,8 @@ import type {
 import type { VaultEntity } from '../entities/vault';
 import type { TokenEntity } from '../entities/token';
 import type { SerializedError } from '@reduxjs/toolkit';
-import type { Intersect, KeysOfType, KeysOfUnion, Prettify } from '../utils/types-utils';
-import type { BeefyState } from '../../../redux-types';
 
 type LoadingStatus = 'idle' | 'pending' | 'rejected' | 'fulfilled';
-export type ChartStat = 'apy' | 'tvl' | 'price' | 'clm';
 
 type WithStatus<T extends object> = {
   status: LoadingStatus;

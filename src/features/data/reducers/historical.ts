@@ -18,9 +18,12 @@ import type {
 } from './historical-types';
 import type { Draft } from 'immer';
 import { isCowcentratedVault } from '../entities/vault';
-import { allDataApiBuckets, getDataApiBucket } from '../apis/beefy/beefy-data-api-helpers';
+import {
+  allDataApiBuckets,
+  getDataApiBucket,
+  getDataApiBucketsShorterThan,
+} from '../apis/beefy/beefy-data-api-helpers';
 import { fromKeys, fromKeysBy } from '../../../helpers/object';
-import { isDurationEqual, isLonger } from '../../../helpers/date';
 
 const initialState: HistoricalState = {
   ranges: {
@@ -200,11 +203,8 @@ function setTimebucketFulfilled(
   // Fill other buckets that have the same interval but a smaller range
   if (fillOtherBuckets && data.length > 0) {
     const now = new Date();
-    const bucket = getDataApiBucket(bucketKey);
-    const smallerBuckets = allDataApiBuckets
-      .map(getDataApiBucket)
-      .filter(b => isDurationEqual(bucket.interval, b.interval) && isLonger(bucket.range, b.range));
-    for (const smallerBucket of smallerBuckets) {
+    const shorterBuckets = getDataApiBucketsShorterThan(bucketKey);
+    for (const smallerBucket of shorterBuckets) {
       const startDate = getUnixTime(sub(sub(now, smallerBucket.range), smallerBucket.maPeriod));
       setTimebucketFulfilled(
         state,

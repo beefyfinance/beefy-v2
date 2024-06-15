@@ -13,10 +13,10 @@ import { selectTokenByAddress } from '../selectors/tokens';
 import type { TokenEntity } from '../entities/token';
 import type { ThunkAction } from 'redux-thunk';
 import type { Action } from 'redux';
-import type { ChartStat } from '../reducers/historical-types';
 import type { ChainEntity } from '../entities/chain';
 import { featureFlag_simulateBeefyApiError } from '../utils/feature-flags';
 import { sleep } from '../utils/async-utils';
+import type { ChartStat } from '../../vault/components/HistoricGraph/types';
 
 export interface HistoricalRangesPayload {
   vault: VaultEntity;

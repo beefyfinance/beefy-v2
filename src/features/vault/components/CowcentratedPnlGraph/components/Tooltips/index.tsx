@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
-import { formatUsd } from '../../../../../../helpers/format';
+import { formatTokenDisplayCondensed, formatUsd } from '../../../../../../helpers/format';
 import { makeStyles, type Theme } from '@material-ui/core';
 import { featureFlag_debugGraph } from '../../../../../data/utils/feature-flags';
 import type {
@@ -9,6 +9,7 @@ import type {
   ClmInvestorOverviewTimeSeriesPoint,
 } from '../../../../../../helpers/timeserie';
 import type { RechartsTooltipProps } from '../../../../../../helpers/graph';
+import type { TokenEntity } from '../../../../../data/entities/token';
 
 const useStyles = makeStyles((theme: Theme) => ({
   content: {
@@ -89,16 +90,18 @@ export const OverviewTooltip = memo<OverviewTooltipProps>(function OverviewToolt
   );
 });
 
-export type FeesTooltipProps = RechartsTooltipProps<'v0', 't', ClmInvestorFeesTimeSeriesPoint> & {
-  token0Symbol: string;
-  token1Symbol: string;
+export type FeesTooltipProps = RechartsTooltipProps<
+  'values',
+  't',
+  ClmInvestorFeesTimeSeriesPoint
+> & {
+  tokens: TokenEntity[];
 };
 
 export const FeesTooltip = memo<FeesTooltipProps>(function FeesTooltip({
   active,
   payload,
-  token1Symbol,
-  token0Symbol,
+  tokens,
 }) {
   const classes = useStyles();
 
@@ -111,19 +114,19 @@ export const FeesTooltip = memo<FeesTooltipProps>(function FeesTooltip({
     return null;
   }
 
-  const { t: timestamp, v0, v1 } = valueLine.payload;
+  const { t: timestamp, values, amounts } = valueLine.payload;
 
   return (
     <div className={classes.content}>
       <div className={classes.timestamp}>{format(timestamp, 'MMM d, yyyy h:mm a')}</div>
-      <div className={classes.itemContainer}>
-        <div className={classes.label}>{token0Symbol}:</div>
-        <div className={classes.value}>{formatUsd(v0)}</div>
-      </div>
-      <div className={classes.itemContainer}>
-        <div className={classes.label}>{token1Symbol}:</div>
-        <div className={classes.value}>{formatUsd(v1)}</div>
-      </div>
+      {tokens.map((token, i) => (
+        <div className={classes.itemContainer} key={token.id}>
+          <div className={classes.label}>{token.symbol}:</div>
+          <div className={classes.value}>
+            {formatTokenDisplayCondensed(amounts[i], token.decimals)} ({formatUsd(values[i])})
+          </div>
+        </div>
+      ))}
     </div>
   );
 });
