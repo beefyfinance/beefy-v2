@@ -9,11 +9,12 @@ import { ToggleButtons } from '../../../../../../../components/ToggleButtons';
 import { useTranslation } from 'react-i18next';
 import { selectHasDataToShowGraphByVaultId } from '../../../../../../data/selectors/analytics';
 import {
-  DashboardCowcentratedFeesGraph,
-  DashboardCowcentratedPnLGraph,
+  DashboardFeesGraph,
+  DashboardOverviewGraph,
 } from '../../../../../../vault/components/CowcentratedPnlGraph';
 import type { VaultCollapseContentProps } from '../types';
 import { styles } from './styles';
+import { ErrorBoundary } from '../../../../../../../components/ErrorBoundary/ErrorBoundary';
 
 const useStyles = makeStyles(styles);
 
@@ -45,9 +46,8 @@ export const DesktopCollapseContent = memo<VaultCollapseContentProps>(
       return items;
     }, [hasAnalyticsData, vaultType, t]);
 
-    const PositionGraph =
-      vaultType === 'cowcentrated' ? DashboardCowcentratedPnLGraph : DashboardPnLGraph;
-    const CompoundsGraph = DashboardCowcentratedFeesGraph;
+    const PositionGraph = vaultType === 'cowcentrated' ? DashboardOverviewGraph : DashboardPnLGraph;
+    const CompoundsGraph = DashboardFeesGraph;
 
     return (
       <>
@@ -62,13 +62,15 @@ export const DesktopCollapseContent = memo<VaultCollapseContentProps>(
         ) : null}
         <div className={classes.collapseInner}>
           <TabletStats vaultId={vaultId} />
-          {toggleTab === 'txHistory' ? (
-            <VaultTransactions address={address} vaultId={vaultId} />
-          ) : toggleTab === 'positionChart' ? (
-            <PositionGraph address={address} vaultId={vaultId} />
-          ) : toggleTab === 'compoundsChart' ? (
-            <CompoundsGraph address={address} vaultId={vaultId} />
-          ) : null}
+          <ErrorBoundary>
+            {toggleTab === 'txHistory' ? (
+              <VaultTransactions address={address} vaultId={vaultId} />
+            ) : toggleTab === 'positionChart' ? (
+              <PositionGraph address={address} vaultId={vaultId} />
+            ) : toggleTab === 'compoundsChart' ? (
+              <CompoundsGraph address={address} vaultId={vaultId} />
+            ) : null}
+          </ErrorBoundary>
         </div>
       </>
     );
