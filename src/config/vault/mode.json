@@ -102,7 +102,7 @@
     ],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://velodrome.finance/swap?from=0xdfc7c877a950e49d2610114102175a06c2e3167a&to=eth",
-    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xd988097fb8612cc24eeC14542bC03424c656005f&token1=0xf0F161fDA2712DB8b566946122a5af183995e2eD&type=-1",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xd988097fb8612cc24eeC14542bC03424c656005f&token1=0xf0F161fDA2712DB8b566946122a5af183995e2eD&type=0",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x4B1BC95478826F6bC42d0471C68eEA6526576D85",
     "network": "mode",
     "zaps": [

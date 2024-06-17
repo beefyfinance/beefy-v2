@@ -1,5 +1,292 @@
 [
   {
+    "id": "uniswap-cow-op-crv-weth",
+    "name": "CRV-WETH",
+    "token": "CRV-WETH",
+    "tokenAddress": "0xE870BFE4AaCB6E234B645e535D26C53790D50E78",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0994206dfE8De6Ec6920FF4D779B0d950605Fb53",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpCRV-WETH",
+    "earnedTokenAddress": "0xCFf23567199817dEeC54c8D0E0d138837b20B3A8",
+    "earnContractAddress": "0xCFf23567199817dEeC54c8D0E0d138837b20B3A8",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-crv-weth",
+    "status": "active",
+    "createdAt": 1718455449,
+    "platformId": "beefy",
+    "assets": ["CRV", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-usdc-wbtc",
+    "name": "WBTC-USDC",
+    "token": "WBTC-USDC",
+    "tokenAddress": "0xaDAb76dD2dcA7aE080A796F0ce86170e482AfB4a",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+      "0x68f180fcCe6836688e9084f035309E29Bf0A2095"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpUSDC-WBTC",
+    "earnedTokenAddress": "0x0Ee84708c7E4F65e4799235CB576C7E862aA4D03",
+    "earnContractAddress": "0x0Ee84708c7E4F65e4799235CB576C7E862aA4D03",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-usdc-wbtc",
+    "status": "active",
+    "createdAt": 1718455449,
+    "platformId": "beefy",
+    "assets": ["WBTC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-weth-usdt",
+    "name": "WETH-USDT",
+    "token": "WETH-USDT",
+    "tokenAddress": "0xc858A329Bf053BE78D6239C4A4343B8FbD21472b",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpWETH-USDT",
+    "earnedTokenAddress": "0x9b9EB6B79b09A43e5d4118ED7124147Fb3c8d250",
+    "earnContractAddress": "0x9b9EB6B79b09A43e5d4118ED7124147Fb3c8d250",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-weth-usdt",
+    "status": "active",
+    "createdAt": 1718455449,
+    "platformId": "beefy",
+    "assets": ["WETH", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-weth-dai",
+    "name": "WETH-DAI",
+    "token": "WETH-DAI",
+    "tokenAddress": "0x03aF20bDAaFfB4cC0A521796a223f7D85e2aAc31",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpWETH-DAI",
+    "earnedTokenAddress": "0x53F42Ee2feb58035e6c43B3FF796b17D9650cF4b",
+    "earnContractAddress": "0x53F42Ee2feb58035e6c43B3FF796b17D9650cF4b",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-weth-dai",
+    "status": "active",
+    "createdAt": 1718455449,
+    "platformId": "beefy",
+    "assets": ["WETH", "DAI"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-weth-snx",
+    "name": "SNX-WETH",
+    "token": "SNX-WETH",
+    "tokenAddress": "0x0392b358CE4547601BEFa962680BedE836606ae2",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpWETH-SNX",
+    "earnedTokenAddress": "0x4EAb2865E76318478b7d4F63F613a0ED0A602945",
+    "earnContractAddress": "0x4EAb2865E76318478b7d4F63F613a0ED0A602945",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-weth-snx",
+    "status": "active",
+    "createdAt": 1718455449,
+    "platformId": "beefy",
+    "assets": ["SNX", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-weth-usdc.e",
+    "name": "WETH-USDC.e",
+    "token": "WETH-USDC.e",
+    "tokenAddress": "0x85149247691df622eaF1a8Bd0CaFd40BC45154a9",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x7F5c764cBc14f9669B88837ca1490cCa17c31607"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpWETH-USDC.e",
+    "earnedTokenAddress": "0x0A90c02d6Be2EF93e939702Efc74BEC58659a4D3",
+    "earnContractAddress": "0x0A90c02d6Be2EF93e939702Efc74BEC58659a4D3",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-weth-usdc.e",
+    "status": "active",
+    "createdAt": 1718455449,
+    "platformId": "beefy",
+    "assets": ["WETH", "opUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-usdc-op",
+    "name": "OP-USDC",
+    "token": "OP-USDC",
+    "tokenAddress": "0xB533c12fB4e7b53b5524EAb9b47d93fF6C7A456F",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+      "0x4200000000000000000000000000000000000042"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpUSDC-OP",
+    "earnedTokenAddress": "0xA2A8B06aa9d211e02E1F8CEb7706aE8bF3362Dfb",
+    "earnContractAddress": "0xA2A8B06aa9d211e02E1F8CEb7706aE8bF3362Dfb",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-usdc-op",
+    "status": "active",
+    "createdAt": 1718390583,
+    "platformId": "beefy",
+    "assets": ["OP", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-weth-wbtc",
+    "name": "WETH-WBTC",
+    "token": "WETH-WBTC",
+    "tokenAddress": "0x85C31FFA3706d1cce9d525a00f1C7D4A2911754c",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x68f180fcCe6836688e9084f035309E29Bf0A2095"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpWETH-WBTC",
+    "earnedTokenAddress": "0xE430F5264653056BE2B556B4bB0F9Cd70fb8407B",
+    "earnContractAddress": "0xE430F5264653056BE2B556B4bB0F9Cd70fb8407B",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-weth-wbtc",
+    "status": "active",
+    "createdAt": 1718390583,
+    "platformId": "beefy",
+    "assets": ["WETH", "WBTC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "curve-op-usdc-usdm",
+    "name": "USDC/USDM",
+    "token": "usdc-usdm",
+    "tokenAddress": "0xb52c9213d318956bFa26Df2656B161e3cAcbB64d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveUSDC-USDM",
+    "earnedTokenAddress": "0x9567717a195D5B40f2e5B84E98B1595C72Dd1587",
+    "earnContractAddress": "0x9567717a195D5B40f2e5B84E98B1595C72Dd1587",
+    "oracle": "lps",
+    "oracleId": "curve-op-usdc-usdm",
+    "status": "active",
+    "createdAt": 1718273154,
+    "platformId": "curve",
+    "assets": ["USDC", "USDM"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-7/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/optimism/pools/factory-stable-ng-7/withdraw",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xb52c9213d318956bFa26Df2656B161e3cAcbB64d",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xb52c9213d318956bFa26Df2656B161e3cAcbB64d",
+            "coins": [
+              "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+              "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-op-op-weth",
     "name": "OP-WETH",
     "token": "OP-WETH",

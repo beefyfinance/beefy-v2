@@ -191,5 +191,11 @@
     "name": "Mantle Bridge",
     "tagName": "Mantle",
     "website": "https://bridge.mantle.xyz/"
+  },
+  {
+    "id": "inception",
+    "name": "Inception Bridge",
+    "tagName": "Inception",
+    "website": "https://www.inceptionlrt.com/app/bridge/"
   }
 ]
