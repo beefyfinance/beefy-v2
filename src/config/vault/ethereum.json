@@ -1798,6 +1798,7 @@
     "token": "BIFI",
     "tokenAddress": "0xB1F1ee126e9c96231Cc3d3fAD7C08b4cf873b1f1",
     "tokenDecimals": 18,
+    "earnedToken": "rBIFI",
     "earnedTokens": ["ETH"],
     "earnedTokenAddresses": ["0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"],
     "earnedOracleIds": ["ETH"],

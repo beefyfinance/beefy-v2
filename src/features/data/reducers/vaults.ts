@@ -273,7 +273,7 @@ function addVaultToState(
       assetType: 'single',
       risks: apiVault.risks || [],
       buyTokenUrl: apiVault.buyTokenUrl || null,
-      addLiquidityUrl: null,
+      addLiquidityUrl: apiVault.earnedTokenAddresses ? apiVault.addLiquidityUrl ?? null : null,
       removeLiquidityUrl: null,
       depositFee: apiVault.depositFee ?? 0,
       createdAt: apiVault.createdAt ?? 0,
@@ -282,6 +282,7 @@ function addVaultToState(
       retiredAt: apiVault.retiredAt,
       pauseReason: apiVault.pauseReason,
       pausedAt: apiVault.pausedAt,
+      zaps: apiVault.zaps || [],
     } satisfies VaultGov;
     if (apiVault.id === 'bifi-pool') console.log(vault);
   } else if (apiVault.type === 'cowcentrated') {

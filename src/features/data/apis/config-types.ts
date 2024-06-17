@@ -22,7 +22,10 @@ export interface VaultConfig {
   tokenProviderId?: PlatformEntity['id'];
   zaps?: StrategyOptions[];
 
-  earnedToken?: string; // only missing in multi gov vaults
+  earnedToken: string; // multi gov vaults have it as the receiptToken
+
+  earnOracleId?: string; //multi gov vault receiptToken
+
   earnedTokenAddress?: string; // only missing in multi gov vaults
   earnedTokenDecimals?: number | null; // only missing in multi gov vaults
 

@@ -547,12 +547,12 @@ function addVaultToState(
         // Add receipt token
         const token: TokenErc20 = {
           type: 'erc20',
-          id: vault.earnedToken!,
+          id: vault.earnedToken,
           chainId: chainId,
           oracleId: vault.oracleId,
           address: vault.earnedTokenAddress!,
           decimals: 18, // receipt token always has 18 decimals
-          symbol: vault.earnedToken!,
+          symbol: vault.earnedToken,
           buyUrl: undefined,
           website: undefined,
           description: undefined,
@@ -584,6 +584,33 @@ function addVaultToState(
       const token = chainState.byAddress[earnedAddressKey];
       if (isTokenErc20(token)) {
         addBridgedReceiptTokensToState(vault, token, sliceState);
+      }
+    }
+  }
+
+  // Multi reward gov vault receipt tokens
+  if (vault.type === 'gov' && vault.earnedTokenAddresses) {
+    const earnedAddressKey = vault.earnContractAddress.toLowerCase();
+    const existingEarnedToken = chainState.byAddress[earnedAddressKey];
+    if (existingEarnedToken === undefined) {
+      const token: TokenErc20 = {
+        type: 'erc20',
+        id: vault.earnedToken,
+        chainId: chainId,
+        oracleId: vault.earnOracleId ?? vault.earnedToken,
+        address: vault.earnContractAddress,
+        decimals: 18, // receipt token always has 18 decimals
+        symbol: vault.earnedToken,
+        buyUrl: undefined,
+        website: undefined,
+        description: undefined,
+        documentation: undefined,
+        risks: [],
+      };
+      addTokenToState(sliceState, token, true);
+    } else {
+      if (vault.earnContractAddress && vault.earnContractAddress !== 'native') {
+        ensureInterestingToken(vault.earnContractAddress, chainId, sliceState);
       }
     }
   }

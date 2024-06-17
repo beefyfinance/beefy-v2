@@ -136,20 +136,23 @@ export interface VaultGovBase {
   risks: string[];
 
   buyTokenUrl: string | null;
-  addLiquidityUrl: null;
+  addLiquidityUrl: null | string;
   removeLiquidityUrl: null;
 
   depositFee: number;
 
   migrationIds?: string[];
+  zaps: StrategyOptions[];
 }
 
 export interface VaultGovSingle extends VaultGovBase {
   subType: 'single';
+  // addLiquidityUrl: null;
 }
 
 export interface VaultGovMulti extends VaultGovBase {
   subType: 'multi';
+  // addLiquidityUrl: string;
 }
 
 export type VaultGov = VaultGovSingle | VaultGovMulti;

@@ -1,5 +1,42 @@
 [
   {
+    "id": "uniswap-cow-arb-eusd-usdc-rp",
+    "name": "eUSD-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArbeUSD-USDC",
+    "tokenAddress": "0xEEA4114Ab4FCb82a28c514e21d656Ca78D75b1A9",
+    "tokenDecimals": 18,
+    "earnedTokens": ["ARB"],
+    "earnedTokenAddresses": ["0x912CE59144191C1204E64559FE8253a0e49E6548"],
+    "earnedOracleIds": ["ARB"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowUniswapArbeUSD-USDC",
+    "earnContractAddress": "0xcb304759697fdabb3b9699161e8bA204Ac3DfF33",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-eusd-usdc",
+    "status": "active",
+    "createdAt": 1718561036,
+    "platformId": "beefy",
+    "assets": ["eUSD", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "bifi-pool",
+    "network": "arbitrum",
+    "addLiquidityUrl": "https://app.beefy.com/vault/uniswap-cow-arb-eusd-usdc",
+    "zaps": [
+      {
+        "strategyId": "gov"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arb-weth-rsr",
     "name": "RSR-WETH",
     "type": "cowcentrated",

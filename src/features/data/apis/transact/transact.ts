@@ -274,11 +274,6 @@ export class TransactApi implements ITransactApi {
   private async getZapStrategiesForVault(helpers: TransactHelpers): Promise<IStrategy[]> {
     const { vault } = helpers;
 
-    // Only standard/cow vaults are supported so far
-    if (!isStandardVault(vault) && !isCowcentratedVault(vault)) {
-      return [];
-    }
-
     if (!vault.zaps || vault.zaps.length === 0) {
       return [];
     }
@@ -328,11 +323,6 @@ export class TransactApi implements ITransactApi {
       // Wrapper for common interface
       return new VaultStrategy(vaultType);
     }
-
-    // if (strategyId === 'cowcentrated' && isCowcentratedVault(vaultType)) {
-    //   console.log('returnning cow strat');
-    //   return new CowcentratedStrategy(vaultType);
-    // }
 
     if (!isZapTransactHelpers(helpers)) {
       throw new Error(`Strategy "${strategyId}" requires zap contract`);

@@ -68,6 +68,10 @@ export type CowcentratedStrategyOptions = {
   strategyId: 'cowcentrated';
 } & OptionalStrategySwapOption;
 
+export type GovVaultStrategyOptions = {
+  strategyId: 'gov';
+} & OptionalStrategySwapOption;
+
 export type StrategyOptions =
   | SingleStrategyOptions
   | UniswapV2StrategyOptions
@@ -75,7 +79,8 @@ export type StrategyOptions =
   | CurveStrategyOptions
   | GammaStrategyOptions
   | ConicStrategyOptions
-  | CowcentratedStrategyOptions;
+  | CowcentratedStrategyOptions
+  | GovVaultStrategyOptions;
 
 export interface IStrategy {
   readonly id: string;
