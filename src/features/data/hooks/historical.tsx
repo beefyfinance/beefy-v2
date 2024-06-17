@@ -58,9 +58,7 @@ export function useOracleIdToUsdPrices(oracleId: TokenEntity['oracleId'], bucket
 export function useVaultIdToUnderlyingUsdPrices(vaultId: VaultEntity['id'], bucket: GraphBucket) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const token = useAppSelector(state =>
-    isCowcentratedVault(vault)
-      ? undefined
-      : selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
+    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   return useOracleIdToUsdPrices(token?.oracleId || vaultId, bucket);
 }

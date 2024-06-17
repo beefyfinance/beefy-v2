@@ -14,7 +14,10 @@ import { selectWalletAddress } from '../../../../../data/selectors/wallet';
 import { maxBy, minBy } from 'lodash';
 import { getClmInvestorTimeSeries } from '../../../../../../helpers/timeserie';
 import { isCLMTimelineAnalyticsEntity } from '../../../../../data/entities/analytics';
-import { useOracleIdToUsdPrices } from '../../../../../data/hooks/historical';
+import {
+  useOracleIdToUsdPrices,
+  useVaultIdToUnderlyingUsdPrices,
+} from '../../../../../data/hooks/historical';
 import type { GraphBucket } from '../../../../../../helpers/graph';
 import { useVaultPeriods } from '../../../PnLGraph/hooks';
 
@@ -42,7 +45,7 @@ export const usePnLChartData = (
   const { token0, token1 } = useAppSelector(state =>
     selectCowcentratedVaultDepositTokensWithPrices(state, vaultId)
   );
-  const { data: sharesToUsd, loading: sharesToUsdLoading } = useOracleIdToUsdPrices(
+  const { data: sharesToUsd, loading: sharesToUsdLoading } = useVaultIdToUnderlyingUsdPrices(
     vaultId,
     timebucket
   );
