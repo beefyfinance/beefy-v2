@@ -785,7 +785,7 @@ export const config = {
     explorerUrl: 'https://lineascan.build',
     multicallAddress: '0x91BB303E972995EbE5f593BCddBb6F5Ef49Dbcbd',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0xe536F8141D8EB7B1f096934AF3329cB581bFe995',
+    appMulticallContractAddress: '0x7340a46bDAD936841Fd66fEE2fF5007FB2f80bC9',
     providerName: 'Linea',
     walletSettings: {
       chainId: `0x${parseInt('59144', 10).toString(16)}`,
