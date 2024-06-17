@@ -1,5 +1,34 @@
 [
   {
+    "id": "ramses-aleth-frxeth",
+    "name": "alETH-frxETH sLP",
+    "type": "standard",
+    "token": "alETH-frxETH sLP",
+    "tokenAddress": "0xfB4fE921F724f3C7B610a826c827F9F6eCEf6886",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "earnedToken": "mooRamsesalETH-frxETH",
+    "earnedTokenAddress": "0x986aCB6886bfD1556F4AC6e7F1Bb53e6eA66890F",
+    "earnContractAddress": "0x986aCB6886bfD1556F4AC6e7F1Bb53e6eA66890F",
+    "oracle": "lps",
+    "oracleId": "ramses-aleth-frxeth",
+    "status": "active",
+    "createdAt": 1718628471,
+    "platformId": "ramses",
+    "assets": ["alETH", "frxETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://app.ramses.exchange/swap?from=0x17573150d67d820542EFb24210371545a4868B03&to=0x178412e79c25968a32e89b11f63B33F733770c2A",
+    "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0xfB4fE921F724f3C7B610a826c827F9F6eCEf6886",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arb-ldo-weth",
     "name": "LDO-WETH",
     "type": "cowcentrated",
