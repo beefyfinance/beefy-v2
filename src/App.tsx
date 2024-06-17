@@ -15,6 +15,7 @@ import { Redirects } from './components/Redirects';
 import { Stepper } from './components/Stepper';
 import { Layout } from './components/Layout';
 import { AddTokenToWallet } from './components/AddTokenToWallet';
+import { AppVersionCheck } from './components/AppVersionCheck';
 
 const Home = lazy(() => import(`./features/home`));
 const Vault = lazy(() => import(`./features/vault`));
@@ -72,6 +73,7 @@ export const App = () => {
             </Layout>
           </Router>
         </HelmetProvider>
+        <AppVersionCheck />
       </ThemeProvider>
     </Suspense>
   );

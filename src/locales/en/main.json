@@ -707,5 +707,8 @@
   "Rewards-Title": "CLM Incentives",
   "Rewards-Description": "This position is receiving rewards through Merkl in addition to trading fees. These rewards are distributed several times per day and are claimed with all other available rewards from Merkl.",
   "Rewards-Claim": "Claim All",
-  "Rewards-OtherRewards": "Other Rewards ({{value}})"
+  "Rewards-OtherRewards": "Other Rewards ({{value}})",
+  "Update-Available": "Reload to get the latest version of Beefy",
+  "Update-Available-Failed": "A new version of Beefy is available. Please clear your browser cache and reload the page to get the latest version.",
+  "Update-Reload": "Reload"
 }

@@ -1,13 +1,14 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type PluginOption } from 'vite';
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import RollupNodePolyFillPlugin from 'rollup-plugin-polyfill-node';
 import react from '@vitejs/plugin-react';
 import svgrPlugin from 'vite-plugin-svgr';
 import eslint from 'vite-plugin-eslint';
 import { visualizer } from 'rollup-plugin-visualizer';
-import * as path from 'path';
+import * as path from 'node:path';
+import versionPlugin from './version-plugin';
 
-const optionalPlugins = [];
+const optionalPlugins: PluginOption[] = [];
 
 if (process.env.NODE_ENV === 'development') {
   optionalPlugins.push(eslint());
@@ -36,6 +37,7 @@ export default defineConfig({
       ...svgrPlugin(),
       enforce: 'post',
     },
+    versionPlugin(),
     ...optionalPlugins,
   ],
   optimizeDeps: {

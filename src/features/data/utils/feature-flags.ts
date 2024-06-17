@@ -246,3 +246,8 @@ export function featureFlag_disableKyber(): boolean {
   const params = getSearchParams();
   return params.has('__disable_kyber');
 }
+
+export function featureFlag_simUpdate(): boolean {
+  const params = getSearchParams();
+  return params.has('__sim_update');
+}
