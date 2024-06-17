@@ -3,7 +3,6 @@ import { type AnyAction, createListenerMiddleware } from '@reduxjs/toolkit';
 import {
   selectIsAddressBookLoaded,
   selectIsConfigAvailable,
-  selectIsContractDataLoadedOnChain,
   selectIsPriceAvailable,
   selectIsZapLoaded,
   selectShouldInitZapAggregatorTokenSupport,
@@ -78,8 +77,7 @@ transactListener.startListening({
     await condition(
       (_, currentState) =>
         selectIsConfigAvailable(currentState) &&
-        selectIsAddressBookLoaded(currentState, vault.chainId) &&
-        selectIsContractDataLoadedOnChain(currentState, vault.chainId)
+        selectIsAddressBookLoaded(currentState, vault.chainId)
     );
 
     if (shouldCancel()) {

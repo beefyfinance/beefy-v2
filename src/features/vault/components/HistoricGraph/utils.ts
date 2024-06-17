@@ -1,43 +1,16 @@
 import type { ApiTimeBucket } from '../../../data/apis/beefy/beefy-data-api-types';
 import { fromUnixTime, getUnixTime, sub } from 'date-fns';
-import type { ChartStat } from '../../../data/reducers/historical-types';
 import { first } from 'lodash-es';
+import { getDataApiBucket } from '../../../data/apis/beefy/beefy-data-api-helpers';
+import type { ChartStat } from './types';
 
 // must match API
 export const SNAPSHOT_INTERVAL: number = 15 * 60;
 
-// must match API
-export const TIME_BUCKETS = {
-  '1h_1d': {
-    interval: { hours: 1 },
-    range: { days: 1 },
-    maPeriod: { hours: 6 },
-    available: { days: 0 },
-  },
-  '1h_1w': {
-    interval: { hours: 1 },
-    range: { days: 7 },
-    maPeriod: { hours: 48 },
-    available: { days: 1 },
-  },
-  '1d_1M': {
-    interval: { days: 1 },
-    range: { months: 1 },
-    maPeriod: { days: 10 },
-    available: { days: 7 },
-  },
-  '1d_1Y': {
-    interval: { days: 1 },
-    range: { years: 1 },
-    maPeriod: { days: 30 },
-    available: { months: 1 },
-  },
-} as const;
-
 export type TimeRange = '1Day' | '1Week' | '1Month' | '1Year';
 
 const timeRanges: TimeRange[] = ['1Day', '1Week', '1Month', '1Year'];
-const defaultTimeRangeOrder: TimeRange[] = ['1Month', '1Week', '1Day'];
+const defaultTimeRangeOrder: TimeRange[] = ['1Year', '1Month', '1Week', '1Day'];
 
 export const timeRangeToBucket: Record<TimeRange, ApiTimeBucket> = {
   '1Day': '1h_1d',
@@ -69,7 +42,7 @@ export function getLatestSnapshot() {
 }
 
 export function getBucketParams(bucket: ApiTimeBucket) {
-  const { range, interval, maPeriod } = TIME_BUCKETS[bucket];
+  const { range, interval, maPeriod } = getDataApiBucket(bucket);
   const endDate = fromUnixTime(getLatestSnapshot());
   const startDate = sub(endDate, range);
   const startEpoch = getUnixTime(startDate);

@@ -32,7 +32,7 @@ function mapStateToProps(
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
   const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
 
-  if (!vaultTimeline || !vaultTimeline.length) {
+  if (!vaultTimeline || !vaultTimeline.current.length) {
     return {
       label,
       value: '-',

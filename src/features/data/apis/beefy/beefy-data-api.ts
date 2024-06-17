@@ -80,13 +80,21 @@ export class BeefyDataApi implements IBeefyDataApi {
     value: string,
     bucket: ApiTimeBucket
   ): Promise<ApiChartData> {
-    const res = await this.data.get<ApiChartData>(`${stat}/`, {
-      params: {
-        [key]: value,
-        bucket,
-      },
-    });
+    try {
+      const res = await this.data.get<ApiChartData>(`${stat}/`, {
+        params: {
+          [key]: value,
+          bucket,
+        },
+      });
 
-    return res.data;
+      return res.data;
+    } catch (e: unknown) {
+      // on 404 we return empty data so that we don't keep trying to refetch in components
+      if (axios.isAxiosError(e) && e.response?.status === 404) {
+        return [];
+      }
+      throw e;
+    }
   }
 }

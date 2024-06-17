@@ -1,32 +1,26 @@
 import React, {
   forwardRef,
   memo,
-  type TouchEventHandler,
   type MouseEvent,
   type MouseEventHandler,
   type ReactNode,
   type TouchEvent as ReactTouchEvent,
+  type TouchEventHandler,
   useCallback,
   useId,
   useMemo,
   useState,
 } from 'react';
 import type { PopperPlacementType } from '@material-ui/core';
-import { ClickAwayListener, makeStyles, Popper, setRef } from '@material-ui/core';
+import { makeStyles, Popper, setRef } from '@material-ui/core';
 import clsx from 'clsx';
 import { styles } from './styles';
-import type { ClickAwayListenerProps } from '@material-ui/core/ClickAwayListener/ClickAwayListener';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { selectTooltipIsOpen } from '../../features/data/selectors/tooltips';
-import { closeTooltip, openTooltip } from '../../features/data/reducers/tooltips';
+import { closeTooltip, openTooltip, toggleTooltip } from '../../features/data/reducers/tooltips';
+import { useClickAway } from './useClickAway';
 
 const useStyles = makeStyles(styles);
-
-const DummyClickAwayListener = memo<ClickAwayListenerProps>(function DummyClickAwayListener({
-  children,
-}) {
-  return <>{children}</>;
-});
 
 export enum TRIGGERS {
   CLICK = 1 << 0,
@@ -91,6 +85,10 @@ export const Tooltip = memo(
       [dispatch, id, group]
     );
 
+    const toggleOpen = useCallback(() => {
+      dispatch(toggleTooltip({ id, group }));
+    }, [dispatch, id, group]);
+
     const handleMouseEnter = useCallback(() => {
       if (!disabled && triggers & TRIGGERS.HOVER) {
         setIsOpen(true);
@@ -123,11 +121,11 @@ export const Tooltip = memo(
           }
 
           if (triggers & TRIGGERS.CLICK) {
-            setIsOpen(!isOpen);
+            toggleOpen();
           }
         }
       },
-      [disabled, isOpen, onTriggerClick, triggers, setIsOpen, propagateTriggerClick]
+      [disabled, onTriggerClick, triggers, toggleOpen, propagateTriggerClick]
     );
 
     const handleTouch = useCallback<TouchEventHandler<HTMLDivElement>>(
@@ -146,11 +144,11 @@ export const Tooltip = memo(
           }
 
           if (triggers & TRIGGERS.CLICK) {
-            setIsOpen(!isOpen);
+            toggleOpen();
           }
         }
       },
-      [disabled, isOpen, onTriggerClick, triggers, setIsOpen, propagateTriggerClick]
+      [disabled, onTriggerClick, triggers, toggleOpen, propagateTriggerClick]
     );
 
     const handlePopperClick = useCallback<MouseEventHandler<HTMLDivElement>>(
@@ -180,24 +178,22 @@ export const Tooltip = memo(
       [arrowRef]
     );
 
+    const { clickAwayRef, tooltipRef } = useClickAway<HTMLDivElement>(handleClickAway);
+
     const setTriggerRef = useCallback(
       (element: HTMLDivElement) => {
         setRef(ref, element);
+        setRef(clickAwayRef, element);
         setAnchorEl(element);
         if (element) {
           element.addEventListener('touchstart', (e: TouchEvent) => e.preventDefault());
         }
       },
-      [setAnchorEl, ref]
+      [setAnchorEl, ref, clickAwayRef]
     );
 
-    const ClickAway = useMemo(() => {
-      // multiple click away listeners don't work well together, only one gets triggered
-      return isOpen ? ClickAwayListener : DummyClickAwayListener;
-    }, [isOpen]);
-
     return (
-      <ClickAway onClickAway={handleClickAway}>
+      <>
         <div
           className={clsx(baseClasses.trigger, triggerClass)}
           onMouseEnter={handleMouseEnter}
@@ -207,19 +203,20 @@ export const Tooltip = memo(
           ref={setTriggerRef}
         >
           {children}
-          <Popper
-            open={isOpen}
-            className={clsx(baseClasses.tooltip, tooltipClass)}
-            anchorEl={anchorEl}
-            modifiers={modifiers}
-            placement={placement}
-            onClick={handlePopperClick}
-          >
-            <div className={clsx(baseClasses.arrow, arrowClass)} ref={setArrowRef} />
-            <div className={clsx(baseClasses.content, contentClass)}>{content}</div>
-          </Popper>
         </div>
-      </ClickAway>
+        <Popper
+          open={isOpen}
+          className={clsx(baseClasses.tooltip, tooltipClass)}
+          anchorEl={anchorEl}
+          modifiers={modifiers}
+          placement={placement}
+          onClick={handlePopperClick}
+          ref={tooltipRef}
+        >
+          <div className={clsx(baseClasses.arrow, arrowClass)} ref={setArrowRef} />
+          <div className={clsx(baseClasses.content, contentClass)}>{content}</div>
+        </Popper>
+      </>
     );
   })
 );

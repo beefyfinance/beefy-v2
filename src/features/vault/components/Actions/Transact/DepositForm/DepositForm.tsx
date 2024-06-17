@@ -20,14 +20,11 @@ import { DepositActions } from '../DepositActions';
 import { TransactQuote } from '../TransactQuote';
 import { AlertError } from '../../../../../../components/Alerts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
-import {
-  selectVaultById,
-  selectVaultStrategyAddressOrUndefined,
-} from '../../../../../data/selectors/vaults';
+import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { RetirePauseReason } from '../../../RetirePauseReason';
 import { TokenAmount, TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
 import zapIcon from '../../../../../../images/icons/zap.svg';
-import { isCowcentratedVault, isVaultActive } from '../../../../../data/entities/vault';
+import { isVaultActive } from '../../../../../data/entities/vault';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { TextLoader } from '../../../../../../components/TextLoader';
@@ -72,12 +69,7 @@ export const DepositFormLoader = memo(function DepositFormLoader() {
   const error = useAppSelector(selectTransactOptionsError);
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const isCowVault = isCowcentratedVault(vault);
-  const strategy = useAppSelector(state => selectVaultStrategyAddressOrUndefined(state, vaultId));
-  const isLoading =
-    status === TransactStatus.Idle ||
-    status === TransactStatus.Pending ||
-    (isCowVault && strategy === undefined);
+  const isLoading = status === TransactStatus.Idle || status === TransactStatus.Pending;
   const isError = status === TransactStatus.Rejected;
 
   return (

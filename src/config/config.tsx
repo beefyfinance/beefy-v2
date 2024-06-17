@@ -62,6 +62,8 @@ export const config = {
       'fxUSD',
       'bbsDAI',
       'hyUSD',
+      'rgUSD',
+      'USD3',
       'bpt3POOL',
       'USDC+',
       'PYUSD',

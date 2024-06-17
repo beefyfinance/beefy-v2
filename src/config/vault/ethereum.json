@@ -1,5 +1,84 @@
 [
   {
+    "id": "convex-usd3-rgusd",
+    "name": "USD3/rgUSD",
+    "token": "USD3rgUSD",
+    "tokenAddress": "0xde73E407EFC75EdBAfc5bcD62Ebb1E7A9b38EBCD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooConvexUSD3-rgUSD",
+    "earnedTokenAddress": "0x12eE065896cc5b24fa81fA4a10F935a445bf744f",
+    "earnContractAddress": "0x12eE065896cc5b24fa81fA4a10F935a445bf744f",
+    "oracle": "lps",
+    "oracleId": "convex-usd3-rgusd",
+    "status": "active",
+    "createdAt": 1718618127,
+    "platformId": "convex",
+    "assets": ["USD3", "rgUSD"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-twocrypto-27/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-twocrypto-27/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xde73E407EFC75EdBAfc5bcD62Ebb1E7A9b38EBCD",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0xde73E407EFC75EdBAfc5bcD62Ebb1E7A9b38EBCD",
+            "coins": [
+              "0x0d86883FAf4FfD7aEb116390af37746F45b6f378",
+              "0x78da5799CF427Fee11e9996982F4150eCe7a99A7"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "convex-rgusd-eusd-usdc",
+    "name": "rgUSD/eUSD/USDC",
+    "token": "revPool",
+    "tokenAddress": "0xdf9015472Ea23e3BeA6fbD6092915F9Ed6980a99",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooConvex_rgUSD-eUSD-USDC",
+    "earnedTokenAddress": "0xa781ed375b5a795BC2ce2024D59698aDB1BC97F5",
+    "earnContractAddress": "0xa781ed375b5a795BC2ce2024D59698aDB1BC97F5",
+    "oracle": "lps",
+    "oracleId": "convex-rgusd-eusd-usdc",
+    "status": "active",
+    "createdAt": 1718618051,
+    "platformId": "convex",
+    "assets": ["rgUSD", "eUSD", "USDC"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-119/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-119/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xdf9015472Ea23e3BeA6fbD6092915F9Ed6980a99",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xdf9015472Ea23e3BeA6fbD6092915F9Ed6980a99",
+            "coins": [
+              "0x78da5799CF427Fee11e9996982F4150eCe7a99A7",
+              "0xA0d69E286B938e21CBf7E51D71F6A4c8918f482F",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "stargate-v2-eth-weth",
     "name": "WETH",
     "type": "standard",

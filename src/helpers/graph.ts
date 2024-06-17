@@ -1,6 +1,9 @@
 import { format } from 'date-fns';
 import type { TimeBucketType } from '../features/data/apis/analytics/analytics-types';
 import { formatLargeUsd } from './format';
+import type { ApiTimeBucket } from '../features/data/apis/beefy/beefy-data-api-types';
+import type { NameType, Payload, ValueType } from 'recharts/types/component/DefaultTooltipContent';
+import type { TooltipProps } from 'recharts';
 
 export const domainOffSet = (min: number, max: number, heightPercentageUsedByChart: number) => {
   return ((max - min) * (1 - heightPercentageUsedByChart)) / (2 * heightPercentageUsedByChart);
@@ -18,9 +21,18 @@ export const getXInterval = (dataLenght: number, xsDown: boolean) => {
   return Math.ceil(dataLenght / numResults);
 };
 
-export const TIME_BUCKET: TimeBucketType[] = ['1h_1d', '1h_1w', '1d_1M', '1d_all'];
+/** only buckets both databarn and data apis support */
+export type GraphBucket = TimeBucketType & ApiTimeBucket;
 
-export const formatDateTimeTick = (tickItem: number, timebucket: TimeBucketType) => {
+export const GRAPH_TIME_BUCKETS = [
+  '1h_1d',
+  '1h_1w',
+  '1d_1M',
+  '1d_1Y',
+  '1d_all',
+] as const satisfies GraphBucket[];
+
+export const formatDateTimeTick = (tickItem: number, timebucket: GraphBucket) => {
   const date = new Date(tickItem);
   if (timebucket === '1h_1d') {
     return format(date, 'HH:mm');
@@ -47,3 +59,15 @@ export function formatUnderlyingTick(value: number, minMax: [number, number]) {
 export function formatUsdTick(value: number) {
   return formatLargeUsd(value);
 }
+
+export type RechartsTooltipProps<
+  KValue extends string,
+  KName extends string,
+  TPayload extends { [key in KValue]: ValueType } & { [key in KName]: NameType },
+  TValue extends ValueType = TPayload[KValue],
+  TName extends NameType = TPayload[KName],
+  TBaseProps extends TooltipProps<ValueType, NameType> = TooltipProps<TValue, TName>,
+  TBasePayload extends Payload<TValue, TName> = Payload<TValue, TName>
+> = Omit<TBaseProps, 'payload'> & {
+  payload?: Array<Omit<TBasePayload, 'payload'> & { payload: TPayload }>;
+};

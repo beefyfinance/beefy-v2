@@ -10,15 +10,14 @@ import { isGovVault, type VaultEntity } from '../entities/vault';
 import { createCachedSelector } from 're-reselect';
 import { selectCowcentratedVaultById, selectVaultById } from './vaults';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
-import {
-  selectHistoricalPriceBucketData,
-  selectHistoricalPriceBucketIsLoaded,
-  selectHistoricalPriceBucketStatus,
-} from './historical';
 import { orderBy } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { fromUnixTime, sub } from 'date-fns';
-import { TIME_BUCKETS } from '../../vault/components/HistoricGraph/utils';
+
+import {
+  getDataApiBucket,
+  getDataApiBucketsLongerThan,
+} from '../apis/beefy/beefy-data-api-helpers';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -331,40 +330,75 @@ export const selectWrappedToNativeSymbolOrTokenSymbol = createCachedSelector(
 export const selectPriceWithChange = createCachedSelector(
   (state: BeefyState, oracleId: string, _bucket: ApiTimeBucket) =>
     selectTokenPriceByTokenOracleId(state, oracleId),
-  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
-    selectHistoricalPriceBucketStatus(state, oracleId, bucket),
-  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
-    selectHistoricalPriceBucketIsLoaded(state, oracleId, bucket),
-  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
-    selectHistoricalPriceBucketData(state, oracleId, bucket),
-  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) => TIME_BUCKETS[bucket].range,
-  (price, status, loaded, data, range) => {
-    if (!price) {
+  (state: BeefyState, oracleId: string, _bucket: ApiTimeBucket) =>
+    state.biz.historical.prices.byOracleId[oracleId],
+  (_state: BeefyState, _oracleId: string, bucket: ApiTimeBucket) => bucket,
+  (price, oracle, requestedBucket) => {
+    // wait for price, or load if no buckets have been requested yet
+    if (!price || !oracle) {
       return {
+        bucket: requestedBucket,
         price: undefined,
+        shouldLoad: !!price,
+        previousPrice: undefined,
+        previousDate: undefined,
+      };
+    }
+
+    const thisBucket = getDataApiBucket(requestedBucket);
+    const possibleBuckets = [thisBucket].concat(getDataApiBucketsLongerThan(requestedBucket));
+    const readyBucket = possibleBuckets.find(bucket => {
+      const state = oracle.byTimebucket[bucket.id];
+      return state && state.alreadyFulfilled && state.data && state.data.length > 0;
+    });
+
+    // if any of the buckets contains data, we can use it
+    // (if this bucket doesn't contain the data we want, neither will any other)
+    if (readyBucket) {
+      const { range } = readyBucket;
+      const data = oracle.byTimebucket[readyBucket.id]!.data!; // we checked we have data already
+      const oneRangeAgo = Math.floor(sub(new Date(), range).getTime() / 1000);
+      const oneDayAgoPricePoint = orderBy(data, 't', 'asc').find(point => point.t > oneRangeAgo);
+
+      if (oneDayAgoPricePoint && oneDayAgoPricePoint.v) {
+        const previousPrice = new BigNumber(oneDayAgoPricePoint.v);
+        const previousDate = fromUnixTime(oneDayAgoPricePoint.t);
+        return { bucket: readyBucket.id, price, shouldLoad: false, previousPrice, previousDate };
+      }
+
+      return {
+        bucket: readyBucket.id,
+        price,
         shouldLoad: false,
         previousPrice: undefined,
         previousDate: undefined,
       };
     }
 
-    if (!loaded && status === 'idle') {
-      return { price, shouldLoad: true, previousPrice: undefined, previousDate: undefined };
+    const pendingBucket = possibleBuckets.find(bucket => {
+      const state = oracle.byTimebucket[bucket.id];
+      return state && state.status === 'pending';
+    });
+
+    // if a bucket is pending, wait on it instead
+    if (pendingBucket) {
+      return {
+        bucket: pendingBucket.id,
+        price,
+        shouldLoad: false,
+        previousPrice: undefined,
+        previousDate: undefined,
+      };
     }
 
-    if (!loaded || !data || data.length === 0) {
-      return { price, shouldLoad: false, previousPrice: undefined, previousDate: undefined };
-    }
-
-    const oneRangeAgo = Math.floor(sub(new Date(), range).getTime() / 1000);
-    const oneDayAgoPricePoint = orderBy(data, 't', 'asc').find(point => point.t > oneRangeAgo);
-    if (!oneDayAgoPricePoint || !oneDayAgoPricePoint.v) {
-      return { price, shouldLoad: false, previousPrice: undefined, previousDate: undefined };
-    }
-
-    const previousPrice = new BigNumber(oneDayAgoPricePoint.v);
-    const previousDate = fromUnixTime(oneDayAgoPricePoint.t);
-    return { price, shouldLoad: false, previousPrice, previousDate };
+    // no bucket is pending, load the requested one
+    return {
+      bucket: requestedBucket,
+      price,
+      shouldLoad: true,
+      previousPrice: undefined,
+      previousDate: undefined,
+    };
   }
 )((_state: BeefyState, oracleId: string, bucket: ApiTimeBucket) => `${oracleId}-${bucket}`);
 
@@ -396,14 +430,21 @@ export const selectSupportedSwapTokensForChainAggregatorHavingPrice = (
   );
 };
 
-export const selectVaultTokenSymbols = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const vault = selectVaultById(state, vaultId);
-  return vault.assetIds.map(assetId => {
-    const token = selectTokenByIdOrUndefined(state, vault.chainId, assetId);
+export const selectVaultTokenSymbols = createCachedSelector(
+  selectVaultById,
+  (state: BeefyState) => state.entities.tokens.byChainId,
+  (vault, tokensByChainId) => {
+    return vault.assetIds.map(assetId => {
+      const address = tokensByChainId[vault.chainId]?.byId[assetId];
+      if (!address) {
+        return assetId;
+      }
 
-    return token?.symbol || assetId;
-  });
-};
+      const token = tokensByChainId[vault.chainId]?.byAddress[address];
+      return token?.symbol || assetId;
+    });
+  }
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectCurrentCowcentratedRangesByVaultId = (
   state: BeefyState,
