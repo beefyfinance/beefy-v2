@@ -88,11 +88,18 @@ export const AppVersionCheck = memo(function AppVersionCheck() {
     <div className={classes.positioner}>
       <div className={classes.alert}>
         <div className={classes.message}>{message}</div>
-        <div className={classes.action}>
-          <Button onClick={handleReload} size={'sm'} variant={'success'} className={classes.button}>
-            {t('Update-Reload')}
-          </Button>
-        </div>
+        {!app.reloadFailed ? (
+          <div className={classes.action}>
+            <Button
+              onClick={handleReload}
+              size={'sm'}
+              variant={'success'}
+              className={classes.button}
+            >
+              {t('Update-Reload')}
+            </Button>
+          </div>
+        ) : null}
       </div>
     </div>
   );
