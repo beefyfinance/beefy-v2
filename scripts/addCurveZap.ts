@@ -170,6 +170,7 @@ const chainIdToCurveChainId = {
 const curveEndpoints = [
   'factory',
   'factory-tricrypto',
+  'factory-twocrypto',
   'factory-stable-ng',
   'crypto',
   'factory-crvusd',
@@ -701,6 +702,7 @@ function poolEndpointToIndexType(
       return 'int128';
     case 'factory-crypto':
     case 'factory-tricrypto':
+    case 'factory-twocrypto':
     case 'crypto':
       return 'uint256';
     default:
@@ -987,6 +989,7 @@ async function poolToMethods(pool: CurveApiPoolWithChain): Promise<CurveMethods[
   if (
     endpoint === 'factory' ||
     endpoint === 'factory-tricrypto' ||
+    endpoint === 'factory-twocrypto' ||
     endpoint === 'factory-crypto' ||
     endpoint === 'factory-crvusd'
   ) {

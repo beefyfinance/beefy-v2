@@ -23,7 +23,7 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "moonbeam",
-    "feeTier": "Dynamic "
+    "feeTier": "Dynamic"
   },
   {
     "id": "stella-cow-axlusdc-xcusdc",
@@ -49,7 +49,7 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "moonbeam",
-    "feeTier": "Dynamic "
+    "feeTier": "Dynamic"
   },
   {
     "id": "stella-cow-xcusdc-xcusdt",
@@ -75,7 +75,7 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "moonbeam",
-    "feeTier": "Dynamic "
+    "feeTier": "Dynamic"
   },
   {
     "id": "stella-cow-xcusdc-glmr",
@@ -101,7 +101,7 @@
     "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "moonbeam",
-    "feeTier": "Dynamic "
+    "feeTier": "Dynamic"
   },
   {
     "id": "stella-cow-xcdot-glmr",
@@ -127,7 +127,7 @@
     "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "cowcentrated",
     "network": "moonbeam",
-    "feeTier": "Dynamic "
+    "feeTier": "Dynamic"
   },
   {
     "id": "uniswap-gamma-weth-wglmr",

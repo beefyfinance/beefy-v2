@@ -36,6 +36,7 @@ import type { TooltipsState } from './features/data/reducers/tooltips';
 import type { AddToWalletState } from './features/data/reducers/add-to-wallet';
 import type { ArticlesState } from './features/data/reducers/articles';
 import type { RewardsState } from './features/data/reducers/wallet/rewards';
+import type { VersionState } from './features/data/reducers/ui-version';
 
 export interface BeefyState {
   entities: {
@@ -80,6 +81,7 @@ export interface BeefyState {
     savedVaults: SavedVaultsState;
     tooltips: TooltipsState;
     addToWallet: AddToWalletState;
+    version: VersionState;
   };
 }
 

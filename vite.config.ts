@@ -5,7 +5,8 @@ import react from '@vitejs/plugin-react';
 import svgrPlugin from 'vite-plugin-svgr';
 import eslint from 'vite-plugin-eslint';
 import { visualizer } from 'rollup-plugin-visualizer';
-import * as path from 'path';
+import * as path from 'node:path';
+import versionPlugin from './version-plugin';
 
 const optionalPlugins: Plugin[] = [];
 
@@ -60,6 +61,7 @@ export default defineConfig({
       ...svgrPlugin(),
       enforce: 'post',
     },
+    versionPlugin(),
     ...optionalPlugins,
   ],
   optimizeDeps: {

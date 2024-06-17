@@ -16,6 +16,7 @@ import { Stepper } from './components/Stepper';
 import { Layout } from './components/Layout';
 import { AddTokenToWallet } from './components/AddTokenToWallet';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
+import { AppVersionCheck } from './components/AppVersionCheck';
 
 const Home = lazy(() => import(`./features/home`));
 const Vault = lazy(() => import(`./features/vault`));
@@ -74,7 +75,8 @@ export const App = () => {
               </Layout>
             </Router>
           </HelmetProvider>
-        </ThemeProvider>
+        <AppVersionCheck />
+      </ThemeProvider>
       </Suspense>
     </ErrorBoundary>
   );

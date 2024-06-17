@@ -252,3 +252,8 @@ export function featureFlag_debugGraph(): boolean {
   const params = getSearchParams();
   return params.has('__debug_graph');
 }
+
+export function featureFlag_simUpdate(): boolean {
+  const params = getSearchParams();
+  return params.has('__sim_update');
+}
