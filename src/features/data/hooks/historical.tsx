@@ -10,7 +10,7 @@ import {
   selectHistoricalPriceBucketStatus,
 } from '../selectors/historical';
 import { fetchHistoricalPrices, fetchHistoricalStat } from '../actions/historical';
-import { isCowcentratedVault, type VaultEntity } from '../entities/vault';
+import { type VaultEntity } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
 import { selectTokenByAddress } from '../selectors/tokens';
 import type { GraphBucket } from '../../../helpers/graph';
