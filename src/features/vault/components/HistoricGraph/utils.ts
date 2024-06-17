@@ -10,7 +10,7 @@ export const SNAPSHOT_INTERVAL: number = 15 * 60;
 export type TimeRange = '1Day' | '1Week' | '1Month' | '1Year';
 
 const timeRanges: TimeRange[] = ['1Day', '1Week', '1Month', '1Year'];
-const defaultTimeRangeOrder: TimeRange[] = ['1Month', '1Week', '1Day'];
+const defaultTimeRangeOrder: TimeRange[] = ['1Year', '1Month', '1Week', '1Day'];
 
 export const timeRangeToBucket: Record<TimeRange, ApiTimeBucket> = {
   '1Day': '1h_1d',
