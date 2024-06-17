@@ -6,7 +6,7 @@ import {
   selectUserFirstDepositDateByVaultId,
 } from '../../../../../data/selectors/analytics';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet';
-import { maxBy, minBy } from 'lodash';
+import { maxBy, minBy } from 'lodash-es';
 import { getClmInvestorFeesTimeSeries } from '../../../../../../helpers/timeserie';
 import { differenceInHours } from 'date-fns';
 import type { GraphBucket } from '../../../../../../helpers/graph';

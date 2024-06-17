@@ -27,9 +27,11 @@ export default function (): Plugin {
   }
 
   function getContentHash(bundle: OutputBundle): string {
-    return createHash('md5')
-      .update(JSON.stringify(Object.keys(bundle).sort()))
-      .digest('hex');
+    const hash = createHash('md5');
+    for (const key of Object.keys(bundle).sort()) {
+      hash.update(key);
+    }
+    return hash.digest('hex');
   }
 
   function getCloudflareHeaders(version: BuildVersion) {

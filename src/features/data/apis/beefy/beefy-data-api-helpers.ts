@@ -1,6 +1,6 @@
 import type { ApiTimeBucket, ApiTimeBucketData } from './beefy-data-api-types';
 import { keys } from '../../../../helpers/object';
-import { keyBy } from 'lodash';
+import { keyBy } from 'lodash-es';
 import { isAfter, isBefore, sub } from 'date-fns';
 import { isDurationEqual, isLonger } from '../../../../helpers/date';
 

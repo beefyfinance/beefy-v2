@@ -78,11 +78,20 @@ export default defineConfig({
   build: {
     outDir: 'build',
     assetsInlineLimit: 0,
+    sourcemap: false,
     commonjsOptions: {
       transformMixedEsModules: true,
     },
     rollupOptions: {
       output: {
+        manualChunks: id => {
+          if (id.includes('@material-ui')) {
+            return 'material-ui';
+          }
+          if (id.includes('node_modules/lodash')) {
+            return 'lodash';
+          }
+        },
         entryFileNames: entryInfo => {
           if (entryInfo.name === 'index') {
             if (entryInfo.facadeModuleId) {

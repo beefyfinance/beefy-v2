@@ -11,7 +11,7 @@ import {
   selectTokenPriceByTokenOracleId,
 } from '../../../../../data/selectors/tokens';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet';
-import { maxBy, minBy } from 'lodash';
+import { maxBy, minBy } from 'lodash-es';
 import { getClmInvestorTimeSeries } from '../../../../../../helpers/timeserie';
 import { isCLMTimelineAnalyticsEntity } from '../../../../../data/entities/analytics';
 import {

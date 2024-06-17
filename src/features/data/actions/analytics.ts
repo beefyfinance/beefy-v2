@@ -27,7 +27,7 @@ import {
   selectVaultStrategyAddressOrUndefined,
 } from '../selectors/vaults';
 import { selectCowcentratedVaultDepositTokens } from '../selectors/tokens';
-import { groupBy, mapValues, omitBy, partition, sortBy } from 'lodash-es';
+import { groupBy, keyBy, mapValues, omitBy, partition, sortBy } from 'lodash-es';
 import type { ChainEntity } from '../entities/chain';
 import { entries } from '../../../helpers/object';
 import { BIG_ZERO } from '../../../helpers/big-number';
@@ -38,7 +38,6 @@ import {
   selectUserFirstDepositDateByVaultId,
   selectUserHasCurrentDepositTimelineByVaultId,
 } from '../selectors/analytics';
-import { keyBy } from 'lodash';
 import type {
   ApiClmHarvestPriceRow,
   ClmPendingRewardsResponse,

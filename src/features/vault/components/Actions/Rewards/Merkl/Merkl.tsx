@@ -9,7 +9,7 @@ import { useAppSelector } from '../../../../../../store';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import { formatUsd } from '../../../../../../helpers/format';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
-import { keyBy } from 'lodash';
+import { keyBy } from 'lodash-es';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';

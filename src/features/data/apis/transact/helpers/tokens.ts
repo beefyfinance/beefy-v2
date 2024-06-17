@@ -1,7 +1,6 @@
 import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token';
 import { isTokenEqual, isTokenNative } from '../../../entities/token';
-import { sortBy } from 'lodash-es';
-import { uniqBy } from 'lodash';
+import { sortBy, uniqBy } from 'lodash-es';
 import type { ChainEntity } from '../../../entities/chain';
 import type { TokenAmount } from '../transact-types';
 

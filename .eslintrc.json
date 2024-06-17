@@ -28,6 +28,13 @@
         "message": "Prefer named exports"
       }
     ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "name": "lodash",
+        "message": "Use lodash-es instead"
+      }
+    ],
     "no-mixed-operators": "off",
     "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/no-explicit-any": "warn",
@@ -40,7 +47,8 @@
         "varsIgnorePattern": "^_"
       }
     ],
-    "@typescript-eslint/no-non-null-assertion": "off", // TODO fix
+    "@typescript-eslint/no-non-null-assertion": "off",
+    // TODO fix
     "react/jsx-no-target-blank": [
       "error",
       {
