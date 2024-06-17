@@ -396,14 +396,21 @@ export const selectSupportedSwapTokensForChainAggregatorHavingPrice = (
   );
 };
 
-export const selectVaultTokenSymbols = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const vault = selectVaultById(state, vaultId);
-  return vault.assetIds.map(assetId => {
-    const token = selectTokenByIdOrUndefined(state, vault.chainId, assetId);
+export const selectVaultTokenSymbols = createCachedSelector(
+  selectVaultById,
+  (state: BeefyState) => state.entities.tokens.byChainId,
+  (vault, tokensByChainId) => {
+    return vault.assetIds.map(assetId => {
+      const address = tokensByChainId[vault.chainId]?.byId[assetId];
+      if (!address) {
+        return assetId;
+      }
 
-    return token?.symbol || assetId;
-  });
-};
+      const token = tokensByChainId[vault.chainId]?.byAddress[address];
+      return token?.symbol || assetId;
+    });
+  }
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectCurrentCowcentratedRangesByVaultId = (
   state: BeefyState,

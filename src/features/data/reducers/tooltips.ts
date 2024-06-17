@@ -23,7 +23,14 @@ export const tooltipsSlice = createSlice({
         sliceState.byGroup[action.payload.group] = '';
       }
     },
+    toggleTooltip(sliceState, action: PayloadAction<{ group: string; id: string }>) {
+      if (sliceState.byGroup[action.payload.group] === action.payload.id) {
+        sliceState.byGroup[action.payload.group] = '';
+      } else {
+        sliceState.byGroup[action.payload.group] = action.payload.id;
+      }
+    },
   },
 });
 
-export const { openTooltip, closeTooltip } = tooltipsSlice.actions;
+export const { openTooltip, closeTooltip, toggleTooltip } = tooltipsSlice.actions;
