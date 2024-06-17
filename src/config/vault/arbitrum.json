@@ -518,6 +518,7 @@
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
     "feeTier": "0.05",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "cowcentrated"
