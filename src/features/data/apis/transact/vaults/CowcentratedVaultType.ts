@@ -111,8 +111,17 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       this.depositTokens
     );
 
-    const { isCalm, liquidity, used0, used1, unused0, unused1, position1, position0 } =
-      await clmPool.previewDeposit(inputs[0].amount, inputs[1].amount);
+    const {
+      isCalm,
+      liquidity,
+      used0,
+      used1,
+      unused0,
+      unused1,
+      position1,
+      position0,
+      balancingAmount,
+    } = await clmPool.previewDeposit(inputs[0].amount, inputs[1].amount);
     const depositUsed = [used0, used1].map((amount, i) => ({
       token: this.depositTokens[i],
       amount: fromWei(amount, this.depositTokens[i].decimals),
@@ -125,6 +134,10 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       token: this.depositTokens[i],
       amount: fromWei(amount, this.depositTokens[i].decimals),
     }));
+    const toBalance = {
+      ...balancingAmount,
+      amount: fromWei(balancingAmount.amount, balancingAmount.token.decimals),
+    };
 
     const outputs = [
       {
@@ -155,6 +168,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       unused: depositUnused,
       used: depositUsed,
       position: depositPosition,
+      toBalance,
     };
   }
 

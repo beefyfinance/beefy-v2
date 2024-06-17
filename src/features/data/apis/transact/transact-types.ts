@@ -350,6 +350,7 @@ export type CowcentratedVaultDepositQuote = BaseQuote<CowcentratedVaultDepositOp
   used: TokenAmount[];
   unused: TokenAmount[];
   position: TokenAmount[];
+  toBalance: TokenAmount;
 };
 
 export type CowcentratedZapDepositQuote = BaseZapQuote<CowcentratedZapDepositOption> & {
@@ -358,6 +359,7 @@ export type CowcentratedZapDepositQuote = BaseZapQuote<CowcentratedZapDepositOpt
   used: TokenAmount[];
   unused: TokenAmount[];
   position: TokenAmount[];
+  toBalance: TokenAmount;
   lpQuotes: (QuoteResponse | undefined)[];
 };
 
