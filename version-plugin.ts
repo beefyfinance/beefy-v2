@@ -1,10 +1,9 @@
-import type { Plugin } from 'vite';
+import { transformWithEsbuild, type Plugin } from 'vite';
 import { exec } from 'node:child_process';
 import type { OutputBundle } from 'rollup';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { transform } from 'esbuild';
 
 export default function (): Plugin {
   type BuildVersion = {
@@ -42,12 +41,16 @@ export default function (): Plugin {
   }
 
   async function getCheckerScript(version: BuildVersion) {
-    const code = await readFile(path.resolve(__dirname, 'version-checker.ts'), 'utf-8');
+    const filePath = path.resolve(__dirname, 'version-checker.ts');
+    const code = await readFile(filePath, 'utf-8');
     const codeWithVersion = code.replace(
       "'$$VERSION_PLACEHOLDER$$'",
       JSON.stringify(JSON.stringify(version))
     );
-    const minified = await transform(codeWithVersion, { minify: true, loader: 'ts' });
+    const minified = await transformWithEsbuild(codeWithVersion, filePath, {
+      minify: true,
+      loader: 'ts',
+    });
 
     return `<script>${minified.code}</script>`;
   }
