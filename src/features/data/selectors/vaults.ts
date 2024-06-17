@@ -361,3 +361,17 @@ export const selectVaultHasPlatformWithRisks = (
     return { risks: false };
   }
 };
+
+export const selectChainsWithCowcentratedVaults = createSelector(
+  (state: BeefyState) => state.entities.vaults.byChainId,
+  byChainId => {
+    return Object.entries(byChainId)
+      .filter(
+        ([_, chainState]) =>
+          chainState.cowcentratedVault &&
+          chainState.cowcentratedVault.byEarnedTokenAddress &&
+          Object.keys(chainState.cowcentratedVault.byEarnedTokenAddress).length > 0
+      )
+      .map(([chainId]) => chainId as ChainEntity['id']);
+  }
+);
