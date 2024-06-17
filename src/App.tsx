@@ -75,8 +75,8 @@ export const App = () => {
               </Layout>
             </Router>
           </HelmetProvider>
-        <AppVersionCheck />
-      </ThemeProvider>
+          <AppVersionCheck />
+        </ThemeProvider>
       </Suspense>
     </ErrorBoundary>
   );
