@@ -1,5 +1,7 @@
 import escapeStringRegexp from 'escape-string-regexp';
+
 const PUNCTUATION = new RegExp(/([/,-])/g);
+
 export function punctuationWrap(text: string): string {
   return text.replace(PUNCTUATION, '$1\u200B');
 }
@@ -19,4 +21,8 @@ export function stringFoundAnywhere(
   caseInsensitive: boolean = true
 ) {
   return (haystack || '').match(safeSearchRegex(needle, caseInsensitive));
+}
+
+export function ucFirstLetter<T extends string>(word: T): Capitalize<T> {
+  return `${word.charAt(0).toUpperCase()}${word.slice(1)}` as Capitalize<T>;
 }

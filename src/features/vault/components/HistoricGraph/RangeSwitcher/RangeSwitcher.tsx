@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ToggleButtons } from '../../../../../components/ToggleButtons';
 import { makeStyles } from '@material-ui/core';
@@ -23,6 +23,12 @@ export const RangeSwitcher = memo<RangeSwitcherProps>(function RangeSwitcher({
   const options: Record<string, string> = useMemo(() => {
     return Object.fromEntries(availableRanges.map(range => [range, t(`Graph-${range}`)]));
   }, [availableRanges, t]);
+
+  useEffect(() => {
+    if (availableRanges.length > 0 && !availableRanges.includes(range)) {
+      onChange(availableRanges[availableRanges.length - 1]);
+    }
+  }, [range, availableRanges, onChange]);
 
   return (
     <ToggleButtons

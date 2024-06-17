@@ -1,22 +1,21 @@
 import { useMemo } from 'react';
 import { useAppSelector } from '../../../../../../store';
-import type { TimeBucketType } from '../../../../../data/apis/analytics/analytics-types';
 import type { VaultEntity } from '../../../../../data/entities/vault';
 import {
   selectUserClmHarvestTimelineByVaultId,
   selectUserFirstDepositDateByVaultId,
 } from '../../../../../data/selectors/analytics';
-import { selectCowcentratedVaultDepositTokensWithPrices } from '../../../../../data/selectors/tokens';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet';
 import { maxBy, minBy } from 'lodash';
-import { getClmInvestorFeesTimeserie } from '../../../../../../helpers/timeserie';
-import { eachDayOfInterval } from 'date-fns';
+import { getClmInvestorFeesTimeSeries } from '../../../../../../helpers/timeserie';
+import { differenceInHours } from 'date-fns';
+import type { GraphBucket } from '../../../../../../helpers/graph';
 
 // Same object reference for empty chart data
-export const NO_CHART_DATA = { data: [], minUsd: 0, maxUsd: 0 };
+export const NO_CHART_DATA = { data: [], tokens: [], minUsd: 0, maxUsd: 0 };
 
 export const useFeesChartData = (
-  timebucket: TimeBucketType,
+  timebucket: GraphBucket,
   vaultId: VaultEntity['id'],
   address?: string
 ) => {
@@ -24,58 +23,75 @@ export const useFeesChartData = (
   const userHarvestTimeline = useAppSelector(state =>
     selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress)
   );
-  const isLoading = !userHarvestTimeline;
-  const { token0, token1 } = useAppSelector(state =>
-    selectCowcentratedVaultDepositTokensWithPrices(state, vaultId)
+  const firstDepositDate = useAppSelector(state =>
+    selectUserFirstDepositDateByVaultId(state, vaultId, walletAddress)
   );
+  const isLoading = !userHarvestTimeline;
 
   const chartData = useMemo(() => {
-    if (userHarvestTimeline && userHarvestTimeline.harvests.length > 0) {
-      const data = getClmInvestorFeesTimeserie(
+    if (userHarvestTimeline) {
+      const data = getClmInvestorFeesTimeSeries(
         timebucket,
         userHarvestTimeline,
-        token0.price,
-        token1.price
+        firstDepositDate || new Date()
       );
 
       if (data && data.length > 0) {
-        const minV0Usd = minBy(data, 'v0')?.v0 || 0;
-        const minV1Usd = minBy(data, 'v1')?.v1 || 0;
+        const tokens = userHarvestTimeline.tokens;
+        const mins = tokens.map((_, i) => minBy(data, d => d.values[i])?.values[i] || 0);
+        const maxes = tokens.map((_, i) => maxBy(data, d => d.values[i])?.values[i] || 0);
 
-        const maxV0Usd = maxBy(data, 'v0')?.v0 || 0;
-        const maxV1Usd = maxBy(data, 'v1')?.v1 || 0;
+        const minUsd = Math.min(...mins);
+        const maxUsd = Math.max(...maxes);
 
-        const minUsd = minV0Usd < minV1Usd ? minV0Usd : minV1Usd;
-        const maxUsd = maxV0Usd > maxV1Usd ? maxV0Usd : maxV1Usd;
-
-        return { data, minUsd, maxUsd };
+        return { data, tokens, minUsd, maxUsd };
       }
     }
 
     // This save us from re-rendering when data is loading
     // We need to make sure this object is not modified elsewhere
     return NO_CHART_DATA;
-  }, [userHarvestTimeline, timebucket, token0.price, token1.price]);
+  }, [userHarvestTimeline, timebucket, firstDepositDate]);
 
   return { chartData, isLoading };
 };
 
-export const useVaultPeriodsFeesGraph = (vaultId: VaultEntity['id'], address?: string) => {
+/**
+ * The indexes of the array returned are used to index FEES_TIME_BUCKET
+ */
+export const useVaultPeriodsFeesGraph = (
+  vaultId: VaultEntity['id'],
+  address: string,
+  minHours: number = 4
+): string[] => {
   const vaultDepositDate = useAppSelector(state =>
     selectUserFirstDepositDateByVaultId(state, vaultId, address)
   );
-  const currentDate = new Date();
-
-  const result = eachDayOfInterval({
-    start: vaultDepositDate || currentDate,
-    end: currentDate,
-  });
+  const harvestTimeline = useAppSelector(state =>
+    selectUserClmHarvestTimelineByVaultId(state, vaultId, address)
+  );
 
   return useMemo(() => {
-    if (result.length > 30) return ['1W', '1M', 'ALL'];
-    if (result.length > 7) return ['1W', 'ALL'];
-    if (result.length > 1) return ['ALL'];
-    if (result.length === 1) return ['ALL'];
+    if (
+      vaultDepositDate === undefined ||
+      harvestTimeline === undefined ||
+      harvestTimeline.harvests.length === 0
+    ) {
+      return [];
+    }
+
+    const now = new Date();
+    const fullHours = differenceInHours(now, vaultDepositDate);
+    const fractionalDays = fullHours / 24;
+
+    if (fractionalDays > 366) return ['1W', '1M', '1Y', 'ALL'];
+    if (fractionalDays > 30) return ['1W', '1M', 'ALL'];
+    if (fractionalDays > 7) return ['1W', 'ALL'];
+    if (fractionalDays > 1) return ['ALL'];
+
+    // smallest bucket is 1h, so wait until we have at least 4 hours to show on the graph
+    if (fullHours >= minHours) return ['ALL'];
+
     return [];
-  }, [result.length]);
+  }, [vaultDepositDate, harvestTimeline, minHours]);
 };

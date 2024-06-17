@@ -25,6 +25,8 @@ import {
 import { selectWalletAddress } from '../../../data/selectors/wallet';
 import { CLMFeesGraph } from './components/FeesGraph';
 import { useVaultPeriodsFeesGraph } from './components/FeesGraph/hooks';
+import { GraphNoData } from '../../../../components/GraphNoData/GraphNoData';
+import { ErrorBoundary } from '../../../../components/ErrorBoundary/ErrorBoundary';
 
 const useStyles = makeStyles(styles);
 
@@ -64,11 +66,6 @@ export const CowcentratedPnlGraphLoader = memo<CowcentratedPnlGraphLoaderProps>(
   }
 );
 
-enum ChartEnum {
-  Overview = 1,
-  Fees,
-}
-
 interface CowcentratedPnlGraphProps {
   vaultId: VaultEntity['id'];
   address: string;
@@ -81,17 +78,24 @@ export const OverviewGraph = memo<CowcentratedPnlGraphProps>(function OverviewGr
   const classes = useStyles();
   const labels = useVaultPeriodsOverviewGraph(vaultId, address);
   const [period, setPeriod] = useState<number>(labels.length - 1);
+  const canShowGraph = labels.length > 0;
 
   return (
-    <>
-      <CardContent className={classes.content}>
-        <OverviewGraphHeader vaultId={vaultId} />
-        <div className={classes.graphContainer}>
-          <CLMOverviewGraph period={period} address={address} vaultId={vaultId} />
-        </div>
+    <CardContent className={classes.content}>
+      <OverviewGraphHeader vaultId={vaultId} />
+      <div className={classes.graphContainer}>
+        {canShowGraph ? (
+          <ErrorBoundary>
+            <CLMOverviewGraph period={period} address={address} vaultId={vaultId} />
+          </ErrorBoundary>
+        ) : (
+          <GraphNoData reason="wait-collect" />
+        )}
+      </div>
+      {canShowGraph ? (
         <OverviewFooter labels={labels} period={period} handlePeriod={setPeriod} />
-      </CardContent>
-    </>
+      ) : null}
+    </CardContent>
   );
 });
 
@@ -99,31 +103,38 @@ export const FeesGraph = memo<CowcentratedPnlGraphProps>(function FeesGraph({ va
   const classes = useStyles();
   const labels = useVaultPeriodsFeesGraph(vaultId, address);
   const [period, setPeriod] = useState<number>(labels.length - 1);
+  const canShowGraph = labels.length > 0;
 
   return (
-    <>
-      <CardContent className={classes.content}>
-        <FeesGraphHeader vaultId={vaultId} address={address} />
-        <div className={classes.graphContainer}>
+    <CardContent className={classes.content}>
+      <FeesGraphHeader vaultId={vaultId} address={address} />
+      <div className={classes.graphContainer}>
+        {canShowGraph ? (
           <CLMFeesGraph vaultId={vaultId} period={period} address={address} />
-        </div>
+        ) : (
+          <GraphNoData reason="wait-collect" />
+        )}
+      </div>
+      {canShowGraph ? (
         <FeesFooter labels={labels} vaultId={vaultId} period={period} handlePeriod={setPeriod} />
-      </CardContent>
-    </>
+      ) : null}
+    </CardContent>
   );
 });
 
-const chartToComponent: Record<ChartEnum, FC<CowcentratedPnlGraphProps>> = {
-  [ChartEnum.Overview]: OverviewGraph as FC<CowcentratedPnlGraphProps>,
-  [ChartEnum.Fees]: FeesGraph as FC<CowcentratedPnlGraphProps>,
-};
+const chartToComponent = {
+  overview: OverviewGraph,
+  fees: FeesGraph,
+} as const satisfies Record<string, FC<CowcentratedPnlGraphProps>>;
+
+type ChartType = keyof typeof chartToComponent;
 
 export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function CowcentratedPnlGraph({
   vaultId,
   address,
 }) {
   const dispatch = useAppDispatch();
-  const [stat, setStat] = useState<string>('Overview');
+  const [stat, setStat] = useState<ChartType>('overview');
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -134,71 +145,80 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
 
   const options = useMemo(() => {
     return {
-      Overview: t('Graph-Overview'),
-      Fees: t('Graph-Fees'),
-    };
+      overview: t('Graph-Overview'),
+      fees: t('Graph-Fees'),
+    } as const satisfies Record<ChartType, string>;
   }, [t]);
 
-  const chartStat = useMemo(() => {
-    if (stat === 'Overview') {
-      return ChartEnum.Overview;
-    } else {
-      return ChartEnum.Fees;
-    }
-  }, [stat]);
-
-  const GraphComponent = chartToComponent[chartStat];
+  const GraphComponent = chartToComponent[stat];
 
   return (
     <Card className={classes.card}>
       <CardHeader className={classes.header}>
         <CardTitle title={t('Graph-PositionPerformance')} />
-        <StatSwitcher stat={stat} options={options} onChange={setStat} />
+        <StatSwitcher<ChartType> stat={stat} options={options} onChange={setStat} />
       </CardHeader>
-      <GraphComponent vaultId={vaultId} address={address} />
+      <ErrorBoundary>
+        <GraphComponent vaultId={vaultId} address={address} />
+      </ErrorBoundary>
     </Card>
   );
 });
 
-export const DashboardCowcentratedPnLGraph = memo<CowcentratedPnlGraphProps>(
-  function DashboardCowcentratedPnLGraph({ vaultId, address }) {
+export const DashboardOverviewGraph = memo<CowcentratedPnlGraphProps>(
+  function DashboardOverviewGraph({ vaultId, address }) {
     const classes = useStyles();
     const labels = useVaultPeriodsOverviewGraph(vaultId, address);
     const [period, setPeriod] = useState<number>(labels.length - 1);
+    const canShowGraph = labels.length > 0;
 
     return (
       <div className={classes.dashboardPnlContainer}>
-        <CLMOverviewGraph address={address} period={period} vaultId={vaultId} />
-        <OverviewFooter
-          className={classes.footerDashboard}
-          tabsClassName={classes.tabsDashboard}
-          labels={labels}
-          period={period}
-          handlePeriod={setPeriod}
-        />
+        {canShowGraph ? (
+          <>
+            <CLMOverviewGraph address={address} period={period} vaultId={vaultId} />
+            <OverviewFooter
+              className={classes.footerDashboard}
+              tabsClassName={classes.tabsDashboard}
+              labels={labels}
+              period={period}
+              handlePeriod={setPeriod}
+            />
+          </>
+        ) : (
+          <GraphNoData reason="wait-collect" />
+        )}
       </div>
     );
   }
 );
 
-export const DashboardCowcentratedFeesGraph = memo<CowcentratedPnlGraphProps>(
-  function DashboardCowcentratedFeesGraph({ vaultId, address }) {
-    const classes = useStyles();
-    const labels = useVaultPeriodsFeesGraph(vaultId, address);
-    const [period, setPeriod] = useState<number>(labels.length - 1);
+export const DashboardFeesGraph = memo<CowcentratedPnlGraphProps>(function DashboardFeesGraph({
+  vaultId,
+  address,
+}) {
+  const classes = useStyles();
+  const labels = useVaultPeriodsFeesGraph(vaultId, address);
+  const [period, setPeriod] = useState<number>(labels.length - 1);
+  const canShowGraph = labels.length > 0;
 
-    return (
-      <div className={classes.dashboardPnlContainer}>
-        <CLMFeesGraph address={address} period={period} vaultId={vaultId} />
-        <FeesFooter
-          className={classes.footerDashboard}
-          tabsClassName={classes.tabsDashboard}
-          labels={labels}
-          vaultId={vaultId}
-          period={period}
-          handlePeriod={setPeriod}
-        />
-      </div>
-    );
-  }
-);
+  return (
+    <div className={classes.dashboardPnlContainer}>
+      {canShowGraph ? (
+        <>
+          <CLMFeesGraph address={address} period={period} vaultId={vaultId} />
+          <FeesFooter
+            className={classes.footerDashboard}
+            tabsClassName={classes.tabsDashboard}
+            labels={labels}
+            vaultId={vaultId}
+            period={period}
+            handlePeriod={setPeriod}
+          />
+        </>
+      ) : (
+        <GraphNoData reason="wait-collect" />
+      )}
+    </div>
+  );
+});
