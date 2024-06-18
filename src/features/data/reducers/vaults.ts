@@ -6,7 +6,7 @@ import { safetyScoreNum } from '../../../helpers/safetyScore';
 import type { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsLastHarvests } from '../actions/vaults';
+import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import type { ChainEntity } from '../entities/chain';
 import {
@@ -19,7 +19,7 @@ import {
   type VaultStandard,
 } from '../entities/vault';
 import type { NormalizedEntity } from '../utils/normalized-entity';
-import type { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
+import type { VaultConfig } from '../apis/config-types';
 import { entries } from '../../../helpers/object';
 import { BIG_ZERO } from '../../../helpers/big-number';
 
@@ -90,11 +90,6 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
     };
   };
 
-  /**
-   * We want to know if the vault is featured or not
-   */
-  featuredVaults: FeaturedVaultConfig;
-
   lastHarvestById: {
     [vaultId: VaultEntity['id']]: number;
   };
@@ -106,7 +101,7 @@ export const initialVaultsState: VaultsState = {
   allBridgedIds: [],
   byChainId: {},
   contractData: { byVaultId: {} },
-  featuredVaults: {},
+
   lastHarvestById: {},
 };
 
@@ -117,10 +112,6 @@ export const vaultsSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    builder.addCase(fetchFeaturedVaults.fulfilled, (sliceState, action) => {
-      sliceState.featuredVaults = action.payload.byVaultId;
-    });
-
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
       const initialVaultAmount = sliceState.allIds.length;
       for (const [chainId, vaults] of entries(action.payload.byChainId)) {

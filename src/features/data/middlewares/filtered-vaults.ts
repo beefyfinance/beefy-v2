@@ -6,7 +6,7 @@ import {
   recalculateDepositedVaultsAction,
 } from '../actions/balance';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { fetchAllVaults, fetchFeaturedVaults } from '../actions/vaults';
+import { fetchAllVaults } from '../actions/vaults';
 import { fetchAllPricesAction } from '../actions/prices';
 import { fetchApyAction } from '../actions/apy';
 import { fetchAllBoosts } from '../actions/boosts';
@@ -43,7 +43,6 @@ function isRehydrateFiltersAction(action: any): action is RehydrateAction {
 const hasDataLoaded = isFulfilled(
   fetchChainConfigs,
   fetchAllVaults,
-  fetchFeaturedVaults,
   fetchAllBoosts,
   fetchPlatforms
 );
