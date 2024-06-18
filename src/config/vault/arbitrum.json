@@ -1,5 +1,160 @@
 [
   {
+    "id": "uniswap-cow-arb-weth-reth",
+    "name": "rETH-WETH",
+    "type": "cowcentrated",
+    "token": "rETH-WETH",
+    "tokenAddress": "0x09ba302A3f5ad2bF8853266e271b005A5b3716fe",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8"
+    ],
+    "earnedToken": "cowUniswapArbrETH-WETH",
+    "earnedTokenAddress": "0xB79D17BE1bd9544e0005FA0F9033f8f78CE06D4c",
+    "earnContractAddress": "0xB79D17BE1bd9544e0005FA0F9033f8f78CE06D4c",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-weth-reth",
+    "status": "active",
+    "createdAt": 1718709062,
+    "platformId": "beefy",
+    "assets": ["rETH", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-usdv-usdc",
+    "name": "USDV-USDC",
+    "type": "cowcentrated",
+    "token": "USDV-USDC",
+    "tokenAddress": "0x536F4b1CbEDA8387A57b45A549ca6B250f7f1D90",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x323665443CEf804A3b5206103304BD4872EA4253",
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+    ],
+    "earnedToken": "cowUniswapArbUSDV-USDC",
+    "earnedTokenAddress": "0x308aD09fD1577dF61Dd638cd8c81B12072c21665",
+    "earnContractAddress": "0x308aD09fD1577dF61Dd638cd8c81B12072c21665",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-usdv-usdc",
+    "status": "active",
+    "createdAt": 1718709062,
+    "platformId": "beefy",
+    "assets": ["USDV", "USDC"],
+    "risks": ["IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-usde-usdt",
+    "name": "USDe-USDT",
+    "type": "cowcentrated",
+    "token": "USDe-USDT",
+    "tokenAddress": "0xAF7b48ae2f4773FD44f9208ccA3Db5ae7BFa7e37",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+    ],
+    "earnedToken": "cowUniswapArbUSDe-USDT",
+    "earnedTokenAddress": "0xAf4c8cEE65Fd6dD1864f4bb53dbD386B0D092063",
+    "earnContractAddress": "0xAf4c8cEE65Fd6dD1864f4bb53dbD386B0D092063",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-usde-usdt",
+    "status": "active",
+    "createdAt": 1718709062,
+    "platformId": "beefy",
+    "assets": ["USDe", "USDT"],
+    "risks": ["IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-usdc-usdt",
+    "name": "USDC-USDT",
+    "type": "cowcentrated",
+    "token": "USDC-USDT",
+    "tokenAddress": "0xbE3aD6a5669Dc0B8b12FeBC03608860C31E2eef6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+    ],
+    "earnedToken": "cowUniswapArbUSDC-USDT",
+    "earnedTokenAddress": "0xFBebeDa38450bBf12aFe5B64df9aC507380C0Cca",
+    "earnContractAddress": "0xFBebeDa38450bBf12aFe5B64df9aC507380C0Cca",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-usdc-usdt",
+    "status": "active",
+    "createdAt": 1718709062,
+    "platformId": "beefy",
+    "assets": ["USDC", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-frax-usdt",
+    "name": "FRAX-USDT",
+    "type": "cowcentrated",
+    "token": "FRAX-USDT",
+    "tokenAddress": "0x1EbCF8831b93450eA81b0619c5e05b98751c8322",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
+      "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+    ],
+    "earnedToken": "cowUniswapArbFRAX-USDT",
+    "earnedTokenAddress": "0x92058bF6685A73D96c3919a8431fC3f4E348B0af",
+    "earnContractAddress": "0x92058bF6685A73D96c3919a8431fC3f4E348B0af",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-frax-usdt",
+    "status": "active",
+    "createdAt": 1718709062,
+    "platformId": "beefy",
+    "assets": ["FRAX", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "ramses-aleth-frxeth",
     "name": "alETH-frxETH sLP",
     "type": "standard",
