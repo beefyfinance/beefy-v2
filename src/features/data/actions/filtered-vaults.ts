@@ -17,7 +17,7 @@ import {
   selectIsVaultBlueChip,
   selectIsVaultCorrelated,
   selectIsVaultCowcentrated,
-  selectIsVaultFeatured,
+  selectIsVaultGov,
   selectIsVaultStable,
   selectVaultById,
 } from '../selectors/vaults';
@@ -88,23 +88,30 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
           return false;
         }
 
-        // Vault Category
-        if (filterOptions.vaultCategory === 'featured' && !selectIsVaultFeatured(state, vault.id)) {
+        if (filterOptions.assetType === 'clm' && !selectIsVaultCowcentrated(state, vault.id)) {
           return false;
         }
+        // Vault Category
+
         if (filterOptions.vaultCategory === 'bluechip' && !selectIsVaultBlueChip(state, vault.id)) {
           return false;
         }
         if (filterOptions.vaultCategory === 'stable' && !selectIsVaultStable(state, vault.id)) {
           return false;
         }
-        if (filterOptions.vaultCategory === 'clm' && !selectIsVaultCowcentrated(state, vault.id)) {
-          return false;
-        }
         if (
           filterOptions.vaultCategory === 'correlated' &&
           !selectIsVaultCorrelated(state, vault.id)
         ) {
+          return false;
+        }
+
+        //Strategy Type
+        if (filterOptions.strategyType === 'pools' && !selectIsVaultGov(state, vault.id)) {
+          return false;
+        }
+
+        if (filterOptions.strategyType === 'vaults' && selectIsVaultGov(state, vault.id)) {
           return false;
         }
 

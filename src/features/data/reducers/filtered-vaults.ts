@@ -10,6 +10,7 @@ import type {
   UserCategoryType,
   VaultAssetType,
   VaultCategoryType,
+  StrategiesType,
 } from './filtered-vaults-types';
 import { isValidUserCategory } from './filtered-vaults-types';
 import type { VaultEntity } from '../entities/vault';
@@ -30,6 +31,7 @@ export type FilteredVaultsState = {
   sortDirection: SortDirectionType;
   vaultCategory: VaultCategoryType;
   userCategory: UserCategoryType;
+  strategyType: StrategiesType;
   assetType: VaultAssetType;
   searchText: string;
   chainIds: ChainEntity['id'][];
@@ -50,6 +52,7 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   sortDirection: 'desc',
   vaultCategory: 'all',
   userCategory: 'all',
+  strategyType: 'all',
   assetType: 'all',
   searchText: '',
   chainIds: [],
@@ -96,6 +99,10 @@ export const filteredVaultsSlice = createSlice({
     setVaultCategory(sliceState, action: PayloadAction<FilteredVaultsState['vaultCategory']>) {
       sliceState.reseted = false;
       sliceState.vaultCategory = action.payload;
+    },
+    setStrategyType(sliceState, action: PayloadAction<FilteredVaultsState['strategyType']>) {
+      sliceState.reseted = false;
+      sliceState.strategyType = action.payload;
     },
     setUserCategory(sliceState, action: PayloadAction<FilteredVaultsState['userCategory']>) {
       sliceState.reseted = false;

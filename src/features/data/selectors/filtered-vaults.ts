@@ -26,6 +26,7 @@ export const selectFilterSearchSortDirection = (state: BeefyState) =>
   state.ui.filteredVaults.sortDirection;
 export const selectFilterUserCategory = (state: BeefyState) => state.ui.filteredVaults.userCategory;
 export const selectFilterAssetType = (state: BeefyState) => state.ui.filteredVaults.assetType;
+export const selectFilterStrategyType = (state: BeefyState) => state.ui.filteredVaults.strategyType;
 export const selectFilterVaultCategory = (state: BeefyState) =>
   state.ui.filteredVaults.vaultCategory;
 export const selectFilterPlatformIds = (state: BeefyState) => state.ui.filteredVaults.platformIds;
@@ -46,6 +47,7 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.onlyEarningPoints ? 1 : 0) +
     (filterOptions.assetType !== 'all' ? 1 : 0) +
     (filterOptions.vaultCategory !== 'all' ? 1 : 0) +
+    (filterOptions.strategyType !== 'all' ? 1 : 0) +
     (filterOptions.sort !== 'default' ? 1 : 0) +
     filterOptions.chainIds.length +
     filterOptions.platformIds.length
@@ -57,6 +59,7 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.vaultCategory !== 'all' ||
     filterOptions.userCategory !== 'all' ||
     filterOptions.assetType !== 'all' ||
+    filterOptions.strategyType !== 'all' ||
     filterOptions.onlyRetired !== false ||
     filterOptions.onlyPaused !== false ||
     filterOptions.onlyBoosted !== false ||
@@ -73,6 +76,7 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
   filterOptions =>
     filterOptions.vaultCategory !== 'all' ||
     filterOptions.assetType !== 'all' ||
+    filterOptions.strategyType !== 'all' ||
     filterOptions.onlyRetired !== false ||
     filterOptions.onlyPaused !== false ||
     filterOptions.onlyBoosted !== false ||

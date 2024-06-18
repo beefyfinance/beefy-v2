@@ -63,6 +63,7 @@ const hasFiltersChanged = isAnyOf(
   filteredVaultsActions.reset,
   filteredVaultsActions.setVaultCategory,
   filteredVaultsActions.setUserCategory,
+  filteredVaultsActions.setStrategyType,
   filteredVaultsActions.setAssetType,
   filteredVaultsActions.setSearchText,
   filteredVaultsActions.setChainIds,
