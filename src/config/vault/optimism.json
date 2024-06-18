@@ -1,5 +1,365 @@
 [
   {
+    "id": "silo-op-op-op",
+    "name": "OP (OP Market)",
+    "type": "standard",
+    "token": "OP",
+    "tokenAddress": "0x4200000000000000000000000000000000000042",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloOpOP(OP)",
+    "earnedTokenAddress": "0x25fC7cE70Ba167ec6290834d3297205ba86539A9",
+    "earnContractAddress": "0x25fC7cE70Ba167ec6290834d3297205ba86539A9",
+    "oracle": "tokens",
+    "oracleId": "OP",
+    "status": "active",
+    "createdAt": 1718736201,
+    "platformId": "silo",
+    "assets": ["OP"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x0D276FC14719f9292D5C1eA2198673d1f4269246"
+    }
+  },
+  {
+    "id": "silo-op-eth-op",
+    "name": "WETH (OP Market)",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0x4200000000000000000000000000000000000006",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloOpWETH(OP)",
+    "earnedTokenAddress": "0xde357f07152BCE64161Ac5dcE7FA235139cd156A",
+    "earnContractAddress": "0xde357f07152BCE64161Ac5dcE7FA235139cd156A",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "createdAt": 1718736201,
+    "platformId": "silo",
+    "assets": ["WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x13e3Ee699D1909E989722E753853AE30b17e08c5"
+    }
+  },
+  {
+    "id": "silo-op-usdc-op",
+    "name": "USDC (OP Market)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+    "tokenDecimals": 6,
+    "earnedToken": "mooSiloOpUSDC(OP)",
+    "earnedTokenAddress": "0xEE2e18164609499cd623E493307B1e5a68fccC5B",
+    "earnContractAddress": "0xEE2e18164609499cd623E493307B1e5a68fccC5B",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1718736201,
+    "platformId": "silo",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x16a9FA2FDa030272Ce99B29CF780dFA30361E0f3"
+    }
+  },
+  {
+    "id": "silo-op-wsteth-wsteth",
+    "name": "wstETH (wstETH Market)",
+    "type": "standard",
+    "token": "wstETH",
+    "tokenAddress": "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloOpwstETH(wstETH)",
+    "earnedTokenAddress": "0xf6Ad62aed3C09B63bC3c2D30CbED1a8184f4B3D8",
+    "earnContractAddress": "0xf6Ad62aed3C09B63bC3c2D30CbED1a8184f4B3D8",
+    "oracle": "tokens",
+    "oracleId": "wstETH",
+    "status": "active",
+    "createdAt": 1718736201,
+    "platformId": "silo",
+    "assets": ["wstETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xe59EBa0D492cA53C6f46015EEa00517F2707dc77"
+    }
+  },
+  {
+    "id": "silo-op-eth-wsteth",
+    "name": "WETH (wstETH Market)",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0x4200000000000000000000000000000000000006",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloOpWETH(wstETH)",
+    "earnedTokenAddress": "0x9F18a883209095CB3a5E600BBAa22be3F0f8880a",
+    "earnContractAddress": "0x9F18a883209095CB3a5E600BBAa22be3F0f8880a",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "createdAt": 1718736201,
+    "platformId": "silo",
+    "assets": ["WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x13e3Ee699D1909E989722E753853AE30b17e08c5"
+    }
+  },
+  {
+    "id": "silo-op-usdc-wsteth",
+    "name": "USDC (wstETH Market)",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+    "tokenDecimals": 6,
+    "earnedToken": "mooSiloOpUSDC(wstETH)",
+    "earnedTokenAddress": "0xb2EFe32D29e15Db4674dC4A2eD2553DAE8Ad4EdE",
+    "earnContractAddress": "0xb2EFe32D29e15Db4674dC4A2eD2553DAE8Ad4EdE",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1718736201,
+    "platformId": "silo",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x16a9FA2FDa030272Ce99B29CF780dFA30361E0f3"
+    }
+  },
+  {
+    "id": "silo-op-wbtc-wbtc",
+    "name": "WBTC (WBTC Market)",
+    "type": "standard",
+    "token": "WBTC",
+    "tokenAddress": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
+    "tokenDecimals": 8,
+    "earnedToken": "mooSiloOpWBTC(WBTC)",
+    "earnedTokenAddress": "0x26064be0ac7465E7126DfB0383623C546fbbC44d",
+    "earnContractAddress": "0x26064be0ac7465E7126DfB0383623C546fbbC44d",
+    "oracle": "tokens",
+    "oracleId": "WBTC",
+    "status": "active",
+    "createdAt": 1718736201,
+    "platformId": "silo",
+    "assets": ["WBTC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x718A5788b89454aAE3A028AE9c111A29Be6c2a6F"
+    }
+  },
+  {
+    "id": "silo-op-reth-reth",
+    "name": "rETH (rETH Market)",
+    "type": "standard",
+    "token": "rETH",
+    "tokenAddress": "0x9Bcef72be871e61ED4fBbc7630889beE758eb81D",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloOprETH(rETH)",
+    "earnedTokenAddress": "0xBc7eCA06679C2578c9945a613E0dB2a43A627205",
+    "earnContractAddress": "0xBc7eCA06679C2578c9945a613E0dB2a43A627205",
+    "oracle": "tokens",
+    "oracleId": "rETH",
+    "status": "active",
+    "createdAt": 1718736201,
+    "platformId": "silo",
+    "assets": ["rETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xb429DE60943a8e6DeD356dca2F93Cd31201D9ed0"
+    }
+  },
+  {
+    "id": "silo-op-tbtc-tbtc",
+    "name": "tBTC (tBTC Market)",
+    "type": "standard",
+    "token": "tBTC",
+    "tokenAddress": "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloOptBTC(tBTC)",
+    "earnedTokenAddress": "0xB54f0b4E02f2d98eD29FbFDC9D2BB5Fd02a5cb12",
+    "earnContractAddress": "0xB54f0b4E02f2d98eD29FbFDC9D2BB5Fd02a5cb12",
+    "oracle": "tokens",
+    "oracleId": "tBTC",
+    "status": "active",
+    "createdAt": 1718736201,
+    "platformId": "silo",
+    "assets": ["tBTC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x5a61374950D4BFa5a3D4f2CA36FC1d23A92b6f21"
+    }
+  },
+  {
+    "id": "silo-op-velo-velo",
+    "name": "VELO (VELO Market)",
+    "type": "standard",
+    "token": "VELO",
+    "tokenAddress": "0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloOpVELO(VELO)",
+    "earnedTokenAddress": "0xEc7C14b7687D7089241f7515DbC72949dBcF20F2",
+    "earnContractAddress": "0xEc7C14b7687D7089241f7515DbC72949dBcF20F2",
+    "oracle": "tokens",
+    "oracleId": "VELO",
+    "status": "active",
+    "createdAt": 1718736201,
+    "platformId": "silo",
+    "assets": ["VELO"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x0f2Ed59657e391746C1a097BDa98F2aBb94b1120"
+    }
+  },
+  {
     "id": "uniswap-cow-op-crv-weth",
     "name": "CRV-WETH",
     "token": "CRV-WETH",
