@@ -27,7 +27,9 @@ export const strategyBuildersById = {
   curve: makeLazyLoader(async () => (await import('./curve/CurveStrategy')).CurveStrategy),
   gamma: makeLazyLoader(async () => (await import('./gamma/GammaStrategy')).GammaStrategy),
   conic: makeLazyLoader(async () => (await import('./conic/ConicStrategy')).ConicStrategy),
-  gov: makeLazyLoader(async () => (await import('./gov/GovVaultStrategy')).GovVaultStrategy),
+  gov: makeLazyLoader(
+    async () => (await import('./gov/GovUnderlyingStrategy')).GovUnderlyingStrategy
+  ),
   cowcentrated: makeLazyLoader(
     async () => (await import('./cowcentrated/CowcentratedStrategy')).CowcentratedStrategy
   ),

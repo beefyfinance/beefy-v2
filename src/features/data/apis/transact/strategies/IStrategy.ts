@@ -20,6 +20,9 @@ import type {
 import type { Step } from '../../../reducers/wallet/stepper';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { CurveMethod } from './curve/types';
+import type { UserlessZapRequest } from '../zap/types';
+import type { TokenEntity } from '../../../entities/token';
+import type { Balances } from '../helpers/Balances';
 
 export type SwapAggregatorId = 'one-inch' | 'kyber';
 
@@ -100,6 +103,16 @@ export interface IStrategy {
   fetchWithdrawQuote(inputs: InputTokenAmount[], option: WithdrawOption): Promise<WithdrawQuote>;
 
   fetchWithdrawStep(quote: TransactQuote, t: TFunction<Namespace>): Promise<Step>;
+}
+
+type UserlessZapBreakdown = {
+  zapRequest: UserlessZapRequest;
+  expectedTokens: TokenEntity[];
+  minBalances: Balances;
+};
+
+export interface IComposableStrategy extends IStrategy {
+  fetchUserlessZapBreakdown(quote: TransactQuote): Promise<UserlessZapBreakdown>;
 }
 
 type BaseTransactHelpers<T extends VaultEntity = VaultEntity> = {

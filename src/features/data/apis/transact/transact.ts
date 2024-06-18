@@ -9,7 +9,6 @@ import type {
 } from './transact-types';
 import { partition } from 'lodash';
 import type { VaultEntity } from '../../entities/vault';
-import { isCowcentratedVault, isStandardVault } from '../../entities/vault';
 import type { GetStateFn } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
 import {
@@ -328,12 +327,7 @@ export class TransactApi implements ITransactApi {
       throw new Error(`Strategy "${strategyId}" requires zap contract`);
     }
 
-    if (!isStandardVault(vault) && !isCowcentratedVault(vault)) {
-      // This should never happen
-      throw new Error(`Vault ${vault.id} is not a standard vault and does not support zaps`);
-    }
-
-    if (!vault.zaps && !isCowcentratedVault(vault)) {
+    if (!vault.zaps) {
       throw new Error(`Vault ${vault.id} has no zaps`);
     }
 

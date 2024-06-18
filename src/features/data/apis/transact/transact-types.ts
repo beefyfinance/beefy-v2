@@ -126,6 +126,11 @@ export type CowcentratedZapWithdrawOption = ZapBaseWithdrawOption & {
   swapVia: 'aggregator';
 };
 
+export type GovUnderlyingDepositOption = ZapBaseDepositOption & {
+  strategyId: 'gov';
+  underlyingDepositOption: DepositOption;
+};
+
 export type UniswapLikeDepositOption<TAmm extends AmmEntity> = ZapBaseDepositOption & {
   strategyId: TAmm['type'];
   depositToken: TokenEntity;
@@ -200,7 +205,8 @@ export type DepositOption =
   | SingleDepositOption
   | CurveDepositOption
   | CowcentratedZapDepositOption
-  | ConicDepositOption;
+  | ConicDepositOption
+  | GovUnderlyingDepositOption;
 
 export type WithdrawOption =
   | StandardVaultWithdrawOption
@@ -282,13 +288,19 @@ export type ZapQuoteStepUnused = {
   outputs: TokenAmount[];
 };
 
+export type ZapQuoteStepStake = {
+  type: 'stake';
+  inputs: TokenAmount[];
+};
+
 export type ZapQuoteStep =
   | ZapQuoteStepWithdraw
   | ZapQuoteStepSwap
   | ZapQuoteStepBuild
   | ZapQuoteStepDeposit
   | ZapQuoteStepSplit
-  | ZapQuoteStepUnused;
+  | ZapQuoteStepUnused
+  | ZapQuoteStepStake;
 
 export function isZapQuoteStepSwap(step: ZapQuoteStep): step is ZapQuoteStepSwap {
   return step.type === 'swap';
@@ -308,6 +320,10 @@ export function isZapQuoteStepBuild(step: ZapQuoteStep): step is ZapQuoteStepBui
 
 export function isZapQuoteStepSplit(step: ZapQuoteStep): step is ZapQuoteStepSplit {
   return step.type === 'split';
+}
+
+export function isZapQuoteStepStake(step: ZapQuoteStep): step is ZapQuoteStepStake {
+  return step.type === 'stake';
 }
 
 export function isZapQuoteStepSwapPool(step: ZapQuoteStepSwap): step is ZapQuoteStepSwapPool {
@@ -359,6 +375,29 @@ export type CowcentratedZapDepositQuote = BaseZapQuote<CowcentratedZapDepositOpt
   unused: TokenAmount[];
   position: TokenAmount[];
   lpQuotes: (QuoteResponse | undefined)[];
+};
+
+export type GovUnderlyingZapDepositQuote = (
+  | Omit<SingleDepositQuote, 'strategyId' | 'vaultType' | 'option'>
+  | Omit<UniswapV2DepositQuote, 'strategyId' | 'vaultType' | 'option'>
+  | Omit<SolidlyDepositQuote, 'strategyId' | 'vaultType' | 'option'>
+  | Omit<CurveDepositQuote, 'strategyId' | 'vaultType' | 'option'>
+  | Omit<GammaDepositQuote, 'strategyId' | 'vaultType' | 'option'>
+  | Omit<ConicDepositQuote, 'strategyId' | 'vaultType' | 'option'>
+  | Omit<CowcentratedZapDepositQuote, 'strategyId' | 'vaultType' | 'option'>
+) & {
+  vaultType: 'gov';
+  strategyId: 'gov';
+  subStrategy: 'vault' | 'strategy';
+  underlyingQuote:
+    | SingleDepositQuote
+    | UniswapV2DepositQuote
+    | SolidlyDepositQuote
+    | CurveDepositQuote
+    | GammaDepositQuote
+    | ConicDepositQuote
+    | CowcentratedZapDepositQuote;
+  option: GovUnderlyingDepositOption;
 };
 
 export type SingleDepositQuote = BaseZapQuote<SingleDepositOption> & {
@@ -413,7 +452,8 @@ export type ZapDepositQuote =
   | CurveDepositQuote
   | GammaDepositQuote
   | ConicDepositQuote
-  | CowcentratedZapDepositQuote;
+  | CowcentratedZapDepositQuote
+  | GovUnderlyingZapDepositQuote;
 
 export type DepositQuote = VaultDepositQuote | ZapDepositQuote;
 
@@ -518,7 +558,11 @@ export function isCowcentratedZapDepositQuote(
 export function isCowcentratedDepositQuote(
   quote: TransactQuote
 ): quote is CowcentratedVaultDepositQuote | CowcentratedZapDepositQuote {
-  return isCowcentratedVaultDepositQuote(quote) || isCowcentratedZapDepositQuote(quote);
+  return (
+    isCowcentratedVaultDepositQuote(quote) ||
+    isCowcentratedZapDepositQuote(quote) ||
+    isGovUnderlyingCowcentratedDepositQuote(quote)
+  );
 }
 
 export function isCowcentratedVaultWithdrawQuote(
@@ -535,6 +579,16 @@ export function isVaultWithdrawQuote(quote: TransactQuote): quote is VaultWithdr
 
 export function isGovVaultWithdrawQuote(quote: TransactQuote): quote is GovVaultWithdrawQuote {
   return isVaultWithdrawQuote(quote) && quote.vaultType === 'gov';
+}
+
+export function isGovUnderlyingCowcentratedDepositQuote(
+  quote: TransactQuote
+): quote is GovUnderlyingZapDepositQuote {
+  return (
+    isDepositQuote(quote) &&
+    quote.strategyId === 'gov' &&
+    isCowcentratedZapDepositQuote(quote.underlyingQuote)
+  );
 }
 
 export function isDepositQuote(quote: TransactQuote): quote is DepositQuote {
