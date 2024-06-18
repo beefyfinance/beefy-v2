@@ -257,6 +257,7 @@
     "oracleId": "aura-base-weeth-weth",
     "status": "active",
     "createdAt": 1716557368,
+    "updatedAt": 1718744992,
     "platformId": "aura",
     "assets": ["weETH", "ETH"],
     "risks": [
@@ -741,8 +742,10 @@
     "earnContractAddress": "0x715a4a6Afb44f87f8C4eE8d945Eb6B630A11E72c",
     "oracle": "lps",
     "oracleId": "aura-base-tbtc-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1713018583,
+    "retireReason": "rewards",
+    "retiredAt": 1718744992,
     "platformId": "aura",
     "assets": ["tBTC", "ETH"],
     "risks": [
@@ -3486,7 +3489,7 @@
     "oracleId": "balancer-base-usdc-usdbc-axlusdc",
     "status": "active",
     "createdAt": 1694110890,
-    "updatedAt": 1713018583,
+    "updatedAt": 1718744992,
     "platformId": "aura",
     "assets": ["USDC", "USDbC", "axlUSDC"],
     "risks": [
@@ -3517,7 +3520,7 @@
     "oracleId": "balancer-base-weth-reth",
     "status": "active",
     "createdAt": 1694110890,
-    "updatedAt": 1713018583,
+    "updatedAt": 1718744992,
     "platformId": "aura",
     "assets": ["rETH", "ETH"],
     "risks": [
