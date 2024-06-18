@@ -1,6 +1,7 @@
 import type {
-  CowcentratedStrategyOptions,
   IComposableStrategy,
+  IComposableStrategyStatic,
+  UserlessZapBreakdown,
   ZapTransactHelpers,
 } from '../IStrategy';
 import {
@@ -58,6 +59,7 @@ import { walletActions } from '../../../../actions/wallet-actions';
 import BigNumber from 'bignumber.js';
 import { isCowcentratedVault, type VaultCowcentrated } from '../../../../entities/vault';
 import { type ICowcentratedVaultType, isCowcentratedVaultType } from '../../vaults/IVaultType';
+import type { CowcentratedStrategyConfig } from '../strategy-configs';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -66,14 +68,21 @@ type ZapHelpers = {
   clmPool: BeefyCLMPool;
 };
 
-export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
-  implements IComposableStrategy
-{
-  public readonly id = 'cowcentrated';
+const strategyId = 'cowcentrated' as const;
+type StrategyId = typeof strategyId;
+
+class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
+  public static readonly id = strategyId;
+  public static readonly composable = true;
+  public readonly id = strategyId;
+
   protected readonly vault: VaultCowcentrated;
   protected readonly vaultType: ICowcentratedVaultType;
 
-  constructor(protected options: TOptions, protected helpers: ZapTransactHelpers) {
+  constructor(
+    protected options: CowcentratedStrategyConfig,
+    protected helpers: ZapTransactHelpers
+  ) {
     const { vault, vaultType } = this.helpers;
     if (!isCowcentratedVault(vault)) {
       throw new Error('Vault is not a cowcentrated vault');
@@ -83,6 +92,10 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     }
     this.vault = vault;
     this.vaultType = vaultType;
+  }
+
+  getHelpers(): ZapTransactHelpers {
+    return this.helpers;
   }
 
   async fetchDepositOptions(): Promise<CowcentratedZapDepositOption[]> {
@@ -132,7 +145,9 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     }
   }
 
-  async fetchUserlessZapBreakdown(quote: CowcentratedZapDepositQuote) {
+  async fetchDepositUserlessZapBreakdown(
+    quote: CowcentratedZapDepositQuote
+  ): Promise<UserlessZapBreakdown> {
     const state = this.helpers.getState();
     const chain = selectChainById(state, this.vault.chainId);
     const clmPool = new BeefyCLMPool(
@@ -240,7 +255,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     t: TFunction<Namespace>
   ): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
-      const { zapRequest, expectedTokens } = await this.fetchUserlessZapBreakdown(quote);
+      const { zapRequest, expectedTokens } = await this.fetchDepositUserlessZapBreakdown(quote);
 
       const walletAction = walletActions.zapExecuteOrder(
         quote.option.vaultId,
@@ -875,3 +890,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     };
   }
 }
+
+export const CowcentratedStrategy =
+  CowcentratedStrategyImpl satisfies IComposableStrategyStatic<StrategyId>;

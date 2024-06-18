@@ -1,14 +1,21 @@
-import type { UniswapV2StrategyOptions } from '../IStrategy';
+import type { IZapStrategyStatic } from '../IStrategy';
 import { UniswapLikeStrategy } from '../UniswapLikeStrategy';
 import type { AmmEntity, AmmEntityUniswapV2 } from '../../../../entities/zap';
+import type { UniswapV2StrategyConfig } from '../strategy-configs';
 
-export class UniswapV2Strategy extends UniswapLikeStrategy<
+const strategyId = 'uniswap-v2' as const;
+type StrategyId = typeof strategyId;
+
+export class UniswapV2StrategyImpl extends UniswapLikeStrategy<
   AmmEntityUniswapV2,
-  UniswapV2StrategyOptions
+  UniswapV2StrategyConfig
 > {
-  public readonly id = 'uniswap-v2';
+  public static readonly id = strategyId;
+  public readonly id = strategyId;
 
   protected isAmmType(amm: AmmEntity): amm is AmmEntityUniswapV2 {
     return amm.type === 'uniswap-v2';
   }
 }
+
+export const UniswapV2Strategy = UniswapV2StrategyImpl satisfies IZapStrategyStatic<StrategyId>;

@@ -1,33 +1,34 @@
-import type { TFunction, Namespace } from 'react-i18next';
+import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../../reducers/wallet/stepper';
 import {
+  type DepositOption,
+  type DepositQuote,
+  type GovComposerDepositOption,
+  type GovComposerWithdrawOption,
+  type GovComposerZapDepositQuote,
+  type GovComposerZapWithdrawQuote,
   type InputTokenAmount,
-  type TransactQuote,
-  type WithdrawOption,
-  type WithdrawQuote,
-  type GovUnderlyingDepositOption,
-  type ZapDepositQuote,
-  type GovUnderlyingZapDepositQuote,
-  type CowcentratedZapDepositQuote,
-  type ZapQuoteStepStake,
-  type TokenAmount,
   isZapQuoteStepStake,
+  type TokenAmount,
+  type TransactQuote,
+  type ZapQuoteStepStake,
+  type ZapStrategyIdToDepositOption,
+  type ZapStrategyIdToDepositQuote,
 } from '../../transact-types';
-import type {
-  GovVaultStrategyOptions,
-  IComposableStrategy,
-  IStrategy,
-  ZapTransactHelpers,
-} from '../IStrategy';
-import { isGovVault, type VaultGov } from '../../../../entities/vault';
 import {
-  isGovVaultType,
-  type IGovVaultType,
+  type AnyComposableStrategy,
+  type IComposableStrategy,
+  type IComposerStrategy,
+  type IComposerStrategyStatic,
+  type ZapTransactHelpers,
+} from '../IStrategy';
+import { isMultiGovVault, type VaultGov } from '../../../../entities/vault';
+import {
   type ICowcentratedVaultType,
+  type IGovVaultType,
+  isCowcentratedVaultType,
+  isGovVaultType,
 } from '../../vaults/IVaultType';
-import { selectCowcentratedVaultById } from '../../../../selectors/vaults';
-import { strategyBuildersById } from '..';
-import { getVaultTypeBuilder } from '../../vaults';
 import { isTokenEqual, type TokenEntity } from '../../../../entities/token';
 import { selectTokenByAddress } from '../../../../selectors/tokens';
 import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
@@ -41,6 +42,7 @@ import abiCoder from 'web3-eth-abi';
 import { getInsertIndex } from '../../helpers/zap';
 import { toWei, toWeiString } from '../../../../../../helpers/big-number';
 import { slipBy } from '../../helpers/amounts';
+import type { GovComposerStrategyConfig } from '../strategy-configs';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -48,121 +50,130 @@ type ZapHelpers = {
   state: BeefyState;
 };
 
-export class GovUnderlyingStrategy<TOptions extends GovVaultStrategyOptions> implements IStrategy {
-  public readonly id = 'gov';
+const strategyId = 'gov-composer' as const;
+type StrategyId = typeof strategyId;
+
+class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
+  public static readonly id = strategyId;
+  public static readonly composer = true;
+  public readonly id = strategyId;
+
   protected readonly vault: VaultGov;
   protected readonly vaultType: IGovVaultType;
-  protected underlyingVaultType: ICowcentratedVaultType | undefined;
-  protected underlyingStrategy: IComposableStrategy | undefined;
-  protected linked: boolean = false;
+  protected readonly underlyingStrategy: IComposableStrategy<'cowcentrated'>;
+  protected readonly underlyingVaultType: ICowcentratedVaultType;
   protected readonly shareToken: TokenEntity;
   protected readonly depositToken: TokenEntity;
 
-  constructor(protected options: TOptions, protected helpers: ZapTransactHelpers) {
+  constructor(
+    protected options: GovComposerStrategyConfig,
+    protected helpers: ZapTransactHelpers,
+    underlying: AnyComposableStrategy
+  ) {
     const { vault, vaultType, getState } = this.helpers;
-    if (!isGovVault(vault)) {
-      throw new Error('Vault is not a cowcentrated vault');
+    if (!isMultiGovVault(vault)) {
+      throw new Error('Vault is not a multi gov vault');
     }
     if (!isGovVaultType(vaultType)) {
-      throw new Error('Vault type is not cowcentrated');
+      throw new Error('Vault type is not gov');
     }
     this.vault = vault;
     this.vaultType = vaultType;
     this.shareToken = selectTokenByAddress(getState(), vault.chainId, vault.earnContractAddress);
     this.depositToken = selectTokenByAddress(getState(), vault.chainId, vault.depositTokenAddress);
-  }
 
-  async linkUnderlying() {
-    const { getState, swapAggregator, zap } = this.helpers;
-    const state = getState();
-    const underlyingCLM = selectCowcentratedVaultById(state, 'uniswap-cow-arb-eusd-usdc');
-    const underlyingVaultType = await getVaultTypeBuilder(underlyingCLM)(underlyingCLM, getState);
-    //only
-    const zapOption = underlyingCLM.zaps.filter(zap => zap.strategyId === 'cowcentrated');
-    if (zapOption.length > 0) {
-      const helpers: ZapTransactHelpers = {
-        vault: underlyingCLM,
-        vaultType: underlyingVaultType,
-        getState: getState,
-        swapAggregator: swapAggregator,
-        zap: zap,
-      };
-      this.underlyingVaultType = underlyingVaultType;
-      this.underlyingStrategy = (await strategyBuildersById[zapOption[0].strategyId](
-        zapOption[0],
-        helpers
-      )) as IComposableStrategy;
+    if (underlying.id !== 'cowcentrated') {
+      // TODO support other underlying types or just rename this strategy CowcentratedGovComposerStrategy
+      throw new Error('Underlying strategy must be cowcentrated');
     }
-    this.linked = true;
+    this.underlyingStrategy = underlying;
+
+    const { vaultType: underlyingVaultType } = underlying.getHelpers();
+    if (!isCowcentratedVaultType(underlyingVaultType)) {
+      // TODO support other underlying types or just rename this strategy CowcentratedGovComposerStrategy
+      throw new Error('Underlying vault type is not cowcentrated');
+    }
+    this.underlyingVaultType = underlyingVaultType;
   }
 
-  async fetchDepositOptions(): Promise<GovUnderlyingDepositOption[]> {
-    if (!this.linked) await this.linkUnderlying();
-    if (!this.underlyingStrategy) return [];
-
+  async fetchDepositOptions(): Promise<GovComposerDepositOption[]> {
     const options = await this.underlyingStrategy.fetchDepositOptions();
     // TODO: offer 2 token option vault zap-in, should be extracted from underlyingVaultType
     // We need to map those options to the current vault zaps
-    return options
-      .filter(o => o.strategyId !== 'vault')
-      .map(option => ({
-        ...option,
-        strategyId: 'gov',
-        vaultId: this.vault.id,
-        underlyingDepositOption: option,
-      }));
+    return (
+      options
+        // .filter(o => o.strategyId !== 'vault')
+        .map(option => ({
+          ...option,
+          strategyId,
+          vaultId: this.vault.id,
+          underlyingOption: option,
+        }))
+    );
+  }
+
+  // FIXME this will break if this strategy supports multiple underlying strategies
+  protected isMatchingDepositOption(
+    option: DepositOption
+  ): option is ZapStrategyIdToDepositOption<typeof this.underlyingStrategy.id> {
+    return option.strategyId === this.underlyingStrategy.id;
   }
 
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: GovUnderlyingDepositOption
-  ): Promise<GovUnderlyingZapDepositQuote> {
-    if (!this.linked) await this.linkUnderlying();
-    if (!this.underlyingStrategy || !this.underlyingVaultType)
-      throw new Error('Underlying product not linked');
-
-    if (option.underlyingDepositOption.strategyId === 'vault') {
-      // Zap in with 2 tokens
-      throw new Error('Underlying vault support not enabled yet');
-    } else {
-      // Quote to be fetched via underlying strategy
-      const baseQuote = (await this.underlyingStrategy.fetchDepositQuote(
-        inputs,
-        option.underlyingDepositOption
-      )) as ZapDepositQuote;
-
-      const stakeQuote: GovUnderlyingZapDepositQuote = {
-        ...baseQuote,
-        outputs: baseQuote.outputs.map(output => ({
-          token: this.shareToken,
-          amount: output.amount,
-        })),
-        steps: baseQuote.steps.concat({
-          type: 'stake',
-          inputs: baseQuote.outputs,
-        }),
-        vaultType: 'gov',
-        strategyId: 'gov',
-        subStrategy: 'strategy',
-        underlyingQuote: baseQuote as CowcentratedZapDepositQuote,
-        option,
-      };
-      return stakeQuote;
+    option: GovComposerDepositOption
+  ): Promise<GovComposerZapDepositQuote> {
+    const { underlyingOption } = option;
+    if (!this.isMatchingDepositOption(underlyingOption)) {
+      throw new Error('Invalid underlying deposit option');
     }
+
+    // Quote to be fetched via underlying strategy
+    const underlyingQuote = await this.underlyingStrategy.fetchDepositQuote(
+      inputs,
+      underlyingOption
+    );
+
+    return {
+      ...underlyingQuote,
+      outputs: underlyingQuote.outputs.map(output => ({
+        token: this.shareToken,
+        amount: output.amount,
+      })),
+      steps: underlyingQuote.steps.concat({
+        type: 'stake',
+        inputs: underlyingQuote.outputs,
+      }),
+      vaultType: 'gov',
+      strategyId: 'gov-composer',
+      subStrategy: 'strategy',
+      underlyingQuote,
+      option,
+    };
+  }
+
+  // FIXME this will break if this strategy supports multiple underlying strategies
+  protected isMatchingDepositQuote(
+    option: DepositQuote
+  ): option is ZapStrategyIdToDepositQuote<typeof this.underlyingStrategy.id> {
+    return option.strategyId === this.underlyingStrategy.id;
   }
 
   async fetchDepositStep(
-    quote: GovUnderlyingZapDepositQuote,
+    quote: GovComposerZapDepositQuote,
     t: TFunction<Namespace>
   ): Promise<Step> {
-    if (!this.linked) await this.linkUnderlying();
-    if (!this.underlyingStrategy) throw new Error('Underlying product not linked');
-    if (quote.subStrategy === 'vault') throw new Error('2 token Zap-in not enabled yet');
+    // if (quote.subStrategy === 'vault') throw new Error('2 token Zap-in not enabled yet');
+    const { underlyingQuote } = quote;
+
+    if (!this.isMatchingDepositQuote(underlyingQuote)) {
+      throw new Error('Invalid underlying deposit quote');
+    }
 
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       // We have the built userless zap-in request
       const { zapRequest, expectedTokens, minBalances } =
-        await this.underlyingStrategy!.fetchUserlessZapBreakdown(quote.underlyingQuote);
+        await this.underlyingStrategy.fetchDepositUserlessZapBreakdown(underlyingQuote);
 
       const state = this.helpers.getState();
       const chain = selectChainById(state, this.vault.chainId);
@@ -294,16 +305,23 @@ export class GovUnderlyingStrategy<TOptions extends GovVaultStrategyOptions> imp
     };
   }
 
-  async fetchWithdrawOptions(): Promise<WithdrawOption[]> {
-    if (!this.linked) await this.linkUnderlying();
+  async fetchWithdrawOptions(): Promise<GovComposerWithdrawOption[]> {
     throw new Error('Method not implemented.');
   }
-  fetchWithdrawQuote(inputs: InputTokenAmount[], option: WithdrawOption): Promise<WithdrawQuote> {
+
+  fetchWithdrawQuote(
+    inputs: InputTokenAmount[],
+    option: GovComposerWithdrawOption
+  ): Promise<GovComposerZapWithdrawQuote> {
     if (!inputs || !option) console.log();
     throw new Error('Method not implemented.');
   }
+
   fetchWithdrawStep(quote: TransactQuote, t: TFunction<Namespace, undefined>): Promise<Step> {
     if (!quote || !t) console.log();
     throw new Error('Method not implemented.');
   }
 }
+
+export const GovComposerStrategy =
+  GovComposerStrategyImpl satisfies IComposerStrategyStatic<StrategyId>;

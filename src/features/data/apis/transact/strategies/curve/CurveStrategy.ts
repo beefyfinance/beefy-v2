@@ -26,7 +26,7 @@ import {
   type ZapQuoteStepSwap,
   type ZapQuoteStepSwapAggregator,
 } from '../../transact-types';
-import type { CurveStrategyOptions, IStrategy, ZapTransactHelpers } from '../IStrategy';
+import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy';
 import type { ChainEntity } from '../../../../entities/chain';
 import {
   createOptionId,
@@ -79,6 +79,7 @@ import { CurvePool } from './CurvePool';
 import { isFulfilledResult } from '../../../../../../helpers/promises';
 import { isDefined } from '../../../../utils/array-utils';
 import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
+import type { CurveStrategyConfig } from '../strategy-configs';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -103,8 +104,13 @@ type WithdrawLiquidity = DepositLiquidity & {
   split: TokenAmount;
 };
 
-export class CurveStrategy implements IStrategy {
-  public readonly id = 'curve';
+const strategyId = 'curve' as const;
+type StrategyId = typeof strategyId;
+
+class CurveStrategyImpl implements IZapStrategy<StrategyId> {
+  public static readonly id = strategyId;
+  public readonly id = strategyId;
+
   protected readonly native: TokenNative;
   protected readonly wnative: TokenErc20;
   protected readonly possibleTokens: CurveTokenOption[];
@@ -114,7 +120,7 @@ export class CurveStrategy implements IStrategy {
   protected readonly vault: VaultStandard;
   protected readonly vaultType: IStandardVaultType;
 
-  constructor(protected options: CurveStrategyOptions, protected helpers: ZapTransactHelpers) {
+  constructor(protected options: CurveStrategyConfig, protected helpers: ZapTransactHelpers) {
     const { vault, vaultType, getState } = this.helpers;
 
     if (!isStandardVault(vault)) {
@@ -1062,3 +1068,5 @@ export class CurveStrategy implements IStrategy {
     };
   }
 }
+
+export const CurveStrategy = CurveStrategyImpl satisfies IZapStrategyStatic<StrategyId>;

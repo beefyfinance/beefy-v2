@@ -1,19 +1,23 @@
-import type { IStrategy, SingleStrategyOptions, ZapTransactHelpers } from '../IStrategy';
 import type {
-  InputTokenAmount,
-  SingleDepositOption,
-  SingleDepositQuote,
-  SingleWithdrawOption,
-  SingleWithdrawQuote,
-  TokenAmount,
-  ZapFee,
-  ZapQuoteStep,
-  ZapQuoteStepSwapAggregator,
-} from '../../transact-types';
+  IComposableStrategy,
+  IComposableStrategyStatic,
+  UserlessZapBreakdown,
+  ZapTransactHelpers,
+} from '../IStrategy';
 import {
+  type InputTokenAmount,
   isZapQuoteStepSwap,
   isZapQuoteStepSwapAggregator,
   isZapQuoteStepWithdraw,
+  type SingleDepositOption,
+  type SingleDepositQuote,
+  type SingleWithdrawOption,
+  type SingleWithdrawQuote,
+  type TokenAmount,
+  type TransactQuote,
+  type ZapFee,
+  type ZapQuoteStep,
+  type ZapQuoteStepSwapAggregator,
 } from '../../transact-types';
 import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
 import {
@@ -59,6 +63,7 @@ import { fetchZapAggregatorSwap } from '../../zap/swap';
 import type { ChainEntity } from '../../../../entities/chain';
 import { selectChainById } from '../../../../selectors/chains';
 import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
+import type { SingleStrategyConfig } from '../strategy-configs';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -66,14 +71,24 @@ type ZapHelpers = {
   state: BeefyState;
 };
 
-export class SingleStrategy implements IStrategy {
-  public readonly id = 'single';
+const strategyId = 'single' as const;
+type StrategyId = typeof strategyId;
+
+class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
+  public static readonly id = strategyId;
+  public static readonly composable: true;
+  public readonly id = strategyId;
+
   protected readonly wnative: TokenErc20;
   protected readonly native: TokenNative;
   protected readonly vault: VaultStandard;
   protected readonly vaultType: IStandardVaultType;
 
-  constructor(protected options: SingleStrategyOptions, protected helpers: ZapTransactHelpers) {
+  public getHelpers(): ZapTransactHelpers {
+    return this.helpers;
+  }
+
+  constructor(protected options: SingleStrategyConfig, protected helpers: ZapTransactHelpers) {
     // Make sure zap was configured correctly for this vault
     const { vault, vaultType, getState } = this.helpers;
 
@@ -582,4 +597,10 @@ export class SingleStrategy implements IStrategy {
       state
     );
   }
+
+  fetchDepositUserlessZapBreakdown(_quote: TransactQuote): Promise<UserlessZapBreakdown> {
+    throw new Error('no impl');
+  }
 }
+
+export const SingleStrategy = SingleStrategyImpl satisfies IComposableStrategyStatic<StrategyId>;

@@ -40,6 +40,22 @@ export const selectVaultById = createCachedSelector(
   }
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
+export const selectVaultByAddressOrUndefined = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  vaultAddress: VaultEntity['earnContractAddress']
+): VaultEntity | undefined => {
+  const id =
+    state.entities.vaults.byChainId[chainId]?.byAddress[vaultAddress.toLowerCase()] || undefined;
+  return id ? selectVaultById(state, id) : undefined;
+};
+
+export const selectVaultByAddress = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  vaultAddress: VaultEntity['earnContractAddress']
+): VaultEntity => valueOrThrow(selectVaultByAddressOrUndefined(state, chainId, vaultAddress));
+
 export const selectIsVaultPausedOrRetired = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   vault => isVaultPausedOrRetired(vault)

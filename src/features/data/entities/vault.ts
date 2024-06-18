@@ -1,7 +1,8 @@
 import type { ChainEntity } from './chain';
 import type { PlatformEntity } from './platform';
 import type { TokenEntity } from './token';
-import type { StrategyOptions } from '../apis/transact/strategies/IStrategy';
+
+import type { ZapStrategyConfig } from '../apis/transact/strategies/strategy-configs';
 
 // maybe a RiskAnalysis type would be better
 
@@ -28,7 +29,7 @@ export interface VaultStandard {
   type: 'standard';
   version: number;
   depositTokenAddress: string;
-  zaps: StrategyOptions[];
+  zaps: ZapStrategyConfig[];
 
   /**
    * ASSETS are basically the assets that are in that vault
@@ -142,7 +143,7 @@ export interface VaultGovBase {
   depositFee: number;
 
   migrationIds?: string[];
-  zaps: StrategyOptions[];
+  zaps: ZapStrategyConfig[];
 }
 
 export interface VaultGovSingle extends VaultGovBase {
