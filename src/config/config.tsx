@@ -393,6 +393,8 @@ export const config = {
       'rgUSD',
       'stataArbUSDCn',
       'stataArbUSDTn',
+      'USDV',
+      'USDe',
     ],
   },
   avax: {
