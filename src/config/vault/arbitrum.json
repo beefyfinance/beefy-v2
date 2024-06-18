@@ -62,6 +62,37 @@
     ]
   },
   {
+    "id": "uniswap-cow-arb-usde-usdt",
+    "name": "USDe-USDT",
+    "type": "cowcentrated",
+    "token": "USDe-USDT",
+    "tokenAddress": "0xAF7b48ae2f4773FD44f9208ccA3Db5ae7BFa7e37",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+    ],
+    "earnedToken": "cowUniswapArbUSDe-USDT",
+    "earnedTokenAddress": "0xAf4c8cEE65Fd6dD1864f4bb53dbD386B0D092063",
+    "earnContractAddress": "0xAf4c8cEE65Fd6dD1864f4bb53dbD386B0D092063",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-usde-usdt",
+    "status": "active",
+    "createdAt": 1718709062,
+    "platformId": "beefy",
+    "assets": ["USDe", "USDT"],
+    "risks": ["IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arb-usdc-usdt",
     "name": "USDC-USDT",
     "type": "cowcentrated",
