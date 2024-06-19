@@ -167,6 +167,13 @@ export const selectAllStandardVaultsByChainId = createSelector(
   (byIds, vaultIds): VaultStandard[] => vaultIds.map(id => byIds[id]).filter(isStandardVault)
 );
 
+export const selectAllCowcentratedVaultsByChainId = createSelector(
+  (state: BeefyState) => state.entities.vaults.byId,
+  selectVaultIdsByChainId,
+  (byIds, vaultIds): VaultCowcentrated[] =>
+    vaultIds.map(id => byIds[id]).filter(isCowcentratedVault)
+);
+
 export const selectNonGovVaultIdsByDepositTokenAddress = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) => chainId,
   (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
