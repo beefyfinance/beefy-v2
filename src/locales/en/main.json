@@ -601,6 +601,7 @@
   "Transact-Route-Step-Withdraw": "Withdraw estimated <tokenAmounts/>",
   "Transact-Route-Step-Deposit": "Deposit estimated <tokenAmounts/>",
   "Transact-Route-Step-Stake": "Stake estimated <tokenAmounts/>",
+  "Transact-Route-Step-Unstake": "Unstake <tokenAmounts/>",
   "Transact-Route-Step-Split": "Split LP for <tokenAmounts/> on {{provider}}",
   "Transact-Route-Step-Unused": "Return up to <tokenAmounts/> unused tokens",
   "Transact-Options-Error": "There was an error fetching options: {{error}}",

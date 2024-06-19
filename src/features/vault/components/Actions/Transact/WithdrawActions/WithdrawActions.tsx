@@ -10,11 +10,15 @@ import {
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import type {
+  GovComposerZapWithdrawQuote,
   GovVaultWithdrawQuote,
   TransactOption,
   TransactQuote,
 } from '../../../../../data/apis/transact/transact-types';
-import { isGovVaultWithdrawQuote } from '../../../../../data/apis/transact/transact-types';
+import {
+  isGovComposerWithdrawQuote,
+  isGovVaultWithdrawQuote,
+} from '../../../../../data/apis/transact/transact-types';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 import { PriceImpactNotice } from '../PriceImpactNotice';
 import { transactSteps, transactStepsClaimGov } from '../../../../../data/actions/transact';
@@ -67,7 +71,9 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const showWithdraw =
-    quote && isGovVaultWithdrawQuote(quote) && quoteStatus === TransactStatus.Fulfilled;
+    quote &&
+    (isGovVaultWithdrawQuote(quote) || isGovComposerWithdrawQuote(quote)) &&
+    quoteStatus === TransactStatus.Fulfilled;
 
   return (
     <>
@@ -177,7 +183,7 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ optio
 });
 
 type ActionClaimWithdrawProps = {
-  quote: GovVaultWithdrawQuote;
+  quote: GovVaultWithdrawQuote | GovComposerZapWithdrawQuote;
   vault: VaultGov;
 } & ActionButtonProps;
 const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimWithdraw({

@@ -1,7 +1,8 @@
 import type {
   IComposableStrategy,
   IComposableStrategyStatic,
-  UserlessZapBreakdown,
+  UserlessZapDepositBreakdown,
+  UserlessZapWithdrawBreakdown,
   ZapTransactHelpers,
 } from '../IStrategy';
 import {
@@ -598,7 +599,11 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     );
   }
 
-  fetchDepositUserlessZapBreakdown(_quote: TransactQuote): Promise<UserlessZapBreakdown> {
+  fetchDepositUserlessZapBreakdown(_quote: TransactQuote): Promise<UserlessZapDepositBreakdown> {
+    throw new Error('no impl');
+  }
+
+  fetchWithdrawUserlessZapBreakdown(_quote: TransactQuote): Promise<UserlessZapWithdrawBreakdown> {
     throw new Error('no impl');
   }
 }

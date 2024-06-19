@@ -294,6 +294,11 @@ export type ZapQuoteStepStake = {
   inputs: TokenAmount[];
 };
 
+export type ZapQuoteStepUnstake = {
+  type: 'unstake';
+  outputs: TokenAmount[];
+};
+
 export type ZapQuoteStep =
   | ZapQuoteStepWithdraw
   | ZapQuoteStepSwap
@@ -301,7 +306,8 @@ export type ZapQuoteStep =
   | ZapQuoteStepDeposit
   | ZapQuoteStepSplit
   | ZapQuoteStepUnused
-  | ZapQuoteStepStake;
+  | ZapQuoteStepStake
+  | ZapQuoteStepUnstake;
 
 export function isZapQuoteStepSwap(step: ZapQuoteStep): step is ZapQuoteStepSwap {
   return step.type === 'swap';
@@ -325,6 +331,10 @@ export function isZapQuoteStepSplit(step: ZapQuoteStep): step is ZapQuoteStepSpl
 
 export function isZapQuoteStepStake(step: ZapQuoteStep): step is ZapQuoteStepStake {
   return step.type === 'stake';
+}
+
+export function isZapQuoteStepUnstake(step: ZapQuoteStep): step is ZapQuoteStepUnstake {
+  return step.type === 'unstake';
 }
 
 export function isZapQuoteStepSwapPool(step: ZapQuoteStepSwap): step is ZapQuoteStepSwapPool {
@@ -591,6 +601,12 @@ export function isGovUnderlyingCowcentratedDepositQuote(
     quote.strategyId === 'gov-composer' &&
     isCowcentratedZapDepositQuote(quote.underlyingQuote)
   );
+}
+
+export function isGovComposerWithdrawQuote(
+  quote: TransactQuote
+): quote is GovComposerZapWithdrawQuote {
+  return isWithdrawQuote(quote) && quote.strategyId === 'gov-composer';
 }
 
 export function isDepositQuote(quote: TransactQuote): quote is DepositQuote {

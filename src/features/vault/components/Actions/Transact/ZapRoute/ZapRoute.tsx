@@ -133,6 +133,23 @@ const StepContentStake = memo<StepContentProps<ZapQuoteStepDeposit>>(function St
   );
 });
 
+const StepContentUnstake = memo<StepContentProps<ZapQuoteStepWithdraw>>(
+  function StepContentWithdraw({ step }) {
+    const { t } = useTranslation();
+    const tokenAmounts = useTokenAmounts(step.outputs);
+
+    return (
+      <Trans
+        t={t}
+        i18nKey="Transact-Route-Step-Unstake"
+        components={{
+          tokenAmounts: <ListJoin items={tokenAmounts} />,
+        }}
+      />
+    );
+  }
+);
+
 const StepContentWithdraw = memo<StepContentProps<ZapQuoteStepWithdraw>>(
   function StepContentWithdraw({ step }) {
     const { t } = useTranslation();
@@ -212,6 +229,7 @@ const StepContentComponents: Record<
   split: StepContentSplit,
   unused: StepContentUnused,
   stake: StepContentStake,
+  unstake: StepContentUnstake,
 };
 
 type StepProps = {
