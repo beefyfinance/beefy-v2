@@ -8,13 +8,13 @@ import type { Namespace, TFunction } from 'react-i18next';
 import { TransactMode } from '../../reducers/wallet/transact-types';
 import type { QuoteResponse } from './swap/ISwapProvider';
 import type {
-  AmmEntity,
   AmmEntitySolidly,
   AmmEntityUniswapLike,
   AmmEntityUniswapV2,
 } from '../../entities/zap';
 import type { PlatformEntity } from '../../entities/platform';
 import type { CurveTokenOption } from './strategies/curve/types';
+import type { ZapStrategyId } from './strategies/strategy-configs';
 
 export type TokenAmount<T extends TokenEntity = TokenEntity> = {
   amount: BigNumber;
@@ -31,11 +31,6 @@ export type AllowanceTokenAmount = {
   amount: BigNumber;
   token: TokenErc20;
   spenderAddress: string;
-};
-
-export type TokenIndex<T extends TokenEntity = TokenEntity> = {
-  token: T;
-  index: number;
 };
 
 export type ZapFeeNormal = {
@@ -126,12 +121,7 @@ export type CowcentratedZapWithdrawOption = ZapBaseWithdrawOption & {
   swapVia: 'aggregator';
 };
 
-export type GovUnderlyingDepositOption = ZapBaseDepositOption & {
-  strategyId: 'gov';
-  underlyingDepositOption: DepositOption;
-};
-
-export type UniswapLikeDepositOption<TAmm extends AmmEntity> = ZapBaseDepositOption & {
+export type UniswapLikeDepositOption<TAmm extends AmmEntityUniswapLike> = ZapBaseDepositOption & {
   strategyId: TAmm['type'];
   depositToken: TokenEntity;
   lpTokens: TokenErc20[];
@@ -148,7 +138,7 @@ export type GammaDepositOption = ZapBaseDepositOption & {
   swapVia: 'aggregator';
 };
 
-export type UniswapLikeWithdrawOption<TAmm extends AmmEntity> = ZapBaseWithdrawOption & {
+export type UniswapLikeWithdrawOption<TAmm extends AmmEntityUniswapLike> = ZapBaseWithdrawOption & {
   strategyId: TAmm['type'];
   depositToken: TokenEntity;
   lpTokens: TokenErc20[];
@@ -195,6 +185,16 @@ export type ConicWithdrawOption = ZapBaseWithdrawOption & {
   strategyId: 'conic';
 };
 
+export type GovComposerDepositOption = ZapBaseDepositOption & {
+  strategyId: 'gov-composer';
+  underlyingOption: CowcentratedZapDepositOption | SingleDepositOption;
+};
+
+export type GovComposerWithdrawOption = ZapBaseWithdrawOption & {
+  strategyId: 'gov-composer';
+  underlyingOption: CowcentratedZapWithdrawOption | SingleWithdrawOption;
+};
+
 export type DepositOption =
   | StandardVaultDepositOption
   | GovVaultDepositOption
@@ -206,7 +206,7 @@ export type DepositOption =
   | CurveDepositOption
   | CowcentratedZapDepositOption
   | ConicDepositOption
-  | GovUnderlyingDepositOption;
+  | GovComposerDepositOption;
 
 export type WithdrawOption =
   | StandardVaultWithdrawOption
@@ -218,7 +218,8 @@ export type WithdrawOption =
   | SingleWithdrawOption
   | CurveWithdrawOption
   | CowcentratedZapWithdrawOption
-  | ConicWithdrawOption;
+  | ConicWithdrawOption
+  | GovComposerWithdrawOption;
 
 export type TransactOption = DepositOption | WithdrawOption;
 
@@ -377,57 +378,33 @@ export type CowcentratedZapDepositQuote = BaseZapQuote<CowcentratedZapDepositOpt
   lpQuotes: (QuoteResponse | undefined)[];
 };
 
-export type GovUnderlyingZapDepositQuote = (
-  | Omit<SingleDepositQuote, 'strategyId' | 'vaultType' | 'option'>
-  | Omit<UniswapV2DepositQuote, 'strategyId' | 'vaultType' | 'option'>
-  | Omit<SolidlyDepositQuote, 'strategyId' | 'vaultType' | 'option'>
-  | Omit<CurveDepositQuote, 'strategyId' | 'vaultType' | 'option'>
-  | Omit<GammaDepositQuote, 'strategyId' | 'vaultType' | 'option'>
-  | Omit<ConicDepositQuote, 'strategyId' | 'vaultType' | 'option'>
-  | Omit<CowcentratedZapDepositQuote, 'strategyId' | 'vaultType' | 'option'>
-) & {
+export type GovComposerZapDepositQuote = BaseZapQuote<GovComposerDepositOption> & {
   vaultType: 'gov';
-  strategyId: 'gov';
-  subStrategy: 'vault' | 'strategy';
-  underlyingQuote:
-    | SingleDepositQuote
-    | UniswapV2DepositQuote
-    | SolidlyDepositQuote
-    | CurveDepositQuote
-    | GammaDepositQuote
-    | ConicDepositQuote
-    | CowcentratedZapDepositQuote;
-  option: GovUnderlyingDepositOption;
+  underlyingQuote: CowcentratedZapDepositQuote | SingleDepositQuote;
+  subStrategy: 'strategy';
 };
 
 export type SingleDepositQuote = BaseZapQuote<SingleDepositOption> & {
   swapQuote: QuoteResponse;
 };
 
-export type UniswapLikePoolDepositQuote = BaseZapQuote<
-  UniswapLikeDepositOption<AmmEntityUniswapLike>
-> & {
-  quote: { from: TokenAmount; to: TokenAmount };
-};
+export type UniswapLikePoolDepositQuote<T extends UniswapLikeDepositOption<AmmEntityUniswapLike>> =
+  BaseZapQuote<T> & {
+    quote: { from: TokenAmount; to: TokenAmount };
+  };
 
-export type UniswapLikeAggregatorDepositQuote = BaseZapQuote<
-  UniswapLikeDepositOption<AmmEntityUniswapLike>
-> & {
+export type UniswapLikeAggregatorDepositQuote<
+  T extends UniswapLikeDepositOption<AmmEntityUniswapLike>
+> = BaseZapQuote<T> & {
   lpQuotes: (QuoteResponse | undefined)[];
 };
 
-export type UniswapLikeDepositQuote =
-  | UniswapLikePoolDepositQuote
-  | UniswapLikeAggregatorDepositQuote;
+export type UniswapLikeDepositQuote<T extends UniswapLikeDepositOption<AmmEntityUniswapLike>> =
+  | UniswapLikePoolDepositQuote<T>
+  | UniswapLikeAggregatorDepositQuote<T>;
 
-export type UniswapV2PoolDepositQuote = BaseZapQuote<UniswapV2DepositOption> & {
-  quote: { from: TokenAmount; to: TokenAmount };
-};
-export type UniswapV2AggregatorDepositQuote = BaseZapQuote<UniswapV2DepositOption> & {
-  lpQuotes: QuoteResponse[];
-};
-export type UniswapV2DepositQuote = UniswapLikeDepositQuote;
-export type SolidlyDepositQuote = UniswapLikeDepositQuote;
+export type UniswapV2DepositQuote = UniswapLikeDepositQuote<UniswapV2DepositOption>;
+export type SolidlyDepositQuote = UniswapLikeDepositQuote<SolidlyDepositOption>;
 
 export type CurveDepositQuote = BaseZapQuote<CurveDepositOption> & {
   via: 'aggregator' | 'direct';
@@ -453,7 +430,7 @@ export type ZapDepositQuote =
   | GammaDepositQuote
   | ConicDepositQuote
   | CowcentratedZapDepositQuote
-  | GovUnderlyingZapDepositQuote;
+  | GovComposerZapDepositQuote;
 
 export type DepositQuote = VaultDepositQuote | ZapDepositQuote;
 
@@ -473,26 +450,26 @@ export type CowcentratedZapWithdrawQuote = BaseZapQuote<CowcentratedZapWithdrawO
 
 export type SingleWithdrawQuote = BaseZapQuote<SingleWithdrawOption>;
 
-export type UniswapLikeBreakWithdrawQuote = BaseZapQuote<
-  UniswapLikeWithdrawOption<AmmEntityUniswapLike>
->;
-export type UniswapLikePoolWithdrawQuote = BaseZapQuote<
-  UniswapLikeWithdrawOption<AmmEntityUniswapLike>
-> & {
+export type UniswapLikeBreakWithdrawQuote<
+  T extends UniswapLikeWithdrawOption<AmmEntityUniswapLike>
+> = BaseZapQuote<T>;
+export type UniswapLikePoolWithdrawQuote<
+  T extends UniswapLikeWithdrawOption<AmmEntityUniswapLike>
+> = BaseZapQuote<T> & {
   quote: { from: TokenAmount; to: TokenAmount };
 };
-export type UniswapLikeAggregatorWithdrawQuote = BaseZapQuote<
-  UniswapLikeWithdrawOption<AmmEntityUniswapLike>
-> & {
+export type UniswapLikeAggregatorWithdrawQuote<
+  T extends UniswapLikeWithdrawOption<AmmEntityUniswapLike>
+> = BaseZapQuote<T> & {
   lpQuotes: QuoteResponse[];
 };
-export type UniswapLikeWithdrawQuote =
-  | UniswapLikeBreakWithdrawQuote
-  | UniswapLikePoolWithdrawQuote
-  | UniswapLikeAggregatorWithdrawQuote;
+export type UniswapLikeWithdrawQuote<T extends UniswapLikeWithdrawOption<AmmEntityUniswapLike>> =
+  | UniswapLikeBreakWithdrawQuote<T>
+  | UniswapLikePoolWithdrawQuote<T>
+  | UniswapLikeAggregatorWithdrawQuote<T>;
 
-export type UniswapV2WithdrawQuote = UniswapLikeWithdrawQuote;
-export type SolidlyWithdrawQuote = UniswapLikeWithdrawQuote;
+export type UniswapV2WithdrawQuote = UniswapLikeWithdrawQuote<UniswapV2WithdrawOption>;
+export type SolidlyWithdrawQuote = UniswapLikeWithdrawQuote<SolidlyWithdrawOption>;
 
 export type CurveWithdrawQuote = BaseZapQuote<CurveWithdrawOption> & {
   via: 'aggregator' | 'direct';
@@ -512,6 +489,12 @@ export type VaultWithdrawQuote =
 
 export type ConicWithdrawQuote = BaseZapQuote<ConicWithdrawOption>;
 
+export type GovComposerZapWithdrawQuote = BaseZapQuote<GovComposerWithdrawOption> & {
+  vaultType: 'gov';
+  underlyingQuote: CowcentratedZapWithdrawQuote | SingleWithdrawQuote;
+  subStrategy: 'strategy';
+};
+
 export type ZapWithdrawQuote =
   | SingleWithdrawQuote
   | UniswapV2WithdrawQuote
@@ -519,13 +502,32 @@ export type ZapWithdrawQuote =
   | CurveWithdrawQuote
   | GammaWithdrawQuote
   | ConicWithdrawQuote
-  | CowcentratedZapWithdrawQuote;
+  | CowcentratedZapWithdrawQuote
+  | GovComposerZapWithdrawQuote;
 
 export type WithdrawQuote = VaultWithdrawQuote | ZapWithdrawQuote;
 
 export type ZapQuote = ZapDepositQuote | ZapWithdrawQuote;
 
 export type TransactQuote = DepositQuote | WithdrawQuote;
+
+export type ZapStrategyIdToDepositOption<T extends ZapStrategyId> = Extract<
+  DepositOption,
+  { strategyId: T }
+>;
+export type ZapStrategyIdToWithdrawOption<T extends ZapStrategyId> = Extract<
+  WithdrawOption,
+  { strategyId: T }
+>;
+export type ZapStrategyIdToDepositQuote<T extends ZapStrategyId> = Extract<
+  ZapDepositQuote,
+  { strategyId: T }
+>;
+
+export type ZapStrategyIdToWithdrawQuote<T extends ZapStrategyId> = Extract<
+  ZapWithdrawQuote,
+  { strategyId: T }
+>;
 
 export type QuoteOutputTokenAmountChange = TokenAmount & {
   newAmount: TokenAmount['amount'];
@@ -583,10 +585,10 @@ export function isGovVaultWithdrawQuote(quote: TransactQuote): quote is GovVault
 
 export function isGovUnderlyingCowcentratedDepositQuote(
   quote: TransactQuote
-): quote is GovUnderlyingZapDepositQuote {
+): quote is GovComposerZapDepositQuote {
   return (
     isDepositQuote(quote) &&
-    quote.strategyId === 'gov' &&
+    quote.strategyId === 'gov-composer' &&
     isCowcentratedZapDepositQuote(quote.underlyingQuote)
   );
 }

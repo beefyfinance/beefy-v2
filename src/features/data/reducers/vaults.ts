@@ -40,6 +40,10 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
       allRetiredIds: VaultEntity['id'][];
       /** Vaults that have bridged receipt tokens we should track */
       allBridgedIds: VaultEntity['id'][];
+      /** Vaults by their contract address */
+      byAddress: {
+        [address: string]: VaultEntity['id'];
+      };
       /** Find standard vaults by deposit token address or earned token address */
       standardVault: {
         /** Map of standard vault ids by deposit token address */
@@ -222,6 +226,7 @@ function getOrCreateVaultsChainState(sliceState: Draft<VaultsState>, chainId: Ch
       allActiveIds: [],
       allRetiredIds: [],
       allBridgedIds: [],
+      byAddress: {},
       standardVault: {
         byEarnedTokenAddress: {},
         byDepositTokenAddress: {},
@@ -365,6 +370,7 @@ function addVaultToState(
 
   // Track vault by chain
   chainState.allIds.push(vault.id);
+  chainState.byAddress[vault.earnContractAddress.toLowerCase()] = vault.id;
 
   if (apiVault.status === 'eol' || apiVault.status === 'paused') {
     chainState.allRetiredIds.push(vault.id);

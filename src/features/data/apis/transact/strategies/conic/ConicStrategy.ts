@@ -1,4 +1,4 @@
-import type { IStrategy, SingleStrategyOptions, ZapTransactHelpers } from '../IStrategy';
+import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy';
 import {
   type ConicDepositOption,
   type ConicDepositQuote,
@@ -68,9 +68,15 @@ import { slipBy } from '../../helpers/amounts';
 import coder from 'web3-eth-abi';
 import { fetchZapAggregatorSwap } from '../../zap/swap';
 import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
+import type { ConicStrategyConfig } from '../strategy-configs';
 
-export class ConicStrategy implements IStrategy {
-  readonly id: string = 'conic';
+const strategyId = 'conic' as const;
+type StrategyId = typeof strategyId;
+
+class ConicStrategyImp implements IZapStrategy<StrategyId> {
+  public static readonly id = strategyId;
+  public readonly id = strategyId;
+
   protected readonly conicZap = '0x1F3aabF169aE52E868a6065CD1AE6B29Ae1a0368';
   protected readonly tokens: TokenEntity[];
   protected readonly cnc: TokenErc20;
@@ -79,7 +85,7 @@ export class ConicStrategy implements IStrategy {
   protected readonly vault: VaultStandard;
   protected readonly vaultType: IStandardVaultType;
 
-  constructor(protected options: SingleStrategyOptions, protected helpers: ZapTransactHelpers) {
+  constructor(protected options: ConicStrategyConfig, protected helpers: ZapTransactHelpers) {
     const { vault, vaultType, getState } = this.helpers;
 
     if (!isStandardVault(vault)) {
@@ -593,3 +599,5 @@ export class ConicStrategy implements IStrategy {
     );
   }
 }
+
+export const ConicStrategy = ConicStrategyImp satisfies IZapStrategyStatic<StrategyId>;

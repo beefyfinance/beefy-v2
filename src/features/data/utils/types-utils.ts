@@ -35,3 +35,8 @@ export type AsWeb3Result<T extends object> = Prettify<{
 }>;
 
 export type KeysOfUnion<T> = T extends T ? keyof T : never;
+
+/** Return type of 1-level deep promise or never */
+export type PromiseReturnType<T> = T extends PromiseLike<infer U> ? U : never;
+
+export type OmitNever<T> = { [K in keyof T as T[K] extends never ? never : K]: T[K] };

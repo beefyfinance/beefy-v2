@@ -1,39 +1,70 @@
 import type {
-  IStrategy,
-  StrategyConstructor,
-  StrategyOptions,
-  ZapTransactHelpers,
+  IAnyStrategyStatic,
+  IComposableStrategyStatic,
+  IComposerStrategyStatic,
 } from './IStrategy';
-import type { BeefyState } from '../../../../../redux-types';
+import type { OmitNever, PromiseReturnType } from '../../../utils/types-utils';
+import type { ZapStrategyId } from './strategy-configs';
 
-function makeLazyLoader<T extends StrategyConstructor>(loader: () => Promise<T>) {
-  let constructor: T | undefined;
+const strategyLoadersByIdUnchecked = {
+  single: async () => (await import('./single/SingleStrategy')).SingleStrategy,
+  'uniswap-v2': async () => (await import('./uniswap-v2/UniswapV2Strategy')).UniswapV2Strategy,
+  solidly: async () => (await import('./solidly/SolidlyStrategy')).SolidlyStrategy,
+  curve: async () => (await import('./curve/CurveStrategy')).CurveStrategy,
+  gamma: async () => (await import('./gamma/GammaStrategy')).GammaStrategy,
+  conic: async () => (await import('./conic/ConicStrategy')).ConicStrategy,
+  'gov-composer': async () => (await import('./gov/GovComposerStrategy')).GovComposerStrategy,
+  cowcentrated: async () =>
+    (await import('./cowcentrated/CowcentratedStrategy')).CowcentratedStrategy,
+} as const satisfies Record<ZapStrategyId, () => Promise<IAnyStrategyStatic>>;
 
-  return async (options: StrategyOptions, helpers: ZapTransactHelpers) => {
-    if (!constructor) {
-      constructor = await loader();
-    }
+type StrategyIdToStaticPromise = typeof strategyLoadersByIdUnchecked;
 
-    return new constructor(options, helpers);
-  };
+export type StrategyIdToStatic = OmitNever<{
+  [K in keyof StrategyIdToStaticPromise]: PromiseReturnType<
+    ReturnType<StrategyIdToStaticPromise[K]>
+  >;
+}>;
+
+export type ComposableStrategyId = {
+  [K in ZapStrategyId]: StrategyIdToStatic[K] extends IComposableStrategyStatic<K> ? K : never;
+}[ZapStrategyId];
+
+export type ComposerStrategyId = {
+  [K in ZapStrategyId]: StrategyIdToStatic[K] extends IComposerStrategyStatic<K> ? K : never;
+}[ZapStrategyId];
+
+export type AnyZapStrategyStatic = StrategyIdToStatic[ZapStrategyId];
+export type ComposableZapStrategyStatic = StrategyIdToStatic[ComposableStrategyId];
+export type ComposerZapStrategyStatic = StrategyIdToStatic[ComposerStrategyId];
+export type BasicZapStrategyStatic = Exclude<
+  AnyZapStrategyStatic,
+  ComposableZapStrategyStatic | ComposerZapStrategyStatic
+>;
+
+type StrategyIdToPromiseLoader = {
+  [K in ZapStrategyId]: () => StrategyIdToStatic[K]['id'] extends K
+    ? Promise<StrategyIdToStatic[K]>
+    : never;
+};
+
+// ensure key->strategy mapping matches
+export const strategyLoadersById = strategyLoadersByIdUnchecked satisfies StrategyIdToPromiseLoader;
+
+export function isComposableStrategyStatic(
+  strategy: AnyZapStrategyStatic
+): strategy is ComposableZapStrategyStatic {
+  return 'composable' in strategy && strategy.composable;
 }
 
-export const strategyBuildersById = {
-  single: makeLazyLoader(async () => (await import('./single/SingleStrategy')).SingleStrategy),
-  'uniswap-v2': makeLazyLoader(
-    async () => (await import('./uniswap-v2/UniswapV2Strategy')).UniswapV2Strategy
-  ),
-  solidly: makeLazyLoader(async () => (await import('./solidly/SolidlyStrategy')).SolidlyStrategy),
-  curve: makeLazyLoader(async () => (await import('./curve/CurveStrategy')).CurveStrategy),
-  gamma: makeLazyLoader(async () => (await import('./gamma/GammaStrategy')).GammaStrategy),
-  conic: makeLazyLoader(async () => (await import('./conic/ConicStrategy')).ConicStrategy),
-  gov: makeLazyLoader(
-    async () => (await import('./gov/GovUnderlyingStrategy')).GovUnderlyingStrategy
-  ),
-  cowcentrated: makeLazyLoader(
-    async () => (await import('./cowcentrated/CowcentratedStrategy')).CowcentratedStrategy
-  ),
-} as const satisfies Record<
-  StrategyOptions['strategyId'],
-  (options: StrategyOptions, helpers: ZapTransactHelpers, state: BeefyState) => Promise<IStrategy>
->;
+export function isComposerStrategyStatic(
+  strategy: AnyZapStrategyStatic
+): strategy is ComposerZapStrategyStatic {
+  return 'composer' in strategy && strategy.composer;
+}
+
+export function isBasicZapStrategyStatic(
+  strategy: AnyZapStrategyStatic
+): strategy is BasicZapStrategyStatic {
+  return !isComposableStrategyStatic(strategy) && !isComposerStrategyStatic(strategy);
+}
