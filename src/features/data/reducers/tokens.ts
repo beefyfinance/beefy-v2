@@ -597,7 +597,7 @@ function addVaultToState(
         type: 'erc20',
         id: vault.earnedToken,
         chainId: chainId,
-        oracleId: vault.earnOracleId ?? vault.earnedToken,
+        oracleId: vault.oracleId,
         address: vault.earnContractAddress,
         decimals: 18, // receipt token always has 18 decimals
         symbol: vault.earnedToken,
