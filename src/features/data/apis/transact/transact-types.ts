@@ -187,12 +187,18 @@ export type ConicWithdrawOption = ZapBaseWithdrawOption & {
 
 export type GovComposerDepositOption = ZapBaseDepositOption & {
   strategyId: 'gov-composer';
-  underlyingOption: CowcentratedZapDepositOption | SingleDepositOption;
+  underlyingOption:
+    | CowcentratedZapDepositOption
+    | SingleDepositOption
+    | CowcentratedVaultDepositOption;
 };
 
 export type GovComposerWithdrawOption = ZapBaseWithdrawOption & {
   strategyId: 'gov-composer';
-  underlyingOption: CowcentratedZapWithdrawOption | SingleWithdrawOption;
+  underlyingOption:
+    | CowcentratedZapWithdrawOption
+    | SingleWithdrawOption
+    | CowcentratedVaultWithdrawOption;
 };
 
 export type DepositOption =
@@ -390,8 +396,8 @@ export type CowcentratedZapDepositQuote = BaseZapQuote<CowcentratedZapDepositOpt
 
 export type GovComposerZapDepositQuote = BaseZapQuote<GovComposerDepositOption> & {
   vaultType: 'gov';
-  underlyingQuote: CowcentratedZapDepositQuote | SingleDepositQuote;
-  subStrategy: 'strategy';
+  underlyingQuote: CowcentratedZapDepositQuote | SingleDepositQuote | CowcentratedVaultDepositQuote;
+  subStrategy: 'strategy' | 'vault';
 };
 
 export type SingleDepositQuote = BaseZapQuote<SingleDepositOption> & {
@@ -501,8 +507,11 @@ export type ConicWithdrawQuote = BaseZapQuote<ConicWithdrawOption>;
 
 export type GovComposerZapWithdrawQuote = BaseZapQuote<GovComposerWithdrawOption> & {
   vaultType: 'gov';
-  underlyingQuote: CowcentratedZapWithdrawQuote | SingleWithdrawQuote;
-  subStrategy: 'strategy';
+  underlyingQuote:
+    | CowcentratedZapWithdrawQuote
+    | SingleWithdrawQuote
+    | CowcentratedVaultWithdrawQuote;
+  subStrategy: 'strategy' | 'vault';
 };
 
 export type ZapWithdrawQuote =

@@ -249,8 +249,54 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     };
   }
 
-  async fetchZapDeposit(_request: VaultDepositRequest): Promise<VaultDepositResponse> {
-    throw new Error('Zap deposit not implemented for cowcentrated vaults');
+  async fetchZapDeposit(request: VaultDepositRequest): Promise<VaultDepositResponse> {
+    if (request.inputs.length !== this.depositTokens.length) {
+      throw new Error('Invalid number of inputs');
+    }
+    if (
+      request.inputs.some((input, index) => !isTokenEqual(input.token, this.depositTokens[index]))
+    ) {
+      throw new Error('Invalid input tokens');
+    }
+
+    const state = this.getState();
+    const chain = selectChainById(state, this.vault.chainId);
+    const slippage = selectTransactSlippage(state);
+    const clmPool = new BeefyCLMPool(
+      this.vault.earnContractAddress,
+      selectVaultStrategyAddress(state, this.vault.id),
+      chain,
+      this.depositTokens
+    );
+
+    const { liquidity } = await clmPool.previewDeposit(
+      request.inputs[0].amount,
+      request.inputs[1].amount
+    );
+
+    const outputs: TokenAmount[] = [
+      {
+        token: this.shareToken,
+        amount: fromWei(liquidity, this.shareToken.decimals),
+      },
+    ];
+
+    const minOutputs = slipAllBy(outputs, slippage);
+
+    return {
+      inputs: request.inputs,
+      outputs,
+      minOutputs,
+      zap: this.buildZapDepositTx(
+        this.shareToken.address,
+        tokenAmountToWei(request.inputs[0]),
+        tokenAmountToWei(request.inputs[1]),
+        tokenAmountToWei(minOutputs[0]),
+        request.inputs[0].token.address,
+        request.inputs[1].token.address,
+        true
+      ),
+    };
   }
 
   async fetchZapWithdraw(request: VaultWithdrawRequest): Promise<VaultWithdrawResponse> {
@@ -294,6 +340,55 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
         tokenAmountToWei(minOutputs[1]),
         input.max
       ),
+    };
+  }
+
+  protected buildZapDepositTx(
+    clmAddress: string,
+    amountA: BigNumber,
+    amountB: BigNumber,
+    minShares: BigNumber,
+    tokenA: string,
+    tokenB: string,
+    insertBalance: boolean
+  ): ZapStep {
+    return {
+      target: clmAddress,
+      value: '0',
+      data: abiCoder.encodeFunctionCall(
+        {
+          type: 'function',
+          name: 'deposit',
+          constant: false,
+          payable: false,
+          inputs: [
+            {
+              name: '_amount0',
+              type: 'uint256',
+            },
+            {
+              name: '_amount1',
+              type: 'uint256',
+            },
+            {
+              name: '_minShares',
+              type: 'uint256',
+            },
+          ],
+          outputs: [],
+        },
+        [amountA.toString(10), amountB.toString(10), minShares.toString(10)]
+      ),
+      tokens: [
+        {
+          token: tokenA,
+          index: insertBalance ? getInsertIndex(0) : -1,
+        },
+        {
+          token: tokenB,
+          index: insertBalance ? getInsertIndex(1) : -1,
+        },
+      ],
     };
   }
 
