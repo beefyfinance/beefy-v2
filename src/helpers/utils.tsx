@@ -20,39 +20,42 @@ export function isEmpty(key) {
 }
 
 export const bluechipTokens = [
-  'WBTCe',
-  'WETHe',
   'BTC',
   'WBTC',
-  'WETH',
   'ETH',
+  'WETH',
+  'LTC',
+  'ATOM',
+  'AVAX',
   'BNB',
   'DOT',
+  'FTM',
+  'MATIC',
+  'SOL',
   'UNI',
   'YFI',
   'LINK',
   'AAVE',
   'SUSHI',
-  'LTC',
   'MKR',
-  'ATOM',
   'COMP',
   'SNX',
+  'CRV',
+  'GNO',
+  'LDO',
+  'ENS',
   'BIFI',
+  'mooBIFI',
+  'WBTCe',
+  'BTCB',
+  'BTCb',
+  'tBTC', // Treshold BTC
+  'WETHe',
+  'wstETH', // Lido Wrapped Staked ETH
+  'stETH', // Lido Staked ETH
+  'rETH', // Rocket Pool Staked ETH
+  'cbETH', // Coinbase Staked ETH
   'sarETH', //Stargate Arbitrum ETH
   'soETH', //Stargate Optimism ETH
   'sethETH', //Stargate Ethereum ETH
-  'multiBTC',
-  'sBTC',
-  'BTCB',
-  'AVAX',
-  'BTCb',
-  'tBTC', // trehshodl BTC
-  'axlWBTC', //axelar WBTC
-  'axlETH', // axelar eth
-  'wstETH', // lido staked eth
-  'stETH', // lido eth
-  'rETH', // rocketpool eth
-  'WETHwh', // wormhole ETH
-  'WBTCwh', // wormhole WBTC
 ];
