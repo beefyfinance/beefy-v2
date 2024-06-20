@@ -1,5 +1,74 @@
 [
   {
+    "id": "velodrome-v2-weth-weeth",
+    "name": "ETH-weETH vLP V2",
+    "type": "standard",
+    "token": "vAMMV2-WETH/weETH",
+    "tokenAddress": "0xd0F92F5d756Bf223574DFa3ef284a35C3c046289",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2WETH-weETH",
+    "earnedTokenAddress": "0x12fBf29ebab68ed27db7f1a3A3b733692f566535",
+    "earnContractAddress": "0x12fBf29ebab68ed27db7f1a3A3b733692f566535",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-weth-weeth",
+    "status": "active",
+    "createdAt": 1718855231,
+    "platformId": "velodrome",
+    "assets": ["ETH", "weETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x4200000000000000000000000000000000000006&to=0x5a7facb970d094b6c7ff1df0ea68d99e6e73cbff",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x5A7fACB970D094B6C7FF1df0eA68D99E6e73CBFF&type=-1&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xd0F92F5d756Bf223574DFa3ef284a35C3c046289",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-v2-hai-kite",
+    "name": "HAI-KITE vLP V2",
+    "type": "standard",
+    "token": "vAMMV2-HAI/KITE",
+    "tokenAddress": "0xf2d3941b6E1cbD3616061E556Eb06986147715d1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2HAI-KITE",
+    "earnedTokenAddress": "0x5473C206323A5a4Ab2590C24D6CEf710002ba631",
+    "earnContractAddress": "0x5473C206323A5a4Ab2590C24D6CEf710002ba631",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-hai-kite",
+    "status": "active",
+    "createdAt": 1718855231,
+    "platformId": "velodrome",
+    "assets": ["HAI", "KITE"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x10398abc267496e49106b07dd6be13364d10dc71&to=0xf467c7d5a4a9c4687ffc7986ac6ad5a4c81e1404",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x10398AbC267496E49106B07dd6BE13364D10dC71&token1=0xf467C7d5a4A9C4687fFc7986aC6aD5A4c81E1404&type=-1&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xf2d3941b6E1cbD3616061E556Eb06986147715d1",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+
+  {
     "id": "silo-op-op-op",
     "name": "OP (OP Market)",
     "type": "standard",
