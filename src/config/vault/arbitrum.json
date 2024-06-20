@@ -31,6 +31,37 @@
     ]
   },
   {
+    "id": "uniswap-cow-arb-zro-usdt",
+    "name": "ZRO-USDT",
+    "type": "cowcentrated",
+    "token": "ZRO-USDT",
+    "tokenAddress": "0xc868f85196fACFBBc08B44975f83788Dd922E482",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+    ],
+    "earnedToken": "cowUniswapArbZRO-USDT",
+    "earnedTokenAddress": "0x93af018a52b8a539ED2255445D1d62f5452B1488",
+    "earnContractAddress": "0x93af018a52b8a539ED2255445D1d62f5452B1488",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-zro-usdt",
+    "status": "active",
+    "createdAt": 1718895191,
+    "platformId": "beefy",
+    "assets": ["ZRO", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "curve-arb-trirsr",
     "name": "ETH+/eUSD/RSR",
     "token": "ETH+/eUSD/RSR",
