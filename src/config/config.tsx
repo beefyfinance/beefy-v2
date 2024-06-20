@@ -80,7 +80,7 @@ export const config = {
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x244908D9A21B143911D531cD1D37575D63da4D87',
+    appMulticallContractAddress: '0xacE432fD45f78fFE1F80961e879679D49aB63246',
     providerName: 'polygon',
     walletSettings: {
       chainId: `0x${parseInt('137', 10).toString(16)}`,
