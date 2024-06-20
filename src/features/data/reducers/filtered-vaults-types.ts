@@ -9,9 +9,9 @@ export type SortType =
 
 export type SortDirectionType = 'asc' | 'desc';
 
-export type VaultCategoryType = 'all' | 'stable' | 'bluechip' | 'correlated';
+export type VaultCategoryType = 'stable' | 'bluechip' | 'correlated';
 
-export type VaultAssetType = 'all' | 'lps' | 'single' | 'clm';
+export type VaultAssetType = 'lps' | 'single' | 'clm';
 
 export type StrategiesType = 'all' | 'pools' | 'vaults';
 

@@ -14,6 +14,8 @@ import {
 } from '../selectors/filtered-vaults';
 import {
   selectAllVaultIds,
+  selectIsVaultAssetTypeLps,
+  selectIsVaultAssetTypeSingle,
   selectIsVaultBlueChip,
   selectIsVaultCorrelated,
   selectIsVaultCowcentrated,
@@ -40,6 +42,7 @@ import { orderBy, sortBy } from 'lodash-es';
 import type { TotalApy } from '../reducers/apy';
 import { selectVaultTotalApy } from '../selectors/apy';
 import { selectVaultTvl } from '../selectors/tvl';
+import type { VaultAssetType, VaultCategoryType } from '../reducers/filtered-vaults-types';
 
 export type RecalculateFilteredVaultsParams = {
   dataChanged?: boolean;
@@ -50,6 +53,24 @@ export type RecalculateFilteredVaultsParams = {
 export type RecalculateFilteredVaultsPayload = {
   filtered: VaultEntity['id'][];
   sorted: VaultEntity['id'][];
+};
+
+const _VaultCategoryFilter: Record<
+  VaultCategoryType,
+  (state: BeefyState, vaultId: VaultEntity['id']) => boolean
+> = {
+  bluechip: selectIsVaultBlueChip,
+  stable: selectIsVaultStable,
+  correlated: selectIsVaultCorrelated,
+};
+
+const _VaultAssetTypeFilter: Record<
+  VaultAssetType,
+  (state: BeefyState, vaultId: VaultEntity['id']) => boolean
+> = {
+  lps: selectIsVaultAssetTypeLps,
+  single: selectIsVaultAssetTypeSingle,
+  clm: selectIsVaultCowcentrated,
 };
 
 export const recalculateFilteredVaultsAction = createAsyncThunk<
@@ -74,35 +95,56 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
       );
       const searchText = simplifySearchText(filterOptions.searchText);
       const allVaults = selectAllVaultIds(state).map(id => selectVaultById(state, id));
-      filteredVaults = allVaults.filter(vault => {
+
+      const vaultsByCategory =
+        filterOptions.vaultCategory.length > 0
+          ? allVaults.filter(vault => {
+              if (
+                filterOptions.vaultCategory.includes('bluechip') &&
+                selectIsVaultBlueChip(state, vault.id)
+              ) {
+                return true;
+              }
+              if (
+                filterOptions.vaultCategory.includes('stable') &&
+                selectIsVaultStable(state, vault.id)
+              ) {
+                return true;
+              }
+              if (
+                filterOptions.vaultCategory.includes('correlated') &&
+                selectIsVaultCorrelated(state, vault.id)
+              ) {
+                return true;
+              }
+
+              return false;
+            }, [])
+          : allVaults;
+
+      const vaultsByAssetType =
+        filterOptions.assetType.length > 0
+          ? vaultsByCategory.filter(vault => {
+              if (filterOptions.assetType.includes('lps') && vault.assetType === 'lps') {
+                return true;
+              }
+              if (filterOptions.assetType.includes('single') && vault.assetType === 'single') {
+                return true;
+              }
+
+              if (
+                filterOptions.assetType.includes('clm') &&
+                selectIsVaultCowcentrated(state, vault.id)
+              ) {
+                return true;
+              }
+              return false;
+            }, [])
+          : vaultsByCategory;
+
+      filteredVaults = vaultsByAssetType.filter(vault => {
         // Chains
         if (!visibleChains.has(vault.chainId)) {
-          return false;
-        }
-
-        // Asset type
-        if (filterOptions.assetType === 'lps' && vault.assetType !== 'lps') {
-          return false;
-        }
-        if (filterOptions.assetType === 'single' && vault.assetType !== 'single') {
-          return false;
-        }
-
-        if (filterOptions.assetType === 'clm' && !selectIsVaultCowcentrated(state, vault.id)) {
-          return false;
-        }
-        // Vault Category
-
-        if (filterOptions.vaultCategory === 'bluechip' && !selectIsVaultBlueChip(state, vault.id)) {
-          return false;
-        }
-        if (filterOptions.vaultCategory === 'stable' && !selectIsVaultStable(state, vault.id)) {
-          return false;
-        }
-        if (
-          filterOptions.vaultCategory === 'correlated' &&
-          !selectIsVaultCorrelated(state, vault.id)
-        ) {
           return false;
         }
 
