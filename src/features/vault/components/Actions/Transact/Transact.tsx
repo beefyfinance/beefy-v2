@@ -27,13 +27,16 @@ export type TransactProps = {
 export const Transact = memo<TransactProps>(function Transact({ vaultId }) {
   const transactStep = useAppSelector(selectTransactStep);
   const transactVaultId = useAppSelector(selectTransactVaultIdOrUndefined);
-  const step = transactVaultId === vaultId ? transactStep : TransactStep.Loading;
+  const isReady = transactVaultId === vaultId;
+  const step = isReady ? transactStep : TransactStep.Loading;
   const StepComponent = stepToComponent[step];
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(transactInit({ vaultId }));
-  }, [dispatch, vaultId]);
+    if (!isReady) {
+      dispatch(transactInit({ vaultId }));
+    }
+  }, [dispatch, vaultId, isReady]);
 
   return (
     <Card>

@@ -1,5 +1,98 @@
 [
   {
+    "id": "oku-linea-usdc-usdt",
+    "name": "USDC-USDT",
+    "type": "cowcentrated",
+    "token": "USDC-USDT",
+    "tokenAddress": "0x5856EDF9212bdceC74301ec78AFc573B62D6A283",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "depositTokenAddresses": [
+      "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
+      "0xA219439258ca9da29E9Cc4cE5596924745e12B93"
+    ],
+    "earnedToken": "cowOkuUSDC-USDT",
+    "earnedTokenAddress": "0x97BaB27d3EC82a43aFC60ce521ac121CD6F6Cc3e",
+    "earnContractAddress": "0x97BaB27d3EC82a43aFC60ce521ac121CD6F6Cc3e",
+    "oracle": "lps",
+    "oracleId": "oku-linea-usdc-usdt",
+    "status": "active",
+    "createdAt": 1718657097,
+    "platformId": "beefy",
+    "assets": ["USDC", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "linea",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "oku-linea-weth-wbtc",
+    "name": "WETH-WBTC",
+    "type": "cowcentrated",
+    "token": "WETH-WBTC",
+    "tokenAddress": "0xa22206521A460aA6B21a089c3b48FFd0C79d5fD5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "depositTokenAddresses": [
+      "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
+      "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
+    ],
+    "earnedToken": "cowOkuWBTC-WETH",
+    "earnedTokenAddress": "0x0Db58cB843B8AF6A8704338447c0a7e36F4D5613",
+    "earnContractAddress": "0x0Db58cB843B8AF6A8704338447c0a7e36F4D5613",
+    "oracle": "lps",
+    "oracleId": "oku-linea-weth-wbtc",
+    "status": "active",
+    "createdAt": 1718657097,
+    "platformId": "beefy",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "linea",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "oku-linea-weth-usdc.e",
+    "name": "WETH-USDC",
+    "type": "cowcentrated",
+    "token": "WETH-USDC",
+    "tokenAddress": "0xc48622190a6B91d64ee7459C62fadE9AbE61b48a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "depositTokenAddresses": [
+      "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
+      "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
+    ],
+    "earnedToken": "cowOkuWETH-USDC.e",
+    "earnedTokenAddress": "0x4d6d208e75d800957c4AF83FB9f42AabFEbc6b6D",
+    "earnContractAddress": "0x4d6d208e75d800957c4AF83FB9f42AabFEbc6b6D",
+    "oracle": "lps",
+    "oracleId": "oku-linea-weth-usdc.e",
+    "status": "active",
+    "createdAt": 1718657097,
+    "platformId": "beefy",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "linea",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "lynex-gamma-ineth-wsteth",
     "name": "inETH-wstETH LP",
     "type": "standard",
@@ -965,8 +1058,10 @@
     "earnContractAddress": "0xb227116Fa19ABb3a94655dDF24E9CFa09c58d154",
     "oracle": "tokens",
     "oracleId": "DAI",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1702481665,
+    "retireReason": "tvl",
+    "retiredAt": 1718369014,
     "platformId": "mendi",
     "assets": ["DAI"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],

@@ -62,6 +62,8 @@ export const config = {
       'fxUSD',
       'bbsDAI',
       'hyUSD',
+      'rgUSD',
+      'USD3',
       'bpt3POOL',
       'USDC+',
       'PYUSD',
@@ -78,7 +80,7 @@ export const config = {
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x244908D9A21B143911D531cD1D37575D63da4D87',
+    appMulticallContractAddress: '0xacE432fD45f78fFE1F80961e879679D49aB63246',
     providerName: 'polygon',
     walletSettings: {
       chainId: `0x${parseInt('137', 10).toString(16)}`,
@@ -481,7 +483,7 @@ export const config = {
     explorerUrl: 'https://moonscan.io',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0xA4afDf57663951C6204E5110EE1741e8dfb0F3ec',
+    appMulticallContractAddress: '0x6B0A1644e662E63cC866A3F243d83a49e0818Aa1',
     providerName: 'Moonbeam',
     walletSettings: {
       chainId: `0x${parseInt('1284', 10).toString(16)}`,
@@ -514,6 +516,8 @@ export const config = {
       'USDCwh',
       'USDTxc',
       'BUSDwh',
+      'xcUSDC',
+      'axlUSDC',
     ],
   },
   moonriver: {
@@ -781,7 +785,7 @@ export const config = {
     explorerUrl: 'https://lineascan.build',
     multicallAddress: '0x91BB303E972995EbE5f593BCddBb6F5Ef49Dbcbd',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0xe536F8141D8EB7B1f096934AF3329cB581bFe995',
+    appMulticallContractAddress: '0x7340a46bDAD936841Fd66fEE2fF5007FB2f80bC9',
     providerName: 'Linea',
     walletSettings: {
       chainId: `0x${parseInt('59144', 10).toString(16)}`,

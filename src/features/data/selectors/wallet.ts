@@ -2,19 +2,6 @@ import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 
-// If we know the address: either from a wallet connection; or from hydration of persisted state from previous visit
-export const selectIsWalletKnown = createSelector(
-  (state: BeefyState) => state.user.wallet.address,
-  address => !!address
-);
-
-// If address is actually connected
-export const selectIsWalletConnected = createSelector(
-  (state: BeefyState) => state.user.wallet.connectedAddress,
-  (state: BeefyState) => state.user.wallet.address,
-  (connectedAddress, address) => !!connectedAddress && connectedAddress === address
-);
-
 export const selectWalletAddress = createSelector(
   (state: BeefyState) => state.user.wallet.address,
   address => {
@@ -22,16 +9,22 @@ export const selectWalletAddress = createSelector(
   }
 );
 
+export const selectIsWalletKnown = createSelector(selectWalletAddress, address => !!address);
+
+// If address is actually connected
+export const selectIsWalletConnected = createSelector(
+  selectWalletAddress,
+  (state: BeefyState) => state.user.wallet.connectedAddress,
+  (address, connectedAddress) => !!connectedAddress && connectedAddress === address
+);
+
 export const selectWalletAddressOrThrow = createSelector(selectWalletAddress, (address): string => {
   if (!address) throw new Error('Wallet address not known');
   return address;
 });
 
-export const selectWalletAddressIfKnown = createSelector(
-  (state: BeefyState) => state.user.wallet.address,
-  (state: BeefyState) => selectIsWalletKnown(state),
-  (address, isKnown) => (isKnown && address ? address : undefined)
-);
+// TODO: remove later
+export const selectWalletAddressIfKnown = selectWalletAddress;
 
 export const selectCurrentChainId = (state: BeefyState) => state.user.wallet.selectedChainId;
 export const selectIsBalanceHidden = (state: BeefyState) => state.user.wallet.hideBalance;

@@ -27,16 +27,6 @@ function mapStateToProps(
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
   const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
 
-  if (!vaultTimeline || !vaultTimeline.length) {
-    return {
-      label,
-      value: '-',
-      subValue: null,
-      blur: false,
-      loading: false,
-      className: className ?? '',
-    };
-  }
   if (!isLoaded) {
     return {
       label,
@@ -44,6 +34,17 @@ function mapStateToProps(
       subValue: null,
       blur: false,
       loading: true,
+      className: className ?? '',
+    };
+  }
+
+  if (!vaultTimeline || !vaultTimeline.current.length) {
+    return {
+      label,
+      value: '-',
+      subValue: null,
+      blur: false,
+      loading: false,
       className: className ?? '',
     };
   }

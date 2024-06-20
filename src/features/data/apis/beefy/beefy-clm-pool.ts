@@ -75,7 +75,7 @@ export class BeefyCLMPool {
   protected getIsCalmRequests(): ShapeWithLabel[] {
     const contract = createContract(
       viemToWeb3Abi(BeefyCowcentratedLiquidityStrategyAbi),
-      this.strategy
+      this.address
     );
     return [
       {

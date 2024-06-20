@@ -118,11 +118,16 @@ export const VaultClmTag = memo(function VaultClmTag({
   hideText?: boolean;
 }) {
   const classes = useStyles();
+
+  const isDynamic = useMemo(() => vault.feeTier === 'Dynamic', [vault.feeTier]);
+
   const tooltipContent = useMemo(() => {
-    return hideFee
+    return isDynamic
+      ? `Cowcentrated Liquidity Manager | ${vault.feeTier}`
+      : hideFee
       ? `Cowcentrated Liquidity Manager | ${vault.feeTier}%`
       : 'Cowcentrated Liquidity Manager';
-  }, [hideFee, vault]);
+  }, [hideFee, isDynamic, vault.feeTier]);
 
   return (
     <VaultTagWithTooltip
@@ -132,9 +137,15 @@ export const VaultClmTag = memo(function VaultClmTag({
         [classes.vaultTagClmAutoHide]: hideFee === undefined && hideText === undefined,
       })}
     >
-      <img src={getIcon('clm')} height={16} />
+      <img
+        src={getIcon('clm')}
+        height={16}
+        width={16}
+        className={classes.vaultTagClmIcon}
+        alt={hideText ? 'CLM' : undefined}
+      />
       {!hideText && <div className={classes.vaultTagClmText}>CLM</div>}
-      {!hideFee && vault.feeTier && (
+      {!hideFee && vault.feeTier && !isDynamic && (
         <>
           <div className={classes.divider} />
           <span>{`${vault.feeTier}%`}</span>

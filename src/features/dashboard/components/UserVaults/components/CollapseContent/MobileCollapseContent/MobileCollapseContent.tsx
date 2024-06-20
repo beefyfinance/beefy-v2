@@ -8,8 +8,8 @@ import { useAppSelector } from '../../../../../../../store';
 import { selectHasDataToShowGraphByVaultId } from '../../../../../../data/selectors/analytics';
 import { selectVaultType } from '../../../../../../data/selectors/vaults';
 import {
-  DashboardCowcentratedFeesGraph,
-  DashboardCowcentratedPnLGraph,
+  DashboardFeesGraph,
+  DashboardOverviewGraph,
 } from '../../../../../../vault/components/CowcentratedPnlGraph';
 import type { VaultCollapseContentProps } from '../types';
 import { styles } from './styles';
@@ -46,9 +46,8 @@ export const MobileCollapseContent = memo<VaultCollapseContentProps>(
       return items;
     }, [hasAnalyticsData, vaultType, t]);
 
-    const PositionGraph =
-      vaultType === 'cowcentrated' ? DashboardCowcentratedPnLGraph : DashboardPnLGraph;
-    const CompoundsGraph = DashboardCowcentratedFeesGraph;
+    const PositionGraph = vaultType === 'cowcentrated' ? DashboardOverviewGraph : DashboardPnLGraph;
+    const CompoundsGraph = DashboardFeesGraph;
 
     return (
       <div className={classes.container}>

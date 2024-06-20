@@ -1,4 +1,3 @@
-import type { ChartStat } from '../../../data/reducers/historical-types';
 import type { VaultEntity } from '../../../data/entities/vault';
 import React, { memo, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +12,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { getDefaultStat } from './utils';
 import { CowcentratedRanges } from './CowcentratedRanges';
+import type { ChartStat } from './types';
 
 const useStyles = makeStyles(styles);
 
@@ -41,7 +41,7 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
     <Card className={classes.container}>
       <CardHeader className={classes.header}>
         <CardTitle title={t('Graph-RateHist')} />
-        <StatSwitcher stat={stat} options={options} onChange={stat => setStat(stat as ChartStat)} />
+        <StatSwitcher<ChartStat> stat={stat} options={options} onChange={setStat} />
       </CardHeader>
       <CardContent className={classes.content}>
         {stat === 'clm' && <CowcentratedRanges vaultId={vaultId} />}

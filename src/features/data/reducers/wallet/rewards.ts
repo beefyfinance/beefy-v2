@@ -60,7 +60,7 @@ export const rewardsSlice = createSlice({
     builder.addCase(fetchMerklRewardsAction.fulfilled, (sliceState, action) => {
       const userChainState = getMerklUserState(
         sliceState,
-        action.payload.walletAddress,
+        action.payload.walletAddress.toLowerCase(),
         action.payload.chainId
       );
       userChainState.byTokenAddress = action.payload.byTokenAddress;

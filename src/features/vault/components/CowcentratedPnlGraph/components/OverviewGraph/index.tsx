@@ -7,7 +7,6 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  type TooltipProps,
 } from 'recharts';
 import { usePnLChartData } from './hooks';
 import type { Theme } from '@material-ui/core';
@@ -16,15 +15,15 @@ import { GraphLoader } from '../../../GraphLoader';
 import { max } from 'lodash-es';
 import {
   domainOffSet,
-  getXInterval,
-  mapRangeToTicks,
-  formatUsdTick,
   formatDateTimeTick,
-  TIME_BUCKET,
+  formatUsdTick,
+  getXInterval,
+  GRAPH_TIME_BUCKETS,
+  mapRangeToTicks,
 } from '../../../../../../helpers/graph';
 import { styles } from './styles';
 import { XAxisTick } from '../../../../../../components/XAxisTick';
-import { OverviewTooltip } from '../Tooltips';
+import { OverviewTooltip, type OverviewTooltipProps } from '../Tooltips';
 
 const useStyles = makeStyles(styles);
 
@@ -41,7 +40,7 @@ export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverview
 }) {
   const classes = useStyles();
 
-  const { chartData, isLoading } = usePnLChartData(TIME_BUCKET[period], vaultId, address);
+  const { chartData, isLoading } = usePnLChartData(GRAPH_TIME_BUCKETS[period], vaultId, address);
 
   const { data, minUsd, maxUsd } = chartData;
 
@@ -62,7 +61,7 @@ export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverview
   }, [maxUsd, startUsdDomain, usdDiff]);
 
   const dateTimeTickFormatter = useMemo(() => {
-    return (value: number) => formatDateTimeTick(value, TIME_BUCKET[period]);
+    return (value: number) => formatDateTimeTick(value, GRAPH_TIME_BUCKETS[period]);
   }, [period]);
 
   const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
@@ -76,7 +75,7 @@ export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverview
   }, [xsDown]);
 
   const tooltipContentCreator = useCallback(
-    (props: TooltipProps<number, string>) => <OverviewTooltip {...props} />,
+    (props: OverviewTooltipProps) => <OverviewTooltip {...props} />,
     []
   );
 

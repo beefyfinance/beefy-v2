@@ -37,10 +37,10 @@ export const styles = (theme: Theme) => ({
   vaultPaused: {
     backgroundColor: 'rgba(209, 83, 71, 0.05)',
   },
-  vaultRetired: {
-    backgroundColor: theme.palette.background.vaults.inactive,
-  },
   vaultClm: {
     backgroundColor: theme.palette.background.vaults.clm,
+  },
+  vaultRetired: {
+    backgroundColor: theme.palette.background.vaults.inactive,
   },
 });

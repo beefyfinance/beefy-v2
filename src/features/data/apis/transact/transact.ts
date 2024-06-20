@@ -7,7 +7,7 @@ import {
   type WithdrawOption,
   type WithdrawQuote,
 } from './transact-types';
-import { partition } from 'lodash';
+import { partition, uniq } from 'lodash-es';
 import type { VaultEntity } from '../../entities/vault';
 import type { GetStateFn } from '../../../../redux-types';
 import { selectVaultByAddress, selectVaultById } from '../../selectors/vaults';
@@ -36,7 +36,6 @@ import {
   strategyLoadersById,
 } from './strategies';
 import { getVaultTypeBuilder } from './vaults';
-import { uniq } from 'lodash-es';
 import { VaultStrategy } from './strategies/vault/VaultStrategy';
 import { selectZapByChainId } from '../../selectors/zap';
 import { getSwapAggregator } from '../instances';
