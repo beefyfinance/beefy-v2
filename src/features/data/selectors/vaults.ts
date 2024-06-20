@@ -259,22 +259,6 @@ export const selectIsVaultBlueChip = createSelector(
   res => res
 );
 
-export const selectIsVaultAssetTypeLps = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => {
-    const vault = selectVaultById(state, vaultId);
-    return vault.assetType === 'lps';
-  },
-  res => res
-);
-
-export const selectIsVaultAssetTypeSingle = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => {
-    const vault = selectVaultById(state, vaultId);
-    return vault.assetType === 'lps';
-  },
-  res => res
-);
-
 export const selectIsVaultStable = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import {
+  isCowcentratedVault,
   isVaultEarningPoints,
   isVaultPaused,
   isVaultRetired,
@@ -14,11 +15,8 @@ import {
 } from '../selectors/filtered-vaults';
 import {
   selectAllVaultIds,
-  selectIsVaultAssetTypeLps,
-  selectIsVaultAssetTypeSingle,
   selectIsVaultBlueChip,
   selectIsVaultCorrelated,
-  selectIsVaultCowcentrated,
   selectIsVaultGov,
   selectIsVaultStable,
   selectVaultById,
@@ -42,7 +40,6 @@ import { orderBy, sortBy } from 'lodash-es';
 import type { TotalApy } from '../reducers/apy';
 import { selectVaultTotalApy } from '../selectors/apy';
 import { selectVaultTvl } from '../selectors/tvl';
-import type { VaultAssetType, VaultCategoryType } from '../reducers/filtered-vaults-types';
 
 export type RecalculateFilteredVaultsParams = {
   dataChanged?: boolean;
@@ -53,24 +50,6 @@ export type RecalculateFilteredVaultsParams = {
 export type RecalculateFilteredVaultsPayload = {
   filtered: VaultEntity['id'][];
   sorted: VaultEntity['id'][];
-};
-
-const _VaultCategoryFilter: Record<
-  VaultCategoryType,
-  (state: BeefyState, vaultId: VaultEntity['id']) => boolean
-> = {
-  bluechip: selectIsVaultBlueChip,
-  stable: selectIsVaultStable,
-  correlated: selectIsVaultCorrelated,
-};
-
-const _VaultAssetTypeFilter: Record<
-  VaultAssetType,
-  (state: BeefyState, vaultId: VaultEntity['id']) => boolean
-> = {
-  lps: selectIsVaultAssetTypeLps,
-  single: selectIsVaultAssetTypeSingle,
-  clm: selectIsVaultCowcentrated,
 };
 
 export const recalculateFilteredVaultsAction = createAsyncThunk<
@@ -125,17 +104,18 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
       const vaultsByAssetType =
         filterOptions.assetType.length > 0
           ? vaultsByCategory.filter(vault => {
-              if (filterOptions.assetType.includes('lps') && vault.assetType === 'lps') {
+              if (
+                filterOptions.assetType.includes('lps') &&
+                vault.assetType === 'lps' &&
+                !isCowcentratedVault(vault)
+              ) {
                 return true;
               }
               if (filterOptions.assetType.includes('single') && vault.assetType === 'single') {
                 return true;
               }
 
-              if (
-                filterOptions.assetType.includes('clm') &&
-                selectIsVaultCowcentrated(state, vault.id)
-              ) {
+              if (filterOptions.assetType.includes('clm') && isCowcentratedVault(vault)) {
                 return true;
               }
               return false;
