@@ -1,5 +1,67 @@
 [
   {
+    "id": "uniswap-cow-base-weth-zro",
+    "name": "ZRO-WETH",
+    "token": "ZRO-WETH",
+    "tokenAddress": "0x41Fd11E5997fBC144418Fd2F1B5D9D9b45a94e32",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x6985884C4392D348587B19cb9eAAf157F13271cd"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBaseWETH-ZRO",
+    "earnedTokenAddress": "0xc88d16c4cb87b5EEC33cA0696bBd5154492E4282",
+    "earnContractAddress": "0xc88d16c4cb87b5EEC33cA0696bBd5154492E4282",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-zro",
+    "status": "active",
+    "createdAt": 1718885884,
+    "platformId": "beefy",
+    "assets": ["ZRO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-zro-usdc",
+    "name": "ZRO-USDC",
+    "token": "ZRO-USDC",
+    "tokenAddress": "0x4587df381022922f6622F9096C22e754BcF27b4F",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBaseZRO-USDC",
+    "earnedTokenAddress": "0xB6DDAb86739524ba19185105B545220A858F2d0e",
+    "earnContractAddress": "0xB6DDAb86739524ba19185105B545220A858F2d0e",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-zro-usdc",
+    "status": "active",
+    "createdAt": 1718885884,
+    "platformId": "beefy",
+    "assets": ["ZRO", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-sfrxeth-wsteth",
     "name": "sfrxETH-wstETH vLP",
     "token": "vAMM-sfrxETH/wstETH",
