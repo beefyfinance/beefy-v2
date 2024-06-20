@@ -211,7 +211,7 @@ export const config = {
   optimism: {
     name: 'Optimism',
     chainId: 10,
-    rpc: ['https://mainnet.optimism.io'],
+    rpc: ['https://optimism-rpc.publicnode.com'],
     explorerUrl: 'https://optimistic.etherscan.io',
     multicallAddress: '0x820ae7bf39792d7ce7befc70b0172f4d267f1938',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -225,7 +225,11 @@ export const config = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://mainnet.optimism.io'],
+      rpcUrls: [
+        'https://opt-mainnet.g.alchemy.com/v2/CL6E3PpLbRjZ8xkLXsr35urC2ustFdAb',
+        'https://optimism-mainnet.public.blastapi.io',
+        'https://optimism.gateway.tenderly.co',
+      ],
       blockExplorerUrls: ['https://optimistic.etherscan.io/'],
     },
     gas: {
@@ -703,7 +707,7 @@ export const config = {
   base: {
     name: 'Base',
     chainId: 8453,
-    rpc: ['https://mainnet.base.org'],
+    rpc: ['https://base.llamarpc.com'],
     explorerUrl: 'https://basescan.org',
     multicallAddress: '0xbA790ec6F95D68123E772A43b314464585B311b4',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -717,8 +721,8 @@ export const config = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://rpc.ankr.com/base'],
-      blockExplorerUrls: ['https://basescan.org/'],
+      rpcUrls: ['https://base-mainnet.g.alchemy.com/v2/pqFEysOmDpJbAbPITGcJ416bF6vh58y1'],
+      blockExplorerUrls: ['https://base.llamarpc.com'],
     },
     gas: {
       type: 'eip1559',
