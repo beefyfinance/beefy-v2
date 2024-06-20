@@ -1,8 +1,14 @@
-import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
+import type { VaultAssetType } from '../../../../../data/reducers/filtered-vaults-types';
 
-export const TYPE_OPTIONS: Record<FilteredVaultsState['assetType'], string> = {
-  all: 'Filter-DropdwnDflt',
-  single: 'Filter-AsstSingle',
-  lps: 'Filter-LP',
-  clm: 'Filter-CLM',
+export type AssetCategory = {
+  i18nKey: string;
+  highlight?: 'new' | undefined;
+};
+
+type VaultAssetTypeWithouAll = Exclude<VaultAssetType, 'all'>;
+
+export const TYPE_OPTIONS: Record<VaultAssetTypeWithouAll, AssetCategory> = {
+  single: { i18nKey: 'Filter-AsstSingle' },
+  lps: { i18nKey: 'Filter-LP' },
+  clm: { i18nKey: 'Filter-CLM', highlight: 'new' },
 };

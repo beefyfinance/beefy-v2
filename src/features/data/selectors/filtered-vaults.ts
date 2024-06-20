@@ -45,8 +45,8 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.onlyZappable ? 1 : 0) +
     (filterOptions.onlyEarningPoints ? 1 : 0) +
-    (filterOptions.assetType !== 'all' ? 1 : 0) +
-    (filterOptions.vaultCategory !== 'all' ? 1 : 0) +
+    filterOptions.assetType.length +
+    filterOptions.vaultCategory.length +
     (filterOptions.strategyType !== 'all' ? 1 : 0) +
     (filterOptions.sort !== 'default' ? 1 : 0) +
     filterOptions.chainIds.length +
@@ -56,9 +56,9 @@ export const selectFilterPopinFilterCount = createSelector(
 export const selectHasActiveFilter = createSelector(
   selectFilterOptions,
   filterOptions =>
-    filterOptions.vaultCategory !== 'all' ||
+    filterOptions.vaultCategory.length > 0 ||
     filterOptions.userCategory !== 'all' ||
-    filterOptions.assetType !== 'all' ||
+    filterOptions.assetType.length > 0 ||
     filterOptions.strategyType !== 'all' ||
     filterOptions.onlyRetired !== false ||
     filterOptions.onlyPaused !== false ||
@@ -74,8 +74,8 @@ export const selectHasActiveFilter = createSelector(
 export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
   selectFilterOptions,
   filterOptions =>
-    filterOptions.vaultCategory !== 'all' ||
-    filterOptions.assetType !== 'all' ||
+    filterOptions.vaultCategory.length > 0 ||
+    filterOptions.assetType.length > 0 ||
     filterOptions.strategyType !== 'all' ||
     filterOptions.onlyRetired !== false ||
     filterOptions.onlyPaused !== false ||

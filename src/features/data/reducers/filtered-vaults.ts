@@ -29,10 +29,10 @@ export type FilteredVaultsState = {
   reseted: boolean;
   sort: SortType;
   sortDirection: SortDirectionType;
-  vaultCategory: VaultCategoryType;
+  vaultCategory: VaultCategoryType[];
   userCategory: UserCategoryType;
   strategyType: StrategiesType;
-  assetType: VaultAssetType;
+  assetType: VaultAssetType[];
   searchText: string;
   chainIds: ChainEntity['id'][];
   platformIds: PlatformEntity['id'][];
@@ -50,10 +50,10 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   reseted: true,
   sort: 'default',
   sortDirection: 'desc',
-  vaultCategory: 'all',
+  vaultCategory: [],
   userCategory: 'all',
   strategyType: 'all',
-  assetType: 'all',
+  assetType: [],
   searchText: '',
   chainIds: [],
   platformIds: [],
