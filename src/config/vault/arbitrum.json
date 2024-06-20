@@ -1,5 +1,45 @@
 [
   {
+    "id": "curve-arb-trirsr",
+    "name": "ETH+/eUSD/RSR",
+    "token": "ETH+/eUSD/RSR",
+    "tokenAddress": "0x45B47fE1bed067de6B4b89e0285E6B571A64c57C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveTriRSR",
+    "earnedTokenAddress": "0x33eCa80Faa8D65611aA0DdA9c986d0dC5651aF42",
+    "earnContractAddress": "0x33eCa80Faa8D65611aA0DdA9c986d0dC5651aF42",
+    "oracle": "lps",
+    "oracleId": "curve-arb-trirsr",
+    "status": "active",
+    "createdAt": 1718870937,
+    "platformId": "curve",
+    "assets": ["ETH+", "eUSD", "RSR"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-22/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-22/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x45B47fE1bed067de6B4b89e0285E6B571A64c57C",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x45B47fE1bed067de6B4b89e0285E6B571A64c57C",
+            "coins": [
+              "0x18C14C2D707b2212e17d1579789Fc06010cfca23",
+              "0x12275DCB9048680c4Be40942eA4D92c74C63b844",
+              "0xCa5Ca9083702c56b481D1eec86F1776FDbd2e594"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arb-cbeth-weth",
     "name": "cbETH-WETH",
     "type": "cowcentrated",
