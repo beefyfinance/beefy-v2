@@ -1,11 +1,11 @@
-import React, { memo, useCallback, useMemo, useState } from 'react';
-import type { VaultEntity } from '../../../../../data/entities/vault';
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { isCowcentratedVault, type VaultEntity } from '../../../../../data/entities/vault';
 import {
   selectUserHasMerklRewardsForVault,
   selectUserMerklRewardsForChain,
   selectUserMerklRewardsForVault,
 } from '../../../../../data/selectors/rewards';
-import { useAppSelector } from '../../../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import { formatUsd } from '../../../../../../helpers/format';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
@@ -19,6 +19,8 @@ import { RewardList } from './RewardList/RewardList';
 import clsx from 'clsx';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import merklLogo from '../../../../../../images/partners/merkl.svg';
+import { selectWalletAddress } from '../../../../../data/selectors/wallet';
+import { fetchMerklRewardsAction } from '../../../../../data/actions/rewards';
 
 const useStyles = makeStyles(styles);
 
@@ -27,8 +29,21 @@ type MerklProps = {
 };
 
 export const Merkl = memo<MerklProps>(function Merkl({ vaultId }) {
+  const dispatch = useAppDispatch();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const hasRewards = useAppSelector(state => selectUserHasMerklRewardsForVault(state, vaultId));
+  const walletAddress = useAppSelector(selectWalletAddress);
+  const hasRewards = useAppSelector(
+    state => !!walletAddress && selectUserHasMerklRewardsForVault(state, vaultId, walletAddress)
+  );
+  const { chainId } = vault;
+  const isCowcentrated = isCowcentratedVault(vault);
+
+  useEffect(() => {
+    if (walletAddress && isCowcentrated) {
+      dispatch(fetchMerklRewardsAction({ chainId, walletAddress }));
+    }
+  }, [dispatch, chainId, walletAddress, isCowcentrated]);
+
   if (!hasRewards) {
     return null;
   }

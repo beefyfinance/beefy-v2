@@ -249,9 +249,9 @@ export const selectIsMerklRewardsForUserChainRecent = (
   state: BeefyState,
   walletAddress: string,
   chainId: string,
-  recentSeconds: number = 5 * 60
+  recentSeconds: number = 30 * 60
 ) =>
   isLoaderRecent(
     state.ui.dataLoader.byAddress[walletAddress]?.byChainId[chainId]?.merklRewards,
-    recentSeconds || 5 * 60
+    recentSeconds || 30 * 60
   );
