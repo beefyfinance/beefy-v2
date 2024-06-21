@@ -72,8 +72,8 @@ import { BeefyCowcentratedLiquidityVaultAbi } from '../../../config/abi/BeefyCow
 import { selectTransactSelectedQuote, selectTransactSlippage } from '../selectors/transact';
 import { AngleMerklDistributorAbi } from '../../../config/abi/AngleMerklDistributor';
 import { isDefined } from '../utils/array-utils';
-import { fetchAllRewardsAction } from './rewards';
 import { slipAllBy } from '../apis/transact/helpers/amounts';
+import { fetchMerklRewardsAction } from './rewards';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -184,7 +184,18 @@ function txMined(
     }
 
     if (rewards) {
-      dispatch(fetchAllRewardsAction({ walletAddress }));
+      // Wait 60s before checking rewards after tx success
+      setTimeout(
+        () =>
+          dispatch(
+            fetchMerklRewardsAction({
+              walletAddress,
+              chainId,
+              recentSeconds: 60,
+            })
+          ),
+        60 * 1000
+      );
     }
   }
 }

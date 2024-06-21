@@ -120,6 +120,7 @@ export interface ChainIdDataByAddressByChainEntity {
   balance: LoaderState;
   allowance: LoaderState;
   clmHarvests: LoaderState;
+  merklRewards: LoaderState;
 }
 
 export interface GlobalDataByAddressEntity {

@@ -57,6 +57,7 @@ import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
 import type { Draft } from 'immer';
 import { cloneDeep } from 'lodash-es';
+import { fetchMerklRewardsAction } from '../actions/rewards';
 
 const dataLoaderStateInit: LoaderStateIdle = {
   lastFulfilled: undefined,
@@ -85,6 +86,7 @@ const dataLoaderStateInitByAddressByChainId: ChainIdDataByAddressByChainEntity =
   balance: dataLoaderStateInit,
   allowance: dataLoaderStateInit,
   clmHarvests: dataLoaderStateInit,
+  merklRewards: dataLoaderStateInit,
 };
 
 export const initialDataLoaderState: DataLoaderState = {
@@ -397,6 +399,7 @@ export const dataLoaderSlice = createSlice({
       ['balance', 'allowance']
     );
     addByAddressByChainAsyncThunkActions(builder, fetchClmHarvestsForUserChain, ['clmHarvests']);
+    addByAddressByChainAsyncThunkActions(builder, fetchMerklRewardsAction, ['merklRewards']);
 
     addByAddressAsyncThunkActions(builder, fetchWalletTimeline, ['timeline']);
     addByAddressAsyncThunkActions(builder, recalculateDepositedVaultsAction, ['depositedVaults']);

@@ -23,6 +23,8 @@ import { selectVaultById } from '../selectors/vaults';
 import { fetchFees } from '../actions/fees';
 import { selectAreFeesLoaded, selectShouldInitFees } from '../selectors/fees';
 import { selectTransactPendingVaultIdOrUndefined } from '../selectors/transact';
+import { fetchMerklRewardsAction } from '../actions/rewards';
+import { selectWalletAddress } from '../selectors/wallet';
 
 const transactListener = createListenerMiddleware<BeefyState>();
 
@@ -82,6 +84,14 @@ transactListener.startListening({
 
     if (shouldCancel()) {
       return;
+    }
+
+    // TODO this should not be here but its convenient for now since this action is dispatch on vault page
+    {
+      const walletAddress = selectWalletAddress(getState());
+      if (walletAddress) {
+        dispatch(fetchMerklRewardsAction({ chainId: vault.chainId, walletAddress }));
+      }
     }
 
     // Init zap data loaders

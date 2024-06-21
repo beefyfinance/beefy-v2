@@ -32,7 +32,6 @@ import {
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
 } from './zap';
-import { fetchAllRewardsAction } from './rewards';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 
@@ -124,14 +123,6 @@ export async function initAppData(store: BeefyStore) {
 
   // before doing anything else, we need our prices
   await pricesPromise;
-
-  // pnl timeline
-  if (selectIsWalletKnown(store.getState())) {
-    const walletAddress = selectWalletAddress(store.getState());
-    if (walletAddress) {
-      store.dispatch(fetchAllRewardsAction({ walletAddress }));
-    }
-  }
 
   for (const chain of chains) {
     // run in an async block se we don't wait for a slow chain
