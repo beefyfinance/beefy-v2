@@ -1,5 +1,129 @@
 [
   {
+    "id": "camelot-wbtc-weth",
+    "name": "WBTC-WETH",
+    "type": "cowcentrated",
+    "token": "WBTC-WETH",
+    "tokenAddress": "0xd845f7D4f4DeB9Ff5bCf09D140Ef13718F6f6C71",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowCamelotWBTC-WETH",
+    "earnedTokenAddress": "0x168285c55a871fd2219329F680EB0CA8fB8711e4",
+    "earnContractAddress": "0x168285c55a871fd2219329F680EB0CA8fB8711e4",
+    "oracle": "lps",
+    "oracleId": "camelot-wbtc-weth",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-ezeth-weth",
+    "name": "ezETH-WETH",
+    "type": "cowcentrated",
+    "token": "ezETH-WETH",
+    "tokenAddress": "0xaA45265A94C93802BE9511E426933239117E658f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowCamelotezETH-WETH",
+    "earnedTokenAddress": "0x663B0d9ddB6e86cB5E1F87ebCbDafb5A53a45798",
+    "earnContractAddress": "0x663B0d9ddB6e86cB5E1F87ebCbDafb5A53a45798",
+    "oracle": "lps",
+    "oracleId": "camelot-ezeth-weth",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["ezETH", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-weth-usdc",
+    "name": "USDC-WETH",
+    "type": "cowcentrated",
+    "token": "USDC-WETH",
+    "tokenAddress": "0xB1026b8e7276e7AC75410F1fcbbe21796e8f7526",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+    ],
+    "earnedToken": "cowCamelotUSDC-WETH",
+    "earnedTokenAddress": "0xDa3E652A86B3FD320512cadd87D6504fa18aEC65",
+    "earnContractAddress": "0xDa3E652A86B3FD320512cadd87D6504fa18aEC65",
+    "oracle": "lps",
+    "oracleId": "camelot-weth-usdc",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["USDC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-wsteth-weth",
+    "name": "wstETH-WETH",
+    "type": "cowcentrated",
+    "token": "wstETH-WETH",
+    "tokenAddress": "0xdEb89DE4bb6ecf5BFeD581EB049308b52d9b2Da7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x5979D7b546E38E414F7E9822514be443A4800529",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowCamelotwstETH-WETH",
+    "earnedTokenAddress": "0xc4AE801d239da28A9108a5E6caD9F5893Ad93CB2",
+    "earnContractAddress": "0xc4AE801d239da28A9108a5E6caD9F5893Ad93CB2",
+    "oracle": "lps",
+    "oracleId": "camelot-wsteth-weth",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["wstETH", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arb-zro-weth-0.3",
     "name": "ZRO-WETH",
     "type": "cowcentrated",
