@@ -1,5 +1,36 @@
 [
   {
+    "id": "uniswap-cow-arb-zro-weth-0.3",
+    "name": "ZRO-WETH",
+    "type": "cowcentrated",
+    "token": "ZRO-WETH 0.3",
+    "tokenAddress": "0x4CEf551255EC96d89feC975446301b5C4e164C59",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowUniswapArbZRO-WETH-0.3",
+    "earnedTokenAddress": "0x073819cff8229BC2f5Af33012e69C8289779E7aC",
+    "earnContractAddress": "0x073819cff8229BC2f5Af33012e69C8289779E7aC",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-zro-weth-0.3",
+    "status": "active",
+    "createdAt": 1719052734,
+    "platformId": "beefy",
+    "assets": ["ZRO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "0.3",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arb-zro-weth",
     "name": "ZRO-WETH",
     "type": "cowcentrated",
