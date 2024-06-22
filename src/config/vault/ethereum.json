@@ -2037,28 +2037,16 @@
     "tokenDecimals": 18,
     "tokenProviderId": "curve",
     "earnedToken": "mooConvexTriCRV",
-    "earnedTokenAddress": "0x6F962B98803C7977d1cD8c3eeC29dBb7Dc1A7f6A",
-    "earnContractAddress": "0x6F962B98803C7977d1cD8c3eeC29dBb7Dc1A7f6A",
+    "earnedTokenAddress": "0x1d46d2B6A3d83bB33Feb7b8e7EdFb73e9937befD",
+    "earnContractAddress": "0x1d46d2B6A3d83bB33Feb7b8e7EdFb73e9937befD",
     "oracle": "lps",
     "oracleId": "convex-tricrv",
     "status": "active",
-    "createdAt": 1687161060,
+    "createdAt": 1719084155,
     "platformId": "convex",
-    "assets": [
-      "crvUSD",
-      "ETH",
-      "CRV"
-    ],
-    "migrationIds": [
-      "ethereum-convex"
-    ],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_LOW",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "assets": ["crvUSD", "ETH", "CRV"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-4/swap",
     "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-4/deposit",
