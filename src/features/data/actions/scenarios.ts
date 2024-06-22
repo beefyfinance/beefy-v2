@@ -32,7 +32,6 @@ import {
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
 } from './zap';
-import { fetchWalletTimeline } from './analytics';
 import { fetchAllRewardsAction } from './rewards';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
@@ -54,7 +53,7 @@ export const chains = chainsConfig.map(id => ({ id }));
 /**
  * Fetch all necessary information for the home page
  */
-export async function initHomeDataV4(store: BeefyStore) {
+export async function initAppData(store: BeefyStore) {
   const captureFulfill = createFulfilledActionCapturer(store);
 
   // start fetching chain config
@@ -130,7 +129,6 @@ export async function initHomeDataV4(store: BeefyStore) {
   if (selectIsWalletKnown(store.getState())) {
     const walletAddress = selectWalletAddress(store.getState());
     if (walletAddress) {
-      store.dispatch(fetchWalletTimeline({ walletAddress }));
       store.dispatch(fetchAllRewardsAction({ walletAddress }));
     }
   }

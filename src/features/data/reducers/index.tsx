@@ -39,6 +39,7 @@ import { tooltipsSlice } from './tooltips';
 import { addToWalletSlice } from './add-to-wallet';
 import { articlesSlice } from './articles';
 import { rewardsReducer } from './wallet/rewards';
+import { versionReducer } from './ui-version';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -96,6 +97,7 @@ const uiReducer = combineReducers<BeefyState['ui']>({
   treasury: treasurySlice.reducer,
   tooltips: tooltipsSlice.reducer,
   addToWallet: addToWalletSlice.reducer,
+  version: versionReducer,
 });
 
 export const rootReducer = combineReducers<BeefyState>({

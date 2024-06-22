@@ -9,20 +9,19 @@ const useStyles = makeStyles(styles);
 
 export const ExposureChart = memo<ExposureDashboardChartProps>(function ExposureChart({
   title,
-  data,
-  type,
+  ...rest
 }) {
   const classes = useStyles();
 
   return (
     <div className={classes.container}>
-      {title && <div className={classes.title}>{title}</div>}
-      {data && (
+      {title ? <div className={classes.title}>{title}</div> : null}
+      {rest.data ? (
         <div className={classes.infoContainer}>
-          <PieChart data={data} type={type} />
-          <ChartDetails data={data} />
+          <PieChart {...rest} />
+          <ChartDetails data={rest.data} />
         </div>
-      )}
+      ) : null}
     </div>
   );
 });

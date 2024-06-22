@@ -12,7 +12,7 @@ import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenEqual, isTokenNative } from '../entities/token';
 import type { VaultCowcentrated, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
-import { isCowcentratedLiquidityVault, isStandardVault } from '../entities/vault';
+import { isCowcentratedVault, isStandardVault } from '../entities/vault';
 import {
   createWalletActionErrorAction,
   createWalletActionPendingAction,
@@ -69,10 +69,11 @@ import { viemToWeb3Abi } from '../../../helpers/web3';
 import { BeefyCommonBridgeAbi } from '../../../config/abi/BeefyCommonBridgeAbi';
 import { BeefyZapRouterAbi } from '../../../config/abi/BeefyZapRouterAbi';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
-import { selectTransactSelectedQuote } from '../selectors/transact';
+import { selectTransactSelectedQuote, selectTransactSlippage } from '../selectors/transact';
 import { AngleMerklDistributorAbi } from '../../../config/abi/AngleMerklDistributor';
 import { isDefined } from '../utils/array-utils';
 import { fetchAllRewardsAction } from './rewards';
+import { slipAllBy } from '../apis/transact/helpers/amounts';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -477,6 +478,7 @@ const v3Withdraw = (vault: VaultCowcentrated, withdrawAmount: BigNumber, max: bo
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const chain = selectChainById(state, vault.chainId);
+    const slippage = selectTransactSlippage(state);
 
     const contract = new web3.eth.Contract(
       viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
@@ -485,27 +487,21 @@ const v3Withdraw = (vault: VaultCowcentrated, withdrawAmount: BigNumber, max: bo
     const gasPrices = await getGasPriceOptions(chain);
 
     const outputs = selectTransactSelectedQuote(state).outputs;
-
-    const estimatedLiquidity0 = toWeiString(
-      outputs[0].amount.times(0.99),
-      outputs[0].token.decimals
+    const minOutputs = slipAllBy(outputs, slippage);
+    const minOutputsWei = minOutputs.map(output =>
+      toWeiString(output.amount, output.token.decimals)
     );
-    const estimatedLiquidity1 = toWeiString(
-      outputs[1].amount.times(0.99),
-      outputs[1].token.decimals
-    );
-
     const sharesToWithdrawWei = toWeiString(withdrawAmount, 18);
 
     txWallet(dispatch);
     const transaction = (() => {
       if (max) {
         return contract.methods
-          .withdrawAll(estimatedLiquidity0, estimatedLiquidity1)
+          .withdrawAll(minOutputsWei[0], minOutputsWei[1])
           .send({ from: address, ...gasPrices });
       } else {
         return contract.methods
-          .withdraw(sharesToWithdrawWei, estimatedLiquidity0, estimatedLiquidity1)
+          .withdraw(sharesToWithdrawWei, minOutputsWei[0], minOutputsWei[1])
           .send({ from: address, ...gasPrices });
       }
     })();
@@ -1309,14 +1305,14 @@ function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
       }
     }
   }
-  if (isCowcentratedLiquidityVault(vault)) {
+  if (isCowcentratedVault(vault)) {
     vault.depositTokenAddresses.forEach(tokenAddress => {
       tokens.push(selectTokenByAddress(state, vault.chainId, tokenAddress));
     });
   }
 
   // clm deposit tokens aren't erc20 and don't share balanceOf
-  if (!isCowcentratedLiquidityVault(vault)) {
+  if (!isCowcentratedVault(vault)) {
     tokens.push(selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress));
   }
   tokens.push(selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress));

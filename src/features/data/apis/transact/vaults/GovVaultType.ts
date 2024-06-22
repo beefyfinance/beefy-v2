@@ -1,4 +1,4 @@
-import { isGovVault, type VaultEntity, type VaultGov } from '../../../entities/vault';
+import { isGovVault, type VaultGov } from '../../../entities/vault';
 import type { BeefyState, GetStateFn } from '../../../../../redux-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import type {
@@ -42,7 +42,7 @@ export class GovVaultType implements IGovVaultType {
   public readonly depositToken: TokenEntity;
   protected readonly getState: GetStateFn;
 
-  constructor(vault: VaultEntity, getState: GetStateFn) {
+  constructor(vault: VaultGov, getState: GetStateFn) {
     if (!isGovVault(vault)) {
       throw new Error('Vault is not a gov vault');
     }
@@ -54,8 +54,9 @@ export class GovVaultType implements IGovVaultType {
   }
 
   protected calculateDepositFee(input: TokenAmount, state: BeefyState): BigNumber {
-    const { deposit: depositFeePercent } = selectFeesByVaultId(state, this.vault.id);
-    return depositFeePercent && depositFeePercent > 0
+    const fees = selectFeesByVaultId(state, this.vault.id);
+    const depositFeePercent = fees?.deposit || 0;
+    return depositFeePercent > 0
       ? input.amount
           .multipliedBy(depositFeePercent)
           .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR)
@@ -63,7 +64,8 @@ export class GovVaultType implements IGovVaultType {
   }
 
   protected calculateWithdrawFee(input: TokenAmount, state: BeefyState): BigNumber {
-    const { withdraw: withdrawFeePercent } = selectFeesByVaultId(state, this.vault.id);
+    const fees = selectFeesByVaultId(state, this.vault.id);
+    const withdrawFeePercent = fees?.withdraw || 0;
     return withdrawFeePercent > 0
       ? input.amount
           .multipliedBy(withdrawFeePercent)

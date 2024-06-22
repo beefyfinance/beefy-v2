@@ -29,13 +29,14 @@ export const styles = (theme: Theme) => ({
   },
   inputs: {
     display: 'flex',
-    flexWrap: 'nowrap' as const,
-    gap: '12px',
-  },
-  v3Inputs: {
-    display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '24px',
+  },
+  input: {},
+  amount: {
+    display: 'flex',
+    flexWrap: 'nowrap' as const,
+    gap: '12px',
   },
   links: {
     marginTop: '12px',

@@ -22,7 +22,7 @@ export const ChartDetails = memo<ChartDetailsProps>(function ChartDetails({ data
         <div key={item.key} className={classes.item}>
           <div className={classes.flex}>
             <div
-              style={{ backgroundColor: CHART_COLORS[i % data.length] }}
+              style={{ backgroundColor: CHART_COLORS[i % CHART_COLORS.length] }}
               className={classes.square}
             />
             <div className={classes.label}>{item.label ?? item.key}</div>

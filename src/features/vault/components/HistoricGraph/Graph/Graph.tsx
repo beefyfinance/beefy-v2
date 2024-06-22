@@ -1,5 +1,4 @@
 import React, { memo, useCallback, useMemo } from 'react';
-import type { TooltipProps } from 'recharts';
 import {
   Area,
   Bar,
@@ -13,10 +12,9 @@ import {
 } from 'recharts';
 import type { VaultEntity } from '../../../../data/entities/vault';
 import type { TokenEntity } from '../../../../data/entities/token';
-import type { ChartStat } from '../../../../data/reducers/historical-types';
 import type { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
 import type { Theme } from '@material-ui/core';
+import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { format, fromUnixTime } from 'date-fns';
 import { XAxisTick } from '../../../../../components/XAxisTick';
 import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../helpers/graph';
@@ -26,28 +24,41 @@ import {
   formatUsd,
 } from '../../../../../helpers/format';
 import type { LineTogglesState } from '../LineToggles';
-import { TooltipContent } from '../TooltipContent';
+import { type BaseTooltipProps, TooltipContent } from '../TooltipContent';
 import { useChartData } from './useChartData';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../store';
 import { selectVaultById } from '../../../../data/selectors/vaults';
 import { max as lodashMax } from 'lodash-es';
+import type { ChartStat } from '../types';
 
 const useStyles = makeStyles(styles);
 
-export type ChartProp = {
+export type ChartProp<TStat extends ChartStat> = {
   vaultId: VaultEntity['id'];
   oracleId: TokenEntity['oracleId'];
-  stat: ChartStat;
+  stat: TStat;
   bucket: ApiTimeBucket;
   toggles: LineTogglesState;
 };
-export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, bucket, toggles }) {
+
+export const Graph = memo(function Graph<TStat extends ChartStat>({
+  vaultId,
+  oracleId,
+  stat,
+  bucket,
+  toggles,
+}: ChartProp<TStat>) {
   const classes = useStyles();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const vaultType = vault.type;
-  const { min, max, avg, data } = useChartData(stat, vaultId, oracleId, bucket);
+  const chartData = useChartData(stat, vaultId, oracleId, bucket);
+  if (!chartData) {
+    throw new Error('No chart data found.');
+  }
+
+  const { min, max, avg, data } = chartData;
 
   const chartMargin = useMemo(() => {
     return { top: 14, right: isMobile ? 16 : 24, bottom: 0, left: isMobile ? 16 : 24 };
@@ -85,20 +96,21 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
     return mapRangeToTicks(min, max + diff);
   }, [min, max, diff]);
 
-  const isCowcentrated = useMemo(() => stat === 'clm', [stat]);
+  const isClm = stat === 'clm';
+
   const tooltipContentCreator = useCallback(
-    (props: TooltipProps<number, string>) => (
-      <TooltipContent
+    (props: BaseTooltipProps<TStat>) => (
+      <TooltipContent<TStat>
         {...props}
         stat={stat}
         bucket={bucket}
-        toggles={isCowcentrated ? { movingAverage: false, average: false } : toggles}
+        toggles={isClm ? { movingAverage: false, average: false } : toggles}
         valueFormatter={yTickFormatter}
         avg={avg}
         vaultType={vaultType}
       />
     ),
-    [stat, bucket, isCowcentrated, toggles, yTickFormatter, avg, vaultType]
+    [stat, bucket, isClm, toggles, yTickFormatter, avg, vaultType]
   );
 
   return (
@@ -111,7 +123,7 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
           margin={chartMargin}
           barCategoryGap={'30%'}
         >
-          <CartesianGrid strokeDasharray="2 2" vertical={!isCowcentrated} stroke="#363B63" />
+          <CartesianGrid strokeDasharray="2 2" vertical={!isClm} stroke="#363B63" />
           <XAxis
             dataKey="t"
             tickMargin={10}
@@ -126,14 +138,14 @@ export const Graph = memo<ChartProp>(function Graph({ vaultId, oracleId, stat, b
             stroke="#F5F5FF"
             strokeWidth={1.5}
             fill="rgba(255, 255, 255, 0.05)"
-            fillOpacity={isCowcentrated ? 0 : 100}
+            fillOpacity={isClm ? 0 : 100}
           />
-          {isCowcentrated ? <Bar dataKey="ranges" fill="#6A71AE4C" /> : null}
+          {isClm ? <Bar dataKey="ranges" fill="#6A71AE4C" /> : null}
           <Tooltip content={tooltipContentCreator} wrapperStyle={{ outline: 'none' }} />
-          {!isCowcentrated && toggles.movingAverage ? (
+          {!isClm && toggles.movingAverage ? (
             <Area dataKey="ma" stroke="#5C70D6" strokeWidth={1.5} fill="none" />
           ) : null}
-          {!isCowcentrated && toggles.average ? (
+          {!isClm && toggles.average ? (
             <ReferenceLine y={avg} stroke="#4DB258" strokeWidth={1.5} strokeDasharray="3 3" />
           ) : null}
           <YAxis

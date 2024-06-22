@@ -1,5 +1,4 @@
 import type { BeefyState } from '../../../redux-types';
-import { fetchWalletTimeline } from '../actions/analytics';
 import { createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit';
 import {
   accountHasChanged,
@@ -23,6 +22,9 @@ const hasWalletChanged = isAnyOf(
 
 const walletListener = createListenerMiddleware<BeefyState>();
 
+/**
+ * When connected wallet address changes, fetch data for the new wallet address
+ */
 walletListener.startListening({
   matcher: hasWalletChanged,
   effect: async (
@@ -42,7 +44,6 @@ walletListener.startListening({
         for (const chainId of chains) {
           dispatch(fetchAllBalanceAction({ chainId, walletAddress }));
         }
-        dispatch(fetchWalletTimeline({ walletAddress }));
         dispatch(fetchAllRewardsAction({ walletAddress }));
       }
     }

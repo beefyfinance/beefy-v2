@@ -5,10 +5,8 @@ import React, { memo, useEffect, useMemo } from 'react';
 import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectTransactDualInputAmounts,
-  selectTransactDualMaxAmounts,
-  selectTransactInputAmount,
-  selectTransactInputMax,
+  selectTransactInputAmounts,
+  selectTransactInputMaxes,
   selectTransactMode,
   selectTransactQuoteError,
   selectTransactQuoteStatus,
@@ -23,19 +21,21 @@ import { transactFetchQuotesIfNeeded } from '../../../../../data/actions/transac
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { TokenAmountIcon, TokenAmountIconLoader } from '../TokenAmountIcon/TokenAmountIcon';
 import {
-  isCowcentratedDepositQuote,
-  isZapQuote,
   type CowcentratedVaultDepositQuote,
+  type CowcentratedZapDepositQuote,
+  isCowcentratedDepositQuote,
+  isCowcentratedVaultWithdrawQuote,
+  isZapQuote,
 } from '../../../../../data/apis/transact/transact-types';
 import { ZapRoute } from '../ZapRoute';
 import { QuoteTitleRefresh } from '../QuoteTitleRefresh';
 import { AlertError } from '../../../../../../components/Alerts';
-import { TransactMode, TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
+import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { ZapSlippage } from '../ZapSlippage';
 import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
-import { isCowcentratedLiquidityVault } from '../../../../../data/entities/vault';
+import { isCowcentratedVault } from '../../../../../data/entities/vault';
 
 const useStyles = makeStyles(styles);
 
@@ -49,10 +49,8 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   const mode = useAppSelector(selectTransactMode);
   const selectionId = useAppSelector(selectTransactSelectedSelectionId);
   const selection = useAppSelector(selectTransactSelected);
-  const singleInputAmount = useAppSelector(selectTransactInputAmount);
-  const dualInputAmounts = useAppSelector(selectTransactDualInputAmounts);
-  const singleMaxAmount = useAppSelector(selectTransactInputMax);
-  const dualMaxAmounts = useAppSelector(selectTransactDualMaxAmounts);
+  const inputAmounts = useAppSelector(selectTransactInputAmounts);
+  const inputMaxes = useAppSelector(selectTransactInputMaxes);
   const chainId = useAppSelector(selectTransactSelectedChainId);
   const status = useAppSelector(selectTransactQuoteStatus);
   const debouncedFetchQuotes = useMemo(
@@ -72,13 +70,8 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   );
 
   useEffect(() => {
-    debouncedFetchQuotes(
-      dispatch,
-      selection && selection.tokens.length === 2 && mode === TransactMode.Deposit
-        ? dualInputAmounts
-        : [singleInputAmount]
-    );
-  }, [dispatch, mode, chainId, selectionId, selection, singleInputAmount, dualInputAmounts, singleMaxAmount, dualMaxAmounts, debouncedFetchQuotes]);
+    debouncedFetchQuotes(dispatch, inputAmounts);
+  }, [dispatch, mode, chainId, selectionId, selection, inputAmounts, inputMaxes, debouncedFetchQuotes]);
 
   if (status === TransactStatus.Idle) {
     return <QuoteIdle title={title} className={className} />;
@@ -101,14 +94,13 @@ const QuoteIdle = memo<TransactQuoteProps>(function QuoteIdle({ title, className
   const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const transactMode = useAppSelector(selectTransactMode);
 
   return (
     <div className={clsx(classes.container, classes.disabled, className)}>
       <QuoteTitleRefresh title={title} enableRefresh={true} />
       <div className={classes.tokenAmounts}>
-        {isCowcentratedLiquidityVault(vault) && transactMode === TransactMode.Withdraw ? (
-          <>
+        {isCowcentratedVault(vault) ? (
+          <div className={classes.amountReturned}>
             {vault.depositTokenAddresses.map(tokenAddress => {
               return (
                 <TokenAmountIcon
@@ -116,10 +108,11 @@ const QuoteIdle = memo<TransactQuoteProps>(function QuoteIdle({ title, className
                   amount={BIG_ZERO}
                   chainId={vault.chainId}
                   tokenAddress={tokenAddress}
+                  className={classes.fullWidth}
                 />
               );
             })}
-          </>
+          </div>
         ) : (
           <TokenAmountIcon
             amount={BIG_ZERO}
@@ -173,6 +166,7 @@ const QuoteLoaded = memo(function QuoteLoaded() {
   const classes = useStyles();
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isZap = isZapQuote(quote);
+  const needsSlippage = isZap || isCowcentratedVaultWithdrawQuote(quote);
 
   return (
     <>
@@ -207,12 +201,8 @@ const QuoteLoaded = memo(function QuoteLoaded() {
           </div>
         </div>
       ) : null}*/}
-      {isZap ? (
-        <>
-          <ZapRoute quote={quote} className={classes.route} />
-          <ZapSlippage className={classes.slippage} />
-        </>
-      ) : null}
+      {isZap ? <ZapRoute quote={quote} className={classes.route} /> : null}
+      {needsSlippage ? <ZapSlippage className={classes.slippage} /> : null}
     </>
   );
 });
@@ -220,25 +210,24 @@ const QuoteLoaded = memo(function QuoteLoaded() {
 export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
   quote,
 }: {
-  quote: CowcentratedVaultDepositQuote;
+  quote: CowcentratedVaultDepositQuote | CowcentratedZapDepositQuote;
 }) {
   const { t } = useTranslation();
   const shares = quote.outputs[0];
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
   const classes = useStyles();
 
   return (
     <div className={classes.cowcentratedDepositContainer}>
       <div className={classes.amountReturned}>
-        {quote.amountsUsed.map(tokenReturned => {
+        {quote.used.map(used => {
           return (
             <TokenAmountIcon
-              key={tokenReturned.token.id}
-              amount={tokenReturned.amount}
-              chainId={tokenReturned.token.chainId}
-              tokenAddress={tokenReturned.token.address}
+              key={used.token.id}
+              amount={used.amount}
+              chainId={used.token.chainId}
+              tokenAddress={used.token.address}
               showSymbol={false}
               className={classes.fullWidth}
               tokenImageSize={28}
@@ -257,13 +246,13 @@ export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
           className={classes.mainLp}
         />
         <div className={classes.amountReturned}>
-          {quote.amountsReturned.map((tokenReturned, i) => {
+          {quote.position.map((position, i) => {
             return (
               <TokenAmountIcon
-                key={tokenReturned.token.id}
-                amount={tokenReturned.amount}
-                chainId={tokenReturned.token.chainId}
-                tokenAddress={tokenReturned.token.address}
+                key={position.token.id}
+                amount={position.amount}
+                chainId={position.token.chainId}
+                tokenAddress={position.token.address}
                 className={clsx(classes.fullWidth, classes[`borderRadiusToken${i}`])}
                 showSymbol={false}
                 tokenImageSize={28}

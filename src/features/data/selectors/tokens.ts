@@ -5,20 +5,19 @@ import type { TokenEntity } from '../entities/token';
 import { isTokenErc20, isTokenNative } from '../entities/token';
 import { selectAllChainIds, selectChainById } from './chains';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { selectIsAddressBookLoaded } from './data-loader';
-import type { VaultEntity } from '../entities/vault';
+import { selectIsAddressBookLoaded, selectIsGlobalDataAvailable } from './data-loader';
+import { isGovVault, type VaultEntity } from '../entities/vault';
 import { createCachedSelector } from 're-reselect';
-import { selectVaultById } from './vaults';
+import { selectCowcentratedVaultById, selectVaultById } from './vaults';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
-import {
-  selectHistoricalPriceBucketData,
-  selectHistoricalPriceBucketIsLoaded,
-  selectHistoricalPriceBucketStatus,
-} from './historical';
 import { orderBy } from 'lodash-es';
 import BigNumber from 'bignumber.js';
 import { fromUnixTime, sub } from 'date-fns';
-import { TIME_BUCKETS } from '../../vault/components/HistoricGraph/utils';
+
+import {
+  getDataApiBucket,
+  getDataApiBucketsLongerThan,
+} from '../apis/beefy/beefy-data-api-helpers';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -97,6 +96,14 @@ export const selectTokensByChainId = (state: BeefyState, chainId: ChainEntity['i
 export const selectDepositTokenByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
   return selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+};
+
+export const selectShareTokenByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const vault = selectVaultById(state, vaultId);
+  if (isGovVault(vault)) {
+    return undefined;
+  }
+  return selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
 };
 
 export const selectErc20TokenByAddress = (
@@ -234,6 +241,10 @@ export const selectTokenPriceByTokenOracleId = createCachedSelector(
 export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
   state.entities.tokens.breakdown.byOracleId[oracleId];
 
+export const selectLpBreakdownForVault = (state: BeefyState, vault: VaultEntity) => {
+  return selectLpBreakdownByTokenAddress(state, vault.chainId, vault.depositTokenAddress);
+};
+
 export const selectLpBreakdownByTokenAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
@@ -258,7 +269,7 @@ export const selectHasBreakdownDataByOracleId = (
   oracleId: TokenEntity['oracleId'],
   chainId: ChainEntity['id']
 ) => {
-  const isPricesLoaded = state.ui.dataLoader.global.prices.alreadyLoadedOnce;
+  const isPricesLoaded = selectIsGlobalDataAvailable(state, 'prices');
   const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
   const breakdown = selectLpBreakdownByOracleId(state, oracleId);
 
@@ -319,40 +330,75 @@ export const selectWrappedToNativeSymbolOrTokenSymbol = createCachedSelector(
 export const selectPriceWithChange = createCachedSelector(
   (state: BeefyState, oracleId: string, _bucket: ApiTimeBucket) =>
     selectTokenPriceByTokenOracleId(state, oracleId),
-  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
-    selectHistoricalPriceBucketStatus(state, oracleId, bucket),
-  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
-    selectHistoricalPriceBucketIsLoaded(state, oracleId, bucket),
-  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) =>
-    selectHistoricalPriceBucketData(state, oracleId, bucket),
-  (state: BeefyState, oracleId: string, bucket: ApiTimeBucket) => TIME_BUCKETS[bucket].range,
-  (price, status, loaded, data, range) => {
-    if (!price) {
+  (state: BeefyState, oracleId: string, _bucket: ApiTimeBucket) =>
+    state.biz.historical.prices.byOracleId[oracleId],
+  (_state: BeefyState, _oracleId: string, bucket: ApiTimeBucket) => bucket,
+  (price, oracle, requestedBucket) => {
+    // wait for price, or load if no buckets have been requested yet
+    if (!price || !oracle) {
       return {
+        bucket: requestedBucket,
         price: undefined,
+        shouldLoad: !!price,
+        previousPrice: undefined,
+        previousDate: undefined,
+      };
+    }
+
+    const thisBucket = getDataApiBucket(requestedBucket);
+    const possibleBuckets = [thisBucket].concat(getDataApiBucketsLongerThan(requestedBucket));
+    const readyBucket = possibleBuckets.find(bucket => {
+      const state = oracle.byTimebucket[bucket.id];
+      return state && state.alreadyFulfilled && state.data && state.data.length > 0;
+    });
+
+    // if any of the buckets contains data, we can use it
+    // (if this bucket doesn't contain the data we want, neither will any other)
+    if (readyBucket) {
+      const { range } = readyBucket;
+      const data = oracle.byTimebucket[readyBucket.id]!.data!; // we checked we have data already
+      const oneRangeAgo = Math.floor(sub(new Date(), range).getTime() / 1000);
+      const oneDayAgoPricePoint = orderBy(data, 't', 'asc').find(point => point.t > oneRangeAgo);
+
+      if (oneDayAgoPricePoint && oneDayAgoPricePoint.v) {
+        const previousPrice = new BigNumber(oneDayAgoPricePoint.v);
+        const previousDate = fromUnixTime(oneDayAgoPricePoint.t);
+        return { bucket: readyBucket.id, price, shouldLoad: false, previousPrice, previousDate };
+      }
+
+      return {
+        bucket: readyBucket.id,
+        price,
         shouldLoad: false,
         previousPrice: undefined,
         previousDate: undefined,
       };
     }
 
-    if (!loaded && status === 'idle') {
-      return { price, shouldLoad: true, previousPrice: undefined, previousDate: undefined };
+    const pendingBucket = possibleBuckets.find(bucket => {
+      const state = oracle.byTimebucket[bucket.id];
+      return state && state.status === 'pending';
+    });
+
+    // if a bucket is pending, wait on it instead
+    if (pendingBucket) {
+      return {
+        bucket: pendingBucket.id,
+        price,
+        shouldLoad: false,
+        previousPrice: undefined,
+        previousDate: undefined,
+      };
     }
 
-    if (!loaded || !data || data.length === 0) {
-      return { price, shouldLoad: false, previousPrice: undefined, previousDate: undefined };
-    }
-
-    const oneRangeAgo = Math.floor(sub(new Date(), range).getTime() / 1000);
-    const oneDayAgoPricePoint = orderBy(data, 't', 'asc').find(point => point.t > oneRangeAgo);
-    if (!oneDayAgoPricePoint || !oneDayAgoPricePoint.v) {
-      return { price, shouldLoad: false, previousPrice: undefined, previousDate: undefined };
-    }
-
-    const previousPrice = new BigNumber(oneDayAgoPricePoint.v);
-    const previousDate = fromUnixTime(oneDayAgoPricePoint.t);
-    return { price, shouldLoad: false, previousPrice, previousDate };
+    // no bucket is pending, load the requested one
+    return {
+      bucket: requestedBucket,
+      price,
+      shouldLoad: true,
+      previousPrice: undefined,
+      previousDate: undefined,
+    };
   }
 )((_state: BeefyState, oracleId: string, bucket: ApiTimeBucket) => `${oracleId}-${bucket}`);
 
@@ -384,14 +430,21 @@ export const selectSupportedSwapTokensForChainAggregatorHavingPrice = (
   );
 };
 
-export const selectVaultTokenSymbols = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const vault = selectVaultById(state, vaultId);
-  return vault.assetIds.map(assetId => {
-    const token = selectTokenByIdOrUndefined(state, vault.chainId, assetId);
+export const selectVaultTokenSymbols = createCachedSelector(
+  selectVaultById,
+  (state: BeefyState) => state.entities.tokens.byChainId,
+  (vault, tokensByChainId) => {
+    return vault.assetIds.map(assetId => {
+      const address = tokensByChainId[vault.chainId]?.byId[assetId];
+      if (!address) {
+        return assetId;
+      }
 
-    return token?.symbol || assetId;
-  });
-};
+      const token = tokensByChainId[vault.chainId]?.byAddress[address];
+      return token?.symbol || assetId;
+    });
+  }
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectCurrentCowcentratedRangesByVaultId = (
   state: BeefyState,
@@ -404,4 +457,38 @@ export const selectCurrentCowcentratedRangesByVaultId = (
       priceRangeMin: BIG_ZERO,
     }
   );
+};
+
+export const selectCowcentratedVaultDepositTokens = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => {
+  const vault = selectCowcentratedVaultById(state, vaultId);
+  const token0 = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddresses[0]);
+  const token1 = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddresses[1]);
+
+  return {
+    token0,
+    token1,
+  };
+};
+
+export const selectCowcentratedVaultDepositTokensWithPrices = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => {
+  const { token1, token0 } = selectCowcentratedVaultDepositTokens(state, vaultId);
+  const token0Price = selectTokenPriceByTokenOracleId(state, token0.oracleId);
+  const token1Price = selectTokenPriceByTokenOracleId(state, token1.oracleId);
+
+  return {
+    token0: {
+      ...token0,
+      price: token0Price,
+    },
+    token1: {
+      ...token1,
+      price: token1Price,
+    },
+  };
 };

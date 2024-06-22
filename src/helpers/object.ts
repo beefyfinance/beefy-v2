@@ -37,3 +37,17 @@ type Keys<T> = (keyof T)[];
 export function keys<T extends Record<string, unknown>>(input: T): Keys<T> {
   return Object.keys(input) as Keys<T>;
 }
+
+export function fromKeys<K extends string, V>(arr: K[], value: V): Record<K, V> {
+  return arr.reduce((acc, key) => {
+    acc[key] = value;
+    return acc;
+  }, {} as Record<K, V>);
+}
+
+export function fromKeysBy<K extends string, V>(arr: K[], valueFn: (key: K) => V): Record<K, V> {
+  return arr.reduce((acc, key) => {
+    acc[key] = valueFn(key);
+    return acc;
+  }, {} as Record<K, V>);
+}

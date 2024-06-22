@@ -1,11 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyDataApi } from '../apis/instances';
-import {
-  isCowcentratedLiquidityVault,
-  type VaultCowcentrated,
-  type VaultEntity,
-} from '../entities/vault';
+import { isCowcentratedVault, type VaultCowcentrated, type VaultEntity } from '../entities/vault';
 import type {
   ApiChartData,
   ApiCowcentratedChartData,
@@ -17,9 +13,10 @@ import { selectTokenByAddress } from '../selectors/tokens';
 import type { TokenEntity } from '../entities/token';
 import type { ThunkAction } from 'redux-thunk';
 import type { Action } from 'redux';
-import type { ChartStat } from '../reducers/historical-types';
 import type { ChainEntity } from '../entities/chain';
-import BigNumber from 'bignumber.js';
+import { featureFlag_simulateBeefyApiError } from '../utils/feature-flags';
+import { sleep } from '../utils/async-utils';
+import type { ChartStat } from '../../vault/components/HistoricGraph/types';
 
 export interface HistoricalRangesPayload {
   vault: VaultEntity;
@@ -44,8 +41,8 @@ export const fetchHistoricalRanges = createAsyncThunk<
   const ranges = await api.getAvailableRanges(
     vaultId,
     depositToken.oracleId,
-    isCowcentratedLiquidityVault(vault) ? vault.earnContractAddress : undefined,
-    isCowcentratedLiquidityVault(vault) ? vault.chainId : undefined
+    isCowcentratedVault(vault) ? vault.earnContractAddress : undefined,
+    isCowcentratedVault(vault) ? vault.chainId : undefined
   );
 
   return { vault, oracleId: depositToken.oracleId, ranges };
@@ -105,9 +102,13 @@ export const fetchHistoricalPrices = createAsyncThunk<
   HistoricalPricesParams,
   { state: BeefyState }
 >('historical/fetchHistoricalPrices', async ({ oracleId, bucket }) => {
+  if (featureFlag_simulateBeefyApiError('historical-prices')) {
+    await sleep(5000);
+    throw new Error('Simulated beefy data api error');
+  }
+
   const api = await getBeefyDataApi();
   const data = await api.getPriceChartData(oracleId, bucket);
-
   return { data };
 });
 
@@ -138,15 +139,12 @@ export const fetchHistoricalCowcentratedRanges = createAsyncThunk<
         : ('1h_1M' as ApiTimeBucket);
     const rawData = await api.getCowcentratedRangesChartData(vaultAddress, bucketToUse, chainId);
 
-    const token0 = selectTokenByAddress(state, chainId, vault.depositTokenAddresses[0]);
-    const token1 = selectTokenByAddress(state, chainId, vault.depositTokenAddresses[1]);
-
     const data = rawData.map(item => {
       return {
         ...item,
-        v: Number(decimalTranslateFunction(item.v, token0.decimals, token1.decimals)),
-        min: Number(decimalTranslateFunction(item.min, token0.decimals, token1.decimals)),
-        max: Number(decimalTranslateFunction(item.max, token0.decimals, token1.decimals)),
+        v: Number(item.v),
+        min: Number(item.min),
+        max: Number(item.max),
       };
     }) satisfies ApiCowcentratedChartData;
 
@@ -175,7 +173,3 @@ export function fetchHistoricalStat(
 
   throw new Error(`Unknown stat: ${stat}`);
 }
-
-const decimalTranslateFunction = (value: number, decimal0: number, decimal1: number) => {
-  return new BigNumber(value).shiftedBy(decimal0 - decimal1).toString(10);
-};

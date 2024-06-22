@@ -141,5 +141,5 @@ export const fetchAllCowcentratedVaultRanges = createAsyncThunk<
 >('tokens/fetchAllCowcentratedVaultRanges', async () => {
   const api = await getBeefyApi();
   const data = await api.getAllCowcentratedVaultRanges();
-  return { ...data };
+  return Object.assign({}, ...Object.values(data));
 });

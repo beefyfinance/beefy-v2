@@ -33,3 +33,14 @@ type Web3ConvertType<T> = T extends Array<infer U>
 export type AsWeb3Result<T extends object> = Prettify<{
   [key in keyof T]: Web3ConvertType<T[key]>;
 }>;
+
+export type KeysOfUnion<T> = T extends unknown ? keyof T : never;
+
+export type EnsureKeys<
+  TKey extends string,
+  TObj extends {
+    [key in TKey]: unknown;
+  }
+> = {
+  [key in TKey]: TObj[key];
+};

@@ -158,7 +158,7 @@ export function isStandardVault(vault: VaultEntity): vault is VaultStandard {
   return vault.type === 'standard';
 }
 
-export function isCowcentratedLiquidityVault(vault: VaultEntity): vault is VaultCowcentrated {
+export function isCowcentratedVault(vault: VaultEntity): vault is VaultCowcentrated {
   return vault.type === 'cowcentrated';
 }
 
@@ -175,7 +175,7 @@ export function isVaultPaused(vault: VaultEntity) {
 }
 
 export function isVaultEarningPoints(vault: VaultEntity) {
-  return isStandardVault(vault) && vault.earningPoints === true;
+  return !isGovVault(vault) && vault.earningPoints === true;
 }
 
 export function isVaultPausedOrRetired(vault: VaultEntity) {

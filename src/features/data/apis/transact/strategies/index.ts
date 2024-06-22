@@ -27,6 +27,9 @@ export const strategyBuildersById = {
   curve: makeLazyLoader(async () => (await import('./curve/CurveStrategy')).CurveStrategy),
   gamma: makeLazyLoader(async () => (await import('./gamma/GammaStrategy')).GammaStrategy),
   conic: makeLazyLoader(async () => (await import('./conic/ConicStrategy')).ConicStrategy),
+  cowcentrated: makeLazyLoader(
+    async () => (await import('./cowcentrated/CowcentratedStrategy')).CowcentratedStrategy
+  ),
 } as const satisfies Record<
   StrategyOptions['strategyId'],
   (options: StrategyOptions, helpers: ZapTransactHelpers, state: BeefyState) => Promise<IStrategy>

@@ -2,7 +2,7 @@ import type { ActionReducerMapBuilder, AsyncThunk } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllAllowanceAction } from '../actions/allowance';
 import { fetchApyAction } from '../actions/apy';
-import { fetchAllBalanceAction } from '../actions/balance';
+import { fetchAllBalanceAction, recalculateDepositedVaultsAction } from '../actions/balance';
 import { fetchAllBoosts, initiateBoostForm } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
@@ -20,10 +20,10 @@ import {
   initWallet,
 } from '../actions/wallet';
 import {
-  fetchZapSwapAggregatorsAction,
-  fetchZapConfigsAction,
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
+  fetchZapConfigsAction,
+  fetchZapSwapAggregatorsAction,
 } from '../actions/zap';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters';
 import { fetchBridgeConfig } from '../actions/bridge';
@@ -36,32 +36,33 @@ import type {
   DataLoaderState,
   GlobalDataByAddressEntity,
   LoaderState,
+  LoaderStateFulfilled,
+  LoaderStateIdle,
+  LoaderStatePending,
+  LoaderStateRejected,
 } from './data-loader-types';
 import { errorToString } from '../../../helpers/format';
 import { fetchTreasury } from '../actions/treasury';
-import { fetchWalletTimeline } from '../actions/analytics';
+import {
+  fetchClmHarvestsForUser,
+  fetchClmHarvestsForUserChain,
+  fetchWalletTimeline,
+  initDashboardByAddress,
+} from '../actions/analytics';
 import { fetchActiveProposals } from '../actions/proposal';
 import { fetchBridges } from '../actions/bridges';
 import { fetchAllMigrators } from '../actions/migrator';
 import { fetchLastArticle } from '../actions/articles';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
+import type { Draft } from 'immer';
+import { cloneDeep } from 'lodash-es';
 
-const dataLoaderStateInit: LoaderState = {
-  alreadyLoadedOnce: false,
-  status: 'init',
-  error: null,
-};
-
-const dataLoaderStateFulfilled: LoaderState = {
-  alreadyLoadedOnce: true,
-  status: 'fulfilled',
-  error: null,
-};
-
-const dataLoaderStatePending: LoaderState = {
-  alreadyLoadedOnce: false,
-  status: 'pending',
+const dataLoaderStateInit: LoaderStateIdle = {
+  lastFulfilled: undefined,
+  lastDispatched: undefined,
+  lastRejected: undefined,
+  status: 'idle',
   error: null,
 };
 
@@ -70,16 +71,20 @@ const dataLoaderStateInitByChainId: ChainIdDataEntity = {
   addressBook: dataLoaderStateInit,
 };
 
-const dataLoaderStateInitByAddress = {
+const dataLoaderStateInitByAddress: DataLoaderState['byAddress'][string] = {
   byChainId: {},
   global: {
     timeline: dataLoaderStateInit,
+    depositedVaults: dataLoaderStateInit,
+    dashboard: dataLoaderStateInit,
+    clmHarvests: dataLoaderStateInit,
   },
 };
 
 const dataLoaderStateInitByAddressByChainId: ChainIdDataByAddressByChainEntity = {
   balance: dataLoaderStateInit,
   allowance: dataLoaderStateInit,
+  clmHarvests: dataLoaderStateInit,
 };
 
 export const initialDataLoaderState: DataLoaderState = {
@@ -122,6 +127,36 @@ export const initialDataLoaderState: DataLoaderState = {
   byAddress: {},
 };
 
+function makePendingState(existing: LoaderState | undefined): LoaderStatePending {
+  return {
+    lastDispatched: Date.now(),
+    lastFulfilled: existing?.lastFulfilled || undefined,
+    lastRejected: existing?.lastRejected || undefined,
+    status: 'pending',
+    error: null,
+  };
+}
+
+function makeRejectedState(existing: LoaderState | undefined, error: string): LoaderStateRejected {
+  return {
+    lastDispatched: existing?.lastDispatched || Date.now(),
+    lastFulfilled: existing?.lastFulfilled || undefined,
+    lastRejected: Date.now(),
+    status: 'rejected',
+    error,
+  };
+}
+
+function makeFulfilledState(existing: LoaderState | undefined): LoaderStateFulfilled {
+  return {
+    lastDispatched: existing?.lastDispatched || Date.now(),
+    lastFulfilled: Date.now(),
+    lastRejected: existing?.lastRejected || undefined,
+    status: 'fulfilled',
+    error: null,
+  };
+}
+
 /**
  * Handling those async actions is very generic
  * Use a helper function to handle each action state
@@ -133,19 +168,12 @@ function addGlobalAsyncThunkActions(
   openNetworkModalOnReject: boolean = false
 ) {
   builder.addCase(action.pending, sliceState => {
-    sliceState.global[stateKey] = {
-      ...dataLoaderStatePending,
-      alreadyLoadedOnce: sliceState.global[stateKey].alreadyLoadedOnce,
-    };
+    sliceState.global[stateKey] = makePendingState(sliceState.global[stateKey]);
   });
   builder.addCase(action.rejected, (sliceState, action) => {
     const msg = errorToString(action.error);
     // here, maybe put an error message
-    sliceState.global[stateKey] = {
-      status: 'rejected',
-      error: msg,
-      alreadyLoadedOnce: sliceState.global[stateKey].alreadyLoadedOnce,
-    };
+    sliceState.global[stateKey] = makeRejectedState(sliceState.global[stateKey], msg);
 
     // something got rejected, we want to auto-open the indicator
     if (openNetworkModalOnReject) {
@@ -153,14 +181,14 @@ function addGlobalAsyncThunkActions(
     }
   });
   builder.addCase(action.fulfilled, sliceState => {
-    sliceState.global[stateKey] = dataLoaderStateFulfilled;
+    sliceState.global[stateKey] = makeFulfilledState(sliceState.global[stateKey]);
   });
 }
 
-function getOrCreateChainState(sliceState: DataLoaderState, chainId: string) {
+function getOrCreateChainState(sliceState: Draft<DataLoaderState>, chainId: string) {
   let chainState: ChainIdDataEntity | undefined = sliceState.byChainId[chainId];
   if (!chainState) {
-    chainState = { ...dataLoaderStateInitByChainId };
+    chainState = cloneDeep(dataLoaderStateInitByChainId);
     sliceState.byChainId = {
       ...sliceState.byChainId,
       [chainId]: chainState,
@@ -169,10 +197,10 @@ function getOrCreateChainState(sliceState: DataLoaderState, chainId: string) {
   return chainState;
 }
 
-function getOrCreateAddressState(sliceState: DataLoaderState, address: string) {
+function getOrCreateAddressState(sliceState: Draft<DataLoaderState>, address: string) {
   let addressState = sliceState.byAddress[address];
   if (!addressState) {
-    addressState = { ...dataLoaderStateInitByAddress };
+    addressState = cloneDeep(dataLoaderStateInitByAddress);
     sliceState.byAddress = {
       ...sliceState.byAddress,
       [address]: addressState,
@@ -183,7 +211,7 @@ function getOrCreateAddressState(sliceState: DataLoaderState, address: string) {
 }
 
 function getOrCreateAddressChainState(
-  sliceState: DataLoaderState,
+  sliceState: Draft<DataLoaderState>,
   chainId: string,
   address: string
 ) {
@@ -191,7 +219,7 @@ function getOrCreateAddressChainState(
 
   let chainState: ChainIdDataByAddressByChainEntity | undefined = addressState.byChainId[chainId];
   if (!chainState) {
-    chainState = { ...dataLoaderStateInitByAddressByChainId };
+    chainState = cloneDeep(dataLoaderStateInitByAddressByChainId);
     sliceState.byAddress[address].byChainId = {
       ...sliceState.byAddress[address].byChainId,
       [chainId]: chainState,
@@ -211,10 +239,7 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: ChainEntity
       const chainId = action.meta?.arg.chainId;
       const chainState = getOrCreateChainState(sliceState, chainId);
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = {
-          ...dataLoaderStatePending,
-          alreadyLoadedOnce: true,
-        };
+        chainState[stateKey] = makePendingState(chainState[stateKey]);
       }
     })
     .addCase(action.rejected, (sliceState, action) => {
@@ -223,11 +248,7 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: ChainEntity
       const error = errorToString(action.error);
 
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = {
-          alreadyLoadedOnce: chainState[stateKey].alreadyLoadedOnce,
-          status: 'rejected',
-          error,
-        };
+        chainState[stateKey] = makeRejectedState(chainState[stateKey], error);
 
         // something got rejected, we want to auto-open the indicator
         sliceState.statusIndicator.open = true;
@@ -238,7 +259,7 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: ChainEntity
       const chainState = getOrCreateChainState(sliceState, chainId);
 
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = { ...dataLoaderStateFulfilled };
+        chainState[stateKey] = makeFulfilledState(chainState[stateKey]);
       }
     });
 }
@@ -260,10 +281,7 @@ function addByAddressByChainAsyncThunkActions<
       );
 
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = {
-          ...dataLoaderStatePending,
-          alreadyLoadedOnce: true,
-        };
+        chainState[stateKey] = makePendingState(chainState[stateKey]);
       }
     })
     .addCase(action.rejected, (sliceState, action) => {
@@ -276,11 +294,7 @@ function addByAddressByChainAsyncThunkActions<
       const error = errorToString(action.error);
 
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = {
-          alreadyLoadedOnce: chainState[stateKey].alreadyLoadedOnce,
-          status: 'rejected',
-          error,
-        };
+        chainState[stateKey] = makeRejectedState(chainState[stateKey], error);
       }
     })
     .addCase(action.fulfilled, (sliceState, action) => {
@@ -292,7 +306,7 @@ function addByAddressByChainAsyncThunkActions<
       );
 
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = { ...dataLoaderStateFulfilled };
+        chainState[stateKey] = makeFulfilledState(chainState[stateKey]);
       }
     });
 }
@@ -307,10 +321,7 @@ function addByAddressAsyncThunkActions<ActionParams extends { walletAddress: str
       const addressState = getOrCreateAddressState(sliceState, action.meta.arg.walletAddress);
 
       for (const stateKey of stateKeys) {
-        addressState.global[stateKey] = {
-          ...dataLoaderStatePending,
-          alreadyLoadedOnce: true,
-        };
+        addressState.global[stateKey] = makePendingState(addressState.global[stateKey]);
       }
     })
     .addCase(action.rejected, (sliceState, action) => {
@@ -318,18 +329,14 @@ function addByAddressAsyncThunkActions<ActionParams extends { walletAddress: str
       const error = errorToString(action.error);
 
       for (const stateKey of stateKeys) {
-        addressState.global[stateKey] = {
-          alreadyLoadedOnce: addressState[stateKey].alreadyLoadedOnce,
-          status: 'rejected',
-          error,
-        };
+        addressState.global[stateKey] = makeRejectedState(addressState.global[stateKey], error);
       }
     })
     .addCase(action.fulfilled, (sliceState, action) => {
       const addressState = getOrCreateAddressState(sliceState, action.meta.arg.walletAddress);
 
       for (const stateKey of stateKeys) {
-        addressState.global[stateKey] = { ...dataLoaderStateFulfilled };
+        addressState.global[stateKey] = makeFulfilledState(addressState.global[stateKey]);
       }
     });
 }
@@ -389,8 +396,12 @@ export const dataLoaderSlice = createSlice({
       reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
       ['balance', 'allowance']
     );
+    addByAddressByChainAsyncThunkActions(builder, fetchClmHarvestsForUserChain, ['clmHarvests']);
 
     addByAddressAsyncThunkActions(builder, fetchWalletTimeline, ['timeline']);
+    addByAddressAsyncThunkActions(builder, recalculateDepositedVaultsAction, ['depositedVaults']);
+    addByAddressAsyncThunkActions(builder, initDashboardByAddress, ['dashboard']);
+    addByAddressAsyncThunkActions(builder, fetchClmHarvestsForUser, ['clmHarvests']);
   },
 });
 

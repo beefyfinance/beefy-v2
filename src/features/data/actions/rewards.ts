@@ -3,31 +3,47 @@ import type { BeefyState } from '../../../redux-types';
 import { getMerklRewardsApi } from '../apis/instances';
 import type { ChainEntity } from '../entities/chain';
 import { selectChainById } from '../selectors/chains';
-import { groupBy } from 'lodash-es';
-import { keyBy } from 'lodash';
+import { groupBy, keyBy } from 'lodash-es';
 import { BIG_ZERO, fromWeiString } from '../../../helpers/big-number';
 import type { BigNumber } from 'bignumber.js';
+import { selectChainsWithCowcentratedVaults } from '../selectors/vaults';
 
-const MERKL_CHAINS: ChainEntity['id'][] = [
-  // 'ethereum',
-  // 'polygon',
-  // 'optimism',
+const MERKL_SUPPORTED_CHAINS: Set<ChainEntity['id']> = new Set([
+  'ethereum',
   'arbitrum',
-  // 'base',
-  // 'gnosis',
-  // 'zkevm',
-];
+  'optimism',
+  'base',
+  'polygon',
+  'zkevm',
+  'mantle',
+  'mode',
+  'linea',
+  'gnosis',
+  'bsc',
+  'zksync',
+  'fuse',
+  'moonbeam',
+]);
 
 export const fetchAllRewardsAction = createAsyncThunk<
   void,
   { walletAddress: string },
   { state: BeefyState }
->('rewards/fetchAllRewardsAction', async ({ walletAddress }, { dispatch }) => {
-  const promises: Promise<unknown>[] = [];
-  for (const chainId of MERKL_CHAINS) {
-    promises.push(dispatch(fetchMerklRewardsAction({ walletAddress, chainId })));
+>('rewards/fetchAllRewardsAction', async ({ walletAddress }, { dispatch, getState }) => {
+  const clmChains = selectChainsWithCowcentratedVaults(getState());
+  const merklChains = clmChains.filter(chainId => MERKL_SUPPORTED_CHAINS.has(chainId));
+  if (!merklChains.length) {
+    console.warn(
+      `Not checking for merkl rewards, no chains with clm vaults and merkl support found.`
+    );
+    console.debug('clmChains', clmChains);
+    console.debug('MERKL_SUPPORTED_CHAINS', MERKL_SUPPORTED_CHAINS);
+    return;
   }
-  await Promise.allSettled(promises);
+
+  await Promise.allSettled(
+    merklChains.map(chainId => dispatch(fetchMerklRewardsAction({ walletAddress, chainId })))
+  );
 });
 
 export type FetchMerklRewardsActionParams = {

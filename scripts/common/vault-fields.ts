@@ -10,6 +10,7 @@ const FIELD_ORDER = [
   'tokenAddress',
   'tokenDecimals',
   'tokenProviderId',
+  'depositTokenAddresses',
   'zap',
   'earnedToken',
   'earnedTokenAddress',
@@ -39,6 +40,7 @@ const FIELD_ORDER = [
   'refundContractAddress',
   'showWarning',
   'warning',
+  'earningPoints',
   'network',
 ].reduce((fields: {}, field, i) => {
   fields[field] = i + 1;

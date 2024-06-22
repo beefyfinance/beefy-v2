@@ -4,6 +4,7 @@ import type { VaultEntity } from '../entities/vault';
 import type { VaultFee } from '../reducers/fees';
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectIsVaultGov, selectVaultDepositFee } from './vaults';
+import { selectIsGlobalDataAvailable } from './data-loader';
 
 const GOV_FEES: Readonly<VaultFee> = {
   id: 'gov-fees',
@@ -17,22 +18,22 @@ const GOV_FEES: Readonly<VaultFee> = {
 };
 
 export const selectAreFeesLoaded = (state: BeefyState) =>
-  state.ui.dataLoader.global.fees.alreadyLoadedOnce;
+  selectIsGlobalDataAvailable(state, 'fees');
 
 export const selectShouldInitFees = (state: BeefyState) =>
   isInitialLoader(state.ui.dataLoader.global.fees);
 
 export const selectFeesByVaultId = createCachedSelector(
   selectVaultDepositFee,
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectIsVaultGov(state, vaultId),
+  selectIsVaultGov,
   (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.fees.byId[vaultId],
-  (vaultDepositFee: number, isGov: boolean, fees: VaultFee): VaultFee => {
+  (vaultDepositFee: number, isGov: boolean, fees: VaultFee | undefined): VaultFee | undefined => {
     if (isGov) {
       return GOV_FEES;
     }
 
     // API vault fee overrides vault config fee
-    if (fees?.deposit === undefined) {
+    if (fees && fees.deposit === undefined) {
       return {
         ...fees,
         deposit: vaultDepositFee,

@@ -1,14 +1,13 @@
 import type { VaultEntity } from '../../features/data/entities/vault';
-import { isGovVault, isStandardVault } from '../../features/data/entities/vault';
+import { isStandardVault } from '../../features/data/entities/vault';
 import { memo, type ReactNode } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import {
-  selectGovVaultUserStakedBalanceInDepositToken,
-  selectStandardVaultUserBalanceInDepositTokenExcludingBoostsBridged,
-  selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged,
-  selectUserVaultDepositInUsd,
+  selectUserVaultBalanceInDepositToken,
+  selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
+  selectUserVaultBalanceInUsdIncludingBoostsBridged,
 } from '../../features/data/selectors/balance';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
 import {
@@ -19,6 +18,10 @@ import {
 import { VaultValueStat } from '../VaultValueStat';
 import { VaultDepositedTooltip } from '../VaultDepositedTooltip';
 import { selectTokenByAddress } from '../../features/data/selectors/tokens';
+import {
+  selectIsAddressChainDataAvailable,
+  selectIsGlobalDataAvailable,
+} from '../../features/data/selectors/data-loader';
 
 export type VaultDepositStatProps = {
   vaultId: VaultEntity['id'];
@@ -34,11 +37,8 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDeposit
   const walletAddress = selectWalletAddress(state);
 
   const isLoaded =
-    state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
-    selectIsWalletKnown(state) &&
-    walletAddress
-      ? state.ui.dataLoader.byAddress[walletAddress]?.byChainId[vault.chainId]?.balance
-          .alreadyLoadedOnce
+    selectIsGlobalDataAvailable(state, 'prices') && selectIsWalletKnown(state) && walletAddress
+      ? selectIsAddressChainDataAvailable(state, walletAddress, vault.chainId, 'balance')
       : true;
 
   if (!isLoaded) {
@@ -52,10 +52,7 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDeposit
     };
   }
 
-  // deposit can be moo or oracle
-  const deposit = isGovVault(vault)
-    ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id)
-    : selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(state, vault.id);
+  const deposit = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(state, vault.id);
 
   if (!deposit.gt(0)) {
     return {
@@ -70,15 +67,14 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDeposit
 
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const totalDeposited = formatTokenDisplayCondensed(deposit, depositToken.decimals, 6);
-  const totalDepositedUsd = formatLargeUsd(selectUserVaultDepositInUsd(state, vaultId));
+  const totalDepositedUsd = formatLargeUsd(
+    selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vaultId)
+  );
 
   // if bridged, or boosted, add tooltip
   let tooltip: ReactNode | undefined;
   if (isStandardVault(vault)) {
-    const onlyVaultDeposit = selectStandardVaultUserBalanceInDepositTokenExcludingBoostsBridged(
-      state,
-      vault.id
-    );
+    const onlyVaultDeposit = selectUserVaultBalanceInDepositToken(state, vault.id);
     if (onlyVaultDeposit.lt(deposit)) {
       tooltip = <VaultDepositedTooltip vaultId={vault.id} />;
     }

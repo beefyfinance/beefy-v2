@@ -59,7 +59,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#FCFF52',
   },
   'vaultNetwork-moonriver': {
-    backgroundColor: '#c3136f',
+    backgroundColor: '#06353D',
   },
   'vaultNetwork-cronos': {
     backgroundColor: '#121926',
@@ -74,7 +74,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#70d44b',
   },
   'vaultNetwork-moonbeam': {
-    backgroundColor: '#211438',
+    backgroundColor: '#958FDC',
   },
   'vaultNetwork-emerald': {
     backgroundColor: '#0192f6',

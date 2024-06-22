@@ -33,3 +33,17 @@ export async function allFulfilled<T>(promises: Promise<T>[]): Promise<T[]> {
 export function asyncMap<T, U>(array: T[], mapper: (item: T) => Promise<U>): Promise<U[]> {
   return Promise.all(array.map(mapper));
 }
+
+export class PromiseSettledAwaiter<T = unknown> {
+  protected promises: Promise<T>[] = [];
+
+  add(promise: Promise<T>) {
+    this.promises.push(promise);
+  }
+
+  async wait(): Promise<PromiseSettledResult<Awaited<T>>[]> {
+    const promises = [...this.promises];
+    this.promises = [];
+    return await Promise.allSettled(promises);
+  }
+}

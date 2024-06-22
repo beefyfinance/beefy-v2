@@ -1,5 +1,71 @@
 [
   {
+    "id": "stargate-v2-avax-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    "tokenDecimals": 6,
+    "earnedToken": "mooStargateV2USDC",
+    "earnedTokenAddress": "0x0473224b593B33F6780ee0ebab66FDd38b0F9767",
+    "earnContractAddress": "0x0473224b593B33F6780ee0ebab66FDd38b0F9767",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1717949732,
+    "platformId": "stargate",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E#/",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "stargate-v2-avax-usdt",
+    "name": "USDT",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+    "tokenDecimals": 6,
+    "earnedToken": "mooStargateV2USDT",
+    "earnedTokenAddress": "0x1F6C375770f3aC345576bc744C6e315489eC4515",
+    "earnContractAddress": "0x1F6C375770f3aC345576bc744C6e315489eC4515",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1717949732,
+    "platformId": "stargate",
+    "assets": ["USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7#/",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "balancer-avax-savax-avax",
     "name": "sAVAX-AVAX",
     "type": "standard",
@@ -5277,8 +5343,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E#/",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDC-AVALANCHE/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDC-AVALANCHE/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/avalanche:0x1205f31718499dBf1fCa446663B532Ef87481fe1",
+    "removeLiquidityUrl": "https://stargate.finance/pool/avalanche:0x1205f31718499dBf1fCa446663B532Ef87481fe1/remove",
     "network": "avax"
   },
   {
@@ -5308,8 +5374,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7#/",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDT-AVALANCHE/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDT-AVALANCHE/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/avalanche:0x29e38769f23701A2e4A8Ef0492e19dA4604Be62c",
+    "removeLiquidityUrl": "https://stargate.finance/pool/avalanche:0x29e38769f23701A2e4A8Ef0492e19dA4604Be62c/remove",
     "network": "avax"
   },
   {

@@ -143,7 +143,13 @@ export const balanceSlice = createSlice({
 
     builder.addCase(recalculateDepositedVaultsAction.fulfilled, (sliceState, action) => {
       const walletState = getWalletState(sliceState, action.payload.walletAddress.toLowerCase());
-      walletState.depositedVaultIds = action.payload.vaultIds;
+      // avoid updating if the data is the same
+      if (
+        action.payload.vaultIds.length !== walletState.depositedVaultIds.length ||
+        action.payload.vaultIds.some(id => !walletState.depositedVaultIds.includes(id))
+      ) {
+        walletState.depositedVaultIds = action.payload.vaultIds;
+      }
     });
   },
 });

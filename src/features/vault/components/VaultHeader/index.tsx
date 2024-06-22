@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { memo } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
-import { isCowcentratedLiquidityVault, isGovVault } from '../../../data/entities/vault';
+import { isCowcentratedVault, isGovVault } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
 import { selectChainById } from '../../../data/selectors/chains';
@@ -14,7 +14,7 @@ import { ShareButton } from '../ShareButton';
 import { punctuationWrap } from '../../../../helpers/string';
 import { SaveButton } from '../SaveButton';
 import { selectVaultTokenSymbols } from '../../../data/selectors/tokens';
-import { CLMTag } from '../../../../components/VaultIdentity/components/VaultTags';
+import { VaultClmTag } from '../../../../components/VaultIdentity/components/VaultTags';
 
 const useStyles = makeStyles(styles);
 
@@ -35,8 +35,8 @@ export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId
         <div className={classes.title}>
           {punctuationWrap(vault.name)}{' '}
           {!isGovVault(vault) ? (
-            isCowcentratedLiquidityVault(vault) ? (
-              <CLMTag vault={vault} />
+            isCowcentratedVault(vault) ? (
+              <VaultClmTag vault={vault} />
             ) : (
               t('Vault-vault')
             )

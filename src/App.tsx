@@ -5,7 +5,7 @@ import { Footer } from './components/Footer';
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import { ScrollToTop } from './components/ScrollToTop';
 import { theme } from './theme';
-import { initHomeDataV4 } from './features/data/actions/scenarios';
+import { initAppData } from './features/data/actions/scenarios';
 import { store } from './store';
 import { FullscreenTechLoader, TechLoader } from './components/TechLoader';
 import { Router } from './components/Router';
@@ -15,6 +15,8 @@ import { Redirects } from './components/Redirects';
 import { Stepper } from './components/Stepper';
 import { Layout } from './components/Layout';
 import { AddTokenToWallet } from './components/AddTokenToWallet';
+import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
+import { AppVersionCheck } from './components/AppVersionCheck';
 
 const Home = lazy(() => import(`./features/home`));
 const Vault = lazy(() => import(`./features/vault`));
@@ -26,53 +28,56 @@ const PageNotFound = lazy(() => import(`./features/pagenotfound`));
 
 export const App = () => {
   useEffect(() => {
-    initHomeDataV4(store);
+    initAppData(store);
   }, []);
 
   return (
-    <Suspense fallback={<FullscreenTechLoader />}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <HelmetProvider>
-          <Router>
-            <ScrollToTop />
-            <DefaultMeta />
-            <Redirects />
-            <Layout header={<Header />} footer={<Footer />}>
-              <Suspense fallback={<TechLoader />}>
-                <Switch>
-                  <Route exact path="/">
-                    <Home />
-                  </Route>
-                  <Route strict sensitive exact path={['/:network/vault/:id', '/vault/:id']}>
-                    <Vault />
-                  </Route>
-                  <Route exact path="/onramp">
-                    <OnRamp />
-                  </Route>
-                  <Route exact path="/bridge">
-                    <Bridge />
-                  </Route>
-                  <Route strict exact path="/dashboard/:address">
-                    <Dashboard mode={'url'} />
-                  </Route>
-                  <Route exact path="/dashboard">
-                    <Dashboard mode={'wallet'} />
-                  </Route>
-                  <Route exact path="/treasury">
-                    <Treasury />
-                  </Route>
-                  <Route>
-                    <PageNotFound />
-                  </Route>
-                </Switch>
-              </Suspense>
-              <Stepper />
-              <AddTokenToWallet />
-            </Layout>
-          </Router>
-        </HelmetProvider>
-      </ThemeProvider>
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<FullscreenTechLoader />}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <HelmetProvider>
+            <Router>
+              <ScrollToTop />
+              <DefaultMeta />
+              <Redirects />
+              <Layout header={<Header />} footer={<Footer />}>
+                <Suspense fallback={<TechLoader />}>
+                  <Switch>
+                    <Route exact path="/">
+                      <Home />
+                    </Route>
+                    <Route strict sensitive exact path={['/:network/vault/:id', '/vault/:id']}>
+                      <Vault />
+                    </Route>
+                    <Route exact path="/onramp">
+                      <OnRamp />
+                    </Route>
+                    <Route exact path="/bridge">
+                      <Bridge />
+                    </Route>
+                    <Route strict exact path="/dashboard/:address">
+                      <Dashboard mode={'url'} />
+                    </Route>
+                    <Route exact path="/dashboard">
+                      <Dashboard mode={'wallet'} />
+                    </Route>
+                    <Route exact path="/treasury">
+                      <Treasury />
+                    </Route>
+                    <Route>
+                      <PageNotFound />
+                    </Route>
+                  </Switch>
+                </Suspense>
+                <Stepper />
+                <AddTokenToWallet />
+              </Layout>
+            </Router>
+          </HelmetProvider>
+          <AppVersionCheck />
+        </ThemeProvider>
+      </Suspense>
+    </ErrorBoundary>
   );
 };

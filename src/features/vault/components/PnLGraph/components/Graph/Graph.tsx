@@ -8,19 +8,26 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { useAppSelector } from '../../../../../../store';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { usePnLChartData } from '../../hooks';
 import { PnLTooltip } from '../PnLTooltip';
 import type { Theme } from '@material-ui/core';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { GraphLoader } from '../../../GraphLoader';
 import { max } from 'lodash-es';
-import { formatUnderlyingTick, formatUsdTick, formatDateTimeTick, TIME_BUCKET } from './helpers';
+import {
+  formatUnderlyingTick,
+  formatUsdTick,
+  formatDateTimeTick,
+  GRAPH_TIME_BUCKETS,
+  domainOffSet,
+  getXInterval,
+  mapRangeToTicks,
+} from '../../../../../../helpers/graph';
 import { Legend } from '../Legend';
-import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../../helpers/graph';
 import { styles } from './styles';
 import { XAxisTick } from '../../../../../../components/XAxisTick';
+import { AlertError } from '../../../../../../components/Alerts';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(styles);
 
@@ -31,21 +38,9 @@ interface GraphProps {
 }
 
 export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address }) {
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
   const classes = useStyles();
-
-  const productKey = useMemo(() => {
-    return `beefy:vault:${vault.chainId}:${vault.earnContractAddress.toLowerCase()}`;
-  }, [vault.chainId, vault.earnContractAddress]);
-
-  const { chartData, isLoading } = usePnLChartData(
-    TIME_BUCKET[period],
-    productKey,
-    vaultId,
-    address
-  );
-
+  const { t } = useTranslation();
+  const { chartData, isLoading } = usePnLChartData(GRAPH_TIME_BUCKETS[period], vaultId, address);
   const { data, minUnderlying, maxUnderlying, minUsd, maxUsd } = chartData;
 
   const underlyingDiff = useMemo(() => {
@@ -85,7 +80,7 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
   }, [underlyingAxisDomain]);
 
   const dateTimeTickFormatter = useMemo(() => {
-    return (value: number) => formatDateTimeTick(value, TIME_BUCKET[period]);
+    return (value: number) => formatDateTimeTick(value, GRAPH_TIME_BUCKETS[period]);
   }, [period]);
 
   const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
@@ -100,6 +95,10 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
 
   if (isLoading) {
     return <GraphLoader imgHeight={220} />;
+  }
+
+  if (!data.length) {
+    return <AlertError>{t('Graph-No-Data-Retry')}</AlertError>;
   }
 
   return (

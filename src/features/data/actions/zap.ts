@@ -3,7 +3,10 @@ import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi, getConfigApi, getTransactApi } from '../apis/instances';
 import type { AmmConfig, SwapAggregatorConfig, ZapConfig } from '../apis/config-types';
 import { ZERO_ADDRESS } from '../../../helpers/addresses';
-import { selectAllStandardVaultsByChainId } from '../selectors/vaults';
+import {
+  selectAllStandardVaultsByChainId,
+  selectAllCowcentratedVaultsByChainId,
+} from '../selectors/vaults';
 import { isFulfilledResult } from '../../../helpers/promises';
 import type { VaultEntity } from '../entities/vault';
 import type { ZapAggregatorTokenSupportResponse } from '../apis/beefy/beefy-api';
@@ -53,7 +56,10 @@ export const calculateZapAvailabilityAction = createAsyncThunk<
   const state = getState();
   const chainIds = keys(state.entities.zaps.zaps.byChainId);
   const vaults = chainIds
-    .flatMap(chainId => selectAllStandardVaultsByChainId(state, chainId))
+    .flatMap(chainId => [
+      ...selectAllStandardVaultsByChainId(state, chainId),
+      ...selectAllCowcentratedVaultsByChainId(state, chainId),
+    ])
     .filter(v => v.zaps?.length > 0);
   const api = await getTransactApi();
   const hasZap = await Promise.allSettled(vaults.map(v => api.fetchVaultHasZap(v.id, getState)));

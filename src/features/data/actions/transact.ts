@@ -1,19 +1,13 @@
-import { type AnyAction, createAsyncThunk, miniSerializeError, nanoid } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk, miniSerializeError, nanoid } from '@reduxjs/toolkit';
 import type { BeefyState, BeefyThunk } from '../../../redux-types';
-import type { VaultEntity, VaultGov } from '../entities/vault';
+import { isCowcentratedVault, type VaultEntity, type VaultGov } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
-import { selectShouldInitAddressBook } from '../selectors/data-loader';
-import { fetchAddressBookAction } from './tokens';
-import { isInitialLoader } from '../reducers/data-loader-types';
-import { fetchZapAmmsAction, fetchZapConfigsAction, fetchZapSwapAggregatorsAction } from './zap';
 import { getTransactApi } from '../apis/instances';
 import { transactActions } from '../reducers/wallet/transact';
 import {
   selectTokenAmountsTotalValue,
-  selectTransactDualInputAmounts,
-  selectTransactDualMaxAmounts,
-  selectTransactInputAmount,
-  selectTransactInputMax,
+  selectTransactInputAmounts,
+  selectTransactInputMaxes,
   selectTransactOptionsForSelectionId,
   selectTransactOptionsMode,
   selectTransactOptionsVaultId,
@@ -24,7 +18,6 @@ import {
   selectTransactSelectionById,
   selectTransactSlippage,
   selectTransactVaultId,
-  selectTransactVaultIdOrUndefined,
 } from '../selectors/transact';
 import type {
   InputTokenAmount,
@@ -55,62 +48,17 @@ import { TransactMode, TransactStatus } from '../reducers/wallet/transact-types'
 import { selectTokenByAddress } from '../selectors/tokens';
 import { groupBy, uniqBy } from 'lodash-es';
 import { fetchAllowanceAction } from './allowance';
-import { fetchFees } from './fees';
 import { uniqueTokens } from '../../../helpers/tokens';
 import { fetchBalanceAction } from './balance';
 import type { Action } from 'redux';
 import { selectWalletAddress } from '../selectors/wallet';
-import { onlyOneInput } from '../apis/transact/helpers/options';
 
 export type TransactInitArgs = {
   vaultId: VaultEntity['id'];
 };
 
-export type TransactInitPayload = void;
-
-export const transactInit = createAsyncThunk<
-  TransactInitPayload,
-  TransactInitArgs,
-  { state: BeefyState }
->(
-  'transact/init',
-  async ({ vaultId }, { getState, dispatch }) => {
-    const vault = selectVaultById(getState(), vaultId);
-    const loaders: Promise<AnyAction>[] = [];
-
-    if (selectShouldInitAddressBook(getState(), vault.chainId)) {
-      loaders.push(dispatch(fetchAddressBookAction({ chainId: vault.chainId })));
-    }
-
-    const ammsLoader = getState().ui.dataLoader.global.zapAmms;
-    if (ammsLoader && isInitialLoader(ammsLoader)) {
-      loaders.push(dispatch(fetchZapAmmsAction()));
-    }
-
-    const zapsLoader = getState().ui.dataLoader.global.zapConfigs;
-    if (zapsLoader && isInitialLoader(zapsLoader)) {
-      loaders.push(dispatch(fetchZapConfigsAction()));
-    }
-
-    const swapAggregatorsLoader = getState().ui.dataLoader.global.zapSwapAggregators;
-    if (swapAggregatorsLoader && isInitialLoader(swapAggregatorsLoader)) {
-      loaders.push(dispatch(fetchZapSwapAggregatorsAction()));
-    }
-
-    const feesLoader = getState().ui.dataLoader.global.fees;
-    if (feesLoader && isInitialLoader(feesLoader)) {
-      loaders.push(dispatch(fetchFees()));
-    }
-
-    await Promise.all(loaders);
-  },
-  {
-    condition({ vaultId }, { getState }) {
-      // only dispatch if needed
-      return selectTransactVaultIdOrUndefined(getState()) !== vaultId;
-    },
-  }
-);
+export const transactInit = createAction<TransactInitArgs>('transact/init');
+export const transactInitReady = createAction<TransactInitArgs>('transact/init/ready');
 
 export type TransactFetchOptionsArgs = {
   vaultId: VaultEntity['id'];
@@ -200,25 +148,14 @@ export const transactFetchQuotes = createAsyncThunk<
   const api = await getTransactApi();
   const state = getState();
   const mode = selectTransactOptionsMode(state);
-  const inputAmount = selectTransactInputAmount(state);
-  const inputMax = selectTransactInputMax(state);
-  const dualInputAmounts = selectTransactDualInputAmounts(state);
-  const dualMaxAmounts = selectTransactDualMaxAmounts(state);
+  const inputAmounts = selectTransactInputAmounts(state);
+  const inputMaxes = selectTransactInputMaxes(state);
   const walletAddress = selectWalletAddress(state);
-
   const vaultId = selectTransactVaultId(state);
   const vault = selectVaultById(state, vaultId);
-  // This can be improved, don't worry chimpo
 
-  if (vault.type !== 'cowcentrated' && inputAmount.lte(BIG_ZERO)) {
+  if (inputAmounts.every(amount => amount.lte(BIG_ZERO))) {
     throw new Error(`Can not quote for 0`);
-  }
-  if (vault.type === 'cowcentrated') {
-    if (mode === TransactMode.Deposit && dualInputAmounts.every(amount => amount.lte(BIG_ZERO))) {
-      throw new Error(`Can not quote for [0, 0]`);
-    } else if (mode === TransactMode.Withdraw && inputAmount.lte(BIG_ZERO)) {
-      throw new Error(`Can not quote for 0`);
-    }
   }
 
   const selectionId = selectTransactSelectedSelectionId(state);
@@ -241,38 +178,37 @@ export const transactFetchQuotes = createAsyncThunk<
     throw new Error(`No tokens for selectionId ${selectionId}`);
   }
 
-  // const vaultId = selectTransactVaultId(state);
-  // const vault = selectVaultById(state, vaultId);
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-
-  // TODO handle differently for univ3 with multiple deposit tokens
-  const inputAmounts: InputTokenAmount[] =
-    vault.type !== 'cowcentrated' || mode === TransactMode.Withdraw
-      ? [
-          {
-            amount: inputAmount,
-            token: mode === TransactMode.Withdraw ? depositToken : selection.tokens[0], // for withdraw this is always depositToken / deposit is only token of selection
-            max: inputMax,
-          },
-        ]
-      : [
-          {
-            amount: dualInputAmounts[0],
-            token: selection.tokens[0],
-            max: dualMaxAmounts[0],
-          },
-          {
-            amount: dualInputAmounts[1],
-            token: selection.tokens[1],
-            max: dualMaxAmounts[1],
-          },
-        ];
+  const quoteInputAmounts: InputTokenAmount[] = [];
+  if (mode == TransactMode.Deposit) {
+    // For deposit, user enters number of the selected token(s) to deposit
+    selection.tokens.forEach((token, index) => {
+      quoteInputAmounts.push({
+        token,
+        amount: inputAmounts[index] || BIG_ZERO,
+        max: inputMaxes[index] || false,
+      });
+    });
+  } else {
+    let inputToken: TokenEntity;
+    if (isCowcentratedVault(vault)) {
+      // For CLM vaults, user enters number of shares to withdraw
+      inputToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
+    } else {
+      // For standard/gov vaults, user enters number of deposit token to withdraw
+      inputToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    }
+    quoteInputAmounts.push({
+      token: inputToken,
+      amount: inputAmounts[0] || BIG_ZERO,
+      max: inputMaxes[0] || false,
+    });
+  }
 
   let quotes: TransactQuote[];
   if (options.every(isDepositOption)) {
-    quotes = await api.fetchDepositQuotesFor(options, inputAmounts, getState);
+    quotes = await api.fetchDepositQuotesFor(options, quoteInputAmounts, getState);
   } else if (options.every(isWithdrawOption)) {
-    quotes = await api.fetchWithdrawQuotesFor(options, inputAmounts, getState);
+    quotes = await api.fetchWithdrawQuotesFor(options, quoteInputAmounts, getState);
   } else {
     throw new Error(`Invalid options`);
   }
@@ -312,7 +248,7 @@ export const transactFetchQuotes = createAsyncThunk<
   return {
     selectionId,
     chainId,
-    inputAmounts,
+    inputAmounts: quoteInputAmounts,
     quotes,
   };
 });
@@ -329,13 +265,10 @@ export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state:
       const vaultId = selectTransactVaultId(state);
       const chainId = selectTransactSelectedChainId(state);
       const selectionId = selectTransactSelectedSelectionId(state);
-      const inputAmount = selectTransactInputAmount(state);
-      const inputAmounts = selectTransactDualInputAmounts(state);
-
+      const inputAmounts = selectTransactInputAmounts(state);
       const matchingInputs =
-        quote.option.mode === TransactMode.Deposit && quote.option.strategyId === 'cowcentrated'
-          ? inputAmounts.every((amount, index) => amount === quote.inputs[index]?.amount)
-          : onlyOneInput(quote.inputs).amount.eq(inputAmount);
+        inputAmounts.length === quote.inputs.length &&
+        inputAmounts.every((amount, index) => amount.eq(quote.inputs[index].amount));
 
       shouldFetch =
         option.chainId !== chainId ||

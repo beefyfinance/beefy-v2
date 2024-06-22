@@ -14,9 +14,10 @@ import type { BeefyState } from './redux-types';
 import type { Middleware } from 'redux';
 import { balanceMiddleware } from './features/data/middlewares/balance';
 import { apyMiddleware } from './features/data/middlewares/apy';
-import { zapMiddleware } from './features/data/middlewares/zap';
+import { transactMiddleware } from './features/data/middlewares/transact';
 import { filteredVaultsMiddleware } from './features/data/middlewares/filtered-vaults';
 import { walletMiddleware } from './features/data/middlewares/wallet';
+import { analyticsMiddleware } from './features/data/middlewares/analytics';
 
 let middlewares: Middleware[] = [];
 
@@ -34,9 +35,10 @@ if (!featureFlag_replayReduxActions()) {
     ...middlewares,
     balanceMiddleware,
     apyMiddleware,
-    zapMiddleware,
+    transactMiddleware,
     filteredVaultsMiddleware,
     walletMiddleware,
+    analyticsMiddleware,
   ];
 }
 

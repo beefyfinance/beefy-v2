@@ -69,20 +69,18 @@ export type TransactConfirm = {
 
 export type TransactState = {
   vaultId: VaultEntity['id'] | undefined;
+  pendingVaultId: VaultEntity['id'] | undefined;
   selectedChainId: ChainEntity['id'] | undefined;
   selectedSelectionId: string | undefined;
   selectedQuoteId: string | undefined;
   swapSlippage: number;
-  inputAmount: BigNumber;
-  inputMax: boolean;
-  dualInputAmounts: BigNumber[];
-  dualInputMax: boolean[];
+  inputAmounts: BigNumber[];
+  inputMaxes: boolean[];
   mode: TransactMode;
   step: TransactStep;
   forceSelection: boolean;
   selections: TransactSelections;
   options: TransactOptions;
   quotes: TransactQuotes;
-  migrateQuotes: TransactQuotes;
   confirm: TransactConfirm;
 };
