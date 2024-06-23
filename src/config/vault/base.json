@@ -1,5 +1,67 @@
 [
   {
+    "id": "uniswap-cow-base-weth-normus",
+    "name": "NORMUS-WETH",
+    "token": "NORMUS-WETH",
+    "tokenAddress": "0x70C079c33a9F5DAE97bB5085be8155d6dE68BbED",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xBA5EDE8d98ab88CEa9f0D69918ddE28Dc23c2553"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBaseWETH-NORMUS",
+    "earnedTokenAddress": "0xf181Ef98Bee1fBa44acc4726054A0c2a12B48d35",
+    "earnContractAddress": "0xf181Ef98Bee1fBa44acc4726054A0c2a12B48d35",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-normus",
+    "status": "active",
+    "createdAt": 1719145884,
+    "platformId": "beefy",
+    "assets": ["NORMUS", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-tybg-weth",
+    "name": "TYBG-WETH",
+    "token": "TYBG-WETH",
+    "tokenAddress": "0xE745a591970e0Fa981204cf525E170a2B9e4fb93",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0d97F261b1e88845184f678e2d1e7a98D9FD38dE",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBaseTYBG-WETH",
+    "earnedTokenAddress": "0x11b6ae0bD06fA08908511F0f14a5F6B27E7dEdF3",
+    "earnContractAddress": "0x11b6ae0bD06fA08908511F0f14a5F6B27E7dEdF3",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-tybg-weth",
+    "status": "active",
+    "createdAt": 1719145884,
+    "platformId": "beefy",
+    "assets": ["TYBG", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-weth-zro-0.3",
     "name": "ZRO-WETH",
     "token": "ZRO-WETH",
