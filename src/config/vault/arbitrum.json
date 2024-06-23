@@ -1,5 +1,160 @@
 [
   {
+    "id": "camelot-weth-link",
+    "name": "LINK-WETH",
+    "type": "cowcentrated",
+    "token": "LINK-WETH",
+    "tokenAddress": "0xe8795cF9c2309eCfe05Df028eB0F21D5D6e3a951",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xf97f4df75117a78c1A5a0DBb814Af92458539FB4"
+    ],
+    "earnedToken": "cowCamelotLINK-WETH",
+    "earnedTokenAddress": "0x2Ba14a1308789322694a69C06acDFEbA824B7e2A",
+    "earnContractAddress": "0x2Ba14a1308789322694a69C06acDFEbA824B7e2A",
+    "oracle": "lps",
+    "oracleId": "camelot-weth-link",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["LINK", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-weth-usdt",
+    "name": "USDT-WETH",
+    "type": "cowcentrated",
+    "token": "USDT-WETH",
+    "tokenAddress": "0x7CcCBA38E2D959fe135e79AEBB57CCb27B128358",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+    ],
+    "earnedToken": "cowCamelotUSDT-WETH",
+    "earnedTokenAddress": "0xf7ac5f7F05fB27AB4974607aa9EBcD24BBD2192a",
+    "earnContractAddress": "0xf7ac5f7F05fB27AB4974607aa9EBcD24BBD2192a",
+    "oracle": "lps",
+    "oracleId": "camelot-weth-usdt",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["USDT", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-weeth-weth",
+    "name": "weETH-WETH",
+    "type": "cowcentrated",
+    "token": "weETH-WETH",
+    "tokenAddress": "0x293DFD996d5cd72Bed712B0EEAb96DBE400c0416",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowCamelotweETH-WETH",
+    "earnedTokenAddress": "0xEe839B08Ac1Fb711Fd4A583fB450EeD60ce52446",
+    "earnContractAddress": "0xEe839B08Ac1Fb711Fd4A583fB450EeD60ce52446",
+    "oracle": "lps",
+    "oracleId": "camelot-weeth-weth",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["weETH", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-arb-weth",
+    "name": "ARB-WETH",
+    "type": "cowcentrated",
+    "token": "ARB-WETH",
+    "tokenAddress": "0xe51635ae8136aBAc44906A8f230C2D235E9c195F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0x912CE59144191C1204E64559FE8253a0e49E6548"
+    ],
+    "earnedToken": "cowCamelotARB-WETH",
+    "earnedTokenAddress": "0x79899918e6AdA2cb5D984f444A9c188bd2B7daae",
+    "earnContractAddress": "0x79899918e6AdA2cb5D984f444A9c188bd2B7daae",
+    "oracle": "lps",
+    "oracleId": "camelot-arb-weth",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["ARB", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-arb-usdc",
+    "name": "ARB-USDC",
+    "type": "cowcentrated",
+    "token": "ARB-USDC",
+    "tokenAddress": "0xfaE2AE0a9f87FD35b5b0E24B47BAC796A7EEfEa1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x912CE59144191C1204E64559FE8253a0e49E6548",
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+    ],
+    "earnedToken": "cowCamelotARB-USDC",
+    "earnedTokenAddress": "0x8bc2AE3862617838357c329ccfd9eD8Fded58cfc",
+    "earnContractAddress": "0x8bc2AE3862617838357c329ccfd9eD8Fded58cfc",
+    "oracle": "lps",
+    "oracleId": "camelot-arb-usdc",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["ARB", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "camelot-wbtc-weth",
     "name": "WBTC-WETH",
     "type": "cowcentrated",
