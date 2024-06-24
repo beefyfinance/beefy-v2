@@ -10,7 +10,6 @@ import {
 import { selectWalletAddress } from '../selectors/wallet';
 import { selectAllChainIds } from '../selectors/chains';
 import { fetchAllBalanceAction } from '../actions/balance';
-import { fetchAllRewardsAction } from '../actions/rewards';
 
 const hasWalletChanged = isAnyOf(
   userDidConnect,
@@ -44,7 +43,6 @@ walletListener.startListening({
         for (const chainId of chains) {
           dispatch(fetchAllBalanceAction({ chainId, walletAddress }));
         }
-        dispatch(fetchAllRewardsAction({ walletAddress }));
       }
     }
   },

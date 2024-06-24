@@ -382,3 +382,9 @@ export const selectChainsWithCowcentratedVaults = createSelector(
       .map(([chainId]) => chainId as ChainEntity['id']);
   }
 );
+
+export const selectChainsHasCowcentratedVaults = createSelector(
+  (state: BeefyState, chainId: ChainEntity['id']) =>
+    state.entities.vaults.byChainId[chainId]?.cowcentratedVault?.byEarnedTokenAddress,
+  byEarnedTokenAddress => !!byEarnedTokenAddress && Object.keys(byEarnedTokenAddress).length > 0
+);
