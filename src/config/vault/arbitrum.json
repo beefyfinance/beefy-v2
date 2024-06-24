@@ -16,7 +16,7 @@
     "oracle": "lps",
     "oracleId": "uniswap-cow-arb-eusd-usdc",
     "status": "active",
-    "createdAt": 1718889726,
+    "createdAt": 1719247654,
     "platformId": "beefy",
     "assets": ["eUSD", "USDC"],
     "risks": [
@@ -33,6 +33,625 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pendle-arb-dusdc-26sep24",
+    "name": "USDC (Dolomite) 26Sep24",
+    "token": "USDC (Dolomite) 26Sep24",
+    "tokenAddress": "0x2fB73D98B1D60B35FD12508933578098f352cE7e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnedToken": "mooPenpie-dUSDC_26SEP24",
+    "earnedTokenAddress": "0xf8934BDFe5424D3e8101A73dBAb30f73335106Ea",
+    "earnContractAddress": "0xf8934BDFe5424D3e8101A73dBAb30f73335106Ea",
+    "oracle": "lps",
+    "oracleId": "pendle-arb-dusdc-26sep24",
+    "status": "active",
+    "createdAt": 1719221816,
+    "platformId": "magpie",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2fB73D98B1D60B35FD12508933578098f352cE7e/zap/in?chain=arbitrum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2fB73D98B1D60B35FD12508933578098f352cE7e/zap/out?chain=arbitrum",
+    "network": "arbitrum"
+  },
+  {
+    "id": "pendle-arb-seth-rseth-26sep24",
+    "name": "ETH (rsETHSilo) 26Sep24",
+    "token": "ETH (rsETHSilo) 26Sep24",
+    "tokenAddress": "0x2aD746fa3faA0AD586021a633d10F4E2785A0349",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnedToken": "mooPenpie-rsETH_eETHSilo_26SEP24",
+    "earnedTokenAddress": "0xa47D338061c499DBF8dd93a857828762b594d543",
+    "earnContractAddress": "0xa47D338061c499DBF8dd93a857828762b594d543",
+    "oracle": "lps",
+    "oracleId": "pendle-arb-seth-rseth-26sep24",
+    "status": "active",
+    "createdAt": 1719221758,
+    "platformId": "magpie",
+    "assets": ["ETH"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2aD746fa3faA0AD586021a633d10F4E2785A0349/zap/in?chain=arbitrum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2aD746fa3faA0AD586021a633d10F4E2785A0349/zap/out?chain=arbitrum",
+    "network": "arbitrum"
+  },
+  {
+    "id": "pendle-arb-seth-eeth-26sep24",
+    "name": "ETH (eETHSilo) 26Sep24",
+    "token": "ETH (eETHSilo) 26Sep24",
+    "tokenAddress": "0x5f3C781B3a20299DB27C8fC5f4415D895677c885",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnedToken": "mooPenpie-sETH_eETHSilo_26SEP24",
+    "earnedTokenAddress": "0x188E9DF1E12BF43d7d848b2ed5Fe9FED9AAa5155",
+    "earnContractAddress": "0x188E9DF1E12BF43d7d848b2ed5Fe9FED9AAa5155",
+    "oracle": "lps",
+    "oracleId": "pendle-arb-seth-eeth-26sep24",
+    "status": "active",
+    "createdAt": 1719221705,
+    "platformId": "magpie",
+    "assets": ["ETH"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5f3C781B3a20299DB27C8fC5f4415D895677c885/zap/in?chain=arbitrum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5f3C781B3a20299DB27C8fC5f4415D895677c885/zap/out?chain=arbitrum",
+    "network": "arbitrum"
+  },
+  {
+    "id": "pendle-arb-seth-ezeth-26sep24",
+    "name": "ETH (ezETHSilo) 26Sep24",
+    "token": "ETH (ezETHSilo) 26Sep24",
+    "tokenAddress": "0xb4781463a1261F60fca37732EFa510c22DEc5ADa",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnedToken": "mooPenpie-sETH_ezETHSilo_26SEP24",
+    "earnedTokenAddress": "0xaD2cd300E6fFd20f620255C2C13251FB1D76F660",
+    "earnContractAddress": "0xaD2cd300E6fFd20f620255C2C13251FB1D76F660",
+    "oracle": "lps",
+    "oracleId": "pendle-arb-seth-ezeth-26sep24",
+    "status": "active",
+    "createdAt": 1719221661,
+    "platformId": "magpie",
+    "assets": ["ETH"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/in?chain=arbitrum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/out?chain=arbitrum",
+    "network": "arbitrum"
+  },
+  {
+    "id": "camelot-pendle-weth",
+    "name": "PENDLE-WETH",
+    "type": "cowcentrated",
+    "token": "PENDLE-WETH",
+    "tokenAddress": "0xE461f84C3fE6BCDd1162Eb0Ef4284F3bB6e4CAD3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x0c880f6761F1af8d9Aa9C466984b80DAb9a8c9e8",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowCamelotPENDLE-WETH",
+    "earnedTokenAddress": "0x6D5B6507E3AAA81c584E1ba086F50796B3F34F60",
+    "earnContractAddress": "0x6D5B6507E3AAA81c584E1ba086F50796B3F34F60",
+    "oracle": "lps",
+    "oracleId": "camelot-pendle-weth",
+    "status": "active",
+    "createdAt": 1719145883,
+    "platformId": "beefy",
+    "assets": ["PENDLE", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-weth-gmx",
+    "name": "GMX-WETH",
+    "type": "cowcentrated",
+    "token": "GMX-WETH",
+    "tokenAddress": "0xC99be44383BC8d82357F5A1D9ae9976EE9d75bee",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a"
+    ],
+    "earnedToken": "cowCamelotWETH-GMX",
+    "earnedTokenAddress": "0x3a81D849D3044d13665d383aA2bB1611C597fF64",
+    "earnContractAddress": "0x3a81D849D3044d13665d383aA2bB1611C597fF64",
+    "oracle": "lps",
+    "oracleId": "camelot-weth-gmx",
+    "status": "active",
+    "createdAt": 1719145883,
+    "platformId": "beefy",
+    "assets": ["GMX", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-rdnt-weth",
+    "name": "RDNT-WETH",
+    "type": "cowcentrated",
+    "token": "RDNT-WETH",
+    "tokenAddress": "0xD51F7383C906cfD995d7f24729F37933Ff264Fa6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x3082CC23568eA640225c2467653dB90e9250AaA0",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowCamelotRDNT-WETH",
+    "earnedTokenAddress": "0x75acF1692b963De13Fe7018B16DE21959619ff87",
+    "earnContractAddress": "0x75acF1692b963De13Fe7018B16DE21959619ff87",
+    "oracle": "lps",
+    "oracleId": "camelot-rdnt-weth",
+    "status": "active",
+    "createdAt": 1719145883,
+    "platformId": "beefy",
+    "assets": ["RDNT", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-magic-weth",
+    "name": "MAGIC-WETH",
+    "type": "cowcentrated",
+    "token": "MAGIC-WETH",
+    "tokenAddress": "0x1106dB7165A8d4a8559B441eCdEe14a5d5070DbC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x539bdE0d7Dbd336b79148AA742883198BBF60342",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowCamelotMAGIC-WETH",
+    "earnedTokenAddress": "0x3e440e83ba58125472fdA166C87577d479BFd25E",
+    "earnContractAddress": "0x3e440e83ba58125472fdA166C87577d479BFd25E",
+    "oracle": "lps",
+    "oracleId": "camelot-magic-weth",
+    "status": "active",
+    "createdAt": 1719145883,
+    "platformId": "beefy",
+    "assets": ["MAGIC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-sol-usdc",
+    "name": "SOL-USDC",
+    "type": "cowcentrated",
+    "token": "SOL-USDC",
+    "tokenAddress": "0x622B5186384783BB805c12A808cCF07F41DE1Ff0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+    ],
+    "earnedToken": "cowCamelotSOL-USDC",
+    "earnedTokenAddress": "0xc4BDb58F24247B51FD23B1FC225961eB3d86783C",
+    "earnContractAddress": "0xc4BDb58F24247B51FD23B1FC225961eB3d86783C",
+    "oracle": "lps",
+    "oracleId": "camelot-sol-usdc",
+    "status": "active",
+    "createdAt": 1719145883,
+    "platformId": "beefy",
+    "assets": ["SOL", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-weth-link",
+    "name": "LINK-WETH",
+    "type": "cowcentrated",
+    "token": "LINK-WETH",
+    "tokenAddress": "0xe8795cF9c2309eCfe05Df028eB0F21D5D6e3a951",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xf97f4df75117a78c1A5a0DBb814Af92458539FB4"
+    ],
+    "earnedToken": "cowCamelotLINK-WETH",
+    "earnedTokenAddress": "0x2Ba14a1308789322694a69C06acDFEbA824B7e2A",
+    "earnContractAddress": "0x2Ba14a1308789322694a69C06acDFEbA824B7e2A",
+    "oracle": "lps",
+    "oracleId": "camelot-weth-link",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["LINK", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-weth-usdt",
+    "name": "USDT-WETH",
+    "type": "cowcentrated",
+    "token": "USDT-WETH",
+    "tokenAddress": "0x7CcCBA38E2D959fe135e79AEBB57CCb27B128358",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+    ],
+    "earnedToken": "cowCamelotUSDT-WETH",
+    "earnedTokenAddress": "0xf7ac5f7F05fB27AB4974607aa9EBcD24BBD2192a",
+    "earnContractAddress": "0xf7ac5f7F05fB27AB4974607aa9EBcD24BBD2192a",
+    "oracle": "lps",
+    "oracleId": "camelot-weth-usdt",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["USDT", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-weeth-weth",
+    "name": "weETH-WETH",
+    "type": "cowcentrated",
+    "token": "weETH-WETH",
+    "tokenAddress": "0x293DFD996d5cd72Bed712B0EEAb96DBE400c0416",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowCamelotweETH-WETH",
+    "earnedTokenAddress": "0xEe839B08Ac1Fb711Fd4A583fB450EeD60ce52446",
+    "earnContractAddress": "0xEe839B08Ac1Fb711Fd4A583fB450EeD60ce52446",
+    "oracle": "lps",
+    "oracleId": "camelot-weeth-weth",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["weETH", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-arb-weth",
+    "name": "ARB-WETH",
+    "type": "cowcentrated",
+    "token": "ARB-WETH",
+    "tokenAddress": "0xe51635ae8136aBAc44906A8f230C2D235E9c195F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0x912CE59144191C1204E64559FE8253a0e49E6548"
+    ],
+    "earnedToken": "cowCamelotARB-WETH",
+    "earnedTokenAddress": "0x79899918e6AdA2cb5D984f444A9c188bd2B7daae",
+    "earnContractAddress": "0x79899918e6AdA2cb5D984f444A9c188bd2B7daae",
+    "oracle": "lps",
+    "oracleId": "camelot-arb-weth",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["ARB", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-arb-usdc",
+    "name": "ARB-USDC",
+    "type": "cowcentrated",
+    "token": "ARB-USDC",
+    "tokenAddress": "0xfaE2AE0a9f87FD35b5b0E24B47BAC796A7EEfEa1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x912CE59144191C1204E64559FE8253a0e49E6548",
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+    ],
+    "earnedToken": "cowCamelotARB-USDC",
+    "earnedTokenAddress": "0x8bc2AE3862617838357c329ccfd9eD8Fded58cfc",
+    "earnContractAddress": "0x8bc2AE3862617838357c329ccfd9eD8Fded58cfc",
+    "oracle": "lps",
+    "oracleId": "camelot-arb-usdc",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["ARB", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-wbtc-weth",
+    "name": "WBTC-WETH",
+    "type": "cowcentrated",
+    "token": "WBTC-WETH",
+    "tokenAddress": "0xd845f7D4f4DeB9Ff5bCf09D140Ef13718F6f6C71",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowCamelotWBTC-WETH",
+    "earnedTokenAddress": "0x168285c55a871fd2219329F680EB0CA8fB8711e4",
+    "earnContractAddress": "0x168285c55a871fd2219329F680EB0CA8fB8711e4",
+    "oracle": "lps",
+    "oracleId": "camelot-wbtc-weth",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-ezeth-weth",
+    "name": "ezETH-WETH",
+    "type": "cowcentrated",
+    "token": "ezETH-WETH",
+    "tokenAddress": "0xaA45265A94C93802BE9511E426933239117E658f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowCamelotezETH-WETH",
+    "earnedTokenAddress": "0x663B0d9ddB6e86cB5E1F87ebCbDafb5A53a45798",
+    "earnContractAddress": "0x663B0d9ddB6e86cB5E1F87ebCbDafb5A53a45798",
+    "oracle": "lps",
+    "oracleId": "camelot-ezeth-weth",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["ezETH", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-weth-usdc",
+    "name": "USDC-WETH",
+    "type": "cowcentrated",
+    "token": "USDC-WETH",
+    "tokenAddress": "0xB1026b8e7276e7AC75410F1fcbbe21796e8f7526",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+    ],
+    "earnedToken": "cowCamelotUSDC-WETH",
+    "earnedTokenAddress": "0xDa3E652A86B3FD320512cadd87D6504fa18aEC65",
+    "earnContractAddress": "0xDa3E652A86B3FD320512cadd87D6504fa18aEC65",
+    "oracle": "lps",
+    "oracleId": "camelot-weth-usdc",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["USDC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "camelot-wsteth-weth",
+    "name": "wstETH-WETH",
+    "type": "cowcentrated",
+    "token": "wstETH-WETH",
+    "tokenAddress": "0xdEb89DE4bb6ecf5BFeD581EB049308b52d9b2Da7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x5979D7b546E38E414F7E9822514be443A4800529",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowCamelotwstETH-WETH",
+    "earnedTokenAddress": "0xc4AE801d239da28A9108a5E6caD9F5893Ad93CB2",
+    "earnContractAddress": "0xc4AE801d239da28A9108a5E6caD9F5893Ad93CB2",
+    "oracle": "lps",
+    "oracleId": "camelot-wsteth-weth",
+    "status": "active",
+    "createdAt": 1719055978,
+    "platformId": "beefy",
+    "assets": ["wstETH", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-zro-weth-0.3",
+    "name": "ZRO-WETH",
+    "type": "cowcentrated",
+    "token": "ZRO-WETH 0.3",
+    "tokenAddress": "0x4CEf551255EC96d89feC975446301b5C4e164C59",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowUniswapArbZRO-WETH-0.3",
+    "earnedTokenAddress": "0x073819cff8229BC2f5Af33012e69C8289779E7aC",
+    "earnContractAddress": "0x073819cff8229BC2f5Af33012e69C8289779E7aC",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-zro-weth-0.3",
+    "status": "active",
+    "createdAt": 1719052734,
+    "platformId": "beefy",
+    "assets": ["ZRO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.3",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-zro-weth",
+    "name": "ZRO-WETH",
+    "type": "cowcentrated",
+    "token": "ZRO-WETH",
+    "tokenAddress": "0x16503510c58DA73486950B72a12eaD3D1D8355dd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowUniswapArbZRO-WETH",
+    "earnedTokenAddress": "0xb14c7466E13c15D053ba579D0c0cB808039E7dB2",
+    "earnContractAddress": "0xb14c7466E13c15D053ba579D0c0cB808039E7dB2",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-zro-weth",
+    "status": "active",
+    "createdAt": 1718895191,
+    "platformId": "beefy",
+    "assets": ["ZRO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-zro-usdt",
+    "name": "ZRO-USDT",
+    "type": "cowcentrated",
+    "token": "ZRO-USDT",
+    "tokenAddress": "0xc868f85196fACFBBc08B44975f83788Dd922E482",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+    ],
+    "earnedToken": "cowUniswapArbZRO-USDT",
+    "earnedTokenAddress": "0x93af018a52b8a539ED2255445D1d62f5452B1488",
+    "earnContractAddress": "0x93af018a52b8a539ED2255445D1d62f5452B1488",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-zro-usdt",
+    "status": "active",
+    "createdAt": 1718895191,
+    "platformId": "beefy",
+    "assets": ["ZRO", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -3472,31 +4091,6 @@
     "strategyTypeId": "pendle",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x99e9028e274feafa2e1d8787e1ee6de39c6f7724/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x99e9028e274feafa2e1d8787e1ee6de39c6f7724/zap/out?chain=arbitrum",
-    "network": "arbitrum"
-  },
-  {
-    "id": "equilibria-arb-ezeth",
-    "name": "ezETH 27Jun24",
-    "token": "ezETH-27Jun24",
-    "tokenAddress": "0x60712e3C9136CF411C561b4E948d4d26637561e7",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pendle",
-    "earnedToken": "mooEqb-ezETH_27JUN24old",
-    "earnedTokenAddress": "0x8b479C22c5B33eA4E42395dC7360231B19AF8300",
-    "earnContractAddress": "0x8b479C22c5B33eA4E42395dC7360231B19AF8300",
-    "oracle": "lps",
-    "oracleId": "equilibria-arb-ezeth",
-    "status": "eol",
-    "createdAt": 1710143077,
-    "retireReason": "withdraw",
-    "retiredAt": 1712060685,
-    "platformId": "equilibria",
-    "assets": ["ezETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pendle",
-    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x60712e3c9136cf411c561b4e948d4d26637561e7/zap/in?chain=arbitrum",
-    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x60712e3c9136cf411c561b4e948d4d26637561e7/zap/out?chain=arbitrum",
-    "earningPoints": true,
     "network": "arbitrum"
   },
   {

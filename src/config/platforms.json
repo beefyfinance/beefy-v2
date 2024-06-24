@@ -998,5 +998,10 @@
     "id": "oku",
     "name": "Uniswap (Oku)",
     "filter": true
+  },
+  {
+    "id": "camelot",
+    "name": "Camelot",
+    "filter": true
   }
 ]

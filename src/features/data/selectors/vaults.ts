@@ -289,6 +289,13 @@ export const selectAllStandardVaultsByChainId = createSelector(
   (byIds, vaultIds): VaultStandard[] => vaultIds.map(id => byIds[id]).filter(isStandardVault)
 );
 
+export const selectAllCowcentratedVaultsByChainId = createSelector(
+  (state: BeefyState) => state.entities.vaults.byId,
+  selectVaultIdsByChainId,
+  (byIds, vaultIds): VaultCowcentrated[] =>
+    vaultIds.map(id => byIds[id]).filter(isCowcentratedVault)
+);
+
 export const selectNonGovVaultIdsByDepositTokenAddress = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) => chainId,
   (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
@@ -473,16 +480,5 @@ export const selectVaultHasPlatformWithRisks = (
   }
 };
 
-export const selectChainsWithCowcentratedVaults = createSelector(
-  (state: BeefyState) => state.entities.vaults.byChainId,
-  byChainId => {
-    return Object.entries(byChainId)
-      .filter(
-        ([_, chainState]) =>
-          chainState.byType.cowcentrated &&
-          chainState.byType.cowcentrated.byAddress &&
-          Object.keys(chainState.byType.cowcentrated.byAddress).length > 0
-      )
-      .map(([chainId]) => chainId as ChainEntity['id']);
-  }
-);
+export const selectChainsHasCowcentratedVaults = (state: BeefyState, chainId: ChainEntity['id']) =>
+  (state.entities.vaults.byChainId[chainId]?.byType.cowcentrated.allIds.length || 0) > 0;

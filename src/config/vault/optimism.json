@@ -1,5 +1,129 @@
 [
   {
+    "id": "uniswap-cow-op-usdc.e-wld",
+    "name": "WLD-USDC.e",
+    "token": "WLD-USDC.e",
+    "tokenAddress": "0xD1F1baD4c9E6c44DeC1e9bF3B94902205c5Cd6C3",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+      "0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpUSDC.e-WLD",
+    "earnedTokenAddress": "0x3099015b25b3F2409a06b92C8B46A35FC3Da0A4e",
+    "earnContractAddress": "0x3099015b25b3F2409a06b92C8B46A35FC3Da0A4e",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-usdc.e-wld",
+    "status": "active",
+    "createdAt": 1719160073,
+    "platformId": "beefy",
+    "assets": ["WLD", "opUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-weth-wld",
+    "name": "WLD-WETH",
+    "token": "WLD-WETH",
+    "tokenAddress": "0x2Ae3d6096d8215Ac2Acddf30c60CAa984Ea5dEbe",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpWETH-WLD",
+    "earnedTokenAddress": "0xE37B4bb335D82B94032687eE620a436C20927Cef",
+    "earnContractAddress": "0xE37B4bb335D82B94032687eE620a436C20927Cef",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-weth-wld",
+    "status": "active",
+    "createdAt": 1719160073,
+    "platformId": "beefy",
+    "assets": ["WLD", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.3",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-weth-zro",
+    "name": "ZRO-WETH",
+    "token": "ZRO-WETH",
+    "tokenAddress": "0x7505159f644DdC5eaE21C119E328d0D5Bee574b0",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x6985884C4392D348587B19cb9eAAf157F13271cd"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpWETH-ZRO",
+    "earnedTokenAddress": "0x5451b6584B4D7de383A55B01E7335E137BFEA5A5",
+    "earnContractAddress": "0x5451b6584B4D7de383A55B01E7335E137BFEA5A5",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-weth-zro",
+    "status": "active",
+    "createdAt": 1718890158,
+    "platformId": "beefy",
+    "assets": ["ZRO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-zro-usdt",
+    "name": "ZRO-USDT",
+    "token": "ZRO-USDT",
+    "tokenAddress": "0xd9dD34576c7034BEB0B11a99aFFfC49e91011235",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapOpZRO-USDT",
+    "earnedTokenAddress": "0x18A2688494cFa036C8Bc28595336639a9eb9FA53",
+    "earnContractAddress": "0x18A2688494cFa036C8Bc28595336639a9eb9FA53",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-zro-usdt",
+    "status": "active",
+    "createdAt": 1718890158,
+    "platformId": "beefy",
+    "assets": ["ZRO", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "velodrome-v2-weth-weeth",
     "name": "weETH-ETH vLP V2",
     "type": "standard",

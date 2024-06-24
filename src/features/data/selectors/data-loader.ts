@@ -244,3 +244,14 @@ export const selectDashboardShouldLoadClmHarvestsForUser = (
   const loader = state.ui.dataLoader.byAddress[walletAddress]?.global.clmHarvests;
   return isInitialLoader(loader) || (!isPending(loader) && !isLoaderRecent(loader));
 };
+
+export const selectIsMerklRewardsForUserChainRecent = (
+  state: BeefyState,
+  walletAddress: string,
+  chainId: string,
+  recentSeconds: number = 30 * 60
+) =>
+  isLoaderRecent(
+    state.ui.dataLoader.byAddress[walletAddress]?.byChainId[chainId]?.merklRewards,
+    recentSeconds || 30 * 60
+  );

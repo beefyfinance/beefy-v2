@@ -393,6 +393,8 @@ export const config = {
       'rgUSD',
       'stataArbUSDCn',
       'stataArbUSDTn',
+      'USDV',
+      'USDe',
     ],
   },
   avax: {
@@ -657,7 +659,7 @@ export const config = {
     explorerTokenUrlTemplate: 'https://explorer.zksync.io/address/{address}',
     multicallAddress: '0x1E9231Cc9782D9F8e213736F6dAC00020D8271cB',
     multicall3Address: '0x9A04a9e1d67151AB1E742E6D8965e0602410f91d',
-    appMulticallContractAddress: '0x5479d2A10e60110F4728d910b5321Af4B78c30E4',
+    appMulticallContractAddress: '0x4d0DB1CcEFb0bc8079a7C65479c1E77b14950844',
     providerName: 'zkSync',
     walletSettings: {
       chainId: `0x${parseInt('324', 10).toString(16)}`,
