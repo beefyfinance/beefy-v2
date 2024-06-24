@@ -9,10 +9,7 @@ import type { BreakdownMode } from './types';
 import { ChartWithLegend } from './components/ChartWithLegend';
 import { useCalculatedBreakdown } from './hooks';
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import {
-  selectVaultById,
-  selectVaultUnderlyingVaultOrUndefined,
-} from '../../../data/selectors/vaults';
+import { selectIsVaultCowcentratedLike, selectVaultById } from '../../../data/selectors/vaults';
 import type { TokenLpBreakdown } from '../../../data/entities/token';
 import {
   selectHasBreakdownDataByTokenAddress,
@@ -36,15 +33,14 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
   function LiquidityPoolBreakdown({ vault, breakdown }) {
     const classes = useStyles();
     const { t } = useTranslation();
-    const underlyingVault = useAppSelector(state =>
-      selectVaultUnderlyingVaultOrUndefined(state, vault.id)
+    const isCowcentratedLike = useAppSelector(state =>
+      selectIsVaultCowcentratedLike(state, vault.id)
     );
     const calculatedBreakdown = useCalculatedBreakdown(vault, breakdown);
     const { userBalance } = calculatedBreakdown;
     const [tab, setTab] = useState<BreakdownMode>(userBalance.gt(BIG_ZERO) ? 'user' : 'total');
     const [haveSwitchedTab, setHaveSwitchedTab] = useState(false);
-    const isForCowcentrated =
-      isCowcentratedVault(vault) || (underlyingVault && isCowcentratedVault(underlyingVault));
+    const isForCowcentrated = isCowcentratedVault(vault) || isCowcentratedLike;
 
     const tabs: Partial<Record<BreakdownMode, string>> = useMemo(() => {
       const map = {};
