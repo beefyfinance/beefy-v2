@@ -163,7 +163,7 @@ function addContractDataToState(
       throw new Error(`Could not find ppfs for vault id ${vault.id}`);
     }
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
+    const mooToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
     const totalStaked = mooAmountToOracleAmount(
       mooToken,
       depositToken,

@@ -18,7 +18,7 @@ export function selectUserMerklRewardsForVault(
   const vault = selectVaultById(state, vaultId);
   const rewards =
     state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byChain[vault.chainId]
-      ?.byVaultAddress[vault.earnContractAddress.toLowerCase()];
+      ?.byVaultAddress[vault.contractAddress.toLowerCase()];
   if (!rewards) {
     return [];
   }

@@ -69,7 +69,7 @@ export async function getVaultWithdrawnFromContract(
   const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
   const vaultContract = new web3.eth.Contract(
     StandardVaultAbi as unknown as AbiItem[],
-    vault.earnContractAddress
+    vault.contractAddress
   );
   const vaultFees = selectFeesByVaultId(state, vault.id);
   const withdrawFee = vaultFees?.withdraw || 0;

@@ -3,18 +3,18 @@ import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { VaultDashboardMobileStats } from './components/VaultDashboardMobileStats';
 import { VaultTransactions } from '../../VaultTransactions';
-import { DashboardPnLGraph } from '../../../../../../vault/components/PnLGraph';
 import { useAppSelector } from '../../../../../../../store';
 import { selectHasDataToShowGraphByVaultId } from '../../../../../../data/selectors/analytics';
 import { selectVaultType } from '../../../../../../data/selectors/vaults';
 import {
   DashboardFeesGraph,
   DashboardOverviewGraph,
-} from '../../../../../../vault/components/CowcentratedPnlGraph';
+} from '../../../../../../vault/components/PnLGraph/cowcentrated';
 import type { VaultCollapseContentProps } from '../types';
 import { styles } from './styles';
 import { LabeledSelect } from '../../../../../../../components/LabeledSelect';
 import { ToggleButtons } from '../../../../../../../components/ToggleButtons';
+import { DashboardPnLGraph } from '../../../../../../vault/components/PnLGraph/standard/StandardPnLGraph';
 
 const useStyles = makeStyles(styles);
 

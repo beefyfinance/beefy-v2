@@ -2,7 +2,7 @@ import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity } from '../entities/vault';
 import { isGovVault, isVaultActive } from '../entities/vault';
 import {
-  selectAddressDepositedVaultIds,
+  selectDashboardDepositedVaultIdsForAddress,
   selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
 } from './balance';
 import { selectIsUserBalanceAvailable } from './data-loader';
@@ -21,9 +21,18 @@ const EMPTY_TOTAL_APY: TotalApy = {
   totalDaily: 0,
 };
 
-export const selectVaultTotalApy = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const result = state.biz.apy.totalApy.byVaultId[vaultId] || { ...EMPTY_TOTAL_APY };
-  return result;
+export const selectVaultTotalApyOrUndefined = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): Readonly<TotalApy> | undefined => {
+  return state.biz.apy.totalApy.byVaultId[vaultId] || undefined;
+};
+
+export const selectVaultTotalApy = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): Readonly<TotalApy> => {
+  return selectVaultTotalApyOrUndefined(state, vaultId) || EMPTY_TOTAL_APY;
 };
 
 export const selectDidAPIReturnValuesForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
@@ -52,7 +61,7 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
     return EMPTY_GLOBAL_STATS;
   }
 
-  const userVaultIds = selectAddressDepositedVaultIds(state, walletAddress);
+  const userVaultIds = selectDashboardDepositedVaultIdsForAddress(state, walletAddress);
 
   if (userVaultIds.length === 0) {
     return EMPTY_GLOBAL_STATS;

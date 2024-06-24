@@ -43,7 +43,7 @@ export const selectVaultById = createCachedSelector(
 export const selectVaultByAddressOrUndefined = (
   state: BeefyState,
   chainId: ChainEntity['id'],
-  vaultAddress: VaultEntity['earnContractAddress']
+  vaultAddress: VaultEntity['contractAddress']
 ): VaultEntity | undefined => {
   const id =
     state.entities.vaults.byChainId[chainId]?.byAddress[vaultAddress.toLowerCase()] || undefined;
@@ -53,8 +53,108 @@ export const selectVaultByAddressOrUndefined = (
 export const selectVaultByAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
-  vaultAddress: VaultEntity['earnContractAddress']
+  vaultAddress: VaultEntity['contractAddress']
 ): VaultEntity => valueOrThrow(selectVaultByAddressOrUndefined(state, chainId, vaultAddress));
+
+/** The id of the vault whose contract address is equal to the deposit token address of the passed vault id */
+export const selectVaultUnderlyingVaultIdOrUndefined = (
+  state: BeefyState,
+  parentVaultId: VaultEntity['id']
+): VaultEntity['id'] | undefined => {
+  return state.entities.vaults.relations.underlyingOf.byId[parentVaultId] || undefined;
+};
+
+/** The vault whose contract address is equal to the deposit token address of the passed vault id */
+export const selectVaultUnderlyingVaultOrUndefined = (
+  state: BeefyState,
+  parentVaultId: VaultEntity['id']
+): VaultEntity | undefined => {
+  const underlyingId = selectVaultUnderlyingVaultIdOrUndefined(state, parentVaultId);
+  return underlyingId ? selectVaultById(state, underlyingId) : undefined;
+};
+
+/** The vault whose contract address is equal to the deposit token address of the passed vault id */
+export const selectVaultUnderlyingVault = (
+  state: BeefyState,
+  parentVaultId: VaultEntity['id']
+): VaultEntity => valueOrThrow(selectVaultUnderlyingVaultOrUndefined(state, parentVaultId));
+
+/** The id of the cowcentrated vault whose contract address is equal to the deposit token address of the passed vault id */
+export const selectVaultUnderlyingCowcentratedVaultIdOrUndefined = (
+  state: BeefyState,
+  parentVaultId: VaultEntity['id']
+): VaultEntity['id'] | undefined => {
+  return (
+    state.entities.vaults.relations.underlyingOf.byType.cowcentrated.byId[parentVaultId] ||
+    undefined
+  );
+};
+
+/** The cowcentrated vault whose contract address is equal to the deposit token address of the passed vault id */
+export const selectVaultUnderlyingCowcentratedVaultOrUndefined = (
+  state: BeefyState,
+  parentVaultId: VaultEntity['id']
+): VaultCowcentrated | undefined => {
+  const underlyingId = selectVaultUnderlyingCowcentratedVaultIdOrUndefined(state, parentVaultId);
+  return underlyingId ? selectCowcentratedVaultById(state, underlyingId) : undefined;
+};
+
+/** The cowcentrated vault whose contract address is equal to the deposit token address of the passed vault id */
+export const selectVaultUnderlyingCowcentratedVault = (
+  state: BeefyState,
+  parentVaultId: VaultEntity['id']
+): VaultCowcentrated =>
+  valueOrThrow(selectVaultUnderlyingCowcentratedVaultOrUndefined(state, parentVaultId));
+
+/** vault ids for which this vault is used as the deposit token for  */
+export const selectVaultParentVaultIdsOrUndefined = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultEntity['id'][] | undefined => {
+  return state.entities.vaults.relations.depositFor.byId[vaultId] || undefined;
+};
+
+/** standard vault ids for which this vault is used as the deposit token for  */
+export const selectVaultParentStandardVaultIdsOrUndefined = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultEntity['id'][] | undefined => {
+  return state.entities.vaults.relations.depositFor.byType.standard.byId[vaultId] || undefined;
+};
+
+/** gov vault ids for which this vault is used as the deposit token for  */
+export const selectVaultParentGovVaultIdsOrUndefined = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultEntity['id'][] | undefined => {
+  return state.entities.vaults.relations.depositFor.byType.gov.byId[vaultId] || undefined;
+};
+
+/** cowcentrated vault ids for which this vault is used as the deposit token for  */
+export const selectVaultParentCowcentratedVaultIdsOrUndefined = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultEntity['id'][] | undefined => {
+  return state.entities.vaults.relations.depositFor.byType.cowcentrated.byId[vaultId] || undefined;
+};
+
+/** if this vault is used as the deposit token for another vault */
+export const selectVaultIsUnderlyingVault = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): boolean => {
+  const parentIds = selectVaultParentVaultIdsOrUndefined(state, vaultId);
+  return parentIds ? parentIds.length > 0 : false;
+};
+
+/** if this vault is used as the deposit token for another gov vault */
+export const selectVaultIsUnderlyingVaultOfGov = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): boolean => {
+  const parentIds = selectVaultParentGovVaultIdsOrUndefined(state, vaultId);
+  return parentIds ? parentIds.length > 0 : false;
+};
 
 export const selectIsVaultPausedOrRetired = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
@@ -74,6 +174,12 @@ export const selectIsVaultRetired = createCachedSelector(
 export const selectIsVaultCowcentrated = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   vault => isCowcentratedVault(vault)
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+/** true if the deposit token of this vault is a CLM receipt token */
+export const selectIsVaultCowcentratedLike = createCachedSelector(
+  selectVaultUnderlyingCowcentratedVaultIdOrUndefined,
+  underlyingCowcentratedId => !underlyingCowcentratedId
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectIsVaultGov = createCachedSelector(
@@ -190,8 +296,8 @@ export const selectNonGovVaultIdsByDepositTokenAddress = createCachedSelector(
   (state: BeefyState, _chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) =>
     state.entities.vaults.byChainId,
   (chainId, tokenAddress, byChainId) =>
-    (byChainId[chainId]?.standardVault.byDepositTokenAddress[tokenAddress] || []).concat(
-      byChainId[chainId]?.cowcentratedVault.byDepositTokenAddress[tokenAddress] || []
+    (byChainId[chainId]?.byType.standard.byDepositTokenAddress[tokenAddress] || []).concat(
+      byChainId[chainId]?.byType.cowcentrated.byDepositTokenAddress[tokenAddress] || []
     )
 )(
   (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
@@ -216,7 +322,7 @@ export const selectGovVaultVaultIdsByDepositTokenAddress = createCachedSelector(
   (state: BeefyState, _chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) =>
     state.entities.vaults.byChainId,
   (chainId, tokenAddress, byChainId) =>
-    byChainId[chainId]?.govVault.byDepositTokenAddress[tokenAddress] || []
+    byChainId[chainId]?.byType.gov.byDepositTokenAddress[tokenAddress] || []
 )(
   (state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
     `${chainId}-${tokenAddress.toLowerCase()}`
@@ -228,7 +334,7 @@ export const selectIsStandardVaultEarnTokenAddress = (
   tokenAddress: TokenEntity['address']
 ) => {
   return (
-    state.entities.vaults.byChainId[chainId]?.standardVault.byEarnedTokenAddress[
+    state.entities.vaults.byChainId[chainId]?.byType.standard.byAddress[
       tokenAddress.toLowerCase()
     ] !== undefined
   );
@@ -240,26 +346,15 @@ export const selectStandardVaultByEarnTokenAddress = (
   tokenAddress: TokenEntity['address']
 ) => {
   const vaultId =
-    state.entities.vaults.byChainId[chainId]?.standardVault.byEarnedTokenAddress[
-      tokenAddress.toLowerCase()
-    ];
+    state.entities.vaults.byChainId[chainId]?.byType.standard.byAddress[tokenAddress.toLowerCase()];
   if (vaultId === undefined) {
     throw new Error(`Vault id by earn token id not found`);
   }
   return vaultId;
 };
 
-export const selectTotalActiveVaults = createSelector(
-  (state: BeefyState) => state.entities.vaults.byChainId,
-  byChainId => {
-    let count = 0;
-    for (const chainId in byChainId) {
-      count = count + (byChainId[chainId]?.allActiveIds.length || 0);
-    }
-    return count;
-  }
-);
-
+export const selectTotalActiveVaults = (state: BeefyState) =>
+  state.entities.vaults.allActiveIds.length;
 export const selectIsVaultFeatured = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.featuredVaults[vaultId],
   isFeatured => isFeatured === true
@@ -329,7 +424,7 @@ export const selectAllVaultIdsWithBridgedVersion = (state: BeefyState) =>
   state.entities.vaults.allBridgedIds;
 
 export const selectAllVaultsWithBridgedVersion = (state: BeefyState) =>
-  state.entities.vaults.allBridgedIds.map(id => selectStandardVaultById(state, id));
+  selectAllVaultIdsWithBridgedVersion(state).map(id => selectVaultById(state, id));
 
 export const selectVaultHasAssetsWithRisks = (
   state: BeefyState,
@@ -384,9 +479,9 @@ export const selectChainsWithCowcentratedVaults = createSelector(
     return Object.entries(byChainId)
       .filter(
         ([_, chainState]) =>
-          chainState.cowcentratedVault &&
-          chainState.cowcentratedVault.byEarnedTokenAddress &&
-          Object.keys(chainState.cowcentratedVault.byEarnedTokenAddress).length > 0
+          chainState.byType.cowcentrated &&
+          chainState.byType.cowcentrated.byAddress &&
+          Object.keys(chainState.byType.cowcentrated.byAddress).length > 0
       )
       .map(([chainId]) => chainId as ChainEntity['id']);
   }

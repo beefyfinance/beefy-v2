@@ -63,7 +63,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       selectTokenByAddress(state, vault.chainId, tokenAddress)
     );
 
-    const shareToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
+    const shareToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
     if (!isTokenErc20(shareToken)) {
       throw new Error('Share token is not an ERC20 token');
     }
@@ -105,7 +105,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     const state = this.getState();
     const chain = selectChainById(state, this.vault.chainId);
     const clmPool = new BeefyCLMPool(
-      this.vault.earnContractAddress,
+      this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
       this.depositTokens
@@ -138,7 +138,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       .map(input => ({
         token: input.token as TokenErc20,
         amount: input.amount,
-        spenderAddress: this.vault.earnContractAddress,
+        spenderAddress: this.vault.contractAddress,
       }));
 
     return {
@@ -203,7 +203,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     const state = this.getState();
     const chain = selectChainById(state, this.vault.chainId);
     const clmPool = new BeefyCLMPool(
-      this.vault.earnContractAddress,
+      this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
       this.depositTokens
@@ -263,7 +263,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     const chain = selectChainById(state, this.vault.chainId);
     const slippage = selectTransactSlippage(state);
     const clmPool = new BeefyCLMPool(
-      this.vault.earnContractAddress,
+      this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
       this.depositTokens
@@ -308,7 +308,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     const state = this.getState();
     const chain = selectChainById(state, this.vault.chainId);
     const clmPool = new BeefyCLMPool(
-      this.vault.earnContractAddress,
+      this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
       this.depositTokens

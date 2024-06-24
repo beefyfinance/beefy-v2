@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
-import type { ApyDataAprComponents, BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api';
+import type { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api';
 import { getBeefyApi } from '../apis/instances';
 import { isGovVault, type VaultEntity } from '../entities/vault';
 import type { TotalApy } from '../reducers/apy';
@@ -9,6 +9,7 @@ import { selectActiveVaultBoostIds } from '../selectors/boosts';
 import { first } from 'lodash-es';
 import { compoundInterest, yearlyToDaily } from '../../../helpers/number';
 import { isDefined } from '../utils/array-utils';
+import { getApiApyDataComponents } from '../../../helpers/apy';
 
 export interface FetchAllApyFulfilledPayload {
   data: BeefyAPIApyBreakdownResponse;
@@ -45,19 +46,8 @@ export const recalculateTotalApyAction = createAsyncThunk<
   const state = getState();
   const vaultIds = selectAllVaultIds(state);
   const totals: Record<VaultEntity['id'], TotalApy> = {};
-  const compoundableComponents = ['vault', 'clm'] as const satisfies Array<ApyDataAprComponents>;
-  const nonCompoundableComponents = [
-    'trading',
-    'liquidStaking',
-    'composablePool',
-    'merkl',
-  ] as const satisfies Array<ApyDataAprComponents>;
-  const allComponents = [...compoundableComponents, ...nonCompoundableComponents];
-  const compoundableDaily = compoundableComponents.map(component => `${component}Daily` as const);
-  const nonCompoundableDaily = nonCompoundableComponents.map(
-    component => `${component}Daily` as const
-  );
-  const allDaily = allComponents.map(component => `${component}Daily` as const);
+  const { allComponents, allDaily, compoundableDaily, nonCompoundableDaily } =
+    getApiApyDataComponents();
 
   for (const vaultId of vaultIds) {
     const apy = state.biz.apy.rawApy.byVaultId[vaultId];
@@ -74,7 +64,7 @@ export const recalculateTotalApyAction = createAsyncThunk<
 
     // Extract all the components from the apy object to the total object as Apr and Daily
     for (const component of allComponents) {
-      const aprKey = `${component}Apr`;
+      const aprKey = `${component}Apr` as const;
       const apr = apy[aprKey];
       if (apr) {
         total[aprKey] = apr;
@@ -98,8 +88,7 @@ export const recalculateTotalApyAction = createAsyncThunk<
 
     // Gov vaults don't auto-compound
     if (isGovVault(vault) && 'vaultApr' in apy) {
-      total.totalApy = apy.vaultApr;
-      total.totalDaily = apy.vaultApr / 365;
+      total.totalApy = total.totalDaily * 365;
       total.totalMonthly = total.totalDaily * 30;
     }
 

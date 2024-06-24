@@ -334,7 +334,7 @@ class ClmInvestorOverviewTimeSeriesGenerator {
         .concat(
           this.timeline.map(tx => ({
             t: getUnixTime(tx.datetime),
-            v: tx.usdDiff.dividedBy(tx.shareDiff),
+            v: tx.usdBalance.dividedBy(tx.shareBalance),
           }))
         )
         .concat(

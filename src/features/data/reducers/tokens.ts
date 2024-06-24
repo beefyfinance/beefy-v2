@@ -32,6 +32,7 @@ import type { LpData } from '../apis/beefy/beefy-api';
 import { isNativeAlternativeAddress } from '../../../helpers/addresses';
 import { fetchBridgeConfig } from '../actions/bridge';
 import { entries } from '../../../helpers/object';
+import { isDefined } from '../utils/array-utils';
 
 /**
  * State containing Vault infos
@@ -496,121 +497,85 @@ function addVaultToState(
   }
 
   //
-  // Earned token
+  // Receipt token
   //
-  const earnedAddressKey = vault.earnedTokenAddress
-    ? vault.earnedTokenAddress.toLowerCase()
-    : 'native';
-  const existingEarnedToken = chainState.byAddress[earnedAddressKey];
-  if (existingEarnedToken === undefined) {
-    // Do not add native token from configs, keep config as source of truth
-    if (earnedAddressKey !== 'native') {
-      const tokens: TokenErc20[] = [];
+  // (Only v2 + of gov vaults have a receipt token)
+  if (vault.type !== 'gov' || (vault.version || 1) > 1) {
+    const receiptToken: TokenErc20 = {
+      type: 'erc20',
+      id: vault.id,
+      chainId: chainId,
+      oracleId: vault.oracleId,
+      address: vault.earnContractAddress,
+      decimals: 18, // receipt token always has 18 decimals
+      symbol: vault.earnedToken, // earnedToken === receipt token in this context
+      buyUrl: undefined,
+      website: undefined,
+      description: undefined,
+      documentation: undefined,
+      risks: [],
+    };
 
-      // if (vault.type === 'gov') {
-      // // Add earned token
-      // if (vault.earnedTokenAddress) {
-      //   tokens.push({
-      //     type: 'erc20',
-      //     id: vault.earnedToken!,
-      //     chainId: chainId,
-      //     oracleId: vault.oracleId,
-      //     decimals: vault.earnedTokenDecimals ?? 18,
-      //     address: vault.earnedTokenAddress,
-      //     symbol: vault.earnedToken!,
-      //     buyUrl: undefined,
-      //     website: undefined,
-      //     description: undefined,
-      //     documentation: undefined,
-      //     risks: [],
-      //   });
-      // } else {
-      //   vault.earnedTokenAddresses!.forEach((_, i) => {
-      //     tokens.push({
-      //       type: 'erc20',
-      //       id: vault.earnedToken!,
-      //       chainId: chainId,
-      //       oracleId: vault.earnedOracleIds![i],
-      //       decimals: vault.earnedTokensDecimals![i] ?? 18,
-      //       address: vault.earnedTokenAddresses![i],
-      //       symbol: vault.earnedTokens![i],
-      //       buyUrl: undefined,
-      //       website: undefined,
-      //       description: undefined,
-      //       documentation: undefined,
-      //       risks: [],
-      //     });
-      //   });
-      // }
-      // } else
-      if (vault.type === 'standard' || vault.type === 'cowcentrated' || vault.type === undefined) {
-        // Add receipt token
-        const token: TokenErc20 = {
-          type: 'erc20',
-          id: vault.earnedToken,
+    // We always let the vault overwrite the receipt token, even if it was added via deposit token of another vault
+    addTokenToState(sliceState, receiptToken, true);
+
+    // Add bridged versions of receipt token
+    if (vault.bridged) {
+      addBridgedReceiptTokensToState(vault, receiptToken, sliceState);
+    }
+  }
+
+  //
+  // Earned Token
+  //
+  // Only gov vaults have an earned token that isn't the receipt token
+  // And only the new v2 gov vaults have oracle ids such that we can add the token here
+  if (
+    vault.type === 'gov' &&
+    vault.earnedTokens &&
+    vault.earnedOracleIds &&
+    vault.earnedTokenAddresses &&
+    vault.earnedTokenDecimals &&
+    Array.isArray(vault.earnedTokenDecimals)
+  ) {
+    const earnedTokens: TokenErc20[] = vault.earnedTokenAddresses
+      .map((address, i) => {
+        const earnedToken = vault.earnedTokens?.[i];
+        const earnedOracleId = vault.earnedOracleIds?.[i];
+        const earnedTokenDecimals = vault.earnedTokenDecimals?.[i];
+        if (
+          !earnedToken ||
+          !earnedOracleId ||
+          !earnedTokenDecimals ||
+          !address ||
+          address === 'native'
+        ) {
+          return undefined;
+        }
+
+        return {
+          type: 'erc20' as const,
+          id: earnedToken,
           chainId: chainId,
-          oracleId: vault.oracleId,
-          address: vault.earnedTokenAddress!,
-          decimals: 18, // receipt token always has 18 decimals
-          symbol: vault.earnedToken,
+          oracleId: earnedOracleId,
+          address,
+          decimals: earnedTokenDecimals,
+          symbol: earnedToken,
           buyUrl: undefined,
           website: undefined,
           description: undefined,
           documentation: undefined,
           risks: [],
         };
-
-        tokens.push(token);
-
-        // Add bridged versions of receipt token
-        if (vault.bridged) {
-          addBridgedReceiptTokensToState(vault, token, sliceState);
-        }
+      })
+      .filter(isDefined);
+    for (const earnedToken of earnedTokens) {
+      const earnedAddressKey = earnedToken.address.toLowerCase();
+      const existingEarnedToken = chainState.byAddress[earnedAddressKey];
+      if (existingEarnedToken === undefined) {
+        addTokenToState(sliceState, earnedToken, true);
       } else {
-        throw new Error(`Unknown vault type ${vault.type}`);
-      }
-
-      tokens.forEach(token => addTokenToState(sliceState, token, true));
-    }
-  } else {
-    /** address book loaded first, and the vault receipt token is in the address book */
-    // make sure vault token is still tagged as an interesting address
-    if (vault.earnedTokenAddress && vault.earnedTokenAddress !== 'native') {
-      ensureInterestingToken(vault.earnedTokenAddress, chainId, sliceState);
-    }
-
-    // make sure bridged tokens are added/are marked as interesting
-    if (vault.type !== 'gov' && vault.bridged) {
-      const token = chainState.byAddress[earnedAddressKey];
-      if (isTokenErc20(token)) {
-        addBridgedReceiptTokensToState(vault, token, sliceState);
-      }
-    }
-  }
-
-  // Multi reward gov vault receipt tokens
-  if (vault.type === 'gov' && vault.earnedTokenAddresses) {
-    const earnedAddressKey = vault.earnContractAddress.toLowerCase();
-    const existingEarnedToken = chainState.byAddress[earnedAddressKey];
-    if (existingEarnedToken === undefined) {
-      const token: TokenErc20 = {
-        type: 'erc20',
-        id: vault.earnedToken,
-        chainId: chainId,
-        oracleId: vault.oracleId,
-        address: vault.earnContractAddress,
-        decimals: 18, // receipt token always has 18 decimals
-        symbol: vault.earnedToken,
-        buyUrl: undefined,
-        website: undefined,
-        description: undefined,
-        documentation: undefined,
-        risks: [],
-      };
-      addTokenToState(sliceState, token, true);
-    } else {
-      if (vault.earnContractAddress && vault.earnContractAddress !== 'native') {
-        ensureInterestingToken(vault.earnContractAddress, chainId, sliceState);
+        ensureInterestingToken(earnedToken.address, earnedToken.chainId, sliceState);
       }
     }
   }
@@ -691,6 +656,6 @@ function addTokenToState(
   chainState.byId[token.id] = token.address.toLowerCase();
   chainState.byAddress[addressKey] = token;
   if (interesting) {
-    chainState.interestingBalanceTokenAddresses.push(token.address);
+    ensureInterestingToken(token.address, token.chainId, sliceState);
   }
 }

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import {
+  isCowcentratedVault,
   isVaultEarningPoints,
   isVaultPaused,
   isVaultRetired,
@@ -20,6 +21,7 @@ import {
   selectIsVaultFeatured,
   selectIsVaultStable,
   selectVaultById,
+  selectVaultIsUnderlyingVault,
 } from '../selectors/vaults';
 import { selectActiveChainIds, selectAllChainIds } from '../selectors/chains';
 import { selectVaultSupportsZap } from '../selectors/zap';
@@ -77,6 +79,11 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
       filteredVaults = allVaults.filter(vault => {
         // Chains
         if (!visibleChains.has(vault.chainId)) {
+          return false;
+        }
+
+        // Hide CLM if pool or vault exists
+        if (isCowcentratedVault(vault) && selectVaultIsUnderlyingVault(state, vault.id)) {
           return false;
         }
 

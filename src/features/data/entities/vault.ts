@@ -15,53 +15,64 @@ export type VaultTag =
   | 'eol'
   | 'paused';
 
-/**
- * A vault is anything you can stake stuff into
- * - could be a single token vault
- * - could be an LP vault
- * - could be a bifi boost (gov vault)
- *
- * Sometimes also named "pool"
- */
-export interface VaultStandard {
+export type VaultType = 'standard' | 'gov' | 'cowcentrated';
+
+export type VaultBase = {
+  /** globally unique id for the vault */
   id: string;
+  /** name of the vault (as in the config) */
   name: string;
-  type: 'standard';
+  /** short name of the vault w/out Vault/Pool/CLM suffix */
+  shortName: string;
+  /** long name of the vault w/ Vault/Pool/CLM suffix */
+  longName: string;
+  /** contract version, increased when app needs to behave differently for the same vault type */
   version: number;
-  depositTokenAddress: string;
-  zaps: ZapStrategyConfig[];
-
-  /**
-   * ASSETS are basically the assets that are in that vault
-   * So if you go into a BIFI vault, the assets is of course only BIFI
-   * But if you join the curve aTriCrypto vault your assets will be BTC,ETH and USDT
-   */
-  assetIds: TokenEntity['id'][];
-
+  /** chain the vault is on */
   chainId: ChainEntity['id'];
+  /** address book token ids of assets used to deposit in the vault (deposit token for single, token0/1 for LP) */
+  assetIds: TokenEntity['id'][];
+  /** when the vault was added to the app, unix timestamp */
+  createdAt: number;
+  /** when the something about the vault changed, unix timestamp, used for default sort */
+  updatedAt: number;
+  /** config for zaps available on this vault */
+  zaps: ZapStrategyConfig[];
+  /** the vault contract address (earnContractAddress in config) */
+  contractAddress: string;
+};
 
+export type VaultActive = {
+  status: 'active';
+};
+
+export type VaultRetired = {
+  status: 'eol';
+  /** retire reason code */
+  retireReason: string;
+  /** when the vault was retired, unix timestamp */
+  retiredAt: number;
+};
+
+export type VaultPaused = {
+  status: 'paused';
+  /** paused reason code */
+  pauseReason: string;
+  /** when the vault was paused, unix timestamp */
+  pausedAt: number;
+};
+
+export type VaultStatus = VaultActive | VaultRetired | VaultPaused;
+
+type VaultStandardOnly = {
+  depositTokenAddress: string;
   earnedTokenAddress: string;
-
-  /**
-   * The vault contract address
-   */
-  earnContractAddress: string;
-
   strategyTypeId: string;
 
   /**
    * The protocol this vault rely on (Curve, boo finance, etc)
    */
   platformId: PlatformEntity['id'];
-
-  status: 'active' | 'eol' | 'paused';
-  createdAt: number;
-  /** Used for sorting, not required in config but defaults to createdAt on load so always available on entity */
-  updatedAt: number;
-  retireReason?: string;
-  retiredAt?: number;
-  pauseReason?: string;
-  pausedAt?: number;
 
   assetType: 'lps' | 'single';
 
@@ -80,31 +91,12 @@ export interface VaultStandard {
   bridged?: Record<ChainEntity['id'], string>;
   lendingOracle?: { provider: string; address?: string; loops?: number };
   earningPoints: boolean;
-}
+};
 
-export interface VaultGovBase {
-  id: string;
-  name: string;
-  type: 'gov';
-  version: number;
+type VaultGovBaseOnly = {
   depositTokenAddress: string;
 
-  /**
-   * ASSETS are basically the assets that are in that vault
-   * So if you go into a BIFI vault, the assets is of course only BIFI
-   * But if you join the curve aTriCrypto vault your assets will be BTC,ETH and USDT
-   */
-  assetIds: TokenEntity['id'][];
-
-  chainId: ChainEntity['id'];
-
   earnedTokenAddresses: string[];
-
-  /**
-   * Vault address "treasury", we ask this address about user balances
-   */
-  earnContractAddress: string;
-
   /**
    * so bifi-gov and bifi-maxi, are very special
    * those are the way in which we distribute platform revenue back to bifi holders
@@ -115,20 +107,11 @@ export interface VaultGovBase {
    * so in order not to count TVL twice. when we count the tvl of the gov pools
    * we must exclude/substract the tvl from the maxi vault
    */
-  excludedId: null | VaultEntity['id'];
+  excludedId: null | VaultBase['id'];
 
   strategyTypeId: string;
 
   platformId: PlatformEntity['id'];
-
-  status: 'active' | 'eol' | 'paused';
-  createdAt: number;
-  /** Used for sorting, not required in config but defaults to createdAt on load so always available on entity */
-  updatedAt: number;
-  retireReason?: string;
-  retiredAt?: number;
-  pauseReason?: string;
-  pausedAt?: number;
 
   assetType: 'single';
 
@@ -143,26 +126,47 @@ export interface VaultGovBase {
   depositFee: number;
 
   migrationIds?: string[];
-  zaps: ZapStrategyConfig[];
-}
+};
 
-export interface VaultGovSingle extends VaultGovBase {
+type VaultGovSingleOnly = VaultGovBaseOnly & {
   subType: 'single';
   // addLiquidityUrl: null;
-}
+};
 
-export interface VaultGovMulti extends VaultGovBase {
+type VaultGovMultiOnly = VaultGovBaseOnly & {
   subType: 'multi';
   // addLiquidityUrl: string;
-}
+};
 
-export type VaultGov = VaultGovSingle | VaultGovMulti;
-
-export type VaultCowcentrated = Omit<VaultStandard, 'type'> & {
-  type: 'cowcentrated';
+type VaultCowcentratedOnly = VaultStandardOnly & {
   depositTokenAddresses: string[];
   feeTier: string;
 };
+
+type MakeVaultActive<TVaultType extends VaultType, TOnly> = { type: TVaultType } & VaultBase &
+  VaultActive &
+  TOnly;
+type MakeVaultRetired<TVaultType extends VaultType, TOnly> = { type: TVaultType } & VaultBase &
+  VaultRetired &
+  TOnly;
+type MakeVaultPaused<TVaultType extends VaultType, TOnly> = { type: TVaultType } & VaultBase &
+  VaultPaused &
+  TOnly;
+
+type MakeVault<TVaultType extends VaultType, TOnly> =
+  | MakeVaultActive<TVaultType, TOnly>
+  | MakeVaultRetired<TVaultType, TOnly>
+  | MakeVaultPaused<TVaultType, TOnly>;
+
+export type VaultStandard = MakeVault<'standard', VaultStandardOnly>;
+export type VaultGovSingle = MakeVault<'gov', VaultGovSingleOnly>;
+export type VaultGovMulti = MakeVault<'gov', VaultGovMultiOnly>;
+export type VaultGov = VaultGovSingle | VaultGovMulti;
+export type VaultCowcentrated = MakeVault<'cowcentrated', VaultCowcentratedOnly>;
+export type VaultEntity = VaultStandard | VaultGov | VaultCowcentrated;
+export type VaultEntityActive = Extract<VaultEntity, VaultActive>;
+export type VaultEntityPaused = Extract<VaultEntity, VaultPaused>;
+export type VaultEntityRetired = Extract<VaultEntity, VaultRetired>;
 
 export function isGovVault(vault: VaultEntity): vault is VaultGov {
   return vault.type === 'gov';
@@ -184,15 +188,15 @@ export function isCowcentratedVault(vault: VaultEntity): vault is VaultCowcentra
   return vault.type === 'cowcentrated';
 }
 
-export function isVaultRetired(vault: VaultEntity) {
+export function isVaultRetired(vault: VaultEntity): vault is VaultEntityRetired {
   return vault.status === 'eol';
 }
 
-export function isVaultActive(vault: VaultEntity) {
+export function isVaultActive(vault: VaultEntity): vault is VaultEntityActive {
   return vault.status === 'active';
 }
 
-export function isVaultPaused(vault: VaultEntity) {
+export function isVaultPaused(vault: VaultEntity): vault is VaultEntityPaused {
   return vault.status === 'paused';
 }
 
@@ -216,5 +220,3 @@ export function shouldVaultShowInterest(vault: VaultEntity) {
 
   return true;
 }
-
-export type VaultEntity = VaultStandard | VaultGov | VaultCowcentrated;

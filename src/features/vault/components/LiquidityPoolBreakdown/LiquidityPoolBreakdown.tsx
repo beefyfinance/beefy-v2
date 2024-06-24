@@ -9,7 +9,10 @@ import type { BreakdownMode } from './types';
 import { ChartWithLegend } from './components/ChartWithLegend';
 import { useCalculatedBreakdown } from './hooks';
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import { selectVaultById } from '../../../data/selectors/vaults';
+import {
+  selectVaultById,
+  selectVaultUnderlyingVaultOrUndefined,
+} from '../../../data/selectors/vaults';
 import type { TokenLpBreakdown } from '../../../data/entities/token';
 import {
   selectHasBreakdownDataByTokenAddress,
@@ -33,10 +36,15 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
   function LiquidityPoolBreakdown({ vault, breakdown }) {
     const classes = useStyles();
     const { t } = useTranslation();
+    const underlyingVault = useAppSelector(state =>
+      selectVaultUnderlyingVaultOrUndefined(state, vault.id)
+    );
     const calculatedBreakdown = useCalculatedBreakdown(vault, breakdown);
     const { userBalance } = calculatedBreakdown;
     const [tab, setTab] = useState<BreakdownMode>(userBalance.gt(BIG_ZERO) ? 'user' : 'total');
     const [haveSwitchedTab, setHaveSwitchedTab] = useState(false);
+    const isForCowcentrated =
+      isCowcentratedVault(vault) || (underlyingVault && isCowcentratedVault(underlyingVault));
 
     const tabs: Partial<Record<BreakdownMode, string>> = useMemo(() => {
       const map = {};
@@ -45,13 +53,13 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
       }
       map['one'] = t('Vault-LpBreakdown-1LP');
       map['total'] = t(
-        isCowcentratedVault(vault) ? 'Vault-LpBreakdown-ClmPool' : 'Vault-LpBreakdown-TotalPool'
+        isForCowcentrated ? 'Vault-LpBreakdown-ClmPool' : 'Vault-LpBreakdown-TotalPool'
       );
-      if (isCowcentratedVault(vault)) {
+      if (isForCowcentrated) {
         map['underlying'] = t('Vault-LpBreakdown-Underlying');
       }
       return map;
-    }, [userBalance, t, vault]);
+    }, [userBalance, t, isForCowcentrated]);
 
     const onTabChange = useCallback(
       (newTab: string) => {

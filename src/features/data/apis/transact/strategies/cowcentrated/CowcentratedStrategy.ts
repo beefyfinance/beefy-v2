@@ -152,7 +152,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     const state = this.helpers.getState();
     const chain = selectChainById(state, this.vault.chainId);
     const clmPool = new BeefyCLMPool(
-      this.vault.earnContractAddress,
+      this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
       this.vaultType.depositTokens
@@ -550,7 +550,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     const strategy = selectVaultStrategyAddress(state, this.vault.id);
     const chain = selectChainById(state, this.vault.chainId);
     const clmPool = new BeefyCLMPool(
-      this.vault.earnContractAddress,
+      this.vault.contractAddress,
       strategy,
       chain,
       this.vaultType.depositTokens

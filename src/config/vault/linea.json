@@ -21,7 +21,7 @@
     "platformId": "beefy",
     "assets": ["USDC", "USDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "linea",
     "feeTier": "0.01",
     "zaps": [
@@ -52,7 +52,7 @@
     "platformId": "beefy",
     "assets": ["WBTC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "linea",
     "feeTier": "0.05",
     "zaps": [
@@ -83,7 +83,7 @@
     "platformId": "beefy",
     "assets": ["WETH", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "linea",
     "feeTier": "0.05",
     "zaps": [

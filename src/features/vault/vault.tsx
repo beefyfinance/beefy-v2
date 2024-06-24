@@ -3,10 +3,8 @@ import type { PropsWithChildren } from 'react';
 import React, { lazy, memo } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { styles } from './styles';
-import { StrategyCard } from './components/StrategyCard';
 import { SafetyCard } from './components/SafetyCard';
 import { BoostCard } from './components/BoostCard';
-import { GovDetailsCard } from './components/GovDetailsCard';
 import {
   selectVaultById,
   selectVaultExistsById,
@@ -14,7 +12,6 @@ import {
 } from '../data/selectors/vaults';
 import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
 import type { VaultEntity } from '../data/entities/vault';
-import { isCowcentratedVault, isGovVault } from '../data/entities/vault';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { TechLoader } from '../../components/TechLoader';
 import { useAppSelector } from '../../store';
@@ -25,12 +22,12 @@ import { LeverageCards } from './components/LeverageCards';
 import { Actions } from './components/Actions';
 import { VaultHeader } from './components/VaultHeader';
 import { BusdBannerVault } from '../../components/Banners/BusdBanner';
-import { PnLGraphLoader } from './components/PnLGraph';
 import { VaultsStats } from './components/VaultsStats';
 import { HistoricGraphsLoader } from './components/HistoricGraph';
 import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
-import { CowcentratedPnlGraphLoader } from './components/CowcentratedPnlGraph';
 import { VaultMeta } from '../../components/Meta/VaultMeta';
+import { PnLGraphIfWallet } from './components/PnLGraph/PnLGraphIfWallet';
+import { Explainer } from './components/Explainer/Explainer';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -93,18 +90,11 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
           </div>
           <div className={classes.columnInfo}>
             {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
-
-            {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
-            {isCowcentratedVault(vault) && (
-              <CowcentratedPnlGraphLoader vaultId={vaultId} address={walletAddress} />
-            )}
-            {!isGovVault(vault) ? (
-              <PnLGraphLoader vaultId={vaultId} address={walletAddress} />
-            ) : null}
+            <PnLGraphIfWallet vaultId={vaultId} walletAddress={walletAddress} />
             <HistoricGraphsLoader vaultId={vaultId} />
             <LiquidityPoolBreakdownLoader vaultId={vaultId} />
             <SafetyCard vaultId={vaultId} />
-            {!isGovVault(vault) ? <StrategyCard vaultId={vaultId} /> : null}
+            <Explainer vaultId={vaultId} />
             <AssetsCard vaultId={vault.id} />
             <Hidden mdUp>
               <InsuranceCards vaultId={vaultId} />

@@ -1,6 +1,5 @@
 import type { AxiosInstance } from 'axios';
 import axios from 'axios';
-import { isString } from 'lodash-es';
 import type { TokenEntity } from '../../entities/token';
 import type { VaultEntity } from '../../entities/vault';
 import { mapValuesDeep } from '../../utils/array-utils';
@@ -58,19 +57,19 @@ export interface ApyCLM {
 }
 
 type ExtractAprComponents<T extends string> = T extends `${infer C}Apr` ? C : never;
-export type ApyData = ApyGovVault | ApyMaxiVault | ApyStandard | ApyCLM;
-export type ApyDataKeys = KeysOfUnion<ApyData>;
-export type ApyDataAprComponents = ExtractAprComponents<ApyDataKeys>;
+export type ApiApyData = ApyGovVault | ApyMaxiVault | ApyStandard | ApyCLM;
+export type ApiApyDataKeys = KeysOfUnion<ApiApyData>;
+export type ApiApyDataAprComponents = ExtractAprComponents<ApiApyDataKeys>;
 
-export function isStandardVaultApy(apy: ApyData): apy is ApyStandard {
+export function isStandardVaultApy(apy: ApiApyData): apy is ApyStandard {
   return 'compoundingsPerYear' in apy;
 }
 
-export function isGovVaultApy(apy: ApyData): apy is ApyGovVault {
+export function isGovVaultApy(apy: ApiApyData): apy is ApyGovVault {
   return 'vaultApr' in apy && !('compoundingsPerYear' in apy);
 }
 
-export function isMaxiVaultApy(apy: ApyData): apy is ApyMaxiVault {
+export function isMaxiVaultApy(apy: ApiApyData): apy is ApyMaxiVault {
   return 'totalApy' in apy && !('compoundingsPerYear' in apy);
 }
 
@@ -79,7 +78,7 @@ export interface BeefyAPITokenPricesResponse {
 }
 
 export interface BeefyAPIApyBreakdownResponse {
-  [vaultId: VaultEntity['id']]: ApyData;
+  [vaultId: VaultEntity['id']]: ApiApyData;
 }
 
 export interface LpData {
@@ -181,7 +180,7 @@ export class BeefyAPI {
     // somehow, all vaultApr are currently strings, we need to fix that before sending
     // the data to be processed
     const data = mapValuesDeep(res.data, (val, key) => {
-      if (key === 'vaultApr' && isString(val)) {
+      if (key === 'vaultApr' && typeof val === 'string') {
         val = parseFloat(val);
       }
       return val;

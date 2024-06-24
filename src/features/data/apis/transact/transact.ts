@@ -10,7 +10,7 @@ import {
 import { partition, uniq } from 'lodash-es';
 import type { VaultEntity } from '../../entities/vault';
 import type { GetStateFn } from '../../../../redux-types';
-import { selectVaultByAddress, selectVaultById } from '../../selectors/vaults';
+import { selectVaultById, selectVaultUnderlyingVault } from '../../selectors/vaults';
 import {
   type AnyComposableStrategy,
   type IComposableStrategyStatic,
@@ -437,11 +437,7 @@ export class TransactApi implements ITransactApi {
     helpers: ZapTransactHelpers
   ): Promise<AnyComposableStrategy> {
     const { getState, vault } = helpers;
-    const underlyingVault = selectVaultByAddress(
-      getState(),
-      vault.chainId,
-      vault.depositTokenAddress
-    );
+    const underlyingVault = selectVaultUnderlyingVault(getState(), vault.id);
     const underlyingHelpers = await this.getHelpersForVault(underlyingVault.id, getState);
     if (!isZapTransactHelpers(underlyingHelpers)) {
       throw new Error(

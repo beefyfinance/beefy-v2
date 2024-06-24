@@ -49,27 +49,25 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
     boostBatches.forEach(boostBatch => {
       requestsForBatch.push({
-        method: mc.methods.getBoostInfo(boostBatch.map(boost => boost.earnContractAddress)).call,
+        method: mc.methods.getBoostInfo(boostBatch.map(boost => boost.contractAddress)).call,
         params: { from: '0x0000000000000000000000000000000000000000' },
       });
     });
     vaultBatches.forEach(vaultBatch => {
       requestsForBatch.push({
-        method: mc.methods.getVaultInfo(vaultBatch.map(vault => vault.earnContractAddress)).call,
+        method: mc.methods.getVaultInfo(vaultBatch.map(vault => vault.contractAddress)).call,
         params: { from: '0x0000000000000000000000000000000000000000' },
       });
     });
     govVaultBatches.forEach(govVaultBatch => {
       requestsForBatch.push({
-        method: mc.methods.getGovVaultInfo(govVaultBatch.map(vault => vault.earnContractAddress))
-          .call,
+        method: mc.methods.getGovVaultInfo(govVaultBatch.map(vault => vault.contractAddress)).call,
         params: { from: '0x0000000000000000000000000000000000000000' },
       });
     });
     cowVaultBatches.forEach(cowVaultBatch => {
       requestsForBatch.push({
-        method: mc.methods.getCowVaultInfo(cowVaultBatch.map(vault => vault.earnContractAddress))
-          .call,
+        method: mc.methods.getCowVaultInfo(cowVaultBatch.map(vault => vault.contractAddress)).call,
         params: { from: '0x0000000000000000000000000000000000000000' },
       });
     });
@@ -191,7 +189,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     standardVault: VaultStandard
   ) {
     const vault = selectVaultById(state, standardVault.id);
-    const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
+    const mooToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     return {
       id: standardVault.id,

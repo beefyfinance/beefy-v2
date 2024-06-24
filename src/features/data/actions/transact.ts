@@ -192,7 +192,7 @@ export const transactFetchQuotes = createAsyncThunk<
     let inputToken: TokenEntity;
     if (isCowcentratedVault(vault)) {
       // For CLM vaults, user enters number of shares to withdraw
-      inputToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
+      inputToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
     } else {
       // For standard/gov vaults, user enters number of deposit token to withdraw
       inputToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);

@@ -45,28 +45,44 @@ export const App = () => {
                 <Suspense fallback={<TechLoader />}>
                   <Switch>
                     <Route exact path="/">
-                      <Home />
+                      <ErrorBoundary>
+                        <Home />
+                      </ErrorBoundary>
                     </Route>
                     <Route strict sensitive exact path={['/:network/vault/:id', '/vault/:id']}>
-                      <Vault />
+                      <ErrorBoundary>
+                        <Vault />
+                      </ErrorBoundary>
                     </Route>
                     <Route exact path="/onramp">
-                      <OnRamp />
+                      <ErrorBoundary>
+                        <OnRamp />
+                      </ErrorBoundary>
                     </Route>
                     <Route exact path="/bridge">
-                      <Bridge />
+                      <ErrorBoundary>
+                        <Bridge />
+                      </ErrorBoundary>
                     </Route>
                     <Route strict exact path="/dashboard/:address">
-                      <Dashboard mode={'url'} />
+                      <ErrorBoundary>
+                        <Dashboard mode={'url'} />
+                      </ErrorBoundary>
                     </Route>
                     <Route exact path="/dashboard">
-                      <Dashboard mode={'wallet'} />
+                      <ErrorBoundary>
+                        <Dashboard mode={'wallet'} />
+                      </ErrorBoundary>
                     </Route>
                     <Route exact path="/treasury">
-                      <Treasury />
+                      <ErrorBoundary>
+                        <Treasury />
+                      </ErrorBoundary>
                     </Route>
                     <Route>
-                      <PageNotFound />
+                      <ErrorBoundary>
+                        <PageNotFound />
+                      </ErrorBoundary>
                     </Route>
                   </Switch>
                 </Suspense>

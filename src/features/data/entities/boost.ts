@@ -25,7 +25,7 @@ export interface BoostEntity {
   /**
    * This is the boost's contract address
    */
-  earnContractAddress: string;
+  contractAddress: string;
 
   /**
    * ASSETS are basically the assets that are in that boost

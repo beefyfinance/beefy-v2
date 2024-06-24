@@ -41,7 +41,7 @@ export const fetchHistoricalRanges = createAsyncThunk<
   const ranges = await api.getAvailableRanges(
     vaultId,
     depositToken.oracleId,
-    isCowcentratedVault(vault) ? vault.earnContractAddress : undefined,
+    isCowcentratedVault(vault) ? vault.contractAddress : undefined,
     isCowcentratedVault(vault) ? vault.chainId : undefined
   );
 
@@ -118,7 +118,7 @@ export interface HistoricalCowcentratedPayload {
 
 export interface HistoricalCowcentratedParams {
   vaultId: VaultEntity['id'];
-  vaultAddress: VaultEntity['earnContractAddress'];
+  vaultAddress: VaultEntity['contractAddress'];
   chainId: ChainEntity['id'];
   bucket: ApiTimeBucket;
 }
@@ -158,7 +158,7 @@ export function fetchHistoricalStat(
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket,
   chainId: ChainEntity['id'],
-  vaultAddress: VaultEntity['earnContractAddress']
+  vaultAddress: VaultEntity['contractAddress']
 ): ThunkAction<unknown, unknown, unknown, Action<unknown>> {
   switch (stat) {
     case 'apy':

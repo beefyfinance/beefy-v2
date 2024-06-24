@@ -52,7 +52,7 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
   const boost = useAppSelector(state => selectBoostById(state, boostId));
   const vault = useAppSelector(state => selectStandardVaultById(state, boost.vaultId));
   const formState = useAppSelector(state => state.ui.boost);
-  const spenderAddress = boost.earnContractAddress;
+  const spenderAddress = boost.contractAddress;
   const needsApproval = useAppSelector(state =>
     selectIsApprovalNeededForBoostStaking(state, spenderAddress)
   );

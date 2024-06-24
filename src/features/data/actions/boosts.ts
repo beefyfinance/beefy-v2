@@ -65,7 +65,7 @@ export const initiateBoostForm = createAsyncThunk<
     ? await balanceApi.fetchAllBalances(getState(), [], [], [boost], walletAddress)
     : { tokens: [], boosts: [], govVaults: [] };
 
-  const spenderAddress = boost.earnContractAddress;
+  const spenderAddress = boost.contractAddress;
 
   const allowanceApi = await getAllowanceApi(chain);
   const mooToken = selectErc20TokenByAddress(

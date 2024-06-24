@@ -6,17 +6,24 @@ import {
   selectTokenByAddressOrUndefined,
   selectVaultTokenSymbols,
 } from '../../features/data/selectors/tokens';
-import type { AssetsImageType } from '../AssetsImage';
-import { AssetsImage } from '../AssetsImage';
+import { AssetsImage, type AssetsImageProps, MissingAssetsImage } from '../AssetsImage';
 import { singleAssetExists } from '../../helpers/singleAssetSrc';
-import { selectFirstNonGovVaultByDepositTokenAddress } from '../../features/data/selectors/vaults';
+import {
+  selectNonGovVaultIdsByDepositTokenAddress,
+  selectVaultByAddressOrUndefined,
+} from '../../features/data/selectors/vaults';
+import type { VaultEntity } from '../../features/data/entities/vault';
+
+type CommonTokenImageProps = {
+  size?: AssetsImageProps['size'];
+  className?: AssetsImageProps['className'];
+};
 
 export type TokenImageProps = {
   tokenAddress: TokenEntity['address'];
   chainId: ChainEntity['id'];
-  size?: AssetsImageType['size'];
-  className?: AssetsImageType['className'];
-};
+} & CommonTokenImageProps;
+
 export const TokenImage = memo<TokenImageProps>(function TokenImage({
   tokenAddress,
   chainId,
@@ -26,62 +33,38 @@ export const TokenImage = memo<TokenImageProps>(function TokenImage({
   const token = useAppSelector(state =>
     selectTokenByAddressOrUndefined(state, chainId, tokenAddress)
   );
-  const haveAssetForToken = useMemo(() => {
-    return !!token && singleAssetExists(token.symbol, token.chainId);
-  }, [token]);
 
-  return haveAssetForToken ? (
-    <AssetsImage
-      chainId={chainId}
-      assetSymbols={[token!.symbol]}
-      className={className}
-      size={size}
-    />
-  ) : token ? (
-    <TokenWithoutAsset token={token} size={size} className={className} />
+  return token ? (
+    <TokenImageFromEntity token={token} size={size} className={className} />
   ) : (
-    <AssetsImage chainId={chainId} assetSymbols={['unknown']} className={className} size={size} />
+    <MissingAssetsImage className={className} size={size} />
   );
 });
 
-type TokenWithoutAssetProps = {
+export type TokenImageFromEntityProps = {
   token: TokenEntity;
-} & Pick<TokenImageProps, 'size' | 'className'>;
-const TokenWithoutAsset = memo<TokenWithoutAssetProps>(function TokenWithoutAsset({
+} & CommonTokenImageProps;
+
+export const TokenImageFromEntity = memo<TokenImageFromEntityProps>(function TokenImageFromEntity({
   token,
   size,
   className,
 }) {
-  // The assets of a LP are defined on the vault config for a vault with that deposit token
-  const vault = useAppSelector(state =>
-    selectFirstNonGovVaultByDepositTokenAddress(state, token.chainId, token.address)
-  );
-  const vaultTokenSymbols = useAppSelector(state =>
-    vault ? selectVaultTokenSymbols(state, vault.id) : []
+  const symbols = useMemo(
+    () => (singleAssetExists(token.symbol, token.chainId) ? [token.symbol] : undefined),
+    [token]
   );
 
-  return vault && vaultTokenSymbols.length ? (
-    <AssetsImage
-      chainId={token.chainId}
-      assetSymbols={vaultTokenSymbols}
-      className={className}
-      size={size}
-    />
+  return symbols ? (
+    <AssetsImage chainId={token.chainId} assetSymbols={symbols} className={className} size={size} />
   ) : (
-    <AssetsImage
-      chainId={token.chainId}
-      assetSymbols={[token.id]}
-      className={className}
-      size={size}
-    />
+    <TokenNoSingleAsset token={token} size={size} className={className} />
   );
 });
 
 export type TokensImageProps = {
   tokens: TokenEntity[];
-  size?: AssetsImageType['size'];
-  className?: AssetsImageType['className'];
-};
+} & CommonTokenImageProps;
 export const TokensImage = memo<TokensImageProps>(function TokensImage({
   tokens,
   size,
@@ -106,4 +89,65 @@ export const TokensImage = memo<TokensImageProps>(function TokensImage({
       size={size}
     />
   );
+});
+
+type TokenNoSingleAssetProps = {
+  token: TokenEntity;
+} & CommonTokenImageProps;
+const TokenNoSingleAsset = memo<TokenNoSingleAssetProps>(function TokenNoSingleAsset({
+  token,
+  size,
+  className,
+}) {
+  const vault = useAppSelector(state =>
+    selectVaultByAddressOrUndefined(state, token.chainId, token.address)
+  );
+  if (vault) {
+    return (
+      <TokenImageViaVaultId
+        vaultId={vault.id}
+        chainId={vault.chainId}
+        size={size}
+        className={className}
+      />
+    );
+  }
+
+  return <TokenNotVault token={token} size={size} className={className} />;
+});
+
+type TokenNotVaultProps = {
+  token: TokenEntity;
+} & CommonTokenImageProps;
+const TokenNotVault = memo<TokenNotVaultProps>(function TokenNotVault({ token, size, className }) {
+  const vaultIds = useAppSelector(state =>
+    selectNonGovVaultIdsByDepositTokenAddress(state, token.chainId, token.address)
+  );
+  if (vaultIds && vaultIds.length > 0) {
+    return (
+      <TokenImageViaVaultId
+        vaultId={vaultIds[0]}
+        chainId={token.chainId}
+        size={size}
+        className={className}
+      />
+    );
+  }
+
+  return <MissingAssetsImage className={className} size={size} />;
+});
+
+type TokenImageViaVaultIdProps = {
+  vaultId: VaultEntity['id'];
+  chainId: ChainEntity['id'];
+} & CommonTokenImageProps;
+
+const TokenImageViaVaultId = memo<TokenImageViaVaultIdProps>(function TokenImageViaVaultId({
+  vaultId,
+  chainId,
+  size,
+  className,
+}) {
+  const symbols = useAppSelector(state => selectVaultTokenSymbols(state, vaultId));
+  return <AssetsImage chainId={chainId} assetSymbols={symbols} className={className} size={size} />;
 });

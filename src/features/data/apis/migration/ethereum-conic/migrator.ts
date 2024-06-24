@@ -108,13 +108,13 @@ export const executeConicAction = createAsyncThunk<
         state,
         depositToken.chainId,
         depositToken.address,
-        vault.earnContractAddress
+        vault.contractAddress
       );
       if (allowance.lt(balance)) {
         steps.push({
           step: 'approve',
           message: t('Vault-ApproveMsg'),
-          action: walletActions.approval(depositToken, vault.earnContractAddress),
+          action: walletActions.approval(depositToken, vault.contractAddress),
           pending: false,
         });
       }

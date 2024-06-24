@@ -35,7 +35,7 @@ async function getLiquidity(vault: VaultEntity, chain: ChainEntity, depositToken
   const web3 = await getWeb3Instance(chain);
   const vaultContract = new web3.eth.Contract(
     StandardVaultAbi as unknown as AbiItem[],
-    vault.earnContractAddress
+    vault.contractAddress
   );
   const strategyAddress = await vaultContract.methods.strategy().call();
   const strategyContract = new web3.eth.Contract(strategyABI as AbiItem[], strategyAddress);

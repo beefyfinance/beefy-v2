@@ -35,7 +35,7 @@ export function ActiveBoost({ boostId, title }: { boostId: BoostEntity['id']; ti
   const chain = useAppSelector(state => selectChainById(state, boost.chainId));
   const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
   const mooTokenBalance = useAppSelector(state =>
-    selectUserBalanceOfToken(state, boost.chainId, vault.earnContractAddress)
+    selectUserBalanceOfToken(state, boost.chainId, vault.contractAddress)
   );
   const boostBalance = useAppSelector(state => selectBoostUserBalanceInToken(state, boost.id));
   const boostPendingRewards = useAppSelector(state =>

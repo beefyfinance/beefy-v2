@@ -1,6 +1,10 @@
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../../reducers/wallet/stepper';
 import {
+  type CowcentratedVaultDepositOption,
+  type CowcentratedVaultDepositQuote,
+  type CowcentratedVaultWithdrawOption,
+  type CowcentratedVaultWithdrawQuote,
   type DepositOption,
   type DepositQuote,
   type GovComposerDepositOption,
@@ -9,21 +13,17 @@ import {
   type GovComposerZapWithdrawQuote,
   type InputTokenAmount,
   isZapQuoteStepStake,
+  isZapQuoteStepUnstake,
   type TokenAmount,
+  type WithdrawOption,
+  type WithdrawQuote,
+  type ZapQuoteStep,
   type ZapQuoteStepStake,
+  type ZapQuoteStepUnstake,
   type ZapStrategyIdToDepositOption,
   type ZapStrategyIdToDepositQuote,
-  type WithdrawOption,
   type ZapStrategyIdToWithdrawOption,
-  type WithdrawQuote,
   type ZapStrategyIdToWithdrawQuote,
-  isZapQuoteStepUnstake,
-  type ZapQuoteStepUnstake,
-  type CowcentratedVaultWithdrawOption,
-  type ZapQuoteStep,
-  type CowcentratedVaultWithdrawQuote,
-  type CowcentratedVaultDepositOption,
-  type CowcentratedVaultDepositQuote,
 } from '../../transact-types';
 import {
   type AnyComposableStrategy,
@@ -56,14 +56,14 @@ import type {
 } from '../../zap/types';
 import type BigNumber from 'bignumber.js';
 import abiCoder from 'web3-eth-abi';
-import { NO_RELAY, getInsertIndex } from '../../helpers/zap';
+import { getInsertIndex, NO_RELAY } from '../../helpers/zap';
 import { toWei, toWeiString } from '../../../../../../helpers/big-number';
 import { slipBy } from '../../helpers/amounts';
 import type { GovComposerStrategyConfig } from '../strategy-configs';
 import { onlyOneInput } from '../../helpers/options';
-import { ZERO_FEE, calculatePriceImpact } from '../../helpers/quotes';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes';
 import { pickTokens } from '../../helpers/tokens';
-import { uniqBy } from 'lodash';
+import { uniqBy } from 'lodash-es';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -100,11 +100,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     }
     this.vault = vault;
     this.vaultType = vaultType;
-    this.shareToken = selectErc20TokenByAddress(
-      getState(),
-      vault.chainId,
-      vault.earnContractAddress
-    );
+    this.shareToken = selectErc20TokenByAddress(getState(), vault.chainId, vault.contractAddress);
     this.depositToken = selectTokenByAddress(getState(), vault.chainId, vault.depositTokenAddress);
 
     if (underlying.id !== 'cowcentrated') {
@@ -401,7 +397,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       returned: [],
       zaps: [
         this.buildZapStakeTx(
-          this.vault.earnContractAddress,
+          this.vault.contractAddress,
           toWei(inputs[0].amount, inputs[0].token.decimals),
           inputs[0].token.address
         ),
@@ -723,7 +719,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       returned: [],
       zaps: [
         this.buildZapUnstakeTx(
-          this.vault.earnContractAddress,
+          this.vault.contractAddress,
           toWei(inputs[0].amount, inputs[0].token.decimals),
           max
         ),

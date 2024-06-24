@@ -18,7 +18,6 @@ import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string
 import escapeStringRegexp from 'escape-string-regexp';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
-
 export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
 export const selectFilterChainIds = (state: BeefyState) => state.ui.filteredVaults.chainIds;
 export const selectFilterSearchSortField = (state: BeefyState) => state.ui.filteredVaults.sort;

@@ -116,7 +116,7 @@ export class GovVaultType implements IGovVaultType {
           {
             token: input.token,
             amount: input.amount,
-            spenderAddress: this.vault.earnContractAddress,
+            spenderAddress: this.vault.contractAddress,
           },
         ]
       : [];

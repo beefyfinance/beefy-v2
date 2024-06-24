@@ -81,7 +81,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     boostAndGovVaultBatches.forEach(boostAndGovVaultBatch => {
       requestsForBatch.push({
         method: mc.methods.getBoostOrGovBalance(
-          boostAndGovVaultBatch.map(boostOrGovVaultt => boostOrGovVaultt.earnContractAddress),
+          boostAndGovVaultBatch.map(boostOrGovVaultt => boostOrGovVaultt.contractAddress),
           walletAddress
         ).call,
         params: { from: '0x0000000000000000000000000000000000000000' },
@@ -91,7 +91,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     govVaultsV2Batches.forEach(govVaultsV2Batch => {
       requestsForBatch.push({
         method: mc.methods.getGovVaultMultiBalance(
-          govVaultsV2Batch.map(gov => gov.earnContractAddress),
+          govVaultsV2Batch.map(gov => gov.contractAddress),
           walletAddress
         ).call,
         params: { from: '0x0000000000000000000000000000000000000000' },

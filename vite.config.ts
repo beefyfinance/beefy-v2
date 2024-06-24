@@ -11,7 +11,12 @@ import versionPlugin from './version-plugin';
 const optionalPlugins: Plugin[] = [];
 
 if (process.env.NODE_ENV === 'development') {
-  optionalPlugins.push(eslint());
+  optionalPlugins.push(
+    eslint({
+      failOnError: false,
+      failOnWarning: false,
+    })
+  );
 }
 
 if (process.env.ANALYZE_BUNDLE) {

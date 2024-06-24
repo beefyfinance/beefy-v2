@@ -4,7 +4,7 @@ import type { BeefyState } from '../../../redux-types';
 import { fetchApyAction, recalculateTotalApyAction } from '../actions/apy';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import type { ApyData } from '../apis/beefy/beefy-api';
+import type { ApiApyData } from '../apis/beefy/beefy-api';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import type { BoostEntity } from '../entities/boost';
 import type { VaultEntity } from '../entities/vault';
@@ -45,6 +45,12 @@ export interface TotalApy {
   merklDaily?: number;
 }
 
+type ExtractAprComponents<T extends string> = T extends `${infer C}Apr` ? C : never;
+export type TotalApyKey = keyof TotalApy;
+export type TotalApyComponent = ExtractAprComponents<TotalApyKey>;
+export type TotalApyYearlyComponent = `${TotalApyComponent}Apr`;
+export type TotalApyDailyComponent = `${TotalApyComponent}Daily`;
+
 /**
  * State containing APY infos indexed by vault id
  */
@@ -52,7 +58,7 @@ export interface ApyState {
   rawApy: {
     byVaultId: {
       // we reuse the api types, not the best idea but works for now
-      [vaultId: VaultEntity['id']]: ApyData;
+      [vaultId: VaultEntity['id']]: ApiApyData;
     };
     byBoostId: {
       [boostId: BoostEntity['id']]: AprData;
@@ -115,8 +121,10 @@ function addContractDataToState(
     // we can't use the selectIsBoostActiveOrPreStake selector here as state is not updated yet
     const boostStatus = getBoostStatusFromContractState(boost.id, boostContractData);
     const isBoostActiveOrPrestake = boostStatus === 'active' || boostStatus === 'prestake';
-    // boost is expired, don't count apy
+    // boost is expired
     if (!isBoostActiveOrPrestake) {
+      // removing existing if it exists
+      delete sliceState.rawApy.byBoostId[boost.id];
       continue;
     }
 
@@ -128,7 +136,7 @@ function addContractDataToState(
      **/
     let earnedPrice: BigNumber;
     const rewardTargetVaultId =
-      state.entities.vaults.byChainId[boost.chainId]?.standardVault.byEarnedTokenAddress[
+      state.entities.vaults.byChainId[boost.chainId]?.byType.standard.byAddress[
         boost.earnedTokenAddress.toLowerCase()
       ];
     if (rewardTargetVaultId) {

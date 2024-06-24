@@ -21,6 +21,8 @@ import {
   selectAllGovVaultsByChainId,
   selectAllVaultIds,
   selectVaultById,
+  selectVaultParentGovVaultIdsOrUndefined,
+  selectVaultUnderlyingCowcentratedVaultOrUndefined,
 } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 import type { TokenEntity } from '../entities/token';
@@ -157,15 +159,15 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
   const depositedIds: VaultEntity['id'][] = [];
 
   for (const vaultId of allVaultIds) {
+    let deposited = false;
     const vault = selectVaultById(state, vaultId);
 
     if (isStandardVault(vault) || isCowcentratedVault(vault)) {
       // standard vaults via receipt tokens
-      let deposited = false;
       const balance = selectUserBalanceOfToken(
         state,
         vault.chainId,
-        vault.earnContractAddress,
+        vault.contractAddress,
         walletAddress
       );
       if (balance.gt(BIG_ZERO)) {
@@ -195,15 +197,53 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
         }
       }
 
-      // add?
-      if (deposited) {
-        depositedIds.push(vault.id);
+      // + is the underlying of a clm reward pool
+      if (!deposited && isCowcentratedVault(vault)) {
+        // user is marked as deposited in both the CLM + Reward Pool if either holds a balance
+        const parentGovVaults = selectVaultParentGovVaultIdsOrUndefined(state, vault.id);
+        if (parentGovVaults?.length) {
+          for (const govVaultId of parentGovVaults) {
+            if (govVaultId) {
+              const balance = selectGovVaultUserStakedBalanceInDepositToken(
+                state,
+                govVaultId,
+                walletAddress
+              );
+              if (balance.gt(BIG_ZERO)) {
+                deposited = true;
+              }
+            }
+          }
+        }
       }
     } else if (isGovVault(vault)) {
+      // standard gov balance contract calls
       const balance = selectGovVaultUserStakedBalanceInDepositToken(state, vault.id, walletAddress);
       if (balance.gt(BIG_ZERO)) {
-        depositedIds.push(vault.id);
+        deposited = true;
       }
+
+      // + has an underlying clm
+      if (!deposited) {
+        // user is marked as deposited in both the CLM + Reward Pool if either holds a balance
+        const underlyingVault = selectVaultUnderlyingCowcentratedVaultOrUndefined(state, vault.id);
+        if (underlyingVault) {
+          const balance = selectUserBalanceOfToken(
+            state,
+            underlyingVault.chainId,
+            underlyingVault.contractAddress,
+            walletAddress
+          );
+          if (balance.gt(BIG_ZERO)) {
+            deposited = true;
+          }
+        }
+      }
+    }
+
+    // add?
+    if (deposited) {
+      depositedIds.push(vault.id);
     }
   }
 

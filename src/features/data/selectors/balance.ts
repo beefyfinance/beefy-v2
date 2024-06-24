@@ -80,10 +80,42 @@ export const selectUserDepositedVaultIds = (state: BeefyState, walletAddress?: s
   return walletBalance?.depositedVaultIds || [];
 };
 
-export const selectAddressDepositedVaultIds = createSelector(
+/**
+ * Same as selectUserDepositedVaultIds, except:
+ * Excluding any CLM vaults if they used as the deposit token for other vaults
+ */
+export const selectDashboardDepositedVaultIdsForAddress = createSelector(
   (state: BeefyState, address: string) =>
     state.user.balance.byAddress[address.toLowerCase()]?.depositedVaultIds,
-  maybeDepositedVaultIds => maybeDepositedVaultIds || []
+  (state: BeefyState) => state.entities.vaults.byId,
+  (state: BeefyState) => state.entities.vaults.relations.depositFor.byId,
+  (vaultIds, vaultsById, depositForById) => {
+    if (!vaultIds) {
+      return [];
+    }
+
+    return vaultIds.filter(vaultId => {
+      const vault = vaultsById[vaultId];
+      // should never happen
+      if (!vault) {
+        return false;
+      }
+
+      // include all non-CLM vaults
+      if (!isCowcentratedVault(vault)) {
+        return true;
+      }
+
+      const parentIds = depositForById[vaultId];
+      // include all vaults not used as the underlying for another vault
+      if (!parentIds || parentIds.length === 0) {
+        return true;
+      }
+
+      // Filter out the CLM vault if its used as the deposit token for other vaults
+      return false;
+    });
+  }
 );
 
 export const selectUserDepositedVaultIdsForAsset = (state: BeefyState, asset: string) => {
@@ -145,7 +177,7 @@ export const selectUserVaultBalanceInShareToken = (
   }
 
   if (isStandardVault(vault) || isCowcentratedVault(vault)) {
-    return selectUserBalanceOfToken(state, vault.chainId, vault.earnContractAddress, walletAddress);
+    return selectUserBalanceOfToken(state, vault.chainId, vault.contractAddress, walletAddress);
   }
 
   throw new Error(`Unsupported vault type for ${vaultId}`);
@@ -465,7 +497,7 @@ export const selectGovVaultPendingRewardsInUsd = (
 export const selectBoostBalanceTokenEntity = (state: BeefyState, boostId: BoostEntity['id']) => {
   const boost = selectBoostById(state, boostId);
   const boostedVault = selectVaultById(state, boost.vaultId);
-  return selectTokenByAddress(state, boostedVault.chainId, boostedVault.earnContractAddress);
+  return selectTokenByAddress(state, boostedVault.chainId, boostedVault.contractAddress);
 };
 
 /**

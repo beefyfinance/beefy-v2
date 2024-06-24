@@ -219,7 +219,7 @@ function addBoostToState(
     chainId: chainId,
     assets: apiBoost.assets || [],
     earnedTokenAddress: apiBoost.earnedTokenAddress,
-    earnContractAddress: apiBoost.earnContractAddress,
+    contractAddress: apiBoost.earnContractAddress,
     tagIcon: apiBoost.tagIcon || undefined,
     tagText: apiBoost.tagText || undefined,
     name: apiBoost.name,

@@ -8,7 +8,7 @@ import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectIsAddressBookLoaded, selectIsGlobalDataAvailable } from './data-loader';
 import { isGovVault, type VaultEntity } from '../entities/vault';
 import { createCachedSelector } from 're-reselect';
-import { selectCowcentratedVaultById, selectVaultById } from './vaults';
+import { selectCowcentratedVaultById, selectGovVaultById, selectVaultById } from './vaults';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import { orderBy } from 'lodash-es';
 import BigNumber from 'bignumber.js';
@@ -18,6 +18,7 @@ import {
   getDataApiBucket,
   getDataApiBucketsLongerThan,
 } from '../apis/beefy/beefy-data-api-helpers';
+import { createSelector } from '@reduxjs/toolkit';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -103,7 +104,7 @@ export const selectShareTokenByVaultId = (state: BeefyState, vaultId: VaultEntit
   if (isGovVault(vault)) {
     return undefined;
   }
-  return selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
+  return selectTokenByAddress(state, vault.chainId, vault.contractAddress);
 };
 
 export const selectErc20TokenByAddress = (
@@ -492,3 +493,19 @@ export const selectCowcentratedVaultDepositTokensWithPrices = (
     },
   };
 };
+
+export const selectGovVaultEarnedTokens = createSelector(
+  (state: BeefyState, _chainId: ChainEntity['id'], vaultId: VaultEntity['id']) =>
+    selectGovVaultById(state, vaultId),
+  (state: BeefyState, chainId: ChainEntity['id'], _vaultId: VaultEntity['id']) =>
+    state.entities.tokens.byChainId[chainId]?.byAddress,
+  (vault, byAddress) => {
+    return vault.earnedTokenAddresses.map(address => {
+      const token = byAddress?.[address.toLowerCase()];
+      if (!token) {
+        throw new Error(`selectGovVaultEarnedTokens: Unknown token address ${address}`);
+      }
+      return token;
+    });
+  }
+);

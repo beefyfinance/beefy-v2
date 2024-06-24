@@ -169,7 +169,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
     const zapTokenIn = nativeToWNative(input.token, this.wnative);
     const userAmountInWei = toWeiString(input.amount, input.token.decimals);
     const estimate = await zapContract.methods
-      .estimateSwap(this.vault.earnContractAddress, zapTokenIn.address, userAmountInWei)
+      .estimateSwap(this.vault.contractAddress, zapTokenIn.address, userAmountInWei)
       .call();
     const lpToken = this.vaultType.depositToken;
     const swapAmountOut = fromWeiString(estimate.swapAmountOut, lpToken.decimals);
@@ -216,9 +216,9 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
       );
       const isNative = isTokenNative(input.token);
       const data = isNative
-        ? this.encodeBeefInETHCall(this.vault.earnContractAddress, amountOutMin)
+        ? this.encodeBeefInETHCall(this.vault.contractAddress, amountOutMin)
         : this.encodeBeefInCall(
-            this.vault.earnContractAddress,
+            this.vault.contractAddress,
             amountOutMin,
             getTokenAddress(input.token),
             toWeiString(input.amount, input.token.decimals)
@@ -246,7 +246,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
       const shareToken = selectTokenByAddress(
         state,
         this.vault.chainId,
-        this.vault.earnContractAddress
+        this.vault.contractAddress
       );
       const requiredOutputs: OrderOutput[] = [
         {
@@ -354,7 +354,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
     // Withdraw and split via custom zap contract
     const estimate = await zapContract.methods
       .estimateSwapOut(
-        this.vault.earnContractAddress,
+        this.vault.contractAddress,
         poolOutputToken.address,
         sharesToWithdrawWei.toString(10)
       )
@@ -463,7 +463,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
           target: this.conicZap,
           value: '0',
           data: this.encodeBeefOutAndSwap(
-            this.vault.earnContractAddress,
+            this.vault.contractAddress,
             sharesToWithdrawWei,
             zapOutTokenAddress,
             amountOutMinWei

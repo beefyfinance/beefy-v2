@@ -4,17 +4,17 @@ import { VaultTransactions } from '../../VaultTransactions';
 import { useAppSelector } from '../../../../../../../store';
 import { selectVaultType } from '../../../../../../data/selectors/vaults';
 import { TabletStats } from '../../TabletStats';
-import { DashboardPnLGraph } from '../../../../../../vault/components/PnLGraph';
 import { ToggleButtons } from '../../../../../../../components/ToggleButtons';
 import { useTranslation } from 'react-i18next';
 import { selectHasDataToShowGraphByVaultId } from '../../../../../../data/selectors/analytics';
 import {
   DashboardFeesGraph,
   DashboardOverviewGraph,
-} from '../../../../../../vault/components/CowcentratedPnlGraph';
+} from '../../../../../../vault/components/PnLGraph/cowcentrated';
 import type { VaultCollapseContentProps } from '../types';
 import { styles } from './styles';
 import { ErrorBoundary } from '../../../../../../../components/ErrorBoundary/ErrorBoundary';
+import { DashboardPnLGraph } from '../../../../../../vault/components/PnLGraph/standard/StandardPnLGraph';
 
 const useStyles = makeStyles(styles);
 
