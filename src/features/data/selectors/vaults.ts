@@ -394,6 +394,10 @@ export const getMaximumVaultTvl = (state: BeefyState) => {
   const ids = state.entities.vaults.allIds;
   let maxTvl = BIG_ZERO;
   for (const id of ids) {
+    const vault = selectVaultById(state, id);
+    if (isVaultRetired(vault)) {
+      continue;
+    }
     const underlyingTvl = selectVaultUnderlyingTvlUsd(state, id);
     if (underlyingTvl.gt(maxTvl)) {
       maxTvl = underlyingTvl;
