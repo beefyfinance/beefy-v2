@@ -197,5 +197,11 @@
     "name": "Inception Bridge",
     "tagName": "Inception",
     "website": "https://www.inceptionlrt.com/app/bridge/"
+  },
+  {
+    "id": "manta-canonical",
+    "name": "Manta Bridge",
+    "tagName": "Manta",
+    "website": "https://pacific-bridge.manta.network/"
   }
 ]
