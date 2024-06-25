@@ -12,7 +12,12 @@ import { boostsSlice } from './boosts';
 import { dataLoaderSlice } from './data-loader';
 import { walletSlice } from './wallet/wallet';
 import type { BeefyState } from '../../../redux-types';
-import { chanIdsTransform, filteredVaultsSlice, userCategoryTransform } from './filtered-vaults';
+import {
+  bigNumberTransform,
+  chanIdsTransform,
+  filteredVaultsSlice,
+  userCategoryTransform,
+} from './filtered-vaults';
 import { platformsSlice } from './platforms';
 import { uiThemeSlice } from './ui-theme';
 import { partnersSlice } from './partners';
@@ -81,7 +86,7 @@ const uiReducer = combineReducers<BeefyState['ui']>({
     {
       key: 'filters',
       storage,
-      transforms: [userCategoryTransform, chanIdsTransform],
+      transforms: [bigNumberTransform, userCategoryTransform, chanIdsTransform],
       blacklist: ['filteredVaultIds', 'sortedFilteredVaultIds'],
     },
     filteredVaultsSlice.reducer

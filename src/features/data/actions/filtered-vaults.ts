@@ -39,7 +39,7 @@ import type { FilteredVaultsState } from '../reducers/filtered-vaults';
 import { orderBy, sortBy } from 'lodash-es';
 import type { TotalApy } from '../reducers/apy';
 import { selectVaultTotalApy } from '../selectors/apy';
-import { selectVaultTvl } from '../selectors/tvl';
+import { selectVaultTvl, selectVaultUnderlyingTvlUsd } from '../selectors/tvl';
 
 export type RecalculateFilteredVaultsParams = {
   dataChanged?: boolean;
@@ -129,6 +129,13 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
           return false;
         }
 
+        if (
+          filterOptions.minimumTotalSupply.gt(0) &&
+          selectVaultUnderlyingTvlUsd(state, vault.id).lt(filterOptions.minimumTotalSupply)
+        ) {
+          return false;
+        }
+
         // User category: All / Saved Vaults / My Vaults
         if (filterOptions.userCategory === 'saved' && !selectIsVaultIdSaved(state, vault.id)) {
           return false;
@@ -200,7 +207,10 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
       }
     }
 
-    return { filtered: filteredVaults.map(v => v.id), sorted: sortedVaultIds };
+    return {
+      filtered: filteredVaults.map(v => v.id),
+      sorted: sortedVaultIds,
+    };
   },
   {
     condition: ({ filtersChanged, sortChanged, dataChanged }) => {
