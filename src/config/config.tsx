@@ -910,9 +910,9 @@ export const config = {
     chainId: 169,
     rpc: ['https://manta-pacific.drpc.org'],
     explorerUrl: 'https://pacific-explorer.manta.network/',
-    multicallAddress: '0000x0000000000000000000000000000000000000',
-    multicall3Address: '0x0000000000000000000000000000000000000',
-    appMulticallContractAddress: '0x0000000000000000000000000000000000000',
+    multicallAddress: '0x663504a9453eD242335C3dCc9E4B52620F566b30',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x6B5cd7f8eFa53e10C4b948B6989c6A66895d1991',
     providerName: 'Manta',
     walletSettings: {
       chainId: `0x${parseInt('169', 10).toString(16)}`,
