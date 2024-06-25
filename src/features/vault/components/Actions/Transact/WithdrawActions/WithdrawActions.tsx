@@ -71,6 +71,7 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
   const vault = useAppSelector(state => selectGovVaultById(state, vaultId));
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
+
   const showWithdraw =
     quote &&
     (isGovVaultWithdrawQuote(quote) || isGovComposerWithdrawQuote(quote)) &&
