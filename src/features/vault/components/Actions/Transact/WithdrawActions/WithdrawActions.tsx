@@ -33,7 +33,7 @@ import {
 } from '../../../../../data/selectors/vaults';
 import { type ActionButtonProps, ActionConnectSwitch } from '../CommonActions';
 import { selectGovVaultPendingRewardsInToken } from '../../../../../data/selectors/balance';
-import { isGovVault, type VaultGov } from '../../../../../data/entities/vault';
+import { isCowcentratedVault, isGovVault, type VaultGov } from '../../../../../data/entities/vault';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { GlpWithdrawNotice } from '../GlpNotices';
 import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotice';
@@ -210,6 +210,13 @@ const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimW
   const isDisabled =
     isTxInProgress || isDisabledByPriceImpact || isDisabledByConfirm || isDisabledByNotEnoughInput;
 
+  const underlyingVault = useAppSelector(state =>
+    selectVaultUnderlyingVaultOrUndefined(state, vault.id)
+  );
+  const hasUnderlyingCLM = underlyingVault && isCowcentratedVault(underlyingVault);
+
+  const showClaim = hasUnderlyingCLM ? false : true;
+
   const handleWithdraw = useCallback(() => {
     dispatch(transactSteps(quote, t));
   }, [dispatch, quote, t]);
@@ -242,7 +249,7 @@ const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimW
             )}
           </Button>
           <div className={classes.feesContainer}>
-            <ActionClaim vault={vault} />
+            {showClaim ? <ActionClaim vault={vault} /> : null}
             <WithdrawFees />
           </div>
         </ActionConnectSwitch>

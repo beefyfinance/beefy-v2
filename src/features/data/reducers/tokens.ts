@@ -33,6 +33,7 @@ import { isNativeAlternativeAddress } from '../../../helpers/addresses';
 import { fetchBridgeConfig } from '../actions/bridge';
 import { entries } from '../../../helpers/object';
 import { isDefined } from '../utils/array-utils';
+import { getVaultNames } from '../utils/vault-utils';
 
 /**
  * State containing Vault infos
@@ -501,6 +502,13 @@ function addVaultToState(
   //
   // (Only v2 + of gov vaults have a receipt token)
   if (vault.type !== 'gov' || (vault.version || 1) > 1) {
+    const receiptTokenSymbol =
+      vault.type === 'cowcentrated'
+        ? vault.name + ' CLM'
+        : vault.type === 'gov' && vault.earnedToken.startsWith('rCow')
+        ? getVaultNames(vault.name, 'gov').shortName + 'rCLM'
+        : vault.earnedToken;
+
     const receiptToken: TokenErc20 = {
       type: 'erc20',
       id: vault.id,
@@ -508,7 +516,7 @@ function addVaultToState(
       oracleId: vault.oracleId,
       address: vault.earnContractAddress,
       decimals: 18, // receipt token always has 18 decimals
-      symbol: vault.earnedToken, // earnedToken === receipt token in this context
+      symbol: receiptTokenSymbol, // earnedToken === receipt token in this context
       buyUrl: undefined,
       website: undefined,
       description: undefined,
