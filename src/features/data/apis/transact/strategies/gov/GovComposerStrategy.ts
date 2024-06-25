@@ -121,16 +121,12 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     const options = await this.underlyingStrategy.fetchDepositOptions();
     const vaultOption =
       (await this.underlyingVaultType.fetchDepositOption()) as CowcentratedVaultDepositOption;
-    return (
-      [...options, vaultOption]
-        // .filter(o => o.strategyId !== 'vault')
-        .map(option => ({
-          ...option,
-          strategyId,
-          vaultId: this.vault.id,
-          underlyingOption: option,
-        }))
-    );
+    return [vaultOption, ...options].map(option => ({
+      ...option,
+      strategyId,
+      vaultId: this.vault.id,
+      underlyingOption: option,
+    }));
   }
 
   // FIXME this will break if this strategy supports multiple underlying strategies
@@ -445,7 +441,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
 
     // TODO: offer 2 token option vault zap-out, should be extracted from underlyingVaultType
     return (
-      [...options, vaultOption]
+      [vaultOption, ...options]
         // .filter(o => o.strategyId !== 'vault')
         .map(option => ({
           ...option,
