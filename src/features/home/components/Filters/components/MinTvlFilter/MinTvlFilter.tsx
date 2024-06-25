@@ -29,7 +29,7 @@ export const MinTvlFilter = memo(function MinTvlFilter() {
   // By default, only show up to 5M (more practical UX for most cases)
   // Provide a checkbox to let users see the larger TVL options
   const maxShownTvl = useMemo(
-    () => (!showLargeOptions ? new BigNumber(5_000_000) : maximumTvlOfAllVaults),
+    () => (!showLargeOptions ? new BigNumber(3_000_000) : maximumTvlOfAllVaults),
     [maximumTvlOfAllVaults, showLargeOptions]
   );
 
