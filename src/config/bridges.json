@@ -197,5 +197,15 @@
     "name": "Inception Bridge",
     "tagName": "Inception",
     "website": "https://www.inceptionlrt.com/app/bridge/"
+  },
+  {
+    "id": "ankr",
+    "name": "Ankr Bridge",
+    "website": "https://www.ankr.com/staking/bridge/"
+  },
+  {
+    "id": "chainlink-ccip",
+    "name": "Chainlink CCIP",
+    "website": "https://chain.link/cross-chain"
   }
 ]
