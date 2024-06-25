@@ -29,6 +29,7 @@ import {
   selectGovVaultById,
   selectIsVaultGov,
   selectVaultById,
+  selectVaultUnderlyingVaultOrUndefined,
 } from '../../../../../data/selectors/vaults';
 import { type ActionButtonProps, ActionConnectSwitch } from '../CommonActions';
 import { selectGovVaultPendingRewardsInToken } from '../../../../../data/selectors/balance';
@@ -74,6 +75,9 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
     quote &&
     (isGovVaultWithdrawQuote(quote) || isGovComposerWithdrawQuote(quote)) &&
     quoteStatus === TransactStatus.Fulfilled;
+  const showClaim = useAppSelector(state => selectVaultUnderlyingVaultOrUndefined(state, vaultId))
+    ? false
+    : true;
 
   return (
     <>
@@ -88,7 +92,7 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
           <div className={classes.buttons}>
             <ActionWithdrawDisabled />
             <div className={classes.feesContainer}>
-              <ActionClaim vault={vault} />
+              {showClaim ? <ActionClaim vault={vault} /> : null}
               <WithdrawFees />
             </div>
           </div>
