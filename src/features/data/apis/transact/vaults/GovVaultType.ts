@@ -35,6 +35,7 @@ import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../reducers/wallet/stepper';
 import { walletActions } from '../../../actions/wallet-actions';
 import { selectGovVaultPendingRewardsInToken } from '../../../selectors/balance';
+import { selectVaultUnderlyingCowcentratedVaultIdOrUndefined } from '../../../selectors/vaults';
 
 export class GovVaultType implements IGovVaultType {
   public readonly id = 'gov';
@@ -191,7 +192,12 @@ export class GovVaultType implements IGovVaultType {
       },
     ];
 
-    if (isWithdrawAll) {
+    const underlyingVault = selectVaultUnderlyingCowcentratedVaultIdOrUndefined(
+      state,
+      this.vault.id
+    );
+
+    if (isWithdrawAll && !underlyingVault) {
       const pendingRewards = selectGovVaultPendingRewardsInToken(state, this.vault.id);
       if (pendingRewards.gt(BIG_ZERO)) {
         const rewardToken = selectTokenByAddress(
