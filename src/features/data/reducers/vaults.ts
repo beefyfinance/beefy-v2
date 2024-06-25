@@ -474,6 +474,7 @@ function rebuildVaultsState(sliceState: Draft<VaultsState>) {
     if (isGovVault(vault) && sliceState.relations.underlyingOf.byType.cowcentrated.byId[vault.id]) {
       vault.name = vault.shortName;
       vault.longName = `${vault.shortName} ${getVaultTypeSuffix('cowcentrated')}`;
+      vault.risks = sliceState.byId[sliceState.relations.underlyingOf.byId[vault.id]!]?.risks || [];
     }
   }
 }

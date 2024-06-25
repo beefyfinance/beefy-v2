@@ -5,11 +5,7 @@ import { Redirect, useParams } from 'react-router';
 import { styles } from './styles';
 import { SafetyCard } from './components/SafetyCard';
 import { BoostCard } from './components/BoostCard';
-import {
-  selectVaultById,
-  selectVaultExistsById,
-  selectVaultIdIgnoreCase,
-} from '../data/selectors/vaults';
+import { selectVaultExistsById, selectVaultIdIgnoreCase } from '../data/selectors/vaults';
 import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
 import type { VaultEntity } from '../data/entities/vault';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
@@ -67,7 +63,6 @@ type VaultContentProps = PropsWithChildren<{
 }>;
 const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) {
   const classes = useStyles();
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
   const isBoostedOrPreStake = useAppSelector(state =>
     selectIsVaultPreStakedOrBoosted(state, vaultId)
@@ -95,7 +90,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
             <LiquidityPoolBreakdownLoader vaultId={vaultId} />
             <SafetyCard vaultId={vaultId} />
             <Explainer vaultId={vaultId} />
-            <AssetsCard vaultId={vault.id} />
+            <AssetsCard vaultId={vaultId} />
             <Hidden mdUp>
               <InsuranceCards vaultId={vaultId} />
               <LeverageCards vaultId={vaultId} />
