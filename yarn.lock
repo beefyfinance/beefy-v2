@@ -2671,13 +2671,6 @@
   dependencies:
     undici-types "~5.26.4"
 
-"@types/node@^20.9.0":
-  version "20.11.16"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.16.tgz#4411f79411514eb8e2926f036c86c9f0e4ec6708"
-  integrity sha512-gKb0enTmRCzXSSUJDq6/sPcqrfCv2mkkG6Jt/clpn5eiCbKTY+SgZUxo+p8ZKMof5dCp9vHQUAB7wOUTod22wQ==
-  dependencies:
-    undici-types "~5.26.4"
-
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.npmjs.org/@types/parse-json/-/parse-json-4.0.0.tgz"
@@ -3674,12 +3667,10 @@ blakejs@^1.1.0:
   resolved "https://registry.yarnpkg.com/blakejs/-/blakejs-1.2.1.tgz#5057e4206eadb4a97f7c0b6e197a505042fc3814"
   integrity sha512-QXUSXI3QVc/gJME0dBpXrag1kbzOqCjCX8/b54ntNyW6sjtoqxqRk3LTmXzaJoh71zMsDCjM+47jS7XiwN/+fQ==
 
-blockchain-addressbook@^0.46.163:
-  version "0.46.163"
-  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.46.163.tgz#475dde112ee140422c76472a74771d358f487f44"
-  integrity sha512-oQKmTJvA7tpQA+O/KCasILJLP+odT5rqdKy0B4D/hooN5z2i8/lM571Ek5JPjqXSO/Qv5PS8cM1HOnRuqHI/iA==
-  dependencies:
-    "@types/node" "^20.9.0"
+blockchain-addressbook@^0.46.166:
+  version "0.46.166"
+  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.46.166.tgz#648d050e08eb212582102d3bed46a15f5bd3b029"
+  integrity sha512-pp65o9XVZtywqCEoJ0lj935cYSGEfM8jXbKM+qN1opQGIfnSOFvlxBgVYx/bKesrsgF1nhabT9ZyYbR+DIheMQ==
 
 bluebird@^3.5.0:
   version "3.7.2"
