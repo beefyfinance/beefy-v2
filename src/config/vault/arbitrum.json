@@ -29,7 +29,6 @@
     ],
     "strategyTypeId": "pool",
     "network": "arbitrum",
-    "addLiquidityUrl": "https://app.beefy.com/vault/uniswap-cow-arb-eusd-usdc",
     "zaps": [
       {
         "strategyId": "gov-composer"
