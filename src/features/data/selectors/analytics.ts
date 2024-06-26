@@ -30,6 +30,7 @@ import { selectWalletAddress } from './wallet';
 import {
   isLoaderAvailable,
   selectIsAddressDataAvailable,
+  selectIsAddressDataIdle,
   selectIsConfigAvailable,
   selectIsUserBalanceAvailable,
 } from './data-loader';
@@ -125,28 +126,36 @@ export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAd
   }
 
   const addressLower = walletAddress.toLowerCase();
-  const timelineLoaded = selectIsAnalyticsLoadedByAddress(state, addressLower);
-  if (!timelineLoaded) {
-    return false;
-  }
 
   const dataByAddress = state.ui.dataLoader.byAddress[addressLower];
   if (!dataByAddress) {
     return false;
   }
 
-  for (const chainId of Object.values(dataByAddress.byChainId)) {
-    if (isLoaderAvailable(chainId.balance)) {
-      // if any chain has already loaded, then data is available
-      return true;
-    }
+  const anyChainBalanceAvailable = Object.values(dataByAddress.byChainId).some(chain =>
+    isLoaderAvailable(chain.balance)
+  );
+  if (!anyChainBalanceAvailable) {
+    return false;
   }
 
-  return false;
+  const hasDepositedVaults = selectUserDepositedVaultIds(state, walletAddress).length > 0;
+  const timelineIdle = selectIsAnalyticsIdleByAddress(state, walletAddress);
+
+  // do not wait if user has no deposits and fetch wallet timeline has not dispatched
+  // [as we don't dispatch fetch wallet timeline for users with no deposits]
+  if (!hasDepositedVaults && timelineIdle) {
+    return true;
+  }
+
+  return selectIsAnalyticsLoadedByAddress(state, addressLower);
 };
 
 export const selectIsAnalyticsLoadedByAddress = (state: BeefyState, walletAddress: string) =>
   selectIsAddressDataAvailable(state, walletAddress, 'timeline');
+
+export const selectIsAnalyticsIdleByAddress = (state: BeefyState, walletAddress: string) =>
+  selectIsAddressDataIdle(state, walletAddress, 'timeline');
 
 export const selectStandardGovPnl = (
   state: BeefyState,
