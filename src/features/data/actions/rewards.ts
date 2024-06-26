@@ -8,23 +8,26 @@ import { BIG_ZERO, fromWeiString } from '../../../helpers/big-number';
 import type { BigNumber } from 'bignumber.js';
 import { selectChainsHasCowcentratedVaults } from '../selectors/vaults';
 import { selectIsMerklRewardsForUserChainRecent } from '../selectors/data-loader';
+import type { Address } from 'viem';
 
-const MERKL_SUPPORTED_CHAINS: Set<ChainEntity['id']> = new Set([
-  'ethereum',
-  'arbitrum',
-  'optimism',
-  'base',
-  'polygon',
-  'zkevm',
-  'mantle',
-  'mode',
-  'linea',
-  'gnosis',
-  'bsc',
-  'zksync',
-  'fuse',
-  'moonbeam',
-]);
+// ChainId -> Merkl Distributor contract address
+// https://app.merkl.xyz/status
+export const MERKL_SUPPORTED_CHAINS: Partial<Record<ChainEntity['id'], Address>> = {
+  ethereum: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  polygon: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  optimism: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  arbitrum: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  base: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  gnosis: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  zkevm: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  mantle: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  mode: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  linea: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  bsc: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  zksync: '0xe117ed7Ef16d3c28fCBA7eC49AFAD77f451a6a21',
+  fuse: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  moonbeam: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+};
 
 export type FetchMerklRewardsActionParams = {
   walletAddress: string;
@@ -122,7 +125,7 @@ export const fetchMerklRewardsAction = createAsyncThunk<
   },
   {
     condition({ walletAddress, chainId, recentSeconds }, { getState }) {
-      if (!MERKL_SUPPORTED_CHAINS.has(chainId)) {
+      if (!MERKL_SUPPORTED_CHAINS[chainId]) {
         return false;
       }
       const state = getState();
