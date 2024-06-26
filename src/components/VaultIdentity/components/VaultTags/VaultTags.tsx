@@ -18,7 +18,6 @@ import {
   isVaultActive,
   type VaultCowcentrated,
   type VaultEntity,
-  type VaultGov,
 } from '../../../../features/data/entities/vault';
 import {
   isCowcentratedVault,
@@ -182,20 +181,6 @@ const PointsTag = memo(function PointsTag() {
   );
 });
 
-const GovOrCLMTag = memo(function GovOrCLMTag({ vault }: { vault: VaultGov }) {
-  const underlyingCLM = useAppSelector(state =>
-    selectVaultUnderlyingCowcentratedVaultOrUndefined(state, vault.id)
-  );
-
-  if (underlyingCLM) {
-    return <VaultClmTag vault={underlyingCLM} hideFee={true} isPool={true} />;
-  }
-
-  return (
-    <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} />
-  ); // TODO: support multiple earned tokens
-});
-
 export type VaultTagsProps = {
   vaultId: VaultEntity['id'];
 };
@@ -206,6 +191,10 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   const boostIds = useAppSelector(state => selectPreStakeOrActiveBoostIds(state, vaultId));
   const boostId = boostIds.length ? boostIds[0] : null;
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
+  const isGov = isGovVault(vault);
+  const underlyingCLM = useAppSelector(state =>
+    selectVaultUnderlyingCowcentratedVaultOrUndefined(state, vaultId)
+  );
 
   // Tag 1: Platform
   // Tag 2: Retired -> Paused -> Boosted > Earnings
@@ -226,9 +215,12 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
         <VaultTag className={classes.vaultTagPaused}>{t('VaultTag-Paused')}</VaultTag>
       ) : boostId ? (
         <VaultBoostTag boostId={boostId} />
-      ) : isGovVault(vault) ? (
-        <GovOrCLMTag vault={vault} />
+      ) : underlyingCLM ? (
+        <VaultClmTag vault={underlyingCLM} hideFee={true} isPool={true} />
+      ) : isGov ? (
+        <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} />
       ) : null}
+
       {isVaultEarningPoints(vault) && <PointsTag />}
     </div>
   );

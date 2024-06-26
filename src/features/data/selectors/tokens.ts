@@ -75,7 +75,7 @@ export const selectTokenByAddress = (
   const tokensByChainId = selectTokensByChainId(state, chainId);
   const token = tokensByChainId.byAddress[address.toLowerCase()];
   if (token === undefined) {
-    throw new Error(`selectTokenByAddress: Unknown token address ${address}`);
+    throw new Error(`selectTokenByAddress: Unknown token address "${address}"`);
   }
   return token;
 };

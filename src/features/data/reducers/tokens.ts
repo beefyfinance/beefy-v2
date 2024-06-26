@@ -506,7 +506,7 @@ function addVaultToState(
       vault.type === 'cowcentrated'
         ? vault.name + ' CLM'
         : vault.type === 'gov' && vault.earnedToken.startsWith('rCow')
-        ? getVaultNames(vault.name, 'gov').shortName + 'rCLM'
+        ? getVaultNames(vault.name, 'gov').shortName + ' rCLM'
         : vault.earnedToken;
 
     const receiptToken: TokenErc20 = {
