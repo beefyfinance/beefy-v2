@@ -8940,10 +8940,9 @@
     "earnContractAddress": "0x79149B500f0d796aA7f85e0170d16C7e79BAd3C5",
     "oracle": "lps",
     "oracleId": "stargate-op-eth",
-    "status": "eol",
+    "status": "active",
     "createdAt": 1659634992,
-    "retireReason": "rewards",
-    "retiredAt": 1719408570,
+    "updatedAt": 1719421224,
     "platformId": "stargate",
     "assets": ["ETH"],
     "risks": [
