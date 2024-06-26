@@ -31,7 +31,7 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -57,12 +57,12 @@
     "platformId": "beefy",
     "assets": ["USDe", "USDC"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -88,12 +88,12 @@
     "platformId": "beefy",
     "assets": ["USDC", "USDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -119,12 +119,12 @@
     "platformId": "beefy",
     "assets": ["ZRO", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -150,12 +150,12 @@
     "platformId": "beefy",
     "assets": ["KUJI", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -181,12 +181,12 @@
     "platformId": "beefy",
     "assets": ["WBTC", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -381,7 +381,7 @@
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -412,7 +412,7 @@
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -443,7 +443,7 @@
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -474,7 +474,7 @@
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -505,7 +505,7 @@
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -536,7 +536,7 @@
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -567,7 +567,7 @@
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -598,7 +598,7 @@
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -629,7 +629,7 @@
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -660,7 +660,7 @@
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -691,7 +691,7 @@
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -722,7 +722,7 @@
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -753,7 +753,7 @@
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -784,7 +784,7 @@
     "feeTier": "Dynamic",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -815,7 +815,7 @@
     "feeTier": "0.3",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -846,7 +846,7 @@
     "feeTier": "1",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -877,7 +877,7 @@
     "feeTier": "1",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -948,7 +948,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -979,7 +979,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1010,7 +1010,7 @@
     "feeTier": "1",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1041,7 +1041,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1072,7 +1072,7 @@
     "feeTier": "1",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1103,7 +1103,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1134,7 +1134,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1165,7 +1165,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1196,7 +1196,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1227,7 +1227,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1258,7 +1258,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1289,7 +1289,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1320,7 +1320,7 @@
     "feeTier": "1",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1351,7 +1351,7 @@
     "feeTier": "0.3",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1382,7 +1382,7 @@
     "feeTier": "0.3",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1413,7 +1413,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1444,7 +1444,7 @@
     "feeTier": "0.01",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1475,7 +1475,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1506,7 +1506,7 @@
     "feeTier": "0.01",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1537,7 +1537,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1597,7 +1597,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1628,7 +1628,7 @@
     "feeTier": "1",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1659,7 +1659,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1690,7 +1690,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1721,7 +1721,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1752,7 +1752,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1783,7 +1783,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1814,7 +1814,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1845,7 +1845,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1876,7 +1876,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1907,7 +1907,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1938,7 +1938,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -1969,7 +1969,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2000,7 +2000,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2031,7 +2031,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2063,7 +2063,7 @@
     "earningPoints": true,
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2094,7 +2094,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2125,7 +2125,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2156,7 +2156,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2187,7 +2187,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2218,7 +2218,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2249,7 +2249,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2280,7 +2280,7 @@
     "feeTier": "1",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2311,7 +2311,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2342,7 +2342,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2373,7 +2373,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2404,7 +2404,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2435,7 +2435,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2466,7 +2466,7 @@
     "feeTier": "0.01",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -2497,7 +2497,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -3127,7 +3127,7 @@
     "feeTier": "1",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -3269,7 +3269,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -3302,7 +3302,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -3335,7 +3335,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -3564,7 +3564,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -3597,7 +3597,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -3630,7 +3630,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -3709,7 +3709,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -3742,7 +3742,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -3775,7 +3775,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -3808,7 +3808,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },

@@ -21,12 +21,12 @@
     "platformId": "beefy",
     "assets": ["ZK", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "zksync",
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -52,12 +52,12 @@
     "platformId": "beefy",
     "assets": ["ZK", "USDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "zksync",
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -83,12 +83,12 @@
     "platformId": "beefy",
     "assets": ["WBTC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "zksync",
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -114,12 +114,12 @@
     "platformId": "beefy",
     "assets": ["WETH", "USDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "zksync",
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -145,12 +145,12 @@
     "platformId": "beefy",
     "assets": ["WETH", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "zksync",
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },

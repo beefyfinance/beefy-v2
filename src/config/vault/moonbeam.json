@@ -21,7 +21,7 @@
     "platformId": "beefy",
     "assets": ["xcUSDC", "xcUSDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "moonbeam",
     "feeTier": "0.01"
   },
@@ -47,7 +47,7 @@
     "platformId": "beefy",
     "assets": ["WETHwh", "WGLMR"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "moonbeam",
     "feeTier": "0.30"
   },
@@ -73,7 +73,7 @@
     "platformId": "beefy",
     "assets": ["xcUSDC", "WGLMR"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "moonbeam",
     "feeTier": "0.30"
   },
@@ -99,7 +99,7 @@
     "platformId": "beefy",
     "assets": ["WETHwh", "xcUSDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "moonbeam",
     "feeTier": "0.05"
   },
@@ -125,7 +125,7 @@
     "platformId": "beefy",
     "assets": ["xcDOT", "WETHwh"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "moonbeam",
     "feeTier": "0.30"
   },

@@ -26,7 +26,7 @@
     "feeTier": "0.01",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -57,7 +57,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
@@ -88,7 +88,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "compounds"
+        "strategyId": "cowcentrated"
       }
     ]
   },
