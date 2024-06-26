@@ -30,7 +30,9 @@ import {
   selectIsVaultStable,
   selectStandardVaultById,
   selectVaultById,
+  selectVaultParentVaultIdsOrUndefined,
   selectVaultPricePerFullShare,
+  selectVaultUnderlyingVaultIdOrUndefined,
 } from './vaults';
 import { selectIsWalletKnown, selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
@@ -578,11 +580,21 @@ export const selectUserLpBreakdownBalance = (
 ): UserLpBreakdownBalance => {
   const lpTotalSupplyDecimal = new BigNumber(breakdown.totalSupply);
   const underlyingTotalSupplyDecimal = new BigNumber(breakdown?.underlyingLiquidity || 0);
+
+  const relatedVault =
+    selectVaultParentVaultIdsOrUndefined(state, vault.id)?.[0] ??
+    selectVaultUnderlyingVaultIdOrUndefined(state, vault.id) ??
+    undefined;
+
+  const relatedBalanceDecimal = relatedVault
+    ? selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(state, relatedVault, walletAddress)
+    : BIG_ZERO;
+
   const userBalanceDecimal = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(
     state,
     vault.id,
     walletAddress
-  );
+  ).plus(relatedBalanceDecimal);
 
   const userShareOfPool = lpTotalSupplyDecimal.gt(BIG_ZERO)
     ? userBalanceDecimal.dividedBy(lpTotalSupplyDecimal)
