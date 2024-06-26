@@ -18,9 +18,12 @@ import twitterIcon from '../../../../images/icons/share/twitter.svg';
 import lensterIcon from '../../../../images/icons/share/lenster.svg';
 import telegramIcon from '../../../../images/icons/share/telegram.svg';
 import linkIcon from '../../../../images/icons/share/link.svg';
-import { isGovVault } from '../../../data/entities/vault';
+import { isCowcentratedVault, isGovVault } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
-import { selectVaultById } from '../../../data/selectors/vaults';
+import {
+  selectVaultById,
+  selectVaultUnderlyingCowcentratedVaultIdOrUndefined,
+} from '../../../data/selectors/vaults';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectVaultTotalApy } from '../../../data/selectors/apy';
@@ -71,7 +74,10 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   const additionalSelector = useMemo(
     () =>
       (state: BeefyState): Types | BoostedVaultExtraDetails | GovVaultExtraDetails => {
+        if (isCowcentratedVault(vault)) return { kind: 'clm' };
         if (isGovVault(vault)) {
+          if (selectVaultUnderlyingCowcentratedVaultIdOrUndefined(state, vault.id))
+            return { kind: 'clm-pool' };
           const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); //TODO: handle multiple earned tokens
           return {
             kind: 'gov',
