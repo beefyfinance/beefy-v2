@@ -4517,11 +4517,6 @@ enhanced-resolve@^5.8.3:
     graceful-fs "^4.2.4"
     tapable "^2.2.0"
 
-ens-reverse@^1.0.2:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/ens-reverse/-/ens-reverse-1.0.3.tgz#3b62ea7ba74e1a4f4f74774f35e32f42c5b1efd4"
-  integrity sha512-tn5NTGxUikyFMkuM0iL2VhXnD+mPUSFQenNRFXc1DqZKf1dQtKoMxEsZAKfv1leHy3dMSirqS3dH5k4OW23rTA==
-
 entities@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/entities/-/entities-4.4.0.tgz#97bdaba170339446495e653cfd2db78962900174"
