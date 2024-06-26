@@ -6,49 +6,33 @@ import { selectChainById } from '../selectors/chains';
 import { groupBy, keyBy } from 'lodash-es';
 import { BIG_ZERO, fromWeiString } from '../../../helpers/big-number';
 import type { BigNumber } from 'bignumber.js';
-import { selectChainsWithCowcentratedVaults } from '../selectors/vaults';
+import { selectChainsHasCowcentratedVaults } from '../selectors/vaults';
+import { selectIsMerklRewardsForUserChainRecent } from '../selectors/data-loader';
+import type { Address } from 'viem';
 
-const MERKL_SUPPORTED_CHAINS: Set<ChainEntity['id']> = new Set([
-  'ethereum',
-  'arbitrum',
-  'optimism',
-  'base',
-  'polygon',
-  'zkevm',
-  'mantle',
-  'mode',
-  'linea',
-  'gnosis',
-  'bsc',
-  'zksync',
-  'fuse',
-  'moonbeam',
-]);
-
-export const fetchAllRewardsAction = createAsyncThunk<
-  void,
-  { walletAddress: string },
-  { state: BeefyState }
->('rewards/fetchAllRewardsAction', async ({ walletAddress }, { dispatch, getState }) => {
-  const clmChains = selectChainsWithCowcentratedVaults(getState());
-  const merklChains = clmChains.filter(chainId => MERKL_SUPPORTED_CHAINS.has(chainId));
-  if (!merklChains.length) {
-    console.warn(
-      `Not checking for merkl rewards, no chains with clm vaults and merkl support found.`
-    );
-    console.debug('clmChains', clmChains);
-    console.debug('MERKL_SUPPORTED_CHAINS', MERKL_SUPPORTED_CHAINS);
-    return;
-  }
-
-  await Promise.allSettled(
-    merklChains.map(chainId => dispatch(fetchMerklRewardsAction({ walletAddress, chainId })))
-  );
-});
+// ChainId -> Merkl Distributor contract address
+// https://app.merkl.xyz/status
+export const MERKL_SUPPORTED_CHAINS: Partial<Record<ChainEntity['id'], Address>> = {
+  ethereum: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  polygon: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  optimism: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  arbitrum: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  base: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  gnosis: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  zkevm: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  mantle: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  mode: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  linea: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  bsc: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  zksync: '0xe117ed7Ef16d3c28fCBA7eC49AFAD77f451a6a21',
+  fuse: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  moonbeam: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+};
 
 export type FetchMerklRewardsActionParams = {
   walletAddress: string;
   chainId: ChainEntity['id'];
+  recentSeconds?: number;
 };
 
 export type FetchMerklRewardsFulfilledPayload = {
@@ -86,54 +70,69 @@ export const fetchMerklRewardsAction = createAsyncThunk<
   FetchMerklRewardsFulfilledPayload,
   FetchMerklRewardsActionParams,
   { state: BeefyState }
->('rewards/fetchMerklRewardsAction', async ({ walletAddress, chainId }, { getState }) => {
-  const state = getState();
-  const chain = selectChainById(state, chainId);
-  const api = await getMerklRewardsApi();
+>(
+  'rewards/fetchMerklRewardsAction',
+  async ({ walletAddress, chainId }, { getState }) => {
+    const state = getState();
+    const chain = selectChainById(state, chainId);
+    const api = await getMerklRewardsApi();
 
-  const userRewards = await api.fetchUserRewards({
-    user: walletAddress,
-    chainId: chain.networkChainId,
-  });
+    const userRewards = await api.fetchUserRewards({
+      user: walletAddress,
+      chainId: chain.networkChainId,
+    });
 
-  const rewardsPerToken = Object.entries(userRewards)
-    .map(([tokenAddress, tokenData]) => ({
-      ...tokenData,
-      address: tokenAddress.toLowerCase(),
-      unclaimed: fromWeiString(tokenData.unclaimed, tokenData.decimals),
-      accumulated: fromWeiString(tokenData.accumulated, tokenData.decimals),
-      reasons: Object.entries(tokenData.reasons)
-        .map(([reason, reasonData]) => ({
-          ...reasonData,
-          id: reason,
-          unclaimed: fromWeiString(reasonData.unclaimed, tokenData.decimals),
-          accumulated: fromWeiString(reasonData.accumulated, tokenData.decimals),
-        }))
-        .filter(r => r.unclaimed.gt(BIG_ZERO)),
-    }))
-    .filter(r => r.unclaimed.gt(BIG_ZERO) && r.symbol !== 'aglaMerkl');
+    const rewardsPerToken = Object.entries(userRewards)
+      .map(([tokenAddress, tokenData]) => ({
+        ...tokenData,
+        address: tokenAddress.toLowerCase(),
+        unclaimed: fromWeiString(tokenData.unclaimed, tokenData.decimals),
+        accumulated: fromWeiString(tokenData.accumulated, tokenData.decimals),
+        reasons: Object.entries(tokenData.reasons)
+          .map(([reason, reasonData]) => ({
+            ...reasonData,
+            id: reason,
+            unclaimed: fromWeiString(reasonData.unclaimed, tokenData.decimals),
+            accumulated: fromWeiString(reasonData.accumulated, tokenData.decimals),
+          }))
+          .filter(r => r.unclaimed.gt(BIG_ZERO)),
+      }))
+      .filter(r => r.unclaimed.gt(BIG_ZERO) && r.symbol !== 'aglaMerkl');
 
-  const byTokenAddress = keyBy(rewardsPerToken, r => r.address);
+    const byTokenAddress = keyBy(rewardsPerToken, r => r.address);
 
-  const byVaultAddress = groupBy(
-    rewardsPerToken.flatMap(reward =>
-      reward.reasons
-        .filter(reason => reason.id.startsWith('Beefy_') && reason.unclaimed.gt(BIG_ZERO))
-        .map(reason => ({
-          vaultAddress: reason.id.split('_')[1].toLowerCase(),
-          ...reason,
-          address: reward.address,
-          symbol: reward.symbol,
-          decimals: reward.decimals,
-        }))
-    ),
-    r => r.vaultAddress
-  );
+    const byVaultAddress = groupBy(
+      rewardsPerToken.flatMap(reward =>
+        reward.reasons
+          .filter(reason => reason.id.startsWith('Beefy_') && reason.unclaimed.gt(BIG_ZERO))
+          .map(reason => ({
+            vaultAddress: reason.id.split('_')[1].toLowerCase(),
+            ...reason,
+            address: reward.address,
+            symbol: reward.symbol,
+            decimals: reward.decimals,
+          }))
+      ),
+      r => r.vaultAddress
+    );
 
-  return {
-    walletAddress,
-    chainId,
-    byTokenAddress,
-    byVaultAddress,
-  };
-});
+    return {
+      walletAddress,
+      chainId,
+      byTokenAddress,
+      byVaultAddress,
+    };
+  },
+  {
+    condition({ walletAddress, chainId, recentSeconds }, { getState }) {
+      if (!MERKL_SUPPORTED_CHAINS[chainId]) {
+        return false;
+      }
+      const state = getState();
+      if (!selectChainsHasCowcentratedVaults(state, chainId)) {
+        return false;
+      }
+      return !selectIsMerklRewardsForUserChainRecent(state, walletAddress, chainId, recentSeconds);
+    },
+  }
+);

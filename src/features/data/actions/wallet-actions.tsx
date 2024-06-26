@@ -72,8 +72,8 @@ import { BeefyCowcentratedLiquidityVaultAbi } from '../../../config/abi/BeefyCow
 import { selectTransactSelectedQuote, selectTransactSlippage } from '../selectors/transact';
 import { AngleMerklDistributorAbi } from '../../../config/abi/AngleMerklDistributor';
 import { isDefined } from '../utils/array-utils';
-import { fetchAllRewardsAction } from './rewards';
 import { slipAllBy } from '../apis/transact/helpers/amounts';
+import { fetchMerklRewardsAction, MERKL_SUPPORTED_CHAINS } from './rewards';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -184,7 +184,18 @@ function txMined(
     }
 
     if (rewards) {
-      dispatch(fetchAllRewardsAction({ walletAddress }));
+      // Wait 60s before checking rewards after tx success
+      setTimeout(
+        () =>
+          dispatch(
+            fetchMerklRewardsAction({
+              walletAddress,
+              chainId,
+              recentSeconds: 60,
+            })
+          ),
+        60 * 1000
+      );
     }
   }
 }
@@ -1158,16 +1169,7 @@ const claimMerkl = (chainId: ChainEntity['id']) => {
       return;
     }
 
-    const merklDistributors: Partial<Record<ChainEntity['id'], string>> = {
-      ethereum: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-      polygon: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-      optimism: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-      arbitrum: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-      base: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-      gnosis: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-      zkevm: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
-    };
-    const distributorAddress = merklDistributors[chainId];
+    const distributorAddress = MERKL_SUPPORTED_CHAINS[chainId];
     if (!distributorAddress) {
       throw new Error(`No Merkl contract found for chain ${chainId}`);
     }

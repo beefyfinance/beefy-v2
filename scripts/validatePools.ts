@@ -56,6 +56,7 @@ const nonHarvestOnDepositPools = [
   'venus-bnb',
   'equilibria-arb-silo-usdc.e',
   'silo-eth-pendle-weeth',
+  'silo-op-tbtc-tbtc',
 ];
 
 const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddress'];

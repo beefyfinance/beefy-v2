@@ -196,6 +196,10 @@ export const selectIsClmHarvestsForUserPending = (state: BeefyState, walletAddre
   return isPending(state.ui.dataLoader.byAddress[walletAddress]?.global.clmHarvests);
 };
 
+export const selectIsWalletTimelineForUserIdle = (state: BeefyState, walletAddress: string) => {
+  return isInitialLoader(state.ui.dataLoader.byAddress[walletAddress]?.global.timeline);
+};
+
 export const selectIsWalletTimelineForUserPending = (state: BeefyState, walletAddress: string) => {
   return isPending(state.ui.dataLoader.byAddress[walletAddress]?.global.timeline);
 };
@@ -244,3 +248,14 @@ export const selectDashboardShouldLoadClmHarvestsForUser = (
   const loader = state.ui.dataLoader.byAddress[walletAddress]?.global.clmHarvests;
   return isInitialLoader(loader) || (!isPending(loader) && !isLoaderRecent(loader));
 };
+
+export const selectIsMerklRewardsForUserChainRecent = (
+  state: BeefyState,
+  walletAddress: string,
+  chainId: string,
+  recentSeconds: number = 30 * 60
+) =>
+  isLoaderRecent(
+    state.ui.dataLoader.byAddress[walletAddress]?.byChainId[chainId]?.merklRewards,
+    recentSeconds || 30 * 60
+  );

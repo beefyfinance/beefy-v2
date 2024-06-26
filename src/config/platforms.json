@@ -20,6 +20,11 @@
     "name": "Equilibria"
   },
   {
+    "id": "magpie",
+    "name": "Magpie",
+    "risks": ["NO_TIMELOCK"]
+  },
+  {
     "id": "pendle",
     "name": "Pendle"
   },
@@ -992,6 +997,11 @@
   {
     "id": "oku",
     "name": "Uniswap (Oku)",
+    "filter": true
+  },
+  {
+    "id": "camelot",
+    "name": "Camelot",
     "filter": true
   }
 ]
