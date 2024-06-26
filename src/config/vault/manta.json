@@ -4,7 +4,7 @@
     "name": "STONE-WETH",
     "type": "cowcentrated",
     "token": "STONE-WETH",
-    "tokenAddress": "0xf8C42655373A280e8800BEeE44fcC12ffC99E797",
+    "tokenAddress": "0x7881dc8E59E644517a95A9687a6b58b86d98DB78",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
