@@ -75,6 +75,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
     () =>
       (state: BeefyState): Types | BoostedVaultExtraDetails | GovVaultExtraDetails => {
         if (isCowcentratedVault(vault)) return { kind: 'clm' };
+
         if (isGovVault(vault)) {
           if (selectVaultUnderlyingCowcentratedVaultIdOrUndefined(state, vault.id))
             return { kind: 'clm-pool' };
