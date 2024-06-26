@@ -8942,7 +8942,6 @@
     "oracleId": "stargate-op-eth",
     "status": "active",
     "createdAt": 1659634992,
-    "updatedAt": 1719421224,
     "platformId": "stargate",
     "assets": ["ETH"],
     "risks": [
