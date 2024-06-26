@@ -1773,8 +1773,10 @@
     "earnContractAddress": "0x480E3FC888044e038d9261A38437DeEC13C84AC5",
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdv-usdce",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1711465892,
+    "retireReason": "tvl",
+    "retiredAt": 1719409066,
     "platformId": "velodrome",
     "assets": ["USDV", "opUSDCe"],
     "risks": [
