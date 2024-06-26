@@ -50,11 +50,6 @@ export const getBridgeApi = createDependencyFactory(
   () => import('./bridge/bridge-api')
 );
 
-export const getAxelarApi = createDependencyFactory(
-  async ({ AxelarApi }) => new AxelarApi(),
-  () => import('./axelar/axelar')
-);
-
 export const getOnRampApi = createDependencyFactory(
   async ({ OnRampApi }) => new OnRampApi(),
   () => import('./on-ramp/on-ramp')
