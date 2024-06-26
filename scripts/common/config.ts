@@ -22,23 +22,23 @@ export type ChainConfig = (typeof chainConfigs)[keyof typeof chainConfigs];
 export const excludeChains: Record<string, { count: number; hash: string }> = {
   heco: {
     count: 35,
-    hash: '0x9b0d945a620022e303085619428f8476b0815be63de66c381985b1600a6ed424',
+    hash: 'ccab3fea9945e6474f803946d72001a04245fb2556f340ebee7a65af61be4773',
   },
   one: {
     count: 22,
-    hash: '0x90ed7bc48e41fcefe008e61a93d8ef4bb9ffc10929e098c2e9963ddf64beadf8',
+    hash: '104ab490f7be1037e0a8b5c545db505cd2ae644ba73fd958d33ab9435202e00a',
   },
   fuse: {
     count: 28,
-    hash: '0x684a1f39fbb159ed063810479c1d0fcc8c9dfbc200238442582e9916becf660e',
+    hash: '496b1a976f7d822f32cb4d19e570aa77ea3aef6a0ad77045146c9039c12e9f17',
   },
   emerald: {
     count: 10,
-    hash: '0x8bc8e4abf4228c9dcf41bf674a325cddfc0956bad8af1c4d6a57a340057fcd67',
+    hash: 'f74673e540c41ec7ab283c9d07ac2090453ab34be8824e8178c0a853fcaf80b1',
   },
   mantle: {
     count: 28,
-    hash: '0xf15f785d34060e04c8d88ea9a0f8c1d35f11b3b5de2ffbbc6b64c4d4d280d1b0',
+    hash: '7bde62e7e6f90ad6bdaf31a7b7c54f26d78c2388f7c68ee97a2899e3ab143018',
   },
 };
 
