@@ -15,7 +15,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   legendContainer: {
-    ...theme.typography['body-lg-med'],
+    ...theme.typography['body-sm-med'],
     textTransform: 'uppercase' as const,
     letterSpacing: '0.5px',
     color: theme.palette.text.dark,

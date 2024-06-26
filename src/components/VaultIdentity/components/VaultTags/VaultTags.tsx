@@ -18,6 +18,7 @@ import {
   isVaultActive,
   type VaultCowcentrated,
   type VaultEntity,
+  type VaultGov,
 } from '../../../../features/data/entities/vault';
 import {
   isCowcentratedVault,
@@ -31,6 +32,7 @@ import {
   selectIsVaultCowcentrated,
   selectIsVaultGov,
   selectVaultById,
+  selectVaultUnderlyingCowcentratedVaultOrUndefined,
 } from '../../../../features/data/selectors/vaults';
 import { getBoostIconSrc } from '../../../../helpers/boostIconSrc';
 import clsx from 'clsx';
@@ -112,22 +114,30 @@ export const VaultClmTag = memo(function VaultClmTag({
   vault,
   hideFee,
   hideText,
+  isPool = false,
 }: {
   vault: VaultCowcentrated;
   hideFee?: boolean;
   hideText?: boolean;
+  isPool?: boolean;
 }) {
   const classes = useStyles();
 
   const isDynamic = useMemo(() => vault.feeTier === 'Dynamic', [vault.feeTier]);
 
   const tooltipContent = useMemo(() => {
-    return isDynamic
+    return isPool
+      ? 'Cowcentrated Liquidity Manager Pool'
+      : isDynamic
       ? `Cowcentrated Liquidity Manager | ${vault.feeTier}`
       : hideFee
       ? `Cowcentrated Liquidity Manager | ${vault.feeTier}%`
       : 'Cowcentrated Liquidity Manager';
-  }, [hideFee, isDynamic, vault.feeTier]);
+  }, [hideFee, isDynamic, isPool, vault.feeTier]);
+
+  const text = useMemo(() => {
+    return isPool ? 'CLM Pool' : 'CLM';
+  }, [isPool]);
 
   return (
     <VaultTagWithTooltip
@@ -144,7 +154,7 @@ export const VaultClmTag = memo(function VaultClmTag({
         className={classes.vaultTagClmIcon}
         alt={hideText ? 'CLM' : undefined}
       />
-      {!hideText && <div className={classes.vaultTagClmText}>CLM</div>}
+      {!hideText && <div className={classes.vaultTagClmText}>{text}</div>}
       {!hideFee && vault.feeTier && !isDynamic && (
         <>
           <div className={classes.divider} />
@@ -170,6 +180,20 @@ const PointsTag = memo(function PointsTag() {
       {t('VaultTag-Points')}
     </VaultTagWithTooltip>
   );
+});
+
+const GovOrCLMTag = memo(function GovOrCLMTag({ vault }: { vault: VaultGov }) {
+  const underlyingCLM = useAppSelector(state =>
+    selectVaultUnderlyingCowcentratedVaultOrUndefined(state, vault.id)
+  );
+
+  if (underlyingCLM) {
+    return <VaultClmTag vault={underlyingCLM} hideFee={true} isPool={true} />;
+  }
+
+  return (
+    <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} />
+  ); // TODO: support multiple earned tokens
 });
 
 export type VaultTagsProps = {
@@ -203,7 +227,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
       ) : boostId ? (
         <VaultBoostTag boostId={boostId} />
       ) : isGovVault(vault) ? (
-        <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO: support multiple earned tokens
+        <GovOrCLMTag vault={vault} />
       ) : null}
       {isVaultEarningPoints(vault) && <PointsTag />}
     </div>
