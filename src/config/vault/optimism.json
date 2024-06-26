@@ -24,7 +24,7 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "gov-composer"
+        "strategyId": "pool"
       }
     ]
   },
@@ -55,7 +55,7 @@
     "feeTier": "0.3",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "pool"
       }
     ]
   },
@@ -86,7 +86,7 @@
     "feeTier": "1",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -117,7 +117,7 @@
     "feeTier": "0.3",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -148,7 +148,7 @@
     "feeTier": "1",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -179,7 +179,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -638,7 +638,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -669,7 +669,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -700,7 +700,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -731,7 +731,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -762,7 +762,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -793,7 +793,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -824,7 +824,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -855,7 +855,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -925,7 +925,7 @@
     "feeTier": "0.30",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -956,7 +956,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -987,7 +987,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -1018,7 +1018,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -1049,7 +1049,7 @@
     "feeTier": "0.05",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -1080,7 +1080,7 @@
     "feeTier": "1",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "compounds"
       }
     ]
   },
@@ -1833,8 +1833,10 @@
     "earnContractAddress": "0x480E3FC888044e038d9261A38437DeEC13C84AC5",
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdv-usdce",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1711465892,
+    "retireReason": "tvl",
+    "retiredAt": 1719409066,
     "platformId": "velodrome",
     "assets": ["USDV", "opUSDCe"],
     "risks": [
@@ -4100,8 +4102,10 @@
     "earnContractAddress": "0xb379AB37f2e7d4A0d2479c09d637bD6B20E1354d",
     "oracle": "lps",
     "oracleId": "velodrome-v2-usdc-mta",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1688104098,
+    "retireReason": "rewards",
+    "retiredAt": 1719408570,
     "platformId": "velodrome",
     "assets": ["MTA", "opUSDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
