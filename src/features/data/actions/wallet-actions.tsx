@@ -11,7 +11,13 @@ import type { BoostEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenEqual, isTokenNative } from '../entities/token';
-import type { VaultCowcentrated, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
+import {
+  isGovVault,
+  type VaultCowcentrated,
+  type VaultEntity,
+  type VaultGov,
+  type VaultStandard,
+} from '../entities/vault';
 import { isCowcentratedVault, isStandardVault } from '../entities/vault';
 import {
   createWalletActionErrorAction,
@@ -34,6 +40,7 @@ import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
   selectErc20TokenByAddress,
+  selectGovVaultEarnedTokens,
   selectIsTokenLoaded,
   selectTokenByAddress,
   selectTokenByAddressOrUndefined,
@@ -73,7 +80,7 @@ import { selectTransactSelectedQuote, selectTransactSlippage } from '../selector
 import { AngleMerklDistributorAbi } from '../../../config/abi/AngleMerklDistributor';
 import { isDefined } from '../utils/array-utils';
 import { slipAllBy } from '../apis/transact/helpers/amounts';
-import { fetchMerklRewardsAction, MERKL_SUPPORTED_CHAINS } from './rewards';
+import { fetchUserMerklRewardsAction, MERKL_SUPPORTED_CHAINS } from './user-rewards';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -188,7 +195,7 @@ function txMined(
       setTimeout(
         () =>
           dispatch(
-            fetchMerklRewardsAction({
+            fetchUserMerklRewardsAction({
               walletAddress,
               chainId,
               recentSeconds: 60,
@@ -1303,11 +1310,12 @@ function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
         tokens.push(selectTokenById(state, vault.chainId, assetId));
       }
     }
-  }
-  if (isCowcentratedVault(vault)) {
+  } else if (isCowcentratedVault(vault)) {
     vault.depositTokenAddresses.forEach(tokenAddress => {
       tokens.push(selectTokenByAddress(state, vault.chainId, tokenAddress));
     });
+  } else if (isGovVault(vault)) {
+    selectGovVaultEarnedTokens(state, vault.chainId, vault.id).forEach(token => tokens.push(token));
   }
 
   // clm deposit tokens aren't erc20 and don't share balanceOf

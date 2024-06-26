@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
 import {
-  selecTransactForceSelection,
+  selectTransactForceSelection,
   selectTransactNumTokens,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
@@ -33,7 +33,7 @@ const DepositedInVault = memo(function DepositedInVault() {
   const tokenAmount = useAppSelector(state =>
     vaultId ? selectUserVaultBalanceInDepositTokenWithToken(state, vaultId) : undefined
   );
-  const forceSelection = useAppSelector(selecTransactForceSelection);
+  const forceSelection = useAppSelector(selectTransactForceSelection);
 
   const handleMax = useCallback(() => {
     if (tokenAmount) {
@@ -85,7 +85,7 @@ export const WithdrawForm = memo(function WithdrawForm() {
   const { t } = useTranslation();
   const classes = useStyles();
   const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
-  const forceSelection = useAppSelector(selecTransactForceSelection);
+  const forceSelection = useAppSelector(selectTransactForceSelection);
 
   const i18key = useMemo(() => {
     return hasOptions

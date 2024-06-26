@@ -32,6 +32,7 @@ import {
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
 } from './zap';
+import { fetchMerklCampaignsAction } from './rewards';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 
@@ -79,6 +80,8 @@ export async function initAppData(store: BeefyStore) {
     store.dispatch(fetchBridges());
 
     store.dispatch(fetchVaultsLastHarvests());
+
+    store.dispatch(fetchMerklCampaignsAction());
 
     // Zap (we need the data to know if zap is available for each vault)
     store.dispatch(fetchZapConfigsAction());

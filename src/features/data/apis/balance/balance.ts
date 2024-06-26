@@ -1,7 +1,7 @@
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi';
 import type Web3 from 'web3';
 import {
-  isSingleGovVault,
+  isGovVaultSingle,
   type VaultGov,
   type VaultGovMulti,
   type VaultGovSingle,
@@ -37,6 +37,7 @@ import {
   type Web3CallMethod,
 } from '../../../../helpers/web3';
 import { selectTokenByAddress } from '../../selectors/tokens';
+import { fromWeiString } from '../../../../helpers/big-number';
 
 export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   constructor(protected web3: Web3, protected chain: T) {}
@@ -68,10 +69,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       }
     }
 
-    const [govVaultsV1, govVaultsV2] = partition(govVaults, isSingleGovVault) as [
-      VaultGovSingle[],
-      VaultGovMulti[]
-    ];
+    const [govVaultsV1, govVaultsV2] = partition(govVaults, isGovVaultSingle);
     const erc20TokensBatches = chunk(erc20Tokens, CHUNK_SIZE);
     const boostAndGovVaultBatches = chunk([...boosts, ...govVaultsV1], CHUNK_SIZE);
     const govVaultsV2Batches = chunk(govVaultsV2, CHUNK_SIZE);
@@ -239,28 +237,23 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     }
 
     const balanceToken = selectGovVaultBalanceTokenEntity(state, govVault.id);
-    const rewardTokens = govVault.earnedTokenAddresses;
-    const rewards: BigNumber[] = [];
 
-    const rawBalance = new BigNumber(result.balance);
-
-    for (const rewardTokenAddress of rewardTokens) {
+    const rewards: BigNumber[] = govVault.earnedTokenAddresses.map(rewardTokenAddress => {
       const rewardTokenEntity = selectTokenByAddress(state, govVault.chainId, rewardTokenAddress);
       const index = result.rewardTokens.findIndex(
         token => token.toLowerCase() === rewardTokenAddress.toLowerCase()
       );
       if (index === -1) {
-        throw new Error(`Config reward token not found in result`);
+        throw new Error(`Config reward token ${rewardTokenAddress} not found in result`);
       }
-      const rawRewards = new BigNumber(result.rewards[index]);
-      rewards.push(rawRewards.shiftedBy(-rewardTokenEntity.decimals));
-    }
+      return fromWeiString(result.rewards[index], rewardTokenEntity.decimals);
+    });
 
     return {
       vaultId: govVault.id,
-      balance: rawBalance.shiftedBy(-balanceToken.decimals),
+      balance: fromWeiString(result.balance, balanceToken.decimals),
       rewards,
-      rewardTokens,
+      rewardTokens: govVault.earnedTokenAddresses,
     };
   }
 }

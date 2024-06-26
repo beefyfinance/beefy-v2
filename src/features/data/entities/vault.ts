@@ -172,6 +172,14 @@ export function isGovVault(vault: VaultEntity): vault is VaultGov {
   return vault.type === 'gov';
 }
 
+export function isGovVaultMulti(vault: VaultGov): vault is VaultGovMulti {
+  return vault.subType === 'multi';
+}
+
+export function isGovVaultSingle(vault: VaultGov): vault is VaultGovSingle {
+  return vault.subType === 'single';
+}
+
 export function isMultiGovVault(vault: VaultEntity): vault is VaultGovMulti {
   return isGovVault(vault) && vault.subType === 'multi';
 }

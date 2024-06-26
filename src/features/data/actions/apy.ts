@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
-import type { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api';
 import { getBeefyApi } from '../apis/instances';
 import { isGovVault, type VaultEntity } from '../entities/vault';
 import type { TotalApy } from '../reducers/apy';
@@ -10,6 +9,7 @@ import { first } from 'lodash-es';
 import { compoundInterest, yearlyToDaily } from '../../../helpers/number';
 import { isDefined } from '../utils/array-utils';
 import { getApiApyDataComponents } from '../../../helpers/apy';
+import type { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api-types';
 
 export interface FetchAllApyFulfilledPayload {
   data: BeefyAPIApyBreakdownResponse;

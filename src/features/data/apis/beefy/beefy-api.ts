@@ -1,129 +1,24 @@
 import type { AxiosInstance } from 'axios';
 import axios from 'axios';
-import type { TokenEntity } from '../../entities/token';
-import type { VaultEntity } from '../../entities/vault';
 import { mapValuesDeep } from '../../utils/array-utils';
 import { featureFlag_simulateBeefyApiError } from '../../utils/feature-flags';
 import type { TreasuryCompleteBreakdownConfig } from '../config-types';
+import type {
+  AllCowcentratedVaultRangesResponse,
+  ApyFeeData,
+  BeefyAPIApyBreakdownResponse,
+  BeefyAPILpBreakdownResponse,
+  BeefyApiMerklCampaign,
+  BeefyAPITokenPricesResponse,
+  BeefyApiVaultLastHarvestResponse,
+  BeefyLastArticleResponse,
+  BeefySnapshotActiveResponse,
+  ZapAggregatorTokenSupportResponse,
+} from './beefy-api-types';
 import type { ChainEntity } from '../../entities/chain';
-import type { KeysOfUnion } from '../../utils/types-utils';
-import type { AllCowcentratedVaultRangesResponse } from './beefy-api-types';
 
 export const API_URL = import.meta.env.VITE_API_URL || 'https://api.beefy.finance';
 export const API_ZAP_URL = import.meta.env.VITE_API_ZAP_URL || `${API_URL}/zap`;
-
-export type ApyPerformanceFeeData = {
-  total: number;
-  call: number;
-  strategist: number;
-  treasury: number;
-  stakers: number;
-};
-
-export type ApyVaultFeeData = {
-  performance: ApyPerformanceFeeData;
-  withdraw: number;
-  deposit?: number;
-  lastUpdated: number;
-};
-
-export type ApyFeeData = Record<VaultEntity['id'], ApyVaultFeeData>;
-
-interface ApyGovVault {
-  vaultApr: number;
-}
-
-interface ApyMaxiVault {
-  totalApy: number;
-}
-
-export interface ApyStandard {
-  beefyPerformanceFee: number;
-  vaultApr: number;
-  compoundingsPerYear: number;
-  vaultApy: number;
-  tradingApr?: number;
-  composablePoolApr?: number;
-  liquidStakingApr?: number;
-  totalApy: number;
-  // todo: does it make sense to have fees and apy in the same entities?
-  lpFee: number;
-}
-
-export interface ApyCLM {
-  clmApr: number;
-  totalApy: number;
-  merklApr?: number;
-}
-
-type ExtractAprComponents<T extends string> = T extends `${infer C}Apr` ? C : never;
-export type ApiApyData = ApyGovVault | ApyMaxiVault | ApyStandard | ApyCLM;
-export type ApiApyDataKeys = KeysOfUnion<ApiApyData>;
-export type ApiApyDataAprComponents = ExtractAprComponents<ApiApyDataKeys>;
-
-export function isStandardVaultApy(apy: ApiApyData): apy is ApyStandard {
-  return 'compoundingsPerYear' in apy;
-}
-
-export function isGovVaultApy(apy: ApiApyData): apy is ApyGovVault {
-  return 'vaultApr' in apy && !('compoundingsPerYear' in apy);
-}
-
-export function isMaxiVaultApy(apy: ApiApyData): apy is ApyMaxiVault {
-  return 'totalApy' in apy && !('compoundingsPerYear' in apy);
-}
-
-export interface BeefyAPITokenPricesResponse {
-  [tokenId: TokenEntity['id']]: number;
-}
-
-export interface BeefyAPIApyBreakdownResponse {
-  [vaultId: VaultEntity['id']]: ApiApyData;
-}
-
-export interface LpData {
-  price: number;
-  tokens: string[];
-  balances: string[];
-  totalSupply: string;
-  underlyingPrice?: number;
-  underlyingBalances?: string[];
-  underlyingLiquidity?: string;
-}
-
-export interface BeefyAPILpBreakdownResponse {
-  [vaultId: VaultEntity['id']]: LpData;
-}
-
-type BeefyApiVaultLastHarvestResponse = Record<string, number>;
-
-export type BeefySnapshotProposal = {
-  id: string;
-  title: string;
-  start: number;
-  end: number;
-  author: string;
-  coreProposal: boolean;
-};
-export type BeefySnapshotActiveResponse = BeefySnapshotProposal[];
-
-export type BeefyArticleConfig = {
-  id: string;
-  title: string;
-  description: string;
-  url: string;
-  date: number;
-};
-
-export type BeefyLastArticleResponse = BeefyArticleConfig;
-
-export type ZapAggregatorTokenSupportResponse = {
-  [chainId in ChainEntity['id']]?: {
-    [tokenAddress: TokenEntity['address']]: {
-      [provider: string]: boolean;
-    };
-  };
-};
 
 export class BeefyAPI {
   public api: AxiosInstance;
@@ -269,6 +164,19 @@ export class BeefyAPI {
       params: { _: this.getCacheBuster('short') },
     });
     return res.data;
+  }
+
+  async getCowcentratedMerklCampaigns(): Promise<BeefyApiMerklCampaign[]> {
+    const res = await this.api.get<BeefyApiMerklCampaign<string>[]>(
+      '/cow-merkl-campaigns/all/recent',
+      {
+        params: { _: this.getCacheBuster('short') },
+      }
+    );
+    return res.data.map(campaign => ({
+      ...campaign,
+      chainId: campaign.chainId === 'one' ? 'harmony' : (campaign.chainId as ChainEntity['id']),
+    }));
   }
 
   /**

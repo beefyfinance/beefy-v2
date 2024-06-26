@@ -593,6 +593,7 @@
   "Transact-DepositAll": "Deposit All",
   "Transact-Withdraw": "Withdraw",
   "Transact-WithdrawAll": "Withdraw All",
+  "Transact-Claim": "Claim",
   "Transact-ClaimRewards": "Claim Rewards Only",
   "Transact-ClaimWithdrawAll": "Claim & Withdraw All",
   "Transact-SelectToken": "Select token",

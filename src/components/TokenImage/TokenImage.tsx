@@ -19,6 +19,8 @@ type CommonTokenImageProps = {
   className?: AssetsImageProps['className'];
 };
 
+type Token = Pick<TokenEntity, 'address' | 'symbol' | 'chainId'>;
+
 export type TokenImageProps = {
   tokenAddress: TokenEntity['address'];
   chainId: ChainEntity['id'];
@@ -42,7 +44,7 @@ export const TokenImage = memo<TokenImageProps>(function TokenImage({
 });
 
 export type TokenImageFromEntityProps = {
-  token: TokenEntity;
+  token: Token;
 } & CommonTokenImageProps;
 
 export const TokenImageFromEntity = memo<TokenImageFromEntityProps>(function TokenImageFromEntity({
@@ -63,7 +65,7 @@ export const TokenImageFromEntity = memo<TokenImageFromEntityProps>(function Tok
 });
 
 export type TokensImageProps = {
-  tokens: TokenEntity[];
+  tokens: Token[];
 } & CommonTokenImageProps;
 export const TokensImage = memo<TokensImageProps>(function TokensImage({
   tokens,
@@ -92,7 +94,7 @@ export const TokensImage = memo<TokensImageProps>(function TokensImage({
 });
 
 type TokenNoSingleAssetProps = {
-  token: TokenEntity;
+  token: Token;
 } & CommonTokenImageProps;
 const TokenNoSingleAsset = memo<TokenNoSingleAssetProps>(function TokenNoSingleAsset({
   token,
@@ -117,7 +119,7 @@ const TokenNoSingleAsset = memo<TokenNoSingleAssetProps>(function TokenNoSingleA
 });
 
 type TokenNotVaultProps = {
-  token: TokenEntity;
+  token: Token;
 } & CommonTokenImageProps;
 const TokenNotVault = memo<TokenNotVaultProps>(function TokenNotVault({ token, size, className }) {
   const vaultIds = useAppSelector(state =>
