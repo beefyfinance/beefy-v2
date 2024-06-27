@@ -46,7 +46,12 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
           />
         </div>
         <div className={clsx(classes.column, classes.hideSm)}>
-          <VaultYieldRewardsStat vaultId={vaultId} walletAddress={address} pnlData={pnlData} />
+          <VaultYieldRewardsStat
+            showLabel={false}
+            vaultId={vaultId}
+            walletAddress={address}
+            pnlData={pnlData}
+          />
         </div>
         <div className={classes.column}>
           <VaultPnlStat

@@ -11,7 +11,7 @@ export const VaultsHeader = memo(function VaultsHeader() {
 
   return (
     <div className={classes.header}>
-      <VaultsSearch />
+      <VaultsSearch className={classes.searchWidth} />
       <VaultsSort />
     </div>
   );

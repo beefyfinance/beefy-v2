@@ -9,7 +9,6 @@ import type {
   BoostPartnerConfig,
   BridgeConfig,
   ChainConfig,
-  FeaturedVaultConfig,
   MinterConfig,
   PartnersConfig,
   PlatformConfig,
@@ -29,10 +28,6 @@ import { entries, keys } from '../../../helpers/object';
 export class ConfigAPI {
   public async fetchChainConfigs(): Promise<ChainConfig[]> {
     return entries(chainConfigs).map(([id, chain]) => ({ id, ...chain }));
-  }
-
-  public async fetchFeaturedVaults(): Promise<FeaturedVaultConfig> {
-    return (await import('../../../config/vault/featured.json')).default;
   }
 
   public async fetchPartnersConfig(): Promise<PartnersConfig> {
