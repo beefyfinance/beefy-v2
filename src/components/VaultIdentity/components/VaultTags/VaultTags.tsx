@@ -27,7 +27,6 @@ import {
 } from '../../../../features/data/entities/vault';
 import { VaultPlatform } from '../../../VaultPlatform';
 import {
-  selectIsVaultCowcentrated,
   selectIsVaultCowcentratedLike,
   selectIsVaultGov,
   selectVaultById,
@@ -96,13 +95,13 @@ type VaultPlatformTagProps = {
 const VaultPlatformTag = memo<VaultPlatformTagProps>(function VaultPlatformTag({ vaultId }) {
   const classes = useStyles();
   const isGov = useAppSelector(state => selectIsVaultGov(state, vaultId));
-  const isCowcentrated = useAppSelector(state => selectIsVaultCowcentrated(state, vaultId));
+  const isCowcentratedLike = useAppSelector(state => selectIsVaultCowcentratedLike(state, vaultId));
 
   return (
     <VaultTag
       className={clsx({
         [classes.platformTagGov]: isGov,
-        [classes.platformTagClm]: isCowcentrated,
+        [classes.platformTagClm]: isCowcentratedLike,
       })}
     >
       <VaultPlatform vaultId={vaultId} />
