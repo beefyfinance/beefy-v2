@@ -1,5 +1,44 @@
 [
   {
+    "id": "curve-arb-tbtc-ng",
+    "name": "tBTC/WBTC",
+    "token": "2BTC-ng",
+    "tokenAddress": "0x186cF879186986A20aADFb7eAD50e3C20cb26CeC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurve2BTC-ng",
+    "earnedTokenAddress": "0x64d461a7aa9c3949c2642217F4a52B694f129D94",
+    "earnContractAddress": "0x64d461a7aa9c3949c2642217F4a52B694f129D94",
+    "oracle": "lps",
+    "oracleId": "curve-arb-tbtc-ng",
+    "status": "active",
+    "createdAt": 1719474225,
+    "platformId": "curve",
+    "assets": ["tBTC", "WBTC"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-69/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-69/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x186cF879186986A20aADFb7eAD50e3C20cb26CeC",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x186cF879186986A20aADFb7eAD50e3C20cb26CeC",
+            "coins": [
+              "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+              "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "camelot-usde-usdc",
     "name": "USDe-USDC",
     "type": "cowcentrated",
