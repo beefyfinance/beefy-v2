@@ -284,6 +284,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "earningPoints": true,
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2fB73D98B1D60B35FD12508933578098f352cE7e/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2fB73D98B1D60B35FD12508933578098f352cE7e/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -307,6 +308,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "earningPoints": true,
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2aD746fa3faA0AD586021a633d10F4E2785A0349/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2aD746fa3faA0AD586021a633d10F4E2785A0349/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -330,6 +332,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "earningPoints": true,
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5f3C781B3a20299DB27C8fC5f4415D895677c885/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5f3C781B3a20299DB27C8fC5f4415D895677c885/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -353,6 +356,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "earningPoints": true,
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/out?chain=arbitrum",
     "network": "arbitrum"
