@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import {
   isCowcentratedVault,
+  isGovVault,
   isVaultEarningPoints,
   isVaultPaused,
   isVaultRetired,
@@ -17,7 +18,6 @@ import {
   selectAllVaultIds,
   selectIsVaultBlueChip,
   selectIsVaultCorrelated,
-  selectIsVaultGov,
   selectIsVaultStable,
   selectVaultById,
 } from '../selectors/vaults';
@@ -98,7 +98,7 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
               }
 
               return false;
-            }, [])
+            })
           : allVaults;
 
       const vaultsByAssetType =
@@ -119,7 +119,7 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
                 return true;
               }
               return false;
-            }, [])
+            })
           : vaultsByCategory;
 
       filteredVaults = vaultsByAssetType.filter(vault => {
@@ -129,11 +129,11 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
         }
 
         //Strategy Type
-        if (filterOptions.strategyType === 'pools' && !selectIsVaultGov(state, vault.id)) {
+        if (filterOptions.strategyType === 'pools' && !isGovVault(vault)) {
           return false;
         }
 
-        if (filterOptions.strategyType === 'vaults' && selectIsVaultGov(state, vault.id)) {
+        if (filterOptions.strategyType === 'vaults' && isGovVault(vault)) {
           return false;
         }
 
