@@ -905,6 +905,36 @@ export const config = {
     },
     stableCoins: ['USDC', 'USDT'],
   },
+  manta: {
+    name: 'Manta',
+    new: true,
+    chainId: 169,
+    rpc: ['https://manta-pacific.drpc.org'],
+    explorerUrl: 'https://pacific-explorer.manta.network/',
+    multicallAddress: '0x663504a9453eD242335C3dCc9E4B52620F566b30',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x6B5cd7f8eFa53e10C4b948B6989c6A66895d1991',
+    providerName: 'Manta',
+    walletSettings: {
+      chainId: `0x${parseInt('169', 10).toString(16)}`,
+      chainName: 'Manta Pacific',
+      nativeCurrency: {
+        name: 'ETH',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://manta-pacific.drpc.org'],
+      blockExplorerUrls: ['https://pacific-explorer.manta.network/'],
+    },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.7,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '10000000', // 0.01 gwei
+    },
+    stableCoins: ['USDC', 'USDT'],
+  },
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,

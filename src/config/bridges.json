@@ -199,13 +199,21 @@
     "website": "https://www.inceptionlrt.com/app/bridge/"
   },
   {
+    "id": "manta-canonical",
+    "name": "Manta Bridge",
+    "tagName": "Manta",
+    "website": "https://pacific-bridge.manta.network/"
+  },
+  {
     "id": "ankr",
     "name": "Ankr Bridge",
+    "tagName": "Ankr",
     "website": "https://www.ankr.com/staking/bridge/"
   },
   {
     "id": "chainlink-ccip",
     "name": "Chainlink CCIP",
+    "tagName": "Chainlink CCIP",
     "website": "https://chain.link/cross-chain"
   }
 ]
