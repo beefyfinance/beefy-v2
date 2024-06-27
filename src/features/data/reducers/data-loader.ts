@@ -57,7 +57,8 @@ import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
 import type { Draft } from 'immer';
 import { cloneDeep } from 'lodash-es';
-import { fetchMerklRewardsAction } from '../actions/rewards';
+import { fetchUserMerklRewardsAction } from '../actions/user-rewards';
+import { fetchMerklCampaignsAction } from '../actions/rewards';
 
 const dataLoaderStateInit: LoaderStateIdle = {
   lastFulfilled: undefined,
@@ -124,6 +125,7 @@ export const initialDataLoaderState: DataLoaderState = {
     bridges: dataLoaderStateInit,
     migrators: dataLoaderStateInit,
     articles: dataLoaderStateInit,
+    merklCampaigns: dataLoaderStateInit,
   },
   byChainId: {},
   byAddress: {},
@@ -387,6 +389,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury', true);
     addGlobalAsyncThunkActions(builder, fetchActiveProposals, 'proposals', false);
     addGlobalAsyncThunkActions(builder, fetchLastArticle, 'articles', false);
+    addGlobalAsyncThunkActions(builder, fetchMerklCampaignsAction, 'merklCampaigns', false);
 
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);
@@ -399,7 +402,7 @@ export const dataLoaderSlice = createSlice({
       ['balance', 'allowance']
     );
     addByAddressByChainAsyncThunkActions(builder, fetchClmHarvestsForUserChain, ['clmHarvests']);
-    addByAddressByChainAsyncThunkActions(builder, fetchMerklRewardsAction, ['merklRewards']);
+    addByAddressByChainAsyncThunkActions(builder, fetchUserMerklRewardsAction, ['merklRewards']);
 
     addByAddressAsyncThunkActions(builder, fetchWalletTimeline, ['timeline']);
     addByAddressAsyncThunkActions(builder, recalculateDepositedVaultsAction, ['depositedVaults']);

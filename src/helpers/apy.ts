@@ -1,5 +1,4 @@
 import { createCachedFactory, createFactory } from '../features/data/utils/factory-utils';
-import type { ApiApyDataAprComponents } from '../features/data/apis/beefy/beefy-api';
 import type {
   TotalApyComponent,
   TotalApyDailyComponent,
@@ -9,6 +8,7 @@ import type {
 import type { VaultEntity } from '../features/data/entities/vault';
 import { fromKeysMapper } from './object';
 import { ucFirstLetter } from './string';
+import type { ApiApyDataAprComponents } from '../features/data/apis/beefy/beefy-api-types';
 
 /**
  * Components are the individual parts that make up `totalApy` in `TotalApy`

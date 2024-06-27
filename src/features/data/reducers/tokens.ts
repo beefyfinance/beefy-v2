@@ -28,11 +28,11 @@ import {
 } from '../utils/config-hacks';
 import { fetchAllMinters } from '../actions/minters';
 import type { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
-import type { LpData } from '../apis/beefy/beefy-api';
 import { isNativeAlternativeAddress } from '../../../helpers/addresses';
 import { fetchBridgeConfig } from '../actions/bridge';
 import { entries } from '../../../helpers/object';
 import { isDefined } from '../utils/array-utils';
+import type { LpData } from '../apis/beefy/beefy-api-types';
 import { getVaultNames } from '../utils/vault-utils';
 
 /**

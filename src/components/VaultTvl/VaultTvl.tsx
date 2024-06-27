@@ -12,7 +12,6 @@ import {
   selectLpBreakdownForVault,
   selectTokenByAddress,
 } from '../../features/data/selectors/tokens';
-import type { LpData } from '../../features/data/apis/beefy/beefy-api';
 import { TvlShareTooltip } from '../VaultStats/VaultTvlStat';
 import type { PlatformEntity } from '../../features/data/entities/platform';
 import { getVaultUnderlyingTvlAndBeefySharePercent } from '../../helpers/tvl';
@@ -21,6 +20,7 @@ import {
   selectIsChainDataAvailable,
   selectIsGlobalDataAvailable,
 } from '../../features/data/selectors/data-loader';
+import type { LpData } from '../../features/data/apis/beefy/beefy-api-types';
 
 const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
   const label = 'VaultStat-TVL';

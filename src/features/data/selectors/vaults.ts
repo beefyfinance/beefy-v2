@@ -3,14 +3,18 @@ import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenErc20 } from '../entities/token';
-import type { VaultCowcentrated, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
   isCowcentratedVault,
   isGovVault,
+  isMultiGovVault,
   isStandardVault,
   isVaultPaused,
   isVaultPausedOrRetired,
   isVaultRetired,
+  type VaultCowcentrated,
+  type VaultEntity,
+  type VaultGov,
+  type VaultStandard,
 } from '../entities/vault';
 import {
   selectIsBeefyToken,
@@ -182,9 +186,24 @@ export const selectIsVaultCowcentratedPool = createCachedSelector(
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 /** true if the deposit token of this vault is a CLM receipt token */
+/**
+ * @return 'cowcentrated' if CLM; 'gov' if reward pool with underlying CLM; false otherwise
+ */
 export const selectIsVaultCowcentratedLike = createCachedSelector(
+  selectVaultById,
   selectVaultUnderlyingCowcentratedVaultIdOrUndefined,
-  underlyingCowcentratedId => !underlyingCowcentratedId
+  (vault, underlyingCowcentratedId) => {
+    if (isCowcentratedVault(vault)) {
+      return vault.type;
+    }
+    if (!underlyingCowcentratedId) {
+      return false;
+    }
+    if (isMultiGovVault(vault)) {
+      return vault.type;
+    }
+    return false;
+  }
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectIsVaultGov = createCachedSelector(

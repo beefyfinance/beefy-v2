@@ -1,9 +1,17 @@
 import type { TokenEntity } from '../../entities/token';
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchMerklRewardsAction } from '../../actions/rewards';
+import { fetchUserMerklRewardsAction } from '../../actions/user-rewards';
 import type { Draft } from 'immer';
 import type { ChainEntity } from '../../entities/chain';
 import type { BigNumber } from 'bignumber.js';
+
+export type MerklVaultReward = {
+  address: TokenEntity['address'];
+  symbol: TokenEntity['symbol'];
+  decimals: TokenEntity['decimals'];
+  accumulated: BigNumber;
+  unclaimed: BigNumber;
+};
 
 export type MerklRewardsState = {
   byChain: {
@@ -24,19 +32,13 @@ export type MerklRewardsState = {
         };
       };
       byVaultAddress: {
-        [vaultAddress: string]: {
-          address: TokenEntity['address'];
-          symbol: TokenEntity['symbol'];
-          decimals: TokenEntity['decimals'];
-          accumulated: BigNumber;
-          unclaimed: BigNumber;
-        }[];
+        [vaultAddress: string]: MerklVaultReward[];
       };
     };
   };
 };
 
-export type RewardsState = {
+export type UserRewardsState = {
   byUser: {
     [userAddress: string]: {
       byProvider: {
@@ -46,18 +48,19 @@ export type RewardsState = {
   };
 };
 
-const initialState: RewardsState = {
+const initialState: UserRewardsState = {
   byUser: {},
 };
 
-export const rewardsSlice = createSlice({
+export const userRewardsSlice = createSlice({
   name: 'rewards',
   initialState,
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    builder.addCase(fetchMerklRewardsAction.fulfilled, (sliceState, action) => {
+    builder.addCase(fetchUserMerklRewardsAction.fulfilled, (sliceState, action) => {
+      // @dev the action already filters out rewards with 0 unclaimed
       const userChainState = getMerklUserState(
         sliceState,
         action.payload.walletAddress.toLowerCase(),
@@ -70,7 +73,7 @@ export const rewardsSlice = createSlice({
 });
 
 function getMerklUserState(
-  sliceState: Draft<RewardsState>,
+  sliceState: Draft<UserRewardsState>,
   userAddress: string,
   chainId: ChainEntity['id']
 ) {
@@ -96,4 +99,4 @@ function getMerklUserState(
   return chainState;
 }
 
-export const rewardsReducer = rewardsSlice.reducer;
+export const userRewardsReducer = userRewardsSlice.reducer;

@@ -4,7 +4,6 @@ import type { BeefyState } from '../../../redux-types';
 import { fetchApyAction, recalculateTotalApyAction } from '../actions/apy';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import type { ApiApyData } from '../apis/beefy/beefy-api';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import type { BoostEntity } from '../entities/boost';
 import type { VaultEntity } from '../entities/vault';
@@ -16,6 +15,7 @@ import { mooAmountToOracleAmount } from '../utils/ppfs';
 import { BIG_ONE } from '../../../helpers/big-number';
 import type { BigNumber } from 'bignumber.js';
 import { getBoostStatusFromContractState } from './boosts';
+import type { ApiApyData } from '../apis/beefy/beefy-api-types';
 
 // boost is expressed as APR
 interface AprData {

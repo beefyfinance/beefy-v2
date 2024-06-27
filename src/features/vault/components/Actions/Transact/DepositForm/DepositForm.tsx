@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selecTransactForceSelection,
+  selectTransactForceSelection,
   selectTransactNumTokens,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
@@ -108,7 +108,7 @@ const DepositFormInputs = memo(function DepositFormInputs() {
   const selection = useAppSelector(selectTransactSelected);
   const multipleInputs = selection.tokens.length > 1;
   const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
-  const forceSelection = useAppSelector(selecTransactForceSelection);
+  const forceSelection = useAppSelector(selectTransactForceSelection);
   const availableLabel = t('Transact-Available');
   const firstSelectLabel = useMemo(() => {
     return t(

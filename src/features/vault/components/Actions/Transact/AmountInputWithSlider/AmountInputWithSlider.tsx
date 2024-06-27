@@ -1,7 +1,7 @@
 import { memo, type CSSProperties, useMemo, type ReactNode } from 'react';
 import { AmountInput, type AmountInputProps } from '../AmountInput/AmountInput';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { selecTransactForceSelection } from '../../../../../data/selectors/transact';
+import { selectTransactForceSelection } from '../../../../../data/selectors/transact';
 import { useAppSelector } from '../../../../../../store';
 import clsx from 'clsx';
 import { styles } from './styles';
@@ -29,7 +29,7 @@ export const AmountInputWithSlider = memo<AmountInputWithSliderProps>(
     endAdornment,
     warning,
   }) {
-    const forceSelection = useAppSelector(selecTransactForceSelection);
+    const forceSelection = useAppSelector(selectTransactForceSelection);
     const classes = useStyles();
     const sliderValue = useMemo(() => {
       return value

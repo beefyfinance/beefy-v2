@@ -17,6 +17,10 @@ import { TransactStatus } from '../reducers/wallet/transact-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { valueOrThrow } from '../utils/selector-utils';
 import type { TokenEntity } from '../entities/token';
+import { isGovVault, type VaultEntity } from '../entities/vault';
+import { selectVaultHasActiveMerklCampaigns } from './rewards';
+import { selectConnectedUserHasMerklRewardsForVault } from './user-rewards';
+import { selectVaultById } from './vaults';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
@@ -304,4 +308,15 @@ export const selectTransactConfirmError = (state: BeefyState) => state.ui.transa
 export const selectTransactConfirmChanges = (state: BeefyState) =>
   state.ui.transact.confirm.changes;
 
-export const selecTransactForceSelection = (state: BeefyState) => state.ui.transact.forceSelection;
+export const selectTransactForceSelection = (state: BeefyState) => state.ui.transact.forceSelection;
+
+export const selectShouldShowTransactClaims = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectVaultHasActiveMerklCampaigns(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectConnectedUserHasMerklRewardsForVault(state, vaultId),
+  (vault, vaultHasActiveMerklCampaigns, userHasUnclaimedMerklRewards) => {
+    return isGovVault(vault) || vaultHasActiveMerklCampaigns || userHasUnclaimedMerklRewards;
+  }
+);

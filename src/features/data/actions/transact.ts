@@ -72,7 +72,7 @@ export type TransactFetchOptionsPayload = {
 const optionsForByMode = {
   [TransactMode.Deposit]: 'fetchDepositOptionsFor',
   [TransactMode.Withdraw]: 'fetchWithdrawOptionsFor',
-} as const satisfies Record<TransactMode, keyof ITransactApi>;
+} as const satisfies Partial<Record<TransactMode, keyof ITransactApi>>;
 
 export const transactFetchOptions = createAsyncThunk<
   TransactFetchOptionsPayload,
@@ -115,8 +115,11 @@ export const transactFetchOptions = createAsyncThunk<
   },
   {
     condition({ mode }, { getState }) {
-      const state = getState();
+      if (!(mode in optionsForByMode)) {
+        return false;
+      }
 
+      const state = getState();
       return (
         selectTransactOptionsMode(state) !== mode ||
         selectTransactVaultId(state) !== selectTransactOptionsVaultId(state)

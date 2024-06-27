@@ -3,8 +3,8 @@ import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity } from '../entities/vault';
 import type { VaultFee } from '../reducers/fees';
 import { isInitialLoader } from '../reducers/data-loader-types';
-import { selectIsVaultGov, selectVaultDepositFee } from './vaults';
 import { selectIsGlobalDataAvailable } from './data-loader';
+import { selectIsVaultGov, selectVaultDepositFee } from './vaults';
 
 const GOV_FEES: Readonly<VaultFee> = {
   id: 'gov-fees',

@@ -215,7 +215,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       exitCode = 1;
     } else if (!validStrategyIds[pool.type].has(pool.strategyTypeId)) {
       console.error(
-        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription--${pool.strategyTypeId}" not present in locales/en/risks.json`
+        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription-${pool.type}-${pool.strategyTypeId}" not present in locales/en/risks.json`
       );
       exitCode = 1;
     }
@@ -376,7 +376,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       exitCode = 1;
     } else if (!validStrategyIds.gov.has(pool.strategyTypeId)) {
       console.error(
-        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription-Gov-${pool.strategyTypeId}" not present in locales/en/risks.json`
+        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription-${pool.type}-${pool.strategyTypeId}" not present in locales/en/risks.json`
       );
       exitCode = 1;
     }

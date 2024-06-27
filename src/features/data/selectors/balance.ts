@@ -27,6 +27,7 @@ import {
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens';
 import {
+  selectGovVaultById,
   selectIsVaultStable,
   selectStandardVaultById,
   selectVaultById,
@@ -492,6 +493,43 @@ export const selectGovVaultPendingRewardsInUsd = (
   return tokenRewards.times(tokenPrice);
 };
 
+export const selectGovVaultPendingRewards = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
+    selectGovVaultById(state, vaultId),
+  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
+    state.entities.tokens.byChainId,
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
+    walletAddress
+      ? state.user.balance.byAddress[walletAddress]?.tokenAmount.byGovVaultId[vaultId]?.rewards
+      : undefined,
+  (vault, tokensByChain, rewards) => {
+    return vault.earnedTokenAddresses.map((address, i) => {
+      const token = tokensByChain[vault.chainId]?.byAddress?.[address.toLowerCase()];
+      if (!token) {
+        throw new Error(`selectGovVaultEarnedTokens: Unknown token address ${address}`);
+      }
+
+      const balance = rewards?.[i] || BIG_ZERO;
+      return {
+        token,
+        balance,
+      };
+    });
+  }
+);
+
+export const selectGovVaultPendingRewardsWithPrice = createSelector(
+  selectGovVaultPendingRewards,
+  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
+    state.entities.tokens.prices.byOracleId,
+  (rewards, prices) => {
+    return rewards.map(reward => ({
+      ...reward,
+      price: prices[reward.token.oracleId] || undefined,
+    }));
+  }
+);
+
 /**
  * Get the token for which the boost balance is expressed in
  * for boosts, balance is the amount of earnedToken of the target vault
@@ -929,6 +967,7 @@ export const selectUserRewardsByVaultId = (
   const vault = selectVaultById(state, vaultId);
 
   if (isGovVault(vault)) {
+    // FIXME
     for (const earnedTokenAddress of vault.earnedTokenAddresses) {
       const earnedToken = selectTokenByAddress(state, vault.chainId, earnedTokenAddress);
       const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(

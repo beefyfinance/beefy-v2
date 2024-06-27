@@ -97,6 +97,7 @@ export interface DataLoaderState {
     bridges: LoaderState;
     migrators: LoaderState;
     articles: LoaderState;
+    merklCampaigns: LoaderState;
   };
   byChainId: {
     [chainId in ChainEntity['id']]?: ChainIdDataEntity;

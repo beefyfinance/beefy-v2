@@ -11,6 +11,10 @@ import {
   selectShouldInitZapSwapAggregators,
 } from '../selectors/data-loader';
 import { selectAllChainIds } from '../selectors/chains';
+import { selectIsVaultCowcentratedLike, selectVaultById } from '../selectors/vaults';
+import { selectTransactPendingVaultIdOrUndefined } from '../selectors/transact';
+import { selectWalletAddress } from '../selectors/wallet';
+import { selectAreFeesLoaded, selectShouldInitFees } from '../selectors/fees';
 import {
   calculateZapAvailabilityAction,
   fetchZapAggregatorTokenSupportAction,
@@ -19,10 +23,8 @@ import {
   fetchZapSwapAggregatorsAction,
 } from '../actions/zap';
 import { transactInit, transactInitReady } from '../actions/transact';
-import { selectVaultById } from '../selectors/vaults';
+import { fetchUserMerklRewardsAction } from '../actions/user-rewards';
 import { fetchFees } from '../actions/fees';
-import { selectAreFeesLoaded, selectShouldInitFees } from '../selectors/fees';
-import { selectTransactPendingVaultIdOrUndefined } from '../selectors/transact';
 
 const transactListener = createListenerMiddleware<BeefyState>();
 
@@ -84,7 +86,7 @@ transactListener.startListening({
       return;
     }
 
-    // Init zap data loaders
+    // Deposit/Withdraw: Init zap data loaders
     const loaders: Promise<AnyAction>[] = [];
     if (selectShouldInitZapAmms(getState())) {
       loaders.push(dispatch(fetchZapAmmsAction()));
@@ -102,9 +104,17 @@ transactListener.startListening({
       loaders.push(dispatch(fetchZapAggregatorTokenSupportAction()));
     }
 
-    // Init fees data loader
+    // Deposit/Withdraw: Init fees data loader
     if (selectShouldInitFees(getState())) {
       loaders.push(dispatch(fetchFees()));
+    }
+
+    // Claim: Init user merkl rewards data loader
+    const mayHaveMerklRewards = selectIsVaultCowcentratedLike(getState(), vault.id);
+    const walletAddress = selectWalletAddress(getState());
+    if (mayHaveMerklRewards && walletAddress) {
+      // dispatch but don't wait on it
+      dispatch(fetchUserMerklRewardsAction({ chainId: vault.chainId, walletAddress }));
     }
 
     // Wait for all loaders to finish

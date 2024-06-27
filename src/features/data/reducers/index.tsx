@@ -38,8 +38,9 @@ import { migrationSlice } from './wallet/migration';
 import { tooltipsSlice } from './tooltips';
 import { addToWalletSlice } from './add-to-wallet';
 import { articlesSlice } from './articles';
-import { rewardsReducer } from './wallet/rewards';
+import { userRewardsReducer } from './wallet/rewards';
 import { versionReducer } from './ui-version';
+import { rewardsReducer } from './rewards';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -62,6 +63,7 @@ const bizReducer = combineReducers<BeefyState['biz']>({
   apy: apySlice.reducer,
   partners: partnersSlice.reducer,
   historical: historicalSlice.reducer,
+  rewards: rewardsReducer,
 });
 const userReducer = combineReducers<BeefyState['user']>({
   balance: balanceSlice.reducer,
@@ -74,7 +76,7 @@ const userReducer = combineReducers<BeefyState['user']>({
   walletActions: walletActionsReducer,
   resolver: resolverReducer,
   migration: migrationSlice.reducer,
-  rewards: rewardsReducer,
+  rewards: userRewardsReducer,
 });
 const uiReducer = combineReducers<BeefyState['ui']>({
   filteredVaults: persistReducer(

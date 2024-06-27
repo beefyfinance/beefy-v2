@@ -35,8 +35,9 @@ import type { MigrationState } from './features/data/reducers/wallet/migration';
 import type { TooltipsState } from './features/data/reducers/tooltips';
 import type { AddToWalletState } from './features/data/reducers/add-to-wallet';
 import type { ArticlesState } from './features/data/reducers/articles';
-import type { RewardsState } from './features/data/reducers/wallet/rewards';
+import type { UserRewardsState } from './features/data/reducers/wallet/rewards';
 import type { VersionState } from './features/data/reducers/ui-version';
+import type { RewardsState } from './features/data/reducers/rewards';
 
 export interface BeefyState {
   entities: {
@@ -57,6 +58,7 @@ export interface BeefyState {
     apy: ApyState;
     partners: PartnersState;
     historical: HistoricalState;
+    rewards: RewardsState;
   };
   user: {
     allowance: AllowanceState;
@@ -66,7 +68,7 @@ export interface BeefyState {
     wallet: WalletState;
     walletActions: WalletActionsState;
     migration: MigrationState;
-    rewards: RewardsState;
+    rewards: UserRewardsState;
   };
   ui: {
     dataLoader: DataLoaderState;
