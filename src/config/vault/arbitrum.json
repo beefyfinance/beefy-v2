@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "aura-arb-rseth-weth",
     "status": "active",
-    "createdAt": 1719349009,
+    "createdAt": 1719486776,
     "platformId": "aura",
     "assets": ["rsETH", "ETH"],
     "risks": [
@@ -44,7 +44,7 @@
     "oracle": "lps",
     "oracleId": "aura-arb-wsteth-ethx",
     "status": "active",
-    "createdAt": 1719349009,
+    "createdAt": 1719486776,
     "platformId": "aura",
     "assets": ["wstETH", "ETHx"],
     "risks": [
@@ -59,6 +59,45 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x7b54c44fbe6db6d97fd22b8756f89c0af16202cc00000000000000000000053c/add-liquidity",
     "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0x7b54c44fbe6db6d97fd22b8756f89c0af16202cc00000000000000000000053c/withdraw",
     "network": "arbitrum"
+  },
+  {
+    "id": "curve-arb-tbtc-ng",
+    "name": "tBTC/WBTC",
+    "token": "2BTC-ng",
+    "tokenAddress": "0x186cF879186986A20aADFb7eAD50e3C20cb26CeC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurve2BTC-ng",
+    "earnedTokenAddress": "0x64d461a7aa9c3949c2642217F4a52B694f129D94",
+    "earnContractAddress": "0x64d461a7aa9c3949c2642217F4a52B694f129D94",
+    "oracle": "lps",
+    "oracleId": "curve-arb-tbtc-ng",
+    "status": "active",
+    "createdAt": 1719474225,
+    "platformId": "curve",
+    "assets": ["tBTC", "WBTC"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-69/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-69/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x186cF879186986A20aADFb7eAD50e3C20cb26CeC",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x186cF879186986A20aADFb7eAD50e3C20cb26CeC",
+            "coins": [
+              "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+              "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "camelot-usde-usdc",
@@ -306,6 +345,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "earningPoints": true,
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2fB73D98B1D60B35FD12508933578098f352cE7e/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2fB73D98B1D60B35FD12508933578098f352cE7e/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -329,6 +369,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "earningPoints": true,
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2aD746fa3faA0AD586021a633d10F4E2785A0349/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2aD746fa3faA0AD586021a633d10F4E2785A0349/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -352,6 +393,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "earningPoints": true,
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5f3C781B3a20299DB27C8fC5f4415D895677c885/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5f3C781B3a20299DB27C8fC5f4415D895677c885/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -375,6 +417,7 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "earningPoints": true,
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -2778,8 +2821,10 @@
     "earnContractAddress": "0x5A8D2889A3135B8e0c7B3D6f55A88374804445d0",
     "oracle": "lps",
     "oracleId": "curve-arb-eusd-rgusd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1717141148,
+    "retireReason": "tvl",
+    "retiredAt": 1719409066,
     "platformId": "curve",
     "assets": ["eUSD", "rgUSD"],
     "migrationIds": ["l2-convex", "l2-curve"],
@@ -5966,8 +6011,10 @@
     "earnContractAddress": "0x1e9B8542617757c71B045444b19104Ad75560Ec1",
     "oracle": "lps",
     "oracleId": "joe-auto-arb-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1699756642,
+    "retireReason": "rewards",
+    "retiredAt": 1719408570,
     "platformId": "traderjoe",
     "assets": ["ARB", "ETH"],
     "risks": [
@@ -5997,9 +6044,11 @@
     "earnContractAddress": "0xc452eedb65fb95BB1C3aB0dC0f9363E77f636189",
     "oracle": "lps",
     "oracleId": "joe-auto-weth-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1699756642,
     "updatedAt": 1715616312,
+    "retireReason": "rewards",
+    "retiredAt": 1719408570,
     "platformId": "traderjoe",
     "assets": ["WETH", "USDC"],
     "risks": [

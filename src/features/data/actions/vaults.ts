@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi, getConfigApi } from '../apis/instances';
 import type { ChainEntity } from '../entities/chain';
-import type { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
+import type { VaultConfig } from '../apis/config-types';
 
 // given the list of vaults is pulled from some api at some point
 // we use the api to create an action
@@ -23,18 +23,6 @@ export const fetchAllVaults = createAsyncThunk<
   const vaults = await api.fetchAllVaults();
   return { byChainId: vaults, state: getState() };
 });
-
-export interface FulfilledFeaturedVaultsPayload {
-  byVaultId: FeaturedVaultConfig;
-}
-export const fetchFeaturedVaults = createAsyncThunk<FulfilledFeaturedVaultsPayload>(
-  'vaults/fetchFeaturedVaults',
-  async () => {
-    const api = await getConfigApi();
-    const featuredVaults = await api.fetchFeaturedVaults();
-    return { byVaultId: featuredVaults };
-  }
-);
 
 type FulfilledVaultsLastHarvestPayload = {
   byVaultId: { [vaultId: VaultConfig['id']]: number };
