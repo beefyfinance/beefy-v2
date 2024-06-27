@@ -1193,6 +1193,10 @@ const claimMerkl = (chainId: ChainEntity['id']) => {
         amount: reward.accumulated, // proof requires 'accumulated' amount
         proof: reward.proof,
       }));
+    if (!unclaimedRewards.length) {
+      throw new Error('No unclaimed merkl rewards found');
+    }
+
     const users = new Array(unclaimedRewards.length).fill(address);
     const tokens = unclaimedRewards.map(reward => reward.token);
     const amounts = unclaimedRewards.map(reward => reward.amount);

@@ -1,5 +1,4 @@
 import { memo, useCallback, useMemo, useState } from 'react';
-import clsx from 'clsx';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
@@ -17,6 +16,7 @@ import { BIG_ZERO } from '../../../../../../../helpers/big-number';
 import { Claim } from './Claim/Claim';
 import { styles } from './styles';
 import { RewardList } from '../RewardList/RewardList';
+import { Source } from '../Source/Source';
 
 const useStyles = makeStyles(styles);
 
@@ -33,7 +33,7 @@ export const MerklRewards = memo<MerklRewardsProps>(function MerklRewards({
   walletAddress,
   deposited,
 }) {
-  const classes = useStyles();
+  const { t } = useTranslation();
   const vaultRewards = useAppSelector(state =>
     selectUserMerklUnifiedRewardsForVault(state, vaultId, walletAddress)
   );
@@ -47,20 +47,15 @@ export const MerklRewards = memo<MerklRewardsProps>(function MerklRewards({
   }
 
   return (
-    <div className={classes.container}>
-      <div>Merkl</div>
-      <div className={classes.rewards}>
-        <RewardList rewards={vaultRewards} deposited={deposited} />
-        {walletAddress && claimableVaultRewards ? (
-          <OtherRewards
-            chainId={chainId}
-            vaultRewards={vaultRewards}
-            walletAddress={walletAddress}
-          />
-        ) : null}
-      </div>
-      {claimableVaultRewards ? <Claim chainId={chainId} /> : null}
-    </div>
+    <Source
+      title={t('Transact-Claim-Rewards-merkl')}
+      claim={claimableVaultRewards ? <Claim chainId={chainId} /> : undefined}
+    >
+      <RewardList rewards={vaultRewards} deposited={deposited} />
+      {walletAddress && claimableVaultRewards ? (
+        <OtherRewards chainId={chainId} vaultRewards={vaultRewards} walletAddress={walletAddress} />
+      ) : null}
+    </Source>
   );
 });
 
@@ -113,7 +108,7 @@ const OtherRewards = memo<OtherRewardsProps>(function OtherRewards({
   }
 
   return (
-    <div className={clsx(classes.otherRewards, { [classes.otherRewardsOpen]: otherOpen })}>
+    <div className={classes.otherRewards}>
       <button onClick={onToggle} className={classes.otherRewardsToggle}>
         {t('Rewards-OtherRewards', { value: formatUsd(otherRewardsUsd) })}
         {otherOpen ? (
@@ -122,7 +117,9 @@ const OtherRewards = memo<OtherRewardsProps>(function OtherRewards({
           <ExpandMore className={classes.otherRewardsToggleIcon} viewBox="5 7.59 16.43 9.41" />
         )}
       </button>
-      {otherOpen ? <RewardList rewards={otherRewards} deposited={false} /> : null}
+      {otherOpen ? (
+        <RewardList className={classes.otherRewardsList} rewards={otherRewards} deposited={false} />
+      ) : null}
     </div>
   );
 });

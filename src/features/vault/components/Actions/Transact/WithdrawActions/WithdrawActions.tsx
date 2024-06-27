@@ -244,7 +244,7 @@ const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimW
             {t(
               isMaxAll
                 ? quote.outputs.length > 1
-                  ? 'Transact-ClaimWithdrawAll'
+                  ? 'Transact-Claim-WithdrawAll'
                   : 'Transact-WithdrawAll'
                 : 'Transact-Withdraw'
             )}
@@ -282,7 +282,7 @@ const ActionClaim = memo<ActionClaimProps>(function ActionClaim({ vault }) {
       borderless={true}
       onClick={handleClaim}
     >
-      {t('Transact-ClaimRewards')}
+      {t('Transact-Claim-RewardsOnly')}
     </Button>
   );
 });

@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => ({
     gridTemplateColumns: 'auto minmax(0, 1fr) auto',
     gap: '8px',
     color: theme.palette.text.middle,
-    padding: '12px',
+    padding: '0',
   },
   icon: {
     width: '24px',

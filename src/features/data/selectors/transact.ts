@@ -310,7 +310,7 @@ export const selectTransactConfirmChanges = (state: BeefyState) =>
 
 export const selectTransactForceSelection = (state: BeefyState) => state.ui.transact.forceSelection;
 
-export const selectShouldShowTransactClaims = createSelector(
+export const selectTransactShouldShowClaims = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     selectVaultHasActiveMerklCampaigns(state, vaultId),

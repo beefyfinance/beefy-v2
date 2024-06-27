@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selectShouldShowTransactClaims,
+  selectTransactShouldShowClaims,
   selectTransactMode,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
@@ -32,7 +32,7 @@ export const FormStep = memo(function FormStep() {
   const classes = useStyles();
   const mode = useAppSelector(selectTransactMode);
   const vaultId = useAppSelector(selectTransactVaultId);
-  const showClaim = useAppSelector(state => selectShouldShowTransactClaims(state, vaultId));
+  const showClaim = useAppSelector(state => selectTransactShouldShowClaims(state, vaultId));
   const Component = modeToComponent[mode];
   const handleModeChange = useCallback(
     (mode: string) => {
