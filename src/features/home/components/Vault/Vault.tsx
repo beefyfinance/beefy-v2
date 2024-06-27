@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import {
   selectIsVaultCowcentrated,
+  selectIsVaultCowcentratedPool,
   selectIsVaultGov,
   selectIsVaultRetired,
 } from '../../../data/selectors/vaults';
@@ -23,6 +24,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
   const isRetired = useAppSelector(state => selectIsVaultRetired(state, vaultId));
   const isGov = useAppSelector(state => selectIsVaultGov(state, vaultId));
   const isCowcentrated = useAppSelector(state => selectIsVaultCowcentrated(state, vaultId));
+  const isCowcentratedPool = useAppSelector(state => selectIsVaultCowcentratedPool(state, vaultId));
 
   return (
     <Link
@@ -30,8 +32,9 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
       className={clsx({
         [classes.vault]: true,
         [classes.vaultCowcentrated]: isCowcentrated,
+        [classes.vaultCowcentratedPool]: isCowcentratedPool,
         [classes.vaultRetired]: isRetired,
-        [classes.vaultEarnings]: isGov,
+        [classes.vaultEarnings]: isGov && !isCowcentratedPool,
       })}
     >
       <div className={classes.vaultInner}>

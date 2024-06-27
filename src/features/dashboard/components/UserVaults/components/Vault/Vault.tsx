@@ -8,6 +8,7 @@ import { VaultDashboardStats } from '../../../../../../components/VaultStats/Vau
 import { useAppSelector } from '../../../../../../store';
 import {
   selectIsVaultCowcentrated,
+  selectIsVaultCowcentratedPool,
   selectIsVaultGov,
   selectIsVaultPaused,
   selectIsVaultRetired,
@@ -29,6 +30,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
   const isPaused = useAppSelector(state => selectIsVaultPaused(state, vaultId));
   const isGov = useAppSelector(state => selectIsVaultGov(state, vaultId));
   const isCowcentrated = useAppSelector(state => selectIsVaultCowcentrated(state, vaultId));
+  const isCowcentratedPool = useAppSelector(state => selectIsVaultCowcentratedPool(state, vaultId));
   const handleOpen = useCallback(() => {
     setOpen(o => !o);
   }, [setOpen]);
@@ -41,8 +43,9 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
         onClick={handleOpen}
         className={clsx({
           [classes.vault]: true,
-          [classes.vaultEarnings]: isGov,
+          [classes.vaultEarnings]: isGov && !isCowcentratedPool,
           [classes.vaultClm]: isCowcentrated,
+          [classes.vaultClmPool]: isCowcentratedPool,
           [classes.vaultPaused]: isPaused,
           [classes.vaultRetired]: isRetired,
         })}

@@ -134,9 +134,10 @@ const theme = createTheme(
         },
         vaults: {
           default: '#242842',
-          gov: '#342763',
+          gov: '#322460',
           boost: '#DB8332',
-          clm: '#252C63',
+          clm: '#1E2A48',
+          clmPool: '#252C63',
           inactive: '#242032',
         },
         txsModal: {
