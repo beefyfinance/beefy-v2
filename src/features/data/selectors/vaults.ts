@@ -180,12 +180,6 @@ export const selectIsVaultCowcentrated = createCachedSelector(
   vault => isCowcentratedVault(vault)
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectIsVaultCowcentratedPool = createCachedSelector(
-  selectVaultUnderlyingCowcentratedVaultOrUndefined,
-  underlyingCowcentratedId => !!underlyingCowcentratedId
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
-
-/** true if the deposit token of this vault is a CLM receipt token */
 /**
  * @return 'cowcentrated' if CLM; 'gov' if reward pool with underlying CLM; false otherwise
  */

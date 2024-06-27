@@ -25,7 +25,7 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "gov-composer"
       }
     ]
   },

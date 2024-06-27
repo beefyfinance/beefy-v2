@@ -32,7 +32,7 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "gov-composer"
       }
     ]
   },

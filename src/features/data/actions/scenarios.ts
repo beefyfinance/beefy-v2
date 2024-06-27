@@ -265,11 +265,13 @@ export async function dispatchUserFfs(
  * we want to preload the vault page to make it fast on the first click
  */
 function preLoadPages() {
-  window.requestIdleCallback(async () => {
-    console.debug('pre-loading vault page...');
-    await import('../../../features/vault');
-    console.debug('pre-loading vault page done');
-  });
+  window.setTimeout(() => {
+    window.requestIdleCallback(async () => {
+      console.debug('pre-loading vault page...');
+      await import('../../../features/vault');
+      console.debug('pre-loading vault page done');
+    });
+  }, 10_000);
 }
 
 export async function initBoostForm(

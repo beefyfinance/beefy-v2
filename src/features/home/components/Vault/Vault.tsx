@@ -3,8 +3,7 @@ import type { VaultEntity } from '../../../data/entities/vault';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import {
-  selectIsVaultCowcentrated,
-  selectIsVaultCowcentratedPool,
+  selectIsVaultCowcentratedLike,
   selectIsVaultGov,
   selectIsVaultRetired,
 } from '../../../data/selectors/vaults';
@@ -23,18 +22,17 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
   const classes = useStyles();
   const isRetired = useAppSelector(state => selectIsVaultRetired(state, vaultId));
   const isGov = useAppSelector(state => selectIsVaultGov(state, vaultId));
-  const isCowcentrated = useAppSelector(state => selectIsVaultCowcentrated(state, vaultId));
-  const isCowcentratedPool = useAppSelector(state => selectIsVaultCowcentratedPool(state, vaultId));
+  const isCowcentratedLike = useAppSelector(state => selectIsVaultCowcentratedLike(state, vaultId));
 
   return (
     <Link
       to={`/vault/${vaultId}`}
       className={clsx({
         [classes.vault]: true,
-        [classes.vaultCowcentrated]: isCowcentrated,
-        [classes.vaultCowcentratedPool]: isCowcentratedPool,
+        [classes.vaultCowcentrated]: isCowcentratedLike === 'cowcentrated',
+        [classes.vaultCowcentratedPool]: isCowcentratedLike === 'gov',
         [classes.vaultRetired]: isRetired,
-        [classes.vaultEarnings]: isGov && !isCowcentratedPool,
+        [classes.vaultEarnings]: isGov && !isCowcentratedLike,
       })}
     >
       <div className={classes.vaultInner}>

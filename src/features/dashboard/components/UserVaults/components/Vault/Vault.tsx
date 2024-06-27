@@ -7,8 +7,7 @@ import { VaultIdentity } from '../../../../../../components/VaultIdentity';
 import { VaultDashboardStats } from '../../../../../../components/VaultStats/VaultDashboardStats';
 import { useAppSelector } from '../../../../../../store';
 import {
-  selectIsVaultCowcentrated,
-  selectIsVaultCowcentratedPool,
+  selectIsVaultCowcentratedLike,
   selectIsVaultGov,
   selectIsVaultPaused,
   selectIsVaultRetired,
@@ -29,8 +28,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
   const isRetired = useAppSelector(state => selectIsVaultRetired(state, vaultId));
   const isPaused = useAppSelector(state => selectIsVaultPaused(state, vaultId));
   const isGov = useAppSelector(state => selectIsVaultGov(state, vaultId));
-  const isCowcentrated = useAppSelector(state => selectIsVaultCowcentrated(state, vaultId));
-  const isCowcentratedPool = useAppSelector(state => selectIsVaultCowcentratedPool(state, vaultId));
+  const isCowcentratedLike = useAppSelector(state => selectIsVaultCowcentratedLike(state, vaultId));
   const handleOpen = useCallback(() => {
     setOpen(o => !o);
   }, [setOpen]);
@@ -43,9 +41,9 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
         onClick={handleOpen}
         className={clsx({
           [classes.vault]: true,
-          [classes.vaultEarnings]: isGov && !isCowcentratedPool,
-          [classes.vaultClm]: isCowcentrated,
-          [classes.vaultClmPool]: isCowcentratedPool,
+          [classes.vaultEarnings]: isGov && !isCowcentratedLike,
+          [classes.vaultClm]: isCowcentratedLike === 'cowcentrated',
+          [classes.vaultClmPool]: isCowcentratedLike === 'gov',
           [classes.vaultPaused]: isPaused,
           [classes.vaultRetired]: isRetired,
         })}
