@@ -395,6 +395,7 @@ export const config = {
       'stataArbUSDTn',
       'USDV',
       'USDe',
+      'wUSDM',
     ],
   },
   avax: {

@@ -1,5 +1,129 @@
 [
   {
+    "id": "camelot-gns-weth",
+    "name": "GNS-WETH",
+    "type": "cowcentrated",
+    "token": "GNS-WETH",
+    "tokenAddress": "0x9b6FF025AeE245D314c09F57B72f0dE6E231c3a6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowCamelotGNS-WETH",
+    "earnedTokenAddress": "0xbdFf136395A96f2c09CBC3FbDf8F50FF9C42c21E",
+    "earnContractAddress": "0xbdFf136395A96f2c09CBC3FbDf8F50FF9C42c21E",
+    "oracle": "lps",
+    "oracleId": "camelot-gns-weth",
+    "status": "active",
+    "createdAt": 1719509612,
+    "platformId": "beefy",
+    "assets": ["GNS", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-wusdm-wsteth",
+    "name": "wUSDM-wstETH",
+    "type": "cowcentrated",
+    "token": "wUSDM-wstETH",
+    "tokenAddress": "0xF9bA609869a46c06BE6689fc0a314CE5f4Fdad41",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
+      "0x5979D7b546E38E414F7E9822514be443A4800529"
+    ],
+    "earnedToken": "cowUniswapArbwUSDM-wstETH",
+    "earnedTokenAddress": "0x240939C5e1B63F9bb4c17D69f9BF98dc1bEcb699",
+    "earnContractAddress": "0x240939C5e1B63F9bb4c17D69f9BF98dc1bEcb699",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-wusdm-wsteth",
+    "status": "active",
+    "createdAt": 1719491859,
+    "platformId": "beefy",
+    "assets": ["wUSDM", "wstETH"],
+    "risks": ["IL_LARGE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-wbtc-tbtc",
+    "name": "tBTC-WBTC",
+    "type": "cowcentrated",
+    "token": "tBTC-WBTC",
+    "tokenAddress": "0xe9e6b9aAAfaf6816C3364345F6eF745CcFC8660a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+      "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
+    ],
+    "earnedToken": "cowUniswapArbWBTC-tBTC",
+    "earnedTokenAddress": "0x2668eC44880464412Bb3674875941a014103eD2a",
+    "earnContractAddress": "0x2668eC44880464412Bb3674875941a014103eD2a",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-wbtc-tbtc",
+    "status": "active",
+    "createdAt": 1719491859,
+    "platformId": "beefy",
+    "assets": ["tBTC", "WBTC"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-tbtc-weth-prod",
+    "name": "tBTC-WETH",
+    "type": "cowcentrated",
+    "token": "tBTC-WETH",
+    "tokenAddress": "0xCb198a55e2a88841E855bE4EAcaad99422416b33",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowUniswapArbtBTC-WETH",
+    "earnedTokenAddress": "0xDbaF4a5Ad4352adCDD2E914C1B1515E6F7451A82",
+    "earnContractAddress": "0xDbaF4a5Ad4352adCDD2E914C1B1515E6F7451A82",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-tbtc-weth-prod",
+    "status": "active",
+    "createdAt": 1719491859,
+    "platformId": "beefy",
+    "assets": ["tBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "arbitrum",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aura-arb-gyro-weeth-wsteth",
     "name": "Gyroscope weETH-wstETH",
     "type": "standard",
