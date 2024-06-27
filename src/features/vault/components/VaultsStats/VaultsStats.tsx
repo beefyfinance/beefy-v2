@@ -49,10 +49,10 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
           <VaultTvl vaultId={vaultId} />
         </div>
         <div className={classes.stat}>
-          <YearlyApyStats vaultId={vault.id} />
+          <YearlyApyStats vaultId={vaultId} />
         </div>
         <div className={classes.stat}>
-          <DailyApyStats vaultId={vault.id} />
+          <DailyApyStats vaultId={vaultId} />
         </div>
       </div>
       <div className={clsx(classes.stats, classes.statsDeposit)}>
