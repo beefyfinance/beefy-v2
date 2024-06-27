@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import type { VaultEntity } from '../../features/data/entities/vault';
+import { type VaultEntity } from '../../features/data/entities/vault';
 import clsx from 'clsx';
 import { VaultDailyUsdStat } from './VaultDailyUsdStat';
 import { VaultPnlStat } from './VaultPnlStat';
@@ -11,6 +11,7 @@ import { VaultYearlyStat } from './VaultYearlyStat';
 import { useAppSelector } from '../../store';
 import { selectVaultPnl } from '../../features/data/selectors/analytics';
 import { VaultYieldRewardsStat } from './VaultYieldRewardsStat';
+import { selectVaultUnderlyingCowcentratedVaultIdOrUndefined } from '../../features/data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 
@@ -20,7 +21,12 @@ export type VaultStatsProps = {
 };
 export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ vaultId, address }) {
   const classes = useStyles();
-  const pnlData = useAppSelector(state => selectVaultPnl(state, vaultId, address));
+  const underlyingVaultId = useAppSelector(state =>
+    selectVaultUnderlyingCowcentratedVaultIdOrUndefined(state, vaultId)
+  );
+  const pnlData = useAppSelector(state =>
+    selectVaultPnl(state, underlyingVaultId ?? vaultId, address)
+  );
 
   return (
     <div className={classes.vaultStats}>
