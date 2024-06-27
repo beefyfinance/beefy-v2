@@ -23,6 +23,7 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "linea",
+    "earningPoints": true,
     "feeTier": "0.01",
     "zaps": [
       {
@@ -54,6 +55,7 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "linea",
+    "earningPoints": true,
     "feeTier": "0.05",
     "zaps": [
       {
@@ -85,6 +87,7 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "linea",
+    "earningPoints": true,
     "feeTier": "0.05",
     "zaps": [
       {
@@ -114,14 +117,14 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ineth-wsteth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ineth-wsteth-pegged-price",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "gamma",
         "ammId": "linea-gamma-lynex",
         "tokenHolder": "0x26D9DaD34412bbA1C5aD4b78a272537eB0ABA836"
       }
-    ],
-    "earningPoints": true
+    ]
   },
   {
     "id": "nile-usdc-lusd",
@@ -152,6 +155,7 @@
     "addLiquidityUrl": "https://www.thenile.exchange/manage/v1/0x641d5eAa27e516E1CF1F5C84B5EC25C45b7e3f0D",
     "removeLiquidityUrl": "https://www.thenile.exchange/manage/v1/0x641d5eAa27e516E1CF1F5C84B5EC25C45b7e3f0D",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -181,14 +185,14 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/weeth-weth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/weeth-weth-pegged-price",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "gamma",
         "ammId": "linea-gamma-lynex",
         "tokenHolder": "0x1480808349772759DF7422a3440EDb998A749C3c"
       }
-    ],
-    "earningPoints": true
+    ]
   },
   {
     "id": "nile-ezeth-weth",
@@ -212,13 +216,13 @@
     "addLiquidityUrl": "https://www.thenile.exchange/manage/v1/0xa9a1fb9f6664a0b6bfb1f52724fd7b23842248c5",
     "removeLiquidityUrl": "https://www.thenile.exchange/manage/v1/0xa9a1fb9f6664a0b6bfb1f52724fd7b23842248c5",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "solidly",
         "ammId": "linea-solidly-nile"
       }
-    ],
-    "earningPoints": true
+    ]
   },
   {
     "id": "lynex-ichi-usdt-lynx",
@@ -241,7 +245,8 @@
     "strategyTypeId": "ichi-solidly",
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0xa219439258ca9da29e9cc4ce5596924745e12b93&strategy=Yield%20IQ%20(USDT)",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0xa219439258ca9da29e9cc4ce5596924745e12b93&strategy=Yield%20IQ%20(USDT)",
-    "network": "linea"
+    "network": "linea",
+    "earningPoints": true
   },
   {
     "id": "lynex-ichi-stone-lynx",
@@ -264,7 +269,8 @@
     "strategyTypeId": "ichi-solidly",
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0x93f4d0ab6a8b4271f4a28db399b5e30612d21116&strategy=Yield%20IQ%20(STONE)",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0x93f4d0ab6a8b4271f4a28db399b5e30612d21116&strategy=Yield%20IQ%20(STONE)",
-    "network": "linea"
+    "network": "linea",
+    "earningPoints": true
   },
   {
     "id": "lynex-gamma-wsteth-weth",
@@ -288,6 +294,7 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/wsteth-weth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/wsteth-weth-pegged-price",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "gamma",
@@ -318,6 +325,7 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ezeth-weth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ezeth-weth-pegged-price",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "gamma",
@@ -348,6 +356,7 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/stone-weth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/stone-weth-pegged-price",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "gamma",
@@ -378,6 +387,7 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x8f3e0a2378b0b5838e0e0d99fcecc167d47bc9a7",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x8f3e0a2378b0b5838e0e0d99fcecc167d47bc9a7",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -414,6 +424,7 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x58aacbccaec30938cb2bb11653cad726e5c4194a",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x58aacbccaec30938cb2bb11653cad726e5c4194a",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -450,6 +461,7 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xc5f4c5c2077bbbac5a8381cf30ecdf18fde42a91",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xc5f4c5c2077bbbac5a8381cf30ecdf18fde42a91",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -479,6 +491,7 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xe5e19bbf39c76a8c980b48f2ec89d0de877bf567",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xe5e19bbf39c76a8c980b48f2ec89d0de877bf567",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -507,7 +520,8 @@
     "strategyTypeId": "ichi-solidly",
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x176211869ca2b568f2a7d4ee941e073a821ee1ff&currency1=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&strategy=Yield%20IQ%20(USDC)",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x176211869ca2b568f2a7d4ee941e073a821ee1ff&currency1=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&strategy=Yield%20IQ%20(USDC)",
-    "network": "linea"
+    "network": "linea",
+    "earningPoints": true
   },
   {
     "id": "lynex-ichi-weth-lynx",
@@ -530,7 +544,8 @@
     "strategyTypeId": "ichi-solidly",
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f&strategy=Yield%20IQ%20(wETH)",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f&strategy=Yield%20IQ%20(wETH)",
-    "network": "linea"
+    "network": "linea",
+    "earningPoints": true
   },
   {
     "id": "lynex-ichi-wbtc-weth",
@@ -553,7 +568,8 @@
     "strategyTypeId": "ichi-solidly",
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x3aab2285ddcddad8edf438c1bab47e1a9d05a9b4&currency1=0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f&strategy=Yield%20IQ%20(wBTC)",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x3aab2285ddcddad8edf438c1bab47e1a9d05a9b4&currency1=0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f&strategy=Yield%20IQ%20(wBTC)",
-    "network": "linea"
+    "network": "linea",
+    "earningPoints": true
   },
   {
     "id": "mendi-linea-lev-wsteth",
@@ -574,6 +590,7 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "single"
@@ -603,6 +620,7 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "single"
@@ -631,6 +649,7 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "single"
@@ -659,6 +678,7 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "single"
@@ -687,6 +707,7 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "single"
@@ -716,6 +737,7 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://www.thenile.exchange/swap",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "single"
@@ -723,8 +745,7 @@
     ],
     "lendingOracle": {
       "provider": "pyth"
-    },
-    "earningPoints": true
+    }
   },
   {
     "id": "lynex-usdc-mai",
@@ -748,6 +769,7 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xE9E146f5bceBD71Fb8C526EA036dE6bbFB1B0Ad7",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xE9E146f5bceBD71Fb8C526EA036dE6bbFB1B0Ad7",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -777,6 +799,7 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xa4477d98e519D4c1d66aEf4EfDF7cBEb84f4f778",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xa4477d98e519D4c1d66aEf4EfDF7cBEb84f4f778",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -806,6 +829,7 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xa8e4b5401f98cf20f7e4e9323b02c40f10661f06",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xa8e4b5401f98cf20f7e4e9323b02c40f10661f06",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "solidly",
@@ -835,6 +859,7 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdc-lynx-wide",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdc-lynx-wide",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "gamma",
@@ -865,6 +890,7 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/wbtc-weth-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/wbtc-weth-narrow",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "gamma",
@@ -895,6 +921,7 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdt-weth-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdt-weth-narrow",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "gamma",
@@ -925,6 +952,7 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdc-weth-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdc-weth-narrow",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "gamma",
@@ -952,6 +980,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "single"
@@ -981,6 +1010,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "single"
@@ -1009,6 +1039,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "single"
@@ -1037,6 +1068,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "single"
@@ -1067,6 +1099,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "single"
@@ -1095,6 +1128,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "single"

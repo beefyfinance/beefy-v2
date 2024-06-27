@@ -380,10 +380,6 @@ export const selectStandardVaultByEarnTokenAddress = (
 
 export const selectTotalActiveVaults = (state: BeefyState) =>
   state.entities.vaults.allActiveIds.length;
-export const selectIsVaultFeatured = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.featuredVaults[vaultId],
-  isFeatured => isFeatured === true
-);
 
 export const selectIsVaultBlueChip = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {

@@ -25,6 +25,7 @@ export const selectFilterSearchSortDirection = (state: BeefyState) =>
   state.ui.filteredVaults.sortDirection;
 export const selectFilterUserCategory = (state: BeefyState) => state.ui.filteredVaults.userCategory;
 export const selectFilterAssetType = (state: BeefyState) => state.ui.filteredVaults.assetType;
+export const selectFilterStrategyType = (state: BeefyState) => state.ui.filteredVaults.strategyType;
 export const selectFilterVaultCategory = (state: BeefyState) =>
   state.ui.filteredVaults.vaultCategory;
 export const selectFilterPlatformIds = (state: BeefyState) => state.ui.filteredVaults.platformIds;
@@ -43,8 +44,9 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.onlyZappable ? 1 : 0) +
     (filterOptions.onlyEarningPoints ? 1 : 0) +
-    (filterOptions.assetType !== 'all' ? 1 : 0) +
-    (filterOptions.vaultCategory !== 'all' ? 1 : 0) +
+    filterOptions.assetType.length +
+    filterOptions.vaultCategory.length +
+    (filterOptions.strategyType !== 'all' ? 1 : 0) +
     (filterOptions.sort !== 'default' ? 1 : 0) +
     filterOptions.chainIds.length +
     filterOptions.platformIds.length
@@ -53,9 +55,10 @@ export const selectFilterPopinFilterCount = createSelector(
 export const selectHasActiveFilter = createSelector(
   selectFilterOptions,
   filterOptions =>
-    filterOptions.vaultCategory !== 'all' ||
+    filterOptions.vaultCategory.length > 0 ||
     filterOptions.userCategory !== 'all' ||
-    filterOptions.assetType !== 'all' ||
+    filterOptions.assetType.length > 0 ||
+    filterOptions.strategyType !== 'all' ||
     filterOptions.onlyRetired !== false ||
     filterOptions.onlyPaused !== false ||
     filterOptions.onlyBoosted !== false ||
@@ -70,8 +73,9 @@ export const selectHasActiveFilter = createSelector(
 export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
   selectFilterOptions,
   filterOptions =>
-    filterOptions.vaultCategory !== 'all' ||
-    filterOptions.assetType !== 'all' ||
+    filterOptions.vaultCategory.length > 0 ||
+    filterOptions.assetType.length > 0 ||
+    filterOptions.strategyType !== 'all' ||
     filterOptions.onlyRetired !== false ||
     filterOptions.onlyPaused !== false ||
     filterOptions.onlyBoosted !== false ||
