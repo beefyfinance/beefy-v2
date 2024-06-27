@@ -4,12 +4,7 @@ import { mooAmountToOracleAmount } from '../utils/ppfs';
 import type { Draft } from 'immer';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import type { BoostEntity } from '../entities/boost';
-import {
-  isStandardVault,
-  type VaultCowcentrated,
-  type VaultEntity,
-  type VaultGov,
-} from '../entities/vault';
+import { isStandardVault, type VaultCowcentrated, type VaultEntity } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
 import { selectTokenByAddress, selectTokenPriceByAddress } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
@@ -84,24 +79,20 @@ function addContractDataToState(
   for (const vaultContractData of contractData.standardVaults) {
     const vault = selectVaultById(state, vaultContractData.id);
     const price = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const tvl = vaultContractData.balance.times(price);
 
-    const vaultTvl = vaultContractData.balance.times(price);
-
-    // save for vault
-    sliceState.byVaultId[vault.id] = { tvl: vaultTvl };
+    sliceState.byVaultId[vault.id] = { tvl };
   }
 
   for (const govVaultContractData of contractData.govVaults) {
-    const totalStaked = govVaultContractData.totalSupply;
-
-    const vault = selectVaultById(state, govVaultContractData.id) as VaultGov;
+    const vault = selectVaultById(state, govVaultContractData.id);
     const price = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
-
+    const totalStaked = govVaultContractData.totalSupply;
     let tvl = totalStaked.times(price);
 
-    // handle gov vault TVL exclusion
+    // gov excludes standard tvl
     if (vault.excludedId) {
-      const excludedVault = selectVaultById(state, vault.excludedId) as VaultEntity;
+      const excludedVault = selectVaultById(state, vault.excludedId);
       if (excludedVault && excludedVault.status === 'active') {
         const excludedTVL = sliceState.byVaultId[vault.excludedId]?.tvl;
         if (excludedTVL) {
@@ -109,7 +100,8 @@ function addContractDataToState(
         }
       }
     }
-    sliceState.byVaultId[vault.id] = { tvl: tvl };
+
+    sliceState.byVaultId[vault.id] = { tvl };
   }
 
   for (const cowVaultContractData of contractData.cowVaults) {
@@ -117,14 +109,25 @@ function addContractDataToState(
     const vaultTokens = vault.depositTokenAddresses.map(address =>
       selectTokenByAddress(state, vault.chainId, address)
     );
-    let vaultTvl = BIG_ZERO;
+    let tvl = BIG_ZERO;
 
     vaultTokens.forEach((token, i) => {
       const price = selectTokenPriceByAddress(state, vault.chainId, token.address);
-      vaultTvl = vaultTvl.plus(cowVaultContractData.balances[i].times(price));
+      tvl = tvl.plus(cowVaultContractData.balances[i].times(price));
     });
 
-    sliceState.byVaultId[vault.id] = { tvl: vaultTvl };
+    // clm excludes gov tvl
+    if (vault.excludedId) {
+      const excludedVault = selectVaultById(state, vault.excludedId);
+      if (excludedVault && excludedVault.status === 'active') {
+        const excludedTVL = sliceState.byVaultId[vault.excludedId]?.tvl;
+        if (excludedTVL) {
+          tvl = tvl.minus(excludedTVL);
+        }
+      }
+    }
+
+    sliceState.byVaultId[vault.id] = { tvl };
   }
 
   // create an index of ppfs for boost tvl usage

@@ -40,6 +40,8 @@ export type VaultBase = {
   zaps: ZapStrategyConfig[];
   /** the vault contract address (earnContractAddress in config) */
   contractAddress: string;
+  /** id of vault to exclude from this vault's tvl */
+  excludedId: undefined | VaultBase['id'];
 };
 
 export type VaultActive = {
@@ -97,17 +99,6 @@ type VaultGovBaseOnly = {
   depositTokenAddress: string;
 
   earnedTokenAddresses: string[];
-  /**
-   * so bifi-gov and bifi-maxi, are very special
-   * those are the way in which we distribute platform revenue back to bifi holders
-   * bifi-gov is stake BIFI earn NATIVE (gas token) without autocompounding
-   * bifi-maxi is stake BIFI earn BIFI with autocompounding
-   * bifi-maxi basically uses bifi-gov underneath
-   * so all the money in BIFI-MAXI is actually inside the BIFI-GOV of that chain
-   * so in order not to count TVL twice. when we count the tvl of the gov pools
-   * we must exclude/substract the tvl from the maxi vault
-   */
-  excludedId: null | VaultBase['id'];
 
   strategyTypeId: string;
 

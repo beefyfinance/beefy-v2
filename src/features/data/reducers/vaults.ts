@@ -329,6 +329,7 @@ function getVaultBase(apiVault: VaultConfig, chainId: ChainEntity['id']): VaultB
     createdAt: apiVault.createdAt || 0,
     updatedAt: apiVault.updatedAt || apiVault.createdAt || 0,
     zaps: apiVault.zaps || [],
+    excludedId: apiVault.excluded || undefined,
     ...names,
   };
 }
@@ -350,7 +351,6 @@ function getVaultEntityFromConfig(
       depositTokenAddress: apiVault.tokenAddress || 'native',
       earnedTokenAddresses: apiVault.earnedTokenAddresses ?? [apiVault.earnedTokenAddress!],
       strategyTypeId: apiVault.strategyTypeId,
-      excludedId: apiVault.excluded || null,
       platformId: apiVault.platformId,
       safetyScore: score,
       assetType: 'single',
@@ -471,10 +471,21 @@ function rebuildVaultsState(sliceState: Draft<VaultsState>) {
   // TODO think of a better way to do this
   //  - we need the vault relations resolved in order tell if the reward pool is for a clm or not
   for (const vault of allVaults) {
-    if (isGovVault(vault) && sliceState.relations.underlyingOf.byType.cowcentrated.byId[vault.id]) {
-      vault.name = vault.shortName;
-      vault.longName = `${vault.shortName} ${getVaultTypeSuffix('cowcentrated')}`;
-      vault.risks = sliceState.byId[sliceState.relations.underlyingOf.byId[vault.id]!]?.risks || [];
+    if (isStandardVault(vault)) {
+      const underlyingGovId = sliceState.relations.underlyingOf.byType.gov.byId[vault.id];
+      if (underlyingGovId) {
+        const underlyingGov = sliceState.byId[underlyingGovId]!;
+        underlyingGov.excludedId = vault.id; // gov excludes standard tvl
+      }
+    } else if (isGovVault(vault)) {
+      const underlyingClmId = sliceState.relations.underlyingOf.byType.cowcentrated.byId[vault.id];
+      if (underlyingClmId) {
+        const underlyingClm = sliceState.byId[underlyingClmId]!;
+        vault.name = vault.shortName;
+        vault.longName = `${vault.shortName} ${getVaultTypeSuffix('cowcentrated')}`;
+        vault.risks = underlyingClm?.risks || [];
+        underlyingClm.excludedId = vault.id; // clm excludes gov tvl
+      }
     }
   }
 }
