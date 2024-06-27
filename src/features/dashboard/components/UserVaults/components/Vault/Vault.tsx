@@ -11,6 +11,7 @@ import {
   selectIsVaultGov,
   selectIsVaultPaused,
   selectIsVaultRetired,
+  selectVaultUnderlyingCowcentratedVaultIdOrUndefined,
 } from '../../../../../data/selectors/vaults';
 import clsx from 'clsx';
 import { MobileCollapseContent } from '../CollapseContent/MobileCollapseContent';
@@ -34,6 +35,9 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
   }, [setOpen]);
   const mobileView = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
   const CollapseComponent = mobileView ? MobileCollapseContent : DesktopCollapseContent;
+  const underlyingClmId = useAppSelector(state =>
+    selectVaultUnderlyingCowcentratedVaultIdOrUndefined(state, vaultId)
+  );
 
   return (
     <div className={classes.vaultRow}>
@@ -49,11 +53,11 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
         })}
       >
         <div className={classes.vaultInner}>
-          <VaultIdentity isLink={true} vaultId={vaultId} />
+          <VaultIdentity isLink={true} vaultId={underlyingClmId ?? vaultId} />
           <VaultDashboardStats vaultId={vaultId} address={address} />
         </div>
       </div>
-      {open ? <CollapseComponent address={address} vaultId={vaultId} /> : null}
+      {open ? <CollapseComponent address={address} vaultId={underlyingClmId ?? vaultId} /> : null}
     </div>
   );
 });

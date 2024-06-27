@@ -19,7 +19,11 @@ import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
 } from './tokens';
-import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
+import {
+  selectVaultById,
+  selectVaultPricePerFullShare,
+  selectVaultUnderlyingCowcentratedVaultOrUndefined,
+} from './vaults';
 import {
   selectUserDepositedVaultIds,
   selectUserLpBreakdownBalance,
@@ -545,6 +549,11 @@ export function selectDashboardYieldVaultData(
     return selectDashboardYieldStandardData(state, walletAddress, vault, pnl);
   } else if (isCowcentratedVault(vault) && isUserClmPnl(pnl)) {
     return selectDashboardYieldCowcentratedData(state, walletAddress, vault, pnl);
+  }
+
+  const underlyingClm = selectVaultUnderlyingCowcentratedVaultOrUndefined(state, vault.id);
+  if (underlyingClm && isUserClmPnl(pnl)) {
+    return selectDashboardYieldCowcentratedData(state, walletAddress, underlyingClm, pnl);
   }
 
   throw new Error('Invalid vault/pnl type');

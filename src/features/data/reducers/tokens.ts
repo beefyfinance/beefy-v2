@@ -502,6 +502,7 @@ function addVaultToState(
   //
   // (Only v2 + of gov vaults have a receipt token)
   if (vault.type !== 'gov' || (vault.version || 1) > 1) {
+    // rename clm and clm reward pool receipt tokens to a friendlier name
     const receiptTokenSymbol =
       vault.type === 'cowcentrated'
         ? vault.name + ' CLM'

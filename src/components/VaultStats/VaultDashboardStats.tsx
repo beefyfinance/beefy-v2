@@ -21,11 +21,11 @@ export type VaultStatsProps = {
 };
 export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ vaultId, address }) {
   const classes = useStyles();
-  const underlyingVaultId = useAppSelector(state =>
+  const underlyingCLMId = useAppSelector(state =>
     selectVaultUnderlyingCowcentratedVaultIdOrUndefined(state, vaultId)
   );
   const pnlData = useAppSelector(state =>
-    selectVaultPnl(state, underlyingVaultId ?? vaultId, address)
+    selectVaultPnl(state, underlyingCLMId ?? vaultId, address)
   );
 
   return (
@@ -37,7 +37,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
             pnlData={pnlData}
             triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
             showLabel={false}
-            vaultId={vaultId}
+            vaultId={underlyingCLMId ?? vaultId}
             walletAddress={address}
           />
         </div>
@@ -47,7 +47,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
             pnlData={pnlData}
             triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
             showLabel={false}
-            vaultId={vaultId}
+            vaultId={underlyingCLMId ?? vaultId}
             walletAddress={address}
           />
         </div>
@@ -59,7 +59,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
             walletAddress={address}
             pnlData={pnlData}
             showLabel={false}
-            vaultId={vaultId}
+            vaultId={underlyingCLMId ?? vaultId}
           />
         </div>
         <div className={clsx(classes.column, classes.hideMd)}>
@@ -69,7 +69,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
           <VaultDailyUsdStat
             triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
             showLabel={false}
-            vaultId={vaultId}
+            vaultId={underlyingCLMId ?? vaultId}
             walletAddress={address}
           />
         </div>
