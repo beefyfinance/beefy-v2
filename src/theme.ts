@@ -136,7 +136,7 @@ const theme = createTheme(
           default: '#242842',
           gov: '#322460',
           boost: '#DB8332',
-          clm: '#1E2A48',
+          clm: '#252C63',
           clmPool: '#252C63',
           inactive: '#242032',
         },
