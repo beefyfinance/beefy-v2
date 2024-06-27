@@ -22,6 +22,9 @@ export const styles = (theme: Theme) => ({
   vaultCowcentrated: {
     backgroundColor: theme.palette.background.vaults.clm,
   },
+  vaultCowcentratedPool: {
+    backgroundColor: theme.palette.background.vaults.clmPool,
+  },
   vaultRetired: {
     backgroundColor: theme.palette.background.vaults.inactive,
   },

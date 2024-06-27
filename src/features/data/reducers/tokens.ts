@@ -515,6 +515,7 @@ function addVaultToState(
       chainId: chainId,
       oracleId: vault.oracleId,
       address: vault.earnContractAddress,
+      providerId: vault.tokenProviderId, // FIXME only true for cowcentrated gov pools
       decimals: 18, // receipt token always has 18 decimals
       symbol: receiptTokenSymbol, // earnedToken === receipt token in this context
       buyUrl: undefined,

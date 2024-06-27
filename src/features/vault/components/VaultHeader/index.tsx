@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { memo } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
-import { isCowcentratedVault, isGovVault } from '../../../data/entities/vault';
-import { selectVaultById } from '../../../data/selectors/vaults';
+import { selectIsVaultCowcentratedLike, selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
 import { selectChainById } from '../../../data/selectors/chains';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +13,8 @@ import { ShareButton } from '../ShareButton';
 import { punctuationWrap } from '../../../../helpers/string';
 import { SaveButton } from '../SaveButton';
 import { selectVaultTokenSymbols } from '../../../data/selectors/tokens';
-import { VaultClmTag } from '../../../../components/VaultIdentity/components/VaultTags';
+import { VaultClmLikeTag } from '../../../../components/VaultIdentity/components/VaultTags';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -27,23 +27,29 @@ export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const vaultTokenSymbols = useAppSelector(state => selectVaultTokenSymbols(state, vaultId));
+  const isCowcentratedLike = useAppSelector(state => selectIsVaultCowcentratedLike(state, vaultId));
 
   return (
     <div className={classes.header}>
-      <div className={classes.titleHolder}>
-        <AssetsImage assetSymbols={vaultTokenSymbols} size={48} chainId={vault.chainId} />
-        <div className={classes.title}>
-          {punctuationWrap(vault.name)}{' '}
-          {!isGovVault(vault) ? (
-            isCowcentratedVault(vault) ? (
-              <VaultClmTag vault={vault} />
-            ) : (
-              t('Vault-vault')
-            )
-          ) : (
-            ''
-          )}
-        </div>
+      <div
+        className={clsx(classes.titleHolder, {
+          [classes.titleHolderWithTag]: !!isCowcentratedLike,
+        })}
+      >
+        <AssetsImage
+          assetSymbols={vaultTokenSymbols}
+          size={48}
+          chainId={vault.chainId}
+          className={classes.titleAsset}
+        />
+        <div className={classes.title}>{punctuationWrap(vault.longName)}</div>
+        {isCowcentratedLike ? (
+          <VaultClmLikeTag
+            vault={vault}
+            hideFee={isCowcentratedLike === 'gov' ? true : undefined}
+            className={classes.titleTag}
+          />
+        ) : null}
       </div>
       <div className={classes.labelsHolder}>
         <div className={classes.platformLabel}>

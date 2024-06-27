@@ -7,6 +7,7 @@
     "token": "cowUniswapArbeUSD-USDC",
     "tokenAddress": "0xEEA4114Ab4FCb82a28c514e21d656Ca78D75b1A9",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "earnedTokens": ["ARB"],
     "earnedTokenAddresses": ["0x912CE59144191C1204E64559FE8253a0e49E6548"],
     "earnedOracleIds": ["ARB"],
@@ -31,7 +32,7 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "cowcentrated"
+        "strategyId": "gov-composer"
       }
     ]
   },

@@ -15,20 +15,20 @@ import type { ChainEntity } from '../../../../features/data/entities/chain';
 import type { TokenEntity } from '../../../../features/data/entities/token';
 import { selectTokenByAddress } from '../../../../features/data/selectors/tokens';
 import {
-  isVaultActive,
-  type VaultCowcentrated,
-  type VaultEntity,
-} from '../../../../features/data/entities/vault';
-import {
   isCowcentratedVault,
   isGovVault,
+  isVaultActive,
   isVaultEarningPoints,
   isVaultPaused,
   isVaultRetired,
+  type VaultCowcentrated,
+  type VaultEntity,
+  type VaultGov,
 } from '../../../../features/data/entities/vault';
 import { VaultPlatform } from '../../../VaultPlatform';
 import {
   selectIsVaultCowcentrated,
+  selectIsVaultCowcentratedLike,
   selectIsVaultGov,
   selectVaultById,
   selectVaultUnderlyingCowcentratedVaultOrUndefined,
@@ -36,6 +36,7 @@ import {
 import { getBoostIconSrc } from '../../../../helpers/boostIconSrc';
 import clsx from 'clsx';
 import { getIcon } from '../../../../helpers/iconSrc';
+import { selectPlatformById } from '../../../../features/data/selectors/platforms';
 
 const useStyles = makeStyles(styles);
 
@@ -109,41 +110,37 @@ const VaultPlatformTag = memo<VaultPlatformTagProps>(function VaultPlatformTag({
   );
 });
 
-export const VaultClmTag = memo(function VaultClmTag({
-  vault,
+const BaseVaultClmTag = memo(function BaseVaultClmTag({
+  label,
+  longLabel,
+  fee,
+  platformName,
+  hideLabel,
   hideFee,
-  hideText,
-  isPool = false,
+  className,
 }: {
-  vault: VaultCowcentrated;
+  label: string;
+  longLabel: string;
+  fee: string;
+  platformName: string;
+  hideLabel?: boolean;
   hideFee?: boolean;
-  hideText?: boolean;
-  isPool?: boolean;
+  className?: string;
 }) {
   const classes = useStyles();
-
-  const isDynamic = useMemo(() => vault.feeTier === 'Dynamic', [vault.feeTier]);
-
-  const tooltipContent = useMemo(() => {
-    return isPool
-      ? 'Cowcentrated Liquidity Manager Pool'
-      : isDynamic
-      ? `Cowcentrated Liquidity Manager | ${vault.feeTier}`
-      : hideFee
-      ? `Cowcentrated Liquidity Manager | ${vault.feeTier}%`
-      : 'Cowcentrated Liquidity Manager';
-  }, [hideFee, isDynamic, isPool, vault.feeTier]);
-
-  const text = useMemo(() => {
-    return isPool ? 'CLM Pool' : 'CLM';
-  }, [isPool]);
+  // const tooltipTitle = useMemo(() => {
+  //   return fee ? `${longLabel} | ${fee}` : longLabel;
+  // }, [longLabel, fee]);
 
   return (
     <VaultTagWithTooltip
-      content={<BasicTooltipContent title={tooltipContent} />}
+      content={
+        <BasicTooltipContent title={longLabel} content={`${platformName} trading fee: ${fee}`} />
+      }
       placement="bottom"
+      triggerClass={className}
       className={clsx(classes.vaultTagClm, {
-        [classes.vaultTagClmAutoHide]: hideFee === undefined && hideText === undefined,
+        [classes.vaultTagClmAutoHide]: hideFee === undefined && hideLabel === undefined,
       })}
     >
       <img
@@ -151,17 +148,113 @@ export const VaultClmTag = memo(function VaultClmTag({
         height={16}
         width={16}
         className={classes.vaultTagClmIcon}
-        alt={hideText ? 'CLM' : undefined}
+        alt={hideLabel ? label : undefined}
       />
-      {!hideText && <div className={classes.vaultTagClmText}>{text}</div>}
-      {!hideFee && vault.feeTier && !isDynamic && (
+      {!hideLabel && <div className={classes.vaultTagClmText}>{label}</div>}
+      {!hideFee && fee && (
         <>
           <div className={classes.divider} />
-          <span>{`${vault.feeTier}%`}</span>
+          <span>{fee}</span>
         </>
       )}
     </VaultTagWithTooltip>
   );
+});
+
+const VaultClmPoolTag = memo(function VaultClmPoolTag({
+  vault,
+  hideFee,
+  hideLabel,
+  className,
+}: {
+  vault: VaultGov;
+  hideFee?: boolean;
+  hideLabel?: boolean;
+  className?: string;
+}) {
+  const underlyingVault = useAppSelector(state =>
+    selectVaultUnderlyingCowcentratedVaultOrUndefined(state, vault.id)
+  );
+  const depositToken = useAppSelector(state =>
+    underlyingVault
+      ? selectTokenByAddress(state, underlyingVault.chainId, underlyingVault.depositTokenAddress)
+      : undefined
+  );
+  const provider = useAppSelector(state =>
+    depositToken?.providerId ? selectPlatformById(state, depositToken.providerId) : undefined
+  );
+  if (!underlyingVault) {
+    return null;
+  }
+
+  const hasDynamicFee = underlyingVault?.feeTier === 'Dynamic';
+  return (
+    <BaseVaultClmTag
+      label={'CLM Pool'}
+      fee={hasDynamicFee ? underlyingVault.feeTier : `${underlyingVault.feeTier}%`}
+      longLabel={'Cowcentrated Liquidity Manager Pool'}
+      platformName={provider?.name || 'LP'}
+      hideFee={hideFee}
+      hideLabel={hideLabel}
+      className={className}
+    />
+  );
+});
+
+const VaultClmTag = memo(function VaultClmTag({
+  vault,
+  hideFee,
+  hideLabel,
+  className,
+}: {
+  vault: VaultCowcentrated;
+  hideFee?: boolean;
+  hideLabel?: boolean;
+  className?: string;
+}) {
+  const hasDynamicFee = vault.feeTier === 'Dynamic';
+  const depositToken = useAppSelector(state =>
+    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
+  );
+  const provider = useAppSelector(state =>
+    depositToken.providerId ? selectPlatformById(state, depositToken.providerId) : undefined
+  );
+
+  return (
+    <BaseVaultClmTag
+      label={'CLM'}
+      fee={hasDynamicFee ? vault.feeTier : `${vault.feeTier}%`}
+      longLabel={'Cowcentrated Liquidity Manager'}
+      platformName={provider?.name || 'LP'}
+      hideFee={hideFee || hasDynamicFee}
+      hideLabel={hideLabel}
+      className={className}
+    />
+  );
+});
+
+export const VaultClmLikeTag = memo(function VaultClmLikeTag({
+  vault,
+  hideFee,
+  hideLabel,
+  className,
+}: {
+  vault: VaultEntity;
+  hideFee?: boolean;
+  hideLabel?: boolean;
+  className?: string;
+}) {
+  if (isGovVault(vault)) {
+    return (
+      <VaultClmPoolTag vault={vault} hideFee={true} hideLabel={hideLabel} className={className} />
+    );
+  } else if (isCowcentratedVault(vault)) {
+    return (
+      <VaultClmTag vault={vault} hideFee={hideFee} hideLabel={hideLabel} className={className} />
+    );
+  }
+
+  return null;
 });
 
 const PointsTag = memo(function PointsTag() {
@@ -192,21 +285,20 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   const boostId = boostIds.length ? boostIds[0] : null;
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
   const isGov = isGovVault(vault);
-  const underlyingCLM = useAppSelector(state =>
-    selectVaultUnderlyingCowcentratedVaultOrUndefined(state, vaultId)
-  );
+  const isCowcentratedLike = useAppSelector(state => selectIsVaultCowcentratedLike(state, vaultId));
 
   // Tag 1: Platform
-  // Tag 2: Retired -> Paused -> Boosted > Earnings
-  // Tag 3: Points
+  // Tag 2: CLM -> CLM Pool -> none
+  // Tag 3: Retired -> Paused -> Boosted > Pool -> none
+  // Tag 4: Points -> none
   return (
     <div className={classes.vaultTags}>
       <VaultPlatformTag vaultId={vaultId} />
-      {isCowcentratedVault(vault) && (
-        <VaultClmTag
+      {isCowcentratedLike && (
+        <VaultClmLikeTag
           vault={vault}
           hideFee={isMobile || !isVaultActive(vault)}
-          hideText={isMobile}
+          hideLabel={isMobile}
         />
       )}
       {isVaultRetired(vault) ? (
@@ -215,12 +307,9 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
         <VaultTag className={classes.vaultTagPaused}>{t('VaultTag-Paused')}</VaultTag>
       ) : boostId ? (
         <VaultBoostTag boostId={boostId} />
-      ) : underlyingCLM ? (
-        <VaultClmTag vault={underlyingCLM} hideFee={true} isPool={true} />
-      ) : isGov ? (
-        <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} />
+      ) : isGov && !isCowcentratedLike ? (
+        <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO support multiple earned tokens
       ) : null}
-
       {isVaultEarningPoints(vault) && <PointsTag />}
     </div>
   );
