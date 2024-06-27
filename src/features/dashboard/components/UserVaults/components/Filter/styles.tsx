@@ -10,9 +10,9 @@ export const styles = (theme: Theme) => ({
     columnGap: '8px',
     backgroundClip: 'padding-box',
     borderBottom: `solid 2px ${theme.palette.background.contentDark}`,
-    gridTemplateColumns: 'minmax(0, 30fr) minmax(0, 70fr)',
+    gridTemplateColumns: 'minmax(0, 40fr) minmax(0, 60fr)',
     [theme.breakpoints.down('sm')]: {
-      gridTemplateColumns: 'minmax(0, 70fr) minmax(0, 30fr)',
+      gridTemplateColumns: 'minmax(0, 60fr) minmax(0, 40fr)',
     },
   },
   sortColumns: {
@@ -37,6 +37,11 @@ export const styles = (theme: Theme) => ({
     display: 'none',
     [theme.breakpoints.up('lg')]: {
       display: 'flex',
+    },
+  },
+  searchWidth: {
+    [theme.breakpoints.up('lg')]: {
+      maxWidth: '75%',
     },
   },
 });

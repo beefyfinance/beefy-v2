@@ -519,6 +519,7 @@ export const config = {
       'USDTxc',
       'BUSDwh',
       'xcUSDC',
+      'xcUSDT',
       'axlUSDC',
     ],
   },

@@ -8,6 +8,7 @@ import { VaultCategoryDropdownFilter } from '../VaultCategoryFilters';
 import { CheckboxFilter } from '../CheckboxFilter';
 import { ShownVaultsCount } from './ShownVaultsCount';
 import { AssetTypeDropdownFilter } from '../AssetTypeFilters';
+import { StrategyTypeDropdownFilter } from '../StrategyTypeFilters';
 
 const useStyles = makeStyles(styles);
 
@@ -50,6 +51,7 @@ export const ExtendedFilters = memo<ExtendedFiltersProps>(function ExtendedFilte
         <>
           <VaultCategoryDropdownFilter className={classes.selector} />
           <AssetTypeDropdownFilter className={classes.selector} />
+          <StrategyTypeDropdownFilter className={classes.selector} />
         </>
       ) : null}
 

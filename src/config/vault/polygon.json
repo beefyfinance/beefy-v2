@@ -1,5 +1,222 @@
 [
   {
+    "id": "uniswap-cow-poly-wbtc-usdc",
+    "name": "WBTC-USDC",
+    "token": "WBTC-USDC",
+    "tokenAddress": "0x32FAE204835e08b9374493d6B4628FD1F87DD045",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+      "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWBTC-USDC",
+    "earnedTokenAddress": "0xF93402fddbC5F94fe81998aB2ef2fC6E12E26b1e",
+    "earnContractAddress": "0xF93402fddbC5F94fe81998aB2ef2fC6E12E26b1e",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wbtc-usdc",
+    "status": "active",
+    "createdAt": 1719408542,
+    "platformId": "beefy",
+    "assets": ["WBTC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-wbtc",
+    "name": "WBTC-WMATIC",
+    "token": "WBTC-WMATIC",
+    "tokenAddress": "0x6b75F2189F0E11C52e814E09e280eb1a9A8A094a",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWMATIC-WBTC",
+    "earnedTokenAddress": "0xc96153bdA547d4a6066B8a08AE239EF757BF35aE",
+    "earnContractAddress": "0xc96153bdA547d4a6066B8a08AE239EF757BF35aE",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-wbtc",
+    "status": "active",
+    "createdAt": 1719408542,
+    "platformId": "beefy",
+    "assets": ["WBTC", "WMATIC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdt-lcd",
+    "name": "LCD-USDT",
+    "token": "LCD-USDT",
+    "tokenAddress": "0xc7cfD91eE811E1Fc981A07Cf6890eA3db1b4e542",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+      "0xc2A45FE7d40bCAc8369371B08419DDAFd3131b4a"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyUSDT-LCD",
+    "earnedTokenAddress": "0x1f41a97Ccb116C7F86d7120669Bd659A303DE718",
+    "earnContractAddress": "0x1f41a97Ccb116C7F86d7120669Bd659A303DE718",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdt-lcd",
+    "status": "active",
+    "createdAt": 1719408542,
+    "platformId": "beefy",
+    "assets": ["LCD", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdc-link",
+    "name": "LINK-USDC",
+    "token": "LINK-USDC",
+    "tokenAddress": "0x79E4240E33C121402dfc9009dE266356c91f241d",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyUSDC-LINK",
+    "earnedTokenAddress": "0x195247799ac0B36CF6b9AC5Eb84ceE3bc17fe2dB",
+    "earnContractAddress": "0x195247799ac0B36CF6b9AC5Eb84ceE3bc17fe2dB",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdc-link",
+    "status": "active",
+    "createdAt": 1719408542,
+    "platformId": "beefy",
+    "assets": ["oldLINK", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-link",
+    "name": "LINK-WMATIC",
+    "token": "LINK-WMATIC",
+    "tokenAddress": "0x0A28C2F5E0E8463E047C203F00F649812aE67E4f",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWMATIC-LINK",
+    "earnedTokenAddress": "0xBC82E4724f143eebA9C5b6B7f35361380A88995c",
+    "earnContractAddress": "0xBC82E4724f143eebA9C5b6B7f35361380A88995c",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-link",
+    "status": "active",
+    "createdAt": 1719408542,
+    "platformId": "beefy",
+    "assets": ["oldLINK", "WMATIC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-weth-aave",
+    "name": "AAVE-WETH",
+    "token": "AAVE-WETH",
+    "tokenAddress": "0x2aCeda63B5e958c45bd27d916ba701BC1DC08F7a",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+      "0xD6DF932A45C0f255f85145f286eA0b292B21C90B"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWETH-AAVE",
+    "earnedTokenAddress": "0x69c3F6c3cc1b277BB4370E1A63EfEE19fccE0e74",
+    "earnContractAddress": "0x69c3F6c3cc1b277BB4370E1A63EfEE19fccE0e74",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-weth-aave",
+    "status": "active",
+    "createdAt": 1719408542,
+    "platformId": "beefy",
+    "assets": ["AAVE", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-aave",
+    "name": "AAVE-WMATIC",
+    "token": "AAVE-WMATIC",
+    "tokenAddress": "0xa9077cDB3D13F45B8B9d87C43E11bCe0e73d8631",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "0xD6DF932A45C0f255f85145f286eA0b292B21C90B"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWMATIC-AAVE",
+    "earnedTokenAddress": "0xEefe81030D5Fb355b627a047F48b48480D5b7F09",
+    "earnContractAddress": "0xEefe81030D5Fb355b627a047F48b48480D5b7F09",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-aave",
+    "status": "active",
+    "createdAt": 1719408542,
+    "platformId": "beefy",
+    "assets": ["AAVE", "WMATIC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-poly-usdc.e-weth",
     "name": "WETH-USDC.e",
     "token": "WETH-USDC.e",

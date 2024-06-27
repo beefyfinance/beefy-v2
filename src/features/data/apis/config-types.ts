@@ -59,10 +59,6 @@ export interface VaultConfig {
   feeTier?: string;
 }
 
-export interface FeaturedVaultConfig {
-  [vaultId: VaultEntity['id']]: boolean;
-}
-
 export interface PartnersConfig {
   QiDao: VaultEntity['id'][];
   OpenCover: ChainEntity['id'][];
