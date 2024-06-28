@@ -3,28 +3,33 @@ import type { ToggleButtonsProps } from '../../../../../../components/ToggleButt
 import { ToggleButtons } from '../../../../../../components/ToggleButtons';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { selectFilterUserCategory } from '../../../../../data/selectors/filtered-vaults';
+import { selectFilterStrategyType } from '../../../../../data/selectors/filtered-vaults';
 import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
-import { CATEGORY_OPTIONS } from './category-options';
+import { TYPE_OPTIONS } from './type-options';
 
-export type UserCategoryButtonFilterProps = {
+export type StrategyTypeButtonFilterProps = {
   className?: string;
 };
-export const UserCategoryButtonFilter = memo<UserCategoryButtonFilterProps>(
-  function UserCategoryButtonFilter({ className }) {
+export const StrategyTypeButtonFilter = memo<StrategyTypeButtonFilterProps>(
+  function StrategyTypeButtonFilter({ className }) {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
+    const allKey = 'all';
     const options: Record<string, string> = useMemo(
       () =>
-        Object.fromEntries(Object.entries(CATEGORY_OPTIONS).map(([key, label]) => [key, t(label)])),
+        Object.fromEntries(
+          Object.entries(TYPE_OPTIONS)
+            .filter(([key]) => key !== allKey)
+            .map(([key, label]) => [key, t(label)])
+        ),
       [t]
     );
-    const value = useAppSelector(selectFilterUserCategory);
+    const value = useAppSelector(selectFilterStrategyType);
     const handleChange = useCallback<ToggleButtonsProps['onChange']>(
       value => {
         dispatch(
-          filteredVaultsActions.setUserCategory(value as FilteredVaultsState['userCategory'])
+          filteredVaultsActions.setStrategyType(value as FilteredVaultsState['strategyType'])
         );
       },
       [dispatch]
@@ -36,6 +41,8 @@ export const UserCategoryButtonFilter = memo<UserCategoryButtonFilterProps>(
         options={options}
         onChange={handleChange}
         buttonsClass={className}
+        fullWidth={false}
+        untoggleValue={allKey}
       />
     );
   }

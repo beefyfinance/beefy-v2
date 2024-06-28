@@ -27,7 +27,7 @@
     "@web3-onboard/walletconnect": "^2.5.4",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
-    "blockchain-addressbook": "^0.46.167",
+    "blockchain-addressbook": "^0.46.174",
     "clsx": "^1.1.1",
     "date-fns": "^2.29.3",
     "eip-712": "^1.0.0",
@@ -66,6 +66,8 @@
     "@axelar-network/axelar-cgp-solidity": "6.1.0"
   },
   "scripts": {
+    "postinstall": "vite optimize --force",
+    "prepare": "husky",
     "start": "vite",
     "build": "echo 'DO NOT disable validation on build, fix underlying issue' && yarn validate && tsc && vite build",
     "build-only": "tsc && vite build",
@@ -81,7 +83,6 @@
     "checkVaultTokenDecimals": "ts-node -r dotenv/config ./scripts/checkVaultTokenDecimals.ts && prettier --write ./src/config/vault/*.json",
     "checkZapAddresses": "ts-node -r dotenv/config ./scripts/checkZapAddresses.ts",
     "makeExcludeConfig": "ts-node -r dotenv/config ./scripts/makeExcludeConfig.ts",
-    "prepare": "husky",
     "tsc": "tsc",
     "tsc-watch": "tsc --watch",
     "ts-node": "ts-node",

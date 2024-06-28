@@ -9,6 +9,7 @@ import { ExtendedFiltersButton } from './components/ExtendedFilters';
 import { ClearFiltersButton } from './components/ClearFiltersButton';
 import clsx from 'clsx';
 import { VaultCategoryButtonFilter } from './components/VaultCategoryFilters';
+import { StrategyTypeButtonFilter } from './components/StrategyTypeFilters';
 
 const useStyles = makeStyles(styles);
 
@@ -24,6 +25,7 @@ export const Filters = memo(function Filters() {
         <>
           <VaultCategoryButtonFilter className={classes.vaultCategory} />
           <AssetTypeButtonFilter className={classes.assetType} />
+          <StrategyTypeButtonFilter />
         </>
       ) : (
         <>

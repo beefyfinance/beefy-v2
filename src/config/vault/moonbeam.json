@@ -1,5 +1,31 @@
 [
   {
+    "id": "uniswap-cow-moonbeam-xcusdc-xcusdt",
+    "name": "xcUSDC-xcUSDT",
+    "type": "cowcentrated",
+    "token": "xcUSDC-xcUSDT",
+    "tokenAddress": "0x53c1341cd81562c1b1a7562fff712CD7be95D51e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0xFFfffffF7D2B0B761Af01Ca8e25242976ac0aD7D",
+      "0xFFFFFFfFea09FB06d082fd1275CD48b191cbCD1d"
+    ],
+    "earnedToken": "cowUniswapMoonbeamxcUSDC-xcUSDT",
+    "earnedTokenAddress": "0x58873a92A2eF097CdedeA11e72C30f4E85C10a29",
+    "earnContractAddress": "0x58873a92A2eF097CdedeA11e72C30f4E85C10a29",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-moonbeam-xcusdc-xcusdt",
+    "status": "active",
+    "createdAt": 1719407184,
+    "platformId": "beefy",
+    "assets": ["xcUSDC", "xcUSDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "moonbeam",
+    "feeTier": "0.01"
+  },
+  {
     "id": "uniswap-cow-moonbeam-weth.wh-wglmr",
     "name": "WETH.wh-WGLMR",
     "type": "cowcentrated",
