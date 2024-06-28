@@ -62,7 +62,6 @@
     "@types/react-dom": "18.3.0"
   },
   "scripts": {
-    "postinstall": "vite optimize --force",
     "prepare": "husky",
     "start": "vite",
     "build": "echo 'DO NOT disable validation on build, fix underlying issue' && yarn validate && tsc && vite build",
