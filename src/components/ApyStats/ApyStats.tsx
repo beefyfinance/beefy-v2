@@ -33,7 +33,7 @@ const _YearlyBreakdownTooltip = ({
   if (isGovVault) {
     rows.push({
       label: t('Pool-Apr'),
-      value: rates.vaultApr ?? '?',
+      value: rates.rewardPoolApr ?? '?',
       last: true,
     });
     return <InterestTooltipContent rows={rows} />;
@@ -122,7 +122,7 @@ const _DailyBreakdownTooltip = ({
   if (isGovVault) {
     rows.push({
       label: t('Pool-AprDaily'),
-      value: rates.vaultDaily ?? '?',
+      value: rates.rewardPoolDaily ?? '?',
       last: true,
     });
     return <InterestTooltipContent rows={rows} />;

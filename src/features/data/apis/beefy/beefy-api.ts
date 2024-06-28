@@ -30,49 +30,38 @@ export type ApyVaultFeeData = {
 
 export type ApyFeeData = Record<VaultEntity['id'], ApyVaultFeeData>;
 
-interface ApyGovVault {
+interface ApyGovVaultLegacy {
   vaultApr: number;
 }
 
-interface ApyMaxiVault {
+interface ApyGovVault {
+  rewardPoolApr?: number;
+  clmApr?: number;
+  merklApr?: number;
   totalApy: number;
 }
 
 export interface ApyStandard {
   beefyPerformanceFee: number;
-  vaultApr: number;
   compoundingsPerYear: number;
-  vaultApy: number;
+  vaultApr?: number;
   tradingApr?: number;
   composablePoolApr?: number;
   liquidStakingApr?: number;
+  rewardPoolApr?: number;
   totalApy: number;
-  // todo: does it make sense to have fees and apy in the same entities?
-  lpFee: number;
 }
 
 export interface ApyCLM {
   clmApr: number;
-  totalApy: number;
   merklApr?: number;
+  totalApy: number;
 }
 
 type ExtractAprComponents<T extends string> = T extends `${infer C}Apr` ? C : never;
-export type ApyData = ApyGovVault | ApyMaxiVault | ApyStandard | ApyCLM;
+export type ApyData = ApyGovVault | ApyGovVaultLegacy | ApyStandard | ApyCLM;
 export type ApyDataKeys = KeysOfUnion<ApyData>;
 export type ApyDataAprComponents = ExtractAprComponents<ApyDataKeys>;
-
-export function isStandardVaultApy(apy: ApyData): apy is ApyStandard {
-  return 'compoundingsPerYear' in apy;
-}
-
-export function isGovVaultApy(apy: ApyData): apy is ApyGovVault {
-  return 'vaultApr' in apy && !('compoundingsPerYear' in apy);
-}
-
-export function isMaxiVaultApy(apy: ApyData): apy is ApyMaxiVault {
-  return 'totalApy' in apy && !('compoundingsPerYear' in apy);
-}
 
 export interface BeefyAPITokenPricesResponse {
   [tokenId: TokenEntity['id']]: number;

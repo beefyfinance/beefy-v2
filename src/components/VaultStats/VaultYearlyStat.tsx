@@ -100,7 +100,7 @@ const YearlyTooltipContent = memo<YearlyTooltipContentProps>(function YearlyTool
     if (isGovVault) {
       items.push({
         label: 'Pool-Apr',
-        value: rates.vaultApr ?? '?',
+        value: rates.rewardPoolApr ?? '?',
       });
     } else {
       if ('vaultApr' in rates) {
