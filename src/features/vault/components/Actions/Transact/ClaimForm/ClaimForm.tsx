@@ -1,10 +1,13 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
 import { isGovVault } from '../../../../../data/entities/vault';
 import { selectTransactVaultId } from '../../../../../data/selectors/transact';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
+import {
+  selectIsVaultCowcentratedLike,
+  selectVaultById,
+} from '../../../../../data/selectors/vaults';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet';
 import { selectHasUserDepositInVault } from '../../../../../data/selectors/balance';
 import { MerklRewards } from './Merkl/MerklRewards';
@@ -19,14 +22,26 @@ export const ClaimFormLoader = memo(function ClaimFormLoader() {
   const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const isCowcentratedLike = useAppSelector(state => selectIsVaultCowcentratedLike(state, vaultId));
   const walletAddress = useAppSelector(selectWalletAddress);
   const deposited = useAppSelector(state => selectHasUserDepositInVault(state, vaultId));
   const hasActiveMerkl = useAppSelector(state =>
     selectVaultHasActiveMerklCampaigns(state, vaultId)
   );
-  const descriptionKey = `Transact-Claim-Description-${vault.type}${
-    hasActiveMerkl ? '-merkl' : ''
-  }`;
+  const rewardType = useMemo(() => {
+    let type = vault.type;
+    if (isGovVault(vault) && isCowcentratedLike) {
+      type += `-cowcentrated`;
+    }
+    if (isCowcentratedLike) {
+      type += `-${vault.strategyTypeId}`;
+    }
+    if (hasActiveMerkl) {
+      type += '-merkl';
+    }
+    return type;
+  }, [vault, isCowcentratedLike, hasActiveMerkl]);
+  const descriptionKey = `Transact-Claim-Description-${rewardType}`;
 
   return (
     <div className={classes.container}>

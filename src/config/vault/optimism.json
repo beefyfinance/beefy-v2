@@ -50,7 +50,7 @@
     "platformId": "beefy",
     "assets": ["USDC", "mooBIFI"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "compounds",
+    "strategyTypeId": "pool",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.3",
