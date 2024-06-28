@@ -76,7 +76,7 @@ export const config = {
   polygon: {
     name: 'Polygon PoS',
     chainId: 137,
-    rpc: ['https://polygon-rpc.com'],
+    rpc: ['https://rpc.ankr.com/polygon'],
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -90,7 +90,7 @@ export const config = {
         symbol: 'MATIC',
         decimals: 18,
       },
-      rpcUrls: ['https://polygon-rpc.com'],
+      rpcUrls: ['https://rpc.ankr.com/polygon'],
       blockExplorerUrls: ['https://polygonscan.com/'],
     },
     gas: {
@@ -395,6 +395,7 @@ export const config = {
       'stataArbUSDTn',
       'USDV',
       'USDe',
+      'wUSDM',
     ],
   },
   avax: {
@@ -519,6 +520,7 @@ export const config = {
       'USDTxc',
       'BUSDwh',
       'xcUSDC',
+      'xcUSDT',
       'axlUSDC',
     ],
   },
@@ -894,6 +896,36 @@ export const config = {
       },
       rpcUrls: ['https://mainnet.mode.network'],
       blockExplorerUrls: ['https://explorer.mode.network/'],
+    },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.7,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '10000000', // 0.01 gwei
+    },
+    stableCoins: ['USDC', 'USDT'],
+  },
+  manta: {
+    name: 'Manta',
+    new: true,
+    chainId: 169,
+    rpc: ['https://manta-pacific.drpc.org'],
+    explorerUrl: 'https://pacific-explorer.manta.network/',
+    multicallAddress: '0x663504a9453eD242335C3dCc9E4B52620F566b30',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x6B5cd7f8eFa53e10C4b948B6989c6A66895d1991',
+    providerName: 'Manta',
+    walletSettings: {
+      chainId: `0x${parseInt('169', 10).toString(16)}`,
+      chainName: 'Manta Pacific',
+      nativeCurrency: {
+        name: 'ETH',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://manta-pacific.drpc.org'],
+      blockExplorerUrls: ['https://pacific-explorer.manta.network/'],
     },
     gas: {
       type: 'eip1559',

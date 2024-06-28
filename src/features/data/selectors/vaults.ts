@@ -19,12 +19,13 @@ import {
   selectTokenByIdOrUndefined,
 } from './tokens';
 import { createCachedSelector } from 're-reselect';
-import { BIG_ONE } from '../../../helpers/big-number';
+import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import { differenceWith, isEqual } from 'lodash-es';
 import { selectChainById } from './chains';
 import { selectPlatformById } from './platforms';
 import type { PlatformEntity } from '../entities/platform';
 import { valueOrThrow } from '../utils/selector-utils';
+import { selectVaultUnderlyingTvlUsd } from './tvl';
 
 export const selectAllVaultIds = (state: BeefyState) => state.entities.vaults.allIds;
 
@@ -251,11 +252,6 @@ export const selectTotalActiveVaults = createSelector(
   }
 );
 
-export const selectIsVaultFeatured = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.featuredVaults[vaultId],
-  isFeatured => isFeatured === true
-);
-
 export const selectIsVaultBlueChip = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
@@ -388,3 +384,19 @@ export const selectChainsHasCowcentratedVaults = createSelector(
     state.entities.vaults.byChainId[chainId]?.cowcentratedVault?.byEarnedTokenAddress,
   byEarnedTokenAddress => !!byEarnedTokenAddress && Object.keys(byEarnedTokenAddress).length > 0
 );
+
+export const getMaximumVaultTvl = (state: BeefyState) => {
+  const ids = state.entities.vaults.allIds;
+  let maxTvl = BIG_ZERO;
+  for (const id of ids) {
+    const vault = selectVaultById(state, id);
+    if (isVaultRetired(vault)) {
+      continue;
+    }
+    const underlyingTvl = selectVaultUnderlyingTvlUsd(state, id);
+    if (underlyingTvl.gt(maxTvl)) {
+      maxTvl = underlyingTvl;
+    }
+  }
+  return maxTvl;
+};

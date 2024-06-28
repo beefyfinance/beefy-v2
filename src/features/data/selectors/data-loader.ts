@@ -196,6 +196,10 @@ export const selectIsClmHarvestsForUserPending = (state: BeefyState, walletAddre
   return isPending(state.ui.dataLoader.byAddress[walletAddress]?.global.clmHarvests);
 };
 
+export const selectIsWalletTimelineForUserIdle = (state: BeefyState, walletAddress: string) => {
+  return isInitialLoader(state.ui.dataLoader.byAddress[walletAddress]?.global.timeline);
+};
+
 export const selectIsWalletTimelineForUserPending = (state: BeefyState, walletAddress: string) => {
   return isPending(state.ui.dataLoader.byAddress[walletAddress]?.global.timeline);
 };

@@ -32,7 +32,7 @@ export const styles = (theme: Theme) => ({
     rowGap: '24px',
     width: '100%',
     [theme.breakpoints.up('lg')]: {
-      gridTemplateColumns: 'minmax(0, 30fr) minmax(0, 70fr)',
+      gridTemplateColumns: 'minmax(0, 40fr) minmax(0, 60fr)',
     },
   },
 });

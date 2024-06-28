@@ -1,6 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import {
+  isCowcentratedVault,
+  isGovVault,
   isVaultEarningPoints,
   isVaultPaused,
   isVaultRetired,
@@ -16,8 +18,6 @@ import {
   selectAllVaultIds,
   selectIsVaultBlueChip,
   selectIsVaultCorrelated,
-  selectIsVaultCowcentrated,
-  selectIsVaultFeatured,
   selectIsVaultStable,
   selectVaultById,
 } from '../selectors/vaults';
@@ -39,7 +39,7 @@ import type { FilteredVaultsState } from '../reducers/filtered-vaults';
 import { orderBy, sortBy } from 'lodash-es';
 import type { TotalApy } from '../reducers/apy';
 import { selectVaultTotalApy } from '../selectors/apy';
-import { selectVaultTvl } from '../selectors/tvl';
+import { selectVaultTvl, selectVaultUnderlyingTvlUsd } from '../selectors/tvl';
 
 export type RecalculateFilteredVaultsParams = {
   dataChanged?: boolean;
@@ -74,37 +74,66 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
       );
       const searchText = simplifySearchText(filterOptions.searchText);
       const allVaults = selectAllVaultIds(state).map(id => selectVaultById(state, id));
-      filteredVaults = allVaults.filter(vault => {
+
+      const vaultsByCategory =
+        filterOptions.vaultCategory.length > 0
+          ? allVaults.filter(vault => {
+              if (
+                filterOptions.vaultCategory.includes('bluechip') &&
+                selectIsVaultBlueChip(state, vault.id)
+              ) {
+                return true;
+              }
+              if (
+                filterOptions.vaultCategory.includes('stable') &&
+                selectIsVaultStable(state, vault.id)
+              ) {
+                return true;
+              }
+              if (
+                filterOptions.vaultCategory.includes('correlated') &&
+                selectIsVaultCorrelated(state, vault.id)
+              ) {
+                return true;
+              }
+
+              return false;
+            })
+          : allVaults;
+
+      const vaultsByAssetType =
+        filterOptions.assetType.length > 0
+          ? vaultsByCategory.filter(vault => {
+              if (
+                filterOptions.assetType.includes('lps') &&
+                vault.assetType === 'lps' &&
+                !isCowcentratedVault(vault)
+              ) {
+                return true;
+              }
+              if (filterOptions.assetType.includes('single') && vault.assetType === 'single') {
+                return true;
+              }
+
+              if (filterOptions.assetType.includes('clm') && isCowcentratedVault(vault)) {
+                return true;
+              }
+              return false;
+            })
+          : vaultsByCategory;
+
+      filteredVaults = vaultsByAssetType.filter(vault => {
         // Chains
         if (!visibleChains.has(vault.chainId)) {
           return false;
         }
 
-        // Asset type
-        if (filterOptions.assetType === 'lps' && vault.assetType !== 'lps') {
-          return false;
-        }
-        if (filterOptions.assetType === 'single' && vault.assetType !== 'single') {
+        //Strategy Type
+        if (filterOptions.strategyType === 'pools' && !isGovVault(vault)) {
           return false;
         }
 
-        // Vault Category
-        if (filterOptions.vaultCategory === 'featured' && !selectIsVaultFeatured(state, vault.id)) {
-          return false;
-        }
-        if (filterOptions.vaultCategory === 'bluechip' && !selectIsVaultBlueChip(state, vault.id)) {
-          return false;
-        }
-        if (filterOptions.vaultCategory === 'stable' && !selectIsVaultStable(state, vault.id)) {
-          return false;
-        }
-        if (filterOptions.vaultCategory === 'clm' && !selectIsVaultCowcentrated(state, vault.id)) {
-          return false;
-        }
-        if (
-          filterOptions.vaultCategory === 'correlated' &&
-          !selectIsVaultCorrelated(state, vault.id)
-        ) {
+        if (filterOptions.strategyType === 'vaults' && isGovVault(vault)) {
           return false;
         }
 
@@ -126,6 +155,13 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
         }
 
         if (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) {
+          return false;
+        }
+
+        if (
+          filterOptions.minimumTotalSupply.gt(0) &&
+          selectVaultUnderlyingTvlUsd(state, vault.id).lt(filterOptions.minimumTotalSupply)
+        ) {
           return false;
         }
 
@@ -200,7 +236,10 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
       }
     }
 
-    return { filtered: filteredVaults.map(v => v.id), sorted: sortedVaultIds };
+    return {
+      filtered: filteredVaults.map(v => v.id),
+      sorted: sortedVaultIds,
+    };
   },
   {
     condition: ({ filtersChanged, sortChanged, dataChanged }) => {

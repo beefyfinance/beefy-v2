@@ -10,11 +10,14 @@ import type {
   UserCategoryType,
   VaultAssetType,
   VaultCategoryType,
+  StrategiesType,
 } from './filtered-vaults-types';
 import { isValidUserCategory } from './filtered-vaults-types';
 import type { VaultEntity } from '../entities/vault';
 import { fetchAllVaults } from '../actions/vaults';
 import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults';
+import BigNumber from 'bignumber.js';
+import { BIG_ZERO } from '../../../helpers/big-number';
 
 /**
  * State containing Vault infos
@@ -28,9 +31,10 @@ export type FilteredVaultsState = {
   reseted: boolean;
   sort: SortType;
   sortDirection: SortDirectionType;
-  vaultCategory: VaultCategoryType;
+  vaultCategory: VaultCategoryType[];
   userCategory: UserCategoryType;
-  assetType: VaultAssetType;
+  strategyType: StrategiesType;
+  assetType: VaultAssetType[];
   searchText: string;
   chainIds: ChainEntity['id'][];
   platformIds: PlatformEntity['id'][];
@@ -41,16 +45,20 @@ export type FilteredVaultsState = {
   onlyEarningPoints: boolean;
   filteredVaultIds: VaultEntity['id'][];
   sortedFilteredVaultIds: VaultEntity['id'][];
+  minimumTotalSupply: BigNumber;
 };
 export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
+
+export type FilteredVaultBigNumberKeys = KeysOfType<FilteredVaultsState, BigNumber>;
 
 const initialFilteredVaultsState: FilteredVaultsState = {
   reseted: true,
   sort: 'default',
   sortDirection: 'desc',
-  vaultCategory: 'all',
+  vaultCategory: [],
   userCategory: 'all',
-  assetType: 'all',
+  strategyType: 'all',
+  assetType: [],
   searchText: '',
   chainIds: [],
   platformIds: [],
@@ -61,6 +69,7 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   onlyEarningPoints: false,
   filteredVaultIds: [],
   sortedFilteredVaultIds: [],
+  minimumTotalSupply: BIG_ZERO,
 };
 
 export const filteredVaultsSlice = createSlice({
@@ -97,6 +106,10 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState.vaultCategory = action.payload;
     },
+    setStrategyType(sliceState, action: PayloadAction<FilteredVaultsState['strategyType']>) {
+      sliceState.reseted = false;
+      sliceState.strategyType = action.payload;
+    },
     setUserCategory(sliceState, action: PayloadAction<FilteredVaultsState['userCategory']>) {
       sliceState.reseted = false;
       sliceState.userCategory = action.payload;
@@ -119,7 +132,20 @@ export const filteredVaultsSlice = createSlice({
     },
     setBoolean(
       sliceState,
-      action: PayloadAction<{ filter: FilteredVaultBooleanKeys; value: boolean }>
+      action: PayloadAction<{
+        filter: FilteredVaultBooleanKeys;
+        value: boolean;
+      }>
+    ) {
+      sliceState.reseted = false;
+      sliceState[action.payload.filter] = action.payload.value;
+    },
+    setBigNumber(
+      sliceState,
+      action: PayloadAction<{
+        filter: FilteredVaultBigNumberKeys;
+        value: BigNumber;
+      }>
     ) {
       sliceState.reseted = false;
       sliceState[action.payload.filter] = action.payload.value;
@@ -151,6 +177,12 @@ export const userCategoryTransform = createTransform(
     return isValidUserCategory(userCategoryFromLocalStorage) ? userCategoryFromLocalStorage : 'all';
   },
   { whitelist: ['userCategory'] }
+);
+
+export const bigNumberTransform = createTransform(
+  (bigNumber: BigNumber) => bigNumber.toString(),
+  (storedBigNumber: string) => new BigNumber(storedBigNumber),
+  { whitelist: ['minimumTotalSupply'] }
 );
 
 export const chanIdsTransform = createTransform(

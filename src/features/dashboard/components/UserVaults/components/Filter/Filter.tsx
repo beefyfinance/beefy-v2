@@ -30,6 +30,7 @@ export const Filter = memo<FilterProps>(function Filter({
         handleSearchText={handleSearchText}
         searchText={searchText}
         handleClearText={handleClearText}
+        className={classes.searchWidth}
       />
       <SortColumns sortOptions={sortOptions} handleSort={handleSort} />
     </div>

@@ -108,5 +108,10 @@
     "chainId": "mode",
     "router": "0xf2068e1FE1A80E7f5Ba80D6ABD6e8618aD4E959E",
     "manager": "0x19e730Ab391b79F03CFA2ffc2C5e3fc617F0eEfe"
+  },
+  {
+    "chainId": "manta",
+    "router": "0x6f66F246Bb436B6f4E66A992C2218b57cD906109",
+    "manager": "0xd3d46ff34cd495d5b91b8f3c5c552e81e5e3eab5"
   }
 ]

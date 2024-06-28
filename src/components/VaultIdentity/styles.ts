@@ -115,4 +115,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-mode': {
     backgroundColor: '#000',
   },
+  'vaultNetwork-manta': {
+    backgroundColor: '#000',
+  },
 });
