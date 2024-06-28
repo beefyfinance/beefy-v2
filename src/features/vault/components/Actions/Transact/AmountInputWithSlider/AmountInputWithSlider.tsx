@@ -10,7 +10,7 @@ import type { TokenEntity } from '../../../../../data/entities/token';
 
 type AmountInputWithSliderProps = AmountInputProps & {
   onSliderChange: (v: number) => void;
-  selectedToken: TokenEntity;
+  selectedToken: Pick<TokenEntity, 'decimals'>;
   endAdornment: ReactNode;
   warning?: boolean;
 };
