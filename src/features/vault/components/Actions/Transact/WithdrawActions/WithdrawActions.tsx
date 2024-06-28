@@ -32,13 +32,14 @@ import {
   selectVaultUnderlyingCowcentratedVaultOrUndefined,
 } from '../../../../../data/selectors/vaults';
 import { type ActionButtonProps, ActionConnectSwitch } from '../CommonActions';
-import { selectGovVaultPendingRewardsInToken } from '../../../../../data/selectors/balance';
+import { selectGovVaultPendingRewards } from '../../../../../data/selectors/balance';
 import { isGovVault, type VaultGov } from '../../../../../data/entities/vault';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { GlpWithdrawNotice } from '../GlpNotices';
 import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotice';
 import { NotEnoughNotice } from '../NotEnoughNotice';
 import { WithdrawFees } from '../VaultFees';
+import { selectWalletAddress } from '../../../../../data/selectors/wallet';
 
 const useStyles = makeStyles(styles);
 
@@ -265,11 +266,14 @@ type ActionClaimProps = {
 const ActionClaim = memo<ActionClaimProps>(function ActionClaim({ vault }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const walletAddress = useAppSelector(selectWalletAddress);
   const pendingRewards = useAppSelector(state =>
-    selectGovVaultPendingRewardsInToken(state, vault.id)
+    selectGovVaultPendingRewards(state, vault.id, walletAddress)
   );
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
-  const isDisabled = isTxInProgress || pendingRewards.lte(BIG_ZERO);
+  const isDisabled = useMemo(() => {
+    return isTxInProgress || !pendingRewards.some(r => r.balance.gt(BIG_ZERO));
+  }, [pendingRewards, isTxInProgress]);
   const handleClaim = useCallback(() => {
     dispatch(transactStepsClaimGov(vault, t));
   }, [dispatch, vault, t]);

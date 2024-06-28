@@ -41,7 +41,7 @@ import type {
   ShareButtonProps,
   ShareItemProps,
   ShareServiceItemProps,
-  Types,
+  CommonExtraDetails,
   VaultDetails,
 } from './types';
 import clsx from 'clsx';
@@ -73,13 +73,16 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   }, [vault, chain, apys]);
   const additionalSelector = useMemo(
     () =>
-      (state: BeefyState): Types | BoostedVaultExtraDetails | GovVaultExtraDetails => {
-        if (isCowcentratedVault(vault)) return { kind: 'clm' };
+      (state: BeefyState): CommonExtraDetails | BoostedVaultExtraDetails | GovVaultExtraDetails => {
+        if (isCowcentratedVault(vault)) {
+          return { kind: 'clm' };
+        }
 
         if (isGovVault(vault)) {
-          if (selectVaultUnderlyingCowcentratedVaultIdOrUndefined(state, vault.id))
+          if (selectVaultUnderlyingCowcentratedVaultIdOrUndefined(state, vault.id)) {
             return { kind: 'clm-pool' };
-          const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); //TODO: handle multiple earned tokens
+          }
+          const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); // TODO: handle multiple earned tokens [empty = ok, not used when clm-like]
           return {
             kind: 'gov',
             earnToken: token.symbol,
@@ -188,7 +191,7 @@ const TwitterItem = memo<ShareServiceItemProps>(function TwitterItem({ details }
 const LensterItem = memo<ShareServiceItemProps>(function LensterItem({ details }) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
-    const message = t(`Vault-Share-Message-${details.kind as string}`, details);
+    const message = t(`Vault-Share-Message-${details.kind}`, details);
 
     // https://docs.lens.xyz/docs/integrating-lens
     const params = new URLSearchParams({
@@ -205,7 +208,7 @@ const LensterItem = memo<ShareServiceItemProps>(function LensterItem({ details }
 const TelegramItem = memo<ShareServiceItemProps>(function TelegramItem({ details }) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
-    const message = t(`Vault-Share-Message-${details.kind as string}`, details);
+    const message = t(`Vault-Share-Message-${details.kind}`, details);
 
     // https://core.telegram.org/widgets/share
     const params = new URLSearchParams({

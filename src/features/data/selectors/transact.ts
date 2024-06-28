@@ -317,6 +317,10 @@ export const selectTransactShouldShowClaims = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     selectConnectedUserHasMerklRewardsForVault(state, vaultId),
   (vault, vaultHasActiveMerklCampaigns, userHasUnclaimedMerklRewards) => {
-    return isGovVault(vault) || vaultHasActiveMerklCampaigns || userHasUnclaimedMerklRewards;
+    return (
+      (isGovVault(vault) && vault.earnedTokenAddresses.length > 0) ||
+      vaultHasActiveMerklCampaigns ||
+      userHasUnclaimedMerklRewards
+    );
   }
 );

@@ -16,7 +16,8 @@ import {
   type VaultBase,
   type VaultCowcentrated,
   type VaultEntity,
-  type VaultGov,
+  type VaultGovMulti,
+  type VaultGovSingle,
   type VaultStandard,
   type VaultStatus,
 } from '../entities/vault';
@@ -335,23 +336,50 @@ function getVaultEntityFromConfig(
   const score = getVaultSafetyScore(apiVault);
 
   if (apiVault.type === 'gov') {
-    vault = {
-      type: 'gov',
-      subType: apiVault.earnedTokenAddresses ? 'multi' : 'single',
-      depositTokenAddress: apiVault.tokenAddress || 'native',
-      earnedTokenAddresses: apiVault.earnedTokenAddresses ?? [apiVault.earnedTokenAddress!],
-      strategyTypeId: apiVault.strategyTypeId,
-      platformId: apiVault.platformId,
-      safetyScore: score,
-      assetType: 'single',
-      risks: apiVault.risks || [],
-      buyTokenUrl: apiVault.buyTokenUrl || null,
-      addLiquidityUrl: apiVault.earnedTokenAddresses ? apiVault.addLiquidityUrl ?? null : null,
-      removeLiquidityUrl: null,
-      depositFee: apiVault.depositFee ?? 0,
-      ...vaultBase,
-      ...vaultStatus,
-    } satisfies VaultGov;
+    if (vaultBase.version >= 2) {
+      vault = {
+        type: 'gov',
+        subType: 'multi',
+        depositTokenAddress: apiVault.tokenAddress || 'native',
+        earnedTokenAddresses:
+          apiVault.earnedTokenAddresses ??
+          (apiVault.earnedTokenAddress ? [apiVault.earnedTokenAddress] : []), // TODO throw if empty and not a clm pool
+        strategyTypeId: apiVault.strategyTypeId,
+        platformId: apiVault.platformId,
+        safetyScore: score,
+        assetType: 'single',
+        risks: apiVault.risks || [],
+        buyTokenUrl: apiVault.buyTokenUrl || null,
+        addLiquidityUrl: apiVault.addLiquidityUrl ?? null,
+        removeLiquidityUrl: null,
+        depositFee: apiVault.depositFee ?? 0,
+        ...vaultBase,
+        ...vaultStatus,
+      } satisfies VaultGovMulti;
+    } else {
+      if (!apiVault.earnedTokenAddress) {
+        throw new Error(
+          `Missing earnedTokenAddress for v${vaultBase.version} gov vault ${apiVault.id}`
+        );
+      }
+      vault = {
+        type: 'gov',
+        subType: 'single',
+        depositTokenAddress: apiVault.tokenAddress || 'native',
+        earnedTokenAddresses: [apiVault.earnedTokenAddress],
+        strategyTypeId: apiVault.strategyTypeId,
+        platformId: apiVault.platformId,
+        safetyScore: score,
+        assetType: 'single',
+        risks: apiVault.risks || [],
+        buyTokenUrl: apiVault.buyTokenUrl || null,
+        addLiquidityUrl: null,
+        removeLiquidityUrl: null,
+        depositFee: apiVault.depositFee ?? 0,
+        ...vaultBase,
+        ...vaultStatus,
+      } satisfies VaultGovSingle;
+    }
   } else if (apiVault.type === 'cowcentrated') {
     vault = {
       type: 'cowcentrated',

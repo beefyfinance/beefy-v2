@@ -473,15 +473,17 @@ export const selectUserVaultDepositTokenWalletBalanceInUsd = (
   return walletBalance.multipliedBy(oraclePrice);
 };
 
+/** @deprecated */
 export const selectGovVaultPendingRewardsInToken = (
   state: BeefyState,
   vaultId: VaultGov['id'],
   walletAddress?: string
 ) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
-  return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.rewards[0] || BIG_ZERO; // TODO: support multiple rewards
+  return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.rewards[0] || BIG_ZERO; // TODO: support multiple rewards [empty = ok, only caller not used when clm-like]
 };
 
+/** @deprecated */
 export const selectGovVaultPendingRewardsInUsd = (
   state: BeefyState,
   vaultId: VaultGov['id'],
@@ -489,10 +491,11 @@ export const selectGovVaultPendingRewardsInUsd = (
 ) => {
   const vault = selectVaultById(state, vaultId) as VaultGov;
   const tokenRewards = selectGovVaultPendingRewardsInToken(state, vaultId, walletAddress);
-  const tokenPrice = selectTokenPriceByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); // TODO: support multiple rewards
+  const tokenPrice = selectTokenPriceByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); // TODO: support multiple rewards [empty = ok, only caller not used when clm-like]
   return tokenRewards.times(tokenPrice);
 };
 
+/** @dev will NOT default to connected wallet address */
 export const selectGovVaultPendingRewards = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
     selectGovVaultById(state, vaultId),
@@ -518,6 +521,7 @@ export const selectGovVaultPendingRewards = createSelector(
   }
 );
 
+/** @dev will NOT default to connected wallet address */
 export const selectGovVaultPendingRewardsWithPrice = createSelector(
   selectGovVaultPendingRewards,
   (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
@@ -563,8 +567,8 @@ export const selectGovVaultBalanceTokenEntity = (state: BeefyState, vaultId: Vau
  * for gov vault, rewards is an amount in earnedTokenId
  */
 export const selectGovVaultRewardsTokenEntity = (state: BeefyState, vaultId: VaultGov['id']) => {
-  const vault = selectVaultById(state, vaultId) as VaultGov;
-  return selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); // TODO: support multiple rewards
+  const vault = selectGovVaultById(state, vaultId);
+  return selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); // TODO: support multiple rewards [empty ok, only called in v1 govVaultFormatter]
 };
 
 export const selectLpBreakdownBalance = (
@@ -955,6 +959,8 @@ export const selectUserRewardsByVaultId = (
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ) => {
+  walletAddress = walletAddress || selectWalletAddress(state);
+
   const rewards: {
     rewardToken: TokenEntity['symbol'];
     rewardTokenDecimals: TokenEntity['decimals'];
@@ -964,27 +970,25 @@ export const selectUserRewardsByVaultId = (
   const rewardsTokens: string[] = [];
   let totalRewardsUsd = BIG_ZERO;
 
+  if (!walletAddress) {
+    return { rewards, rewardsTokens, totalRewardsUsd };
+  }
+
   const vault = selectVaultById(state, vaultId);
 
   if (isGovVault(vault)) {
-    // FIXME
-    for (const earnedTokenAddress of vault.earnedTokenAddresses) {
-      const earnedToken = selectTokenByAddress(state, vault.chainId, earnedTokenAddress);
-      const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(
-        state,
-        vault.id,
-        walletAddress
-      );
-      const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id, walletAddress);
+    const pendingRewards = selectGovVaultPendingRewardsWithPrice(state, vault.id, walletAddress);
+    for (const pendingReward of pendingRewards) {
+      const tokenRewardsUsd = pendingReward.balance.times(pendingReward.price || BIG_ZERO);
 
-      totalRewardsUsd = rewardsEarnedUsd;
-      rewardsTokens.push(earnedToken.symbol);
+      totalRewardsUsd = totalRewardsUsd.plus(tokenRewardsUsd);
+      rewardsTokens.push(pendingReward.token.symbol);
 
       rewards.push({
-        rewardToken: earnedToken.symbol,
-        rewardTokenDecimals: earnedToken.decimals,
-        rewards: rewardsEarnedToken,
-        rewardsUsd: rewardsEarnedUsd,
+        rewardToken: pendingReward.token.symbol,
+        rewardTokenDecimals: pendingReward.token.decimals,
+        rewards: pendingReward.balance,
+        rewardsUsd: tokenRewardsUsd,
       });
     }
   } else {

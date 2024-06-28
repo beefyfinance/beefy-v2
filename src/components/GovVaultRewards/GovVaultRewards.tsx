@@ -24,9 +24,9 @@ import {
 
 const _GovVaultRewards = connect((state: BeefyState, { vaultId }: { vaultId: VaultGov['id'] }) => {
   const vault = selectVaultById(state, vaultId) as VaultGov;
-  const earnedToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); // TODO: support multiple earned tokens
-  const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(state, vault.id);
-  const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id);
+  const earnedToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); // TODO: support multiple earned tokens [empty = ok, not used when clm-like]
+  const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(state, vault.id); // TODO: support multiple earned tokens
+  const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id); // TODO: support multiple earned tokens
   const blurred = selectIsBalanceHidden(state);
   const walletAddress = selectWalletAddress(state);
   const isLoaded =

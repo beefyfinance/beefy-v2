@@ -72,7 +72,7 @@ type VaultEarnTagProps = {
   chainId: ChainEntity['id'];
   earnedTokenAddress: TokenEntity['address'];
 };
-const VaultEarnTag = memo<VaultEarnTagProps>(function VaultBoostTag({
+const VaultEarnTag = memo<VaultEarnTagProps>(function VaultEarnTag({
   chainId,
   earnedTokenAddress,
 }) {
@@ -307,7 +307,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
       ) : boostId ? (
         <VaultBoostTag boostId={boostId} />
       ) : isGov && !isCowcentratedLike ? (
-        <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO support multiple earned tokens
+        <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO support multiple earned tokens [empty = ok, not used when clm-like]
       ) : null}
       {isVaultEarningPoints(vault) && <PointsTag />}
     </div>

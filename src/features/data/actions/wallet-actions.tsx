@@ -12,13 +12,14 @@ import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenEqual, isTokenNative } from '../entities/token';
 import {
+  isCowcentratedVault,
   isGovVault,
+  isStandardVault,
   type VaultCowcentrated,
   type VaultEntity,
   type VaultGov,
   type VaultStandard,
 } from '../entities/vault';
-import { isCowcentratedVault, isStandardVault } from '../entities/vault';
 import {
   createWalletActionErrorAction,
   createWalletActionPendingAction,
@@ -32,8 +33,7 @@ import {
 import {
   selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
-  selectGovVaultPendingRewardsInToken,
-  selectGovVaultRewardsTokenEntity,
+  selectGovVaultPendingRewards,
   selectGovVaultUserStakedBalanceInDepositToken,
 } from '../selectors/balance';
 import {
@@ -634,11 +634,18 @@ const claimGovVault = (vault: VaultGov) => {
     const state = getState();
     const address = selectWalletAddress(state);
     if (!address) {
-      return;
+      throw new Error(`Wallet not connected`);
     }
 
-    const amount = selectGovVaultPendingRewardsInToken(state, vault.id);
-    const token = selectGovVaultRewardsTokenEntity(state, vault.id);
+    const pendingRewards = selectGovVaultPendingRewards(state, vault.id, address).filter(r =>
+      r.balance.gt(BIG_ZERO)
+    );
+    if (!pendingRewards.length) {
+      throw new Error(`No rewards to claim`);
+    }
+
+    const amount = pendingRewards[0].balance;
+    const token = pendingRewards[0].token;
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
