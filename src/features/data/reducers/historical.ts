@@ -23,7 +23,6 @@ import {
   getDataApiBucketsShorterThan,
 } from '../apis/beefy/beefy-data-api-helpers';
 import { fromKeys, fromKeysBy } from '../../../helpers/object';
-import { selectIsVaultCowcentratedLike } from '../selectors/vaults';
 
 const initialState: HistoricalState = {
   ranges: {

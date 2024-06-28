@@ -28,7 +28,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "zaps": [
       {

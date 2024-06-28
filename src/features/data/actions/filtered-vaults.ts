@@ -18,6 +18,7 @@ import {
   selectAllVaultIds,
   selectIsVaultBlueChip,
   selectIsVaultCorrelated,
+  selectIsVaultCowcentratedLike,
   selectIsVaultStable,
   selectVaultById,
   selectVaultIsUnderlyingVault,
@@ -76,56 +77,52 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
       const searchText = simplifySearchText(filterOptions.searchText);
       const allVaults = selectAllVaultIds(state).map(id => selectVaultById(state, id));
 
-      const vaultsByCategory =
-        filterOptions.vaultCategory.length > 0
-          ? allVaults.filter(vault => {
-              if (
-                filterOptions.vaultCategory.includes('bluechip') &&
-                selectIsVaultBlueChip(state, vault.id)
-              ) {
-                return true;
-              }
-              if (
-                filterOptions.vaultCategory.includes('stable') &&
-                selectIsVaultStable(state, vault.id)
-              ) {
-                return true;
-              }
-              if (
-                filterOptions.vaultCategory.includes('correlated') &&
-                selectIsVaultCorrelated(state, vault.id)
-              ) {
-                return true;
-              }
-
-              return false;
-            })
-          : allVaults;
-
-      const vaultsByAssetType =
-        filterOptions.assetType.length > 0
-          ? vaultsByCategory.filter(vault => {
-              if (
-                filterOptions.assetType.includes('lps') &&
-                vault.assetType === 'lps' &&
-                !isCowcentratedVault(vault)
-              ) {
-                return true;
-              }
-              if (filterOptions.assetType.includes('single') && vault.assetType === 'single') {
-                return true;
-              }
-
-              if (filterOptions.assetType.includes('clm') && isCowcentratedVault(vault)) {
-                return true;
-              }
-              return false;
-            })
-          : vaultsByCategory;
-
-      filteredVaults = vaultsByAssetType.filter(vault => {
+      /*
+       @dev every filter that can be applied without using a selector should come first
+       then cheap selectors, then expensive selectors last
+      */
+      filteredVaults = allVaults.filter(vault => {
         // Chains
         if (!visibleChains.has(vault.chainId)) {
+          return false;
+        }
+
+        // Strategy Type
+        if (filterOptions.strategyType === 'pools' && !isGovVault(vault)) {
+          return false;
+        }
+
+        // TODO change to !isStandardVault if we get rid of base clm
+        if (filterOptions.strategyType === 'vaults' && isGovVault(vault)) {
+          return false;
+        }
+
+        // Hide non-EOL if onlyRetired is checked
+        if (filterOptions.onlyRetired && !isVaultRetired(vault)) {
+          return false;
+        }
+
+        // Hide non-paused if onlyPaused is checked
+        if (filterOptions.onlyPaused && !isVaultPaused(vault)) {
+          return false;
+        }
+
+        // Hide EOL unless onlyRetired is checked or user category is 'My'
+        if (
+          !filterOptions.onlyRetired &&
+          filterOptions.userCategory !== 'deposited' &&
+          isVaultRetired(vault)
+        ) {
+          return false;
+        }
+
+        // Hide not earning points if onlyEarningPoints checked
+        if (filterOptions.onlyEarningPoints && !isVaultEarningPoints(vault)) {
+          return false;
+        }
+
+        // Hide non-zappable if onlyZappable checked
+        if (filterOptions.onlyZappable && !selectVaultSupportsZap(state, vault.id)) {
           return false;
         }
 
@@ -134,54 +131,52 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
           return false;
         }
 
-        //Strategy Type
-        if (filterOptions.strategyType === 'pools' && !isGovVault(vault)) {
-          return false;
+        // Asset Type
+        if (filterOptions.assetType.length) {
+          const isCowcentratedLike = selectIsVaultCowcentratedLike(state, vault.id);
+          const vaultAssetType = isCowcentratedLike ? 'clm' : vault.assetType;
+          if (!filterOptions.assetType.includes(vaultAssetType)) {
+            return false;
+          }
         }
 
-        if (filterOptions.strategyType === 'vaults' && isGovVault(vault)) {
-          return false;
-        }
-
-        // Checkboxes
-        if (filterOptions.onlyRetired && !isVaultRetired(vault)) {
-          return false;
-        }
-
-        if (filterOptions.onlyPaused && !isVaultPaused(vault)) {
-          return false;
-        }
-
-        if (filterOptions.onlyZappable && !selectVaultSupportsZap(state, vault.id)) {
-          return false;
-        }
-
-        if (filterOptions.onlyEarningPoints && !isVaultEarningPoints(vault)) {
-          return false;
-        }
-
+        // Hide non-boosted if onlyBoosted checked
         if (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) {
           return false;
         }
 
-        // User category: All / Saved Vaults / My Vaults
+        // Vault Category
+        if (filterOptions.vaultCategory.length) {
+          if (
+            filterOptions.vaultCategory.includes('bluechip') &&
+            !selectIsVaultBlueChip(state, vault.id)
+          ) {
+            return false;
+          }
+          if (
+            filterOptions.vaultCategory.includes('stable') &&
+            !selectIsVaultStable(state, vault.id)
+          ) {
+            return false;
+          }
+          if (
+            filterOptions.vaultCategory.includes('correlated') &&
+            !selectIsVaultCorrelated(state, vault.id)
+          ) {
+            return false;
+          }
+        }
+
+        // User category: 'Saved'
         if (filterOptions.userCategory === 'saved' && !selectIsVaultIdSaved(state, vault.id)) {
           return false;
         }
 
+        // User category: 'My'
         if (
           filterOptions.userCategory === 'deposited' &&
           !selectHasUserDepositInVault(state, vault.id)
         ) {
-          return false;
-        }
-
-        if (
-          !filterOptions.onlyRetired &&
-          filterOptions.userCategory !== 'deposited' &&
-          isVaultRetired(vault)
-        ) {
-          // Hide all eol vaults that user is not deposited in if on 'my vaults' tab and only retired is not checked
           return false;
         }
 
