@@ -243,7 +243,7 @@ const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimW
           >
             {t(
               isMaxAll
-                ? quote.outputs.length > 1
+                ? quote.outputs.length > 1 && showClaim
                   ? 'Transact-Claim-WithdrawAll'
                   : 'Transact-WithdrawAll'
                 : 'Transact-Withdraw'

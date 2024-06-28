@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity } from '../entities/vault';
 import { isGovVault } from '../entities/vault';
-import { selectUserDepositedVaultIds } from './balance';
+import { selectDashboardDepositedVaultIdsForAddress } from './balance';
 import {
   selectBoostById,
   selectIsVaultPreStakedOrBoosted,
@@ -167,7 +167,8 @@ export const selectUserDashboardFilteredVaults = (
   text: string,
   walletAddress?: string
 ) => {
-  const vaults = selectUserDepositedVaultIds(state, walletAddress).map(id =>
+  if (!walletAddress) return [];
+  const vaults = selectDashboardDepositedVaultIdsForAddress(state, walletAddress).map(id =>
     selectVaultById(state, id)
   );
   const searchText = simplifySearchText(text);

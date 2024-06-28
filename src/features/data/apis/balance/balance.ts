@@ -232,7 +232,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     result: AsWeb3Result<GovVaultV2Balance>,
     govVault: VaultGovMulti
   ): GovVaultV2Balance {
-    if (result.rewards.length !== result.rewardTokens.length || result.rewards.length === 0) {
+    if (result.rewards.length !== result.rewardTokens.length) {
       throw new Error(`Invalid rewards and rewardTokens length`);
     }
 

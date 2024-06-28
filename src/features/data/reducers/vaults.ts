@@ -24,7 +24,7 @@ import type { NormalizedEntity } from '../utils/normalized-entity';
 import type { VaultConfig } from '../apis/config-types';
 import { entries, fromKeysBy, pushOrSet } from '../../../helpers/object';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { getVaultNames, getVaultTypeSuffix } from '../utils/vault-utils';
+import { getVaultNames } from '../utils/vault-utils';
 
 /**
  * State containing Vault infos
@@ -472,7 +472,7 @@ function rebuildVaultsState(sliceState: Draft<VaultsState>) {
       if (underlyingClmId) {
         const underlyingClm = sliceState.byId[underlyingClmId]!;
         vault.name = vault.shortName;
-        vault.longName = `${vault.shortName} ${getVaultTypeSuffix('cowcentrated')}`;
+        vault.longName = vault.shortName;
         vault.risks = underlyingClm?.risks || [];
         underlyingClm.excludedId = vault.id; // clm excludes gov tvl
       }

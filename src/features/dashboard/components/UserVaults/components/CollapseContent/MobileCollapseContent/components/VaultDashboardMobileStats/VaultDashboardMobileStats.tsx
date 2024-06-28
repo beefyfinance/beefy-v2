@@ -11,6 +11,7 @@ import { useAppSelector } from '../../../../../../../../../store';
 import { MobileVaultRewardsStat } from '../../../../../../../../../components/VaultStats/MobileVaultRewardsStat';
 import { selectVaultPnl } from '../../../../../../../../data/selectors/analytics';
 import { MobileVaultYieldStat } from '../../../../../../../../../components/VaultStats/MobileVaultYieldStat';
+import { selectVaultUnderlyingCowcentratedVaultIdOrUndefined } from '../../../../../../../../data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 
@@ -22,7 +23,12 @@ interface VaultDashboardMobileStatsProps {
 export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
   function VaultDashboardMobileStats({ vaultId, address }) {
     const classes = useStyles();
-    const pnlData = useAppSelector(state => selectVaultPnl(state, vaultId, address));
+    const underlyingCLMId = useAppSelector(state =>
+      selectVaultUnderlyingCowcentratedVaultIdOrUndefined(state, vaultId)
+    );
+    const pnlData = useAppSelector(state =>
+      selectVaultPnl(state, underlyingCLMId ?? vaultId, address)
+    );
 
     return (
       <RowMobile>
@@ -33,7 +39,7 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
             contentClassName={classes.valueContainer}
             triggerClassName={classes.value}
             labelClassName={classes.label}
-            vaultId={vaultId}
+            vaultId={underlyingCLMId ?? vaultId}
             walletAddress={address}
           />
           <VaultNowStat
@@ -42,7 +48,7 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
             contentClassName={classes.valueContainer}
             triggerClassName={classes.value}
             labelClassName={classes.label}
-            vaultId={vaultId}
+            vaultId={underlyingCLMId ?? vaultId}
             walletAddress={address}
           />
           <MobileVaultRewardsStat
@@ -50,7 +56,7 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
             contentClassName={classes.valueContainer}
             triggerClassName={classes.value}
             labelClassName={classes.label}
-            vaultId={vaultId}
+            vaultId={underlyingCLMId ?? vaultId}
             walletAddress={address}
           />
           <MobileVaultYieldStat
@@ -59,7 +65,7 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
             contentClassName={classes.valueContainer}
             triggerClassName={classes.value}
             labelClassName={classes.label}
-            vaultId={vaultId}
+            vaultId={underlyingCLMId ?? vaultId}
             walletAddress={address}
           />
           <VaultYearlyStat

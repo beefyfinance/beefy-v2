@@ -843,7 +843,10 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
           this.vaultType.shareToken.address,
           toWei(inputs[0].amount, inputs[0].token.decimals),
           toWei(inputs[1].amount, inputs[1].token.decimals),
-          toWei(outputs[0].amount, outputs[0].token.decimals),
+          toWei(
+            slipBy(outputs[0].amount, maxSlippage, outputs[0].token.decimals),
+            outputs[0].token.decimals
+          ),
           inputs[0].token.address,
           inputs[1].token.address,
           insertBalance
