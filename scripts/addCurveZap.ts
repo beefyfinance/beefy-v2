@@ -15,9 +15,9 @@ import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import { mkdir } from 'node:fs/promises';
 import * as path from 'node:path';
 import { isNonEmptyArray, NonEmptyArray, sleep } from './common/utils';
-import { getAddress } from '@ethersproject/address';
 import type { CurveStrategyOptions } from '../src/features/data/apis/transact/strategies/IStrategy';
 import type { CurveMethodTypes } from '../src/features/data/apis/transact/strategies/curve/types';
+import { getAddress } from 'viem';
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const EEEE_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';

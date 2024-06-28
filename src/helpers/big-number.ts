@@ -53,6 +53,10 @@ export function toWei(value: BigNumber, decimals: number): BigNumber {
   return value.shiftedBy(decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
 }
 
+export function toWeiFromString(value: string, decimals: number): BigNumber {
+  return toWei(new BigNumber(value), decimals);
+}
+
 export function tokenAmountToWei(tokenAmount: TokenAmount): BigNumber {
   return toWei(tokenAmount.amount, tokenAmount.token.decimals);
 }

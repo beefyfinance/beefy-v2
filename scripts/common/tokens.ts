@@ -30,10 +30,10 @@ async function getChainTokens(chain: ChainEntity): Promise<TokenEntity[]> {
       oracleId: chain.walletSettings.nativeCurrency.symbol,
       address: 'native',
       decimals: chain.walletSettings.nativeCurrency.decimals,
-      buyUrl: null,
-      website: null,
-      description: null,
-      documentation: null,
+      buyUrl: undefined,
+      website: undefined,
+      description: undefined,
+      documentation: undefined,
     },
     {
       type: 'native',
@@ -43,10 +43,10 @@ async function getChainTokens(chain: ChainEntity): Promise<TokenEntity[]> {
       oracleId: chain.walletSettings.nativeCurrency.symbol,
       address: 'native',
       decimals: chain.walletSettings.nativeCurrency.decimals,
-      buyUrl: null,
-      website: null,
-      description: null,
-      documentation: null,
+      buyUrl: undefined,
+      website: undefined,
+      description: undefined,
+      documentation: undefined,
     },
   ];
 }
@@ -65,10 +65,11 @@ async function getVaultTokensForChain(chain: ChainEntity): Promise<TokenEntity[]
         address: vault.tokenAddress,
         decimals: vault.tokenDecimals,
         providerId: vault.tokenProviderId,
-        buyUrl: null,
-        website: null,
-        description: null,
-        documentation: null,
+        buyUrl: undefined,
+        website: undefined,
+        description: undefined,
+        documentation: undefined,
+        risks: [],
       });
     }
 
@@ -81,10 +82,11 @@ async function getVaultTokensForChain(chain: ChainEntity): Promise<TokenEntity[]
         oracleId: vault.earnedToken,
         address: vault.earnedTokenAddress,
         decimals: vault.earnedTokenDecimals || 18,
-        buyUrl: null,
-        website: null,
-        description: null,
-        documentation: null,
+        buyUrl: undefined,
+        website: undefined,
+        description: undefined,
+        documentation: undefined,
+        risks: [],
       });
     }
 
@@ -105,10 +107,11 @@ async function getBoostTokensForChain(chain: ChainEntity): Promise<TokenEntity[]
         oracleId: boost.earnedOracleId || boost.earnedToken,
         address: boost.earnedTokenAddress,
         decimals: boost.earnedTokenDecimals || 18,
-        buyUrl: null,
-        website: null,
-        description: null,
-        documentation: null,
+        buyUrl: undefined,
+        website: undefined,
+        description: undefined,
+        documentation: undefined,
+        risks: [],
       });
     }
 
@@ -129,10 +132,11 @@ async function getMinterTokensForChain(chain: ChainEntity): Promise<TokenEntity[
         oracleId: minter.depositToken.oracleId || minter.depositToken.symbol,
         address: minter.depositToken.contractAddress,
         decimals: minter.depositToken.decimals || 18,
-        buyUrl: null,
-        website: null,
-        description: null,
-        documentation: null,
+        buyUrl: undefined,
+        website: undefined,
+        description: undefined,
+        documentation: undefined,
+        risks: [],
       });
     }
 
@@ -145,10 +149,11 @@ async function getMinterTokensForChain(chain: ChainEntity): Promise<TokenEntity[
         oracleId: minter.mintedToken.oracleId || minter.mintedToken.symbol,
         address: minter.mintedToken.contractAddress,
         decimals: minter.mintedToken.decimals || 18,
-        buyUrl: null,
-        website: null,
-        description: null,
-        documentation: null,
+        buyUrl: undefined,
+        website: undefined,
+        description: undefined,
+        documentation: undefined,
+        risks: [],
       });
     }
 
