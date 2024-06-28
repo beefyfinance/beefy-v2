@@ -1,12 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
-import { selectChainById } from '../selectors/chains';
-import {
-  getAddressDomains,
-  isValidAddress,
-  isMaybeDomain,
-  getDomainAddress,
-} from '../../../helpers/addresses';
+import { selectAllChainIds, selectChainById } from '../selectors/chains';
+import { getNameServicesApi } from '../apis/instances';
+import type { ChainEntity, ChainId } from '../entities/chain';
 
 type ResolveFulfilledPayload = {
   address: string;
@@ -24,26 +20,24 @@ export const resolveAddressToDomain = createAsyncThunk<
 >(
   'resolver/addressToDomain',
   async ({ address }, { getState }) => {
-    if (!address || !isValidAddress(address)) {
-      throw new Error('Invalid address');
+    if (!address || !address.length) {
+      throw new Error('No address provided');
     }
 
-    const addressLower = address.toLowerCase();
     const state = getState();
-    const bscChain = selectChainById(state, 'bsc');
-    const ethChain = selectChainById(state, 'ethereum');
-    const polygonChain = selectChainById(state, 'polygon');
-    const arbChain = selectChainById(state, 'arbitrum');
-
-    const domains = await getAddressDomains(address, [bscChain, ethChain, polygonChain, arbChain]);
-    const domain = domains?.[0] || '';
+    const chainIdToEntity = selectAllChainIds(state).reduce((acc, chainId) => {
+      acc[chainId] = selectChainById(state, chainId);
+      return acc;
+    }, {} as Record<ChainId, ChainEntity>);
+    const nameServices = await getNameServicesApi(chainIdToEntity);
+    const domain = await nameServices.resolveAddressToDomain(address);
 
     if (!domain) {
       throw new Error('No domain found');
     }
 
     return {
-      address: addressLower,
+      address: address.toLowerCase(),
       domain: domain,
     };
   },
@@ -74,22 +68,17 @@ export const resolveDomainToAddress = createAsyncThunk<
 >(
   'resolver/domainToAddress',
   async ({ domain }, { getState }) => {
-    if (!domain || !isMaybeDomain(domain)) {
-      throw new Error('Invalid domain');
+    if (!domain || !domain.length) {
+      throw new Error('No domain provided');
     }
 
-    const domainLower = domain.toLowerCase();
     const state = getState();
-    const bscChain = selectChainById(state, 'bsc');
-    const ethChain = selectChainById(state, 'ethereum');
-    const polygonChain = selectChainById(state, 'polygon');
-    const arbChain = selectChainById(state, 'arbitrum');
-    const address = await getDomainAddress(domainLower, [
-      bscChain,
-      ethChain,
-      polygonChain,
-      arbChain,
-    ]);
+    const chainIdToEntity = selectAllChainIds(state).reduce((acc, chainId) => {
+      acc[chainId] = selectChainById(state, chainId);
+      return acc;
+    }, {} as Record<ChainId, ChainEntity>);
+    const nameServices = await getNameServicesApi(chainIdToEntity);
+    const address = await nameServices.resolveDomainToAddress(domain);
 
     if (!address) {
       throw new Error('No address found');
@@ -97,7 +86,7 @@ export const resolveDomainToAddress = createAsyncThunk<
 
     return {
       address: address,
-      domain: domainLower,
+      domain: domain.toLowerCase(),
     };
   },
   {

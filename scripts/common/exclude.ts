@@ -1,5 +1,5 @@
-import { keccak256 } from '@ethersproject/solidity';
 import { addressBookToAppId } from './config';
+import { createHash } from 'node:crypto';
 
 export async function getVaultsIntegrity(chainId: string) {
   try {
@@ -7,11 +7,10 @@ export async function getVaultsIntegrity(chainId: string) {
     const vaults = (await import(`../../src/config/vault/${appChainId}.json`)).default as {
       earnContractAddress: string;
     }[];
-    const addresses = vaults.map(vault => vault.earnContractAddress);
-    const hash = keccak256(
-      addresses.map(() => 'address'),
-      addresses.sort()
-    );
+    const addresses = vaults.map(vault => vault.earnContractAddress).sort();
+    const hasher = createHash('sha256');
+    addresses.forEach(address => hasher.update(address));
+    const hash = hasher.digest('hex');
     return {
       count: addresses.length,
       hash,

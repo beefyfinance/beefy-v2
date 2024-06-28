@@ -11,6 +11,7 @@ import standardInjectedWallets from '@web3-onboard/injected-wallets/dist/wallets
 import createCoinbaseWalletModule from '@web3-onboard/coinbase';
 import createWalletConnectModule from '@web3-onboard/walletconnect';
 import createMetamaskModule from '@web3-onboard/metamask';
+import createTrustDesktopModule from '@web3-onboard/trust';
 import type { ConnectOptions } from '@web3-onboard/core/dist/types';
 import type { WalletInit } from '@web3-onboard/common';
 import { createEIP1193Provider } from '@web3-onboard/common';
@@ -135,6 +136,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       WalletConnectionApi.createMetamaskModule(),
       createCoinbaseWalletModule(),
       WalletConnectionApi.createCDCWalletModule(),
+      createTrustDesktopModule(),
       WalletConnectionApi.createWalletConnectFireblocksModule(),
     ];
   }

@@ -4,11 +4,11 @@ import type { ChainEntity } from '../../../entities/chain';
 import type { InputTokenAmount, TokenAmount } from '../../transact/transact-types';
 import type { TokenErc20, TokenNative } from '../../../entities/token';
 import type { BeefyState } from '../../../../../redux-types';
-import { getAxelarApi } from '../../instances';
 import { selectChainNativeToken } from '../../../selectors/tokens';
 import { fromWei } from '../../../../../helpers/big-number';
 import type BigNumber from 'bignumber.js';
 import { estimateArbitrumSequencerGas } from '../helpers/arbitrum';
+import { getAxelarApi } from '../../axelar';
 
 export class AxelarProvider extends CommonBridgeProvider<BeefyAxelarBridgeConfig> {
   public readonly id = 'axelar' as const;

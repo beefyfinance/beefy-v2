@@ -68,6 +68,7 @@ const hasFiltersChanged = isAnyOf(
   filteredVaultsActions.setChainIds,
   filteredVaultsActions.setPlatformIds,
   filteredVaultsActions.setBoolean,
+  filteredVaultsActions.setBigNumber,
   isRehydrateFiltersAction
 );
 

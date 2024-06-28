@@ -16,6 +16,7 @@ import type { FilteredVaultsState } from '../reducers/filtered-vaults';
 import type { PlatformEntity } from '../entities/platform';
 import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string';
 import escapeStringRegexp from 'escape-string-regexp';
+import type BigNumber from 'bignumber.js';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
@@ -36,6 +37,12 @@ export const selectFilterBoolean = createCachedSelector(
   (key, filters) => filters[key]
 )((state: BeefyState, key: KeysOfType<FilteredVaultsState, boolean>) => key);
 
+export const selectFilterBigNumber = createCachedSelector(
+  (state: BeefyState, key: KeysOfType<FilteredVaultsState, BigNumber>) => key,
+  (state: BeefyState) => state.ui.filteredVaults,
+  (key, filters) => filters[key]
+)((state: BeefyState, key: KeysOfType<FilteredVaultsState, BigNumber>) => key);
+
 export const selectFilterPopinFilterCount = createSelector(
   selectFilterOptions,
   filterOptions =>
@@ -49,7 +56,8 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.strategyType !== 'all' ? 1 : 0) +
     (filterOptions.sort !== 'default' ? 1 : 0) +
     filterOptions.chainIds.length +
-    filterOptions.platformIds.length
+    filterOptions.platformIds.length +
+    (filterOptions.minimumTotalSupply.gt(0) ? 1 : 0)
 );
 
 export const selectHasActiveFilter = createSelector(
@@ -67,7 +75,8 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.searchText !== '' ||
     filterOptions.platformIds.length > 0 ||
     filterOptions.sort !== 'default' ||
-    filterOptions.chainIds.length > 0
+    filterOptions.chainIds.length > 0 ||
+    filterOptions.minimumTotalSupply.gt(0)
 );
 
 export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
@@ -83,7 +92,8 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.onlyEarningPoints !== false ||
     filterOptions.searchText !== '' ||
     filterOptions.platformIds.length > 0 ||
-    filterOptions.chainIds.length > 0
+    filterOptions.chainIds.length > 0 ||
+    filterOptions.minimumTotalSupply.gt(0)
 );
 
 export const selectVaultCategory = createSelector(

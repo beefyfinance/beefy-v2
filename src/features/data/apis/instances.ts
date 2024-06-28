@@ -14,6 +14,7 @@ import {
 import { createPublicClient, type PublicClient } from 'viem';
 import { buildViemChain } from './viem/chains';
 import { makeCustomFallbackTransport } from './viem/transports';
+import type { ChainEntity, ChainId } from '../entities/chain';
 
 export const getBeefyApi = createDependencyFactory(
   async ({ BeefyAPI }) => new BeefyAPI(),
@@ -48,11 +49,6 @@ export const getMigrationApi = createDependencyFactory(
 export const getBridgeApi = createDependencyFactory(
   async ({ BridgeApi }) => new BridgeApi(),
   () => import('./bridge/bridge-api')
-);
-
-export const getAxelarApi = createDependencyFactory(
-  async ({ AxelarApi }) => new AxelarApi(),
-  () => import('./axelar/axelar')
 );
 
 export const getOnRampApi = createDependencyFactory(
@@ -166,4 +162,10 @@ export const getOneInchApi = createDependencyFactoryWithCacheByChain(
 export const getKyberSwapApi = createDependencyFactoryWithCacheByChain(
   async (chain, { KyberSwapApi }) => new KyberSwapApi(chain),
   () => import('./kyber')
+);
+
+export const getNameServicesApi = createDependencyInitializerFactory(
+  async (chainIdToEntity: Record<ChainId, ChainEntity>, { NameServicesApi }) =>
+    new NameServicesApi(chainIdToEntity),
+  () => import('./name-services/name-services-api')
 );
