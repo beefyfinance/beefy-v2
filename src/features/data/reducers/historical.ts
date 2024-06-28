@@ -17,13 +17,13 @@ import type {
   TimeBucketState,
 } from './historical-types';
 import type { Draft } from 'immer';
-import { isCowcentratedVault } from '../entities/vault';
 import {
   allDataApiBuckets,
   getDataApiBucket,
   getDataApiBucketsShorterThan,
 } from '../apis/beefy/beefy-data-api-helpers';
 import { fromKeys, fromKeysBy } from '../../../helpers/object';
+import { selectIsVaultCowcentratedLike } from '../selectors/vaults';
 
 const initialState: HistoricalState = {
   ranges: {
@@ -73,24 +73,26 @@ export const historicalSlice = createSlice({
           error: action.error,
         };
       })
-      .addCase(fetchHistoricalRanges.fulfilled, (state, action) => {
-        const { vault, oracleId, ranges } = action.payload;
+      .addCase(fetchHistoricalRanges.fulfilled, (sliceState, action) => {
+        const { vault, oracleId, ranges, state } = action.payload;
 
         const vaultId = vault.id;
 
-        state.ranges.byVaultId[vaultId] = {
+        sliceState.ranges.byVaultId[vaultId] = {
           status: 'fulfilled',
           alreadyFulfilled: true,
           ranges,
         };
 
-        initAllTimeBuckets(state, oracleId, vaultId);
-        state.apys.byVaultId[vaultId].available = getBucketsFromRange(ranges.apys);
-        state.tvls.byVaultId[vaultId].available = getBucketsFromRange(ranges.tvls);
-        if (isCowcentratedVault(vault)) {
-          state.clm.byVaultId[vaultId].available = getBucketsFromRange(ranges.clm);
+        const isCowcentrated = selectIsVaultCowcentratedLike(state, vaultId);
+
+        initAllTimeBuckets(sliceState, oracleId, vaultId);
+        sliceState.apys.byVaultId[vaultId].available = getBucketsFromRange(ranges.apys);
+        sliceState.tvls.byVaultId[vaultId].available = getBucketsFromRange(ranges.tvls);
+        if (isCowcentrated) {
+          sliceState.clm.byVaultId[vaultId].available = getBucketsFromRange(ranges.clm);
         }
-        state.prices.byOracleId[oracleId].available = getBucketsFromRange(ranges.prices);
+        sliceState.prices.byOracleId[oracleId].available = getBucketsFromRange(ranges.prices);
       })
       .addCase(fetchHistoricalApys.pending, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
