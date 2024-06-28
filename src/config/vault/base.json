@@ -1,5 +1,33 @@
 [
   {
+    "id": "aerodrome-usd+-mai",
+    "name": "USD+-MAI sLP",
+    "token": "sAMM-USD+/MAI",
+    "tokenAddress": "0x3FF5bfE3ff5e1877664Fe25862871554e632b9C9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroUSD+-MAI",
+    "earnedTokenAddress": "0x36687C7b4A84a718eaC32A62722E01A5eE43abC1",
+    "earnContractAddress": "0x36687C7b4A84a718eaC32A62722E01A5eE43abC1",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usd+-mai",
+    "status": "active",
+    "createdAt": 1719516747,
+    "platformId": "aerodrome",
+    "assets": ["USD+", "MAI"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376&token1=0xbf1aeA8670D2528E08334083616dD9C5F3B087aE&type=0",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-dola-eusd",
     "name": "DOLA-eUSD sLP",
     "token": "sAMM-DOLA/eUSD",
