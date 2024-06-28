@@ -1,5 +1,83 @@
 [
   {
+    "id": "curve-eusd-usdc",
+    "name": "eUSD/USDC",
+    "token": "eUSDUSDC",
+    "tokenAddress": "0x08BfA22bB3e024CDfEB3eca53c0cb93bF59c4147",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurve_eUSD-USDC",
+    "earnedTokenAddress": "0x1817CFfc44c78d5aED61420bF48Cc273E504B7BE",
+    "earnContractAddress": "0x1817CFfc44c78d5aED61420bF48Cc273E504B7BE",
+    "oracle": "lps",
+    "oracleId": "curve-eusd-usdc",
+    "status": "active",
+    "createdAt": 1719559473,
+    "platformId": "curve",
+    "assets": ["eUSD", "USDC"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-167/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-167/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x08BfA22bB3e024CDfEB3eca53c0cb93bF59c4147",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x08BfA22bB3e024CDfEB3eca53c0cb93bF59c4147",
+            "coins": [
+              "0xA0d69E286B938e21CBf7E51D71F6A4c8918f482F",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fx-eusd-fxusd",
+    "name": "eUSD/fxUSD",
+    "token": "eUSDfxUSD",
+    "tokenAddress": "0x16b54e3aC8e3ba088333985035b869847e36E770",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooFxConvexEUSD-fxUSD",
+    "earnedTokenAddress": "0xf308d61839716610baf43cb72c294C61BB67e38E",
+    "earnContractAddress": "0xf308d61839716610baf43cb72c294C61BB67e38E",
+    "oracle": "lps",
+    "oracleId": "fx-eusd-fxusd",
+    "status": "active",
+    "createdAt": 1719559463,
+    "platformId": "fx",
+    "assets": ["eUSD", "fxUSD"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-114/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-114/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x16b54e3aC8e3ba088333985035b869847e36E770",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x16b54e3aC8e3ba088333985035b869847e36E770",
+            "coins": [
+              "0xA0d69E286B938e21CBf7E51D71F6A4c8918f482F",
+              "0x085780639CC2cACd35E474e71f4d000e2405d8f6"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "pendle-crvusd-26sep24",
     "name": "crvUSD 26Sep24",
     "token": "crvUSD 26Sep24",
