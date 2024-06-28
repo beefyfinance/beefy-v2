@@ -309,29 +309,6 @@
     "network": "ethereum"
   },
   {
-    "id": "curve-lend-wsteth-crvusd",
-    "name": "crvUSD (wstETH Market)",
-    "token": "cvcrvUSD",
-    "tokenAddress": "0x8cf1DE26729cfB7137AF1A6B2a665e099EC319b5",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve-lend",
-    "earnedToken": "mooCurveLendWstETH-crvUSD",
-    "earnedTokenAddress": "0x499f4ec878310099b1cFb7e62BfA92D04a955A10",
-    "earnContractAddress": "0x499f4ec878310099b1cFb7e62BfA92D04a955A10",
-    "oracle": "lps",
-    "oracleId": "curve-lend-wsteth-crvusd",
-    "status": "active",
-    "createdAt": 1716534679,
-    "platformId": "convex",
-    "assets": ["crvUSD"],
-    "migrationIds": ["ethereum-convex"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-0/vault/deposit",
-    "removeLiquidityUrl": "https://lend.curve.fi/#/ethereum/markets/one-way-market-0/vault/withdraw",
-    "network": "ethereum"
-  },
-  {
     "id": "fx-dola-fxusd",
     "name": "DOLA/fxUSD",
     "token": "fxUSDDola",
@@ -1259,46 +1236,6 @@
     "addLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x49cbd67651fbabce12d1df18499896ec87bef46f00000000000000000000064a",
     "removeLiquidityUrl": "https://app.balancer.fi/#/ethereum/pool/0x49cbd67651fbabce12d1df18499896ec87bef46f00000000000000000000064a",
     "network": "ethereum"
-  },
-  {
-    "id": "convex-hyusdeusd",
-    "name": "hyUSD/eUSD",
-    "token": "hyUSDeUSD-f",
-    "tokenAddress": "0xc794C6A95f30d0ebF7B3Bbe85e8a0A95C9e411c1",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnedToken": "mooConvex_hyUSD-eUSD",
-    "earnedTokenAddress": "0x08ab1DEfc5A6Df4b5598a68f17385936B345AE36",
-    "earnContractAddress": "0x08ab1DEfc5A6Df4b5598a68f17385936B345AE36",
-    "oracle": "lps",
-    "oracleId": "convex-hyusdeusd",
-    "status": "active",
-    "createdAt": 1703151329,
-    "platformId": "convex",
-    "assets": ["hyUSD", "eUSD"],
-    "migrationIds": ["ethereum-convex"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-252/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-252/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-252/withdraw",
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0x8a8434A5952aC2CF4927bbEa3ace255c6dd165CD",
-        "methods": [
-          {
-            "type": "fixed",
-            "target": "0x8a8434A5952aC2CF4927bbEa3ace255c6dd165CD",
-            "coins": [
-              "0xaCdf0DBA4B9839b96221a8487e9ca660a48212be",
-              "0xA0d69E286B938e21CBf7E51D71F6A4c8918f482F"
-            ]
-          }
-        ]
-      }
-    ]
   },
   {
     "id": "convex-eth+",
@@ -3947,85 +3884,6 @@
             "coins": [
               "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
               "0xD533a949740bb3306d119CC777fa900bA034cd52"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "convex-frxeth",
-    "name": "frxETH/ETH",
-    "type": "standard",
-    "token": "frxETHCRV",
-    "tokenAddress": "0xf43211935C781D5ca1a41d2041F397B8A7366C7A",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnedToken": "mooConvexFrxETH",
-    "earnedTokenAddress": "0x4a37227BFE2aD5c5126E176e16363d5c79BC1EF5",
-    "earnContractAddress": "0x4a37227BFE2aD5c5126E176e16363d5c79BC1EF5",
-    "oracle": "lps",
-    "oracleId": "convex-frxeth",
-    "status": "active",
-    "createdAt": 1669188341,
-    "platformId": "convex",
-    "assets": ["frxETH", "ETH"],
-    "migrationIds": ["ethereum-convex"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/frxeth/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/frxeth/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/frxeth/withdraw",
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0xa1F8A6807c402E4A15ef4EBa36528A3FED24E577",
-        "methods": [
-          {
-            "type": "fixed-deposit-int128",
-            "target": "0xa1F8A6807c402E4A15ef4EBa36528A3FED24E577",
-            "coins": ["native", "0x5E8422345238F34275888049021821E8E08CAa1f"]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "convex-cbeth",
-    "name": "cbETH/ETH",
-    "type": "standard",
-    "token": "cbETH/ETH-f",
-    "tokenAddress": "0x5b6C539b224014A09B3388e51CaAA8e354c959C8",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnedToken": "mooConvexCbETH",
-    "earnedTokenAddress": "0x60a1Cf0D617EeADbB48e488D9Ca3E74F50aB4b71",
-    "earnContractAddress": "0x60a1Cf0D617EeADbB48e488D9Ca3E74F50aB4b71",
-    "oracle": "lps",
-    "oracleId": "convex-cbeth",
-    "status": "active",
-    "createdAt": 1669187174,
-    "platformId": "convex",
-    "assets": ["cbETH", "ETH"],
-    "migrationIds": ["ethereum-convex"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-91/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-91/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-crypto-91/withdraw",
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
-        "methods": [
-          {
-            "type": "fixed",
-            "target": "0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
-            "coins": [
-              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-              "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
             ]
           }
         ]
