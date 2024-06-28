@@ -109,7 +109,7 @@ const DailyContentTooltip = memo<DailyTooltipContentProps>(function DailyTooltip
     if (isGovVault) {
       items.push({
         label: 'Pool-AprDaily',
-        value: rates.vaultDaily ?? '?',
+        value: rates.rewardPoolApr ?? '?',
       });
     } else {
       if ('vaultDaily' in rates) {
