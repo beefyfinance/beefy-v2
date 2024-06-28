@@ -77,6 +77,7 @@ export const getApiApyDataComponents = createFactory(() => {
     'merkl',
     'liquidStaking',
     'composablePool',
+    'rewardPool',
   ] as const satisfies Array<ApiApyDataAprComponents>;
   const allComponents = [...compoundableComponents, ...nonCompoundableComponents];
   const compoundableDaily = compoundableComponents.map(

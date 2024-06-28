@@ -86,8 +86,15 @@ export const recalculateTotalApyAction = createAsyncThunk<
       total.totalMonthly = total.totalDaily * 30;
     }
 
-    // Gov vaults don't auto-compound
-    if (isGovVault(vault) && 'vaultApr' in apy) {
+    // Presence of rewardPoolApr indicates new api calc that has correct totals
+    // [Old gov pools had their apr in the vaultApr field]
+    if (isGovVault(vault) && !('rewardPoolApr' in apy)) {
+      if ('vaultApr' in apy) {
+        total.rewardPoolApr = total.vaultApr;
+        total.rewardPoolDaily = total.vaultDaily;
+        delete total.vaultApr;
+        delete total.vaultDaily;
+      }
       total.totalApy = total.totalDaily * 365;
       total.totalMonthly = total.totalDaily * 30;
     }
