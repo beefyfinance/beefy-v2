@@ -74,7 +74,7 @@ export const historicalSlice = createSlice({
         };
       })
       .addCase(fetchHistoricalRanges.fulfilled, (sliceState, action) => {
-        const { vault, oracleId, ranges, state } = action.payload;
+        const { vault, oracleId, ranges, isCowcentrated } = action.payload;
 
         const vaultId = vault.id;
 
@@ -83,8 +83,6 @@ export const historicalSlice = createSlice({
           alreadyFulfilled: true,
           ranges,
         };
-
-        const isCowcentrated = selectIsVaultCowcentratedLike(state, vaultId);
 
         initAllTimeBuckets(sliceState, oracleId, vaultId);
         sliceState.apys.byVaultId[vaultId].available = getBucketsFromRange(ranges.apys);

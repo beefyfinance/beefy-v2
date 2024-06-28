@@ -22,7 +22,7 @@ export interface HistoricalRangesPayload {
   vault: VaultEntity;
   oracleId: TokenEntity['oracleId'];
   ranges: ApiRanges;
-  state: BeefyState;
+  isCowcentrated: boolean;
 }
 
 export interface HistoricalRangesParams {
@@ -38,7 +38,6 @@ export const fetchHistoricalRanges = createAsyncThunk<
   const vault = selectVaultById(state, vaultId);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const api = await getBeefyDataApi();
-
   const isCowcentrated = selectIsVaultCowcentratedLike(state, vaultId);
 
   const ranges = await api.getAvailableRanges(
@@ -52,7 +51,7 @@ export const fetchHistoricalRanges = createAsyncThunk<
     isCowcentrated ? vault.chainId : undefined
   );
 
-  return { vault, oracleId: depositToken.oracleId, ranges, state };
+  return { vault, oracleId: depositToken.oracleId, ranges, isCowcentrated: !!isCowcentrated };
 });
 
 export interface HistoricalApysPayload {
@@ -145,10 +144,10 @@ export const fetchHistoricalCowcentratedRanges = createAsyncThunk<
         ? bucket
         : ('1h_1M' as ApiTimeBucket);
 
-    // if the vault is a gov vault, we need to use the deposit token address since will be the undelying clm token
-    const addressToUse = isGovVault(vault) ? vault.depositTokenAddress : vaultAddress;
+    // if the vault is a gov vault, we need to use the deposit token address since will be the underlying clm token
+    const clmAddress = isGovVault(vault) ? vault.depositTokenAddress : vaultAddress;
 
-    const rawData = await api.getCowcentratedRangesChartData(addressToUse, bucketToUse, chainId);
+    const rawData = await api.getCowcentratedRangesChartData(clmAddress, bucketToUse, chainId);
 
     const data = rawData.map(item => {
       return {
