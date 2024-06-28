@@ -104,6 +104,26 @@ function addContractDataToState(
     sliceState.byVaultId[vault.id] = { tvl };
   }
 
+  for (const govVaultMultiContractData of contractData.govVaultsMulti) {
+    const vault = selectVaultById(state, govVaultMultiContractData.id);
+    const price = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const totalStaked = govVaultMultiContractData.totalSupply;
+    let tvl = totalStaked.times(price);
+
+    // gov excludes standard tvl
+    if (vault.excludedId) {
+      const excludedVault = selectVaultById(state, vault.excludedId);
+      if (excludedVault && excludedVault.status === 'active') {
+        const excludedTVL = sliceState.byVaultId[vault.excludedId]?.tvl;
+        if (excludedTVL) {
+          tvl = tvl.minus(excludedTVL);
+        }
+      }
+    }
+
+    sliceState.byVaultId[vault.id] = { tvl };
+  }
+
   for (const cowVaultContractData of contractData.cowVaults) {
     const vault = selectVaultById(state, cowVaultContractData.id) as VaultCowcentrated;
     const vaultTokens = vault.depositTokenAddresses.map(address =>

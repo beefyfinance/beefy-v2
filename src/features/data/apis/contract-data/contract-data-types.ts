@@ -1,13 +1,19 @@
 import type BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../redux-types';
 import type { BoostEntity } from '../../entities/boost';
-import type { VaultCowcentrated, VaultGov, VaultStandard } from '../../entities/vault';
+import type {
+  VaultCowcentrated,
+  VaultGov,
+  VaultGovMulti,
+  VaultStandard,
+} from '../../entities/vault';
 
 export interface IContractDataApi {
   fetchAllContractData(
     state: BeefyState,
     standardVaults: VaultStandard[],
     govVaults: VaultGov[],
+    govVaultsMulti: VaultGovMulti[],
     cowVaults: VaultCowcentrated[],
     boosts: BoostEntity[]
   ): Promise<FetchAllContractDataResult>;
@@ -16,6 +22,24 @@ export interface IContractDataApi {
 export interface GovVaultContractData {
   id: string;
   totalSupply: BigNumber;
+}
+
+export interface RewardContractData {
+  tokenAddress: string;
+  rewardRate: BigNumber;
+  periodFinish: Date;
+}
+
+export interface GovVaultMultiContractDataResponse {
+  id: string;
+  totalSupply: BigNumber;
+  rewards: string[][]; // [tokenAddress, rewardRate, periodFinish]
+}
+
+export interface GovVaultMultiContractData {
+  id: string;
+  totalSupply: BigNumber;
+  rewards: RewardContractData[];
 }
 export interface StandardVaultContractData {
   id: string;
@@ -65,5 +89,6 @@ export interface FetchAllContractDataResult {
   boosts: BoostContractData[];
   standardVaults: StandardVaultContractData[];
   govVaults: GovVaultContractData[];
+  govVaultsMulti: GovVaultMultiContractData[];
   cowVaults: CowVaultContractData[];
 }

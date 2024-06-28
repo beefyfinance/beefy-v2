@@ -1,5 +1,10 @@
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi';
-import type { VaultCowcentrated, VaultGov, VaultStandard } from '../../entities/vault';
+import type {
+  VaultCowcentrated,
+  VaultGov,
+  VaultGovMulti,
+  VaultStandard,
+} from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import type { AsWeb3Result } from '../../utils/types-utils';
@@ -11,13 +16,16 @@ import type {
   CowVaultContractData,
   FetchAllContractDataResult,
   GovVaultContractData,
+  GovVaultMultiContractData,
+  GovVaultMultiContractDataResponse,
   IContractDataApi,
+  RewardContractData,
   StandardVaultContractData,
 } from './contract-data-types';
 import { featureFlag_getContractDataApiChunkSize } from '../../utils/feature-flags';
 import type { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
-import { selectTokenByAddress } from '../../selectors/tokens';
+import { selectTokenByAddress, selectTokenByAddressOrUndefined } from '../../selectors/tokens';
 import { makeBatchRequest, viemToWeb3Abi, type Web3Call } from '../../../../helpers/web3';
 import { isFiniteNumber } from '../../../../helpers/number';
 import type Web3 from 'web3';
@@ -29,6 +37,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     state: BeefyState,
     standardVaults: VaultStandard[],
     govVaults: VaultGov[],
+    govVaultsMulti: VaultGovMulti[],
     cowVaults: VaultCowcentrated[],
     boosts: BoostEntity[]
   ): Promise<FetchAllContractDataResult> {
@@ -42,6 +51,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
     const boostBatches = chunk(boosts, CHUNK_SIZE);
     const govVaultBatches = chunk(govVaults, CHUNK_SIZE);
+    const govVaultMultiBatches = chunk(govVaultsMulti, CHUNK_SIZE);
     const vaultBatches = chunk(standardVaults, CHUNK_SIZE);
     const cowVaultBatches = chunk(cowVaults, CHUNK_SIZE);
 
@@ -65,6 +75,13 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
         params: { from: '0x0000000000000000000000000000000000000000' },
       });
     });
+    govVaultMultiBatches.forEach(govVaultBatch => {
+      requestsForBatch.push({
+        method: mc.methods.getGovVaultMultiInfo(govVaultBatch.map(vault => vault.contractAddress))
+          .call,
+        params: { from: '0x0000000000000000000000000000000000000000' },
+      });
+    });
     cowVaultBatches.forEach(cowVaultBatch => {
       requestsForBatch.push({
         method: mc.methods.getCowVaultInfo(cowVaultBatch.map(vault => vault.contractAddress)).call,
@@ -79,6 +96,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const res: FetchAllContractDataResult = {
       boosts: [],
       govVaults: [],
+      govVaultsMulti: [],
       standardVaults: [],
       cowVaults: [],
     };
@@ -103,6 +121,15 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
         (vaultRes, elemidx) => this.govVaultFormatter(state, vaultRes, vaultBatch[elemidx])
       );
       res.govVaults = res.govVaults.concat(batchRes);
+      resultsIdx++;
+    }
+    for (const vaultBatch of govVaultMultiBatches) {
+      const batchRes = (
+        results[resultsIdx] as AsWeb3Result<GovVaultMultiContractDataResponse>[]
+      ).map((vaultRes, elemidx) =>
+        this.govVaultMultiFormatter(state, vaultRes, vaultBatch[elemidx])
+      );
+      res.govVaultsMulti = res.govVaultsMulti.concat(batchRes);
       resultsIdx++;
     }
     for (const cowBatch of cowVaultBatches) {
@@ -212,6 +239,36 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       id: govVault.id,
       totalSupply: new BigNumber(result.totalSupply).shiftedBy(-token.decimals),
     } satisfies GovVaultContractData;
+  }
+
+  protected govVaultMultiFormatter(
+    state: BeefyState,
+    result: AsWeb3Result<GovVaultMultiContractDataResponse>,
+    govVault: VaultGovMulti
+  ) {
+    const vault = selectVaultById(state, govVault.id);
+    const token = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
+
+    const rewards: RewardContractData[] = [];
+    for (const reward of result.rewards) {
+      const rewardAddress = reward[0];
+      const rewardToken = selectTokenByAddressOrUndefined(state, vault.chainId, rewardAddress);
+      if (!rewardToken) {
+        console.error(`Unknown reward token (${rewardToken}) for rewardpool ${vault.id}`);
+        continue;
+      }
+      rewards.push({
+        tokenAddress: rewardAddress,
+        rewardRate: new BigNumber(reward[1]).shiftedBy(-rewardToken.decimals),
+        periodFinish: this.periodFinishToDate(reward[2])!,
+      });
+    }
+
+    return {
+      id: govVault.id,
+      totalSupply: new BigNumber(result.totalSupply).shiftedBy(-token.decimals),
+      rewards,
+    } satisfies GovVaultMultiContractData;
   }
 
   protected cowVaultFormatter(
