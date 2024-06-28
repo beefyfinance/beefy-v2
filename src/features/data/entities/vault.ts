@@ -17,15 +17,26 @@ export type VaultTag =
 
 export type VaultType = 'standard' | 'gov' | 'cowcentrated';
 
+export type VaultNames = {
+  /** w/out Vault/Pool/CLM suffix */
+  short: string;
+  /** w/ Vault/Pool/CLM suffix */
+  long: string;
+  /** vault list */
+  list: string;
+  /** single vault page header */
+  single: string;
+  /** single vault page meta title */
+  singleMeta: string;
+};
+
 export type VaultBase = {
   /** globally unique id for the vault */
   id: string;
   /** name of the vault (as in the config) */
   name: string;
-  /** short name of the vault w/out Vault/Pool/CLM suffix */
-  shortName: string;
-  /** long name of the vault w/ Vault/Pool/CLM suffix */
-  longName: string;
+  /** variations of name used in different contexts */
+  names: VaultNames;
   /** contract version, increased when app needs to behave differently for the same vault type */
   version: number;
   /** chain the vault is on */

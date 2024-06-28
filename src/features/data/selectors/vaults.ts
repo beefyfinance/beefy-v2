@@ -425,11 +425,6 @@ export const selectIsVaultCorrelated = createSelector(
   res => res
 );
 
-export const selectVaultName = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.byId[vaultId],
-  (vault: VaultEntity) => vault.name
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
-
 export const selectVaultDepositFee = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
   return vault.depositFee;

@@ -42,7 +42,7 @@ export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId
           chainId={vault.chainId}
           className={classes.titleAsset}
         />
-        <div className={classes.title}>{punctuationWrap(vault.longName)}</div>
+        <div className={classes.title}>{punctuationWrap(vault.names.list)}</div>
         {isCowcentratedLike ? (
           <VaultClmLikeTag
             vault={vault}

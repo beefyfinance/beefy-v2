@@ -23,7 +23,14 @@ export const styles = (theme: Theme) => ({
       padding: '16px 24px',
     },
   },
-  statsInterest: {},
+  statsInterest: {
+    '& $stat': {
+      textAlign: 'left' as const,
+      '& > div': {
+        textAlign: 'left' as const,
+      },
+    },
+  },
   statsDeposit: {
     '& $stat > div': {
       textAlign: 'left' as const,

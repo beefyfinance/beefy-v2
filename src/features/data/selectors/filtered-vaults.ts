@@ -97,7 +97,7 @@ function fuzzyTokenRegex(token: string) {
 }
 
 function vaultNameMatches(vault: VaultEntity, searchText: string) {
-  return stringFoundAnywhere(simplifySearchText(vault.name), searchText);
+  return stringFoundAnywhere(simplifySearchText(vault.names.list), searchText);
 }
 
 function searchTextToFuzzyTokenMatchers(searchText: string) {

@@ -307,12 +307,11 @@ function getVaultStatus(apiVault: VaultConfig): VaultStatus {
 
 function getVaultBase(apiVault: VaultConfig, chainId: ChainEntity['id']): VaultBase {
   const names = getVaultNames(apiVault.name, apiVault.type);
-  if (apiVault.id === 'bifi-vault') {
-    names.name = names.longName;
-  }
 
   return {
     id: apiVault.id,
+    name: apiVault.id === 'bifi-vault' ? names.long : apiVault.name,
+    names,
     version: apiVault.version || 1,
     chainId: chainId,
     contractAddress: apiVault.earnContractAddress,
@@ -321,7 +320,6 @@ function getVaultBase(apiVault: VaultConfig, chainId: ChainEntity['id']): VaultB
     updatedAt: apiVault.updatedAt || apiVault.createdAt || 0,
     zaps: apiVault.zaps || [],
     excludedId: apiVault.excluded || undefined,
-    ...names,
   };
 }
 
@@ -489,20 +487,18 @@ function rebuildVaultsState(sliceState: Draft<VaultsState>) {
   // TODO think of a better way to do this
   //  - we need the vault relations resolved in order tell if the reward pool is for a clm or not
   for (const vault of allVaults) {
-    if (isStandardVault(vault)) {
-      const underlyingGovId = sliceState.relations.underlyingOf.byType.gov.byId[vault.id];
-      if (underlyingGovId) {
-        const underlyingGov = sliceState.byId[underlyingGovId]!;
-        underlyingGov.excludedId = vault.id; // gov excludes standard tvl
-      }
-    } else if (isGovVault(vault)) {
+    if (isGovVault(vault)) {
       const underlyingClmId = sliceState.relations.underlyingOf.byType.cowcentrated.byId[vault.id];
       if (underlyingClmId) {
         const underlyingClm = sliceState.byId[underlyingClmId]!;
-        vault.name = vault.shortName;
-        vault.longName = vault.shortName;
+        vault.name = underlyingClm.names.short;
+        vault.names.short = underlyingClm.names.short;
+        vault.names.long = `${underlyingClm.names.short} CLM POOL`;
+        vault.names.list = vault.names.short;
+        vault.names.single = vault.names.short;
+        vault.names.singleMeta = vault.names.long;
         vault.risks = underlyingClm?.risks || [];
-        underlyingClm.excludedId = vault.id; // clm excludes gov tvl
+        underlyingClm.excludedId = vault.id; // clm excludes gov tvl // TODO support vaults
       }
     }
   }

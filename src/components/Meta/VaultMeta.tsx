@@ -22,7 +22,7 @@ export const VaultMeta = memo<VaultMetaProps>(function VaultMeta({ vaultId }) {
 
   return (
     <Meta
-      title={t('Meta-Vault-Title', { vault: vault.longName, chain: chain.name })}
+      title={t('Meta-Vault-Title', { vault: vault.names.singleMeta, chain: chain.name })}
       description={t('Meta-Vault-Description', {
         token: depositToken.symbol,
         chain: chain.name,

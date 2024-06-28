@@ -49,7 +49,7 @@ export function useCommonHelper(vaultId: VaultEntity['id']): CommonHelper {
 
   return useMemo(() => {
     const values: Record<string, string> = {
-      name: vault.name,
+      name: vault.names.single,
       chainId: chain.id,
       chainName: chain.name,
       chainNative: chain.walletSettings.nativeCurrency.symbol,

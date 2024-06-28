@@ -1,4 +1,4 @@
-import type { VaultBase, VaultEntity } from '../entities/vault';
+import type { VaultEntity, VaultNames } from '../entities/vault';
 
 const typeToSuffix: Record<VaultEntity['type'], string> = {
   standard: 'Vault',
@@ -24,7 +24,7 @@ export function getVaultTypeSuffix(type: VaultEntity['type']) {
 export function getVaultNames(
   configName: string,
   configType: VaultEntity['type'] | undefined
-): Pick<VaultBase, 'name' | 'shortName' | 'longName'> {
+): VaultNames {
   const type = configType || 'standard';
   const suffix = getSuffix(configName, type);
   // without the suffix
@@ -33,8 +33,10 @@ export function getVaultNames(
   const long = short + ' ' + (suffix || typeToSuffix[type]);
 
   return {
-    name: configName,
-    shortName: short,
-    longName: long,
+    short,
+    long,
+    list: type === 'gov' ? long : short,
+    single: type === 'cowcentrated' ? short : long,
+    singleMeta: long,
   };
 }

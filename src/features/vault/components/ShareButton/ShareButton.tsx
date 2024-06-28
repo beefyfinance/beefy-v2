@@ -63,7 +63,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   const apys = useAppSelector(state => selectVaultTotalApy(state, vault.id));
   const commonVaultDetails = useMemo<CommonVaultDetails>(() => {
     return {
-      vaultName: vault.name,
+      vaultName: vault.names.singleMeta,
       vaultApy: formatLargePercent(apys.totalApy, 2),
       vaultUrl: `https://app.beefy.com/vault/${vault.id}`,
       chainName: chain.name,
