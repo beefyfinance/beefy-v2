@@ -1,5 +1,28 @@
 [
   {
+    "id": "balancer-gyro-arb-wsteth-weth",
+    "name": "Gyroscope wstETH-ETH",
+    "type": "standard",
+    "token": "wstETH-ETH Arb",
+    "tokenAddress": "0x7967FA58B9501600D96bD843173b9334983EE6E6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerGyroArbwstETH-WETH",
+    "earnedTokenAddress": "0xA9Fa0C33cE278952309229FbE202A5E6108491B0",
+    "earnContractAddress": "0xA9Fa0C33cE278952309229FbE202A5E6108491B0",
+    "oracle": "lps",
+    "oracleId": "balancer-gyro-arb-wsteth-weth",
+    "status": "active",
+    "createdAt": 1719689694,
+    "platformId": "balancer",
+    "assets": ["wstETH", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0x7967FA58B9501600D96bD843173b9334983EE6E6/join/",
+    "removeLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0x7967FA58B9501600D96bD843173b9334983EE6E6/exit/",
+    "network": "arbitrum"
+  },
+  {
     "id": "pancake-cow-arb-weth-usdc",
     "name": "WETH-USDC",
     "type": "cowcentrated",
