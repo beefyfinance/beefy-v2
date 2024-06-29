@@ -6763,6 +6763,7 @@
     "oracleId": "balancer-usdc-dai-usdt-usdce",
     "status": "active",
     "createdAt": 1694164215,
+    "updatedAt": 1719672496,
     "platformId": "aura",
     "assets": ["USDC", "DAI", "USDT", "arbUSDCe"],
     "risks": [
@@ -6825,6 +6826,7 @@
     "oracleId": "balancer-wsteth-weth-v3",
     "status": "active",
     "createdAt": 1694164215,
+    "updatedAt": 1719672496,
     "platformId": "aura",
     "assets": ["wstETH", "ETH"],
     "risks": [
