@@ -1,5 +1,34 @@
 [
   {
+    "id": "ramses-usdx-usdc",
+    "name": "USDx-USDC sLP",
+    "type": "standard",
+    "token": "USDx-USDC sLP",
+    "tokenAddress": "0x340F0c6E09bb2C13df14bb4B334CC8Dba0bb4881",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "earnedToken": "mooRamsesUSDxUSDC",
+    "earnedTokenAddress": "0xEd7a0396455404e47B3b407D9e50750A7336BC74",
+    "earnContractAddress": "0xEd7a0396455404e47B3b407D9e50750A7336BC74",
+    "oracle": "lps",
+    "oracleId": "ramses-usdx-usdc",
+    "status": "active",
+    "createdAt": 1719666517,
+    "platformId": "ramses",
+    "assets": ["USDx", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://app.ramses.exchange/swap?from=0xaf88d065e77c8cC2239327C5EDb3A432268e5831&to=0xb2F30A7C980f052f02563fb518dcc39e6bf38175",
+    "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x340F0c6E09bb2C13df14bb4B334CC8Dba0bb4881",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "arbitrum-ramses"
+      }
+    ]
+  },
+  {
     "id": "camelot-gns-weth",
     "name": "GNS-WETH",
     "type": "cowcentrated",
