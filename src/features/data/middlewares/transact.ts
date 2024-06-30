@@ -11,7 +11,7 @@ import {
   selectShouldInitZapSwapAggregators,
 } from '../selectors/data-loader';
 import { selectAllChainIds } from '../selectors/chains';
-import { selectIsVaultCowcentratedLike, selectVaultById } from '../selectors/vaults';
+import { selectVaultById } from '../selectors/vaults';
 import { selectTransactPendingVaultIdOrUndefined } from '../selectors/transact';
 import { selectWalletAddress } from '../selectors/wallet';
 import { selectAreFeesLoaded, selectShouldInitFees } from '../selectors/fees';
@@ -25,6 +25,7 @@ import {
 import { transactInit, transactInitReady } from '../actions/transact';
 import { fetchUserMerklRewardsAction } from '../actions/user-rewards';
 import { fetchFees } from '../actions/fees';
+import { isCowcentratedLikeVault } from '../entities/vault';
 
 const transactListener = createListenerMiddleware<BeefyState>();
 
@@ -110,7 +111,7 @@ transactListener.startListening({
     }
 
     // Claim: Init user merkl rewards data loader
-    const mayHaveMerklRewards = selectIsVaultCowcentratedLike(getState(), vault.id);
+    const mayHaveMerklRewards = isCowcentratedLikeVault(vault);
     const walletAddress = selectWalletAddress(getState());
     if (mayHaveMerklRewards && walletAddress) {
       // dispatch but don't wait on it

@@ -1,4 +1,4 @@
-import { isGovVault, type VaultGov } from '../../../entities/vault';
+import { isGovVault, isGovVaultCowcentrated, type VaultGov } from '../../../entities/vault';
 import type { BeefyState, GetStateFn } from '../../../../../redux-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import type {
@@ -35,7 +35,6 @@ import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../reducers/wallet/stepper';
 import { walletActions } from '../../../actions/wallet-actions';
 import { selectGovVaultPendingRewards } from '../../../selectors/balance';
-import { selectVaultUnderlyingCowcentratedVaultIdOrUndefined } from '../../../selectors/vaults';
 import { selectWalletAddress } from '../../../selectors/wallet';
 
 export class GovVaultType implements IGovVaultType {
@@ -193,12 +192,7 @@ export class GovVaultType implements IGovVaultType {
       },
     ];
 
-    const isCowcentratedGov = !!selectVaultUnderlyingCowcentratedVaultIdOrUndefined(
-      state,
-      this.vault.id
-    );
-
-    if (isWithdrawAll && !isCowcentratedGov) {
+    if (isWithdrawAll && !isGovVaultCowcentrated(this.vault)) {
       const pendingRewards = selectGovVaultPendingRewards(
         state,
         this.vault.id,

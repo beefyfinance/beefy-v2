@@ -18,10 +18,8 @@ import {
   selectAllVaultIds,
   selectIsVaultBlueChip,
   selectIsVaultCorrelated,
-  selectIsVaultCowcentratedLike,
   selectIsVaultStable,
   selectVaultById,
-  selectVaultIsUnderlyingVault,
 } from '../selectors/vaults';
 import { selectActiveChainIds, selectAllChainIds } from '../selectors/chains';
 import { selectVaultSupportsZap } from '../selectors/zap';
@@ -127,17 +125,16 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
         }
 
         // Hide CLM if pool or vault exists
-        if (isCowcentratedVault(vault) && selectVaultIsUnderlyingVault(state, vault.id)) {
+        if (
+          isCowcentratedVault(vault) &&
+          (!vault.cowcentratedGovId || !vault.cowcentratedStandardId)
+        ) {
           return false;
         }
 
-        // Asset Type
-        if (filterOptions.assetType.length) {
-          const isCowcentratedLike = selectIsVaultCowcentratedLike(state, vault.id);
-          const vaultAssetType = isCowcentratedLike ? 'clm' : vault.assetType;
-          if (!filterOptions.assetType.includes(vaultAssetType)) {
-            return false;
-          }
+        // Hide unselected asset types (if any asset type selected)
+        if (filterOptions.assetType.length && !filterOptions.assetType.includes(vault.assetType)) {
+          return false;
         }
 
         // Hide non-boosted if onlyBoosted checked

@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { isGovVault, type VaultEntity } from '../../../../data/entities/vault';
+import { isStandardVault, type VaultEntity } from '../../../../data/entities/vault';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../store';
 import { selectVaultById } from '../../../../data/selectors/vaults';
@@ -26,7 +26,7 @@ export const LendingOracle = memo<LendingOracleProps>(function LendingOracle({ v
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
 
-  if (isGovVault(vault) || !vault.lendingOracle) {
+  if (!isStandardVault(vault) || !vault.lendingOracle) {
     return null;
   }
 

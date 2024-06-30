@@ -4,6 +4,7 @@ import { ClmPnl, PnL } from '../../../helpers/pnl';
 import type { BeefyState } from '../../../redux-types';
 import type { TimeBucketType } from '../apis/analytics/analytics-types';
 import {
+  isCowcentratedLikeVault,
   isCowcentratedVault,
   isGovVault,
   isStandardVault,
@@ -20,9 +21,9 @@ import {
   selectTokenPriceByAddress,
 } from './tokens';
 import {
+  selectCowcentratedVaultById,
   selectVaultById,
   selectVaultPricePerFullShare,
-  selectVaultUnderlyingCowcentratedVaultOrUndefined,
 } from './vaults';
 import {
   selectUserDepositedVaultIds,
@@ -551,9 +552,14 @@ export function selectDashboardYieldVaultData(
     return selectDashboardYieldCowcentratedData(state, walletAddress, vault, pnl);
   }
 
-  const underlyingClm = selectVaultUnderlyingCowcentratedVaultOrUndefined(state, vault.id);
-  if (underlyingClm && isUserClmPnl(pnl)) {
-    return selectDashboardYieldCowcentratedData(state, walletAddress, underlyingClm, pnl);
+  const underlyingClmId = isCowcentratedLikeVault(vault) ? vault.cowcentratedId : undefined;
+  if (underlyingClmId && isUserClmPnl(pnl)) {
+    return selectDashboardYieldCowcentratedData(
+      state,
+      walletAddress,
+      selectCowcentratedVaultById(state, underlyingClmId),
+      pnl
+    );
   }
 
   throw new Error('Invalid vault/pnl type');

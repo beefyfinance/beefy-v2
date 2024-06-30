@@ -29,11 +29,14 @@ import {
   selectGovVaultById,
   selectIsVaultGov,
   selectVaultById,
-  selectVaultUnderlyingCowcentratedVaultOrUndefined,
 } from '../../../../../data/selectors/vaults';
 import { type ActionButtonProps, ActionConnectSwitch } from '../CommonActions';
 import { selectGovVaultPendingRewards } from '../../../../../data/selectors/balance';
-import { isGovVault, type VaultGov } from '../../../../../data/entities/vault';
+import {
+  isCowcentratedLikeVault,
+  isGovVault,
+  type VaultGov,
+} from '../../../../../data/entities/vault';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { GlpWithdrawNotice } from '../GlpNotices';
 import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotice';
@@ -77,11 +80,7 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
     quote &&
     (isGovVaultWithdrawQuote(quote) || isGovComposerWithdrawQuote(quote)) &&
     quoteStatus === TransactStatus.Fulfilled;
-  const showClaim = useAppSelector(state =>
-    selectVaultUnderlyingCowcentratedVaultOrUndefined(state, vaultId)
-  )
-    ? false
-    : true;
+  const showClaim = !isCowcentratedLikeVault(vault);
 
   return (
     <>
@@ -213,11 +212,7 @@ const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimW
 
   const isDisabled =
     isTxInProgress || isDisabledByPriceImpact || isDisabledByConfirm || isDisabledByNotEnoughInput;
-
-  const underlyingCLM = useAppSelector(state =>
-    selectVaultUnderlyingCowcentratedVaultOrUndefined(state, vault.id)
-  );
-  const showClaim = underlyingCLM ? false : true;
+  const showClaim = !isCowcentratedLikeVault(vault);
 
   const handleWithdraw = useCallback(() => {
     dispatch(transactSteps(quote, t));

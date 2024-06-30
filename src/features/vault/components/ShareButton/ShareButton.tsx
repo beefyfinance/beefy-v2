@@ -18,12 +18,13 @@ import twitterIcon from '../../../../images/icons/share/twitter.svg';
 import lensterIcon from '../../../../images/icons/share/lenster.svg';
 import telegramIcon from '../../../../images/icons/share/telegram.svg';
 import linkIcon from '../../../../images/icons/share/link.svg';
-import { isCowcentratedVault, isGovVault } from '../../../data/entities/vault';
-import { useAppSelector } from '../../../../store';
 import {
-  selectVaultById,
-  selectVaultUnderlyingCowcentratedVaultIdOrUndefined,
-} from '../../../data/selectors/vaults';
+  isCowcentratedVault,
+  isGovVault,
+  isGovVaultCowcentrated,
+} from '../../../data/entities/vault';
+import { useAppSelector } from '../../../../store';
+import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectVaultTotalApy } from '../../../data/selectors/apy';
@@ -36,12 +37,12 @@ import {
 } from '../../../data/selectors/boosts';
 import type {
   BoostedVaultExtraDetails,
+  CommonExtraDetails,
   CommonVaultDetails,
   GovVaultExtraDetails,
   ShareButtonProps,
   ShareItemProps,
   ShareServiceItemProps,
-  CommonExtraDetails,
   VaultDetails,
 } from './types';
 import clsx from 'clsx';
@@ -79,7 +80,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
         }
 
         if (isGovVault(vault)) {
-          if (selectVaultUnderlyingCowcentratedVaultIdOrUndefined(state, vault.id)) {
+          if (isGovVaultCowcentrated(vault)) {
             return { kind: 'clm-pool' };
           }
           const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); // TODO: handle multiple earned tokens [empty = ok, not used when clm-like]

@@ -17,10 +17,6 @@ function getSuffix(name: string, type: VaultEntity['type']) {
   return match?.[1] || undefined;
 }
 
-export function getVaultTypeSuffix(type: VaultEntity['type']) {
-  return typeToSuffix[type];
-}
-
 export function getVaultNames(
   configName: string,
   configType: VaultEntity['type'] | undefined

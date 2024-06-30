@@ -55,7 +55,7 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
     };
 
     for (const standardVault of standardVaults) {
-      addTokenAddressesToCalls(standardVault.earnedTokenAddress, standardVault.contractAddress);
+      addTokenAddressesToCalls(standardVault.receiptTokenAddress, standardVault.contractAddress);
       addTokenAddressesToCalls(standardVault.depositTokenAddress, standardVault.contractAddress);
     }
     for (const govVault of govVaults) {

@@ -3,6 +3,7 @@ import type Web3 from 'web3';
 import {
   isGovVaultSingle,
   type VaultGov,
+  type VaultGovCowcentrated,
   type VaultGovMulti,
   type VaultGovSingle,
 } from '../../entities/vault';
@@ -224,13 +225,10 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     };
   }
 
-  /**
-   * For now this converts the result of new v2 gov vaults (multiple reward tokens) to the old 1 token format
-   */
   protected govVaultV2Formatter(
     state: BeefyState,
     result: AsWeb3Result<GovVaultV2Balance>,
-    govVault: VaultGovMulti
+    govVault: VaultGovMulti | VaultGovCowcentrated
   ): GovVaultV2Balance {
     if (result.rewards.length !== result.rewardTokens.length) {
       throw new Error(`Invalid rewards and rewardTokens length`);

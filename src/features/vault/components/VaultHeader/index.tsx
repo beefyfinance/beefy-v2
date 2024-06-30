@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { memo } from 'react';
-import type { VaultEntity } from '../../../data/entities/vault';
-import { selectIsVaultCowcentratedLike, selectVaultById } from '../../../data/selectors/vaults';
+import {
+  isCowcentratedGovVault,
+  isCowcentratedLikeVault,
+  type VaultEntity,
+} from '../../../data/entities/vault';
+import { selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
 import { selectChainById } from '../../../data/selectors/chains';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +31,7 @@ export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const vaultTokenSymbols = useAppSelector(state => selectVaultTokenSymbols(state, vaultId));
-  const isCowcentratedLike = useAppSelector(state => selectIsVaultCowcentratedLike(state, vaultId));
+  const isCowcentratedLike = isCowcentratedLikeVault(vault);
 
   return (
     <div className={classes.header}>
@@ -46,7 +50,7 @@ export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId
         {isCowcentratedLike ? (
           <VaultClmLikeTag
             vault={vault}
-            hideFee={isCowcentratedLike === 'gov' ? true : undefined}
+            hideFee={isCowcentratedGovVault(vault) ? true : undefined}
             className={classes.titleTag}
           />
         ) : null}

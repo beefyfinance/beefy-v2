@@ -9,6 +9,7 @@ import {
   selectGovVaultUserStakedBalanceInDepositToken,
   selectUserBalanceOfToken,
   selectUserDepositedVaultIds,
+  selectUserVaultBalanceInShareToken,
 } from '../selectors/balance';
 import {
   selectAllVaultBoostIds,
@@ -21,12 +22,11 @@ import {
   selectAllGovVaultsByChainId,
   selectAllVaultIds,
   selectVaultById,
-  selectVaultParentGovVaultIdsOrUndefined,
-  selectVaultUnderlyingCowcentratedVaultOrUndefined,
 } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 import type { TokenEntity } from '../entities/token';
 import {
+  isCowcentratedGovVault,
   isCowcentratedVault,
   isGovVault,
   isStandardVault,
@@ -116,7 +116,7 @@ export const fetchBalanceAction = createAsyncThunk<
           } else {
             tokens.push(selectTokenByAddress(state, chain.id, vault.depositTokenAddress));
           }
-          tokens.push(selectTokenByAddress(state, chain.id, vault.earnedTokenAddress));
+          tokens.push(selectTokenByAddress(state, chain.id, vault.receiptTokenAddress));
         }
       }
     }
@@ -187,7 +187,7 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
       }
 
       // + bridged
-      if (!deposited && vault.bridged) {
+      if (!deposited && isStandardVault(vault) && vault.bridged) {
         for (const [chainId, bridgedAddress] of entries(vault.bridged)) {
           const balance = selectUserBalanceOfToken(state, chainId, bridgedAddress, walletAddress);
           if (balance.gt(BIG_ZERO)) {
@@ -198,22 +198,17 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
       }
 
       // + is the underlying of a clm reward pool
-      if (!deposited && isCowcentratedVault(vault)) {
+      if (!deposited && isCowcentratedVault(vault) && vault.cowcentratedGovId) {
         // user is marked as deposited in both the CLM + Reward Pool if either holds a balance
-        const parentGovVaults = selectVaultParentGovVaultIdsOrUndefined(state, vault.id);
-        if (parentGovVaults?.length) {
-          for (const govVaultId of parentGovVaults) {
-            if (govVaultId) {
-              const balance = selectGovVaultUserStakedBalanceInDepositToken(
-                state,
-                govVaultId,
-                walletAddress
-              );
-              if (balance.gt(BIG_ZERO)) {
-                deposited = true;
-              }
-            }
-          }
+        // TODO why? does this make sense?
+
+        const balance = selectGovVaultUserStakedBalanceInDepositToken(
+          state,
+          vault.cowcentratedGovId,
+          walletAddress
+        );
+        if (balance.gt(BIG_ZERO)) {
+          deposited = true;
         }
       }
     } else if (isGovVault(vault)) {
@@ -224,19 +219,16 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
       }
 
       // + has an underlying clm
-      if (!deposited) {
+      if (!deposited && isCowcentratedGovVault(vault)) {
         // user is marked as deposited in both the CLM + Reward Pool if either holds a balance
-        const underlyingVault = selectVaultUnderlyingCowcentratedVaultOrUndefined(state, vault.id);
-        if (underlyingVault) {
-          const balance = selectUserBalanceOfToken(
-            state,
-            underlyingVault.chainId,
-            underlyingVault.contractAddress,
-            walletAddress
-          );
-          if (balance.gt(BIG_ZERO)) {
-            deposited = true;
-          }
+        // TODO why? does this make sense?
+        const balance = selectUserVaultBalanceInShareToken(
+          state,
+          vault.cowcentratedId,
+          walletAddress
+        );
+        if (balance.gt(BIG_ZERO)) {
+          deposited = true;
         }
       }
     }

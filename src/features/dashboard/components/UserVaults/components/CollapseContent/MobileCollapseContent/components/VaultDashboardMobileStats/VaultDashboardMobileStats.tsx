@@ -1,7 +1,10 @@
 import React, { memo } from 'react';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
-import type { VaultEntity } from '../../../../../../../../data/entities/vault';
+import {
+  isCowcentratedLikeVault,
+  type VaultEntity,
+} from '../../../../../../../../data/entities/vault';
 import { VaultAtDepositStat } from '../../../../../../../../../components/VaultStats/VaultAtDepositStat';
 import { VaultNowStat } from '../../../../../../../../../components/VaultStats/VaultNowStat';
 import { RowMobile } from '../../../../Row';
@@ -11,7 +14,7 @@ import { useAppSelector } from '../../../../../../../../../store';
 import { MobileVaultRewardsStat } from '../../../../../../../../../components/VaultStats/MobileVaultRewardsStat';
 import { selectVaultPnl } from '../../../../../../../../data/selectors/analytics';
 import { MobileVaultYieldStat } from '../../../../../../../../../components/VaultStats/MobileVaultYieldStat';
-import { selectVaultUnderlyingCowcentratedVaultIdOrUndefined } from '../../../../../../../../data/selectors/vaults';
+import { selectVaultById } from '../../../../../../../../data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 
@@ -23,9 +26,8 @@ interface VaultDashboardMobileStatsProps {
 export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
   function VaultDashboardMobileStats({ vaultId, address }) {
     const classes = useStyles();
-    const underlyingCLMId = useAppSelector(state =>
-      selectVaultUnderlyingCowcentratedVaultIdOrUndefined(state, vaultId)
-    );
+    const vault = useAppSelector(state => selectVaultById(state, vaultId));
+    const underlyingCLMId = isCowcentratedLikeVault(vault) ? vault.cowcentratedId : undefined;
     const pnlData = useAppSelector(state =>
       selectVaultPnl(state, underlyingCLMId ?? vaultId, address)
     );

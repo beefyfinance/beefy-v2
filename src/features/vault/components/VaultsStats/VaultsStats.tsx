@@ -2,13 +2,13 @@ import React, { useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import type { VaultEntity } from '../../../data/entities/vault';
-import { isGovVault } from '../../../data/entities/vault';
 import {
-  selectVaultById,
-  selectVaultLastHarvestByVaultId,
-  selectVaultUnderlyingCowcentratedVaultIdOrUndefined,
-} from '../../../data/selectors/vaults';
+  isCowcentratedGovVault,
+  isGovVault,
+  isGovVaultCowcentrated,
+  type VaultEntity,
+} from '../../../data/entities/vault';
+import { selectVaultById, selectVaultLastHarvestByVaultId } from '../../../data/selectors/vaults';
 import { DailyApyStats, YearlyApyStats } from '../../../../components/ApyStats';
 import { ValueBlock } from '../../../../components/ValueBlock/ValueBlock';
 import { VaultTvl } from '../../../../components/VaultTvl/VaultTvl';
@@ -23,15 +23,13 @@ const useStyles = makeStyles(styles);
 function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  // FIXME 1) when we have vaults on top of CLM 2) rewardpool has harvests - we need to change this to show the actual vaults last harvest instead of underlying clm
-  const underlyingCowcentratedId = useAppSelector(state =>
-    selectVaultUnderlyingCowcentratedVaultIdOrUndefined(state, vaultId)
-  );
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  // When we have a cowcentrated gov vault, we need to show the last harvest of the underlying cowcentrated vault
   const lastHarvest = useAppSelector(state =>
-    selectVaultLastHarvestByVaultId(state, underlyingCowcentratedId ?? vaultId)
-  );
-  const vault = useAppSelector(state =>
-    selectVaultById(state, underlyingCowcentratedId ?? vaultId)
+    selectVaultLastHarvestByVaultId(
+      state,
+      isCowcentratedGovVault(vault) ? vault.cowcentratedId : vault.id
+    )
   );
 
   const lastHarvestFormatted = useMemo(() => {
@@ -59,7 +57,7 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         <div className={classes.stat}>
           <VaultDeposited vaultId={vaultId} />
         </div>
-        {isGovVault(vault) ? (
+        {isGovVault(vault) && !isGovVaultCowcentrated(vault) ? (
           <div className={classes.stat}>
             <GovVaultRewards vaultId={vaultId} />
           </div>

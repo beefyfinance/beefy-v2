@@ -156,7 +156,7 @@ export const filteredVaultsSlice = createSlice({
       .addCase(fetchAllVaults.fulfilled, (state, action) => {
         if (state.filteredVaultIds.length === 0) {
           const allVaultIds = Object.values(action.payload.byChainId).flatMap(vaults =>
-            vaults.map(v => v.id)
+            vaults.map(v => v.entity.id)
           );
           state.filteredVaultIds = allVaultIds;
           state.sortedFilteredVaultIds = allVaultIds;

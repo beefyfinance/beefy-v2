@@ -57,7 +57,7 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
     selectIsApprovalNeededForBoostStaking(state, spenderAddress)
   );
   const mooToken = useAppSelector(state =>
-    selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
+    selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress)
   );
   const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
   const boostPendingRewards = useAppSelector(state =>

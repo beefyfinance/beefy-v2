@@ -4,6 +4,7 @@ import type { BoostEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token';
 import {
+  isCowcentratedGovVault,
   isCowcentratedVault,
   isGovVault,
   isStandardVault,
@@ -31,9 +32,7 @@ import {
   selectIsVaultStable,
   selectStandardVaultById,
   selectVaultById,
-  selectVaultParentVaultIdsOrUndefined,
   selectVaultPricePerFullShare,
-  selectVaultUnderlyingVaultIdOrUndefined,
 } from './vaults';
 import { selectIsWalletKnown, selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
@@ -91,8 +90,7 @@ export const selectDashboardDepositedVaultIdsForAddress = createSelector(
   (state: BeefyState, address: string) =>
     state.user.balance.byAddress[address.toLowerCase()]?.depositedVaultIds,
   (state: BeefyState) => state.entities.vaults.byId,
-  (state: BeefyState) => state.entities.vaults.relations.depositFor.byId,
-  (vaultIds, vaultsById, depositForById) => {
+  (vaultIds, vaultsById) => {
     if (!vaultIds) {
       return [];
     }
@@ -109,14 +107,8 @@ export const selectDashboardDepositedVaultIdsForAddress = createSelector(
         return true;
       }
 
-      const parentIds = depositForById[vaultId];
-      // include all vaults not used as the underlying for another vault
-      if (!parentIds || parentIds.length === 0) {
-        return true;
-      }
-
-      // Filter out the CLM vault if its used as the deposit token for other vaults
-      return false;
+      // include CLM only if there is no gov/standard vault for it
+      return vault.govId === undefined && vault.standardId === undefined;
     });
   }
 );
@@ -180,7 +172,7 @@ export const selectUserVaultBalanceInShareToken = (
   }
 
   if (isStandardVault(vault) || isCowcentratedVault(vault)) {
-    return selectUserBalanceOfToken(state, vault.chainId, vault.contractAddress, walletAddress);
+    return selectUserBalanceOfToken(state, vault.chainId, vault.receiptTokenAddress, walletAddress);
   }
 
   throw new Error(`Unsupported vault type for ${vaultId}`);
@@ -223,7 +215,7 @@ export const selectUserVaultBalanceInShareTokenInBridged = (
   }
 
   const vault = selectVaultById(state, vaultId);
-  if (isGovVault(vault) || !vault.bridged) {
+  if (!isStandardVault(vault) || !vault.bridged) {
     return BIG_ZERO;
   }
 
@@ -353,7 +345,7 @@ export const selectStandardVaultUserBalanceInDepositTokenBreakdown = (
 ): StandardVaultBalanceBreakdown => {
   const vault = selectStandardVaultById(state, vaultId);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+  const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
   const balances: StandardVaultBalanceBreakdown = [];
 
@@ -623,10 +615,12 @@ export const selectUserLpBreakdownBalance = (
   const lpTotalSupplyDecimal = new BigNumber(breakdown.totalSupply);
   const underlyingTotalSupplyDecimal = new BigNumber(breakdown?.underlyingLiquidity || 0);
 
-  const relatedVault =
-    selectVaultParentVaultIdsOrUndefined(state, vault.id)?.[0] ??
-    selectVaultUnderlyingVaultIdOrUndefined(state, vault.id) ??
-    undefined;
+  // TODO what about when there is standard vaults?
+  const relatedVault = isCowcentratedGovVault(vault)
+    ? vault.cowcentratedId
+    : isCowcentratedVault(vault)
+    ? vault.cowcentratedGovId
+    : undefined;
 
   const relatedBalanceDecimal = relatedVault
     ? selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(state, relatedVault, walletAddress)

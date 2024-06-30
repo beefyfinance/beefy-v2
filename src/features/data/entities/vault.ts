@@ -51,8 +51,30 @@ export type VaultBase = {
   zaps: ZapStrategyConfig[];
   /** the vault contract address (earnContractAddress in config) */
   contractAddress: string;
+  /** type of asset the vault uses */
+  assetType: 'single' | 'lps' | 'clm';
   /** id of vault to exclude from this vault's tvl */
   excludedId: undefined | VaultBase['id'];
+  /** whether users in the vault earn external points */
+  earningPoints: boolean;
+  /** platform where the token is deposited to earn */
+  platformId: PlatformEntity['id'];
+  /** used to describe how the strategy works */
+  strategyTypeId: string;
+  /** risk assessments per category */
+  risks: string[];
+  /** score calculated from risks [0 if risks was empty] */
+  safetyScore: number;
+  /** where you can buy the deposit token */
+  buyTokenUrl?: string | undefined;
+  /** where you create the deposit LP token */
+  addLiquidityUrl?: string | undefined;
+  /** where you break the deposit LP token */
+  removeLiquidityUrl?: string | undefined;
+  /** underlying platforms deposit fee */
+  depositFee: number;
+  /** what helper can be used to migrate user from underlying platform to beefy */
+  migrationIds: string[];
 };
 
 export type VaultActive = {
@@ -77,73 +99,78 @@ export type VaultPaused = {
 
 export type VaultStatus = VaultActive | VaultRetired | VaultPaused;
 
-type VaultStandardOnly = {
+export type VaultStandardBaseOnly = {
+  /** address of token required to deposit in this vault */
   depositTokenAddress: string;
-  earnedTokenAddress: string;
-  strategyTypeId: string;
-
-  /**
-   * The protocol this vault rely on (Curve, boo finance, etc)
-   */
-  platformId: PlatformEntity['id'];
-
-  assetType: 'lps' | 'single';
-
-  safetyScore: number;
-
-  risks: string[];
-
-  buyTokenUrl: string | null;
-  addLiquidityUrl: string | null;
-  removeLiquidityUrl: string | null;
-
-  depositFee: number;
-
-  migrationIds?: string[];
+  /** address of receipt token (=== vault contract address)*/
+  receiptTokenAddress: string;
   /** Map of chain->address of bridged receipt tokens */
   bridged?: Record<ChainEntity['id'], string>;
   lendingOracle?: { provider: string; address?: string; loops?: number };
-  earningPoints: boolean;
 };
 
-type VaultGovBaseOnly = {
+type VaultStandardOnly = VaultStandardBaseOnly & {
+  subType: 'standard';
+};
+
+export type VaultGovBaseOnly = {
+  /** address of token required to deposit in this vault */
   depositTokenAddress: string;
-
   earnedTokenAddresses: string[];
-
-  strategyTypeId: string;
-
-  platformId: PlatformEntity['id'];
-
-  assetType: 'single';
-
-  safetyScore: number;
-
-  risks: string[];
-
-  buyTokenUrl: string | null;
-  addLiquidityUrl: null | string;
-  removeLiquidityUrl: null;
-
-  depositFee: number;
-
-  migrationIds?: string[];
 };
 
 type VaultGovSingleOnly = VaultGovBaseOnly & {
-  subType: 'single';
-  // addLiquidityUrl: null;
+  subType: 'gov';
+  /** single - the contract supports only 1 reward token */
+  contractType: 'single';
 };
 
 type VaultGovMultiOnly = VaultGovBaseOnly & {
-  subType: 'multi';
-  // addLiquidityUrl: string;
+  subType: 'gov';
+  /** multi - the contract supports multiple reward tokens */
+  contractType: 'multi';
+  /** address of receipt token (=== vault contract address)*/
+  receiptTokenAddress: string;
 };
 
-type VaultCowcentratedOnly = VaultStandardOnly & {
+export type VaultCowcentratedBaseOnly = {
+  /** subtype */
+  subType: 'cowcentrated';
+  /** the id of the cowcentrated vault */
+  cowcentratedId: string;
+  /** the id of the gov vault, if one exists */
+  cowcentratedGovId?: string | undefined;
+  /** the id of the standard vault, if one exists */
+  cowcentratedStandardId?: string | undefined;
+  /** addresses of tokens required to deposit in this vault */
   depositTokenAddresses: string[];
+  /** the trading fee of the underlying pool */
   feeTier: string;
+  /** the address of the underlying CL pool */
+  poolAddress: string;
 };
+
+type VaultCowcentratedOnly = VaultCowcentratedBaseOnly & {
+  subType: 'cowcentrated';
+  /** address of receipt token (=== vault contract address)*/
+  receiptTokenAddress: string;
+  /** for clm this is `${poolAddress}-{vaultId}` for compat reasons */
+  depositTokenAddress: string;
+};
+
+type VaultGovCowcentratedOnly = VaultCowcentratedBaseOnly &
+  VaultGovBaseOnly & {
+    /** address of receipt token (=== vault contract address)*/
+    receiptTokenAddress: string;
+    /** multi - the contract supports multiple reward tokens */
+    contractType: 'multi';
+  };
+
+type VaultStandardCowcentratedOnly = VaultCowcentratedBaseOnly &
+  VaultStandardBaseOnly & {
+    /** address of receipt token (=== vault contract address)*/
+    receiptTokenAddress: string;
+  };
 
 type MakeVaultActive<TVaultType extends VaultType, TOnly> = { type: TVaultType } & VaultBase &
   VaultActive &
@@ -160,11 +187,21 @@ type MakeVault<TVaultType extends VaultType, TOnly> =
   | MakeVaultRetired<TVaultType, TOnly>
   | MakeVaultPaused<TVaultType, TOnly>;
 
-export type VaultStandard = MakeVault<'standard', VaultStandardOnly>;
+export type VaultStandardNotCowcentrated = MakeVault<'standard', VaultStandardOnly>;
+export type VaultStandardCowcentrated = MakeVault<'standard', VaultStandardCowcentratedOnly>;
+export type VaultStandard = VaultStandardNotCowcentrated | VaultStandardCowcentrated;
+
 export type VaultGovSingle = MakeVault<'gov', VaultGovSingleOnly>;
 export type VaultGovMulti = MakeVault<'gov', VaultGovMultiOnly>;
-export type VaultGov = VaultGovSingle | VaultGovMulti;
+export type VaultGovCowcentrated = MakeVault<'gov', VaultGovCowcentratedOnly>;
+export type VaultGov = VaultGovSingle | VaultGovMulti | VaultGovCowcentrated;
+
 export type VaultCowcentrated = MakeVault<'cowcentrated', VaultCowcentratedOnly>;
+export type VaultCowcentratedLike =
+  | VaultCowcentrated
+  | VaultGovCowcentrated
+  | VaultStandardCowcentrated;
+
 export type VaultEntity = VaultStandard | VaultGov | VaultCowcentrated;
 export type VaultEntityActive = Extract<VaultEntity, VaultActive>;
 export type VaultEntityPaused = Extract<VaultEntity, VaultPaused>;
@@ -175,27 +212,49 @@ export function isGovVault(vault: VaultEntity): vault is VaultGov {
 }
 
 export function isGovVaultMulti(vault: VaultGov): vault is VaultGovMulti {
-  return vault.subType === 'multi';
+  return vault.contractType === 'multi';
 }
 
 export function isGovVaultSingle(vault: VaultGov): vault is VaultGovSingle {
-  return vault.subType === 'single';
+  return vault.contractType === 'single';
+}
+
+export function isGovVaultCowcentrated(vault: VaultGov): vault is VaultGovCowcentrated {
+  return vault.subType === 'cowcentrated';
 }
 
 export function isMultiGovVault(vault: VaultEntity): vault is VaultGovMulti {
-  return isGovVault(vault) && vault.subType === 'multi';
+  return isGovVault(vault) && vault.contractType === 'multi';
 }
 
 export function isSingleGovVault(vault: VaultEntity): vault is VaultGovSingle {
-  return isGovVault(vault) && vault.subType === 'single';
+  return isGovVault(vault) && vault.contractType === 'single';
+}
+
+export function isCowcentratedGovVault(vault: VaultEntity): vault is VaultGovCowcentrated {
+  return isGovVault(vault) && vault.subType === 'cowcentrated';
 }
 
 export function isStandardVault(vault: VaultEntity): vault is VaultStandard {
   return vault.type === 'standard';
 }
 
+export function isCowcentratedStandardVault(
+  vault: VaultEntity
+): vault is VaultStandardCowcentrated {
+  return isStandardVault(vault) && vault.subType === 'cowcentrated';
+}
+
 export function isCowcentratedVault(vault: VaultEntity): vault is VaultCowcentrated {
   return vault.type === 'cowcentrated';
+}
+
+export function isCowcentratedLikeVault(vault: VaultEntity): vault is VaultCowcentratedLike {
+  return (
+    isCowcentratedVault(vault) ||
+    isCowcentratedGovVault(vault) ||
+    isCowcentratedStandardVault(vault)
+  );
 }
 
 export function isVaultRetired(vault: VaultEntity): vault is VaultEntityRetired {

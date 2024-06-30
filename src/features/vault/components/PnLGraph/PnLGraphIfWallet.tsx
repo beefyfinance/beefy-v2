@@ -1,15 +1,13 @@
 import { memo } from 'react';
 import {
+  isCowcentratedLikeVault,
   isCowcentratedVault,
   isStandardVault,
   type VaultEntity,
 } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
 import { selectWalletAddress } from '../../../data/selectors/wallet';
-import {
-  selectVaultById,
-  selectVaultUnderlyingVaultOrUndefined,
-} from '../../../data/selectors/vaults';
+import { selectVaultById } from '../../../data/selectors/vaults';
 import { StandardPnLGraphLoader } from './standard/StandardPnLGraph';
 import { CowcentratedPnlGraphLoader } from './cowcentrated';
 
@@ -37,9 +35,6 @@ type PnLGraphProps = {
 
 export const PnLGraph = memo<PnLGraphProps>(function PnLGraph({ vaultId, walletAddress }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const underlyingVault = useAppSelector(state =>
-    selectVaultUnderlyingVaultOrUndefined(state, vaultId)
-  );
 
   if (isStandardVault(vault)) {
     return <StandardPnLGraphLoader vaultId={vaultId} address={walletAddress} />;
@@ -49,8 +44,8 @@ export const PnLGraph = memo<PnLGraphProps>(function PnLGraph({ vaultId, walletA
     return <CowcentratedPnlGraphLoader vaultId={vaultId} address={walletAddress} />;
   }
 
-  if (underlyingVault && isCowcentratedVault(underlyingVault)) {
-    return <CowcentratedPnlGraphLoader vaultId={underlyingVault.id} address={walletAddress} />;
+  if (isCowcentratedLikeVault(vault)) {
+    return <CowcentratedPnlGraphLoader vaultId={vault.cowcentratedId} address={walletAddress} />;
   }
 
   return null;

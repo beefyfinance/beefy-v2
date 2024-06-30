@@ -18,7 +18,7 @@ import type {
   TimeBucketType,
   TimelineAnalyticsConfig,
 } from '../apis/analytics/analytics-types';
-import { isCowcentratedVault, isGovVault, type VaultEntity } from '../entities/vault';
+import { isCowcentratedVault, isStandardVault, type VaultEntity } from '../entities/vault';
 import { isFiniteNumber } from '../../../helpers/number';
 import {
   selectAllVaultsWithBridgedVersion,
@@ -138,7 +138,7 @@ function handleDatabarnTimeline(
   const bridgeVaultIds = selectAllVaultsWithBridgedVersion(state);
   const bridgeToBaseId = bridgeVaultIds.reduce(
     (accum: Partial<Record<ChainEntity['id'], BaseVault>>, vault) => {
-      if (!isGovVault(vault) && vault.bridged) {
+      if (isStandardVault(vault) && vault.bridged) {
         for (const [chainId, address] of entries(vault.bridged)) {
           accum[`beefy:vault:${chainId}:${address.toLowerCase()}`] = {
             vaultId: vault.id,

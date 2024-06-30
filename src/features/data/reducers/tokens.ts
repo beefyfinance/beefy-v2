@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import type { Draft } from 'immer';
-import type { BeefyState } from '../../../redux-types';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllPricesAction } from '../actions/prices';
@@ -21,7 +20,6 @@ import type {
   TokenNative,
 } from '../entities/token';
 import { isTokenErc20, isTokenNative } from '../entities/token';
-import { selectChainById } from '../selectors/chains';
 import {
   getBoostTokenAddressFromLegacyConfig,
   getDepositTokenFromLegacyVaultConfig,
@@ -33,7 +31,7 @@ import { fetchBridgeConfig } from '../actions/bridge';
 import { entries } from '../../../helpers/object';
 import { isDefined } from '../utils/array-utils';
 import type { LpData } from '../apis/beefy/beefy-api-types';
-import { getVaultNames } from '../utils/vault-utils';
+import { isCowcentratedGovVault, isCowcentratedVault, type VaultEntity } from '../entities/vault';
 
 /**
  * State containing Vault infos
@@ -121,12 +119,9 @@ export const tokensSlice = createSlice({
 
     // when vault list is fetched, add all new tokens
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
-      for (const [chainId, vaults] of entries(action.payload.byChainId)) {
-        if (vaults) {
-          const chain = selectChainById(action.payload.state, chainId);
-          for (const vault of vaults) {
-            addVaultToState(action.payload.state, sliceState, chain, vault);
-          }
+      for (const vaults of Object.values(action.payload.byChainId)) {
+        for (const vault of vaults) {
+          addVaultToState(sliceState, vault.config, vault.entity);
         }
       }
     });
@@ -457,18 +452,13 @@ function addMinterToState(
   }
 }
 
-function addVaultToState(
-  state: BeefyState,
-  sliceState: Draft<TokensState>,
-  chain: ChainEntity,
-  vault: VaultConfig
-) {
-  const chainId = chain.id;
+function addVaultToState(sliceState: Draft<TokensState>, config: VaultConfig, entity: VaultEntity) {
+  const chainId = entity.chainId;
   const chainState = getOrCreateTokensChainState(sliceState, chainId);
 
   // add assets id's from active vaults to state
-  if (vault.status === 'active' && vault.assets) {
-    for (const assetId of vault.assets) {
+  if (config.status === 'active' && config.assets) {
+    for (const assetId of config.assets) {
       if (!chainState.tokenIdsInActiveVaults.includes(assetId)) {
         chainState.tokenIdsInActiveVaults.push(assetId);
       }
@@ -478,45 +468,46 @@ function addVaultToState(
   //
   // Deposit token
   //
-  const depositToken = getDepositTokenFromLegacyVaultConfig(chain, vault);
-  const depositAddressKey = depositToken.address.toLowerCase();
-  const existingDepositToken = chainState.byAddress[depositAddressKey];
-  if (existingDepositToken === undefined) {
-    // Add the token
-    addTokenToState(sliceState, depositToken, vault.type !== 'cowcentrated');
-  } else {
-    // Only add missing information
-    // Note: we no longer overwrite oracleId as addressbook is now source of truth
-    if (!existingDepositToken.providerId) {
-      existingDepositToken.providerId = depositToken.providerId;
+  const depositToken = getDepositTokenFromLegacyVaultConfig(chainId, config);
+  if (depositToken) {
+    const depositAddressKey = depositToken.address.toLowerCase();
+    const existingDepositToken = chainState.byAddress[depositAddressKey];
+    if (existingDepositToken === undefined) {
+      // Add the token
+      addTokenToState(sliceState, depositToken, config.type !== 'cowcentrated');
+    } else {
+      // Only add missing information
+      // Note: we no longer overwrite oracleId as addressbook is now source of truth
+      if (!existingDepositToken.providerId) {
+        existingDepositToken.providerId = depositToken.providerId;
+      }
     }
-  }
-  if (vault.type === 'cowcentrated' && vault.depositTokenAddresses) {
-    vault.depositTokenAddresses.forEach(address =>
-      ensureInterestingToken(address, chainId, sliceState)
-    );
+    if (config.type === 'cowcentrated' && config.depositTokenAddresses) {
+      config.depositTokenAddresses.forEach(address =>
+        ensureInterestingToken(address, chainId, sliceState)
+      );
+    }
   }
 
   //
   // Receipt token
   //
   // (Only v2 + of gov vaults have a receipt token)
-  if (vault.type !== 'gov' || (vault.version || 1) > 1) {
+  if (config.type !== 'gov' || (config.version || 1) > 1) {
     // rename clm and clm reward pool receipt tokens to a friendlier name
-    const receiptTokenSymbol =
-      vault.type === 'cowcentrated'
-        ? vault.name + ' CLM'
-        : vault.type === 'gov' && vault.earnedToken.startsWith('rCow')
-        ? getVaultNames(vault.name, 'gov').short + ' rCLM'
-        : vault.earnedToken;
+    const receiptTokenSymbol = isCowcentratedVault(entity)
+      ? `${entity.names.short} CLM`
+      : isCowcentratedGovVault(entity)
+      ? `${entity.names.short} rCLM`
+      : config.earnedToken;
 
     const receiptToken: TokenErc20 = {
       type: 'erc20',
-      id: vault.id,
+      id: config.id,
       chainId: chainId,
-      oracleId: vault.oracleId,
-      address: vault.earnContractAddress,
-      providerId: vault.tokenProviderId, // FIXME only true for cowcentrated gov pools
+      oracleId: config.oracleId,
+      address: config.earnContractAddress,
+      providerId: config.tokenProviderId, // FIXME only true for cowcentrated gov pools
       decimals: 18, // receipt token always has 18 decimals
       symbol: receiptTokenSymbol, // earnedToken === receipt token in this context
       buyUrl: undefined,
@@ -530,8 +521,8 @@ function addVaultToState(
     addTokenToState(sliceState, receiptToken, true);
 
     // Add bridged versions of receipt token
-    if (vault.bridged) {
-      addBridgedReceiptTokensToState(vault, receiptToken, sliceState);
+    if (config.bridged) {
+      addBridgedReceiptTokensToState(config, receiptToken, sliceState);
     }
   }
 
@@ -539,54 +530,61 @@ function addVaultToState(
   // Earned Token
   //
   // Only gov vaults have an earned token that isn't the receipt token
-  // And only the new v2 gov vaults have oracle ids such that we can add the token here
-  if (
-    vault.type === 'gov' &&
-    vault.earnedTokens &&
-    vault.earnedOracleIds &&
-    vault.earnedTokenAddresses &&
-    vault.earnedTokenDecimals &&
-    Array.isArray(vault.earnedTokenDecimals)
-  ) {
-    const earnedTokens: TokenErc20[] = vault.earnedTokenAddresses
-      .map((address, i) => {
-        const earnedToken = vault.earnedTokens?.[i];
-        const earnedOracleId = vault.earnedOracleIds?.[i];
-        const earnedTokenDecimals = vault.earnedTokenDecimals?.[i];
-        if (
-          !earnedToken ||
-          !earnedOracleId ||
-          !earnedTokenDecimals ||
-          !address ||
-          address === 'native'
-        ) {
-          return undefined;
-        }
+  if (config.type === 'gov') {
+    // And only the new v2 gov vaults have oracle ids such that we can add the token here
+    if (
+      config.earnedTokens &&
+      config.earnedOracleIds &&
+      config.earnedTokenAddresses &&
+      config.earnedTokenDecimals &&
+      Array.isArray(config.earnedTokenDecimals)
+    ) {
+      const earnedTokens: TokenErc20[] = config.earnedTokenAddresses
+        .map((address, i) => {
+          const earnedToken = config.earnedTokens?.[i];
+          const earnedOracleId = config.earnedOracleIds?.[i];
+          const earnedTokenDecimals = config.earnedTokenDecimals?.[i];
+          if (
+            !earnedToken ||
+            !earnedOracleId ||
+            !earnedTokenDecimals ||
+            !address ||
+            address === 'native'
+          ) {
+            return undefined;
+          }
 
-        return {
-          type: 'erc20' as const,
-          id: earnedToken,
-          chainId: chainId,
-          oracleId: earnedOracleId,
-          address,
-          decimals: earnedTokenDecimals,
-          symbol: earnedToken,
-          buyUrl: undefined,
-          website: undefined,
-          description: undefined,
-          documentation: undefined,
-          risks: [],
-        };
-      })
-      .filter(isDefined);
-    for (const earnedToken of earnedTokens) {
-      const earnedAddressKey = earnedToken.address.toLowerCase();
-      const existingEarnedToken = chainState.byAddress[earnedAddressKey];
-      if (existingEarnedToken === undefined) {
-        addTokenToState(sliceState, earnedToken, true);
-      } else {
-        ensureInterestingToken(earnedToken.address, earnedToken.chainId, sliceState);
+          return {
+            type: 'erc20' as const,
+            id: earnedToken,
+            chainId: chainId,
+            oracleId: earnedOracleId,
+            address,
+            decimals: earnedTokenDecimals,
+            symbol: earnedToken,
+            buyUrl: undefined,
+            website: undefined,
+            description: undefined,
+            documentation: undefined,
+            risks: [],
+          };
+        })
+        .filter(isDefined);
+      for (const earnedToken of earnedTokens) {
+        const earnedAddressKey = earnedToken.address.toLowerCase();
+        const existingEarnedToken = chainState.byAddress[earnedAddressKey];
+        if (existingEarnedToken === undefined) {
+          addTokenToState(sliceState, earnedToken, true);
+        } else {
+          ensureInterestingToken(earnedToken.address, earnedToken.chainId, sliceState);
+        }
       }
+    } else if (config.earnedTokenAddresses) {
+      for (const address of config.earnedTokenAddresses) {
+        ensureInterestingToken(address, chainId, sliceState);
+      }
+    } else if (config.earnedTokenAddress) {
+      ensureInterestingToken(config.earnedTokenAddress, chainId, sliceState);
     }
   }
 }
