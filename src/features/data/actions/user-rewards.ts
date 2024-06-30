@@ -104,7 +104,11 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
     const byVaultAddress = groupBy(
       rewardsPerToken.flatMap(reward =>
         reward.reasons
-          .filter(reason => reason.id.startsWith('Beefy_') && reason.unclaimed.gt(BIG_ZERO))
+          .filter(
+            reason =>
+              (reason.id.startsWith('Beefy_') || reason.id.startsWith('BeefyStaker_')) &&
+              reason.unclaimed.gt(BIG_ZERO)
+          )
           .map(reason => ({
             vaultAddress: reason.id.split('_')[1].toLowerCase(),
             ...reason,

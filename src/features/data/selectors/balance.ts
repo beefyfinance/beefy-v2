@@ -108,7 +108,7 @@ export const selectDashboardDepositedVaultIdsForAddress = createSelector(
       }
 
       // include CLM only if there is no gov/standard vault for it
-      return vault.govId === undefined && vault.standardId === undefined;
+      return vault.cowcentratedGovId === undefined && vault.cowcentratedStandardId === undefined;
     });
   }
 );

@@ -200,7 +200,7 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
       // + is the underlying of a clm reward pool
       if (!deposited && isCowcentratedVault(vault) && vault.cowcentratedGovId) {
         // user is marked as deposited in both the CLM + Reward Pool if either holds a balance
-        // TODO why? does this make sense?
+        // TODO why? does this make sense? [PNL breaks okay...]
 
         const balance = selectGovVaultUserStakedBalanceInDepositToken(
           state,
@@ -221,7 +221,7 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
       // + has an underlying clm
       if (!deposited && isCowcentratedGovVault(vault)) {
         // user is marked as deposited in both the CLM + Reward Pool if either holds a balance
-        // TODO why? does this make sense?
+        // TODO why? does this make sense? [PNL breaks okay...]
         const balance = selectUserVaultBalanceInShareToken(
           state,
           vault.cowcentratedId,
