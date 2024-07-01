@@ -1,4 +1,12 @@
-import { memo, type CSSProperties, useMemo, type ReactNode } from 'react';
+import {
+  type ChangeEventHandler,
+  type CSSProperties,
+  memo,
+  type MouseEventHandler,
+  type ReactNode,
+  useCallback,
+  useMemo,
+} from 'react';
 import { AmountInput, type AmountInputProps } from '../AmountInput/AmountInput';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { selectTransactForceSelection } from '../../../../../data/selectors/transact';
@@ -9,7 +17,6 @@ import { makeStyles } from '@material-ui/core';
 import type { TokenEntity } from '../../../../../data/entities/token';
 
 type AmountInputWithSliderProps = AmountInputProps & {
-  onSliderChange: (v: number) => void;
   selectedToken: Pick<TokenEntity, 'decimals'>;
   endAdornment: ReactNode;
   warning?: boolean;
@@ -22,7 +29,6 @@ export const AmountInputWithSlider = memo<AmountInputWithSliderProps>(
     value,
     maxValue,
     onChange,
-    onSliderChange,
     selectedToken,
     className,
     price,
@@ -37,10 +43,31 @@ export const AmountInputWithSlider = memo<AmountInputWithSliderProps>(
         .dividedBy(maxValue.gt(BIG_ZERO) ? maxValue : 1)
         .toNumber();
     }, [maxValue, value]);
-
     const error = useMemo(() => {
       return value.gt(maxValue);
     }, [maxValue, value]);
+
+    const handlePercentChange = useCallback<(v: number) => void>(
+      value => {
+        const isMax = value === 100;
+        onChange(isMax ? maxValue : maxValue.multipliedBy(value / 100), isMax);
+      },
+      [maxValue, onChange]
+    );
+
+    const handleSliderChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+      e => {
+        handlePercentChange(parseInt(e.target.value) || 0);
+      },
+      [handlePercentChange]
+    );
+
+    const handleButtonClick = useCallback<MouseEventHandler<HTMLButtonElement>>(
+      e => {
+        handlePercentChange(parseInt(e.currentTarget.value) || 0);
+      },
+      [handlePercentChange]
+    );
 
     return (
       <div className={clsx(classes.inputContainer)}>
@@ -68,7 +95,7 @@ export const AmountInputWithSlider = memo<AmountInputWithSliderProps>(
             [classes.warningRange]: warning && !error,
           })}
           style={{ '--value': `${sliderValue}%` } as CSSProperties}
-          onChange={e => onSliderChange(parseInt(e.target.value))}
+          onChange={handleSliderChange}
           value={sliderValue}
           type="range"
           min="0"
@@ -76,14 +103,16 @@ export const AmountInputWithSlider = memo<AmountInputWithSliderProps>(
         />
         <div className={classes.dataList}>
           {[0, 25, 50, 75, 100].map(item => (
-            <div
+            <button
               className={clsx(classes.itemList, {
                 [classes.active]: item === sliderValue && !error,
                 [classes.itemDisabled]: forceSelection,
               })}
-              onClick={() => onSliderChange(item)}
+              value={item}
+              onClick={handleButtonClick}
               key={`index-${item}`}
-            >{`${item}%`}</div>
+              disabled={forceSelection}
+            >{`${item}%`}</button>
           ))}
         </div>
       </div>

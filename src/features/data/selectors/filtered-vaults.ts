@@ -57,7 +57,7 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.sort !== 'default' ? 1 : 0) +
     filterOptions.chainIds.length +
     filterOptions.platformIds.length +
-    (filterOptions.minimumTotalSupply.gt(0) ? 1 : 0)
+    (filterOptions.minimumUnderlyingTvl.gt(0) ? 1 : 0)
 );
 
 export const selectHasActiveFilter = createSelector(
@@ -76,7 +76,7 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.platformIds.length > 0 ||
     filterOptions.sort !== 'default' ||
     filterOptions.chainIds.length > 0 ||
-    filterOptions.minimumTotalSupply.gt(0)
+    filterOptions.minimumUnderlyingTvl.gt(0)
 );
 
 export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
@@ -93,7 +93,7 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.searchText !== '' ||
     filterOptions.platformIds.length > 0 ||
     filterOptions.chainIds.length > 0 ||
-    filterOptions.minimumTotalSupply.gt(0)
+    filterOptions.minimumUnderlyingTvl.gt(0)
 );
 
 export const selectVaultCategory = createSelector(

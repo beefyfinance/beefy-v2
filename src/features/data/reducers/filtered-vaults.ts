@@ -45,7 +45,9 @@ export type FilteredVaultsState = {
   onlyEarningPoints: boolean;
   filteredVaultIds: VaultEntity['id'][];
   sortedFilteredVaultIds: VaultEntity['id'][];
-  minimumTotalSupply: BigNumber;
+  showMinimumUnderlyingTvl: boolean;
+  showMinimumUnderlyingTvlLarge: boolean;
+  minimumUnderlyingTvl: BigNumber;
 };
 export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
 
@@ -69,7 +71,9 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   onlyEarningPoints: false,
   filteredVaultIds: [],
   sortedFilteredVaultIds: [],
-  minimumTotalSupply: BIG_ZERO,
+  showMinimumUnderlyingTvl: false,
+  showMinimumUnderlyingTvlLarge: false,
+  minimumUnderlyingTvl: BIG_ZERO,
 };
 
 export const filteredVaultsSlice = createSlice({
@@ -182,7 +186,7 @@ export const userCategoryTransform = createTransform(
 export const bigNumberTransform = createTransform(
   (bigNumber: BigNumber) => bigNumber.toString(),
   (storedBigNumber: string) => new BigNumber(storedBigNumber),
-  { whitelist: ['minimumTotalSupply'] }
+  { whitelist: ['minimumUnderlyingTvl'] }
 );
 
 export const chanIdsTransform = createTransform(

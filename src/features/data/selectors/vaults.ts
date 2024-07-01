@@ -395,14 +395,10 @@ export const selectVaultHasPlatformWithRisks = (
 export const selectChainsHasCowcentratedVaults = (state: BeefyState, chainId: ChainEntity['id']) =>
   (state.entities.vaults.byChainId[chainId]?.byType.cowcentrated.allIds.length || 0) > 0;
 
-export const getMaximumVaultTvl = (state: BeefyState) => {
-  const ids = state.entities.vaults.allIds;
+export const selectMaximumUnderlyingVaultTvl = (state: BeefyState) => {
+  const ids = state.entities.vaults.allActiveIds;
   let maxTvl = BIG_ZERO;
   for (const id of ids) {
-    const vault = selectVaultById(state, id);
-    if (isVaultRetired(vault)) {
-      continue;
-    }
     const underlyingTvl = selectVaultUnderlyingTvlUsd(state, id);
     if (underlyingTvl.gt(maxTvl)) {
       maxTvl = underlyingTvl;
