@@ -608,7 +608,8 @@ export function isGovUnderlyingCowcentratedDepositQuote(
   return (
     isDepositQuote(quote) &&
     quote.strategyId === 'gov-composer' &&
-    isCowcentratedZapDepositQuote(quote.underlyingQuote)
+    (isCowcentratedZapDepositQuote(quote.underlyingQuote) ||
+      isCowcentratedVaultDepositQuote(quote.underlyingQuote))
   );
 }
 
