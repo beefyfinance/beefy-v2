@@ -127,7 +127,7 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
         // Hide CLM if pool or vault exists
         if (
           isCowcentratedVault(vault) &&
-          (!vault.cowcentratedGovId || !vault.cowcentratedStandardId)
+          (!!vault.cowcentratedGovId || !!vault.cowcentratedStandardId)
         ) {
           return false;
         }

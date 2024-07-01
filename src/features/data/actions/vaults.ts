@@ -205,6 +205,7 @@ function getCowcentratedVault(
     receiptTokenAddress: config.earnContractAddress,
     depositTokenAddress: `${clmBase.poolAddress}-${config.id}`,
     excludedId: config.excluded || clmBase.cowcentratedGovId || undefined,
+    assetType: 'clm',
   };
 }
 
