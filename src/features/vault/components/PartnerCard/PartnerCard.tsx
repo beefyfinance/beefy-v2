@@ -19,7 +19,7 @@ export const PartnerCard = memo<PartnerCardProps>(function PartnerCard({
   const classes = useStyles();
 
   return (
-    <a href={url} target="__blank" className={classes.link}>
+    <a href={url} target="_blank" rel="noopener" className={classes.link}>
       <div className={classes.container}>
         <div className={classes.title}>
           {logo ? <img src={logo} alt={title} className={classes.icon} /> : null} {title}

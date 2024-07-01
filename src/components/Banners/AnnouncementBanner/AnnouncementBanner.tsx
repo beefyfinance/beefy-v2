@@ -24,7 +24,12 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
       icon={<img alt="snapshot" src={clm} className={classes.icon} />}
       text={
         <>
-          <a className={classes.link} target="__blank" href="https://beefy.com/articles/ltipp/">
+          <a
+            className={classes.link}
+            rel="noopener"
+            target="_blank"
+            href="https://beefy.com/articles/ltipp/"
+          >
             Unleashing the CLM:
           </a>{' '}
           {`The full functionality of Beefy’s app arrives for CLM across the chains. ZAP, Yield Module, Dashboard, and 12 weeks of ARB incentives kick off to turbocharge CLM yields for users. Cowcentrate your liquidity today!`}

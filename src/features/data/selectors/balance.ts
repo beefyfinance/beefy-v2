@@ -34,7 +34,7 @@ import {
   selectVaultById,
   selectVaultPricePerFullShare,
 } from './vaults';
-import { selectIsWalletKnown, selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
+import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
 import { getTopNArray } from '../utils/array-utils';
@@ -53,19 +53,18 @@ const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
     return selectWalletBalanceByAddress(state, walletAddress);
   }
 
-  if (selectIsWalletKnown(state)) {
-    const userAddress = selectWalletAddress(state);
-    if (!userAddress) {
-      return null;
-    }
+  const userAddress = selectWalletAddress(state);
+  if (userAddress) {
     return selectWalletBalanceByAddress(state, userAddress);
   }
+
+  return undefined;
 };
 
 export const selectWalletBalanceByAddress = createCachedSelector(
   (state: BeefyState, _walletAddress: string) => state.user.balance.byAddress,
   (state: BeefyState, walletAddress: string) => walletAddress.toLocaleLowerCase(),
-  (balancesByAddress, walletAddress) => balancesByAddress[walletAddress] || null
+  (balancesByAddress, walletAddress) => balancesByAddress[walletAddress] || undefined
 )((state: BeefyState, walletAddress: string) => walletAddress);
 
 export const selectAllTokenWhereUserCouldHaveBalance = createSelector(
@@ -1009,3 +1008,26 @@ export const selectUserRewardsByVaultId = (
 
   return { rewards, rewardsTokens, totalRewardsUsd };
 };
+
+export const selectUserUnstakedCowcentratedVaultIds = createSelector(
+  (state: BeefyState, walletAddress?: string) => _selectWalletBalance(state, walletAddress),
+  (state: BeefyState) => state.entities.vaults.byId,
+  (userBalance, vaultsById) => {
+    if (!userBalance || userBalance.depositedVaultIds.length === 0) {
+      return [];
+    }
+    console.log(userBalance);
+    return userBalance.depositedVaultIds
+      .map(vaultId => vaultsById[vaultId])
+      .filter(isCowcentratedVault)
+      .filter(
+        vault =>
+          isCowcentratedVault(vault) &&
+          (vault.cowcentratedGovId || vault.cowcentratedStandardId) &&
+          userBalance.tokenAmount.byChainId[vault.chainId]?.byTokenAddress[
+            vault.receiptTokenAddress.toLowerCase()
+          ]?.balance.gt(BIG_ZERO)
+      )
+      .map(vault => vault.id);
+  }
+);

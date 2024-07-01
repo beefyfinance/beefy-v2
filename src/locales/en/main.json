@@ -586,7 +586,6 @@
   "Glp-Deposit-Notice": "The underlying protocol requires deposits to be at least {{cooldown}} after adding or transferring liquidity.",
   "Glp-Deposit-Notice-Unlocks": "Unlocks in <countdown/>",
   "Details-Here": "Details here",
-  "ETH-Banner": "Beefy is now deployed on <ethereum/>! New autocompounding vaults from Convex, Aura and Stargate are already available and more are coming soon.",
   "Ethereum": "Ethereum",
   "PRE-STAKE": "PRE-STAKE",
   "Treasury-Title": "Beefy Treasury",
@@ -742,12 +741,13 @@
   "TokenBridge-Tooltip-native": "Token is native to {{chain}}",
   "TokenBridge-Tooltip-bridge": "Token is bridged to {{chain}} via <website>{{bridge}}</website>",
   "MarketMaker-Managed": "Funds being managed by a Market Maker",
-  "CLM-Beta-Banner": "Beefy CLM is in public beta, so be conscious of risks. Read the <LinkDocs>docs</LinkDocs> before using and provide your <LinkFeedback>feedback</LinkFeedback>. Audited by Cyfrin and Zellic.",
   "Rewards-Title": "CLM Incentives",
   "Rewards-Description": "This position is receiving rewards through Merkl in addition to trading fees. These rewards are distributed several times per day and are claimed with all other available rewards from Merkl.",
   "Rewards-Claim": "Claim All",
   "Rewards-OtherRewards": "Other Rewards ({{value}})",
   "Update-Available": "Reload to get the latest version of Beefy",
   "Update-Available-Failed": "A new version of Beefy is available. Please clear your browser cache and reload the page to get the latest version.",
-  "Update-Reload": "Reload"
+  "Update-Reload": "Reload",
+  "Banner-UnstakedClm": "You have {{count}} unstaked CLM position. Consider staking in the CLM Pool to ensure you do not miss out on any current or upcoming rewards.",
+  "Banner-UnstakedClm_plural": "You have {{count}} unstaked CLM positions. Consider staking them in the CLM Pools to ensure you do not miss out on any current or upcoming rewards."
 }

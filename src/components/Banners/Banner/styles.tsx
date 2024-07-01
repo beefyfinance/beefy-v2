@@ -19,8 +19,14 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'center',
     gap: '8px',
   },
-  text: {},
+  icon: {
+    flex: 'auto 0 0',
+  },
+  text: {
+    flexGrow: 1,
+  },
   cross: {
+    flex: 'auto 0 0',
     fill: theme.palette.text.middle,
     '&:hover': {
       cursor: 'pointer',
