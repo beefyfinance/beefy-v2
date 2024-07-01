@@ -29,6 +29,9 @@ export const styles = (theme: Theme) => ({
   },
   graphContainer: {
     backgroundColor: theme.palette.background.contentPrimary,
+    '&:last-child': {
+      borderRadius: '0px 0px 12px 12px',
+    },
   },
   graph: {
     '& text': {
