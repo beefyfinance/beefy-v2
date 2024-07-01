@@ -29,7 +29,6 @@ import type { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-type
 import { isNativeAlternativeAddress } from '../../../helpers/addresses';
 import { fetchBridgeConfig } from '../actions/bridge';
 import { entries } from '../../../helpers/object';
-import { isDefined } from '../utils/array-utils';
 import type { LpData } from '../apis/beefy/beefy-api-types';
 import { isCowcentratedGovVault, isCowcentratedVault, type VaultEntity } from '../entities/vault';
 
@@ -532,55 +531,9 @@ function addVaultToState(sliceState: Draft<TokensState>, config: VaultConfig, en
   //
   // Only gov vaults have an earned token that isn't the receipt token
   if (config.type === 'gov') {
-    // And only the new v2 gov vaults have oracle ids such that we can add the token here
-    if (
-      config.earnedTokens &&
-      config.earnedOracleIds &&
-      config.earnedTokenAddresses &&
-      config.earnedTokenDecimals &&
-      Array.isArray(config.earnedTokenDecimals)
-    ) {
-      const earnedTokens: TokenErc20[] = config.earnedTokenAddresses
-        .map((address, i) => {
-          const earnedToken = config.earnedTokens?.[i];
-          const earnedOracleId = config.earnedOracleIds?.[i];
-          const earnedTokenDecimals = config.earnedTokenDecimals?.[i];
-          if (
-            !earnedToken ||
-            !earnedOracleId ||
-            !earnedTokenDecimals ||
-            !address ||
-            address === 'native'
-          ) {
-            return undefined;
-          }
-
-          return {
-            type: 'erc20' as const,
-            id: earnedToken,
-            chainId: chainId,
-            oracleId: earnedOracleId,
-            address,
-            decimals: earnedTokenDecimals,
-            symbol: earnedToken,
-            buyUrl: undefined,
-            website: undefined,
-            description: undefined,
-            documentation: undefined,
-            risks: [],
-          };
-        })
-        .filter(isDefined);
-      for (const earnedToken of earnedTokens) {
-        const earnedAddressKey = earnedToken.address.toLowerCase();
-        const existingEarnedToken = chainState.byAddress[earnedAddressKey];
-        if (existingEarnedToken === undefined) {
-          addTokenToState(sliceState, earnedToken, true);
-        } else {
-          ensureInterestingToken(earnedToken.address, earnedToken.chainId, sliceState);
-        }
-      }
-    } else if (config.earnedTokenAddresses) {
+    // We just make sure we fetch balances of them
+    // The tokens should exist in the address book
+    if (config.earnedTokenAddresses) {
       for (const address of config.earnedTokenAddresses) {
         ensureInterestingToken(address, chainId, sliceState);
       }

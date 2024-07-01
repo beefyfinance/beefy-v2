@@ -29,10 +29,7 @@ export interface VaultConfig {
   earnedTokenAddress?: string; // only missing in multi gov vaults
   earnedTokenDecimals?: number | null; // only missing in multi gov vaults
 
-  earnedTokens?: string[]; // only available in multi gov vaults
-  earnedTokensDecimals: (number | null)[]; // only available in multi gov vaults
   earnedTokenAddresses?: string[]; // only available in multi gov vaults
-  earnedOracleIds?: TokenEntity['id'][]; // only available in multi gov vaults
 
   earnContractAddress: string;
   oracle: string; // 'tokens' | 'lps';

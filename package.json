@@ -75,6 +75,8 @@
     "pause": "ts-node ./scripts/pausePlatform.ts",
     "setVaultUrls": "ts-node -r dotenv/config ./scripts/setVaultUrls.ts && prettier --write ./src/config/vault/*.json",
     "setVaultStatus": "ts-node -r dotenv/config ./scripts/setVaultStatus.ts",
+    "addClmRewardPools": "ts-node -r dotenv/config ./scripts/addClmRewardPools.ts",
+    "updateRewardPoolRewards": "ts-node -r dotenv/config ./scripts/updateRewardPoolRewards.ts",
     "addCurveZap": "ts-node -r dotenv/config ./scripts/addCurveZap.ts",
     "checkVaultTokenDecimals": "ts-node -r dotenv/config ./scripts/checkVaultTokenDecimals.ts && prettier --write ./src/config/vault/*.json",
     "checkZapAddresses": "ts-node -r dotenv/config ./scripts/checkZapAddresses.ts",
