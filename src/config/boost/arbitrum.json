@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_uniswap-cow-arb-silo-weth-beefy",
+    "poolId": "uniswap-cow-arb-silo-weth",
+    "name": "Silo",
+    "assets": ["ETH","SILO"],
+    "tokenAddress": "0xe3EAc56810C885067dC4C43A8049A07D9Bb127a4",
+    "earnedToken": "ARB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+    "earnContractAddress": "0x0595cad1AC3AF21eD87Bf15231032bA338e4DAc4",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "ARB",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": false,
+    "partners": ["silo"]
+  },
+  {
     "id": "moo_silo-eth-ezeth-silo",
     "poolId": "silo-eth-ezeth",
     "name": "Silo",
