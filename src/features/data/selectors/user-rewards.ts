@@ -1,5 +1,5 @@
 import type { BeefyState } from '../../../redux-types';
-import { type VaultEntity } from '../entities/vault';
+import { isGovVault, type VaultEntity } from '../entities/vault';
 import type { ChainEntity } from '../entities/chain';
 import type { MerklVaultReward } from '../reducers/wallet/rewards';
 import type { BigNumber } from 'bignumber.js';
@@ -168,6 +168,8 @@ export const selectConnectedUserHasGovRewardsForVault = (
   if (!walletAddress) {
     return false;
   }
+  const vault = selectVaultById(state, vaultId);
+  if (!isGovVault(vault)) return false;
 
   const rewards = selectGovVaultPendingRewards(state, vaultId, walletAddress);
   return rewards && rewards.some(r => r.balance.gt(BIG_ZERO));

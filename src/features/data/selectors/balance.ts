@@ -1024,7 +1024,6 @@ export const selectUserUnstakedCowcentratedVaultIds = createSelector(
     if (!userBalance || userBalance.depositedVaultIds.length === 0) {
       return [];
     }
-    console.log(userBalance);
     return userBalance.depositedVaultIds
       .map(vaultId => vaultsById[vaultId])
       .filter(isCowcentratedVault)

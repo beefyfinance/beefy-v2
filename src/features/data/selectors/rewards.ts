@@ -31,7 +31,6 @@ export const selectVaultActiveGovRewards = createSelector(
   selectVaultTvl,
   (state: BeefyState) => state.entities.tokens.prices.byOracleId,
   (rewards, tvl, priceByOracleId) => {
-    console.log(rewards, tvl);
     if (!rewards || rewards.length === 0 || !tvl || tvl.isZero()) {
       return undefined;
     }
