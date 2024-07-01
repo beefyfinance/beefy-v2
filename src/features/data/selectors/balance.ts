@@ -497,6 +497,10 @@ export const selectGovVaultPendingRewards = createSelector(
       ? state.user.balance.byAddress[walletAddress]?.tokenAmount.byGovVaultId[vaultId]?.rewards
       : undefined,
   (vault, tokensByChain, rewards) => {
+    if (!rewards) {
+      return [];
+    }
+
     return vault.earnedTokenAddresses.map((address, i) => {
       const token = tokensByChain[vault.chainId]?.byAddress?.[address.toLowerCase()];
       if (!token) {

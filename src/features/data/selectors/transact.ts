@@ -17,10 +17,13 @@ import { TransactStatus } from '../reducers/wallet/transact-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { valueOrThrow } from '../utils/selector-utils';
 import type { TokenEntity } from '../entities/token';
-import { isGovVault, type VaultEntity } from '../entities/vault';
-import { selectVaultHasActiveMerklCampaigns } from './rewards';
-import { selectConnectedUserHasMerklRewardsForVault } from './user-rewards';
+import { selectVaultHasActiveGovRewards, selectVaultHasActiveMerklCampaigns } from './rewards';
+import {
+  selectConnectedUserHasGovRewardsForVault,
+  selectConnectedUserHasMerklRewardsForVault,
+} from './user-rewards';
 import { selectVaultById } from './vaults';
+import { isSingleGovVault } from '../entities/vault';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
@@ -311,15 +314,24 @@ export const selectTransactConfirmChanges = (state: BeefyState) =>
 export const selectTransactForceSelection = (state: BeefyState) => state.ui.transact.forceSelection;
 
 export const selectTransactShouldShowClaims = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
-  (state: BeefyState, vaultId: VaultEntity['id']) =>
-    selectVaultHasActiveMerklCampaigns(state, vaultId),
-  (state: BeefyState, vaultId: VaultEntity['id']) =>
-    selectConnectedUserHasMerklRewardsForVault(state, vaultId),
-  (vault, vaultHasActiveMerklCampaigns, userHasUnclaimedMerklRewards) => {
+  selectVaultById,
+  selectVaultHasActiveGovRewards,
+  selectConnectedUserHasGovRewardsForVault,
+  selectVaultHasActiveMerklCampaigns,
+  selectConnectedUserHasMerklRewardsForVault,
+  (
+    vault,
+    vaultHasActiveGovRewards,
+    userHasUnclaimedGovRewards,
+    vaultHasActiveMerklCampaigns,
+    userHasUnclaimedMerklRewards
+  ) => {
+    // single gov vault do not have periodFinish/rewardRate data
     return (
-      (isGovVault(vault) && vault.earnedTokenAddresses.length > 0) ||
+      isSingleGovVault(vault) ||
+      vaultHasActiveGovRewards ||
       vaultHasActiveMerklCampaigns ||
+      userHasUnclaimedGovRewards ||
       userHasUnclaimedMerklRewards
     );
   }

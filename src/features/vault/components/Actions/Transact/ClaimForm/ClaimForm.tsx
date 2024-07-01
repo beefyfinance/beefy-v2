@@ -44,7 +44,7 @@ export const ClaimFormLoader = memo(function ClaimFormLoader() {
   return (
     <div className={classes.container}>
       <div className={classes.description}>{t(descriptionKey)}</div>
-      {isGovVault(vault) && vault.earnedTokenAddresses.length > 0 ? (
+      {isGovVault(vault) ? (
         <GovRewards
           vaultId={vault.id}
           chainId={vault.chainId}

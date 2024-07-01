@@ -7,6 +7,7 @@ import type {
   VaultGovMulti,
   VaultStandard,
 } from '../../entities/vault';
+import type { TokenEntity } from '../../entities/token';
 
 export interface IContractDataApi {
   fetchAllContractData(
@@ -25,7 +26,7 @@ export interface GovVaultContractData {
 }
 
 export interface RewardContractData {
-  tokenAddress: string;
+  token: Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'oracleId' | 'chainId'>;
   rewardRate: BigNumber;
   periodFinish: Date;
 }

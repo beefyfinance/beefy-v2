@@ -42,7 +42,7 @@ export const MerklRewards = memo<MerklRewardsProps>(function MerklRewards({
     [vaultRewards]
   );
 
-  if (!vaultRewards) {
+  if (!vaultRewards || vaultRewards.length === 0) {
     return null;
   }
 

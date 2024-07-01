@@ -30,7 +30,7 @@ export const GovRewards = memo<GovRewardsProps>(function GovRewards({
     [vaultRewards]
   );
 
-  if (!vaultRewards) {
+  if (!vaultRewards || vaultRewards.length === 0) {
     return null;
   }
 

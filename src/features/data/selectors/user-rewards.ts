@@ -1,5 +1,5 @@
 import type { BeefyState } from '../../../redux-types';
-import type { VaultEntity } from '../entities/vault';
+import { type VaultEntity } from '../entities/vault';
 import type { ChainEntity } from '../entities/chain';
 import type { MerklVaultReward } from '../reducers/wallet/rewards';
 import type { BigNumber } from 'bignumber.js';
@@ -9,8 +9,8 @@ import { createSelector } from '@reduxjs/toolkit';
 import { selectVaultById } from './vaults';
 import { selectTokenByAddressOrUndefined, selectTokenPriceByTokenOracleId } from './tokens';
 import { selectWalletAddress } from './wallet';
-import { selectVaultActiveMerklCampaigns } from './rewards';
-import { selectGovVaultPendingRewardsWithPrice } from './balance';
+import { selectVaultActiveGovRewards, selectVaultActiveMerklCampaigns } from './rewards';
+import { selectGovVaultPendingRewards, selectGovVaultPendingRewardsWithPrice } from './balance';
 
 type UnifiedRewardToken = Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'chainId'>;
 
@@ -159,8 +159,53 @@ export const selectConnectedUserHasMerklRewardsForVault = createSelector(
   selectConnectedUserMerklRewardsForVault,
   rewards => rewards?.some(r => r.unclaimed.gt(BIG_ZERO)) || false
 );
+export const selectConnectedUserHasGovRewardsForVault = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  walletAddress = walletAddress || selectWalletAddress(state);
+  if (!walletAddress) {
+    return false;
+  }
+
+  const rewards = selectGovVaultPendingRewards(state, vaultId, walletAddress);
+  return rewards && rewards.some(r => r.balance.gt(BIG_ZERO));
+};
 
 export const selectUserGovVaultUnifiedRewards = createSelector(
   selectGovVaultPendingRewardsWithPrice,
-  rewards => (rewards ? rewards.map(r => ({ ...r, active: false, apr: undefined })) : undefined)
+  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
+    selectVaultActiveGovRewards(state, vaultId),
+  (pendingRewards, activeRewards): UnifiedReward[] => {
+    console.log(pendingRewards, activeRewards);
+    const rewards: UnifiedReward[] =
+      pendingRewards && pendingRewards.length
+        ? pendingRewards.map(r => ({
+            ...r,
+            active: false,
+            apr: undefined,
+          }))
+        : [];
+
+    if (activeRewards && activeRewards.length) {
+      for (const reward of activeRewards) {
+        const existing = rewards.find(r => r.token.address === reward.token.address);
+        if (existing) {
+          existing.active = true;
+          existing.apr = reward.apr;
+        } else {
+          rewards.push({
+            balance: BIG_ZERO,
+            token: reward.token,
+            price: reward.price,
+            active: true,
+            apr: reward.apr,
+          });
+        }
+      }
+    }
+
+    return rewards;
+  }
 );

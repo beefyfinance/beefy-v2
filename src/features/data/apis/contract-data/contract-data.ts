@@ -9,7 +9,7 @@ import type { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import type { AsWeb3Result } from '../../utils/types-utils';
 import type { BoostEntity } from '../../entities/boost';
-import { chunk } from 'lodash-es';
+import { chunk, pick } from 'lodash-es';
 import type {
   BoostContractData,
   BoostContractDataResponse,
@@ -245,22 +245,33 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     state: BeefyState,
     result: AsWeb3Result<GovVaultMultiContractDataResponse>,
     govVault: VaultGovMulti
-  ) {
+  ): GovVaultMultiContractData {
     const vault = selectVaultById(state, govVault.id);
     const token = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
 
     const rewards: RewardContractData[] = [];
     for (const reward of result.rewards) {
-      const rewardAddress = reward[0];
+      if (!reward || reward.length !== 3) {
+        console.error(`Invalid reward data for rewardpool ${vault.id}`);
+        continue;
+      }
+
+      const [rewardAddress, rewardRate, periodFinish] = reward;
+      if (!rewardAddress || !rewardRate || !periodFinish) {
+        console.error(`Invalid reward data for rewardpool ${vault.id}`);
+        continue;
+      }
+
       const rewardToken = selectTokenByAddressOrUndefined(state, vault.chainId, rewardAddress);
       if (!rewardToken) {
         console.error(`Unknown reward token (${rewardToken}) for rewardpool ${vault.id}`);
         continue;
       }
+
       rewards.push({
-        tokenAddress: rewardAddress,
-        rewardRate: new BigNumber(reward[1]).shiftedBy(-rewardToken.decimals),
-        periodFinish: this.periodFinishToDate(reward[2])!,
+        token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+        rewardRate: new BigNumber(rewardRate).shiftedBy(-rewardToken.decimals),
+        periodFinish: this.periodFinishToDate(periodFinish)!,
       });
     }
 
@@ -268,7 +279,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       id: govVault.id,
       totalSupply: new BigNumber(result.totalSupply).shiftedBy(-token.decimals),
       rewards,
-    } satisfies GovVaultMultiContractData;
+    };
   }
 
   protected cowVaultFormatter(
