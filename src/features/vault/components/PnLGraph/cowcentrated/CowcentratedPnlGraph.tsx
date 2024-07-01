@@ -137,18 +137,21 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
   const [stat, setStat] = useState<ChartType>('overview');
   const { t } = useTranslation();
   const classes = useStyles();
+  const { strategyTypeId } = useAppSelector(state => selectVaultById(state, vaultId));
 
   useEffect(() => {
-    dispatch(fetchClmHarvestsForUserVault({ vaultId, walletAddress: address }));
+    if (strategyTypeId === 'compounds') {
+      dispatch(fetchClmHarvestsForUserVault({ vaultId, walletAddress: address }));
+    }
     dispatch(fetchClmPendingRewards({ vaultId }));
-  }, [dispatch, vaultId, address]);
+  }, [dispatch, vaultId, address, strategyTypeId]);
 
   const options = useMemo(() => {
     return {
       overview: t('Graph-Overview'),
-      fees: t('Graph-Fees'),
-    } as const satisfies Record<ChartType, string>;
-  }, [t]);
+      ...(strategyTypeId === 'compounds' ? { fees: t('Graph-Fees') } : {}),
+    };
+  }, [t, strategyTypeId]);
 
   const GraphComponent = chartToComponent[stat];
 
@@ -156,7 +159,9 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
     <Card className={classes.card}>
       <CardHeader className={classes.header}>
         <CardTitle title={t('Graph-PositionPerformance')} />
-        <StatSwitcher<ChartType> stat={stat} options={options} onChange={setStat} />
+        {Object.keys(options).length > 1 ? (
+          <StatSwitcher stat={stat} options={options} onChange={setStat as (v: string) => void} />
+        ) : null}
       </CardHeader>
       <ErrorBoundary>
         <GraphComponent vaultId={vaultId} address={address} />

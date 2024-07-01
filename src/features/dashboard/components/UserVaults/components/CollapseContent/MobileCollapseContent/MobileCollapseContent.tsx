@@ -5,7 +5,7 @@ import { VaultDashboardMobileStats } from './components/VaultDashboardMobileStat
 import { VaultTransactions } from '../../VaultTransactions';
 import { useAppSelector } from '../../../../../../../store';
 import { selectHasDataToShowGraphByVaultId } from '../../../../../../data/selectors/analytics';
-import { selectVaultType } from '../../../../../../data/selectors/vaults';
+import { selectVaultById, selectVaultType } from '../../../../../../data/selectors/vaults';
 import {
   DashboardFeesGraph,
   DashboardOverviewGraph,
@@ -24,7 +24,7 @@ export const MobileCollapseContent = memo<VaultCollapseContentProps>(
   function MobileCollapseContent({ vaultId, address }) {
     const classes = useStyles();
     const { t } = useTranslation();
-    const vaultType = useAppSelector(state => selectVaultType(state, vaultId));
+    const { type, strategyTypeId } = useAppSelector(state => selectVaultById(state, vaultId));
     const hasAnalyticsData = useAppSelector(state =>
       selectHasDataToShowGraphByVaultId(state, vaultId, address)
     );
@@ -38,15 +38,17 @@ export const MobileCollapseContent = memo<VaultCollapseContentProps>(
       };
       if (hasAnalyticsData) {
         items['positionChart'] = t('Dashboard-Chart');
-        if (vaultType === 'cowcentrated') {
+        if (type === 'cowcentrated') {
           items['positionChart'] = t('Dashboard-PositionChart');
-          items['compoundsChart'] = t('Dashboard-CompoundsChart');
+          if (strategyTypeId === 'compounds') {
+            items['compoundsChart'] = t('Dashboard-CompoundsChart');
+          }
         }
       }
       return items;
-    }, [hasAnalyticsData, vaultType, t]);
+    }, [hasAnalyticsData, type, strategyTypeId, t]);
 
-    const PositionGraph = vaultType === 'cowcentrated' ? DashboardOverviewGraph : DashboardPnLGraph;
+    const PositionGraph = type === 'cowcentrated' ? DashboardOverviewGraph : DashboardPnLGraph;
     const CompoundsGraph = DashboardFeesGraph;
 
     return (
