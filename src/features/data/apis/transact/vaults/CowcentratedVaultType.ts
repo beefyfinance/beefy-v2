@@ -43,6 +43,7 @@ import abiCoder from 'web3-eth-abi';
 import { getInsertIndex } from '../helpers/zap';
 import { slipAllBy } from '../helpers/amounts';
 import { selectTransactSlippage } from '../../../selectors/transact';
+import { calculatePriceImpact } from '../helpers/quotes';
 
 export class CowcentratedVaultType implements ICowcentratedVaultType {
   public readonly id = 'cowcentrated';
@@ -126,6 +127,12 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       amount: fromWei(amount, this.depositTokens[i].decimals),
     }));
 
+    const usedInputs: InputTokenAmount[] = inputs.map((input, i) => ({
+      token: input.token,
+      amount: fromWei(i === 0 ? used0 : used1, input.token.decimals),
+      max: input.max,
+    }));
+
     const outputs = [
       {
         token: this.shareToken,
@@ -146,11 +153,11 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       strategyId: option.strategyId,
       vaultType: option.vaultType,
       option,
-      inputs,
+      inputs: usedInputs,
       outputs,
       returned: [],
       allowances,
-      priceImpact: 0,
+      priceImpact: calculatePriceImpact(usedInputs, outputs, [], state),
       isCalm,
       unused: depositUnused,
       used: depositUsed,
