@@ -85,7 +85,7 @@ function buildVaultEntitiesForChain(configs: VaultConfig[], chainId: ChainId): V
 function getStandardVault(
   config: VaultConfig,
   chainId: ChainEntity['id'],
-  clm: VaultCowcentratedBaseOnly | undefined
+  clmBase: VaultCowcentratedBaseOnly | undefined
 ): VaultStandard {
   const status = getVaultStatus(config);
   const base = getVaultBase(config, chainId);
@@ -96,12 +96,12 @@ function getStandardVault(
     lendingOracle: config.lendingOracle || undefined,
   };
 
-  if (clm) {
+  if (clmBase) {
     return {
       ...base,
       ...status,
       ...standardBase,
-      ...clm,
+      ...clmBase,
       type: 'standard',
       assetType: 'clm',
       name: base.names.short,
@@ -127,7 +127,7 @@ function getStandardVault(
 function getGovVault(
   config: VaultConfig,
   chainId: ChainEntity['id'],
-  clm: VaultCowcentratedBaseOnly | undefined
+  clmBase: VaultCowcentratedBaseOnly | undefined
 ): VaultGov {
   const status = getVaultStatus(config);
   const base = getVaultBase(config, chainId);
@@ -138,17 +138,17 @@ function getGovVault(
   };
 
   if ((config.version || 1) >= 2) {
-    if (clm) {
+    if (clmBase) {
       return {
         ...base,
         ...status,
         ...govBase,
-        ...clm,
+        ...clmBase,
         type: 'gov',
         contractType: 'multi',
         receiptTokenAddress: config.earnContractAddress,
         assetType: 'clm',
-        excludedId: config.excluded || clm.cowcentratedStandardId || undefined,
+        excludedId: config.excluded || clmBase.cowcentratedStandardId || undefined,
         name: base.names.short,
         names: {
           short: base.names.short,
@@ -188,9 +188,9 @@ function getGovVault(
 function getCowcentratedVault(
   config: VaultConfig,
   chainId: ChainEntity['id'],
-  clm: VaultCowcentratedBaseOnly | undefined
+  clmBase: VaultCowcentratedBaseOnly | undefined
 ): VaultCowcentrated {
-  if (!clm) {
+  if (!clmBase) {
     throw new Error(`Cowcentrated vault ${config.id} must have a CLM base`);
   }
 
@@ -199,12 +199,12 @@ function getCowcentratedVault(
   return {
     ...base,
     ...status,
-    ...clm,
+    ...clmBase,
     type: 'cowcentrated',
     subType: 'cowcentrated',
     receiptTokenAddress: config.earnContractAddress,
-    depositTokenAddress: `${clm.poolAddress}-${config.id}`,
-    excludedId: config.excluded || clm.cowcentratedGovId || undefined,
+    depositTokenAddress: `${clmBase.poolAddress}-${config.id}`,
+    excludedId: config.excluded || clmBase.cowcentratedGovId || undefined,
   };
 }
 
@@ -255,6 +255,8 @@ function getCowcentratedBases(configs: VaultConfig[]) {
         depositTokenAddresses: config.depositTokenAddresses,
         feeTier: config.feeTier,
         poolAddress: config.tokenAddress,
+        risks: config.risks || [],
+        safetyScore: safetyScoreNum(config.risks || []) || 0,
       };
 
       for (const c of govs) {

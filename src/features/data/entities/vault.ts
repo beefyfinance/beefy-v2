@@ -148,6 +148,10 @@ export type VaultCowcentratedBaseOnly = {
   feeTier: string;
   /** the address of the underlying CL pool */
   poolAddress: string;
+  /** risk assessments per category */
+  risks: string[];
+  /** score calculated from risks [0 if risks was empty] */
+  safetyScore: number;
 };
 
 type VaultCowcentratedOnly = VaultCowcentratedBaseOnly & {
