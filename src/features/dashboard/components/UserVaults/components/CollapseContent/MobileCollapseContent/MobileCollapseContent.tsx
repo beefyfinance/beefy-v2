@@ -5,7 +5,7 @@ import { VaultDashboardMobileStats } from './components/VaultDashboardMobileStat
 import { VaultTransactions } from '../../VaultTransactions';
 import { useAppSelector } from '../../../../../../../store';
 import { selectHasDataToShowGraphByVaultId } from '../../../../../../data/selectors/analytics';
-import { selectVaultById, selectVaultType } from '../../../../../../data/selectors/vaults';
+import { selectVaultById } from '../../../../../../data/selectors/vaults';
 import {
   DashboardFeesGraph,
   DashboardOverviewGraph,

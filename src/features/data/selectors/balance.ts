@@ -612,7 +612,10 @@ export const selectUserLpBreakdownBalance = (
   walletAddress?: string
 ): UserLpBreakdownBalance => {
   const lpTotalSupplyDecimal = new BigNumber(breakdown.totalSupply);
-  const underlyingTotalSupplyDecimal = new BigNumber(breakdown?.underlyingLiquidity || 0);
+  const underlyingTotalSupplyDecimal =
+    breakdown && 'underlyingLiquidity' in breakdown
+      ? new BigNumber(breakdown.underlyingLiquidity || 0)
+      : BIG_ZERO;
 
   // TODO what about when there is standard vaults?
   const relatedVault = isCowcentratedGovVault(vault)
@@ -645,9 +648,10 @@ export const selectUserLpBreakdownBalance = (
 
   const assets = breakdown.tokens.map((tokenAddress, i) => {
     const reserves = new BigNumber(breakdown.balances[i]);
-    const underlyingReserves = new BigNumber(
-      breakdown.underlyingBalances ? breakdown.underlyingBalances[i] : 0
-    );
+    const underlyingReserves =
+      breakdown && 'underlyingBalances' in breakdown
+        ? new BigNumber(breakdown.underlyingBalances[i] || 0)
+        : BIG_ZERO;
     const assetToken = selectTokenByAddress(state, vault.chainId, tokenAddress);
     const valuePerDecimal = selectTokenPriceByAddress(state, vault.chainId, tokenAddress);
     const totalValue = reserves.multipliedBy(valuePerDecimal);

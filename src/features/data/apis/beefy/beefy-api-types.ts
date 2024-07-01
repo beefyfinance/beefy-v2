@@ -68,15 +68,20 @@ export interface BeefyAPIApyBreakdownResponse {
   [vaultId: VaultEntity['id']]: ApiApyData;
 }
 
-export interface LpData {
+export type BaseLpData = {
   price: number;
   tokens: string[];
   balances: string[];
   totalSupply: string;
-  underlyingPrice?: number;
-  underlyingBalances?: string[];
-  underlyingLiquidity?: string;
-}
+};
+
+export type CowcentratedLpData = BaseLpData & {
+  underlyingPrice: number;
+  underlyingBalances: string[];
+  underlyingLiquidity: string;
+};
+
+export type LpData = BaseLpData | CowcentratedLpData;
 
 export interface BeefyAPILpBreakdownResponse {
   [vaultId: VaultEntity['id']]: LpData;

@@ -306,6 +306,7 @@ function addBreakdownToState(sliceState: Draft<TokensState>, oracleId: string, b
   }
 
   if (
+    'underlyingBalances' in breakdown &&
     breakdown.underlyingBalances &&
     breakdown.underlyingBalances.length !== breakdown.tokens.length
   ) {

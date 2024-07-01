@@ -1,25 +1,19 @@
-import { isCowcentratedVault, type VaultEntity } from '../../features/data/entities/vault';
+import { type VaultEntity } from '../../features/data/entities/vault';
 import { memo, useMemo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { VaultValueStat } from '../VaultValueStat';
-import { selectVaultTvl } from '../../features/data/selectors/tvl';
+import { selectTvlBreakdownByVaultId } from '../../features/data/selectors/tvl';
 import { formatLargeUsd, formatPercent } from '../../helpers/format';
-import {
-  selectLpBreakdownForVault,
-  selectTokenByAddress,
-} from '../../features/data/selectors/tokens';
-import type { BigNumber } from 'bignumber.js';
 import { InterestTooltipContent } from '../InterestTooltipContent';
-import type { PlatformEntity } from '../../features/data/entities/platform';
 import { selectPlatformById } from '../../features/data/selectors/platforms';
 import { useAppSelector } from '../../store';
-import { getVaultUnderlyingTvlAndBeefySharePercent } from '../../helpers/tvl';
 import {
   selectIsChainDataAvailable,
   selectIsGlobalDataAvailable,
 } from '../../features/data/selectors/data-loader';
+import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types';
 
 export type VaultTvlStatProps = {
   vaultId: VaultEntity['id'];
@@ -44,77 +38,78 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
     };
   }
 
-  // deposit can be moo or oracle
-  const tvl = selectVaultTvl(state, vaultId);
-  const breakdown = selectLpBreakdownForVault(state, vault);
-
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const platformId = isCowcentratedVault(vault) ? depositToken.providerId! : vault.platformId;
-
-  if (!breakdown) {
+  const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
+  if (!breakdown || !('underlyingTvl' in breakdown)) {
     return {
       label,
-      value: formatLargeUsd(tvl),
+      value: formatLargeUsd(breakdown.vaultTvl),
       subValue: null,
       blur: false,
       loading: false,
     };
   }
 
-  const { percent, underlyingTvl } = getVaultUnderlyingTvlAndBeefySharePercent(
-    vault,
-    breakdown,
-    tvl
-  );
-
   return {
     label,
-    value: formatLargeUsd(tvl),
-    subValue: formatLargeUsd(underlyingTvl),
+    value: formatLargeUsd(breakdown.vaultTvl),
+    subValue: formatLargeUsd(breakdown.underlyingTvl),
     blur: false,
     loading: false,
-    tooltip: (
-      <TvlShareTooltip
-        platformId={platformId}
-        underlyingTvl={underlyingTvl}
-        vaultTvl={tvl}
-        percent={percent}
-      />
-    ),
+    tooltip: <TvlShareTooltip breakdown={breakdown} />,
   };
 }
 
 type TvlShareTooltipProps = {
-  underlyingTvl: BigNumber;
-  vaultTvl: BigNumber;
-  percent: number;
-  platformId: PlatformEntity['id'];
+  breakdown: TvlBreakdownUnderlying;
 };
 
-export const TvlShareTooltip = memo<TvlShareTooltipProps>(function TvlShareTooltip({
-  underlyingTvl,
-  vaultTvl,
-  percent,
-  platformId,
-}) {
-  const platform = useAppSelector(state => selectPlatformById(state, platformId));
+export const TvlShareTooltip = memo<TvlShareTooltipProps>(function TvlShareTooltip({ breakdown }) {
+  const platform = useAppSelector(state =>
+    breakdown.underlyingPlatformId
+      ? selectPlatformById(state, breakdown.underlyingPlatformId)
+      : undefined
+  );
+
   const rows = useMemo(() => {
+    const platformName = platform?.name || 'Underlying';
+    if ('vaultType' in breakdown) {
+      return [
+        {
+          label: [`Vault-Breakdown-Tvl-Vault-${breakdown.vaultType}`, 'Vault-Breakdown-Tvl-Vault'],
+          value: formatLargeUsd(breakdown.vaultTvl),
+        },
+        {
+          label: [`Vault-Breakdown-Tvl-Total-${breakdown.totalType}`, 'Vault-Breakdown-Tvl-Total'],
+          value: formatLargeUsd(breakdown.totalTvl),
+        },
+        {
+          label: 'Vault-Breakdown-Tvl-Underlying',
+          value: formatLargeUsd(breakdown.underlyingTvl),
+          labelTextParams: { platform: platformName },
+        },
+        {
+          label: [`Vault-Breakdown-Tvl-Share-${breakdown.totalType}`, 'Vault-Breakdown-Tvl-Share'],
+          value: formatPercent(breakdown.totalShare),
+        },
+      ];
+    }
+
     return [
       {
         label: 'Vault-Breakdown-Tvl-Vault',
-        value: formatLargeUsd(vaultTvl),
+        value: formatLargeUsd(breakdown.vaultTvl),
       },
       {
         label: 'Vault-Breakdown-Tvl-Underlying',
-        value: formatLargeUsd(underlyingTvl),
-        labelTextParams: { platform: platform.name },
+        value: formatLargeUsd(breakdown.underlyingTvl),
+        labelTextParams: { platform: platformName },
       },
       {
         label: 'Vault-Breakdown-Tvl-Share',
-        value: formatPercent(percent),
+        value: formatPercent(breakdown.vaultShare),
       },
     ];
-  }, [vaultTvl, underlyingTvl, platform.name, percent]);
+  }, [breakdown, platform]);
 
   return <InterestTooltipContent rows={rows} />;
 });

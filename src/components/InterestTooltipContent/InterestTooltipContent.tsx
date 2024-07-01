@@ -18,7 +18,7 @@ export const InterestTooltipContent = memo<InterestTooltipContentProps>(
       <div className={classes.rows}>
         {rows.map(({ label, value, labelTextParams }) => (
           <Fragment key={typeof label === 'string' ? label : label[0]}>
-            <div className={classes.label}>{t(label, { ...labelTextParams })}</div>
+            <div className={classes.label}>{t(label, labelTextParams)}</div>
             <div className={classes.value}>{t(value)}</div>
           </Fragment>
         ))}
