@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "aura-gyro-op-frax-symphony",
     "status": "active",
-    "createdAt": 1719566723,
+    "createdAt": 1719920477,
     "platformId": "aura",
     "assets": ["sFRAX", "FRAX"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],

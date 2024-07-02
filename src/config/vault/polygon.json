@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "balancer-polygon-wbtc-usdc-eth",
     "status": "active",
-    "createdAt": 1719697337,
+    "createdAt": 1719920477,
     "platformId": "balancer",
     "assets": ["WBTC", "USDC", "ETH"],
     "risks": [
@@ -43,7 +43,7 @@
     "oracle": "lps",
     "oracleId": "balancer-polygon-usdc-dai-usdt",
     "status": "active",
-    "createdAt": 1719697337,
+    "createdAt": 1719920477,
     "platformId": "balancer",
     "assets": ["USDC", "DAI", "USDT"],
     "risks": [
@@ -73,7 +73,7 @@
     "oracle": "lps",
     "oracleId": "aura-polygon-wmatic-maticx",
     "status": "active",
-    "createdAt": 1719578856,
+    "createdAt": 1719920477,
     "platformId": "aura",
     "assets": ["MaticX", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],

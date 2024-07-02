@@ -41,7 +41,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-weth-reth-s",
     "status": "active",
-    "createdAt": 1719426091,
+    "createdAt": 1719920477,
     "platformId": "aerodrome",
     "assets": ["WETH", "rETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
