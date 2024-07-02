@@ -68,6 +68,14 @@ export const selectVaultUnderlyingVaultIdOrUndefined = (
   return state.entities.vaults.relations.underlyingOf.byId[parentVaultId] || undefined;
 };
 
+/** The id of the vault whose contract address is equal to the deposit token address of the passed vault id */
+export const selectVaultParentVaultIdOrUndefined = (
+  state: BeefyState,
+  childVaultId: VaultEntity['id']
+): VaultEntity['id'] | undefined => {
+  return state.entities.vaults.relations.depositFor.byId[childVaultId]?.[0] || undefined;
+};
+
 /** The vault whose contract address is equal to the deposit token address of the passed vault id */
 export const selectVaultUnderlyingVaultOrUndefined = (
   state: BeefyState,

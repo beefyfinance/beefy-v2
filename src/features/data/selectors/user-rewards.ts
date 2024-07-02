@@ -143,9 +143,8 @@ const selectConnectedUserMerklRewardsForVault = createSelector(
     }
 
     return (
-      rewardsByUser[walletAddress]?.byProvider.merkl.byChain[vault.chainId]?.byVaultAddress[
-        vault.contractAddress.toLowerCase()
-      ] || undefined
+      rewardsByUser[walletAddress.toLowerCase()]?.byProvider.merkl.byChain[vault.chainId]
+        ?.byVaultAddress[vault.contractAddress.toLowerCase()] || undefined
     );
   }
 );

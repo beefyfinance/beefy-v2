@@ -6,7 +6,12 @@ import { selectChainById } from '../selectors/chains';
 import { groupBy, keyBy } from 'lodash-es';
 import { BIG_ZERO, fromWeiString } from '../../../helpers/big-number';
 import type { BigNumber } from 'bignumber.js';
-import { selectChainsHasCowcentratedVaults } from '../selectors/vaults';
+import {
+  selectChainsHasCowcentratedVaults,
+  selectVaultByAddressOrUndefined,
+  selectVaultById,
+  selectVaultParentVaultIdOrUndefined,
+} from '../selectors/vaults';
 import { selectIsMerklRewardsForUserChainRecent } from '../selectors/data-loader';
 import type { Address } from 'viem';
 
@@ -119,6 +124,34 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
       ),
       r => r.vaultAddress
     );
+
+    const keysToDelete: string[] = [];
+    for (const vaultKey of Object.keys(byVaultAddress)) {
+      const vault = selectVaultByAddressOrUndefined(state, chain.id, vaultKey);
+      if (!vault) {
+        console.error(`Vault not found for merkl rewards on ${chain.id}: ${vaultKey}`);
+        continue;
+      }
+      const depositFor = selectVaultParentVaultIdOrUndefined(state, vault.id);
+      if (depositFor) {
+        const parentVault = selectVaultById(state, depositFor);
+        if (!byVaultAddress[parentVault.contractAddress.toLowerCase()]) {
+          byVaultAddress[parentVault.contractAddress.toLowerCase()] = [];
+        }
+        const parentMerkleRewards = byVaultAddress[parentVault.contractAddress.toLowerCase()];
+        const underlyingMerkleRewards = byVaultAddress[vaultKey];
+        for (const rewardData of Object.values(underlyingMerkleRewards)) {
+          parentMerkleRewards.push({
+            ...rewardData,
+            vaultAddress: parentVault.contractAddress.toLowerCase(),
+          });
+        }
+        keysToDelete.push(vaultKey);
+      }
+    }
+    for (const key of keysToDelete) {
+      delete byVaultAddress[key];
+    }
 
     return {
       walletAddress,
