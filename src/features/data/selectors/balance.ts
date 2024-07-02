@@ -5,6 +5,7 @@ import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token';
 import {
   isCowcentratedGovVault,
+  isCowcentratedLikeVault,
   isCowcentratedVault,
   isGovVault,
   isGovVaultMulti,
@@ -1047,5 +1048,43 @@ export const selectUserUnstakedCowcentratedVaultIds = createSelector(
           ]?.balance.gt(BIG_ZERO)
       )
       .map(vault => vault.id);
+  }
+);
+
+export const selectUserShouldStakeForVault = createSelector(
+  (state: BeefyState, _vaultId: string, walletAddress?: string) =>
+    _selectWalletBalance(state, walletAddress),
+  (state: BeefyState, vaultId: string) => selectVaultById(state, vaultId),
+  (
+    userBalance,
+    vault
+  ): false | { type: 'gov' | 'standard'; id: string; cowcentratedId: string } => {
+    if (!userBalance || !vault || !isCowcentratedLikeVault(vault)) {
+      return false;
+    }
+    if (!vault.cowcentratedGovId && !vault.cowcentratedStandardId) {
+      return false;
+    }
+
+    const clmReceiptTokenAddress =
+      vault.id === vault.cowcentratedId ? vault.receiptTokenAddress : vault.depositTokenAddress;
+    const hasClmBalance =
+      userBalance.tokenAmount.byChainId[vault.chainId]?.byTokenAddress[
+        clmReceiptTokenAddress.toLowerCase()
+      ]?.balance.gt(BIG_ZERO) || false;
+
+    if (!hasClmBalance) {
+      return false;
+    }
+
+    if (vault.cowcentratedGovId) {
+      return { type: 'gov', id: vault.cowcentratedGovId, cowcentratedId: vault.cowcentratedId };
+    }
+
+    return {
+      type: 'standard',
+      id: vault.cowcentratedStandardId!,
+      cowcentratedId: vault.cowcentratedId,
+    };
   }
 );

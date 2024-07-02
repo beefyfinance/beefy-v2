@@ -51,32 +51,14 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.onlyZappable ? 1 : 0) +
     (filterOptions.onlyEarningPoints ? 1 : 0) +
+    (filterOptions.onlyUnstakedClm ? 1 : 0) +
     filterOptions.assetType.length +
     filterOptions.vaultCategory.length +
     (filterOptions.strategyType !== 'all' ? 1 : 0) +
     (filterOptions.sort !== 'default' ? 1 : 0) +
     filterOptions.chainIds.length +
     filterOptions.platformIds.length +
-    (filterOptions.minimumUnderlyingTvl.gt(0) ? 1 : 0)
-);
-
-export const selectHasActiveFilter = createSelector(
-  selectFilterOptions,
-  filterOptions =>
-    filterOptions.vaultCategory.length > 0 ||
-    filterOptions.userCategory !== 'all' ||
-    filterOptions.assetType.length > 0 ||
-    filterOptions.strategyType !== 'all' ||
-    filterOptions.onlyRetired !== false ||
-    filterOptions.onlyPaused !== false ||
-    filterOptions.onlyBoosted !== false ||
-    filterOptions.onlyZappable !== false ||
-    filterOptions.onlyEarningPoints !== false ||
-    filterOptions.searchText !== '' ||
-    filterOptions.platformIds.length > 0 ||
-    filterOptions.sort !== 'default' ||
-    filterOptions.chainIds.length > 0 ||
-    filterOptions.minimumUnderlyingTvl.gt(0)
+    (filterOptions.showMinimumUnderlyingTvl && filterOptions.minimumUnderlyingTvl.gt(0) ? 1 : 0)
 );
 
 export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
@@ -85,15 +67,23 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.vaultCategory.length > 0 ||
     filterOptions.assetType.length > 0 ||
     filterOptions.strategyType !== 'all' ||
-    filterOptions.onlyRetired !== false ||
-    filterOptions.onlyPaused !== false ||
-    filterOptions.onlyBoosted !== false ||
-    filterOptions.onlyZappable !== false ||
-    filterOptions.onlyEarningPoints !== false ||
+    filterOptions.onlyRetired ||
+    filterOptions.onlyPaused ||
+    filterOptions.onlyBoosted ||
+    filterOptions.onlyZappable ||
+    filterOptions.onlyEarningPoints ||
+    filterOptions.onlyUnstakedClm ||
     filterOptions.searchText !== '' ||
     filterOptions.platformIds.length > 0 ||
     filterOptions.chainIds.length > 0 ||
-    filterOptions.minimumUnderlyingTvl.gt(0)
+    (filterOptions.showMinimumUnderlyingTvl && filterOptions.minimumUnderlyingTvl.gt(0))
+);
+
+export const selectHasActiveFilter = createSelector(
+  selectHasActiveFilterExcludingUserCategoryAndSort,
+  selectFilterOptions,
+  (activeFilter, filterOptions) =>
+    activeFilter || filterOptions.userCategory !== 'all' || filterOptions.sort !== 'default'
 );
 
 export const selectVaultCategory = createSelector(

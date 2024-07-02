@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import {
+  isCowcentratedLikeVault,
   isCowcentratedVault,
   isGovVault,
   isVaultEarningPoints,
@@ -31,6 +32,7 @@ import {
 import { selectIsVaultIdSaved } from '../selectors/saved-vaults';
 import {
   selectHasUserDepositInVault,
+  selectUserBalanceOfToken,
   selectUserVaultBalanceInUsdIncludingBoostsBridged,
   selectUserVaultDepositTokenWalletBalanceInUsd,
 } from '../selectors/balance';
@@ -169,10 +171,20 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
           return false;
         }
 
-        // User category: 'My'
+        // User category: 'My Positions'
         if (
           filterOptions.userCategory === 'deposited' &&
           !selectHasUserDepositInVault(state, vault.id)
+        ) {
+          return false;
+        }
+
+        // User category: 'My Positions' + onlyUnstakedClm
+        if (
+          filterOptions.userCategory === 'deposited' &&
+          filterOptions.onlyUnstakedClm &&
+          (!isCowcentratedLikeVault(vault) ||
+            selectUserBalanceOfToken(state, vault.chainId, vault.depositTokenAddress).isZero())
         ) {
           return false;
         }

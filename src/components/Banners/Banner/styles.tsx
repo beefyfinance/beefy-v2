@@ -21,6 +21,8 @@ export const styles = (theme: Theme) => ({
   },
   icon: {
     flex: 'auto 0 0',
+    height: '24px',
+    width: '24px',
   },
   text: {
     flexGrow: 1,

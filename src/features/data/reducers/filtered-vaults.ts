@@ -43,6 +43,7 @@ export type FilteredVaultsState = {
   onlyBoosted: boolean;
   onlyZappable: boolean;
   onlyEarningPoints: boolean;
+  onlyUnstakedClm: boolean;
   filteredVaultIds: VaultEntity['id'][];
   sortedFilteredVaultIds: VaultEntity['id'][];
   showMinimumUnderlyingTvl: boolean;
@@ -69,6 +70,7 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   onlyBoosted: false,
   onlyZappable: false,
   onlyEarningPoints: false,
+  onlyUnstakedClm: false,
   filteredVaultIds: [],
   sortedFilteredVaultIds: [],
   showMinimumUnderlyingTvl: false,

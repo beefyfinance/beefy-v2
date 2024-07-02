@@ -24,6 +24,7 @@ import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
 import { VaultMeta } from '../../components/Meta/VaultMeta';
 import { PnLGraphIfWallet } from './components/PnLGraph/PnLGraphIfWallet';
 import { Explainer } from './components/Explainer/Explainer';
+import { UnstakedClmBannerVault } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -72,6 +73,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
     <Container maxWidth="lg" className={classes.page}>
       <VaultMeta vaultId={vaultId} />
       <BusdBannerVault vaultId={vaultId} />
+      <UnstakedClmBannerVault vaultId={vaultId} />
       <VaultHeader vaultId={vaultId} />
       <VaultsStats vaultId={vaultId} />
       <div className={classes.contentContainer}>
