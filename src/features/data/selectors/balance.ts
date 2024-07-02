@@ -4,8 +4,12 @@ import type { BoostEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token';
 import {
+  isCowcentratedGovVault,
+  isCowcentratedLikeVault,
   isCowcentratedVault,
   isGovVault,
+  isGovVaultMulti,
+  isGovVaultSingle,
   isStandardVault,
   type VaultEntity,
   type VaultGov,
@@ -27,12 +31,13 @@ import {
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens';
 import {
+  selectGovVaultById,
   selectIsVaultStable,
   selectStandardVaultById,
   selectVaultById,
   selectVaultPricePerFullShare,
 } from './vaults';
-import { selectIsWalletKnown, selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
+import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
 import { getTopNArray } from '../utils/array-utils';
@@ -51,19 +56,18 @@ const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
     return selectWalletBalanceByAddress(state, walletAddress);
   }
 
-  if (selectIsWalletKnown(state)) {
-    const userAddress = selectWalletAddress(state);
-    if (!userAddress) {
-      return null;
-    }
+  const userAddress = selectWalletAddress(state);
+  if (userAddress) {
     return selectWalletBalanceByAddress(state, userAddress);
   }
+
+  return undefined;
 };
 
 export const selectWalletBalanceByAddress = createCachedSelector(
   (state: BeefyState, _walletAddress: string) => state.user.balance.byAddress,
   (state: BeefyState, walletAddress: string) => walletAddress.toLocaleLowerCase(),
-  (balancesByAddress, walletAddress) => balancesByAddress[walletAddress] || null
+  (balancesByAddress, walletAddress) => balancesByAddress[walletAddress] || undefined
 )((state: BeefyState, walletAddress: string) => walletAddress);
 
 export const selectAllTokenWhereUserCouldHaveBalance = createSelector(
@@ -80,10 +84,35 @@ export const selectUserDepositedVaultIds = (state: BeefyState, walletAddress?: s
   return walletBalance?.depositedVaultIds || [];
 };
 
-export const selectAddressDepositedVaultIds = createSelector(
+/**
+ * Same as selectUserDepositedVaultIds, except:
+ * Excluding any CLM vaults if they used as the deposit token for other vaults
+ */
+export const selectDashboardDepositedVaultIdsForAddress = createSelector(
   (state: BeefyState, address: string) =>
     state.user.balance.byAddress[address.toLowerCase()]?.depositedVaultIds,
-  maybeDepositedVaultIds => maybeDepositedVaultIds || []
+  (state: BeefyState) => state.entities.vaults.byId,
+  (vaultIds, vaultsById) => {
+    if (!vaultIds) {
+      return [];
+    }
+
+    return vaultIds.filter(vaultId => {
+      const vault = vaultsById[vaultId];
+      // should never happen
+      if (!vault) {
+        return false;
+      }
+
+      // include all non-CLM vaults
+      if (!isCowcentratedVault(vault)) {
+        return true;
+      }
+
+      // include CLM only if there is no gov/standard vault for it
+      return vault.cowcentratedGovId === undefined && vault.cowcentratedStandardId === undefined;
+    });
+  }
 );
 
 export const selectUserDepositedVaultIdsForAsset = (state: BeefyState, asset: string) => {
@@ -141,11 +170,20 @@ export const selectUserVaultBalanceInShareToken = (
   const vault = selectVaultById(state, vaultId);
 
   if (isGovVault(vault)) {
-    return selectGovVaultUserStakedBalanceInDepositToken(state, vaultId, walletAddress);
+    if (isGovVaultSingle(vault)) {
+      return selectGovVaultUserStakedBalanceInDepositToken(state, vaultId, walletAddress);
+    } else if (isGovVaultMulti(vault)) {
+      return selectUserBalanceOfToken(
+        state,
+        vault.chainId,
+        vault.receiptTokenAddress,
+        walletAddress
+      );
+    }
   }
 
   if (isStandardVault(vault) || isCowcentratedVault(vault)) {
-    return selectUserBalanceOfToken(state, vault.chainId, vault.earnContractAddress, walletAddress);
+    return selectUserBalanceOfToken(state, vault.chainId, vault.receiptTokenAddress, walletAddress);
   }
 
   throw new Error(`Unsupported vault type for ${vaultId}`);
@@ -188,7 +226,7 @@ export const selectUserVaultBalanceInShareTokenInBridged = (
   }
 
   const vault = selectVaultById(state, vaultId);
-  if (isGovVault(vault) || !vault.bridged) {
+  if (!isStandardVault(vault) || !vault.bridged) {
     return BIG_ZERO;
   }
 
@@ -318,7 +356,7 @@ export const selectStandardVaultUserBalanceInDepositTokenBreakdown = (
 ): StandardVaultBalanceBreakdown => {
   const vault = selectStandardVaultById(state, vaultId);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+  const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
   const balances: StandardVaultBalanceBreakdown = [];
 
@@ -438,25 +476,70 @@ export const selectUserVaultDepositTokenWalletBalanceInUsd = (
   return walletBalance.multipliedBy(oraclePrice);
 };
 
+/** @deprecated */
 export const selectGovVaultPendingRewardsInToken = (
   state: BeefyState,
   vaultId: VaultGov['id'],
   walletAddress?: string
 ) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
-  return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.rewards || BIG_ZERO;
+  return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.rewards[0] || BIG_ZERO; // TODO: support multiple rewards [empty = ok, only caller not used when clm-like]
 };
 
+/** @deprecated */
 export const selectGovVaultPendingRewardsInUsd = (
   state: BeefyState,
   vaultId: VaultGov['id'],
   walletAddress?: string
 ) => {
-  const vault = selectVaultById(state, vaultId);
+  const vault = selectVaultById(state, vaultId) as VaultGov;
   const tokenRewards = selectGovVaultPendingRewardsInToken(state, vaultId, walletAddress);
-  const tokenPrice = selectTokenPriceByAddress(state, vault.chainId, vault.earnedTokenAddress);
+  const tokenPrice = selectTokenPriceByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); // TODO: support multiple rewards [empty = ok, only caller not used when clm-like]
   return tokenRewards.times(tokenPrice);
 };
+
+/** @dev will NOT default to connected wallet address */
+export const selectGovVaultPendingRewards = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
+    selectVaultById(state, vaultId),
+  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
+    state.entities.tokens.byChainId,
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
+    walletAddress
+      ? state.user.balance.byAddress[walletAddress]?.tokenAmount.byGovVaultId[vaultId]?.rewards
+      : undefined,
+  (vault, tokensByChain, rewards) => {
+    if (!isGovVault(vault) || !rewards) {
+      return [];
+    }
+
+    return vault.earnedTokenAddresses.map((address, i) => {
+      const token = tokensByChain[vault.chainId]?.byAddress?.[address.toLowerCase()];
+      if (!token) {
+        throw new Error(`selectGovVaultEarnedTokens: Unknown token address ${address}`);
+      }
+
+      const balance = rewards?.[i] || BIG_ZERO;
+      return {
+        token,
+        balance,
+      };
+    });
+  }
+);
+
+/** @dev will NOT default to connected wallet address */
+export const selectGovVaultPendingRewardsWithPrice = createSelector(
+  selectGovVaultPendingRewards,
+  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
+    state.entities.tokens.prices.byOracleId,
+  (rewards, prices) => {
+    return rewards.map(reward => ({
+      ...reward,
+      price: prices[reward.token.oracleId] || undefined,
+    }));
+  }
+);
 
 /**
  * Get the token for which the boost balance is expressed in
@@ -465,7 +548,7 @@ export const selectGovVaultPendingRewardsInUsd = (
 export const selectBoostBalanceTokenEntity = (state: BeefyState, boostId: BoostEntity['id']) => {
   const boost = selectBoostById(state, boostId);
   const boostedVault = selectVaultById(state, boost.vaultId);
-  return selectTokenByAddress(state, boostedVault.chainId, boostedVault.earnedTokenAddress);
+  return selectTokenByAddress(state, boostedVault.chainId, boostedVault.contractAddress);
 };
 
 /**
@@ -491,8 +574,8 @@ export const selectGovVaultBalanceTokenEntity = (state: BeefyState, vaultId: Vau
  * for gov vault, rewards is an amount in earnedTokenId
  */
 export const selectGovVaultRewardsTokenEntity = (state: BeefyState, vaultId: VaultGov['id']) => {
-  const vault = selectVaultById(state, vaultId);
-  return selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+  const vault = selectGovVaultById(state, vaultId);
+  return selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); // TODO: support multiple rewards [empty ok, only called in v1 govVaultFormatter]
 };
 
 export const selectLpBreakdownBalance = (
@@ -545,12 +628,27 @@ export const selectUserLpBreakdownBalance = (
   walletAddress?: string
 ): UserLpBreakdownBalance => {
   const lpTotalSupplyDecimal = new BigNumber(breakdown.totalSupply);
-  const underlyingTotalSupplyDecimal = new BigNumber(breakdown?.underlyingLiquidity || 0);
+  const underlyingTotalSupplyDecimal =
+    breakdown && 'underlyingLiquidity' in breakdown
+      ? new BigNumber(breakdown.underlyingLiquidity || 0)
+      : BIG_ZERO;
+
+  // TODO what about when there is standard vaults?
+  const relatedVault = isCowcentratedGovVault(vault)
+    ? vault.cowcentratedId
+    : isCowcentratedVault(vault)
+    ? vault.cowcentratedGovId
+    : undefined;
+
+  const relatedBalanceDecimal = relatedVault
+    ? selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(state, relatedVault, walletAddress)
+    : BIG_ZERO;
+
   const userBalanceDecimal = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(
     state,
     vault.id,
     walletAddress
-  );
+  ).plus(relatedBalanceDecimal);
 
   const userShareOfPool = lpTotalSupplyDecimal.gt(BIG_ZERO)
     ? userBalanceDecimal.dividedBy(lpTotalSupplyDecimal)
@@ -566,9 +664,10 @@ export const selectUserLpBreakdownBalance = (
 
   const assets = breakdown.tokens.map((tokenAddress, i) => {
     const reserves = new BigNumber(breakdown.balances[i]);
-    const underlyingReserves = new BigNumber(
-      breakdown.underlyingBalances ? breakdown.underlyingBalances[i] : 0
-    );
+    const underlyingReserves =
+      breakdown && 'underlyingBalances' in breakdown
+        ? new BigNumber(breakdown.underlyingBalances[i] || 0)
+        : BIG_ZERO;
     const assetToken = selectTokenByAddress(state, vault.chainId, tokenAddress);
     const valuePerDecimal = selectTokenPriceByAddress(state, vault.chainId, tokenAddress);
     const totalValue = reserves.multipliedBy(valuePerDecimal);
@@ -873,6 +972,8 @@ export const selectUserRewardsByVaultId = (
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ) => {
+  walletAddress = walletAddress || selectWalletAddress(state);
+
   const rewards: {
     rewardToken: TokenEntity['symbol'];
     rewardTokenDecimals: TokenEntity['decimals'];
@@ -882,22 +983,27 @@ export const selectUserRewardsByVaultId = (
   const rewardsTokens: string[] = [];
   let totalRewardsUsd = BIG_ZERO;
 
+  if (!walletAddress) {
+    return { rewards, rewardsTokens, totalRewardsUsd };
+  }
+
   const vault = selectVaultById(state, vaultId);
 
   if (isGovVault(vault)) {
-    const earnedToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
-    const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(state, vault.id, walletAddress);
-    const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id, walletAddress);
+    const pendingRewards = selectGovVaultPendingRewardsWithPrice(state, vault.id, walletAddress);
+    for (const pendingReward of pendingRewards) {
+      const tokenRewardsUsd = pendingReward.balance.times(pendingReward.price || BIG_ZERO);
 
-    totalRewardsUsd = rewardsEarnedUsd;
-    rewardsTokens.push(earnedToken.symbol);
+      totalRewardsUsd = totalRewardsUsd.plus(tokenRewardsUsd);
+      rewardsTokens.push(pendingReward.token.symbol);
 
-    rewards.push({
-      rewardToken: earnedToken.symbol,
-      rewardTokenDecimals: earnedToken.decimals,
-      rewards: rewardsEarnedToken,
-      rewardsUsd: rewardsEarnedUsd,
-    });
+      rewards.push({
+        rewardToken: pendingReward.token.symbol,
+        rewardTokenDecimals: pendingReward.token.decimals,
+        rewards: pendingReward.balance,
+        rewardsUsd: tokenRewardsUsd,
+      });
+    }
   } else {
     const boosts = selectAllVaultBoostIds(state, vaultId);
     for (const boostId of boosts) {
@@ -922,3 +1028,63 @@ export const selectUserRewardsByVaultId = (
 
   return { rewards, rewardsTokens, totalRewardsUsd };
 };
+
+export const selectUserUnstakedCowcentratedVaultIds = createSelector(
+  (state: BeefyState, walletAddress?: string) => _selectWalletBalance(state, walletAddress),
+  (state: BeefyState) => state.entities.vaults.byId,
+  (userBalance, vaultsById) => {
+    if (!userBalance || userBalance.depositedVaultIds.length === 0) {
+      return [];
+    }
+    return userBalance.depositedVaultIds
+      .map(vaultId => vaultsById[vaultId])
+      .filter(isCowcentratedVault)
+      .filter(
+        vault =>
+          isCowcentratedVault(vault) &&
+          (vault.cowcentratedGovId || vault.cowcentratedStandardId) &&
+          userBalance.tokenAmount.byChainId[vault.chainId]?.byTokenAddress[
+            vault.receiptTokenAddress.toLowerCase()
+          ]?.balance.gt(BIG_ZERO)
+      )
+      .map(vault => vault.id);
+  }
+);
+
+export const selectUserShouldStakeForVault = createSelector(
+  (state: BeefyState, _vaultId: string, walletAddress?: string) =>
+    _selectWalletBalance(state, walletAddress),
+  (state: BeefyState, vaultId: string) => selectVaultById(state, vaultId),
+  (
+    userBalance,
+    vault
+  ): false | { type: 'gov' | 'standard'; id: string; cowcentratedId: string } => {
+    if (!userBalance || !vault || !isCowcentratedLikeVault(vault)) {
+      return false;
+    }
+    if (!vault.cowcentratedGovId && !vault.cowcentratedStandardId) {
+      return false;
+    }
+
+    const clmReceiptTokenAddress =
+      vault.id === vault.cowcentratedId ? vault.receiptTokenAddress : vault.depositTokenAddress;
+    const hasClmBalance =
+      userBalance.tokenAmount.byChainId[vault.chainId]?.byTokenAddress[
+        clmReceiptTokenAddress.toLowerCase()
+      ]?.balance.gt(BIG_ZERO) || false;
+
+    if (!hasClmBalance) {
+      return false;
+    }
+
+    if (vault.cowcentratedGovId) {
+      return { type: 'gov', id: vault.cowcentratedGovId, cowcentratedId: vault.cowcentratedId };
+    }
+
+    return {
+      type: 'standard',
+      id: vault.cowcentratedStandardId!,
+      cowcentratedId: vault.cowcentratedId,
+    };
+  }
+);

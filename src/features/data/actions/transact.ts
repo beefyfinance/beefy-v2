@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk, miniSerializeError, nanoid } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
 import type { BeefyState, BeefyThunk } from '../../../redux-types';
 import { isCowcentratedVault, type VaultEntity, type VaultGov } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
@@ -52,6 +52,8 @@ import { uniqueTokens } from '../../../helpers/tokens';
 import { fetchBalanceAction } from './balance';
 import type { Action } from 'redux';
 import { selectWalletAddress } from '../selectors/wallet';
+import { isSerializableError, serializeError } from '../apis/transact/strategies/error';
+import type { SerializedError } from '../apis/transact/strategies/error-types';
 
 export type TransactInitArgs = {
   vaultId: VaultEntity['id'];
@@ -72,7 +74,7 @@ export type TransactFetchOptionsPayload = {
 const optionsForByMode = {
   [TransactMode.Deposit]: 'fetchDepositOptionsFor',
   [TransactMode.Withdraw]: 'fetchWithdrawOptionsFor',
-} as const satisfies Record<TransactMode, keyof ITransactApi>;
+} as const satisfies Partial<Record<TransactMode, keyof ITransactApi>>;
 
 export const transactFetchOptions = createAsyncThunk<
   TransactFetchOptionsPayload,
@@ -115,8 +117,11 @@ export const transactFetchOptions = createAsyncThunk<
   },
   {
     condition({ mode }, { getState }) {
-      const state = getState();
+      if (!(mode in optionsForByMode)) {
+        return false;
+      }
 
+      const state = getState();
       return (
         selectTransactOptionsMode(state) !== mode ||
         selectTransactVaultId(state) !== selectTransactOptionsVaultId(state)
@@ -143,114 +148,125 @@ export type TransactFetchQuotesPayload = {
 export const transactFetchQuotes = createAsyncThunk<
   TransactFetchQuotesPayload,
   void,
-  { state: BeefyState }
->('transact/fetchQuotes', async (_, { getState, dispatch }) => {
-  const api = await getTransactApi();
-  const state = getState();
-  const mode = selectTransactOptionsMode(state);
-  const inputAmounts = selectTransactInputAmounts(state);
-  const inputMaxes = selectTransactInputMaxes(state);
-  const walletAddress = selectWalletAddress(state);
-  const vaultId = selectTransactVaultId(state);
-  const vault = selectVaultById(state, vaultId);
+  { state: BeefyState; rejectValue: SerializedError }
+>('transact/fetchQuotes', async (_, { getState, dispatch, rejectWithValue }) => {
+  try {
+    const api = await getTransactApi();
+    const state = getState();
+    const mode = selectTransactOptionsMode(state);
+    const inputAmounts = selectTransactInputAmounts(state);
+    const inputMaxes = selectTransactInputMaxes(state);
+    const walletAddress = selectWalletAddress(state);
+    const vaultId = selectTransactVaultId(state);
+    const vault = selectVaultById(state, vaultId);
 
-  if (inputAmounts.every(amount => amount.lte(BIG_ZERO))) {
-    throw new Error(`Can not quote for 0`);
-  }
-
-  const selectionId = selectTransactSelectedSelectionId(state);
-  if (!selectionId) {
-    throw new Error(`No selectionId selected`);
-  }
-
-  const chainId = selectTransactSelectedChainId(state);
-  if (!chainId) {
-    throw new Error(`No chainId selected`);
-  }
-
-  const options = selectTransactOptionsForSelectionId(state, selectionId);
-  if (!options || options.length === 0) {
-    throw new Error(`No options for selectionId ${selectionId}`);
-  }
-
-  const selection = selectTransactSelectionById(state, selectionId);
-  if (!selection || selection.tokens.length === 0) {
-    throw new Error(`No tokens for selectionId ${selectionId}`);
-  }
-
-  const quoteInputAmounts: InputTokenAmount[] = [];
-  if (mode == TransactMode.Deposit) {
-    // For deposit, user enters number of the selected token(s) to deposit
-    selection.tokens.forEach((token, index) => {
-      quoteInputAmounts.push({
-        token,
-        amount: inputAmounts[index] || BIG_ZERO,
-        max: inputMaxes[index] || false,
-      });
-    });
-  } else {
-    let inputToken: TokenEntity;
-    if (isCowcentratedVault(vault)) {
-      // For CLM vaults, user enters number of shares to withdraw
-      inputToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
-    } else {
-      // For standard/gov vaults, user enters number of deposit token to withdraw
-      inputToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    if (inputAmounts.every(amount => amount.lte(BIG_ZERO))) {
+      throw new Error(`Can not quote for 0`);
     }
-    quoteInputAmounts.push({
-      token: inputToken,
-      amount: inputAmounts[0] || BIG_ZERO,
-      max: inputMaxes[0] || false,
+
+    const selectionId = selectTransactSelectedSelectionId(state);
+    if (!selectionId) {
+      throw new Error(`No selectionId selected`);
+    }
+
+    const chainId = selectTransactSelectedChainId(state);
+    if (!chainId) {
+      throw new Error(`No chainId selected`);
+    }
+
+    const options = selectTransactOptionsForSelectionId(state, selectionId);
+    if (!options || options.length === 0) {
+      throw new Error(`No options for selectionId ${selectionId}`);
+    }
+
+    const selection = selectTransactSelectionById(state, selectionId);
+    if (!selection || selection.tokens.length === 0) {
+      throw new Error(`No tokens for selectionId ${selectionId}`);
+    }
+
+    const quoteInputAmounts: InputTokenAmount[] = [];
+    if (mode == TransactMode.Deposit) {
+      // For deposit, user enters number of the selected token(s) to deposit
+      selection.tokens.forEach((token, index) => {
+        quoteInputAmounts.push({
+          token,
+          amount: inputAmounts[index] || BIG_ZERO,
+          max: inputMaxes[index] || false,
+        });
+      });
+    } else {
+      let inputToken: TokenEntity;
+      if (isCowcentratedVault(vault)) {
+        // For CLM vaults, user enters number of shares to withdraw
+        inputToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
+      } else {
+        // For standard/gov vaults, user enters number of deposit token to withdraw
+        inputToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+      }
+      quoteInputAmounts.push({
+        token: inputToken,
+        amount: inputAmounts[0] || BIG_ZERO,
+        max: inputMaxes[0] || false,
+      });
+    }
+
+    let quotes: TransactQuote[];
+    if (options.every(isDepositOption)) {
+      quotes = await api.fetchDepositQuotesFor(options, quoteInputAmounts, getState);
+    } else if (options.every(isWithdrawOption)) {
+      quotes = await api.fetchWithdrawQuotesFor(options, quoteInputAmounts, getState);
+    } else {
+      throw new Error(`Invalid options`);
+    }
+
+    quotes.sort((a, b) => {
+      const valueA = selectTokenAmountsTotalValue(state, a.outputs);
+      const valueB = selectTokenAmountsTotalValue(state, b.outputs);
+      return valueB.comparedTo(valueA);
     });
-  }
 
-  let quotes: TransactQuote[];
-  if (options.every(isDepositOption)) {
-    quotes = await api.fetchDepositQuotesFor(options, quoteInputAmounts, getState);
-  } else if (options.every(isWithdrawOption)) {
-    quotes = await api.fetchWithdrawQuotesFor(options, quoteInputAmounts, getState);
-  } else {
-    throw new Error(`Invalid options`);
-  }
+    // update allowances
+    if (walletAddress) {
+      const uniqueAllowances = uniqBy(
+        quotes.map(quote => quote.allowances).flat(),
+        allowance =>
+          `${allowance.token.chainId}-${allowance.spenderAddress}-${allowance.token.address}`
+      );
+      const allowancesPerChainSpender = groupBy(
+        uniqueAllowances,
+        allowance => `${allowance.token.chainId}-${allowance.spenderAddress}`
+      );
 
-  quotes.sort((a, b) => {
-    const valueA = selectTokenAmountsTotalValue(state, a.outputs);
-    const valueB = selectTokenAmountsTotalValue(state, b.outputs);
-    return valueB.comparedTo(valueA);
-  });
-
-  // update allowances
-  if (walletAddress) {
-    const uniqueAllowances = uniqBy(
-      quotes.map(quote => quote.allowances).flat(),
-      allowance =>
-        `${allowance.token.chainId}-${allowance.spenderAddress}-${allowance.token.address}`
-    );
-    const allowancesPerChainSpender = groupBy(
-      uniqueAllowances,
-      allowance => `${allowance.token.chainId}-${allowance.spenderAddress}`
-    );
-
-    await Promise.all(
-      Object.values(allowancesPerChainSpender).map(allowances =>
-        dispatch(
-          fetchAllowanceAction({
-            chainId: allowances[0].token.chainId,
-            spenderAddress: allowances[0].spenderAddress,
-            tokens: allowances.map(allowance => allowance.token),
-            walletAddress,
-          })
+      await Promise.all(
+        Object.values(allowancesPerChainSpender).map(allowances =>
+          dispatch(
+            fetchAllowanceAction({
+              chainId: allowances[0].token.chainId,
+              spenderAddress: allowances[0].spenderAddress,
+              tokens: allowances.map(allowance => allowance.token),
+              walletAddress,
+            })
+          )
         )
-      )
-    );
-  }
+      );
+    }
 
-  return {
-    selectionId,
-    chainId,
-    inputAmounts: quoteInputAmounts,
-    quotes,
-  };
+    if (quotes.length === 0) {
+      throw new Error(`No quotes available`);
+    }
+
+    return {
+      selectionId,
+      chainId,
+      inputAmounts: quoteInputAmounts,
+      quotes,
+    };
+  } catch (e: unknown) {
+    if (isSerializableError(e)) {
+      return rejectWithValue(e.serialize());
+    }
+    throw e;
+  }
 });
 
 export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state: BeefyState }>(
@@ -444,7 +460,7 @@ function wrapStepConfirmQuote(originalStep: Step, originalQuote: TransactQuote):
     } catch (error) {
       // Hide stepper (as UI will now show error)
       dispatch(stepperActions.reset());
-      dispatch(transactActions.confirmRejected({ requestId, error: miniSerializeError(error) }));
+      dispatch(transactActions.confirmRejected({ requestId, error: serializeError(error) }));
       return;
     }
   };

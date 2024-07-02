@@ -3,7 +3,12 @@ import type {
   CLMTimelineAnalyticsConfig,
   TimelineAnalyticsConfig,
 } from '../apis/analytics/analytics-types';
-import type { ChangeTypeOfKeys, Prettify, SnakeToCamelCase } from '../utils/types-utils';
+import type {
+  ChangeTypeOfKeys,
+  MapNullToUndefined,
+  Prettify,
+  SnakeToCamelCase,
+} from '../utils/types-utils';
 import type { ChainEntity } from './chain';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 
@@ -45,26 +50,36 @@ type CLMACSnake = {
   [K in keyof CLMTimelineAnalyticsConfig as SnakeToCamelCase<K>]: CLMTimelineAnalyticsConfig[K];
 };
 
-type CLMABigNumber = ChangeTypeOfKeys<
+type CLMACBigNumber = ChangeTypeOfKeys<
   CLMACSnake,
   | 'shareBalance'
   | 'shareDiff'
+  | 'managerBalance'
+  | 'managerDiff'
   | 'token0ToUsd'
-  | 'token1ToUsd'
   | 'underlying0Balance'
-  | 'underlying1Balance'
   | 'underlying0Diff'
+  | 'token1ToUsd'
+  | 'underlying1Balance'
   | 'underlying1Diff'
   | 'usdBalance'
   | 'usdDiff',
   BigNumber
 >;
 
+type CLMACBigNumberUndefined = ChangeTypeOfKeys<
+  CLMACBigNumber,
+  'rewardPoolBalance' | 'rewardPoolDiff',
+  BigNumber | undefined
+>;
+
 export type CLMTimelineAnalyticsEntryWithoutVaultId = Prettify<
-  ChangeTypeOfKeys<CLMABigNumber, 'datetime', Date> & {
-    type: 'cowcentrated';
-    transactionId: string;
-  }
+  MapNullToUndefined<
+    ChangeTypeOfKeys<CLMACBigNumberUndefined, 'datetime', Date> & {
+      type: 'cowcentrated';
+      transactionId: string;
+    }
+  >
 >;
 
 export type CLMTimelineAnalyticsEntry = CLMTimelineAnalyticsEntryWithoutVaultId & {

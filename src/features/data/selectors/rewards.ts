@@ -1,74 +1,58 @@
 import type { BeefyState } from '../../../redux-types';
-import { selectWalletAddress } from './wallet';
-import { selectVaultById } from './vaults';
 import type { VaultEntity } from '../entities/vault';
-import { selectTokenByAddressOrUndefined, selectTokenPriceByTokenOracleId } from './tokens';
-import type { ChainEntity } from '../entities/chain';
+import { createSelector } from '@reduxjs/toolkit';
+import { getUnixTime, isAfter } from 'date-fns';
+import { selectVaultTvl } from './tvl';
+import { BIG_ZERO } from '../../../helpers/big-number';
 
-export function selectUserMerklRewardsForVault(
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  walletAddress?: string
-) {
-  walletAddress = walletAddress || selectWalletAddress(state);
-  if (!walletAddress) {
-    return [];
+export const selectVaultActiveMerklCampaigns = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => state.biz.rewards.merkl.byVaultId[vaultId],
+  (state: BeefyState) => state.biz.rewards.merkl.byId,
+  (vaultCampaigns, campaignById) => {
+    if (!vaultCampaigns) {
+      return undefined;
+    }
+
+    const now = getUnixTime(new Date());
+    return vaultCampaigns
+      .filter(v => v.apr > 0)
+      .map(v => ({ ...campaignById[v.campaignId], apr: v.apr }))
+      .filter(c => c.startTimestamp <= now && c.endTimestamp >= now);
   }
+);
 
-  const vault = selectVaultById(state, vaultId);
-  const rewards =
-    state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byChain[vault.chainId]
-      ?.byVaultAddress[vault.earnContractAddress.toLowerCase()];
-  if (!rewards) {
-    return [];
+export const selectVaultHasActiveMerklCampaigns = createSelector(
+  selectVaultActiveMerklCampaigns,
+  campaigns => !!campaigns && campaigns.length > 0
+);
+
+export const selectVaultActiveGovRewards = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => state.biz.rewards.gov.byVaultId[vaultId],
+  selectVaultTvl,
+  (state: BeefyState) => state.entities.tokens.prices.byOracleId,
+  (rewards, tvl, priceByOracleId) => {
+    if (!rewards || rewards.length === 0 || !tvl || tvl.isZero()) {
+      return undefined;
+    }
+
+    const now = new Date();
+    return rewards
+      .filter(r => isAfter(r.periodFinish, now) && r.rewardRate.gt(BIG_ZERO))
+      .map(r => {
+        const price = priceByOracleId[r.token.oracleId] || BIG_ZERO;
+        const yearlyUsd = price.times(r.rewardRate).times(365 * 24 * 60 * 60);
+
+        return {
+          token: r.token,
+          price,
+          apr: yearlyUsd.dividedBy(tvl).toNumber(),
+        };
+      })
+      .filter(r => r.apr > 0);
   }
+);
 
-  return rewards.map(reward => {
-    const token = selectTokenByAddressOrUndefined(state, vault.chainId, reward.address);
-    const price = token ? selectTokenPriceByTokenOracleId(state, token.oracleId) : undefined;
-
-    return {
-      ...reward,
-      token,
-      price,
-    };
-  });
-}
-
-export function selectUserMerklRewardsForChain(
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  walletAddress?: string
-) {
-  walletAddress = walletAddress || selectWalletAddress(state);
-  if (!walletAddress) {
-    return [];
-  }
-
-  const chainRewards =
-    state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byChain[chainId];
-  if (!chainRewards) {
-    return [];
-  }
-
-  const rewards = Object.values(chainRewards.byTokenAddress);
-  return rewards.map(reward => {
-    const token = selectTokenByAddressOrUndefined(state, chainId, reward.address);
-    const price = token ? selectTokenPriceByTokenOracleId(state, token.oracleId) : undefined;
-
-    return {
-      ...reward,
-      token,
-      price,
-    };
-  });
-}
-
-export function selectUserHasMerklRewardsForVault(
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  walletAddress?: string
-) {
-  const rewards = selectUserMerklRewardsForVault(state, vaultId, walletAddress);
-  return rewards.length > 0;
-}
+export const selectVaultHasActiveGovRewards = createSelector(
+  selectVaultActiveGovRewards,
+  rewards => !!rewards && rewards.length > 0
+);

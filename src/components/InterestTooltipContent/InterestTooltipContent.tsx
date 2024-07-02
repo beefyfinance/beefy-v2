@@ -6,7 +6,7 @@ import { styles } from './styles';
 const useStyles = makeStyles(styles);
 
 export type InterestTooltipContentProps = {
-  rows: { label: string; value: string; labelTextParams?: Record<string, string> }[];
+  rows: { label: string | string[]; value: string; labelTextParams?: Record<string, string> }[];
 };
 
 export const InterestTooltipContent = memo<InterestTooltipContentProps>(
@@ -17,8 +17,8 @@ export const InterestTooltipContent = memo<InterestTooltipContentProps>(
     return (
       <div className={classes.rows}>
         {rows.map(({ label, value, labelTextParams }) => (
-          <Fragment key={label}>
-            <div className={classes.label}>{t(label, { ...labelTextParams })}</div>
+          <Fragment key={typeof label === 'string' ? label : label[0]}>
+            <div className={classes.label}>{t(label, labelTextParams)}</div>
             <div className={classes.value}>{t(value)}</div>
           </Fragment>
         ))}

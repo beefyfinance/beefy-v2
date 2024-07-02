@@ -1,27 +1,11 @@
-import { type ErrorInfo, type FC, lazy, PureComponent, type ReactNode } from 'react';
-import { miniSerializeError, type SerializedError } from '@reduxjs/toolkit';
+import { type ErrorInfo, type FC, PureComponent } from 'react';
+import { miniSerializeError } from '@reduxjs/toolkit';
 import { DefaultFallback } from './DefaultFallback';
-
-type ErrorBoundaryNoErrorState = {
-  hasError: false;
-};
-
-type ErrorBoundaryHasErrorState = {
-  hasError: true;
-  error: SerializedError;
-};
-
-type ErrorBoundaryState = ErrorBoundaryNoErrorState | ErrorBoundaryHasErrorState;
-
-export type FallbackComponentProps = ErrorBoundaryHasErrorState;
-
-export type ErrorBoundaryProps = {
-  children: ReactNode;
-  fallback?: FC<ErrorBoundaryHasErrorState>;
-};
+import { DevDefaultFallback } from './DevDefaultFallback';
+import type { ErrorBoundaryHasErrorState, ErrorBoundaryProps, ErrorBoundaryState } from './types';
 
 const DefaultFallbackComponent: FC<ErrorBoundaryHasErrorState> = import.meta.env.DEV
-  ? lazy(() => import('./DevDefaultFallback'))
+  ? DevDefaultFallback
   : DefaultFallback;
 
 function isReactDevTools(): boolean {
@@ -76,7 +60,7 @@ export class ErrorBoundary extends PureComponent<ErrorBoundaryProps, ErrorBounda
       console.log(errorInfo.componentStack);
       console.groupEnd();
     }
-    console.log(`%c❌❌❌ ErrorBoundary caught an error ⤴️⤴️⤴️`, `backrround: #4a3535;`);
+    console.log(`%c❌❌❌ ErrorBoundary caught an error ⤴️⤴️⤴️`, `background: #4a3535;`);
     console.groupEnd();
   }
 

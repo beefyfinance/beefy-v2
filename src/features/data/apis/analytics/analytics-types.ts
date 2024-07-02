@@ -22,18 +22,42 @@ export type TimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
   underlying_to_usd_price: number | null;
 };
 
+export type CLMTimelineAnalyticsAction =
+  | 'MANAGER_DEPOSIT'
+  | 'MANAGER_WITHDRAW'
+  | 'REWARD_POOL_STAKE'
+  | 'REWARD_POOL_UNSTAKE'
+  | 'REWARD_POOL_CLAIM';
+
 export type CLMTimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
   transaction_hash: string;
+
+  /** total clm + reward pool balance */
   share_balance: string;
   share_diff: string;
+
+  token0_to_usd: string;
+  underlying0_balance: string;
+  underlying0_diff: string;
+
+  token1_to_usd: string;
+  underlying1_balance: string;
+  underlying1_diff: string;
+
   usd_balance: string;
   usd_diff: string;
-  token0_to_usd: string;
-  token1_to_usd: string;
-  underlying0_balance: string;
-  underlying1_balance: string;
-  underlying0_diff: string;
-  underlying1_diff: string;
+
+  /** balance of the clm receipt token */
+  manager_balance: string;
+  manager_diff: string;
+  manager_address: string;
+
+  /** balance of the reward pool receipt token */
+  reward_pool_balance: string | null;
+  reward_pool_diff: string | null;
+  reward_pool_address: string | null;
+
+  actions: CLMTimelineAnalyticsAction[];
 };
 
 export type AnalyticsUserTimelineResponse = {

@@ -43,7 +43,7 @@ export const ResourcesNavItems: NavItemConfig[] = [
   },
   { title: 'Header-MediaKit', Icon: MediaKitIcon, url: 'https://beefy.com/media-kit/' },
   { title: 'Header-Audit', Icon: AuditIcon, url: 'https://github.com/beefyfinance/beefy-audits' },
-  { title: 'Header-Partnerts', Icon: PartnersIcon, url: 'https://beefy.com/partners' },
+  { title: 'Header-Partners', Icon: PartnersIcon, url: 'https://beefy.com/partners' },
 ];
 
 export const MobileList: NavConfig[] = [

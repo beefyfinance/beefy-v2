@@ -11,6 +11,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     marginBottom: '8px',
     alignItems: 'center',
+    gap: '8px 12px',
     flexGrow: 1,
     [theme.breakpoints.up('lg')]: {
       marginBottom: '0',
@@ -19,10 +20,21 @@ export const styles = (theme: Theme) => ({
   title: {
     ...theme.typography['h1'],
     color: theme.palette.text.middle,
-    margin: '0 0 0 12px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
+  },
+  titleAsset: {},
+  titleTag: {},
+  titleHolderWithTag: {
+    [theme.breakpoints.down('xs')]: {
+      flexWrap: 'wrap',
+      '& $titleAsset': {
+        width: '32px',
+        height: '32px',
+      },
+      '& $title': {
+        width: '100%',
+        order: 10,
+      },
+    },
   },
   labelsHolder: {
     display: 'flex',

@@ -3,11 +3,11 @@ import type {
   TransactOption,
   TransactQuote,
 } from '../../apis/transact/transact-types';
-import type { SerializedError } from '@reduxjs/toolkit';
 import type { VaultEntity } from '../../entities/vault';
 import type { TokenEntity } from '../../entities/token';
 import type { ChainEntity } from '../../entities/chain';
 import type { BigNumber } from 'bignumber.js';
+import type { SerializedError } from '../../apis/transact/strategies/error-types';
 
 export enum TransactStep {
   Loading,
@@ -19,6 +19,7 @@ export enum TransactStep {
 export enum TransactMode {
   Deposit,
   Withdraw,
+  Claim,
 }
 
 export enum TransactStatus {

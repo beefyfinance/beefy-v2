@@ -42,7 +42,7 @@ export class AnalyticsApi {
     productType: 'vault' | 'boost',
     priceType: PriceType,
     timeBucket: TimeBucketType,
-    address: VaultEntity['earnContractAddress'],
+    address: VaultEntity['contractAddress'],
     chain: ChainEntity['id']
   ): Promise<AnalyticsPriceResponse> {
     const res = await this.api.get('/api/v1/prices', {

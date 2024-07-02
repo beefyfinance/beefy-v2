@@ -62,7 +62,7 @@ const nonHarvestOnDepositPools = [
 const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddress'];
 
 const validPlatformIds = platforms.map(platform => platform.id);
-const { gov: validGovStrategyIds, vault: validVaultStrategyIds } = getStrategyIds();
+const validStrategyIds = getStrategyIds();
 
 const oldFields = {
   tokenDescription: 'Use addressbook',
@@ -160,6 +160,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
 
   let updates: Record<string, Record<string, any>> = {};
   let exitCode = 0;
+
   //Governance pools should be separately verified
   const [govPools, vaultPools] = partition(pools, pool => pool.type === 'gov');
   pools = vaultPools;
@@ -168,6 +169,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   const uniqueEarnedToken = new Set();
   const uniqueEarnedTokenAddress = new Set();
   const uniqueOracleId = new Set();
+  const govPoolsByDepositAddress = new Map(govPools.map(pool => [pool.tokenAddress, pool]));
   let activePools = 0;
 
   // Populate some extra data.
@@ -206,9 +208,9 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     if (!pool.strategyTypeId) {
       console.error(`Error: ${pool.id} : strategyTypeId missing vault strategy type`);
       exitCode = 1;
-    } else if (!validVaultStrategyIds.includes(pool.strategyTypeId)) {
+    } else if (!validStrategyIds[pool.type].has(pool.strategyTypeId)) {
       console.error(
-        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription-${pool.strategyTypeId}" not present in locales/en/risks.json`
+        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription-${pool.type}-${pool.strategyTypeId}" not present in locales/en/risks.json`
       );
       exitCode = 1;
     }
@@ -301,6 +303,15 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       }
     }
 
+    // Cowcentrated should have RP
+    if (pool.type === 'cowcentrated' && pool.status !== 'eol') {
+      const govPool = govPoolsByDepositAddress.get(pool.earnContractAddress);
+      if (!govPool) {
+        console.error(`Error: ${pool.id} : CLM missing CLM pool`);
+        exitCode = 1;
+      }
+    }
+
     // Old fields we no longer need
     const fieldsToDelete = Object.keys(oldFields).filter(field => field in pool);
     if (fieldsToDelete.length) {
@@ -327,7 +338,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       activePools++;
     }
 
-    if (new BigNumber(pool.totalSupply).isZero()) {
+    if (new BigNumber(pool.totalSupply || '0').isZero()) {
       if (pool.status !== 'eol') {
         console.error(`Error: ${pool.id} : Pool is empty`);
         exitCode = 1;
@@ -367,9 +378,9 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     if (!pool.strategyTypeId) {
       console.error(`Error: ${pool.id} : strategyTypeId missing gov strategy type`);
       exitCode = 1;
-    } else if (!validGovStrategyIds.includes(pool.strategyTypeId)) {
+    } else if (!validStrategyIds.gov.has(pool.strategyTypeId)) {
       console.error(
-        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription-Gov-${pool.strategyTypeId}" not present in locales/en/risks.json`
+        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription-${pool.type}-${pool.strategyTypeId}" not present in locales/en/risks.json`
       );
       exitCode = 1;
     }
@@ -513,7 +524,8 @@ const isHarvestOnDepositCorrect = (pool, chain, updates) => {
 
 // Helpers to populate required addresses.
 
-type VaultConfigWithVaultData = VaultConfig & {
+type VaultConfigWithVaultData = Omit<VaultConfig, 'type'> & {
+  type: NonNullable<VaultConfig['type']>;
   strategy: string | undefined;
   vaultOwner: string | undefined;
   totalSupply: string | undefined;
@@ -542,6 +554,7 @@ const populateVaultsData = async (
   return pools.map((pool, i) => {
     return {
       ...pool,
+      type: pool.type || 'standard',
       strategy: results[i].strategy,
       vaultOwner: results[i].owner,
       totalSupply: results[i].totalSupply,
@@ -588,7 +601,7 @@ const populateStrategyData = async (
   });
 };
 
-const override = pools => {
+const override = (pools: VaultConfigWithVaultData[]): VaultConfigWithVaultData[] => {
   Object.keys(overrides).forEach(id => {
     pools
       .filter(p => p.id.includes(id))

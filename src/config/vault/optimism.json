@@ -1,5 +1,491 @@
 [
   {
+    "id": "uniswap-cow-op-usdc.e-wld-rp",
+    "name": "WLD-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpUSDC.e-WLD",
+    "tokenAddress": "0x3099015b25b3F2409a06b92C8B46A35FC3Da0A4e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xdf1031FB42DbA108Be6D75642C0bcB179612E5d2",
+    "earnedToken": "rcowUniswapOpUSDC.e-WLD",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-usdc.e-wld",
+    "status": "active",
+    "createdAt": 1719160074,
+    "platformId": "uniswap",
+    "assets": ["WLD", "opUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-weth-wld-rp",
+    "name": "WLD-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpWETH-WLD",
+    "tokenAddress": "0xE37B4bb335D82B94032687eE620a436C20927Cef",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x4D7440966e734495DcC6712EE2d4d43Fa0fAe88f",
+    "earnedToken": "rcowUniswapOpWETH-WLD",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-weth-wld",
+    "status": "active",
+    "createdAt": 1719160074,
+    "platformId": "uniswap",
+    "assets": ["WLD", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-weth-zro-rp",
+    "name": "ZRO-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpWETH-ZRO",
+    "tokenAddress": "0x5451b6584B4D7de383A55B01E7335E137BFEA5A5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xb533C8aa9F26e84ce030009311aC999179a22eb8",
+    "earnedToken": "rcowUniswapOpWETH-ZRO",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-weth-zro",
+    "status": "active",
+    "createdAt": 1718890159,
+    "platformId": "uniswap",
+    "assets": ["ZRO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-zro-usdt-rp",
+    "name": "ZRO-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpZRO-USDT",
+    "tokenAddress": "0x18A2688494cFa036C8Bc28595336639a9eb9FA53",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xBB27B72B2564d05afB8D28902CA2203E18cc26ff",
+    "earnedToken": "rcowUniswapOpZRO-USDT",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-zro-usdt",
+    "status": "active",
+    "createdAt": 1718890159,
+    "platformId": "uniswap",
+    "assets": ["ZRO", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-crv-weth-rp",
+    "name": "CRV-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpCRV-WETH",
+    "tokenAddress": "0xCFf23567199817dEeC54c8D0E0d138837b20B3A8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x29B614f9edeC633661A0fcBF2F89e68a4AA3e33c",
+    "earnedToken": "rcowUniswapOpCRV-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-crv-weth",
+    "status": "active",
+    "createdAt": 1718455450,
+    "platformId": "uniswap",
+    "assets": ["CRV", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-usdc-wbtc-rp",
+    "name": "WBTC-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpUSDC-WBTC",
+    "tokenAddress": "0x0Ee84708c7E4F65e4799235CB576C7E862aA4D03",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xEB2F9be149e50313A93adF536038a61215376007",
+    "earnedToken": "rcowUniswapOpUSDC-WBTC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-usdc-wbtc",
+    "status": "active",
+    "createdAt": 1718455450,
+    "platformId": "uniswap",
+    "assets": ["WBTC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-weth-usdt-rp",
+    "name": "WETH-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpWETH-USDT",
+    "tokenAddress": "0x9b9EB6B79b09A43e5d4118ED7124147Fb3c8d250",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x53DB31F043F9A74922de20A163739db7dEF13Ae9",
+    "earnedToken": "rcowUniswapOpWETH-USDT",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-weth-usdt",
+    "status": "active",
+    "createdAt": 1718455450,
+    "platformId": "uniswap",
+    "assets": ["WETH", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-weth-dai-rp",
+    "name": "WETH-DAI Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpWETH-DAI",
+    "tokenAddress": "0x53F42Ee2feb58035e6c43B3FF796b17D9650cF4b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xEF520fB7cd09F25e9eC96a8B45BF622E8Fb56d84",
+    "earnedToken": "rcowUniswapOpWETH-DAI",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-weth-dai",
+    "status": "active",
+    "createdAt": 1718455450,
+    "platformId": "uniswap",
+    "assets": ["WETH", "DAI"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-weth-snx-rp",
+    "name": "SNX-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpWETH-SNX",
+    "tokenAddress": "0x4EAb2865E76318478b7d4F63F613a0ED0A602945",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xc5d2Bc2E9C941Ea2bc0F55344b72b2Daf63BDaA0",
+    "earnedToken": "rcowUniswapOpWETH-SNX",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-weth-snx",
+    "status": "active",
+    "createdAt": 1718455450,
+    "platformId": "uniswap",
+    "assets": ["SNX", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-weth-usdc.e-rp",
+    "name": "WETH-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpWETH-USDC.e",
+    "tokenAddress": "0x0A90c02d6Be2EF93e939702Efc74BEC58659a4D3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x60eAaaE542Cea57A3593fcbED9a98a64bfc68FbC",
+    "earnedToken": "rcowUniswapOpWETH-USDC.e",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-weth-usdc.e",
+    "status": "active",
+    "createdAt": 1718455450,
+    "platformId": "uniswap",
+    "assets": ["WETH", "opUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-usdc-op-rp",
+    "name": "OP-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpUSDC-OP",
+    "tokenAddress": "0xA2A8B06aa9d211e02E1F8CEb7706aE8bF3362Dfb",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x2b786E8FF345c2836c06F11D2e2d20Ed843e60E7",
+    "earnedToken": "rcowUniswapOpUSDC-OP",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-usdc-op",
+    "status": "active",
+    "createdAt": 1718390584,
+    "platformId": "uniswap",
+    "assets": ["OP", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-weth-wbtc-rp",
+    "name": "WETH-WBTC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpWETH-WBTC",
+    "tokenAddress": "0xE430F5264653056BE2B556B4bB0F9Cd70fb8407B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x6854e054b8FfB8d3264829fF64D117963B208f57",
+    "earnedToken": "rcowUniswapOpWETH-WBTC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-weth-wbtc",
+    "status": "active",
+    "createdAt": 1718390584,
+    "platformId": "uniswap",
+    "assets": ["WETH", "WBTC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-op-weth-rp",
+    "name": "OP-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpOP-WETH",
+    "tokenAddress": "0xC884a956a18a4953356b87c1c968419c32FA4a73",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x0Ed458029ef8DdAeb3f131965e99fdB1E2a6c2E0",
+    "earnedToken": "rcowUniswapOpOP-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-op-weth",
+    "status": "active",
+    "createdAt": 1718042017,
+    "platformId": "uniswap",
+    "assets": ["WETH", "OP"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-usdc-weth-rp",
+    "name": "USDC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpUSDC-WETH",
+    "tokenAddress": "0xc0Fdb17dd0811e9a6855b9bb0C6c0bbC2194C98F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x2e6513098909aF0de22648ed7EDF2E529E4D34b2",
+    "earnedToken": "rcowUniswapOpUSDC-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-usdc-weth",
+    "status": "active",
+    "createdAt": 1718042017,
+    "platformId": "uniswap",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-tbtc-wbtc-rp",
+    "name": "tBTC-WBTC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOptBTC-WBTC",
+    "tokenAddress": "0x25F25a45105Ea0Cad9cb116cc4f9b40124A7D02D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x0c4dc6AD1C38Ec63Ae259b1d42dDeCF0f32dd806",
+    "earnedToken": "rcowUniswapOptBTC-WBTC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-tbtc-wbtc",
+    "status": "active",
+    "createdAt": 1718042017,
+    "platformId": "uniswap",
+    "assets": ["tBTC", "WBTC"],
+    "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-usde-wsteth-rp",
+    "name": "USDe-wstETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpUSDe-wstETH",
+    "tokenAddress": "0x80D438EEdb918207c2F7F7eAC31f2F8012923F76",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x20eaD00Cf50Df696ddF434be900fA5a0a437181E",
+    "earnedToken": "rcowUniswapOpUSDe-wstETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-usde-wsteth",
+    "status": "active",
+    "createdAt": 1718042017,
+    "platformId": "uniswap",
+    "assets": ["USDe", "wstETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-rseth-wsteth-rp",
+    "name": "rsETH-wstETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOprsETH-wstETH",
+    "tokenAddress": "0x0F46A74B01708E78c27DEF7160A5C5222f9dD157",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xF1748128a1b5c0c45728D09F6f1f60748bC03FE1",
+    "earnedToken": "rcowUniswapOprsETH-wstETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-rseth-wsteth",
+    "status": "active",
+    "createdAt": 1718042017,
+    "platformId": "uniswap",
+    "assets": ["rsETH", "wstETH"],
+    "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-op-usdc-wld-rp",
+    "name": "WLD-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapOpWLD-USDC",
+    "tokenAddress": "0x36183032f94652748Ab6F6ce503f801de9D1d8CB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xB67aD599Ef29F8b7ba01595332b917EdfCeeC546",
+    "earnedToken": "rcowUniswapOpWLD-USDC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-op-usdc-wld",
+    "status": "active",
+    "createdAt": 1718042017,
+    "platformId": "uniswap",
+    "assets": ["WLD", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
     "id": "aura-gyro-op-frax-symphony",
     "name": "Gyroscope Frax Symphony",
     "type": "standard",
@@ -23,6 +509,66 @@
     "network": "optimism"
   },
   {
+    "id": "velo-cow-op-moobifi-usdc-rp",
+    "name": "mooBIFI-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowVeloOpmooBIFI-USDC",
+    "tokenAddress": "0xD4768E30180786e875a4909472c9826b18931E43",
+    "tokenDecimals": 18,
+    "earnedTokens": ["VELO"],
+    "earnedTokenAddresses": ["0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db"],
+    "earnedOracleIds": ["VELOV2"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowVeloOpmooBIFI-USDC",
+    "earnContractAddress": "0xdA0c58F0f407bC4EbF6e885Ae90e9a817cf8cdF5",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-moobifi-usdc",
+    "status": "active",
+    "createdAt": 1719497842,
+    "platformId": "velodrome",
+    "assets": ["USDC", "mooBIFI"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "velo-cow-op-moobifi-usdc",
+    "name": "mooBIFI-USDC",
+    "token": "mooBIFI-USDC",
+    "tokenAddress": "0x173cDC71e29d5Cffa6D090AD99f555a24B8831f9",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+      "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434"
+    ],
+    "tokenProviderId": "velodrome",
+    "earnedToken": "cowVeloOpmooBIFI-USDC",
+    "earnedTokenAddress": "0xD4768E30180786e875a4909472c9826b18931E43",
+    "earnContractAddress": "0xD4768E30180786e875a4909472c9826b18931E43",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-moobifi-usdc",
+    "status": "active",
+    "createdAt": 1719497841,
+    "platformId": "beefy",
+    "assets": ["USDC", "mooBIFI"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.3",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-op-usdc.e-wld",
     "name": "WLD-USDC.e",
     "token": "WLD-USDC.e",
@@ -43,7 +589,7 @@
     "platformId": "beefy",
     "assets": ["WLD", "opUSDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "1",
@@ -74,7 +620,7 @@
     "platformId": "beefy",
     "assets": ["WLD", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.3",
@@ -105,7 +651,7 @@
     "platformId": "beefy",
     "assets": ["ZRO", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "1",
@@ -136,7 +682,7 @@
     "platformId": "beefy",
     "assets": ["ZRO", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.30",
@@ -595,7 +1141,7 @@
     "platformId": "beefy",
     "assets": ["CRV", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.30",
@@ -626,7 +1172,7 @@
     "platformId": "beefy",
     "assets": ["WBTC", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.30",
@@ -657,7 +1203,7 @@
     "platformId": "beefy",
     "assets": ["WETH", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.05",
@@ -688,7 +1234,7 @@
     "platformId": "beefy",
     "assets": ["WETH", "DAI"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.30",
@@ -719,7 +1265,7 @@
     "platformId": "beefy",
     "assets": ["SNX", "WETH"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.30",
@@ -750,7 +1296,7 @@
     "platformId": "beefy",
     "assets": ["WETH", "opUSDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.05",
@@ -781,7 +1327,7 @@
     "platformId": "beefy",
     "assets": ["OP", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.30",
@@ -812,7 +1358,7 @@
     "platformId": "beefy",
     "assets": ["WETH", "WBTC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.05",
@@ -882,7 +1428,7 @@
     "platformId": "beefy",
     "assets": ["WETH", "OP"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.30",
@@ -913,7 +1459,7 @@
     "platformId": "beefy",
     "assets": ["WETH", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.05",
@@ -944,7 +1490,7 @@
     "platformId": "beefy",
     "assets": ["tBTC", "WBTC"],
     "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.05",
@@ -975,7 +1521,7 @@
     "platformId": "beefy",
     "assets": ["USDe", "wstETH"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.05",
@@ -1006,7 +1552,7 @@
     "platformId": "beefy",
     "assets": ["rsETH", "wstETH"],
     "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.05",
@@ -1037,7 +1583,7 @@
     "platformId": "beefy",
     "assets": ["WLD", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "1",

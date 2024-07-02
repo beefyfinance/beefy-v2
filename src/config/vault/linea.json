@@ -1,5 +1,89 @@
 [
   {
+    "id": "oku-linea-usdc-usdt-rp",
+    "name": "USDC-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowOkuUSDC-USDT",
+    "tokenAddress": "0x97BaB27d3EC82a43aFC60ce521ac121CD6F6Cc3e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "earnContractAddress": "0xfc3733F22131C32b1c05D22D3C5047Fe4044208c",
+    "earnedToken": "rcowOkuUSDC-USDT",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "oku-linea-usdc-usdt",
+    "status": "active",
+    "createdAt": 1718657098,
+    "platformId": "oku",
+    "assets": ["USDC", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "oku-linea-weth-wbtc-rp",
+    "name": "WETH-WBTC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowOkuWBTC-WETH",
+    "tokenAddress": "0x0Db58cB843B8AF6A8704338447c0a7e36F4D5613",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "earnContractAddress": "0x31c0b0ce930797291fAa950B6F3085D2Dd620247",
+    "earnedToken": "rcowOkuWBTC-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "oku-linea-weth-wbtc",
+    "status": "active",
+    "createdAt": 1718657098,
+    "platformId": "oku",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "oku-linea-weth-usdc.e-rp",
+    "name": "WETH-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowOkuWETH-USDC.e",
+    "tokenAddress": "0x4d6d208e75d800957c4AF83FB9f42AabFEbc6b6D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "earnContractAddress": "0x711d9dF7927c9e8083D682824238aC224258a656",
+    "earnedToken": "rcowOkuWETH-USDC.e",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "oku-linea-weth-usdc.e",
+    "status": "active",
+    "createdAt": 1718657098,
+    "platformId": "oku",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
     "id": "oku-linea-usdc-usdt",
     "name": "USDC-USDT",
     "type": "cowcentrated",
@@ -21,7 +105,7 @@
     "platformId": "beefy",
     "assets": ["USDC", "USDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "linea",
     "earningPoints": true,
     "feeTier": "0.01",
@@ -53,7 +137,7 @@
     "platformId": "beefy",
     "assets": ["WBTC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "linea",
     "earningPoints": true,
     "feeTier": "0.05",
@@ -85,7 +169,7 @@
     "platformId": "beefy",
     "assets": ["WETH", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "compounds",
     "network": "linea",
     "earningPoints": true,
     "feeTier": "0.05",

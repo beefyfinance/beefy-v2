@@ -15,9 +15,9 @@ import { isFulfilledResult } from '../../../../../helpers/promises';
 import type { ISwapAggregator, TokenSupport } from './ISwapAggregator';
 import type { VaultEntity } from '../../../entities/vault';
 import { selectZapTokenScore } from '../../../selectors/zap';
-import type { StrategySwapOption } from '../strategies/IStrategy';
 import { sortQuotes } from '../helpers/quotes';
 import { selectChainWrappedNativeToken } from '../../../selectors/tokens';
+import type { StrategySwapConfig } from '../strategies/strategy-configs';
 
 export class SwapAggregator implements ISwapAggregator {
   protected providersById: Record<string, ISwapProvider> = {};
@@ -32,7 +32,7 @@ export class SwapAggregator implements ISwapAggregator {
     return new SwapAggregator([...this.providers, provider]);
   }
 
-  protected allowedProviders(options: StrategySwapOption | undefined) {
+  protected allowedProviders(options: StrategySwapConfig | undefined) {
     const blockedProviders: string[] = options?.blockProviders || [];
 
     if (blockedProviders.length === 0) {
@@ -42,7 +42,7 @@ export class SwapAggregator implements ISwapAggregator {
     return this.providers.filter(provider => !blockedProviders.includes(provider.getId()));
   }
 
-  protected allowedTokens(tokens: TokenEntity[], options: StrategySwapOption | undefined) {
+  protected allowedTokens(tokens: TokenEntity[], options: StrategySwapConfig | undefined) {
     const blockedTokens: string[] = options?.blockTokens || [];
 
     if (blockedTokens.length === 0) {
@@ -57,7 +57,7 @@ export class SwapAggregator implements ISwapAggregator {
     vaultId: VaultEntity['id'],
     chainId: ChainEntity['id'],
     state: BeefyState,
-    options: StrategySwapOption | undefined
+    options: StrategySwapConfig | undefined
   ) {
     const chains = await provider.getSupportedChains(state);
     if (!chains.includes(chainId)) {
@@ -73,7 +73,7 @@ export class SwapAggregator implements ISwapAggregator {
     vaultId: VaultEntity['id'],
     chainId: ChainEntity['id'],
     state: BeefyState,
-    options?: StrategySwapOption
+    options?: StrategySwapConfig
   ): Promise<TokenSupport> {
     const allowedProviders = this.allowedProviders(options);
     const tokensPerProvider = await Promise.all(
@@ -147,7 +147,7 @@ export class SwapAggregator implements ISwapAggregator {
     tokenA: TokenEntity,
     tokenB: TokenEntity,
     state: BeefyState,
-    options?: StrategySwapOption
+    options?: StrategySwapConfig
   ): Promise<boolean> {
     // Disable native<-->wnative swaps via swap aggregators, only allow wnative provider
     if (provider.getId() !== 'wnative') {
@@ -176,7 +176,7 @@ export class SwapAggregator implements ISwapAggregator {
   async fetchQuotes(
     request: QuoteRequest,
     state: BeefyState,
-    options?: StrategySwapOption
+    options?: StrategySwapConfig
   ): Promise<QuoteResponse[]> {
     const allowedProviders = this.allowedProviders(options);
     const providerSupported = await Promise.all(

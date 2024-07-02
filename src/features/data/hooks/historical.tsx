@@ -69,7 +69,7 @@ export function useHistoricalStatLoader(
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket,
   chainId: ChainEntity['id'],
-  vaultAddress: VaultEntity['earnContractAddress']
+  vaultAddress: VaultEntity['contractAddress']
 ) {
   const dispatch = useAppDispatch();
   const status = useAppSelector(state =>

@@ -51,3 +51,29 @@ export function fromKeysBy<K extends string, V>(arr: K[], valueFn: (key: K) => V
     return acc;
   }, {} as Record<K, V>);
 }
+
+type Mapped<T extends string, V, K extends string, KF extends (key: T) => K> = {
+  [key in T as KF extends (key: key) => infer U ? U : never]: V;
+};
+
+export function fromKeysMapper<T extends string, V, K extends string, KF extends (key: T) => K>(
+  arr: T[],
+  valueFn: (key: T) => V,
+  keyFn: KF
+): Mapped<T, V, K, KF> {
+  return arr.reduce((acc, key) => {
+    // @ts-ignore
+    acc[keyFn(key)] = valueFn(key);
+    return acc;
+  }, {} as Mapped<T, V, K, KF>);
+}
+
+/** Push value to array at map[key], or set map key to [value] if array does not exist yet */
+export function pushOrSet<K extends string, V>(map: Record<K, V[]>, key: K, value: V) {
+  if (map[key]) {
+    map[key].push(value);
+  } else {
+    map[key] = [value];
+  }
+  return map;
+}

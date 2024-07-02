@@ -1,9 +1,13 @@
 import React, { useMemo } from 'react';
-import { Box, Divider, Grid, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import type { VaultEntity } from '../../../data/entities/vault';
-import { isGovVault } from '../../../data/entities/vault';
+import {
+  isCowcentratedGovVault,
+  isGovVault,
+  isGovVaultCowcentrated,
+  type VaultEntity,
+} from '../../../data/entities/vault';
 import { selectVaultById, selectVaultLastHarvestByVaultId } from '../../../data/selectors/vaults';
 import { DailyApyStats, YearlyApyStats } from '../../../../components/ApyStats';
 import { ValueBlock } from '../../../../components/ValueBlock/ValueBlock';
@@ -12,16 +16,23 @@ import { VaultDeposited } from '../../../../components/VaultDeposited/VaultDepos
 import { GovVaultRewards } from '../../../../components/GovVaultRewards/GovVaultRewards';
 import { useAppSelector } from '../../../../store';
 import { formatDistance } from 'date-fns';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
 function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
-  const lastHarvest = useAppSelector(state => selectVaultLastHarvestByVaultId(state, vaultId));
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const classes = useStyles();
   const { t } = useTranslation();
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  // When we have a cowcentrated gov vault, we need to show the last harvest of the underlying cowcentrated vault
+  const lastHarvest = useAppSelector(state =>
+    selectVaultLastHarvestByVaultId(
+      state,
+      isCowcentratedGovVault(vault) ? vault.cowcentratedId : vault.id
+    )
+  );
 
-  const lastHarvetFormatted = useMemo(() => {
+  const lastHarvestFormatted = useMemo(() => {
     if (lastHarvest === 0) {
       return 'never';
     } else {
@@ -30,54 +41,31 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   }, [lastHarvest]);
 
   return (
-    <div className={classes.stats}>
-      <div className={classes.interestStats}>
-        <Box className={classes.interestStatsBox}>
-          <Box width={'33%'} className={classes.stat3}>
-            <VaultTvl vaultId={vaultId} />
-          </Box>
-          <Box className={classes.stat}>
-            <Divider className={classes.divider} orientation="vertical" />
-            <Box className={classes.stat3}>
-              <YearlyApyStats vaultId={vault.id} />
-            </Box>
-          </Box>
-          <Box display="flex">
-            <Divider className={classes.divider} orientation="vertical" />
-            <Box className={classes.stat3}>
-              <DailyApyStats vaultId={vault.id} />
-            </Box>
-          </Box>
-        </Box>
+    <div className={classes.boxes}>
+      <div className={clsx(classes.stats, classes.statsInterest)}>
+        <div className={classes.stat}>
+          <VaultTvl vaultId={vaultId} />
+        </div>
+        <div className={classes.stat}>
+          <YearlyApyStats vaultId={vaultId} />
+        </div>
+        <div className={classes.stat}>
+          <DailyApyStats vaultId={vaultId} />
+        </div>
       </div>
-      <div className={classes.depositStats}>
-        <Grid container className={classes.depositStatsBox}>
-          <Grid item xs={6} className={classes.stat1}>
-            <Box className={classes.stat4}>
-              <VaultDeposited vaultId={vaultId} />
-            </Box>
-          </Grid>
-          {(isGovVault(vault) || lastHarvest !== 0) && (
-            <Divider flexItem={true} className={classes.divider1} orientation="vertical" />
-          )}
-          {!isGovVault(vault) ? (
-            <>
-              {lastHarvest !== 0 && (
-                <Grid item xs={6}>
-                  <Box className={classes.stat4}>
-                    <ValueBlock label={t('Vault-LastHarvest')} value={lastHarvetFormatted} />
-                  </Box>
-                </Grid>
-              )}
-            </>
-          ) : (
-            <Grid item xs={6}>
-              <Box className={classes.stat4}>
-                <GovVaultRewards vaultId={vaultId} />
-              </Box>
-            </Grid>
-          )}
-        </Grid>
+      <div className={clsx(classes.stats, classes.statsDeposit)}>
+        <div className={classes.stat}>
+          <VaultDeposited vaultId={vaultId} />
+        </div>
+        {isGovVault(vault) && !isGovVaultCowcentrated(vault) ? (
+          <div className={classes.stat}>
+            <GovVaultRewards vaultId={vaultId} />
+          </div>
+        ) : lastHarvest ? (
+          <div className={classes.stat}>
+            <ValueBlock label={t('Vault-LastHarvest')} value={lastHarvestFormatted} />
+          </div>
+        ) : null}
       </div>
     </div>
   );

@@ -9,10 +9,10 @@ import {
 } from '../selectors/vaults';
 import { isFulfilledResult } from '../../../helpers/promises';
 import type { VaultEntity } from '../entities/vault';
-import type { ZapAggregatorTokenSupportResponse } from '../apis/beefy/beefy-api';
 import { featureFlag_kyberSwapSupport, featureFlag_oneInchSupport } from '../utils/feature-flags';
 import type { ChainEntity } from '../entities/chain';
 import { keys } from '../../../helpers/object';
+import type { ZapAggregatorTokenSupportResponse } from '../apis/beefy/beefy-api-types';
 
 interface FetchAllZapsFulfilledPayload {
   zaps: ZapConfig[];

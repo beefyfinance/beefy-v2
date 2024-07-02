@@ -15,7 +15,7 @@ import {
   selectHasBreakdownDataByTokenAddress,
   selectLpBreakdownForVault,
 } from '../../../data/selectors/tokens';
-import { isCowcentratedVault, type VaultEntity } from '../../../data/entities/vault';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../../data/entities/vault';
 import {
   selectIsAddressBookLoaded,
   selectShouldInitAddressBook,
@@ -37,6 +37,7 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
     const { userBalance } = calculatedBreakdown;
     const [tab, setTab] = useState<BreakdownMode>(userBalance.gt(BIG_ZERO) ? 'user' : 'total');
     const [haveSwitchedTab, setHaveSwitchedTab] = useState(false);
+    const isForCowcentrated = isCowcentratedLikeVault(vault);
 
     const tabs: Partial<Record<BreakdownMode, string>> = useMemo(() => {
       const map = {};
@@ -45,13 +46,13 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
       }
       map['one'] = t('Vault-LpBreakdown-1LP');
       map['total'] = t(
-        isCowcentratedVault(vault) ? 'Vault-LpBreakdown-ClmPool' : 'Vault-LpBreakdown-TotalPool'
+        isForCowcentrated ? 'Vault-LpBreakdown-ClmPool' : 'Vault-LpBreakdown-TotalPool'
       );
-      if (isCowcentratedVault(vault)) {
+      if (isForCowcentrated) {
         map['underlying'] = t('Vault-LpBreakdown-Underlying');
       }
       return map;
-    }, [userBalance, t, vault]);
+    }, [userBalance, t, isForCowcentrated]);
 
     const onTabChange = useCallback(
       (newTab: string) => {

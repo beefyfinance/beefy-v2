@@ -1,12 +1,14 @@
 import React, { memo } from 'react';
-import type { VaultEntity } from '../../../data/entities/vault';
+import {
+  isCowcentratedGovVault,
+  isCowcentratedLikeVault,
+  isGovVault,
+  isVaultRetired,
+  type VaultEntity,
+} from '../../../data/entities/vault';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import {
-  selectIsVaultCowcentrated,
-  selectIsVaultGov,
-  selectIsVaultRetired,
-} from '../../../data/selectors/vaults';
+import { selectVaultById } from '../../../data/selectors/vaults';
 import clsx from 'clsx';
 import { useAppSelector } from '../../../../store';
 import { Link } from 'react-router-dom';
@@ -20,9 +22,11 @@ export type VaultProps = {
 };
 export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
   const classes = useStyles();
-  const isRetired = useAppSelector(state => selectIsVaultRetired(state, vaultId));
-  const isGov = useAppSelector(state => selectIsVaultGov(state, vaultId));
-  const isCowcentrated = useAppSelector(state => selectIsVaultCowcentrated(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const isRetired = isVaultRetired(vault);
+  const isCowcentratedPool = isCowcentratedGovVault(vault);
+  const isCowcentrated = !isCowcentratedPool && isCowcentratedLikeVault(vault); // cowcentrated or cowcentrated standard
+  const isGov = !isCowcentrated && !isCowcentratedPool && isGovVault(vault); // gov but not cowcentrated pool
 
   return (
     <Link
@@ -30,6 +34,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
       className={clsx({
         [classes.vault]: true,
         [classes.vaultCowcentrated]: isCowcentrated,
+        [classes.vaultCowcentratedPool]: isCowcentratedPool,
         [classes.vaultRetired]: isRetired,
         [classes.vaultEarnings]: isGov,
       })}

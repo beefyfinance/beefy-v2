@@ -18,7 +18,11 @@ import twitterIcon from '../../../../images/icons/share/twitter.svg';
 import lensterIcon from '../../../../images/icons/share/lenster.svg';
 import telegramIcon from '../../../../images/icons/share/telegram.svg';
 import linkIcon from '../../../../images/icons/share/link.svg';
-import { isGovVault } from '../../../data/entities/vault';
+import {
+  isCowcentratedVault,
+  isGovVault,
+  isGovVaultCowcentrated,
+} from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectChainById } from '../../../data/selectors/chains';
@@ -33,12 +37,12 @@ import {
 } from '../../../data/selectors/boosts';
 import type {
   BoostedVaultExtraDetails,
+  CommonExtraDetails,
   CommonVaultDetails,
   GovVaultExtraDetails,
   ShareButtonProps,
   ShareItemProps,
   ShareServiceItemProps,
-  Types,
   VaultDetails,
 } from './types';
 import clsx from 'clsx';
@@ -60,7 +64,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   const apys = useAppSelector(state => selectVaultTotalApy(state, vault.id));
   const commonVaultDetails = useMemo<CommonVaultDetails>(() => {
     return {
-      vaultName: vault.name,
+      vaultName: vault.names.singleMeta,
       vaultApy: formatLargePercent(apys.totalApy, 2),
       vaultUrl: `https://app.beefy.com/vault/${vault.id}`,
       chainName: chain.name,
@@ -70,9 +74,16 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
   }, [vault, chain, apys]);
   const additionalSelector = useMemo(
     () =>
-      (state: BeefyState): Types | BoostedVaultExtraDetails | GovVaultExtraDetails => {
+      (state: BeefyState): CommonExtraDetails | BoostedVaultExtraDetails | GovVaultExtraDetails => {
+        if (isCowcentratedVault(vault)) {
+          return { kind: 'clm' };
+        }
+
         if (isGovVault(vault)) {
-          const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+          if (isGovVaultCowcentrated(vault)) {
+            return { kind: 'clm-pool' };
+          }
+          const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); // TODO: handle multiple earned tokens [empty = ok, not used when clm-like]
           return {
             kind: 'gov',
             earnToken: token.symbol,
@@ -181,7 +192,7 @@ const TwitterItem = memo<ShareServiceItemProps>(function TwitterItem({ details }
 const LensterItem = memo<ShareServiceItemProps>(function LensterItem({ details }) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
-    const message = t(`Vault-Share-Message-${details.kind as string}`, details);
+    const message = t(`Vault-Share-Message-${details.kind}`, details);
 
     // https://docs.lens.xyz/docs/integrating-lens
     const params = new URLSearchParams({
@@ -198,7 +209,7 @@ const LensterItem = memo<ShareServiceItemProps>(function LensterItem({ details }
 const TelegramItem = memo<ShareServiceItemProps>(function TelegramItem({ details }) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
-    const message = t(`Vault-Share-Message-${details.kind as string}`, details);
+    const message = t(`Vault-Share-Message-${details.kind}`, details);
 
     // https://core.telegram.org/widgets/share
     const params = new URLSearchParams({

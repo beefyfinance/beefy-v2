@@ -16,87 +16,31 @@ import type { AllValuesAsString } from '../../features/data/utils/types-utils';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { useAppSelector } from '../../store';
 import { InterestTooltipContent } from '../InterestTooltipContent';
+import { getApyComponents, getApyLabelsForType } from '../../helpers/apy';
 
 const _YearlyBreakdownTooltip = ({
-  isGovVault,
+  type,
   boosted,
   rates,
 }: {
-  isGovVault: boolean;
+  type: VaultEntity['type'];
   boosted: boolean;
   // here we get formatted values
   rates: AllValuesAsString<TotalApy>;
 }) => {
-  const rows: { label: string; value: string; last?: boolean }[] = [];
   const { t } = useTranslation();
+  const labels = getApyLabelsForType(type);
+  const { yearly } = getApyComponents();
 
-  if (isGovVault) {
-    rows.push({
-      label: t('Pool-Apr'),
-      value: rates.rewardPoolApr ?? '?',
-      last: true,
-    });
-    return <InterestTooltipContent rows={rows} />;
-  }
-
-  if ('vaultApr' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-VaultApr'),
-      value: rates.vaultApr ?? '?',
-      last: false,
-    });
-  }
-
-  if ('tradingApr' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-TradingApr'),
-      value: rates.tradingApr ?? '?',
-      last: false,
-    });
-  }
-
-  if ('liquidStakingApr' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-LiquidStakingApr'),
-      value: rates.liquidStakingApr ?? '?',
-      last: false,
-    });
-  }
-
-  if ('composablePoolApr' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-ComposablePoolApr'),
-      value: rates.composablePoolApr ?? '?',
-      last: false,
-    });
-  }
-
-  if ('boostApr' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-BoostApr'),
-      value: rates.boostApr ?? '?',
-      last: false,
-    });
-  }
-
-  if ('clmApr' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-CLMApr'),
-      value: rates.clmApr ?? '?',
-      last: false,
-    });
-  }
-
-  if ('merklApr' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-MerklApr'),
-      value: rates.merklApr ?? '?',
-      last: false,
-    });
-  }
+  const rows: { label: string; value: string; last?: boolean }[] = yearly
+    .filter(key => key in rates)
+    .map(key => ({
+      label: t(labels[key]),
+      value: rates[key] ?? '?',
+    }));
 
   rows.push({
-    label: t('APY'),
+    label: t(labels.totalApy),
     value: boosted ? rates.boostedTotalApy ?? '?' : rates.totalApy,
     last: true,
   });
@@ -107,69 +51,28 @@ const _YearlyBreakdownTooltip = ({
 const YearlyBreakdownTooltip = memo(_YearlyBreakdownTooltip);
 
 const _DailyBreakdownTooltip = ({
-  isGovVault,
+  type,
   boosted,
   rates,
 }: {
-  isGovVault: boolean;
+  type: VaultEntity['type'];
   boosted: boolean;
   // here we get formatted values
   rates: AllValuesAsString<TotalApy>;
 }) => {
-  const rows: { label: string; value: string; last?: boolean }[] = [];
   const { t } = useTranslation();
+  const labels = getApyLabelsForType(type);
+  const { daily } = getApyComponents();
 
-  if (isGovVault) {
-    rows.push({
-      label: t('Pool-AprDaily'),
-      value: rates.rewardPoolDaily ?? '?',
-      last: true,
-    });
-    return <InterestTooltipContent rows={rows} />;
-  }
-
-  if ('vaultDaily' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-VaultDaily'),
-      value: rates.vaultDaily ?? '?',
-      last: false,
-    });
-  }
-
-  if ('tradingDaily' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-TradingDaily'),
-      value: rates.tradingDaily ?? '?',
-      last: false,
-    });
-  }
-
-  if ('liquidStakingDaily' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-LiquidStakingDaily'),
-      value: rates.liquidStakingDaily ?? '?',
-      last: false,
-    });
-  }
-
-  if ('composablePoolDaily' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-ComposablePoolDaily'),
-      value: rates.composablePoolDaily ?? '?',
-      last: false,
-    });
-  }
-
-  if ('boostDaily' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-BoostDaily'),
-      value: rates.boostDaily ?? '?',
-      last: false,
-    });
-  }
+  const rows: { label: string; value: string; last?: boolean }[] = daily
+    .filter(key => key in rates)
+    .map(key => ({
+      label: t(labels[key]),
+      value: rates[key] ?? '?',
+    }));
 
   rows.push({
-    label: t('Vault-Breakdown-DailyAPY'),
+    label: t(labels.totalDaily),
     value: boosted ? rates.boostedTotalDaily ?? '?' : rates.totalDaily,
     last: true,
   });
@@ -209,11 +112,7 @@ function _YearlyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
         shouldShowApy
           ? {
               content: (
-                <YearlyBreakdownTooltip
-                  isGovVault={isGovVault(vault)}
-                  boosted={isBoosted}
-                  rates={formatted}
-                />
+                <YearlyBreakdownTooltip type={vault.type} boosted={isBoosted} rates={formatted} />
               ),
             }
           : undefined
@@ -255,11 +154,7 @@ function _DailyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
         shouldShowApy
           ? {
               content: (
-                <DailyBreakdownTooltip
-                  isGovVault={isGovVault(vault)}
-                  boosted={isBoosted}
-                  rates={formatted}
-                />
+                <DailyBreakdownTooltip type={vault.type} boosted={isBoosted} rates={formatted} />
               ),
             }
           : undefined

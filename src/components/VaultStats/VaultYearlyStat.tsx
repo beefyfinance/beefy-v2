@@ -2,7 +2,7 @@ import type { VaultEntity } from '../../features/data/entities/vault';
 import React, { memo, useMemo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
-import { selectIsVaultGov } from '../../features/data/selectors/vaults';
+import { selectIsVaultGov, selectVaultById } from '../../features/data/selectors/vaults';
 import { formatTotalApy } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import {
@@ -21,6 +21,7 @@ import { useAppSelector } from '../../store';
 import type { AllValuesAsString } from '../../features/data/utils/types-utils';
 import type { TotalApy } from '../../features/data/reducers/apy';
 import { InterestTooltipContent } from '../InterestTooltipContent';
+import { getApyComponents, getApyLabelsForType } from '../../helpers/apy';
 
 export type VaultYearlyStatProps = {
   vaultId: VaultEntity['id'];
@@ -93,73 +94,26 @@ const YearlyTooltipContent = memo<YearlyTooltipContentProps>(function YearlyTool
   isBoosted,
   rates,
 }) {
-  const isGovVault = useAppSelector(state => selectIsVaultGov(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const rows = useMemo(() => {
-    const items: { label: string; value: string }[] = [];
+    const labels = getApyLabelsForType(vault.type);
+    const { yearly } = getApyComponents();
 
-    if (isGovVault) {
-      items.push({
-        label: 'Pool-Apr',
-        value: rates.rewardPoolApr ?? '?',
-      });
-    } else {
-      if ('vaultApr' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-VaultApr',
-          value: rates.vaultApr ?? '?',
-        });
-      }
+    const items: { label: string | string[]; value: string; last?: boolean }[] = yearly
+      .filter(key => key in rates)
+      .map(key => ({
+        label: labels[key],
+        value: rates[key] ?? '?',
+      }));
 
-      if ('tradingApr' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-TradingApr',
-          value: rates.tradingApr ?? '?',
-        });
-      }
-
-      if ('liquidStakingApr' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-LiquidStakingApr',
-          value: rates.liquidStakingApr ?? '?',
-        });
-      }
-
-      if ('composablePoolApr' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-ComposablePoolApr',
-          value: rates.composablePoolApr ?? '?',
-        });
-      }
-
-      if ('clmApr' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-CLMApr',
-          value: rates.clmApr ?? '?',
-        });
-      }
-
-      if ('merklApr' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-MerklApr',
-          value: rates.merklApr ?? '?',
-        });
-      }
-
-      if ('boostApr' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-BoostApr',
-          value: rates.boostApr ?? '?',
-        });
-      }
-
-      items.push({
-        label: 'APY',
-        value: isBoosted ? rates.boostedTotalApy ?? '?' : rates.totalApy,
-      });
-    }
+    items.push({
+      label: labels.totalApy,
+      value: isBoosted ? rates.boostedTotalApy ?? '?' : rates.totalApy,
+      last: true,
+    });
 
     return items.length ? items : undefined;
-  }, [isGovVault, isBoosted, rates]);
+  }, [vault.type, isBoosted, rates]);
 
   return rows ? <InterestTooltipContent rows={rows} /> : undefined;
 });

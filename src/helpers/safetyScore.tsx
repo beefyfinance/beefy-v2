@@ -38,7 +38,7 @@ const calcRisk = (arr: string[]) => {
 };
 
 export const safetyScoreNum = (arr: string[]) => {
-  if (arr.length === 0) return null;
+  if (arr.length === 0) return undefined;
 
   return MAX_SCORE * (1 - calcRisk(arr));
 };

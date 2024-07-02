@@ -5,80 +5,27 @@ import type {
   TransactQuote,
   WithdrawOption,
   WithdrawQuote,
+  ZapStrategyIdToDepositOption,
+  ZapStrategyIdToDepositQuote,
+  ZapStrategyIdToWithdrawOption,
+  ZapStrategyIdToWithdrawQuote,
 } from '../transact-types';
 import type { VaultTypeFromVault } from '../vaults/IVaultType';
 import type { ISwapAggregator } from '../swap/ISwapAggregator';
 import type { VaultEntity } from '../../../entities/vault';
 import type { BeefyState } from '../../../../../redux-types';
-import type {
-  AmmEntity,
-  AmmEntityGamma,
-  AmmEntitySolidly,
-  AmmEntityUniswapV2,
-  ZapEntity,
-} from '../../../entities/zap';
+import type { ZapEntity } from '../../../entities/zap';
 import type { Step } from '../../../reducers/wallet/stepper';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { CurveMethod } from './curve/types';
+import type { UserlessZapRequest } from '../zap/types';
+import type { TokenEntity } from '../../../entities/token';
+import type { Balances } from '../helpers/Balances';
+import type { AnyStrategyId, StrategyIdToConfig, ZapStrategyId } from './strategy-configs';
 
-export type SwapAggregatorId = 'one-inch' | 'kyber';
-
-export type StrategySwapOption = {
-  blockProviders: SwapAggregatorId[];
-  blockTokens: string[];
-};
-
-export type OptionalStrategySwapOption = {
-  swap?: StrategySwapOption;
-};
-
-export type SingleStrategyOptions = {
-  strategyId: 'single';
-} & OptionalStrategySwapOption;
-
-export type UniswapLikeStrategyOptions<TAmm extends AmmEntity> = {
-  strategyId: TAmm['type'];
-  ammId: TAmm['id'];
-} & OptionalStrategySwapOption;
-
-export type UniswapV2StrategyOptions = UniswapLikeStrategyOptions<AmmEntityUniswapV2>;
-
-export type SolidlyStrategyOptions = UniswapLikeStrategyOptions<AmmEntitySolidly>;
-
-export type CurveStrategyOptions = {
-  strategyId: 'curve';
-  /** Address of the curve pool. Can be undefined if same as the LP token (want) */
-  poolAddress?: string | undefined;
-  /** Methods to interact with pool, @see curve/types.ts */
-  methods: CurveMethod[];
-} & OptionalStrategySwapOption;
-
-export type GammaStrategyOptions = {
-  strategyId: 'gamma';
-  ammId: AmmEntityGamma['id'];
-  /** where are the LP tokens held while earning, not needed for merkl as tokens held in strategy */
-  tokenHolder?: string | undefined;
-} & OptionalStrategySwapOption;
-
-export type ConicStrategyOptions = {
-  strategyId: 'conic';
-} & OptionalStrategySwapOption;
-
-export type CowcentratedStrategyOptions = {
-  strategyId: 'cowcentrated';
-} & OptionalStrategySwapOption;
-
-export type StrategyOptions =
-  | SingleStrategyOptions
-  | UniswapV2StrategyOptions
-  | SolidlyStrategyOptions
-  | CurveStrategyOptions
-  | GammaStrategyOptions
-  | ConicStrategyOptions
-  | CowcentratedStrategyOptions;
-
-export interface IStrategy {
-  readonly id: string;
+export interface IStrategy<TId extends AnyStrategyId = AnyStrategyId> {
+  readonly id: TId;
+  readonly disableVaultDeposit?: boolean;
+  readonly disableVaultWithdraw?: boolean;
 
   beforeQuote?(): Promise<void>;
 
@@ -96,6 +43,90 @@ export interface IStrategy {
 
   fetchWithdrawStep(quote: TransactQuote, t: TFunction<Namespace>): Promise<Step>;
 }
+
+export interface IZapStrategy<TId extends ZapStrategyId = ZapStrategyId> extends IStrategy<TId> {
+  fetchDepositOptions(): Promise<ZapStrategyIdToDepositOption<TId>[]>;
+
+  fetchDepositQuote(
+    inputs: InputTokenAmount[],
+    option: ZapStrategyIdToDepositOption<TId>
+  ): Promise<ZapStrategyIdToDepositQuote<TId>>;
+
+  fetchDepositStep(quote: ZapStrategyIdToDepositQuote<TId>, t: TFunction<Namespace>): Promise<Step>;
+
+  fetchWithdrawOptions(): Promise<ZapStrategyIdToWithdrawOption<TId>[]>;
+
+  fetchWithdrawQuote(
+    inputs: InputTokenAmount[],
+    option: ZapStrategyIdToWithdrawOption<TId>
+  ): Promise<ZapStrategyIdToWithdrawQuote<TId>>;
+
+  fetchWithdrawStep(
+    quote: ZapStrategyIdToWithdrawQuote<TId>,
+    t: TFunction<Namespace>
+  ): Promise<Step>;
+}
+
+export type IComposerStrategy<TId extends ZapStrategyId = ZapStrategyId> = IZapStrategy<TId>;
+
+export type UserlessZapDepositBreakdown = {
+  zapRequest: UserlessZapRequest;
+  expectedTokens: TokenEntity[];
+  minBalances: Balances;
+};
+
+export type UserlessZapWithdrawBreakdown = {
+  zapRequest: UserlessZapRequest;
+  expectedTokens: TokenEntity[];
+};
+
+export interface IComposableStrategy<TId extends ZapStrategyId = ZapStrategyId>
+  extends IZapStrategy<TId> {
+  getHelpers(): TransactHelpers;
+  fetchDepositUserlessZapBreakdown(
+    quote: ZapStrategyIdToDepositQuote<TId>
+  ): Promise<UserlessZapDepositBreakdown>;
+  fetchWithdrawUserlessZapBreakdown(
+    quote: ZapStrategyIdToWithdrawQuote<TId>
+  ): Promise<UserlessZapWithdrawBreakdown>;
+}
+
+export type AnyComposableStrategy<TId extends ZapStrategyId = ZapStrategyId> = {
+  [K in TId]: IComposableStrategy<K>;
+}[TId];
+
+export interface IZapStrategyStatic<TId extends ZapStrategyId = ZapStrategyId> {
+  readonly id: TId;
+
+  new (options: StrategyIdToConfig<TId>, helpers: TransactHelpers): IZapStrategy<TId>;
+}
+
+export interface IComposableStrategyStatic<TId extends ZapStrategyId = ZapStrategyId> {
+  readonly id: TId;
+  readonly composable: true;
+
+  new (options: StrategyIdToConfig<TId>, helpers: TransactHelpers): IComposableStrategy<TId>;
+}
+
+export type AnyComposableStrategyStatic<TId extends ZapStrategyId = ZapStrategyId> = {
+  [K in TId]: IComposableStrategyStatic<K>;
+}[TId];
+
+export interface IComposerStrategyStatic<TId extends ZapStrategyId = ZapStrategyId> {
+  readonly id: TId;
+  readonly composer: true;
+
+  new (
+    options: StrategyIdToConfig<TId>,
+    helpers: TransactHelpers,
+    underlying: AnyComposableStrategy
+  ): IComposerStrategy<TId>;
+}
+
+export type IAnyStrategyStatic<TId extends ZapStrategyId = ZapStrategyId> =
+  | IZapStrategyStatic<TId>
+  | IComposableStrategyStatic<TId>
+  | IComposerStrategyStatic<TId>;
 
 type BaseTransactHelpers<T extends VaultEntity = VaultEntity> = {
   swapAggregator: ISwapAggregator;
@@ -117,8 +148,3 @@ export type TransactHelpers = ZaplessTransactHelpers | ZapTransactHelpers;
 export function isZapTransactHelpers(helpers: TransactHelpers): helpers is ZapTransactHelpers {
   return helpers.zap !== undefined;
 }
-
-export type StrategyConstructor = new (
-  options: StrategyOptions,
-  helpers: TransactHelpers
-) => IStrategy;

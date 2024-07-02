@@ -2,70 +2,62 @@ import { createSlice } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import type { Draft } from 'immer';
 import { sortBy } from 'lodash-es';
-import { safetyScoreNum } from '../../../helpers/safetyScore';
-import type { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import type { ChainEntity } from '../entities/chain';
-import {
-  isCowcentratedVault,
-  isGovVault,
-  isStandardVault,
-  type VaultCowcentrated,
-  type VaultEntity,
-  type VaultGov,
-  type VaultStandard,
-} from '../entities/vault';
+import { isStandardVault, type VaultEntity } from '../entities/vault';
 import type { NormalizedEntity } from '../utils/normalized-entity';
-import type { VaultConfig } from '../apis/config-types';
-import { entries } from '../../../helpers/object';
+import { fromKeysBy, pushOrSet } from '../../../helpers/object';
 import { BIG_ZERO } from '../../../helpers/big-number';
 
 /**
  * State containing Vault infos
  */
 export type VaultsState = NormalizedEntity<VaultEntity> & {
+  /** All chains that have at least 1 vault */
+  allChainIds: ChainEntity['id'][];
+  /** Vaults that have status: active */
+  allActiveIds: VaultEntity['id'][];
   /** Vaults that have bridged receipt tokens we should track */
   allBridgedIds: VaultEntity['id'][];
-
+  /** Relations between vaults */
+  relations: {
+    /** which vault does vaultId use as its deposit token  */
+    underlyingOf: {
+      byId: {
+        [vaultId: VaultEntity['id']]: VaultEntity['id'];
+      };
+    };
+    /** which vaults is vaultId the deposit token for  */
+    depositFor: {
+      byId: {
+        [vaultId: VaultEntity['id']]: VaultEntity['id'][];
+      };
+    };
+  };
+  /** Vaults id look up by chain id */
   byChainId: {
     [chainId in ChainEntity['id']]?: {
       /** Vaults on chain */
       allIds: VaultEntity['id'][];
-      /** Vaults that have status: active */
-      allActiveIds: VaultEntity['id'][];
-      /** Vaults that have status: eol or paused */
-      allRetiredIds: VaultEntity['id'][];
-      /** Vaults that have bridged receipt tokens we should track */
-      allBridgedIds: VaultEntity['id'][];
-      /** Find standard vaults by deposit token address or earned token address */
-      standardVault: {
-        /** Map of standard vault ids by deposit token address */
-        byDepositTokenAddress: {
-          [address: string]: VaultEntity['id'][];
-        };
-        /** Map of standard vault id by earned (receipt) token address */
-        byEarnedTokenAddress: {
-          [address: string]: VaultEntity['id'];
-        };
+      /** Vaults by their contract address */
+      byAddress: {
+        [address: string]: VaultEntity['id'];
       };
-      /** Find gov vaults by deposit token address */
-      govVault: {
-        /** Map of gov vault ids by deposit token address */
-        byDepositTokenAddress: {
-          [address: string]: VaultEntity['id'][];
-        };
-      };
-      cowcentratedVault: {
-        /** Map of cowcentrated vault ids by deposit token address */
-        byDepositTokenAddress: {
-          [address: string]: VaultEntity['id'][];
-        };
-        /** Map of cowcentrated vault id by earned (receipt) token address */
-        byEarnedTokenAddress: {
-          [address: string]: VaultEntity['id'];
+      byType: {
+        [type in VaultEntity['type']]: {
+          /** Vaults on chain of type */
+          allIds: VaultEntity['id'][];
+          /** Find {type} vaults by contract address (earnContractAddress) */
+          byAddress: {
+            [address: string]: VaultEntity['id'];
+          };
+          /** Find {type} vaults by deposit token address */
+          byDepositTokenAddress: {
+            [address: string]: VaultEntity['id'][];
+          };
         };
       };
     };
@@ -98,10 +90,19 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
 export const initialVaultsState: VaultsState = {
   byId: {},
   allIds: [],
+  allActiveIds: [],
   allBridgedIds: [],
+  allChainIds: [],
+  relations: {
+    underlyingOf: {
+      byId: {},
+    },
+    depositFor: {
+      byId: {},
+    },
+  },
   byChainId: {},
   contractData: { byVaultId: {} },
-
   lastHarvestById: {},
 };
 
@@ -113,21 +114,12 @@ export const vaultsSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
-      const initialVaultAmount = sliceState.allIds.length;
-      for (const [chainId, vaults] of entries(action.payload.byChainId)) {
-        if (vaults) {
-          for (const vault of vaults) {
-            addVaultToState(action.payload.state, sliceState, chainId, vault);
-          }
+      for (const vaults of Object.values(action.payload.byChainId)) {
+        for (const vault of vaults) {
+          sliceState.byId[vault.entity.id] = vault.entity;
         }
       }
-
-      // If new vaults were added, apply default sorting
-      if (sliceState.allIds.length !== initialVaultAmount) {
-        sliceState.allIds = sortBy(sliceState.allIds, id => {
-          return -sliceState.byId[id]!.updatedAt;
-        });
-      }
+      rebuildVaultsState(sliceState);
     });
 
     builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
@@ -205,218 +197,117 @@ function addContractDataToState(
   }
 }
 
-function getOrCreateVaultsChainState(sliceState: Draft<VaultsState>, chainId: ChainEntity['id']) {
-  let vaultState = sliceState.byChainId[chainId];
-  if (vaultState === undefined) {
-    vaultState = sliceState.byChainId[chainId] = {
-      allIds: [],
-      allActiveIds: [],
-      allRetiredIds: [],
-      allBridgedIds: [],
-      standardVault: {
-        byEarnedTokenAddress: {},
+function createVaultsChainState(): VaultsState['byChainId'][ChainEntity['id']] {
+  return {
+    allIds: [],
+    byAddress: {},
+    byType: {
+      standard: {
+        allIds: [],
+        byAddress: {},
         byDepositTokenAddress: {},
       },
-      govVault: {
+      gov: {
+        allIds: [],
+        byAddress: {},
         byDepositTokenAddress: {},
       },
-      cowcentratedVault: {
-        byEarnedTokenAddress: {},
+      cowcentrated: {
+        allIds: [],
+        byAddress: {},
         byDepositTokenAddress: {},
       },
-    };
-  }
-  return vaultState;
+    },
+  };
 }
 
-function addVaultToState(
-  state: BeefyState,
-  sliceState: Draft<VaultsState>,
-  chainId: ChainEntity['id'],
-  apiVault: VaultConfig
-) {
-  // we already know this vault
-  if (apiVault.id in sliceState.byId) {
-    return;
+function rebuildVaultsState(sliceState: Draft<VaultsState>) {
+  const allIds = sortBy(Object.keys(sliceState.byId), id => {
+    return -sliceState.byId[id]!.updatedAt;
+  });
+  const allVaults = allIds.map(id => sliceState.byId[id]!);
+  const allChainIds = Array.from(
+    allVaults
+      .reduce((acc, vault) => {
+        acc.add(vault.chainId);
+        return acc;
+      }, new Set<ChainEntity['id']>())
+      .values()
+  );
+
+  const allActiveIds: VaultsState['allActiveIds'] = [];
+  const allBridgedIds: VaultsState['allBridgedIds'] = [];
+  const byChainId: VaultsState['byChainId'] = fromKeysBy(allChainIds, () =>
+    createVaultsChainState()
+  );
+
+  for (const vault of allVaults) {
+    // global
+    if (vault.status === 'active') {
+      allActiveIds.push(vault.id);
+    }
+    if (isStandardVault(vault) && !!vault.bridged) {
+      allBridgedIds.push(vault.id);
+    }
+
+    // by chain
+    const chainState = byChainId[vault.chainId]!;
+    chainState.allIds.push(vault.id);
+    chainState.byAddress[vault.contractAddress.toLowerCase()] = vault.id;
+
+    // by vault type by chain
+    const chainTypeState = chainState.byType[vault.type];
+    chainTypeState.allIds.push(vault.id);
+    chainTypeState.byAddress[vault.contractAddress.toLowerCase()] = vault.id;
+    pushOrSet(
+      chainTypeState.byDepositTokenAddress,
+      vault.depositTokenAddress.toLowerCase(),
+      vault.id
+    );
   }
 
-  const score = getVaultSafetyScore(state, chainId, apiVault);
-  const chainState = getOrCreateVaultsChainState(sliceState, chainId);
-  let vault: VaultEntity;
-
-  if (apiVault.type === 'gov') {
-    vault = {
-      id: apiVault.id,
-      name: apiVault.name,
-      type: 'gov',
-      version: apiVault.version || 1,
-      depositTokenAddress: apiVault.tokenAddress || 'native',
-      earnedTokenAddress: apiVault.earnedTokenAddress,
-      earnContractAddress: apiVault.earnContractAddress,
-      strategyTypeId: apiVault.strategyTypeId,
-      excludedId: apiVault.excluded || null,
-      chainId: chainId,
-      status: apiVault.status as VaultGov['status'],
-      platformId: apiVault.platformId,
-      safetyScore: score,
-      assetIds: apiVault.assets || [],
-      assetType: 'single',
-      risks: apiVault.risks || [],
-      buyTokenUrl: apiVault.buyTokenUrl || null,
-      addLiquidityUrl: null,
-      removeLiquidityUrl: null,
-      depositFee: apiVault.depositFee ?? 0,
-      createdAt: apiVault.createdAt ?? 0,
-      updatedAt: apiVault.updatedAt || apiVault.createdAt || 0,
-      retireReason: apiVault.retireReason,
-      retiredAt: apiVault.retiredAt,
-      pauseReason: apiVault.pauseReason,
-      pausedAt: apiVault.pausedAt,
-    } satisfies VaultGov;
-  } else if (apiVault.type === 'cowcentrated') {
-    vault = {
-      id: apiVault.id,
-      name: apiVault.name,
-      type: 'cowcentrated',
-      version: apiVault.version || 1,
-      depositTokenAddress: apiVault.tokenAddress
-        ? apiVault.tokenAddress + '-' + apiVault.id
-        : 'native',
-      depositTokenAddresses: apiVault.depositTokenAddresses || [],
-      zaps: apiVault.zaps || [],
-      earnContractAddress: apiVault.earnContractAddress,
-      earnedTokenAddress: apiVault.earnedTokenAddress,
-      strategyTypeId: apiVault.strategyTypeId,
-      chainId: chainId,
-      platformId: apiVault.platformId,
-      status: apiVault.status as VaultStandard['status'],
-      assetType: 'lps',
-      safetyScore: score,
-      assetIds: apiVault.assets || [],
-      risks: apiVault.risks || [],
-      buyTokenUrl: apiVault.buyTokenUrl || null,
-      addLiquidityUrl: apiVault.addLiquidityUrl || null,
-      removeLiquidityUrl: apiVault.removeLiquidityUrl || null,
-      depositFee: apiVault.depositFee ?? 0,
-      createdAt: apiVault.createdAt ?? 0,
-      updatedAt: apiVault.updatedAt || apiVault.createdAt || 0,
-      retireReason: apiVault.retireReason,
-      retiredAt: apiVault.retiredAt,
-      pauseReason: apiVault.pauseReason,
-      pausedAt: apiVault.pausedAt,
-      migrationIds: apiVault.migrationIds,
-      bridged: apiVault.bridged,
-      lendingOracle: apiVault.lendingOracle,
-      earningPoints: apiVault.earningPoints ?? false,
-      feeTier: apiVault.feeTier ?? '0.05',
-    } satisfies VaultCowcentrated;
-  } else if (apiVault.type === 'standard' || apiVault.type === undefined) {
-    vault = {
-      id: apiVault.id,
-      name: apiVault.name,
-      type: apiVault.type || 'standard',
-      version: apiVault.version || 1,
-      depositTokenAddress: apiVault.tokenAddress ?? 'native',
-      zaps: apiVault.zaps || [],
-      earnContractAddress: apiVault.earnContractAddress,
-      earnedTokenAddress: apiVault.earnedTokenAddress,
-      strategyTypeId: apiVault.strategyTypeId,
-      chainId: chainId,
-      platformId: apiVault.platformId,
-      status: apiVault.status as VaultStandard['status'],
-      assetType: !apiVault.assets ? 'single' : apiVault.assets.length > 1 ? 'lps' : 'single',
-      safetyScore: score,
-      assetIds: apiVault.assets || [],
-      risks: apiVault.risks || [],
-      buyTokenUrl: apiVault.buyTokenUrl || null,
-      addLiquidityUrl: apiVault.addLiquidityUrl || null,
-      removeLiquidityUrl: apiVault.removeLiquidityUrl || null,
-      depositFee: apiVault.depositFee ?? 0,
-      createdAt: apiVault.createdAt ?? 0,
-      updatedAt: apiVault.updatedAt || apiVault.createdAt || 0,
-      retireReason: apiVault.retireReason,
-      retiredAt: apiVault.retiredAt,
-      pauseReason: apiVault.pauseReason,
-      pausedAt: apiVault.pausedAt,
-      migrationIds: apiVault.migrationIds,
-      bridged: apiVault.bridged,
-      lendingOracle: apiVault.lendingOracle,
-      earningPoints: apiVault.earningPoints ?? false,
-    } satisfies VaultStandard;
-  } else {
-    throw new Error(`Unknown vault type: ${apiVault.type}`);
-  }
-
-  // Track vault globally
-  sliceState.byId[vault.id] = vault;
-  sliceState.allIds.push(vault.id);
-
-  // Track vault by chain
-  chainState.allIds.push(vault.id);
-
-  if (apiVault.status === 'eol' || apiVault.status === 'paused') {
-    chainState.allRetiredIds.push(vault.id);
-  } else {
-    chainState.allActiveIds.push(vault.id);
-  }
-
-  if (isStandardVault(vault)) {
-    // List of all standard vaults for deposit token
-    const depositTokenKey = vault.depositTokenAddress.toLowerCase();
-    const byDepositTokenAddress = chainState.standardVault.byDepositTokenAddress[depositTokenKey];
-    if (byDepositTokenAddress === undefined) {
-      chainState.standardVault.byDepositTokenAddress[depositTokenKey] = [vault.id];
-    } else {
-      byDepositTokenAddress.push(vault.id);
-    }
-
-    // Standard vaults earned tokens are unique to each vault
-    const earnedTokenKey = vault.earnedTokenAddress.toLowerCase();
-    chainState.standardVault.byEarnedTokenAddress[earnedTokenKey] = vault.id;
-
-    // Track bridged tokens (like mooBIFI)
-    if (vault.bridged) {
-      chainState.allBridgedIds.push(vault.id);
-      sliceState.allBridgedIds.push(vault.id);
-    }
-  } else if (isCowcentratedVault(vault)) {
-    const depositTokenKey = vault.depositTokenAddress.toLowerCase();
-    const byDepositTokenAddress =
-      chainState.cowcentratedVault.byDepositTokenAddress[depositTokenKey];
-
-    if (vault.bridged) {
-      chainState.allBridgedIds.push(vault.id);
-      sliceState.allBridgedIds.push(vault.id);
-    }
-    if (byDepositTokenAddress === undefined) {
-      chainState.cowcentratedVault.byDepositTokenAddress[depositTokenKey] = [vault.id];
-    } else {
-      byDepositTokenAddress.push(vault.id);
-    }
-
-    const earnedTokenKey = vault.earnedTokenAddress.toLowerCase();
-    chainState.cowcentratedVault.byEarnedTokenAddress[earnedTokenKey] = vault.id;
-  } else if (isGovVault(vault)) {
-    // List of all gov vaults for deposit token
-    const depositTokenKey = vault.depositTokenAddress.toLowerCase();
-    const byDepositTokenAddress = chainState.govVault.byDepositTokenAddress[depositTokenKey];
-    if (byDepositTokenAddress === undefined) {
-      chainState.govVault.byDepositTokenAddress[depositTokenKey] = [vault.id];
-    } else {
-      byDepositTokenAddress.push(vault.id);
-    }
-  }
+  // Update state
+  sliceState.allIds = allIds;
+  sliceState.allChainIds = allChainIds;
+  sliceState.allActiveIds = allActiveIds;
+  sliceState.allBridgedIds = allBridgedIds;
+  sliceState.byChainId = byChainId;
+  sliceState.relations = getVaultRelations(sliceState);
 }
 
-function getVaultSafetyScore(
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  apiVault: VaultConfig
-): number {
-  let score = 0;
-  if (apiVault.risks && apiVault.risks.length > 0) {
-    score = safetyScoreNum(apiVault.risks) || 0;
+function getVaultRelations(sliceState: Draft<VaultsState>): VaultsState['relations'] {
+  const underlyingOf: VaultsState['relations']['underlyingOf']['byId'] = {};
+  const depositForById: VaultsState['relations']['depositFor']['byId'] = {};
+
+  for (const chainSlice of Object.values(sliceState.byChainId)) {
+    for (const vaultId of chainSlice.allIds) {
+      const vault = sliceState.byId[vaultId];
+      if (!vault) {
+        continue;
+      }
+      const underlyingVaultId = chainSlice.byAddress[vault.depositTokenAddress.toLowerCase()];
+      if (!underlyingVaultId) {
+        continue;
+      }
+      const underlyingVault = sliceState.byId[underlyingVaultId];
+      if (!underlyingVault) {
+        continue;
+      }
+
+      // vaultId uses underlyingVaultId as its deposit token
+      underlyingOf[vaultId] = underlyingVaultId;
+
+      // underlyingVaultId is the deposit token for vaultId
+      pushOrSet(depositForById, underlyingVaultId, vaultId);
+    }
   }
 
-  return score;
+  return {
+    underlyingOf: {
+      byId: underlyingOf,
+    },
+    depositFor: {
+      byId: depositForById,
+    },
+  };
 }

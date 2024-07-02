@@ -1,7 +1,8 @@
 import type { ChainEntity } from './chain';
 import type { PlatformEntity } from './platform';
 import type { TokenEntity } from './token';
-import type { StrategyOptions } from '../apis/transact/strategies/IStrategy';
+
+import type { ZapStrategyConfig } from '../apis/transact/strategies/strategy-configs';
 
 // maybe a RiskAnalysis type would be better
 
@@ -14,168 +15,266 @@ export type VaultTag =
   | 'eol'
   | 'paused';
 
-/**
- * A vault is anything you can stake stuff into
- * - could be a single token vault
- * - could be an LP vault
- * - could be a bifi boost (gov vault)
- *
- * Sometimes also named "pool"
- */
-export interface VaultStandard {
+export type VaultType = 'standard' | 'gov' | 'cowcentrated';
+
+export type VaultNames = {
+  /** w/out Vault/Pool/CLM suffix */
+  short: string;
+  /** w/ Vault/Pool/CLM suffix */
+  long: string;
+  /** vault list */
+  list: string;
+  /** single vault page header */
+  single: string;
+  /** single vault page meta title */
+  singleMeta: string;
+};
+
+export type VaultBase = {
+  /** globally unique id for the vault */
   id: string;
+  /** name of the vault (as in the config) */
   name: string;
-  type: 'standard';
+  /** variations of name used in different contexts */
+  names: VaultNames;
+  /** contract version, increased when app needs to behave differently for the same vault type */
   version: number;
-  depositTokenAddress: string;
-  zaps: StrategyOptions[];
-
-  /**
-   * ASSETS are basically the assets that are in that vault
-   * So if you go into a BIFI vault, the assets is of course only BIFI
-   * But if you join the curve aTriCrypto vault your assets will be BTC,ETH and USDT
-   */
-  assetIds: TokenEntity['id'][];
-
+  /** chain the vault is on */
   chainId: ChainEntity['id'];
-
-  earnedTokenAddress: string;
-
-  /**
-   * The vault contract address
-   */
-  earnContractAddress: string;
-
-  strategyTypeId: string;
-
-  /**
-   * The protocol this vault rely on (Curve, boo finance, etc)
-   */
-  platformId: PlatformEntity['id'];
-
-  status: 'active' | 'eol' | 'paused';
+  /** address book token ids of assets used to deposit in the vault (deposit token for single, token0/1 for LP) */
+  assetIds: TokenEntity['id'][];
+  /** when the vault was added to the app, unix timestamp */
   createdAt: number;
-  /** Used for sorting, not required in config but defaults to createdAt on load so always available on entity */
+  /** when the something about the vault changed, unix timestamp, used for default sort */
   updatedAt: number;
-  retireReason?: string;
-  retiredAt?: number;
-  pauseReason?: string;
-  pausedAt?: number;
-
-  assetType: 'lps' | 'single';
-
-  safetyScore: number;
-
+  /** config for zaps available on this vault */
+  zaps: ZapStrategyConfig[];
+  /** the vault contract address (earnContractAddress in config) */
+  contractAddress: string;
+  /** type of asset the vault uses */
+  assetType: 'single' | 'lps' | 'clm';
+  /** id of vault to exclude from this vault's tvl */
+  excludedId: undefined | VaultBase['id'];
+  /** whether users in the vault earn external points */
+  earningPoints: boolean;
+  /** platform where the token is deposited to earn */
+  platformId: PlatformEntity['id'];
+  /** used to describe how the strategy works */
+  strategyTypeId: string;
+  /** risk assessments per category */
   risks: string[];
-
-  buyTokenUrl: string | null;
-  addLiquidityUrl: string | null;
-  removeLiquidityUrl: string | null;
-
+  /** score calculated from risks [0 if risks was empty] */
+  safetyScore: number;
+  /** where you can buy the deposit token */
+  buyTokenUrl?: string | undefined;
+  /** where you create the deposit LP token */
+  addLiquidityUrl?: string | undefined;
+  /** where you break the deposit LP token */
+  removeLiquidityUrl?: string | undefined;
+  /** underlying platforms deposit fee */
   depositFee: number;
+  /** what helper can be used to migrate user from underlying platform to beefy */
+  migrationIds: string[];
+};
 
-  migrationIds?: string[];
+export type VaultActive = {
+  status: 'active';
+};
+
+export type VaultRetired = {
+  status: 'eol';
+  /** retire reason code */
+  retireReason: string;
+  /** when the vault was retired, unix timestamp */
+  retiredAt: number;
+};
+
+export type VaultPaused = {
+  status: 'paused';
+  /** paused reason code */
+  pauseReason: string;
+  /** when the vault was paused, unix timestamp */
+  pausedAt: number;
+};
+
+export type VaultStatus = VaultActive | VaultRetired | VaultPaused;
+
+export type VaultStandardBaseOnly = {
+  /** address of token required to deposit in this vault */
+  depositTokenAddress: string;
+  /** address of receipt token (=== vault contract address)*/
+  receiptTokenAddress: string;
   /** Map of chain->address of bridged receipt tokens */
   bridged?: Record<ChainEntity['id'], string>;
   lendingOracle?: { provider: string; address?: string; loops?: number };
-  earningPoints: boolean;
-}
-
-export interface VaultGov {
-  id: string;
-  name: string;
-  type: 'gov';
-  version: number;
-  depositTokenAddress: string;
-
-  /**
-   * ASSETS are basically the assets that are in that vault
-   * So if you go into a BIFI vault, the assets is of course only BIFI
-   * But if you join the curve aTriCrypto vault your assets will be BTC,ETH and USDT
-   */
-  assetIds: TokenEntity['id'][];
-
-  chainId: ChainEntity['id'];
-
-  earnedTokenAddress: string;
-
-  /**
-   * Vault address "treasury", we ask this address about user balances
-   */
-  earnContractAddress: string;
-
-  /**
-   * so bifi-gov and bifi-maxi, are very special
-   * those are the way in which we distribute platform revenue back to bifi holders
-   * bifi-gov is stake BIFI earn NATIVE (gas token) without autocompounding
-   * bifi-maxi is stake BIFI earn BIFI with autocompounding
-   * bifi-maxi basically uses bifi-gov underneath
-   * so all the money in BIFI-MAXI is actually inside the BIFI-GOV of that chain
-   * so in order not to count TVL twice. when we count the tvl of the gov pools
-   * we must exclude/substract the tvl from the maxi vault
-   */
-  excludedId: null | VaultEntity['id'];
-
-  strategyTypeId: string;
-
-  platformId: PlatformEntity['id'];
-
-  status: 'active' | 'eol' | 'paused';
-  createdAt: number;
-  /** Used for sorting, not required in config but defaults to createdAt on load so always available on entity */
-  updatedAt: number;
-  retireReason?: string;
-  retiredAt?: number;
-  pauseReason?: string;
-  pausedAt?: number;
-
-  assetType: 'single';
-
-  safetyScore: number;
-
-  risks: string[];
-
-  buyTokenUrl: string | null;
-  addLiquidityUrl: null;
-  removeLiquidityUrl: null;
-
-  depositFee: number;
-
-  migrationIds?: string[];
-}
-
-export type VaultCowcentrated = Omit<VaultStandard, 'type'> & {
-  type: 'cowcentrated';
-  depositTokenAddresses: string[];
-  feeTier: string;
 };
+
+type VaultStandardOnly = VaultStandardBaseOnly & {
+  subType: 'standard';
+};
+
+export type VaultGovBaseOnly = {
+  /** address of token required to deposit in this vault */
+  depositTokenAddress: string;
+  earnedTokenAddresses: string[];
+};
+
+type VaultGovSingleOnly = VaultGovBaseOnly & {
+  subType: 'gov';
+  /** single - the contract supports only 1 reward token */
+  contractType: 'single';
+};
+
+type VaultGovMultiOnly = VaultGovBaseOnly & {
+  subType: 'gov';
+  /** multi - the contract supports multiple reward tokens */
+  contractType: 'multi';
+  /** address of receipt token (=== vault contract address)*/
+  receiptTokenAddress: string;
+};
+
+export type VaultCowcentratedBaseOnly = {
+  /** subtype */
+  subType: 'cowcentrated';
+  /** the id of the cowcentrated vault */
+  cowcentratedId: string;
+  /** the id of the gov vault, if one exists */
+  cowcentratedGovId?: string | undefined;
+  /** the id of the standard vault, if one exists */
+  cowcentratedStandardId?: string | undefined;
+  /** addresses of tokens required to deposit in this vault */
+  depositTokenAddresses: string[];
+  /** the trading fee of the underlying pool */
+  feeTier: string;
+  /** the address of the underlying CL pool */
+  poolAddress: string;
+  /** risk assessments per category */
+  risks: string[];
+  /** score calculated from risks [0 if risks was empty] */
+  safetyScore: number;
+};
+
+type VaultCowcentratedOnly = VaultCowcentratedBaseOnly & {
+  subType: 'cowcentrated';
+  /** address of receipt token (=== vault contract address)*/
+  receiptTokenAddress: string;
+  /** for clm this is `${poolAddress}-{vaultId}` for compat reasons */
+  depositTokenAddress: string;
+};
+
+type VaultGovCowcentratedOnly = VaultCowcentratedBaseOnly &
+  VaultGovBaseOnly & {
+    /** address of receipt token (=== vault contract address)*/
+    receiptTokenAddress: string;
+    /** multi - the contract supports multiple reward tokens */
+    contractType: 'multi';
+  };
+
+type VaultStandardCowcentratedOnly = VaultCowcentratedBaseOnly &
+  VaultStandardBaseOnly & {
+    /** address of receipt token (=== vault contract address)*/
+    receiptTokenAddress: string;
+  };
+
+type MakeVaultActive<TVaultType extends VaultType, TOnly> = { type: TVaultType } & VaultBase &
+  VaultActive &
+  TOnly;
+type MakeVaultRetired<TVaultType extends VaultType, TOnly> = { type: TVaultType } & VaultBase &
+  VaultRetired &
+  TOnly;
+type MakeVaultPaused<TVaultType extends VaultType, TOnly> = { type: TVaultType } & VaultBase &
+  VaultPaused &
+  TOnly;
+
+type MakeVault<TVaultType extends VaultType, TOnly> =
+  | MakeVaultActive<TVaultType, TOnly>
+  | MakeVaultRetired<TVaultType, TOnly>
+  | MakeVaultPaused<TVaultType, TOnly>;
+
+export type VaultStandardNotCowcentrated = MakeVault<'standard', VaultStandardOnly>;
+export type VaultStandardCowcentrated = MakeVault<'standard', VaultStandardCowcentratedOnly>;
+export type VaultStandard = VaultStandardNotCowcentrated | VaultStandardCowcentrated;
+
+export type VaultGovSingle = MakeVault<'gov', VaultGovSingleOnly>;
+export type VaultGovMulti = MakeVault<'gov', VaultGovMultiOnly>;
+export type VaultGovCowcentrated = MakeVault<'gov', VaultGovCowcentratedOnly>;
+export type VaultGov = VaultGovSingle | VaultGovMulti | VaultGovCowcentrated;
+
+export type VaultCowcentrated = MakeVault<'cowcentrated', VaultCowcentratedOnly>;
+export type VaultCowcentratedLike =
+  | VaultCowcentrated
+  | VaultGovCowcentrated
+  | VaultStandardCowcentrated;
+
+export type VaultEntity = VaultStandard | VaultGov | VaultCowcentrated;
+export type VaultEntityActive = Extract<VaultEntity, VaultActive>;
+export type VaultEntityPaused = Extract<VaultEntity, VaultPaused>;
+export type VaultEntityRetired = Extract<VaultEntity, VaultRetired>;
 
 export function isGovVault(vault: VaultEntity): vault is VaultGov {
   return vault.type === 'gov';
+}
+
+export function isGovVaultMulti(vault: VaultGov): vault is VaultGovMulti {
+  return vault.contractType === 'multi';
+}
+
+export function isGovVaultSingle(vault: VaultGov): vault is VaultGovSingle {
+  return vault.contractType === 'single';
+}
+
+export function isGovVaultCowcentrated(vault: VaultGov): vault is VaultGovCowcentrated {
+  return vault.subType === 'cowcentrated';
+}
+
+export function isMultiGovVault(vault: VaultEntity): vault is VaultGovMulti {
+  return isGovVault(vault) && vault.contractType === 'multi';
+}
+
+export function isSingleGovVault(vault: VaultEntity): vault is VaultGovSingle {
+  return isGovVault(vault) && vault.contractType === 'single';
+}
+
+export function isCowcentratedGovVault(vault: VaultEntity): vault is VaultGovCowcentrated {
+  return isGovVault(vault) && vault.subType === 'cowcentrated';
 }
 
 export function isStandardVault(vault: VaultEntity): vault is VaultStandard {
   return vault.type === 'standard';
 }
 
+export function isCowcentratedStandardVault(
+  vault: VaultEntity
+): vault is VaultStandardCowcentrated {
+  return isStandardVault(vault) && vault.subType === 'cowcentrated';
+}
+
 export function isCowcentratedVault(vault: VaultEntity): vault is VaultCowcentrated {
   return vault.type === 'cowcentrated';
 }
 
-export function isVaultRetired(vault: VaultEntity) {
+export function isCowcentratedLikeVault(vault: VaultEntity): vault is VaultCowcentratedLike {
+  return (
+    isCowcentratedVault(vault) ||
+    isCowcentratedGovVault(vault) ||
+    isCowcentratedStandardVault(vault)
+  );
+}
+
+export function isVaultRetired(vault: VaultEntity): vault is VaultEntityRetired {
   return vault.status === 'eol';
 }
 
-export function isVaultActive(vault: VaultEntity) {
+export function isVaultActive(vault: VaultEntity): vault is VaultEntityActive {
   return vault.status === 'active';
 }
 
-export function isVaultPaused(vault: VaultEntity) {
+export function isVaultPaused(vault: VaultEntity): vault is VaultEntityPaused {
   return vault.status === 'paused';
 }
 
 export function isVaultEarningPoints(vault: VaultEntity) {
-  return !isGovVault(vault) && vault.earningPoints === true;
+  return vault.earningPoints === true;
 }
 
 export function isVaultPausedOrRetired(vault: VaultEntity) {
@@ -194,5 +293,3 @@ export function shouldVaultShowInterest(vault: VaultEntity) {
 
   return true;
 }
-
-export type VaultEntity = VaultStandard | VaultGov | VaultCowcentrated;

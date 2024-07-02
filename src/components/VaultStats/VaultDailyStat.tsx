@@ -2,7 +2,7 @@ import type { VaultEntity } from '../../features/data/entities/vault';
 import React, { memo, useMemo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
-import { selectIsVaultGov } from '../../features/data/selectors/vaults';
+import { selectVaultById } from '../../features/data/selectors/vaults';
 import { formatTotalApy } from '../../helpers/format';
 import {
   selectVaultApyAvailable,
@@ -21,6 +21,7 @@ import type { TotalApy } from '../../features/data/reducers/apy';
 import { useAppSelector } from '../../store';
 import { InterestTooltipContent } from '../InterestTooltipContent';
 import { VaultValueStat } from '../VaultValueStat';
+import { getApyComponents, getApyLabelsForType } from '../../helpers/apy';
 
 export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];
@@ -102,73 +103,26 @@ const DailyContentTooltip = memo<DailyTooltipContentProps>(function DailyTooltip
   isBoosted,
   rates,
 }) {
-  const isGovVault = useAppSelector(state => selectIsVaultGov(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const rows = useMemo(() => {
-    const items: { label: string; value: string }[] = [];
+    const labels = getApyLabelsForType(vault.type);
+    const { daily } = getApyComponents();
 
-    if (isGovVault) {
-      items.push({
-        label: 'Pool-AprDaily',
-        value: rates.rewardPoolApr ?? '?',
-      });
-    } else {
-      if ('vaultDaily' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-VaultDaily',
-          value: rates.vaultDaily ?? '?',
-        });
-      }
+    const items: { label: string | string[]; value: string; last?: boolean }[] = daily
+      .filter(key => key in rates)
+      .map(key => ({
+        label: labels[key],
+        value: rates[key] ?? '?',
+      }));
 
-      if ('tradingDaily' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-TradingDaily',
-          value: rates.tradingDaily ?? '?',
-        });
-      }
-
-      if ('liquidStakingDaily' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-LiquidStakingDaily',
-          value: rates.liquidStakingDaily ?? '?',
-        });
-      }
-
-      if ('composablePoolDaily' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-ComposablePoolDaily',
-          value: rates.composablePoolDaily ?? '?',
-        });
-      }
-
-      if ('clmDaily' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-CLMDaily',
-          value: rates.clmDaily ?? '?',
-        });
-      }
-
-      if ('merklDaily' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-MerklDaily',
-          value: rates.merklDaily ?? '?',
-        });
-      }
-
-      if ('boostDaily' in rates) {
-        items.push({
-          label: 'Vault-Breakdown-BoostDaily',
-          value: rates.boostDaily ?? '?',
-        });
-      }
-
-      items.push({
-        label: 'Vault-Breakdown-DailyAPY',
-        value: isBoosted ? rates.boostedTotalDaily ?? '?' : rates.totalDaily,
-      });
-    }
+    items.push({
+      label: labels.totalDaily,
+      value: isBoosted ? rates.boostedTotalDaily ?? '?' : rates.totalDaily,
+      last: true,
+    });
 
     return items.length ? items : undefined;
-  }, [isGovVault, isBoosted, rates]);
+  }, [vault.type, isBoosted, rates]);
 
   return rows ? <InterestTooltipContent rows={rows} /> : undefined;
 });

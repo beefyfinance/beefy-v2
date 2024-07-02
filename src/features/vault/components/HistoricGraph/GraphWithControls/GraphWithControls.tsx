@@ -37,7 +37,7 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
   const availableBuckets = useAppSelector(state =>
     selectHistoricalAvailableBuckets(state, stat, vaultId, oracleId)
   );
-  const { chainId, earnContractAddress } = useAppSelector(state => selectVaultById(state, vaultId));
+  const { chainId, contractAddress } = useAppSelector(state => selectVaultById(state, vaultId));
   const availableRanges = useMemo(() => getAvailableRanges(availableBuckets), [availableBuckets]);
   const [range, setRange] = useState<TimeRange>(() => getDefaultTimeRange(availableRanges));
   const bucket = useMemo(() => timeRangeToBucket[range], [range]);
@@ -47,7 +47,7 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
     oracleId,
     bucket,
     chainId,
-    earnContractAddress
+    contractAddress
   );
   const [lineToggles, setLineToggles] = useState<LineTogglesState>({
     average: true,

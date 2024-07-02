@@ -43,6 +43,11 @@ import abiCoder from 'web3-eth-abi';
 import { getInsertIndex } from '../helpers/zap';
 import { slipAllBy } from '../helpers/amounts';
 import { selectTransactSlippage } from '../../../selectors/transact';
+import { calculatePriceImpact } from '../helpers/quotes';
+import {
+  QuoteCowcentratedNoSingleSideError,
+  QuoteCowcentratedNotCalmError,
+} from '../strategies/error';
 
 export class CowcentratedVaultType implements ICowcentratedVaultType {
   public readonly id = 'cowcentrated';
@@ -63,7 +68,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       selectTokenByAddress(state, vault.chainId, tokenAddress)
     );
 
-    const shareToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
+    const shareToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
     if (!isTokenErc20(shareToken)) {
       throw new Error('Share token is not an ERC20 token');
     }
@@ -105,7 +110,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     const state = this.getState();
     const chain = selectChainById(state, this.vault.chainId);
     const clmPool = new BeefyCLMPool(
-      this.vault.earnContractAddress,
+      this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
       this.depositTokens
@@ -113,6 +118,15 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
 
     const { isCalm, liquidity, used0, used1, unused0, unused1, position1, position0 } =
       await clmPool.previewDeposit(inputs[0].amount, inputs[1].amount);
+
+    if (liquidity.lte(BIG_ZERO)) {
+      throw new QuoteCowcentratedNoSingleSideError(inputs);
+    }
+
+    if (!isCalm) {
+      throw new QuoteCowcentratedNotCalmError();
+    }
+
     const depositUsed = [used0, used1].map((amount, i) => ({
       token: this.depositTokens[i],
       amount: fromWei(amount, this.depositTokens[i].decimals),
@@ -124,6 +138,12 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     const depositPosition = [position0, position1].map((amount, i) => ({
       token: this.depositTokens[i],
       amount: fromWei(amount, this.depositTokens[i].decimals),
+    }));
+
+    const usedInputs: InputTokenAmount[] = inputs.map((input, i) => ({
+      token: input.token,
+      amount: fromWei(i === 0 ? used0 : used1, input.token.decimals),
+      max: input.max,
     }));
 
     const outputs = [
@@ -138,7 +158,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       .map(input => ({
         token: input.token as TokenErc20,
         amount: input.amount,
-        spenderAddress: this.vault.earnContractAddress,
+        spenderAddress: this.vault.contractAddress,
       }));
 
     return {
@@ -146,11 +166,11 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       strategyId: option.strategyId,
       vaultType: option.vaultType,
       option,
-      inputs,
+      inputs: usedInputs,
       outputs,
       returned: [],
       allowances,
-      priceImpact: 0,
+      priceImpact: calculatePriceImpact(usedInputs, outputs, [], state),
       isCalm,
       unused: depositUnused,
       used: depositUsed,
@@ -203,7 +223,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     const state = this.getState();
     const chain = selectChainById(state, this.vault.chainId);
     const clmPool = new BeefyCLMPool(
-      this.vault.earnContractAddress,
+      this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
       this.depositTokens
@@ -249,8 +269,54 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     };
   }
 
-  async fetchZapDeposit(_request: VaultDepositRequest): Promise<VaultDepositResponse> {
-    throw new Error('Zap deposit not implemented for cowcentrated vaults');
+  async fetchZapDeposit(request: VaultDepositRequest): Promise<VaultDepositResponse> {
+    if (request.inputs.length !== this.depositTokens.length) {
+      throw new Error('Invalid number of inputs');
+    }
+    if (
+      request.inputs.some((input, index) => !isTokenEqual(input.token, this.depositTokens[index]))
+    ) {
+      throw new Error('Invalid input tokens');
+    }
+
+    const state = this.getState();
+    const chain = selectChainById(state, this.vault.chainId);
+    const slippage = selectTransactSlippage(state);
+    const clmPool = new BeefyCLMPool(
+      this.vault.contractAddress,
+      selectVaultStrategyAddress(state, this.vault.id),
+      chain,
+      this.depositTokens
+    );
+
+    const { liquidity } = await clmPool.previewDeposit(
+      request.inputs[0].amount,
+      request.inputs[1].amount
+    );
+
+    const outputs: TokenAmount[] = [
+      {
+        token: this.shareToken,
+        amount: fromWei(liquidity, this.shareToken.decimals),
+      },
+    ];
+
+    const minOutputs = slipAllBy(outputs, slippage);
+
+    return {
+      inputs: request.inputs,
+      outputs,
+      minOutputs,
+      zap: this.buildZapDepositTx(
+        this.shareToken.address,
+        tokenAmountToWei(request.inputs[0]),
+        tokenAmountToWei(request.inputs[1]),
+        tokenAmountToWei(minOutputs[0]),
+        request.inputs[0].token.address,
+        request.inputs[1].token.address,
+        true
+      ),
+    };
   }
 
   async fetchZapWithdraw(request: VaultWithdrawRequest): Promise<VaultWithdrawResponse> {
@@ -262,7 +328,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     const state = this.getState();
     const chain = selectChainById(state, this.vault.chainId);
     const clmPool = new BeefyCLMPool(
-      this.vault.earnContractAddress,
+      this.vault.contractAddress,
       selectVaultStrategyAddress(state, this.vault.id),
       chain,
       this.depositTokens
@@ -294,6 +360,55 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
         tokenAmountToWei(minOutputs[1]),
         input.max
       ),
+    };
+  }
+
+  protected buildZapDepositTx(
+    clmAddress: string,
+    amountA: BigNumber,
+    amountB: BigNumber,
+    minShares: BigNumber,
+    tokenA: string,
+    tokenB: string,
+    insertBalance: boolean
+  ): ZapStep {
+    return {
+      target: clmAddress,
+      value: '0',
+      data: abiCoder.encodeFunctionCall(
+        {
+          type: 'function',
+          name: 'deposit',
+          constant: false,
+          payable: false,
+          inputs: [
+            {
+              name: '_amount0',
+              type: 'uint256',
+            },
+            {
+              name: '_amount1',
+              type: 'uint256',
+            },
+            {
+              name: '_minShares',
+              type: 'uint256',
+            },
+          ],
+          outputs: [],
+        },
+        [amountA.toString(10), amountB.toString(10), minShares.toString(10)]
+      ),
+      tokens: [
+        {
+          token: tokenA,
+          index: insertBalance ? getInsertIndex(0) : -1,
+        },
+        {
+          token: tokenB,
+          index: insertBalance ? getInsertIndex(1) : -1,
+        },
+      ],
     };
   }
 

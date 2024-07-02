@@ -1,5 +1,4 @@
-import type { ReactNode } from 'react';
-import React from 'react';
+import React, { memo, type ReactNode } from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import { styles } from './styles';
@@ -9,15 +8,7 @@ import { ContentLoading } from '../ContentLoading';
 
 const useStyles = makeStyles(styles);
 
-export function ValueBlock({
-  label,
-  value,
-  textContent = true,
-  tooltip,
-  usdValue,
-  loading = false,
-  blurred = false,
-}: {
+type ValueBlockProps = {
   label: ReactNode;
   value: ReactNode;
   textContent?: boolean;
@@ -25,7 +16,23 @@ export function ValueBlock({
   usdValue?: ReactNode;
   loading?: boolean;
   blurred?: boolean;
-}) {
+  labelClassName?: string;
+  valueClassName?: string;
+  priceClassName?: string;
+};
+
+export const ValueBlock = memo(function ValueBlock({
+  label,
+  value,
+  textContent = true,
+  tooltip,
+  usdValue,
+  loading = false,
+  blurred = false,
+  labelClassName,
+  valueClassName,
+  priceClassName,
+}: ValueBlockProps) {
   const classes = useStyles();
   return (
     <>
@@ -35,19 +42,18 @@ export function ValueBlock({
           onClick={popoverInLinkHack__popoverContainerHandler}
           onTouchStart={popoverInLinkHack__popoverContainerHandler}
         >
-          <div className={classes.label}>{label}</div>
+          <div className={clsx(classes.label, labelClassName)}>{label}</div>
           <div className={classes.tooltipHolder}>
             <Popover title={tooltip.title}>{tooltip.content}</Popover>
           </div>
         </div>
       ) : (
-        <div className={classes.label}>{label}</div>
+        <div className={clsx(classes.label, labelClassName)}>{label}</div>
       )}
 
       {textContent ? (
         <div
-          className={clsx({
-            [classes.value]: true,
+          className={clsx(classes.value, valueClassName, {
             [classes.blurred]: blurred,
           })}
         >
@@ -63,8 +69,7 @@ export function ValueBlock({
 
       {usdValue && (
         <div
-          className={clsx({
-            [classes.price]: true,
+          className={clsx(classes.price, priceClassName, {
             [classes.blurred]: blurred,
           })}
         >
@@ -73,4 +78,4 @@ export function ValueBlock({
       )}
     </>
   );
-}
+});

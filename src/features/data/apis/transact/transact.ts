@@ -1,32 +1,78 @@
-import type {
-  DepositOption,
-  DepositQuote,
-  InputTokenAmount,
-  ITransactApi,
-  TransactQuote,
-  WithdrawOption,
-  WithdrawQuote,
+import {
+  type DepositOption,
+  type DepositQuote,
+  type InputTokenAmount,
+  type ITransactApi,
+  type TransactQuote,
+  type WithdrawOption,
+  type WithdrawQuote,
 } from './transact-types';
 import { partition, uniq } from 'lodash-es';
 import type { VaultEntity } from '../../entities/vault';
-import { isCowcentratedVault, isStandardVault } from '../../entities/vault';
 import type { GetStateFn } from '../../../../redux-types';
-import { selectVaultById } from '../../selectors/vaults';
+import { selectVaultById, selectVaultUnderlyingVault } from '../../selectors/vaults';
 import {
+  type AnyComposableStrategy,
+  type IComposableStrategyStatic,
+  type IComposerStrategyStatic,
   type IStrategy,
   isZapTransactHelpers,
-  type StrategyOptions,
+  type IZapStrategyStatic,
   type TransactHelpers,
+  type ZapTransactHelpers,
 } from './strategies/IStrategy';
 import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../reducers/wallet/stepper';
 import { type VaultTypeFromVault } from './vaults/IVaultType';
-import { strategyBuildersById } from './strategies';
+import {
+  type AnyZapStrategyStatic,
+  type ComposableStrategyId,
+  type ComposerStrategyId,
+  isBasicZapStrategyStatic,
+  isComposableStrategyStatic,
+  isComposerStrategyStatic,
+  type StrategyIdToStatic,
+  strategyLoadersById,
+} from './strategies';
 import { getVaultTypeBuilder } from './vaults';
 import { VaultStrategy } from './strategies/vault/VaultStrategy';
 import { selectZapByChainId } from '../../selectors/zap';
 import { getSwapAggregator } from '../instances';
+import { isDefined } from '../../utils/array-utils';
+import type {
+  AnyStrategyId,
+  StrategyIdToConfig,
+  ZapStrategyConfig,
+  ZapStrategyId,
+} from './strategies/strategy-configs';
+
+type StrategyConstructorWithOptions<TId extends ZapStrategyId = ZapStrategyId> = {
+  [K in TId]: {
+    id: K;
+    ctor: StrategyIdToStatic[K];
+    options: StrategyIdToConfig<K>;
+  };
+}[TId];
+
+type GenericStrategyConstructorWithOptions = {
+  id: ZapStrategyId;
+  ctor: AnyZapStrategyStatic;
+  options: ZapStrategyConfig;
+};
+
+type ComposableStrategyConstructorWithOptions =
+  StrategyConstructorWithOptions<ComposableStrategyId>;
+
+export function isComposableStrategyConstructorWithOptions(
+  strategy: GenericStrategyConstructorWithOptions
+): strategy is ComposableStrategyConstructorWithOptions {
+  return (
+    isComposableStrategyStatic(strategy.ctor) &&
+    strategy.id === strategy.ctor.id &&
+    strategy.id === strategy.options.strategyId
+  );
+}
 
 export class TransactApi implements ITransactApi {
   protected async getHelpersForVault(
@@ -56,15 +102,29 @@ export class TransactApi implements ITransactApi {
     const options: DepositOption[] = [];
 
     // direct deposit option
-    options.push(await vaultType.fetchDepositOption());
+    let vaultDepositOption: DepositOption | undefined = await vaultType.fetchDepositOption();
 
     // zaps
     const zapStrategies = await this.getZapStrategiesForVault(helpers);
     if (zapStrategies.length) {
-      const zapOptions = await allFulfilled(
+      const zapOptions = await Promise.allSettled(
         zapStrategies.map(zapStrategy => zapStrategy.fetchDepositOptions())
       );
-      options.push(...zapOptions.flat());
+      zapOptions.forEach((result, i) => {
+        if (isFulfilledResult(result)) {
+          if (result.value.length) {
+            if (zapStrategies[i].disableVaultDeposit) {
+              vaultDepositOption = undefined;
+            }
+            options.push(...result.value);
+          }
+        }
+      });
+    }
+
+    // if not disabled by a zap strategy, add the vault deposit option as the first item
+    if (vaultDepositOption) {
+      options.unshift(vaultDepositOption);
     }
 
     return options;
@@ -152,17 +212,29 @@ export class TransactApi implements ITransactApi {
     const options: WithdrawOption[] = [];
 
     // direct deposit option
-    options.push(await vaultType.fetchWithdrawOption());
+    let vaultWithdrawOption: WithdrawOption | undefined = await vaultType.fetchWithdrawOption();
 
     // zaps
     const zapStrategies = await this.getZapStrategiesForVault(helpers);
     if (zapStrategies.length) {
-      const zapOptions = await allFulfilled(
+      const zapOptions = await Promise.allSettled(
         zapStrategies.map(zapStrategy => zapStrategy.fetchWithdrawOptions())
       );
-      options.push(...zapOptions.flat());
-    } else {
-      console.debug('no zap strategies for', vaultId); // this is OK
+      zapOptions.forEach((result, i) => {
+        if (isFulfilledResult(result)) {
+          if (result.value.length) {
+            if (zapStrategies[i].disableVaultWithdraw) {
+              vaultWithdrawOption = undefined;
+            }
+            options.push(...result.value);
+          }
+        }
+      });
+    }
+
+    // if not disabled by a zap strategy, add the vault withdraw option as the first item
+    if (vaultWithdrawOption) {
+      options.unshift(vaultWithdrawOption);
     }
 
     return options;
@@ -273,11 +345,6 @@ export class TransactApi implements ITransactApi {
   private async getZapStrategiesForVault(helpers: TransactHelpers): Promise<IStrategy[]> {
     const { vault } = helpers;
 
-    // Only standard/cow vaults are supported so far
-    if (!isStandardVault(vault) && !isCowcentratedVault(vault)) {
-      return [];
-    }
-
     if (!vault.zaps || vault.zaps.length === 0) {
       return [];
     }
@@ -294,16 +361,8 @@ export class TransactApi implements ITransactApi {
           return undefined;
         }
 
-        const builder = strategyBuildersById[zapConfig.strategyId];
-        if (!builder) {
-          console.warn(
-            `Vault ${vault.id} has a zap config with an unknown strategy "${zapConfig.strategyId}"`
-          );
-          return undefined;
-        }
-
         try {
-          return await builder(zapConfig, helpers);
+          return await this.buildZapStrategy(zapConfig, helpers);
         } catch (err: unknown) {
           console.error(
             `Vault ${vault.id} failed to build strategy "${zapConfig.strategyId}"`,
@@ -314,11 +373,130 @@ export class TransactApi implements ITransactApi {
       })
     );
 
-    return strategies.filter((strategy): strategy is IStrategy => !!strategy);
+    return strategies.filter(isDefined);
+  }
+
+  private async getZapStrategyConstructorsForVault(helpers: TransactHelpers) {
+    const { vault } = helpers;
+
+    if (!vault.zaps || vault.zaps.length === 0) {
+      return [];
+    }
+
+    if (!isZapTransactHelpers(helpers)) {
+      console.warn(`Vault ${vault.id} has zaps defined but ${vault.chainId} has no zap config`);
+      return [];
+    }
+
+    const strategyConstructors = await Promise.all(
+      vault.zaps.map(async zapConfig => {
+        if (!zapConfig.strategyId) {
+          console.warn(`Vault ${vault.id} has a zap config but no strategyId specified`);
+          return undefined;
+        }
+
+        const loader = strategyLoadersById[zapConfig.strategyId];
+        if (!loader) {
+          console.warn(
+            `Vault ${vault.id} has a zap config with an unknown strategy "${zapConfig.strategyId}"`
+          );
+          return undefined;
+        }
+
+        try {
+          const ctor = await loader();
+          if (ctor.id !== zapConfig.strategyId) {
+            console.error(
+              `Constructor for "${zapConfig.strategyId}" has unexpected id "${ctor.id}"`
+            );
+            return undefined;
+          }
+
+          return { id: ctor.id, ctor, options: zapConfig as StrategyIdToConfig<typeof ctor.id> };
+        } catch (err: unknown) {
+          console.error(`Vault ${vault.id} failed to load strategy "${zapConfig.strategyId}"`, err);
+          return undefined;
+        }
+      })
+    );
+
+    return strategyConstructors.filter(isDefined);
+  }
+
+  private async buildZapStrategy<T extends ZapStrategyConfig>(
+    strategyConfig: T,
+    helpers: ZapTransactHelpers
+  ): Promise<IStrategy> {
+    const loader = strategyLoadersById[strategyConfig.strategyId];
+    if (!loader) {
+      throw new Error(`Strategy "${strategyConfig.strategyId}" not found`);
+    }
+
+    const ctor = await loader();
+
+    if (isComposerStrategyStatic(ctor)) {
+      console.log('isComposerStrategyStatic', ctor.id, ctor.composer);
+      const underlyingStrategy = await this.getComposableStrategyForZap(helpers);
+      console.log('underlyingStrategy', underlyingStrategy);
+      const genericCtor: IComposerStrategyStatic = ctor;
+      return new genericCtor(
+        strategyConfig as StrategyIdToConfig<ComposerStrategyId>,
+        helpers,
+        underlyingStrategy
+      );
+    }
+
+    if (isComposableStrategyStatic(ctor)) {
+      const genericCtor: IComposableStrategyStatic = ctor;
+      return new genericCtor(strategyConfig, helpers);
+    }
+
+    if (isBasicZapStrategyStatic(ctor)) {
+      const genericCtor: IZapStrategyStatic = ctor;
+      return new genericCtor(strategyConfig, helpers);
+    }
+
+    throw new Error(`Strategy "${strategyConfig.strategyId}" is an unknown type`);
+  }
+
+  private async getComposableStrategyForZap(
+    helpers: ZapTransactHelpers
+  ): Promise<AnyComposableStrategy> {
+    const { getState, vault } = helpers;
+    const underlyingVault = selectVaultUnderlyingVault(getState(), vault.id);
+    const underlyingHelpers = await this.getHelpersForVault(underlyingVault.id, getState);
+    if (!isZapTransactHelpers(underlyingHelpers)) {
+      throw new Error(
+        `Underlying vault ${underlyingVault.id} has no zap contract on chain ${underlyingVault.chainId}`
+      );
+    }
+    const underlyingStrategies = await this.getZapStrategyConstructorsForVault(underlyingHelpers);
+    const composableUnderlyingStrategies = underlyingStrategies.filter(
+      isComposableStrategyConstructorWithOptions
+    );
+    if (composableUnderlyingStrategies.length === 0) {
+      throw new Error(
+        `Underlying vault ${underlyingVault.id} of ${vault.id} has no composable strategies`
+      );
+    }
+
+    const underlyingStrategy = composableUnderlyingStrategies[0];
+    if (composableUnderlyingStrategies.length > 1) {
+      console.warn(
+        `Underlying vault ${underlyingVault.id} of ${vault.id} has multiple composable strategies, using the first ${underlyingStrategy.ctor.id}`
+      );
+    }
+
+    const ctor: new (
+      options: ZapStrategyConfig,
+      helpers: ZapTransactHelpers
+    ) => AnyComposableStrategy = underlyingStrategy.ctor;
+    const options = underlyingStrategy.options;
+    return new ctor(options, underlyingHelpers);
   }
 
   private async getStrategyById(
-    strategyId: StrategyOptions['strategyId'] | 'vault' | 'cowcentrated',
+    strategyId: AnyStrategyId,
     helpers: TransactHelpers
   ): Promise<IStrategy> {
     const { vault, vaultType } = helpers;
@@ -328,21 +506,11 @@ export class TransactApi implements ITransactApi {
       return new VaultStrategy(vaultType);
     }
 
-    // if (strategyId === 'cowcentrated' && isCowcentratedVault(vaultType)) {
-    //   console.log('returnning cow strat');
-    //   return new CowcentratedStrategy(vaultType);
-    // }
-
     if (!isZapTransactHelpers(helpers)) {
       throw new Error(`Strategy "${strategyId}" requires zap contract`);
     }
 
-    if (!isStandardVault(vault) && !isCowcentratedVault(vault)) {
-      // This should never happen
-      throw new Error(`Vault ${vault.id} is not a standard vault and does not support zaps`);
-    }
-
-    if (!vault.zaps && !isCowcentratedVault(vault)) {
+    if (!vault.zaps) {
       throw new Error(`Vault ${vault.id} has no zaps`);
     }
 
@@ -351,13 +519,6 @@ export class TransactApi implements ITransactApi {
       throw new Error(`Vault ${vault.id} has no zap with strategy "${strategyId}"`);
     }
 
-    const builder = strategyBuildersById[zap.strategyId];
-    if (!builder) {
-      throw new Error(
-        `Vault ${vault.id} has a zap config with an unknown strategy "${zap.strategyId}"`
-      );
-    }
-
-    return await builder(zap, helpers);
+    return await this.buildZapStrategy(zap, helpers);
   }
 }

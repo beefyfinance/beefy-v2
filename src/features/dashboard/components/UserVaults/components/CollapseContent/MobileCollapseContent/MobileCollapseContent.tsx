@@ -3,18 +3,18 @@ import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { VaultDashboardMobileStats } from './components/VaultDashboardMobileStats';
 import { VaultTransactions } from '../../VaultTransactions';
-import { DashboardPnLGraph } from '../../../../../../vault/components/PnLGraph';
 import { useAppSelector } from '../../../../../../../store';
 import { selectHasDataToShowGraphByVaultId } from '../../../../../../data/selectors/analytics';
-import { selectVaultType } from '../../../../../../data/selectors/vaults';
+import { selectVaultById } from '../../../../../../data/selectors/vaults';
 import {
   DashboardFeesGraph,
   DashboardOverviewGraph,
-} from '../../../../../../vault/components/CowcentratedPnlGraph';
+} from '../../../../../../vault/components/PnLGraph/cowcentrated';
 import type { VaultCollapseContentProps } from '../types';
 import { styles } from './styles';
 import { LabeledSelect } from '../../../../../../../components/LabeledSelect';
 import { ToggleButtons } from '../../../../../../../components/ToggleButtons';
+import { DashboardPnLGraph } from '../../../../../../vault/components/PnLGraph/standard/StandardPnLGraph';
 
 const useStyles = makeStyles(styles);
 
@@ -24,7 +24,7 @@ export const MobileCollapseContent = memo<VaultCollapseContentProps>(
   function MobileCollapseContent({ vaultId, address }) {
     const classes = useStyles();
     const { t } = useTranslation();
-    const vaultType = useAppSelector(state => selectVaultType(state, vaultId));
+    const { type, strategyTypeId } = useAppSelector(state => selectVaultById(state, vaultId));
     const hasAnalyticsData = useAppSelector(state =>
       selectHasDataToShowGraphByVaultId(state, vaultId, address)
     );
@@ -38,15 +38,17 @@ export const MobileCollapseContent = memo<VaultCollapseContentProps>(
       };
       if (hasAnalyticsData) {
         items['positionChart'] = t('Dashboard-Chart');
-        if (vaultType === 'cowcentrated') {
+        if (type === 'cowcentrated') {
           items['positionChart'] = t('Dashboard-PositionChart');
-          items['compoundsChart'] = t('Dashboard-CompoundsChart');
+          if (strategyTypeId === 'compounds') {
+            items['compoundsChart'] = t('Dashboard-CompoundsChart');
+          }
         }
       }
       return items;
-    }, [hasAnalyticsData, vaultType, t]);
+    }, [hasAnalyticsData, type, strategyTypeId, t]);
 
-    const PositionGraph = vaultType === 'cowcentrated' ? DashboardOverviewGraph : DashboardPnLGraph;
+    const PositionGraph = type === 'cowcentrated' ? DashboardOverviewGraph : DashboardPnLGraph;
     const CompoundsGraph = DashboardFeesGraph;
 
     return (
