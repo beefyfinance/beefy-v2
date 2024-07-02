@@ -500,7 +500,7 @@ export const selectGovVaultPendingRewardsInUsd = (
 /** @dev will NOT default to connected wallet address */
 export const selectGovVaultPendingRewards = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
-    selectGovVaultById(state, vaultId),
+    selectVaultById(state, vaultId),
   (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
     state.entities.tokens.byChainId,
   (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
@@ -508,7 +508,7 @@ export const selectGovVaultPendingRewards = createSelector(
       ? state.user.balance.byAddress[walletAddress]?.tokenAmount.byGovVaultId[vaultId]?.rewards
       : undefined,
   (vault, tokensByChain, rewards) => {
-    if (!rewards) {
+    if (!isGovVault(vault) || !rewards) {
       return [];
     }
 

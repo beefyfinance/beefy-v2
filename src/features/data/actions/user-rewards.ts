@@ -3,17 +3,18 @@ import type { BeefyState } from '../../../redux-types';
 import { getMerklRewardsApi } from '../apis/instances';
 import type { ChainEntity } from '../entities/chain';
 import { selectChainById } from '../selectors/chains';
-import { groupBy, keyBy } from 'lodash-es';
+import { groupBy, keyBy, mapKeys } from 'lodash-es';
 import { BIG_ZERO, fromWeiString } from '../../../helpers/big-number';
 import type { BigNumber } from 'bignumber.js';
 import {
-  selectChainsHasCowcentratedVaults,
+  selectChainCowcentratedVaultIds,
+  selectChainHasCowcentratedVaults,
+  selectCowcentratedVaultById,
   selectVaultByAddressOrUndefined,
-  selectVaultById,
-  selectVaultParentVaultIdOrUndefined,
 } from '../selectors/vaults';
 import { selectIsMerklRewardsForUserChainRecent } from '../selectors/data-loader';
 import type { Address } from 'viem';
+import { isDefined } from '../utils/array-utils';
 
 // ChainId -> Merkl Distributor contract address
 // https://app.merkl.xyz/status
@@ -59,7 +60,7 @@ export type FetchMerklRewardsFulfilledPayload = {
       proof: string[];
     }
   >;
-  byVaultAddress: Record<
+  byVaultId: Record<
     string,
     {
       address: string;
@@ -125,39 +126,52 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
       r => r.vaultAddress
     );
 
-    const keysToDelete: string[] = [];
-    for (const vaultKey of Object.keys(byVaultAddress)) {
-      const vault = selectVaultByAddressOrUndefined(state, chain.id, vaultKey);
-      if (!vault) {
-        console.error(`Vault not found for merkl rewards on ${chain.id}: ${vaultKey}`);
-        continue;
+    // by vault address -> by vault id
+    const byVaultId = mapKeys(byVaultAddress, (rewards, vaultAddress) => {
+      const vault = selectVaultByAddressOrUndefined(state, chainId, vaultAddress);
+      if (vault) {
+        return vault.id;
       }
-      const depositFor = selectVaultParentVaultIdOrUndefined(state, vault.id);
-      if (depositFor) {
-        const parentVault = selectVaultById(state, depositFor);
-        if (!byVaultAddress[parentVault.contractAddress.toLowerCase()]) {
-          byVaultAddress[parentVault.contractAddress.toLowerCase()] = [];
+
+      console.error(`Vault not found for merkl rewards on ${chainId}: ${vaultAddress}`);
+      return `${chainId}:${vaultAddress}`;
+    });
+
+    // Merge rewards from CLM in to their CLM Pool and CLM Vault
+    const clmIds = selectChainCowcentratedVaultIds(state, chain.id);
+    if (clmIds) {
+      for (const clmId of clmIds) {
+        const clmRewards = byVaultId[clmId];
+        if (!clmRewards) {
+          continue;
         }
-        const parentMerkleRewards = byVaultAddress[parentVault.contractAddress.toLowerCase()];
-        const underlyingMerkleRewards = byVaultAddress[vaultKey];
-        for (const rewardData of Object.values(underlyingMerkleRewards)) {
-          parentMerkleRewards.push({
-            ...rewardData,
-            vaultAddress: parentVault.contractAddress.toLowerCase(),
-          });
+
+        const vault = selectCowcentratedVaultById(state, clmId);
+        const mergeInto = [vault.cowcentratedGovId, vault.cowcentratedStandardId].filter(isDefined);
+        for (const mergeId of mergeInto) {
+          const existingRewards = byVaultId[mergeId];
+          if (existingRewards) {
+            for (const clmReward of clmRewards) {
+              const existingReward = existingRewards.find(e => e.address === clmReward.address);
+              if (existingReward) {
+                existingReward.accumulated = existingReward.accumulated.plus(clmReward.accumulated);
+                existingReward.unclaimed = existingReward.unclaimed.plus(clmReward.unclaimed);
+              } else {
+                existingRewards.push(clmReward);
+              }
+            }
+          } else {
+            byVaultId[mergeId] = clmRewards;
+          }
         }
-        keysToDelete.push(vaultKey);
       }
-    }
-    for (const key of keysToDelete) {
-      delete byVaultAddress[key];
     }
 
     return {
       walletAddress,
       chainId,
       byTokenAddress,
-      byVaultAddress,
+      byVaultId,
     };
   },
   {
@@ -166,7 +180,7 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
         return false;
       }
       const state = getState();
-      if (!selectChainsHasCowcentratedVaults(state, chainId)) {
+      if (!selectChainHasCowcentratedVaults(state, chainId)) {
         return false;
       }
       return !selectIsMerklRewardsForUserChainRecent(state, walletAddress, chainId, recentSeconds);

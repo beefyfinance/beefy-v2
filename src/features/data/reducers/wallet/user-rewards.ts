@@ -14,6 +14,9 @@ export type MerklVaultReward = {
 };
 
 export type MerklRewardsState = {
+  byVaultId: {
+    [vaultId: string]: MerklVaultReward[];
+  };
   byChain: {
     [chainId in ChainEntity['id']]?: {
       byTokenAddress: {
@@ -30,9 +33,6 @@ export type MerklRewardsState = {
           }[];
           proof: string[];
         };
-      };
-      byVaultAddress: {
-        [vaultAddress: string]: MerklVaultReward[];
       };
     };
   };
@@ -61,13 +61,15 @@ export const userRewardsSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(fetchUserMerklRewardsAction.fulfilled, (sliceState, action) => {
       // @dev the action already filters out rewards with 0 unclaimed
-      const userChainState = getMerklUserState(
+      const { userState, chainState } = getMerklUserState(
         sliceState,
         action.payload.walletAddress.toLowerCase(),
         action.payload.chainId
       );
-      userChainState.byTokenAddress = action.payload.byTokenAddress;
-      userChainState.byVaultAddress = action.payload.byVaultAddress;
+      for (const [vaultId, rewards] of Object.entries(action.payload.byVaultId)) {
+        userState.byVaultId[vaultId] = rewards;
+      }
+      chainState.byTokenAddress = action.payload.byTokenAddress;
     });
   },
 });
@@ -82,6 +84,7 @@ function getMerklUserState(
     userState = sliceState.byUser[userAddress] = {
       byProvider: {
         merkl: {
+          byVaultId: {},
           byChain: {},
         },
       },
@@ -92,11 +95,10 @@ function getMerklUserState(
   if (!chainState) {
     chainState = sliceState.byUser[userAddress].byProvider.merkl.byChain[chainId] = {
       byTokenAddress: {},
-      byVaultAddress: {},
     };
   }
 
-  return chainState;
+  return { userState: userState.byProvider.merkl, chainState };
 }
 
 export const userRewardsReducer = userRewardsSlice.reducer;

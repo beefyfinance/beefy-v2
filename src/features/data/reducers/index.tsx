@@ -43,7 +43,7 @@ import { migrationSlice } from './wallet/migration';
 import { tooltipsSlice } from './tooltips';
 import { addToWalletSlice } from './add-to-wallet';
 import { articlesSlice } from './articles';
-import { userRewardsReducer } from './wallet/rewards';
+import { userRewardsReducer } from './wallet/user-rewards';
 import { versionReducer } from './ui-version';
 import { rewardsReducer } from './rewards';
 

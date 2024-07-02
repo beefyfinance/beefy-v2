@@ -68,14 +68,6 @@ export const selectVaultUnderlyingVaultIdOrUndefined = (
   return state.entities.vaults.relations.underlyingOf.byId[parentVaultId] || undefined;
 };
 
-/** The id of the vault whose contract address is equal to the deposit token address of the passed vault id */
-export const selectVaultParentVaultIdOrUndefined = (
-  state: BeefyState,
-  childVaultId: VaultEntity['id']
-): VaultEntity['id'] | undefined => {
-  return state.entities.vaults.relations.depositFor.byId[childVaultId]?.[0] || undefined;
-};
-
 /** The vault whose contract address is equal to the deposit token address of the passed vault id */
 export const selectVaultUnderlyingVaultOrUndefined = (
   state: BeefyState,
@@ -400,8 +392,11 @@ export const selectVaultHasPlatformWithRisks = (
   }
 };
 
-export const selectChainsHasCowcentratedVaults = (state: BeefyState, chainId: ChainEntity['id']) =>
-  (state.entities.vaults.byChainId[chainId]?.byType.cowcentrated.allIds.length || 0) > 0;
+export const selectChainCowcentratedVaultIds = (state: BeefyState, chainId: ChainEntity['id']) =>
+  state.entities.vaults.byChainId[chainId]?.byType.cowcentrated.allIds || undefined;
+
+export const selectChainHasCowcentratedVaults = (state: BeefyState, chainId: ChainEntity['id']) =>
+  (selectChainCowcentratedVaultIds(state, chainId)?.length || 0) > 0;
 
 export const selectMaximumUnderlyingVaultTvl = (state: BeefyState) => {
   const ids = state.entities.vaults.allActiveIds;

@@ -1,7 +1,7 @@
 import type { BeefyState } from '../../../redux-types';
-import { isGovVault, type VaultEntity } from '../entities/vault';
+import { type VaultEntity } from '../entities/vault';
 import type { ChainEntity } from '../entities/chain';
-import type { MerklVaultReward } from '../reducers/wallet/rewards';
+import type { MerklVaultReward } from '../reducers/wallet/user-rewards';
 import type { BigNumber } from 'bignumber.js';
 import type { TokenEntity } from '../entities/token';
 import { BIG_ZERO } from '../../../helpers/big-number';
@@ -66,9 +66,9 @@ export function selectUserMerklUnifiedRewardsForVault(
 ) {
   const vault = selectVaultById(state, vaultId);
   const unclaimedRewards = walletAddress
-    ? state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byChain[
-        vault.chainId
-      ]?.byVaultAddress[vault.contractAddress.toLowerCase()]?.filter(r => r.unclaimed.gt(BIG_ZERO))
+    ? state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byVaultId[
+        vaultId
+      ]?.filter(r => r.unclaimed.gt(BIG_ZERO))
     : undefined;
   const activeCampaigns = selectVaultActiveMerklCampaigns(state, vaultId);
 
@@ -120,31 +120,25 @@ export function selectUserMerklUnifiedRewardsForChain(
   return selectUnifiedMerklRewards(state, chainId, rewards);
 }
 
-const selectUserMerklRewardsForVault = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress: string) =>
-    selectVaultById(state, vaultId),
-  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
-    state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byChain,
-  (vault, rewardsByChain) => {
-    return (
-      rewardsByChain[vault.chainId]?.byVaultAddress[vault.contractAddress.toLowerCase()] ||
-      undefined
-    );
-  }
-);
+const selectUserMerklRewardsForVault = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress: string
+) =>
+  state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byVaultId[vaultId] ||
+  undefined;
 
 const selectConnectedUserMerklRewardsForVault = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
   (state: BeefyState) => state.user.rewards.byUser,
   (state: BeefyState) => selectWalletAddress(state),
-  (vault, rewardsByUser, walletAddress) => {
+  (vaultId, rewardsByUser, walletAddress) => {
     if (!walletAddress) {
       return undefined;
     }
 
     return (
-      rewardsByUser[walletAddress.toLowerCase()]?.byProvider.merkl.byChain[vault.chainId]
-        ?.byVaultAddress[vault.contractAddress.toLowerCase()] || undefined
+      rewardsByUser[walletAddress.toLowerCase()]?.byProvider.merkl.byVaultId[vaultId] || undefined
     );
   }
 );
@@ -167,8 +161,6 @@ export const selectConnectedUserHasGovRewardsForVault = (
   if (!walletAddress) {
     return false;
   }
-  const vault = selectVaultById(state, vaultId);
-  if (!isGovVault(vault)) return false;
 
   const rewards = selectGovVaultPendingRewards(state, vaultId, walletAddress);
   return rewards && rewards.some(r => r.balance.gt(BIG_ZERO));
