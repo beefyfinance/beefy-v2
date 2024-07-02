@@ -39,7 +39,7 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     gap: '2px',
   },
-  amountReturned: {
+  amountsSideBySide: {
     display: 'flex',
     gap: '2px',
     alignItems: 'center',

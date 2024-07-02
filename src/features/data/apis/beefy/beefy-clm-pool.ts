@@ -183,17 +183,7 @@ export class BeefyCLMPool {
     const { price } = this.consumeStrategyData(strategyResults);
     const { balance0, balance1 } = this.consumeCLMData(clmResults);
 
-    const bal0inToken1 = balance0.times(price).div(this.PRECISION);
-
-    const balancingAmount: TokenAmount = balance1.gt(bal0inToken1)
-      ? {
-          token: this.tokens[0],
-          amount: balance1.minus(bal0inToken1).times(this.PRECISION).div(price),
-        }
-      : {
-          token: this.tokens[1],
-          amount: bal0inToken1.minus(balance1),
-        };
+    const balancingAmount = this.getBalancingAmount(price, balance0, balance1);
 
     // If the input token is one of these tokens we can calculate amounts based off clm price ratio
     const inputAmountInWei = toWei(inputToken.amount, inputToken.token.decimals);
@@ -327,18 +317,36 @@ export class BeefyCLMPool {
     }
   }
 
+  private getBalancingAmount(price: BigNumber, balance0: BigNumber, balance1: BigNumber) {
+    const bal0inToken1 = balance0.times(price).div(this.PRECISION);
+    const balancingAmount: TokenAmount = balance1.gt(bal0inToken1)
+      ? {
+          token: this.tokens[0],
+          amount: balance1.minus(bal0inToken1).times(this.PRECISION).div(price),
+        }
+      : {
+          token: this.tokens[1],
+          amount: bal0inToken1.minus(balance1),
+        };
+
+    return balancingAmount;
+  }
+
   public async previewDeposit(inputAmount0: BigNumber, inputAmount1: BigNumber) {
     const multicall = await this.getMulticall();
     const input0 = toWei(inputAmount0, this.tokens[0].decimals);
     const input1 = toWei(inputAmount1, this.tokens[1].decimals);
-    const [previewDepositResponse, isCalmRequest, clmData] = await multicall.all([
+    const [previewDepositResponse, isCalmRequest, clmData, strategyResults] = await multicall.all([
       this.getPreviewDepositRequests(input0, input1),
       this.getIsCalmRequests(),
       this.getCLMDataRequests(),
+      this.getStrategyDataRequests(),
     ]);
     const { liquidity, used0, used1 } = this.consumePreviewDeposit(previewDepositResponse);
     const { isCalm } = this.consumeIsCalm(isCalmRequest);
     const { balance0, balance1, totalSupply } = this.consumeCLMData(clmData);
+    const { price } = this.consumeStrategyData(strategyResults);
+    const balancingAmount = this.getBalancingAmount(price, balance0, balance1);
 
     const newTotalSupply = totalSupply.plus(liquidity);
     const newBalance0 = balance0.plus(used0);
@@ -349,7 +357,17 @@ export class BeefyCLMPool {
     const unused0 = input0.minus(used0);
     const unused1 = input1.minus(used1);
 
-    return { liquidity, used0, used1, position0, position1, unused0, unused1, isCalm };
+    return {
+      liquidity,
+      used0,
+      used1,
+      position0,
+      position1,
+      unused0,
+      unused1,
+      isCalm,
+      balancingAmount,
+    };
   }
 
   public async previewWithdraw(liquidity: BigNumber) {

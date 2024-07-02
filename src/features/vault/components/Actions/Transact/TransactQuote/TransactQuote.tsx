@@ -29,13 +29,15 @@ import {
 } from '../../../../../data/apis/transact/transact-types';
 import { ZapRoute } from '../ZapRoute';
 import { QuoteTitleRefresh } from '../QuoteTitleRefresh';
-import { AlertError } from '../../../../../../components/Alerts';
+import { AlertError, AlertInfo } from '../../../../../../components/Alerts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { ZapSlippage } from '../ZapSlippage';
 import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { isCowcentratedVault } from '../../../../../data/entities/vault';
+import { isTokenEqual } from '../../../../../data/entities/token';
+import { formatTokenDisplayCondensed } from '../../../../../../helpers/format';
 
 const useStyles = makeStyles(styles);
 
@@ -100,7 +102,7 @@ const QuoteIdle = memo<TransactQuoteProps>(function QuoteIdle({ title, className
       <QuoteTitleRefresh title={title} enableRefresh={true} />
       <div className={classes.tokenAmounts}>
         {isCowcentratedVault(vault) ? (
-          <div className={classes.amountReturned}>
+          <div className={classes.amountsSideBySide}>
             {vault.depositTokenAddresses.map(tokenAddress => {
               return (
                 <TokenAmountIcon
@@ -217,10 +219,41 @@ export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const classes = useStyles();
+  const singleSided = useMemo(() => {
+    if (quote.used.length !== 2) {
+      return false;
+    }
+
+    const noneUsed = quote.used.every(ta => ta.amount.isZero());
+    if (noneUsed) {
+      // handled by CowcentratedNoSingleSideAllowedNotice stopping the deposit
+      return false;
+    }
+
+    const unusedIndex = quote.unused.findIndex(ta => !ta.amount.isZero());
+    const unused = quote.unused[unusedIndex];
+    const needed = quote.used[unusedIndex === 0 ? 1 : 0];
+    if (!unused || !needed) {
+      return false;
+    }
+
+    if (!isTokenEqual(needed.token, quote.toBalance.token)) {
+      return false;
+    }
+
+    const moreNeeded = quote.toBalance.amount.minus(needed.amount);
+
+    return {
+      needed: needed.token,
+      neededAmount: quote.toBalance.amount,
+      neededMoreAmount: moreNeeded,
+      unused: unused.token,
+    };
+  }, [quote.used, quote.unused, quote.toBalance]);
 
   return (
     <div className={classes.cowcentratedDepositContainer}>
-      <div className={classes.amountReturned}>
+      <div className={classes.amountsSideBySide}>
         {quote.used.map(used => {
           return (
             <TokenAmountIcon
@@ -236,6 +269,18 @@ export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
           );
         })}
       </div>
+      {singleSided ? (
+        <AlertInfo>
+          {t('Transact-Notice-CowcentratedNeedsBalanced', {
+            unused: singleSided.unused.symbol,
+            needed: singleSided.needed.symbol,
+            amount: formatTokenDisplayCondensed(
+              singleSided.neededAmount,
+              singleSided.needed.decimals
+            ),
+          })}
+        </AlertInfo>
+      ) : null}
       <div className={classes.label}>{t('Your Position Will Be')}</div>
       <div className={classes.cowcentratedSharesDepositContainer}>
         <TokenAmountIcon
@@ -245,7 +290,7 @@ export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
           tokenAddress={vault.depositTokenAddress}
           className={classes.mainLp}
         />
-        <div className={classes.amountReturned}>
+        <div className={classes.amountsSideBySide}>
           {quote.position.map((position, i) => {
             return (
               <TokenAmountIcon

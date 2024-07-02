@@ -595,8 +595,17 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       return { token: this.vaultType.depositTokens[i], amount: swapInAmounts[i] };
     });
 
-    const { isCalm, liquidity, used0, used1, unused0, unused1, position1, position0 } =
-      await clmPool.previewDeposit(lpTokenAmounts[0].amount, lpTokenAmounts[1].amount);
+    const {
+      isCalm,
+      liquidity,
+      used0,
+      used1,
+      unused0,
+      unused1,
+      position1,
+      position0,
+      balancingAmount,
+    } = await clmPool.previewDeposit(lpTokenAmounts[0].amount, lpTokenAmounts[1].amount);
     const depositUsed = [used0, used1].map((amount, i) => ({
       token: this.vaultType.depositTokens[i],
       amount: fromWei(amount, this.vaultType.depositTokens[i].decimals),
@@ -609,6 +618,10 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       token: this.vaultType.depositTokens[i],
       amount: fromWei(amount, this.vaultType.depositTokens[i].decimals),
     }));
+    const toBalance = {
+      ...balancingAmount,
+      amount: fromWei(balancingAmount.amount, balancingAmount.token.decimals),
+    };
 
     // build quote inputs
     const inputs = [input];
@@ -670,6 +683,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
       unused: depositUnused,
       used: depositUsed,
       position: depositPosition,
+      toBalance,
     };
   }
 

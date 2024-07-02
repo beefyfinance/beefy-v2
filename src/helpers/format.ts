@@ -52,11 +52,14 @@ export function formatTokenDisplayCondensed(
     digits = decimals;
   }
 
+  // If whole number, just format it
+  const absWholeNumber = value.absoluteValue().integerValue(BigNumber.ROUND_FLOOR);
+  if (value.absoluteValue().eq(absWholeNumber)) {
+    return formatGrouped(value, 0);
+  }
+
   // Work out how many digits we have for whole and fraction
-  const wholeDigits = value
-    .absoluteValue()
-    .decimalPlaces(0, BigNumber.ROUND_FLOOR)
-    .toString(10).length;
+  const wholeDigits = absWholeNumber.toString(10).length;
   const decimalDigits = digits - wholeDigits;
 
   // Whole number only
