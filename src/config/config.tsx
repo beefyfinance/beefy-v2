@@ -80,7 +80,7 @@ export const config = {
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0xacE432fD45f78fFE1F80961e879679D49aB63246',
+    appMulticallContractAddress: '0x9C983dd514087674CA1d22A22B7432b614b4C835',
     providerName: 'polygon',
     walletSettings: {
       chainId: `0x${parseInt('137', 10).toString(16)}`,
@@ -487,7 +487,7 @@ export const config = {
     explorerUrl: 'https://moonscan.io',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x6B0A1644e662E63cC866A3F243d83a49e0818Aa1',
+    appMulticallContractAddress: '0xED3772a9F1207CBa409D26DA7CF512F9b95Ad0FE',
     providerName: 'Moonbeam',
     walletSettings: {
       chainId: `0x${parseInt('1284', 10).toString(16)}`,
@@ -662,7 +662,7 @@ export const config = {
     explorerTokenUrlTemplate: 'https://explorer.zksync.io/address/{address}',
     multicallAddress: '0x1E9231Cc9782D9F8e213736F6dAC00020D8271cB',
     multicall3Address: '0x9A04a9e1d67151AB1E742E6D8965e0602410f91d',
-    appMulticallContractAddress: '0x4d0DB1CcEFb0bc8079a7C65479c1E77b14950844',
+    appMulticallContractAddress: '0x6bD7b74BD4707b1effeFC199920Bc3bC1Cb7b11f',
     providerName: 'zkSync',
     walletSettings: {
       chainId: `0x${parseInt('324', 10).toString(16)}`,
@@ -712,7 +712,7 @@ export const config = {
     explorerUrl: 'https://basescan.org',
     multicallAddress: '0xbA790ec6F95D68123E772A43b314464585B311b4',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x09C74A4bd3453e1C15D6624F24b3A02059a4dA15',
+    appMulticallContractAddress: '0x57B01298DfDdeA1c6CaB01793396af5fbFc213CE',
     providerName: 'Base',
     walletSettings: {
       chainId: `0x${parseInt('8453', 10).toString(16)}`,
@@ -790,7 +790,7 @@ export const config = {
     explorerUrl: 'https://lineascan.build',
     multicallAddress: '0x91BB303E972995EbE5f593BCddBb6F5Ef49Dbcbd',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x7340a46bDAD936841Fd66fEE2fF5007FB2f80bC9',
+    appMulticallContractAddress: '0x74037AEe034D2bD5cD2eEc043FE5ad9cE2e90275',
     providerName: 'Linea',
     walletSettings: {
       chainId: `0x${parseInt('59144', 10).toString(16)}`,
@@ -915,7 +915,7 @@ export const config = {
     explorerUrl: 'https://pacific-explorer.manta.network/',
     multicallAddress: '0x663504a9453eD242335C3dCc9E4B52620F566b30',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x6B5cd7f8eFa53e10C4b948B6989c6A66895d1991',
+    appMulticallContractAddress: '0xED3772a9F1207CBa409D26DA7CF512F9b95Ad0FE',
     providerName: 'Manta',
     walletSettings: {
       chainId: `0x${parseInt('169', 10).toString(16)}`,
