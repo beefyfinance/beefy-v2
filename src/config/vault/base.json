@@ -1040,10 +1040,8 @@
     "earnContractAddress": "0x715a4a6Afb44f87f8C4eE8d945Eb6B630A11E72c",
     "oracle": "lps",
     "oracleId": "aura-base-tbtc-weth",
-    "status": "eol",
+    "status": "active",
     "createdAt": 1713018583,
-    "retireReason": "rewards",
-    "retiredAt": 1718744992,
     "platformId": "aura",
     "assets": ["tBTC", "ETH"],
     "risks": [
