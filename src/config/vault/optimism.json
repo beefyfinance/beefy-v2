@@ -1,5 +1,28 @@
 [
   {
+    "id": "aura-gyro-op-frax-symphony",
+    "name": "Gyroscope Frax Symphony",
+    "type": "standard",
+    "token": "Gyroscope Frax Symphony",
+    "tokenAddress": "0xE906d4C4fC4c3Fe96560De86B4bf7eD89aF9A69a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooAuraGyroOPFraxSymphony",
+    "earnedTokenAddress": "0x10BD7A983E2897c36b059ce0a8C57BcC17d6b847",
+    "earnContractAddress": "0x10BD7A983E2897c36b059ce0a8C57BcC17d6b847",
+    "oracle": "lps",
+    "oracleId": "aura-gyro-op-frax-symphony",
+    "status": "active",
+    "createdAt": 1719920477,
+    "platformId": "aura",
+    "assets": ["sFRAX", "FRAX"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://op.beets.fi/pool/0xe906d4c4fc4c3fe96560de86b4bf7ed89af9a69a000200000000000000000126",
+    "removeLiquidityUrl": "https://op.beets.fi/pool/0xe906d4c4fc4c3fe96560de86b4bf7ed89af9a69a000200000000000000000126",
+    "network": "optimism"
+  },
+  {
     "id": "uniswap-cow-op-usdc.e-wld",
     "name": "WLD-USDC.e",
     "token": "WLD-USDC.e",
