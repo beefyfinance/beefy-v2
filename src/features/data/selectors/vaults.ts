@@ -4,6 +4,7 @@ import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenErc20 } from '../entities/token';
 import {
+  isCowcentratedLikeVault,
   isCowcentratedVault,
   isGovVault,
   isStandardVault,
@@ -11,6 +12,7 @@ import {
   isVaultPausedOrRetired,
   isVaultRetired,
   type VaultCowcentrated,
+  type VaultCowcentratedLike,
   type VaultEntity,
   type VaultGov,
   type VaultStandard,
@@ -146,6 +148,19 @@ export const selectCowcentratedVaultById = (
   const vault = selectVaultById(state, vaultId);
   if (!isCowcentratedVault(vault)) {
     throw new Error(`selectCowcentratedVaultById: Vault ${vaultId} is not a cowcentrated vault`);
+  }
+  return vault;
+};
+
+export const selectCowcentratedLikeVaultById = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultCowcentratedLike => {
+  const vault = selectVaultById(state, vaultId);
+  if (!isCowcentratedLikeVault(vault)) {
+    throw new Error(
+      `selectCowcentratedLikeVaultById: Vault ${vaultId} is not a cowcentrated-like vault`
+    );
   }
   return vault;
 };
