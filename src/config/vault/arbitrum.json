@@ -23,6 +23,30 @@
     "network": "arbitrum"
   },
   {
+    "id": "pendle-arb-usde-29aug24",
+    "name": "USDe 29Aug24",
+    "token": "USDe-29Aug24",
+    "tokenAddress": "0x2Dfaf9a5E4F293BceedE49f2dBa29aACDD88E0C4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnedToken": "mooPenpie-USDe_29AUG24",
+    "earnedTokenAddress": "0x631d5C4bA949418D7D856Acc4e33EC2FFF96b590",
+    "earnContractAddress": "0x631d5C4bA949418D7D856Acc4e33EC2FFF96b590",
+    "oracle": "lps",
+    "oracleId": "pendle-arb-usde-29aug24",
+    "status": "active",
+    "createdAt": 1719822484,
+    "platformId": "magpie",
+    "assets": ["USDe"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2Dfaf9a5E4F293BceedE49f2dBa29aACDD88E0C4/zap/in?chain=arbitrum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2Dfaf9a5E4F293BceedE49f2dBa29aACDD88E0C4/zap/out?chain=arbitrum",
+    "earningPoints": true,
+    "network": "arbitrum"
+  },
+  {
     "id": "pancake-cow-arb-weth-usdc",
     "name": "WETH-USDC",
     "type": "cowcentrated",
@@ -1086,6 +1110,7 @@
     "strategyTypeId": "cowcentrated",
     "network": "arbitrum",
     "feeTier": "Dynamic",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -6786,6 +6811,7 @@
     "oracleId": "balancer-usdc-dai-usdt-usdce",
     "status": "active",
     "createdAt": 1694164215,
+    "updatedAt": 1719672496,
     "platformId": "aura",
     "assets": ["USDC", "DAI", "USDT", "arbUSDCe"],
     "risks": [
@@ -6848,6 +6874,7 @@
     "oracleId": "balancer-wsteth-weth-v3",
     "status": "active",
     "createdAt": 1694164215,
+    "updatedAt": 1719672496,
     "platformId": "aura",
     "assets": ["wstETH", "ETH"],
     "risks": [
