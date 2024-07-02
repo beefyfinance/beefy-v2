@@ -293,7 +293,12 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "0.01"
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "uniswap-cow-moonbeam-weth.wh-wglmr",
@@ -319,7 +324,12 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "0.30"
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "uniswap-cow-moonbeam-wglmr-xcusdc",
@@ -345,7 +355,12 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "0.30"
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "uniswap-cow-moonbeam-weth.wh-xcusdc",
@@ -371,7 +386,12 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "0.05"
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "uniswap-cow-moonbeam-weth.wh-xcdot",
@@ -397,7 +417,12 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "0.30"
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "stella-cow-xcdot-xcusdt",
@@ -423,7 +448,12 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "Dynamic"
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "stella-cow-axlusdc-xcusdc",
@@ -449,7 +479,12 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "Dynamic"
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "stella-cow-xcusdc-xcusdt",
@@ -475,7 +510,12 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "Dynamic"
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "stella-cow-xcusdc-glmr",
@@ -501,7 +541,12 @@
     "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "Dynamic"
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "stella-cow-xcdot-glmr",
@@ -527,7 +572,12 @@
     "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "Dynamic"
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "stellaswap-axldualpool",

@@ -131,7 +131,12 @@
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "manta",
-    "feeTier": "0.30"
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "uniswap-cow-manta-weth-stone",
@@ -157,7 +162,12 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "manta",
-    "feeTier": "0.05"
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "uniswap-cow-manta-weth-usdc",
@@ -183,7 +193,12 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "manta",
-    "feeTier": "0.05"
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   },
   {
     "id": "uniswap-cow-manta-usdc-usdt",
@@ -209,6 +224,11 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "manta",
-    "feeTier": "0.01"
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
   }
 ]
