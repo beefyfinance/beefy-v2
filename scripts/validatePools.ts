@@ -169,6 +169,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   const uniqueEarnedToken = new Set();
   const uniqueEarnedTokenAddress = new Set();
   const uniqueOracleId = new Set();
+  const govPoolsByDepositAddress = new Map(govPools.map(pool => [pool.tokenAddress, pool]));
   let activePools = 0;
 
   // Populate some extra data.
@@ -299,6 +300,15 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
           console.warn(`Warning: ${pool.id} : Asset ${assetId} not in addressbook on ${chainId}`);
           // exitCode = 1;
         }
+      }
+    }
+
+    // Cowcentrated should have RP
+    if (pool.type === 'cowcentrated' && pool.status !== 'eol') {
+      const govPool = govPoolsByDepositAddress.get(pool.earnContractAddress);
+      if (!govPool) {
+        console.error(`Error: ${pool.id} : CLM missing CLM pool`);
+        exitCode = 1;
       }
     }
 

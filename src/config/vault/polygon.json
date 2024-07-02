@@ -1,5 +1,572 @@
 [
   {
+    "id": "uniswap-cow-poly-wbtc-usdc-rp",
+    "name": "WBTC-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWBTC-USDC",
+    "tokenAddress": "0xF93402fddbC5F94fe81998aB2ef2fC6E12E26b1e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x82ff162e9e30311563052c6D69dEb7e1ec9e6A6a",
+    "earnedToken": "rcowUniswapPolyWBTC-USDC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wbtc-usdc",
+    "status": "active",
+    "createdAt": 1719408543,
+    "platformId": "beefy",
+    "assets": ["WBTC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-wbtc-rp",
+    "name": "WBTC-WMATIC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-WBTC",
+    "tokenAddress": "0xc96153bdA547d4a6066B8a08AE239EF757BF35aE",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x4c58e6C9E55Ee55C06154255a352c7da013dE571",
+    "earnedToken": "rcowUniswapPolyWMATIC-WBTC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-wbtc",
+    "status": "active",
+    "createdAt": 1719408543,
+    "platformId": "beefy",
+    "assets": ["WBTC", "WMATIC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdt-lcd-rp",
+    "name": "LCD-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyUSDT-LCD",
+    "tokenAddress": "0x1f41a97Ccb116C7F86d7120669Bd659A303DE718",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xE2859af0575bfaE3E12013FD861437533bEdCCe1",
+    "earnedToken": "rcowUniswapPolyUSDT-LCD",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdt-lcd",
+    "status": "active",
+    "createdAt": 1719408543,
+    "platformId": "beefy",
+    "assets": ["LCD", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdc-link-rp",
+    "name": "LINK-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyUSDC-LINK",
+    "tokenAddress": "0x195247799ac0B36CF6b9AC5Eb84ceE3bc17fe2dB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xc9B9CC3C54d13E849c92f24AB8318A40439c0A06",
+    "earnedToken": "rcowUniswapPolyUSDC-LINK",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdc-link",
+    "status": "active",
+    "createdAt": 1719408543,
+    "platformId": "beefy",
+    "assets": ["oldLINK", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-link-rp",
+    "name": "LINK-WMATIC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-LINK",
+    "tokenAddress": "0xBC82E4724f143eebA9C5b6B7f35361380A88995c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x784561E787E835C1b4787728025C8B71Cc1FDD46",
+    "earnedToken": "rcowUniswapPolyWMATIC-LINK",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-link",
+    "status": "active",
+    "createdAt": 1719408543,
+    "platformId": "beefy",
+    "assets": ["oldLINK", "WMATIC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-weth-aave-rp",
+    "name": "AAVE-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWETH-AAVE",
+    "tokenAddress": "0x69c3F6c3cc1b277BB4370E1A63EfEE19fccE0e74",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xA4BcC2624eab34745CFE81501399E3B6Da6Df779",
+    "earnedToken": "rcowUniswapPolyWETH-AAVE",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-weth-aave",
+    "status": "active",
+    "createdAt": 1719408543,
+    "platformId": "beefy",
+    "assets": ["AAVE", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-aave-rp",
+    "name": "AAVE-WMATIC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-AAVE",
+    "tokenAddress": "0xEefe81030D5Fb355b627a047F48b48480D5b7F09",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xf587753417dd5EA6e8eA0CBC875Bace0F1Fd97A4",
+    "earnedToken": "rcowUniswapPolyWMATIC-AAVE",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-aave",
+    "status": "active",
+    "createdAt": 1719408543,
+    "platformId": "beefy",
+    "assets": ["AAVE", "WMATIC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdc.e-weth-rp",
+    "name": "WETH-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyUSDC.e-WETH",
+    "tokenAddress": "0xa55eEB0b0ef32Bf25425C2107350b07E1e8e1346",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x4eB5675C74dF65e5ce61bD26d76166259753218f",
+    "earnedToken": "rcowUniswapPolyUSDC.e-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdc.e-weth",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "beefy",
+    "assets": ["ETH", "pUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdc-weth-rp",
+    "name": "WETH-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyUSDC-WETH",
+    "tokenAddress": "0xc6985d660B9A6560Ffc249655f044a9ee44e61d5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xd29b224d938Ac074C47516D3524D416C0C2E5524",
+    "earnedToken": "rcowUniswapPolyUSDC-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdc-weth",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "beefy",
+    "assets": ["ETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-weth-usdt-rp",
+    "name": "WETH-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWETH-USDT",
+    "tokenAddress": "0x22720E26712584a8234C5545B8DfE6a8FB48F453",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x13afcAb699e8f08516Fa4e9CcBe96c0020a9E38e",
+    "earnedToken": "rcowUniswapPolyWETH-USDT",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-weth-usdt",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "beefy",
+    "assets": ["ETH", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wbtc-usdc.e-rp",
+    "name": "WBTC-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWBTC-USDC.e",
+    "tokenAddress": "0x71d38eEC002E65ec38343C44B2AaED707eD56027",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x827394689920d94aCC2c21BDF190E54501E8c742",
+    "earnedToken": "rcowUniswapPolyWBTC-USDC.e",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wbtc-usdc.e",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "beefy",
+    "assets": ["WBTC", "pUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wbtc-weth-rp",
+    "name": "WBTC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWBTC-WETH",
+    "tokenAddress": "0x081901d477A296CDDE2084697c25Cfd52805BA31",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x74613aB5306B5D4f3746bbD7ad2FF5906E814c60",
+    "earnedToken": "rcowUniswapPolyWBTC-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wbtc-weth",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "beefy",
+    "assets": ["WBTC", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-weth-rp",
+    "name": "WMATIC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-WETH",
+    "tokenAddress": "0x064e2dDf54ca08bbe44De8e46bF475F510dcb503",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x4DD7bEa937B25C4d81A4C2c8F19b1BcEc501378A",
+    "earnedToken": "rcowUniswapPolyWMATIC-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-weth",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "beefy",
+    "assets": ["WMATIC", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-usdt-rp",
+    "name": "WMATIC-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-USDT",
+    "tokenAddress": "0xa37378E6e42F8b1586E6B272A56AC285EbF44E1B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x6fF8b3E4f9eBC8c937Fcd2E79bD16f6a0Ad47fA9",
+    "earnedToken": "rcowUniswapPolyWMATIC-USDT",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-usdt",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "beefy",
+    "assets": ["WMATIC", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-usdc.e-rp",
+    "name": "WMATIC-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-USDC.e",
+    "tokenAddress": "0xd8B28ebdE520DEE6248dFb4998d0a2ee791D8940",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xb3B1D783DCFb66CfD4e748C03757D96196b3da26",
+    "earnedToken": "rcowUniswapPolyWMATIC-USDC.e",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-usdc.e",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "beefy",
+    "assets": ["WMATIC", "pUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-usdc-rp",
+    "name": "WMATIC-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-USDC",
+    "tokenAddress": "0xD27914D1fFc272d37d3B6dD8A2adeb8bf88251C8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xB470e9a07486d3e2510822c4B2f04e595ce3801F",
+    "earnedToken": "rcowUniswapPolyWMATIC-USDC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-usdc",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "beefy",
+    "assets": ["WMATIC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-ldo-rp",
+    "name": "LDO-WMATIC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-LDO",
+    "tokenAddress": "0x7f14AAEb965028Ea56c10a1B758fB61BC90Cd770",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xaf6EF2222bF16bC7ca86C3a04F7D427c5eFEE7C3",
+    "earnedToken": "rcowUniswapPolyWMATIC-LDO",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-ldo",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "beefy",
+    "assets": ["LDO", "WMATIC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-weth-ldo-rp",
+    "name": "LDO-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWETH-LDO",
+    "tokenAddress": "0x1bFac0A539C9A28c9d59cD39C3cC1AB4247A13E2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x004D7f1f84aa7285188404Db99fE63Edc8D568Ed",
+    "earnedToken": "rcowUniswapPolyWETH-LDO",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-weth-ldo",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "beefy",
+    "assets": ["LDO", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdc.e-link-rp",
+    "name": "LINK-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyUSDC.e-LINK",
+    "tokenAddress": "0xcc8f331385963894E33195961BA5D2A26194aACC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xdd8543d1d85f1C21865B698C8d4fE258412533ef",
+    "earnedToken": "rcowUniswapPolyUSDC.e-LINK",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdc.e-link",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "beefy",
+    "assets": ["oldLINK", "pUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-link-weth-rp",
+    "name": "LINK-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyLINK-WETH",
+    "tokenAddress": "0x5F35d9840A66C7D97d61faFAA969744783D58F37",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xbAA0619f0441C75ed1348193b07bdd18723558e4",
+    "earnedToken": "rcowUniswapPolyLINK-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-link-weth",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "beefy",
+    "assets": ["oldLINK", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-weth-uni-rp",
+    "name": "UNI-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWETH-UNI",
+    "tokenAddress": "0x9b6ed34a879fc5f4a6945978d12a3c41eC500B93",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xD63EE2E094704A35867c0E782f74cA20F78F001E",
+    "earnedToken": "rcowUniswapPolyWETH-UNI",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-weth-uni",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "beefy",
+    "assets": ["UNI", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
     "id": "balancer-polygon-wbtc-usdc-eth",
     "name": "WBTC/USDC/ETH",
     "type": "standard",

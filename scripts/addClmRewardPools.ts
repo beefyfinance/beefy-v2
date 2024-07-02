@@ -1,7 +1,8 @@
 import { ArgumentConfig, parse } from 'ts-command-line-args';
-import { getChain, getVaultsForChain } from './common/config';
+import { getVaultsForChain } from './common/config';
 import { sortVaultKeys } from './common/vault-fields';
 import { loadJson, saveJson } from './common/files';
+import { VaultConfig } from '../src/features/data/apis/config-types';
 
 type RunArgs = {
   help?: boolean;
@@ -59,7 +60,7 @@ async function main() {
     return;
   }
 
-  const chain = getChain(args.chain);
+  const chainId = args.chain;
   const pools = await getPools(args.path);
   const notFound = new Set();
   const alreadyExists = new Set();
@@ -78,7 +79,7 @@ async function main() {
         alreadyExists.add(pool.rewardPool);
         if (existing.earnContractAddress !== pool.rewardPool) {
           console.error(
-            `[ERROR] Reward pool "${existing.id}" with a different address ${existing.earnContractAddress} already exists for "${existing.oracleId}", was it deployed at ${pool.rewardPool} for a second time by mistake?`
+            `[ERROR/${chainId}] Reward pool "${existing.id}" with a different address ${existing.earnContractAddress} already exists for "${existing.oracleId}", was it deployed at ${pool.rewardPool} for a second time by mistake?`
           );
         }
         return undefined;
@@ -115,23 +116,39 @@ async function main() {
     .filter(isDefined);
 
   if (notFound.size > 0) {
-    console.warn(
-      `[WARN] CLM ${Array.from(notFound.values()).join(', ')} not found on ${chain.name}`
-    );
+    console.error(`[ERROR/${chainId}] CLM ${Array.from(notFound.values()).join(', ')} not found`);
   }
 
-  if (alreadyExists.size > 0) {
-    console.warn(
-      `[WARN] CLM Pool ${Array.from(alreadyExists.values()).join(', ')} already exist on ${
-        chain.name
-      }`
-    );
-  }
+  // if (alreadyExists.size > 0) {
+  //   console.warn(
+  //     `[WARN] CLM Pool ${Array.from(alreadyExists.values()).join(', ')} already exist on ${
+  //       chain.name
+  //     }`
+  //   );
+  // }
 
   if (poolConfigs.length > 0) {
     const modified = [...poolConfigs, ...allVaults];
     await saveJson(`./src/config/vault/${args.chain}.json`, modified, 'prettier');
-    console.log(`[INFO] ${poolConfigs.length} gov vaults added`);
+    console.log(`[INFO/${chainId}] ${poolConfigs.length} gov vaults added`);
+    checkForMissing(chainId, modified);
+  } else {
+    checkForMissing(chainId, allVaults);
+  }
+}
+
+function checkForMissing(chainId: string, configs: VaultConfig[]) {
+  for (const config of configs) {
+    if (config.type !== 'cowcentrated' || config.status !== 'active') {
+      continue;
+    }
+
+    const rp = configs.find(v => v.tokenAddress === config.earnContractAddress);
+    if (!rp) {
+      console.warn(
+        `[WARN/${chainId}] No reward pool for ${config.oracleId} [${config.earnContractAddress}]`
+      );
+    }
   }
 }
 
