@@ -102,15 +102,29 @@ export class TransactApi implements ITransactApi {
     const options: DepositOption[] = [];
 
     // direct deposit option
-    options.push(await vaultType.fetchDepositOption());
+    let vaultDepositOption: DepositOption | undefined = await vaultType.fetchDepositOption();
 
     // zaps
     const zapStrategies = await this.getZapStrategiesForVault(helpers);
     if (zapStrategies.length) {
-      const zapOptions = await allFulfilled(
+      const zapOptions = await Promise.allSettled(
         zapStrategies.map(zapStrategy => zapStrategy.fetchDepositOptions())
       );
-      options.push(...zapOptions.flat());
+      zapOptions.forEach((result, i) => {
+        if (isFulfilledResult(result)) {
+          if (result.value.length) {
+            if (zapStrategies[i].disableVaultDeposit) {
+              vaultDepositOption = undefined;
+            }
+            options.push(...result.value);
+          }
+        }
+      });
+    }
+
+    // if not disabled by a zap strategy, add the vault deposit option as the first item
+    if (vaultDepositOption) {
+      options.unshift(vaultDepositOption);
     }
 
     return options;
@@ -198,17 +212,29 @@ export class TransactApi implements ITransactApi {
     const options: WithdrawOption[] = [];
 
     // direct deposit option
-    options.push(await vaultType.fetchWithdrawOption());
+    let vaultWithdrawOption: WithdrawOption | undefined = await vaultType.fetchWithdrawOption();
 
     // zaps
     const zapStrategies = await this.getZapStrategiesForVault(helpers);
     if (zapStrategies.length) {
-      const zapOptions = await allFulfilled(
+      const zapOptions = await Promise.allSettled(
         zapStrategies.map(zapStrategy => zapStrategy.fetchWithdrawOptions())
       );
-      options.push(...zapOptions.flat());
-    } else {
-      console.debug('no zap strategies for', vaultId); // this is OK
+      zapOptions.forEach((result, i) => {
+        if (isFulfilledResult(result)) {
+          if (result.value.length) {
+            if (zapStrategies[i].disableVaultWithdraw) {
+              vaultWithdrawOption = undefined;
+            }
+            options.push(...result.value);
+          }
+        }
+      });
+    }
+
+    // if not disabled by a zap strategy, add the vault withdraw option as the first item
+    if (vaultWithdrawOption) {
+      options.unshift(vaultWithdrawOption);
     }
 
     return options;

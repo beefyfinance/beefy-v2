@@ -78,6 +78,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
   public static readonly id = strategyId;
   public static readonly composer = true;
   public readonly id = strategyId;
+  public readonly disableVaultWithdraw = true;
 
   protected readonly vault: VaultGov;
   protected readonly vaultType: IGovVaultType;

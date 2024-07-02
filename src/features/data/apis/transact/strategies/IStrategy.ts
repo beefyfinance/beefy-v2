@@ -24,6 +24,8 @@ import type { AnyStrategyId, StrategyIdToConfig, ZapStrategyId } from './strateg
 
 export interface IStrategy<TId extends AnyStrategyId = AnyStrategyId> {
   readonly id: TId;
+  readonly disableVaultDeposit?: boolean;
+  readonly disableVaultWithdraw?: boolean;
 
   beforeQuote?(): Promise<void>;
 
