@@ -16,7 +16,6 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     borderRadius: '8px',
   },
-
   dataList: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -26,9 +25,15 @@ export const styles = (theme: Theme) => ({
   itemList: {
     ...theme.typography['body-sm'],
     color: theme.palette.text.dark,
-    '&:hover': {
-      cursor: 'pointer' as const,
-    },
+    background: 'transparent',
+    border: 'none',
+    boxShadow: 'none',
+    outline: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    margin: 0,
+    padding: 0,
+    cursor: 'pointer' as const,
   },
   itemDisabled: {
     pointerEvents: 'none' as const,

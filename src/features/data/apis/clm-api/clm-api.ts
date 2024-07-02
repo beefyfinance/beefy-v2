@@ -66,7 +66,7 @@ export class ClmApi implements IClmApi {
 
   public async getHarvestsForVault(
     chainId: ChainEntity['id'],
-    vaultAddress: VaultEntity['earnContractAddress']
+    vaultAddress: VaultEntity['contractAddress']
   ): Promise<ClmVaultHarvestsResponse> {
     const res = await this.api.get<ClmVaultHarvestsResponse>(
       `/api/v1/vault/${chainId}/${vaultAddress.toLocaleLowerCase()}/harvests`
@@ -76,7 +76,7 @@ export class ClmApi implements IClmApi {
 
   public async getHarvestsForVaultsSince(
     chainId: ChainEntity['id'],
-    vaultAddresses: VaultEntity['earnContractAddress'][],
+    vaultAddresses: VaultEntity['contractAddress'][],
     since: Date
   ): Promise<ClmVaultsHarvestsResponse> {
     const nearestMinute = roundToNearestMinutes(since);
@@ -95,7 +95,7 @@ export class ClmApi implements IClmApi {
     state: BeefyState,
     chainId: ChainEntity['id'],
     stratAddress: string,
-    vaultAddress: VaultEntity['earnContractAddress']
+    vaultAddress: VaultEntity['contractAddress']
   ): Promise<ClmPendingRewardsResponse> {
     const chain = selectChainById(state, chainId);
     const web3 = await getWeb3Instance(chain);

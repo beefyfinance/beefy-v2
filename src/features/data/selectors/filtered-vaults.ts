@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity } from '../entities/vault';
 import { isGovVault } from '../entities/vault';
-import { selectUserDepositedVaultIds } from './balance';
+import { selectDashboardDepositedVaultIdsForAddress } from './balance';
 import {
   selectBoostById,
   selectIsVaultPreStakedOrBoosted,
@@ -19,7 +19,6 @@ import escapeStringRegexp from 'escape-string-regexp';
 import type BigNumber from 'bignumber.js';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
-
 export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
 export const selectFilterChainIds = (state: BeefyState) => state.ui.filteredVaults.chainIds;
 export const selectFilterSearchSortField = (state: BeefyState) => state.ui.filteredVaults.sort;
@@ -52,32 +51,14 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.onlyZappable ? 1 : 0) +
     (filterOptions.onlyEarningPoints ? 1 : 0) +
+    (filterOptions.onlyUnstakedClm ? 1 : 0) +
     filterOptions.assetType.length +
     filterOptions.vaultCategory.length +
     (filterOptions.strategyType !== 'all' ? 1 : 0) +
     (filterOptions.sort !== 'default' ? 1 : 0) +
     filterOptions.chainIds.length +
     filterOptions.platformIds.length +
-    (filterOptions.minimumTotalSupply.gt(0) ? 1 : 0)
-);
-
-export const selectHasActiveFilter = createSelector(
-  selectFilterOptions,
-  filterOptions =>
-    filterOptions.vaultCategory.length > 0 ||
-    filterOptions.userCategory !== 'all' ||
-    filterOptions.assetType.length > 0 ||
-    filterOptions.strategyType !== 'all' ||
-    filterOptions.onlyRetired !== false ||
-    filterOptions.onlyPaused !== false ||
-    filterOptions.onlyBoosted !== false ||
-    filterOptions.onlyZappable !== false ||
-    filterOptions.onlyEarningPoints !== false ||
-    filterOptions.searchText !== '' ||
-    filterOptions.platformIds.length > 0 ||
-    filterOptions.sort !== 'default' ||
-    filterOptions.chainIds.length > 0 ||
-    filterOptions.minimumTotalSupply.gt(0)
+    (filterOptions.showMinimumUnderlyingTvl && filterOptions.minimumUnderlyingTvl.gt(0) ? 1 : 0)
 );
 
 export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
@@ -86,15 +67,23 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.vaultCategory.length > 0 ||
     filterOptions.assetType.length > 0 ||
     filterOptions.strategyType !== 'all' ||
-    filterOptions.onlyRetired !== false ||
-    filterOptions.onlyPaused !== false ||
-    filterOptions.onlyBoosted !== false ||
-    filterOptions.onlyZappable !== false ||
-    filterOptions.onlyEarningPoints !== false ||
+    filterOptions.onlyRetired ||
+    filterOptions.onlyPaused ||
+    filterOptions.onlyBoosted ||
+    filterOptions.onlyZappable ||
+    filterOptions.onlyEarningPoints ||
+    filterOptions.onlyUnstakedClm ||
     filterOptions.searchText !== '' ||
     filterOptions.platformIds.length > 0 ||
     filterOptions.chainIds.length > 0 ||
-    filterOptions.minimumTotalSupply.gt(0)
+    (filterOptions.showMinimumUnderlyingTvl && filterOptions.minimumUnderlyingTvl.gt(0))
+);
+
+export const selectHasActiveFilter = createSelector(
+  selectHasActiveFilterExcludingUserCategoryAndSort,
+  selectFilterOptions,
+  (activeFilter, filterOptions) =>
+    activeFilter || filterOptions.userCategory !== 'all' || filterOptions.sort !== 'default'
 );
 
 export const selectVaultCategory = createSelector(
@@ -108,7 +97,7 @@ function fuzzyTokenRegex(token: string) {
 }
 
 function vaultNameMatches(vault: VaultEntity, searchText: string) {
-  return stringFoundAnywhere(simplifySearchText(vault.name), searchText);
+  return stringFoundAnywhere(simplifySearchText(vault.names.list), searchText);
 }
 
 function searchTextToFuzzyTokenMatchers(searchText: string) {
@@ -148,7 +137,9 @@ export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, se
     // In gov earned token
     if (
       isGovVault(vault) &&
-      selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress).id.match(token)
+      vault.earnedTokenAddresses
+        .map(address => selectTokenByAddress(state, vault.chainId, address))
+        .some(earnedToken => earnedToken.id.match(token))
     ) {
       return true;
     }
@@ -176,7 +167,8 @@ export const selectUserDashboardFilteredVaults = (
   text: string,
   walletAddress?: string
 ) => {
-  const vaults = selectUserDepositedVaultIds(state, walletAddress).map(id =>
+  if (!walletAddress) return [];
+  const vaults = selectDashboardDepositedVaultIdsForAddress(state, walletAddress).map(id =>
     selectVaultById(state, id)
   );
   const searchText = simplifySearchText(text);

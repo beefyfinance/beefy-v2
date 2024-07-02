@@ -6,8 +6,6 @@ import { selectTokenPriceByAddress } from './tokens';
 import { selectWalletAddressIfKnown } from './wallet';
 import { selectUserBalanceOfToken, selectUserVaultBalanceInDepositToken } from './balance';
 import {
-  type InputTokenAmount,
-  isCowcentratedDepositQuote,
   type TokenAmount,
   type TransactOption,
   type TransactQuote,
@@ -16,7 +14,13 @@ import BigNumber from 'bignumber.js';
 import { TransactStatus } from '../reducers/wallet/transact-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { valueOrThrow } from '../utils/selector-utils';
-import type { TokenEntity } from '../entities/token';
+import { selectVaultHasActiveGovRewards, selectVaultHasActiveMerklCampaigns } from './rewards';
+import {
+  selectConnectedUserHasGovRewardsForVault,
+  selectConnectedUserHasMerklRewardsForVault,
+} from './user-rewards';
+import { selectVaultById } from './vaults';
+import { isSingleGovVault } from '../entities/vault';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
@@ -120,27 +124,6 @@ export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyStat
   const value = selectTransactInputIndexAmount(state, 0);
 
   return value.gt(userBalance);
-};
-
-export const selectTransactCowcentratedDepositNotSingleSideAllowed = (state: BeefyState) => {
-  const quote = selectTransactSelectedQuote(state);
-
-  const noSingleSideAllowed =
-    isCowcentratedDepositQuote(quote) &&
-    quote.outputs.every(inputToken => inputToken.amount.eq(BIG_ZERO));
-
-  let inputToken: InputTokenAmount<TokenEntity> | null = null;
-  let neededToken: InputTokenAmount<TokenEntity> | null = null;
-
-  for (const input of quote.inputs) {
-    if (input.amount.gt(BIG_ZERO)) {
-      inputToken = input;
-    } else {
-      neededToken = input;
-    }
-  }
-
-  return { noSingleSideAllowed, inputToken, neededToken };
 };
 
 export const selectTransactTokenChains = (state: BeefyState) =>
@@ -304,4 +287,28 @@ export const selectTransactConfirmError = (state: BeefyState) => state.ui.transa
 export const selectTransactConfirmChanges = (state: BeefyState) =>
   state.ui.transact.confirm.changes;
 
-export const selecTransactForceSelection = (state: BeefyState) => state.ui.transact.forceSelection;
+export const selectTransactForceSelection = (state: BeefyState) => state.ui.transact.forceSelection;
+
+export const selectTransactShouldShowClaims = createSelector(
+  selectVaultById,
+  selectVaultHasActiveGovRewards,
+  selectConnectedUserHasGovRewardsForVault,
+  selectVaultHasActiveMerklCampaigns,
+  selectConnectedUserHasMerklRewardsForVault,
+  (
+    vault,
+    vaultHasActiveGovRewards,
+    userHasUnclaimedGovRewards,
+    vaultHasActiveMerklCampaigns,
+    userHasUnclaimedMerklRewards
+  ) => {
+    // single gov vault do not have periodFinish/rewardRate data
+    return (
+      isSingleGovVault(vault) ||
+      vaultHasActiveGovRewards ||
+      vaultHasActiveMerklCampaigns ||
+      userHasUnclaimedGovRewards ||
+      userHasUnclaimedMerklRewards
+    );
+  }
+);

@@ -1,6 +1,5 @@
-import type { GammaStrategyOptions, IStrategy, ZapTransactHelpers } from '../IStrategy';
+import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy';
 import {
-  type DepositOption,
   type GammaDepositOption,
   type GammaDepositQuote,
   type GammaWithdrawOption,
@@ -80,8 +79,9 @@ import { type AmmEntityGamma, isGammaAmm } from '../../../../entities/zap';
 import { isStandardVault, type VaultStandard } from '../../../../entities/vault';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import { selectVaultStrategyAddress } from '../../../../selectors/vaults';
-import { QuoteChangedError } from '../errors';
+import { QuoteChangedError } from '../error';
 import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
+import type { GammaStrategyConfig } from '../strategy-configs';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -91,8 +91,13 @@ type ZapHelpers = {
 
 type PartialWithdrawQuote = Pick<GammaWithdrawQuote, 'steps' | 'outputs' | 'fee' | 'returned'>;
 
-export class GammaStrategy implements IStrategy {
-  public readonly id: string = 'gamma';
+const strategyId = 'gamma' as const;
+type StrategyId = typeof strategyId;
+
+class GammaStrategyImpl implements IZapStrategy<StrategyId> {
+  public static readonly id = strategyId;
+  public readonly id = strategyId;
+
   protected readonly wnative: TokenErc20;
   protected readonly tokens: TokenEntity[];
   protected readonly lpTokens: TokenErc20[];
@@ -104,7 +109,7 @@ export class GammaStrategy implements IStrategy {
   protected readonly vault: VaultStandard;
   protected readonly vaultType: IStandardVaultType;
 
-  constructor(protected options: GammaStrategyOptions, protected helpers: ZapTransactHelpers) {
+  constructor(protected options: GammaStrategyConfig, protected helpers: ZapTransactHelpers) {
     const { vault, vaultType, getState } = this.helpers;
 
     if (!isStandardVault(vault)) {
@@ -152,7 +157,7 @@ export class GammaStrategy implements IStrategy {
     await this.pool.updateAllData();
   }
 
-  async fetchDepositOptions(): Promise<DepositOption[]> {
+  async fetchDepositOptions(): Promise<GammaDepositOption[]> {
     const supportedAggregatorTokens = await this.aggregatorTokenSupport();
     const outputs = [this.vaultType.depositToken];
 
@@ -1048,3 +1053,5 @@ export class GammaStrategy implements IStrategy {
     });
   }
 }
+
+export const GammaStrategy = GammaStrategyImpl satisfies IZapStrategyStatic<StrategyId>;

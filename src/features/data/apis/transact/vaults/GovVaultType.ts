@@ -1,4 +1,4 @@
-import { isGovVault, type VaultGov } from '../../../entities/vault';
+import { isGovVault, isGovVaultCowcentrated, type VaultGov } from '../../../entities/vault';
 import type { BeefyState, GetStateFn } from '../../../../../redux-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import type {
@@ -34,7 +34,8 @@ import { BigNumber } from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../reducers/wallet/stepper';
 import { walletActions } from '../../../actions/wallet-actions';
-import { selectGovVaultPendingRewardsInToken } from '../../../selectors/balance';
+import { selectGovVaultPendingRewards } from '../../../selectors/balance';
+import { selectWalletAddress } from '../../../selectors/wallet';
 
 export class GovVaultType implements IGovVaultType {
   public readonly id = 'gov';
@@ -116,7 +117,7 @@ export class GovVaultType implements IGovVaultType {
           {
             token: input.token,
             amount: input.amount,
-            spenderAddress: this.vault.earnContractAddress,
+            spenderAddress: this.vault.contractAddress,
           },
         ]
       : [];
@@ -191,18 +192,19 @@ export class GovVaultType implements IGovVaultType {
       },
     ];
 
-    if (isWithdrawAll) {
-      const pendingRewards = selectGovVaultPendingRewardsInToken(state, this.vault.id);
-      if (pendingRewards.gt(BIG_ZERO)) {
-        const rewardToken = selectTokenByAddress(
-          state,
-          this.vault.chainId,
-          this.vault.earnedTokenAddress
-        );
-        outputs.push({
-          token: rewardToken,
-          amount: pendingRewards,
-        });
+    if (isWithdrawAll && !isGovVaultCowcentrated(this.vault)) {
+      const pendingRewards = selectGovVaultPendingRewards(
+        state,
+        this.vault.id,
+        selectWalletAddress(state)
+      );
+      for (const pendingReward of pendingRewards) {
+        if (pendingReward.balance.gt(BIG_ZERO)) {
+          outputs.push({
+            token: pendingReward.token,
+            amount: pendingReward.balance,
+          });
+        }
       }
     }
 
@@ -229,7 +231,7 @@ export class GovVaultType implements IGovVaultType {
     // 'exit' withdraws all and claims pending rewards
     // will revert if there is no pending rewards
     if (isWithdrawAll && hasPendingRewards) {
-      const rewardTokenAmount = quote.outputs[1]; // assumes 2nd output is the pending reward
+      const pendingRewards = quote.outputs.slice(1); // assumes 2nd output+ is the pending rewards
 
       return {
         step: 'claim-withdraw',
@@ -237,10 +239,7 @@ export class GovVaultType implements IGovVaultType {
         action: walletActions.exitGovVault(this.vault),
         pending: false,
         extraInfo: {
-          rewards: {
-            token: rewardTokenAmount.token,
-            amount: rewardTokenAmount.amount,
-          },
+          rewards: pendingRewards.length ? pendingRewards[0] : undefined, // TODO support multiple earned tokens [empty = ok, length checked]
           vaultId: this.vault.id,
         },
       };

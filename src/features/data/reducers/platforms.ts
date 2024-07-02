@@ -29,7 +29,7 @@ export const platformsSlice = createSlice({
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
       for (const vaults of Object.values(action.payload.byChainId)) {
         for (const vault of vaults) {
-          addVaultToState(sliceState, vault);
+          addVaultToState(sliceState, vault.config);
         }
       }
     });

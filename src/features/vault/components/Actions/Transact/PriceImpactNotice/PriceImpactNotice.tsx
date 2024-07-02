@@ -4,7 +4,11 @@ import { AlertError, AlertWarning } from '../../../../../../components/Alerts';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox';
 import { formatLargePercent } from '../../../../../../helpers/format';
 import type { TransactQuote } from '../../../../../data/apis/transact/transact-types';
-import { isZapQuote } from '../../../../../data/apis/transact/transact-types';
+import {
+  isCowcentratedDepositQuote,
+  isZapQuote,
+} from '../../../../../data/apis/transact/transact-types';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const IMPACT_WARN_PERCENT = 1 / 100;
 const IMPACT_CONFIRM_PERCENT = 5 / 100;
@@ -28,6 +32,8 @@ export const PriceImpactNotice = memo<PriceImpactNoticeProps>(function PriceImpa
   const AlertComponent = shouldConfirm ? AlertError : AlertWarning;
   const isZap = isZapQuote(quote);
   const priceImpact = isZap ? quote.priceImpact : 0;
+  const isInvalidCowcentratedDeposit =
+    isCowcentratedDepositQuote(quote) && quote.outputs.every(quote => quote.amount.lte(BIG_ZERO));
 
   useEffect(() => {
     if (isZap && priceImpact >= IMPACT_WARN_PERCENT) {
@@ -44,7 +50,19 @@ export const PriceImpactNotice = memo<PriceImpactNoticeProps>(function PriceImpa
       setShouldConfirm(false);
       setConfirmed(false);
     }
-  }, [isZap, priceImpact, setShouldWarn, setShouldConfirm, setConfirmed]);
+    if (isInvalidCowcentratedDeposit) {
+      setShouldWarn(false);
+      setShouldConfirm(false);
+      setConfirmed(false);
+    }
+  }, [
+    isZap,
+    priceImpact,
+    setShouldWarn,
+    setShouldConfirm,
+    setConfirmed,
+    isInvalidCowcentratedDeposit,
+  ]);
 
   useEffect(() => {
     onChange(shouldConfirm && !confirmed);

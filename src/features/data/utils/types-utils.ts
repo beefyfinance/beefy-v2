@@ -23,6 +23,12 @@ export type ChangeTypeOfKeys<T extends object, Keys extends keyof T, NewType> = 
   [K in keyof T]: K extends Keys ? NewType : T[K];
 };
 
+export type NullToUndefined<T> = T extends null ? Exclude<T | undefined, null> : T;
+
+export type MapNullToUndefined<T extends object> = {
+  [K in keyof T]: NullToUndefined<T[K]>;
+};
+
 type Web3KeepTypes = boolean;
 type Web3ConvertType<T> = T extends Array<infer U>
   ? Web3ConvertType<U>[]
@@ -44,3 +50,9 @@ export type EnsureKeys<
 > = {
   [key in TKey]: TObj[key];
 };
+
+/** Return type of 1-level deep promise or never */
+export type PromiseReturnType<T> = T extends PromiseLike<infer U> ? U : never;
+
+/** Excludes keys whose value type is never */
+export type OmitNever<T> = { [K in keyof T as T[K] extends never ? never : K]: T[K] };

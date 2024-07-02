@@ -43,9 +43,12 @@ export type FilteredVaultsState = {
   onlyBoosted: boolean;
   onlyZappable: boolean;
   onlyEarningPoints: boolean;
+  onlyUnstakedClm: boolean;
   filteredVaultIds: VaultEntity['id'][];
   sortedFilteredVaultIds: VaultEntity['id'][];
-  minimumTotalSupply: BigNumber;
+  showMinimumUnderlyingTvl: boolean;
+  showMinimumUnderlyingTvlLarge: boolean;
+  minimumUnderlyingTvl: BigNumber;
 };
 export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
 
@@ -67,9 +70,12 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   onlyBoosted: false,
   onlyZappable: false,
   onlyEarningPoints: false,
+  onlyUnstakedClm: false,
   filteredVaultIds: [],
   sortedFilteredVaultIds: [],
-  minimumTotalSupply: BIG_ZERO,
+  showMinimumUnderlyingTvl: false,
+  showMinimumUnderlyingTvlLarge: false,
+  minimumUnderlyingTvl: BIG_ZERO,
 };
 
 export const filteredVaultsSlice = createSlice({
@@ -113,6 +119,7 @@ export const filteredVaultsSlice = createSlice({
     setUserCategory(sliceState, action: PayloadAction<FilteredVaultsState['userCategory']>) {
       sliceState.reseted = false;
       sliceState.userCategory = action.payload;
+      sliceState.onlyUnstakedClm = false; // reset this filter when user category changes
     },
     setAssetType(sliceState, action: PayloadAction<FilteredVaultsState['assetType']>) {
       sliceState.reseted = false;
@@ -156,7 +163,7 @@ export const filteredVaultsSlice = createSlice({
       .addCase(fetchAllVaults.fulfilled, (state, action) => {
         if (state.filteredVaultIds.length === 0) {
           const allVaultIds = Object.values(action.payload.byChainId).flatMap(vaults =>
-            vaults.map(v => v.id)
+            vaults.map(v => v.entity.id)
           );
           state.filteredVaultIds = allVaultIds;
           state.sortedFilteredVaultIds = allVaultIds;
@@ -182,7 +189,7 @@ export const userCategoryTransform = createTransform(
 export const bigNumberTransform = createTransform(
   (bigNumber: BigNumber) => bigNumber.toString(),
   (storedBigNumber: string) => new BigNumber(storedBigNumber),
-  { whitelist: ['minimumTotalSupply'] }
+  { whitelist: ['minimumUnderlyingTvl'] }
 );
 
 export const chanIdsTransform = createTransform(

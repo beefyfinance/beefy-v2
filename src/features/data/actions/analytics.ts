@@ -18,7 +18,7 @@ import type {
   TimeBucketType,
   TimelineAnalyticsConfig,
 } from '../apis/analytics/analytics-types';
-import { isCowcentratedVault, type VaultEntity } from '../entities/vault';
+import { isCowcentratedVault, isStandardVault, type VaultEntity } from '../entities/vault';
 import { isFiniteNumber } from '../../../helpers/number';
 import {
   selectAllVaultsWithBridgedVersion,
@@ -138,12 +138,12 @@ function handleDatabarnTimeline(
   const bridgeVaultIds = selectAllVaultsWithBridgedVersion(state);
   const bridgeToBaseId = bridgeVaultIds.reduce(
     (accum: Partial<Record<ChainEntity['id'], BaseVault>>, vault) => {
-      if (vault.bridged) {
+      if (isStandardVault(vault) && vault.bridged) {
         for (const [chainId, address] of entries(vault.bridged)) {
           accum[`beefy:vault:${chainId}:${address.toLowerCase()}`] = {
             vaultId: vault.id,
             chainId: vault.chainId,
-            productKey: `beefy:vault:${vault.chainId}:${vault.earnContractAddress.toLowerCase()}`,
+            productKey: `beefy:vault:${vault.chainId}:${vault.contractAddress.toLowerCase()}`,
           };
         }
       }
@@ -216,22 +216,12 @@ function handleCowcentratedTimeline(
   timeline: CLMTimelineAnalyticsEntryWithoutVaultId[],
   state: BeefyState
 ): Record<VaultEntity['id'], CLMTimelineAnalyticsEntry[]> {
-  const [vaultTxs] = partition(timeline, tx => tx.productKey.startsWith('beefy:vault:'));
+  const vaultTxs = timeline.filter(tx => tx.productKey.startsWith('beefy:vault:'));
 
   const vaultTxsWithId = sortBy(
     vaultTxs.map(tx => {
-      const parts = tx.productKey.split(':');
-      if (
-        parts.length !== 4 ||
-        parts[0] !== 'beefy' ||
-        parts[1] !== 'vault' ||
-        parts[2] !== tx.chain
-      ) {
-        return { ...tx, vaultId: tx.displayName };
-      }
+      const vaultId = state.entities.vaults.byChainId[tx.chain]?.byAddress[tx.managerAddress];
 
-      const vaultId =
-        state.entities.vaults.byChainId[tx.chain]?.cowcentratedVault.byEarnedTokenAddress[parts[3]];
       return { ...tx, vaultId: vaultId || tx.displayName };
     }),
     tx => tx.datetime.getTime()
@@ -280,6 +270,9 @@ export const fetchWalletTimeline = createAsyncThunk<
 
     const clmTimelineProcessed = handleCowcentratedTimeline(
       clmTimeline.map((row): CLMTimelineAnalyticsEntryWithoutVaultId => {
+        const hasRewardPool =
+          !!row.reward_pool_address && !!row.reward_pool_balance && !!row.reward_pool_diff;
+
         return {
           type: 'cowcentrated',
           transactionId: makeTransactionId(row),
@@ -290,16 +283,30 @@ export const fetchWalletTimeline = createAsyncThunk<
           isEol: row.is_eol,
           isDashboardEol: row.is_dashboard_eol,
           transactionHash: row.transaction_hash,
+
           token0ToUsd: new BigNumber(row.token0_to_usd),
-          token1ToUsd: new BigNumber(row.token1_to_usd),
           underlying0Balance: new BigNumber(row.underlying0_balance),
-          underlying1Balance: new BigNumber(row.underlying1_balance),
           underlying0Diff: new BigNumber(row.underlying0_diff),
+
+          token1ToUsd: new BigNumber(row.token1_to_usd),
+          underlying1Balance: new BigNumber(row.underlying1_balance),
           underlying1Diff: new BigNumber(row.underlying1_diff),
+
           usdBalance: new BigNumber(row.usd_balance),
           usdDiff: new BigNumber(row.usd_diff),
+
           shareBalance: new BigNumber(row.share_balance),
           shareDiff: new BigNumber(row.share_diff),
+
+          managerBalance: new BigNumber(row.manager_balance),
+          managerDiff: new BigNumber(row.manager_diff),
+          managerAddress: row.manager_address,
+
+          rewardPoolBalance: hasRewardPool ? new BigNumber(row.reward_pool_balance!) : undefined,
+          rewardPoolDiff: hasRewardPool ? new BigNumber(row.reward_pool_diff!) : undefined,
+          rewardPoolAddress: hasRewardPool ? row.reward_pool_address! : undefined,
+
+          actions: row.actions,
         };
       }),
       state
@@ -340,7 +347,7 @@ export const fetchShareToUnderlying = createAsyncThunk<
     'vault',
     'share_to_underlying',
     timebucket,
-    vault.earnContractAddress,
+    vault.contractAddress,
     vault.chainId
   );
   return {
@@ -362,10 +369,7 @@ export const fetchClmHarvestsForUserVault = createAsyncThunk<
   { state: BeefyState }
 >('analytics/fetchClmHarvestsForUserVault', async ({ vaultId }, { getState }) => {
   const state = getState();
-  const { chainId, earnContractAddress: vaultAddress } = selectCowcentratedVaultById(
-    state,
-    vaultId
-  );
+  const { chainId, contractAddress: vaultAddress } = selectCowcentratedVaultById(state, vaultId);
   const api = await getClmApi();
   const harvests = await api.getHarvestsForVault(chainId, vaultAddress);
   return { harvests, vaultId, chainId };
@@ -393,7 +397,7 @@ export const fetchClmHarvestsForUser = createAsyncThunk<
       .filter(vault => selectUserHasCurrentDepositTimelineByVaultId(state, vault.id, walletAddress))
       .map(vault => ({
         id: vault.id,
-        address: vault.earnContractAddress.toLowerCase(),
+        address: vault.contractAddress.toLowerCase(),
         chainId: vault.chainId,
       }))
       .reduce((acc, vault) => {
@@ -448,7 +452,7 @@ export const fetchClmHarvestsForUserChain = createAsyncThunk<
         return since
           ? {
               id: vault.id,
-              address: vault.earnContractAddress.toLowerCase(),
+              address: vault.contractAddress.toLowerCase(),
               chainId: vault.chainId,
               since,
             }
@@ -623,7 +627,7 @@ export const recalculateClmHarvestsForUserVaultId = createAsyncThunk<
 
 interface FetchClmPendingRewardsFulfilledAction {
   data: ClmPendingRewardsResponse;
-  vaultId: VaultEntity['earnContractAddress'];
+  vaultId: VaultEntity['contractAddress'];
   chainId: ChainEntity['id'];
 }
 
@@ -635,7 +639,7 @@ export const fetchClmPendingRewards = createAsyncThunk<
   const state = getState();
   const vault = selectVaultById(state, vaultId);
 
-  const { chainId, earnContractAddress: vaultAddress } = vault;
+  const { chainId, contractAddress: vaultAddress } = vault;
 
   const { token0, token1 } = selectCowcentratedVaultDepositTokens(state, vaultId);
 

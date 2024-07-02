@@ -10,11 +10,16 @@ import type {
 import type { Step } from '../../../../reducers/wallet/stepper';
 import type { Namespace, TFunction } from 'react-i18next';
 
+const strategyId = 'vault' as const;
+type StrategyId = typeof strategyId;
+
 /**
  * This is just a wrapper around IVaultType to make it an IStrategy
+ * It does not need to conform to IZapStrategy
  */
-export class VaultStrategy<T extends IVaultType> implements IStrategy {
-  readonly id: string = 'vault';
+export class VaultStrategy<T extends IVaultType> implements IStrategy<StrategyId> {
+  public static readonly id = strategyId;
+  public readonly id = strategyId;
 
   constructor(protected readonly vaultType: T) {}
 

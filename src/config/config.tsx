@@ -9,7 +9,7 @@ export const config = {
     explorerUrl: 'https://etherscan.io',
     multicallAddress: '0x9dA9f3C6c45F1160b53D395b0A982aEEE1D212fE',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x00d3e26d17aEA6f5c7d2f442aAc68E679E454517',
+    appMulticallContractAddress: '0x47bec05dC291e61cd4360322eA44882cA468dD54',
     providerName: 'Ethereum',
     walletSettings: {
       chainId: `0x${parseInt('1', 10).toString(16)}`,
@@ -215,7 +215,7 @@ export const config = {
     explorerUrl: 'https://optimistic.etherscan.io',
     multicallAddress: '0x820ae7bf39792d7ce7befc70b0172f4d267f1938',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0xB089f6c9C99238FC6df256cc66d53Aed198584D9',
+    appMulticallContractAddress: '0x5e0388EFf1e18c13E5a2650879DdF1677893bDBc',
     providerName: 'Optimism',
     walletSettings: {
       chainId: `0x${parseInt('10', 10).toString(16)}`,
@@ -332,7 +332,7 @@ export const config = {
     explorerUrl: 'https://arbiscan.io',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x47bec05dC291e61cd4360322eA44882cA468dD54',
+    appMulticallContractAddress: '0x050b4081e41aB8474a24Dc8C5c50144c65F1b108',
     providerName: 'Arbitrum',
     walletSettings: {
       chainId: `0x${parseInt('42161', 10).toString(16)}`,

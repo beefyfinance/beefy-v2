@@ -40,6 +40,6 @@ export interface BoostBalance {
 
 export interface FetchAllBalancesResult {
   tokens: TokenBalance[];
-  govVaults: GovVaultBalance[];
+  govVaults: GovVaultV2Balance[];
   boosts: BoostBalance[];
 }

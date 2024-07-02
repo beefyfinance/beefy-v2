@@ -1,9 +1,10 @@
 import { memo } from 'react';
-import type { FallbackComponentProps } from './ErrorBoundary';
 import { AlertError } from '../Alerts';
+import type { FallbackComponentProps } from './types';
 
-// eslint-disable-next-line no-restricted-syntax
-export default memo<FallbackComponentProps>(function DevDefaultFallback({ error }) {
+export const DevDefaultFallback = memo<FallbackComponentProps>(function DevDefaultFallback({
+  error,
+}) {
   return (
     <AlertError>
       <div>An error was thrown from a component</div>

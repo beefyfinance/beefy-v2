@@ -68,10 +68,21 @@ const StandardAmountStat = memo<TransactionStatProps<VaultTimelineAnalyticsEntry
 const CowcentratedAmountStat = memo<TransactionStatProps<CLMTimelineAnalyticsEntry>>(
   function CowcentratedAmountStat({ tx, mobile }) {
     const classes = useStyles();
-    const { underlying0Diff, underlying1Diff } = tx;
+    const { underlying0Diff, underlying1Diff, shareDiff, actions, managerDiff } = tx;
     const { token0, token1 } = useAppSelector(state =>
       selectCowcentratedVaultDepositTokens(state, tx.vaultId)
     );
+    const action = useMemo(() => {
+      if (shareDiff.isZero() && actions.length === 2) {
+        if (actions.includes('REWARD_POOL_UNSTAKE') && actions.includes('MANAGER_DEPOSIT')) {
+          return 'Pool → CLM';
+        } else if (actions.includes('MANAGER_WITHDRAW') && actions.includes('REWARD_POOL_STAKE')) {
+          return 'CLM → Pool';
+        }
+      }
+
+      return undefined;
+    }, [shareDiff, actions]);
     const variant0 = underlying0Diff.isZero()
       ? 'neutral'
       : underlying0Diff.gt(BIG_ZERO)
@@ -85,18 +96,27 @@ const CowcentratedAmountStat = memo<TransactionStatProps<CLMTimelineAnalyticsEnt
 
     return (
       <div className={classes.cowcentratedTokenAmounts}>
-        <TokenIconAmount
-          token={token0}
-          amount={underlying0Diff}
-          mobile={mobile}
-          variant={variant0}
-        />
-        <TokenIconAmount
-          token={token1}
-          amount={underlying1Diff}
-          mobile={mobile}
-          variant={variant1}
-        />
+        {action ? (
+          <div className={mobile ? classes.actionMobile : classes.action}>
+            <TokenAmount amount={managerDiff.abs()} decimals={18} />
+            <div>{action}</div>
+          </div>
+        ) : (
+          <>
+            <TokenIconAmount
+              token={token0}
+              amount={underlying0Diff}
+              mobile={mobile}
+              variant={variant0}
+            />
+            <TokenIconAmount
+              token={token1}
+              amount={underlying1Diff}
+              mobile={mobile}
+              variant={variant1}
+            />
+          </>
+        )}
       </div>
     );
   }

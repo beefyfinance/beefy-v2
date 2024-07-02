@@ -2,11 +2,11 @@ import type { VaultEntity } from '../entities/vault';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity } from '../entities/token';
 import type { PlatformEntity } from '../entities/platform';
-import type { StrategyOptions } from './transact/strategies/IStrategy';
 import type { ZapFee } from './transact/transact-types';
 import type { ChangeTypeOfKeys } from '../utils/types-utils';
 import type BigNumber from 'bignumber.js';
 import type { Address } from 'viem';
+import type { ZapStrategyConfig } from './transact/strategies/strategy-configs';
 
 export interface VaultConfig {
   id: string;
@@ -20,13 +20,22 @@ export interface VaultConfig {
   tokenDecimals: number;
   depositTokenAddresses?: string[];
   tokenProviderId?: PlatformEntity['id'];
-  zaps?: StrategyOptions[];
-  earnedToken: string;
-  earnedTokenAddress: string;
-  earnedTokenDecimals?: number | null;
+  zaps?: ZapStrategyConfig[];
+
+  earnedToken: string; // multi gov vaults have it as the receiptToken
+
+  earnOracleId?: string; //multi gov vault receiptToken
+
+  earnedTokenAddress?: string; // only missing in multi gov vaults
+  earnedTokenDecimals?: number | null; // only missing in multi gov vaults
+
+  earnedTokenAddresses?: string[]; // only available in multi gov vaults
+
   earnContractAddress: string;
   oracle: string; // 'tokens' | 'lps';
-  oracleId: TokenEntity['id'];
+
+  oracleId: TokenEntity['id']; // only missing in multi gov vaults
+
   status: string; // 'active' | 'eol' | 'paused';
   platformId: PlatformEntity['id'];
   assets?: TokenEntity['id'][];

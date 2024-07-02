@@ -10,6 +10,7 @@ import {
 import type { VaultEntity } from '../../../../data/entities/vault';
 import { styles } from './styles';
 import { BIG_ZERO } from '../../../../../helpers/big-number';
+import { selectCowcentratedLikeVaultById } from '../../../../data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 
@@ -20,11 +21,11 @@ export const CowcentratedRanges = memo(function CowcentratedRanges({
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
+  const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
   const { currentPrice, priceRangeMin, priceRangeMax } = useAppSelector(state =>
-    selectCurrentCowcentratedRangesByVaultId(state, vaultId)
+    selectCurrentCowcentratedRangesByVaultId(state, vault.cowcentratedId)
   );
-
-  const symbols = useAppSelector(state => selectVaultTokenSymbols(state, vaultId));
+  const symbols = useAppSelector(state => selectVaultTokenSymbols(state, vault.cowcentratedId));
   const priceString = `${symbols[1]}/${symbols[0]}`;
 
   const showInRange = useMemo(() => {

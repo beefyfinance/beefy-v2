@@ -212,7 +212,7 @@ const TooltipPricePerFullShare = memo(function TooltipPricePerFullShare() {
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const earnedToken = useAppSelector(state =>
-    selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
+    selectTokenByAddress(state, vault.chainId, vault.contractAddress)
   );
 
   return (

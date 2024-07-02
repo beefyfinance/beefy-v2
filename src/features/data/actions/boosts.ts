@@ -10,6 +10,7 @@ import { selectChainById } from '../selectors/chains';
 import { selectErc20TokenByAddress } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
 import type { BoostCampaignConfig, BoostConfig, BoostPartnerConfig } from '../apis/config-types';
+import { isGovVault } from '../entities/vault';
 
 // given the list of vaults is pulled from some api at some point
 // we use the api to create an action
@@ -55,6 +56,10 @@ export const initiateBoostForm = createAsyncThunk<
 >('boosts/initBoostForm', async ({ boostId, mode, walletAddress }, { getState }) => {
   const boost = selectBoostById(getState(), boostId);
   const vault = selectVaultById(getState(), boost.vaultId);
+  if (isGovVault(vault)) {
+    throw new Error(`Gov vaults do not support boosts`);
+  }
+
   const chain = selectChainById(getState(), boost.chainId);
 
   const balanceApi = await getBalanceApi(chain);
@@ -63,13 +68,13 @@ export const initiateBoostForm = createAsyncThunk<
     ? await balanceApi.fetchAllBalances(getState(), [], [], [boost], walletAddress)
     : { tokens: [], boosts: [], govVaults: [] };
 
-  const spenderAddress = boost.earnContractAddress;
+  const spenderAddress = boost.contractAddress;
 
   const allowanceApi = await getAllowanceApi(chain);
   const mooToken = selectErc20TokenByAddress(
     getState(),
     boost.chainId,
-    vault.earnedTokenAddress,
+    vault.receiptTokenAddress,
     false
   );
   const allowanceRes =

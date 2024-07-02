@@ -31,6 +31,7 @@ declare module '@material-ui/core/styles/createPalette' {
       gov: string;
       boost: string;
       clm: string;
+      clmPool: string;
       inactive: string;
     };
     txsModal: {

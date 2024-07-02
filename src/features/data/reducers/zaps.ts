@@ -153,8 +153,8 @@ export const zapsSlice = createSlice({
         sliceState.vaults.byId = Object.values(action.payload.byChainId)
           .flat()
           .reduce((acc, vault) => {
-            if (vault.type === 'standard' && isNonEmptyArray(vault.zaps)) {
-              acc[vault.id] = true;
+            if (isNonEmptyArray(vault.entity.zaps)) {
+              acc[vault.entity.id] = true;
             }
             return acc;
           }, {} as Record<VaultEntity['id'], boolean>);

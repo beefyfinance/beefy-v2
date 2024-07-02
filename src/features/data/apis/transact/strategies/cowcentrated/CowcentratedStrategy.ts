@@ -1,4 +1,10 @@
-import type { CowcentratedStrategyOptions, IStrategy, ZapTransactHelpers } from '../IStrategy';
+import type {
+  IComposableStrategy,
+  IComposableStrategyStatic,
+  UserlessZapDepositBreakdown,
+  UserlessZapWithdrawBreakdown,
+  ZapTransactHelpers,
+} from '../IStrategy';
 import {
   type CowcentratedZapDepositOption,
   type CowcentratedZapDepositQuote,
@@ -54,6 +60,8 @@ import { walletActions } from '../../../../actions/wallet-actions';
 import BigNumber from 'bignumber.js';
 import { isCowcentratedVault, type VaultCowcentrated } from '../../../../entities/vault';
 import { type ICowcentratedVaultType, isCowcentratedVaultType } from '../../vaults/IVaultType';
+import type { CowcentratedStrategyConfig } from '../strategy-configs';
+import { QuoteCowcentratedNoSingleSideError, QuoteCowcentratedNotCalmError } from '../error';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -62,14 +70,21 @@ type ZapHelpers = {
   clmPool: BeefyCLMPool;
 };
 
-export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
-  implements IStrategy
-{
-  public readonly id = 'cowcentrated';
+const strategyId = 'cowcentrated' as const;
+type StrategyId = typeof strategyId;
+
+class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
+  public static readonly id = strategyId;
+  public static readonly composable = true;
+  public readonly id = strategyId;
+
   protected readonly vault: VaultCowcentrated;
   protected readonly vaultType: ICowcentratedVaultType;
 
-  constructor(protected options: TOptions, protected helpers: ZapTransactHelpers) {
+  constructor(
+    protected options: CowcentratedStrategyConfig,
+    protected helpers: ZapTransactHelpers
+  ) {
     const { vault, vaultType } = this.helpers;
     if (!isCowcentratedVault(vault)) {
       throw new Error('Vault is not a cowcentrated vault');
@@ -79,6 +94,10 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     }
     this.vault = vault;
     this.vaultType = vaultType;
+  }
+
+  getHelpers(): ZapTransactHelpers {
+    return this.helpers;
   }
 
   async fetchDepositOptions(): Promise<CowcentratedZapDepositOption[]> {
@@ -128,113 +147,118 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     }
   }
 
+  async fetchDepositUserlessZapBreakdown(
+    quote: CowcentratedZapDepositQuote
+  ): Promise<UserlessZapDepositBreakdown> {
+    const state = this.helpers.getState();
+    const chain = selectChainById(state, this.vault.chainId);
+    const clmPool = new BeefyCLMPool(
+      this.vault.contractAddress,
+      selectVaultStrategyAddress(state, this.vault.id),
+      chain,
+      this.vaultType.depositTokens
+    );
+    const slippage = selectTransactSlippage(state);
+    const zapHelpers: ZapHelpers = { chain, slippage, state, clmPool };
+    const steps: ZapStep[] = [];
+    const minBalances = new Balances(quote.inputs);
+    const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
+    const depositQuote = quote.steps.find(isZapQuoteStepDeposit);
+
+    if (!depositQuote || swapQuotes.length > 2) {
+      throw new Error('Invalid quote');
+    }
+
+    // Swaps
+    const insertBalance = allTokensAreDistinct(
+      swapQuotes
+        .map(quoteStep => quoteStep.fromToken)
+        .concat(depositQuote.inputs.map(({ token }) => token))
+    );
+    const swapZaps = await Promise.all(
+      swapQuotes.map(quoteStep => this.fetchZapSwap(quoteStep, zapHelpers, insertBalance))
+    );
+    swapZaps.forEach(swap => {
+      // add step to order
+      swap.zaps.forEach(step => steps.push(step));
+      // track the minimum balances for use in further steps
+      minBalances.subtractMany(swap.inputs);
+      minBalances.addMany(swap.minOutputs);
+    });
+
+    // Deposit
+    const depositZap = await this.fetchZapDepositCLM(
+      depositQuote,
+      depositQuote.inputs.map(({ token }) => ({
+        token,
+        amount: minBalances.get(token), // we have to pass min expected in case swaps slipped
+      })),
+      zapHelpers
+    );
+    depositZap.zaps.forEach(step => steps.push(step));
+    minBalances.subtractMany(depositZap.inputs);
+    minBalances.addMany(depositZap.minOutputs);
+
+    // Build order
+    const inputs: OrderInput[] = quote.inputs.map(input => ({
+      token: getTokenAddress(input.token),
+      amount: toWeiString(input.amount, input.token.decimals),
+    }));
+
+    const requiredOutputs: OrderOutput[] = depositZap.outputs.map(output => ({
+      token: getTokenAddress(output.token),
+      minOutputAmount: toWeiString(
+        slipBy(output.amount, slippage, output.token.decimals),
+        output.token.decimals
+      ),
+    }));
+
+    // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
+    const dustOutputs: OrderOutput[] = pickTokens(quote.outputs, quote.inputs, quote.returned).map(
+      token => ({
+        token: getTokenAddress(token),
+        minOutputAmount: '0',
+      })
+    );
+
+    swapQuotes.forEach(quoteStep => {
+      dustOutputs.push({
+        token: getTokenAddress(quoteStep.fromToken),
+        minOutputAmount: '0',
+      });
+      dustOutputs.push({
+        token: getTokenAddress(quoteStep.toToken),
+        minOutputAmount: '0',
+      });
+    });
+
+    // @dev uniqBy: first occurrence of each element is kept.
+    const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
+
+    // Perform TX
+    const zapRequest: UserlessZapRequest = {
+      order: {
+        inputs,
+        outputs,
+        relay: NO_RELAY,
+      },
+      steps,
+    };
+
+    return {
+      zapRequest,
+      expectedTokens: depositZap.outputs.map(output => output.token),
+      minBalances,
+    };
+  }
+
   async fetchDepositStep(
     quote: CowcentratedZapDepositQuote,
     t: TFunction<Namespace>
   ): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
-      const state = getState();
-      const chain = selectChainById(state, this.vault.chainId);
-      const clmPool = new BeefyCLMPool(
-        this.vault.earnContractAddress,
-        selectVaultStrategyAddress(state, this.vault.id),
-        chain,
-        this.vaultType.depositTokens
-      );
-      const slippage = selectTransactSlippage(state);
-      const zapHelpers: ZapHelpers = { chain, slippage, state, clmPool };
-      const steps: ZapStep[] = [];
-      const minBalances = new Balances(quote.inputs);
-      const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
-      const depositQuote = quote.steps.find(isZapQuoteStepDeposit);
+      const { zapRequest, expectedTokens } = await this.fetchDepositUserlessZapBreakdown(quote);
 
-      if (!depositQuote || swapQuotes.length > 2) {
-        throw new Error('Invalid quote');
-      }
-
-      // Swaps
-      const insertBalance = allTokensAreDistinct(
-        swapQuotes
-          .map(quoteStep => quoteStep.fromToken)
-          .concat(depositQuote.inputs.map(({ token }) => token))
-      );
-      const swapZaps = await Promise.all(
-        swapQuotes.map(quoteStep => this.fetchZapSwap(quoteStep, zapHelpers, insertBalance))
-      );
-      swapZaps.forEach(swap => {
-        // add step to order
-        swap.zaps.forEach(step => steps.push(step));
-        // track the minimum balances for use in further steps
-        minBalances.subtractMany(swap.inputs);
-        minBalances.addMany(swap.minOutputs);
-      });
-
-      // Deposit
-      const depositZap = await this.fetchZapDepositCLM(
-        depositQuote,
-        depositQuote.inputs.map(({ token }) => ({
-          token,
-          amount: minBalances.get(token), // we have to pass min expected in case swaps slipped
-        })),
-        zapHelpers
-      );
-      depositZap.zaps.forEach(step => steps.push(step));
-      minBalances.subtractMany(depositZap.inputs);
-      minBalances.addMany(depositZap.minOutputs);
-
-      // Build order
-      const inputs: OrderInput[] = quote.inputs.map(input => ({
-        token: getTokenAddress(input.token),
-        amount: toWeiString(input.amount, input.token.decimals),
-      }));
-
-      const requiredOutputs: OrderOutput[] = depositZap.outputs.map(output => ({
-        token: getTokenAddress(output.token),
-        minOutputAmount: toWeiString(
-          slipBy(output.amount, slippage, output.token.decimals),
-          output.token.decimals
-        ),
-      }));
-
-      // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
-      const dustOutputs: OrderOutput[] = pickTokens(
-        quote.outputs,
-        quote.inputs,
-        quote.returned
-      ).map(token => ({
-        token: getTokenAddress(token),
-        minOutputAmount: '0',
-      }));
-
-      swapQuotes.forEach(quoteStep => {
-        dustOutputs.push({
-          token: getTokenAddress(quoteStep.fromToken),
-          minOutputAmount: '0',
-        });
-        dustOutputs.push({
-          token: getTokenAddress(quoteStep.toToken),
-          minOutputAmount: '0',
-        });
-      });
-      // dustOutputs.push({
-      //   token: getTokenAddress(buildQuote.outputToken),
-      //   minOutputAmount: '0',
-      // });
-
-      // @dev uniqBy: first occurrence of each element is kept.
-      const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
-
-      // Perform TX
-      const zapRequest: UserlessZapRequest = {
-        order: {
-          inputs,
-          outputs,
-          relay: NO_RELAY,
-        },
-        steps,
-      };
-
-      const expectedTokens = depositZap.outputs.map(output => output.token);
       const walletAction = walletActions.zapExecuteOrder(
         quote.option.vaultId,
         zapRequest,
@@ -377,98 +401,108 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     };
   }
 
+  async fetchWithdrawUserlessZapBreakdown(
+    quote: CowcentratedZapWithdrawQuote
+  ): Promise<UserlessZapWithdrawBreakdown> {
+    const state = this.helpers.getState();
+    const chain = selectChainById(state, this.vault.chainId);
+    const clmPool = new BeefyCLMPool(
+      this.vaultType.shareToken.address,
+      selectVaultStrategyAddress(state, this.vault.id),
+      chain,
+      this.vaultType.depositTokens
+    );
+    const slippage = selectTransactSlippage(state);
+    const zapHelpers: ZapHelpers = { chain, slippage, state, clmPool };
+    const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
+    const steps: ZapStep[] = [];
+
+    // Step 1: Withdraw from CLM
+    const vaultWithdrawn = await this.vaultType.fetchZapWithdraw({
+      inputs: quote.inputs,
+    });
+    steps.push(vaultWithdrawn.zap);
+
+    // Step 2: Swap(s)
+    if (swapQuotes.length < 1) {
+      throw new Error('Invalid withdraw quote: no swap steps');
+    }
+    if (swapQuotes.length > 2) {
+      throw new Error('Invalid withdraw quote: too many swap steps');
+    }
+
+    const insertBalance = allTokensAreDistinct(swapQuotes.map(quoteStep => quoteStep.fromToken));
+
+    // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
+    const lastSwapIndex = swapQuotes.length - 1;
+    const swapZaps = await Promise.all(
+      swapQuotes.map((quoteStep, i) =>
+        this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i)
+      )
+    );
+    swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
+
+    // Build order
+    const inputs: OrderInput[] = quote.inputs.map(input => ({
+      token: getTokenAddress(input.token),
+      amount: toWeiString(input.amount, input.token.decimals),
+    }));
+
+    const requiredOutputs: OrderOutput[] = quote.outputs.map(output => ({
+      token: getTokenAddress(output.token),
+      minOutputAmount: toWeiString(
+        slipBy(output.amount, slippage, output.token.decimals),
+        output.token.decimals
+      ),
+    }));
+
+    // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
+    const dustOutputs: OrderOutput[] = pickTokens(quote.outputs, quote.inputs, quote.returned).map(
+      token => ({
+        token: getTokenAddress(token),
+        minOutputAmount: '0',
+      })
+    );
+
+    swapQuotes.forEach(quoteStep => {
+      dustOutputs.push({
+        token: getTokenAddress(quoteStep.fromToken),
+        minOutputAmount: '0',
+      });
+      dustOutputs.push({
+        token: getTokenAddress(quoteStep.toToken),
+        minOutputAmount: '0',
+      });
+    });
+
+    // @dev uniqBy: first occurrence of each element is kept -> required outputs are kept
+    const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
+
+    // Perform TX
+    const zapRequest: UserlessZapRequest = {
+      order: {
+        inputs,
+        outputs,
+        relay: NO_RELAY,
+      },
+      steps,
+    };
+
+    const expectedTokens = quote.outputs.map(output => output.token);
+
+    return {
+      zapRequest,
+      expectedTokens,
+    };
+  }
+
   async fetchWithdrawStep(
     quote: CowcentratedZapWithdrawQuote,
     t: TFunction<Namespace>
   ): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
-      const state = getState();
-      const chain = selectChainById(state, this.vault.chainId);
-      const clmPool = new BeefyCLMPool(
-        this.vaultType.shareToken.address,
-        selectVaultStrategyAddress(state, this.vault.id),
-        chain,
-        this.vaultType.depositTokens
-      );
-      const slippage = selectTransactSlippage(state);
-      const zapHelpers: ZapHelpers = { chain, slippage, state, clmPool };
-      const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
-      const steps: ZapStep[] = [];
+      const { zapRequest, expectedTokens } = await this.fetchWithdrawUserlessZapBreakdown(quote);
 
-      // Step 1: Withdraw from CLM
-      const vaultWithdrawn = await this.vaultType.fetchZapWithdraw({
-        inputs: quote.inputs,
-      });
-      steps.push(vaultWithdrawn.zap);
-
-      // Step 2: Swap(s)
-      if (swapQuotes.length < 1) {
-        throw new Error('Invalid withdraw quote: no swap steps');
-      }
-      if (swapQuotes.length > 2) {
-        throw new Error('Invalid withdraw quote: too many swap steps');
-      }
-
-      const insertBalance = allTokensAreDistinct(swapQuotes.map(quoteStep => quoteStep.fromToken));
-
-      // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
-      const lastSwapIndex = swapQuotes.length - 1;
-      const swapZaps = await Promise.all(
-        swapQuotes.map((quoteStep, i) =>
-          this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i)
-        )
-      );
-      swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
-
-      // Build order
-      const inputs: OrderInput[] = quote.inputs.map(input => ({
-        token: getTokenAddress(input.token),
-        amount: toWeiString(input.amount, input.token.decimals),
-      }));
-
-      const requiredOutputs: OrderOutput[] = quote.outputs.map(output => ({
-        token: getTokenAddress(output.token),
-        minOutputAmount: toWeiString(
-          slipBy(output.amount, slippage, output.token.decimals),
-          output.token.decimals
-        ),
-      }));
-
-      // We need to list all inputs, and mid-route outputs, as outputs so dust gets returned
-      const dustOutputs: OrderOutput[] = pickTokens(
-        quote.outputs,
-        quote.inputs,
-        quote.returned
-      ).map(token => ({
-        token: getTokenAddress(token),
-        minOutputAmount: '0',
-      }));
-
-      swapQuotes.forEach(quoteStep => {
-        dustOutputs.push({
-          token: getTokenAddress(quoteStep.fromToken),
-          minOutputAmount: '0',
-        });
-        dustOutputs.push({
-          token: getTokenAddress(quoteStep.toToken),
-          minOutputAmount: '0',
-        });
-      });
-
-      // @dev uniqBy: first occurrence of each element is kept -> required outputs are kept
-      const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
-
-      // Perform TX
-      const zapRequest: UserlessZapRequest = {
-        order: {
-          inputs,
-          outputs,
-          relay: NO_RELAY,
-        },
-        steps,
-      };
-
-      const expectedTokens = quote.outputs.map(output => output.token);
       const walletAction = walletActions.zapExecuteOrder(
         quote.option.vaultId,
         zapRequest,
@@ -517,7 +551,7 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     const strategy = selectVaultStrategyAddress(state, this.vault.id);
     const chain = selectChainById(state, this.vault.chainId);
     const clmPool = new BeefyCLMPool(
-      this.vault.earnContractAddress,
+      this.vault.contractAddress,
       strategy,
       chain,
       this.vaultType.depositTokens
@@ -597,6 +631,15 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
 
     const { isCalm, liquidity, used0, used1, unused0, unused1, position1, position0 } =
       await clmPool.previewDeposit(lpTokenAmounts[0].amount, lpTokenAmounts[1].amount);
+
+    if (liquidity.lte(BIG_ZERO)) {
+      throw new QuoteCowcentratedNoSingleSideError(lpTokenAmounts);
+    }
+
+    if (!isCalm) {
+      throw new QuoteCowcentratedNotCalmError();
+    }
+
     const depositUsed = [used0, used1].map((amount, i) => ({
       token: this.vaultType.depositTokens[i],
       amount: fromWei(amount, this.vaultType.depositTokens[i].decimals),
@@ -810,7 +853,10 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
           this.vaultType.shareToken.address,
           toWei(inputs[0].amount, inputs[0].token.decimals),
           toWei(inputs[1].amount, inputs[1].token.decimals),
-          toWei(outputs[0].amount, outputs[0].token.decimals),
+          toWei(
+            slipBy(outputs[0].amount, maxSlippage, outputs[0].token.decimals),
+            outputs[0].token.decimals
+          ),
           inputs[0].token.address,
           inputs[1].token.address,
           insertBalance
@@ -868,3 +914,6 @@ export class CowcentratedStrategy<TOptions extends CowcentratedStrategyOptions>
     };
   }
 }
+
+export const CowcentratedStrategy =
+  CowcentratedStrategyImpl satisfies IComposableStrategyStatic<StrategyId>;

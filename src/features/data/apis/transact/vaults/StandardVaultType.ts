@@ -69,7 +69,7 @@ export class StandardVaultType implements IStandardVaultType {
     this.vault = vault;
     this.depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
-    const shareToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
+    const shareToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
     if (!isTokenErc20(shareToken)) {
       throw new Error('Share token is not an ERC20 token');
     }
@@ -99,7 +99,7 @@ export class StandardVaultType implements IStandardVaultType {
     const web3 = await getWeb3Instance(chain);
     const vaultContract = new web3.eth.Contract(
       StandardVaultAbi as unknown as AbiItem[],
-      this.vault.earnContractAddress
+      this.vault.contractAddress
     );
     const ppfsRaw = await vaultContract.methods.getPricePerFullShare().call();
     const ppfs = new BigNumber(ppfsRaw);
@@ -121,9 +121,9 @@ export class StandardVaultType implements IStandardVaultType {
       outputs,
       minOutputs: outputs,
       zap: isTokenNative(input.token)
-        ? this.fetchNativeZapDeposit(this.vault.earnContractAddress, input.token, input.amount)
+        ? this.fetchNativeZapDeposit(this.vault.contractAddress, input.token, input.amount)
         : this.fetchErc20ZapDeposit(
-            this.vault.earnContractAddress,
+            this.vault.contractAddress,
             input.token,
             input.amount,
             input.max
@@ -263,7 +263,7 @@ export class StandardVaultType implements IStandardVaultType {
           {
             token: input.token,
             amount: input.amount,
-            spenderAddress: this.vault.earnContractAddress,
+            spenderAddress: this.vault.contractAddress,
           },
         ]
       : [];
@@ -404,13 +404,13 @@ export class StandardVaultType implements IStandardVaultType {
       minOutputs: outputs,
       zap: isTokenNative(this.depositToken)
         ? this.fetchNativeZapWithdraw(
-            this.vault.earnContractAddress,
+            this.vault.contractAddress,
             this.shareToken,
             sharesToWithdrawWei,
             input.max
           )
         : this.fetchErc20ZapWithdraw(
-            this.vault.earnContractAddress,
+            this.vault.contractAddress,
             this.shareToken,
             sharesToWithdrawWei,
             input.max

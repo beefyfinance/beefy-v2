@@ -28,12 +28,12 @@ export type ClmPendingRewardsResponse = {
 export interface IClmApi {
   getHarvestsForVault(
     chainId: ChainEntity['id'],
-    vaultAddress: VaultEntity['earnContractAddress']
+    vaultAddress: VaultEntity['contractAddress']
   ): Promise<ClmVaultHarvestsResponse>;
 
   getHarvestsForVaultsSince(
     chainId: ChainEntity['id'],
-    vaultAddresses: VaultEntity['earnContractAddress'][],
+    vaultAddresses: VaultEntity['contractAddress'][],
     since: Date
   ): Promise<ClmVaultsHarvestsResponse>;
 
@@ -41,6 +41,6 @@ export interface IClmApi {
     state: BeefyState,
     chainId: ChainEntity['id'],
     stratAddress: string,
-    vaultAddress: VaultEntity['earnContractAddress']
+    vaultAddress: VaultEntity['contractAddress']
   ): Promise<ClmPendingRewardsResponse>;
 }

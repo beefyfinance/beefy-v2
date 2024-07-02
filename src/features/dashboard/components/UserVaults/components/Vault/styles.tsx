@@ -40,6 +40,9 @@ export const styles = (theme: Theme) => ({
   vaultClm: {
     backgroundColor: theme.palette.background.vaults.clm,
   },
+  vaultClmPool: {
+    backgroundColor: theme.palette.background.vaults.clmPool,
+  },
   vaultRetired: {
     backgroundColor: theme.palette.background.vaults.inactive,
   },

@@ -52,12 +52,12 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
   const boost = useAppSelector(state => selectBoostById(state, boostId));
   const vault = useAppSelector(state => selectStandardVaultById(state, boost.vaultId));
   const formState = useAppSelector(state => state.ui.boost);
-  const spenderAddress = boost.earnContractAddress;
+  const spenderAddress = boost.contractAddress;
   const needsApproval = useAppSelector(state =>
     selectIsApprovalNeededForBoostStaking(state, spenderAddress)
   );
   const mooToken = useAppSelector(state =>
-    selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
+    selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress)
   );
   const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
   const boostPendingRewards = useAppSelector(state =>

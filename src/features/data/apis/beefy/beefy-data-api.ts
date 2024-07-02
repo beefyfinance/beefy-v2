@@ -28,7 +28,7 @@ export class BeefyDataApi implements IBeefyDataApi {
   async getAvailableRanges(
     vaultId: VaultEntity['id'],
     oracleId: TokenEntity['oracleId'],
-    vaultAddress?: VaultEntity['earnContractAddress'],
+    vaultAddress?: VaultEntity['contractAddress'],
     chainId?: ChainEntity['id']
   ): Promise<ApiRanges> {
     const res = await this.data.get<ApiRanges>(`ranges/`, {
@@ -59,7 +59,7 @@ export class BeefyDataApi implements IBeefyDataApi {
   }
 
   async getCowcentratedRangesChartData(
-    vaultAddress: VaultEntity['earnContractAddress'],
+    vaultAddress: VaultEntity['contractAddress'],
     bucket: ApiTimeBucket,
     chainId: ChainEntity['id']
   ): Promise<ApiCowcentratedChartData> {

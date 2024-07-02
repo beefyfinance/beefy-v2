@@ -1,15 +1,16 @@
 import type { ComponentType, ReactNode } from 'react';
 import React, { Fragment, memo, useCallback, useMemo } from 'react';
-import type {
-  TokenAmount,
-  ZapQuote,
-  ZapQuoteStep,
-  ZapQuoteStepBuild,
-  ZapQuoteStepDeposit,
-  ZapQuoteStepSplit,
-  ZapQuoteStepSwap,
-  ZapQuoteStepUnused,
-  ZapQuoteStepWithdraw,
+import {
+  isCowcentratedDepositQuote,
+  type TokenAmount,
+  type ZapQuote,
+  type ZapQuoteStep,
+  type ZapQuoteStepBuild,
+  type ZapQuoteStepDeposit,
+  type ZapQuoteStepSplit,
+  type ZapQuoteStepSwap,
+  type ZapQuoteStepUnused,
+  type ZapQuoteStepWithdraw,
 } from '../../../../../data/apis/transact/transact-types';
 import { Trans, useTranslation } from 'react-i18next';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
@@ -24,6 +25,7 @@ import { QuoteTitle } from '../QuoteTitle';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types';
 import { selectZapSwapProviderName } from '../../../../../data/selectors/zap';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
@@ -117,6 +119,39 @@ const StepContentDeposit = memo<StepContentProps<ZapQuoteStepDeposit>>(function 
   );
 });
 
+const StepContentStake = memo<StepContentProps<ZapQuoteStepDeposit>>(function StepContentDeposit({
+  step,
+}) {
+  const { t } = useTranslation();
+  const tokenAmounts = useTokenAmounts(step.inputs);
+  return (
+    <Trans
+      t={t}
+      i18nKey="Transact-Route-Step-Stake"
+      components={{
+        tokenAmounts: <ListJoin items={tokenAmounts} />,
+      }}
+    />
+  );
+});
+
+const StepContentUnstake = memo<StepContentProps<ZapQuoteStepWithdraw>>(
+  function StepContentWithdraw({ step }) {
+    const { t } = useTranslation();
+    const tokenAmounts = useTokenAmounts(step.outputs);
+
+    return (
+      <Trans
+        t={t}
+        i18nKey="Transact-Route-Step-Unstake"
+        components={{
+          tokenAmounts: <ListJoin items={tokenAmounts} />,
+        }}
+      />
+    );
+  }
+);
+
 const StepContentWithdraw = memo<StepContentProps<ZapQuoteStepWithdraw>>(
   function StepContentWithdraw({ step }) {
     const { t } = useTranslation();
@@ -195,6 +230,8 @@ const StepContentComponents: Record<
   withdraw: StepContentWithdraw,
   split: StepContentSplit,
   unused: StepContentUnused,
+  stake: StepContentStake,
+  unstake: StepContentUnstake,
 };
 
 type StepProps = {
@@ -228,6 +265,13 @@ export const ZapRoute = memo<ZapRouteProps>(function ZapRoute({ quote, className
   const handleSwitch = useCallback(() => {
     dispatch(transactActions.switchStep(TransactStep.QuoteSelect));
   }, [dispatch]);
+
+  if (
+    isCowcentratedDepositQuote(quote) &&
+    quote.outputs.every(output => output.amount.lte(BIG_ZERO))
+  ) {
+    return null;
+  }
 
   return (
     <div className={clsx(classes.holder, className)}>

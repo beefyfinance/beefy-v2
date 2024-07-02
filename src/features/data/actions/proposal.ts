@@ -1,10 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi } from '../apis/instances';
-import type { BeefySnapshotActiveResponse, BeefySnapshotProposal } from '../apis/beefy/beefy-api';
 import type { ProposalEntity } from '../entities/proposal';
 import { uniq } from 'lodash-es';
 import { selectAllProposalIds } from '../selectors/proposals';
+import type {
+  BeefySnapshotActiveResponse,
+  BeefySnapshotProposal,
+} from '../apis/beefy/beefy-api-types';
 
 const READ_STORAGE_KEY = 'readProposals';
 

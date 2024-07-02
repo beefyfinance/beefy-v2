@@ -30,6 +30,13 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-sm'],
     color: theme.palette.text.middle,
   },
+  action: {
+    ...theme.typography['body-lg-med'],
+    color: theme.palette.text.middle,
+  },
+  actionMobile: {
+    ...theme.typography['body-sm'],
+  },
   network: {
     display: 'block',
     marginRight: '8px',

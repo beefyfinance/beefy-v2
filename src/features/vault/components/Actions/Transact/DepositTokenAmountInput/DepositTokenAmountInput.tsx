@@ -38,21 +38,6 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
       [dispatch, token.decimals, index]
     );
 
-    const handleSliderChange = useCallback(
-      (value: number) => {
-        dispatch(
-          transactActions.setInputAmount({
-            index,
-            amount: userBalance
-              .multipliedBy(value / 100)
-              .decimalPlaces(token.decimals, BigNumber.ROUND_FLOOR),
-            max: value === 100,
-          })
-        );
-      },
-      [token.decimals, dispatch, userBalance, index]
-    );
-
     return (
       <AmountInputWithSlider
         className={className}
@@ -60,7 +45,6 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
         price={price}
         maxValue={userBalance}
         onChange={handleChange}
-        onSliderChange={handleSliderChange}
         selectedToken={token}
         endAdornment={<TokenSelectButton index={index} />}
       />

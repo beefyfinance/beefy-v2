@@ -42,7 +42,7 @@ export interface IBeefyDataApi {
   getAvailableRanges(
     vaultId: VaultEntity['id'],
     oracleId: TokenEntity['oracleId'],
-    vaultAddress?: VaultEntity['earnContractAddress'],
+    vaultAddress?: VaultEntity['contractAddress'],
     chainId?: ChainEntity['id']
   ): Promise<ApiRanges>;
 
@@ -56,7 +56,7 @@ export interface IBeefyDataApi {
   ): Promise<ApiChartData>;
 
   getCowcentratedRangesChartData(
-    vaultAddress: VaultEntity['earnContractAddress'],
+    vaultAddress: VaultEntity['contractAddress'],
     bucket: ApiTimeBucket,
     chainId: ChainEntity['id']
   ): Promise<ApiCowcentratedChartData>;

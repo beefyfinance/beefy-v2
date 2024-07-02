@@ -1,1 +1,1 @@
-export * from './DepositForm';
+export { DepositFormLoader as default } from './DepositForm';

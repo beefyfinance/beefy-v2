@@ -34,14 +34,15 @@ export function asyncMap<T, U>(array: T[], mapper: (item: T) => Promise<U>): Pro
   return Promise.all(array.map(mapper));
 }
 
-export class PromiseSettledAwaiter<T = unknown> {
-  protected promises: Promise<T>[] = [];
+export class PromiseSettledAwaiter {
+  protected promises: Promise<unknown>[] = [];
 
-  add(promise: Promise<T>) {
+  add<T>(promise: Promise<T>): Promise<T> {
     this.promises.push(promise);
+    return promise;
   }
 
-  async wait(): Promise<PromiseSettledResult<Awaited<T>>[]> {
+  async wait(): Promise<PromiseSettledResult<Awaited<unknown>>[]> {
     const promises = [...this.promises];
     this.promises = [];
     return await Promise.allSettled(promises);

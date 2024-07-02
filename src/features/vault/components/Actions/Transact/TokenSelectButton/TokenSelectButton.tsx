@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
-  selecTransactForceSelection,
+  selectTransactForceSelection,
   selectTransactNumTokens,
   selectTransactOptionsMode,
   selectTransactSelected,
@@ -37,7 +37,7 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const numTokenOptions = useAppSelector(selectTransactNumTokens);
-  const forceSelection = useAppSelector(selecTransactForceSelection);
+  const forceSelection = useAppSelector(selectTransactForceSelection);
   const mode = useAppSelector(selectTransactOptionsMode);
   const canSwitchToTokenSelect = index === 0 && numTokenOptions > 1;
 

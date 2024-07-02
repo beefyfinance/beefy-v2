@@ -1,9 +1,10 @@
-import type { VaultEntity } from '../entities/vault';
+import { isCowcentratedLikeVault, isCowcentratedVault, type VaultEntity } from '../entities/vault';
 import type { BeefyState } from '../../../redux-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { selectLpBreakdownForVault } from './tokens';
-import { getVaultUnderlyingTvlAndBeefySharePercent } from '../../../helpers/tvl';
+import { selectLpBreakdownForVault, selectTokenByAddress } from './tokens';
 import { selectVaultById } from './vaults';
+import { BigNumber } from 'bignumber.js';
+import type { TvlBreakdown } from './tvl-types';
 
 export const selectVaultTvl = (state: BeefyState, vaultId: VaultEntity['id']) =>
   state.biz.tvl.byVaultId[vaultId]?.tvl || BIG_ZERO;
@@ -12,11 +13,88 @@ export const selectVaultUnderlyingTvlUsd = (state: BeefyState, vaultId: VaultEnt
   const vault = selectVaultById(state, vaultId);
   const breakdown = selectLpBreakdownForVault(state, vault);
   if (!breakdown) return BIG_ZERO;
-  const tvl = selectVaultTvl(state, vault.id);
-  const { underlyingTvl } = getVaultUnderlyingTvlAndBeefySharePercent(vault, breakdown, tvl);
-  return underlyingTvl;
+
+  if (isCowcentratedLikeVault(vault) && 'underlyingPrice' in breakdown) {
+    return new BigNumber(breakdown.underlyingLiquidity || 0).times(breakdown.underlyingPrice || 0);
+  }
+
+  return new BigNumber(breakdown.totalSupply || 0).times(breakdown.price || 0);
 };
 
 export const selectTotalTvl = (state: BeefyState) => state.biz.tvl.totalTvl;
 
 export const selectTvlByChain = (state: BeefyState) => state.biz.tvl.byChaindId;
+
+function calculateShare(beefyTvl: BigNumber, underlyingTvl: BigNumber): number {
+  return Math.min(underlyingTvl.gt(BIG_ZERO) ? beefyTvl.div(underlyingTvl).toNumber() : 0, 1);
+}
+
+export const selectTvlBreakdownByVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): TvlBreakdown => {
+  const vault = selectVaultById(state, vaultId);
+  const isClmLike = isCowcentratedLikeVault(vault);
+  const vaultTvl = selectVaultTvl(state, vault.id);
+
+  // CLM with a pool or vault
+  if (isClmLike) {
+    const clmVault = isCowcentratedVault(vault)
+      ? vault
+      : selectVaultById(state, vault.cowcentratedId);
+    const clmBreakdown = selectLpBreakdownForVault(state, clmVault);
+    if (
+      !clmBreakdown ||
+      !('underlyingPrice' in clmBreakdown) ||
+      !clmBreakdown.underlyingPrice ||
+      !clmBreakdown.underlyingLiquidity
+    ) {
+      return { vaultTvl };
+    }
+
+    const underlyingTvl = new BigNumber(clmBreakdown.underlyingLiquidity).times(
+      clmBreakdown.underlyingPrice
+    );
+    const depositToken = selectTokenByAddress(
+      state,
+      clmVault.chainId,
+      clmVault.depositTokenAddress
+    );
+    const totalTvl = new BigNumber(clmBreakdown.totalSupply).times(clmBreakdown.price);
+
+    // If all the Beefy TVL is in this vault, we can skip further breakdown
+    if (totalTvl.minus(vaultTvl).lt(0.1)) {
+      return {
+        vaultTvl,
+        vaultShare: calculateShare(vaultTvl, underlyingTvl),
+        underlyingTvl,
+        underlyingPlatformId: depositToken.providerId,
+      };
+    }
+
+    return {
+      vaultType: isCowcentratedVault(vault) ? 'cowcentrated' : `cowcentrated-${vault.type}`,
+      vaultTvl,
+      vaultShare: calculateShare(vaultTvl, underlyingTvl),
+      totalType: clmVault.type,
+      totalTvl,
+      totalShare: calculateShare(totalTvl, underlyingTvl),
+      underlyingTvl,
+      underlyingPlatformId: depositToken.providerId,
+    };
+  }
+
+  const breakdown = selectLpBreakdownForVault(state, vault);
+  if (!breakdown) {
+    return { vaultTvl };
+  }
+
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const underlyingTvl = new BigNumber(breakdown.totalSupply).times(breakdown.price);
+  return {
+    vaultTvl,
+    vaultShare: calculateShare(vaultTvl, underlyingTvl),
+    underlyingTvl,
+    underlyingPlatformId: depositToken.providerId,
+  };
+};

@@ -100,7 +100,7 @@ export const VaultIdentity = memo<VaultNameProps>(function VaultIdentity({ vault
   return (
     <>
       <AssetsImage size={24} chainId={vault.chainId} assetSymbols={vaultTokenSymbols} />
-      <AssetName name={vault.name} />
+      <AssetName name={vault.names.list} />
     </>
   );
 });

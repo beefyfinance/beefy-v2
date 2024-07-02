@@ -10,7 +10,7 @@ import type { BoostEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { CowcentratedRanges, TokenEntity } from '../entities/token';
 import { isTokenErc20 } from '../entities/token';
-import type { VaultGov } from '../entities/vault';
+import { isGovVaultMulti, isGovVaultSingle, type VaultGov } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
 import { selectAllChains, selectChainById } from '../selectors/chains';
 import { selectGovVaultById } from '../selectors/vaults';
@@ -87,6 +87,9 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
     const chain = selectChainById(getState(), chainId);
 
     const govVault = govVaultId ? selectGovVaultById(getState(), govVaultId) : null;
+    const govVaultSingle = govVault && isGovVaultSingle(govVault) ? govVault : null;
+    const govVaultMulti = govVault && isGovVaultMulti(govVault) ? govVault : null;
+
     const boost = boostId ? selectBoostById(getState(), boostId) : null;
 
     if (boost) {
@@ -116,11 +119,12 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
       ? await contractDataApi.fetchAllContractData(
           getState(),
           [],
-          govVault ? [govVault] : [],
+          govVaultSingle ? [govVaultSingle] : [],
+          govVaultMulti ? [govVaultMulti] : [],
           [],
           boost ? [boost] : []
         )
-      : { boosts: [], govVaults: [], standardVaults: [], cowVaults: [] };
+      : { boosts: [], govVaults: [], govVaultsMulti: [], standardVaults: [], cowVaults: [] };
 
     return {
       walletAddress,

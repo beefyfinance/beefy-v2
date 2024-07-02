@@ -16,7 +16,7 @@ export const selectIsApprovalNeededForBoostStaking = (
   const boost = selectBoostById(state, boostId);
   const vault = selectStandardVaultById(state, boost.vaultId);
 
-  const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+  const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
   const allowance = selectAllowanceByTokenAddress(
     state,
     vault.chainId,

@@ -21,7 +21,7 @@ export function getVaultWithdrawnFromState(
   const withdrawAll = userInput.max;
   const withdrawnToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const requestedAmountWei = toWei(userInput.amount, withdrawnToken.decimals);
-  const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+  const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
   const totalSharesWei = toWei(
     selectUserBalanceOfToken(state, shareToken.chainId, shareToken.address, userAddress),
     shareToken.decimals
@@ -66,10 +66,10 @@ export async function getVaultWithdrawnFromContract(
   const withdrawAll = userInput.max;
   const withdrawnToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const requestedAmountWei = toWei(userInput.amount, withdrawnToken.decimals);
-  const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+  const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
   const vaultContract = new web3.eth.Contract(
     StandardVaultAbi as unknown as AbiItem[],
-    vault.earnContractAddress
+    vault.contractAddress
   );
   const vaultFees = selectFeesByVaultId(state, vault.id);
   const withdrawFee = vaultFees?.withdraw || 0;

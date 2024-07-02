@@ -3,7 +3,8 @@ import type { BeefyState } from '../../../../../redux-types';
 import type { TokenEntity } from '../../../entities/token';
 import type { QuoteRequest, QuoteResponse, SwapRequest, SwapResponse } from './ISwapProvider';
 import type { VaultEntity } from '../../../entities/vault';
-import type { StrategySwapOption } from '../strategies/IStrategy';
+
+import type { StrategySwapConfig } from '../strategies/strategy-configs';
 
 export type TokenSupport = {
   /** Tokens supported per input token */
@@ -20,7 +21,7 @@ export interface ISwapAggregator {
   fetchQuotes(
     request: QuoteRequest,
     state: BeefyState,
-    options?: StrategySwapOption
+    options?: StrategySwapConfig
   ): Promise<QuoteResponse[]>;
 
   /**
@@ -37,6 +38,6 @@ export interface ISwapAggregator {
     vaultId: VaultEntity['id'],
     chainId: ChainEntity['id'],
     state: BeefyState,
-    options?: StrategySwapOption
+    options?: StrategySwapConfig
   ): Promise<TokenSupport>;
 }

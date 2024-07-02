@@ -32,6 +32,7 @@ import {
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
 } from './zap';
+import { fetchMerklCampaignsAction } from './rewards';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 
@@ -77,6 +78,8 @@ export async function initAppData(store: BeefyStore) {
     store.dispatch(fetchBridges());
 
     store.dispatch(fetchVaultsLastHarvests());
+
+    store.dispatch(fetchMerklCampaignsAction());
 
     // Zap (we need the data to know if zap is available for each vault)
     store.dispatch(fetchZapConfigsAction());
@@ -260,11 +263,13 @@ export async function dispatchUserFfs(
  * we want to preload the vault page to make it fast on the first click
  */
 function preLoadPages() {
-  window.requestIdleCallback(async () => {
-    console.debug('pre-loading vault page...');
-    await import('../../../features/vault');
-    console.debug('pre-loading vault page done');
-  });
+  window.setTimeout(() => {
+    window.requestIdleCallback(async () => {
+      console.debug('pre-loading vault page...');
+      await import('../../../features/vault');
+      console.debug('pre-loading vault page done');
+    });
+  }, 10_000);
 }
 
 export async function initBoostForm(
