@@ -15,7 +15,7 @@
     "createdAt": 1719868969,
     "platformId": "aerodrome",
     "assets": ["cbETH", "USDC"],
-    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
