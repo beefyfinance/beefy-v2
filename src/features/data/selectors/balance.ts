@@ -7,6 +7,8 @@ import {
   isCowcentratedGovVault,
   isCowcentratedVault,
   isGovVault,
+  isGovVaultMulti,
+  isGovVaultSingle,
   isStandardVault,
   type VaultEntity,
   type VaultGov,
@@ -167,7 +169,16 @@ export const selectUserVaultBalanceInShareToken = (
   const vault = selectVaultById(state, vaultId);
 
   if (isGovVault(vault)) {
-    return selectGovVaultUserStakedBalanceInDepositToken(state, vaultId, walletAddress);
+    if (isGovVaultSingle(vault)) {
+      return selectGovVaultUserStakedBalanceInDepositToken(state, vaultId, walletAddress);
+    } else if (isGovVaultMulti(vault)) {
+      return selectUserBalanceOfToken(
+        state,
+        vault.chainId,
+        vault.receiptTokenAddress,
+        walletAddress
+      );
+    }
   }
 
   if (isStandardVault(vault) || isCowcentratedVault(vault)) {
