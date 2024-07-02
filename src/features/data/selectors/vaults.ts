@@ -297,7 +297,8 @@ export const selectStandardVaultByEarnTokenAddress = (
 };
 
 export const selectTotalActiveVaults = (state: BeefyState) =>
-  state.entities.vaults.allActiveIds.length;
+  state.entities.vaults.allActiveIds.length -
+  Object.values(state.entities.vaults.relations.underlyingOf.byId).length;
 
 export const selectIsVaultBlueChip = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
