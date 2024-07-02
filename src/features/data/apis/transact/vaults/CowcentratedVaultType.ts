@@ -44,6 +44,10 @@ import { getInsertIndex } from '../helpers/zap';
 import { slipAllBy } from '../helpers/amounts';
 import { selectTransactSlippage } from '../../../selectors/transact';
 import { calculatePriceImpact } from '../helpers/quotes';
+import {
+  QuoteCowcentratedNoSingleSideError,
+  QuoteCowcentratedNotCalmError,
+} from '../strategies/error';
 
 export class CowcentratedVaultType implements ICowcentratedVaultType {
   public readonly id = 'cowcentrated';
@@ -114,6 +118,15 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
 
     const { isCalm, liquidity, used0, used1, unused0, unused1, position1, position0 } =
       await clmPool.previewDeposit(inputs[0].amount, inputs[1].amount);
+
+    if (liquidity.lte(BIG_ZERO)) {
+      throw new QuoteCowcentratedNoSingleSideError(inputs);
+    }
+
+    if (!isCalm) {
+      throw new QuoteCowcentratedNotCalmError();
+    }
+
     const depositUsed = [used0, used1].map((amount, i) => ({
       token: this.depositTokens[i],
       amount: fromWei(amount, this.depositTokens[i].decimals),

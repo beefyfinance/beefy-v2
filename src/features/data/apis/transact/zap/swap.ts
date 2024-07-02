@@ -5,7 +5,7 @@ import type { ZapStepRequest, ZapStepResponse } from './types';
 import { first } from 'lodash-es';
 import { isTokenNative } from '../../../entities/token';
 import type { QuoteResponse } from '../swap/ISwapProvider';
-import { QuoteChangedError } from '../strategies/errors';
+import { QuoteChangedError } from '../strategies/error';
 
 export type ZapAggregatorSwapRequest = ZapStepRequest & {
   providerId: string;

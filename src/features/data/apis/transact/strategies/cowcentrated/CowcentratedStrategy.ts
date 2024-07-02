@@ -61,6 +61,7 @@ import BigNumber from 'bignumber.js';
 import { isCowcentratedVault, type VaultCowcentrated } from '../../../../entities/vault';
 import { type ICowcentratedVaultType, isCowcentratedVaultType } from '../../vaults/IVaultType';
 import type { CowcentratedStrategyConfig } from '../strategy-configs';
+import { QuoteCowcentratedNoSingleSideError, QuoteCowcentratedNotCalmError } from '../error';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -630,6 +631,15 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
 
     const { isCalm, liquidity, used0, used1, unused0, unused1, position1, position0 } =
       await clmPool.previewDeposit(lpTokenAmounts[0].amount, lpTokenAmounts[1].amount);
+
+    if (liquidity.lte(BIG_ZERO)) {
+      throw new QuoteCowcentratedNoSingleSideError(lpTokenAmounts);
+    }
+
+    if (!isCalm) {
+      throw new QuoteCowcentratedNotCalmError();
+    }
+
     const depositUsed = [used0, used1].map((amount, i) => ({
       token: this.vaultType.depositTokens[i],
       amount: fromWei(amount, this.vaultType.depositTokens[i].decimals),

@@ -25,7 +25,6 @@ import { type ActionButtonProps, ActionConnectSwitch } from '../CommonActions';
 import { GlpDepositNotice } from '../GlpNotices';
 import { NotEnoughNotice } from '../NotEnoughNotice';
 import { VaultFees } from '../VaultFees';
-import { CowcentratedNoSingleSideAllowedNotice } from '../CowcentratedNoSingleSideAllowedNotice';
 
 const useStyles = makeStyles(styles);
 
@@ -83,7 +82,6 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
   const [isDisabledByConfirm, setIsDisabledByConfirm] = useState(false);
   const [isDisabledByGlpLock, setIsDisabledByGlpLock] = useState(false);
   const [isDisabledByNotEnoughInput, setIsDisabledByNotEnoughInput] = useState(false);
-  const [isDisabledByNoAllowedSingleSide, setIsDisabledByNoAllowedSingleSide] = useState(false);
 
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const isMaxAll = useMemo(() => {
@@ -97,8 +95,7 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
     isDisabledByMaxNative ||
     isDisabledByConfirm ||
     isDisabledByGlpLock ||
-    isDisabledByNotEnoughInput ||
-    isDisabledByNoAllowedSingleSide;
+    isDisabledByNotEnoughInput;
 
   const handleClick = useCallback(() => {
     dispatch(transactSteps(quote, t));
@@ -116,7 +113,6 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
       <MaxNativeNotice quote={quote} onChange={setIsDisabledByMaxNative} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <NotEnoughNotice mode="deposit" onChange={setIsDisabledByNotEnoughInput} />
-      <CowcentratedNoSingleSideAllowedNotice onChange={setIsDisabledByNoAllowedSingleSide} />
       <div className={classes.feesContainer}>
         <ActionConnectSwitch chainId={option.chainId}>
           <Button

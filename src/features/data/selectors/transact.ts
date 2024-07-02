@@ -6,8 +6,6 @@ import { selectTokenPriceByAddress } from './tokens';
 import { selectWalletAddressIfKnown } from './wallet';
 import { selectUserBalanceOfToken, selectUserVaultBalanceInDepositToken } from './balance';
 import {
-  type InputTokenAmount,
-  isCowcentratedDepositQuote,
   type TokenAmount,
   type TransactOption,
   type TransactQuote,
@@ -16,7 +14,6 @@ import BigNumber from 'bignumber.js';
 import { TransactStatus } from '../reducers/wallet/transact-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { valueOrThrow } from '../utils/selector-utils';
-import type { TokenEntity } from '../entities/token';
 import { selectVaultHasActiveGovRewards, selectVaultHasActiveMerklCampaigns } from './rewards';
 import {
   selectConnectedUserHasGovRewardsForVault,
@@ -127,26 +124,6 @@ export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyStat
   const value = selectTransactInputIndexAmount(state, 0);
 
   return value.gt(userBalance);
-};
-
-export const selectTransactCowcentratedDepositNotSingleSideAllowed = (state: BeefyState) => {
-  const quote = selectTransactSelectedQuote(state);
-
-  const noSingleSideAllowed =
-    isCowcentratedDepositQuote(quote) &&
-    quote.outputs.every(inputToken => inputToken.amount.eq(BIG_ZERO));
-
-  let inputToken: InputTokenAmount<TokenEntity> | null = null;
-  let neededToken: InputTokenAmount<TokenEntity> | null = null;
-
-  if (quote.inputs[0].amount.gt(BIG_ZERO)) {
-    inputToken = quote.inputs[0];
-    neededToken = quote.inputs[1];
-  } else {
-    inputToken = quote.inputs[1];
-    neededToken = quote.inputs[0];
-  }
-  return { noSingleSideAllowed, inputToken, neededToken };
 };
 
 export const selectTransactTokenChains = (state: BeefyState) =>

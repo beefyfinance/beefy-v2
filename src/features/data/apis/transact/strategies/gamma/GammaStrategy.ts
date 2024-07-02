@@ -79,7 +79,7 @@ import { type AmmEntityGamma, isGammaAmm } from '../../../../entities/zap';
 import { isStandardVault, type VaultStandard } from '../../../../entities/vault';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import { selectVaultStrategyAddress } from '../../../../selectors/vaults';
-import { QuoteChangedError } from '../errors';
+import { QuoteChangedError } from '../error';
 import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
 import type { GammaStrategyConfig } from '../strategy-configs';
 

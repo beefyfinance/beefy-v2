@@ -9,7 +9,6 @@ import {
   transactInitReady,
 } from '../../actions/transact';
 import {
-  isCowcentratedDepositQuote,
   type QuoteOutputTokenAmountChange,
   type TransactOption,
   type TransactQuote,
@@ -243,31 +242,20 @@ const transactSlice = createSlice({
       .addCase(transactFetchQuotes.rejected, (sliceState, action) => {
         if (sliceState.quotes.requestId === action.meta.requestId) {
           sliceState.quotes.status = TransactStatus.Rejected;
-          sliceState.quotes.error = action.error;
-          console.error(action.error);
+          sliceState.quotes.error = action.meta.rejectedWithValue ? action.payload : action.error;
+          console.error(sliceState.quotes.error);
         }
       })
       .addCase(transactFetchQuotes.fulfilled, (sliceState, action) => {
         if (sliceState.quotes.requestId === action.meta.requestId) {
-          if (action.payload.quotes.length === 0) {
-            sliceState.quotes.status = TransactStatus.Rejected;
-            sliceState.quotes.error = { name: 'No quotes returned.' };
-          } else if (
-            isCowcentratedDepositQuote(action.payload.quotes[0]) &&
-            !action.payload.quotes[0].isCalm
-          ) {
-            sliceState.quotes.status = TransactStatus.Rejected;
-            sliceState.quotes.error = { code: 'calm' };
-          } else {
-            sliceState.quotes.status = TransactStatus.Fulfilled;
+          sliceState.quotes.status = TransactStatus.Fulfilled;
 
-            addQuotesToState(sliceState, action.payload.quotes);
+          addQuotesToState(sliceState, action.payload.quotes);
 
-            if (sliceState.selectedQuoteId === undefined) {
-              const firstQuote = first(action.payload.quotes);
-              if (firstQuote) {
-                sliceState.selectedQuoteId = firstQuote.id;
-              }
+          if (sliceState.selectedQuoteId === undefined) {
+            const firstQuote = first(action.payload.quotes);
+            if (firstQuote) {
+              sliceState.selectedQuoteId = firstQuote.id;
             }
           }
         }

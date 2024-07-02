@@ -79,7 +79,7 @@ import { getVaultWithdrawnFromState } from '../helpers/vault';
 import { BigNumber } from 'bignumber.js';
 import { slipBy, tokenAmountToWei } from '../helpers/amounts';
 import type { IUniswapLikePool } from '../../amm/types';
-import { QuoteChangedError } from './errors';
+import { QuoteChangedError } from './error';
 import { selectAmmById } from '../../../selectors/zap';
 import { type AmmEntityUniswapLike, isUniswapLikeAmm } from '../../../entities/zap';
 import { isStandardVaultType, type IStandardVaultType } from '../vaults/IVaultType';

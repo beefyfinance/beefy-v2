@@ -36,6 +36,10 @@ import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { isCowcentratedVault } from '../../../../../data/entities/vault';
+import {
+  QuoteCowcentratedNoSingleSideError,
+  QuoteCowcentratedNotCalmError,
+} from '../../../../../data/apis/transact/strategies/error';
 
 const useStyles = makeStyles(styles);
 
@@ -130,26 +134,39 @@ const QuoteError = memo(function QuoteError() {
   const { t } = useTranslation();
   const error = useAppSelector(selectTransactQuoteError);
 
-  return error && error?.code === 'calm' ? (
-    <AlertError>
-      <p>
-        <Trans
-          t={t}
-          i18nKey={'Transact-Quote-Error-Calm'}
-          components={{
-            LinkCalm: (
-              <a
-                className={classes.link}
-                href={'https://docs.beefy.finance/beefy-products/clm#calmness-check'}
-                target="_blank"
-                rel="noopener"
-              />
-            ),
-          }}
-        />
-      </p>
-    </AlertError>
-  ) : (
+  if (error) {
+    if (QuoteCowcentratedNoSingleSideError.match(error)) {
+      return (
+        <AlertError>
+          {t('Transact-Notice-CowcentratedNoSingleSideAllowed', {
+            inputToken: error.inputToken,
+            neededToken: error.neededToken,
+          })}
+        </AlertError>
+      );
+    } else if (QuoteCowcentratedNotCalmError.match(error)) {
+      return (
+        <AlertError>
+          <Trans
+            t={t}
+            i18nKey={'Transact-Quote-Error-Calm'}
+            components={{
+              LinkCalm: (
+                <a
+                  className={classes.link}
+                  href={'https://docs.beefy.finance/beefy-products/clm#calmness-check'}
+                  target="_blank"
+                  rel="noopener"
+                />
+              ),
+            }}
+          />
+        </AlertError>
+      );
+    }
+  }
+
+  return (
     <AlertError>
       <p>{t('Transact-Quote-Error')}</p>
       {error && error.message ? <p>{error.message}</p> : null}
@@ -167,15 +184,12 @@ const QuoteLoaded = memo(function QuoteLoaded() {
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isZap = isZapQuote(quote);
   const needsSlippage = isZap || isCowcentratedVaultWithdrawQuote(quote);
-  const isEmptyOutputQuote = quote.outputs.every(output => output.amount.gt(BIG_ZERO));
 
   return (
     <>
       <div className={classes.tokenAmounts}>
         {isCowcentratedDepositQuote(quote) ? (
-          isEmptyOutputQuote ? (
-            <CowcentratedLoadedQuote quote={quote} />
-          ) : null
+          <CowcentratedLoadedQuote quote={quote} />
         ) : (
           <>
             {quote.outputs.map(({ token, amount }) => (
