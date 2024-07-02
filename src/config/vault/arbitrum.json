@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "balancer-gyro-arb-wsteth-weth",
     "status": "active",
-    "createdAt": 1719689694,
+    "createdAt": 1719920477,
     "platformId": "balancer",
     "assets": ["wstETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
