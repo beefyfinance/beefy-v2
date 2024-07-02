@@ -14,7 +14,3 @@ export type SerializedError =
   | SerializedAnyError
   | SerializedQuoteCowcentratedNoSingleSideError
   | SerializedQuoteCowcentratedNotCalmError;
-
-export abstract class SerializableError extends Error {
-  abstract serialize(): SerializedError;
-}

@@ -1,7 +1,6 @@
 import type { TokenAmount } from '../transact-types';
 import { BIG_ZERO } from '../../../../../helpers/big-number';
 import {
-  SerializableError,
   type SerializedError,
   type SerializedQuoteCowcentratedNoSingleSideError,
   type SerializedQuoteCowcentratedNotCalmError,
@@ -12,6 +11,12 @@ export class QuoteChangedError extends Error {
   constructor(message: string) {
     super(message);
     this.name = 'QuoteChangedError';
+  }
+}
+
+abstract class SerializableError extends Error {
+  serialize(): SerializedError {
+    return miniSerializeError(this);
   }
 }
 
@@ -43,7 +48,7 @@ export class QuoteCowcentratedNoSingleSideError extends SerializableError {
   }
 
   static match(error: SerializedError): error is SerializedQuoteCowcentratedNoSingleSideError {
-    return error.name === 'QuoteCowcentratedNoSingleSideError';
+    return error.name === QuoteCowcentratedNoSingleSideError.name;
   }
 }
 
