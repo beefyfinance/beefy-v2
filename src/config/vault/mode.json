@@ -1,7 +1,45 @@
 [
   {
+    "id": "velodrome-mode-dola-usdc",
+    "name": "DOLA-USDC sLP",
+    "type": "standard",
+    "token": "sAMMMode-DOLA/USDC",
+    "tokenAddress": "0x90a0b21936785164103eb9AC7d76792EB5F6c49C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloModeDOLA-USDC",
+    "earnedTokenAddress": "0x573F85C231a382Fa749E5Dae729dC09C36f71bA4",
+    "earnContractAddress": "0x573F85C231a382Fa749E5Dae729dC09C36f71bA4",
+    "oracle": "lps",
+    "oracleId": "velodrome-mode-dola-usdc",
+    "status": "active",
+    "createdAt": 1719836541,
+    "platformId": "velodrome",
+    "assets": ["DOLA", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x00eA4344e90c741560f08667961A8dE39FF506D7&to=eth",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x00eA4344e90c741560f08667961A8dE39FF506D7&token1=0xd988097fb8612cc24eeC14542bC03424c656005f&type=-1",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x90a0b21936785164103eb9AC7d76792EB5F6c49C",
+    "network": "mode",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "mode-velodrome-v2"
+      }
+    ],
+    "earningPoints": true
+  },
+  {
     "id": "velodrome-mode-weeth-eth",
-    "name": "weETH.mode-ETH vLP",
+    "name": "weETH.mode-ETH sLP",
     "type": "standard",
     "token": "sAMMMode-weETH/WETH",
     "tokenAddress": "0x53E85d00F2C6578a1205b842255AB9DF9D053744",
@@ -39,7 +77,7 @@
   },
   {
     "id": "velodrome-mode-ezeth-eth",
-    "name": "ezETH-ETH vLP",
+    "name": "ezETH-ETH sLP",
     "type": "standard",
     "token": "sAMMMode-ezETH/WETH",
     "tokenAddress": "0x44C6ccEA1f549Dc28bAceC12Edec580F8E1B64cd",
@@ -77,7 +115,7 @@
   },
   {
     "id": "velodrome-mode-usdt-usdc",
-    "name": "USDC-USDT vLP",
+    "name": "USDC-USDT sLP",
     "type": "standard",
     "token": "sAMMMode-USDC/USDT",
     "tokenAddress": "0x4B1BC95478826F6bC42d0471C68eEA6526576D85",

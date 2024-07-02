@@ -22,6 +22,7 @@ const explorerApiUrls = {
   kava: 'explorer.kava.io/api',
   ethereum: 'api.etherscan.io/api',
   canto: 'tuber.build/api',
+  base: 'api.basescan.org/api',
 };
 
 const blockScoutChains = new Set(['fuse', 'metis', 'emerald', 'aurora', 'kava', 'canto']);

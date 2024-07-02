@@ -28,6 +28,35 @@
     ]
   },
   {
+    "id": "aerodrome-weth-reth-s",
+    "name": "ETH-rETH sLP",
+    "type": "standard",
+    "token": "sAMM-WETH/rETH",
+    "tokenAddress": "0xb8866732424AcDdd729C6fcf7146b19bFE4A2e36",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroETH-rETH-s",
+    "earnedTokenAddress": "0x7f6c2827Fa27CF3D8DaDBE1c3D471da93a9A248D",
+    "earnContractAddress": "0x7f6c2827Fa27CF3D8DaDBE1c3D471da93a9A248D",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-reth-s",
+    "status": "active",
+    "createdAt": 1719426091,
+    "platformId": "aerodrome",
+    "assets": ["WETH", "rETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c&type=0",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-dola-eusd",
     "name": "DOLA-eUSD sLP",
     "token": "sAMM-DOLA/eUSD",
@@ -1011,10 +1040,8 @@
     "earnContractAddress": "0x715a4a6Afb44f87f8C4eE8d945Eb6B630A11E72c",
     "oracle": "lps",
     "oracleId": "aura-base-tbtc-weth",
-    "status": "eol",
+    "status": "active",
     "createdAt": 1713018583,
-    "retireReason": "rewards",
-    "retiredAt": 1718744992,
     "platformId": "aura",
     "assets": ["tBTC", "ETH"],
     "risks": [
