@@ -139,14 +139,13 @@ export const selectTransactCowcentratedDepositNotSingleSideAllowed = (state: Bee
   let inputToken: InputTokenAmount<TokenEntity> | null = null;
   let neededToken: InputTokenAmount<TokenEntity> | null = null;
 
-  for (const input of quote.inputs) {
-    if (input.amount.gt(BIG_ZERO)) {
-      inputToken = input;
-    } else {
-      neededToken = input;
-    }
+  if (quote.inputs[0].amount.gt(BIG_ZERO)) {
+    inputToken = quote.inputs[0];
+    neededToken = quote.inputs[1];
+  } else {
+    inputToken = quote.inputs[1];
+    neededToken = quote.inputs[0];
   }
-
   return { noSingleSideAllowed, inputToken, neededToken };
 };
 

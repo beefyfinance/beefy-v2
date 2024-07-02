@@ -167,12 +167,15 @@ const QuoteLoaded = memo(function QuoteLoaded() {
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isZap = isZapQuote(quote);
   const needsSlippage = isZap || isCowcentratedVaultWithdrawQuote(quote);
+  const isEmptyOutputQuote = quote.outputs.every(output => output.amount.gt(BIG_ZERO));
 
   return (
     <>
       <div className={classes.tokenAmounts}>
         {isCowcentratedDepositQuote(quote) ? (
-          <CowcentratedLoadedQuote quote={quote} />
+          isEmptyOutputQuote ? (
+            <CowcentratedLoadedQuote quote={quote} />
+          ) : null
         ) : (
           <>
             {quote.outputs.map(({ token, amount }) => (
