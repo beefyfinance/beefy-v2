@@ -119,6 +119,7 @@ export const filteredVaultsSlice = createSlice({
     setUserCategory(sliceState, action: PayloadAction<FilteredVaultsState['userCategory']>) {
       sliceState.reseted = false;
       sliceState.userCategory = action.payload;
+      sliceState.onlyUnstakedClm = false; // reset this filter when user category changes
     },
     setAssetType(sliceState, action: PayloadAction<FilteredVaultsState['assetType']>) {
       sliceState.reseted = false;
