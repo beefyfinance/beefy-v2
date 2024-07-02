@@ -18,6 +18,7 @@
     "platformId": "oku",
     "assets": ["USDC", "USDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
     "strategyTypeId": "compounds",
     "network": "linea",
     "zaps": [
@@ -45,6 +46,7 @@
     "platformId": "oku",
     "assets": ["WBTC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
     "strategyTypeId": "compounds",
     "network": "linea",
     "zaps": [
@@ -72,6 +74,7 @@
     "platformId": "oku",
     "assets": ["WETH", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
     "strategyTypeId": "compounds",
     "network": "linea",
     "zaps": [

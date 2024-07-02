@@ -274,7 +274,7 @@ export function isVaultPaused(vault: VaultEntity): vault is VaultEntityPaused {
 }
 
 export function isVaultEarningPoints(vault: VaultEntity) {
-  return !isGovVault(vault) && vault.earningPoints === true;
+  return vault.earningPoints === true;
 }
 
 export function isVaultPausedOrRetired(vault: VaultEntity) {

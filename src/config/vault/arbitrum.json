@@ -1720,6 +1720,7 @@
     "assets": ["ezETH", "wstETH"],
     "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
+    "earningPoints": true,
     "network": "arbitrum",
     "zaps": [
       {
@@ -2098,6 +2099,7 @@
     "assets": ["ezETH", "WETH"],
     "risks": [],
     "strategyTypeId": "compounds",
+    "earningPoints": true,
     "network": "arbitrum",
     "zaps": [
       {
