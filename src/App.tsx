@@ -17,6 +17,7 @@ import { Layout } from './components/Layout';
 import { AddTokenToWallet } from './components/AddTokenToWallet';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { AppVersionCheck } from './components/AppVersionCheck';
+import { MinimalFallback } from './components/ErrorBoundary/MinimalFallback';
 
 const Home = lazy(() => import(`./features/home`));
 const Vault = lazy(() => import(`./features/vault`));
@@ -41,7 +42,7 @@ export const App = () => {
   }, []);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary fallback={MinimalFallback}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <HelmetProvider>

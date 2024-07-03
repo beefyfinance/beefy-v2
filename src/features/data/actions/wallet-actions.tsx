@@ -63,7 +63,7 @@ import { StepContent, stepperActions } from '../reducers/wallet/stepper';
 import type { PromiEvent } from 'web3-core';
 import type { ThunkDispatch } from 'redux-thunk';
 import { selectOneInchSwapAggregatorForChain, selectZapByChainId } from '../selectors/zap';
-import type { UserlessZapRequest, ZapOrder } from '../apis/transact/zap/types';
+import type { UserlessZapRequest, ZapOrder, ZapStep } from '../apis/transact/zap/types';
 import { ZERO_ADDRESS } from '../../../helpers/addresses';
 import { MultiCall } from 'eth-multicall';
 import { getVaultWithdrawnFromContract } from '../apis/transact/helpers/vault';
@@ -1117,7 +1117,7 @@ const zapExecuteOrder = (
     const state = getState();
     const address = selectWalletAddress(state);
     if (!address) {
-      return;
+      throw new Error(`No wallet connected`);
     }
 
     const vault = selectVaultById(state, vaultId);
@@ -1128,12 +1128,20 @@ const zapExecuteOrder = (
     }
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
-    const order = {
+    const order: ZapOrder = {
       ...params.order,
+      inputs: params.order.inputs.filter(i => BIG_ZERO.lt(i.amount)), // remove <= zero amounts
       user: address,
       recipient: address,
     };
-    const steps = params.steps;
+    if (!order.inputs.length) {
+      throw new Error('No inputs provided');
+    }
+
+    const steps: ZapStep[] = params.steps;
+    if (!steps.length) {
+      throw new Error('No steps provided');
+    }
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
