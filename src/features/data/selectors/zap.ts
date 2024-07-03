@@ -8,6 +8,7 @@ import { selectPlatformByIdOrUndefined } from './platforms';
 import type { TFunction } from 'react-i18next';
 import { isZapQuoteStepSwap, type ZapQuoteStep } from '../apis/transact/transact-types';
 import { uniqBy } from 'lodash-es';
+import { isNonEmptyArray } from '../utils/array-utils';
 
 export const selectZapByChainId = (state: BeefyState, chainId: ChainEntity['id']) =>
   state.entities.zaps.zaps.byChainId[chainId] || undefined;
@@ -57,8 +58,16 @@ export const selectZapTokenScore = (
   tokenId: TokenEntity['id']
 ): number => state.entities.zaps.tokens.byChainId[chainId]?.scoreById[tokenId] || 0;
 
-export const selectVaultSupportsZap = (state: BeefyState, vaultId: VaultEntity['id']) =>
-  state.entities.zaps.vaults.byId[vaultId] || false;
+export const selectVaultSupportsZap = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], _chainId: ChainEntity['id']) => vaultId,
+  (state: BeefyState, _vaultId: VaultEntity['id'], chainId: ChainEntity['id']) => chainId,
+  (state: BeefyState, _vaultId: VaultEntity['id'], _chainId: ChainEntity['id']) =>
+    state.entities.zaps.vaults.byId,
+  (state: BeefyState, _vaultId: VaultEntity['id'], _chainId: ChainEntity['id']) =>
+    state.entities.zaps.amms.byChainId,
+  (vaultId, chainId, byVaultId, ammsByChainId) =>
+    (byVaultId[vaultId] && isNonEmptyArray(ammsByChainId[chainId])) || false
+);
 
 export const selectAmmsByChainId = createSelector(
   (state: BeefyState, chainId: ChainEntity['id']) => chainId,

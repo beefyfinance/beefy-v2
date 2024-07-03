@@ -122,7 +122,7 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
         }
 
         // Hide non-zappable if onlyZappable checked
-        if (filterOptions.onlyZappable && !selectVaultSupportsZap(state, vault.id)) {
+        if (filterOptions.onlyZappable && !selectVaultSupportsZap(state, vault.id, vault.chainId)) {
           return false;
         }
 
