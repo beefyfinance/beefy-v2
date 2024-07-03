@@ -76,7 +76,7 @@ export const config = {
   polygon: {
     name: 'Polygon PoS',
     chainId: 137,
-    rpc: ['https://rpc.ankr.com/polygon'],
+    rpc: ['https://polygon-bor-rpc.publicnode.com'],
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -90,7 +90,7 @@ export const config = {
         symbol: 'MATIC',
         decimals: 18,
       },
-      rpcUrls: ['https://rpc.ankr.com/polygon'],
+      rpcUrls: ['https://polygon-bor-rpc.publicnode.com'],
       blockExplorerUrls: ['https://polygonscan.com/'],
     },
     gas: {
