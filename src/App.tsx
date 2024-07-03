@@ -17,7 +17,6 @@ import { Layout } from './components/Layout';
 import { AddTokenToWallet } from './components/AddTokenToWallet';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { AppVersionCheck } from './components/AppVersionCheck';
-import { MinimalFallback } from './components/ErrorBoundary/MinimalFallback';
 
 const Home = lazy(() => import(`./features/home`));
 const Vault = lazy(() => import(`./features/vault`));
@@ -42,64 +41,62 @@ export const App = () => {
   }, []);
 
   return (
-    <ErrorBoundary fallback={MinimalFallback}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <HelmetProvider>
-          <Router>
-            <ScrollToTop />
-            <DefaultMeta />
-            <Redirects />
-            <Layout header={<Header />} footer={<Footer />}>
-              <Switch>
-                <Route exact path="/">
-                  <Boundaries>
-                    <Home />
-                  </Boundaries>
-                </Route>
-                <Route strict sensitive exact path={['/:network/vault/:id', '/vault/:id']}>
-                  <Boundaries>
-                    <Vault />
-                  </Boundaries>
-                </Route>
-                <Route exact path="/onramp">
-                  <Boundaries>
-                    <OnRamp />
-                  </Boundaries>
-                </Route>
-                <Route exact path="/bridge">
-                  <Boundaries>
-                    <Bridge />
-                  </Boundaries>
-                </Route>
-                <Route strict exact path="/dashboard/:address">
-                  <Boundaries>
-                    <Dashboard mode={'url'} />
-                  </Boundaries>
-                </Route>
-                <Route exact path="/dashboard">
-                  <Boundaries>
-                    <Dashboard mode={'wallet'} />
-                  </Boundaries>
-                </Route>
-                <Route exact path="/treasury">
-                  <Boundaries>
-                    <Treasury />
-                  </Boundaries>
-                </Route>
-                <Route>
-                  <Boundaries>
-                    <PageNotFound />
-                  </Boundaries>
-                </Route>
-              </Switch>
-              <Stepper />
-              <AddTokenToWallet />
-            </Layout>
-          </Router>
-        </HelmetProvider>
-        <AppVersionCheck />
-      </ThemeProvider>
-    </ErrorBoundary>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <HelmetProvider>
+        <Router>
+          <ScrollToTop />
+          <DefaultMeta />
+          <Redirects />
+          <Layout header={<Header />} footer={<Footer />}>
+            <Switch>
+              <Route exact path="/">
+                <Boundaries>
+                  <Home />
+                </Boundaries>
+              </Route>
+              <Route strict sensitive exact path={['/:network/vault/:id', '/vault/:id']}>
+                <Boundaries>
+                  <Vault />
+                </Boundaries>
+              </Route>
+              <Route exact path="/onramp">
+                <Boundaries>
+                  <OnRamp />
+                </Boundaries>
+              </Route>
+              <Route exact path="/bridge">
+                <Boundaries>
+                  <Bridge />
+                </Boundaries>
+              </Route>
+              <Route strict exact path="/dashboard/:address">
+                <Boundaries>
+                  <Dashboard mode={'url'} />
+                </Boundaries>
+              </Route>
+              <Route exact path="/dashboard">
+                <Boundaries>
+                  <Dashboard mode={'wallet'} />
+                </Boundaries>
+              </Route>
+              <Route exact path="/treasury">
+                <Boundaries>
+                  <Treasury />
+                </Boundaries>
+              </Route>
+              <Route>
+                <Boundaries>
+                  <PageNotFound />
+                </Boundaries>
+              </Route>
+            </Switch>
+            <Stepper />
+            <AddTokenToWallet />
+          </Layout>
+        </Router>
+      </HelmetProvider>
+      <AppVersionCheck />
+    </ThemeProvider>
   );
 };
