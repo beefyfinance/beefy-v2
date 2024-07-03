@@ -38,7 +38,7 @@ import {
   type Web3CallMethod,
 } from '../../../../helpers/web3';
 import { selectTokenByAddress } from '../../selectors/tokens';
-import { fromWeiString } from '../../../../helpers/big-number';
+import { BIG_ZERO, fromWeiString } from '../../../../helpers/big-number';
 
 export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   constructor(protected web3: Web3, protected chain: T) {}
@@ -242,7 +242,8 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
         token => token.toLowerCase() === rewardTokenAddress.toLowerCase()
       );
       if (index === -1) {
-        throw new Error(`Config reward token ${rewardTokenAddress} not found in result`);
+        return BIG_ZERO;
+        // throw new Error(`Config reward token ${rewardTokenAddress} not found in result`);
       }
       return fromWeiString(result.rewards[index], rewardTokenEntity.decimals);
     });
