@@ -6,6 +6,7 @@ import { ZERO_ADDRESS } from '../../../helpers/addresses';
 import {
   selectAllStandardVaultsByChainId,
   selectAllCowcentratedVaultsByChainId,
+  selectAllGovVaultsByChainId,
 } from '../selectors/vaults';
 import { isFulfilledResult } from '../../../helpers/promises';
 import type { VaultEntity } from '../entities/vault';
@@ -59,6 +60,7 @@ export const calculateZapAvailabilityAction = createAsyncThunk<
     .flatMap(chainId => [
       ...selectAllStandardVaultsByChainId(state, chainId),
       ...selectAllCowcentratedVaultsByChainId(state, chainId),
+      ...selectAllGovVaultsByChainId(state, chainId),
     ])
     .filter(v => v.zaps?.length > 0);
   const api = await getTransactApi();
