@@ -51,6 +51,37 @@ const oldValidFeeRecipients = {
   ],
 };
 
+const oldValidRewardPoolOwners = {
+  polygon: [
+    '0x7313533ed72D2678bFD9393480D0A30f9AC45c1f',
+    '0x97bfa4b212A153E15dCafb799e733bc7d1b70E72',
+  ],
+  kava: '0xF0d26842c3935A618e6980C53fDa3A2D10A02eb7',
+  metis: '0x2cC364255206A7e14bF59ADB1fc5770DbA48CB3f',
+  cronos: '0xF9eBb381dC153D0966B2BaEe776de2F400405755',
+  celo: '0x32C82EE8Fca98ce5114D2060c5715AEc714152FB',
+  canto: '0xeD7b88EDd899d578581DCcfce80F43D1F395b93f',
+  moonriver: '0xD5e8D34dE3B1A6fd54e87B5d4a857CBB762d0C8A',
+  moonbeam: '0x00AeC34489A7ADE91A0507B6b9dBb0a50938B7c0',
+  aurora: '0x9dA9f3C6c45F1160b53D395b0A982aEEE1D212fE',
+  ethereum: [
+    '0x1c9270ac5C42E51611d7b97b1004313D52c80293',
+    '0x8237f3992526036787E8178Def36291Ab94638CD',
+  ],
+  avax: [
+    '0x48beD04cBC52B5676C04fa94be5786Cdc9f266f5',
+    '0xc1464638B11b9BAac9525cf7bF2B4A52Ccbde885',
+  ],
+  arbitrum: '0xFEd99885fE647dD44bEA2B375Bd8A81490bF6E0f',
+  bsc: ['0xAb4e8665E7b0E6D83B65b8FF6521E347ca93E4F8', '0x0000000000000000000000000000000000000000'],
+  fantom: '0x35F43b181957824f2b5C0EF9856F85c90fECb3c8',
+  optimism: [
+    '0xEDFBeC807304951785b581dB401fDf76b4bAd1b0',
+    '0x3Cd5Ae887Ddf78c58c9C1a063EB343F942DbbcE8',
+    addressBook.optimism.platforms.beefyfinance.strategyOwner,
+  ],
+};
+
 const nonHarvestOnDepositChains = ['ethereum', 'avax'];
 const nonHarvestOnDepositPools = [
   'venus-bnb',
@@ -174,6 +205,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
 
   // Populate some extra data.
   const web3 = new Web3(chainRpcs[chainId]);
+  const poolsWithGovData = await populateGovData(chainId, govPools, web3);
   const poolsWithVaultData = await populateVaultsData(chainId, pools, web3);
   const poolsWithStrategyData = override(
     await populateStrategyData(chainId, poolsWithVaultData, web3)
@@ -374,7 +406,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   });
 
   // Gov Pools
-  govPools.forEach(pool => {
+  poolsWithGovData.forEach(pool => {
     if (!pool.strategyTypeId) {
       console.error(`Error: ${pool.id} : strategyTypeId missing gov strategy type`);
       exitCode = 1;
@@ -384,6 +416,8 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       );
       exitCode = 1;
     }
+    const { devMultisig } = addressBook[chainId].platforms.beefyfinance;
+    updates = isRewardPoolOwnerCorrect(pool, chainId, devMultisig, updates);
   });
 
   if (!isEmpty(updates)) {
@@ -443,6 +477,30 @@ const isVaultOwnerCorrect = (pool, chain, owner, updates) => {
       updates.vaultOwner[chain][pool.vaultOwner].push(pool.earnContractAddress);
     } else {
       updates.vaultOwner[chain][pool.vaultOwner] = [pool.earnContractAddress];
+    }
+  }
+
+  return updates;
+};
+
+const isRewardPoolOwnerCorrect = (pool, chain, owner, updates) => {
+  const validOwners: string[] = oldValidRewardPoolOwners[chain] || [];
+  if (
+    pool.rewardPoolOwner !== undefined &&
+    pool.rewardPoolOwner !== owner &&
+    !validOwners.includes(pool.rewardPoolOwner)
+  ) {
+    console.log(
+      `Reward Pool ${pool.id} should update owner. From: ${pool.rewardPoolOwner} To: ${owner}`
+    );
+
+    if (!('rewardPoolOwner' in updates)) updates['rewardPoolOwner'] = {};
+    if (!(chain in updates.rewardPoolOwner)) updates.rewardPoolOwner[chain] = {};
+
+    if (pool.rewardPoolOwner in updates.rewardPoolOwner[chain]) {
+      updates.rewardPoolOwner[chain][pool.rewardPoolOwner].push(pool.earnContractAddress);
+    } else {
+      updates.rewardPoolOwner[chain][pool.rewardPoolOwner] = [pool.earnContractAddress];
     }
   }
 
@@ -523,6 +581,38 @@ const isHarvestOnDepositCorrect = (pool, chain, updates) => {
 };
 
 // Helpers to populate required addresses.
+
+type VaultConfigWithGovData = Omit<VaultConfig, 'type'> & {
+  type: NonNullable<VaultConfig['type']>;
+  rewardPoolOwner: string | undefined;
+};
+const populateGovData = async (
+  chain,
+  pools: VaultConfig[],
+  web3
+): Promise<VaultConfigWithGovData[]> => {
+  const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
+
+  const calls = pools.map(pool => {
+    const vaultContract = new web3.eth.Contract(
+      StandardVaultAbi as unknown as AbiItem[],
+      pool.earnContractAddress
+    );
+    return {
+      owner: vaultContract.methods.owner(),
+    };
+  });
+
+  const [results] = await multicall.all([calls]);
+
+  return pools.map((pool, i) => {
+    return {
+      ...pool,
+      type: pool.type || 'gov',
+      rewardPoolOwner: results[i].owner,
+    };
+  });
+};
 
 type VaultConfigWithVaultData = Omit<VaultConfig, 'type'> & {
   type: NonNullable<VaultConfig['type']>;
