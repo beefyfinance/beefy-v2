@@ -745,7 +745,7 @@ const selectUserExposure = <T extends UserExposureVaultEntry = UserExposureVault
     return [];
   }
 
-  const vaultIds = selectUserDepositedVaultIds(state, walletAddress);
+  const vaultIds = selectDashboardDepositedVaultIdsForAddress(state, walletAddress);
   if (!vaultIds.length) {
     return [];
   }
