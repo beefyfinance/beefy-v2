@@ -304,7 +304,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     const minOutputs = slipAllBy(outputs, slippage);
 
     return {
-      inputs: request.inputs.filter(input => input.amount.gt(BIG_ZERO)), // only pull in tokens that are required
+      inputs: request.inputs,
       outputs,
       minOutputs,
       zap: this.buildZapDepositTx(
