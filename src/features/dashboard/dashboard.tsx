@@ -114,6 +114,7 @@ const DashboardForAddress = memo<DashboardForAddressProps>(function DashboardFor
   return (
     <DashboardContainer>
       <DashboardMeta wallet={addressLabel || address} />
+
       <DepositSummary address={address} addressLabel={addressLabel} />
       {loading ? (
         <TechLoader />

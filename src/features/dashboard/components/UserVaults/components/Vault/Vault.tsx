@@ -57,12 +57,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
           <VaultDashboardStats vaultId={vaultId} address={address} />
         </div>
       </div>
-      {open ? (
-        <CollapseComponent
-          address={address}
-          vaultId={isCowcentratedLikeVault(vault) ? vault.cowcentratedId : vaultId}
-        />
-      ) : null}
+      {open ? <CollapseComponent address={address} vaultId={vaultId} /> : null}
     </div>
   );
 });

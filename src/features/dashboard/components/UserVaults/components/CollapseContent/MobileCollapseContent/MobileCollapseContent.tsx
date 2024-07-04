@@ -15,6 +15,7 @@ import { styles } from './styles';
 import { LabeledSelect } from '../../../../../../../components/LabeledSelect';
 import { ToggleButtons } from '../../../../../../../components/ToggleButtons';
 import { DashboardPnLGraph } from '../../../../../../vault/components/PnLGraph/standard/StandardPnLGraph';
+import { isCowcentratedLikeVault } from '../../../../../../data/entities/vault';
 
 const useStyles = makeStyles(styles);
 
@@ -24,9 +25,15 @@ export const MobileCollapseContent = memo<VaultCollapseContentProps>(
   function MobileCollapseContent({ vaultId, address }) {
     const classes = useStyles();
     const { t } = useTranslation();
-    const { type, strategyTypeId } = useAppSelector(state => selectVaultById(state, vaultId));
+    const vault = useAppSelector(state => selectVaultById(state, vaultId));
+    const underlyingCLMIdOrVaultId = isCowcentratedLikeVault(vault)
+      ? vault.cowcentratedId
+      : vaultId;
+    const { type, strategyTypeId } = useAppSelector(state =>
+      selectVaultById(state, underlyingCLMIdOrVaultId)
+    );
     const hasAnalyticsData = useAppSelector(state =>
-      selectHasDataToShowGraphByVaultId(state, vaultId, address)
+      selectHasDataToShowGraphByVaultId(state, underlyingCLMIdOrVaultId, address)
     );
     const [toggleTab, setToggleTab] = useState<ToggleTabOptions>('stats');
     const useDropdown = useMediaQuery('(max-width: 700px)', { noSsr: true });
@@ -72,11 +79,11 @@ export const MobileCollapseContent = memo<VaultCollapseContentProps>(
         {toggleTab === 'stats' ? (
           <VaultDashboardMobileStats address={address} vaultId={vaultId} />
         ) : toggleTab === 'txHistory' ? (
-          <VaultTransactions address={address} vaultId={vaultId} />
+          <VaultTransactions address={address} vaultId={underlyingCLMIdOrVaultId} />
         ) : toggleTab === 'positionChart' ? (
-          <PositionGraph address={address} vaultId={vaultId} />
+          <PositionGraph address={address} vaultId={underlyingCLMIdOrVaultId} />
         ) : toggleTab === 'compoundsChart' ? (
-          <CompoundsGraph address={address} vaultId={vaultId} />
+          <CompoundsGraph address={address} vaultId={underlyingCLMIdOrVaultId} />
         ) : null}
       </div>
     );

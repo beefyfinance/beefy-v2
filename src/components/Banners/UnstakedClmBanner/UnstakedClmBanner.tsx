@@ -12,7 +12,13 @@ import type { VaultEntity } from '../../../features/data/entities/vault';
 import { ButtonLink, InternalLink } from '../Links/Links';
 import { filteredVaultsActions } from '../../../features/data/reducers/filtered-vaults';
 
-export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
+interface UnstakedClmBannerProps {
+  className?: string;
+}
+
+export const UnstakedClmBanner = memo<UnstakedClmBannerProps>(function UnstakedClmBanner({
+  className,
+}) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const unstakedIds = useAppSelector(selectUserUnstakedCowcentratedVaultIds);
@@ -41,6 +47,7 @@ export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
 
   return (
     <Banner
+      className={className}
       icon={<img src={clmIcon} alt="" />}
       text={
         <Trans

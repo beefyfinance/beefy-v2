@@ -15,6 +15,7 @@ import type { VaultCollapseContentProps } from '../types';
 import { styles } from './styles';
 import { ErrorBoundary } from '../../../../../../../components/ErrorBoundary/ErrorBoundary';
 import { DashboardPnLGraph } from '../../../../../../vault/components/PnLGraph/standard/StandardPnLGraph';
+import { isCowcentratedLikeVault } from '../../../../../../data/entities/vault';
 
 const useStyles = makeStyles(styles);
 
@@ -24,9 +25,15 @@ export const DesktopCollapseContent = memo<VaultCollapseContentProps>(
   function DesktopCollapseContent({ vaultId, address }) {
     const classes = useStyles();
     const { t } = useTranslation();
-    const { type, strategyTypeId } = useAppSelector(state => selectVaultById(state, vaultId));
+    const vault = useAppSelector(state => selectVaultById(state, vaultId));
+    const underlyingCLMIdOrVaultId = isCowcentratedLikeVault(vault)
+      ? vault.cowcentratedId
+      : vaultId;
+    const { type, strategyTypeId } = useAppSelector(state =>
+      selectVaultById(state, underlyingCLMIdOrVaultId)
+    );
     const hasAnalyticsData = useAppSelector(state =>
-      selectHasDataToShowGraphByVaultId(state, vaultId, address)
+      selectHasDataToShowGraphByVaultId(state, underlyingCLMIdOrVaultId, address)
     );
     const [toggleTab, setToggleTab] = useState<ToggleTabOptions>('txHistory');
 
@@ -63,14 +70,14 @@ export const DesktopCollapseContent = memo<VaultCollapseContentProps>(
           </div>
         ) : null}
         <div className={classes.collapseInner}>
-          <TabletStats vaultId={vaultId} />
+          <TabletStats address={address} vaultId={vaultId} />
           <ErrorBoundary>
             {toggleTab === 'txHistory' ? (
-              <VaultTransactions address={address} vaultId={vaultId} />
+              <VaultTransactions address={address} vaultId={underlyingCLMIdOrVaultId} />
             ) : toggleTab === 'positionChart' ? (
-              <PositionGraph address={address} vaultId={vaultId} />
+              <PositionGraph address={address} vaultId={underlyingCLMIdOrVaultId} />
             ) : toggleTab === 'compoundsChart' ? (
-              <CompoundsGraph address={address} vaultId={vaultId} />
+              <CompoundsGraph address={address} vaultId={underlyingCLMIdOrVaultId} />
             ) : null}
           </ErrorBoundary>
         </div>
