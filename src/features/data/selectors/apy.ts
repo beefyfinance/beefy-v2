@@ -2,7 +2,7 @@ import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity } from '../entities/vault';
 import { isGovVault, isVaultActive } from '../entities/vault';
 import {
-  selectDashboardDepositedVaultIdsForAddress,
+  selectUserDepositedVaultIds,
   selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
 } from './balance';
 import { selectIsUserBalanceAvailable } from './data-loader';
@@ -61,7 +61,7 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
     return EMPTY_GLOBAL_STATS;
   }
 
-  const userVaultIds = selectDashboardDepositedVaultIdsForAddress(state, walletAddress);
+  const userVaultIds = selectUserDepositedVaultIds(state, walletAddress);
 
   if (userVaultIds.length === 0) {
     return EMPTY_GLOBAL_STATS;

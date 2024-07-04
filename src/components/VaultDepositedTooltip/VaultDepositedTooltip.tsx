@@ -4,17 +4,14 @@ import { styles } from './styles';
 import type { VaultEntity } from '../../features/data/entities/vault';
 import { useAppSelector } from '../../store';
 import {
-  selectStandardVaultUserBalanceInDepositTokenBreakdown,
-  type StandardVaultBalanceBreakdownBoost,
-  type StandardVaultBalanceBreakdownBridged,
-  type StandardVaultBalanceBreakdownEntry,
-  type StandardVaultBalanceBreakdownVault,
+  selectVaultUserBalanceInDepositTokenBreakdown,
+  type UserVaultBalanceBreakdownBoost,
+  type UserVaultBalanceBreakdownBridged,
+  type UserVaultBalanceBreakdownCLM,
+  type UserVaultBalanceBreakdownEntry,
+  type UserVaultBalanceBreakdownVault,
 } from '../../features/data/selectors/balance';
-import { selectStandardVaultById } from '../../features/data/selectors/vaults';
-import {
-  selectTokenByAddress,
-  selectTokenPriceByTokenOracleId,
-} from '../../features/data/selectors/tokens';
+import { selectTokenPriceByTokenOracleId } from '../../features/data/selectors/tokens';
 import type { TokenEntity } from '../../features/data/entities/token';
 import type BigNumber from 'bignumber.js';
 import { TokenAmount } from '../TokenAmount';
@@ -26,7 +23,7 @@ import { selectBoostById } from '../../features/data/selectors/boosts';
 const useStyles = makeStyles(styles);
 
 type EntryDisplayProps = {
-  entry: StandardVaultBalanceBreakdownEntry;
+  entry: UserVaultBalanceBreakdownEntry;
   depositToken: TokenEntity;
   price: BigNumber;
   label: string;
@@ -53,7 +50,7 @@ const EntryDisplay = memo<EntryDisplayProps>(function VaultEntry({
   );
 });
 
-const VaultEntry = memo<EntryProps<StandardVaultBalanceBreakdownVault>>(function VaultEntry({
+const VaultEntry = memo<EntryProps<UserVaultBalanceBreakdownVault>>(function VaultEntry({
   entry,
   depositToken,
   price,
@@ -64,12 +61,12 @@ const VaultEntry = memo<EntryProps<StandardVaultBalanceBreakdownVault>>(function
       entry={entry}
       depositToken={depositToken}
       price={price}
-      label={t('VaultStat-Deposited-Vault')}
+      label={t(`VaultStat-Deposited-${entry.type}`)}
     />
   );
 });
 
-const BoostEntry = memo<EntryProps<StandardVaultBalanceBreakdownBoost>>(function BoostEntry({
+const BoostEntry = memo<EntryProps<UserVaultBalanceBreakdownBoost>>(function BoostEntry({
   entry,
   depositToken,
   price,
@@ -81,12 +78,12 @@ const BoostEntry = memo<EntryProps<StandardVaultBalanceBreakdownBoost>>(function
       entry={entry}
       depositToken={depositToken}
       price={price}
-      label={t('VaultStat-Deposited-Boost', { boost: boost.name })}
+      label={t(`VaultStat-Deposited-${entry.type}`, { boost: boost.name })}
     />
   );
 });
 
-const BridgedEntry = memo<EntryProps<StandardVaultBalanceBreakdownBridged>>(function BridgedEntry({
+const BridgedEntry = memo<EntryProps<UserVaultBalanceBreakdownBridged>>(function BridgedEntry({
   entry,
   depositToken,
   price,
@@ -99,14 +96,31 @@ const BridgedEntry = memo<EntryProps<StandardVaultBalanceBreakdownBridged>>(func
       entry={entry}
       depositToken={depositToken}
       price={price}
-      label={t('VaultStat-Deposited-Bridged', { chain: chain.name })}
+      label={t(`VaultStat-Deposited-${entry.type}`, { chain: chain.name })}
+    />
+  );
+});
+
+const CLMEntry = memo<EntryProps<UserVaultBalanceBreakdownCLM>>(function CLMEntry({
+  entry,
+  depositToken,
+  price,
+}) {
+  const { t } = useTranslation();
+
+  return (
+    <EntryDisplay
+      entry={entry}
+      depositToken={depositToken}
+      price={price}
+      label={t(`VaultStat-Deposited-${entry.type}`)}
     />
   );
 });
 
 type TypeToComponentMap = {
-  [T in StandardVaultBalanceBreakdownEntry['type']]: FC<{
-    entry: StandardVaultBalanceBreakdownEntry;
+  [T in UserVaultBalanceBreakdownEntry['type']]: FC<{
+    entry: UserVaultBalanceBreakdownEntry;
   }>;
 };
 
@@ -114,14 +128,14 @@ const typeToComponent: TypeToComponentMap = {
   vault: VaultEntry,
   boost: BoostEntry,
   bridged: BridgedEntry,
+  clm: CLMEntry,
 };
 
-type EntryProps<T extends StandardVaultBalanceBreakdownEntry = StandardVaultBalanceBreakdownEntry> =
-  {
-    entry: T;
-    depositToken: TokenEntity;
-    price: BigNumber;
-  };
+type EntryProps<T extends UserVaultBalanceBreakdownEntry = UserVaultBalanceBreakdownEntry> = {
+  entry: T;
+  depositToken: TokenEntity;
+  price: BigNumber;
+};
 
 const Entry = memo<EntryProps>(function Entry(props) {
   const Component = typeToComponent[props.entry.type];
@@ -135,19 +149,16 @@ export type VaultDepositedTooltipProps = {
 export const VaultDepositedTooltip = memo<VaultDepositedTooltipProps>(
   function VaultDepositedTooltip({ vaultId }) {
     const classes = useStyles();
-    const vault = useAppSelector(state => selectStandardVaultById(state, vaultId));
-    const depositToken = useAppSelector(state =>
-      selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
+    const { depositToken, entries } = useAppSelector(state =>
+      selectVaultUserBalanceInDepositTokenBreakdown(state, vaultId)
     );
     const price = useAppSelector(state =>
       selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
     );
-    const breakdown = useAppSelector(state =>
-      selectStandardVaultUserBalanceInDepositTokenBreakdown(state, vaultId)
-    );
+
     return (
       <div className={classes.grid}>
-        {breakdown.map(entry => (
+        {entries.map(entry => (
           <Entry key={entry.id} entry={entry} price={price} depositToken={depositToken} />
         ))}
       </div>

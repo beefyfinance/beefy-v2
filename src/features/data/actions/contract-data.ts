@@ -7,7 +7,7 @@ import type { VaultCowcentrated, VaultGov, VaultGovMulti, VaultStandard } from '
 import { isGovVault, isGovVaultMulti, isGovVaultSingle, isStandardVault } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
-import { selectVaultIdsByChainId, selectVaultById } from '../selectors/vaults';
+import { selectVaultIdsByChainIdIncludingHidden, selectVaultById } from '../selectors/vaults';
 import { featureFlag_simulateRpcError } from '../utils/feature-flags';
 
 interface ActionParams {
@@ -38,7 +38,7 @@ export const fetchAllContractDataByChainAction = createAsyncThunk<
   const boosts = selectBoostsByChainId(state, chainId).map(vaultId =>
     selectBoostById(state, vaultId)
   );
-  const allVaults = selectVaultIdsByChainId(state, chainId).map(vaultId =>
+  const allVaults = selectVaultIdsByChainIdIncludingHidden(state, chainId).map(vaultId =>
     selectVaultById(state, vaultId)
   );
   const standardVaults: VaultStandard[] = [];

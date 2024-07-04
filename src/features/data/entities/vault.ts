@@ -75,6 +75,8 @@ export type VaultBase = {
   depositFee: number;
   /** what helper can be used to migrate user from underlying platform to beefy */
   migrationIds: string[];
+  /** whether vault should be hidden from user */
+  hidden: boolean;
 };
 
 export type VaultActive = {

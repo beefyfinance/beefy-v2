@@ -1,10 +1,7 @@
 import React, { memo } from 'react';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
-import {
-  isCowcentratedLikeVault,
-  type VaultEntity,
-} from '../../../../../../../../data/entities/vault';
+import { type VaultEntity } from '../../../../../../../../data/entities/vault';
 import { VaultAtDepositStat } from '../../../../../../../../../components/VaultStats/VaultAtDepositStat';
 import { VaultNowStat } from '../../../../../../../../../components/VaultStats/VaultNowStat';
 import { RowMobile } from '../../../../Row';
@@ -14,7 +11,6 @@ import { useAppSelector } from '../../../../../../../../../store';
 import { MobileVaultRewardsStat } from '../../../../../../../../../components/VaultStats/MobileVaultRewardsStat';
 import { selectVaultPnl } from '../../../../../../../../data/selectors/analytics';
 import { MobileVaultYieldStat } from '../../../../../../../../../components/VaultStats/MobileVaultYieldStat';
-import { selectVaultById } from '../../../../../../../../data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 
@@ -26,11 +22,7 @@ interface VaultDashboardMobileStatsProps {
 export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
   function VaultDashboardMobileStats({ vaultId, address }) {
     const classes = useStyles();
-    const vault = useAppSelector(state => selectVaultById(state, vaultId));
-    const underlyingCLMId = isCowcentratedLikeVault(vault) ? vault.cowcentratedId : undefined;
-    const pnlData = useAppSelector(state =>
-      selectVaultPnl(state, underlyingCLMId ?? vaultId, address)
-    );
+    const pnlData = useAppSelector(state => selectVaultPnl(state, vaultId, address));
 
     return (
       <RowMobile>
@@ -41,7 +33,7 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
             contentClassName={classes.valueContainer}
             triggerClassName={classes.value}
             labelClassName={classes.label}
-            vaultId={underlyingCLMId ?? vaultId}
+            vaultId={vaultId}
             walletAddress={address}
           />
           <VaultNowStat
@@ -50,7 +42,7 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
             contentClassName={classes.valueContainer}
             triggerClassName={classes.value}
             labelClassName={classes.label}
-            vaultId={underlyingCLMId ?? vaultId}
+            vaultId={vaultId}
             walletAddress={address}
           />
           <MobileVaultRewardsStat
@@ -58,7 +50,7 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
             contentClassName={classes.valueContainer}
             triggerClassName={classes.value}
             labelClassName={classes.label}
-            vaultId={underlyingCLMId ?? vaultId}
+            vaultId={vaultId}
             walletAddress={address}
           />
           <MobileVaultYieldStat
@@ -67,7 +59,7 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
             contentClassName={classes.valueContainer}
             triggerClassName={classes.value}
             labelClassName={classes.label}
-            vaultId={underlyingCLMId ?? vaultId}
+            vaultId={vaultId}
             walletAddress={address}
           />
           <VaultYearlyStat

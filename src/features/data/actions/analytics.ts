@@ -5,7 +5,13 @@ import {
   type AnyTimelineAnalyticsEntity,
   type AnyTimelineAnalyticsEntry,
   type CLMTimelineAnalyticsEntry,
-  type CLMTimelineAnalyticsEntryWithoutVaultId,
+  type CLMTimelineAnalyticsEntryHandleInput,
+  type CLMTimelineAnalyticsEntryHandleInputWithVaultId,
+  type CLMTimelineAnalyticsEntryNoRewardPool,
+  type CLMTimelineAnalyticsEntryNoRewardPoolPart,
+  type CLMTimelineAnalyticsEntryRewardPool,
+  type CLMTimelineAnalyticsEntryRewardPools,
+  type CLMTimelineAnalyticsEntryWithRewardPoolsPart,
   isCLMTimelineAnalyticsEntity,
   type TimelineAnalyticsEntryToEntity,
   type VaultTimelineAnalyticsEntry,
@@ -18,16 +24,25 @@ import type {
   TimeBucketType,
   TimelineAnalyticsConfig,
 } from '../apis/analytics/analytics-types';
-import { isCowcentratedVault, isStandardVault, type VaultEntity } from '../entities/vault';
+import {
+  isCowcentratedGovVault,
+  isCowcentratedLikeVault,
+  isCowcentratedVault,
+  isStandardVault,
+  type VaultEntity,
+} from '../entities/vault';
 import { isFiniteNumber } from '../../../helpers/number';
 import {
   selectAllVaultsWithBridgedVersion,
+  selectCowcentratedLikeVaultById,
   selectCowcentratedVaultById,
+  selectVaultByAddressOrUndefined,
   selectVaultById,
+  selectVaultByIdOrUndefined,
   selectVaultStrategyAddressOrUndefined,
 } from '../selectors/vaults';
-import { selectCowcentratedVaultDepositTokens } from '../selectors/tokens';
-import { groupBy, keyBy, mapValues, omitBy, partition, sortBy } from 'lodash-es';
+import { selectCowcentratedLikeVaultDepositTokens } from '../selectors/tokens';
+import { groupBy, keyBy, mapValues, omit, omitBy, partition, sortBy } from 'lodash-es';
 import type { ChainEntity } from '../entities/chain';
 import { entries } from '../../../helpers/object';
 import { BIG_ZERO } from '../../../helpers/big-number';
@@ -50,12 +65,13 @@ import {
   selectIsClmHarvestsForUserPending,
   selectIsWalletTimelineForUserPending,
 } from '../selectors/data-loader';
-import { selectAllChainIds } from '../selectors/chains';
+import { selectAllChainIds, selectChainById } from '../selectors/chains';
 import { fetchAllBalanceAction } from './balance';
 import { PromiseSettledAwaiter } from '../../../helpers/promises';
-import { isDefined } from '../utils/array-utils';
+import { isDefined, isNonEmptyArray } from '../utils/array-utils';
 import { getDataApiBucketsFromDates } from '../apis/beefy/beefy-data-api-helpers';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
+import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils';
 
 export interface FetchWalletTimelineFulfilled {
   timelines: Record<VaultEntity['id'], AnyTimelineAnalyticsEntity>;
@@ -213,21 +229,145 @@ function handleDatabarnTimeline(
 }
 
 function handleCowcentratedTimeline(
-  timeline: CLMTimelineAnalyticsEntryWithoutVaultId[],
+  timeline: CLMTimelineAnalyticsEntryHandleInput[],
   state: BeefyState
 ): Record<VaultEntity['id'], CLMTimelineAnalyticsEntry[]> {
   const vaultTxs = timeline.filter(tx => tx.productKey.startsWith('beefy:vault:'));
 
-  const vaultTxsWithId = sortBy(
+  const vaultTxsWithId: CLMTimelineAnalyticsEntryHandleInputWithVaultId[] = sortBy(
     vaultTxs.map(tx => {
-      const vaultId = state.entities.vaults.byChainId[tx.chain]?.byAddress[tx.managerAddress];
+      const vault = selectVaultByAddressOrUndefined(state, tx.chain, tx.managerAddress);
 
-      return { ...tx, vaultId: vaultId || tx.displayName };
+      return { ...tx, vaultId: vault?.id || tx.displayName };
     }),
     tx => tx.datetime.getTime()
   );
 
-  return groupBy(vaultTxsWithId, tx => tx.vaultId);
+  const byClmId = groupBy(vaultTxsWithId, tx => tx.vaultId);
+  const byVaultId: Record<VaultEntity['id'], CLMTimelineAnalyticsEntry[]> = {};
+
+  // TODO fix for CLM Vaults
+  for (const [clmId, txs] of Object.entries(byClmId)) {
+    const clm = selectVaultByIdOrUndefined(state, clmId);
+    if (!clm || !isCowcentratedVault(clm)) {
+      continue;
+    }
+
+    // bare clm, remove all reward pool balances
+    byVaultId[clm.id] = removeAllRewardPoolsFromTimeline(txs);
+
+    const firstTx = txs[0];
+    if (firstTx.hasRewardPool) {
+      firstTx.rewardPoolDetails.forEach((rp, i) => {
+        const gov = selectVaultByAddressOrUndefined(state, firstTx.chain, rp.address);
+        if (!gov || !isCowcentratedGovVault(gov)) {
+          return;
+        }
+        // pretend only the clm and THIS gov pool exists
+        byVaultId[gov.id] = keepOnlyThisRewardPoolOfTimeline(
+          gov.id,
+          txs as CLMTimelineAnalyticsEntryRewardPools[],
+          i
+        );
+      });
+    }
+  }
+
+  return byVaultId;
+}
+
+function keepOnlyThisRewardPoolOfTimeline(
+  vaultId: string,
+  timeline: CLMTimelineAnalyticsEntryRewardPools[],
+  keepIndex: number
+): CLMTimelineAnalyticsEntryRewardPool[] {
+  if (keepIndex === 0 && timeline[0].rewardPoolDetails.length === 1) {
+    return timeline.map(tx => ({
+      ...omit(tx, ['rewardPoolDetails']),
+      vaultId,
+      rewardPoolAddress: tx.rewardPoolDetails[0].address,
+    }));
+  }
+
+  return timeline.map(tx => {
+    const poolToKeep = tx.rewardPoolDetails[keepIndex];
+    const poolsToRemove = tx.rewardPoolDetails.filter((_, i) => i !== keepIndex);
+
+    return poolsToRemove.reduce(
+      (newTx, pool) => removeRewardPoolAmountsFromTx(newTx, pool.balance, pool.diff, vaultId),
+      { ...omit(tx, 'rewardPoolDetails'), rewardPoolAddress: poolToKeep.address }
+    );
+  });
+}
+
+function removeAllRewardPoolsFromTimeline(
+  timeline: CLMTimelineAnalyticsEntryHandleInputWithVaultId[]
+): CLMTimelineAnalyticsEntryNoRewardPool[] {
+  return timeline
+    .map((tx): CLMTimelineAnalyticsEntryNoRewardPool => {
+      if (!tx.hasRewardPool) {
+        return tx;
+      }
+
+      const newTx = removeRewardPoolAmountsFromTx(
+        { ...omit(tx, 'rewardPoolDetails'), rewardPoolAddress: tx.rewardPoolDetails[0].address },
+        tx.rewardPoolBalance,
+        tx.rewardPoolDiff
+      );
+      return {
+        ...omit(newTx, ['rewardPoolAddress', 'rewardPoolBalance', 'rewardPoolDiff']),
+        hasRewardPool: false,
+      };
+    })
+    .filter(tx => !tx.shareDiff.isZero());
+}
+
+function removeRewardPoolAmountsFromTx(
+  tx: CLMTimelineAnalyticsEntryRewardPool,
+  rewardPoolBalance: BigNumber,
+  rewardPoolDiff: BigNumber,
+  newVaultId?: string
+): CLMTimelineAnalyticsEntryRewardPool {
+  const underlying0PerShare = tx.shareBalance.isZero()
+    ? tx.shareDiff.isZero()
+      ? BIG_ZERO
+      : tx.underlying0Diff.dividedBy(tx.shareDiff)
+    : tx.underlying0Balance.dividedBy(tx.shareBalance);
+  const underlying1PerShare = tx.shareBalance.isZero()
+    ? tx.shareDiff.isZero()
+      ? BIG_ZERO
+      : tx.underlying1Diff.dividedBy(tx.shareDiff)
+    : tx.underlying1Balance.dividedBy(tx.shareBalance);
+  const usdPerShare = tx.shareBalance.isZero()
+    ? tx.shareDiff.isZero()
+      ? BIG_ZERO
+      : tx.usdDiff.dividedBy(tx.shareDiff)
+    : tx.usdBalance.dividedBy(tx.shareBalance);
+
+  // RP
+  const newRewardPoolBalance = tx.rewardPoolBalance.minus(rewardPoolBalance);
+  const newRewardPoolDiff = tx.rewardPoolDiff.minus(rewardPoolDiff);
+
+  // Total
+  const newShareBalance = tx.shareBalance.minus(rewardPoolBalance);
+  const newShareDiff = tx.shareDiff.minus(rewardPoolDiff);
+
+  return {
+    ...tx,
+    shareBalance: newShareBalance,
+    shareDiff: newShareDiff,
+    underlying0Balance: newShareBalance.multipliedBy(underlying0PerShare),
+    underlying0Diff: newShareDiff.multipliedBy(underlying0PerShare),
+    underlying1Balance: newShareBalance.multipliedBy(underlying1PerShare),
+    underlying1Diff: newShareDiff.multipliedBy(underlying1PerShare),
+    usdBalance: newShareBalance.multipliedBy(usdPerShare),
+    usdDiff: newShareDiff.multipliedBy(usdPerShare),
+    hasRewardPool: true,
+    rewardPoolAddress: tx.rewardPoolAddress,
+    rewardPoolBalance: newRewardPoolBalance,
+    rewardPoolDiff: newRewardPoolDiff,
+    vaultId: newVaultId || tx.vaultId,
+  };
 }
 
 export const fetchWalletTimeline = createAsyncThunk<
@@ -269,9 +409,27 @@ export const fetchWalletTimeline = createAsyncThunk<
     );
 
     const clmTimelineProcessed = handleCowcentratedTimeline(
-      clmTimeline.map((row): CLMTimelineAnalyticsEntryWithoutVaultId => {
-        const hasRewardPool =
-          !!row.reward_pool_address && !!row.reward_pool_balance && !!row.reward_pool_diff;
+      clmTimeline.map((row): CLMTimelineAnalyticsEntryHandleInput => {
+        const rewardPoolDetails:
+          | CLMTimelineAnalyticsEntryWithRewardPoolsPart['rewardPoolDetails'][0][]
+          | undefined = isNonEmptyArray(row.reward_pool_details)
+          ? row.reward_pool_details.map(rp => ({
+              address: rp.reward_pool_address,
+              balance: new BigNumber(rp.reward_pool_balance),
+              diff: new BigNumber(rp.reward_pool_diff),
+            }))
+          : undefined;
+        const rewardPoolParts:
+          | CLMTimelineAnalyticsEntryWithRewardPoolsPart
+          | CLMTimelineAnalyticsEntryNoRewardPoolPart =
+          row.reward_pool_total && row.reward_pool_details && isNonEmptyArray(rewardPoolDetails)
+            ? {
+                hasRewardPool: true,
+                rewardPoolBalance: new BigNumber(row.reward_pool_total.reward_pool_balance || 0),
+                rewardPoolDiff: new BigNumber(row.reward_pool_total.reward_pool_diff || 0),
+                rewardPoolDetails,
+              }
+            : { hasRewardPool: false };
 
         return {
           type: 'cowcentrated',
@@ -302,9 +460,7 @@ export const fetchWalletTimeline = createAsyncThunk<
           managerDiff: new BigNumber(row.manager_diff),
           managerAddress: row.manager_address,
 
-          rewardPoolBalance: hasRewardPool ? new BigNumber(row.reward_pool_balance!) : undefined,
-          rewardPoolDiff: hasRewardPool ? new BigNumber(row.reward_pool_diff!) : undefined,
-          rewardPoolAddress: hasRewardPool ? row.reward_pool_address! : undefined,
+          ...rewardPoolParts,
 
           actions: row.actions,
         };
@@ -369,10 +525,13 @@ export const fetchClmHarvestsForUserVault = createAsyncThunk<
   { state: BeefyState }
 >('analytics/fetchClmHarvestsForUserVault', async ({ vaultId }, { getState }) => {
   const state = getState();
-  const { chainId, contractAddress: vaultAddress } = selectCowcentratedVaultById(state, vaultId);
+  const vault = selectCowcentratedLikeVaultById(state, vaultId);
   const api = await getClmApi();
-  const harvests = await api.getHarvestsForVault(chainId, vaultAddress);
-  return { harvests, vaultId, chainId };
+  const harvests = await api.getHarvestsForVault(
+    vault.chainId,
+    getCowcentratedAddressFromCowcentratedLikeVault(vault)
+  );
+  return { harvests, vaultId, chainId: vault.chainId };
 });
 
 /**
@@ -393,15 +552,11 @@ export const fetchClmHarvestsForUser = createAsyncThunk<
     const state = getState();
     const chains = selectUserDepositedVaultIds(state, walletAddress)
       .map(vaultId => selectVaultById(state, vaultId))
-      .filter(isCowcentratedVault)
+      .filter(isCowcentratedLikeVault)
       .filter(vault => selectUserHasCurrentDepositTimelineByVaultId(state, vault.id, walletAddress))
-      .map(vault => ({
-        id: vault.id,
-        address: vault.contractAddress.toLowerCase(),
-        chainId: vault.chainId,
-      }))
-      .reduce((acc, vault) => {
-        acc.add(vault.chainId);
+      .map(vault => vault.chainId)
+      .reduce((acc, chainId) => {
+        acc.add(chainId);
         return acc;
       }, new Set<ChainEntity['id']>());
 
@@ -445,14 +600,14 @@ export const fetchClmHarvestsForUserChain = createAsyncThunk<
     const state = getState();
     const vaults = selectUserDepositedVaultIds(state, walletAddress)
       .map(vaultId => selectVaultById(state, vaultId))
-      .filter(isCowcentratedVault)
+      .filter(isCowcentratedLikeVault)
       .filter(vault => vault.chainId === chainId)
       .map(vault => {
         const since = selectUserFirstDepositDateByVaultId(state, vault.id, walletAddress);
         return since
           ? {
               id: vault.id,
-              address: vault.contractAddress.toLowerCase(),
+              address: getCowcentratedAddressFromCowcentratedLikeVault(vault),
               chainId: vault.chainId,
               since,
             }
@@ -532,7 +687,7 @@ export const recalculateClmHarvestsForUserVaultId = createAsyncThunk<
   'analytics/recalculateClmHarvestsForUserVaultId',
   async ({ walletAddress, vaultId }, { getState }) => {
     const state = getState();
-    const { token0, token1 } = selectCowcentratedVaultDepositTokens(state, vaultId);
+    const { token0, token1 } = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
     const result: RecalculateClmHarvestsForUserVaultIdPayload = {
       vaultId,
       walletAddress,
@@ -627,8 +782,7 @@ export const recalculateClmHarvestsForUserVaultId = createAsyncThunk<
 
 interface FetchClmPendingRewardsFulfilledAction {
   data: ClmPendingRewardsResponse;
-  vaultId: VaultEntity['contractAddress'];
-  chainId: ChainEntity['id'];
+  vaultIds: VaultEntity['id'][];
 }
 
 export const fetchClmPendingRewards = createAsyncThunk<
@@ -637,20 +791,19 @@ export const fetchClmPendingRewards = createAsyncThunk<
   { state: BeefyState }
 >('analytics/fetchClmPendingRewards', async ({ vaultId }, { getState }) => {
   const state = getState();
-  const vault = selectVaultById(state, vaultId);
-
-  const { chainId, contractAddress: vaultAddress } = vault;
-
-  const { token0, token1 } = selectCowcentratedVaultDepositTokens(state, vaultId);
-
-  const stratAddr = selectVaultStrategyAddressOrUndefined(state, vaultId);
+  const vault = selectCowcentratedLikeVaultById(state, vaultId);
+  const clm = isCowcentratedVault(vault)
+    ? vault
+    : selectCowcentratedVaultById(state, vault.cowcentratedId);
+  const { token0, token1 } = selectCowcentratedLikeVaultDepositTokens(state, clm.id);
+  const clmStrategyAddress = selectVaultStrategyAddressOrUndefined(state, clm.id);
+  const chain = selectChainById(state, clm.chainId);
   const api = await getClmApi();
 
   const { fees0, fees1, totalSupply } = await api.getClmPendingRewards(
-    state,
-    chainId,
-    stratAddr,
-    vaultAddress
+    chain,
+    clmStrategyAddress,
+    clm.contractAddress
   );
 
   return {
@@ -659,8 +812,7 @@ export const fetchClmPendingRewards = createAsyncThunk<
       fees1: fees1.shiftedBy(-token1.decimals),
       totalSupply: totalSupply.shiftedBy(-18),
     },
-    chainId,
-    vaultId,
+    vaultIds: [clm.id, clm.cowcentratedGovId, clm.cowcentratedStandardId].filter(isDefined),
   };
 });
 

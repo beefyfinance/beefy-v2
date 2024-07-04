@@ -16,9 +16,11 @@ import { BIG_ZERO } from '../../../helpers/big-number';
  * State containing Vault infos
  */
 export type VaultsState = NormalizedEntity<VaultEntity> & {
+  /** All vault ids that have hidden: false */
+  allVisibleIds: VaultEntity['id'][];
   /** All chains that have at least 1 vault */
   allChainIds: ChainEntity['id'][];
-  /** Vaults that have status: active */
+  /** Vaults that have status: active, hidden: false */
   allActiveIds: VaultEntity['id'][];
   /** Vaults that have bridged receipt tokens we should track */
   allBridgedIds: VaultEntity['id'][];
@@ -40,7 +42,7 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
   /** Vaults id look up by chain id */
   byChainId: {
     [chainId in ChainEntity['id']]?: {
-      /** Vaults on chain */
+      /** Vaults on chain, includes hidden */
       allIds: VaultEntity['id'][];
       /** Vaults by their contract address */
       byAddress: {
@@ -90,6 +92,7 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
 export const initialVaultsState: VaultsState = {
   byId: {},
   allIds: [],
+  allVisibleIds: [],
   allActiveIds: [],
   allBridgedIds: [],
   allChainIds: [],
@@ -226,6 +229,7 @@ function rebuildVaultsState(sliceState: Draft<VaultsState>) {
     return -sliceState.byId[id]!.updatedAt;
   });
   const allVaults = allIds.map(id => sliceState.byId[id]!);
+  const allVisibleIds = allVaults.filter(vault => !vault.hidden).map(vault => vault.id);
   const allChainIds = Array.from(
     allVaults
       .reduce((acc, vault) => {
@@ -243,7 +247,7 @@ function rebuildVaultsState(sliceState: Draft<VaultsState>) {
 
   for (const vault of allVaults) {
     // global
-    if (vault.status === 'active') {
+    if (vault.status === 'active' && !vault.hidden) {
       allActiveIds.push(vault.id);
     }
     if (isStandardVault(vault) && !!vault.bridged) {
@@ -268,6 +272,7 @@ function rebuildVaultsState(sliceState: Draft<VaultsState>) {
 
   // Update state
   sliceState.allIds = allIds;
+  sliceState.allVisibleIds = allVisibleIds;
   sliceState.allChainIds = allChainIds;
   sliceState.allActiveIds = allActiveIds;
   sliceState.allBridgedIds = allBridgedIds;

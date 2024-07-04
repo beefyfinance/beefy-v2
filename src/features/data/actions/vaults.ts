@@ -18,10 +18,6 @@ import type {
 import { getVaultNames } from '../utils/vault-utils';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
 
-// given the list of vaults is pulled from some api at some point
-// we use the api to create an action
-// this action should return just enough data for the state to work with
-
 export interface FulfilledAllVaultsPayload {
   byChainId: {
     [chainId in ChainEntity['id']]?: { config: VaultConfig; entity: VaultEntity }[];
@@ -206,6 +202,7 @@ function getCowcentratedVault(
     depositTokenAddress: `${clmBase.poolAddress}-${config.id}`,
     excludedId: config.excluded || clmBase.cowcentratedGovId || undefined,
     assetType: 'clm',
+    hidden: !!clmBase.cowcentratedGovId,
   };
 }
 
@@ -314,5 +311,6 @@ function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBas
     safetyScore: safetyScoreNum(config.risks || []) || 0,
     depositFee: config.depositFee || 0,
     migrationIds: config.migrationIds || [],
+    hidden: false,
   };
 }

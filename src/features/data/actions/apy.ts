@@ -3,7 +3,7 @@ import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi } from '../apis/instances';
 import { isGovVault, type VaultEntity } from '../entities/vault';
 import type { TotalApy } from '../reducers/apy';
-import { selectAllVaultIds, selectVaultById } from '../selectors/vaults';
+import { selectAllVaultIdsIncludingHidden, selectVaultById } from '../selectors/vaults';
 import { selectActiveVaultBoostIds } from '../selectors/boosts';
 import { first } from 'lodash-es';
 import { compoundInterest, yearlyToDaily } from '../../../helpers/number';
@@ -44,7 +44,7 @@ export const recalculateTotalApyAction = createAsyncThunk<
   { state: BeefyState }
 >('apy/recalculateTotalApy', async (_, { getState }) => {
   const state = getState();
-  const vaultIds = selectAllVaultIds(state);
+  const vaultIds = selectAllVaultIdsIncludingHidden(state); // Hidden: OK
   const totals: Record<VaultEntity['id'], TotalApy> = {};
   const { allComponents, allDaily, compoundableDaily, nonCompoundableDaily } =
     getApiApyDataComponents();

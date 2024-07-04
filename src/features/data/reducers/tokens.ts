@@ -70,7 +70,7 @@ export type TokensState = {
     };
   };
   cowcentratedRanges: {
-    byVaultId: {
+    byOracleId: {
       [tokenId: TokenEntity['oracleId']]: CurrentCowcentratedRangeData;
     };
   };
@@ -79,7 +79,7 @@ export const initialTokensState: TokensState = {
   byChainId: {},
   prices: { byOracleId: {} },
   breakdown: { byOracleId: {} },
-  cowcentratedRanges: { byVaultId: {} },
+  cowcentratedRanges: { byOracleId: {} },
 };
 
 export const tokensSlice = createSlice({
@@ -211,7 +211,7 @@ export const tokensSlice = createSlice({
       })
       .addCase(fetchAllCurrentCowcentratedRanges.fulfilled, (sliceState, action) => {
         for (const [oracleId, value] of Object.entries(action.payload)) {
-          sliceState.cowcentratedRanges.byVaultId[oracleId] = {
+          sliceState.cowcentratedRanges.byOracleId[oracleId] = {
             priceRangeMax: new BigNumber(value.priceRangeMax),
             priceRangeMin: new BigNumber(value.priceRangeMin),
             currentPrice: new BigNumber(value.currentPrice),

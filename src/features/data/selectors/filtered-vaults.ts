@@ -2,13 +2,13 @@ import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity } from '../entities/vault';
 import { isGovVault } from '../entities/vault';
-import { selectDashboardDepositedVaultIdsForAddress } from './balance';
+import { selectUserDepositedVaultIds } from './balance';
 import {
   selectBoostById,
   selectIsVaultPreStakedOrBoosted,
   selectPreStakeOrActiveBoostIds,
 } from './boosts';
-import { selectVaultById } from './vaults';
+import { selectAllVisibleVaultIds, selectVaultById } from './vaults';
 import { selectTokenByAddress } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import type { KeysOfType } from '../utils/types-utils';
@@ -168,7 +168,7 @@ export const selectUserDashboardFilteredVaults = (
   walletAddress?: string
 ) => {
   if (!walletAddress) return [];
-  const vaults = selectDashboardDepositedVaultIdsForAddress(state, walletAddress).map(id =>
+  const vaults = selectUserDepositedVaultIds(state, walletAddress).map(id =>
     selectVaultById(state, id)
   );
   const searchText = simplifySearchText(text);
@@ -208,7 +208,4 @@ export const selectFilteredVaults = (state: BeefyState) =>
 
 export const selectFilteredVaultCount = createSelector(selectFilteredVaults, ids => ids.length);
 
-export const selectTotalVaultCount = createSelector(
-  (state: BeefyState) => state.entities.vaults.allIds.length,
-  c => c
-);
+export const selectTotalVaultCount = (state: BeefyState) => selectAllVisibleVaultIds(state).length;

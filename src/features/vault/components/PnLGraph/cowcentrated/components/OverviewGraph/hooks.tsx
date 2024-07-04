@@ -2,24 +2,22 @@ import { useMemo } from 'react';
 import { useAppSelector } from '../../../../../../../store';
 import { type VaultEntity } from '../../../../../../data/entities/vault';
 import {
-  selectClmPnl,
-  selectUserDepositedTimelineByVaultId,
-} from '../../../../../../data/selectors/analytics';
-import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../../../../data/selectors/balance';
-import {
-  selectCowcentratedVaultDepositTokensWithPrices,
+  selectCowcentratedLikeVaultDepositTokensWithPrices,
+  selectDepositTokenByVaultId,
   selectTokenPriceByTokenOracleId,
 } from '../../../../../../data/selectors/tokens';
 import { selectWalletAddress } from '../../../../../../data/selectors/wallet';
 import { maxBy, minBy } from 'lodash-es';
 import { getClmInvestorTimeSeries } from '../../../../../../../helpers/timeserie';
 import { isCLMTimelineAnalyticsEntity } from '../../../../../../data/entities/analytics';
-import {
-  useOracleIdToUsdPrices,
-  useVaultIdToUnderlyingUsdPrices,
-} from '../../../../../../data/hooks/historical';
+import { useOracleIdToUsdPrices } from '../../../../../../data/hooks/historical';
 import type { GraphBucket } from '../../../../../../../helpers/graph';
 import { useVaultPeriods } from '../../../standard/hooks';
+import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../../../../data/selectors/balance';
+import {
+  selectClmPnl,
+  selectUserDepositedTimelineByVaultId,
+} from '../../../../../../data/selectors/analytics';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], minUsd: 0, maxUsd: 0 };
@@ -30,23 +28,24 @@ export const usePnLChartData = (
   address?: string
 ) => {
   const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
+  const depositToken = useAppSelector(state => selectDepositTokenByVaultId(state, vaultId));
   const vaultTimeline = useAppSelector(state =>
     selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress)
   );
   const currentSharePrice = useAppSelector(state =>
-    selectTokenPriceByTokenOracleId(state, vaultId)
+    selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
   );
-  const currentMooTokenBalance = useAppSelector(state =>
+  const currentShareBalance = useAppSelector(state =>
     selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vaultId, walletAddress)
   );
-  const { token0SharesAtDeposit, token1SharesAtDeposit } = useAppSelector(state =>
+  const { token0AtDeposit, token1AtDeposit } = useAppSelector(state =>
     selectClmPnl(state, vaultId, address)
   );
   const { token0, token1 } = useAppSelector(state =>
-    selectCowcentratedVaultDepositTokensWithPrices(state, vaultId)
+    selectCowcentratedLikeVaultDepositTokensWithPrices(state, vaultId)
   );
-  const { data: sharesToUsd, loading: sharesToUsdLoading } = useVaultIdToUnderlyingUsdPrices(
-    vaultId,
+  const { data: sharesToUsd, loading: sharesToUsdLoading } = useOracleIdToUsdPrices(
+    depositToken.oracleId,
     timebucket
   );
   const { data: token0ToUsd, loading: token0ToUsdLoading } = useOracleIdToUsdPrices(
@@ -81,9 +80,9 @@ export const usePnLChartData = (
         token1ToUsd,
         vaultLastDeposit,
         currentSharePrice,
-        currentMooTokenBalance,
-        token0SharesAtDeposit,
-        token1SharesAtDeposit,
+        currentShareBalance,
+        token0AtDeposit,
+        token1AtDeposit,
         token0.price,
         token1.price
       );
@@ -107,13 +106,13 @@ export const usePnLChartData = (
     return NO_CHART_DATA;
   }, [
     isLoading,
-    currentMooTokenBalance,
+    currentShareBalance,
     currentSharePrice,
     timebucket,
     token0.price,
-    token0SharesAtDeposit,
+    token0AtDeposit,
     token1.price,
-    token1SharesAtDeposit,
+    token1AtDeposit,
     sharesToUsd,
     vaultTimeline,
     token0ToUsd,

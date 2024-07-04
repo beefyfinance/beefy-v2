@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import type { ReactNode } from 'react';
 import React, { memo } from 'react';
 import { useAppSelector } from '../../store';
-import { selectDashboardDepositedVaultIdsForAddress } from '../data/selectors/balance';
+import { selectUserDepositedVaultIds } from '../data/selectors/balance';
 import { DepositSummary } from './components/DepositSummary';
 import { InvalidAddress, InvalidDomain, NoResults, NotConnected } from './components/NoResults';
 import { UserExposure } from './components/UserExposure';
@@ -107,9 +107,7 @@ const DashboardForAddress = memo<DashboardForAddressProps>(function DashboardFor
   addressLabel,
 }) {
   const loading = useInitDashboard(address);
-  const userVaults = useAppSelector(state =>
-    selectDashboardDepositedVaultIdsForAddress(state, address)
-  );
+  const userVaults = useAppSelector(state => selectUserDepositedVaultIds(state, address));
 
   return (
     <DashboardContainer>

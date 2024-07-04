@@ -1,16 +1,12 @@
 import type BigNumber from 'bignumber.js';
 import type {
-  CLMTimelineAnalyticsConfig,
+  CLMTimelineAnalyticsAction,
   TimelineAnalyticsConfig,
 } from '../apis/analytics/analytics-types';
-import type {
-  ChangeTypeOfKeys,
-  MapNullToUndefined,
-  Prettify,
-  SnakeToCamelCase,
-} from '../utils/types-utils';
+import type { ChangeTypeOfKeys, Prettify, SnakeToCamelCase } from '../utils/types-utils';
 import type { ChainEntity } from './chain';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
+import type { NonEmptyArray } from '../utils/array-utils';
 
 type VTACSnake = {
   [K in keyof TimelineAnalyticsConfig as SnakeToCamelCase<K>]: TimelineAnalyticsConfig[K];
@@ -46,45 +42,75 @@ export type VaultTimelineAnalyticsEntry = VaultTimelineAnalyticsEntryWithoutVaul
   vaultId: string;
 };
 
-type CLMACSnake = {
-  [K in keyof CLMTimelineAnalyticsConfig as SnakeToCamelCase<K>]: CLMTimelineAnalyticsConfig[K];
-};
-
-type CLMACBigNumber = ChangeTypeOfKeys<
-  CLMACSnake,
-  | 'shareBalance'
-  | 'shareDiff'
-  | 'managerBalance'
-  | 'managerDiff'
-  | 'token0ToUsd'
-  | 'underlying0Balance'
-  | 'underlying0Diff'
-  | 'token1ToUsd'
-  | 'underlying1Balance'
-  | 'underlying1Diff'
-  | 'usdBalance'
-  | 'usdDiff',
-  BigNumber
->;
-
-type CLMACBigNumberUndefined = ChangeTypeOfKeys<
-  CLMACBigNumber,
-  'rewardPoolBalance' | 'rewardPoolDiff',
-  BigNumber | undefined
->;
-
-export type CLMTimelineAnalyticsEntryWithoutVaultId = Prettify<
-  MapNullToUndefined<
-    ChangeTypeOfKeys<CLMACBigNumberUndefined, 'datetime', Date> & {
-      type: 'cowcentrated';
-      transactionId: string;
-    }
-  >
->;
-
-export type CLMTimelineAnalyticsEntry = CLMTimelineAnalyticsEntryWithoutVaultId & {
+type CLMTimelineAnalyticsEntryBase = {
   vaultId: string;
+  type: 'cowcentrated';
+  transactionId: string;
+  datetime: Date;
+  productKey: string;
+  displayName: string;
+  chain: ChainEntity['id'];
+  isEol: boolean;
+  isDashboardEol: boolean;
+  transactionHash: string;
+  token0ToUsd: BigNumber;
+  underlying0Balance: BigNumber;
+  underlying0Diff: BigNumber;
+  token1ToUsd: BigNumber;
+  underlying1Balance: BigNumber;
+  underlying1Diff: BigNumber;
+  usdBalance: BigNumber;
+  usdDiff: BigNumber;
+  shareBalance: BigNumber;
+  shareDiff: BigNumber;
+  managerBalance: BigNumber;
+  managerDiff: BigNumber;
+  managerAddress: string;
+  actions: CLMTimelineAnalyticsAction[];
 };
+
+export type CLMTimelineAnalyticsEntryNoRewardPoolPart = {
+  hasRewardPool: false;
+};
+
+export type CLMTimelineAnalyticsEntryWithRewardPoolPart = {
+  hasRewardPool: true;
+  /** address of the reward pool */
+  rewardPoolAddress: string;
+  /** balance of reward pool */
+  rewardPoolBalance: BigNumber;
+  /** diff of reward pool balance */
+  rewardPoolDiff: BigNumber;
+};
+
+export type CLMTimelineAnalyticsEntryWithRewardPoolsPart = {
+  hasRewardPool: true;
+  /** total balance in all reward pools */
+  rewardPoolBalance: BigNumber;
+  /** total diff from all reward pools */
+  rewardPoolDiff: BigNumber;
+  /** details of each reward pool */
+  rewardPoolDetails: NonEmptyArray<{ address: string; balance: BigNumber; diff: BigNumber }>;
+};
+
+export type CLMTimelineAnalyticsEntryNoRewardPool = CLMTimelineAnalyticsEntryBase &
+  CLMTimelineAnalyticsEntryNoRewardPoolPart;
+export type CLMTimelineAnalyticsEntryRewardPool = CLMTimelineAnalyticsEntryBase &
+  CLMTimelineAnalyticsEntryWithRewardPoolPart;
+export type CLMTimelineAnalyticsEntryRewardPools = CLMTimelineAnalyticsEntryBase &
+  CLMTimelineAnalyticsEntryWithRewardPoolsPart;
+
+export type CLMTimelineAnalyticsEntry =
+  | CLMTimelineAnalyticsEntryNoRewardPool
+  | CLMTimelineAnalyticsEntryRewardPool;
+
+export type CLMTimelineAnalyticsEntryHandleInput =
+  | Omit<CLMTimelineAnalyticsEntryNoRewardPool, 'vaultId'>
+  | Omit<CLMTimelineAnalyticsEntryRewardPools, 'vaultId'>;
+
+export type CLMTimelineAnalyticsEntryHandleInputWithVaultId =
+  | CLMTimelineAnalyticsEntryNoRewardPool
+  | CLMTimelineAnalyticsEntryRewardPools;
 
 export type AnyTimelineAnalyticsEntry = VaultTimelineAnalyticsEntry | CLMTimelineAnalyticsEntry;
 

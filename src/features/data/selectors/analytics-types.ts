@@ -23,16 +23,16 @@ export type UserGovPnl = {
 
 export type UserClmPnl = {
   type: 'cowcentrated';
-  userSharesAtDeposit: BigNumber;
-  token0EntryPrice: BigNumber;
-  token1EntryPrice: BigNumber;
-  token0SharesAtDeposit: BigNumber;
-  token1SharesAtDeposit: BigNumber;
-  token0SharesAtDepositToUsd: BigNumber;
-  token1SharesAtDepositToUsd: BigNumber;
-  sharesAtDepositToUsd: BigNumber;
-  shares: BigNumber;
-  sharesNowToUsd: BigNumber;
+  sharesAtDeposit: BigNumber;
+  token0AtDepositPrice: BigNumber;
+  token1AtDepositPrice: BigNumber;
+  token0AtDeposit: BigNumber;
+  token1AtDeposit: BigNumber;
+  token0AtDepositInUsd: BigNumber;
+  token1AtDepositInUsd: BigNumber;
+  sharesAtDepositInUsd: BigNumber;
+  sharesNow: BigNumber;
+  sharesNowInUsd: BigNumber;
   token0: UserLpBreakdownBalanceAsset;
   token1: UserLpBreakdownBalanceAsset;
   token0Diff: BigNumber;

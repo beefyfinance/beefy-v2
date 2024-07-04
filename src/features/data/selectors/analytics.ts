@@ -14,13 +14,14 @@ import {
   type VaultStandard,
 } from '../entities/vault';
 import {
-  selectCowcentratedVaultDepositTokens,
-  selectCowcentratedVaultDepositTokensWithPrices,
+  selectCowcentratedLikeVaultDepositTokens,
+  selectCowcentratedLikeVaultDepositTokensWithPrices,
   selectLpBreakdownForVault,
   selectTokenByAddress,
   selectTokenPriceByAddress,
 } from './tokens';
 import {
+  selectCowcentratedLikeVaultById,
   selectCowcentratedVaultById,
   selectVaultById,
   selectVaultPricePerFullShare,
@@ -232,11 +233,15 @@ export const selectClmPnl = (
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ): UserClmPnl => {
-  const vault = selectVaultById(state, vaultId);
+  const vault = selectCowcentratedLikeVaultById(state, vaultId);
   const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
-  const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const depositTokenPrice = selectTokenPriceByAddress(
+    state,
+    vault.chainId,
+    vault.depositTokenAddress
+  );
   const breakdown = selectLpBreakdownForVault(state, vault);
-  const { assets, userBalanceDecimal } = selectUserLpBreakdownBalance(
+  const { assets, userBalanceDecimal: sharesNowInDepositToken } = selectUserLpBreakdownBalance(
     state,
     vault,
     breakdown,
@@ -260,21 +265,24 @@ export const selectClmPnl = (
     }
   }
 
-  const { remainingToken0, remainingToken1, remainingShares } = pnl.getRemainingShares();
-  const { token0EntryPrice, token1EntryPrice } = pnl.getRemainingSharesAvgEntryPrice();
+  const {
+    remainingToken0: token0AtDeposit,
+    remainingToken1: token1AtDeposit,
+    remainingShares: sharesAtDeposit,
+  } = pnl.getRemainingShares();
+  const { token0EntryPrice: token0AtDepositPrice, token1EntryPrice: token1AtDepositPrice } =
+    pnl.getRemainingSharesAvgEntryPrice();
 
-  const oraclePriceAtDeposit = remainingToken0
-    .times(token0EntryPrice)
-    .plus(remainingToken1.times(token1EntryPrice));
+  const sharesAtDepositInUsd = token0AtDeposit
+    .times(token0AtDepositPrice)
+    .plus(token1AtDeposit.times(token1AtDepositPrice));
 
-  const positionPnl = userBalanceDecimal.times(oraclePrice).minus(oraclePriceAtDeposit);
-
-  const sharesNowToUsd = remainingShares.times(oraclePrice);
-
-  const hold = remainingToken0.times(token0.price).plus(remainingToken1.times(token1.price));
+  const sharesNow = sharesAtDeposit; // TODO for CLM vaults, shares increase at each harvest
+  const sharesNowInUsd = sharesNowInDepositToken.times(depositTokenPrice); // correct for CLM vaults too
+  const positionPnl = sharesNowInUsd.minus(sharesAtDepositInUsd);
+  const hold = token0AtDeposit.times(token0.price).plus(token1AtDeposit.times(token1.price));
 
   const harvestTimeline = selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress);
-
   const compoundedYield = harvestTimeline
     ? {
         total0Compounded: harvestTimeline.totals[0],
@@ -293,24 +301,24 @@ export const selectClmPnl = (
 
   return {
     type: 'cowcentrated',
-    userSharesAtDeposit: remainingShares,
-    token0EntryPrice,
-    token1EntryPrice,
-    token0SharesAtDeposit: remainingToken0,
-    token1SharesAtDeposit: remainingToken1,
-    token0SharesAtDepositToUsd: remainingToken0.times(token0EntryPrice),
-    token1SharesAtDepositToUsd: remainingToken1.times(token1EntryPrice),
-    sharesAtDepositToUsd: oraclePriceAtDeposit,
-    shares: remainingShares,
-    sharesNowToUsd,
+    sharesAtDeposit,
+    sharesAtDepositInUsd: sharesAtDepositInUsd,
+    token0AtDeposit,
+    token1AtDeposit,
+    token0AtDepositPrice: token0AtDepositPrice,
+    token1AtDepositPrice: token1AtDepositPrice,
+    token0AtDepositInUsd: token0AtDeposit.times(token0AtDepositPrice),
+    token1AtDepositInUsd: token1AtDeposit.times(token1AtDepositPrice),
+    sharesNow,
+    sharesNowInUsd,
     token0,
     token1,
-    token0Diff: token0.userAmount.minus(remainingToken0),
-    token1Diff: token1.userAmount.minus(remainingToken1),
+    token0Diff: token0.userAmount.minus(token0AtDeposit),
+    token1Diff: token1.userAmount.minus(token1AtDeposit),
     pnl: positionPnl,
-    pnlPercentage: positionPnl.dividedBy(oraclePriceAtDeposit),
+    pnlPercentage: positionPnl.dividedBy(sharesAtDepositInUsd),
     hold,
-    holdDiff: sharesNowToUsd.minus(hold),
+    holdDiff: sharesNowInUsd.minus(hold),
     ...compoundedYield,
   };
 };
@@ -354,7 +362,7 @@ export const selectHasDataToShowGraphByVaultId = createCachedSelector(
     selectVaultById(state, vaultId),
   (userVaults, isLoaded, timeline, vault) => {
     // show clm data for 1 month after vault is retired
-    const statusCondition = isCowcentratedVault(vault)
+    const statusCondition = isCowcentratedLikeVault(vault)
       ? vault.status !== 'eol' ||
         (vault.status === 'eol' && Date.now() / 1000 - (vault.retiredAt || 0) <= 60 * 60 * 24 * 30)
       : vault.status === 'active';
@@ -364,8 +372,7 @@ export const selectHasDataToShowGraphByVaultId = createCachedSelector(
       userVaults.includes(vault.id) &&
       !!timeline &&
       timeline.current.length !== 0 &&
-      statusCondition &&
-      !isGovVault(vault)
+      statusCondition
     );
   }
 )(
@@ -399,7 +406,7 @@ export const selectClmAutocompoundedPendingFeesByVaultId = (
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ) => {
-  const { token0, token1 } = selectCowcentratedVaultDepositTokensWithPrices(state, vaultId);
+  const { token0, token1 } = selectCowcentratedLikeVaultDepositTokensWithPrices(state, vaultId);
   const { price: token0Price, symbol: token0Symbol, decimals: token0Decimals } = token0;
   const { price: token1Price, symbol: token1Symbol, decimals: token1Decimals } = token1;
 
@@ -517,7 +524,7 @@ function selectDashboardYieldCowcentratedData(
   }
 
   const { rewards, totalRewardsUsd } = selectUserRewardsByVaultId(state, vault.id, walletAddress);
-  const tokens = selectCowcentratedVaultDepositTokens(state, vault.id);
+  const tokens = selectCowcentratedLikeVaultDepositTokens(state, vault.id);
   return {
     type: vault.type,
     ...tokens,

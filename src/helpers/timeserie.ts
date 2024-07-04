@@ -573,8 +573,8 @@ export function getClmInvestorTimeSeries(
   firstDepositDate: Date,
   currentPrice: BigNumber,
   currentShareBalance: BigNumber,
-  token0SharesAtDeposit: BigNumber,
-  token1SharesAtDeposit: BigNumber,
+  token0AtDeposit: BigNumber,
+  token1AtDeposit: BigNumber,
   currentPriceToken0: BigNumber,
   currentPriceToken1: BigNumber
 ): ClmInvestorOverviewTimeSeriesPoint[] {
@@ -595,9 +595,9 @@ export function getClmInvestorTimeSeries(
     currentPrice,
     currentShareBalance,
     currentPriceToken0,
-    token0SharesAtDeposit,
+    token0AtDeposit,
     currentPriceToken1,
-    token1SharesAtDeposit,
+    token1AtDeposit,
     firstDate,
     lastDate,
     bucketSize

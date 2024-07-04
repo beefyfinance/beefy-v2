@@ -5,7 +5,6 @@ import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token';
 import {
   isCowcentratedGovVault,
-  isCowcentratedLikeVault,
   isCowcentratedVault,
   isGovVault,
   isGovVaultMulti,
@@ -14,14 +13,12 @@ import {
   type VaultEntity,
   type VaultGov,
 } from '../entities/vault';
-import { selectActiveVaultBoostIds, selectAllVaultBoostIds, selectBoostById } from './boosts';
+import { selectAllVaultBoostIds, selectBoostById } from './boosts';
 import { createCachedSelector } from 're-reselect';
 import {
-  selectDepositTokenByVaultId,
   selectHasBreakdownDataByTokenAddress,
   selectIsTokenStable,
   selectLpBreakdownForVault,
-  selectShareTokenByVaultId,
   selectTokenByAddress,
   selectTokenByIdOrUndefined,
   selectTokenPriceByAddress,
@@ -30,13 +27,7 @@ import {
   selectVaultTokenSymbols,
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens';
-import {
-  selectGovVaultById,
-  selectIsVaultStable,
-  selectStandardVaultById,
-  selectVaultById,
-  selectVaultPricePerFullShare,
-} from './vaults';
+import { selectGovVaultById, selectIsVaultStable, selectVaultById } from './vaults';
 import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
@@ -84,37 +75,6 @@ export const selectUserDepositedVaultIds = (state: BeefyState, walletAddress?: s
   return walletBalance?.depositedVaultIds || [];
 };
 
-/**
- * Same as selectUserDepositedVaultIds, except:
- * Excluding any CLM vaults if they used as the deposit token for other vaults
- */
-export const selectDashboardDepositedVaultIdsForAddress = createSelector(
-  (state: BeefyState, address: string) =>
-    state.user.balance.byAddress[address.toLowerCase()]?.depositedVaultIds,
-  (state: BeefyState) => state.entities.vaults.byId,
-  (vaultIds, vaultsById) => {
-    if (!vaultIds) {
-      return [];
-    }
-
-    return vaultIds.filter(vaultId => {
-      const vault = vaultsById[vaultId];
-      // should never happen
-      if (!vault) {
-        return false;
-      }
-
-      // include all non-CLM vaults
-      if (!isCowcentratedVault(vault)) {
-        return true;
-      }
-
-      // include CLM only if there is no gov/standard vault for it
-      return vault.cowcentratedGovId === undefined && vault.cowcentratedStandardId === undefined;
-    });
-  }
-);
-
 export const selectUserDepositedVaultIdsForAsset = (state: BeefyState, asset: string) => {
   const vaultIds = selectUserDepositedVaultIds(state);
   return vaultIds.filter(vaultId => {
@@ -126,18 +86,6 @@ export const selectUserDepositedVaultIdsForAsset = (state: BeefyState, asset: st
 export const selectHasUserDepositInVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const walletBalance = _selectWalletBalance(state);
   return walletBalance ? walletBalance.depositedVaultIds.indexOf(vaultId) !== -1 : false;
-};
-
-export const selectHasUserBalanceInActiveBoost = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-) => {
-  const activeBoostsIds = selectActiveVaultBoostIds(state, vaultId);
-  let userBalance = BIG_ZERO;
-  activeBoostsIds.forEach(boostId => {
-    userBalance = userBalance.plus(selectBoostUserBalanceInToken(state, boostId) ?? BIG_ZERO);
-  });
-  return userBalance.isGreaterThan(0);
 };
 
 export const selectUserBalanceOfToken = (
@@ -238,6 +186,63 @@ export const selectUserVaultBalanceInShareTokenInBridged = (
   return shares;
 };
 
+/**
+ * Only includes bare CLM in wallet if vault is CLM Pool
+ */
+export const selectUserVaultBalanceInShareTokenInUnderlyingCLM = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  maybeWalletAddress?: string
+) => {
+  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
+  if (!walletAddress) {
+    return BIG_ZERO;
+  }
+
+  const vault = selectVaultById(state, vaultId);
+  if (!isCowcentratedGovVault(vault)) {
+    return BIG_ZERO;
+  }
+
+  return selectUserBalanceOfToken(state, vault.chainId, vault.depositTokenAddress, walletAddress);
+};
+
+const selectVaultSharesToDepositTokenData = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    state.entities.vaults.contractData.byVaultId[vaultId]?.pricePerFullShare,
+  (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.tokens.byChainId,
+  (vault, ppfs, tokensByChainId) => {
+    const depositToken =
+      tokensByChainId[vault.chainId]?.byAddress[vault.depositTokenAddress.toLowerCase()];
+    if (!depositToken) {
+      throw new Error(`Deposit token not found for ${vault.id}`);
+    }
+
+    // only standard vaults have ppfs
+    if (isStandardVault(vault)) {
+      if (!ppfs) {
+        throw new Error(`Price per full share not found for ${vault.id}`);
+      }
+      const shareToken =
+        tokensByChainId[vault.chainId]?.byAddress[vault.receiptTokenAddress.toLowerCase()];
+      if (!shareToken) {
+        throw new Error(`Share token not found for ${vault.id}`);
+      }
+
+      return {
+        ppfs,
+        shareToken,
+        depositToken,
+      };
+    }
+
+    return {
+      depositToken,
+    };
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
 type UserBalanceSelector = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
@@ -261,7 +266,9 @@ export const selectUserVaultBalanceInShareTokenIncludingBoostsBridged: UserBalan
       selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, maybeWalletAddress),
     (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
       selectUserVaultBalanceInShareTokenInBridged(state, vaultId, maybeWalletAddress),
-    (base, boosts, bridged) => base.plus(boosts).plus(bridged)
+    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+      selectUserVaultBalanceInShareTokenInUnderlyingCLM(state, vaultId, maybeWalletAddress),
+    (...balances) => balances.reduce((acc, balance) => acc.plus(balance), BIG_ZERO)
   )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
@@ -270,11 +277,17 @@ export const selectUserVaultBalanceInShareTokenIncludingBoostsBridged: UserBalan
 export const selectUserVaultBalanceInDepositToken: UserBalanceSelector = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
     selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultPricePerFullShare(state, vaultId),
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectDepositTokenByVaultId(state, vaultId),
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectShareTokenByVaultId(state, vaultId),
-  (shares, ppfs, depositToken, shareToken) =>
-    shareToken ? mooAmountToOracleAmount(shareToken, depositToken, ppfs, shares) : shares
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectVaultSharesToDepositTokenData(state, vaultId),
+  (shares, shareData) =>
+    shareData.shareToken
+      ? mooAmountToOracleAmount(
+          shareData.shareToken,
+          shareData.depositToken,
+          shareData.ppfs,
+          shares
+        )
+      : shares
 )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
@@ -284,11 +297,17 @@ export const selectUserVaultBalanceInDepositTokenIncludingBoostsBridged: UserBal
   createCachedSelector(
     (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
       selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultPricePerFullShare(state, vaultId),
-    (state: BeefyState, vaultId: VaultEntity['id']) => selectDepositTokenByVaultId(state, vaultId),
-    (state: BeefyState, vaultId: VaultEntity['id']) => selectShareTokenByVaultId(state, vaultId),
-    (shares, ppfs, depositToken, shareToken) =>
-      shareToken ? mooAmountToOracleAmount(shareToken, depositToken, ppfs, shares) : shares
+    (state: BeefyState, vaultId: VaultEntity['id']) =>
+      selectVaultSharesToDepositTokenData(state, vaultId),
+    (shares, shareData) =>
+      shareData.shareToken
+        ? mooAmountToOracleAmount(
+            shareData.shareToken,
+            shareData.depositToken,
+            shareData.ppfs,
+            shares
+          )
+        : shares
   )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
@@ -299,12 +318,18 @@ export const selectUserVaultBalanceInDepositTokenWithToken: UserBalanceWithToken
   createCachedSelector(
     (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
       selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultPricePerFullShare(state, vaultId),
-    (state: BeefyState, vaultId: VaultEntity['id']) => selectDepositTokenByVaultId(state, vaultId),
-    (state: BeefyState, vaultId: VaultEntity['id']) => selectShareTokenByVaultId(state, vaultId),
-    (shares, ppfs, depositToken, shareToken) => ({
-      token: depositToken,
-      amount: shareToken ? mooAmountToOracleAmount(shareToken, depositToken, ppfs, shares) : shares,
+    (state: BeefyState, vaultId: VaultEntity['id']) =>
+      selectVaultSharesToDepositTokenData(state, vaultId),
+    (shares, shareData) => ({
+      token: shareData.depositToken,
+      amount: shareData.shareToken
+        ? mooAmountToOracleAmount(
+            shareData.shareToken,
+            shareData.depositToken,
+            shareData.ppfs,
+            shares
+          )
+        : shares,
     })
   )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
@@ -316,92 +341,145 @@ export const selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken
   createCachedSelector(
     (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
       selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultPricePerFullShare(state, vaultId),
-    (state: BeefyState, vaultId: VaultEntity['id']) => selectDepositTokenByVaultId(state, vaultId),
-    (state: BeefyState, vaultId: VaultEntity['id']) => selectShareTokenByVaultId(state, vaultId),
-    (shares, ppfs, depositToken, shareToken) => ({
-      token: depositToken,
-      amount: shareToken ? mooAmountToOracleAmount(shareToken, depositToken, ppfs, shares) : shares,
+    (state: BeefyState, vaultId: VaultEntity['id']) =>
+      selectVaultSharesToDepositTokenData(state, vaultId),
+    (shares, shareData) => ({
+      token: shareData.depositToken,
+      amount: shareData.shareToken
+        ? mooAmountToOracleAmount(
+            shareData.shareToken,
+            shareData.depositToken,
+            shareData.ppfs,
+            shares
+          )
+        : shares,
     })
   )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
-export type StandardVaultBalanceBreakdownVault = {
+export type UserVaultBalanceBreakdownVault = {
   type: 'vault';
   id: string;
   amount: BigNumber;
   vaultId: VaultEntity['id'];
 };
-export type StandardVaultBalanceBreakdownBoost = {
+export type UserVaultBalanceBreakdownBoost = {
   type: 'boost';
   id: string;
   amount: BigNumber;
   boostId: BoostEntity['id'];
 };
-export type StandardVaultBalanceBreakdownBridged = {
+export type UserVaultBalanceBreakdownBridged = {
   type: 'bridged';
   id: string;
   amount: BigNumber;
   chainId: ChainEntity['id'];
 };
-export type StandardVaultBalanceBreakdownEntry =
-  | StandardVaultBalanceBreakdownVault
-  | StandardVaultBalanceBreakdownBoost
-  | StandardVaultBalanceBreakdownBridged;
-export type StandardVaultBalanceBreakdown = StandardVaultBalanceBreakdownEntry[];
+export type UserVaultBalanceBreakdownCLM = {
+  type: 'clm';
+  id: string;
+  amount: BigNumber;
+  chainId: ChainEntity['id'];
+};
 
-export const selectStandardVaultUserBalanceInDepositTokenBreakdown = (
+export type UserVaultBalanceBreakdownEntry =
+  | UserVaultBalanceBreakdownVault
+  | UserVaultBalanceBreakdownBoost
+  | UserVaultBalanceBreakdownBridged
+  | UserVaultBalanceBreakdownCLM;
+
+export type UserVaultBalanceBreakdown = {
+  depositToken: TokenEntity;
+  entries: UserVaultBalanceBreakdownEntry[];
+};
+
+export const selectVaultUserBalanceInDepositTokenBreakdown = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
-): StandardVaultBalanceBreakdown => {
-  const vault = selectStandardVaultById(state, vaultId);
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
-  const ppfs = selectVaultPricePerFullShare(state, vault.id);
-  const balances: StandardVaultBalanceBreakdown = [];
+): UserVaultBalanceBreakdown => {
+  const vault = selectVaultById(state, vaultId);
+  const shareData = selectVaultSharesToDepositTokenData(state, vaultId);
+  const vaultBalance = selectUserVaultBalanceInDepositToken(state, vaultId);
+  const balances: UserVaultBalanceBreakdown = {
+    depositToken: shareData.depositToken,
+    entries: [],
+  };
 
-  // direct deposit in vault
-  const mooTokenBalance = selectUserBalanceOfToken(
-    state,
-    vault.chainId,
-    mooToken.address,
-    walletAddress
-  );
-
-  if (mooTokenBalance.gt(BIG_ZERO)) {
-    balances.push({
+  if (vaultBalance.gt(BIG_ZERO)) {
+    balances.entries.push({
       type: 'vault',
       id: `vault-${vaultId}`,
       vaultId,
-      amount: mooAmountToOracleAmount(mooToken, depositToken, ppfs, mooTokenBalance),
+      amount: vaultBalance,
     });
+  }
+
+  // normal gov vaults do not have balances elsewhere
+  if (isGovVault(vault) && !isCowcentratedGovVault(vault)) {
+    return balances;
+  }
+
+  // only gov vaults count CLM in wallet
+  if (isCowcentratedGovVault(vault)) {
+    const clmBalance = selectUserVaultBalanceInShareTokenInUnderlyingCLM(
+      state,
+      vaultId,
+      walletAddress
+    );
+    if (clmBalance.gt(BIG_ZERO)) {
+      balances.entries.push({
+        type: 'clm',
+        id: `clm-${vaultId}`,
+        chainId: vault.chainId,
+        amount: clmBalance,
+      });
+    }
+  }
+
+  // only standard vaults have boosts or bridged balances
+  if (!isStandardVault(vault) || !shareData.shareToken) {
+    return balances;
   }
 
   // deposits in boost (even those expired)
   const boostIds = selectAllVaultBoostIds(state, vaultId);
   for (const boostId of boostIds) {
-    const boostMooToken = selectBoostUserBalanceInToken(state, boostId, walletAddress);
-    if (boostMooToken.gt(BIG_ZERO)) {
-      balances.push({
+    const boostShareBalance = selectBoostUserBalanceInToken(state, boostId, walletAddress);
+    if (boostShareBalance.gt(BIG_ZERO)) {
+      balances.entries.push({
         type: 'boost',
-        id: `boost-${boostId}}`,
+        id: `boost-${boostId}`,
         boostId,
-        amount: mooAmountToOracleAmount(mooToken, depositToken, ppfs, boostMooToken),
+        amount: mooAmountToOracleAmount(
+          shareData.shareToken,
+          shareData.depositToken,
+          shareData.ppfs,
+          boostShareBalance
+        ),
       });
     }
   }
 
   // bridged mooToken
-
-  if (!isGovVault(vault) && vault.bridged) {
+  if (vault.bridged) {
     for (const [chainId, tokenAddress] of entries(vault.bridged)) {
-      const bridgedMooToken = selectUserBalanceOfToken(state, chainId, tokenAddress, walletAddress);
-      if (bridgedMooToken.gt(BIG_ZERO)) {
-        balances.push({
+      const bridgedShareBalance = selectUserBalanceOfToken(
+        state,
+        chainId,
+        tokenAddress,
+        walletAddress
+      );
+      if (bridgedShareBalance.gt(BIG_ZERO)) {
+        balances.entries.push({
           type: 'bridged',
           id: `bridged-${chainId}`,
           chainId,
-          amount: mooAmountToOracleAmount(mooToken, depositToken, ppfs, bridgedMooToken),
+          amount: mooAmountToOracleAmount(
+            shareData.shareToken,
+            shareData.depositToken,
+            shareData.ppfs,
+            bridgedShareBalance
+          ),
         });
       }
     }
@@ -633,22 +711,11 @@ export const selectUserLpBreakdownBalance = (
       ? new BigNumber(breakdown.underlyingLiquidity || 0)
       : BIG_ZERO;
 
-  // TODO what about when there is standard vaults?
-  const relatedVault = isCowcentratedGovVault(vault)
-    ? vault.cowcentratedId
-    : isCowcentratedVault(vault)
-    ? vault.cowcentratedGovId
-    : undefined;
-
-  const relatedBalanceDecimal = relatedVault
-    ? selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(state, relatedVault, walletAddress)
-    : BIG_ZERO;
-
   const userBalanceDecimal = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(
     state,
     vault.id,
     walletAddress
-  ).plus(relatedBalanceDecimal);
+  );
 
   const userShareOfPool = lpTotalSupplyDecimal.gt(BIG_ZERO)
     ? userBalanceDecimal.dividedBy(lpTotalSupplyDecimal)
@@ -919,33 +986,10 @@ const selectUserVaultStableExposure: UserExposureVaultFn = (
   return [{ key: 'other', label: 'Other', value: vaultTvl }];
 };
 
-export const selectUserStablecoinsExposure = (state: BeefyState, walletAddress?: string) =>
+export const selectUserStablecoinsExposure = (state: BeefyState, walletAddress: string) =>
   selectUserExposure(state, selectUserVaultStableExposure, stableVsOthersSummarizer, walletAddress);
 
-export const selectUserVaultBalances = (state: BeefyState) => {
-  const userVaults = selectUserDepositedVaultIds(state);
-  const result = userVaults.reduce((totals, vaultId) => {
-    const vault = selectVaultById(state, vaultId);
-    const chainId = vault.chainId;
-    const vaults = totals[chainId]?.vaults || [];
-    vaults.push(vault);
-    const depositedByChain = (totals[chainId]?.depositedByChain || BIG_ZERO).plus(
-      selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vaultId)
-    );
-    totals[chainId] = {
-      chainId,
-      vaults,
-      depositedByChain,
-    };
-    return totals;
-  }, {} as Record<string, { vaults: VaultEntity[]; depositedByChain: BigNumber; chainId: ChainEntity['id'] }>);
-
-  return Object.values(result).sort((a, b) => {
-    return a.depositedByChain.gte(b.depositedByChain) ? -1 : 1;
-  });
-};
-
-export const selectUserVaultsPnl = (state: BeefyState, walletAddress?: string) => {
+export const selectUserVaultsPnl = (state: BeefyState, walletAddress: string) => {
   const userVaults = selectUserDepositedVaultIds(state, walletAddress);
   const vaults: Record<string, UserVaultPnl> = {};
   for (const vaultId of userVaults) {
@@ -954,7 +998,7 @@ export const selectUserVaultsPnl = (state: BeefyState, walletAddress?: string) =
   return vaults;
 };
 
-export const selectUserTotalYieldUsd = (state: BeefyState, walletAddress?: string) => {
+export const selectUserTotalYieldUsd = (state: BeefyState, walletAddress: string) => {
   const vaultPnls = selectUserVaultsPnl(state, walletAddress);
 
   let totalYieldUsd = BIG_ZERO;
@@ -1029,7 +1073,7 @@ export const selectUserRewardsByVaultId = (
   return { rewards, rewardsTokens, totalRewardsUsd };
 };
 
-export const selectUserUnstakedCowcentratedVaultIds = createSelector(
+export const selectUserUnstakedCowcentratedGovVaultIds = createSelector(
   (state: BeefyState, walletAddress?: string) => _selectWalletBalance(state, walletAddress),
   (state: BeefyState) => state.entities.vaults.byId,
   (userBalance, vaultsById) => {
@@ -1037,54 +1081,31 @@ export const selectUserUnstakedCowcentratedVaultIds = createSelector(
       return [];
     }
     return userBalance.depositedVaultIds
-      .map(vaultId => vaultsById[vaultId])
-      .filter(isCowcentratedVault)
+      .map(vaultId => vaultsById[vaultId]!)
       .filter(
         vault =>
-          isCowcentratedVault(vault) &&
-          (vault.cowcentratedGovId || vault.cowcentratedStandardId) &&
+          isCowcentratedGovVault(vault) &&
           userBalance.tokenAmount.byChainId[vault.chainId]?.byTokenAddress[
-            vault.receiptTokenAddress.toLowerCase()
+            vault.depositTokenAddress.toLowerCase()
           ]?.balance.gt(BIG_ZERO)
       )
       .map(vault => vault.id);
   }
 );
 
-export const selectUserShouldStakeForVault = createSelector(
+export const selectUserIsUnstakedForVaultId = createSelector(
   (state: BeefyState, _vaultId: string, walletAddress?: string) =>
     _selectWalletBalance(state, walletAddress),
   (state: BeefyState, vaultId: string) => selectVaultById(state, vaultId),
-  (
-    userBalance,
-    vault
-  ): false | { type: 'gov' | 'standard'; id: string; cowcentratedId: string } => {
-    if (!userBalance || !vault || !isCowcentratedLikeVault(vault)) {
-      return false;
-    }
-    if (!vault.cowcentratedGovId && !vault.cowcentratedStandardId) {
+  (userBalance, vault): boolean => {
+    if (!userBalance || !vault || !isCowcentratedGovVault(vault)) {
       return false;
     }
 
-    const clmReceiptTokenAddress =
-      vault.id === vault.cowcentratedId ? vault.receiptTokenAddress : vault.depositTokenAddress;
-    const hasClmBalance =
+    return (
       userBalance.tokenAmount.byChainId[vault.chainId]?.byTokenAddress[
-        clmReceiptTokenAddress.toLowerCase()
-      ]?.balance.gt(BIG_ZERO) || false;
-
-    if (!hasClmBalance) {
-      return false;
-    }
-
-    if (vault.cowcentratedGovId) {
-      return { type: 'gov', id: vault.cowcentratedGovId, cowcentratedId: vault.cowcentratedId };
-    }
-
-    return {
-      type: 'standard',
-      id: vault.cowcentratedStandardId!,
-      cowcentratedId: vault.cowcentratedId,
-    };
+        vault.depositTokenAddress.toLowerCase()
+      ]?.balance.gt(BIG_ZERO) || false
+    );
   }
 );

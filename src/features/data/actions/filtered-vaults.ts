@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import {
   isCowcentratedLikeVault,
-  isCowcentratedVault,
   isGovVault,
   isVaultEarningPoints,
   isVaultPaused,
@@ -16,7 +15,7 @@ import {
   selectVaultMatchesText,
 } from '../selectors/filtered-vaults';
 import {
-  selectAllVaultIds,
+  selectAllVisibleVaultIds,
   selectIsVaultBlueChip,
   selectIsVaultCorrelated,
   selectIsVaultStable,
@@ -75,7 +74,7 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
         filterOptions.chainIds.length === 0 ? allChainIds : filterOptions.chainIds
       );
       const searchText = simplifySearchText(filterOptions.searchText);
-      const allVaults = selectAllVaultIds(state).map(id => selectVaultById(state, id));
+      const allVaults = selectAllVisibleVaultIds(state).map(id => selectVaultById(state, id));
 
       /*
        @dev every filter that can be applied without using a selector should come first
@@ -123,14 +122,6 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
 
         // Hide non-zappable if onlyZappable checked
         if (filterOptions.onlyZappable && !selectVaultSupportsZap(state, vault.id)) {
-          return false;
-        }
-
-        // Hide CLM if pool or vault exists
-        if (
-          isCowcentratedVault(vault) &&
-          (!!vault.cowcentratedGovId || !!vault.cowcentratedStandardId)
-        ) {
           return false;
         }
 

@@ -1,12 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyDataApi } from '../apis/instances';
-import {
-  isCowcentratedLikeVault,
-  isCowcentratedVault,
-  isGovVault,
-  type VaultEntity,
-} from '../entities/vault';
+import { isCowcentratedLikeVault, isGovVault, type VaultEntity } from '../entities/vault';
 import type {
   ApiChartData,
   ApiCowcentratedChartData,
@@ -22,6 +17,7 @@ import type { ChainEntity } from '../entities/chain';
 import { featureFlag_simulateBeefyApiError } from '../utils/feature-flags';
 import { sleep } from '../utils/async-utils';
 import type { ChartStat } from '../../vault/components/HistoricGraph/types';
+import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils';
 
 export interface HistoricalRangesPayload {
   vaultId: VaultEntity['id'];
@@ -48,11 +44,7 @@ export const fetchHistoricalRanges = createAsyncThunk<
   const ranges = await api.getAvailableRanges(
     vaultId,
     depositToken.oracleId,
-    isCowcentratedLike
-      ? isCowcentratedVault(vault)
-        ? vault.contractAddress
-        : vault.depositTokenAddress
-      : undefined,
+    isCowcentratedLike ? getCowcentratedAddressFromCowcentratedLikeVault(vault) : undefined,
     isCowcentratedLike ? vault.chainId : undefined
   );
 

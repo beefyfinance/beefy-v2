@@ -44,13 +44,13 @@ export function useSortedDashboardVaults(address: string) {
             switch (sortedOptions.sort) {
               case 'atDeposit': {
                 if (isUserClmPnl(vaultPnl)) {
-                  return vaultPnl.sharesAtDepositToUsd.toNumber();
+                  return vaultPnl.sharesAtDepositInUsd.toNumber();
                 }
                 return vaultPnl.usdBalanceAtDeposit.toNumber();
               }
               case 'now': {
                 if (isUserClmPnl(vaultPnl)) {
-                  return vaultPnl.sharesNowToUsd.toNumber();
+                  return vaultPnl.sharesNowInUsd.toNumber();
                 }
                 return vaultPnl.depositUsd.toNumber();
               }
@@ -85,7 +85,7 @@ export function useSortedDashboardVaults(address: string) {
                   return -1;
                 }
                 if (isUserClmPnl(vaultPnl)) {
-                  return vaultPnl.sharesNowToUsd.times(apy.totalDaily).toNumber();
+                  return vaultPnl.sharesNowInUsd.times(apy.totalDaily).toNumber();
                 }
                 return vaultPnl.deposit
                   .times(vaultPnl.oraclePrice)

@@ -7,7 +7,7 @@ import { groupBy, keyBy, mapKeys } from 'lodash-es';
 import { BIG_ZERO, fromWeiString } from '../../../helpers/big-number';
 import type { BigNumber } from 'bignumber.js';
 import {
-  selectChainCowcentratedVaultIds,
+  selectChainCowcentratedVaultIdsIncludingHidden,
   selectChainHasCowcentratedVaults,
   selectCowcentratedVaultById,
   selectVaultByAddressOrUndefined,
@@ -138,7 +138,7 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
     });
 
     // Merge rewards from CLM in to their CLM Pool and CLM Vault
-    const clmIds = selectChainCowcentratedVaultIds(state, chain.id);
+    const clmIds = selectChainCowcentratedVaultIdsIncludingHidden(state, chain.id);
     if (clmIds) {
       for (const clmId of clmIds) {
         const clmRewards = byVaultId[clmId];

@@ -1,5 +1,4 @@
 import type { VaultEntity } from '../../features/data/entities/vault';
-import { isStandardVault } from '../../features/data/entities/vault';
 import { memo, type ReactNode } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
@@ -16,7 +15,7 @@ import {
   selectWalletAddress,
 } from '../../features/data/selectors/wallet';
 import { VaultValueStat } from '../VaultValueStat';
-import { VaultDepositedTooltip } from '../VaultDepositedTooltip';
+import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip';
 import { selectTokenByAddress } from '../../features/data/selectors/tokens';
 import {
   selectIsAddressChainDataAvailable,
@@ -73,11 +72,9 @@ function mapStateToProps(state: BeefyState, { vaultId, className }: VaultDeposit
 
   // if bridged, or boosted, add tooltip
   let tooltip: ReactNode | undefined;
-  if (isStandardVault(vault)) {
-    const onlyVaultDeposit = selectUserVaultBalanceInDepositToken(state, vault.id);
-    if (onlyVaultDeposit.lt(deposit)) {
-      tooltip = <VaultDepositedTooltip vaultId={vault.id} />;
-    }
+  const onlyVaultDeposit = selectUserVaultBalanceInDepositToken(state, vault.id);
+  if (onlyVaultDeposit.lt(deposit)) {
+    tooltip = <VaultDepositedTooltip vaultId={vault.id} />;
   }
 
   return {

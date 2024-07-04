@@ -4,13 +4,12 @@ import { LinkButton } from '../../../../../components/LinkButton';
 import { CardTitle } from '../../Card';
 import { selectVaultTotalApy } from '../../../../data/selectors/apy';
 import {
+  isCowcentratedGovVault,
   shouldVaultShowInterest,
-  type VaultCowcentrated,
-  type VaultGov,
+  type VaultCowcentratedLike,
 } from '../../../../data/entities/vault';
 import {
-  selectCowcentratedVaultById,
-  selectGovVaultById,
+  selectCowcentratedLikeVaultById,
   selectVaultStrategyAddressOrUndefined,
 } from '../../../../data/selectors/vaults';
 import { selectChainById } from '../../../../data/selectors/chains';
@@ -18,22 +17,21 @@ import { useAppSelector } from '../../../../../store';
 import { explorerAddressUrl } from '../../../../../helpers/url';
 import { ApyDetails } from '../ApyDetails/ApyDetails';
 import { ExplainerCard } from '../ExplainerCard/ExplainerCard';
-import { CowcentratedDescription } from '../Description/CowcentratedDescription';
+import { CowcentratedLikeDescription } from '../Description/CowcentratedLikeDescription';
+import { getCowcentratedAddressFromCowcentratedLikeVault } from '../../../../data/utils/vault-utils';
 
 type CowcentratedExplainerProps = {
-  vaultId: VaultCowcentrated['id'];
-  poolId?: VaultGov['id'];
+  vaultId: VaultCowcentratedLike['id'];
 };
 
 export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
-  function CowcentratedExplainer({ vaultId, poolId }) {
+  function CowcentratedExplainer({ vaultId }) {
     const { t } = useTranslation();
-    const vault = useAppSelector(state => selectCowcentratedVaultById(state, vaultId));
-    const pool = useAppSelector(state => (poolId ? selectGovVaultById(state, poolId) : undefined));
+    const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
     const chain = useAppSelector(state => selectChainById(state, vault.chainId));
-    const apys = useAppSelector(state => selectVaultTotalApy(state, poolId ?? vaultId));
+    const apys = useAppSelector(state => selectVaultTotalApy(state, vaultId));
     const strategyAddress = useAppSelector(state =>
-      selectVaultStrategyAddressOrUndefined(state, vaultId)
+      selectVaultStrategyAddressOrUndefined(state, vault.cowcentratedId)
     );
     const showApy = apys && apys.totalApy > 0 && shouldVaultShowInterest(vault);
 
@@ -49,20 +47,21 @@ export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
               />
             ) : null}
             <LinkButton
-              href={explorerAddressUrl(chain, vault.contractAddress)}
+              href={explorerAddressUrl(
+                chain,
+                getCowcentratedAddressFromCowcentratedLikeVault(vault)
+              )}
               text={t('Strat-CLMContract')}
             />
-            {pool ? (
+            {isCowcentratedGovVault(vault) ? (
               <LinkButton
-                href={explorerAddressUrl(chain, pool.contractAddress)}
+                href={explorerAddressUrl(chain, vault.contractAddress)}
                 text={t('Strat-PoolContract')}
               />
             ) : null}
           </>
         }
-        description={
-          <CowcentratedDescription vaultId={vaultId} poolId={pool ? pool.id : undefined} />
-        }
+        description={<CowcentratedLikeDescription vaultId={vaultId} />}
         details={showApy ? <ApyDetails type={vault.type} values={apys} /> : undefined}
       />
     );
