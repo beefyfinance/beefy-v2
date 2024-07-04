@@ -1851,7 +1851,11 @@
     "tokenProviderId": "uniswap",
     "earnContractAddress": "0x4e37A0162913dB4b4dFD9C7DF544582363681Da1",
     "earnedToken": "rcowUniswapArbETH+-WETH",
-    "earnedTokenAddresses": [],
+    "earnedTokenAddresses": [
+      "0x912CE59144191C1204E64559FE8253a0e49E6548",
+      "0xCa5Ca9083702c56b481D1eec86F1776FDbd2e594"
+    ],
+    "earnedOracleIds": ["ARB", "RSR"],
     "oracle": "lps",
     "oracleId": "uniswap-cow-arb-eth+-weth",
     "status": "active",
