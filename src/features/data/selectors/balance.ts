@@ -37,7 +37,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { selectChainById } from './chains';
 import { selectVaultPnl } from './analytics';
 import { entries } from '../../../helpers/object';
-import type { UserLpBreakdownBalance } from './balance-types';
+import type { UserLpBreakdownBalance, UserLpBreakdownBalanceAsset } from './balance-types';
 import { isUserClmPnl, type UserVaultPnl } from './analytics-types';
 import { selectPlatformById } from './platforms';
 import type { TokenAmount } from '../apis/transact/transact-types';
@@ -790,6 +790,31 @@ type UserChainExposureVaultEntry = UserExposureVaultEntry & {
   chainId: ChainEntity['id'] | 'others';
 };
 
+const getLpBreakdownScalingFactor = (
+  vaultId: string,
+  userVaultTvl: BigNumber,
+  assets: UserLpBreakdownBalanceAsset[]
+) => {
+  const assetValueTotal = assets.reduce((sum, asset) => sum.plus(asset.userValue), BIG_ZERO);
+  let scaleFactor = BIG_ONE;
+  if (assetValueTotal.gt(userVaultTvl)) {
+    if (assetValueTotal.gt(userVaultTvl.times(1.01))) {
+      // If more than % out, warn in console, and let UI show over 100%
+      console.warn(
+        `[${vaultId}] Total asset value (${assetValueTotal.toString(
+          10
+        )}) from user LP breakdown is >1% greater than user's total vault deposit (${userVaultTvl.toString(
+          10
+        )})`
+      );
+    } else {
+      // If less than % out, just scale user values down equally to not go over 100%
+      scaleFactor = userVaultTvl.dividedBy(assetValueTotal);
+    }
+  }
+  return scaleFactor;
+};
+
 const top6ByPercentageSummarizer = <T extends UserExposureVaultEntry = UserExposureVaultEntry>(
   entries: UserExposureEntry<T>[]
 ) =>
@@ -914,12 +939,14 @@ const selectUserVaultTokenExposure: UserExposureVaultFn<UserTokenExposureVaultEn
   if (haveBreakdownData) {
     const breakdown = selectLpBreakdownForVault(state, vault);
     const { assets } = selectUserLpBreakdownBalance(state, vault, breakdown, walletAddress);
+    const scaleFactor = getLpBreakdownScalingFactor(vaultId, vaultTvl, assets);
+
     return assets.map(asset => {
       const symbol = selectWrappedToNativeSymbolOrTokenSymbol(state, asset.symbol);
       return {
         key: symbol,
         label: symbol,
-        value: asset.userValue,
+        value: asset.userValue.multipliedBy(scaleFactor),
         symbols: [symbol],
         chainId: vault.chainId,
       };
@@ -974,12 +1001,14 @@ const selectUserVaultStableExposure: UserExposureVaultFn = (
   if (haveBreakdownData) {
     const breakdown = selectLpBreakdownForVault(state, vault);
     const { assets } = selectUserLpBreakdownBalance(state, vault, breakdown, walletAddress);
+    const scaleFactor = getLpBreakdownScalingFactor(vaultId, vaultTvl, assets);
+
     return assets.map(asset => {
       const isStable = selectIsTokenStable(state, asset.chainId, asset.id);
       return {
         key: isStable ? 'stable' : 'other',
         label: isStable ? 'Stable' : 'Other',
-        value: asset.userValue,
+        value: asset.userValue.multipliedBy(scaleFactor),
       };
     });
   }
