@@ -39,7 +39,7 @@ import {
   selectVaultPricePerFullShare,
 } from './vaults';
 import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
-import { BIG_ONE, BIG_ZERO, bigNumberToStringDeep } from '../../../helpers/big-number';
+import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
 import { getTopNArray } from '../utils/array-utils';
 import { orderBy } from 'lodash-es';
@@ -1089,9 +1089,6 @@ const selectDashboardUserVaultChainExposure: DashboardUserExposureVaultFn<
 > = (state, vaultId, vaultTvl, _walletAddress) => {
   const vault = selectVaultById(state, vaultId);
   const chain = selectChainById(state, vault.chainId);
-  console.log('DashboardUserVaultChain');
-  console.log('vault ', vaultId);
-  console.log('vaultTvl ', vaultTvl.toString(10));
   return [{ key: chain.id, label: chain.name, value: vaultTvl, chainId: chain.id }];
 };
 
@@ -1124,10 +1121,6 @@ const selectDashboardUserExposure = <
   );
   const totalDeposits = [...vaultDeposits].reduce((acc, deposit) => acc.plus(deposit), BIG_ZERO);
 
-  console.log('Deposits');
-  console.log(bigNumberToStringDeep(vaultDeposits));
-
-  console.log('totalDeposits', totalDeposits.toString(10));
   const entries = vaultIds
     .map((vaultId, i) => vaultFn(state, vaultId, vaultDeposits[i], walletAddress))
     .flat();
