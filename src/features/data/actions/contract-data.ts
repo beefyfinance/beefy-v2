@@ -7,7 +7,7 @@ import type { VaultCowcentrated, VaultGov, VaultGovMulti, VaultStandard } from '
 import { isGovVault, isGovVaultMulti, isGovVaultSingle, isStandardVault } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
-import { selectVaultIdsByChainIdIncludingHidden, selectVaultById } from '../selectors/vaults';
+import { selectVaultById, selectVaultIdsByChainIdIncludingHidden } from '../selectors/vaults';
 import { featureFlag_simulateRpcError } from '../utils/feature-flags';
 
 interface ActionParams {

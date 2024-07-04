@@ -222,7 +222,8 @@ const selectVaultSharesToDepositTokenData = createCachedSelector(
     // only standard vaults have ppfs
     if (isStandardVault(vault)) {
       if (!ppfs) {
-        throw new Error(`Price per full share not found for ${vault.id}`);
+        // TODO find what is asking for balances before ppfs loaded
+        console.debug(`Price per full share not found for ${vault.id}`);
       }
       const shareToken =
         tokensByChainId[vault.chainId]?.byAddress[vault.receiptTokenAddress.toLowerCase()];
@@ -231,7 +232,7 @@ const selectVaultSharesToDepositTokenData = createCachedSelector(
       }
 
       return {
-        ppfs,
+        ppfs: ppfs || BIG_ONE,
         shareToken,
         depositToken,
       };
