@@ -3,16 +3,11 @@ import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi, getConfigApi, getTransactApi } from '../apis/instances';
 import type { AmmConfig, SwapAggregatorConfig, ZapConfig } from '../apis/config-types';
 import { ZERO_ADDRESS } from '../../../helpers/addresses';
-import {
-  selectAllStandardVaultsByChainId,
-  selectAllCowcentratedVaultsByChainId,
-  selectAllGovVaultsByChainId,
-} from '../selectors/vaults';
+import { selectAllVaultIds, selectVaultById } from '../selectors/vaults';
 import { isFulfilledResult } from '../../../helpers/promises';
 import type { VaultEntity } from '../entities/vault';
 import { featureFlag_kyberSwapSupport, featureFlag_oneInchSupport } from '../utils/feature-flags';
 import type { ChainEntity } from '../entities/chain';
-import { keys } from '../../../helpers/object';
 import type { ZapAggregatorTokenSupportResponse } from '../apis/beefy/beefy-api-types';
 
 interface FetchAllZapsFulfilledPayload {
@@ -55,19 +50,14 @@ export const calculateZapAvailabilityAction = createAsyncThunk<
   { state: BeefyState }
 >('zap/calculateZapAvailability', async (_, { getState }) => {
   const state = getState();
-  const chainIds = keys(state.entities.zaps.zaps.byChainId);
-  const vaults = chainIds
-    .flatMap(chainId => [
-      ...selectAllStandardVaultsByChainId(state, chainId),
-      ...selectAllCowcentratedVaultsByChainId(state, chainId),
-      ...selectAllGovVaultsByChainId(state, chainId),
-    ])
+  const allVaults = selectAllVaultIds(state)
+    .map(id => selectVaultById(state, id))
     .filter(v => v.zaps?.length > 0);
   const api = await getTransactApi();
-  const hasZap = await Promise.allSettled(vaults.map(v => api.fetchVaultHasZap(v.id, getState)));
+  const hasZap = await Promise.allSettled(allVaults.map(v => api.fetchVaultHasZap(v.id, getState)));
 
   return {
-    vaultIds: vaults
+    vaultIds: allVaults
       .filter((v, i) => {
         const result = hasZap[i];
         if (isFulfilledResult(result)) {
