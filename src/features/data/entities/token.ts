@@ -74,7 +74,7 @@ export function isTokenEqual(tokenA: TokenEntity, tokenB: TokenEntity): boolean 
 
 export type TokenLpBreakdown = LpData;
 
-export type CowcentratedRanges = {
+export type CurrentCowcentratedRangeData = {
   currentPrice: BigNumber;
   priceRangeMin: BigNumber;
   priceRangeMax: BigNumber;

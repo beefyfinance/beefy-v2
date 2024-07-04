@@ -15,6 +15,9 @@ export const selectZapByChainId = (state: BeefyState, chainId: ChainEntity['id']
 export const selectSwapAggregatorById = (state: BeefyState, id: SwapAggregatorEntity['id']) =>
   state.entities.zaps.aggregators.byId[id] || undefined;
 
+export const selectSwapAggregatorsExistForChain = (state: BeefyState, chainId: ChainEntity['id']) =>
+  (state.entities.zaps.aggregators.byChainId[chainId]?.allIds.length || 0) > 0;
+
 export const selectSwapAggregatorsForChain = createSelector(
   (state: BeefyState, chainId: ChainEntity['id']) =>
     state.entities.zaps.aggregators.byChainId[chainId]?.byType,
