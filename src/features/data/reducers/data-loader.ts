@@ -10,6 +10,7 @@ import { fetchAllPricesAction } from '../actions/prices';
 import {
   fetchAddressBookAction,
   fetchAllAddressBookAction,
+  fetchAllCurrentCowcentratedRanges,
   reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
 } from '../actions/tokens';
 import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults';
@@ -126,6 +127,7 @@ export const initialDataLoaderState: DataLoaderState = {
     migrators: dataLoaderStateInit,
     articles: dataLoaderStateInit,
     merklCampaigns: dataLoaderStateInit,
+    currentCowcentratedRanges: dataLoaderStateInit,
   },
   byChainId: {},
   byAddress: {},
@@ -390,6 +392,12 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchActiveProposals, 'proposals', false);
     addGlobalAsyncThunkActions(builder, fetchLastArticle, 'articles', false);
     addGlobalAsyncThunkActions(builder, fetchMerklCampaignsAction, 'merklCampaigns', false);
+    addGlobalAsyncThunkActions(
+      builder,
+      fetchAllCurrentCowcentratedRanges,
+      'currentCowcentratedRanges',
+      false
+    );
 
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);

@@ -33,7 +33,7 @@ import {
 } from './balance';
 import { selectWalletAddress } from './wallet';
 import {
-  isLoaderAvailable,
+  loaderFulfilledOnce,
   selectIsAddressDataAvailable,
   selectIsAddressDataIdle,
   selectIsConfigAvailable,
@@ -138,7 +138,7 @@ export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAd
   }
 
   const anyChainBalanceAvailable = Object.values(dataByAddress.byChainId).some(chain =>
-    isLoaderAvailable(chain.balance)
+    loaderFulfilledOnce(chain.balance)
   );
   if (!anyChainBalanceAvailable) {
     return false;

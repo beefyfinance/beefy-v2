@@ -3,12 +3,12 @@ import type { VaultEntity } from '../../../data/entities/vault';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import {
   selectHistoricalHasAnyChart,
-  selectHistoricalHasCowcentratedRanges,
   selectHistoricalRangesStatus,
 } from '../../../data/selectors/historical';
 import { fetchHistoricalRanges } from '../../../data/actions/historical';
 import { HistoricGraphs } from './HistoricGraphs';
-import { fetchAllCowcentratedVaultRanges } from '../../../data/actions/tokens';
+import { fetchAllCurrentCowcentratedRanges } from '../../../data/actions/tokens';
+import { selectShouldLoadAllCowcentratedRanges } from '../../../data/selectors/data-loader';
 
 export type HistoricGraphsLoaderProps = {
   vaultId: VaultEntity['id'];
@@ -20,18 +20,18 @@ export const HistoricGraphsLoader = memo<HistoricGraphsLoaderProps>(function His
   const dispatch = useAppDispatch();
   const rangesStatus = useAppSelector(state => selectHistoricalRangesStatus(state, vaultId));
   const hasAnyChart = useAppSelector(state => selectHistoricalHasAnyChart(state, vaultId));
-  const hasCowcentratedData = useAppSelector(state =>
-    selectHistoricalHasCowcentratedRanges(state, vaultId)
+  const shouldLoadAllCowcentratedRanges = useAppSelector(state =>
+    selectShouldLoadAllCowcentratedRanges(state)
   );
 
   useEffect(() => {
     if (rangesStatus === 'idle') {
       dispatch(fetchHistoricalRanges({ vaultId }));
     }
-    if (!hasCowcentratedData) {
-      dispatch(fetchAllCowcentratedVaultRanges());
+    if (shouldLoadAllCowcentratedRanges) {
+      dispatch(fetchAllCurrentCowcentratedRanges());
     }
-  }, [dispatch, hasCowcentratedData, rangesStatus, vaultId]);
+  }, [dispatch, shouldLoadAllCowcentratedRanges, rangesStatus, vaultId]);
 
   if (!hasAnyChart) {
     return null;
