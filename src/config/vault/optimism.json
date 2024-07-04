@@ -1084,8 +1084,11 @@
     "tokenAddress": "0xD4768E30180786e875a4909472c9826b18931E43",
     "tokenDecimals": 18,
     "earnedTokens": ["VELO"],
-    "earnedTokenAddresses": ["0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db"],
-    "earnedOracleIds": ["VELOV2"],
+    "earnedTokenAddresses": [
+      "0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
+      "0x4200000000000000000000000000000000000042"
+    ],
+    "earnedOracleIds": ["VELOV2", "OP"],
     "earnedTokenDecimals": [18],
     "earnedToken": "rCowVeloOpmooBIFI-USDC",
     "earnContractAddress": "0xdA0c58F0f407bC4EbF6e885Ae90e9a817cf8cdF5",
