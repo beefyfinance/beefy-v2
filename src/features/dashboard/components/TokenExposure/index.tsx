@@ -3,13 +3,15 @@ import { useAppSelector } from '../../../../store';
 import { selectIsUserBalanceAvailable } from '../../../data/selectors/data-loader';
 import { ExposureChart } from '../ExposureChart';
 import type { ExposureDashboardChartLoaderProps } from '../ExposureChart/types';
-import { selectUserExposureByToken } from '../../../data/selectors/balance';
+import { selectDashboardUserExposureByToken } from '../../../data/selectors/balance';
 
 const TokenExposure = memo<ExposureDashboardChartLoaderProps>(function TokenExposure({
   title,
   address,
 }) {
-  const tokensExposureData = useAppSelector(state => selectUserExposureByToken(state, address));
+  const tokensExposureData = useAppSelector(state =>
+    selectDashboardUserExposureByToken(state, address)
+  );
 
   return <ExposureChart title={title} type="token" data={tokensExposureData} />;
 });
