@@ -329,7 +329,7 @@ export const selectVaultPnl = (
   walletAddress?: string
 ): UserVaultPnl => {
   const vault = selectVaultById(state, vaultId);
-  if (isCowcentratedVault(vault)) {
+  if (isCowcentratedLikeVault(vault)) {
     return selectClmPnl(state, vaultId, walletAddress);
   }
   return selectStandardGovPnl(state, vaultId, walletAddress);

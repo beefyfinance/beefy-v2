@@ -13,7 +13,12 @@ import {
   type VaultEntity,
   type VaultGov,
 } from '../entities/vault';
-import { selectAllVaultBoostIds, selectBoostById } from './boosts';
+import {
+  selectAllVaultBoostIds,
+  selectBoostById,
+  selectIsVaultPreStakedOrBoosted,
+  selectVaultCurrentBoostId,
+} from './boosts';
 import { createCachedSelector } from 're-reselect';
 import {
   selectHasBreakdownDataByTokenAddress,
@@ -161,6 +166,23 @@ export const selectUserVaultBalanceInShareTokenInBoosts = (
 };
 
 /**
+ * Only includes shares deposited in current boost
+ */
+export const selectUserVaultBalanceInShareTokenInCurrentBoost = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  maybeWalletAddress?: string
+) => {
+  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
+  if (!walletAddress) {
+    return BIG_ZERO;
+  }
+
+  const boostId = selectVaultCurrentBoostId(state, vaultId);
+  return boostId ? selectBoostUserBalanceInToken(state, boostId, walletAddress) : BIG_ZERO;
+};
+
+/**
  * Only includes shares bridged to another chain
  */
 export const selectUserVaultBalanceInShareTokenInBridged = (
@@ -273,6 +295,32 @@ export const selectUserVaultBalanceInShareTokenIncludingBoostsBridged: UserBalan
   )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
+ * Total not earning (via boost or reward pool)
+ */
+export const selectUserVaultNotEarningBalanceInShareToken: UserBalanceSelector =
+  createCachedSelector(
+    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+      selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),
+    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+      selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, maybeWalletAddress),
+    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+      selectUserVaultBalanceInShareTokenInBridged(state, vaultId, maybeWalletAddress),
+    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+      selectUserVaultBalanceInShareTokenInUnderlyingCLM(state, vaultId, maybeWalletAddress),
+    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+      selectIsVaultPreStakedOrBoosted(state, vaultId, maybeWalletAddress),
+    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+      selectUserVaultBalanceInShareTokenInCurrentBoost(state, vaultId, maybeWalletAddress),
+    (inVault, inBoosts, inBridge, inCLM, isBoosted, inCurrentBoost) => {
+      if (isBoosted) {
+        return inVault.plus(inBoosts).plus(inBridge).plus(inCLM).minus(inCurrentBoost);
+      }
+
+      return inCLM;
+    }
+  )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
+
+/**
  * Balance converted to deposit token, excluding in boosts and bridged tokens
  */
 export const selectUserVaultBalanceInDepositToken: UserBalanceSelector = createCachedSelector(
@@ -290,6 +338,26 @@ export const selectUserVaultBalanceInDepositToken: UserBalanceSelector = createC
         )
       : shares
 )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
+
+/**
+ * Total not earning (via boost or reward pool), converted to deposit token
+ */
+export const selectUserVaultNotEarningBalanceInDepositToken: UserBalanceSelector =
+  createCachedSelector(
+    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+      selectUserVaultNotEarningBalanceInShareToken(state, vaultId, maybeWalletAddress),
+    (state: BeefyState, vaultId: VaultEntity['id']) =>
+      selectVaultSharesToDepositTokenData(state, vaultId),
+    (shares, shareData) =>
+      shareData.shareToken
+        ? mooAmountToOracleAmount(
+            shareData.shareToken,
+            shareData.depositToken,
+            shareData.ppfs,
+            shares
+          )
+        : shares
+  )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
  * Balance converted to deposit token, including in boosts and bridged tokens
