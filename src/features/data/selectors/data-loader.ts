@@ -279,7 +279,7 @@ export const selectIsMerklRewardsForUserChainRecent = (
     recentSeconds || 30 * 60
   );
 
-export const selectShouldLoadAllCowcentratedRanges = (
+export const selectShouldLoadAllCurrentCowcentratedRanges = (
   state: BeefyState,
   recentSeconds: number = 180
 ) => shouldLoadDataRecent(state.ui.dataLoader.global.currentCowcentratedRanges, recentSeconds);
