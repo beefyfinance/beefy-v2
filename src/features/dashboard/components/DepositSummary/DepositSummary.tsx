@@ -13,7 +13,6 @@ import { ReactComponent as MonthlyIcon } from '../../../../images/icons/monthly-
 import { selectUserTotalYieldUsd } from '../../../data/selectors/balance';
 import { AddressInput } from '../AddressInput';
 import { ShortAddress } from '../ShortAddress';
-import { UnstakedClmBanner } from '../../../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
 
 const useStyles = makeStyles(styles);
 
@@ -68,9 +67,6 @@ export const DepositSummary = memo<DepositSummaryProps>(function DepositSummary(
             <AddressInput />
           </div>
         </div>
-
-        <UnstakedClmBanner className={classes.bannerMargin} />
-
         <SummaryStats items={UserStats} />
       </Container>
     </div>

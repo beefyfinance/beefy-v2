@@ -22,7 +22,4 @@ export const styles = (theme: Theme) => ({
     alignItems: 'baseline',
     ...theme.typography.h1,
   },
-  bannerMargin: {
-    marginBottom: '24px',
-  },
 });

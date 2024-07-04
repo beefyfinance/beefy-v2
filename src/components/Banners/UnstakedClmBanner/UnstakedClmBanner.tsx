@@ -11,6 +11,14 @@ import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean'
 import type { VaultEntity } from '../../../features/data/entities/vault';
 import { ButtonLink, InternalLink } from '../Links/Links';
 import { filteredVaultsActions } from '../../../features/data/reducers/filtered-vaults';
+import { Container, makeStyles } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
+
+const useStyles = makeStyles((theme: Theme) => ({
+  clmUnstakedBanner: {
+    backgroundColor: theme.palette.background.footerHeader,
+  },
+}));
 
 interface UnstakedClmBannerProps {
   className?: string;
@@ -103,6 +111,53 @@ export const UnstakedClmBannerVault = memo<UnstakedClmBannerVaultProps>(
         }
         onClose={closeBanner}
       />
+    );
+  }
+);
+
+interface UnstakedClmBannerDashboardProps {
+  address: string;
+}
+
+export const UnstakedClmBannerDashboard = memo<UnstakedClmBannerDashboardProps>(
+  function UnstakedClmBannerDashboard({ address }) {
+    const classes = useStyles();
+    const { t } = useTranslation();
+    const unstakedIds = useAppSelector(state =>
+      selectUserUnstakedCowcentratedVaultIds(state, address)
+    );
+    const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideUnstakedClmBanner', false);
+    const closeBanner = useCallback(() => {
+      setHideBanner(true);
+    }, [setHideBanner]);
+
+    if (hideBanner || !unstakedIds.length) {
+      return null;
+    }
+
+    if (unstakedIds.length === 1) {
+      return <UnstakedClmBannerVault vaultId={unstakedIds[0]} />;
+    }
+
+    return (
+      <div className={classes.clmUnstakedBanner}>
+        <Container maxWidth="lg">
+          <Banner
+            icon={<img src={clmIcon} alt="" />}
+            text={
+              <Trans
+                t={t}
+                i18nKey={`Banner-UnstakedClm`}
+                values={{ count: unstakedIds.length }}
+                components={{
+                  Link: <span />,
+                }}
+              />
+            }
+            onClose={closeBanner}
+          />
+        </Container>
+      </div>
     );
   }
 );
