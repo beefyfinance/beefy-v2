@@ -451,13 +451,7 @@ export const selectCurrentCowcentratedRangesByVaultId = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ) => {
-  return (
-    state.entities.tokens.cowcentratedRanges.byVaultId[vaultId] || {
-      currentPrice: BIG_ZERO,
-      priceRangeMax: BIG_ZERO,
-      priceRangeMin: BIG_ZERO,
-    }
-  );
+  return state.entities.tokens.cowcentratedRanges.byVaultId[vaultId] || undefined;
 };
 
 export const selectCowcentratedVaultDepositTokens = (

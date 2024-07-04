@@ -98,6 +98,7 @@ export interface DataLoaderState {
     migrators: LoaderState;
     articles: LoaderState;
     merklCampaigns: LoaderState;
+    currentCowcentratedRanges: LoaderState;
   };
   byChainId: {
     [chainId in ChainEntity['id']]?: ChainIdDataEntity;

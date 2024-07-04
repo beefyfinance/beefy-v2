@@ -8,7 +8,7 @@ import type { FetchAllContractDataResult } from '../apis/contract-data/contract-
 import { getAllowanceApi, getBalanceApi, getBeefyApi, getContractDataApi } from '../apis/instances';
 import type { BoostEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
-import type { CowcentratedRanges, TokenEntity } from '../entities/token';
+import type { CurrentCowcentratedRangeData, TokenEntity } from '../entities/token';
 import { isTokenErc20 } from '../entities/token';
 import { isGovVaultMulti, isGovVaultSingle, type VaultGov } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
@@ -71,7 +71,7 @@ interface ReloadBalanceAllowanceRewardsFulfilledPayload {
   state: BeefyState;
 }
 
-export type AllCowcentradedVaultRangesFullfiledPayload = Record<string, CowcentratedRanges>;
+export type AllCurrentCowcentratedRangesPayload = Record<string, CurrentCowcentratedRangeData>;
 
 // TODO: split this into more specialized actions to make them faster
 export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThunk<
@@ -138,11 +138,11 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
   }
 );
 
-export const fetchAllCowcentratedVaultRanges = createAsyncThunk<
-  AllCowcentradedVaultRangesFullfiledPayload,
+export const fetchAllCurrentCowcentratedRanges = createAsyncThunk<
+  AllCurrentCowcentratedRangesPayload,
   void,
   { state: BeefyState }
->('tokens/fetchAllCowcentratedVaultRanges', async () => {
+>('tokens/fetchAllCurrentCowcentratedRanges', async () => {
   const api = await getBeefyApi();
   const data = await api.getAllCowcentratedVaultRanges();
   return Object.assign({}, ...Object.values(data));

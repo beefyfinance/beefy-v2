@@ -8,12 +8,12 @@ import type { FetchAddressBookPayload } from '../actions/tokens';
 import {
   fetchAddressBookAction,
   fetchAllAddressBookAction,
-  fetchAllCowcentratedVaultRanges,
+  fetchAllCurrentCowcentratedRanges,
 } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
 import type { ChainEntity } from '../entities/chain';
 import type {
-  CowcentratedRanges,
+  CurrentCowcentratedRangeData,
   TokenEntity,
   TokenErc20,
   TokenLpBreakdown,
@@ -71,7 +71,7 @@ export type TokensState = {
   };
   cowcentratedRanges: {
     byVaultId: {
-      [tokenId: TokenEntity['oracleId']]: CowcentratedRanges;
+      [tokenId: TokenEntity['oracleId']]: CurrentCowcentratedRangeData;
     };
   };
 };
@@ -209,7 +209,7 @@ export const tokensSlice = createSlice({
           addBridgeTokenToState(sliceState, token, !isSourceXErc20);
         }
       })
-      .addCase(fetchAllCowcentratedVaultRanges.fulfilled, (sliceState, action) => {
+      .addCase(fetchAllCurrentCowcentratedRanges.fulfilled, (sliceState, action) => {
         for (const [oracleId, value] of Object.entries(action.payload)) {
           sliceState.cowcentratedRanges.byVaultId[oracleId] = {
             priceRangeMax: new BigNumber(value.priceRangeMax),

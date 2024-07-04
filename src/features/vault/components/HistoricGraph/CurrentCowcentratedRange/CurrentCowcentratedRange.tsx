@@ -11,33 +11,50 @@ import type { VaultEntity } from '../../../../data/entities/vault';
 import { styles } from './styles';
 import { BIG_ZERO } from '../../../../../helpers/big-number';
 import { selectCowcentratedLikeVaultById } from '../../../../data/selectors/vaults';
+import type { CurrentCowcentratedRangeData } from '../../../../data/entities/token';
 
 const useStyles = makeStyles(styles);
 
-export const CowcentratedRanges = memo(function CowcentratedRanges({
-  vaultId,
-}: {
+type CurrentCowcentratedRangeIfAvailableProps = {
   vaultId: VaultEntity['id'];
-}) {
-  const classes = useStyles();
-  const { t } = useTranslation();
-  const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
-  const { currentPrice, priceRangeMin, priceRangeMax } = useAppSelector(state =>
-    selectCurrentCowcentratedRangesByVaultId(state, vault.cowcentratedId)
-  );
-  const symbols = useAppSelector(state => selectVaultTokenSymbols(state, vault.cowcentratedId));
-  const priceString = `${symbols[1]}/${symbols[0]}`;
+};
 
-  const showInRange = useMemo(() => {
-    return currentPrice.lte(priceRangeMax) && currentPrice.gte(priceRangeMin);
-  }, [currentPrice, priceRangeMax, priceRangeMin]);
+export const CurrentCowcentratedRangeIfAvailable = memo<CurrentCowcentratedRangeIfAvailableProps>(
+  function CowcentratedRangesIfAvailable({ vaultId }) {
+    const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
+    const range = useAppSelector(state =>
+      selectCurrentCowcentratedRangesByVaultId(state, vault.cowcentratedId)
+    );
+    if (
+      !range ||
+      range.currentPrice.eq(BIG_ZERO) ||
+      range.priceRangeMax.eq(BIG_ZERO) ||
+      range.priceRangeMin.eq(BIG_ZERO)
+    ) {
+      return null;
+    }
 
-  if (currentPrice.eq(BIG_ZERO) || priceRangeMin.eq(BIG_ZERO) || priceRangeMax.eq(BIG_ZERO)) {
-    return null;
+    return <CurrentCowcentratedRange vaultId={vaultId} range={range} />;
   }
+);
 
-  return (
-    <>
+type CurrentCowcentratedRangeProps = {
+  vaultId: VaultEntity['id'];
+  range: CurrentCowcentratedRangeData;
+};
+
+export const CurrentCowcentratedRange = memo<CurrentCowcentratedRangeProps>(
+  function CowcentratedRanges({ vaultId, range }) {
+    const classes = useStyles();
+    const { t } = useTranslation();
+    const { currentPrice, priceRangeMin, priceRangeMax } = range;
+    const symbols = useAppSelector(state => selectVaultTokenSymbols(state, vaultId));
+    const priceString = `${symbols[1]}/${symbols[0]}`;
+    const showInRange = useMemo(() => {
+      return currentPrice.lte(priceRangeMax) && currentPrice.gte(priceRangeMin);
+    }, [currentPrice, priceRangeMax, priceRangeMin]);
+
+    return (
       <div className={classes.cowcentratedHeader}>
         <div className={classes.cowcentratedStat}>
           <div className={classes.label}>{t('Min Price')}</div>
@@ -45,7 +62,6 @@ export const CowcentratedRanges = memo(function CowcentratedRanges({
             {formatTokenDisplayCondensed(priceRangeMin, 18)} <span>{priceString}</span>
           </div>
         </div>
-
         <div className={classes.cowcentratedStat}>
           <div className={classes.label}>
             {t('Current Price')}{' '}
@@ -53,7 +69,6 @@ export const CowcentratedRanges = memo(function CowcentratedRanges({
               ({t(showInRange ? 'In Range' : 'Out of Range')})
             </span>
           </div>
-
           <div className={classes.value}>
             {formatTokenDisplayCondensed(currentPrice, 18)} <span>{priceString}</span>
           </div>
@@ -65,6 +80,6 @@ export const CowcentratedRanges = memo(function CowcentratedRanges({
           </div>
         </div>
       </div>
-    </>
-  );
-});
+    );
+  }
+);
