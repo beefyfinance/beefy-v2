@@ -5,7 +5,7 @@ import { type VaultEntity } from '../../../../../../../../data/entities/vault';
 import { VaultAtDepositStat } from '../../../../../../../../../components/VaultStats/VaultAtDepositStat';
 import { VaultNowStat } from '../../../../../../../../../components/VaultStats/VaultNowStat';
 import { RowMobile } from '../../../../Row';
-import { VaultYearlyStat } from '../../../../../../../../../components/VaultStats/VaultYearlyStat';
+import { VaultApyStat } from '../../../../../../../../../components/VaultStats/VaultApyStat';
 import { VaultDailyUsdStat } from '../../../../../../../../../components/VaultStats/VaultDailyUsdStat';
 import { useAppSelector } from '../../../../../../../../../store';
 import { MobileVaultRewardsStat } from '../../../../../../../../../components/VaultStats/MobileVaultRewardsStat';
@@ -62,7 +62,8 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
             vaultId={vaultId}
             walletAddress={address}
           />
-          <VaultYearlyStat
+          <VaultApyStat
+            type={'yearly'}
             className={classes.statMobile}
             contentClassName={classes.valueContainer}
             triggerClassName={classes.value}

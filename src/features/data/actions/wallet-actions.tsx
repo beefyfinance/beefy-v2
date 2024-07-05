@@ -197,7 +197,7 @@ function txMined(
             fetchUserMerklRewardsAction({
               walletAddress,
               chainId,
-              recentSeconds: 60,
+              afterClaim: true,
             })
           ),
         60 * 1000

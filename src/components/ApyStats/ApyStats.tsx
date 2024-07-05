@@ -10,20 +10,25 @@ import {
 import type { VaultEntity } from '../../features/data/entities/vault';
 import { isGovVault, shouldVaultShowInterest } from '../../features/data/entities/vault';
 import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
-import { selectVaultApyAvailable } from '../../features/data/selectors/data-loader';
+import { selectIsVaultApyAvailable } from '../../features/data/selectors/data-loader';
 import type { TotalApy } from '../../features/data/reducers/apy';
 import type { AllValuesAsString } from '../../features/data/utils/types-utils';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { useAppSelector } from '../../store';
 import { InterestTooltipContent } from '../InterestTooltipContent';
-import { getApyComponents, getApyLabelsForType } from '../../helpers/apy';
+import {
+  type ApyLabelsType,
+  getApyComponents,
+  getApyLabelsForType,
+  getApyLabelsTypeForVault,
+} from '../../helpers/apy';
 
 const _YearlyBreakdownTooltip = ({
   type,
   boosted,
   rates,
 }: {
-  type: VaultEntity['type'];
+  type: ApyLabelsType;
   boosted: boolean;
   // here we get formatted values
   rates: AllValuesAsString<TotalApy>;
@@ -55,7 +60,7 @@ const _DailyBreakdownTooltip = ({
   boosted,
   rates,
 }: {
-  type: VaultEntity['type'];
+  type: ApyLabelsType;
   boosted: boolean;
   // here we get formatted values
   rates: AllValuesAsString<TotalApy>;
@@ -92,7 +97,8 @@ function _YearlyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const isLoading = useAppSelector(
     state =>
       // sometimes, the api skips some vaults, for now, we consider the vault loading
-      !selectVaultApyAvailable(state, vaultId) || !selectDidAPIReturnValuesForVault(state, vaultId)
+      !selectIsVaultApyAvailable(state, vaultId) ||
+      !selectDidAPIReturnValuesForVault(state, vaultId)
   );
   const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
 
@@ -112,7 +118,11 @@ function _YearlyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
         shouldShowApy
           ? {
               content: (
-                <YearlyBreakdownTooltip type={vault.type} boosted={isBoosted} rates={formatted} />
+                <YearlyBreakdownTooltip
+                  type={getApyLabelsTypeForVault(vault)}
+                  boosted={isBoosted}
+                  rates={formatted}
+                />
               ),
             }
           : undefined
@@ -134,7 +144,8 @@ function _DailyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const isLoading = useAppSelector(
     state =>
       // sometimes, the api skips some vaults, for now, we consider the vault loading
-      !selectVaultApyAvailable(state, vaultId) || !selectDidAPIReturnValuesForVault(state, vaultId)
+      !selectIsVaultApyAvailable(state, vaultId) ||
+      !selectDidAPIReturnValuesForVault(state, vaultId)
   );
   const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
 
@@ -154,7 +165,11 @@ function _DailyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
         shouldShowApy
           ? {
               content: (
-                <DailyBreakdownTooltip type={vault.type} boosted={isBoosted} rates={formatted} />
+                <DailyBreakdownTooltip
+                  type={getApyLabelsTypeForVault(vault)}
+                  boosted={isBoosted}
+                  rates={formatted}
+                />
               ),
             }
           : undefined

@@ -14,12 +14,12 @@ import { VaultValueStat } from '../VaultValueStat';
 import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip';
 import { selectTokenByAddress } from '../../features/data/selectors/tokens';
 import {
-  selectIsAddressChainDataAvailable,
-  selectIsGlobalDataAvailable,
+  selectIsBalanceAvailableForChainUser,
+  selectIsPricesAvailable,
 } from '../../features/data/selectors/data-loader';
 import { BIG_ZERO } from '../../helpers/big-number';
 import { useAppSelector } from '../../store';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { TokenEntity } from '../../features/data/entities/token';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
@@ -57,8 +57,8 @@ function selectData(state: BeefyState, vaultId: VaultEntity['id']): SelectDataRe
   }
 
   const isLoaded =
-    selectIsGlobalDataAvailable(state, 'prices') &&
-    selectIsAddressChainDataAvailable(state, walletAddress, vault.chainId, 'balance');
+    selectIsPricesAvailable(state) &&
+    selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress);
   if (!isLoaded) {
     return { loading: true };
   }
@@ -113,8 +113,8 @@ export const VaultDepositStat = memo<VaultDepositStatProps>(function VaultDeposi
           formatTokenDisplayCondensed(data.totalDeposit, data.depositToken.decimals, 6)
         ) : (
           <div className={classes.notEarning}>
-            {formatTokenDisplayCondensed(data.totalDeposit, data.depositToken.decimals, 6)}
             <ErrorOutline className={classes.notEarningIcon} />
+            {formatTokenDisplayCondensed(data.totalDeposit, data.depositToken.decimals, 6)}
           </div>
         )
       }

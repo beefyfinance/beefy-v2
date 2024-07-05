@@ -33,13 +33,7 @@ import {
   selectUserVaultBalanceInShareToken,
 } from './balance';
 import { selectWalletAddress } from './wallet';
-import {
-  loaderFulfilledOnce,
-  selectIsAddressDataAvailable,
-  selectIsAddressDataIdle,
-  selectIsConfigAvailable,
-  selectIsUserBalanceAvailable,
-} from './data-loader';
+import { selectIsConfigAvailable, selectIsUserBalanceAvailable } from './data-loader';
 import type { AnalyticsBucketData, AnalyticsState } from '../reducers/analytics';
 import {
   type AnyTimelineAnalyticsEntity,
@@ -60,6 +54,11 @@ import {
 import { selectFeesByVaultId } from './fees';
 import BigNumber from 'bignumber.js';
 import { pick } from 'lodash-es';
+import {
+  createAddressDataSelector,
+  hasLoaderFulfilledOnce,
+  isLoaderIdle,
+} from './data-loader-helpers';
 
 export const selectUserAnalytics = createSelector(
   (state: BeefyState, address?: string) => address || selectWalletAddress(state),
@@ -139,7 +138,7 @@ export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAd
   }
 
   const anyChainBalanceAvailable = Object.values(dataByAddress.byChainId).some(chain =>
-    loaderFulfilledOnce(chain.balance)
+    hasLoaderFulfilledOnce(chain.balance)
   );
   if (!anyChainBalanceAvailable) {
     return false;
@@ -157,11 +156,17 @@ export const selectIsDashboardDataLoadedByAddress = (state: BeefyState, walletAd
   return selectIsAnalyticsLoadedByAddress(state, addressLower);
 };
 
-export const selectIsAnalyticsLoadedByAddress = (state: BeefyState, walletAddress: string) =>
-  selectIsAddressDataAvailable(state, walletAddress, 'timeline');
+export const selectIsAnalyticsLoadedByAddress = createAddressDataSelector(
+  'timeline',
+  hasLoaderFulfilledOnce
+);
 
-export const selectIsAnalyticsIdleByAddress = (state: BeefyState, walletAddress: string) =>
-  selectIsAddressDataIdle(state, walletAddress, 'timeline');
+export const selectIsAnalyticsIdleByAddress = createAddressDataSelector('timeline', isLoaderIdle);
+
+export const selectIsClmHarvestsLoadedByAddress = createAddressDataSelector(
+  'clmHarvests',
+  hasLoaderFulfilledOnce
+);
 
 export const selectStandardGovPnl = (
   state: BeefyState,
@@ -518,7 +523,7 @@ function selectDashboardYieldCowcentratedData(
 ) {
   if (
     !selectIsAnalyticsLoadedByAddress(state, walletAddress) ||
-    !selectIsAddressDataAvailable(state, walletAddress, 'clmHarvests')
+    !selectIsClmHarvestsLoadedByAddress(state, walletAddress)
   ) {
     return DashboardDataStatus.Loading;
   }

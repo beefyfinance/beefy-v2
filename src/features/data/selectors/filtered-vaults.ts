@@ -17,6 +17,7 @@ import type { PlatformEntity } from '../entities/platform';
 import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string';
 import escapeStringRegexp from 'escape-string-regexp';
 import type BigNumber from 'bignumber.js';
+import { selectVaultTotalApy } from './apy';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
@@ -209,3 +210,13 @@ export const selectFilteredVaults = (state: BeefyState) =>
 export const selectFilteredVaultCount = createSelector(selectFilteredVaults, ids => ids.length);
 
 export const selectTotalVaultCount = (state: BeefyState) => selectAllVisibleVaultIds(state).length;
+
+/** standard boost, or anything with boostedTotalDaily entry */
+export const selectVaultIsBoostedForFilter = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  if (selectIsVaultPreStakedOrBoosted(state, vaultId)) {
+    return true;
+  }
+
+  const apy = selectVaultTotalApy(state, vaultId);
+  return !!apy && (apy.boostedTotalDaily || 0) > 0;
+};

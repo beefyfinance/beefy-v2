@@ -2,9 +2,12 @@ import { createCachedSelector } from 're-reselect';
 import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity } from '../entities/vault';
 import type { VaultFee } from '../reducers/fees';
-import { isInitialLoader } from '../reducers/data-loader-types';
-import { selectIsGlobalDataAvailable } from './data-loader';
 import { selectIsVaultGov, selectVaultDepositFee } from './vaults';
+import {
+  createGlobalDataSelector,
+  hasLoaderFulfilledOnce,
+  shouldLoaderLoadOnce,
+} from './data-loader-helpers';
 
 const GOV_FEES: Readonly<VaultFee> = {
   id: 'gov-fees',
@@ -17,11 +20,9 @@ const GOV_FEES: Readonly<VaultFee> = {
   treasury: 0,
 };
 
-export const selectAreFeesLoaded = (state: BeefyState) =>
-  selectIsGlobalDataAvailable(state, 'fees');
+export const selectAreFeesLoaded = createGlobalDataSelector('fees', hasLoaderFulfilledOnce);
 
-export const selectShouldInitFees = (state: BeefyState) =>
-  isInitialLoader(state.ui.dataLoader.global.fees);
+export const selectShouldInitFees = createGlobalDataSelector('fees', shouldLoaderLoadOnce);
 
 export const selectFeesByVaultId = createCachedSelector(
   selectVaultDepositFee,

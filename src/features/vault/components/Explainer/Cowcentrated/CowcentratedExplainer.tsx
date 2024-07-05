@@ -19,6 +19,7 @@ import { ApyDetails } from '../ApyDetails/ApyDetails';
 import { ExplainerCard } from '../ExplainerCard/ExplainerCard';
 import { CowcentratedLikeDescription } from '../Description/CowcentratedLikeDescription';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../../../../data/utils/vault-utils';
+import { getApyLabelsTypeForVault } from '../../../../../helpers/apy';
 
 type CowcentratedExplainerProps = {
   vaultId: VaultCowcentratedLike['id'];
@@ -62,7 +63,9 @@ export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
           </>
         }
         description={<CowcentratedLikeDescription vaultId={vaultId} />}
-        details={showApy ? <ApyDetails type={vault.type} values={apys} /> : undefined}
+        details={
+          showApy ? <ApyDetails type={getApyLabelsTypeForVault(vault)} values={apys} /> : undefined
+        }
       />
     );
   }

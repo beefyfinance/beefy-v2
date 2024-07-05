@@ -1,7 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi } from '../apis/instances';
-import { isGovVault, type VaultEntity } from '../entities/vault';
+import {
+  isCowcentratedGovVault,
+  isCowcentratedVault,
+  isGovVault,
+  type VaultEntity,
+} from '../entities/vault';
 import type { TotalApy } from '../reducers/apy';
 import { selectAllVaultIdsIncludingHidden, selectVaultById } from '../selectors/vaults';
 import { selectActiveVaultBoostIds } from '../selectors/boosts';
@@ -10,6 +15,7 @@ import { compoundInterest, yearlyToDaily } from '../../../helpers/number';
 import { isDefined } from '../utils/array-utils';
 import { getApiApyDataComponents } from '../../../helpers/apy';
 import type { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api-types';
+import { selectVaultActiveGovRewards } from '../selectors/rewards';
 
 export interface FetchAllApyFulfilledPayload {
   data: BeefyAPIApyBreakdownResponse;
@@ -103,10 +109,46 @@ export const recalculateTotalApyAction = createAsyncThunk<
     if (activeBoostId) {
       const boostApr = state.biz.apy.rawApy.byBoostId[activeBoostId]?.apr || 0;
       if (boostApr) {
+        const boostDaily = boostApr / 365;
         total.boostApr = boostApr;
-        total.boostDaily = boostApr / 365;
-        total.boostedTotalApy = total.boostApr ? total.totalApy + total.boostApr : 0;
-        total.boostedTotalDaily = total.boostDaily ? total.totalDaily + total.boostDaily : 0;
+        total.boostDaily = boostDaily;
+        total.boostedTotalApy = total.totalApy + total.boostApr;
+        total.boostedTotalDaily = total.totalDaily + boostDaily;
+      }
+    }
+
+    // Mark CLM/CLM Pools as boosted if they have extra pool or merkle rewards
+    if (isCowcentratedVault(vault) || isCowcentratedGovVault(vault)) {
+      // for 'pool' type (e.g. velodrome) we need to separate that part from fees vs additional rewards
+      if (vault.strategyTypeId === 'pool') {
+        const poolRewards = selectVaultActiveGovRewards(state, vaultId);
+        if (poolRewards && poolRewards.length > 0) {
+          const { rewardPoolApr, feePoolApr } = poolRewards.reduce(
+            (acc, r) => {
+              // assumption, reward at index 0 is the base trading fee reward
+              if (r.index === 0) {
+                acc.feePoolApr += r.apr;
+              } else {
+                acc.rewardPoolApr += r.apr;
+              }
+              return acc;
+            },
+            { rewardPoolApr: 0, feePoolApr: 0 }
+          );
+
+          total.rewardPoolApr = rewardPoolApr;
+          total.rewardPoolDaily = rewardPoolApr / 365;
+          total.rewardPoolTradingApr = feePoolApr;
+          total.rewardPoolTradingDaily = feePoolApr / 365;
+        }
+      }
+
+      const additionalApr = (total.merklApr || 0) + (total.rewardPoolApr || 0);
+      if (additionalApr > 0) {
+        total.boostedTotalApy = total.boostedTotalApy ?? total.totalApy;
+        total.boostedTotalDaily = total.boostedTotalDaily ?? total.totalDaily;
+        total.totalApy -= additionalApr;
+        total.totalDaily -= additionalApr / 365;
       }
     }
 

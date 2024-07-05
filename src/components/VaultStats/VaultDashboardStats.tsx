@@ -7,7 +7,7 @@ import { VaultDailyUsdStat } from './VaultDailyUsdStat';
 import { VaultPnlStat } from './VaultPnlStat';
 import { VaultAtDepositStat } from './VaultAtDepositStat';
 import { VaultNowStat } from './VaultNowStat';
-import { VaultYearlyStat } from './VaultYearlyStat';
+import { VaultApyStat } from './VaultApyStat';
 import { useAppSelector } from '../../store';
 import { selectVaultPnl } from '../../features/data/selectors/analytics';
 import { VaultYieldRewardsStat } from './VaultYieldRewardsStat';
@@ -62,7 +62,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
           />
         </div>
         <div className={clsx(classes.column, classes.hideMd)}>
-          <VaultYearlyStat showLabel={false} vaultId={vaultId} />
+          <VaultApyStat type="yearly" showLabel={false} vaultId={vaultId} />
         </div>
         <div className={clsx(classes.column, classes.hideMd)}>
           <VaultDailyUsdStat

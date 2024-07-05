@@ -2,9 +2,8 @@ import type { BeefyState } from '../../../redux-types';
 import type { MinterEntity } from '../entities/minter';
 import type { ChainEntity } from '../entities/chain';
 import { isGovVault, isStandardVault, type VaultEntity } from '../entities/vault';
-import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectVaultById } from './vaults';
-import { selectIsGlobalDataAvailable } from './data-loader';
+import { createGlobalDataSelector, shouldLoaderLoadOnce } from './data-loader-helpers';
 
 export const selectMinterById = (state: BeefyState, minterId: MinterEntity['id']) => {
   const mintersById = state.entities.minters.byId;
@@ -34,11 +33,7 @@ export const selectMinterTotalSupply = (state: BeefyState, minterId: MinterEntit
   return state.entities.minters.totalSupplyById[minterId];
 };
 
-export const selectAreMintersLoaded = (state: BeefyState) =>
-  selectIsGlobalDataAvailable(state, 'minters');
-
-export const selectShouldInitMinters = (state: BeefyState) =>
-  isInitialLoader(state.ui.dataLoader.global.minters);
+export const selectShouldInitMinters = createGlobalDataSelector('minters', shouldLoaderLoadOnce);
 
 export const selectMinterVaultsType = (state: BeefyState, minterId: MinterEntity['id']) => {
   const minter = selectMinterById(state, minterId);

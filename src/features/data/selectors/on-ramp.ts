@@ -1,17 +1,19 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { InputMode } from '../reducers/on-ramp-types';
-import { isInitialLoader } from '../reducers/data-loader-types';
 import { orderBy } from 'lodash-es';
 import type { ChainEntity } from '../entities/chain';
 import { valueOrThrow } from '../utils/selector-utils';
-import { selectIsGlobalDataAvailable } from './data-loader';
+import {
+  createGlobalDataSelector,
+  hasLoaderFulfilledOnce,
+  isLoaderIdle,
+} from './data-loader-helpers';
 
-export const selectIsOnRampLoaded = (state: BeefyState) =>
-  selectIsGlobalDataAvailable(state, 'onRamp');
+export const selectIsOnRampLoaded = createGlobalDataSelector('onRamp', hasLoaderFulfilledOnce);
 
 export const selectShouldInitOnRamp = (state: BeefyState) =>
-  isInitialLoader(state.ui.dataLoader.global.onRamp);
+  isLoaderIdle(state.ui.dataLoader.global.onRamp);
 
 export const selectToken = (state: BeefyState) =>
   valueOrThrow(state.ui.onRamp.token.value, 'Token value is not set');

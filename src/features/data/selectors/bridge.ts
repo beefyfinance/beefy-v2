@@ -1,6 +1,5 @@
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
-import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectErc20TokenByAddress } from './tokens';
 import { FormStep } from '../reducers/wallet/bridge';
 import type { IBridgeQuote } from '../apis/bridge/providers/provider-types';
@@ -13,13 +12,21 @@ import {
 import { StepContent } from '../reducers/wallet/stepper';
 import { createSelector } from '@reduxjs/toolkit';
 import { valueOrThrow } from '../utils/selector-utils';
-import { selectIsGlobalDataAvailable } from './data-loader';
+import {
+  createGlobalDataSelector,
+  hasLoaderFulfilledOnce,
+  shouldLoaderLoadOnce,
+} from './data-loader-helpers';
 
-export const selectIsBridgeConfigLoaded = (state: BeefyState) =>
-  selectIsGlobalDataAvailable(state, 'bridgeConfig');
+export const selectIsBridgeConfigLoaded = createGlobalDataSelector(
+  'bridgeConfig',
+  hasLoaderFulfilledOnce
+);
 
-export const selectShouldLoadBridgeConfig = (state: BeefyState) =>
-  isInitialLoader(state.ui.dataLoader.global.bridgeConfig);
+export const selectShouldLoadBridgeConfig = createGlobalDataSelector(
+  'bridgeConfig',
+  shouldLoaderLoadOnce
+);
 
 export const selectBridgeSupportedChainIds = (state: BeefyState) =>
   state.ui.bridge.destinations.allChains;

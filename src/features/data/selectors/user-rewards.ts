@@ -171,7 +171,6 @@ export const selectUserGovVaultUnifiedRewards = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
     selectVaultActiveGovRewards(state, vaultId),
   (pendingRewards, activeRewards): UnifiedReward[] => {
-    console.log(pendingRewards, activeRewards);
     const rewards: UnifiedReward[] =
       pendingRewards && pendingRewards.length
         ? pendingRewards.map(r => ({

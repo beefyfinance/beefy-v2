@@ -5,8 +5,7 @@ import type { VaultEntity } from '../../features/data/entities/vault';
 import clsx from 'clsx';
 import { VaultDepositStat } from './VaultDepositStat';
 import { VaultWalletStat } from './VaultWalletStat';
-import { VaultYearlyStat } from './VaultYearlyStat';
-import { VaultDailyStat } from './VaultDailyStat';
+import { VaultApyStat } from './VaultApyStat';
 import { VaultTvlStat } from './VaultTvlStat';
 import { VaultSafetyStat } from './VaultSafetyStat';
 
@@ -28,10 +27,10 @@ export const VaultStats = memo<VaultStatsProps>(function VaultStats({ vaultId })
           <VaultDepositStat vaultId={vaultId} />
         </div>
         <div className={classes.column}>
-          <VaultYearlyStat vaultId={vaultId} />
+          <VaultApyStat type="yearly" vaultId={vaultId} />
         </div>
         <div className={classes.column}>
-          <VaultDailyStat vaultId={vaultId} />
+          <VaultApyStat type="daily" vaultId={vaultId} />
         </div>
         <div className={classes.column}>
           <VaultTvlStat vaultId={vaultId} />

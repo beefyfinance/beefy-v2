@@ -101,6 +101,6 @@ export const styles = (theme: Theme) => ({
   notEarningIcon: {
     width: '20px',
     height: '20px',
-    color: theme.palette.error.main,
+    color: theme.palette.background.buttons.boost,
   },
 });

@@ -8,26 +8,28 @@ import {
   selectUserVaultBalanceInUsdIncludingBoostsBridged,
 } from '../../features/data/selectors/balance';
 import { selectVaultById } from '../../features/data/selectors/vaults';
-import {
-  selectIsBalanceHidden,
-  selectIsWalletKnown,
-  selectWalletAddress,
-} from '../../features/data/selectors/wallet';
+import { selectIsBalanceHidden, selectWalletAddress } from '../../features/data/selectors/wallet';
 import { formatLargeUsd } from '../../helpers/format';
 import type { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import type { TokenEntity } from '../../features/data/entities/token';
 import type BigNumber from 'bignumber.js';
 import { TokenAmountFromEntity } from '../TokenAmount';
-import {
-  selectIsAddressChainDataAvailable,
-  selectIsGlobalDataAvailable,
-} from '../../features/data/selectors/data-loader';
 import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip';
+import {
+  selectIsBalanceAvailableForChainUser,
+  selectIsPricesAvailable,
+} from '../../features/data/selectors/data-loader';
 
 const _VaultDeposited = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
     const vault = selectVaultById(state, vaultId);
+    const walletAddress = selectWalletAddress(state);
+    const isLoaded =
+      !!walletAddress &&
+      selectIsPricesAvailable(state) &&
+      selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress);
+
     const { amount: deposit, token: depositToken } =
       selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken(state, vault.id);
     const baseDeposit = selectUserVaultBalanceInDepositToken(state, vault.id);
@@ -36,11 +38,6 @@ const _VaultDeposited = connect(
       selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vaultId)
     );
     const blurred = selectIsBalanceHidden(state);
-    const walletAddress = selectWalletAddress(state);
-    const isLoaded =
-      selectIsGlobalDataAvailable(state, 'prices') && selectIsWalletKnown(state) && walletAddress
-        ? selectIsAddressChainDataAvailable(state, walletAddress, vault.chainId, 'balance')
-        : true;
 
     return {
       vaultId,
@@ -50,7 +47,7 @@ const _VaultDeposited = connect(
       depositUsd,
       depositToken,
       blurred,
-      loading: !isLoaded,
+      loading: !!walletAddress && !isLoaded,
     };
   }
 )(

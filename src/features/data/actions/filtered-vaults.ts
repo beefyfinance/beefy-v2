@@ -12,6 +12,7 @@ import {
 import {
   selectFilterOptions,
   selectFilterPlatformIdsForVault,
+  selectVaultIsBoostedForFilter,
   selectVaultMatchesText,
 } from '../selectors/filtered-vaults';
 import {
@@ -131,7 +132,7 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
         }
 
         // Hide non-boosted if onlyBoosted checked
-        if (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) {
+        if (filterOptions.onlyBoosted && !selectVaultIsBoostedForFilter(state, vault.id)) {
           return false;
         }
 

@@ -9,17 +9,13 @@ import {
 } from '../../features/data/selectors/balance';
 import { selectTokenByAddress } from '../../features/data/selectors/tokens';
 import { selectVaultById } from '../../features/data/selectors/vaults';
-import {
-  selectIsBalanceHidden,
-  selectIsWalletKnown,
-  selectWalletAddress,
-} from '../../features/data/selectors/wallet';
+import { selectIsBalanceHidden, selectWalletAddress } from '../../features/data/selectors/wallet';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
 import type { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import {
-  selectIsAddressChainDataAvailable,
-  selectIsGlobalDataAvailable,
+  selectIsBalanceAvailableForChainUser,
+  selectIsPricesAvailable,
 } from '../../features/data/selectors/data-loader';
 
 const _GovVaultRewards = connect((state: BeefyState, { vaultId }: { vaultId: VaultGov['id'] }) => {
@@ -30,9 +26,9 @@ const _GovVaultRewards = connect((state: BeefyState, { vaultId }: { vaultId: Vau
   const blurred = selectIsBalanceHidden(state);
   const walletAddress = selectWalletAddress(state);
   const isLoaded =
-    selectIsGlobalDataAvailable(state, 'prices') && selectIsWalletKnown(state) && walletAddress
-      ? selectIsAddressChainDataAvailable(state, walletAddress, vault.chainId, 'balance')
-      : true;
+    !!walletAddress &&
+    selectIsPricesAvailable(state) &&
+    selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress);
   const hasRewards = rewardsEarnedUsd.gt(0);
   return {
     earnedToken,
@@ -40,7 +36,7 @@ const _GovVaultRewards = connect((state: BeefyState, { vaultId }: { vaultId: Vau
     rewardsEarnedUsd: formatLargeUsd(rewardsEarnedUsd),
     blurred,
     hasRewards,
-    loading: !isLoaded,
+    loading: !!walletAddress && !isLoaded,
   };
 })(
   ({

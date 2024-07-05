@@ -43,6 +43,7 @@ export const selectVaultActiveGovRewards = createSelector(
         const yearlyUsd = price.times(r.rewardRate).times(365 * 24 * 60 * 60);
 
         return {
+          index: r.index,
           token: r.token,
           price,
           apr: yearlyUsd.dividedBy(tvl).toNumber(),

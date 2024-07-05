@@ -150,6 +150,7 @@ export type VaultDepositedTooltipProps = {
 export const VaultDepositedTooltip = memo<VaultDepositedTooltipProps>(
   function VaultDepositedTooltip({ vaultId }) {
     const classes = useStyles();
+    const { t } = useTranslation();
     const { depositToken, entries } = useAppSelector(state =>
       selectVaultUserBalanceInDepositTokenBreakdown(state, vaultId)
     );
@@ -165,7 +166,9 @@ export const VaultDepositedTooltip = memo<VaultDepositedTooltipProps>(
         {entries.map(entry => (
           <Entry key={entry.id} entry={entry} price={price} depositToken={depositToken} />
         ))}
-        {notEarning.gt(0) && <div style={{ gridColumn: '1 / span 2' }}>You are missing out!</div>}
+        {notEarning.gt(0) && (
+          <div style={{ gridColumn: '1 / span 2' }}>{t('VaultStat-Deposited-NotEarning')}</div>
+        )}
       </div>
     );
   }

@@ -5,7 +5,7 @@ import type { TokenEntity } from '../entities/token';
 import { isTokenErc20, isTokenNative } from '../entities/token';
 import { selectAllChainIds, selectChainById } from './chains';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { selectIsAddressBookLoaded, selectIsGlobalDataAvailable } from './data-loader';
+import { selectIsAddressBookLoaded, selectIsPricesAvailable } from './data-loader';
 import { isStandardVault, type VaultEntity } from '../entities/vault';
 import { createCachedSelector } from 're-reselect';
 import { selectCowcentratedLikeVaultById, selectGovVaultById, selectVaultById } from './vaults';
@@ -271,7 +271,7 @@ export const selectHasBreakdownDataByOracleId = (
   oracleId: TokenEntity['oracleId'],
   chainId: ChainEntity['id']
 ) => {
-  const isPricesLoaded = selectIsGlobalDataAvailable(state, 'prices');
+  const isPricesLoaded = selectIsPricesAvailable(state);
   const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
   const breakdown = selectLpBreakdownByOracleId(state, oracleId);
 
