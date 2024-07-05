@@ -949,7 +949,11 @@ export const selectUserVaultsPnl = (state: BeefyState, walletAddress?: string) =
   const userVaults = selectUserDepositedVaultIds(state, walletAddress);
   const vaults: Record<string, UserVaultPnl> = {};
   for (const vaultId of userVaults) {
-    vaults[vaultId] = selectVaultPnl(state, vaultId, walletAddress);
+    const vault = selectVaultById(state, vaultId);
+    const underlyingCLMIdOrVaultId = isCowcentratedLikeVault(vault)
+      ? vault.cowcentratedId
+      : vaultId;
+    vaults[vaultId] = selectVaultPnl(state, underlyingCLMIdOrVaultId, walletAddress);
   }
   return vaults;
 };
