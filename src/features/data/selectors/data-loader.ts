@@ -65,7 +65,7 @@ export const selectIsUserBalanceAvailable = createSelector(
   (state: BeefyState, _walletAddress: string | undefined) => selectIsPricesAvailable(state),
   (state: BeefyState, _walletAddress: string | undefined) => state.ui.dataLoader.byChainId,
   (state: BeefyState, _walletAddress: string | undefined) => state.ui.dataLoader.byAddress,
-  (_state: BeefyState, walletAddress: string | undefined) => walletAddress,
+  (_state: BeefyState, walletAddress: string | undefined) => walletAddress?.toLowerCase(),
   (configAvailable, pricesAvailable, byChainId, byAddress, walletAddress) => {
     if (!configAvailable || !pricesAvailable || !walletAddress) {
       return false;
