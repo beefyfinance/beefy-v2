@@ -1,7 +1,7 @@
 import { orderBy } from 'lodash-es';
 import { useCallback, useMemo, useState } from 'react';
 import { useAppSelector } from '../../../../store';
-import { selectUserVaultsPnl } from '../../../data/selectors/balance';
+import { selectDashboardUserVaultsPnl } from '../../../data/selectors/balance';
 import { selectUserDashboardFilteredVaults } from '../../../data/selectors/filtered-vaults';
 import { isUserClmPnl } from '../../../data/selectors/analytics-types';
 import { isVaultActive } from '../../../data/entities/vault';
@@ -31,7 +31,7 @@ export function useSortedDashboardVaults(address: string) {
 
   const apyByVaultId = useAppSelector(state => state.biz.apy.totalApy.byVaultId);
 
-  const userVaultsPnl = useAppSelector(state => selectUserVaultsPnl(state, address));
+  const userVaultsPnl = useAppSelector(state => selectDashboardUserVaultsPnl(state, address));
 
   const sortedFilteredVaults = useMemo(() => {
     return sortedOptions.sort === 'default'
