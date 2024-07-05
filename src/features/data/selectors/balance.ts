@@ -316,7 +316,7 @@ export const selectUserVaultNotEarningBalanceInShareToken: UserBalanceSelector =
         return inVault.plus(inBoosts).plus(inBridge).plus(inCLM).minus(inCurrentBoost);
       }
 
-      return inCLM;
+      return inCLM; // TODO only if there is APR above ac-trading fees
     }
   )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
@@ -623,54 +623,25 @@ export const selectUserVaultDepositTokenWalletBalanceInUsd = (
   return walletBalance.multipliedBy(oraclePrice);
 };
 
-/** @deprecated */
-export const selectGovVaultPendingRewardsInToken = (
-  state: BeefyState,
-  vaultId: VaultGov['id'],
-  walletAddress?: string
-) => {
-  const walletBalance = _selectWalletBalance(state, walletAddress);
-  return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.rewards[0] || BIG_ZERO; // TODO: support multiple rewards [empty = ok, only caller not used when clm-like]
-};
-
-/** @deprecated */
-export const selectGovVaultPendingRewardsInUsd = (
-  state: BeefyState,
-  vaultId: VaultGov['id'],
-  walletAddress?: string
-) => {
-  const vault = selectVaultById(state, vaultId) as VaultGov;
-  const tokenRewards = selectGovVaultPendingRewardsInToken(state, vaultId, walletAddress);
-  const tokenPrice = selectTokenPriceByAddress(state, vault.chainId, vault.earnedTokenAddresses[0]); // TODO: support multiple rewards [empty = ok, only caller not used when clm-like]
-  return tokenRewards.times(tokenPrice);
-};
-
 /** @dev will NOT default to connected wallet address */
 export const selectGovVaultPendingRewards = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
-    selectVaultById(state, vaultId),
-  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
-    state.entities.tokens.byChainId,
   (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
     walletAddress
       ? state.user.balance.byAddress[walletAddress]?.tokenAmount.byGovVaultId[vaultId]?.rewards
       : undefined,
-  (vault, tokensByChain, rewards) => {
-    if (!isGovVault(vault) || !rewards) {
+  (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
+    state.entities.tokens.byChainId,
+  (rewards, tokenByChainId) => {
+    if (!rewards || rewards.length === 0) {
       return [];
     }
 
-    return vault.earnedTokenAddresses.map((address, i) => {
-      const token = tokensByChain[vault.chainId]?.byAddress?.[address.toLowerCase()];
+    return rewards.map(reward => {
+      const token = tokenByChainId[reward.chainId]?.byAddress?.[reward.tokenAddress.toLowerCase()];
       if (!token) {
-        throw new Error(`selectGovVaultEarnedTokens: Unknown token address ${address}`);
+        throw new Error(`selectGovVaultEarnedTokens: Unknown token address ${reward.tokenAddress}`);
       }
-
-      const balance = rewards?.[i] || BIG_ZERO;
-      return {
-        token,
-        balance,
-      };
+      return { token, amount: reward.amount };
     });
   }
 );
@@ -1134,7 +1105,7 @@ export const selectUserRewardsByVaultId = (
   if (isGovVault(vault)) {
     const pendingRewards = selectGovVaultPendingRewardsWithPrice(state, vault.id, walletAddress);
     for (const pendingReward of pendingRewards) {
-      const tokenRewardsUsd = pendingReward.balance.times(pendingReward.price || BIG_ZERO);
+      const tokenRewardsUsd = pendingReward.amount.times(pendingReward.price || BIG_ZERO);
 
       totalRewardsUsd = totalRewardsUsd.plus(tokenRewardsUsd);
       rewardsTokens.push(pendingReward.token.symbol);
@@ -1142,7 +1113,7 @@ export const selectUserRewardsByVaultId = (
       rewards.push({
         rewardToken: pendingReward.token.symbol,
         rewardTokenDecimals: pendingReward.token.decimals,
-        rewards: pendingReward.balance,
+        rewards: pendingReward.amount,
         rewardsUsd: tokenRewardsUsd,
       });
     }

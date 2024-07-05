@@ -637,14 +637,13 @@ const claimGovVault = (vault: VaultGov) => {
     }
 
     const pendingRewards = selectGovVaultPendingRewards(state, vault.id, address).filter(r =>
-      r.balance.gt(BIG_ZERO)
+      r.amount.gt(BIG_ZERO)
     );
     if (!pendingRewards.length) {
       throw new Error(`No rewards to claim`);
     }
 
-    const amount = pendingRewards[0].balance;
-    const token = pendingRewards[0].token;
+    const { amount, token } = pendingRewards[0];
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();

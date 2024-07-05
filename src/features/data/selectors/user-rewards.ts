@@ -163,7 +163,7 @@ export const selectConnectedUserHasGovRewardsForVault = (
   }
 
   const rewards = selectGovVaultPendingRewards(state, vaultId, walletAddress);
-  return rewards && rewards.some(r => r.balance.gt(BIG_ZERO));
+  return rewards && rewards.some(r => r.amount.gt(BIG_ZERO));
 };
 
 export const selectUserGovVaultUnifiedRewards = createSelector(
@@ -175,6 +175,7 @@ export const selectUserGovVaultUnifiedRewards = createSelector(
       pendingRewards && pendingRewards.length
         ? pendingRewards.map(r => ({
             ...r,
+            balance: r.amount,
             active: false,
             apr: undefined,
           }))

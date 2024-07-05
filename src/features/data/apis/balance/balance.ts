@@ -18,6 +18,7 @@ import type {
   FetchAllBalancesResult,
   GovVaultBalance,
   GovVaultV2Balance,
+  GovVaultV2BalanceResult,
   IBalanceApi,
   TokenBalance,
 } from './balance-types';
@@ -38,7 +39,8 @@ import {
   type Web3CallMethod,
 } from '../../../../helpers/web3';
 import { selectTokenByAddress } from '../../selectors/tokens';
-import { BIG_ZERO, fromWeiString } from '../../../../helpers/big-number';
+import { BIG_ZERO, fromWeiString, isFiniteBigNumber } from '../../../../helpers/big-number';
+import { isDefined } from '../../utils/array-utils';
 
 export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   constructor(protected web3: Web3, protected chain: T) {}
@@ -152,7 +154,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     }
 
     for (const govVaultsV2Batch of govVaultsV2Batches) {
-      const batchRes = (results[resultsIdx] as AsWeb3Result<GovVaultV2Balance>[]).map(
+      const batchRes = (results[resultsIdx] as AsWeb3Result<GovVaultV2BalanceResult>[]).map(
         (vaultRes, elemidx) => this.govVaultV2Formatter(state, vaultRes, govVaultsV2Batch[elemidx])
       );
       res.govVaults = res.govVaults.concat(batchRes);
@@ -199,13 +201,19 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   ): GovVaultV2Balance {
     const balanceToken = selectGovVaultBalanceTokenEntity(state, govVault.id);
     const rewardsToken = selectGovVaultRewardsTokenEntity(state, govVault.id);
-    const rawBalance = new BigNumber(result.balance);
-    const rawRewards = new BigNumber(result.rewards);
+    const balance = fromWeiString(result.balance, balanceToken.decimals);
+    const rewards = fromWeiString(result.rewards, rewardsToken.decimals);
     return {
       vaultId: govVault.id,
-      balance: rawBalance.shiftedBy(-balanceToken.decimals),
-      rewards: [rawRewards.shiftedBy(-rewardsToken.decimals)],
-      rewardTokens: govVault.earnedTokenAddresses,
+      balance: balance,
+      rewards: [
+        {
+          tokenAddress: rewardsToken.address,
+          chainId: rewardsToken.chainId,
+          amount: rewards,
+          index: 0,
+        },
+      ],
     };
   }
 
@@ -227,7 +235,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
   protected govVaultV2Formatter(
     state: BeefyState,
-    result: AsWeb3Result<GovVaultV2Balance>,
+    result: AsWeb3Result<GovVaultV2BalanceResult>,
     govVault: VaultGovMulti | VaultGovCowcentrated
   ): GovVaultV2Balance {
     if (result.rewards.length !== result.rewardTokens.length) {
@@ -236,23 +244,31 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     const balanceToken = selectGovVaultBalanceTokenEntity(state, govVault.id);
 
-    const rewards: BigNumber[] = govVault.earnedTokenAddresses.map(rewardTokenAddress => {
-      const rewardTokenEntity = selectTokenByAddress(state, govVault.chainId, rewardTokenAddress);
-      const index = result.rewardTokens.findIndex(
-        token => token.toLowerCase() === rewardTokenAddress.toLowerCase()
-      );
-      if (index === -1) {
-        return BIG_ZERO;
-        // throw new Error(`Config reward token ${rewardTokenAddress} not found in result`);
-      }
-      return fromWeiString(result.rewards[index], rewardTokenEntity.decimals);
-    });
+    const rewards = result.rewardTokens
+      .map((rewardTokenAddress, index) => {
+        const rewardToken = selectTokenByAddress(state, govVault.chainId, rewardTokenAddress);
+        if (!rewardToken) {
+          console.warn(
+            `${govVault.id} Reward token ${rewardTokenAddress} not found in address book`
+          );
+          return undefined;
+        }
+
+        const amount = fromWeiString(result.rewards[index] || '0', rewardToken.decimals);
+
+        return {
+          tokenAddress: rewardToken.address,
+          chainId: rewardToken.chainId,
+          amount: isFiniteBigNumber(amount) ? amount : BIG_ZERO,
+          index,
+        };
+      })
+      .filter(isDefined);
 
     return {
       vaultId: govVault.id,
       balance: fromWeiString(result.balance, balanceToken.decimals),
       rewards,
-      rewardTokens: govVault.earnedTokenAddresses,
     };
   }
 }

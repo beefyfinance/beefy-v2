@@ -198,14 +198,8 @@ export class GovVaultType implements IGovVaultType {
         this.vault.id,
         selectWalletAddress(state)
       );
-      for (const pendingReward of pendingRewards) {
-        if (pendingReward.balance.gt(BIG_ZERO)) {
-          outputs.push({
-            token: pendingReward.token,
-            amount: pendingReward.balance,
-          });
-        }
-      }
+
+      outputs.push(...pendingRewards.filter(reward => reward.amount.gt(BIG_ZERO)));
     }
 
     return {

@@ -171,6 +171,10 @@ function getGovVault(
     };
   }
 
+  if (!govBase.earnedTokenAddresses.length) {
+    throw new Error(`Gov vault ${config.id} must have at least 1 earned token address`);
+  }
+
   return {
     ...base,
     ...status,
