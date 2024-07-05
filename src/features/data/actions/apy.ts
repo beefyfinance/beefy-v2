@@ -143,7 +143,7 @@ export const recalculateTotalApyAction = createAsyncThunk<
         }
       }
 
-      const additionalApr = (total.merklApr || 0) + (total.rewardPoolApr || 0);
+      const additionalApr = total.rewardPoolApr || 0;
       if (additionalApr > 0) {
         total.boostedTotalApy = total.boostedTotalApy ?? total.totalApy;
         total.boostedTotalDaily = total.boostedTotalDaily ?? total.totalDaily;
