@@ -136,7 +136,7 @@ type VaultGovMultiOnly = VaultGovBaseOnly & {
 export type VaultCowcentratedBaseOnly = {
   /** subtype */
   subType: 'cowcentrated';
-  /** the id of the cowcentrated vault */
+  /** the id of the cowcentrated CLM */
   cowcentratedId: string;
   /** the id of the gov vault, if one exists */
   cowcentratedGovId?: string | undefined;

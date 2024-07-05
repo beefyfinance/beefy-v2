@@ -1,8 +1,9 @@
 import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity } from '../entities/vault';
-import { isGovVault, isVaultActive } from '../entities/vault';
+import { isCowcentratedLikeVault, isGovVault, isVaultActive } from '../entities/vault';
 import {
   selectDashboardDepositedVaultIdsForAddress,
+  selectUserUnstakedCowcentratedVaultIds,
   selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
 } from './balance';
 import { selectIsUserBalanceAvailable } from './data-loader';
@@ -125,7 +126,14 @@ export const selectVaultDailyYieldStats = (
 ) => {
   const vault = selectVaultById(state, vaultId);
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const unstakedIds = selectUserUnstakedCowcentratedVaultIds(state, walletAddress);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+
+  const underlyingCLMId = isCowcentratedLikeVault(vault) ? vault.cowcentratedId : undefined;
+
+  // if the clm is not staked we have to use the underlyingId to get the tokenBalance
+  const underlyingClmIdOrVaultId =
+    underlyingCLMId && unstakedIds.includes(underlyingCLMId) ? underlyingCLMId : vaultId;
 
   if (!isVaultActive(vault)) {
     return {
@@ -138,10 +146,11 @@ export const selectVaultDailyYieldStats = (
 
   const tokenBalance = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(
     state,
-    vault.id,
+    underlyingClmIdOrVaultId,
     walletAddress
   );
   const vaultUsdBalance = tokenBalance.times(oraclePrice);
+
   const apyData = selectVaultTotalApy(state, vault.id);
 
   let dailyUsd: BigNumber;
