@@ -452,9 +452,7 @@ export class TransactApi implements ITransactApi {
     const ctor = await loader();
 
     if (isComposerStrategyStatic(ctor)) {
-      console.log('isComposerStrategyStatic', ctor.id, ctor.composer);
       const underlyingStrategy = await this.getComposableStrategyForZap(helpers);
-      console.log('underlyingStrategy', underlyingStrategy);
       const genericCtor: IComposerStrategyStatic = ctor;
       return new genericCtor(
         strategyConfig as StrategyIdToConfig<ComposerStrategyId>,

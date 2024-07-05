@@ -5,6 +5,7 @@ import {
   selectDashboardDepositedVaultIdsForAddress,
   selectUserUnstakedCowcentratedVaultIds,
   selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
+  selectUserVaultBalanceInUsdIncludingBoostsBridgedUnderlying,
 } from './balance';
 import { selectIsUserBalanceAvailable } from './data-loader';
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
@@ -76,23 +77,20 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
   const userVaults = userVaultIds.map(vaultId => selectVaultById(state, vaultId));
 
   for (const vault of userVaults) {
-    const tokenBalance = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(
+    const vaultUsdBalance = selectUserVaultBalanceInUsdIncludingBoostsBridgedUnderlying(
       state,
       vault.id,
       walletAddress
-    );
+    ).toNumber();
 
-    if (tokenBalance.lte(BIG_ZERO)) {
+    if (vaultUsdBalance <= 0) {
       continue;
     }
-
-    const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
-    const vaultUsdBalance = tokenBalance.times(oraclePrice).toNumber();
 
     // Add vault balance to total
     newGlobalStats.deposited += vaultUsdBalance;
 
-    if (!isVaultActive(vault) || vaultUsdBalance <= 0) {
+    if (!isVaultActive(vault)) {
       continue;
     }
 
