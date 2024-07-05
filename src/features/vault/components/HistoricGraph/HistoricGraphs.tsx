@@ -11,7 +11,7 @@ import { GraphWithControls } from './GraphWithControls';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { getDefaultStat } from './utils';
-import { CowcentratedRanges } from './CowcentratedRanges';
+import { CurrentCowcentratedRangeIfAvailable } from './CurrentCowcentratedRange';
 import type { ChartStat } from './types';
 
 const useStyles = makeStyles(styles);
@@ -44,7 +44,7 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
         <StatSwitcher<ChartStat> stat={stat} options={options} onChange={setStat} />
       </CardHeader>
       <CardContent className={classes.content}>
-        {stat === 'clm' && <CowcentratedRanges vaultId={vaultId} />}
+        {stat === 'clm' && <CurrentCowcentratedRangeIfAvailable vaultId={vaultId} />}
         <GraphWithControls vaultId={vaultId} oracleId={oracleId} stat={stat} />
       </CardContent>
     </Card>

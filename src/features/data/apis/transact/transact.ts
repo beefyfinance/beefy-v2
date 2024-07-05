@@ -8,7 +8,7 @@ import {
   type WithdrawQuote,
 } from './transact-types';
 import { partition, uniq } from 'lodash-es';
-import type { VaultEntity } from '../../entities/vault';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../entities/vault';
 import type { GetStateFn } from '../../../../redux-types';
 import { selectVaultById, selectVaultUnderlyingVault } from '../../selectors/vaults';
 import {
@@ -37,7 +37,7 @@ import {
 } from './strategies';
 import { getVaultTypeBuilder } from './vaults';
 import { VaultStrategy } from './strategies/vault/VaultStrategy';
-import { selectZapByChainId } from '../../selectors/zap';
+import { selectSwapAggregatorsExistForChain, selectZapByChainId } from '../../selectors/zap';
 import { getSwapAggregator } from '../instances';
 import { isDefined } from '../../utils/array-utils';
 import type {
@@ -330,6 +330,22 @@ export class TransactApi implements ITransactApi {
 
   async fetchVaultHasZap(vaultId: VaultEntity['id'], getState: GetStateFn): Promise<boolean> {
     const helpers = await this.getHelpersForVault(vaultId, getState);
+
+    // No zap in config
+    if (!helpers.vault.zaps || helpers.vault.zaps.length === 0) {
+      return false;
+    }
+
+    // Cowcentrated like are marked as not having zap on chains with no aggregator
+    // [even though CLM Pools technically have a zap from token0/1 in to RP]
+    if (
+      isCowcentratedLikeVault(helpers.vault) &&
+      !selectSwapAggregatorsExistForChain(getState(), helpers.vault.chainId)
+    ) {
+      return false;
+    }
+
+    // No strategies could be initialized
     const zapStrategies = await this.getZapStrategiesForVault(helpers);
     if (!zapStrategies.length) {
       return false;
@@ -339,6 +355,7 @@ export class TransactApi implements ITransactApi {
       zapStrategies.map(zapStrategy => zapStrategy.fetchDepositOptions())
     );
 
+    // Must have at least 1 deposit option from any strategy
     return options.flat().length > 0;
   }
 

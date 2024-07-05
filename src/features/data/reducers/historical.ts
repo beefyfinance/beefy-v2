@@ -73,9 +73,7 @@ export const historicalSlice = createSlice({
         };
       })
       .addCase(fetchHistoricalRanges.fulfilled, (sliceState, action) => {
-        const { vault, oracleId, ranges, isCowcentrated } = action.payload;
-
-        const vaultId = vault.id;
+        const { vaultId, oracleId, ranges, isCowcentrated } = action.payload;
 
         sliceState.ranges.byVaultId[vaultId] = {
           status: 'fulfilled',

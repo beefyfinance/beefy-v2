@@ -24,7 +24,7 @@ import { sleep } from '../utils/async-utils';
 import type { ChartStat } from '../../vault/components/HistoricGraph/types';
 
 export interface HistoricalRangesPayload {
-  vault: VaultEntity;
+  vaultId: VaultEntity['id'];
   oracleId: TokenEntity['oracleId'];
   ranges: ApiRanges;
   isCowcentrated: boolean;
@@ -56,7 +56,7 @@ export const fetchHistoricalRanges = createAsyncThunk<
     isCowcentratedLike ? vault.chainId : undefined
   );
 
-  return { vault, oracleId: depositToken.oracleId, ranges, isCowcentrated: !!isCowcentratedLike };
+  return { vaultId, oracleId: depositToken.oracleId, ranges, isCowcentrated: isCowcentratedLike };
 });
 
 export interface HistoricalApysPayload {
