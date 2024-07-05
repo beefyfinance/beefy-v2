@@ -923,7 +923,8 @@ const stableVsOthersSummarizer = (entries: DashboardUserExposureEntry[]) =>
   orderBy(entries, 'key', 'desc');
 
 export const selectDashboardUserVaultsPnl = (state: BeefyState, walletAddress?: string) => {
-  const userVaults = selectUserDepositedVaultIds(state, walletAddress);
+  if (!walletAddress) return [];
+  const userVaults = selectDashboardDepositedVaultIdsForAddress(state, walletAddress);
   const vaults: Record<string, UserVaultPnl> = {};
   for (const vaultId of userVaults) {
     const vault = selectVaultById(state, vaultId);
