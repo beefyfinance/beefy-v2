@@ -46,6 +46,7 @@ import type { UserLpBreakdownBalance, UserLpBreakdownBalanceAsset } from './bala
 import { isUserClmPnl, type UserVaultPnl } from './analytics-types';
 import { selectPlatformById } from './platforms';
 import type { TokenAmount } from '../apis/transact/transact-types';
+import { selectVaultTotalApy } from './apy';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (walletAddress) {
@@ -308,15 +309,22 @@ export const selectUserVaultNotEarningBalanceInShareToken: UserBalanceSelector =
     (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
       selectUserVaultBalanceInShareTokenInUnderlyingCLM(state, vaultId, maybeWalletAddress),
     (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectIsVaultPreStakedOrBoosted(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
       selectUserVaultBalanceInShareTokenInCurrentBoost(state, vaultId, maybeWalletAddress),
-    (inVault, inBoosts, inBridge, inCLM, isBoosted, inCurrentBoost) => {
+    (state: BeefyState, vaultId: VaultEntity['id']) =>
+      selectIsVaultPreStakedOrBoosted(state, vaultId),
+    (state: BeefyState, vaultId: VaultEntity['id']) =>
+      selectVaultTotalApy(state, vaultId)?.boostedTotalDaily !== undefined,
+    (inVault, inBoosts, inBridge, inUnderlyingCLM, inCurrentBoost, isBoosted, isClmBoosted) => {
       if (isBoosted) {
-        return inVault.plus(inBoosts).plus(inBridge).plus(inCLM).minus(inCurrentBoost);
+        return inVault.plus(inBoosts).plus(inBridge).plus(inUnderlyingCLM).minus(inCurrentBoost);
       }
 
-      return inCLM; // TODO only if there is APR above ac-trading fees
+      if (isClmBoosted) {
+        // isClmBoosted will be true for any boosted vault, but inUnderlyingCLM will only be > 0 for CLM Pools
+        return inUnderlyingCLM;
+      }
+
+      return BIG_ZERO;
     }
   )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
