@@ -1,75 +1,15 @@
-import {
-  isCowcentratedGovVault,
-  isCowcentratedVault,
-  type VaultEntity,
-} from '../../features/data/entities/vault';
+import { type VaultEntity } from '../../features/data/entities/vault';
 import React, { memo, useMemo } from 'react';
-import type { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { formatTotalApy } from '../../helpers/format';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat';
-import {
-  selectIsVaultApyAvailable,
-  selectVaultShouldShowInterest,
-} from '../../features/data/selectors/data-loader';
-import {
-  selectDidAPIReturnValuesForVault,
-  selectVaultTotalApy,
-} from '../../features/data/selectors/apy';
-import { selectVaultCurrentBoostIdWithStatus } from '../../features/data/selectors/boosts';
+import { selectApyVaultUIData } from '../../features/data/selectors/apy';
 import { useAppSelector } from '../../store';
 import type { AllValuesAsString } from '../../features/data/utils/types-utils';
 import type { TotalApy } from '../../features/data/reducers/apy';
 import { InterestTooltipContent } from '../InterestTooltipContent';
 import { getApyComponents, getApyLabelsForType, getApyLabelsTypeForVault } from '../../helpers/apy';
 import { useTranslation } from 'react-i18next';
-
-type SelectDataReturn =
-  | { status: 'loading' | 'missing' | 'hidden'; type: 'apy' | 'apr' }
-  | {
-      status: 'available';
-      type: 'apy' | 'apr';
-      values: TotalApy;
-      boosted: 'active' | 'prestake' | undefined;
-    };
-
-// TEMP: selector instead of connect/mapStateToProps
-function selectData(state: BeefyState, vaultId: VaultEntity['id']): SelectDataReturn {
-  const vault = selectVaultById(state, vaultId);
-  const type: 'apr' | 'apy' = vault.type === 'gov' ? 'apr' : 'apy';
-
-  const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
-  if (!shouldShowInterest) {
-    return { status: 'hidden', type };
-  }
-
-  const isLoaded = selectIsVaultApyAvailable(state, vaultId);
-  if (!isLoaded) {
-    return { status: 'loading', type };
-  }
-
-  const exists = selectDidAPIReturnValuesForVault(state, vaultId);
-  if (!exists) {
-    return { status: 'missing', type };
-  }
-
-  const values = selectVaultTotalApy(state, vaultId);
-  const boost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
-  if (boost) {
-    return { status: 'available', type, values, boosted: boost.status };
-  }
-
-  if (!isCowcentratedVault(vault) && !isCowcentratedGovVault(vault)) {
-    return { status: 'available', type, values, boosted: undefined };
-  }
-
-  return {
-    status: 'available',
-    type: vault.strategyTypeId === 'compounds' ? 'apy' : 'apr',
-    values,
-    boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
-  };
-}
 
 export type VaultApyStatProps = Omit<
   VaultValueStatProps,
@@ -85,7 +25,7 @@ export const VaultApyStat = memo<VaultApyStatProps>(function VaultApyStat({
   ...rest
 }) {
   const { t } = useTranslation();
-  const data = useAppSelector(state => selectData(state, vaultId));
+  const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
   const label =
     type === 'daily' ? 'VaultStat-DAILY' : data.type === 'apr' ? 'VaultStat-APR' : 'VaultStat-APY';
   const formatted = useMemo(
@@ -111,7 +51,7 @@ export const VaultApyStat = memo<VaultApyStatProps>(function VaultApyStat({
     );
   }
 
-  const isBoosted = !!data.boosted || boostedTotalKey in data.values;
+  const isBoosted = !!data.boosted;
 
   return (
     <VaultValueStat
@@ -142,7 +82,7 @@ type ApyTooltipContentProps = {
   rates: AllValuesAsString<TotalApy>;
 };
 
-const ApyTooltipContent = memo<ApyTooltipContentProps>(function ApyTooltipContent({
+export const ApyTooltipContent = memo<ApyTooltipContentProps>(function ApyTooltipContent({
   vaultId,
   type,
   isBoosted,

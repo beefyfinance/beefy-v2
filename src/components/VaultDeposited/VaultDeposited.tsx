@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import type { VaultEntity } from '../../features/data/entities/vault';
@@ -71,22 +71,13 @@ const _VaultDeposited = connect(
     loading: boolean;
   }) => {
     const { t } = useTranslation();
-    const tooltip = useMemo(
-      () =>
-        hasDisplacedDeposit
-          ? {
-              content: <VaultDepositedTooltip vaultId={vaultId} />,
-            }
-          : undefined,
-      [hasDisplacedDeposit, vaultId]
-    );
 
     return (
       <ValueBlock
         label={t('Vault-deposited')}
         value={<TokenAmountFromEntity amount={deposit} token={depositToken} />}
         usdValue={hasDeposit ? depositUsd : null}
-        tooltip={tooltip}
+        tooltip={hasDisplacedDeposit ? <VaultDepositedTooltip vaultId={vaultId} /> : undefined}
         blurred={blurred}
         loading={loading}
       />

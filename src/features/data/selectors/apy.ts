@@ -1,16 +1,25 @@
 import type { BeefyState } from '../../../redux-types';
-import type { VaultEntity } from '../entities/vault';
-import { isGovVault, isVaultActive } from '../entities/vault';
+import {
+  isCowcentratedGovVault,
+  isCowcentratedVault,
+  isGovVault,
+  isVaultActive,
+  type VaultEntity,
+} from '../entities/vault';
 import {
   selectUserDepositedVaultIds,
   selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
   selectUserVaultBalanceInUsdIncludingBoostsBridged,
 } from './balance';
-import { selectIsUserBalanceAvailable } from './data-loader';
+import {
+  selectIsUserBalanceAvailable,
+  selectIsVaultApyAvailable,
+  selectVaultShouldShowInterest,
+} from './data-loader';
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { selectUserActiveBoostBalanceInToken } from './boosts';
+import { selectUserActiveBoostBalanceInToken, selectVaultCurrentBoostIdWithStatus } from './boosts';
 import type { TotalApy } from '../reducers/apy';
 import { isEmpty } from '../../../helpers/utils';
 import { selectWalletAddress } from './wallet';
@@ -169,3 +178,53 @@ export const selectVaultDailyYieldStats = (
 
   return { dailyUsd, dailyTokens, oraclePrice, tokenDecimals: depositToken.decimals };
 };
+
+type ApyVaultUIData =
+  | { status: 'loading' | 'missing' | 'hidden'; type: 'apy' | 'apr' }
+  | {
+      status: 'available';
+      type: 'apy' | 'apr';
+      values: TotalApy;
+      boosted: 'active' | 'prestake' | undefined;
+    };
+
+// TEMP: selector instead of connect/mapStateToProps
+export function selectApyVaultUIData(
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): ApyVaultUIData {
+  const vault = selectVaultById(state, vaultId);
+  const type: 'apr' | 'apy' = vault.type === 'gov' ? 'apr' : 'apy';
+
+  const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
+  if (!shouldShowInterest) {
+    return { status: 'hidden', type };
+  }
+
+  const isLoaded = selectIsVaultApyAvailable(state, vaultId);
+  if (!isLoaded) {
+    return { status: 'loading', type };
+  }
+
+  const exists = selectDidAPIReturnValuesForVault(state, vaultId);
+  if (!exists) {
+    return { status: 'missing', type };
+  }
+
+  const values = selectVaultTotalApy(state, vaultId);
+  const boost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
+  if (boost) {
+    return { status: 'available', type, values, boosted: boost.status };
+  }
+
+  if (!isCowcentratedVault(vault) && !isCowcentratedGovVault(vault)) {
+    return { status: 'available', type, values, boosted: undefined };
+  }
+
+  return {
+    status: 'available',
+    type: vault.strategyTypeId === 'compounds' ? 'apy' : 'apr',
+    values,
+    boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
+  };
+}

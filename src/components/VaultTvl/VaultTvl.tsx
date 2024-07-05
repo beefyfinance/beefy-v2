@@ -81,13 +81,7 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
         blurred={false}
         loading={loading}
         usdValue={subValue}
-        tooltip={
-          breakdown
-            ? {
-                content: <TvlShareTooltip breakdown={breakdown} />,
-              }
-            : undefined
-        }
+        tooltip={breakdown ? <TvlShareTooltip breakdown={breakdown} /> : undefined}
       />
     );
   }
