@@ -99,6 +99,7 @@ export const WithdrawFees = memo<VaultFeesProps>(function WithdrawFees({ classNa
             <TextLoader placeholder={'0.0%'} />
           )}
         </Value>
+        <MaybeZapFees />
       </div>
     </div>
   );
