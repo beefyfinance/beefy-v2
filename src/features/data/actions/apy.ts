@@ -123,23 +123,43 @@ export const recalculateTotalApyAction = createAsyncThunk<
       if (vault.strategyTypeId === 'pool') {
         const poolRewards = selectVaultActiveGovRewards(state, vaultId);
         if (poolRewards && poolRewards.length > 0) {
-          const { rewardPoolApr, feePoolApr } = poolRewards.reduce(
+          const { rewardPoolApr, rewardPoolTradingApr } = poolRewards.reduce(
             (acc, r) => {
               // assumption, reward at index 0 is the base trading fee reward
               if (r.index === 0) {
-                acc.feePoolApr += r.apr;
+                acc.rewardPoolTradingApr += r.apr;
               } else {
                 acc.rewardPoolApr += r.apr;
               }
               return acc;
             },
-            { rewardPoolApr: 0, feePoolApr: 0 }
+            { rewardPoolApr: 0, rewardPoolTradingApr: 0 }
           );
 
+          const existingRewardPoolApr = total.rewardPoolApr || 0;
+          const existingRewardPoolDaily = total.rewardPoolDaily || 0;
+          const rewardPoolDaily = rewardPoolApr / 365;
+          const rewardPoolTradingDaily = rewardPoolTradingApr / 365;
+
           total.rewardPoolApr = rewardPoolApr;
-          total.rewardPoolDaily = rewardPoolApr / 365;
-          total.rewardPoolTradingApr = feePoolApr;
-          total.rewardPoolTradingDaily = feePoolApr / 365;
+          total.rewardPoolDaily = rewardPoolDaily;
+          total.rewardPoolTradingApr = rewardPoolTradingApr;
+          total.rewardPoolTradingDaily = rewardPoolTradingDaily;
+          total.totalApy =
+            total.totalApy - existingRewardPoolApr + rewardPoolApr + rewardPoolTradingApr;
+          total.totalDaily =
+            total.totalDaily - existingRewardPoolDaily + rewardPoolDaily + rewardPoolTradingDaily;
+          if (total.boostedTotalApy !== undefined) {
+            total.boostedTotalApy =
+              total.boostedTotalApy - existingRewardPoolApr + rewardPoolApr + rewardPoolTradingApr;
+          }
+          if (total.boostedTotalDaily !== undefined) {
+            total.boostedTotalDaily =
+              total.boostedTotalDaily -
+              existingRewardPoolDaily +
+              rewardPoolDaily +
+              rewardPoolTradingDaily;
+          }
         }
       }
 
