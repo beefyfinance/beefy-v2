@@ -25,10 +25,10 @@ import {
   selectVaultPricePerFullShare,
 } from './vaults';
 import {
+  selectDashboardUserRewardsByVaultId,
   selectUserDepositedVaultIds,
   selectUserLpBreakdownBalance,
-  selectDashboardUserRewardsByVaultId,
-  selectUserVaultBalanceInShareToken,
+  selectUserVaultBalanceInShareTokenIncludingBoostsBridged,
 } from './balance';
 import { selectWalletAddress } from './wallet';
 import { selectIsConfigAvailable, selectIsUserBalanceAvailable } from './data-loader';
@@ -438,7 +438,12 @@ export const selectClmAutocompoundedPendingFeesByVaultId = (
     totalPending: BIG_ZERO,
   };
   const pendingRewards = selectClmPendingRewardsByVaultId(state, vaultId);
-  const currentMooTokenBalance = selectUserVaultBalanceInShareToken(state, vaultId, walletAddress);
+  const currentMooTokenBalance = selectUserVaultBalanceInShareTokenIncludingBoostsBridged(
+    state,
+    vaultId,
+    walletAddress
+  );
+
   if (pendingRewards && currentMooTokenBalance.gt(BIG_ZERO)) {
     const { fees0, fees1, totalSupply } = pendingRewards;
     const vaultFees = selectFeesByVaultId(state, vaultId);
