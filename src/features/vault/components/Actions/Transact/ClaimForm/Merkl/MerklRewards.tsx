@@ -103,7 +103,7 @@ const OtherRewards = memo<OtherRewardsProps>(function OtherRewards({
     setOtherOpen(v => !v);
   }, [setOtherOpen]);
 
-  if (!otherRewards) {
+  if (!otherRewards || otherRewards.length === 0) {
     return null;
   }
 

@@ -69,7 +69,6 @@ export const getApyLabelsForType = createCachedFactory(
       key => makeLabels(key, 'Yearly'),
       key => `${key}Apr` as const satisfies TotalApyKey
     );
-    console.log(type);
     return {
       ...dailyComponentLabels,
       ...yearlyComponentLabels,

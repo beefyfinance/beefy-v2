@@ -176,9 +176,9 @@ export function createAddressDataSelector(
 ): AddressDataSelectorFn {
   return createCachedSelector(
     (state: BeefyState, walletAddress: string) =>
-      state.ui.dataLoader.byAddress[walletAddress]?.global[key],
+      state.ui.dataLoader.byAddress[walletAddress.toLowerCase()]?.global[key],
     evaluateFn
-  )((_, walletAddress) => walletAddress);
+  )((_, walletAddress) => walletAddress.toLowerCase());
 }
 
 export function createAddressChainDataSelector(
@@ -187,7 +187,7 @@ export function createAddressChainDataSelector(
 ): AddressChainDataSelectorFn {
   return createCachedSelector(
     (state: BeefyState, chainId: ChainEntity['id'], walletAddress: string) =>
-      state.ui.dataLoader.byAddress[walletAddress]?.byChainId[chainId]?.[key],
+      state.ui.dataLoader.byAddress[walletAddress.toLowerCase()]?.byChainId[chainId]?.[key],
     evaluateFn
-  )((_, walletAddress) => walletAddress);
+  )((_, walletAddress) => walletAddress.toLowerCase());
 }
