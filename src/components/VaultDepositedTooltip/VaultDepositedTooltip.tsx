@@ -20,6 +20,7 @@ import { formatLargeUsd } from '../../helpers/format';
 import { useTranslation } from 'react-i18next';
 import { selectChainById } from '../../features/data/selectors/chains';
 import { selectBoostById } from '../../features/data/selectors/boosts';
+import { selectVaultById } from '../../features/data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 
@@ -55,14 +56,16 @@ const VaultEntry = memo<EntryProps<UserVaultBalanceBreakdownVault>>(function Vau
   entry,
   depositToken,
   price,
+  type,
 }) {
   const { t } = useTranslation();
+
   return (
     <EntryDisplay
       entry={entry}
       depositToken={depositToken}
       price={price}
-      label={t(`VaultStat-Deposited-${entry.type}`)}
+      label={t([`VaultStat-Deposited-${entry.type}-${type}`, `VaultStat-Deposited-${entry.type}`])}
     />
   );
 });
@@ -136,6 +139,7 @@ type EntryProps<T extends UserVaultBalanceBreakdownEntry = UserVaultBalanceBreak
   entry: T;
   depositToken: TokenEntity;
   price: BigNumber;
+  type: VaultEntity['type'];
 };
 
 const Entry = memo<EntryProps>(function Entry(props) {
@@ -151,6 +155,7 @@ export const VaultDepositedTooltip = memo<VaultDepositedTooltipProps>(
   function VaultDepositedTooltip({ vaultId }) {
     const classes = useStyles();
     const { t } = useTranslation();
+    const vault = useAppSelector(state => selectVaultById(state, vaultId));
     const { depositToken, entries } = useAppSelector(state =>
       selectVaultUserBalanceInDepositTokenBreakdown(state, vaultId)
     );
@@ -164,7 +169,13 @@ export const VaultDepositedTooltip = memo<VaultDepositedTooltipProps>(
     return (
       <div className={classes.grid}>
         {entries.map(entry => (
-          <Entry key={entry.id} entry={entry} price={price} depositToken={depositToken} />
+          <Entry
+            key={entry.id}
+            entry={entry}
+            price={price}
+            depositToken={depositToken}
+            type={vault.type}
+          />
         ))}
         {notEarning.gt(0) && (
           <div style={{ gridColumn: '1 / span 2' }}>{t('VaultStat-Deposited-NotEarning')}</div>
