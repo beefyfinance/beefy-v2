@@ -5,10 +5,9 @@ import type { BeefyState } from '../../../redux-types';
 import type { TimeBucketType } from '../apis/analytics/analytics-types';
 import {
   isCowcentratedLikeVault,
-  isCowcentratedVault,
   isGovVault,
   isStandardVault,
-  type VaultCowcentrated,
+  type VaultCowcentratedLike,
   type VaultEntity,
   type VaultGov,
   type VaultStandard,
@@ -22,14 +21,13 @@ import {
 } from './tokens';
 import {
   selectCowcentratedLikeVaultById,
-  selectCowcentratedVaultById,
   selectVaultById,
   selectVaultPricePerFullShare,
 } from './vaults';
 import {
   selectUserDepositedVaultIds,
   selectUserLpBreakdownBalance,
-  selectUserRewardsByVaultId,
+  selectDashboardUserRewardsByVaultId,
   selectUserVaultBalanceInShareToken,
 } from './balance';
 import { selectWalletAddress } from './wallet';
@@ -174,7 +172,7 @@ export const selectStandardGovPnl = (
   walletAddress?: string
 ): UserStandardPnl | UserGovPnl => {
   const vault = selectVaultById(state, vaultId);
-  if (isCowcentratedVault(vault)) {
+  if (isCowcentratedLikeVault(vault)) {
     throw new Error('This function should not be called for cowcentrated vaults');
   }
 
@@ -484,7 +482,7 @@ function selectDashboardYieldGovData(
   vault: VaultGov,
   _pnl: UserGovPnl
 ) {
-  const { totalRewardsUsd } = selectUserRewardsByVaultId(state, vault.id, walletAddress);
+  const { totalRewardsUsd } = selectDashboardUserRewardsByVaultId(state, vault.id, walletAddress);
   return { type: vault.type, totalRewardsUsd, hasRewards: totalRewardsUsd.gt(BIG_ZERO) };
 }
 
@@ -503,7 +501,11 @@ function selectDashboardYieldStandardData(
     return DashboardDataStatus.Missing;
   }
 
-  const { rewards, totalRewardsUsd } = selectUserRewardsByVaultId(state, vault.id, walletAddress);
+  const { rewards, totalRewardsUsd } = selectDashboardUserRewardsByVaultId(
+    state,
+    vault.id,
+    walletAddress
+  );
   const { totalYield, totalYieldUsd, tokenDecimals } = pnl;
   return {
     type: vault.type,
@@ -518,7 +520,7 @@ function selectDashboardYieldStandardData(
 function selectDashboardYieldCowcentratedData(
   state: BeefyState,
   walletAddress: string,
-  vault: VaultCowcentrated,
+  vault: VaultCowcentratedLike,
   pnl: UserClmPnl
 ) {
   if (
@@ -528,10 +530,14 @@ function selectDashboardYieldCowcentratedData(
     return DashboardDataStatus.Loading;
   }
 
-  const { rewards, totalRewardsUsd } = selectUserRewardsByVaultId(state, vault.id, walletAddress);
+  const { rewards, totalRewardsUsd } = selectDashboardUserRewardsByVaultId(
+    state,
+    vault.id,
+    walletAddress
+  );
   const tokens = selectCowcentratedLikeVaultDepositTokens(state, vault.id);
   return {
-    type: vault.type,
+    type: 'cowcentrated' as const,
     ...tokens,
     ...pick(pnl, [
       'total0Compounded',
@@ -556,22 +562,12 @@ export function selectDashboardYieldVaultData(
     return DashboardDataStatus.Loading;
   }
 
-  if (isGovVault(vault) && isUserGovPnl(pnl)) {
+  if (isCowcentratedLikeVault(vault) && isUserClmPnl(pnl)) {
+    return selectDashboardYieldCowcentratedData(state, walletAddress, vault, pnl);
+  } else if (isGovVault(vault) && isUserGovPnl(pnl)) {
     return selectDashboardYieldGovData(state, walletAddress, vault, pnl);
   } else if (isStandardVault(vault) && isUserStandardPnl(pnl)) {
     return selectDashboardYieldStandardData(state, walletAddress, vault, pnl);
-  } else if (isCowcentratedVault(vault) && isUserClmPnl(pnl)) {
-    return selectDashboardYieldCowcentratedData(state, walletAddress, vault, pnl);
-  }
-
-  const underlyingClmId = isCowcentratedLikeVault(vault) ? vault.cowcentratedId : undefined;
-  if (underlyingClmId && isUserClmPnl(pnl)) {
-    return selectDashboardYieldCowcentratedData(
-      state,
-      walletAddress,
-      selectCowcentratedVaultById(state, underlyingClmId),
-      pnl
-    );
   }
 
   throw new Error('Invalid vault/pnl type');

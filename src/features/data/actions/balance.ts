@@ -18,6 +18,7 @@ import { selectAllGovVaultsByChainId, selectAllVisibleVaultIds } from '../select
 import { selectWalletAddress } from '../selectors/wallet';
 import type { TokenEntity } from '../entities/token';
 import {
+  isCowcentratedLikeVault,
   isCowcentratedVault,
   isGovVault,
   type VaultEntity,
@@ -98,11 +99,12 @@ export const fetchBalanceAction = createAsyncThunk<
         if (isGovVault(vault)) {
           govVaults.push(vault);
         } else {
-          if (isCowcentratedVault(vault)) {
+          if (isCowcentratedLikeVault(vault)) {
             Object.values(selectCowcentratedLikeVaultDepositTokens(state, vault.id)).forEach(
               token => tokens.push(token)
             );
-          } else {
+          }
+          if (!isCowcentratedVault(vault)) {
             tokens.push(selectTokenByAddress(state, chain.id, vault.depositTokenAddress));
           }
           tokens.push(selectTokenByAddress(state, chain.id, vault.receiptTokenAddress));

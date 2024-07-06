@@ -35,7 +35,6 @@ import { isFiniteNumber } from '../../../helpers/number';
 import {
   selectAllVaultsWithBridgedVersion,
   selectCowcentratedLikeVaultById,
-  selectCowcentratedVaultById,
   selectVaultByAddressOrUndefined,
   selectVaultById,
   selectVaultByIdOrUndefined,
@@ -234,6 +233,8 @@ function handleCowcentratedTimeline(
 ): Record<VaultEntity['id'], CLMTimelineAnalyticsEntry[]> {
   const vaultTxs = timeline.filter(tx => tx.productKey.startsWith('beefy:vault:'));
 
+  // Timelines returned from the API are stored under the CLM "manager" address,
+  // but included all txs for CLM, CLM Pool and CLM Vaults
   const vaultTxsWithId: CLMTimelineAnalyticsEntryHandleInputWithVaultId[] = sortBy(
     vaultTxs.map(tx => {
       const vault = selectVaultByAddressOrUndefined(state, tx.chain, tx.managerAddress);
@@ -792,18 +793,15 @@ export const fetchClmPendingRewards = createAsyncThunk<
 >('analytics/fetchClmPendingRewards', async ({ vaultId }, { getState }) => {
   const state = getState();
   const vault = selectCowcentratedLikeVaultById(state, vaultId);
-  const clm = isCowcentratedVault(vault)
-    ? vault
-    : selectCowcentratedVaultById(state, vault.cowcentratedId);
-  const { token0, token1 } = selectCowcentratedLikeVaultDepositTokens(state, clm.id);
-  const clmStrategyAddress = selectVaultStrategyAddressOrUndefined(state, clm.id);
-  const chain = selectChainById(state, clm.chainId);
+  const { token0, token1 } = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
+  const clmStrategyAddress = selectVaultStrategyAddressOrUndefined(state, vault.cowcentratedId);
+  const chain = selectChainById(state, vault.chainId);
   const api = await getClmApi();
 
   const { fees0, fees1, totalSupply } = await api.getClmPendingRewards(
     chain,
     clmStrategyAddress,
-    clm.contractAddress
+    getCowcentratedAddressFromCowcentratedLikeVault(vault)
   );
 
   return {
@@ -812,7 +810,7 @@ export const fetchClmPendingRewards = createAsyncThunk<
       fees1: fees1.shiftedBy(-token1.decimals),
       totalSupply: totalSupply.shiftedBy(-18),
     },
-    vaultIds: [clm.id, clm.cowcentratedGovId, clm.cowcentratedStandardId].filter(isDefined),
+    vaultIds: [vault.id, vault.cowcentratedGovId, vault.cowcentratedStandardId].filter(isDefined),
   };
 });
 

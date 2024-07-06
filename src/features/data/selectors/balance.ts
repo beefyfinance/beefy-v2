@@ -827,7 +827,7 @@ export const selectUserTotalYieldUsd = (state: BeefyState, walletAddress: string
   return totalYieldUsd;
 };
 
-export const selectUserRewardsByVaultId = (
+export const selectDashboardUserRewardsByVaultId = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -852,17 +852,19 @@ export const selectUserRewardsByVaultId = (
   if (isGovVault(vault)) {
     const pendingRewards = selectGovVaultPendingRewardsWithPrice(state, vault.id, walletAddress);
     for (const pendingReward of pendingRewards) {
-      const tokenRewardsUsd = pendingReward.amount.times(pendingReward.price || BIG_ZERO);
+      if (pendingReward.amount.isGreaterThan(BIG_ZERO)) {
+        const tokenRewardsUsd = pendingReward.amount.times(pendingReward.price || BIG_ZERO);
 
-      totalRewardsUsd = totalRewardsUsd.plus(tokenRewardsUsd);
-      rewardsTokens.push(pendingReward.token.symbol);
+        totalRewardsUsd = totalRewardsUsd.plus(tokenRewardsUsd);
+        rewardsTokens.push(pendingReward.token.symbol);
 
-      rewards.push({
-        rewardToken: pendingReward.token.symbol,
-        rewardTokenDecimals: pendingReward.token.decimals,
-        rewards: pendingReward.amount,
-        rewardsUsd: tokenRewardsUsd,
-      });
+        rewards.push({
+          rewardToken: pendingReward.token.symbol,
+          rewardTokenDecimals: pendingReward.token.decimals,
+          rewards: pendingReward.amount,
+          rewardsUsd: tokenRewardsUsd,
+        });
+      }
     }
   } else {
     const boosts = selectAllVaultBoostIds(state, vaultId);

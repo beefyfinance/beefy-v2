@@ -12,6 +12,7 @@ import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenEqual, isTokenNative } from '../entities/token';
 import {
+  isCowcentratedLikeVault,
   isCowcentratedVault,
   isGovVault,
   isStandardVault,
@@ -1319,13 +1320,15 @@ function bindTransactionEvents(
 function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
   const tokens: TokenEntity[] = [];
 
-  // deposit tokens
-  // depositTokenAddress for CLM is the pool address not an ERC20 therefore we just updated token0/1
-  if (isCowcentratedVault(vault)) {
+  // token0/1 for CLM-like
+  if (isCowcentratedLikeVault(vault)) {
     vault.depositTokenAddresses.forEach(tokenAddress => {
       tokens.push(selectTokenByAddress(state, vault.chainId, tokenAddress));
     });
-  } else {
+  }
+
+  // depositTokenAddress for CLM is the pool address not an ERC20 therefore we just updated token0/1
+  if (!isCowcentratedVault(vault)) {
     tokens.push(selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress));
   }
 

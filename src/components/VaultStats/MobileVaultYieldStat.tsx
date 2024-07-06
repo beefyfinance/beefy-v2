@@ -1,4 +1,8 @@
-import { isGovVault, type VaultEntity } from '../../features/data/entities/vault';
+import {
+  isCowcentratedGovVault,
+  isGovVault,
+  type VaultEntity,
+} from '../../features/data/entities/vault';
 import { memo } from 'react';
 import {
   formatLargeUsd,
@@ -34,7 +38,10 @@ export const MobileVaultYieldStat = memo<MobileVaultYieldStatProps>(function Mob
     selectDashboardYieldVaultData(state, walletAddress, vault, pnlData)
   );
 
-  if (isGovVault(vault)) {
+  if (
+    isGovVault(vault) &&
+    (!isCowcentratedGovVault(vault) || vault.strategyTypeId !== 'compounds')
+  ) {
     return null;
   }
 

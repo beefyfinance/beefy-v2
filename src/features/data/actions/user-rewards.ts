@@ -189,7 +189,7 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
       const selectorFn = afterClaim
         ? selectShouldLoadMerklRewardsForUserChainAfterClaim
         : selectShouldLoadMerklRewardsForUserChain;
-      return !selectorFn(state, chainId, walletAddress);
+      return selectorFn(state, chainId, walletAddress);
     },
   }
 );
