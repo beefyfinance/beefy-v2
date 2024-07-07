@@ -1,5 +1,28 @@
 [
   {
+    "id": "balancer-arb-usdc-gusdc",
+    "name": "gUSDC-USDC",
+    "type": "standard",
+    "token": "gUSDC-USDC Arb",
+    "tokenAddress": "0xE8a6026365254f779b6927f00f8724EA1B8aE5E0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerArbUSDC-gUSDC",
+    "earnedTokenAddress": "0x93a3c287A826a8307C6b3fE1A79D06cC8966d900",
+    "earnContractAddress": "0x93a3c287A826a8307C6b3fE1A79D06cC8966d900",
+    "oracle": "lps",
+    "oracleId": "balancer-arb-usdc-gusdc",
+    "status": "active",
+    "createdAt": 1720336438,
+    "platformId": "balancer",
+    "assets": ["gUSDC", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xe8a6026365254f779b6927f00f8724ea1b8ae5e0000000000000000000000580/add-liquidity",
+    "removeLiquidityUrl": "https://app.balancer.fi/#/arbitrum/pool/0xe8a6026365254f779b6927f00f8724ea1b8ae5e0000000000000000000000580/withdraw",
+    "network": "arbitrum"
+  },
+  {
     "id": "equilibria-arb-seth-ezeth-26sep24",
     "name": "ETH (ezETHSilo) 26Sep24",
     "token": "ETH (ezETHSilo) 26Sep24",
