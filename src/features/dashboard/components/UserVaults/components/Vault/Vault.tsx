@@ -38,7 +38,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
   }, [setOpen]);
   const mobileView = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
   const CollapseComponent = mobileView ? MobileCollapseContent : DesktopCollapseContent;
-  // TODO we can't just show the same CLM tx list for all of CLM/CLM Pool/CLM Vault
+
   return (
     <div className={classes.vaultRow}>
       <div
@@ -57,12 +57,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
           <VaultDashboardStats vaultId={vaultId} address={address} />
         </div>
       </div>
-      {open ? (
-        <CollapseComponent
-          address={address}
-          vaultId={isCowcentratedLikeVault(vault) ? vault.cowcentratedId : vaultId}
-        />
-      ) : null}
+      {open ? <CollapseComponent address={address} vaultId={vaultId} /> : null}
     </div>
   );
 });

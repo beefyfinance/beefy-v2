@@ -1,6 +1,5 @@
 import {
   isCowcentratedLikeVault,
-  isCowcentratedVault,
   isStandardVault,
   type VaultEntity,
 } from '../../../data/entities/vault';
@@ -23,13 +22,8 @@ export const Explainer = memo<ExplainerProps>(function Explainer({ vaultId }) {
     return <StandardExplainer vaultId={vaultId} />;
   }
 
-  if (isCowcentratedVault(vault)) {
-    return <CowcentratedExplainer vaultId={vaultId} />;
-  }
-
   if (isCowcentratedLikeVault(vault)) {
-    // TODO fix for cowcentrated standard vaults
-    return <CowcentratedExplainer vaultId={vault.cowcentratedId} poolId={vaultId} />;
+    return <CowcentratedExplainer vaultId={vaultId} />;
   }
 
   return <GovExplainer vaultId={vaultId} />;

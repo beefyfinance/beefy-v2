@@ -7,12 +7,15 @@ import { groupBy, keyBy, mapKeys } from 'lodash-es';
 import { BIG_ZERO, fromWeiString } from '../../../helpers/big-number';
 import type { BigNumber } from 'bignumber.js';
 import {
-  selectChainCowcentratedVaultIds,
+  selectChainCowcentratedVaultIdsIncludingHidden,
   selectChainHasCowcentratedVaults,
   selectCowcentratedVaultById,
   selectVaultByAddressOrUndefined,
 } from '../selectors/vaults';
-import { selectIsMerklRewardsForUserChainRecent } from '../selectors/data-loader';
+import {
+  selectShouldLoadMerklRewardsForUserChain,
+  selectShouldLoadMerklRewardsForUserChainAfterClaim,
+} from '../selectors/data-loader';
 import type { Address } from 'viem';
 import { isDefined } from '../utils/array-utils';
 
@@ -38,7 +41,7 @@ export const MERKL_SUPPORTED_CHAINS: Partial<Record<ChainEntity['id'], Address>>
 export type FetchMerklRewardsActionParams = {
   walletAddress: string;
   chainId: ChainEntity['id'];
-  recentSeconds?: number;
+  afterClaim?: boolean;
 };
 
 export type FetchMerklRewardsFulfilledPayload = {
@@ -138,7 +141,7 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
     });
 
     // Merge rewards from CLM in to their CLM Pool and CLM Vault
-    const clmIds = selectChainCowcentratedVaultIds(state, chain.id);
+    const clmIds = selectChainCowcentratedVaultIdsIncludingHidden(state, chain.id);
     if (clmIds) {
       for (const clmId of clmIds) {
         const clmRewards = byVaultId[clmId];
@@ -175,7 +178,7 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
     };
   },
   {
-    condition({ walletAddress, chainId, recentSeconds }, { getState }) {
+    condition({ walletAddress, chainId, afterClaim }, { getState }) {
       if (!MERKL_SUPPORTED_CHAINS[chainId]) {
         return false;
       }
@@ -183,7 +186,10 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
       if (!selectChainHasCowcentratedVaults(state, chainId)) {
         return false;
       }
-      return !selectIsMerklRewardsForUserChainRecent(state, walletAddress, chainId, recentSeconds);
+      const selectorFn = afterClaim
+        ? selectShouldLoadMerklRewardsForUserChainAfterClaim
+        : selectShouldLoadMerklRewardsForUserChain;
+      return selectorFn(state, chainId, walletAddress);
     },
   }
 );

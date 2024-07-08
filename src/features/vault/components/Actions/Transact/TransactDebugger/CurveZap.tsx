@@ -15,7 +15,10 @@ import { getSwapAggregator } from '../../../../../data/apis/instances';
 import { uniqBy } from 'lodash-es';
 import { formatLargeUsd } from '../../../../../../helpers/format';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { selectIsGlobalDataAvailable } from '../../../../../data/selectors/data-loader';
+import {
+  selectIsAddressBookLoaded,
+  selectIsZapLoaded,
+} from '../../../../../data/selectors/data-loader';
 import type { CurveStrategyConfig } from '../../../../../data/apis/transact/strategies/strategy-configs';
 
 const useStyles = makeStyles(styles);
@@ -56,12 +59,7 @@ type ZapProps = {
 const ZapLoader = memo<ZapLoaderProps>(function ZapLoader({ vault, zap }) {
   const store = useAppStore();
   const swapLoaded = useAppSelector(
-    state =>
-      selectIsGlobalDataAvailable(state, 'zapAggregatorTokenSupport') &&
-      selectIsGlobalDataAvailable(state, 'zapAmms') &&
-      selectIsGlobalDataAvailable(state, 'zapConfigs') &&
-      selectIsGlobalDataAvailable(state, 'zapSwapAggregators') &&
-      selectIsGlobalDataAvailable(state, 'addressBook')
+    state => selectIsZapLoaded(state) && selectIsAddressBookLoaded(state, vault.chainId)
   );
   const tokens = useAppSelector(state =>
     uniqBy(

@@ -128,7 +128,6 @@ const DepositFormInputs = memo(function DepositFormInputs() {
         availableLabel={availableLabel}
         selectLabel={t('Transact-SelectToken')}
         showZapIcon={hasOptions}
-        tokenAvailable={<TokenAmount amount={BIG_ZERO} decimals={18} />}
       />
     );
   }
@@ -158,7 +157,7 @@ type DepositFormInputProps = {
   selectLabel: string;
   availableLabel: string;
   showZapIcon: boolean;
-  tokenAvailable: ReactNode;
+  tokenAvailable?: ReactNode;
 };
 
 const DepositFormInput = memo<DepositFormInputProps>(function DepositFormInput({
@@ -178,9 +177,11 @@ const DepositFormInput = memo<DepositFormInputProps>(function DepositFormInput({
           {showZapIcon ? <img src={zapIcon} alt="Zap" height={12} /> : null}
           {selectLabel}
         </div>
-        <div className={classes.availableLabel}>
-          {availableLabel} <span className={classes.availableLabelAmount}>{tokenAvailable}</span>
-        </div>
+        {tokenAvailable ? (
+          <div className={classes.availableLabel}>
+            {availableLabel} <span className={classes.availableLabelAmount}>{tokenAvailable}</span>
+          </div>
+        ) : null}
       </div>
       <div className={classes.amount}>
         <DepositTokenAmountInput token={token} index={index} />

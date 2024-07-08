@@ -63,7 +63,7 @@ export const DesktopCollapseContent = memo<VaultCollapseContentProps>(
           </div>
         ) : null}
         <div className={classes.collapseInner}>
-          <TabletStats vaultId={vaultId} />
+          <TabletStats vaultId={vaultId} address={address} />
           <ErrorBoundary>
             {toggleTab === 'txHistory' ? (
               <VaultTransactions address={address} vaultId={vaultId} />

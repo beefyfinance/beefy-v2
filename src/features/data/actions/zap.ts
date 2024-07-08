@@ -3,7 +3,7 @@ import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi, getConfigApi, getTransactApi } from '../apis/instances';
 import type { AmmConfig, SwapAggregatorConfig, ZapConfig } from '../apis/config-types';
 import { ZERO_ADDRESS } from '../../../helpers/addresses';
-import { selectAllVaultIds, selectVaultById } from '../selectors/vaults';
+import { selectAllVisibleVaultIds, selectVaultById } from '../selectors/vaults';
 import { isFulfilledResult } from '../../../helpers/promises';
 import type { VaultEntity } from '../entities/vault';
 import { featureFlag_kyberSwapSupport, featureFlag_oneInchSupport } from '../utils/feature-flags';
@@ -50,7 +50,7 @@ export const calculateZapAvailabilityAction = createAsyncThunk<
   { state: BeefyState }
 >('zap/calculateZapAvailability', async (_, { getState }) => {
   const state = getState();
-  const allVaults = selectAllVaultIds(state)
+  const allVaults = selectAllVisibleVaultIds(state)
     .map(id => selectVaultById(state, id))
     .filter(v => v.zaps?.length > 0);
   const api = await getTransactApi();

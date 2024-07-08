@@ -52,10 +52,18 @@ export type CLMTimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
   manager_diff: string;
   manager_address: string;
 
-  /** balance of the reward pool receipt token */
-  reward_pool_balance: string | null;
-  reward_pool_diff: string | null;
-  reward_pool_address: string | null;
+  /** total balance/diff of all reward pools */
+  reward_pool_total: {
+    reward_pool_balance: string | null;
+    reward_pool_diff: string | null;
+  } | null;
+
+  /** address/balance/diff for each reward pool */
+  reward_pool_details: Array<{
+    reward_pool_address: string;
+    reward_pool_balance: string;
+    reward_pool_diff: string;
+  }> | null;
 
   actions: CLMTimelineAnalyticsAction[];
 };

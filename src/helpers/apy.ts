@@ -5,23 +5,39 @@ import type {
   TotalApyKey,
   TotalApyYearlyComponent,
 } from '../features/data/reducers/apy';
-import type { VaultEntity } from '../features/data/entities/vault';
+import { isCowcentratedGovVault, type VaultEntity } from '../features/data/entities/vault';
 import { fromKeysMapper } from './object';
 import { ucFirstLetter } from './string';
 import type { ApiApyDataAprComponents } from '../features/data/apis/beefy/beefy-api-types';
+
+const DISPLAY_ORDER = ((i = 0) =>
+  ({
+    vault: i++,
+    clm: i++,
+    rewardPoolTrading: i++,
+    rewardPool: i++,
+    trading: i++,
+    merkl: i++,
+    liquidStaking: i++,
+    composablePool: i++,
+    boost: i++,
+  } satisfies Record<TotalApyComponent, number>))();
 
 /**
  * Components are the individual parts that make up `totalApy` in `TotalApy`
  */
 export const getApyComponents = createFactory(() => {
-  const {
-    allComponents: baseAll,
-    allDaily: baseDaily,
-    allYearly: baseYearly,
-  } = getApiApyDataComponents();
-  const components = [...baseAll, 'boost' as const] as const satisfies TotalApyComponent[];
-  const daily = [...baseDaily, 'boostDaily' as const] as const satisfies TotalApyDailyComponent[];
-  const yearly = [...baseYearly, 'boostApr' as const] as const satisfies TotalApyYearlyComponent[];
+  const { allComponents: baseAll } = getApiApyDataComponents();
+  const components = [
+    ...baseAll,
+    'boost' as const,
+    'rewardPoolTrading' as const,
+  ] as const satisfies TotalApyComponent[];
+
+  components.sort((a, b) => DISPLAY_ORDER[a] - DISPLAY_ORDER[b]);
+
+  const daily = components.map(c => `${c}Daily` as const satisfies TotalApyDailyComponent);
+  const yearly = components.map(c => `${c}Apr` as const satisfies TotalApyYearlyComponent);
 
   return {
     components,
@@ -30,7 +46,7 @@ export const getApyComponents = createFactory(() => {
   } as const;
 });
 
-export type ApyLabelsType = VaultEntity['type'] | 'cowcentrated-gov';
+export type ApyLabelsType = VaultEntity['type'] | 'cowcentrated-compounds';
 
 export type ApyLabels = {
   [K in TotalApyKey | 'breakdown']: string[];
@@ -57,7 +73,7 @@ export const getApyLabelsForType = createCachedFactory(
       ...dailyComponentLabels,
       ...yearlyComponentLabels,
       totalDaily: makeLabels('total', 'Daily'),
-      totalMonthly: makeLabels('totalM', 'Monthly'),
+      totalMonthly: makeLabels('total', 'Monthly'),
       totalApy: makeLabels('total', 'Yearly'),
       boostedTotalDaily: [...makeLabels('boosted', 'Daily'), ...makeLabels('total', 'Daily')],
       boostedTotalApy: [...makeLabels('boosted', 'Yearly'), ...makeLabels('total', 'Yearly')],
@@ -111,3 +127,11 @@ export const getApiApyDataComponents = createFactory(() => {
     nonCompoundableYearly,
   } as const;
 });
+
+export function getApyLabelsTypeForVault(vault: VaultEntity): ApyLabelsType {
+  if (isCowcentratedGovVault(vault) && vault.strategyTypeId === 'compounds') {
+    return 'cowcentrated-compounds';
+  }
+
+  return vault.type;
+}

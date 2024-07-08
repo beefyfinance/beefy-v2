@@ -5,10 +5,10 @@ import type { TokenEntity } from '../entities/token';
 import { isTokenErc20, isTokenNative } from '../entities/token';
 import { selectAllChainIds, selectChainById } from './chains';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { selectIsAddressBookLoaded, selectIsGlobalDataAvailable } from './data-loader';
-import { isGovVault, type VaultEntity } from '../entities/vault';
+import { selectIsAddressBookLoaded, selectIsPricesAvailable } from './data-loader';
+import { isStandardVault, type VaultEntity } from '../entities/vault';
 import { createCachedSelector } from 're-reselect';
-import { selectCowcentratedVaultById, selectGovVaultById, selectVaultById } from './vaults';
+import { selectCowcentratedLikeVaultById, selectGovVaultById, selectVaultById } from './vaults';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import { orderBy } from 'lodash-es';
 import BigNumber from 'bignumber.js';
@@ -99,12 +99,13 @@ export const selectDepositTokenByVaultId = (state: BeefyState, vaultId: VaultEnt
   return selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 };
 
+/** only if vault has receipt token, and that is a share token (uses price per full share) */
 export const selectShareTokenByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
-  if (isGovVault(vault)) {
+  if (!isStandardVault(vault)) {
     return undefined;
   }
-  return selectTokenByAddress(state, vault.chainId, vault.contractAddress);
+  return selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 };
 
 export const selectErc20TokenByAddress = (
@@ -270,7 +271,7 @@ export const selectHasBreakdownDataByOracleId = (
   oracleId: TokenEntity['oracleId'],
   chainId: ChainEntity['id']
 ) => {
-  const isPricesLoaded = selectIsGlobalDataAvailable(state, 'prices');
+  const isPricesLoaded = selectIsPricesAvailable(state);
   const isAddressBookLoaded = selectIsAddressBookLoaded(state, chainId);
   const breakdown = selectLpBreakdownByOracleId(state, oracleId);
 
@@ -447,18 +448,26 @@ export const selectVaultTokenSymbols = createCachedSelector(
   }
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
+export const selectCurrentCowcentratedRangesByOracleId = (
+  state: BeefyState,
+  oracleId: TokenEntity['oracleId']
+) => {
+  return state.entities.tokens.cowcentratedRanges.byOracleId[oracleId] || undefined;
+};
+
 export const selectCurrentCowcentratedRangesByVaultId = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ) => {
-  return state.entities.tokens.cowcentratedRanges.byVaultId[vaultId] || undefined;
+  const depositToken = selectDepositTokenByVaultId(state, vaultId);
+  return selectCurrentCowcentratedRangesByOracleId(state, depositToken.oracleId);
 };
 
-export const selectCowcentratedVaultDepositTokens = (
+export const selectCowcentratedLikeVaultDepositTokens = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ) => {
-  const vault = selectCowcentratedVaultById(state, vaultId);
+  const vault = selectCowcentratedLikeVaultById(state, vaultId);
   const token0 = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddresses[0]);
   const token1 = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddresses[1]);
 
@@ -468,11 +477,11 @@ export const selectCowcentratedVaultDepositTokens = (
   };
 };
 
-export const selectCowcentratedVaultDepositTokensWithPrices = (
+export const selectCowcentratedLikeVaultDepositTokensWithPrices = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ) => {
-  const { token1, token0 } = selectCowcentratedVaultDepositTokens(state, vaultId);
+  const { token1, token0 } = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
   const token0Price = selectTokenPriceByTokenOracleId(state, token0.oracleId);
   const token1Price = selectTokenPriceByTokenOracleId(state, token1.oracleId);
 

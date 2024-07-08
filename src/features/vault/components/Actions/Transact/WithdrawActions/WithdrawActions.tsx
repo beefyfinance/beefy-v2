@@ -267,7 +267,7 @@ const ActionClaim = memo<ActionClaimProps>(function ActionClaim({ vault }) {
   );
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
   const isDisabled = useMemo(() => {
-    return isTxInProgress || !pendingRewards.some(r => r.balance.gt(BIG_ZERO));
+    return isTxInProgress || !pendingRewards.some(r => r.amount.gt(BIG_ZERO));
   }, [pendingRewards, isTxInProgress]);
   const handleClaim = useCallback(() => {
     dispatch(transactStepsClaimGov(vault, t));

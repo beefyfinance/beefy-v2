@@ -10,8 +10,8 @@ import { styles } from './styles';
 import { TechLoader } from '../../components/TechLoader';
 import { useTranslation } from 'react-i18next';
 import {
-  selectIsGlobalAddressBookAvailable,
-  selectIsGlobalDataAvailable,
+  selectIsAddressBookLoadedGlobal,
+  selectIsVaultsAvailable,
 } from '../data/selectors/data-loader';
 
 const useStyles = makeStyles(styles);
@@ -22,8 +22,8 @@ export const Treasury = memo(function Treasury() {
   const dispatch = useAppDispatch();
   const shouldInit = useAppSelector(selectShouldInitTreasury);
   const isLoaded = useAppSelector(selectIsTreasuryLoaded);
-  const isAddressBookLoaded = useAppSelector(selectIsGlobalAddressBookAvailable);
-  const vaultsLoaded = useAppSelector(state => selectIsGlobalDataAvailable(state, 'vaults'));
+  const isAddressBookLoaded = useAppSelector(selectIsAddressBookLoadedGlobal);
+  const vaultsLoaded = useAppSelector(selectIsVaultsAvailable);
 
   useEffect(() => {
     if (shouldInit && isAddressBookLoaded && vaultsLoaded) {

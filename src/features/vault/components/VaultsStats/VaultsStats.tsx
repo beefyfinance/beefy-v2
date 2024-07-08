@@ -2,14 +2,9 @@ import React, { useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import {
-  isCowcentratedGovVault,
-  isGovVault,
-  isGovVaultCowcentrated,
-  type VaultEntity,
-} from '../../../data/entities/vault';
+import { isGovVault, isGovVaultCowcentrated, type VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById, selectVaultLastHarvestByVaultId } from '../../../data/selectors/vaults';
-import { DailyApyStats, YearlyApyStats } from '../../../../components/ApyStats';
+import { ApyStats } from '../../../../components/ApyStats';
 import { ValueBlock } from '../../../../components/ValueBlock/ValueBlock';
 import { VaultTvl } from '../../../../components/VaultTvl/VaultTvl';
 import { VaultDeposited } from '../../../../components/VaultDeposited/VaultDeposited';
@@ -24,13 +19,7 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  // When we have a cowcentrated gov vault, we need to show the last harvest of the underlying cowcentrated vault
-  const lastHarvest = useAppSelector(state =>
-    selectVaultLastHarvestByVaultId(
-      state,
-      isCowcentratedGovVault(vault) ? vault.cowcentratedId : vault.id
-    )
-  );
+  const lastHarvest = useAppSelector(state => selectVaultLastHarvestByVaultId(state, vault.id));
 
   const lastHarvestFormatted = useMemo(() => {
     if (lastHarvest === 0) {
@@ -47,10 +36,10 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
           <VaultTvl vaultId={vaultId} />
         </div>
         <div className={classes.stat}>
-          <YearlyApyStats vaultId={vaultId} />
+          <ApyStats type="yearly" vaultId={vaultId} />
         </div>
         <div className={classes.stat}>
-          <DailyApyStats vaultId={vaultId} />
+          <ApyStats type="daily" vaultId={vaultId} />
         </div>
       </div>
       <div className={clsx(classes.stats, classes.statsDeposit)}>

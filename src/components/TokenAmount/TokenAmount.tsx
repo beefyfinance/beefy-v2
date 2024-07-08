@@ -15,12 +15,14 @@ export type TokenAmountProps = {
   decimals: number;
   className?: string;
   onClick?: () => void;
+  disableTooltip?: boolean;
 };
 export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({
   amount,
   decimals,
   className,
   onClick,
+  disableTooltip,
 }) {
   const classes = useStyles();
   const fullAmount = formatTokenDisplay(amount, decimals);
@@ -28,13 +30,19 @@ export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({
   const needTooltip = shortAmount.length < fullAmount.length;
 
   return needTooltip ? (
-    <Tooltip
-      onTriggerClick={onClick}
-      triggerClass={clsx(classes.withTooltip, className, { [classes.withOnClick]: onClick })}
-      content={<BasicTooltipContent title={fullAmount} />}
-    >
-      {shortAmount}
-    </Tooltip>
+    disableTooltip ? (
+      <span onClick={onClick} className={clsx(className, { [classes.withOnClick]: onClick })}>
+        {shortAmount}
+      </span>
+    ) : (
+      <Tooltip
+        onTriggerClick={onClick}
+        triggerClass={clsx(classes.withTooltip, className, { [classes.withOnClick]: onClick })}
+        content={<BasicTooltipContent title={fullAmount} />}
+      >
+        {shortAmount}
+      </Tooltip>
+    )
   ) : (
     <span onClick={onClick} className={clsx(className, { [classes.withOnClick]: onClick })}>
       {fullAmount}
@@ -42,21 +50,12 @@ export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({
   );
 });
 
-export type TokenAmountFromEntityProps = {
-  amount: BigNumber;
+export type TokenAmountFromEntityProps = Omit<TokenAmountProps, 'decimals'> & {
   token: TokenEntity;
-  className?: string;
-  onClick?: () => void;
 };
+
 export const TokenAmountFromEntity = memo<TokenAmountFromEntityProps>(
-  function TokenAmountFromEntity({ amount, token, className, onClick }) {
-    return (
-      <TokenAmount
-        amount={amount}
-        decimals={token.decimals}
-        className={className}
-        onClick={onClick}
-      />
-    );
+  function TokenAmountFromEntity({ token, ...rest }) {
+    return <TokenAmount decimals={token.decimals} {...rest} />;
   }
 );

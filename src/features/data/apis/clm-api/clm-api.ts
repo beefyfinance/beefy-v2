@@ -1,18 +1,16 @@
 import type { AxiosInstance } from 'axios';
 import axios from 'axios';
 import type {
-  ClmVaultHarvestsResponse,
   ClmPendingRewardsResponse,
-  IClmApi,
+  ClmVaultHarvestsResponse,
   ClmVaultsHarvestsResponse,
+  IClmApi,
 } from './clm-api-types';
 import type { VaultEntity } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
-import { selectChainById } from '../../selectors/chains';
 import type { Abi } from 'viem';
 import { getWeb3Instance } from '../instances';
 import { makeBatchRequest, viemToWeb3Abi, type Web3Call } from '../../../../helpers/web3';
-import type { BeefyState } from '../../../../redux-types';
 import BigNumber from 'bignumber.js';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
 import { getUnixTime, roundToNearestMinutes } from 'date-fns';
@@ -92,12 +90,10 @@ export class ClmApi implements IClmApi {
   }
 
   public async getClmPendingRewards(
-    state: BeefyState,
-    chainId: ChainEntity['id'],
+    chain: ChainEntity,
     stratAddress: string,
     vaultAddress: VaultEntity['contractAddress']
   ): Promise<ClmPendingRewardsResponse> {
-    const chain = selectChainById(state, chainId);
     const web3 = await getWeb3Instance(chain);
 
     const strat = new web3.eth.Contract(viemToWeb3Abi(ClmStrategyAbi), stratAddress);

@@ -3,7 +3,7 @@ import { type AnyAction, createListenerMiddleware } from '@reduxjs/toolkit';
 import {
   selectIsAddressBookLoaded,
   selectIsConfigAvailable,
-  selectIsPriceAvailable,
+  selectIsPricesAvailable,
   selectIsZapLoaded,
   selectShouldInitZapAggregatorTokenSupport,
   selectShouldInitZapAmms,
@@ -46,7 +46,7 @@ transactListener.startListening({
         return false;
       }
 
-      if (!selectIsPriceAvailable(state)) {
+      if (!selectIsPricesAvailable(state)) {
         return false;
       }
 

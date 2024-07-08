@@ -1,15 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi } from '../apis/instances';
-import { isGovVault, type VaultEntity } from '../entities/vault';
+import {
+  isCowcentratedGovVault,
+  isCowcentratedVault,
+  isGovVault,
+  type VaultEntity,
+} from '../entities/vault';
 import type { TotalApy } from '../reducers/apy';
-import { selectAllVaultIds, selectVaultById } from '../selectors/vaults';
+import { selectAllVaultIdsIncludingHidden, selectVaultById } from '../selectors/vaults';
 import { selectActiveVaultBoostIds } from '../selectors/boosts';
 import { first } from 'lodash-es';
 import { compoundInterest, yearlyToDaily } from '../../../helpers/number';
 import { isDefined } from '../utils/array-utils';
 import { getApiApyDataComponents } from '../../../helpers/apy';
 import type { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api-types';
+import { selectVaultActiveGovRewards } from '../selectors/rewards';
 
 export interface FetchAllApyFulfilledPayload {
   data: BeefyAPIApyBreakdownResponse;
@@ -44,7 +50,7 @@ export const recalculateTotalApyAction = createAsyncThunk<
   { state: BeefyState }
 >('apy/recalculateTotalApy', async (_, { getState }) => {
   const state = getState();
-  const vaultIds = selectAllVaultIds(state);
+  const vaultIds = selectAllVaultIdsIncludingHidden(state); // Hidden: OK
   const totals: Record<VaultEntity['id'], TotalApy> = {};
   const { allComponents, allDaily, compoundableDaily, nonCompoundableDaily } =
     getApiApyDataComponents();
@@ -103,10 +109,66 @@ export const recalculateTotalApyAction = createAsyncThunk<
     if (activeBoostId) {
       const boostApr = state.biz.apy.rawApy.byBoostId[activeBoostId]?.apr || 0;
       if (boostApr) {
+        const boostDaily = boostApr / 365;
         total.boostApr = boostApr;
-        total.boostDaily = boostApr / 365;
-        total.boostedTotalApy = total.boostApr ? total.totalApy + total.boostApr : 0;
-        total.boostedTotalDaily = total.boostDaily ? total.totalDaily + total.boostDaily : 0;
+        total.boostDaily = boostDaily;
+        total.boostedTotalApy = total.totalApy + total.boostApr;
+        total.boostedTotalDaily = total.totalDaily + boostDaily;
+      }
+    }
+
+    // Mark CLM/CLM Pools as boosted if they have extra pool or merkle rewards
+    if (isCowcentratedVault(vault) || isCowcentratedGovVault(vault)) {
+      // for 'pool' type (e.g. velodrome) we need to separate that part from fees vs additional rewards
+      if (vault.strategyTypeId === 'pool') {
+        const poolRewards = selectVaultActiveGovRewards(state, vaultId);
+        if (poolRewards && poolRewards.length > 0) {
+          const { rewardPoolApr, rewardPoolTradingApr } = poolRewards.reduce(
+            (acc, r) => {
+              // assumption, reward at index 0 is the base trading fee reward
+              if (r.index === 0) {
+                acc.rewardPoolTradingApr += r.apr;
+              } else {
+                acc.rewardPoolApr += r.apr;
+              }
+              return acc;
+            },
+            { rewardPoolApr: 0, rewardPoolTradingApr: 0 }
+          );
+
+          const existingRewardPoolApr = total.rewardPoolApr || 0;
+          const existingRewardPoolDaily = total.rewardPoolDaily || 0;
+          const rewardPoolDaily = rewardPoolApr / 365;
+          const rewardPoolTradingDaily = rewardPoolTradingApr / 365;
+
+          total.rewardPoolApr = rewardPoolApr;
+          total.rewardPoolDaily = rewardPoolDaily;
+          total.rewardPoolTradingApr = rewardPoolTradingApr;
+          total.rewardPoolTradingDaily = rewardPoolTradingDaily;
+          total.totalApy =
+            total.totalApy - existingRewardPoolApr + rewardPoolApr + rewardPoolTradingApr;
+          total.totalDaily =
+            total.totalDaily - existingRewardPoolDaily + rewardPoolDaily + rewardPoolTradingDaily;
+          if (total.boostedTotalApy !== undefined) {
+            total.boostedTotalApy =
+              total.boostedTotalApy - existingRewardPoolApr + rewardPoolApr + rewardPoolTradingApr;
+          }
+          if (total.boostedTotalDaily !== undefined) {
+            total.boostedTotalDaily =
+              total.boostedTotalDaily -
+              existingRewardPoolDaily +
+              rewardPoolDaily +
+              rewardPoolTradingDaily;
+          }
+        }
+      }
+
+      const additionalApr = total.rewardPoolApr || 0;
+      if (additionalApr > 0) {
+        total.boostedTotalApy = total.boostedTotalApy ?? total.totalApy;
+        total.boostedTotalDaily = total.boostedTotalDaily ?? total.totalDaily;
+        total.totalApy -= additionalApr;
+        total.totalDaily -= additionalApr / 365;
       }
     }
 

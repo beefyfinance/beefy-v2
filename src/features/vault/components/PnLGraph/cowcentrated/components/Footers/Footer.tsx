@@ -6,7 +6,7 @@ import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { useAppSelector } from '../../../../../../../store';
-import { selectCowcentratedVaultDepositTokens } from '../../../../../../data/selectors/tokens';
+import { selectCowcentratedLikeVaultDepositTokens } from '../../../../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
@@ -61,7 +61,7 @@ export const FeesFooter = memo<FooterProps>(function Footer({
 }) {
   const classes = useStyles();
   const { token0, token1 } = useAppSelector(state =>
-    selectCowcentratedVaultDepositTokens(state, vaultId)
+    selectCowcentratedLikeVaultDepositTokens(state, vaultId)
   );
 
   return (

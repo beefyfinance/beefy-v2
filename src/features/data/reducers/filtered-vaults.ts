@@ -192,11 +192,13 @@ export const bigNumberTransform = createTransform(
   { whitelist: ['minimumUnderlyingTvl'] }
 );
 
-export const chanIdsTransform = createTransform(
+export const chainIdsTransform = createTransform(
   (chanIds: FilteredVaultsState['chainIds']) => chanIds,
   (chainIdsFromLocalStorage: FilteredVaultsState['chainIds']) => {
     // TODO fix so we use real list of eol chains
-    return chainIdsFromLocalStorage.filter(chainId => !['heco', 'harmony'].includes(chainId));
+    return chainIdsFromLocalStorage.filter(
+      chainId => !['heco', 'harmony', 'moonriver', 'aurora', 'emerald', 'celo'].includes(chainId)
+    );
   },
   { whitelist: ['chainIds'] }
 );

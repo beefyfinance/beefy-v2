@@ -12,6 +12,7 @@ import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenEqual, isTokenNative } from '../entities/token';
 import {
+  isCowcentratedLikeVault,
   isCowcentratedVault,
   isGovVault,
   isStandardVault,
@@ -41,10 +42,9 @@ import {
   selectChainWrappedNativeToken,
   selectErc20TokenByAddress,
   selectGovVaultEarnedTokens,
-  selectIsTokenLoaded,
   selectTokenByAddress,
   selectTokenByAddressOrUndefined,
-  selectTokenById,
+  selectTokenByIdOrUndefined,
 } from '../selectors/tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
@@ -198,7 +198,7 @@ function txMined(
             fetchUserMerklRewardsAction({
               walletAddress,
               chainId,
-              recentSeconds: 60,
+              afterClaim: true,
             })
           ),
         60 * 1000
@@ -638,14 +638,13 @@ const claimGovVault = (vault: VaultGov) => {
     }
 
     const pendingRewards = selectGovVaultPendingRewards(state, vault.id, address).filter(r =>
-      r.balance.gt(BIG_ZERO)
+      r.amount.gt(BIG_ZERO)
     );
     if (!pendingRewards.length) {
       throw new Error(`No rewards to claim`);
     }
 
-    const amount = pendingRewards[0].balance;
-    const token = pendingRewards[0].token;
+    const { amount, token } = pendingRewards[0];
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
@@ -1174,6 +1173,7 @@ const zapExecuteOrder = (
         spenderAddress: zap.manager,
         tokens: selectZapTokensToRefresh(state, vault, order),
         clearInput: true,
+        ...(isGovVault(vault) ? { govVaultId: vault.id } : {}),
       }
     );
   });
@@ -1320,28 +1320,35 @@ function bindTransactionEvents(
 function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
   const tokens: TokenEntity[] = [];
 
-  // refresh vault tokens
-  if (isStandardVault(vault)) {
-    for (const assetId of vault.assetIds) {
-      // selectTokenById throws if token does not exist;
-      // tokens in assetIds[] might not exist if vault does not have ZAP
-      if (selectIsTokenLoaded(state, vault.chainId, assetId)) {
-        tokens.push(selectTokenById(state, vault.chainId, assetId));
-      }
-    }
-  } else if (isCowcentratedVault(vault)) {
+  // token0/1 for CLM-like
+  if (isCowcentratedLikeVault(vault)) {
     vault.depositTokenAddresses.forEach(tokenAddress => {
       tokens.push(selectTokenByAddress(state, vault.chainId, tokenAddress));
     });
-  } else if (isGovVault(vault)) {
-    selectGovVaultEarnedTokens(state, vault.chainId, vault.id).forEach(token => tokens.push(token));
   }
 
-  // clm deposit tokens aren't erc20 and don't share balanceOf
+  // depositTokenAddress for CLM is the pool address not an ERC20 therefore we just updated token0/1
   if (!isCowcentratedVault(vault)) {
     tokens.push(selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress));
   }
-  tokens.push(selectTokenByAddress(state, vault.chainId, vault.contractAddress));
+
+  // receipt token
+  // gov v1 vaults do not have a receipt token
+  if ('receiptTokenAddress' in vault) {
+    tokens.push(selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress));
+  }
+
+  // related tokens
+  if (isStandardVault(vault)) {
+    // assets from LP that may have been split
+    vault.assetIds
+      .map(assetId => selectTokenByIdOrUndefined(state, vault.chainId, assetId))
+      .filter(isDefined)
+      .forEach(token => tokens.push(token));
+  } else if (isGovVault(vault)) {
+    // any earned token user may have claimed
+    selectGovVaultEarnedTokens(state, vault.chainId, vault.id).forEach(token => tokens.push(token));
+  }
 
   // and native token because we spent gas
   tokens.push(selectChainNativeToken(state, vault.chainId));

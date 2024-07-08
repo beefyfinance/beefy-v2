@@ -35,7 +35,7 @@ import { ZapSlippage } from '../ZapSlippage';
 import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
-import { isCowcentratedVault } from '../../../../../data/entities/vault';
+import { isCowcentratedLikeVault } from '../../../../../data/entities/vault';
 import {
   QuoteCowcentratedNoSingleSideError,
   QuoteCowcentratedNotCalmError,
@@ -103,7 +103,7 @@ const QuoteIdle = memo<TransactQuoteProps>(function QuoteIdle({ title, className
     <div className={clsx(classes.container, classes.disabled, className)}>
       <QuoteTitleRefresh title={title} enableRefresh={true} />
       <div className={classes.tokenAmounts}>
-        {isCowcentratedVault(vault) ? (
+        {isCowcentratedLikeVault(vault) ? (
           <div className={classes.amountReturned}>
             {vault.depositTokenAddresses.map(tokenAddress => {
               return (

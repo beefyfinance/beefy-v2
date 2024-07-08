@@ -5,7 +5,6 @@ import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenHoldingEntity, TreasuryHoldingEntity } from '../entities/treasury';
 import { isTokenHoldingEntity, isVaultHoldingEntity } from '../entities/treasury';
-import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectLpBreakdownBalance } from './balance';
 import { selectChainById } from './chains';
 import {
@@ -18,13 +17,15 @@ import {
 import { selectIsVaultStable, selectVaultPricePerFullShare } from './vaults';
 import { explorerAddressUrl } from '../../../helpers/url';
 import { entries, keys } from '../../../helpers/object';
-import { selectIsGlobalDataAvailable } from './data-loader';
+import {
+  createGlobalDataSelector,
+  hasLoaderFulfilledOnce,
+  shouldLoaderLoadOnce,
+} from './data-loader-helpers';
 
-export const selectIsTreasuryLoaded = (state: BeefyState) =>
-  selectIsGlobalDataAvailable(state, 'treasury');
+export const selectIsTreasuryLoaded = createGlobalDataSelector('treasury', hasLoaderFulfilledOnce);
 
-export const selectShouldInitTreasury = (state: BeefyState) =>
-  isInitialLoader(state.ui.dataLoader.global.treasury);
+export const selectShouldInitTreasury = createGlobalDataSelector('treasury', shouldLoaderLoadOnce);
 
 export const selectTreasury = (state: BeefyState) => {
   return state.ui.treasury.byChainId;

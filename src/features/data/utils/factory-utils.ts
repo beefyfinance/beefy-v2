@@ -12,17 +12,19 @@ export function createFactory<P, R>(factoryFn: FactoryFn<P, R>): FactoryFn<P, R>
   };
 }
 
-export function createCachedFactory<P, R>(
-  factoryFn: FactoryFn<P, R>,
-  keyFn: (...args: P[]) => string = (...args: P[]) => JSON.stringify(args)
-): FactoryFn<P, R> {
-  const cache: { [index: string]: R } = {};
-  return (...args: P[]): R => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function createCachedFactory<FN extends (...args: any[]) => any>(
+  factoryFn: FN,
+  keyFn: (...args: Parameters<FN>) => string = (...args) => JSON.stringify(args)
+) {
+  const cache: { [index: string]: ReturnType<FN> } = {};
+  return (...args: Parameters<FN>) => {
     const index = keyFn(...args);
-    if (cache[index] === undefined) {
-      cache[index] = factoryFn(...args);
+    let value = cache[index];
+    if (value === undefined) {
+      value = cache[index] = factoryFn(...args);
     }
-    return cache[index]!;
+    return value;
   };
 }
 

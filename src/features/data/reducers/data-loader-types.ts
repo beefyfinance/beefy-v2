@@ -46,22 +46,6 @@ export type LoaderState =
   | LoaderStateRejected
   | LoaderStateFulfilled;
 
-export function isFulfilled(state: LoaderState | undefined): state is LoaderStateFulfilled {
-  return !!state && state.status === 'fulfilled';
-}
-
-export function isPending(state: LoaderState | undefined): state is LoaderStatePending {
-  return !!state && state.status === 'pending';
-}
-
-export function isInitialLoader(state: LoaderState | undefined): state is LoaderStateIdle {
-  return !state || state.status === 'idle';
-}
-
-export function isRejected(state: LoaderState | undefined): state is LoaderStateRejected {
-  return !!state && state.status === 'rejected';
-}
-
 export interface DataLoaderState {
   instances: {
     wallet: boolean;

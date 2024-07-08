@@ -10,18 +10,17 @@ import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { BIG_ZERO } from '../../helpers/big-number';
 import { TvlShareTooltip } from '../VaultStats/VaultTvlStat';
 import type BigNumber from 'bignumber.js';
-import {
-  selectIsChainDataAvailable,
-  selectIsGlobalDataAvailable,
-} from '../../features/data/selectors/data-loader';
 import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types';
+import {
+  selectIsContractDataLoadedOnChain,
+  selectIsPricesAvailable,
+} from '../../features/data/selectors/data-loader';
 
 const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
   const label = 'VaultStat-TVL';
   const vault = selectVaultById(state, vaultId);
   const isLoaded =
-    selectIsChainDataAvailable(state, vault.chainId, 'contractData') &&
-    selectIsGlobalDataAvailable(state, 'prices');
+    selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
 
   if (!isLoaded) {
     return {
@@ -82,13 +81,7 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
         blurred={false}
         loading={loading}
         usdValue={subValue}
-        tooltip={
-          breakdown
-            ? {
-                content: <TvlShareTooltip breakdown={breakdown} />,
-              }
-            : undefined
-        }
+        tooltip={breakdown ? <TvlShareTooltip breakdown={breakdown} /> : undefined}
       />
     );
   }

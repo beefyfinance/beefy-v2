@@ -11,7 +11,6 @@ import { initBoostForm } from '../../../../../data/actions/scenarios';
 import { startStepper } from '../../../../../data/actions/stepper';
 import { walletActions } from '../../../../../data/actions/wallet-actions';
 import type { BoostEntity } from '../../../../../data/entities/boost';
-import { isFulfilled } from '../../../../../data/reducers/data-loader-types';
 import { boostActions } from '../../../../../data/reducers/wallet/boost';
 import { stepperActions } from '../../../../../data/reducers/wallet/stepper';
 import {
@@ -28,6 +27,7 @@ import { selectIsApprovalNeededForBoostStaking } from '../../../../../data/selec
 import { styles } from './styles';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
+import { isLoaderFulfilled } from '../../../../../data/selectors/data-loader-helpers';
 
 const useStyles = makeStyles(styles);
 
@@ -67,7 +67,7 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
   const formReady = useAppSelector(
     state =>
       selectIsAddressBookLoaded(state, boost.chainId) &&
-      isFulfilled(state.ui.dataLoader.global.boostForm)
+      isLoaderFulfilled(state.ui.dataLoader.global.boostForm)
   );
   const walletAddress = useAppSelector(state =>
     selectIsWalletKnown(state) ? selectWalletAddress(state) : undefined

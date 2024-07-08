@@ -46,17 +46,31 @@ export const selectIsVaultPreStakedOrBoosted = createCachedSelector(
   (activeBoostIds, prestakeBoostIds) => activeBoostIds.length + prestakeBoostIds.length > 0
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectVaultCurrentBoostIdWithStatus = createCachedSelector(
+export const selectVaultCurrentBoostId = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
   (activeBoostIds, prestakeBoostIds) => {
+    if (activeBoostIds.length > 0) {
+      return activeBoostIds[0];
+    }
+    if (prestakeBoostIds.length > 0) {
+      return prestakeBoostIds[0];
+    }
+    return undefined;
+  }
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectVaultCurrentBoostIdWithStatus = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
+  (activeBoostIds, prestakeBoostIds): { id: string; status: 'active' | 'prestake' } | undefined => {
     if (activeBoostIds.length > 0) {
       return { id: activeBoostIds[0], status: 'active' };
     }
     if (prestakeBoostIds.length > 0) {
       return { id: prestakeBoostIds[0], status: 'prestake' };
     }
-    return null;
+    return undefined;
   }
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 

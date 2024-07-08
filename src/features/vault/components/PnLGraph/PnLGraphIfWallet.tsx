@@ -1,7 +1,6 @@
 import { memo } from 'react';
 import {
   isCowcentratedLikeVault,
-  isCowcentratedVault,
   isStandardVault,
   type VaultEntity,
 } from '../../../data/entities/vault';
@@ -40,12 +39,8 @@ export const PnLGraph = memo<PnLGraphProps>(function PnLGraph({ vaultId, walletA
     return <StandardPnLGraphLoader vaultId={vaultId} address={walletAddress} />;
   }
 
-  if (isCowcentratedVault(vault)) {
-    return <CowcentratedPnlGraphLoader vaultId={vaultId} address={walletAddress} />;
-  }
-
   if (isCowcentratedLikeVault(vault)) {
-    return <CowcentratedPnlGraphLoader vaultId={vault.cowcentratedId} address={walletAddress} />;
+    return <CowcentratedPnlGraphLoader vaultId={vaultId} address={walletAddress} />;
   }
 
   return null;

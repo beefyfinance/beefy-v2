@@ -204,12 +204,13 @@ function getOrCreateChainState(sliceState: Draft<DataLoaderState>, chainId: stri
 }
 
 function getOrCreateAddressState(sliceState: Draft<DataLoaderState>, address: string) {
-  let addressState = sliceState.byAddress[address];
+  const addressKey = address.toLowerCase();
+  let addressState = sliceState.byAddress[addressKey];
   if (!addressState) {
     addressState = cloneDeep(dataLoaderStateInitByAddress);
     sliceState.byAddress = {
       ...sliceState.byAddress,
-      [address]: addressState,
+      [addressKey]: addressState,
     };
   }
 
@@ -221,13 +222,14 @@ function getOrCreateAddressChainState(
   chainId: string,
   address: string
 ) {
-  const addressState = getOrCreateAddressState(sliceState, address);
+  const addressKey = address.toLowerCase();
+  const addressState = getOrCreateAddressState(sliceState, addressKey);
 
   let chainState: ChainIdDataByAddressByChainEntity | undefined = addressState.byChainId[chainId];
   if (!chainState) {
     chainState = cloneDeep(dataLoaderStateInitByAddressByChainId);
-    sliceState.byAddress[address].byChainId = {
-      ...sliceState.byAddress[address].byChainId,
+    sliceState.byAddress[addressKey].byChainId = {
+      ...sliceState.byAddress[addressKey].byChainId,
       [chainId]: chainState,
     };
   }

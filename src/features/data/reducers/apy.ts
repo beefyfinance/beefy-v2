@@ -45,6 +45,8 @@ export interface TotalApy {
   merklDaily?: number;
   rewardPoolApr?: number;
   rewardPoolDaily?: number;
+  rewardPoolTradingApr?: number;
+  rewardPoolTradingDaily?: number;
 }
 
 type ExtractAprComponents<T extends string> = T extends `${infer C}Apr` ? C : never;

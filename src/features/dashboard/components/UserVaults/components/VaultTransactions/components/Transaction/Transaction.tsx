@@ -24,7 +24,7 @@ import { useAppSelector } from '../../../../../../../../store';
 import { getNetworkSrc } from '../../../../../../../../helpers/networkSrc';
 import { VaultNetwork } from '../../../../../../../../components/VaultIdentity';
 import {
-  selectCowcentratedVaultDepositTokens,
+  selectCowcentratedLikeVaultDepositTokens,
   selectDepositTokenByVaultId,
 } from '../../../../../../../data/selectors/tokens';
 import { TokenImage } from '../../../../../../../../components/TokenImage/TokenImage';
@@ -70,7 +70,7 @@ const CowcentratedAmountStat = memo<TransactionStatProps<CLMTimelineAnalyticsEnt
     const classes = useStyles();
     const { underlying0Diff, underlying1Diff, shareDiff, actions, managerDiff } = tx;
     const { token0, token1 } = useAppSelector(state =>
-      selectCowcentratedVaultDepositTokens(state, tx.vaultId)
+      selectCowcentratedLikeVaultDepositTokens(state, tx.vaultId)
     );
     const action = useMemo(() => {
       if (shareDiff.isZero() && actions.length === 2) {
@@ -177,7 +177,7 @@ const CowcentratedBalanceStat = memo<TransactionStatProps<CLMTimelineAnalyticsEn
     const classes = useStyles();
     const { underlying0Balance, underlying1Balance } = tx;
     const { token0, token1 } = useAppSelector(state =>
-      selectCowcentratedVaultDepositTokens(state, tx.vaultId)
+      selectCowcentratedLikeVaultDepositTokens(state, tx.vaultId)
     );
 
     return (

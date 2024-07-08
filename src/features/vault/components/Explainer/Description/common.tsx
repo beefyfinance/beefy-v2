@@ -1,8 +1,8 @@
 import {
-  isCowcentratedVault,
+  isCowcentratedLikeVault,
   isGovVault,
   isStandardVault,
-  type VaultCowcentrated,
+  type VaultCowcentratedLike,
   type VaultEntity,
   type VaultGov,
   type VaultStandard,
@@ -73,7 +73,6 @@ export function useCommonHelper(vaultId: VaultEntity['id']): CommonHelper {
         t,
         i18nKey: [
           `StrategyDescription-${vault.type}-${vault.strategyTypeId}`,
-          `StrategyDescription-${vault.strategyTypeId}`,
           `StrategyDescription-${vault.type}-default`,
           'StrategyDescription-default',
         ],
@@ -84,10 +83,10 @@ export function useCommonHelper(vaultId: VaultEntity['id']): CommonHelper {
   }, [assetSymbols, chain, depositToken, depositTokenProvider, platform, t, vault]);
 }
 
-export function isCowcentratedCommonHelper(
+export function isCowcentratedLikeCommonHelper(
   helper: CommonHelper
-): helper is CommonHelper<VaultCowcentrated> {
-  return isCowcentratedVault(helper.vault);
+): helper is CommonHelper<VaultCowcentratedLike> {
+  return isCowcentratedLikeVault(helper.vault);
 }
 
 export function isGovCommonHelper(helper: CommonHelper): helper is CommonHelper<VaultGov> {
