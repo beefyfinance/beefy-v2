@@ -734,7 +734,7 @@ export const recalculateClmHarvestsForUserVaultId = createAsyncThunk<
     let timelineIdx = 0;
     for (const harvest of harvestsAfterDeposit) {
       let currentDeposit = timeline.current[timelineIdx];
-      if (
+      while (
         timelineIdx < lastTimelineIdx &&
         isAfter(harvest.timestamp, timeline.current[timelineIdx + 1].datetime)
       ) {
