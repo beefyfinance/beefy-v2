@@ -17,6 +17,7 @@ import { isFulfilledStatus, isRejectedStatus } from '../data/reducers/wallet/res
 import { useTranslation } from 'react-i18next';
 import { useResolveDomain } from '../data/hooks/resolver';
 import { DashboardMeta } from '../../components/Meta/DashboardMeta';
+import { UnstakedClmBannerDashboard } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
 
 const useStyles = makeStyles(styles);
 
@@ -112,6 +113,7 @@ const DashboardForAddress = memo<DashboardForAddressProps>(function DashboardFor
   return (
     <DashboardContainer>
       <DashboardMeta wallet={addressLabel || address} />
+      <UnstakedClmBannerDashboard address={address} />
       <DepositSummary address={address} addressLabel={addressLabel} />
       {loading ? (
         <TechLoader />

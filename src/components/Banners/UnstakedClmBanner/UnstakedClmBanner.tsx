@@ -12,6 +12,14 @@ import type { VaultEntity } from '../../../features/data/entities/vault';
 import { ButtonLink, InternalLink } from '../Links/Links';
 import { filteredVaultsActions } from '../../../features/data/reducers/filtered-vaults';
 import { selectDepositTokenByVaultId } from '../../../features/data/selectors/tokens';
+import { Container, makeStyles } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
+
+const useStyles = makeStyles((theme: Theme) => ({
+  clmUnstakedBannerContainer: {
+    backgroundColor: theme.palette.background.footerHeader,
+  },
+}));
 
 export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
   const dispatch = useAppDispatch();
@@ -95,6 +103,59 @@ export const UnstakedClmBannerVault = memo<UnstakedClmBannerVaultProps>(
         }
         onClose={closeBanner}
       />
+    );
+  }
+);
+
+interface UnstakedClmBannerDashboardProps {
+  address: string;
+}
+
+export const UnstakedClmBannerDashboard = memo<UnstakedClmBannerDashboardProps>(
+  function UnstakedClmBannerDashboard({ address }) {
+    const classes = useStyles();
+    const { t } = useTranslation();
+    const unstakedIds = useAppSelector(state =>
+      selectUserUnstakedCowcentratedGovVaultIds(state, address)
+    );
+    const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideUnstakedClmBanner', false);
+    const closeBanner = useCallback(() => {
+      setHideBanner(true);
+    }, [setHideBanner]);
+
+    if (hideBanner || !unstakedIds.length) {
+      return null;
+    }
+
+    if (unstakedIds.length === 1) {
+      return (
+        <div className={classes.clmUnstakedBannerContainer}>
+          <Container maxWidth="lg">
+            <UnstakedClmBannerVault vaultId={unstakedIds[0]} />
+          </Container>
+        </div>
+      );
+    }
+
+    return (
+      <div className={classes.clmUnstakedBannerContainer}>
+        <Container maxWidth="lg">
+          <Banner
+            icon={<img src={clmIcon} alt="" />}
+            text={
+              <Trans
+                t={t}
+                i18nKey={`Banner-UnstakedClm`}
+                values={{ count: unstakedIds.length }}
+                components={{
+                  Link: <span />,
+                }}
+              />
+            }
+            onClose={closeBanner}
+          />
+        </Container>
+      </div>
     );
   }
 );
