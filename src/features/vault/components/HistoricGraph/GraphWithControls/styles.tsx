@@ -28,7 +28,7 @@ export const styles = (theme: Theme) => ({
     gap: '24px',
   },
   legendItem: {
-    ...theme.typography['subline-lg'],
+    ...theme.typography['subline-sm'],
     color: theme.palette.text.dark,
     display: 'flex',
     alignItems: 'center',
