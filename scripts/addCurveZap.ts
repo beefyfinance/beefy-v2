@@ -15,9 +15,9 @@ import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import { mkdir } from 'node:fs/promises';
 import * as path from 'node:path';
 import { isNonEmptyArray, NonEmptyArray, sleep } from './common/utils';
-import type { CurveStrategyOptions } from '../src/features/data/apis/transact/strategies/IStrategy';
 import type { CurveMethodTypes } from '../src/features/data/apis/transact/strategies/curve/types';
 import { getAddress } from 'viem';
+import { ZapStrategyConfig } from '../src/features/data/apis/transact/strategies/strategy-configs';
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const EEEE_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
@@ -1061,19 +1061,17 @@ export async function discoverCurveZap(args: RunArgs) {
 
   const methods = await poolToMethods(pool);
   if (methods.length) {
-    const zap: CurveStrategyOptions = {
+    return {
       strategyId: 'curve',
       poolAddress: pool.address,
       methods,
     };
-
-    return zap;
   } else {
     throw new Error(`No zap methods found for pool`);
   }
 }
 
-async function saveZap(chainId: string, vaultId: string, zap: CurveStrategyOptions) {
+async function saveZap(chainId: string, vaultId: string, zap: any) {
   const path = `./src/config/vault/${addressBookToAppId(chainId)}.json`;
   const vaults = await loadJson<VaultConfig[]>(path);
   let found = false;
