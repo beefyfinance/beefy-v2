@@ -46,7 +46,7 @@ import type { UserLpBreakdownBalance, UserLpBreakdownBalanceAsset } from './bala
 import { isUserClmPnl, type UserVaultPnl } from './analytics-types';
 import { selectPlatformById } from './platforms';
 import type { TokenAmount } from '../apis/transact/transact-types';
-import { selectVaultTotalApy } from './apy';
+import { selectGovVaultHasPoolApr } from './apy';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (walletAddress) {
@@ -230,6 +230,26 @@ export const selectUserVaultBalanceInShareTokenInUnderlyingCLM = (
   return selectUserBalanceOfToken(state, vault.chainId, vault.depositTokenAddress, walletAddress);
 };
 
+/**
+ * Only includes bare CLM in wallet if vault is CLM Pool, converted to deposit token
+ */
+export const selectUserVaultBalanceInDepositTokenInUnderlyingCLM: UserBalanceSelector =
+  createCachedSelector(
+    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+      selectUserVaultBalanceInShareTokenInUnderlyingCLM(state, vaultId, maybeWalletAddress),
+    (state: BeefyState, vaultId: VaultEntity['id']) =>
+      selectVaultSharesToDepositTokenData(state, vaultId),
+    (shares, shareData) =>
+      shareData.shareToken
+        ? mooAmountToOracleAmount(
+            shareData.shareToken,
+            shareData.depositToken,
+            shareData.ppfs,
+            shares
+          )
+        : shares
+  )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
+
 const selectVaultSharesToDepositTokenData = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id']) =>
@@ -296,7 +316,7 @@ export const selectUserVaultBalanceInShareTokenIncludingBoostsBridged: UserBalan
   )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
- * Total not earning (via boost or reward pool)
+ * Total not earning (via active boost or active reward pool for CLM)
  */
 export const selectUserVaultNotEarningBalanceInShareToken: UserBalanceSelector =
   createCachedSelector(
@@ -312,15 +332,14 @@ export const selectUserVaultNotEarningBalanceInShareToken: UserBalanceSelector =
       selectUserVaultBalanceInShareTokenInCurrentBoost(state, vaultId, maybeWalletAddress),
     (state: BeefyState, vaultId: VaultEntity['id']) =>
       selectIsVaultPreStakedOrBoosted(state, vaultId),
-    (state: BeefyState, vaultId: VaultEntity['id']) =>
-      selectVaultTotalApy(state, vaultId)?.boostedTotalDaily !== undefined,
-    (inVault, inBoosts, inBridge, inUnderlyingCLM, inCurrentBoost, isBoosted, isClmBoosted) => {
+    (state: BeefyState, vaultId: VaultEntity['id']) => selectGovVaultHasPoolApr(state, vaultId),
+    (inVault, inBoosts, inBridge, inUnderlyingCLM, inCurrentBoost, isBoosted, govHasPoolApr) => {
       if (isBoosted) {
         return inVault.plus(inBoosts).plus(inBridge).plus(inUnderlyingCLM).minus(inCurrentBoost);
       }
 
-      if (isClmBoosted) {
-        // isClmBoosted will be true for any boosted vault, but inUnderlyingCLM will only be > 0 for CLM Pools
+      if (govHasPoolApr) {
+        // govHasPoolApr will be true for any gov vault, but inUnderlyingCLM will only be > 0 for CLM Pools
         return inUnderlyingCLM;
       }
 
