@@ -23,18 +23,8 @@ export class AnalyticsApi {
 
   public async getWalletTimeline(address: string): Promise<AnalyticsUserTimelineResponse> {
     try {
-      const [prodRes, testRes] = await Promise.all([
-        this.api.get<{ result: AnalyticsUserTimelineResponse }>('/api/v1/timeline', {
-          params: { address },
-        }),
-        this.api.get<AnalyticsUserTimelineResponse['clmTimeline']>(
-          `https://clm-api-dev-580f3e014014.herokuapp.com/api/v1/investor/${address}/timeline` // TODO remove once live
-        ),
-      ]);
-      return {
-        ...prodRes.data.result,
-        clmTimeline: testRes.data,
-      };
+      const res = await this.api.get('/api/v1/timeline', { params: { address } });
+      return res.data.result;
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response?.status === 404) {
