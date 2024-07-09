@@ -51,7 +51,7 @@ export const MerklRewards = memo<MerklRewardsProps>(function MerklRewards({
   );
 
   if (!isNonEmptyArray(vaultRewards)) {
-    return null;
+    return <RewardsLoader walletAddress={walletAddress} />;
   }
 
   return (
@@ -67,7 +67,7 @@ export const MerklRewards = memo<MerklRewardsProps>(function MerklRewards({
           <RewardList rewards={vaultRewards} deposited={deposited} />
         </Source>
       )}
-      {walletAddress ? <RefreshRewards walletAddress={walletAddress} /> : null}
+      <RewardsLoader walletAddress={walletAddress} />
     </>
   );
 });
@@ -204,22 +204,22 @@ const OtherRewards = memo<OtherRewardsProps>(function OtherRewards({
   );
 });
 
-type RefreshRewardsProps = {
-  walletAddress: string;
+type RewardsLoaderProps = {
+  walletAddress?: string;
 };
 
-const RefreshRewards = memo<RefreshRewardsProps>(function RefreshRewards({ walletAddress }) {
+const RewardsLoader = memo<RewardsLoaderProps>(function RewardsLoader({ walletAddress }) {
   const dispatch = useAppDispatch();
   const shouldFetch = useAppSelector(state =>
-    selectShouldLoadMerklRewardsForUser(state, walletAddress)
+    walletAddress ? selectShouldLoadMerklRewardsForUser(state, walletAddress) : false
   );
   const shouldWait = useAppSelector(selectHasMerklRewardsDispatchedRecentlyForAnyUser);
 
   useEffect(() => {
-    if (!shouldWait && shouldFetch) {
+    if (walletAddress && !shouldWait && shouldFetch) {
       dispatch(fetchUserMerklRewardsAction({ walletAddress }));
     }
-  }, [dispatch, shouldFetch, shouldWait, walletAddress]);
+  }, [dispatch, shouldFetch, shouldWait, walletAddress, walletAddress]);
 
   return null;
 });
