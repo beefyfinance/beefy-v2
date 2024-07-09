@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity } from '../entities/vault';
-import { isGovVault } from '../entities/vault';
+import { isCowcentratedGovVault, isGovVault } from '../entities/vault';
 import { selectUserDepositedVaultIds } from './balance';
 import {
   selectBoostById,
@@ -138,6 +138,7 @@ export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, se
     // In gov earned token
     if (
       isGovVault(vault) &&
+      !isCowcentratedGovVault(vault) &&
       vault.earnedTokenAddresses
         .map(address => selectTokenByAddress(state, vault.chainId, address))
         .some(earnedToken => earnedToken.id.match(token))
