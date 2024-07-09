@@ -2,22 +2,19 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getMerklRewardsApi } from '../apis/instances';
 import type { ChainEntity } from '../entities/chain';
-import { selectChainById } from '../selectors/chains';
-import { groupBy, keyBy, mapKeys } from 'lodash-es';
-import { BIG_ZERO, fromWeiString } from '../../../helpers/big-number';
-import type { BigNumber } from 'bignumber.js';
-import {
-  selectChainCowcentratedVaultIdsIncludingHidden,
-  selectChainHasCowcentratedVaults,
-  selectCowcentratedVaultById,
-  selectVaultByAddressOrUndefined,
-} from '../selectors/vaults';
-import {
-  selectShouldLoadMerklRewardsForUserChain,
-  selectShouldLoadMerklRewardsForUserChainAfterClaim,
-} from '../selectors/data-loader';
-import type { Address } from 'viem';
+import { selectAllChainIds, selectChainByNetworkChainId } from '../selectors/chains';
+import { selectVaultByAddressOrUndefined } from '../selectors/vaults';
+import { selectShouldLoadMerklRewardsForUser } from '../selectors/data-loader';
+import { type Address, getAddress } from 'viem';
+import { isCowcentratedLikeVault, isCowcentratedVault, type VaultEntity } from '../entities/vault';
 import { isDefined } from '../utils/array-utils';
+import { fromWeiString } from '../../../helpers/big-number';
+import { pushOrSet } from '../../../helpers/object';
+import type { MerklTokenReward, MerklVaultReward } from '../reducers/wallet/user-rewards-types';
+import type {
+  FetchUserMerklRewardsActionParams,
+  FetchUserMerklRewardsFulfilledPayload,
+} from './user-rewards-types';
 
 // ChainId -> Merkl Distributor contract address
 // https://app.merkl.xyz/status
@@ -38,158 +35,172 @@ export const MERKL_SUPPORTED_CHAINS: Partial<Record<ChainEntity['id'], Address>>
   moonbeam: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
 };
 
-export type FetchMerklRewardsActionParams = {
-  walletAddress: string;
-  chainId: ChainEntity['id'];
-  afterClaim?: boolean;
-};
+function parseReasonId(
+  reasonId: string
+): { type: VaultEntity['type']; address: string } | undefined {
+  const parts = reasonId.trim().split('_');
+  if (parts.length !== 2) {
+    return undefined;
+  }
 
-export type FetchMerklRewardsFulfilledPayload = {
-  walletAddress: string;
-  chainId: ChainEntity['id'];
-  byTokenAddress: Record<
-    string,
-    {
-      address: string;
-      decimals: number;
-      symbol: string;
-      accumulated: BigNumber;
-      unclaimed: BigNumber;
-      reasons: {
-        id: string;
-        accumulated: BigNumber;
-        unclaimed: BigNumber;
-      }[];
-      proof: string[];
-    }
-  >;
-  byVaultId: Record<
-    string,
-    {
-      address: string;
-      symbol: string;
-      decimals: number;
-      accumulated: BigNumber;
-      unclaimed: BigNumber;
-    }[]
-  >;
-};
+  const [type, address] = parts;
+
+  switch (type) {
+    case 'Beefy':
+      return { type: 'cowcentrated', address: getAddress(address) };
+    case 'BeefyStaker':
+      return { type: 'gov', address: getAddress(address) };
+    default:
+      return undefined;
+  }
+}
+
+/**
+ * @dev Modifies `existing` in place
+ */
+function addVaultRewardToExisting(existing: MerklVaultReward, next: MerklVaultReward) {
+  if (
+    existing.token.address !== next.token.address ||
+    existing.token.chainId !== next.token.chainId
+  ) {
+    throw new Error('Cannot merge rewards for different tokens');
+  }
+
+  existing.campaignIds = Array.from(new Set([...existing.campaignIds, ...next.campaignIds]));
+  existing.accumulated = existing.accumulated.plus(next.accumulated);
+  existing.unclaimed = existing.unclaimed.plus(next.unclaimed);
+}
 
 export const fetchUserMerklRewardsAction = createAsyncThunk<
-  FetchMerklRewardsFulfilledPayload,
-  FetchMerklRewardsActionParams,
+  FetchUserMerklRewardsFulfilledPayload,
+  FetchUserMerklRewardsActionParams,
   { state: BeefyState }
 >(
   'rewards/fetchUserMerklRewardsAction',
-  async ({ walletAddress, chainId }, { getState }) => {
+  async ({ walletAddress }, { getState }) => {
     const state = getState();
-    const chain = selectChainById(state, chainId);
     const api = await getMerklRewardsApi();
 
-    const userRewards = await api.fetchUserRewards({
+    const rewards = await api.fetchRewards({
       user: walletAddress,
-      chainId: chain.networkChainId,
     });
 
-    const rewardsPerToken = Object.entries(userRewards)
-      .map(([tokenAddress, tokenData]) => ({
-        ...tokenData,
-        address: tokenAddress.toLowerCase(),
-        unclaimed: fromWeiString(tokenData.unclaimed, tokenData.decimals),
-        accumulated: fromWeiString(tokenData.accumulated, tokenData.decimals),
-        reasons: Object.entries(tokenData.reasons)
-          .map(([reason, reasonData]) => ({
-            ...reasonData,
-            id: reason,
-            unclaimed: fromWeiString(reasonData.unclaimed, tokenData.decimals),
-            accumulated: fromWeiString(reasonData.accumulated, tokenData.decimals),
-          }))
-          .filter(r => r.unclaimed.gt(BIG_ZERO)),
-      }))
-      .filter(r => r.unclaimed.gt(BIG_ZERO) && r.symbol !== 'aglaMerkl');
+    const allChainIds = selectAllChainIds(state);
+    const byVaultId: Record<string, MerklVaultReward[]> = {};
+    const byChainId: Record<string, MerklTokenReward[]> = {};
+    const addRewardToVault = (vaultId: string, reward: MerklVaultReward) => {
+      const existingReward = byVaultId[vaultId]?.find(
+        r => r.token.address === reward.token.address && r.token.chainId === reward.token.chainId
+      );
+      if (existingReward) {
+        addVaultRewardToExisting(existingReward, reward);
+      } else {
+        pushOrSet(byVaultId, vaultId, reward);
+      }
+    };
 
-    const byTokenAddress = keyBy(rewardsPerToken, r => r.address);
-
-    const byVaultAddress = groupBy(
-      rewardsPerToken.flatMap(reward =>
-        reward.reasons
-          .filter(
-            reason =>
-              (reason.id.startsWith('Beefy_') || reason.id.startsWith('BeefyStaker_')) &&
-              reason.unclaimed.gt(BIG_ZERO)
-          )
-          .map(reason => ({
-            vaultAddress: reason.id.split('_')[1].toLowerCase(),
-            ...reason,
-            address: reward.address,
-            symbol: reward.symbol,
-            decimals: reward.decimals,
-          }))
-      ),
-      r => r.vaultAddress
-    );
-
-    // by vault address -> by vault id
-    const byVaultId = mapKeys(byVaultAddress, (rewards, vaultAddress) => {
-      const vault = selectVaultByAddressOrUndefined(state, chainId, vaultAddress);
-      if (vault) {
-        return vault.id;
+    for (const [networkChainId, chainData] of Object.entries(rewards)) {
+      const claimChain = selectChainByNetworkChainId(state, parseInt(networkChainId));
+      if (!claimChain) {
+        continue;
       }
 
-      console.error(`Vault not found for merkl rewards on ${chainId}: ${vaultAddress}`);
-      return `${chainId}:${vaultAddress}`;
-    });
+      const { tokenData, campaignData } = chainData;
 
-    // Merge rewards from CLM in to their CLM Pool and CLM Vault
-    const clmIds = selectChainCowcentratedVaultIdsIncludingHidden(state, chain.id);
-    if (clmIds) {
-      for (const clmId of clmIds) {
-        const clmRewards = byVaultId[clmId];
-        if (!clmRewards) {
+      for (const [campaignId, reasons] of Object.entries(campaignData)) {
+        for (const [reasonId, reasonData] of Object.entries(reasons)) {
+          // Skip if nothing to claim or reward is the test token
+          if (reasonData.unclaimed === '0' || reasonData.symbol === 'aglaMerkl') {
+            continue;
+          }
+
+          const reason = parseReasonId(reasonId);
+          // Skip rewards for other platforms
+          if (!reason) {
+            continue;
+          }
+
+          const vaults = allChainIds
+            .map(chainId => selectVaultByAddressOrUndefined(state, chainId, reason.address))
+            .filter(isDefined)
+            .filter(isCowcentratedLikeVault)
+            .filter(
+              v =>
+                v.type === reason.type &&
+                reasonData.mainParameter.toLowerCase() === v.poolAddress.toLowerCase()
+            );
+
+          if (vaults.length === 0) {
+            console.warn(
+              `Vault ${reason.address} with type ${reason.type} not found on any chain.`
+            );
+            continue;
+          } else if (vaults.length > 1) {
+            console.warn(
+              `Multiple vaults found for ${reason.address} with type ${reason.type}:`,
+              vaults.map(v => v.id)
+            );
+          }
+
+          // Only one vault should match
+          const vault = vaults[0];
+
+          const reward: MerklVaultReward = {
+            campaignIds: [campaignId],
+            token: {
+              decimals: reasonData.decimals,
+              symbol: reasonData.symbol,
+              address: getAddress(reasonData.token),
+              chainId: claimChain.id,
+            },
+            accumulated: fromWeiString(reasonData.accumulated, reasonData.decimals),
+            unclaimed: fromWeiString(reasonData.unclaimed, reasonData.decimals),
+          };
+
+          // Add reward to the vault
+          addRewardToVault(vault.id, reward);
+
+          // For rewards on CLM, merge them into the CLM Pool and CLM Vault since the CLM page is inaccessible
+          if (isCowcentratedVault(vault)) {
+            [vault.cowcentratedGovId, vault.cowcentratedStandardId]
+              .filter(isDefined)
+              .forEach(otherVaultId => addRewardToVault(otherVaultId, reward));
+          }
+        }
+      }
+
+      for (const [tokenAddress, token] of Object.entries(tokenData)) {
+        // Skip if nothing to claim or reward is the test token
+        if (token.unclaimed === '0' || token.symbol === 'aglaMerkl') {
           continue;
         }
 
-        const vault = selectCowcentratedVaultById(state, clmId);
-        const mergeInto = [vault.cowcentratedGovId, vault.cowcentratedStandardId].filter(isDefined);
-        for (const mergeId of mergeInto) {
-          const existingRewards = byVaultId[mergeId];
-          if (existingRewards) {
-            for (const clmReward of clmRewards) {
-              const existingReward = existingRewards.find(e => e.address === clmReward.address);
-              if (existingReward) {
-                existingReward.accumulated = existingReward.accumulated.plus(clmReward.accumulated);
-                existingReward.unclaimed = existingReward.unclaimed.plus(clmReward.unclaimed);
-              } else {
-                existingRewards.push(clmReward);
-              }
-            }
-          } else {
-            byVaultId[mergeId] = clmRewards;
-          }
-        }
+        pushOrSet(byChainId, claimChain.id, {
+          token: {
+            address: getAddress(tokenAddress),
+            symbol: token.symbol,
+            decimals: token.decimals,
+            chainId: claimChain.id,
+          },
+          accumulated: fromWeiString(token.accumulated, token.decimals),
+          unclaimed: fromWeiString(token.unclaimed, token.decimals),
+          proof: token.proof,
+        });
       }
     }
 
     return {
       walletAddress,
-      chainId,
-      byTokenAddress,
+      byChainId,
       byVaultId,
     };
   },
   {
-    condition({ walletAddress, chainId, afterClaim }, { getState }) {
-      if (!MERKL_SUPPORTED_CHAINS[chainId]) {
-        return false;
+    condition({ walletAddress, force }, { getState }) {
+      if (force) {
+        return true;
       }
-      const state = getState();
-      if (!selectChainHasCowcentratedVaults(state, chainId)) {
-        return false;
-      }
-      const selectorFn = afterClaim
-        ? selectShouldLoadMerklRewardsForUserChainAfterClaim
-        : selectShouldLoadMerklRewardsForUserChain;
-      return selectorFn(state, chainId, walletAddress);
+      return selectShouldLoadMerklRewardsForUser(getState(), walletAddress);
     },
   }
 );

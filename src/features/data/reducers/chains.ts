@@ -11,6 +11,7 @@ import type { Draft } from 'immer';
 export type ChainsState = NormalizedEntity<ChainEntity> & {
   activeIds: ChainEntity['id'][];
   eolIds: ChainEntity['id'][];
+  chainIdByNetworkChainId: Record<ChainEntity['networkChainId'], ChainEntity['id']>;
 };
 
 export const initialChainsState: ChainsState = {
@@ -18,6 +19,7 @@ export const initialChainsState: ChainsState = {
   allIds: [],
   activeIds: [],
   eolIds: [],
+  chainIdByNetworkChainId: {},
 };
 
 export const chainsSlice = createSlice({
@@ -55,6 +57,7 @@ export const chainsSlice = createSlice({
         };
 
         sliceState.byId[chain.id] = chain;
+        sliceState.chainIdByNetworkChainId[chain.networkChainId] = chain.id;
         sliceState.allIds.push(chain.id);
         sliceState[chain.eol && timestampNow > chain.eol ? 'eolIds' : 'activeIds'].push(chain.id);
       }

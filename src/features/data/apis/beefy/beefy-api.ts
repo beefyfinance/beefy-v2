@@ -15,7 +15,6 @@ import type {
   BeefySnapshotActiveResponse,
   ZapAggregatorTokenSupportResponse,
 } from './beefy-api-types';
-import type { ChainEntity } from '../../entities/chain';
 
 export const API_URL = import.meta.env.VITE_API_URL || 'https://api.beefy.finance';
 export const API_ZAP_URL = import.meta.env.VITE_API_ZAP_URL || `${API_URL}/zap`;
@@ -167,16 +166,10 @@ export class BeefyAPI {
   }
 
   async getCowcentratedMerklCampaigns(): Promise<BeefyApiMerklCampaign[]> {
-    const res = await this.api.get<BeefyApiMerklCampaign<string>[]>(
-      '/cow-merkl-campaigns/all/recent',
-      {
-        params: { _: this.getCacheBuster('short') },
-      }
-    );
-    return res.data.map(campaign => ({
-      ...campaign,
-      chainId: campaign.chainId === 'one' ? 'harmony' : (campaign.chainId as ChainEntity['id']),
-    }));
+    const res = await this.api.get<BeefyApiMerklCampaign[]>('/cow-merkl-campaigns/all/recent', {
+      params: { _: this.getCacheBuster('short') },
+    });
+    return res.data;
   }
 
   /**

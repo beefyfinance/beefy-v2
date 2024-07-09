@@ -1,22 +1,30 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
-import { keyBy } from 'lodash-es';
+import { groupBy, keyBy } from 'lodash-es';
 import { type VaultEntity } from '../../../../../../data/entities/vault';
 import {
   selectUserMerklUnifiedRewardsForChain,
   selectUserMerklUnifiedRewardsForVault,
   type UnifiedReward,
 } from '../../../../../../data/selectors/user-rewards';
-import { useAppSelector } from '../../../../../../../store';
-import type { ChainEntity } from '../../../../../../data/entities/chain';
+import { useAppDispatch, useAppSelector } from '../../../../../../../store';
+import type { ChainEntity, ChainId } from '../../../../../../data/entities/chain';
 import { formatUsd } from '../../../../../../../helpers/format';
 import { BIG_ZERO } from '../../../../../../../helpers/big-number';
 import { Claim } from './Claim/Claim';
 import { styles } from './styles';
 import { RewardList } from '../RewardList/RewardList';
 import { Source } from '../Source/Source';
+import { isNonEmptyArray, type NonEmptyArray } from '../../../../../../data/utils/array-utils';
+import { selectChainById } from '../../../../../../data/selectors/chains';
+import { strictEntries } from '../../../../../../../helpers/object';
+import {
+  selectHasMerklRewardsDispatchedRecentlyForAnyUser,
+  selectShouldLoadMerklRewardsForUser,
+} from '../../../../../../data/selectors/data-loader';
+import { fetchUserMerklRewardsAction } from '../../../../../../data/actions/user-rewards';
 
 const useStyles = makeStyles(styles);
 
@@ -37,24 +45,96 @@ export const MerklRewards = memo<MerklRewardsProps>(function MerklRewards({
   const vaultRewards = useAppSelector(state =>
     selectUserMerklUnifiedRewardsForVault(state, vaultId, walletAddress)
   );
-  const claimableVaultRewards = useMemo(
-    () => !!vaultRewards && vaultRewards.some(r => r.balance.gt(BIG_ZERO)),
-    [vaultRewards]
+  const hasClaimable = useMemo(
+    () => !!walletAddress && !!vaultRewards && vaultRewards.some(r => r.amount.gt(BIG_ZERO)),
+    [vaultRewards, walletAddress]
   );
 
-  if (!vaultRewards || vaultRewards.length === 0) {
+  if (!isNonEmptyArray(vaultRewards)) {
     return null;
   }
 
   return (
+    <>
+      {hasClaimable && walletAddress ? (
+        <ClaimableRewards
+          vaultRewards={vaultRewards}
+          walletAddress={walletAddress}
+          deposited={deposited}
+        />
+      ) : (
+        <Source key={chainId} title={t('Transact-Claim-Rewards-merkl')}>
+          <RewardList rewards={vaultRewards} deposited={deposited} />
+        </Source>
+      )}
+      {walletAddress ? <RefreshRewards walletAddress={walletAddress} /> : null}
+    </>
+  );
+});
+
+type ClaimableRewardsProps = {
+  vaultRewards: NonEmptyArray<UnifiedReward>;
+  walletAddress: string;
+  deposited: boolean;
+};
+
+const ClaimableRewards = memo<ClaimableRewardsProps>(function ClaimableRewards({
+  vaultRewards,
+  walletAddress,
+  deposited,
+}) {
+  const byChain = useMemo(
+    () =>
+      groupBy(vaultRewards, r => r.token.chainId) as Partial<
+        Record<ChainId, NonEmptyArray<UnifiedReward>>
+      >,
+    [vaultRewards]
+  );
+  const hasMultipleChains = useMemo(() => Object.keys(byChain).length > 1, [byChain]);
+
+  return strictEntries(byChain).map(([chainId, rewards]) => (
+    <ClaimableChainRewards
+      key={chainId}
+      chainId={chainId}
+      vaultRewards={rewards!}
+      deposited={deposited}
+      walletAddress={walletAddress}
+      withChain={hasMultipleChains}
+    />
+  ));
+});
+
+type ClaimableChainRewardsProps = {
+  chainId: ChainId;
+  vaultRewards: NonEmptyArray<UnifiedReward>;
+  walletAddress: string;
+  deposited: boolean;
+  withChain?: boolean;
+};
+
+const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function ClaimableChainRewards({
+  chainId,
+  vaultRewards,
+  walletAddress,
+  deposited,
+  withChain,
+}) {
+  const { t } = useTranslation();
+  const chain = useAppSelector(state => selectChainById(state, chainId));
+  const hasClaimable = useMemo(() => vaultRewards.some(r => r.amount.gt(BIG_ZERO)), [vaultRewards]);
+
+  return (
     <Source
-      title={t('Transact-Claim-Rewards-merkl')}
-      claim={claimableVaultRewards ? <Claim chainId={chainId} /> : undefined}
+      key={chainId}
+      title={t(withChain ? 'Transact-Claim-Rewards-merkl-chain' : 'Transact-Claim-Rewards-merkl', {
+        chain: chain.name,
+      })}
+      claim={hasClaimable ? <Claim chainId={chainId} withChain={withChain} /> : undefined}
     >
       <RewardList rewards={vaultRewards} deposited={deposited} />
-      {walletAddress && claimableVaultRewards ? (
+      {hasClaimable ? (
         <OtherRewards chainId={chainId} vaultRewards={vaultRewards} walletAddress={walletAddress} />
-      ) : null}
+      ) : undefined}
     </Source>
   );
 });
@@ -81,21 +161,21 @@ const OtherRewards = memo<OtherRewardsProps>(function OtherRewards({
       return undefined;
     }
     if (!vaultRewards) {
-      return chainRewards.filter(reward => reward.balance.gt(BIG_ZERO));
+      return chainRewards;
     }
 
     const vaultRewardsByToken = keyBy(vaultRewards, r => r.token.address);
     return chainRewards
       .map(reward => ({
         ...reward,
-        balance: reward.balance.minus(vaultRewardsByToken[reward.token.address]?.balance || 0),
+        amount: reward.amount.minus(vaultRewardsByToken[reward.token.address]?.amount || 0),
       }))
-      .filter(reward => reward.balance.gt(BIG_ZERO));
+      .filter(reward => reward.amount.gt(BIG_ZERO));
   }, [vaultRewards, chainRewards]);
   const otherRewardsUsd = useMemo(() => {
     return otherRewards
       ? otherRewards.reduce((sum, reward) => {
-          return sum.plus(reward.price ? reward.price.multipliedBy(reward.balance) : BIG_ZERO);
+          return sum.plus(reward.price ? reward.price.multipliedBy(reward.amount) : BIG_ZERO);
         }, BIG_ZERO)
       : BIG_ZERO;
   }, [otherRewards]);
@@ -122,4 +202,24 @@ const OtherRewards = memo<OtherRewardsProps>(function OtherRewards({
       ) : null}
     </div>
   );
+});
+
+type RefreshRewardsProps = {
+  walletAddress: string;
+};
+
+const RefreshRewards = memo<RefreshRewardsProps>(function RefreshRewards({ walletAddress }) {
+  const dispatch = useAppDispatch();
+  const shouldFetch = useAppSelector(state =>
+    selectShouldLoadMerklRewardsForUser(state, walletAddress)
+  );
+  const shouldWait = useAppSelector(selectHasMerklRewardsDispatchedRecentlyForAnyUser);
+
+  useEffect(() => {
+    if (!shouldWait && shouldFetch) {
+      dispatch(fetchUserMerklRewardsAction({ walletAddress }));
+    }
+  }, [dispatch, shouldFetch, shouldWait, walletAddress]);
+
+  return null;
 });

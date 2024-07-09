@@ -1,25 +1,36 @@
-export type MerklUserRewardsRequest = {
+export type MerklRewardsRequest = {
   user: string;
-  chainId: number;
-  proof?: boolean;
 };
 
-export type MerklUserRewardsResponse = {
-  [tokenAddress: string]: {
-    accumulated: string;
-    decimals: number;
-    symbol: string;
-    unclaimed: string;
-    reasons: {
-      [reason: string]: {
+export type MerklRewardsResponse = {
+  [chainId: string]: {
+    campaignData: {
+      [campaignId: string]: {
+        [reasonId: string]: {
+          accumulated: string;
+          auxiliaryData1: string;
+          auxiliaryData2: string;
+          decimals: number;
+          mainParameter: string;
+          type: number;
+          symbol: string;
+          token: string;
+          unclaimed: string;
+        };
+      };
+    };
+    tokenData: {
+      [tokenAddress: string]: {
         accumulated: string;
+        decimals: number;
+        proof: string[];
+        symbol: string;
         unclaimed: string;
       };
     };
-    proof: string[];
   };
 };
 
 export interface IMerklRewardsApi {
-  fetchUserRewards(request: MerklUserRewardsRequest): Promise<MerklUserRewardsResponse>;
+  fetchRewards(request: MerklRewardsRequest): Promise<MerklRewardsResponse>;
 }

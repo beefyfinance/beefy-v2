@@ -7,6 +7,7 @@ import { walletActions } from '../../../../../../../data/actions/wallet-actions'
 import { startStepperWithSteps } from '../../../../../../../data/actions/stepper';
 import type { VaultGov } from '../../../../../../../data/entities/vault';
 import { selectGovVaultById } from '../../../../../../../data/selectors/vaults';
+import { selectIsStepperStepping } from '../../../../../../../data/selectors/stepper';
 
 type ClaimProps = {
   vaultId: VaultGov['id'];
@@ -16,6 +17,7 @@ export const Claim = memo<ClaimProps>(function Claim({ vaultId }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const vault = useAppSelector(state => selectGovVaultById(state, vaultId));
+  const isStepping = useAppSelector(selectIsStepperStepping);
 
   const handleClaim = useCallback(() => {
     dispatch(
@@ -35,8 +37,8 @@ export const Claim = memo<ClaimProps>(function Claim({ vaultId }) {
 
   return (
     <ActionConnectSwitch chainId={vault.chainId}>
-      <Button fullWidth={true} variant="success" onClick={handleClaim}>
-        {t('Rewards-Claim')}
+      <Button fullWidth={true} variant="success" onClick={handleClaim} disabled={isStepping}>
+        {t('Rewards-Claim-gov')}
       </Button>
     </ActionConnectSwitch>
   );

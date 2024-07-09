@@ -26,7 +26,7 @@ export const GovRewards = memo<GovRewardsProps>(function GovRewards({
     selectUserGovVaultUnifiedRewards(state, vaultId, walletAddress)
   );
   const canClaim = useMemo(
-    () => !!vaultRewards && vaultRewards.some(r => r.balance.gt(BIG_ZERO)),
+    () => !!vaultRewards && vaultRewards.some(r => r.amount.gt(BIG_ZERO)),
     [vaultRewards]
   );
 
