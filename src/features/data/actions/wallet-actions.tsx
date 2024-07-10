@@ -46,9 +46,8 @@ import {
   selectTokenByAddressOrUndefined,
   selectTokenByIdOrUndefined,
 } from '../selectors/tokens';
-import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
+import { selectVaultById } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
-import { oracleAmountToMooAmount } from '../utils/ppfs';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
 import { getGasPriceOptions } from '../utils/gas-utils';
 import type { AbiItem } from 'web3-utils';
@@ -592,15 +591,7 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    const mooToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
-    const ppfs = selectVaultPricePerFullShare(state, vault.chainId);
-
-    // amount is in oracle token, we need it in moo token
-    const mooAmount = oracleAmountToMooAmount(mooToken, depositToken, ppfs, amount);
-
-    const rawAmount = mooAmount
-      .shiftedBy(mooToken.decimals)
-      .decimalPlaces(0, BigNumber.ROUND_FLOOR);
+    const rawAmount = toWei(amount, depositToken.decimals);
 
     const contractAddr = vault.contractAddress;
     const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
