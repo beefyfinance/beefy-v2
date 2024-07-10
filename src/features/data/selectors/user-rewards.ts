@@ -179,6 +179,6 @@ export const selectUserGovVaultUnifiedRewards = createSelector(
       }
     }
 
-    return rewards;
+    return rewards.filter(r => r.amount.gt(BIG_ZERO) || (r.active && r.apr));
   }
 );

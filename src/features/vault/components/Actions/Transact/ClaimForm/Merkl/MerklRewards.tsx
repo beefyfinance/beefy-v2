@@ -219,7 +219,7 @@ const RewardsLoader = memo<RewardsLoaderProps>(function RewardsLoader({ walletAd
     if (walletAddress && !shouldWait && shouldFetch) {
       dispatch(fetchUserMerklRewardsAction({ walletAddress }));
     }
-  }, [dispatch, shouldFetch, shouldWait, walletAddress, walletAddress]);
+  }, [dispatch, shouldFetch, shouldWait, walletAddress]);
 
   return null;
 });
