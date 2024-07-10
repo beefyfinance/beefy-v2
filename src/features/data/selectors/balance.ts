@@ -654,7 +654,8 @@ export const selectUserVaultDepositTokenWalletBalanceInUsd = (
 export const selectGovVaultPendingRewards = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
     walletAddress
-      ? state.user.balance.byAddress[walletAddress]?.tokenAmount.byGovVaultId[vaultId]?.rewards
+      ? state.user.balance.byAddress[walletAddress.toLowerCase()]?.tokenAmount.byGovVaultId[vaultId]
+          ?.rewards
       : undefined,
   (state: BeefyState, _vaultId: VaultEntity['id'], _walletAddress?: string) =>
     state.entities.tokens.byChainId,

@@ -22,7 +22,7 @@ export const selectUserBalanceToMigrateByVaultId = createSelector(
     if (!walletAddress) return { balance: BIG_ZERO, initialized: false };
 
     return (
-      migrationState.byUserAddress[walletAddress]?.byVaultId[vaultId]?.byMigrationId[
+      migrationState.byUserAddress[walletAddress.toLowerCase()]?.byVaultId[vaultId]?.byMigrationId[
         migrationId
       ] || { balance: BIG_ZERO, initialized: false }
     );
