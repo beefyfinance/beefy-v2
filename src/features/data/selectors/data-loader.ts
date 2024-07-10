@@ -10,6 +10,7 @@ import {
   createAddressDataSelector,
   createChainDataSelector,
   createGlobalDataSelector,
+  createHasLoaderDispatchedRecentlyEvaluator,
   createShouldLoaderLoadRecentEvaluator,
   type GlobalDataSelectorFn,
   hasLoaderFulfilledOnce,
@@ -195,14 +196,19 @@ export const selectDashboardShouldLoadBalanceForChainUser = createAddressChainDa
   shouldLoaderLoadRecent
 );
 
-export const selectShouldLoadMerklRewardsForUserChain = createAddressChainDataSelector(
+export const selectShouldLoadMerklRewardsForUser = createAddressDataSelector(
   'merklRewards',
   createShouldLoaderLoadRecentEvaluator(30 * 60)
 );
 
-export const selectShouldLoadMerklRewardsForUserChainAfterClaim = createAddressChainDataSelector(
+export const selectHasMerklRewardsDispatchedRecentlyForAnyUser = createGlobalDataSelector(
   'merklRewards',
-  createShouldLoaderLoadRecentEvaluator(60)
+  createHasLoaderDispatchedRecentlyEvaluator(15)
+);
+
+export const selectFetchMerklRewardsLastDispatched = createGlobalDataSelector(
+  'merklRewards',
+  loader => loader?.lastDispatched || 0
 );
 
 export const selectShouldLoadAllCurrentCowcentratedRanges = createGlobalDataSelector(

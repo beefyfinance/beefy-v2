@@ -1,5 +1,5 @@
 import type { VaultEntity } from '../../entities/vault';
-import type { ChainEntity } from '../../entities/chain';
+import type { ChainEntity, ChainId } from '../../entities/chain';
 import type { TokenEntity } from '../../entities/token';
 import type { KeysOfUnion } from '../../utils/types-utils';
 
@@ -123,13 +123,14 @@ export type BeefyApiMerklCampaignRewardToken = {
   address: string;
   symbol: string;
   decimals: number;
+  chainId: ChainId;
 };
 
-export type BeefyApiMerklCampaign<TChainId extends string = ChainEntity['id']> = {
+export type BeefyApiMerklCampaign = {
   campaignId: string;
   startTimestamp: number;
   endTimestamp: number;
-  chainId: TChainId;
+  chainId: ChainId;
   poolAddress: string;
   rewardToken: BeefyApiMerklCampaignRewardToken;
   type: string;

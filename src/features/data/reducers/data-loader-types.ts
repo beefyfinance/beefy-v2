@@ -1,4 +1,4 @@
-import type { ChainEntity } from '../entities/chain';
+import type { ChainEntity, ChainId } from '../entities/chain';
 
 /**
  * because we want to be smart about data loading
@@ -52,6 +52,7 @@ export interface DataLoaderState {
   };
   statusIndicator: {
     open: boolean;
+    excludeChainIds: ChainId[];
   };
   global: {
     chainConfig: LoaderState;
@@ -83,6 +84,7 @@ export interface DataLoaderState {
     articles: LoaderState;
     merklCampaigns: LoaderState;
     currentCowcentratedRanges: LoaderState;
+    merklRewards: LoaderState;
   };
   byChainId: {
     [chainId in ChainEntity['id']]?: ChainIdDataEntity;
@@ -106,7 +108,6 @@ export interface ChainIdDataByAddressByChainEntity {
   balance: LoaderState;
   allowance: LoaderState;
   clmHarvests: LoaderState;
-  merklRewards: LoaderState;
 }
 
 export interface GlobalDataByAddressEntity {
@@ -114,4 +115,10 @@ export interface GlobalDataByAddressEntity {
   depositedVaults: LoaderState;
   dashboard: LoaderState;
   clmHarvests: LoaderState;
+  merklRewards: LoaderState;
 }
+
+export type LoaderGlobalKey = keyof DataLoaderState['global'];
+export type LoaderChainKey = keyof ChainIdDataEntity;
+export type LoaderChainAddressKey = keyof ChainIdDataByAddressByChainEntity;
+export type LoaderAddressKey = keyof GlobalDataByAddressEntity;

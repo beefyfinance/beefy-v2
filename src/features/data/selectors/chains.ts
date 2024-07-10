@@ -2,7 +2,6 @@ import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
-import { selectChainNativeToken } from './tokens';
 
 function makeChainSelector(idsSelector: (state: BeefyState) => ChainEntity['id'][]) {
   return createSelector(
@@ -13,25 +12,21 @@ function makeChainSelector(idsSelector: (state: BeefyState) => ChainEntity['id']
 }
 
 export const selectChainById = createCachedSelector(
-  (state, chainId) => chainId,
+  (_: BeefyState, chainId: ChainEntity['id']) => chainId,
   state => state.entities.chains.byId,
   (chainId, byId): ChainEntity => {
     const chain = byId[chainId];
     if (!chain) throw new Error(`Unknown chainId ${chainId}`);
     return chain;
   }
-)((state, chainId) => chainId);
+)((_, chainId) => chainId);
 
-export const selectAllChainsNativeAssetsIsd = (state: BeefyState) => {
-  const allChainIds = selectAllChainIds(state);
-
-  const assetdsIds = new Set();
-  for (const chainId of allChainIds) {
-    const nativeToken = selectChainNativeToken(state, chainId);
-    assetdsIds.add(nativeToken.id);
-  }
-
-  return assetdsIds;
+export const selectChainByNetworkChainId = (
+  state: BeefyState,
+  networkChainId: number
+): ChainEntity | undefined => {
+  const chainId = state.entities.chains.chainIdByNetworkChainId[networkChainId];
+  return chainId ? selectChainById(state, chainId) : undefined;
 };
 
 export const selectAllChainIds = (state: BeefyState) => state.entities.chains.allIds;

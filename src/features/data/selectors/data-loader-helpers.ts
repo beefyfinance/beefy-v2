@@ -20,15 +20,15 @@ const DEFAULT_DISPATCHED_RECENT_SECONDS = 30;
 // time since a loader was last fulfilled before it is allowed to be dispatched again
 const DEFAULT_FULFILLED_RECENT_SECONDS = 300;
 
-export type LoaderEvaluatorFn = (loader: LoaderState | undefined) => boolean;
-export type GlobalDataSelectorFn = (state: BeefyState) => boolean;
-export type ChainDataSelectorFn = (state: BeefyState, chainId: ChainEntity['id']) => boolean;
-export type AddressDataSelectorFn = (state: BeefyState, walletAddress: string) => boolean;
-export type AddressChainDataSelectorFn = (
+export type LoaderEvaluatorFn<T = boolean> = (loader: LoaderState | undefined) => T;
+export type GlobalDataSelectorFn<T = boolean> = (state: BeefyState) => T;
+export type ChainDataSelectorFn<T = boolean> = (state: BeefyState, chainId: ChainEntity['id']) => T;
+export type AddressDataSelectorFn<T = boolean> = (state: BeefyState, walletAddress: string) => T;
+export type AddressChainDataSelectorFn<T = boolean> = (
   state: BeefyState,
   chainId: ChainEntity['id'],
   walletAddress: string
-) => boolean;
+) => T;
 
 export function isLoaderFulfilled(state: LoaderState | undefined): state is LoaderStateFulfilled {
   return !!state && state.status === 'fulfilled';
@@ -152,17 +152,17 @@ export const shouldLoaderLoadRecent = createShouldLoaderLoadRecentEvaluator(
   DEFAULT_DISPATCHED_RECENT_SECONDS
 );
 
-export function createGlobalDataSelector(
+export function createGlobalDataSelector<T>(
   key: keyof DataLoaderState['global'],
-  evaluateFn: LoaderEvaluatorFn
-): GlobalDataSelectorFn {
+  evaluateFn: LoaderEvaluatorFn<T>
+): GlobalDataSelectorFn<T> {
   return createSelector((state: BeefyState) => state.ui.dataLoader.global[key], evaluateFn);
 }
 
-export function createChainDataSelector(
+export function createChainDataSelector<T>(
   key: keyof ChainIdDataEntity,
-  evaluateFn: LoaderEvaluatorFn
-): ChainDataSelectorFn {
+  evaluateFn: LoaderEvaluatorFn<T>
+): ChainDataSelectorFn<T> {
   return createCachedSelector(
     (state: BeefyState, chainId: ChainEntity['id']) =>
       state.ui.dataLoader.byChainId[chainId]?.[key],
@@ -170,10 +170,10 @@ export function createChainDataSelector(
   )((_, chainId) => chainId);
 }
 
-export function createAddressDataSelector(
+export function createAddressDataSelector<T>(
   key: keyof GlobalDataByAddressEntity,
-  evaluateFn: LoaderEvaluatorFn
-): AddressDataSelectorFn {
+  evaluateFn: LoaderEvaluatorFn<T>
+): AddressDataSelectorFn<T> {
   return createCachedSelector(
     (state: BeefyState, walletAddress: string) =>
       state.ui.dataLoader.byAddress[walletAddress.toLowerCase()]?.global[key],
@@ -181,10 +181,10 @@ export function createAddressDataSelector(
   )((_, walletAddress) => walletAddress.toLowerCase());
 }
 
-export function createAddressChainDataSelector(
+export function createAddressChainDataSelector<T>(
   key: keyof ChainIdDataByAddressByChainEntity,
-  evaluateFn: LoaderEvaluatorFn
-): AddressChainDataSelectorFn {
+  evaluateFn: LoaderEvaluatorFn<T>
+): AddressChainDataSelectorFn<T> {
   return createCachedSelector(
     (state: BeefyState, chainId: ChainEntity['id'], walletAddress: string) =>
       state.ui.dataLoader.byAddress[walletAddress.toLowerCase()]?.byChainId[chainId]?.[key],
