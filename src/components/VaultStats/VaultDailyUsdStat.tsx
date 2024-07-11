@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
 import { formatLargeUsd } from '../../helpers/format';
 import {
-  selectVaultApyAvailable,
+  selectIsVaultApyAvailable,
   selectVaultShouldShowInterest,
 } from '../../features/data/selectors/data-loader';
 import {
@@ -40,7 +40,7 @@ function mapStateToProps(
     };
   }
 
-  const isLoaded = selectVaultApyAvailable(state, vaultId);
+  const isLoaded = selectIsVaultApyAvailable(state, vaultId);
   if (!isLoaded) {
     return {
       label,

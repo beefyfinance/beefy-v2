@@ -126,14 +126,16 @@ export const analyticsSlice = createSlice({
     });
 
     builder.addCase(fetchClmPendingRewards.fulfilled, (sliceState, action) => {
-      const { data, vaultId } = action.payload;
+      const { data, vaultIds } = action.payload;
       const { fees1, fees0, totalSupply } = data;
 
-      sliceState.clmPendingRewards.byVaultId[vaultId] = {
-        fees1,
-        fees0,
-        totalSupply,
-      };
+      for (const vaultId of vaultIds) {
+        sliceState.clmPendingRewards.byVaultId[vaultId] = {
+          fees1,
+          fees0,
+          totalSupply,
+        };
+      }
     });
 
     builder.addCase(recalculateClmHarvestsForUserVaultId.fulfilled, (sliceState, action) => {

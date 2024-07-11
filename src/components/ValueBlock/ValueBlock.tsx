@@ -2,9 +2,9 @@ import React, { memo, type ReactNode } from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import { styles } from './styles';
-import { popoverInLinkHack__popoverContainerHandler } from '../../helpers/list-popover-in-link-hack';
-import { Popover } from '../Popover';
 import { ContentLoading } from '../ContentLoading';
+import { Tooltip } from '../Tooltip';
+import { HelpOutline } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
@@ -12,7 +12,7 @@ type ValueBlockProps = {
   label: ReactNode;
   value: ReactNode;
   textContent?: boolean;
-  tooltip?: { title?: string; content: ReactNode } | undefined;
+  tooltip?: ReactNode;
   usdValue?: ReactNode;
   loading?: boolean;
   blurred?: boolean;
@@ -36,21 +36,14 @@ export const ValueBlock = memo(function ValueBlock({
   const classes = useStyles();
   return (
     <>
-      {tooltip ? (
-        <div
-          className={classes.tooltipLabel}
-          onClick={popoverInLinkHack__popoverContainerHandler}
-          onTouchStart={popoverInLinkHack__popoverContainerHandler}
-        >
-          <div className={clsx(classes.label, labelClassName)}>{label}</div>
-          <div className={classes.tooltipHolder}>
-            <Popover title={tooltip.title}>{tooltip.content}</Popover>
-          </div>
-        </div>
-      ) : (
+      <div className={classes.tooltipLabel}>
         <div className={clsx(classes.label, labelClassName)}>{label}</div>
-      )}
-
+        {!loading && tooltip && (
+          <Tooltip content={tooltip} triggerClass={classes.tooltipHolder}>
+            <HelpOutline className={classes.tooltipIcon} />
+          </Tooltip>
+        )}
+      </div>
       {textContent ? (
         <div
           className={clsx(classes.value, valueClassName, {

@@ -21,7 +21,7 @@ type RewardListProps = {
   deposited: boolean;
   rewards: {
     active: boolean;
-    balance: BigNumber;
+    amount: BigNumber;
     token: Token;
     price: BigNumber | undefined;
     apr: number | undefined;
@@ -47,18 +47,18 @@ export const RewardList = memo<RewardListProps>(function RewardList({
             <TokenImageFromEntity token={r.token} size={24} />
           </div>
           <div className={classes.amount}>
-            {r.active && r.balance.isZero()
+            {r.active && r.amount.isZero()
               ? deposited
                 ? 'Earning'
                 : 'Earn'
-              : formatTokenDisplayCondensed(r.balance, r.token.decimals)}
+              : formatTokenDisplayCondensed(r.amount, r.token.decimals)}
             {` ${r.token.symbol}`}
           </div>
           <div className={classes.value}>
-            {r.active && r.balance.isZero() && r.apr
+            {r.active && r.amount.isZero() && r.apr
               ? formatPercent(r.apr)
-              : !r.balance.isZero() && r.price
-              ? formatUsd(r.price.multipliedBy(r.balance))
+              : !r.amount.isZero() && r.price
+              ? formatUsd(r.price.multipliedBy(r.amount))
               : '-'}
           </div>
         </Fragment>

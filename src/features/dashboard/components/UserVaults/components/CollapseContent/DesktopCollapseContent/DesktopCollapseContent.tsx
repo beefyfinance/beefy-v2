@@ -15,6 +15,7 @@ import type { VaultCollapseContentProps } from '../types';
 import { styles } from './styles';
 import { ErrorBoundary } from '../../../../../../../components/ErrorBoundary/ErrorBoundary';
 import { DashboardPnLGraph } from '../../../../../../vault/components/PnLGraph/standard/StandardPnLGraph';
+import { isCowcentratedLikeVault } from '../../../../../../data/entities/vault';
 
 const useStyles = makeStyles(styles);
 
@@ -24,11 +25,13 @@ export const DesktopCollapseContent = memo<VaultCollapseContentProps>(
   function DesktopCollapseContent({ vaultId, address }) {
     const classes = useStyles();
     const { t } = useTranslation();
-    const { type, strategyTypeId } = useAppSelector(state => selectVaultById(state, vaultId));
+    const vault = useAppSelector(state => selectVaultById(state, vaultId));
     const hasAnalyticsData = useAppSelector(state =>
       selectHasDataToShowGraphByVaultId(state, vaultId, address)
     );
     const [toggleTab, setToggleTab] = useState<ToggleTabOptions>('txHistory');
+    const { strategyTypeId } = vault;
+    const typeOfCharts = isCowcentratedLikeVault(vault) ? 'cowcentrated' : vault.type;
 
     const options = useMemo(() => {
       const items: Partial<Record<ToggleTabOptions, string>> = {
@@ -37,7 +40,7 @@ export const DesktopCollapseContent = memo<VaultCollapseContentProps>(
 
       if (hasAnalyticsData) {
         items['positionChart'] = t('Dashboard-Chart');
-        if (type === 'cowcentrated') {
+        if (typeOfCharts === 'cowcentrated') {
           items['positionChart'] = t('Dashboard-PositionChart');
           if (strategyTypeId === 'compounds') {
             items['compoundsChart'] = t('Dashboard-CompoundsChart');
@@ -46,9 +49,10 @@ export const DesktopCollapseContent = memo<VaultCollapseContentProps>(
       }
 
       return items;
-    }, [hasAnalyticsData, type, strategyTypeId, t]);
+    }, [hasAnalyticsData, typeOfCharts, strategyTypeId, t]);
 
-    const PositionGraph = type === 'cowcentrated' ? DashboardOverviewGraph : DashboardPnLGraph;
+    const PositionGraph =
+      typeOfCharts === 'cowcentrated' ? DashboardOverviewGraph : DashboardPnLGraph;
     const CompoundsGraph = DashboardFeesGraph;
 
     return (
@@ -63,7 +67,7 @@ export const DesktopCollapseContent = memo<VaultCollapseContentProps>(
           </div>
         ) : null}
         <div className={classes.collapseInner}>
-          <TabletStats vaultId={vaultId} />
+          <TabletStats vaultId={vaultId} address={address} />
           <ErrorBoundary>
             {toggleTab === 'txHistory' ? (
               <VaultTransactions address={address} vaultId={vaultId} />

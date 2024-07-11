@@ -250,7 +250,10 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const token = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
 
     const rewards: RewardContractData[] = [];
+    let index = -1;
     for (const reward of result.rewards) {
+      ++index;
+
       if (!reward || reward.length !== 3) {
         console.error(`Invalid reward data for rewardpool ${vault.id}`);
         continue;
@@ -272,6 +275,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
         token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
         rewardRate: new BigNumber(rewardRate).shiftedBy(-rewardToken.decimals),
         periodFinish: this.periodFinishToDate(periodFinish)!,
+        index,
       });
     }
 

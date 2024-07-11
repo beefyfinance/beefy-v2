@@ -29,6 +29,7 @@ export interface RewardContractData {
   token: Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'oracleId' | 'chainId'>;
   rewardRate: BigNumber;
   periodFinish: Date;
+  index: number;
 }
 
 export interface GovVaultMultiContractDataResponse {

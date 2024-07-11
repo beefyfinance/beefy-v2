@@ -1,7 +1,11 @@
 import { isCowcentratedLikeVault, isCowcentratedVault, type VaultEntity } from '../entities/vault';
 import type { BeefyState } from '../../../redux-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { selectLpBreakdownForVault, selectTokenByAddress } from './tokens';
+import {
+  selectLpBreakdownByOracleId,
+  selectLpBreakdownForVault,
+  selectTokenByAddress,
+} from './tokens';
 import { selectVaultById } from './vaults';
 import { BigNumber } from 'bignumber.js';
 import type { TvlBreakdown } from './tvl-types';
@@ -39,10 +43,9 @@ export const selectTvlBreakdownByVaultId = (
 
   // CLM with a pool or vault
   if (isClmLike) {
-    const clmVault = isCowcentratedVault(vault)
-      ? vault
-      : selectVaultById(state, vault.cowcentratedId);
-    const clmBreakdown = selectLpBreakdownForVault(state, clmVault);
+    // all CLM-like deposit tokens should have the same oracleId
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const clmBreakdown = selectLpBreakdownByOracleId(state, depositToken.oracleId);
     if (
       !clmBreakdown ||
       !('underlyingPrice' in clmBreakdown) ||
@@ -55,11 +58,7 @@ export const selectTvlBreakdownByVaultId = (
     const underlyingTvl = new BigNumber(clmBreakdown.underlyingLiquidity).times(
       clmBreakdown.underlyingPrice
     );
-    const depositToken = selectTokenByAddress(
-      state,
-      clmVault.chainId,
-      clmVault.depositTokenAddress
-    );
+
     const totalTvl = new BigNumber(clmBreakdown.totalSupply).times(clmBreakdown.price);
 
     // If all the Beefy TVL is in this vault, we can skip further breakdown
@@ -76,7 +75,7 @@ export const selectTvlBreakdownByVaultId = (
       vaultType: isCowcentratedVault(vault) ? 'cowcentrated' : `cowcentrated-${vault.type}`,
       vaultTvl,
       vaultShare: calculateShare(vaultTvl, underlyingTvl),
-      totalType: clmVault.type,
+      totalType: 'cowcentrated',
       totalTvl,
       totalShare: calculateShare(totalTvl, underlyingTvl),
       underlyingTvl,

@@ -56,10 +56,10 @@ function mapStateToProps(
 
   let value: string, subValue: string, tooltip: ReactNode;
   if (isUserClmPnl(pnlData)) {
-    const { userSharesAtDeposit, sharesAtDepositToUsd } = pnlData;
-    value = formatTokenDisplayCondensed(userSharesAtDeposit, 18);
-    subValue = formatLargeUsd(sharesAtDepositToUsd);
-    tooltip = <BasicTooltipContent title={formatTokenDisplay(userSharesAtDeposit, 18)} />;
+    const { sharesAtDeposit, sharesAtDepositInUsd } = pnlData;
+    value = formatTokenDisplayCondensed(sharesAtDeposit, 18);
+    subValue = formatLargeUsd(sharesAtDepositInUsd);
+    tooltip = <BasicTooltipContent title={formatTokenDisplay(sharesAtDeposit, 18)} />;
   } else {
     const { balanceAtDeposit, usdBalanceAtDeposit, tokenDecimals } = pnlData;
     value = formatTokenDisplayCondensed(balanceAtDeposit, tokenDecimals);

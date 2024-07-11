@@ -14,10 +14,12 @@ export const selectVaultActiveMerklCampaigns = createSelector(
     }
 
     const now = getUnixTime(new Date());
-    return vaultCampaigns
+    const activeCampaigns = vaultCampaigns
       .filter(v => v.apr > 0)
       .map(v => ({ ...campaignById[v.campaignId], apr: v.apr }))
       .filter(c => c.startTimestamp <= now && c.endTimestamp >= now);
+
+    return activeCampaigns.length ? activeCampaigns : undefined;
   }
 );
 
@@ -43,6 +45,7 @@ export const selectVaultActiveGovRewards = createSelector(
         const yearlyUsd = price.times(r.rewardRate).times(365 * 24 * 60 * 60);
 
         return {
+          index: r.index,
           token: r.token,
           price,
           apr: yearlyUsd.dividedBy(tvl).toNumber(),

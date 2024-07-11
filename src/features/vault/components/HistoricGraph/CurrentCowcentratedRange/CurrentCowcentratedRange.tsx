@@ -10,7 +10,6 @@ import {
 import type { VaultEntity } from '../../../../data/entities/vault';
 import { styles } from './styles';
 import { BIG_ZERO } from '../../../../../helpers/big-number';
-import { selectCowcentratedLikeVaultById } from '../../../../data/selectors/vaults';
 import type { CurrentCowcentratedRangeData } from '../../../../data/entities/token';
 
 const useStyles = makeStyles(styles);
@@ -21,10 +20,7 @@ type CurrentCowcentratedRangeIfAvailableProps = {
 
 export const CurrentCowcentratedRangeIfAvailable = memo<CurrentCowcentratedRangeIfAvailableProps>(
   function CowcentratedRangesIfAvailable({ vaultId }) {
-    const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
-    const range = useAppSelector(state =>
-      selectCurrentCowcentratedRangesByVaultId(state, vault.cowcentratedId)
-    );
+    const range = useAppSelector(state => selectCurrentCowcentratedRangesByVaultId(state, vaultId));
     if (
       !range ||
       range.currentPrice.eq(BIG_ZERO) ||

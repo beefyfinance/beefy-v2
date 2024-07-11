@@ -29,13 +29,13 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
   const { t } = useTranslation();
 
   const {
-    shares,
-    sharesAtDepositToUsd,
-    sharesNowToUsd,
-    token0SharesAtDepositToUsd,
-    token1SharesAtDepositToUsd,
-    token0SharesAtDeposit,
-    token1SharesAtDeposit,
+    sharesNow,
+    sharesAtDepositInUsd,
+    sharesNowInUsd,
+    token0AtDepositInUsd,
+    token1AtDepositInUsd,
+    token0AtDeposit,
+    token1AtDeposit,
     token1,
     token0,
     token0Diff,
@@ -50,16 +50,16 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
       <Stat
         tooltipText={t('pnl-graph-tooltip-deposit')}
         label={t('At Deposit')}
-        value0={`${formatTokenDisplayCondensed(token0SharesAtDeposit, token0.decimals, 6)} ${
+        value0={`${formatTokenDisplayCondensed(token0AtDeposit, token0.decimals, 6)} ${
           token0.symbol
         }`}
-        value1={`${formatTokenDisplayCondensed(token1SharesAtDeposit, token1.decimals, 6)} ${
+        value1={`${formatTokenDisplayCondensed(token1AtDeposit, token1.decimals, 6)} ${
           token1.symbol
         }`}
-        value2={formatTokenDisplayCondensed(shares, 18, 6)}
-        subValue0={formatLargeUsd(token0SharesAtDepositToUsd)}
-        subValue1={formatLargeUsd(token1SharesAtDepositToUsd)}
-        subValue2={formatLargeUsd(sharesAtDepositToUsd)}
+        value2={formatTokenDisplayCondensed(sharesNow, 18, 6)}
+        subValue0={formatLargeUsd(token0AtDepositInUsd)}
+        subValue1={formatLargeUsd(token1AtDepositInUsd)}
+        subValue2={formatLargeUsd(sharesAtDepositInUsd)}
       />
       <Stat
         tooltipText={t('pnl-graph-tooltip-now-clm')}
@@ -70,10 +70,10 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
         value1={`${formatTokenDisplayCondensed(token1.userAmount, token1.decimals, 6)} ${
           token1.symbol
         }`}
-        value2={formatTokenDisplayCondensed(shares, 18, 6)}
+        value2={formatTokenDisplayCondensed(sharesNow, 18, 6)}
         subValue0={formatLargeUsd(token0.userValue)}
         subValue1={formatLargeUsd(token1.userValue)}
-        subValue2={formatLargeUsd(sharesNowToUsd)}
+        subValue2={formatLargeUsd(sharesNowInUsd)}
       />
       <Stat
         tooltipText={t('pnl-graph-tooltip-change-clm')}

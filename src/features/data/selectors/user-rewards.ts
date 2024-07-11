@@ -1,48 +1,40 @@
 import type { BeefyState } from '../../../redux-types';
 import { type VaultEntity } from '../entities/vault';
 import type { ChainEntity } from '../entities/chain';
-import type { MerklVaultReward } from '../reducers/wallet/user-rewards';
+import type { MerklVaultReward } from '../reducers/wallet/user-rewards-types';
 import type { BigNumber } from 'bignumber.js';
 import type { TokenEntity } from '../entities/token';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { createSelector } from '@reduxjs/toolkit';
-import { selectVaultById } from './vaults';
 import { selectTokenByAddressOrUndefined, selectTokenPriceByTokenOracleId } from './tokens';
 import { selectWalletAddress } from './wallet';
 import { selectVaultActiveGovRewards, selectVaultActiveMerklCampaigns } from './rewards';
 import { selectGovVaultPendingRewards, selectGovVaultPendingRewardsWithPrice } from './balance';
+import { isNonEmptyArray } from '../utils/array-utils';
 
 type UnifiedRewardToken = Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'chainId'>;
 
 export type UnifiedReward = {
   active: boolean;
-  balance: BigNumber;
+  amount: BigNumber;
   token: UnifiedRewardToken;
   price: BigNumber | undefined;
   apr: number | undefined;
 };
 
-type SimpleToken = Omit<UnifiedRewardToken, 'chainId'>;
-
-function selectUnifiedMerklReward(
+function selectUnifiedReward(
   state: BeefyState,
   balance: BigNumber,
-  chainId: ChainEntity['id'],
-  token: SimpleToken,
+  token: UnifiedRewardToken,
   active: boolean,
   apr: number | undefined
 ): UnifiedReward {
-  const abToken = selectTokenByAddressOrUndefined(state, chainId, token.address);
+  const abToken = selectTokenByAddressOrUndefined(state, token.chainId, token.address);
   const price = abToken ? selectTokenPriceByTokenOracleId(state, abToken.oracleId) : undefined;
 
   return {
-    balance,
-    token: abToken ?? {
-      address: token.address,
-      symbol: token.symbol,
-      decimals: token.decimals,
-      chainId,
-    },
+    amount: balance,
+    token: abToken ?? token,
     price,
     active,
     apr,
@@ -51,11 +43,10 @@ function selectUnifiedMerklReward(
 
 function selectUnifiedMerklRewards(
   state: BeefyState,
-  chainId: ChainEntity['id'],
-  rewards: MerklVaultReward[]
+  rewards: Pick<MerklVaultReward, 'token' | 'unclaimed'>[]
 ): UnifiedReward[] {
   return rewards.map(reward =>
-    selectUnifiedMerklReward(state, reward.unclaimed, chainId, reward, false, undefined)
+    selectUnifiedReward(state, reward.unclaimed, reward.token, false, undefined)
   );
 }
 
@@ -64,24 +55,21 @@ export function selectUserMerklUnifiedRewardsForVault(
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ) {
-  const vault = selectVaultById(state, vaultId);
   const unclaimedRewards = walletAddress
-    ? state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byVaultId[
-        vaultId
-      ]?.filter(r => r.unclaimed.gt(BIG_ZERO))
+    ? state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byVaultId[vaultId] ||
+      undefined
     : undefined;
   const activeCampaigns = selectVaultActiveMerklCampaigns(state, vaultId);
 
-  if (!unclaimedRewards && !activeCampaigns) {
+  if (!isNonEmptyArray(unclaimedRewards) && !isNonEmptyArray(activeCampaigns)) {
     return undefined;
   }
 
-  const rewards: UnifiedReward[] =
-    unclaimedRewards && unclaimedRewards.length > 0
-      ? selectUnifiedMerklRewards(state, vault.chainId, unclaimedRewards)
-      : [];
+  const rewards: UnifiedReward[] = isNonEmptyArray(unclaimedRewards)
+    ? selectUnifiedMerklRewards(state, unclaimedRewards)
+    : [];
 
-  if (activeCampaigns) {
+  if (isNonEmptyArray(activeCampaigns)) {
     for (const campaign of activeCampaigns) {
       const existing = rewards.find(r => r.token.address === campaign.rewardToken.address);
       if (existing) {
@@ -89,14 +77,7 @@ export function selectUserMerklUnifiedRewardsForVault(
         existing.apr = (existing.apr || 0) + campaign.apr;
       } else {
         rewards.push(
-          selectUnifiedMerklReward(
-            state,
-            BIG_ZERO,
-            vault.chainId,
-            campaign.rewardToken,
-            true,
-            campaign.apr
-          )
+          selectUnifiedReward(state, BIG_ZERO, campaign.rewardToken, true, campaign.apr)
         );
       }
     }
@@ -111,13 +92,12 @@ export function selectUserMerklUnifiedRewardsForChain(
   walletAddress: string
 ) {
   const chainRewards =
-    state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byChain[chainId];
+    state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byChainId[chainId];
   if (!chainRewards) {
     return undefined;
   }
 
-  const rewards = Object.values(chainRewards.byTokenAddress).filter(r => r.unclaimed.gt(BIG_ZERO));
-  return selectUnifiedMerklRewards(state, chainId, rewards);
+  return selectUnifiedMerklRewards(state, chainRewards);
 }
 
 const selectUserMerklRewardsForVault = (
@@ -163,7 +143,7 @@ export const selectConnectedUserHasGovRewardsForVault = (
   }
 
   const rewards = selectGovVaultPendingRewards(state, vaultId, walletAddress);
-  return rewards && rewards.some(r => r.balance.gt(BIG_ZERO));
+  return rewards && rewards.some(r => r.amount.gt(BIG_ZERO));
 };
 
 export const selectUserGovVaultUnifiedRewards = createSelector(
@@ -171,11 +151,11 @@ export const selectUserGovVaultUnifiedRewards = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress?: string) =>
     selectVaultActiveGovRewards(state, vaultId),
   (pendingRewards, activeRewards): UnifiedReward[] => {
-    console.log(pendingRewards, activeRewards);
     const rewards: UnifiedReward[] =
       pendingRewards && pendingRewards.length
         ? pendingRewards.map(r => ({
             ...r,
+            amount: r.amount,
             active: false,
             apr: undefined,
           }))
@@ -189,7 +169,7 @@ export const selectUserGovVaultUnifiedRewards = createSelector(
           existing.apr = reward.apr;
         } else {
           rewards.push({
-            balance: BIG_ZERO,
+            amount: BIG_ZERO,
             token: reward.token,
             price: reward.price,
             active: true,
@@ -199,6 +179,6 @@ export const selectUserGovVaultUnifiedRewards = createSelector(
       }
     }
 
-    return rewards;
+    return rewards.filter(r => r.amount.gt(BIG_ZERO) || (r.active && r.apr));
   }
 );

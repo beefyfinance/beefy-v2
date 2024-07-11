@@ -9,7 +9,7 @@ import {
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import {
   selectIsConfigAvailable,
-  selectIsGlobalAddressBookAvailable,
+  selectIsAddressBookLoadedGlobal,
   selectIsUserBalanceAvailable,
   selectIsWalletTimelineForUserPending,
   selectIsWalletTimelineForUserRecent,
@@ -55,7 +55,7 @@ analyticsListener.startListening({
     await condition(
       (_, currentState) =>
         selectIsConfigAvailable(currentState) &&
-        selectIsGlobalAddressBookAvailable(currentState) &&
+        selectIsAddressBookLoadedGlobal(currentState) &&
         selectIsUserBalanceAvailable(currentState, walletAddress)
     );
 
@@ -80,7 +80,7 @@ analyticsListener.startListening({
     await condition(
       (_, currentState) =>
         selectIsConfigAvailable(currentState) &&
-        selectIsGlobalAddressBookAvailable(currentState) &&
+        selectIsAddressBookLoadedGlobal(currentState) &&
         selectIsUserBalanceAvailable(currentState, walletAddress)
     );
 

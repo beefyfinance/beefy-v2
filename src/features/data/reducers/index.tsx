@@ -14,7 +14,7 @@ import { walletSlice } from './wallet/wallet';
 import type { BeefyState } from '../../../redux-types';
 import {
   bigNumberTransform,
-  chanIdsTransform,
+  chainIdsTransform,
   filteredVaultsSlice,
   userCategoryTransform,
 } from './filtered-vaults';
@@ -88,8 +88,8 @@ const uiReducer = combineReducers<BeefyState['ui']>({
     {
       key: 'filters',
       storage,
-      transforms: [bigNumberTransform, userCategoryTransform, chanIdsTransform],
-      blacklist: ['filteredVaultIds', 'sortedFilteredVaultIds'],
+      transforms: [bigNumberTransform, userCategoryTransform, chainIdsTransform],
+      blacklist: ['filteredVaultIds', 'sortedFilteredVaultIds', 'onlyUnstakedClm'],
     },
     filteredVaultsSlice.reducer
   ),

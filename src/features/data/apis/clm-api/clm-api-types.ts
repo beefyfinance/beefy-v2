@@ -1,5 +1,4 @@
 import type BigNumber from 'bignumber.js';
-import type { BeefyState } from '../../../../redux-types';
 import type { ChainEntity } from '../../entities/chain';
 import type { VaultEntity } from '../../entities/vault';
 
@@ -38,8 +37,7 @@ export interface IClmApi {
   ): Promise<ClmVaultsHarvestsResponse>;
 
   getClmPendingRewards(
-    state: BeefyState,
-    chainId: ChainEntity['id'],
+    chain: ChainEntity,
     stratAddress: string,
     vaultAddress: VaultEntity['contractAddress']
   ): Promise<ClmPendingRewardsResponse>;

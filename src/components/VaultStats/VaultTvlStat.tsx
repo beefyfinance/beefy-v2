@@ -9,11 +9,11 @@ import { formatLargeUsd, formatPercent } from '../../helpers/format';
 import { InterestTooltipContent } from '../InterestTooltipContent';
 import { selectPlatformById } from '../../features/data/selectors/platforms';
 import { useAppSelector } from '../../store';
-import {
-  selectIsChainDataAvailable,
-  selectIsGlobalDataAvailable,
-} from '../../features/data/selectors/data-loader';
 import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types';
+import {
+  selectIsContractDataLoadedOnChain,
+  selectIsPricesAvailable,
+} from '../../features/data/selectors/data-loader';
 
 export type VaultTvlStatProps = {
   vaultId: VaultEntity['id'];
@@ -25,8 +25,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
   const label = 'VaultStat-TVL';
   const vault = selectVaultById(state, vaultId);
   const isLoaded =
-    selectIsGlobalDataAvailable(state, 'prices') &&
-    selectIsChainDataAvailable(state, vault.chainId, 'contractData');
+    selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
 
   if (!isLoaded) {
     return {

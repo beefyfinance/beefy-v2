@@ -1,7 +1,7 @@
 import type BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../redux-types';
 import type { BoostEntity } from '../../entities/boost';
-import type { TokenEntity } from '../../entities/token';
+import type { TokenEntity, TokenErc20 } from '../../entities/token';
 import type { VaultEntity, VaultGov } from '../../entities/vault';
 
 export interface IBalanceApi {
@@ -25,11 +25,23 @@ export interface GovVaultBalance {
   rewards: BigNumber;
 }
 
+export interface GovVaultReward {
+  tokenAddress: TokenErc20['address'];
+  chainId: TokenErc20['chainId'];
+  amount: BigNumber;
+  index: number;
+}
+
+export interface GovVaultV2BalanceResult {
+  balance: BigNumber;
+  rewardTokens: string[];
+  rewards: BigNumber[];
+}
+
 export interface GovVaultV2Balance {
   vaultId: VaultEntity['id'];
   balance: BigNumber;
-  rewards: BigNumber[];
-  rewardTokens: string[];
+  rewards: GovVaultReward[];
 }
 
 export interface BoostBalance {

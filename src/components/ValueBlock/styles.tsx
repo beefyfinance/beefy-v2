@@ -33,6 +33,15 @@ export const styles = (theme: Theme) => ({
   tooltipHolder: {
     marginLeft: '4px',
   },
+  tooltipIcon: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: theme.palette.text.dark,
+    width: '18px',
+    height: '18px',
+    cursor: 'pointer',
+  },
   noTextContentLoader: {
     paddingTop: '3px',
   },

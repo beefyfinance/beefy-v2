@@ -257,3 +257,8 @@ export function featureFlag_simUpdate(): boolean {
   const params = getSearchParams();
   return params.has('__sim_update');
 }
+
+export function featureFlag_disableRedirect(): boolean {
+  const params = getSearchParams();
+  return params.has('__disable_redirect');
+}

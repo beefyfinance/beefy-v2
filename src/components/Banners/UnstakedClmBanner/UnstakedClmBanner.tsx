@@ -1,7 +1,7 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import {
-  selectUserShouldStakeForVault,
-  selectUserUnstakedCowcentratedVaultIds,
+  selectUserIsUnstakedForVaultId,
+  selectUserUnstakedCowcentratedGovVaultIds,
 } from '../../../features/data/selectors/balance';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { Banner } from '../Banner';
@@ -11,11 +11,20 @@ import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean'
 import type { VaultEntity } from '../../../features/data/entities/vault';
 import { ButtonLink, InternalLink } from '../Links/Links';
 import { filteredVaultsActions } from '../../../features/data/reducers/filtered-vaults';
+import { selectDepositTokenByVaultId } from '../../../features/data/selectors/tokens';
+import { Container, makeStyles } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
+
+const useStyles = makeStyles((theme: Theme) => ({
+  clmUnstakedBannerContainer: {
+    backgroundColor: theme.palette.background.footerHeader,
+  },
+}));
 
 export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const unstakedIds = useAppSelector(selectUserUnstakedCowcentratedVaultIds);
+  const unstakedIds = useAppSelector(selectUserUnstakedCowcentratedGovVaultIds);
   const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideUnstakedClmBanner', false);
   const closeBanner = useCallback(() => {
     setHideBanner(true);
@@ -59,19 +68,18 @@ export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
 
 export type UnstakedClmBannerVaultProps = {
   vaultId: VaultEntity['id'];
+  fromVault?: boolean;
 };
 
 export const UnstakedClmBannerVault = memo<UnstakedClmBannerVaultProps>(
-  function UnstakedClmBannerVault({ vaultId }) {
+  function UnstakedClmBannerVault({ vaultId, fromVault }) {
     const { t } = useTranslation();
-    const shouldStake = useAppSelector(state => selectUserShouldStakeForVault(state, vaultId));
-    const storageKey = useMemo(() => {
-      if (shouldStake) {
-        return `hideUnstakedClmBanner.${shouldStake.cowcentratedId}`;
-      }
-      return 'hideUnstakedClmBanner.vault';
-    }, [shouldStake]);
-    const [hideBanner, setHideBanner] = useLocalStorageBoolean(storageKey, false);
+    const shouldStake = useAppSelector(state => selectUserIsUnstakedForVaultId(state, vaultId));
+    const depositToken = useAppSelector(state => selectDepositTokenByVaultId(state, vaultId));
+    const [hideBanner, setHideBanner] = useLocalStorageBoolean(
+      `hideUnstakedClmBanner.${vaultId}`,
+      false
+    );
     const closeBanner = useCallback(() => {
       setHideBanner(true);
     }, [setHideBanner]);
@@ -80,22 +88,74 @@ export const UnstakedClmBannerVault = memo<UnstakedClmBannerVaultProps>(
       return null;
     }
 
-    const withLink = vaultId !== shouldStake.id;
-
     return (
       <Banner
         icon={<img src={clmIcon} alt="" width={24} height={24} />}
         text={
           <Trans
             t={t}
-            i18nKey={`Banner-UnstakedClm-${withLink ? 'link' : 'this'}-${shouldStake.type}`}
+            i18nKey={`Banner-UnstakedClm-${!fromVault ? 'link' : 'this'}`}
+            values={{ token: depositToken.symbol }}
             components={{
-              Link: <InternalLink to={`/vault/${shouldStake.id}`} />,
+              Link: <InternalLink to={`/vault/${vaultId}`} />,
             }}
           />
         }
         onClose={closeBanner}
       />
+    );
+  }
+);
+
+interface UnstakedClmBannerDashboardProps {
+  address: string;
+}
+
+export const UnstakedClmBannerDashboard = memo<UnstakedClmBannerDashboardProps>(
+  function UnstakedClmBannerDashboard({ address }) {
+    const classes = useStyles();
+    const { t } = useTranslation();
+    const unstakedIds = useAppSelector(state =>
+      selectUserUnstakedCowcentratedGovVaultIds(state, address)
+    );
+    const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideUnstakedClmBanner', false);
+    const closeBanner = useCallback(() => {
+      setHideBanner(true);
+    }, [setHideBanner]);
+
+    if (hideBanner || !unstakedIds.length) {
+      return null;
+    }
+
+    if (unstakedIds.length === 1) {
+      return (
+        <div className={classes.clmUnstakedBannerContainer}>
+          <Container maxWidth="lg">
+            <UnstakedClmBannerVault vaultId={unstakedIds[0]} />
+          </Container>
+        </div>
+      );
+    }
+
+    return (
+      <div className={classes.clmUnstakedBannerContainer}>
+        <Container maxWidth="lg">
+          <Banner
+            icon={<img src={clmIcon} alt="" />}
+            text={
+              <Trans
+                t={t}
+                i18nKey={`Banner-UnstakedClm`}
+                values={{ count: unstakedIds.length }}
+                components={{
+                  Link: <span />,
+                }}
+              />
+            }
+            onClose={closeBanner}
+          />
+        </Container>
+      </div>
     );
   }
 );

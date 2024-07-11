@@ -1,7 +1,7 @@
 import type { MigrationConfig } from '../../reducers/wallet/migration';
 import type { Migrator, IMigrationApi } from './migration-types';
 
-export const migrators: MigrationConfig['id'][] = [
+const migrators: MigrationConfig['id'][] = [
   'ethereum-conic',
   'ethereum-convex',
   'l2-convex',

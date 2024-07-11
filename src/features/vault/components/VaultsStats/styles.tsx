@@ -26,20 +26,21 @@ export const styles = (theme: Theme) => ({
   statsInterest: {
     '& $stat': {
       textAlign: 'left' as const,
-      '& > div': {
+      '& *': {
         textAlign: 'left' as const,
       },
     },
   },
   statsDeposit: {
-    '& $stat > div': {
+    '& $stat *': {
       textAlign: 'left' as const,
     },
     [theme.breakpoints.up('lg')]: {
       '& $stat': {
         textAlign: 'right' as const,
-        '& > div': {
+        '& *': {
           textAlign: 'right' as const,
+          justifyContent: 'flex-end' as const,
         },
       },
     },

@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import {
   isCowcentratedLikeVault,
-  isCowcentratedVault,
   isGovVault,
   isVaultEarningPoints,
   isVaultPaused,
@@ -13,10 +12,11 @@ import {
 import {
   selectFilterOptions,
   selectFilterPlatformIdsForVault,
+  selectVaultIsBoostedForFilter,
   selectVaultMatchesText,
 } from '../selectors/filtered-vaults';
 import {
-  selectAllVaultIds,
+  selectAllVisibleVaultIds,
   selectIsVaultBlueChip,
   selectIsVaultCorrelated,
   selectIsVaultStable,
@@ -75,7 +75,7 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
         filterOptions.chainIds.length === 0 ? allChainIds : filterOptions.chainIds
       );
       const searchText = simplifySearchText(filterOptions.searchText);
-      const allVaults = selectAllVaultIds(state).map(id => selectVaultById(state, id));
+      const allVaults = selectAllVisibleVaultIds(state).map(id => selectVaultById(state, id));
 
       /*
        @dev every filter that can be applied without using a selector should come first
@@ -126,21 +126,13 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
           return false;
         }
 
-        // Hide CLM if pool or vault exists
-        if (
-          isCowcentratedVault(vault) &&
-          (!!vault.cowcentratedGovId || !!vault.cowcentratedStandardId)
-        ) {
-          return false;
-        }
-
         // Hide unselected asset types (if any asset type selected)
         if (filterOptions.assetType.length && !filterOptions.assetType.includes(vault.assetType)) {
           return false;
         }
 
         // Hide non-boosted if onlyBoosted checked
-        if (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) {
+        if (filterOptions.onlyBoosted && !selectVaultIsBoostedForFilter(state, vault.id)) {
           return false;
         }
 

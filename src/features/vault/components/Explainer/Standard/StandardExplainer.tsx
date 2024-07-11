@@ -15,6 +15,7 @@ import { explorerAddressUrl } from '../../../../../helpers/url';
 import { ApyDetails } from '../ApyDetails/ApyDetails';
 import { LendingOracle } from '../LendingOracle/LendingOracle';
 import { ExplainerCard } from '../ExplainerCard/ExplainerCard';
+import { getApyLabelsTypeForVault } from '../../../../../helpers/apy';
 
 type StandardExplainerProps = {
   vaultId: VaultEntity['id'];
@@ -54,7 +55,7 @@ export const StandardExplainer = memo<StandardExplainerProps>(function StandardE
       description={<StandardDescription vaultId={vaultId} />}
       details={
         <>
-          {showApy ? <ApyDetails type={vault.type} values={apys} /> : null}
+          {showApy ? <ApyDetails type={getApyLabelsTypeForVault(vault)} values={apys} /> : null}
           {showLendingOracle ? <LendingOracle vaultId={vault.id} /> : null}
         </>
       }

@@ -1,4 +1,9 @@
-import type { VaultEntity, VaultNames } from '../entities/vault';
+import {
+  isCowcentratedVault,
+  type VaultCowcentratedLike,
+  type VaultEntity,
+  type VaultNames,
+} from '../entities/vault';
 
 const typeToSuffix: Record<VaultEntity['type'], string> = {
   standard: 'Vault',
@@ -35,4 +40,12 @@ export function getVaultNames(
     single: type === 'cowcentrated' ? short : long,
     singleMeta: long,
   };
+}
+
+export function getCowcentratedAddressFromCowcentratedLikeVault(
+  vault: VaultCowcentratedLike
+): string {
+  return (
+    isCowcentratedVault(vault) ? vault.receiptTokenAddress : vault.depositTokenAddress
+  ).toLowerCase();
 }

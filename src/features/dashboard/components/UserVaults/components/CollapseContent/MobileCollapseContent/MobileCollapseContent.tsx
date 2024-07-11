@@ -15,6 +15,7 @@ import { styles } from './styles';
 import { LabeledSelect } from '../../../../../../../components/LabeledSelect';
 import { ToggleButtons } from '../../../../../../../components/ToggleButtons';
 import { DashboardPnLGraph } from '../../../../../../vault/components/PnLGraph/standard/StandardPnLGraph';
+import { isCowcentratedLikeVault } from '../../../../../../data/entities/vault';
 
 const useStyles = makeStyles(styles);
 
@@ -24,12 +25,14 @@ export const MobileCollapseContent = memo<VaultCollapseContentProps>(
   function MobileCollapseContent({ vaultId, address }) {
     const classes = useStyles();
     const { t } = useTranslation();
-    const { type, strategyTypeId } = useAppSelector(state => selectVaultById(state, vaultId));
+    const vault = useAppSelector(state => selectVaultById(state, vaultId));
     const hasAnalyticsData = useAppSelector(state =>
       selectHasDataToShowGraphByVaultId(state, vaultId, address)
     );
     const [toggleTab, setToggleTab] = useState<ToggleTabOptions>('stats');
     const useDropdown = useMediaQuery('(max-width: 700px)', { noSsr: true });
+    const { strategyTypeId } = vault;
+    const typeOfCharts = isCowcentratedLikeVault(vault) ? 'cowcentrated' : vault.type;
 
     const options = useMemo(() => {
       const items: Partial<Record<ToggleTabOptions, string>> = {
@@ -38,7 +41,7 @@ export const MobileCollapseContent = memo<VaultCollapseContentProps>(
       };
       if (hasAnalyticsData) {
         items['positionChart'] = t('Dashboard-Chart');
-        if (type === 'cowcentrated') {
+        if (typeOfCharts === 'cowcentrated') {
           items['positionChart'] = t('Dashboard-PositionChart');
           if (strategyTypeId === 'compounds') {
             items['compoundsChart'] = t('Dashboard-CompoundsChart');
@@ -46,9 +49,10 @@ export const MobileCollapseContent = memo<VaultCollapseContentProps>(
         }
       }
       return items;
-    }, [hasAnalyticsData, type, strategyTypeId, t]);
+    }, [hasAnalyticsData, typeOfCharts, strategyTypeId, t]);
 
-    const PositionGraph = type === 'cowcentrated' ? DashboardOverviewGraph : DashboardPnLGraph;
+    const PositionGraph =
+      typeOfCharts === 'cowcentrated' ? DashboardOverviewGraph : DashboardPnLGraph;
     const CompoundsGraph = DashboardFeesGraph;
 
     return (

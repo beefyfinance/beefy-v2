@@ -7,7 +7,7 @@ import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
 import { OverviewGraphHeader } from './components/OverviewGraphHeader';
 import { useAppDispatch, useAppSelector } from '../../../../../store';
-import { selectVaultById } from '../../../../data/selectors/vaults';
+import { selectCowcentratedLikeVaultById } from '../../../../data/selectors/vaults';
 import { selectHasBreakdownDataByTokenAddress } from '../../../../data/selectors/tokens';
 import {
   selectIsAddressBookLoaded,
@@ -38,7 +38,8 @@ interface CowcentratedPnlGraphLoaderProps {
 export const CowcentratedPnlGraphLoader = memo<CowcentratedPnlGraphLoaderProps>(
   function CowcentratedPnlGraphLoader({ vaultId, address }) {
     const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
-    const vault = useAppSelector(state => selectVaultById(state, vaultId));
+    const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
+
     const haveBreakdownData = useAppSelector(state =>
       selectHasBreakdownDataByTokenAddress(state, vault.depositTokenAddress, vault.chainId)
     );
@@ -137,7 +138,9 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
   const [stat, setStat] = useState<ChartType>('overview');
   const { t } = useTranslation();
   const classes = useStyles();
-  const { strategyTypeId } = useAppSelector(state => selectVaultById(state, vaultId));
+  const { strategyTypeId } = useAppSelector(state =>
+    selectCowcentratedLikeVaultById(state, vaultId)
+  );
 
   useEffect(() => {
     if (strategyTypeId === 'compounds') {

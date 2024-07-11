@@ -5,9 +5,9 @@ import { Redirect, useParams } from 'react-router';
 import { styles } from './styles';
 import { SafetyCard } from './components/SafetyCard';
 import { BoostCard } from './components/BoostCard';
-import { selectVaultExistsById, selectVaultIdIgnoreCase } from '../data/selectors/vaults';
+import { selectVaultByIdOrUndefined, selectVaultIdIgnoreCase } from '../data/selectors/vaults';
 import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
-import type { VaultEntity } from '../data/entities/vault';
+import { isCowcentratedVault, type VaultEntity } from '../data/entities/vault';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { TechLoader } from '../../components/TechLoader';
 import { useAppSelector } from '../../store';
@@ -25,6 +25,7 @@ import { VaultMeta } from '../../components/Meta/VaultMeta';
 import { PnLGraphIfWallet } from './components/PnLGraph/PnLGraphIfWallet';
 import { Explainer } from './components/Explainer/Explainer';
 import { UnstakedClmBannerVault } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
+import { featureFlag_disableRedirect } from '../data/utils/feature-flags';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -35,13 +36,22 @@ type VaultUrlParams = {
 export const Vault = memo(function Vault() {
   const { id } = useParams<VaultUrlParams>();
   const isLoaded = useAppSelector(selectIsConfigAvailable);
-  const vaultExists = useAppSelector(state => selectVaultExistsById(state, id));
+  const vault = useAppSelector(state => selectVaultByIdOrUndefined(state, id));
 
   if (!isLoaded) {
     return <TechLoader text="Loading..." />;
   }
 
-  if (!vaultExists) {
+  // CLM -> CLM Pool
+  if (vault && vault.hidden && isCowcentratedVault(vault) && vault.cowcentratedGovId) {
+    return featureFlag_disableRedirect() ? (
+      <VaultContent vaultId={id} />
+    ) : (
+      <Redirect to={`/vault/${vault.cowcentratedGovId}`} />
+    );
+  }
+
+  if (!vault || vault.hidden) {
     return <VaultNotFound id={id} />;
   }
 
@@ -73,7 +83,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
     <Container maxWidth="lg" className={classes.page}>
       <VaultMeta vaultId={vaultId} />
       <BusdBannerVault vaultId={vaultId} />
-      <UnstakedClmBannerVault vaultId={vaultId} />
+      <UnstakedClmBannerVault vaultId={vaultId} fromVault={true} />
       <VaultHeader vaultId={vaultId} />
       <VaultsStats vaultId={vaultId} />
       <div className={classes.contentContainer}>

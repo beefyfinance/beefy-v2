@@ -13,13 +13,14 @@ const useStyles = makeStyles(styles);
 
 interface TableStatsInterface {
   vaultId: VaultEntity['id'];
+  address: string;
 }
 
-export const TabletStats = memo<TableStatsInterface>(function TabletStats({ vaultId }) {
+export const TabletStats = memo<TableStatsInterface>(function TabletStats({ vaultId, address }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const { dailyUsd } = useAppSelector(state => selectVaultDailyYieldStats(state, vaultId));
+  const { dailyUsd } = useAppSelector(state => selectVaultDailyYieldStats(state, vaultId, address));
 
   const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
   const formatted = useMemo(() => formatTotalApy(values, '???'), [values]);

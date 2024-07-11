@@ -1,4 +1,4 @@
-import type { ChainEntity } from '../entities/chain';
+import type { ChainEntity, ChainId } from '../entities/chain';
 
 /**
  * because we want to be smart about data loading
@@ -46,28 +46,13 @@ export type LoaderState =
   | LoaderStateRejected
   | LoaderStateFulfilled;
 
-export function isFulfilled(state: LoaderState | undefined): state is LoaderStateFulfilled {
-  return !!state && state.status === 'fulfilled';
-}
-
-export function isPending(state: LoaderState | undefined): state is LoaderStatePending {
-  return !!state && state.status === 'pending';
-}
-
-export function isInitialLoader(state: LoaderState | undefined): state is LoaderStateIdle {
-  return !state || state.status === 'idle';
-}
-
-export function isRejected(state: LoaderState | undefined): state is LoaderStateRejected {
-  return !!state && state.status === 'rejected';
-}
-
 export interface DataLoaderState {
   instances: {
     wallet: boolean;
   };
   statusIndicator: {
     open: boolean;
+    excludeChainIds: ChainId[];
   };
   global: {
     chainConfig: LoaderState;
@@ -99,6 +84,7 @@ export interface DataLoaderState {
     articles: LoaderState;
     merklCampaigns: LoaderState;
     currentCowcentratedRanges: LoaderState;
+    merklRewards: LoaderState;
   };
   byChainId: {
     [chainId in ChainEntity['id']]?: ChainIdDataEntity;
@@ -122,7 +108,6 @@ export interface ChainIdDataByAddressByChainEntity {
   balance: LoaderState;
   allowance: LoaderState;
   clmHarvests: LoaderState;
-  merklRewards: LoaderState;
 }
 
 export interface GlobalDataByAddressEntity {
@@ -130,4 +115,10 @@ export interface GlobalDataByAddressEntity {
   depositedVaults: LoaderState;
   dashboard: LoaderState;
   clmHarvests: LoaderState;
+  merklRewards: LoaderState;
 }
+
+export type LoaderGlobalKey = keyof DataLoaderState['global'];
+export type LoaderChainKey = keyof ChainIdDataEntity;
+export type LoaderChainAddressKey = keyof ChainIdDataByAddressByChainEntity;
+export type LoaderAddressKey = keyof GlobalDataByAddressEntity;

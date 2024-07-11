@@ -1,14 +1,14 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity } from '../entities/vault';
-import { isGovVault } from '../entities/vault';
-import { selectDashboardDepositedVaultIdsForAddress } from './balance';
+import { isCowcentratedGovVault, isGovVault } from '../entities/vault';
+import { selectUserDepositedVaultIds } from './balance';
 import {
   selectBoostById,
   selectIsVaultPreStakedOrBoosted,
   selectPreStakeOrActiveBoostIds,
 } from './boosts';
-import { selectVaultById } from './vaults';
+import { selectAllVisibleVaultIds, selectVaultById } from './vaults';
 import { selectTokenByAddress } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import type { KeysOfType } from '../utils/types-utils';
@@ -17,6 +17,7 @@ import type { PlatformEntity } from '../entities/platform';
 import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string';
 import escapeStringRegexp from 'escape-string-regexp';
 import type BigNumber from 'bignumber.js';
+import { selectVaultTotalApy } from './apy';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
@@ -137,6 +138,7 @@ export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, se
     // In gov earned token
     if (
       isGovVault(vault) &&
+      !isCowcentratedGovVault(vault) &&
       vault.earnedTokenAddresses
         .map(address => selectTokenByAddress(state, vault.chainId, address))
         .some(earnedToken => earnedToken.id.match(token))
@@ -168,7 +170,7 @@ export const selectUserDashboardFilteredVaults = (
   walletAddress?: string
 ) => {
   if (!walletAddress) return [];
-  const vaults = selectDashboardDepositedVaultIdsForAddress(state, walletAddress).map(id =>
+  const vaults = selectUserDepositedVaultIds(state, walletAddress).map(id =>
     selectVaultById(state, id)
   );
   const searchText = simplifySearchText(text);
@@ -208,7 +210,14 @@ export const selectFilteredVaults = (state: BeefyState) =>
 
 export const selectFilteredVaultCount = createSelector(selectFilteredVaults, ids => ids.length);
 
-export const selectTotalVaultCount = createSelector(
-  (state: BeefyState) => state.entities.vaults.allIds.length,
-  c => c
-);
+export const selectTotalVaultCount = (state: BeefyState) => selectAllVisibleVaultIds(state).length;
+
+/** standard boost, or anything with boostedTotalDaily entry */
+export const selectVaultIsBoostedForFilter = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  if (selectIsVaultPreStakedOrBoosted(state, vaultId)) {
+    return true;
+  }
+
+  const apy = selectVaultTotalApy(state, vaultId);
+  return !!apy && (apy.boostedTotalDaily || 0) > 0;
+};

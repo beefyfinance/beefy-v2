@@ -1,4 +1,8 @@
-import { isGovVault, type VaultEntity } from '../../features/data/entities/vault';
+import {
+  isCowcentratedLikeVault,
+  isGovVault,
+  type VaultEntity,
+} from '../../features/data/entities/vault';
 import { memo } from 'react';
 import {
   formatLargeUsd,
@@ -94,6 +98,20 @@ export const VaultYieldRewardsStat = memo<VaultYieldRewardsStatProps>(
     if (data.type === 'cowcentrated') {
       const { hasRewards, totalCompoundedUsd, ...tooltipProps } = data;
 
+      // Only claimable -> show like a normal gov vault
+      if (isCowcentratedLikeVault(vault) && vault.strategyTypeId !== 'compounds') {
+        return (
+          <VaultValueStat
+            label={label}
+            value={<RewardsTooltip size={20} vaultId={vaultId} walletAddress={walletAddress} />}
+            subValue={formatLargeUsd(tooltipProps.totalRewardsUsd)}
+            loading={false}
+            {...passthrough}
+          />
+        );
+      }
+
+      // Compounds and maybe claimable
       return (
         <VaultValueStat
           label={label}

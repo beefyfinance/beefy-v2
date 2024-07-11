@@ -3,7 +3,7 @@ import { type AnyAction, createListenerMiddleware } from '@reduxjs/toolkit';
 import {
   selectIsAddressBookLoaded,
   selectIsConfigAvailable,
-  selectIsPriceAvailable,
+  selectIsPricesAvailable,
   selectIsZapLoaded,
   selectShouldInitZapAggregatorTokenSupport,
   selectShouldInitZapAmms,
@@ -46,7 +46,7 @@ transactListener.startListening({
         return false;
       }
 
-      if (!selectIsPriceAvailable(state)) {
+      if (!selectIsPricesAvailable(state)) {
         return false;
       }
 
@@ -115,7 +115,7 @@ transactListener.startListening({
     const walletAddress = selectWalletAddress(getState());
     if (mayHaveMerklRewards && walletAddress) {
       // dispatch but don't wait on it
-      dispatch(fetchUserMerklRewardsAction({ chainId: vault.chainId, walletAddress }));
+      dispatch(fetchUserMerklRewardsAction({ walletAddress }));
     }
 
     // Wait for all loaders to finish

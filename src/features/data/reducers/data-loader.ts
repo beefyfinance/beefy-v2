@@ -1,4 +1,4 @@
-import type { ActionReducerMapBuilder, AsyncThunk } from '@reduxjs/toolkit';
+import type { ActionReducerMapBuilder, AsyncThunk, SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllAllowanceAction } from '../actions/allowance';
 import { fetchApyAction } from '../actions/apy';
@@ -35,7 +35,10 @@ import type {
   ChainIdDataByAddressByChainEntity,
   ChainIdDataEntity,
   DataLoaderState,
-  GlobalDataByAddressEntity,
+  LoaderAddressKey,
+  LoaderChainAddressKey,
+  LoaderChainKey,
+  LoaderGlobalKey,
   LoaderState,
   LoaderStateFulfilled,
   LoaderStateIdle,
@@ -81,6 +84,7 @@ const dataLoaderStateInitByAddress: DataLoaderState['byAddress'][string] = {
     depositedVaults: dataLoaderStateInit,
     dashboard: dataLoaderStateInit,
     clmHarvests: dataLoaderStateInit,
+    merklRewards: dataLoaderStateInit,
   },
 };
 
@@ -88,7 +92,6 @@ const dataLoaderStateInitByAddressByChainId: ChainIdDataByAddressByChainEntity =
   balance: dataLoaderStateInit,
   allowance: dataLoaderStateInit,
   clmHarvests: dataLoaderStateInit,
-  merklRewards: dataLoaderStateInit,
 };
 
 export const initialDataLoaderState: DataLoaderState = {
@@ -97,6 +100,7 @@ export const initialDataLoaderState: DataLoaderState = {
   },
   statusIndicator: {
     open: false,
+    excludeChainIds: [],
   },
   global: {
     chainConfig: dataLoaderStateInit,
@@ -128,6 +132,7 @@ export const initialDataLoaderState: DataLoaderState = {
     articles: dataLoaderStateInit,
     merklCampaigns: dataLoaderStateInit,
     currentCowcentratedRanges: dataLoaderStateInit,
+    merklRewards: dataLoaderStateInit,
   },
   byChainId: {},
   byAddress: {},
@@ -170,25 +175,46 @@ function makeFulfilledState(existing: LoaderState | undefined): LoaderStateFulfi
 function addGlobalAsyncThunkActions(
   builder: ActionReducerMapBuilder<DataLoaderState>,
   action: AsyncThunk<unknown, unknown, { state: BeefyState }>,
-  stateKey: keyof DataLoaderState['global'],
+  stateKey: LoaderGlobalKey,
   openNetworkModalOnReject: boolean = false
 ) {
   builder.addCase(action.pending, sliceState => {
-    sliceState.global[stateKey] = makePendingState(sliceState.global[stateKey]);
+    setGlobalPending(sliceState, stateKey);
   });
   builder.addCase(action.rejected, (sliceState, action) => {
-    const msg = errorToString(action.error);
-    // here, maybe put an error message
-    sliceState.global[stateKey] = makeRejectedState(sliceState.global[stateKey], msg);
-
-    // something got rejected, we want to auto-open the indicator
-    if (openNetworkModalOnReject) {
-      sliceState.statusIndicator.open = true;
+    setGlobalRejected(sliceState, stateKey, action.error, openNetworkModalOnReject);
+  });
+  builder.addCase(action.fulfilled, (sliceState, action) => {
+    setGlobalFulfilled(sliceState, stateKey);
+    if (fetchChainConfigs.fulfilled.match(action)) {
+      sliceState.statusIndicator.excludeChainIds = action.payload.chainConfigs
+        .filter(c => c.eol)
+        .map(c => c.id);
     }
   });
-  builder.addCase(action.fulfilled, sliceState => {
-    sliceState.global[stateKey] = makeFulfilledState(sliceState.global[stateKey]);
-  });
+}
+
+function setGlobalPending(sliceState: Draft<DataLoaderState>, stateKey: LoaderGlobalKey) {
+  sliceState.global[stateKey] = makePendingState(sliceState.global[stateKey]);
+}
+
+function setGlobalRejected(
+  sliceState: Draft<DataLoaderState>,
+  stateKey: LoaderGlobalKey,
+  error: SerializedError | string | undefined | null,
+  openModal?: boolean
+) {
+  sliceState.global[stateKey] = makeRejectedState(
+    sliceState.global[stateKey],
+    errorToString(error)
+  );
+  if (openModal) {
+    sliceState.statusIndicator.open = true;
+  }
+}
+
+function setGlobalFulfilled(sliceState: Draft<DataLoaderState>, stateKey: LoaderGlobalKey) {
+  sliceState.global[stateKey] = makeFulfilledState(sliceState.global[stateKey]);
 }
 
 function getOrCreateChainState(sliceState: Draft<DataLoaderState>, chainId: string) {
@@ -204,12 +230,13 @@ function getOrCreateChainState(sliceState: Draft<DataLoaderState>, chainId: stri
 }
 
 function getOrCreateAddressState(sliceState: Draft<DataLoaderState>, address: string) {
-  let addressState = sliceState.byAddress[address];
+  const addressKey = address.toLowerCase();
+  let addressState = sliceState.byAddress[addressKey];
   if (!addressState) {
     addressState = cloneDeep(dataLoaderStateInitByAddress);
     sliceState.byAddress = {
       ...sliceState.byAddress,
-      [address]: addressState,
+      [addressKey]: addressState,
     };
   }
 
@@ -221,13 +248,14 @@ function getOrCreateAddressChainState(
   chainId: string,
   address: string
 ) {
-  const addressState = getOrCreateAddressState(sliceState, address);
+  const addressKey = address.toLowerCase();
+  const addressState = getOrCreateAddressState(sliceState, addressKey);
 
   let chainState: ChainIdDataByAddressByChainEntity | undefined = addressState.byChainId[chainId];
   if (!chainState) {
     chainState = cloneDeep(dataLoaderStateInitByAddressByChainId);
-    sliceState.byAddress[address].byChainId = {
-      ...sliceState.byAddress[address].byChainId,
+    sliceState.byAddress[addressKey].byChainId = {
+      ...sliceState.byAddress[addressKey].byChainId,
       [chainId]: chainState,
     };
   }
@@ -238,7 +266,7 @@ function getOrCreateAddressChainState(
 function addByChainAsyncThunkActions<ActionParams extends { chainId: ChainEntity['id'] }>(
   builder: ActionReducerMapBuilder<DataLoaderState>,
   action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
-  stateKeys: Array<keyof ChainIdDataEntity>
+  stateKeys: Array<LoaderChainKey>
 ) {
   builder
     .addCase(action.pending, (sliceState, action) => {
@@ -256,8 +284,9 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: ChainEntity
       for (const stateKey of stateKeys) {
         chainState[stateKey] = makeRejectedState(chainState[stateKey], error);
 
-        // something got rejected, we want to auto-open the indicator
-        sliceState.statusIndicator.open = true;
+        // something got rejected, we want to auto-open the indicator if not eol chain
+        sliceState.statusIndicator.open =
+          !sliceState.statusIndicator.excludeChainIds.includes(chainId);
       }
     })
     .addCase(action.fulfilled, (sliceState, action) => {
@@ -275,7 +304,7 @@ function addByAddressByChainAsyncThunkActions<
 >(
   builder: ActionReducerMapBuilder<DataLoaderState>,
   action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
-  stateKeys: Array<keyof ChainIdDataByAddressByChainEntity>
+  stateKeys: Array<LoaderChainAddressKey>
 ) {
   builder
     .addCase(action.pending, (sliceState, action) => {
@@ -320,30 +349,37 @@ function addByAddressByChainAsyncThunkActions<
 function addByAddressAsyncThunkActions<ActionParams extends { walletAddress: string }>(
   builder: ActionReducerMapBuilder<DataLoaderState>,
   action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
-  stateKeys: Array<keyof GlobalDataByAddressEntity>
+  addressKeys: Array<LoaderAddressKey>,
+  globalKeys?: Array<LoaderGlobalKey>
 ) {
   builder
     .addCase(action.pending, (sliceState, action) => {
       const addressState = getOrCreateAddressState(sliceState, action.meta.arg.walletAddress);
 
-      for (const stateKey of stateKeys) {
-        addressState.global[stateKey] = makePendingState(addressState.global[stateKey]);
+      for (const addressKey of addressKeys) {
+        addressState.global[addressKey] = makePendingState(addressState.global[addressKey]);
       }
+
+      globalKeys?.forEach(globalKey => setGlobalPending(sliceState, globalKey));
     })
     .addCase(action.rejected, (sliceState, action) => {
       const addressState = getOrCreateAddressState(sliceState, action.meta.arg.walletAddress);
       const error = errorToString(action.error);
 
-      for (const stateKey of stateKeys) {
-        addressState.global[stateKey] = makeRejectedState(addressState.global[stateKey], error);
+      for (const addressKey of addressKeys) {
+        addressState.global[addressKey] = makeRejectedState(addressState.global[addressKey], error);
       }
+
+      globalKeys?.forEach(globalKey => setGlobalRejected(sliceState, globalKey, action.error));
     })
     .addCase(action.fulfilled, (sliceState, action) => {
       const addressState = getOrCreateAddressState(sliceState, action.meta.arg.walletAddress);
 
-      for (const stateKey of stateKeys) {
-        addressState.global[stateKey] = makeFulfilledState(addressState.global[stateKey]);
+      for (const addressKey of addressKeys) {
+        addressState.global[addressKey] = makeFulfilledState(addressState.global[addressKey]);
       }
+
+      globalKeys?.forEach(globalKey => setGlobalFulfilled(sliceState, globalKey));
     });
 }
 
@@ -410,12 +446,17 @@ export const dataLoaderSlice = createSlice({
       ['balance', 'allowance']
     );
     addByAddressByChainAsyncThunkActions(builder, fetchClmHarvestsForUserChain, ['clmHarvests']);
-    addByAddressByChainAsyncThunkActions(builder, fetchUserMerklRewardsAction, ['merklRewards']);
 
     addByAddressAsyncThunkActions(builder, fetchWalletTimeline, ['timeline']);
     addByAddressAsyncThunkActions(builder, recalculateDepositedVaultsAction, ['depositedVaults']);
     addByAddressAsyncThunkActions(builder, initDashboardByAddress, ['dashboard']);
     addByAddressAsyncThunkActions(builder, fetchClmHarvestsForUser, ['clmHarvests']);
+    addByAddressAsyncThunkActions(
+      builder,
+      fetchUserMerklRewardsAction,
+      ['merklRewards'],
+      ['merklRewards']
+    );
   },
 });
 
