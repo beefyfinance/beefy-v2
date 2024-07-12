@@ -36,7 +36,8 @@ export function getVaultNames(
   return {
     short,
     long,
-    list: type === 'gov' ? long : short,
+    //Exception for BIFI Vault to use long name
+    list: type === 'gov' || configName === 'BIFI' ? long : short,
     single: type === 'cowcentrated' ? short : long,
     singleMeta: long,
   };
