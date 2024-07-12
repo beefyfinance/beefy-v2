@@ -2351,6 +2351,48 @@
     ]
   },
   {
+    "id": "convex-tricrv",
+    "name": "TriCRV",
+    "type": "standard",
+    "token": "crvUSDETHCRV",
+    "tokenAddress": "0x4eBdF703948ddCEA3B11f675B4D1Fba9d2414A14",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooConvexTriCRV",
+    "earnedTokenAddress": "0x1d46d2B6A3d83bB33Feb7b8e7EdFb73e9937befD",
+    "earnContractAddress": "0x1d46d2B6A3d83bB33Feb7b8e7EdFb73e9937befD",
+    "oracle": "lps",
+    "oracleId": "convex-tricrv",
+    "status": "active",
+    "createdAt": 1719084155,
+    "platformId": "convex",
+    "assets": ["crvUSD", "ETH", "CRV"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-4/swap",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-4/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-tricrypto-4/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x4eBdF703948ddCEA3B11f675B4D1Fba9d2414A14",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x4eBdF703948ddCEA3B11f675B4D1Fba9d2414A14",
+            "coins": [
+              "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0xD533a949740bb3306d119CC777fa900bA034cd52"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "convex-oeth",
     "name": "OETH/ETH",
     "type": "standard",
