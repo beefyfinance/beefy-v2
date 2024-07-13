@@ -9,6 +9,7 @@ export type ApiClmHarvestPriceRow = {
   token0ToUsd: string;
   token1ToUsd: string;
   totalSupply: string;
+  transactionHash: string;
 };
 
 export type ClmVaultHarvestsResponse = ApiClmHarvestPriceRow[];
