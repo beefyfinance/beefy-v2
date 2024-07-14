@@ -397,6 +397,7 @@ export const config = {
       'USDe',
       'wUSDM',
       'USDx',
+      'gUSDC',
     ],
   },
   avax: {
