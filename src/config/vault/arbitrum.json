@@ -1,5 +1,63 @@
 [
   {
+    "id": "camelot-ethfi-weth-rp",
+    "name": "ETHFI-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowCamelotETHFI-WETH",
+    "tokenAddress": "0x5D604056E2560a8515aB51a2D8e6f0620d955d36",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "earnContractAddress": "0x5375dc3954693322387D329ED175EAdaF04579Fd",
+    "earnedToken": "rcowCamelotETHFI-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "camelot-ethfi-weth",
+    "status": "active",
+    "createdAt": 1721059299,
+    "platformId": "camelot",
+    "assets": ["ETHFI", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "camelot-ethfi-weth",
+    "name": "ETHFI-WETH",
+    "type": "cowcentrated",
+    "token": "ETHFI-WETH",
+    "tokenAddress": "0x0f143FC50d6c71Fee95D6Ec1030e62D788507b84",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowCamelotETHFI-WETH",
+    "earnedTokenAddress": "0x5D604056E2560a8515aB51a2D8e6f0620d955d36",
+    "earnContractAddress": "0x5D604056E2560a8515aB51a2D8e6f0620d955d36",
+    "oracle": "lps",
+    "oracleId": "camelot-ethfi-weth",
+    "status": "active",
+    "createdAt": 1721059299,
+    "platformId": "camelot",
+    "assets": ["ETHFI", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "balancer-arb-usdc-gusdc",
     "name": "gUSDC-USDC",
     "type": "standard",
