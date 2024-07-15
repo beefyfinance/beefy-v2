@@ -107,6 +107,7 @@ export interface BoostConfig {
   earnedTokenDecimals: number;
   earnedTokenAddress: string;
   earnContractAddress: string;
+  version?: number;
   earnedOracle: string;
   earnedOracleId: string;
   partnership: boolean;

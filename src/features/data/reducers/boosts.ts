@@ -226,6 +226,7 @@ function addBoostToState(
     partnerIds: apiBoost.partners?.length ? apiBoost.partners : [],
     campaignId: apiBoost.campaign ? apiBoost.campaign : undefined,
     vaultId: apiBoost.poolId,
+    version: apiBoost.version || 1,
   };
   sliceState.byId[boost.id] = boost;
   sliceState.allIds.push(boost.id);
