@@ -15,9 +15,9 @@ import { styles } from './styles';
 import { selectVaultById } from '../../../../data/selectors/vaults';
 import { useTranslation } from 'react-i18next';
 import { useHistoricalStatLoader } from '../../../../data/hooks/historical';
-import { AlertError } from '../../../../../components/Alerts';
 import type { ChartStat } from '../types';
 import { ErrorBoundary } from '../../../../../components/ErrorBoundary/ErrorBoundary';
+import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData';
 
 const useStyles = makeStyles(styles);
 
@@ -33,7 +33,6 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
   stat,
 }) {
   const classes = useStyles();
-  const { t } = useTranslation();
   const availableBuckets = useAppSelector(state =>
     selectHistoricalAvailableBuckets(state, stat, vaultId, oracleId)
   );
@@ -41,7 +40,7 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
   const availableRanges = useMemo(() => getAvailableRanges(availableBuckets), [availableBuckets]);
   const [range, setRange] = useState<TimeRange>(() => getDefaultTimeRange(availableRanges));
   const bucket = useMemo(() => timeRangeToBucket[range], [range]);
-  const { loading, hasData } = useHistoricalStatLoader(
+  const { loading, hasData, willRetry } = useHistoricalStatLoader(
     stat,
     vaultId,
     oracleId,
@@ -70,7 +69,7 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
         ) : loading ? (
           <GraphLoader imgHeight={220} />
         ) : (
-          <AlertError>{t('Graph-No-Data-Retry')}</AlertError>
+          <GraphNoData reason={willRetry ? 'error-retry' : 'wait-collect'} />
         )}
       </div>
       <div className={classes.footer}>

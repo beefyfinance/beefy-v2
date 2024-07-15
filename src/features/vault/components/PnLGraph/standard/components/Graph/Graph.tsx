@@ -15,19 +15,18 @@ import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { GraphLoader } from '../../../../GraphLoader';
 import { max } from 'lodash-es';
 import {
+  domainOffSet,
+  formatDateTimeTick,
   formatUnderlyingTick,
   formatUsdTick,
-  formatDateTimeTick,
-  GRAPH_TIME_BUCKETS,
-  domainOffSet,
   getXInterval,
+  GRAPH_TIME_BUCKETS,
   mapRangeToTicks,
 } from '../../../../../../../helpers/graph';
 import { Legend } from '../Legend';
 import { styles } from './styles';
 import { XAxisTick } from '../../../../../../../components/XAxisTick';
-import { AlertError } from '../../../../../../../components/Alerts';
-import { useTranslation } from 'react-i18next';
+import { GraphNoData } from '../../../../../../../components/GraphNoData/GraphNoData';
 
 const useStyles = makeStyles(styles);
 
@@ -39,7 +38,6 @@ interface GraphProps {
 
 export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address }) {
   const classes = useStyles();
-  const { t } = useTranslation();
   const { chartData, isLoading } = usePnLChartData(GRAPH_TIME_BUCKETS[period], vaultId, address);
   const { data, minUnderlying, maxUnderlying, minUsd, maxUsd } = chartData;
 
@@ -98,7 +96,7 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
   }
 
   if (!data.length) {
-    return <AlertError>{t('Graph-No-Data-Retry')}</AlertError>;
+    return <GraphNoData reason="error" />;
   }
 
   return (

@@ -101,5 +101,6 @@ export function useHistoricalStatLoader(
     loading: !hasData && (status === 'pending' || status === 'idle'),
     alreadyFulfilled,
     hasData,
+    willRetry: status === 'rejected',
   };
 }

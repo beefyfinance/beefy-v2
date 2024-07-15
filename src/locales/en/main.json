@@ -353,7 +353,7 @@
   "Graph-Fees": "Fees",
   "Graph-No-Data-error": "Failed to fetch data for this chart.",
   "Graph-No-Data-error-retry": "Failed to fetch data for this chart. We'll try again shortly.",
-  "Graph-No-Data-wait-collect": "This chart will be displayed once more data for your position has been collected.",
+  "Graph-No-Data-wait-collect": "This chart will be displayed once more data has been collected.",
   "Safety-Score": "SAFETY SCORE",
   "Safety-Score1": "Safety Score",
   "Safety-ScoreWhat": "The Beefy Safety Score",
