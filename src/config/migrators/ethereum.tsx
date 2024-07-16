@@ -16,4 +16,9 @@ export const migrators = [
     name: 'Prisma',
     icon: 'PRISMA',
   },
+  {
+    id: 'magpie',
+    name: 'Magpie',
+    icon: 'mPENDLE',
+  },
 ] as const satisfies ReadonlyArray<MigrationConfig>;
