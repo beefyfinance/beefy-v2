@@ -1,5 +1,28 @@
 [
   {
+    "id": "pendle-weethk-26sep24",
+    "name": "weETHk 26Sep24",
+    "token": "weETHk 26Sep24",
+    "tokenAddress": "0x905A5a4792A0C27a2AdB2777f98C577D320079EF",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0xAd182D2Fa5BE2D9025fA3775c1D3111927619fed",
+    "earnedToken": "mooPenpieWeETHk_26SEP24",
+    "earnedTokenAddress": "0xAd182D2Fa5BE2D9025fA3775c1D3111927619fed",
+    "oracle": "lps",
+    "oracleId": "pendle-weethk-26sep24",
+    "status": "active",
+    "createdAt": 1721109617,
+    "platformId": "magpie",
+    "assets": ["weETHk"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x905A5a4792A0C27a2AdB2777f98C577D320079EF/zap/in?chain=ethereum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x905A5a4792A0C27a2AdB2777f98C577D320079EF/zap/out?chain=ethereum",
+    "network": "ethereum"
+  },
+  {
     "id": "convex-dgneth-eth+",
     "name": "dgnETH/ETH+",
     "token": "dgnETHETH+",
