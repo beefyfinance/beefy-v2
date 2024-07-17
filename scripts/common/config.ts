@@ -36,10 +36,6 @@ export const excludeChains: Record<string, { count: number; hash: string }> = {
     count: 10,
     hash: 'f74673e540c41ec7ab283c9d07ac2090453ab34be8824e8178c0a853fcaf80b1',
   },
-  mantle: {
-    count: 28,
-    hash: '7bde62e7e6f90ad6bdaf31a7b7c54f26d78c2388f7c68ee97a2899e3ab143018',
-  },
 };
 
 export const excludedChainIds = Object.keys(excludeChains);
