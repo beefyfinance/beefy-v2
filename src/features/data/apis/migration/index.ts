@@ -8,6 +8,7 @@ const migrators: MigrationConfig['id'][] = [
   'l2-curve',
   'ethereum-prisma',
   'polygon-pearl',
+  'magpie',
 ];
 
 export class MigrationApi implements IMigrationApi {
