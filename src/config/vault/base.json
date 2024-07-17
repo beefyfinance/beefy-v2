@@ -1,5 +1,33 @@
 [
   {
+    "id": "aerodrome-usdz-susdz",
+    "name": "USDz-sUSDz vLP",
+    "token": "vAMM-USDz/sUSDz",
+    "tokenAddress": "0x7818B53F423457151407103321d8F961773815D1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroUSDz-sUSDz",
+    "earnedTokenAddress": "0xd4F3e6FaD95Af2512462FeCe507be3C29FE7960C",
+    "earnContractAddress": "0xd4F3e6FaD95Af2512462FeCe507be3C29FE7960C",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usdz-susdz",
+    "status": "active",
+    "createdAt": 1721215738,
+    "platformId": "aerodrome",
+    "assets": ["USDz", "sUSDz"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x04D5ddf5f3a8939889F11E97f8c4BB48317F1938&token1=0xe31eE12bDFDD0573D634124611e85338e2cBF0cF&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aero-cow-usdc-eusd-rp",
     "name": "eUSD-USDC Reward Pool",
     "type": "gov",
