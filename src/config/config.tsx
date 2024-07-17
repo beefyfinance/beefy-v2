@@ -403,7 +403,7 @@ export const config = {
   avax: {
     name: 'Avalanche',
     chainId: 43114,
-    rpc: ['https://rpc.ankr.com/avalanche'],
+    rpc: ['https://avax-pokt.nodies.app/ext/bc/C/rpc'],
     explorerUrl: 'https://cchain.explorer.avax.network',
     multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -417,7 +417,7 @@ export const config = {
         symbol: 'AVAX',
         decimals: 18,
       },
-      rpcUrls: ['https://rpc.ankr.com/avalanche'],
+      rpcUrls: ['https://avax-pokt.nodies.app/ext/bc/C/rpc'],
       blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
     },
     gas: {
