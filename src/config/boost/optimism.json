@@ -1,5 +1,25 @@
 [
   {
+    "id": "moo_velo-cow-op-moobifi-usdc-vault",
+    "poolId": "velo-cow-op-moobifi-usdc-vault",
+    "name": "Beefy",
+    "assets": ["mooBIFI", "USDC"],
+    "tokenAddress": "0xD4768E30180786e875a4909472c9826b18931E43",
+    "earnedToken": "OP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
+    "earnContractAddress": "0xB9175911A14929421D6b19Ca5FA428Adf216257F",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OP",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "arb-ltipp",
+    "partners": [],
+    "hidden": true
+  },
+  {
     "id": "moo_velodrome-v2-velo-usdc-beefy",
     "poolId": "velodrome-v2-velo-usdc",
     "name": "Beefy",
