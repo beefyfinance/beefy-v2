@@ -35,9 +35,9 @@ import { isFiniteNumber } from '../../../helpers/number';
 import {
   selectAllVaultsWithBridgedVersion,
   selectCowcentratedLikeVaultById,
+  selectCowcentratedVaultById,
   selectVaultByAddressOrUndefined,
   selectVaultById,
-  selectVaultByIdOrUndefined,
   selectVaultStrategyAddressOrUndefined,
 } from '../selectors/vaults';
 import { selectCowcentratedLikeVaultDepositTokens } from '../selectors/tokens';
@@ -227,6 +227,7 @@ function handleDatabarnTimeline(
   return byVaultId;
 }
 
+/** CLM + CLM Pools */
 function handleCowcentratedTimeline(
   timeline: CLMTimelineAnalyticsEntryHandleInput[],
   state: BeefyState
@@ -234,25 +235,22 @@ function handleCowcentratedTimeline(
   const vaultTxs = timeline.filter(tx => tx.productKey.startsWith('beefy:vault:'));
 
   // Timelines returned from the API are stored under the CLM "manager" address,
-  // but included all txs for CLM, CLM Pool and CLM Vaults
+  // but included all txs for bare CLM and CLM Pools
   const vaultTxsWithId: CLMTimelineAnalyticsEntryHandleInputWithVaultId[] = sortBy(
-    vaultTxs.map(tx => {
-      const vault = selectVaultByAddressOrUndefined(state, tx.chain, tx.managerAddress);
-
-      return { ...tx, vaultId: vault?.id || tx.displayName };
-    }),
+    vaultTxs
+      .map(tx => {
+        const vault = selectVaultByAddressOrUndefined(state, tx.chain, tx.managerAddress);
+        return vault && isCowcentratedVault(vault) ? { ...tx, vaultId: vault.id } : undefined;
+      })
+      .filter(isDefined),
     tx => tx.datetime.getTime()
   );
 
   const byClmId = groupBy(vaultTxsWithId, tx => tx.vaultId);
   const byVaultId: Record<VaultEntity['id'], CLMTimelineAnalyticsEntry[]> = {};
 
-  // TODO fix for CLM Vaults
   for (const [clmId, txs] of Object.entries(byClmId)) {
-    const clm = selectVaultByIdOrUndefined(state, clmId);
-    if (!clm || !isCowcentratedVault(clm)) {
-      continue;
-    }
+    const clm = selectCowcentratedVaultById(state, clmId);
 
     // bare clm, remove all reward pool balances
     byVaultId[clm.id] = removeAllRewardPoolsFromTimeline(txs);

@@ -12,7 +12,6 @@ import { getAvailableRanges, getDefaultTimeRange, timeRangeToBucket } from '../u
 import type { LineTogglesState } from '../LineToggles';
 import { LineToggles } from '../LineToggles';
 import { styles } from './styles';
-import { selectVaultById } from '../../../../data/selectors/vaults';
 import { useTranslation } from 'react-i18next';
 import { useHistoricalStatLoader } from '../../../../data/hooks/historical';
 import type { ChartStat } from '../types';
@@ -36,18 +35,10 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
   const availableBuckets = useAppSelector(state =>
     selectHistoricalAvailableBuckets(state, stat, vaultId, oracleId)
   );
-  const { chainId, contractAddress } = useAppSelector(state => selectVaultById(state, vaultId));
   const availableRanges = useMemo(() => getAvailableRanges(availableBuckets), [availableBuckets]);
   const [range, setRange] = useState<TimeRange>(() => getDefaultTimeRange(availableRanges));
   const bucket = useMemo(() => timeRangeToBucket[range], [range]);
-  const { loading, hasData, willRetry } = useHistoricalStatLoader(
-    stat,
-    vaultId,
-    oracleId,
-    bucket,
-    chainId,
-    contractAddress
-  );
+  const { loading, hasData, willRetry } = useHistoricalStatLoader(stat, vaultId, oracleId, bucket);
   const [lineToggles, setLineToggles] = useState<LineTogglesState>({
     average: true,
     movingAverage: true,
@@ -74,7 +65,7 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
       </div>
       <div className={classes.footer}>
         {stat === 'clm' ? (
-          <CowcentratedLeged />
+          <CowcentratedLegend />
         ) : (
           <LineToggles toggles={lineToggles} onChange={setLineToggles} />
         )}
@@ -84,7 +75,7 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
   );
 });
 
-const CowcentratedLeged = memo(function CowcentratedLeged() {
+const CowcentratedLegend = memo(function CowcentratedLegend() {
   const classes = useStyles();
   const { t } = useTranslation();
   return (

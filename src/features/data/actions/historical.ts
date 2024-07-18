@@ -1,19 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyDataApi } from '../apis/instances';
-import { isCowcentratedLikeVault, isGovVault, type VaultEntity } from '../entities/vault';
+import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault';
 import type {
   ApiChartData,
   ApiCowcentratedChartData,
   ApiRanges,
   ApiTimeBucket,
 } from '../apis/beefy/beefy-data-api-types';
-import { selectVaultById } from '../selectors/vaults';
+import { selectCowcentratedLikeVaultById, selectVaultById } from '../selectors/vaults';
 import { selectTokenByAddress } from '../selectors/tokens';
 import type { TokenEntity } from '../entities/token';
 import type { ThunkAction } from 'redux-thunk';
 import type { Action } from 'redux';
-import type { ChainEntity } from '../entities/chain';
 import { featureFlag_simulateBeefyApiError } from '../utils/feature-flags';
 import { sleep } from '../utils/async-utils';
 import type { ChartStat } from '../../vault/components/HistoricGraph/types';
@@ -121,8 +120,6 @@ export interface HistoricalCowcentratedPayload {
 
 export interface HistoricalCowcentratedParams {
   vaultId: VaultEntity['id'];
-  vaultAddress: VaultEntity['contractAddress'];
-  chainId: ChainEntity['id'];
   bucket: ApiTimeBucket;
 }
 
@@ -130,42 +127,33 @@ export const fetchHistoricalCowcentratedRanges = createAsyncThunk<
   HistoricalCowcentratedPayload,
   HistoricalCowcentratedParams,
   { state: BeefyState }
->(
-  'historical/fetchHistoricalCowcentratedRanges',
-  async ({ vaultAddress, chainId, bucket, vaultId }, { getState }) => {
-    const state = getState();
-    const vault = selectVaultById(state, vaultId);
-    const api = await getBeefyDataApi();
-    const bucketToUse =
-      Date.now() / 1000 - vault.createdAt >= 60 * 60 * 24 * 30
-        ? bucket
-        : ('1h_1M' as ApiTimeBucket);
+>('historical/fetchHistoricalCowcentratedRanges', async ({ bucket, vaultId }, { getState }) => {
+  const state = getState();
+  const vault = selectCowcentratedLikeVaultById(state, vaultId);
+  const api = await getBeefyDataApi();
+  const bucketToUse =
+    Date.now() / 1000 - vault.createdAt >= 60 * 60 * 24 * 30 ? bucket : ('1h_1M' as ApiTimeBucket);
 
-    // if the vault is a gov vault, we need to use the deposit token address since will be the underlying clm token
-    const clmAddress = isGovVault(vault) ? vault.depositTokenAddress : vaultAddress;
+  const clmAddress = getCowcentratedAddressFromCowcentratedLikeVault(vault);
+  const rawData = await api.getCowcentratedRangesChartData(clmAddress, bucketToUse, vault.chainId);
 
-    const rawData = await api.getCowcentratedRangesChartData(clmAddress, bucketToUse, chainId);
+  const data = rawData.map(item => {
+    return {
+      ...item,
+      v: Number(item.v),
+      min: Number(item.min),
+      max: Number(item.max),
+    };
+  }) satisfies ApiCowcentratedChartData;
 
-    const data = rawData.map(item => {
-      return {
-        ...item,
-        v: Number(item.v),
-        min: Number(item.min),
-        max: Number(item.max),
-      };
-    }) satisfies ApiCowcentratedChartData;
-
-    return { data };
-  }
-);
+  return { data };
+});
 
 export function fetchHistoricalStat(
   stat: ChartStat,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
-  bucket: ApiTimeBucket,
-  chainId: ChainEntity['id'],
-  vaultAddress: VaultEntity['contractAddress']
+  bucket: ApiTimeBucket
 ): ThunkAction<unknown, unknown, unknown, Action<unknown>> {
   switch (stat) {
     case 'apy':
@@ -175,7 +163,7 @@ export function fetchHistoricalStat(
     case 'price':
       return fetchHistoricalPrices({ oracleId, bucket });
     case 'clm':
-      return fetchHistoricalCowcentratedRanges({ vaultId, vaultAddress, chainId, bucket });
+      return fetchHistoricalCowcentratedRanges({ vaultId, bucket });
   }
 
   throw new Error(`Unknown stat: ${stat}`);

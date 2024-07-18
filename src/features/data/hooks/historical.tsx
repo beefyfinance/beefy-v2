@@ -15,7 +15,6 @@ import { selectVaultById } from '../selectors/vaults';
 import { selectTokenByAddress } from '../selectors/tokens';
 import type { GraphBucket } from '../../../helpers/graph';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
-import type { ChainEntity } from '../entities/chain';
 import type { ChartStat } from '../../vault/components/HistoricGraph/types';
 
 export function useOracleIdToUsdPrices(oracleId: TokenEntity['oracleId'], bucket: GraphBucket) {
@@ -36,7 +35,7 @@ export function useOracleIdToUsdPrices(oracleId: TokenEntity['oracleId'], bucket
       } else if (status === 'rejected') {
         const handle = setTimeout(
           () => dispatch(fetchHistoricalPrices({ oracleId, bucket })),
-          5000
+          15000
         );
         return () => clearTimeout(handle);
       }
@@ -48,6 +47,7 @@ export function useOracleIdToUsdPrices(oracleId: TokenEntity['oracleId'], bucket
     loading: !hasData && (status === 'pending' || status === 'idle'),
     alreadyFulfilled,
     hasData,
+    willRetry: status === 'rejected',
   };
 }
 
@@ -67,9 +67,7 @@ export function useHistoricalStatLoader(
   stat: ChartStat,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
-  bucket: ApiTimeBucket,
-  chainId: ChainEntity['id'],
-  vaultAddress: VaultEntity['contractAddress']
+  bucket: ApiTimeBucket
 ) {
   const dispatch = useAppDispatch();
   const status = useAppSelector(state =>
@@ -85,17 +83,16 @@ export function useHistoricalStatLoader(
   useEffect(() => {
     if (!alreadyFulfilled) {
       if (status === 'idle') {
-        dispatch(fetchHistoricalStat(stat, vaultId, oracleId, bucket, chainId, vaultAddress));
+        dispatch(fetchHistoricalStat(stat, vaultId, oracleId, bucket));
       } else if (status === 'rejected') {
         const handle = setTimeout(
-          () =>
-            dispatch(fetchHistoricalStat(stat, vaultId, oracleId, bucket, chainId, vaultAddress)),
-          5000
+          () => dispatch(fetchHistoricalStat(stat, vaultId, oracleId, bucket)),
+          15000
         );
         return () => clearTimeout(handle);
       }
     }
-  }, [dispatch, vaultId, oracleId, stat, bucket, chainId, vaultAddress, alreadyFulfilled, status]);
+  }, [dispatch, vaultId, oracleId, stat, bucket, alreadyFulfilled, status]);
 
   return {
     loading: !hasData && (status === 'pending' || status === 'idle'),

@@ -4,11 +4,15 @@ import BigNumber from 'bignumber.js';
 import type {
   AnalyticsPriceResponse,
   AnalyticsUserTimelineResponse,
+  CLMTimelineAnalyticsConfig,
+  CLMVaultTimelineAnalyticsConfig,
   PriceType,
   TimeBucketType,
+  TimelineAnalyticsConfig,
 } from './analytics-types';
 import type { VaultEntity } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
+import { partition } from 'lodash-es';
 
 const INVESTOR_API = import.meta.env.VITE_INVESTOR_URL || 'https://investor-api.beefy.finance';
 
@@ -23,13 +27,29 @@ export class AnalyticsApi {
 
   public async getWalletTimeline(address: string): Promise<AnalyticsUserTimelineResponse> {
     try {
-      const res = await this.api.get('/api/v1/timeline', { params: { address } });
-      return res.data.result;
+      const res = await this.api.get<{
+        result: {
+          clmTimeline: (CLMTimelineAnalyticsConfig | CLMVaultTimelineAnalyticsConfig)[];
+          databarnTimeline: TimelineAnalyticsConfig[];
+        };
+      }>('/api/v1/timeline', { params: { address } });
+
+      const [clmVaultTimeline, clmTimeline] = partition(
+        res.data.result.clmTimeline || [],
+        (item): item is CLMVaultTimelineAnalyticsConfig => item.type === 'classic'
+      );
+
+      return {
+        clmTimeline,
+        clmVaultTimeline,
+        databarnTimeline: res.data.result.databarnTimeline || [],
+      };
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response?.status === 404) {
           return {
             clmTimeline: [],
+            clmVaultTimeline: [],
             databarnTimeline: [],
           };
         }
