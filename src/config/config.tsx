@@ -69,6 +69,7 @@ export const config = {
       'PYUSD',
       'USDM',
       'ULTRA',
+      'ShezUSD',
       'USDe',
       'sUSDe',
     ],
