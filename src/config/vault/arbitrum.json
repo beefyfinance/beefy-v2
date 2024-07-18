@@ -1,5 +1,44 @@
 [
   {
+    "id": "curve-arb-knox-eusd-v2",
+    "name": "KNOX/eUSD",
+    "token": "KNOXeUSD",
+    "tokenAddress": "0x86EA1191a219989d2dA3a85c949a12A92f8ED3Db",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x38Fb2BbedacDCC3490ee84a1e454324C16f31dae",
+    "earnedToken": "mooCurveKNOX-eUSD-v2",
+    "earnedTokenAddress": "0x38Fb2BbedacDCC3490ee84a1e454324C16f31dae",
+    "oracle": "lps",
+    "oracleId": "curve-arb-knox-eusd-v2",
+    "status": "active",
+    "createdAt": 1721303198,
+    "platformId": "curve",
+    "assets": ["KNOX", "eUSD"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-twocrypto-19/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-twocrypto-19/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x86EA1191a219989d2dA3a85c949a12A92f8ED3Db",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x86EA1191a219989d2dA3a85c949a12A92f8ED3Db",
+            "coins": [
+              "0x0BBF664D46becc28593368c97236FAa0fb397595",
+              "0x12275DCB9048680c4Be40942eA4D92c74C63b844"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "aura-arb-gyro-ausdt-usdt",
     "name": "Gyroscope AaveUSDT/USDT",
     "type": "standard",
