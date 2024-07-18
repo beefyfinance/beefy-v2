@@ -66,6 +66,8 @@ export interface VaultConfig {
   lendingOracle?: { provider: string; address?: string; loops?: number };
   earningPoints?: boolean;
   feeTier?: string;
+  /** tmp: exclude from being loaded */
+  hidden?: boolean;
 }
 
 export interface PartnersConfig {
@@ -115,6 +117,8 @@ export interface BoostConfig {
   partners?: string[] | undefined;
   campaign?: string | undefined;
   fixedStatus?: boolean | null;
+  /** tmp: exclude from being loaded */
+  hidden?: boolean;
 }
 
 export interface StandardGasConfig {

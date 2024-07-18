@@ -1,5 +1,27 @@
 [
   {
+    "id": "velo-cow-op-moobifi-usdc-vault",
+    "name": "mooBIFI-USDC",
+    "type": "standard",
+    "token": "mooBIFI-USDC",
+    "tokenAddress": "0xD4768E30180786e875a4909472c9826b18931E43",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooCowVeloOpmooBIFI-USDC",
+    "earnedTokenAddress": "0x436001D53b77cB0AA636F8124C65dC2c92A46D91",
+    "earnContractAddress": "0x436001D53b77cB0AA636F8124C65dC2c92A46D91",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-moobifi-usdc",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["USDC", "mooBIFI"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "createdAt": 1720631354,
+    "hidden": true
+  },
+  {
     "id": "velo-cow-op-op-usdc-rp",
     "name": "OP-USDC Reward Pool",
     "type": "gov",
