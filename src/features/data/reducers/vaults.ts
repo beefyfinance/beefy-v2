@@ -39,6 +39,13 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
       };
     };
   };
+  /** Vaults id look up by type */
+  byType: {
+    [type in VaultEntity['type']]: {
+      /** Vaults on chain of type */
+      allIds: VaultEntity['id'][];
+    };
+  };
   /** Vaults id look up by chain id */
   byChainId: {
     [chainId in ChainEntity['id']]?: {
@@ -102,6 +109,17 @@ export const initialVaultsState: VaultsState = {
     },
     depositFor: {
       byId: {},
+    },
+  },
+  byType: {
+    standard: {
+      allIds: [],
+    },
+    gov: {
+      allIds: [],
+    },
+    cowcentrated: {
+      allIds: [],
     },
   },
   byChainId: {},
@@ -241,6 +259,17 @@ function rebuildVaultsState(sliceState: Draft<VaultsState>) {
 
   const allActiveIds: VaultsState['allActiveIds'] = [];
   const allBridgedIds: VaultsState['allBridgedIds'] = [];
+  const byType: VaultsState['byType'] = {
+    standard: {
+      allIds: [],
+    },
+    gov: {
+      allIds: [],
+    },
+    cowcentrated: {
+      allIds: [],
+    },
+  };
   const byChainId: VaultsState['byChainId'] = fromKeysBy(allChainIds, () =>
     createVaultsChainState()
   );
@@ -253,6 +282,9 @@ function rebuildVaultsState(sliceState: Draft<VaultsState>) {
     if (isStandardVault(vault) && !!vault.bridged) {
       allBridgedIds.push(vault.id);
     }
+
+    // by type
+    byType[vault.type].allIds.push(vault.id);
 
     // by chain
     const chainState = byChainId[vault.chainId]!;
@@ -276,6 +308,7 @@ function rebuildVaultsState(sliceState: Draft<VaultsState>) {
   sliceState.allChainIds = allChainIds;
   sliceState.allActiveIds = allActiveIds;
   sliceState.allBridgedIds = allBridgedIds;
+  sliceState.byType = byType;
   sliceState.byChainId = byChainId;
   sliceState.relations = getVaultRelations(sliceState);
 }
