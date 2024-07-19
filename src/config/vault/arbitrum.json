@@ -39,6 +39,68 @@
     ]
   },
   {
+    "id": "ramses-zero-weth-rp",
+    "name": "ZRO-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowRamsesZRO-WETH",
+    "tokenAddress": "0x72eB356324963A85A3d06c35422b59c87e475195",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "earnContractAddress": "0x5d1d05481B4F5050220637db87273AE5737B4C1e",
+    "earnedToken": "rcowRamsesZRO-WETH",
+    "earnedTokenAddresses": [
+      "0xAAA6C1E32C55A7Bfa8066A6FAE9b42650F262418",
+      "0x912CE59144191C1204E64559FE8253a0e49E6548"
+    ],
+    "earnedOracleIds": ["RAM", "ARB"],
+    "oracle": "lps",
+    "oracleId": "ramses-zero-weth",
+    "status": "active",
+    "createdAt": 1721343401,
+    "platformId": "ramses",
+    "assets": ["ZRO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "ramses-zero-weth",
+    "name": "ZRO-WETH",
+    "type": "cowcentrated",
+    "token": "ZRO-WETH",
+    "tokenAddress": "0x05bA720fC96EA8969f86d7a0B0767BB8DC265232",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "depositTokenAddresses": [
+      "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowRamsesZRO-WETH",
+    "earnedTokenAddress": "0x72eB356324963A85A3d06c35422b59c87e475195",
+    "earnContractAddress": "0x72eB356324963A85A3d06c35422b59c87e475195",
+    "oracle": "lps",
+    "oracleId": "ramses-zero-weth",
+    "status": "active",
+    "createdAt": 1721343401,
+    "platformId": "ramses",
+    "assets": ["ZRO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.34",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aura-arb-gyro-ausdt-usdt",
     "name": "Gyroscope AaveUSDT/USDT",
     "type": "standard",
