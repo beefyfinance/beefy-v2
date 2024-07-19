@@ -272,11 +272,11 @@ const UserRewardsRefreshButton = memo<RewardsRefresherProps>(function UserReward
           : 'Transact-Claim-Refresh-Merkl-Loaded'
       )}
       text={
-        canRefresh
+        status.isLoading
+          ? undefined
+          : canRefresh
           ? t('Transact-Claim-Refresh')
-          : !status.isLoading
-          ? t('Transact-Claim-Refresh-Wait')
-          : undefined
+          : t('Transact-Claim-Refresh-Wait')
       }
       status={status.isError ? 'error' : status.isLoading ? 'loading' : 'loaded'}
       disabled={!canRefresh}
