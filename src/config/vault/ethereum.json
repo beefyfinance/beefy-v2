@@ -98,6 +98,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x905A5a4792A0C27a2AdB2777f98C577D320079EF/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x905A5a4792A0C27a2AdB2777f98C577D320079EF/zap/out?chain=ethereum",
+    "earningPoints": true,
     "network": "ethereum"
   },
   {
