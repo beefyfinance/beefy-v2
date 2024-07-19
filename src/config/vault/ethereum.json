@@ -1,5 +1,83 @@
 [
   {
+    "id": "curve-shezeth-eth",
+    "name": "ShezETH/ETH",
+    "token": "shezETHETH",
+    "tokenAddress": "0x637213593e31Bc25F49D37C74B43a89eb1743D73",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x46EA5993fdDC27E4f770eFfB6921F401101Cbd59",
+    "earnedToken": "mooCurveShezETH-ETH",
+    "earnedTokenAddress": "0x46EA5993fdDC27E4f770eFfB6921F401101Cbd59",
+    "oracle": "lps",
+    "oracleId": "curve-shezeth-eth",
+    "status": "active",
+    "createdAt": 1721301457,
+    "platformId": "curve",
+    "assets": ["ShezETH", "ETH"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-162/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-162/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x637213593e31Bc25F49D37C74B43a89eb1743D73",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x637213593e31Bc25F49D37C74B43a89eb1743D73",
+            "coins": [
+              "0x63a0964A36c34E81959da5894ad888800e17405b",
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "curve-shezusd-usdc",
+    "name": "ShezUSD/USDC",
+    "token": "shezUSDUSD",
+    "tokenAddress": "0x66267c6E24fBcdeBf06AE9104e0ccFb9C8b2AE08",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x93027914546190635C51647FC9270f0025dA8C53",
+    "earnedToken": "mooCurveShezUSD-USDC",
+    "earnedTokenAddress": "0x93027914546190635C51647FC9270f0025dA8C53",
+    "oracle": "lps",
+    "oracleId": "curve-shezusd-usdc",
+    "status": "active",
+    "createdAt": 1721301442,
+    "platformId": "curve",
+    "assets": ["ShezUSD", "USDC"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-118/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-118/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x66267c6E24fBcdeBf06AE9104e0ccFb9C8b2AE08",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x66267c6E24fBcdeBf06AE9104e0ccFb9C8b2AE08",
+            "coins": [
+              "0xD60EeA80C83779a8A5BFCDAc1F3323548e6BB62d",
+              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "pendle-weethk-26sep24",
     "name": "weETHk 26Sep24",
     "token": "weETHk 26Sep24",
@@ -20,6 +98,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x905A5a4792A0C27a2AdB2777f98C577D320079EF/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x905A5a4792A0C27a2AdB2777f98C577D320079EF/zap/out?chain=ethereum",
+    "earningPoints": true,
     "network": "ethereum"
   },
   {
