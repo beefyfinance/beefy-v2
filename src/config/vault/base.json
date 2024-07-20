@@ -234,38 +234,6 @@
     ]
   },
   {
-    "id": "aero-cow-mog-weth-rp",
-    "name": "Mog-WETH Reward Pool",
-    "type": "gov",
-    "version": 2,
-    "token": "cowAeroMog-WETH",
-    "tokenAddress": "0x7f45AE7f7BBCebde75121bbD14D50511E064f137",
-    "tokenDecimals": 18,
-    "earnedTokens": ["AERO"],
-    "earnedTokenAddresses": [
-      "0x940181a94A35A4569E4529A3CDfB74e38FD98631",
-      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
-    ],
-    "earnedOracleIds": ["AERO", "USDC"],
-    "earnedTokenDecimals": [18, 18],
-    "earnedToken": "rCowAeroMog-WETH",
-    "earnContractAddress": "0xC8F14d8806014B5AB166e3b82654C09b6A52DE72",
-    "oracle": "lps",
-    "oracleId": "aero-cow-mog-weth",
-    "status": "active",
-    "createdAt": 1721217561,
-    "platformId": "aerodrome",
-    "assets": ["Mog", "WETH"],
-    "risks": [],
-    "strategyTypeId": "pool",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "gov-composer"
-      }
-    ]
-  },
-  {
     "id": "aero-cow-mog-weth",
     "name": "Mog-WETH",
     "token": "Mog-WETH aero",
