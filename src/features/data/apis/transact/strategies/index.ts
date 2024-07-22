@@ -18,6 +18,8 @@ const strategyLoadersByIdUnchecked = {
     (await import('./vault/VaultComposerStrategy')).VaultComposerStrategy,
   cowcentrated: async () =>
     (await import('./cowcentrated/CowcentratedStrategy')).CowcentratedStrategy,
+  'reward-pool-to-vault': async () =>
+    (await import('./RewardPoolToVaultStrategy')).RewardPoolToVaultStrategy,
 } as const satisfies Record<ZapStrategyId, () => Promise<IAnyStrategyStatic>>;
 
 type StrategyIdToStaticPromise = typeof strategyLoadersByIdUnchecked;

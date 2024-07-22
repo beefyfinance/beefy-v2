@@ -217,6 +217,14 @@ export type VaultComposerWithdrawOption = ZapBaseWithdrawOption & {
     | CowcentratedVaultWithdrawOption;
 };
 
+export type RewardPoolToVaultDepositOption = ZapBaseDepositOption & {
+  strategyId: 'reward-pool-to-vault';
+};
+
+export type RewardPoolToVaultWithdrawOption = ZapBaseWithdrawOption & {
+  strategyId: 'reward-pool-to-vault';
+};
+
 export type DepositOption =
   | StandardVaultDepositOption
   | GovVaultDepositOption
@@ -229,7 +237,8 @@ export type DepositOption =
   | CowcentratedZapDepositOption
   | ConicDepositOption
   | GovComposerDepositOption
-  | VaultComposerDepositOption;
+  | VaultComposerDepositOption
+  | RewardPoolToVaultDepositOption;
 
 export type WithdrawOption =
   | StandardVaultWithdrawOption
@@ -243,7 +252,8 @@ export type WithdrawOption =
   | CowcentratedZapWithdrawOption
   | ConicWithdrawOption
   | GovComposerWithdrawOption
-  | VaultComposerWithdrawOption;
+  | VaultComposerWithdrawOption
+  | RewardPoolToVaultWithdrawOption;
 
 export type TransactOption = DepositOption | WithdrawOption;
 
@@ -455,6 +465,8 @@ export type GammaDepositQuote = BaseZapQuote<GammaDepositOption> & {
   lpQuotes: (QuoteResponse | undefined)[];
 };
 
+export type RewardPoolToVaultDepositQuote = BaseZapQuote<RewardPoolToVaultDepositOption>;
+
 export type ConicDepositQuote = BaseZapQuote<ConicDepositOption>;
 
 export type VaultDepositQuote =
@@ -471,7 +483,8 @@ export type ZapDepositQuote =
   | ConicDepositQuote
   | CowcentratedZapDepositQuote
   | GovComposerZapDepositQuote
-  | VaultComposerZapDepositQuote;
+  | VaultComposerZapDepositQuote
+  | RewardPoolToVaultDepositQuote;
 
 export type DepositQuote = VaultDepositQuote | ZapDepositQuote;
 

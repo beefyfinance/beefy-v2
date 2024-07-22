@@ -59,6 +59,9 @@
     "zaps": [
       {
         "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
