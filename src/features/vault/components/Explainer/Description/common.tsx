@@ -73,6 +73,7 @@ export function useCommonHelper(vaultId: VaultEntity['id']): CommonHelper {
         t,
         i18nKey: [
           `StrategyDescription-${vault.type}-${vault.strategyTypeId}`,
+          `StrategyDescription-${vault.strategyTypeId}`,
           `StrategyDescription-${vault.type}-default`,
           'StrategyDescription-default',
         ],

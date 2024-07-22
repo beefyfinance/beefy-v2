@@ -312,3 +312,11 @@ export const selectTransactShouldShowClaims = createSelector(
     );
   }
 );
+
+export const selectTransactShouldShowClaimsNotification = createSelector(
+  selectConnectedUserHasGovRewardsForVault,
+  selectConnectedUserHasMerklRewardsForVault,
+  (userHasUnclaimedGovRewards, userHasUnclaimedMerklRewards) => {
+    return userHasUnclaimedGovRewards || userHasUnclaimedMerklRewards;
+  }
+);

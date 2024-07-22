@@ -1,4 +1,22 @@
 {
+  "shezmu": {
+    "title": "Shezmu",
+    "text": "Shezmu is a CDP (Collateralized Debt Position) Protocol that allows users to borrow against yield-bearing tokens and NFTs.",
+    "website": "https://www.shezmu.io/",
+    "social": {
+      "telegram": "https://t.me/shezmueth",
+      "twitter": "https://x.com/ShezmuTech"
+    }
+  },
+  "gains": {
+    "title": "Gains",
+    "text": "Gains is a decentralized trading platform on cryptocurrencies, stocks, and forex, fully on-chain.",
+    "website": "https://gains.trade/",
+    "social": {
+      "discord": "https://discord.com/invite/gains-network",
+      "twitter": "https://twitter.com/GainsNetwork_io"
+    }
+  },
   "arbitrum": {
     "title": "Arbitrum",
     "text": "Arbitrum is a Layer 2 scaling solution for Ethereum, designed to be technically inclusive, sustainable, and socially inclusive. It enhances transaction speeds and reduces costs, leveraging Ethereum's security through optimistic rollup technology, while remaining neutral and open to all users.",

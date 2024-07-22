@@ -22,7 +22,7 @@ export const styles = (theme: Theme) => ({
     outline: 'none',
     cursor: 'pointer' as const,
     userSelect: 'none' as const,
-    '&::after': {
+    '&::before': {
       content: '""',
       position: 'absolute' as const,
       left: 0,
@@ -42,8 +42,28 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.light,
     cursor: 'default' as const,
     pointerEvents: 'none' as const,
-    '&::after': {
+    '&::before': {
       backgroundColor: theme.palette.text.dark,
+    },
+  },
+  '@keyframes highlight': {
+    to: {
+      backgroundPosition: '200% center',
+    },
+  },
+  highlightTab: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    '&::after': {
+      content: '""',
+      display: 'block',
+      backgroundColor: theme.palette.background.indicators.error,
+      padding: '0',
+      borderRadius: '100%',
+      height: '8px',
+      width: '8px',
+      pointerEvents: 'none',
     },
   },
 });

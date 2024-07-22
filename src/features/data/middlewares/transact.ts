@@ -115,7 +115,7 @@ transactListener.startListening({
     const walletAddress = selectWalletAddress(getState());
     if (mayHaveMerklRewards && walletAddress) {
       // dispatch but don't wait on it
-      dispatch(fetchUserMerklRewardsAction({ chainId: vault.chainId, walletAddress }));
+      dispatch(fetchUserMerklRewardsAction({ walletAddress }));
     }
 
     // Wait for all loaders to finish

@@ -38,7 +38,11 @@ interface GraphProps {
 
 export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address }) {
   const classes = useStyles();
-  const { chartData, isLoading } = usePnLChartData(GRAPH_TIME_BUCKETS[period], vaultId, address);
+  const { chartData, isLoading, willRetry } = usePnLChartData(
+    GRAPH_TIME_BUCKETS[period],
+    vaultId,
+    address
+  );
   const { data, minUnderlying, maxUnderlying, minUsd, maxUsd } = chartData;
 
   const underlyingDiff = useMemo(() => {
@@ -96,7 +100,7 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
   }
 
   if (!data.length) {
-    return <GraphNoData reason="error" />;
+    return <GraphNoData reason={willRetry ? 'error-retry' : 'error'} />;
   }
 
   return (

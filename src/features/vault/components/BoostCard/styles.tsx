@@ -32,7 +32,9 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['h3'],
     margin: '0 0 16px 0',
   },
-  campaignText: {},
+  campaignText: {
+    color: theme.palette.text.middle,
+  },
   partners: {
     marginTop: '24px',
   },
