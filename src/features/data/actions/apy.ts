@@ -128,8 +128,8 @@ export const recalculateTotalApyAction = createAsyncThunk<
         },
         optimism: {
           velodrome: [
-            // VELO
-            '0x3c8B650257cFb5f272f799F5e2b4e65093a11a05',
+            // VELOv2
+            '0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db',
           ],
         },
         base: {
