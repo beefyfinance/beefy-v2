@@ -1,12 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi } from '../apis/instances';
-import {
-  isCowcentratedGovVault,
-  isCowcentratedVault,
-  isGovVault,
-  type VaultEntity,
-} from '../entities/vault';
+import { isCowcentratedGovVault, isGovVault, type VaultEntity } from '../entities/vault';
 import type { TotalApy } from '../reducers/apy';
 import { selectAllVaultIdsIncludingHidden, selectVaultById } from '../selectors/vaults';
 import { selectActiveVaultBoostIds } from '../selectors/boosts';
@@ -16,6 +11,8 @@ import { isDefined } from '../utils/array-utils';
 import { getApiApyDataComponents } from '../../../helpers/apy';
 import type { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api-types';
 import { selectVaultActiveGovRewards } from '../selectors/rewards';
+import { selectDepositTokenByVaultId } from '../selectors/tokens';
+import type { ChainId } from '../entities/chain';
 
 export interface FetchAllApyFulfilledPayload {
   data: BeefyAPIApyBreakdownResponse;
@@ -117,16 +114,47 @@ export const recalculateTotalApyAction = createAsyncThunk<
       }
     }
 
-    // Mark CLM/CLM Pools as boosted if they have extra pool or merkle rewards
-    if (isCowcentratedVault(vault) || isCowcentratedGovVault(vault)) {
+    // Mark CLM Pools as boosted if they have extra pool rewards
+    if (isCowcentratedGovVault(vault)) {
+      // TODO find a better place for these
+      const baseRewardTokensByChainProvider: Partial<Record<ChainId, Record<string, string[]>>> = {
+        arbitrum: {
+          ramses: [
+            // RAM
+            '0xAAA6C1E32C55A7Bfa8066A6FAE9b42650F262418',
+            // ARB
+            '0x912CE59144191C1204E64559FE8253a0e49E6548',
+          ],
+        },
+        optimism: {
+          velodrome: [
+            // OP
+            '0x4200000000000000000000000000000000000042',
+          ],
+        },
+        base: {
+          aerodrome: [
+            // AERO
+            '0x940181a94A35A4569E4529A3CDfB74e38FD98631',
+          ],
+        },
+      };
+      const depositToken = selectDepositTokenByVaultId(state, vaultId);
+      const baseRewardTokens = depositToken.providerId
+        ? baseRewardTokensByChainProvider[vault.chainId]?.[depositToken.providerId]
+        : undefined;
       // for 'pool' type (e.g. velodrome) we need to separate that part from fees vs additional rewards
-      if (vault.strategyTypeId === 'pool') {
+      if (baseRewardTokens?.length) {
         const poolRewards = selectVaultActiveGovRewards(state, vaultId);
         if (poolRewards && poolRewards.length > 0) {
           const { rewardPoolApr, rewardPoolTradingApr } = poolRewards.reduce(
             (acc, r) => {
-              // assumption, reward at index 0 is the base trading fee reward
-              if (r.index === 0) {
+              // if reward is a base reward token, it's pool trading apr
+              if (
+                baseRewardTokens.some(
+                  address => r.token.address.toLowerCase() === address.toLowerCase()
+                )
+              ) {
                 acc.rewardPoolTradingApr += r.apr;
               } else {
                 acc.rewardPoolApr += r.apr;
