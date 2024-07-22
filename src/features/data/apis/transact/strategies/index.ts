@@ -14,6 +14,8 @@ const strategyLoadersByIdUnchecked = {
   gamma: async () => (await import('./gamma/GammaStrategy')).GammaStrategy,
   conic: async () => (await import('./conic/ConicStrategy')).ConicStrategy,
   'gov-composer': async () => (await import('./gov/GovComposerStrategy')).GovComposerStrategy,
+  'vault-composer': async () =>
+    (await import('./vault/VaultComposerStrategy')).VaultComposerStrategy,
   cowcentrated: async () =>
     (await import('./cowcentrated/CowcentratedStrategy')).CowcentratedStrategy,
 } as const satisfies Record<ZapStrategyId, () => Promise<IAnyStrategyStatic>>;

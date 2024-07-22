@@ -56,6 +56,10 @@ export type GovComposerStrategyConfig = {
   strategyId: 'gov-composer';
 } & OptionalStrategySwapConfig;
 
+export type VaultComposerStrategyConfig = {
+  strategyId: 'vault-composer';
+} & OptionalStrategySwapConfig;
+
 export type ZapStrategyConfig =
   | SingleStrategyConfig
   | UniswapV2StrategyConfig
@@ -64,7 +68,8 @@ export type ZapStrategyConfig =
   | GammaStrategyConfig
   | ConicStrategyConfig
   | CowcentratedStrategyConfig
-  | GovComposerStrategyConfig;
+  | GovComposerStrategyConfig
+  | VaultComposerStrategyConfig;
 
 export type ZapStrategyId = ZapStrategyConfig['strategyId'];
 

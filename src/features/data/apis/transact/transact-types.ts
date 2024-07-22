@@ -201,6 +201,22 @@ export type GovComposerWithdrawOption = ZapBaseWithdrawOption & {
     | CowcentratedVaultWithdrawOption;
 };
 
+export type VaultComposerDepositOption = ZapBaseDepositOption & {
+  strategyId: 'vault-composer';
+  underlyingOption:
+    | CowcentratedZapDepositOption
+    | SingleDepositOption
+    | CowcentratedVaultDepositOption;
+};
+
+export type VaultComposerWithdrawOption = ZapBaseWithdrawOption & {
+  strategyId: 'vault-composer';
+  underlyingOption:
+    | CowcentratedZapWithdrawOption
+    | SingleWithdrawOption
+    | CowcentratedVaultWithdrawOption;
+};
+
 export type DepositOption =
   | StandardVaultDepositOption
   | GovVaultDepositOption
@@ -212,7 +228,8 @@ export type DepositOption =
   | CurveDepositOption
   | CowcentratedZapDepositOption
   | ConicDepositOption
-  | GovComposerDepositOption;
+  | GovComposerDepositOption
+  | VaultComposerDepositOption;
 
 export type WithdrawOption =
   | StandardVaultWithdrawOption
@@ -225,7 +242,8 @@ export type WithdrawOption =
   | CurveWithdrawOption
   | CowcentratedZapWithdrawOption
   | ConicWithdrawOption
-  | GovComposerWithdrawOption;
+  | GovComposerWithdrawOption
+  | VaultComposerWithdrawOption;
 
 export type TransactOption = DepositOption | WithdrawOption;
 
@@ -400,6 +418,12 @@ export type GovComposerZapDepositQuote = BaseZapQuote<GovComposerDepositOption> 
   subStrategy: 'strategy' | 'vault';
 };
 
+export type VaultComposerZapDepositQuote = BaseZapQuote<VaultComposerDepositOption> & {
+  vaultType: 'standard';
+  underlyingQuote: CowcentratedZapDepositQuote | SingleDepositQuote | CowcentratedVaultDepositQuote;
+  subStrategy: 'strategy' | 'vault';
+};
+
 export type SingleDepositQuote = BaseZapQuote<SingleDepositOption> & {
   swapQuote: QuoteResponse;
 };
@@ -446,7 +470,8 @@ export type ZapDepositQuote =
   | GammaDepositQuote
   | ConicDepositQuote
   | CowcentratedZapDepositQuote
-  | GovComposerZapDepositQuote;
+  | GovComposerZapDepositQuote
+  | VaultComposerZapDepositQuote;
 
 export type DepositQuote = VaultDepositQuote | ZapDepositQuote;
 
@@ -514,6 +539,15 @@ export type GovComposerZapWithdrawQuote = BaseZapQuote<GovComposerWithdrawOption
   subStrategy: 'strategy' | 'vault';
 };
 
+export type VaultComposerZapWithdrawQuote = BaseZapQuote<VaultComposerWithdrawOption> & {
+  vaultType: 'standard';
+  underlyingQuote:
+    | CowcentratedZapWithdrawQuote
+    | SingleWithdrawQuote
+    | CowcentratedVaultWithdrawQuote;
+  subStrategy: 'strategy' | 'vault';
+};
+
 export type ZapWithdrawQuote =
   | SingleWithdrawQuote
   | UniswapV2WithdrawQuote
@@ -522,7 +556,8 @@ export type ZapWithdrawQuote =
   | GammaWithdrawQuote
   | ConicWithdrawQuote
   | CowcentratedZapWithdrawQuote
-  | GovComposerZapWithdrawQuote;
+  | GovComposerZapWithdrawQuote
+  | VaultComposerZapWithdrawQuote;
 
 export type WithdrawQuote = VaultWithdrawQuote | ZapWithdrawQuote;
 

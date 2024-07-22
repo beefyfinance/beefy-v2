@@ -18,7 +18,12 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "network": "optimism",
-    "createdAt": 1720631354
+    "createdAt": 1720631354,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      }
+    ]
   },
   {
     "id": "velo-cow-op-op-usdc-rp",
