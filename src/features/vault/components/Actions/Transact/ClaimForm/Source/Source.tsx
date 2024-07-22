@@ -7,15 +7,19 @@ const useStyles = makeStyles(styles);
 type SourceProps = {
   title: string;
   claim?: ReactNode;
+  refresh?: ReactNode;
   children: ReactNode;
 };
 
-export const Source = memo<SourceProps>(function Source({ title, claim, children }) {
+export const Source = memo<SourceProps>(function Source({ title, claim, refresh, children }) {
   const classes = useStyles();
   return (
     <div className={classes.container}>
       <div className={classes.rewards}>
-        <div className={classes.rewardsTitle}>{title}</div>
+        <div className={classes.titleHolder}>
+          <div className={classes.title}>{title}</div>
+          {refresh ? <div className={classes.refresh}>{refresh}</div> : null}
+        </div>
         {children}
       </div>
       {claim}

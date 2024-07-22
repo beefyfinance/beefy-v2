@@ -4,7 +4,7 @@ import { getMerklRewardsApi } from '../apis/instances';
 import type { ChainEntity } from '../entities/chain';
 import { selectAllChainIds, selectChainByNetworkChainId } from '../selectors/chains';
 import { selectVaultByAddressOrUndefined } from '../selectors/vaults';
-import { selectShouldLoadMerklRewardsForUser } from '../selectors/data-loader';
+import { selectMerklRewardsForUserShouldLoad } from '../selectors/data-loader';
 import { type Address, getAddress } from 'viem';
 import { isCowcentratedLikeVault, isCowcentratedVault, type VaultEntity } from '../entities/vault';
 import { isDefined } from '../utils/array-utils';
@@ -203,7 +203,7 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
       if (force) {
         return true;
       }
-      return selectShouldLoadMerklRewardsForUser(getState(), walletAddress);
+      return selectMerklRewardsForUserShouldLoad(getState(), walletAddress);
     },
   }
 );

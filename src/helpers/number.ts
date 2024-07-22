@@ -56,3 +56,10 @@ export const yearlyToDaily = (apy: number) => {
 
   return g;
 };
+
+export const clamp = (value: number, min: number, max: number): number => {
+  if (isNaN(value)) {
+    return min;
+  }
+  return Math.min(Math.max(value, min), max);
+};
