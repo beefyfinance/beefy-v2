@@ -75,7 +75,7 @@ export const WalletContainer = connect((state: BeefyState) => {
       >
         <FormControl {...formControlProps}>
           <div>
-            {walletPending ? (
+            {walletPending && !walletAddress ? (
               <Box className={classes.loading}>
                 <StatLoader
                   foregroundColor={theme.palette.primary.light}
