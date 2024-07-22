@@ -1,6 +1,5 @@
 import type { TFunction, Namespace } from 'react-i18next';
-import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
-import type { ChainEntity } from '../../../../entities/chain';
+import type { BeefyThunk } from '../../../../../../redux-types';
 import type { Step } from '../../../../reducers/wallet/stepper';
 import type {
   InputTokenAmount,
@@ -16,6 +15,11 @@ import type {
   CowcentratedVaultWithdrawOption,
   VaultComposerWithdrawOption,
   VaultComposerZapWithdrawQuote,
+  CowcentratedVaultWithdrawQuote,
+  WithdrawOption,
+  ZapStrategyIdToWithdrawOption,
+  ZapStrategyIdToWithdrawQuote,
+  WithdrawQuote,
 } from '../../transact-types';
 import type {
   AnyComposableStrategy,
@@ -38,21 +42,15 @@ import {
 import type { TokenEntity, TokenErc20 } from '../../../../entities/token';
 import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../../selectors/tokens';
 import { ZERO_FEE, calculatePriceImpact } from '../../helpers/quotes';
-import { selectChainById } from '../../../../selectors/chains';
 import { selectTransactSlippage } from '../../../../selectors/transact';
-import type { OrderOutput, UserlessZapRequest } from '../../zap/types';
+import type { OrderInput, OrderOutput, UserlessZapRequest, ZapStep } from '../../zap/types';
 import { pickTokens } from '../../helpers/tokens';
 import { toWeiString } from '../../../../../../helpers/big-number';
 import { slipBy } from '../../helpers/amounts';
 import { uniqBy } from 'lodash-es';
 import { walletActions } from '../../../../actions/wallet-actions';
 import { NO_RELAY } from '../../helpers/zap';
-
-type ZapHelpers = {
-  chain: ChainEntity;
-  slippage: number;
-  state: BeefyState;
-};
+import { onlyOneInput } from '../../helpers/options';
 
 const strategyId = 'vault-composer' as const;
 type StrategyId = typeof strategyId;
@@ -219,9 +217,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
 
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = this.helpers.getState();
-      const chain = selectChainById(state, this.vault.chainId);
       const slippage = selectTransactSlippage(state);
-      const zapHelpers: ZapHelpers = { chain, slippage, state };
 
       if (quote.underlyingQuote.strategyId === 'vault') {
         const depositZap = await this.underlyingVaultType.fetchZapDeposit({
@@ -278,51 +274,48 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
         );
         return walletAction(dispatch, getState, extraArgument);
       } else {
-        throw new Error('not implemented');
-        //   if (!this.isMatchingDepositQuote(underlyingQuote)) {
-        //     throw new Error('Invalid underlying deposit quote');
-        //   }
-        //   // We have the built userless zap-in request
-        //   const { zapRequest, expectedTokens, minBalances } =
-        //     await this.underlyingStrategy.fetchDepositUserlessZapBreakdown(underlyingQuote);
+        if (!this.isMatchingDepositQuote(underlyingQuote)) {
+          throw new Error('Invalid underlying deposit quote');
+        }
+        // We have the built userless zap-in request
+        const { zapRequest, expectedTokens, minBalances } =
+          await this.underlyingStrategy.fetchDepositUserlessZapBreakdown(underlyingQuote);
 
-        //   // Stake
-        //   const stakeZap = await this.fetchZapStakeStep(
-        //     stakeStep,
-        //     [
-        //       {
-        //         token: this.depositToken,
-        //         amount: minBalances.get(this.depositToken),
-        //       },
-        //     ],
-        //     zapHelpers
-        //   );
+        const vaultDepositZap = await this.vaultType.fetchZapDeposit({
+          inputs: [
+            {
+              token: this.depositToken,
+              amount: minBalances.get(this.depositToken), // min expected in case add liquidity slipped
+              max: true, // but we call depositAll
+            },
+          ],
+        });
 
-        //   stakeZap.zaps.forEach(zap => zapRequest.steps.push(zap));
-        //   minBalances.subtractMany(stakeZap.inputs);
-        //   minBalances.addMany(stakeZap.minOutputs);
+        zapRequest.steps.push(vaultDepositZap.zap);
+        minBalances.subtractMany(vaultDepositZap.inputs);
+        minBalances.addMany(vaultDepositZap.minOutputs);
 
-        //   const requiredOutputs = stakeZap.outputs.map(output => ({
-        //     token: output.token.address,
-        //     minOutputAmount: toWeiString(
-        //       slipBy(output.amount, slippage, output.token.decimals),
-        //       output.token.decimals
-        //     ),
-        //   }));
+        const requiredOutputs = vaultDepositZap.outputs.map(output => ({
+          token: output.token.address,
+          minOutputAmount: toWeiString(
+            slipBy(output.amount, slippage, output.token.decimals),
+            output.token.decimals
+          ),
+        }));
 
-        //   zapRequest.order.outputs = requiredOutputs.concat(
-        //     zapRequest.order.outputs.map(output => ({
-        //       token: output.token,
-        //       minOutputAmount: '0',
-        //     }))
-        //   );
+        zapRequest.order.outputs = requiredOutputs.concat(
+          zapRequest.order.outputs.map(output => ({
+            token: output.token,
+            minOutputAmount: '0',
+          }))
+        );
 
-        //   const walletAction = walletActions.zapExecuteOrder(
-        //     this.vault.id,
-        //     zapRequest,
-        //     expectedTokens
-        //   );
-        //   return walletAction(dispatch, getState, extraArgument);
+        const walletAction = walletActions.zapExecuteOrder(
+          this.vault.id,
+          zapRequest,
+          expectedTokens
+        );
+        return walletAction(dispatch, getState, extraArgument);
       }
     };
 
@@ -343,6 +336,10 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     return [vaultOption, ...options].map(option => ({
       ...option,
       strategyId,
+      inputs: option.inputs.map(input => ({
+        ...input,
+        token: this.shareToken,
+      })),
       vaultId: this.vault.id,
       underlyingOption: option,
     }));
@@ -352,14 +349,224 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     inputs: InputTokenAmount[],
     option: VaultComposerWithdrawOption
   ): Promise<VaultComposerZapWithdrawQuote> {
-    throw new Error('Method not implemented.');
+    const { underlyingOption } = option;
+    const input = onlyOneInput(inputs);
+    const { zap } = this.helpers;
+
+    const vaultComposerWithdrawQuote = await this.vaultType.fetchWithdrawQuote(
+      [
+        {
+          token: this.depositToken,
+          amount: input.amount,
+          max: input.max,
+        },
+      ],
+      option
+    );
+
+    if (underlyingOption.strategyId === 'vault') {
+      const underlyingQuote = (await this.underlyingVaultType.fetchWithdrawQuote(
+        [
+          {
+            token: this.depositToken,
+            amount: vaultComposerWithdrawQuote.outputs[0].amount,
+            max: input.max,
+          },
+        ],
+        underlyingOption
+      )) as CowcentratedVaultWithdrawQuote;
+
+      const withdrawSteps: ZapQuoteStep[] = [
+        {
+          type: 'withdraw',
+          outputs: underlyingQuote.outputs,
+        },
+      ];
+
+      withdrawSteps.unshift({
+        type: 'withdraw',
+        outputs: underlyingQuote.inputs.map(input => ({
+          token: input.token,
+          amount: input.amount,
+        })),
+      });
+
+      return {
+        ...underlyingQuote,
+        option,
+        inputs,
+        steps: withdrawSteps,
+        vaultType: 'standard',
+        strategyId: 'vault-composer',
+        subStrategy: 'vault',
+        fee: ZERO_FEE,
+        priceImpact: calculatePriceImpact(
+          inputs,
+          underlyingQuote.outputs,
+          underlyingQuote.returned,
+          this.helpers.getState()
+        ),
+        allowances: [
+          {
+            token: this.shareToken,
+            amount: input.amount,
+            spenderAddress: zap.manager,
+          },
+        ],
+        underlyingQuote,
+      };
+    }
+
+    if (!this.isMatchingWithdrawOption(underlyingOption)) {
+      throw new Error('Invalid underlying withdraw option');
+    }
+
+    const underlyingQuote = await this.underlyingStrategy.fetchWithdrawQuote(
+      vaultComposerWithdrawQuote.outputs.map(o => ({ ...o, max: true })),
+      underlyingOption
+    );
+
+    const withdrawQuoteSteps = underlyingQuote.steps.map(s => s);
+    withdrawQuoteSteps.unshift({
+      type: 'withdraw',
+      outputs: vaultComposerWithdrawQuote.outputs,
+    });
+
+    return {
+      ...underlyingQuote,
+      steps: withdrawQuoteSteps,
+      inputs,
+      vaultType: 'standard',
+      strategyId: 'vault-composer',
+      subStrategy: 'strategy',
+      allowances: [
+        {
+          amount: inputs[0].amount,
+          spenderAddress: zap.manager,
+          token: this.shareToken,
+        },
+      ],
+      priceImpact: calculatePriceImpact(
+        inputs,
+        underlyingQuote.outputs,
+        underlyingQuote.returned,
+        this.helpers.getState()
+      ),
+      underlyingQuote,
+      option,
+    };
   }
 
-  fetchWithdrawStep(
+  async fetchWithdrawStep(
     quote: VaultComposerZapWithdrawQuote,
     t: TFunction<Namespace, undefined>
   ): Promise<Step> {
-    throw new Error('Method not implemented.');
+    const { underlyingQuote } = quote;
+
+    const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
+      const state = this.helpers.getState();
+      const slippage = selectTransactSlippage(state);
+
+      const vaultWithdrawZap = await this.vaultType.fetchZapWithdraw({
+        inputs: quote.inputs,
+      });
+
+      if (quote.subStrategy === 'vault') {
+        const cowWithdraw = await this.underlyingVaultType.fetchZapWithdraw({
+          inputs: underlyingQuote.inputs,
+        });
+
+        const steps: ZapStep[] = [];
+        steps.push(vaultWithdrawZap.zap);
+        steps.push(cowWithdraw.zap);
+
+        const inputs: OrderInput[] = vaultWithdrawZap.inputs.map(input => ({
+          token: input.token.address,
+          amount: toWeiString(input.amount, input.token.decimals),
+        }));
+
+        const requiredOutputs: OrderOutput[] = underlyingQuote.outputs.map(output => ({
+          token: output.token.address,
+          minOutputAmount: toWeiString(
+            slipBy(output.amount, slippage, output.token.decimals),
+            output.token.decimals
+          ),
+        }));
+
+        const dustOutputs: OrderOutput[] = pickTokens(
+          quote.inputs,
+          quote.outputs,
+          quote.returned
+        ).map(token => ({
+          token: token.address,
+          minOutputAmount: '0',
+        }));
+
+        const outputs = uniqBy(requiredOutputs.concat(dustOutputs), output => output.token);
+        const expectedTokens = quote.outputs.map(output => output.token);
+
+        const zapRequest: UserlessZapRequest = {
+          order: {
+            inputs,
+            outputs,
+            relay: NO_RELAY,
+          },
+          steps,
+        };
+
+        const walletAction = walletActions.zapExecuteOrder(
+          this.vault.id,
+          zapRequest,
+          expectedTokens
+        );
+        return walletAction(dispatch, getState, extraArgument);
+      } else {
+        if (!this.isMatchingWithdrawQuote(underlyingQuote)) {
+          throw new Error('Invalid underlying withdraw quote');
+        }
+        const { zapRequest, expectedTokens } =
+          await this.underlyingStrategy.fetchWithdrawUserlessZapBreakdown(underlyingQuote);
+        //It's only 1 zap step, so we can just add it to the beginning, if there were more steps, we would need to add them in order too
+        zapRequest.steps.unshift(vaultWithdrawZap.zap);
+
+        zapRequest.order.inputs = vaultWithdrawZap.inputs.map(input => ({
+          token: input.token.address,
+          amount: toWeiString(input.amount, input.token.decimals),
+        }));
+
+        zapRequest.order.outputs.push({
+          token: this.shareToken.address,
+          minOutputAmount: '0',
+        });
+
+        const walletAction = walletActions.zapExecuteOrder(
+          this.vault.id,
+          zapRequest,
+          expectedTokens
+        );
+        return walletAction(dispatch, getState, extraArgument);
+      }
+    };
+
+    return {
+      step: 'zap-out',
+      message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+      action: zapAction,
+      pending: false,
+      extraInfo: { zap: true, vaultId: quote.option.vaultId },
+    };
+  }
+
+  protected isMatchingWithdrawOption(
+    option: WithdrawOption
+  ): option is ZapStrategyIdToWithdrawOption<typeof this.underlyingStrategy.id> {
+    return option.strategyId === this.underlyingStrategy.id;
+  }
+
+  protected isMatchingWithdrawQuote(
+    option: WithdrawQuote
+  ): option is ZapStrategyIdToWithdrawQuote<typeof this.underlyingStrategy.id> {
+    return option.strategyId === this.underlyingStrategy.id;
   }
 }
 

@@ -440,17 +440,12 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     const vaultOption =
       (await this.underlyingVaultType.fetchWithdrawOption()) as CowcentratedVaultWithdrawOption;
 
-    // TODO: offer 2 token option vault zap-out, should be extracted from underlyingVaultType
-    return (
-      [vaultOption, ...options]
-        // .filter(o => o.strategyId !== 'vault')
-        .map(option => ({
-          ...option,
-          strategyId,
-          vaultId: this.vault.id,
-          underlyingOption: option,
-        }))
-    );
+    return [vaultOption, ...options].map(option => ({
+      ...option,
+      strategyId,
+      vaultId: this.vault.id,
+      underlyingOption: option,
+    }));
   }
 
   async fetchWithdrawQuote(
