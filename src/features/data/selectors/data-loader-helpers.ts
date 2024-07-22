@@ -152,42 +152,62 @@ export const shouldLoaderLoadRecent = createShouldLoaderLoadRecentEvaluator(
   DEFAULT_DISPATCHED_RECENT_SECONDS
 );
 
+const createTimeCacheInvalidator = createCachedFactory(
+  (invalidateCacheAfterSeconds: number | undefined): (() => number) => {
+    return invalidateCacheAfterSeconds === undefined
+      ? () => 0
+      : () => Math.trunc(Date.now() / 1000 / invalidateCacheAfterSeconds);
+  },
+  invalidateCacheAfterSeconds => invalidateCacheAfterSeconds?.toString() ?? 'undefined'
+);
+
 export function createGlobalDataSelector<T>(
   key: keyof DataLoaderState['global'],
-  evaluateFn: LoaderEvaluatorFn<T>
+  evaluateFn: LoaderEvaluatorFn<T>,
+  invalidateCacheAfterSeconds?: number
 ): GlobalDataSelectorFn<T> {
-  return createSelector((state: BeefyState) => state.ui.dataLoader.global[key], evaluateFn);
+  return createSelector(
+    (state: BeefyState) => state.ui.dataLoader.global[key],
+    createTimeCacheInvalidator(invalidateCacheAfterSeconds),
+    evaluateFn
+  );
 }
 
 export function createChainDataSelector<T>(
   key: keyof ChainIdDataEntity,
-  evaluateFn: LoaderEvaluatorFn<T>
+  evaluateFn: LoaderEvaluatorFn<T>,
+  invalidateCacheAfterSeconds?: number
 ): ChainDataSelectorFn<T> {
   return createCachedSelector(
     (state: BeefyState, chainId: ChainEntity['id']) =>
       state.ui.dataLoader.byChainId[chainId]?.[key],
+    createTimeCacheInvalidator(invalidateCacheAfterSeconds),
     evaluateFn
   )((_, chainId) => chainId);
 }
 
 export function createAddressDataSelector<T>(
   key: keyof GlobalDataByAddressEntity,
-  evaluateFn: LoaderEvaluatorFn<T>
+  evaluateFn: LoaderEvaluatorFn<T>,
+  invalidateCacheAfterSeconds?: number
 ): AddressDataSelectorFn<T> {
   return createCachedSelector(
     (state: BeefyState, walletAddress: string) =>
       state.ui.dataLoader.byAddress[walletAddress.toLowerCase()]?.global[key],
+    createTimeCacheInvalidator(invalidateCacheAfterSeconds),
     evaluateFn
   )((_, walletAddress) => walletAddress.toLowerCase());
 }
 
 export function createAddressChainDataSelector<T>(
   key: keyof ChainIdDataByAddressByChainEntity,
-  evaluateFn: LoaderEvaluatorFn<T>
+  evaluateFn: LoaderEvaluatorFn<T>,
+  invalidateCacheAfterSeconds?: number
 ): AddressChainDataSelectorFn<T> {
   return createCachedSelector(
     (state: BeefyState, chainId: ChainEntity['id'], walletAddress: string) =>
       state.ui.dataLoader.byAddress[walletAddress.toLowerCase()]?.byChainId[chainId]?.[key],
+    createTimeCacheInvalidator(invalidateCacheAfterSeconds),
     evaluateFn
   )((_, walletAddress) => walletAddress.toLowerCase());
 }

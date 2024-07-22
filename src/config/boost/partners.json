@@ -1,4 +1,13 @@
 {
+  "shezmu": {
+    "title": "Shezmu",
+    "text": "Shezmu is a CDP (Collateralized Debt Position) Protocol that allows users to borrow against yield-bearing tokens and NFTs.",
+    "website": "https://www.shezmu.io/",
+    "social": {
+      "telegram": "https://t.me/shezmueth",
+      "twitter": "https://x.com/ShezmuTech"
+    }
+  },
   "gains": {
     "title": "Gains",
     "text": "Gains is a decentralized trading platform on cryptocurrencies, stocks, and forex, fully on-chain.",

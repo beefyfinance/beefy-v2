@@ -1,5 +1,64 @@
 [
   {
+    "id": "velodrome-v2-weth-tlx",
+    "name": "TLX-ETH vLP V2",
+    "type": "standard",
+    "token": "vAMMV2-WETH/TLX",
+    "tokenAddress": "0x6eA20Dbc05f58ED607c374e545BFb402d5796770",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2WETH-TLX",
+    "earnedTokenAddress": "0xdEC80FB75d805f110e8bb05D12c9178185820417",
+    "earnContractAddress": "0xdEC80FB75d805f110e8bb05D12c9178185820417",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-weth-tlx",
+    "status": "active",
+    "createdAt": 1721331368,
+    "platformId": "velodrome",
+    "assets": ["WETH", "TLX"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x4200000000000000000000000000000000000006&to=0xD9cC3D70E730503E7f28c1B407389198c4B75FA2",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xD9cC3D70E730503E7f28c1B407389198c4B75FA2&type=-1&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x6eA20Dbc05f58ED607c374e545BFb402d5796770",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
+    "id": "velo-cow-op-moobifi-usdc-vault",
+    "name": "mooBIFI-USDC",
+    "type": "standard",
+    "token": "mooBIFI-USDC",
+    "tokenAddress": "0xD4768E30180786e875a4909472c9826b18931E43",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooCowVeloOpmooBIFI-USDC",
+    "earnedTokenAddress": "0x436001D53b77cB0AA636F8124C65dC2c92A46D91",
+    "earnContractAddress": "0x436001D53b77cB0AA636F8124C65dC2c92A46D91",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-moobifi-usdc",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["USDC", "mooBIFI"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "cowcentrated",
+    "network": "optimism",
+    "createdAt": 1720631354,
+    "hidden": true
+  },
+  {
     "id": "velo-cow-op-op-usdc-rp",
     "name": "OP-USDC Reward Pool",
     "type": "gov",

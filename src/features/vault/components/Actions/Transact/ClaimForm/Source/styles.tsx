@@ -14,8 +14,17 @@ export const styles = (theme: Theme) => ({
     borderRadius: '8px',
     padding: '12px',
   },
-  rewardsTitle: {
+  titleHolder: {
     ...theme.typography['subline-sm'],
     color: theme.palette.text.dark,
+    display: 'flex',
+    flexDirection: 'row' as const,
+    gap: '8px',
+  },
+  title: {
+    flex: '1 1 auto',
+  },
+  refresh: {
+    flex: '0 0 auto',
   },
 });

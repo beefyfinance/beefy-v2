@@ -69,6 +69,7 @@ export const config = {
       'PYUSD',
       'USDM',
       'ULTRA',
+      'ShezUSD',
       'USDe',
       'sUSDe',
     ],
@@ -758,6 +759,7 @@ export const config = {
       'rgUSD',
       'USDz',
       'jEUR',
+      'sUSDz',
     ],
   },
   gnosis: {
