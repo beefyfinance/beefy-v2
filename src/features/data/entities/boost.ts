@@ -38,6 +38,8 @@ export interface BoostEntity {
   partnerIds: BoostPartnerEntity['id'][];
 
   campaignId: BoostCampaignEntity['id'] | undefined;
+
+  pinned: boolean;
 }
 
 export type BoostPartnerEntity = BoostPartnerConfig & {

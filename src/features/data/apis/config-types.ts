@@ -116,6 +116,7 @@ export interface BoostConfig {
   partners?: string[] | undefined;
   campaign?: string | undefined;
   fixedStatus?: boolean | null;
+  pinned?: boolean | undefined;
 }
 
 export interface StandardGasConfig {

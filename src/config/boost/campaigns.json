@@ -1,8 +1,8 @@
 {
   "arb-ltipp": {
-    "title": "Beefy LTIPP",
+    "title": "Beefy × Arbitrum LTIPP",
     "description": "Earn extra incentives awarded to Beefy's CLM through Arbitrum's incentives program. Users earn extra $ARB tokens for staking into selected CLMs, while trading fees get automatically claimed and compounded back into the position.",
-    "learn": "https://beefy.com/articles/clm/",
+    "learn": "https://beefy.com/articles/ltipp/",
     "social": {
       "discord": "https://beefy.com/discord",
       "twitter": "https://twitter.com/beefyfinance"
