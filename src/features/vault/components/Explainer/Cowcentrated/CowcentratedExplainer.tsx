@@ -5,6 +5,7 @@ import { CardTitle } from '../../Card';
 import { selectVaultTotalApy } from '../../../../data/selectors/apy';
 import {
   isCowcentratedGovVault,
+  isCowcentratedStandardVault,
   shouldVaultShowInterest,
   type VaultCowcentratedLike,
 } from '../../../../data/entities/vault';
@@ -58,6 +59,12 @@ export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
               <LinkButton
                 href={explorerAddressUrl(chain, vault.contractAddress)}
                 text={t('Strat-PoolContract')}
+              />
+            ) : null}
+            {isCowcentratedStandardVault(vault) ? (
+              <LinkButton
+                href={explorerAddressUrl(chain, vault.contractAddress)}
+                text={t('Strat-VaultContract')}
               />
             ) : null}
           </>

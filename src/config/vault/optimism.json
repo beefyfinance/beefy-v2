@@ -53,7 +53,7 @@
     "platformId": "velodrome",
     "assets": ["USDC", "mooBIFI"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
+    "strategyTypeId": "pool",
     "network": "optimism",
     "createdAt": 1720631354
   },

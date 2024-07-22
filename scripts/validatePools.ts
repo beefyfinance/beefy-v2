@@ -616,27 +616,31 @@ const populateGovData = async (
   pools: VaultConfig[],
   web3
 ): Promise<VaultConfigWithGovData[]> => {
-  const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
+  try {
+    const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
 
-  const calls = pools.map(pool => {
-    const vaultContract = new web3.eth.Contract(
-      StandardVaultAbi as unknown as AbiItem[],
-      pool.earnContractAddress
-    );
-    return {
-      owner: vaultContract.methods.owner(),
-    };
-  });
+    const calls = pools.map(pool => {
+      const vaultContract = new web3.eth.Contract(
+        StandardVaultAbi as unknown as AbiItem[],
+        pool.earnContractAddress
+      );
+      return {
+        owner: vaultContract.methods.owner(),
+      };
+    });
 
-  const [results] = await multicall.all([calls]);
+    const [results] = await multicall.all([calls]);
 
-  return pools.map((pool, i) => {
-    return {
-      ...pool,
-      type: pool.type || 'gov',
-      rewardPoolOwner: results[i].owner,
-    };
-  });
+    return pools.map((pool, i) => {
+      return {
+        ...pool,
+        type: pool.type || 'gov',
+        rewardPoolOwner: results[i].owner,
+      };
+    });
+  } catch (e) {
+    throw new Error(`Failed to populate gov data for ${chain}`, { cause: e });
+  }
 };
 
 type ClmVaultConfig = Omit<VaultConfig, 'type'> & { type: 'cowcentrated' };
@@ -652,147 +656,151 @@ const populateCowcentratedData = async (
   pools: VaultConfig[],
   web3: Web3
 ): Promise<VaultConfigWithCowcentratedData[]> => {
-  const clms = pools.filter((p): p is ClmVaultConfig => p.type === 'cowcentrated');
-  if (clms.length === 0) {
-    return [];
-  }
+  try {
+    const clms = pools.filter((p): p is ClmVaultConfig => p.type === 'cowcentrated');
+    if (clms.length === 0) {
+      return [];
+    }
 
-  const { multicall: multicallAddress, beefyOracle: beefyOracleAddress } =
-    addressBook[chain].platforms.beefyfinance;
-  if (!multicallAddress || !beefyOracleAddress) {
-    throw new Error('Missing multicall or beefyOracle address');
-  }
+    const { multicall: multicallAddress, beefyOracle: beefyOracleAddress } =
+      addressBook[chain].platforms.beefyfinance;
+    if (!multicallAddress || !beefyOracleAddress) {
+      throw new Error('Missing multicall or beefyOracle address');
+    }
 
-  const multicall = new MultiCall(web3, multicallAddress);
-  const beefyOracle = new web3.eth.Contract(
-    [
-      {
-        inputs: [
-          {
-            internalType: 'address',
-            name: '',
-            type: 'address',
-          },
-        ],
-        name: 'subOracle',
-        outputs: [
-          {
-            internalType: 'address',
-            name: 'oracle',
-            type: 'address',
-          },
-          {
-            internalType: 'bytes',
-            name: 'data',
-            type: 'bytes',
-          },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        inputs: [
-          {
-            internalType: 'address',
-            name: '',
-            type: 'address',
-          },
-          {
-            internalType: 'address',
-            name: '',
-            type: 'address',
-          },
-        ],
-        name: 'subOracle',
-        outputs: [
-          {
-            internalType: 'address',
-            name: 'oracle',
-            type: 'address',
-          },
-          {
-            internalType: 'bytes',
-            name: 'data',
-            type: 'bytes',
-          },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    ],
-    beefyOracleAddress
-  );
-  const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
-
-  const tokenResults = (
-    await multicall.all([
-      clms.map(clm => {
-        const vaultContract = new web3.eth.Contract(
-          [
+    const multicall = new MultiCall(web3, multicallAddress);
+    const beefyOracle = new web3.eth.Contract(
+      [
+        {
+          inputs: [
             {
-              inputs: [],
-              name: 'wants',
-              outputs: [
-                {
-                  internalType: 'address',
-                  name: 'token0',
-                  type: 'address',
-                },
-                {
-                  internalType: 'address',
-                  name: 'token1',
-                  type: 'address',
-                },
-              ],
-              stateMutability: 'view',
-              type: 'function',
+              internalType: 'address',
+              name: '',
+              type: 'address',
             },
           ],
-          clm.earnContractAddress
-        );
-        return {
-          wants: vaultContract.methods.wants(),
-        };
-      }),
-    ])
-  )
-    .flat()
-    .map(result => ({
-      token0: result.wants[0],
-      token1: result.wants[1],
-    }));
+          name: 'subOracle',
+          outputs: [
+            {
+              internalType: 'address',
+              name: 'oracle',
+              type: 'address',
+            },
+            {
+              internalType: 'bytes',
+              name: 'data',
+              type: 'bytes',
+            },
+          ],
+          stateMutability: 'view',
+          type: 'function',
+        },
+        {
+          inputs: [
+            {
+              internalType: 'address',
+              name: '',
+              type: 'address',
+            },
+            {
+              internalType: 'address',
+              name: '',
+              type: 'address',
+            },
+          ],
+          name: 'subOracle',
+          outputs: [
+            {
+              internalType: 'address',
+              name: 'oracle',
+              type: 'address',
+            },
+            {
+              internalType: 'bytes',
+              name: 'data',
+              type: 'bytes',
+            },
+          ],
+          stateMutability: 'view',
+          type: 'function',
+        },
+      ],
+      beefyOracleAddress
+    );
+    const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
-  const oracleResults = (
-    await multicall.all([
-      tokenResults.map(result => ({
-        token0: beefyOracle.methods.subOracle(result.token0),
-        token1: beefyOracle.methods.subOracle(result.token1),
-        token0For0xZero: beefyOracle.methods.subOracle(ZERO_ADDRESS, result.token0),
-        token1For0xZero: beefyOracle.methods.subOracle(ZERO_ADDRESS, result.token1),
-      })),
-    ])
-  )
-    .flat()
-    .map(result => ({
-      oracleForToken0:
-        (result.token0 && result.token0[0] && result.token0[0] !== ZERO_ADDRESS) ||
-        (result.token0For0xZero &&
-          result.token0For0xZero[0] &&
-          result.token0For0xZero[0] !== ZERO_ADDRESS),
-      oracleForToken1:
-        (result.token1 && result.token1[0] && result.token1[0] !== ZERO_ADDRESS) ||
-        (result.token1For0xZero &&
-          result.token1For0xZero[0] &&
-          result.token1For0xZero[0] !== ZERO_ADDRESS),
-    }));
+    const tokenResults = (
+      await multicall.all([
+        clms.map(clm => {
+          const vaultContract = new web3.eth.Contract(
+            [
+              {
+                inputs: [],
+                name: 'wants',
+                outputs: [
+                  {
+                    internalType: 'address',
+                    name: 'token0',
+                    type: 'address',
+                  },
+                  {
+                    internalType: 'address',
+                    name: 'token1',
+                    type: 'address',
+                  },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+              },
+            ],
+            clm.earnContractAddress
+          );
+          return {
+            wants: vaultContract.methods.wants(),
+          };
+        }),
+      ])
+    )
+      .flat()
+      .map(result => ({
+        token0: result.wants[0],
+        token1: result.wants[1],
+      }));
 
-  return clms.map((clm, i) => ({
-    ...clm,
-    token0: tokenResults[i].token0,
-    token1: tokenResults[i].token1,
-    oracleForToken0: oracleResults[i].oracleForToken0,
-    oracleForToken1: oracleResults[i].oracleForToken1,
-  }));
+    const oracleResults = (
+      await multicall.all([
+        tokenResults.map(result => ({
+          token0: beefyOracle.methods.subOracle(result.token0),
+          token1: beefyOracle.methods.subOracle(result.token1),
+          token0For0xZero: beefyOracle.methods.subOracle(ZERO_ADDRESS, result.token0),
+          token1For0xZero: beefyOracle.methods.subOracle(ZERO_ADDRESS, result.token1),
+        })),
+      ])
+    )
+      .flat()
+      .map(result => ({
+        oracleForToken0:
+          (result.token0 && result.token0[0] && result.token0[0] !== ZERO_ADDRESS) ||
+          (result.token0For0xZero &&
+            result.token0For0xZero[0] &&
+            result.token0For0xZero[0] !== ZERO_ADDRESS),
+        oracleForToken1:
+          (result.token1 && result.token1[0] && result.token1[0] !== ZERO_ADDRESS) ||
+          (result.token1For0xZero &&
+            result.token1For0xZero[0] &&
+            result.token1For0xZero[0] !== ZERO_ADDRESS),
+      }));
+
+    return clms.map((clm, i) => ({
+      ...clm,
+      token0: tokenResults[i].token0,
+      token1: tokenResults[i].token1,
+      oracleForToken0: oracleResults[i].oracleForToken0,
+      oracleForToken1: oracleResults[i].oracleForToken1,
+    }));
+  } catch (e) {
+    throw new Error(`Failed to populate cowcentrated data for ${chain}`, { cause: e });
+  }
 };
 
 type VaultConfigWithVaultData = Omit<VaultConfig, 'type'> & {
@@ -806,31 +814,35 @@ const populateVaultsData = async (
   pools: VaultConfig[],
   web3
 ): Promise<VaultConfigWithVaultData[]> => {
-  const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
+  try {
+    const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
 
-  const calls = pools.map(pool => {
-    const vaultContract = new web3.eth.Contract(
-      StandardVaultAbi as unknown as AbiItem[],
-      pool.earnContractAddress
-    );
-    return {
-      strategy: vaultContract.methods.strategy(),
-      owner: vaultContract.methods.owner(),
-      totalSupply: vaultContract.methods.totalSupply(),
-    };
-  });
+    const calls = pools.map(pool => {
+      const vaultContract = new web3.eth.Contract(
+        StandardVaultAbi as unknown as AbiItem[],
+        pool.earnContractAddress
+      );
+      return {
+        strategy: vaultContract.methods.strategy(),
+        owner: vaultContract.methods.owner(),
+        totalSupply: vaultContract.methods.totalSupply(),
+      };
+    });
 
-  const [results] = await multicall.all([calls]);
+    const [results] = await multicall.all([calls]);
 
-  return pools.map((pool, i) => {
-    return {
-      ...pool,
-      type: pool.type || 'standard',
-      strategy: results[i].strategy,
-      vaultOwner: results[i].owner,
-      totalSupply: results[i].totalSupply,
-    };
-  });
+    return pools.map((pool, i) => {
+      return {
+        ...pool,
+        type: pool.type || 'standard',
+        strategy: results[i].strategy,
+        vaultOwner: results[i].owner,
+        totalSupply: results[i].totalSupply,
+      };
+    });
+  } catch (e) {
+    throw new Error(`Failed to populate vault data for ${chain}`, { cause: e });
+  }
 };
 
 type VaultConfigWithStrategyData = VaultConfigWithVaultData & {

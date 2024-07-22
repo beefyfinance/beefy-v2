@@ -1,7 +1,7 @@
 {
   "arb-ltipp": {
     "title": "Beefy × Arbitrum LTIPP",
-    "description": "Earn extra incentives awarded to Beefy's CLM through Arbitrum's incentives program. Users earn extra $ARB tokens for staking into selected CLMs, while trading fees get automatically claimed and compounded back into the position.",
+    "description": "Earn extra incentives awarded to Beefy CLM vaults through Arbitrum's Long Term Incentives Pilot Program ('LTIPP'). Beefy users earn additional $ARB tokens for trying out selected CLM products. Rewards accrue linearly over time depending on the user's TVL. Simply use the 'Deposit' button in the Boost module to enter the boost, and then manually claim your LTIPP rewards whenever you're ready.",
     "learn": "https://beefy.com/articles/ltipp/",
     "social": {
       "discord": "https://beefy.com/discord",
