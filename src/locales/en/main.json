@@ -628,7 +628,7 @@
   "Transact-Claim-Refresh-Wait": "Check back later",
   "Transact-Claim-Refresh-Merkl-Error": "Failed to load your rewards from Merkl",
   "Transact-Claim-Refresh-Merkl-Loading": "Loading your rewards from Merkl....",
-  "Transact-Claim-Refresh-Merkl-Loaded": "Successfully fetched your refresh from Merkl",
+  "Transact-Claim-Refresh-Merkl-Loaded": "Successfully fetched your rewards from Merkl",
   "Transact-Claim-RewardsOnly": "Claim Rewards Only",
   "Transact-Claim-WithdrawAll": "Claim & Withdraw All",
   "Transact-SelectToken": "Select token",
