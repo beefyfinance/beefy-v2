@@ -128,8 +128,8 @@ export const recalculateTotalApyAction = createAsyncThunk<
         },
         optimism: {
           velodrome: [
-            // OP
-            '0x4200000000000000000000000000000000000042',
+            // VELO
+            '0x3c8B650257cFb5f272f799F5e2b4e65093a11a05',
           ],
         },
         base: {
