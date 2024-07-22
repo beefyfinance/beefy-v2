@@ -6,7 +6,7 @@ import { ERC20Abi } from '../../../config/abi/ERC20Abi';
 import { StandardVaultAbi } from '../../../config/abi/StandardVaultAbi';
 import { MinterAbi } from '../../../config/abi/MinterAbi';
 import type { BeefyState, BeefyThunk } from '../../../redux-types';
-import { getMerklRewardsApi, getOneInchApi, getWalletConnectionApi } from '../apis/instances';
+import { getOneInchApi, getWalletConnectionApi } from '../apis/instances';
 import type { BoostEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
@@ -196,8 +196,7 @@ function txMined(
           dispatch(
             fetchUserMerklRewardsAction({
               walletAddress,
-              chainId,
-              afterClaim: true,
+              force: true,
             })
           ),
         60 * 1000
@@ -1186,24 +1185,19 @@ const claimMerkl = (chainId: ChainEntity['id']) => {
 
     const chain = selectChainById(state, chainId);
     const native = selectChainNativeToken(state, chainId);
-    const merklApi = await getMerklRewardsApi();
-    const rewards = await merklApi.fetchUserRewards({
-      chainId: chain.networkChainId,
-      user: address,
-      proof: true,
-    });
-    const unclaimedRewards = Object.entries(rewards)
-      .filter(([_, reward]) => reward.unclaimed !== '0' && reward.symbol !== 'aglaMerkl')
-      .map(([tokenAddress, reward]) => ({
-        token: tokenAddress,
-        amount: reward.accumulated, // proof requires 'accumulated' amount
-        proof: reward.proof,
-      }));
+    const { byChainId } = await dispatch(
+      fetchUserMerklRewardsAction({ walletAddress: address, force: true })
+    ).unwrap();
+    const unclaimedRewards = (byChainId[chain.id] || []).map(({ token, accumulated, proof }) => ({
+      token: token.address,
+      amount: toWeiString(accumulated, token.decimals), // proof requires 'accumulated' amount
+      proof: proof,
+    }));
     if (!unclaimedRewards.length) {
       throw new Error('No unclaimed merkl rewards found');
     }
 
-    const users = new Array(unclaimedRewards.length).fill(address);
+    const users = new Array<string>(unclaimedRewards.length).fill(address);
     const tokens = unclaimedRewards.map(reward => reward.token);
     const amounts = unclaimedRewards.map(reward => reward.amount);
     const proofs = unclaimedRewards.map(reward => reward.proof);

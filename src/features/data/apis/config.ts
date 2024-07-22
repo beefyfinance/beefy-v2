@@ -63,7 +63,7 @@ export class ConfigAPI {
   }
 
   public async fetchAllVaults(): Promise<{ [chainId in ChainEntity['id']]: VaultConfig[] }> {
-    return Object.fromEntries(
+    const vaultsByChainId: { [chainId in ChainEntity['id']]: VaultConfig[] } = Object.fromEntries(
       await Promise.all(
         keys(chainConfigs).map(async chainId => [
           chainId,
@@ -71,6 +71,8 @@ export class ConfigAPI {
         ])
       )
     );
+
+    return mapValues(vaultsByChainId, vaults => vaults.filter(v => !v.hidden));
   }
 
   public async fetchAllBoosts(): Promise<{
@@ -91,11 +93,13 @@ export class ConfigAPI {
     );
 
     const boostsByChainId = mapValues(boosts, boosts =>
-      boosts.map(boost => ({
-        ...boost,
-        partners: (boost.partners || []).filter(id => !!partnersById[id]),
-        campaign: boost.campaign && campaignsById[boost.campaign] ? boost.campaign : undefined,
-      }))
+      boosts
+        .map(boost => ({
+          ...boost,
+          partners: (boost.partners || []).filter(id => !!partnersById[id]),
+          campaign: boost.campaign && campaignsById[boost.campaign] ? boost.campaign : undefined,
+        }))
+        .filter(b => !b.hidden)
     );
 
     return { boostsByChainId, partnersById, campaignsById };

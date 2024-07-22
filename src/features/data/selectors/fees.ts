@@ -29,7 +29,7 @@ export const selectFeesByVaultId = createCachedSelector(
   selectIsVaultGov,
   (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.fees.byId[vaultId],
   (vaultDepositFee: number, isGov: boolean, fees: VaultFee | undefined): VaultFee | undefined => {
-    if (isGov) {
+    if (isGov && !fees) {
       return GOV_FEES;
     }
 

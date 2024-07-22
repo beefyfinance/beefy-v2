@@ -7,6 +7,7 @@ import {
   selectTransactShouldShowClaims,
   selectTransactMode,
   selectTransactVaultId,
+  selectTransactShouldShowClaimsNotification,
 } from '../../../../../data/selectors/transact';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { CardsTabs } from '../../../Card/CardTabs';
@@ -33,6 +34,9 @@ export const FormStep = memo(function FormStep() {
   const mode = useAppSelector(selectTransactMode);
   const vaultId = useAppSelector(selectTransactVaultId);
   const showClaim = useAppSelector(state => selectTransactShouldShowClaims(state, vaultId));
+  const highlightClaim = useAppSelector(state =>
+    selectTransactShouldShowClaimsNotification(state, vaultId)
+  );
   const Component = modeToComponent[mode];
   const handleModeChange = useCallback(
     (mode: string) => {
@@ -58,7 +62,12 @@ export const FormStep = memo(function FormStep() {
 
   return (
     <div className={classes.container}>
-      <CardsTabs selected={TransactMode[mode]} options={modeOptions} onChange={handleModeChange} />
+      <CardsTabs
+        selected={TransactMode[mode]}
+        options={modeOptions}
+        onChange={handleModeChange}
+        highlight={highlightClaim ? TransactMode[TransactMode.Claim] : undefined}
+      />
       <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} />}>
         <Component />
       </Suspense>

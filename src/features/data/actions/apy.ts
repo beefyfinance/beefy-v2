@@ -141,8 +141,13 @@ export const recalculateTotalApyAction = createAsyncThunk<
           const rewardPoolDaily = rewardPoolApr / 365;
           const rewardPoolTradingDaily = rewardPoolTradingApr / 365;
 
-          total.rewardPoolApr = rewardPoolApr;
-          total.rewardPoolDaily = rewardPoolDaily;
+          if (rewardPoolApr > 0) {
+            total.rewardPoolApr = rewardPoolApr;
+            total.rewardPoolDaily = rewardPoolDaily;
+          } else {
+            delete total.rewardPoolApr;
+            delete total.rewardPoolDaily;
+          }
           total.rewardPoolTradingApr = rewardPoolTradingApr;
           total.rewardPoolTradingDaily = rewardPoolTradingDaily;
           total.totalApy =

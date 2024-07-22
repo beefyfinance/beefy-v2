@@ -1,5 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { ActionReducerMapBuilder, Draft } from '@reduxjs/toolkit';
+import { type AnyAction, type Draft, createSlice } from '@reduxjs/toolkit';
 import type { VaultEntity } from '../../entities/vault';
 import type BigNumber from 'bignumber.js';
 import { fetchAllMigrators } from '../../actions/migrator';
@@ -8,7 +7,6 @@ import type {
   ConicMigrationData,
 } from '../../apis/migration/ethereum-conic/types';
 import type { CommonMigrationUpdateFulfilledAction } from '../../apis/migration/migration-types';
-import { migrators } from '../../apis/migration';
 
 export type MigrationConfig = ConicMigrationConfig;
 
@@ -33,6 +31,13 @@ export interface MigrationState {
 
 const migrationInitialState: MigrationState = { byUserAddress: {}, byMigrationId: {} };
 
+function isCommonMigrationUpdateFulfilledAction(
+  action: AnyAction
+): action is CommonMigrationUpdateFulfilledAction {
+  const migrationId = action.payload?.migrationId || undefined;
+  return migrationId && action.type === `migration/${migrationId}/update/fulfilled`;
+}
+
 export const migrationSlice = createSlice({
   name: 'migration',
   initialState: migrationInitialState,
@@ -46,24 +51,12 @@ export const migrationSlice = createSlice({
       }
     });
 
-    handleCommonMigratorsUpdate(builder, migrators);
+    builder.addMatcher(isCommonMigrationUpdateFulfilledAction, (sliceState, action) => {
+      const { balance, walletAddress, vaultId, migrationId } = action.payload;
+      addUserBalanceToMigrate(sliceState, balance, walletAddress, vaultId, migrationId);
+    });
   },
 });
-
-function handleCommonMigratorsUpdate(
-  builder: ActionReducerMapBuilder<MigrationState>,
-  migrationIds: MigrationConfig['id'][]
-) {
-  migrationIds.forEach(migrationId => {
-    builder.addCase<string, CommonMigrationUpdateFulfilledAction>(
-      `migration/${migrationId}/update/fulfilled`,
-      (sliceState, action) => {
-        const { balance, walletAddress, vaultId } = action.payload;
-        addUserBalanceToMigrate(sliceState, balance, walletAddress, vaultId, migrationId);
-      }
-    );
-  });
-}
 
 function addUserBalanceToMigrate(
   state: Draft<MigrationState>,

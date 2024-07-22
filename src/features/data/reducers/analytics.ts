@@ -31,6 +31,7 @@ export interface ClmHarvest {
   token0ToUsd: BigNumber;
   token1ToUsd: BigNumber;
   totalSupply: BigNumber;
+  transactionHash: string;
 }
 
 export interface ClmPendingRewards {
@@ -187,19 +188,28 @@ function addClmHarvestsToState(
   harvests: ApiClmHarvestPriceRow[]
 ) {
   const existing: ClmHarvest[] = (state.clmHarvests.byVaultId[vaultId] as ClmHarvest[]) ?? [];
-  const toAdd: ClmHarvest[] = harvests.map(
-    (row): ClmHarvest => ({
-      timestamp: fromUnixTime(Number(row.timestamp)),
-      compoundedAmount0: new BigNumber(row.compoundedAmount0),
-      compoundedAmount1: new BigNumber(row.compoundedAmount1),
-      token0ToUsd: new BigNumber(row.token0ToUsd),
-      token1ToUsd: new BigNumber(row.token1ToUsd),
-      totalSupply: new BigNumber(row.totalSupply),
-    })
-  );
+  const toAdd: ClmHarvest[] = harvests
+    .map(
+      (row): ClmHarvest => ({
+        timestamp: fromUnixTime(Number(row.timestamp)),
+        compoundedAmount0: new BigNumber(row.compoundedAmount0),
+        compoundedAmount1: new BigNumber(row.compoundedAmount1),
+        token0ToUsd: new BigNumber(row.token0ToUsd),
+        token1ToUsd: new BigNumber(row.token1ToUsd),
+        totalSupply: new BigNumber(row.totalSupply),
+        transactionHash: row.transactionHash,
+      })
+    )
+    .filter(h => h.compoundedAmount0.gt(0) || h.compoundedAmount1.gt(0));
 
   state.clmHarvests.byVaultId[vaultId] = orderBy(
-    uniqBy(existing.concat(toAdd), h => h.timestamp.getTime()),
+    uniqBy(
+      existing.concat(toAdd),
+      h =>
+        `${h.transactionHash}-${h.compoundedAmount0.toString(10)}-${h.compoundedAmount1.toString(
+          10
+        )}`
+    ),
     h => h.timestamp.getTime(),
     'asc'
   );

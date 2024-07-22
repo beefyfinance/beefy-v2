@@ -14,7 +14,6 @@ export const styles = (theme: Theme) => ({
     },
   },
   amountContainer: {
-    marginLeft: '16px',
     display: 'flex',
     flexDirection: 'column' as const,
     alignItems: 'flex-end',

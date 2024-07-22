@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_balancer-arb-usdc-gusdc-gains",
+    "poolId": "balancer-arb-usdc-gusdc",
+    "name": "Gains",
+    "assets": ["gUSDC", "USDC"],
+    "tokenAddress": "0x93a3c287A826a8307C6b3fE1A79D06cC8966d900",
+    "earnedToken": "ARB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+    "earnContractAddress": "0x8Fa95a5Ff8aC0d1f17DB56d3e5953bB3E74f9B71",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "ARB",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["gains"]
+  },
+  {
     "id": "moo_silo-eth-ezeth-silo",
     "poolId": "silo-eth-ezeth",
     "name": "Silo",

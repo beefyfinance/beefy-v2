@@ -37,7 +37,7 @@ export const styles = (theme: Theme) => ({
     '&:focus': {
       outline: 'none',
     },
-    '&:disabled': {
+    '&:disabled,&:hover:disabled,&:active:disabled,&:focus:disabled': {
       color: 'rgba(255, 255, 255, 0.38)',
       backgroundColor: 'rgba(255, 255, 255, 0.12)',
       borderColor: 'rgba(255, 255, 255, 0.12)',
