@@ -192,14 +192,6 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   let updates: Record<string, Record<string, any>> = {};
   let exitCode = 0;
 
-  if (chainId === 'optimism') {
-    return {
-      chainId,
-      exitCode,
-      updates,
-    };
-  }
-
   //Governance pools should be separately verified
   const [govPools, vaultPools] = partition(pools, pool => pool.type === 'gov');
   pools = vaultPools;
