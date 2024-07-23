@@ -403,7 +403,11 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
         inputs: depositStep.inputs.map(i => ({ ...i, max: true })),
       });
 
-      const dustOutputs: OrderOutput[] = [];
+      const dustOutputs: OrderOutput[] = unstakeZap.outputs.map(output => ({
+        token: output.token.address,
+        minOutputAmount: '0',
+      }));
+
       const requiredOutputs: OrderOutput[] = depositZap.outputs.map(output => ({
         token: output.token.address,
         minOutputAmount: toWeiString(
