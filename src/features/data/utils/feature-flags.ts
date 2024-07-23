@@ -1,4 +1,5 @@
 import type { ChainEntity } from '../entities/chain';
+import { clamp } from '../../../helpers/number';
 
 const DEFAULT_CHUNK_SIZE = 468;
 const DEFAULT_CHUNK_SIZE_BY_CHAIN: Record<string, number> = {
@@ -261,4 +262,13 @@ export function featureFlag_simUpdate(): boolean {
 export function featureFlag_disableRedirect(): boolean {
   const params = getSearchParams();
   return params.has('__disable_redirect');
+}
+
+export function featureFlag_simulateMerklApiFailure(): number | false {
+  const params = getSearchParams();
+  if (!params.has('__simulate_merkl_api_failure')) {
+    return false;
+  }
+
+  return clamp(parseFloat(params.get('__simulate_merkl_api_failure') || '0'), 0, 1);
 }

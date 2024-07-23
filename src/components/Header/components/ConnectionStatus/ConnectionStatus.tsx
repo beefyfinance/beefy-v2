@@ -16,7 +16,7 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
     <div ref={anchorEl} className={classes.container}>
       <NetworkStatus anchorEl={anchorEl} />
       <div>
-        <Suspense fallback={<>...</>}>
+        <Suspense>
           <WalletContainer />
         </Suspense>
       </div>

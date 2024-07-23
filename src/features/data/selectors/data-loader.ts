@@ -16,6 +16,7 @@ import {
   hasLoaderFulfilledOnce,
   hasLoaderFulfilledRecently,
   isLoaderPending,
+  isLoaderRejected,
   shouldLoaderLoadOnce,
   shouldLoaderLoadRecent,
 } from './data-loader-helpers';
@@ -171,12 +172,14 @@ export const selectIsWalletTimelineForUserPending = createAddressDataSelector(
 
 export const selectIsWalletTimelineForUserRecent = createAddressDataSelector(
   'timeline',
-  hasLoaderFulfilledRecently
+  hasLoaderFulfilledRecently,
+  5
 );
 
 const selectShouldInitDashboardForUserImpl = createAddressDataSelector(
   'dashboard',
-  shouldLoaderLoadRecent
+  shouldLoaderLoadRecent,
+  5
 );
 
 export const selectShouldInitDashboardForUser = (state: BeefyState, walletAddress: string) => {
@@ -193,17 +196,49 @@ export const selectShouldInitDashboardForUser = (state: BeefyState, walletAddres
 
 export const selectDashboardShouldLoadBalanceForChainUser = createAddressChainDataSelector(
   'balance',
-  shouldLoaderLoadRecent
+  shouldLoaderLoadRecent,
+  5
 );
 
-export const selectShouldLoadMerklRewardsForUser = createAddressDataSelector(
+export const selectMerklRewardsForUserShouldLoad = createAddressDataSelector(
   'merklRewards',
-  createShouldLoaderLoadRecentEvaluator(30 * 60)
+  createShouldLoaderLoadRecentEvaluator(30 * 60),
+  5
+);
+
+export const selectMerklRewardsForUserHasFulfilledOnce = createAddressDataSelector(
+  'merklRewards',
+  hasLoaderFulfilledOnce
+);
+
+export const selectMerklRewardsForUserIsRejected = createAddressDataSelector(
+  'merklRewards',
+  isLoaderRejected
+);
+
+export const selectMerklRewardsForUserIsPending = createAddressDataSelector(
+  'merklRewards',
+  isLoaderPending
 );
 
 export const selectHasMerklRewardsDispatchedRecentlyForAnyUser = createGlobalDataSelector(
   'merklRewards',
-  createHasLoaderDispatchedRecentlyEvaluator(15)
+  createHasLoaderDispatchedRecentlyEvaluator(15),
+  5
+);
+
+export const selectMerklUserRewardsStatus = createSelector(
+  selectMerklRewardsForUserHasFulfilledOnce,
+  selectMerklRewardsForUserShouldLoad,
+  selectMerklRewardsForUserIsRejected,
+  selectMerklRewardsForUserIsPending,
+  selectHasMerklRewardsDispatchedRecentlyForAnyUser,
+  (userFulfilled, userShouldLoad, userRejected, userPending, anyUserDispatchedRecently) => ({
+    canLoad: userShouldLoad && !anyUserDispatchedRecently,
+    isLoaded: userFulfilled,
+    isLoading: userPending,
+    isError: !userFulfilled && userRejected,
+  })
 );
 
 export const selectFetchMerklRewardsLastDispatched = createGlobalDataSelector(
@@ -213,7 +248,8 @@ export const selectFetchMerklRewardsLastDispatched = createGlobalDataSelector(
 
 export const selectShouldLoadAllCurrentCowcentratedRanges = createGlobalDataSelector(
   'currentCowcentratedRanges',
-  createShouldLoaderLoadRecentEvaluator(3 * 60)
+  createShouldLoaderLoadRecentEvaluator(3 * 60),
+  5
 );
 
 export const selectIsBalanceAvailableForChainUser = createAddressChainDataSelector(

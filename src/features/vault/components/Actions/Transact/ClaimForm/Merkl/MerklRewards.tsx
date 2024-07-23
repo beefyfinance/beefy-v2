@@ -20,13 +20,37 @@ import { Source } from '../Source/Source';
 import { isNonEmptyArray, type NonEmptyArray } from '../../../../../../data/utils/array-utils';
 import { selectChainById } from '../../../../../../data/selectors/chains';
 import { strictEntries } from '../../../../../../../helpers/object';
-import {
-  selectHasMerklRewardsDispatchedRecentlyForAnyUser,
-  selectShouldLoadMerklRewardsForUser,
-} from '../../../../../../data/selectors/data-loader';
+import { selectMerklUserRewardsStatus } from '../../../../../../data/selectors/data-loader';
 import { fetchUserMerklRewardsAction } from '../../../../../../data/actions/user-rewards';
+import { AlertWarning } from '../../../../../../../components/Alerts';
+import { RefreshButton } from '../RefreshButton/RefreshButton';
 
 const useStyles = makeStyles(styles);
+
+function useUserRewardsLoader(walletAddress: string, autoRefresh: boolean) {
+  const dispatch = useAppDispatch();
+  const status = useAppSelector(state => selectMerklUserRewardsStatus(state, walletAddress));
+  const handleRefresh = useCallback(() => {
+    dispatch(fetchUserMerklRewardsAction({ walletAddress }));
+  }, [dispatch, walletAddress]);
+
+  useEffect(() => {
+    if (autoRefresh && status && status.canLoad) {
+      handleRefresh();
+    }
+  }, [dispatch, status, autoRefresh, handleRefresh]);
+
+  return useMemo(
+    () => ({
+      canLoad: status?.canLoad || false,
+      isLoaded: status?.isLoaded || false,
+      isLoading: status?.isLoading || false,
+      isError: status?.isError || false,
+      handleLoad: status?.canLoad === true ? handleRefresh : undefined,
+    }),
+    [status, handleRefresh]
+  );
+}
 
 type MerklRewardsProps = {
   vaultId: VaultEntity['id'];
@@ -51,7 +75,7 @@ export const MerklRewards = memo<MerklRewardsProps>(function MerklRewards({
   );
 
   if (!isNonEmptyArray(vaultRewards)) {
-    return <RewardsLoader walletAddress={walletAddress} />;
+    return walletAddress ? <AutomaticUserRewardsRefresher walletAddress={walletAddress} /> : null;
   }
 
   return (
@@ -63,11 +87,16 @@ export const MerklRewards = memo<MerklRewardsProps>(function MerklRewards({
           deposited={deposited}
         />
       ) : (
-        <Source key={chainId} title={t('Transact-Claim-Rewards-merkl')}>
+        <Source
+          key={chainId}
+          title={t('Transact-Claim-Rewards-merkl')}
+          refresh={
+            walletAddress ? <UserRewardsRefreshButton walletAddress={walletAddress} /> : undefined
+          }
+        >
           <RewardList rewards={vaultRewards} deposited={deposited} />
         </Source>
       )}
-      <RewardsLoader walletAddress={walletAddress} />
     </>
   );
 });
@@ -92,7 +121,7 @@ const ClaimableRewards = memo<ClaimableRewardsProps>(function ClaimableRewards({
   );
   const hasMultipleChains = useMemo(() => Object.keys(byChain).length > 1, [byChain]);
 
-  return strictEntries(byChain).map(([chainId, rewards]) => (
+  return strictEntries(byChain).map(([chainId, rewards], index) => (
     <ClaimableChainRewards
       key={chainId}
       chainId={chainId}
@@ -100,6 +129,7 @@ const ClaimableRewards = memo<ClaimableRewardsProps>(function ClaimableRewards({
       deposited={deposited}
       walletAddress={walletAddress}
       withChain={hasMultipleChains}
+      withRefresh={index === 0}
     />
   ));
 });
@@ -110,6 +140,7 @@ type ClaimableChainRewardsProps = {
   walletAddress: string;
   deposited: boolean;
   withChain?: boolean;
+  withRefresh?: boolean;
 };
 
 const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function ClaimableChainRewards({
@@ -118,6 +149,7 @@ const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function Claimabl
   walletAddress,
   deposited,
   withChain,
+  withRefresh,
 }) {
   const { t } = useTranslation();
   const chain = useAppSelector(state => selectChainById(state, chainId));
@@ -130,6 +162,7 @@ const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function Claimabl
         chain: chain.name,
       })}
       claim={hasClaimable ? <Claim chainId={chainId} withChain={withChain} /> : undefined}
+      refresh={withRefresh ? <UserRewardsRefreshButton walletAddress={walletAddress} /> : undefined}
     >
       <RewardList rewards={vaultRewards} deposited={deposited} />
       {hasClaimable ? (
@@ -204,22 +237,50 @@ const OtherRewards = memo<OtherRewardsProps>(function OtherRewards({
   );
 });
 
-type RewardsLoaderProps = {
-  walletAddress?: string;
+type RewardsRefresherProps = {
+  walletAddress: string;
 };
 
-const RewardsLoader = memo<RewardsLoaderProps>(function RewardsLoader({ walletAddress }) {
-  const dispatch = useAppDispatch();
-  const shouldFetch = useAppSelector(state =>
-    walletAddress ? selectShouldLoadMerklRewardsForUser(state, walletAddress) : false
-  );
-  const shouldWait = useAppSelector(selectHasMerklRewardsDispatchedRecentlyForAnyUser);
-
-  useEffect(() => {
-    if (walletAddress && !shouldWait && shouldFetch) {
-      dispatch(fetchUserMerklRewardsAction({ walletAddress }));
+const AutomaticUserRewardsRefresher = memo<RewardsRefresherProps>(
+  function AutomaticUserRewardsRefresher({ walletAddress }) {
+    const status = useUserRewardsLoader(walletAddress, true);
+    if (status.isError) {
+      return <AlertWarning>{'Failed to fetch user rewards from Merkl API.'}</AlertWarning>;
     }
-  }, [dispatch, shouldFetch, shouldWait, walletAddress]);
 
-  return null;
+    return null;
+  }
+);
+
+const UserRewardsRefreshButton = memo<RewardsRefresherProps>(function UserRewardsRefreshButton({
+  walletAddress,
+}) {
+  const { t } = useTranslation();
+  const status = useUserRewardsLoader(walletAddress, false);
+  const canRefresh = status.canLoad && !!status.handleLoad;
+  if (status.isLoaded && !canRefresh) {
+    return null;
+  }
+
+  return (
+    <RefreshButton
+      title={t(
+        status.isError
+          ? 'Transact-Claim-Refresh-Merkl-Error'
+          : status.isLoading
+          ? 'Transact-Claim-Refresh-Merkl-Loading'
+          : 'Transact-Claim-Refresh-Merkl-Loaded'
+      )}
+      text={
+        status.isLoading
+          ? undefined
+          : canRefresh
+          ? t('Transact-Claim-Refresh')
+          : t('Transact-Claim-Refresh-Wait')
+      }
+      status={status.isError ? 'error' : status.isLoading ? 'loading' : 'loaded'}
+      disabled={!canRefresh}
+      onClick={status.handleLoad}
+    />
+  );
 });

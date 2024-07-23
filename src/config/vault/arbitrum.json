@@ -1,5 +1,237 @@
 [
   {
+    "id": "sushi-cow-arb-weth-arb-rp",
+    "name": "ARB-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiArbWETH-ARB",
+    "tokenAddress": "0x8bf7D47f17Ea5211a5769a61eaEF0e11d2322968",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnContractAddress": "0x613EB88ccAE8d56de2a7578Ed8Ee89958a0f7E63",
+    "earnedToken": "rcowSushiArbWETH-ARB",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-weth-arb",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["ARB", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-arb-weth-arb",
+    "name": "ARB-WETH",
+    "type": "cowcentrated",
+    "token": "ARB-WETH",
+    "tokenAddress": "0xB3942c9FFA04efBC1Fa746e146bE7565c76E3dC1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0x912CE59144191C1204E64559FE8253a0e49E6548"
+    ],
+    "earnedToken": "cowSushiArbWETH-ARB",
+    "earnedTokenAddress": "0x8bf7D47f17Ea5211a5769a61eaEF0e11d2322968",
+    "earnContractAddress": "0x8bf7D47f17Ea5211a5769a61eaEF0e11d2322968",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-weth-arb",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["ARB", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-arb-zro-weth-rp",
+    "name": "ZRO-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiArbZRO-WETH",
+    "tokenAddress": "0x7257976B27a64FCDA89500F4Cd2375e57bE6eBb0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnContractAddress": "0xa59f706c2f04A6a92ac56089467698FdA869CF79",
+    "earnedToken": "rcowSushiArbZRO-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-zro-weth",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["ZRO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-arb-zro-weth",
+    "name": "ZRO-WETH",
+    "type": "cowcentrated",
+    "token": "ZRO-WETH",
+    "tokenAddress": "0x1797538dd80c041cC2F0C5901D5700868186A9a8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "depositTokenAddresses": [
+      "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowSushiArbZRO-WETH",
+    "earnedTokenAddress": "0x7257976B27a64FCDA89500F4Cd2375e57bE6eBb0",
+    "earnContractAddress": "0x7257976B27a64FCDA89500F4Cd2375e57bE6eBb0",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-zro-weth",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["ZRO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-arb-weth-usdc-rp",
+    "name": "WETH-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiArbWETH-USDC",
+    "tokenAddress": "0x54742a4CF99718FdA55fd8b7636D7FB86edff660",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnContractAddress": "0x4883849fc126F1Bc2DE6377e497656d1A0666c6e",
+    "earnedToken": "rcowSushiArbWETH-USDC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-weth-usdc",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-arb-weth-usdc",
+    "name": "WETH-USDC",
+    "type": "cowcentrated",
+    "token": "WETH-USDC",
+    "tokenAddress": "0xf3Eb87C1F6020982173C908E7eB31aA66c1f0296",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+    ],
+    "earnedToken": "cowSushiArbWETH-USDC",
+    "earnedTokenAddress": "0x54742a4CF99718FdA55fd8b7636D7FB86edff660",
+    "earnContractAddress": "0x54742a4CF99718FdA55fd8b7636D7FB86edff660",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-weth-usdc",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-arb-weth-usdc.e-rp",
+    "name": "WETH-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiArbWETH-USDC.e",
+    "tokenAddress": "0xa80dF57Fa3b92A25179de988D55Dad3f558A348e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnContractAddress": "0x5Eac36721d730E5410C08C6bC6c90043503E5B25",
+    "earnedToken": "rcowSushiArbWETH-USDC.e",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-weth-usdc.e",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["WETH", "arbUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-arb-weth-usdc.e",
+    "name": "WETH-USDC.e",
+    "type": "cowcentrated",
+    "token": "WETH-USDC.e",
+    "tokenAddress": "0x15E444da5b343c5A0931f5d3e85D158d1efC3D40",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"
+    ],
+    "earnedToken": "cowSushiArbWETH-USDC.e",
+    "earnedTokenAddress": "0xa80dF57Fa3b92A25179de988D55Dad3f558A348e",
+    "earnContractAddress": "0xa80dF57Fa3b92A25179de988D55Dad3f558A348e",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-weth-usdc.e",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["WETH", "arbUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arb-ethfi-weth-rp",
     "name": "ETHFI-WETH Reward Pool",
     "type": "gov",
@@ -6044,7 +6276,9 @@
     "earnContractAddress": "0x8Cb60b895FBFDE711622370C7140b554AC3E62Dc",
     "oracle": "lps",
     "oracleId": "curve-arb-knox-rgusd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1721673132,
+    "retireReason": "rewards",
     "createdAt": 1717141130,
     "platformId": "curve",
     "assets": ["KNOX", "rgUSD"],
@@ -6083,7 +6317,9 @@
     "earnContractAddress": "0x447eEeB0bD7f6E93D0C1647498F88130603A9C61",
     "oracle": "lps",
     "oracleId": "curve-arb-rgusd-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1721673132,
+    "retireReason": "rewards",
     "createdAt": 1717141111,
     "platformId": "curve",
     "assets": ["rgUSD", "USDC"],
@@ -6636,7 +6872,9 @@
     "earnContractAddress": "0x928e9075a880Bc40f55BcDB5dF3D8697E924b2c4",
     "oracle": "lps",
     "oracleId": "curve-lend-arb-arb-crvusd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1721673132,
+    "retireReason": "rewards",
     "createdAt": 1713171111,
     "platformId": "curve-lend",
     "assets": ["crvUSD"],
@@ -6659,7 +6897,9 @@
     "earnContractAddress": "0x536CF168B627727acEeCeA4f3C2059F5AA1de456",
     "oracle": "lps",
     "oracleId": "curve-lend-arb-wbtc-crvusd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1721673132,
+    "retireReason": "rewards",
     "createdAt": 1713171101,
     "platformId": "curve-lend",
     "assets": ["crvUSD"],
@@ -6682,7 +6922,9 @@
     "earnContractAddress": "0xb46192aA0640AB9990228d0671DB5ecf67034D27",
     "oracle": "lps",
     "oracleId": "curve-lend-arb-weth-crvusd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1721673132,
+    "retireReason": "rewards",
     "createdAt": 1713171091,
     "platformId": "curve-lend",
     "assets": ["crvUSD"],
