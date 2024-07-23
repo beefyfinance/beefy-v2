@@ -1,5 +1,3 @@
-import type { AxiosInstance } from 'axios';
-import axios from 'axios';
 import type {
   IOnRampApi,
   ApiQuoteRequest,
@@ -10,26 +8,64 @@ import type {
 } from './on-ramp-types';
 
 export class OnRampApi implements IOnRampApi {
-  public api: AxiosInstance;
+  public api: string;
 
   constructor() {
-    this.api = axios.create({
-      baseURL: import.meta.env.VITE_ONRAMP_URL || 'https://onramp.beefy.finance',
-    });
+    this.api = import.meta.env.VITE_ONRAMP_URL || 'https://onramp.beefy.finance';
   }
 
   public async getSupported(): Promise<ApiSupportedResponse> {
-    const res = await this.api.get<ApiSupportedResponse>('/onboard');
-    return res.data;
+    const res = await fetch(`${this.api}/onboard`);
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {
+          countryCode: '',
+          currencyCode: '',
+          providers: {},
+        } as ApiSupportedResponse;
+      }
+      // throw new Error(`HTTP error! stat  us: ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    return data.data;
   }
 
   public async getQuote(options: ApiQuoteRequest): Promise<ApiQuoteResponse> {
-    const res = await this.api.post<ApiQuoteResponse>('/onboard/quote', options);
-    return res.data;
+    const res = await fetch(`${this.api}/onboard/quote`, {
+      method: 'POST',
+      body: JSON.stringify(options),
+    });
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {} as ApiQuoteResponse;
+      }
+      // throw new Error(`HTTP error! stat  us: ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    return data.data;
   }
 
   public async getUrl(options: ApiUrlRequest): Promise<ApiUrlResponse> {
-    const res = await this.api.post<ApiUrlResponse>('/onboard/init', options);
-    return res.data;
+    const res = await fetch(`${this.api}/onboard/init`, {
+      method: 'POST',
+      body: JSON.stringify(options),
+    });
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        return '' as ApiUrlResponse;
+      }
+      // throw new Error(`HTTP error! stat  us: ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    return data.data;
   }
 }

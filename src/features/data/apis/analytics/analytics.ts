@@ -1,5 +1,3 @@
-import type { AxiosInstance } from 'axios';
-import axios from 'axios';
 import BigNumber from 'bignumber.js';
 import type {
   AnalyticsPriceResponse,
@@ -13,29 +11,29 @@ import type { ChainEntity } from '../../entities/chain';
 const INVESTOR_API = import.meta.env.VITE_INVESTOR_URL || 'https://investor-api.beefy.finance';
 
 export class AnalyticsApi {
-  public api: AxiosInstance;
+  public api: string;
 
   constructor() {
-    this.api = axios.create({
-      baseURL: INVESTOR_API,
-    });
+    this.api = INVESTOR_API;
   }
 
   public async getWalletTimeline(address: string): Promise<AnalyticsUserTimelineResponse> {
-    try {
-      const res = await this.api.get('/api/v1/timeline', { params: { address } });
-      return res.data.result;
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        if (err.response?.status === 404) {
-          return {
-            clmTimeline: [],
-            databarnTimeline: [],
-          };
-        }
+    const res = await fetch(
+      `${this.api}/api/v1/timeline?` + new URLSearchParams({ address }).toString()
+    );
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {
+          clmTimeline: [],
+          databarnTimeline: [],
+        };
       }
-      throw err;
+      // throw new Error(`HTTP error! status: ${res.status}`);
     }
+
+    const data = await res.json();
+    return data.result;
   }
 
   public async getVaultPrices(
@@ -45,20 +43,49 @@ export class AnalyticsApi {
     address: VaultEntity['contractAddress'],
     chain: ChainEntity['id']
   ): Promise<AnalyticsPriceResponse> {
-    const res = await this.api.get('/api/v1/prices', {
-      params: { address: address.toLowerCase(), productType, priceType, bucket: timeBucket, chain },
-    });
+    const res = await fetch(
+      `${this.api}/api/v1/prices?` +
+        new URLSearchParams({
+          address: address.toLowerCase(),
+          productType,
+          priceType,
+          bucket: timeBucket,
+          chain,
+        }).toString()
+    );
 
-    return res.data.result.map((row: { ts: number; value: number }) => {
+    if (!res.ok) {
+      if (res.status === 404) {
+        return [] as AnalyticsPriceResponse;
+      }
+      // throw new Error(`HTTP error! stat  us: ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    return data.result.map((row: { ts: number; value: number }) => {
       return { date: new Date(row.ts * 1000), value: new BigNumber(row.value) };
     });
   }
 
   public async getClmPrices(oracleId: string, timebucket: TimeBucketType) {
-    const res = await this.api.get('/api/v1/prices', {
-      params: { oracle: oracleId, bucket: timebucket },
-    });
-    return res.data.result.map((row: { ts: number; value: number }) => {
+    const res = await fetch(
+      `${this.api}/api/v1/prices?` +
+        new URLSearchParams({
+          oracle: oracleId,
+          bucket: timebucket,
+        }).toString()
+    );
+    if (!res.ok) {
+      if (res.status === 404) {
+        return [] as AnalyticsPriceResponse;
+      }
+      throw new Error(`HTTP error! stat  us: ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    return data.result.map((row: { ts: number; value: number }) => {
       return { date: new Date(row.ts * 1000), value: new BigNumber(row.value) };
     });
   }

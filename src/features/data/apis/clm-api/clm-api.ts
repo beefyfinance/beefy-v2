@@ -1,5 +1,3 @@
-import type { AxiosInstance } from 'axios';
-import axios from 'axios';
 import type {
   ClmPendingRewardsResponse,
   ClmVaultHarvestsResponse,
@@ -54,22 +52,30 @@ const ClmStrategyAbi = [
 const CLM_API = import.meta.env.VITE_CLM_URL || 'https://clm-api.beefy.finance';
 
 export class ClmApi implements IClmApi {
-  public api: AxiosInstance;
+  public api: string;
 
   constructor() {
-    this.api = axios.create({
-      baseURL: CLM_API,
-    });
+    this.api = CLM_API;
   }
 
   public async getHarvestsForVault(
     chainId: ChainEntity['id'],
     vaultAddress: VaultEntity['contractAddress']
   ): Promise<ClmVaultHarvestsResponse> {
-    const res = await this.api.get<ClmVaultHarvestsResponse>(
-      `/api/v1/vault/${chainId}/${vaultAddress.toLocaleLowerCase()}/harvests`
+    const res = await fetch(
+      `${this.api}/api/v1/vault/${chainId}/${vaultAddress.toLocaleLowerCase()}/harvests`
     );
-    return res.data;
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        return [];
+      }
+      // throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    return data.data;
   }
 
   public async getHarvestsForVaultsSince(
@@ -80,13 +86,21 @@ export class ClmApi implements IClmApi {
     const nearestMinute = roundToNearestMinutes(since);
     const orderedAddresses = vaultAddresses.map(addr => addr.toLowerCase()).sort();
 
-    const res = await this.api.get<ClmVaultsHarvestsResponse>(
-      `/api/v1/vaults/${chainId}/harvests/${getUnixTime(nearestMinute)}`,
-      {
-        params: new URLSearchParams(orderedAddresses.map(addr => ['vaults', addr])),
-      }
+    const res = await fetch(
+      `${this.api}/api/v1/vaults/${chainId}/harvests/${getUnixTime(nearestMinute)}?` +
+        new URLSearchParams(orderedAddresses.map(addr => ['vaults', addr])).toString()
     );
-    return res.data;
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        return [];
+      }
+      // throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    return data.data;
   }
 
   public async getClmPendingRewards(

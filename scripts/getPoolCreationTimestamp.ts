@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Web3 from 'web3';
 import { chainRpcs, getVaultsForChain } from './common/config';
 
 const explorerApiUrls = {
@@ -29,15 +28,24 @@ const blockScoutChains = new Set(['fuse', 'metis', 'emerald', 'aurora', 'kava', 
 const harmonyRpcChains = new Set(['one']);
 
 const getCreationTimestamp = async (vaultAddress, explorerUrl, chain) => {
-  var url =
+  const url =
     `https://${explorerUrl}?module=account&action=txlist&address=${vaultAddress}` +
     `&startblock=1&endblock=99999999&page=1&sort=asc&limit=1${
       !blockScoutChains.has(chain) ? '&offset=1' : ''
     }`;
-  const resp = await axios.get(url);
+  const res = await fetch(url);
 
-  const block = resp.data.result[0].blockNumber;
-  const timestamp = resp.data.result[0].timeStamp;
+  if (!res.ok) {
+    if (res.status === 404) {
+      return [];
+    }
+    // throw new Error(`HTTP error! stat  us: ${res.status}`);
+  }
+
+  const data = (await res.json()) as { status: string; message: string; data: any };
+
+  const block = data.data.result[0].blockNumber;
+  const timestamp = data.data.result[0].timeStamp;
 
   console.log(`Creation block: ${block} - timestamp: ${timestamp}`);
   return timestamp;

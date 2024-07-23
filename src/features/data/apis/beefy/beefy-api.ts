@@ -21,6 +21,7 @@ export const API_ZAP_URL = import.meta.env.VITE_API_ZAP_URL || `${API_URL}/zap`;
 
 export class BeefyAPI {
   public api: AxiosInstance;
+  public timeout = 30 * 1000;
 
   constructor() {
     // this could be mocked by passing mock axios to the constructor
@@ -28,6 +29,7 @@ export class BeefyAPI {
       baseURL: API_URL,
       timeout: 30 * 1000,
     });
+    this.timeout = 30 * 1000;
   }
 
   // here we can nicely type the responses
@@ -36,8 +38,19 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get('/prices', { params: { _: this.getCacheBuster('short') } });
-    return res.data;
+    const res = await fetch(
+      `${API_URL}/prices?` + new URLSearchParams({ ['_']: String(this.getCacheBuster('short')) }),
+      { signal: AbortSignal.timeout(this.timeout) }
+    );
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {} as BeefyAPITokenPricesResponse;
+      }
+      // throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    return await res.json();
   }
 
   // i'm not 100% certain about the return type
@@ -47,8 +60,19 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get('/lps', { params: { _: this.getCacheBuster('short') } });
-    return res.data;
+    const res = await fetch(
+      `${API_URL}/lps?` + new URLSearchParams({ ['_']: String(this.getCacheBuster('short')) }),
+      { signal: AbortSignal.timeout(this.timeout) }
+    );
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {} as BeefyAPITokenPricesResponse;
+      }
+      // throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    return await res.json();
   }
 
   public async getLpsBreakdown(): Promise<BeefyAPILpBreakdownResponse> {
@@ -56,10 +80,20 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get('/lps/breakdown', {
-      params: { _: this.getCacheBuster('short') },
-    });
-    return res.data;
+    const res = await fetch(
+      `${API_URL}/lps/breakdown?` +
+        new URLSearchParams({ ['_']: String(this.getCacheBuster('short')) }),
+      { signal: AbortSignal.timeout(this.timeout) }
+    );
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {} as BeefyAPILpBreakdownResponse;
+      }
+      // throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    return await res.json();
   }
 
   public async getApyBreakdown(): Promise<BeefyAPIApyBreakdownResponse> {
@@ -67,13 +101,22 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get('/apy/breakdown', {
-      params: { _: this.getCacheBuster('short') },
-    });
+    const res = await fetch(
+      `${API_URL}/apy/breakdown?` +
+        new URLSearchParams({ ['_']: String(this.getCacheBuster('short')) }),
+      { signal: AbortSignal.timeout(this.timeout) }
+    );
 
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {} as BeefyAPIApyBreakdownResponse;
+      }
+      // throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    const values = await res.json();
     // somehow, all vaultApr are currently strings, we need to fix that before sending
     // the data to be processed
-    const data = mapValuesDeep(res.data, (val, key) => {
+    const data = mapValuesDeep(values, (val, key) => {
       if (key === 'vaultApr' && typeof val === 'string') {
         val = parseFloat(val);
       }
