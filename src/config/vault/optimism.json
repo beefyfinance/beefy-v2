@@ -1,5 +1,63 @@
 [
   {
+    "id": "sushi-cow-op-weth-wbtc-rp",
+    "name": "WBTC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiOpWETH-WBTC",
+    "tokenAddress": "0x31f663096Ab1Ac630fAc855633c23d07E70F3024",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnContractAddress": "0xd5949A52265c6d798519F61E43b01a82fE2582E6",
+    "earnedToken": "rcowSushiOpWETH-WBTC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "sushi-cow-op-weth-wbtc",
+    "status": "active",
+    "createdAt": 1721752391,
+    "platformId": "sushi",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-op-weth-wbtc",
+    "name": "WBTC-WETH",
+    "token": "WBTC-WETH",
+    "tokenAddress": "0x689A850F62B41d89B5e5C3465Cd291374B215813",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x68f180fcCe6836688e9084f035309E29Bf0A2095"
+    ],
+    "tokenProviderId": "sushi",
+    "earnedToken": "cowSushiOpWETH-WBTC",
+    "earnedTokenAddress": "0x31f663096Ab1Ac630fAc855633c23d07E70F3024",
+    "earnContractAddress": "0x31f663096Ab1Ac630fAc855633c23d07E70F3024",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-op-weth-wbtc",
+    "status": "active",
+    "createdAt": 1721752391,
+    "platformId": "beefy",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "velodrome-v2-weth-tlx",
     "name": "TLX-ETH vLP V2",
     "type": "standard",
