@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_balancer-gyro-arb-wsteth-weth-balancer",
+    "poolId": "balancer-gyro-arb-wsteth-weth",
+    "name": "Balancer",
+    "assets": ["wstETH", "ETH"],
+    "tokenAddress": "0xA9Fa0C33cE278952309229FbE202A5E6108491B0",
+    "earnedToken": "ARB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+    "earnContractAddress": "0x12f0520DAFd65e6468d4dD4F79dd15b6589cb76a",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "ARB",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["balancer"]
+  },
+  {
     "id": "moo_balancer-arb-usdc-gusdc-gains",
     "poolId": "balancer-arb-usdc-gusdc",
     "name": "Gains",

@@ -1,4 +1,13 @@
 {
+  "balancer": {
+    "title": "Balancer",
+    "text": "Balancer is a decentralized automated market maker (AMM) protocol built on Ethereum with a clear focus on fungible and yield-bearing liquidity. Balancer's success is intrinsically linked to the success of protocols and products built on the platform.",
+    "website": "https://balancer.fi/",
+    "social": {
+      "discord": "https://discord.balancer.fi/",
+      "twitter": "https://x.com/Balancer"
+    }
+  },
   "shezmu": {
     "title": "Shezmu",
     "text": "Shezmu is a CDP (Collateralized Debt Position) Protocol that allows users to borrow against yield-bearing tokens and NFTs.",
