@@ -43,16 +43,19 @@ export const usePnLChartData = (
   const currentMooTokenBalance = useAppSelector(state =>
     selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vault.id, walletAddress)
   );
-  const { data: sharesToUnderlying, loading: sharesLoading } = useVaultIdToShareToUnderlying(
-    vaultId,
-    timebucket
-  );
-  const { data: underlyingToUsd, loading: underlyingLoading } = useVaultIdToUnderlyingUsdPrices(
-    vaultId,
-    timebucket
-  );
+  const {
+    data: sharesToUnderlying,
+    loading: sharesLoading,
+    willRetry: sharesWillRetry,
+  } = useVaultIdToShareToUnderlying(vaultId, timebucket);
+  const {
+    data: underlyingToUsd,
+    loading: underlyingLoading,
+    willRetry: underlyingWillRetry,
+  } = useVaultIdToUnderlyingUsdPrices(vaultId, timebucket);
 
   const isLoading = underlyingLoading || sharesLoading;
+  const willRetry = sharesWillRetry || underlyingWillRetry;
 
   const chartData = useMemo(() => {
     if (
@@ -107,7 +110,7 @@ export const usePnLChartData = (
     timebucket,
   ]);
 
-  return { chartData, isLoading };
+  return { chartData, isLoading, willRetry };
 };
 
 /**

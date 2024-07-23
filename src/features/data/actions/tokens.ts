@@ -91,6 +91,8 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
     const govVaultMulti = govVault && isGovVaultMulti(govVault) ? govVault : null;
 
     const boost = boostId ? selectBoostById(getState(), boostId) : null;
+    const boostSingle = boost && boost.version === 1 ? boost : null;
+    const boostMulti = boost && boost.version >= 2 ? boost : null;
 
     if (boost) {
       dispatch(boostActions.reset());
@@ -122,7 +124,8 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
           govVaultSingle ? [govVaultSingle] : [],
           govVaultMulti ? [govVaultMulti] : [],
           [],
-          boost ? [boost] : []
+          boostSingle ? [boostSingle] : [],
+          boostMulti ? [boostMulti] : []
         )
       : { boosts: [], govVaults: [], govVaultsMulti: [], standardVaults: [], cowVaults: [] };
 

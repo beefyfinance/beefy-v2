@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import {
-  isCowcentratedLikeVault,
+  isCowcentratedGovVault,
   isGovVault,
   isVaultEarningPoints,
   isVaultPaused,
@@ -13,6 +13,7 @@ import {
   selectFilterOptions,
   selectFilterPlatformIdsForVault,
   selectVaultIsBoostedForFilter,
+  selectVaultIsBoostedForSorting,
   selectVaultMatchesText,
 } from '../selectors/filtered-vaults';
 import {
@@ -26,7 +27,6 @@ import { selectActiveChainIds, selectAllChainIds } from '../selectors/chains';
 import { selectVaultSupportsZap } from '../selectors/zap';
 import {
   selectIsVaultPrestakedBoost,
-  selectIsVaultPreStakedOrBoosted,
   selectVaultsActiveBoostPeriodFinish,
 } from '../selectors/boosts';
 import { selectIsVaultIdSaved } from '../selectors/saved-vaults';
@@ -175,7 +175,7 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
         if (
           filterOptions.userCategory === 'deposited' &&
           filterOptions.onlyUnstakedClm &&
-          (!isCowcentratedLikeVault(vault) ||
+          (!isCowcentratedGovVault(vault) ||
             selectUserBalanceOfToken(state, vault.chainId, vault.depositTokenAddress).isZero())
         ) {
           return false;
@@ -258,11 +258,9 @@ function applyDefaultSort(
   vaults: VaultEntity[],
   filters: FilteredVaultsState
 ): VaultEntity['id'][] {
-  const vaultIsActiveAndBoosted = new Set<VaultEntity['id']>(
+  const boostedVaultsToPin = new Set<VaultEntity['id']>(
     vaults
-      .filter(
-        vault => vault.status === 'active' && selectIsVaultPreStakedOrBoosted(state, vault.id)
-      )
+      .filter(vault => vault.status === 'active' && selectVaultIsBoostedForSorting(state, vault.id))
       .map(v => v.id)
   );
 
@@ -273,7 +271,7 @@ function applyDefaultSort(
         ? -3
         : vault.status === 'paused'
         ? -2
-        : vaultIsActiveAndBoosted.has(vault.id)
+        : boostedVaultsToPin.has(vault.id)
         ? -1
         : 1
     ).map(v => v.id);
@@ -281,7 +279,7 @@ function applyDefaultSort(
 
   // Surface boosted
   return sortBy(vaults, vault =>
-    vaultIsActiveAndBoosted.has(vault.id)
+    boostedVaultsToPin.has(vault.id)
       ? selectIsVaultPrestakedBoost(state, vault.id)
         ? -Number.MAX_SAFE_INTEGER
         : -selectVaultsActiveBoostPeriodFinish(state, vault.id)

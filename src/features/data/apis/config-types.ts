@@ -109,6 +109,7 @@ export interface BoostConfig {
   earnedTokenDecimals: number;
   earnedTokenAddress: string;
   earnContractAddress: string;
+  version?: number;
   earnedOracle: string;
   earnedOracleId: string;
   partnership: boolean;
@@ -117,6 +118,7 @@ export interface BoostConfig {
   partners?: string[] | undefined;
   campaign?: string | undefined;
   fixedStatus?: boolean | null;
+  pinned?: boolean | undefined;
   /** tmp: exclude from being loaded */
   hidden?: boolean;
 }

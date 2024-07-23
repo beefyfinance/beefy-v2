@@ -48,7 +48,7 @@ export const StandardExplainer = memo<StandardExplainerProps>(function StandardE
           ) : null}
           <LinkButton
             href={explorerAddressUrl(chain, vault.contractAddress)}
-            text={t('Strat-ContractVault')}
+            text={t('Strat-VaultContract')}
           />
         </>
       }

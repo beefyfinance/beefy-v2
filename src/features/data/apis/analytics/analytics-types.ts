@@ -29,7 +29,15 @@ export type CLMTimelineAnalyticsAction =
   | 'REWARD_POOL_UNSTAKE'
   | 'REWARD_POOL_CLAIM';
 
+export type CLMVaultTimelineAnalyticsAction =
+  | 'VAULT_DEPOSIT'
+  | 'VAULT_WITHDRAW'
+  | 'REWARD_POOL_STAKE'
+  | 'REWARD_POOL_UNSTAKE'
+  | 'REWARD_POOL_CLAIM';
+
 export type CLMTimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
+  type: 'clm';
   transaction_hash: string;
 
   /** total clm + reward pool balance */
@@ -68,8 +76,44 @@ export type CLMTimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
   actions: CLMTimelineAnalyticsAction[];
 };
 
+export type CLMVaultTimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
+  type: 'classic';
+  transaction_hash: string;
+
+  /** total vault + reward pool balance in shares */
+  share_balance: string;
+  share_diff: string;
+
+  underlying_address: string;
+  underlying_to_usd: string;
+
+  usd_balance: string;
+  usd_diff: string;
+
+  /** vault balance in shares */
+  vault_balance: string;
+  vault_diff: string;
+  vault_address: string;
+
+  /** total balance/diff of all reward pools in shares */
+  reward_pool_total: {
+    reward_pool_balance: string | null;
+    reward_pool_diff: string | null;
+  } | null;
+
+  /** address/balance/diff for each reward pool in shares */
+  reward_pool_details: Array<{
+    reward_pool_address: string;
+    reward_pool_balance: string;
+    reward_pool_diff: string;
+  }> | null;
+
+  actions: CLMVaultTimelineAnalyticsAction[];
+};
+
 export type AnalyticsUserTimelineResponse = {
   clmTimeline: CLMTimelineAnalyticsConfig[];
+  clmVaultTimeline: CLMVaultTimelineAnalyticsConfig[];
   databarnTimeline: TimelineAnalyticsConfig[];
 };
 

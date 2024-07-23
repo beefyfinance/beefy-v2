@@ -56,3 +56,7 @@ export type PromiseReturnType<T> = T extends PromiseLike<infer U> ? U : never;
 
 /** Excludes keys whose value type is never */
 export type OmitNever<T> = { [K in keyof T as T[K] extends never ? never : K]: T[K] };
+
+export type OptionalRecord<K extends keyof any, T> = {
+  [P in K]?: T;
+};
