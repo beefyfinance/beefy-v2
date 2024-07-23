@@ -1,5 +1,121 @@
 [
   {
+    "id": "uniswap-cow-arb-dai-usdt-rp",
+    "name": "DAI-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArbDAI-USDT",
+    "tokenAddress": "0x8a38b8183bB697E34133Db43C123d9108C756035",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xD525b2b860950cB6E817599d3d922e4dB8797fc7",
+    "earnedToken": "rcowUniswapArbDAI-USDT",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-dai-usdt",
+    "status": "active",
+    "createdAt": 1721766406,
+    "platformId": "uniswap",
+    "assets": ["DAI", "USDT"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-dai-usdt",
+    "name": "DAI-USDT",
+    "type": "cowcentrated",
+    "token": "DAI-USDT",
+    "tokenAddress": "0x7f580f8A02b759C350E6b8340e7c2d4b8162b6a9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+      "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+    ],
+    "earnedToken": "cowUniswapArbDAI-USDT",
+    "earnedTokenAddress": "0x8a38b8183bB697E34133Db43C123d9108C756035",
+    "earnContractAddress": "0x8a38b8183bB697E34133Db43C123d9108C756035",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-dai-usdt",
+    "status": "active",
+    "createdAt": 1721766402,
+    "platformId": "uniswap",
+    "assets": ["DAI", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-usdc-dai-rp",
+    "name": "USDC-DAI Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapArbUSDC-DAI",
+    "tokenAddress": "0x2e5244Ad13923112dABB744D2A7e314A794486c0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x4Bc58029908DeaD36C6eDf8F269F652a9734005b",
+    "earnedToken": "rcowUniswapArbUSDC-DAI",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-usdc-dai",
+    "status": "active",
+    "createdAt": 1721754650,
+    "platformId": "uniswap",
+    "assets": ["USDC", "DAI"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-usdc-dai",
+    "name": "USDC-DAI",
+    "type": "cowcentrated",
+    "token": "USDC-DAI",
+    "tokenAddress": "0x7CF803e8d82A50504180f417B8bC7a493C0a0503",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+    ],
+    "earnedToken": "cowUniswapArbUSDC-DAI",
+    "earnedTokenAddress": "0x2e5244Ad13923112dABB744D2A7e314A794486c0",
+    "earnContractAddress": "0x2e5244Ad13923112dABB744D2A7e314A794486c0",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-usdc-dai",
+    "status": "active",
+    "createdAt": 1721754644,
+    "platformId": "uniswap",
+    "assets": ["USDC", "DAI"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "sushi-cow-arb-weth-arb-rp",
     "name": "ARB-WETH Reward Pool",
     "type": "gov",
