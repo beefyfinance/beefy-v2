@@ -30,7 +30,12 @@ import { isNativeAlternativeAddress } from '../../../helpers/addresses';
 import { fetchBridgeConfig } from '../actions/bridge';
 import { entries } from '../../../helpers/object';
 import type { LpData } from '../apis/beefy/beefy-api-types';
-import { isCowcentratedGovVault, isCowcentratedVault, type VaultEntity } from '../entities/vault';
+import {
+  isCowcentratedGovVault,
+  isCowcentratedStandardVault,
+  isCowcentratedVault,
+  type VaultEntity,
+} from '../entities/vault';
 
 /**
  * State containing Vault infos
@@ -499,6 +504,8 @@ function addVaultToState(sliceState: Draft<TokensState>, config: VaultConfig, en
       ? `${entity.names.short} CLM`
       : isCowcentratedGovVault(entity)
       ? `${entity.names.short} rCLM`
+      : isCowcentratedStandardVault(entity)
+      ? `${entity.names.short} mooCLM`
       : config.earnedToken;
 
     const receiptToken: TokenErc20 = {
