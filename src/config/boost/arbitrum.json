@@ -315,8 +315,8 @@
     "pinned": false
   },
   {
-    "id": "moo_uniswap-cow-arb-reth-weth-vault",
-    "poolId": "uniswap-cow-arb-reth-weth-vault",
+    "id": "moo_uniswap-cow-arb-weth-reth-vault",
+    "poolId": "uniswap-cow-arb-weth-reth-vault",
     "name": "Beefy",
     "tagText": "Arb LTIPP",
     "assets": ["rETH", "WETH"],
