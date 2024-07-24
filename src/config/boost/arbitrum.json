@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_curve-arb-usdc-usdm-mountain",
+    "poolId": "curve-arb-usdc-usdm",
+    "name": "Mountain",
+    "assets": ["USDM","USDC"],
+    "tokenAddress": "0x1B4dD8911cd2028Ea230f82E7BD91F1651Cb4AaB",
+    "earnedToken": "ARB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+    "earnContractAddress": "0x2e78A4cb6c61A3CAD98FCa902515938C85B9B082",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "ARB",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["mountain"]
+  },
+  {
     "id": "moo_ramses-zero-weth-vault",
     "poolId": "ramses-zero-weth-vault",
     "name": "Beefy",

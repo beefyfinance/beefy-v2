@@ -1,4 +1,12 @@
 {
+  "mountain": {
+    "title": "Mountain",
+    "text": "USDM is a permissionless ERC20, similar to leading fiat-backed stablecoins. USDM Reserves are held in a bankruptcy remote setup, with collateral proof of reserves, third party attestations and regulatory oversight.",
+    "website": "https://mountainprotocol.com/",
+    "social": {
+      "twitter": "https://x.com/MountainUSDM"
+    }
+  },
   "balancer": {
     "title": "Balancer",
     "text": "Balancer is a decentralized automated market maker (AMM) protocol built on Ethereum with a clear focus on fungible and yield-bearing liquidity. Balancer's success is intrinsically linked to the success of protocols and products built on the platform.",
