@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import {
   selectUserIsUnstakedForVaultId,
   selectUserUnstakedCowcentratedGovVaultIds,
@@ -8,12 +8,16 @@ import { Banner } from '../Banner';
 import { Trans, useTranslation } from 'react-i18next';
 import clmIcon from '../../../images/icons/clm.svg';
 import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
-import type { VaultEntity } from '../../../features/data/entities/vault';
+import { isCowcentratedGovVault, type VaultEntity } from '../../../features/data/entities/vault';
 import { ButtonLink, InternalLink } from '../Links/Links';
 import { filteredVaultsActions } from '../../../features/data/reducers/filtered-vaults';
 import { selectDepositTokenByVaultId } from '../../../features/data/selectors/tokens';
 import { Container, makeStyles } from '@material-ui/core';
 import type { Theme } from '@material-ui/core';
+import {
+  selectCLMHasPoolOrVaultOrBoth,
+  selectVaultById,
+} from '../../../features/data/selectors/vaults';
 
 const useStyles = makeStyles((theme: Theme) => ({
   clmUnstakedBannerContainer: {
@@ -76,6 +80,9 @@ export const UnstakedClmBannerVault = memo<UnstakedClmBannerVaultProps>(
     const { t } = useTranslation();
     const shouldStake = useAppSelector(state => selectUserIsUnstakedForVaultId(state, vaultId));
     const depositToken = useAppSelector(state => selectDepositTokenByVaultId(state, vaultId));
+    const clmVariations = useAppSelector(state => selectCLMHasPoolOrVaultOrBoth(state, vaultId));
+    const vault = useAppSelector(state => selectVaultById(state, vaultId));
+    const isGov = isCowcentratedGovVault(vault);
     const [hideBanner, setHideBanner] = useLocalStorageBoolean(
       `hideUnstakedClmBanner.${vaultId}`,
       false
@@ -83,6 +90,40 @@ export const UnstakedClmBannerVault = memo<UnstakedClmBannerVaultProps>(
     const closeBanner = useCallback(() => {
       setHideBanner(true);
     }, [setHideBanner]);
+
+    const endOfKey = !fromVault
+      ? clmVariations?.pool && clmVariations?.vault
+        ? 'link-both'
+        : 'link'
+      : `this-${isGov ? 'gov' : 'vault'}`;
+
+    const typeWithLink = endOfKey.includes('link')
+      ? clmVariations?.pool && !clmVariations?.vault
+        ? 'CLM Pool'
+        : clmVariations?.vault && !clmVariations?.pool
+        ? 'Vault'
+        : ''
+      : '';
+
+    const components = useMemo(() => {
+      if (clmVariations?.pool && clmVariations?.vault) {
+        return {
+          Link: <InternalLink to={`/vault/${clmVariations.pool}`} />,
+          Link2: <InternalLink to={`/vault/${clmVariations.vault}`} />,
+        };
+      }
+
+      if (clmVariations?.pool && !clmVariations?.vault) {
+        return { Link: <InternalLink to={`/vault/${clmVariations.pool}`} />, Link2: <span /> };
+      }
+
+      if (clmVariations?.vault && !clmVariations?.pool) {
+        return { Link: <InternalLink to={`/vault/${clmVariations.vault}`} />, Link2: <span /> };
+      }
+
+      //null checks
+      return { Link: <span />, Link2: <span /> };
+    }, [clmVariations?.pool, clmVariations?.vault]);
 
     if (hideBanner || !shouldStake) {
       return null;
@@ -94,11 +135,9 @@ export const UnstakedClmBannerVault = memo<UnstakedClmBannerVaultProps>(
         text={
           <Trans
             t={t}
-            i18nKey={`Banner-UnstakedClm-${!fromVault ? 'link' : 'this'}`}
-            values={{ token: depositToken.symbol }}
-            components={{
-              Link: <InternalLink to={`/vault/${vaultId}`} />,
-            }}
+            i18nKey={`Banner-UnstakedClm-${endOfKey}`}
+            values={{ token: depositToken.symbol, type: typeWithLink }}
+            components={components}
           />
         }
         onClose={closeBanner}

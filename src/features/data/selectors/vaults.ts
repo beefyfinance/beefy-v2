@@ -455,3 +455,18 @@ export const selectMaximumUnderlyingVaultTvl = (state: BeefyState) => {
   }
   return maxTvl;
 };
+
+export const selectCLMHasPoolOrVaultOrBoth = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const pool = selectVaultByIdOrUndefined(state, vaultId);
+  const vault = selectVaultByIdOrUndefined(state, vaultId.replace('rp', 'vault'));
+
+  if (pool && vault) {
+    return { vault: vault.id, pool: pool.id };
+  }
+  if (pool && !vault) {
+    return { pool: pool.id };
+  }
+  if (!pool && vault) {
+    return { vault: vault.id };
+  }
+};

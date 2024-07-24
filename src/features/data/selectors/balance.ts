@@ -5,6 +5,7 @@ import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token';
 import {
   isCowcentratedGovVault,
+  isCowcentratedLikeVault,
   isCowcentratedVault,
   isGovVault,
   isGovVaultMulti,
@@ -922,7 +923,7 @@ export const selectUserUnstakedCowcentratedGovVaultIds = createSelector(
       .map(vaultId => vaultsById[vaultId]!)
       .filter(
         vault =>
-          isCowcentratedGovVault(vault) &&
+          isCowcentratedLikeVault(vault) &&
           userBalance.tokenAmount.byChainId[vault.chainId]?.byTokenAddress[
             vault.depositTokenAddress.toLowerCase()
           ]?.balance.gt(BIG_ZERO)
@@ -936,7 +937,7 @@ export const selectUserIsUnstakedForVaultId = createSelector(
     _selectWalletBalance(state, walletAddress),
   (state: BeefyState, vaultId: string) => selectVaultById(state, vaultId),
   (userBalance, vault): boolean => {
-    if (!userBalance || !vault || !isCowcentratedGovVault(vault)) {
+    if (!userBalance || !vault || !isCowcentratedLikeVault(vault)) {
       return false;
     }
 
