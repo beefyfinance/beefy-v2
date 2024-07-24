@@ -779,5 +779,7 @@
   "Banner-UnstakedClm-this-gov": "Your CLM position is not deposited. You should deposit it in this CLM Pool to ensure you do not miss out on any current or upcoming rewards.",
   "Banner-UnstakedClm-this-gov-both": "Your CLM position is not deposited. You should deposit it in this CLM Pool or the <VaultLink>CLM Vault</VaultLink> to ensure you do not miss out on any current or upcoming rewards.",
   "Banner-UnstakedClm-this-standard": "Your CLM position is not deposited. You should deposit it in this CLM Vault to ensure you do not miss out on any current or upcoming rewards.",
-  "Banner-UnstakedClm-this-standard-both": "Your CLM position is not deposited. You should deposit it in this CLM Vault or the <GovLink>CLM Pool</GovLink> to ensure you do not miss out on any current or upcoming rewards."
+  "Banner-UnstakedClm-this-standard-both": "Your CLM position is not deposited. You should deposit it in this CLM Vault or the <GovLink>CLM Pool</GovLink> to ensure you do not miss out on any current or upcoming rewards.",
+  "Banner-ClmVault": "There is also a <VaultLink>CLM Vault</VaultLink> available for this CLM. Let Beefy auto-compound all rewards, saving you time and maximizing your returns.",
+  "Banner-ClmVault-Deposited": "There is a <VaultLink>CLM Vault</VaultLink> available for this position. Simply zap in and let Beefy auto-compound all rewards, saving you time and maximizing your returns."
 }

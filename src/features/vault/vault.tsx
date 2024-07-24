@@ -26,6 +26,7 @@ import { PnLGraphIfWallet } from './components/PnLGraph/PnLGraphIfWallet';
 import { Explainer } from './components/Explainer/Explainer';
 import { UnstakedClmBannerVault } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
 import { featureFlag_disableRedirect } from '../data/utils/feature-flags';
+import { ClmVaultBanner } from '../../components/Banners/ClmVaultBanner/ClmVaultBanner';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -83,6 +84,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
     <Container maxWidth="lg" className={classes.page}>
       <VaultMeta vaultId={vaultId} />
       <BusdBannerVault vaultId={vaultId} />
+      <ClmVaultBanner vaultId={vaultId} />
       <UnstakedClmBannerVault vaultId={vaultId} fromVault={true} />
       <VaultHeader vaultId={vaultId} />
       <VaultsStats vaultId={vaultId} />
