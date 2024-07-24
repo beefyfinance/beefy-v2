@@ -90,11 +90,11 @@ function addContractDataToState(
     const totalStaked = govVaultContractData.totalSupply;
     let tvl = totalStaked.times(price);
 
-    // gov excludes standard tvl
-    if (vault.excludedId) {
-      const excludedVault = selectVaultById(state, vault.excludedId);
+    // exclude other tvls from counting towards this
+    for (const excludedId of vault.excludedIds) {
+      const excludedVault = selectVaultById(state, excludedId);
       if (excludedVault && excludedVault.status === 'active') {
-        const excludedTVL = sliceState.byVaultId[vault.excludedId]?.tvl;
+        const excludedTVL = sliceState.byVaultId[excludedId]?.tvl;
         if (excludedTVL) {
           tvl = tvl.minus(excludedTVL);
         }
@@ -110,11 +110,11 @@ function addContractDataToState(
     const totalStaked = govVaultMultiContractData.totalSupply;
     let tvl = totalStaked.times(price);
 
-    // gov excludes standard tvl
-    if (vault.excludedId) {
-      const excludedVault = selectVaultById(state, vault.excludedId);
+    // exclude other tvls from counting towards this e.g. bifi gov pool excludes bifi vault standard tvl / clm pool excludes clm vault
+    for (const excludedId of vault.excludedIds) {
+      const excludedVault = selectVaultById(state, excludedId);
       if (excludedVault && excludedVault.status === 'active') {
-        const excludedTVL = sliceState.byVaultId[vault.excludedId]?.tvl;
+        const excludedTVL = sliceState.byVaultId[excludedId]?.tvl;
         if (excludedTVL) {
           tvl = tvl.minus(excludedTVL);
         }
@@ -136,11 +136,11 @@ function addContractDataToState(
       tvl = tvl.plus(cowVaultContractData.balances[i].times(price));
     });
 
-    // clm excludes gov tvl
-    if (vault.excludedId) {
-      const excludedVault = selectVaultById(state, vault.excludedId);
+    // exclude other tvls from counting towards this e.g. clm excludes clm pool and clm vault
+    for (const excludedId of vault.excludedIds) {
+      const excludedVault = selectVaultById(state, excludedId);
       if (excludedVault && excludedVault.status === 'active') {
-        const excludedTVL = sliceState.byVaultId[vault.excludedId]?.tvl;
+        const excludedTVL = sliceState.byVaultId[excludedId]?.tvl;
         if (excludedTVL) {
           tvl = tvl.minus(excludedTVL);
         }
