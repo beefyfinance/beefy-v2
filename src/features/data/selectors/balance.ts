@@ -33,7 +33,7 @@ import {
   selectVaultTokenSymbols,
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens';
-import { selectGovVaultById, selectIsVaultStable, selectVaultById } from './vaults';
+import { selectAllClms, selectGovVaultById, selectIsVaultStable, selectVaultById } from './vaults';
 import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
@@ -912,21 +912,19 @@ export const selectDashboardUserRewardsByVaultId = (
   return { rewards, rewardsTokens, totalRewardsUsd };
 };
 
-export const selectUserUnstakedCowcentratedGovVaultIds = createSelector(
+export const selectUserUnstakedClms = createSelector(
   (state: BeefyState, walletAddress?: string) => _selectWalletBalance(state, walletAddress),
-  (state: BeefyState) => state.entities.vaults.byId,
-  (userBalance, vaultsById) => {
+  selectAllClms,
+  (userBalance, allClmsById) => {
     if (!userBalance || userBalance.depositedVaultIds.length === 0) {
       return [];
     }
-    return userBalance.depositedVaultIds
-      .map(vaultId => vaultsById[vaultId]!)
-      .filter(
-        vault =>
-          isCowcentratedLikeVault(vault) &&
-          userBalance.tokenAmount.byChainId[vault.chainId]?.byTokenAddress[
-            vault.depositTokenAddress.toLowerCase()
-          ]?.balance.gt(BIG_ZERO)
+
+    return allClmsById
+      .filter(clm =>
+        userBalance.tokenAmount.byChainId[clm.chainId]?.byTokenAddress[
+          clm.receiptTokenAddress.toLocaleLowerCase()
+        ]?.balance.gt(BIG_ZERO)
       )
       .map(vault => vault.id);
   }

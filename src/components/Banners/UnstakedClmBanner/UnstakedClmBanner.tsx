@@ -1,7 +1,7 @@
 import { memo, useCallback, useMemo } from 'react';
 import {
   selectUserIsUnstakedForVaultId,
-  selectUserUnstakedCowcentratedGovVaultIds,
+  selectUserUnstakedClms,
 } from '../../../features/data/selectors/balance';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { Banner } from '../Banner';
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const unstakedIds = useAppSelector(selectUserUnstakedCowcentratedGovVaultIds);
+  const unstakedIds = useAppSelector(selectUserUnstakedClms);
   const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideUnstakedClmBanner', false);
   const closeBanner = useCallback(() => {
     setHideBanner(true);
@@ -154,9 +154,7 @@ export const UnstakedClmBannerDashboard = memo<UnstakedClmBannerDashboardProps>(
   function UnstakedClmBannerDashboard({ address }) {
     const classes = useStyles();
     const { t } = useTranslation();
-    const unstakedIds = useAppSelector(state =>
-      selectUserUnstakedCowcentratedGovVaultIds(state, address)
-    );
+    const unstakedIds = useAppSelector(state => selectUserUnstakedClms(state, address));
     const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideUnstakedClmBanner', false);
     const closeBanner = useCallback(() => {
       setHideBanner(true);
