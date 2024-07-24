@@ -53,8 +53,8 @@ export type VaultBase = {
   contractAddress: string;
   /** type of asset the vault uses */
   assetType: 'single' | 'lps' | 'clm';
-  /** id of vault to exclude from this vault's tvl */
-  excludedId: undefined | VaultBase['id'];
+  /** id of vaults to exclude from this vault's tvl */
+  excludedIds: VaultBase['id'][];
   /** whether users in the vault earn external points */
   earningPoints: boolean;
   /** platform where the token is deposited to earn */
