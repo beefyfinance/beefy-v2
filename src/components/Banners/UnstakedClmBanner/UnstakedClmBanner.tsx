@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import {
   selectUserIsUnstakedForVaultId,
   selectUserUnstakedClms,
@@ -20,6 +20,7 @@ import { selectTokenByAddress } from '../../../features/data/selectors/tokens';
 import type { Theme } from '@material-ui/core';
 import { Container, makeStyles } from '@material-ui/core';
 import { selectVaultById } from '../../../features/data/selectors/vaults';
+import { ClmVaultBanner } from '../ClmVaultBanner/ClmVaultBanner';
 
 const useStyles = makeStyles((theme: Theme) => ({
   clmUnstakedBannerContainer: {
@@ -89,7 +90,15 @@ export const UnstakedClmBannerVault = memo<UnstakedClmBannerVaultProps>(
       setHideBanner(true);
     }, [setHideBanner]);
 
-    if (!hideBanner && shouldStake && isCowcentratedLikeVault(vault)) {
+    if (!isCowcentratedLikeVault(vault)) {
+      return null;
+    }
+
+    if (shouldStake) {
+      if (hideBanner) {
+        return null;
+      }
+
       return (
         <UnstakedClmBannerVaultImpl
           vault={vault}
@@ -97,6 +106,10 @@ export const UnstakedClmBannerVault = memo<UnstakedClmBannerVaultProps>(
           onClose={closeBanner}
         />
       );
+    }
+
+    if (fromVault) {
+      return <ClmVaultBanner vaultId={vaultId} />;
     }
 
     return null;
