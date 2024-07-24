@@ -93,7 +93,7 @@
     "earnedToken": "ARB",
     "earnedTokenDecimals": 18,
     "earnedTokenAddress": "0x912CE59144191C1204E64559FE8253a0e49E6548",
-    "earnContractAddress": "0xF1847CDC7092FaC39F422F37A611fbf6a2d18220",
+    "earnContractAddress": "0xe701DC23A60134DfA6fb4d60a97804569D40f8EE",
     "version": 2,
     "earnedOracle": "tokens",
     "earnedOracleId": "ARB",

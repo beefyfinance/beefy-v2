@@ -232,35 +232,6 @@
     ]
   },
   {
-    "id": "uniswap-cow-arb-wsteth-weth-vault",
-    "name": "wstETH-WETH",
-    "type": "standard",
-    "token": "wstETH-WETH",
-    "tokenAddress": "0x63b54B0e06028802007c5f1eaeaC03d5472B904a",
-    "tokenDecimals": 18,
-    "tokenProviderId": "uniswap",
-    "earnedToken": "mooBeefyUniswapwstETH-WETH",
-    "earnedTokenAddress": "0x749e0767C811a4AE867dDac6280aE8b2C57b75B1",
-    "earnContractAddress": "0x749e0767C811a4AE867dDac6280aE8b2C57b75B1",
-    "oracle": "lps",
-    "oracleId": "uniswap-cow-arb-wsteth-weth-vault",
-    "status": "active",
-    "platformId": "uniswap",
-    "assets": ["wstETH", "WETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
-    "network": "arbitrum",
-    "createdAt": 1721779510,
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
     "id": "uniswap-cow-arb-eusd-usdc-vault",
     "name": "eUSD-USDC",
     "type": "standard",
@@ -326,7 +297,7 @@
     "tokenAddress": "0x6928b8Df875877Ba65Ff53AFF182Ec6B8dFEe90F",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
-    "earnedToken": "mooBeefyUniswapLINK-WETH",
+    "earnedToken": "mooBeefyUniswapETH+-WETH",
     "earnedTokenAddress": "0xDd84e4b6ec8A8c05c95f3eC3C7464029Cb900577",
     "earnContractAddress": "0xDd84e4b6ec8A8c05c95f3eC3C7464029Cb900577",
     "oracle": "lps",
