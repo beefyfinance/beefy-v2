@@ -527,13 +527,13 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
   }
 
   async fetchWithdrawQuote(
-    inputs: InputTokenAmount[],
-    option: RewardPoolToVaultWithdrawOption
+    _inputs: InputTokenAmount[],
+    _option: RewardPoolToVaultWithdrawOption
   ): Promise<never> {
     throw new Error('Method not implemented.');
   }
 
-  async fetchWithdrawStep(quote: never, t: TFunction<Namespace, undefined>): Promise<Step> {
+  async fetchWithdrawStep(_quote: never, _t: TFunction<Namespace, undefined>): Promise<Step> {
     throw new Error('Method not implemented.');
   }
 

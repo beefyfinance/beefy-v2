@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { BusdBannerHome } from '../../../../components/Banners/BusdBanner';
 import { Container, makeStyles } from '@material-ui/core';
-import { AnnouncementBanner } from '../../../../components/Banners/AnnouncementBanner';
+// import { AnnouncementBanner } from '../../../../components/Banners/AnnouncementBanner';
 import { UnstakedClmBanner } from '../../../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
 
 const useStyles = makeStyles(() => ({
@@ -21,7 +21,7 @@ export const Banners = memo<BannersProps>(function Banners() {
 
   return (
     <Container maxWidth="lg" className={classes.banners}>
-      <AnnouncementBanner />
+      {/* <AnnouncementBanner /> */}
       <UnstakedClmBanner />
       <BusdBannerHome />
     </Container>

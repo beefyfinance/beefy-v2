@@ -5,6 +5,7 @@ import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token';
 import {
   isCowcentratedGovVault,
+  isCowcentratedLikeVault,
   isCowcentratedVault,
   isGovVault,
   isGovVaultMulti,
@@ -32,7 +33,12 @@ import {
   selectVaultTokenSymbols,
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens';
-import { selectGovVaultById, selectIsVaultStable, selectVaultById } from './vaults';
+import {
+  selectAllCowcentratedVaults,
+  selectGovVaultById,
+  selectIsVaultStable,
+  selectVaultById,
+} from './vaults';
 import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
@@ -911,21 +917,19 @@ export const selectDashboardUserRewardsByVaultId = (
   return { rewards, rewardsTokens, totalRewardsUsd };
 };
 
-export const selectUserUnstakedCowcentratedGovVaultIds = createSelector(
+export const selectUserUnstakedClms = createSelector(
   (state: BeefyState, walletAddress?: string) => _selectWalletBalance(state, walletAddress),
-  (state: BeefyState) => state.entities.vaults.byId,
-  (userBalance, vaultsById) => {
+  selectAllCowcentratedVaults,
+  (userBalance, allCowcentratedVaults) => {
     if (!userBalance || userBalance.depositedVaultIds.length === 0) {
       return [];
     }
-    return userBalance.depositedVaultIds
-      .map(vaultId => vaultsById[vaultId]!)
-      .filter(
-        vault =>
-          isCowcentratedGovVault(vault) &&
-          userBalance.tokenAmount.byChainId[vault.chainId]?.byTokenAddress[
-            vault.depositTokenAddress.toLowerCase()
-          ]?.balance.gt(BIG_ZERO)
+
+    return allCowcentratedVaults
+      .filter(clm =>
+        userBalance.tokenAmount.byChainId[clm.chainId]?.byTokenAddress[
+          clm.receiptTokenAddress.toLocaleLowerCase()
+        ]?.balance.gt(BIG_ZERO)
       )
       .map(vault => vault.id);
   }
@@ -936,7 +940,7 @@ export const selectUserIsUnstakedForVaultId = createSelector(
     _selectWalletBalance(state, walletAddress),
   (state: BeefyState, vaultId: string) => selectVaultById(state, vaultId),
   (userBalance, vault): boolean => {
-    if (!userBalance || !vault || !isCowcentratedGovVault(vault)) {
+    if (!userBalance || !vault || !isCowcentratedLikeVault(vault)) {
       return false;
     }
 
