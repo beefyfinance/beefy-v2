@@ -456,23 +456,9 @@ export const selectMaximumUnderlyingVaultTvl = (state: BeefyState) => {
   return maxTvl;
 };
 
-export const selectAllClms = (state: BeefyState): VaultCowcentrated[] => {
-  const allVaults = state.entities.vaults.byId;
-
-  return Object.values(allVaults).filter(vault => !!vault && isCowcentratedVault(vault));
-};
-
-export const selectCLMHasPoolOrVaultOrBoth = (state: BeefyState, clmId: VaultEntity['id']) => {
-  const pool = selectVaultByIdOrUndefined(state, `${clmId}-rp`);
-  const vault = selectVaultByIdOrUndefined(state, `${clmId}-vault`);
-
-  if (pool && vault) {
-    return { vault: vault.id, pool: pool.id };
-  }
-  if (pool && !vault) {
-    return { pool: pool.id };
-  }
-  if (!pool && vault) {
-    return { vault: vault.id };
-  }
-};
+export const selectAllCowcentratedVaults = createSelector(
+  selectAllCowcentratedVaultIds,
+  (state: BeefyState) => state.entities.vaults.byId,
+  (clmIds, vaultsById): VaultCowcentrated[] =>
+    clmIds.map(id => vaultsById[id]).filter(isCowcentratedVault)
+);

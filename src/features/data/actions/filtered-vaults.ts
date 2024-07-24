@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import {
-  isCowcentratedGovVault,
+  isCowcentratedLikeVault,
   isGovVault,
   isVaultEarningPoints,
   isVaultPaused,
@@ -175,7 +175,7 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
         if (
           filterOptions.userCategory === 'deposited' &&
           filterOptions.onlyUnstakedClm &&
-          (!isCowcentratedGovVault(vault) ||
+          (!isCowcentratedLikeVault(vault) ||
             selectUserBalanceOfToken(state, vault.chainId, vault.depositTokenAddress).isZero())
         ) {
           return false;

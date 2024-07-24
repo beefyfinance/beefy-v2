@@ -33,7 +33,12 @@ import {
   selectVaultTokenSymbols,
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens';
-import { selectAllClms, selectGovVaultById, selectIsVaultStable, selectVaultById } from './vaults';
+import {
+  selectAllCowcentratedVaults,
+  selectGovVaultById,
+  selectIsVaultStable,
+  selectVaultById,
+} from './vaults';
 import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
@@ -914,13 +919,13 @@ export const selectDashboardUserRewardsByVaultId = (
 
 export const selectUserUnstakedClms = createSelector(
   (state: BeefyState, walletAddress?: string) => _selectWalletBalance(state, walletAddress),
-  selectAllClms,
-  (userBalance, allClmsById) => {
+  selectAllCowcentratedVaults,
+  (userBalance, allCowcentratedVaults) => {
     if (!userBalance || userBalance.depositedVaultIds.length === 0) {
       return [];
     }
 
-    return allClmsById
+    return allCowcentratedVaults
       .filter(clm =>
         userBalance.tokenAmount.byChainId[clm.chainId]?.byTokenAddress[
           clm.receiptTokenAddress.toLocaleLowerCase()
