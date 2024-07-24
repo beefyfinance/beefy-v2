@@ -1,12 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
-import type { VaultEntity } from '../entities/vault';
-import { isCowcentratedGovVault, isGovVault } from '../entities/vault';
+import { isCowcentratedGovVault, isGovVault, type VaultEntity } from '../entities/vault';
 import { selectUserDepositedVaultIds } from './balance';
 import {
   selectBoostById,
   selectIsVaultPreStakedOrBoosted,
   selectPreStakeOrActiveBoostIds,
+  selectVaultCurrentBoostId,
 } from './boosts';
 import { selectAllVisibleVaultIds, selectVaultById } from './vaults';
 import { selectTokenByAddress } from './tokens';
@@ -220,4 +220,18 @@ export const selectVaultIsBoostedForFilter = (state: BeefyState, vaultId: VaultE
 
   const apy = selectVaultTotalApy(state, vaultId);
   return !!apy && (apy.boostedTotalDaily || 0) > 0;
+};
+
+export const selectVaultIsBoostedForSorting = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const boostId = selectVaultCurrentBoostId(state, vaultId);
+  if (!boostId) {
+    return false;
+  }
+
+  const boost = selectBoostById(state, boostId);
+  if (!boost) {
+    return false;
+  }
+
+  return boost.pinned;
 };

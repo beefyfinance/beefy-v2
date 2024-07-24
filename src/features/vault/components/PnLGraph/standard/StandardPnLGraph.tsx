@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { memo, useCallback, useState } from 'react';
 import { useAppSelector } from '../../../../../store';
-import { isCowcentratedVault, type VaultEntity } from '../../../../data/entities/vault';
+import { isStandardVault, type VaultEntity } from '../../../../data/entities/vault';
 import { selectHasDataToShowGraphByVaultId } from '../../../../data/selectors/analytics';
 import { Footer } from './components/Footer';
 import { Graph } from './components/Graph';
@@ -29,7 +29,8 @@ export const StandardPnLGraphLoader = memo<PnLGraphLoaderProps>(function PnLGrap
   );
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
-  if (hasData && walletAddress && !isCowcentratedVault(vault)) {
+  // TODO change when clm standard vault data comes from subgraph
+  if (hasData && walletAddress && isStandardVault(vault)) {
     return <StandardPnLGraph address={walletAddress} vaultId={vaultId} />;
   }
 

@@ -19,12 +19,16 @@ export function useVaultIdToShareToUnderlying(vaultId: VaultEntity['id'], timebu
       } else if (status === 'rejected') {
         const handle = setTimeout(
           () => dispatch(fetchShareToUnderlying({ vaultId, timebucket })),
-          5000
+          15000
         );
         return () => clearTimeout(handle);
       }
     }
   }, [dispatch, vaultId, timebucket, hasData, status]);
 
-  return { data, loading: !hasData && status === 'pending' };
+  return {
+    data,
+    loading: !hasData && status === 'pending',
+    willRetry: status === 'rejected',
+  };
 }

@@ -1,59 +1,32 @@
 import React, { memo, useMemo, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { VaultTransactions } from '../../VaultTransactions';
-import { useAppSelector } from '../../../../../../../store';
-import { selectVaultById } from '../../../../../../data/selectors/vaults';
 import { TabletStats } from '../../TabletStats';
 import { ToggleButtons } from '../../../../../../../components/ToggleButtons';
 import { useTranslation } from 'react-i18next';
-import { selectHasDataToShowGraphByVaultId } from '../../../../../../data/selectors/analytics';
-import {
-  DashboardFeesGraph,
-  DashboardOverviewGraph,
-} from '../../../../../../vault/components/PnLGraph/cowcentrated';
-import type { VaultCollapseContentProps } from '../types';
+import type { ChartTypes, VaultCollapseContentProps } from '../types';
 import { styles } from './styles';
 import { ErrorBoundary } from '../../../../../../../components/ErrorBoundary/ErrorBoundary';
-import { DashboardPnLGraph } from '../../../../../../vault/components/PnLGraph/standard/StandardPnLGraph';
-import { isCowcentratedLikeVault } from '../../../../../../data/entities/vault';
+import { useChartOptions } from '../useChartOptions';
 
 const useStyles = makeStyles(styles);
 
-type ToggleTabOptions = 'txHistory' | 'positionChart' | 'compoundsChart';
+type ToggleTabOptions = 'txHistory' | ChartTypes;
 
 export const DesktopCollapseContent = memo<VaultCollapseContentProps>(
   function DesktopCollapseContent({ vaultId, address }) {
     const classes = useStyles();
     const { t } = useTranslation();
-    const vault = useAppSelector(state => selectVaultById(state, vaultId));
-    const hasAnalyticsData = useAppSelector(state =>
-      selectHasDataToShowGraphByVaultId(state, vaultId, address)
-    );
     const [toggleTab, setToggleTab] = useState<ToggleTabOptions>('txHistory');
-    const { strategyTypeId } = vault;
-    const typeOfCharts = isCowcentratedLikeVault(vault) ? 'cowcentrated' : vault.type;
+    const { PositionGraph, CompoundsGraph, availableCharts } = useChartOptions(vaultId, address);
 
-    const options = useMemo(() => {
-      const items: Partial<Record<ToggleTabOptions, string>> = {
+    const options = useMemo(
+      () => ({
         txHistory: t('Dashboard-TransactionHistory'),
-      };
-
-      if (hasAnalyticsData) {
-        items['positionChart'] = t('Dashboard-Chart');
-        if (typeOfCharts === 'cowcentrated') {
-          items['positionChart'] = t('Dashboard-PositionChart');
-          if (strategyTypeId === 'compounds') {
-            items['compoundsChart'] = t('Dashboard-CompoundsChart');
-          }
-        }
-      }
-
-      return items;
-    }, [hasAnalyticsData, typeOfCharts, strategyTypeId, t]);
-
-    const PositionGraph =
-      typeOfCharts === 'cowcentrated' ? DashboardOverviewGraph : DashboardPnLGraph;
-    const CompoundsGraph = DashboardFeesGraph;
+        ...availableCharts,
+      }),
+      [availableCharts, t]
+    );
 
     return (
       <>

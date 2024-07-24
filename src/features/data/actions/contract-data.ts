@@ -9,6 +9,7 @@ import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
 import { selectVaultById, selectVaultIdsByChainIdIncludingHidden } from '../selectors/vaults';
 import { featureFlag_simulateRpcError } from '../utils/feature-flags';
+import { partition } from 'lodash-es';
 
 interface ActionParams {
   chainId: ChainEntity['id'];
@@ -35,7 +36,7 @@ export const fetchAllContractDataByChainAction = createAsyncThunk<
   const contractApi = await getContractDataApi(chain);
 
   // maybe have a way to retrieve those easily
-  const boosts = selectBoostsByChainId(state, chainId).map(vaultId =>
+  const allBoosts = selectBoostsByChainId(state, chainId).map(vaultId =>
     selectBoostById(state, vaultId)
   );
   const allVaults = selectVaultIdsByChainIdIncludingHidden(state, chainId).map(vaultId =>
@@ -58,6 +59,7 @@ export const fetchAllContractDataByChainAction = createAsyncThunk<
       cowcentratedLiquidityVaults.push(vault);
     }
   }
+  const [boostsMulti, boosts] = partition(allBoosts, b => b.version >= 2);
 
   const res = await contractApi.fetchAllContractData(
     state,
@@ -65,7 +67,8 @@ export const fetchAllContractDataByChainAction = createAsyncThunk<
     govVaults,
     govVaultsMulti,
     cowcentratedLiquidityVaults,
-    boosts
+    boosts,
+    boostsMulti
   );
 
   // always re-fetch the latest state

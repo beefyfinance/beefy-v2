@@ -1,5 +1,44 @@
 [
   {
+    "id": "convex-usd3-eusd",
+    "name": "USD3/eUSD",
+    "token": "USD3eUSD",
+    "tokenAddress": "0x79586fa680958102154093B795Fdb8EFBc013822",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xbacaDaFD16bc062aE0c9818722F04B868d7d5392",
+    "earnedToken": "mooCurveUSD3-eUSD",
+    "earnedTokenAddress": "0xbacaDaFD16bc062aE0c9818722F04B868d7d5392",
+    "oracle": "lps",
+    "oracleId": "convex-usd3-eusd",
+    "status": "active",
+    "createdAt": 1721802504,
+    "platformId": "convex",
+    "assets": ["USD3", "eUSD"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-170/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-170/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x79586fa680958102154093B795Fdb8EFBc013822",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x79586fa680958102154093B795Fdb8EFBc013822",
+            "coins": [
+              "0x0d86883FAf4FfD7aEb116390af37746F45b6f378",
+              "0xA0d69E286B938e21CBf7E51D71F6A4c8918f482F"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "curve-shezeth-eth",
     "name": "ShezETH/ETH",
     "token": "shezETHETH",

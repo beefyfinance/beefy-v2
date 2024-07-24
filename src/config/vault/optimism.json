@@ -111,10 +111,17 @@
     "platformId": "velodrome",
     "assets": ["USDC", "mooBIFI"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "cowcentrated",
+    "strategyTypeId": "pool",
     "network": "optimism",
-    "createdAt": 1720631354,
-    "hidden": true
+    "createdAt": 1721779509,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
   },
   {
     "id": "velo-cow-op-op-usdc-rp",
@@ -1221,6 +1228,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },

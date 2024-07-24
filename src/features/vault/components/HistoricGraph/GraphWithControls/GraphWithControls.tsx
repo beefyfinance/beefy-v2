@@ -12,12 +12,11 @@ import { getAvailableRanges, getDefaultTimeRange, timeRangeToBucket } from '../u
 import type { LineTogglesState } from '../LineToggles';
 import { LineToggles } from '../LineToggles';
 import { styles } from './styles';
-import { selectVaultById } from '../../../../data/selectors/vaults';
 import { useTranslation } from 'react-i18next';
 import { useHistoricalStatLoader } from '../../../../data/hooks/historical';
-import { AlertError } from '../../../../../components/Alerts';
 import type { ChartStat } from '../types';
 import { ErrorBoundary } from '../../../../../components/ErrorBoundary/ErrorBoundary';
+import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData';
 
 const useStyles = makeStyles(styles);
 
@@ -33,22 +32,13 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
   stat,
 }) {
   const classes = useStyles();
-  const { t } = useTranslation();
   const availableBuckets = useAppSelector(state =>
     selectHistoricalAvailableBuckets(state, stat, vaultId, oracleId)
   );
-  const { chainId, contractAddress } = useAppSelector(state => selectVaultById(state, vaultId));
   const availableRanges = useMemo(() => getAvailableRanges(availableBuckets), [availableBuckets]);
   const [range, setRange] = useState<TimeRange>(() => getDefaultTimeRange(availableRanges));
   const bucket = useMemo(() => timeRangeToBucket[range], [range]);
-  const { loading, hasData } = useHistoricalStatLoader(
-    stat,
-    vaultId,
-    oracleId,
-    bucket,
-    chainId,
-    contractAddress
-  );
+  const { loading, hasData, willRetry } = useHistoricalStatLoader(stat, vaultId, oracleId, bucket);
   const [lineToggles, setLineToggles] = useState<LineTogglesState>({
     average: true,
     movingAverage: true,
@@ -70,12 +60,12 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
         ) : loading ? (
           <GraphLoader imgHeight={220} />
         ) : (
-          <AlertError>{t('Graph-No-Data-Retry')}</AlertError>
+          <GraphNoData reason={willRetry ? 'error-retry' : 'wait-collect'} />
         )}
       </div>
       <div className={classes.footer}>
         {stat === 'clm' ? (
-          <CowcentratedLeged />
+          <CowcentratedLegend />
         ) : (
           <LineToggles toggles={lineToggles} onChange={setLineToggles} />
         )}
@@ -85,7 +75,7 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
   );
 });
 
-const CowcentratedLeged = memo(function CowcentratedLeged() {
+const CowcentratedLegend = memo(function CowcentratedLegend() {
   const classes = useStyles();
   const { t } = useTranslation();
   return (

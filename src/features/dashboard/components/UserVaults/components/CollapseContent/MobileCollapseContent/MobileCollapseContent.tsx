@@ -3,19 +3,11 @@ import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { VaultDashboardMobileStats } from './components/VaultDashboardMobileStats';
 import { VaultTransactions } from '../../VaultTransactions';
-import { useAppSelector } from '../../../../../../../store';
-import { selectHasDataToShowGraphByVaultId } from '../../../../../../data/selectors/analytics';
-import { selectVaultById } from '../../../../../../data/selectors/vaults';
-import {
-  DashboardFeesGraph,
-  DashboardOverviewGraph,
-} from '../../../../../../vault/components/PnLGraph/cowcentrated';
 import type { VaultCollapseContentProps } from '../types';
 import { styles } from './styles';
 import { LabeledSelect } from '../../../../../../../components/LabeledSelect';
 import { ToggleButtons } from '../../../../../../../components/ToggleButtons';
-import { DashboardPnLGraph } from '../../../../../../vault/components/PnLGraph/standard/StandardPnLGraph';
-import { isCowcentratedLikeVault } from '../../../../../../data/entities/vault';
+import { useChartOptions } from '../useChartOptions';
 
 const useStyles = makeStyles(styles);
 
@@ -25,35 +17,18 @@ export const MobileCollapseContent = memo<VaultCollapseContentProps>(
   function MobileCollapseContent({ vaultId, address }) {
     const classes = useStyles();
     const { t } = useTranslation();
-    const vault = useAppSelector(state => selectVaultById(state, vaultId));
-    const hasAnalyticsData = useAppSelector(state =>
-      selectHasDataToShowGraphByVaultId(state, vaultId, address)
-    );
     const [toggleTab, setToggleTab] = useState<ToggleTabOptions>('stats');
     const useDropdown = useMediaQuery('(max-width: 700px)', { noSsr: true });
-    const { strategyTypeId } = vault;
-    const typeOfCharts = isCowcentratedLikeVault(vault) ? 'cowcentrated' : vault.type;
+    const { PositionGraph, CompoundsGraph, availableCharts } = useChartOptions(vaultId, address);
 
-    const options = useMemo(() => {
-      const items: Partial<Record<ToggleTabOptions, string>> = {
+    const options = useMemo(
+      () => ({
         stats: t('Dashboard-VaultData'),
         txHistory: t('Dashboard-TransactionHistory'),
-      };
-      if (hasAnalyticsData) {
-        items['positionChart'] = t('Dashboard-Chart');
-        if (typeOfCharts === 'cowcentrated') {
-          items['positionChart'] = t('Dashboard-PositionChart');
-          if (strategyTypeId === 'compounds') {
-            items['compoundsChart'] = t('Dashboard-CompoundsChart');
-          }
-        }
-      }
-      return items;
-    }, [hasAnalyticsData, typeOfCharts, strategyTypeId, t]);
-
-    const PositionGraph =
-      typeOfCharts === 'cowcentrated' ? DashboardOverviewGraph : DashboardPnLGraph;
-    const CompoundsGraph = DashboardFeesGraph;
+        ...availableCharts,
+      }),
+      [availableCharts, t]
+    );
 
     return (
       <div className={classes.container}>

@@ -16,7 +16,8 @@ export interface IContractDataApi {
     govVaults: VaultGov[],
     govVaultsMulti: VaultGovMulti[],
     cowVaults: VaultCowcentrated[],
-    boosts: BoostEntity[]
+    boosts: BoostEntity[],
+    boostsMulti: BoostEntity[]
   ): Promise<FetchAllContractDataResult>;
 }
 

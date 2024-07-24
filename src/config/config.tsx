@@ -915,7 +915,7 @@ export const config = {
     name: 'Manta',
     new: true,
     chainId: 169,
-    rpc: ['https://manta-pacific.drpc.org'],
+    rpc: ['https://pacific-rpc.manta.network/http'],
     explorerUrl: 'https://pacific-explorer.manta.network/',
     multicallAddress: '0x663504a9453eD242335C3dCc9E4B52620F566b30',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -929,7 +929,7 @@ export const config = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://manta-pacific.drpc.org'],
+      rpcUrls: ['https://pacific-rpc.manta.network/http'],
       blockExplorerUrls: ['https://pacific-explorer.manta.network/'],
     },
     gas: {

@@ -5,6 +5,8 @@ import { styles } from './styles';
 import {
   isCowcentratedGovVault,
   isCowcentratedLikeVault,
+  isCowcentratedStandardVault,
+  isCowcentratedVault,
   isGovVault,
   isVaultPaused,
   isVaultRetired,
@@ -30,9 +32,11 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isRetired = isVaultRetired(vault);
   const isPaused = isVaultPaused(vault);
-  const isCowcentratedPool = isCowcentratedGovVault(vault);
-  const isCowcentrated = !isCowcentratedPool && isCowcentratedLikeVault(vault); // cowcentrated or cowcentrated standard
-  const isGov = !isCowcentrated && !isCowcentratedPool && isGovVault(vault); // gov but not cowcentrated pool
+  const isCowcentratedPool = isCowcentratedGovVault(vault); // cowcentrated pool
+  const isCowcentratedStandard = isCowcentratedStandardVault(vault); // cowcentrated vault
+  const isCowcentrated = isCowcentratedVault(vault); // naked clm
+  const isGov = !isCowcentratedLikeVault(vault) && isGovVault(vault); // gov but not cowcentrated pool
+
   const handleOpen = useCallback(() => {
     setOpen(o => !o);
   }, [setOpen]);
@@ -48,6 +52,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
           [classes.vaultEarnings]: isGov,
           [classes.vaultClm]: isCowcentrated,
           [classes.vaultClmPool]: isCowcentratedPool,
+          [classes.vaultCowcentratedVault]: isCowcentratedStandard,
           [classes.vaultPaused]: isPaused,
           [classes.vaultRetired]: isRetired,
         })}
