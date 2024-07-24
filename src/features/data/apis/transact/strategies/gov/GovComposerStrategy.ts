@@ -197,21 +197,21 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       underlyingOption
     );
 
-    const modOutputs = underlyingQuote.outputs.map(output => ({
-      token: this.shareToken,
-      amount: output.amount,
-    }));
+    // const modOutputs = underlyingQuote.outputs.map(output => ({
+    //   token: this.shareToken,
+    //   amount: output.amount,
+    // }));
 
     return {
       ...underlyingQuote,
-      outputs: modOutputs,
+      outputs: underlyingQuote.outputs,
       steps: underlyingQuote.steps.concat({
         type: 'stake',
         inputs: underlyingQuote.outputs,
       }),
       priceImpact: calculatePriceImpact(
         underlyingQuote.inputs,
-        modOutputs,
+        underlyingQuote.outputs,
         underlyingQuote.returned,
         this.helpers.getState()
       ),

@@ -630,7 +630,8 @@ export function isCowcentratedDepositQuote(
   return (
     isCowcentratedVaultDepositQuote(quote) ||
     isCowcentratedZapDepositQuote(quote) ||
-    isGovUnderlyingCowcentratedDepositQuote(quote)
+    isGovUnderlyingCowcentratedDepositQuote(quote) ||
+    isVaultUnderlyingCowcentratedDepositQuote(quote)
   );
 }
 
@@ -656,6 +657,17 @@ export function isGovUnderlyingCowcentratedDepositQuote(
   return (
     isDepositQuote(quote) &&
     quote.strategyId === 'gov-composer' &&
+    (isCowcentratedZapDepositQuote(quote.underlyingQuote) ||
+      isCowcentratedVaultDepositQuote(quote.underlyingQuote))
+  );
+}
+
+export function isVaultUnderlyingCowcentratedDepositQuote(
+  quote: TransactQuote
+): quote is VaultComposerZapDepositQuote {
+  return (
+    isDepositQuote(quote) &&
+    quote.strategyId === 'vault-composer' &&
     (isCowcentratedZapDepositQuote(quote.underlyingQuote) ||
       isCowcentratedVaultDepositQuote(quote.underlyingQuote))
   );
