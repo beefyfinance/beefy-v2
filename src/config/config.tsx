@@ -913,7 +913,6 @@ export const config = {
   },
   manta: {
     name: 'Manta',
-    new: true,
     chainId: 169,
     rpc: ['https://pacific-rpc.manta.network/http'],
     explorerUrl: 'https://pacific-explorer.manta.network/',
@@ -940,6 +939,32 @@ export const config = {
       priorityMinimum: '10000000', // 0.01 gwei
     },
     stableCoins: ['USDC', 'USDT', 'DOLA'],
+  },
+  real: {
+    name: 'Re.al',
+    new: true,
+    chainId: 111188,
+    rpc: ['https://real.drpc.org'],
+    explorerUrl: 'https://explorer.re.al/',
+    multicallAddress: '0x0000000000000000000000000000000000000000',
+    multicall3Address: '0x0000000000000000000000000000000000000000',
+    appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
+    providerName: 'Re.al',
+    walletSettings: {
+      chainId: `0x${parseInt('111188', 10).toString(16)}`,
+      chainName: 'Re.al',
+      nativeCurrency: {
+        name: 'reETH',
+        symbol: 'reETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://real.drpc.org'],
+      blockExplorerUrls: ['https://explorer.re.al/'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: [],
   },
   aurora: {
     name: 'Aurora',
