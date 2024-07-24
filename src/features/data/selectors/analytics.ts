@@ -379,6 +379,8 @@ export const selectHasDataToShowGraphByVaultId = createCachedSelector(
       userVaults.includes(vault.id) &&
       !!timeline &&
       timeline.current.length !== 0 &&
+      (timeline.current[0].type !== 'standard' ||
+        timeline.current[0].underlyingToUsdPrice !== null) &&
       statusCondition
     );
   }
