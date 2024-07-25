@@ -946,9 +946,9 @@ export const config = {
     chainId: 111188,
     rpc: ['https://real.drpc.org'],
     explorerUrl: 'https://explorer.re.al/',
-    multicallAddress: '0x0000000000000000000000000000000000000000',
-    multicall3Address: '0x0000000000000000000000000000000000000000',
-    appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
+    multicallAddress: '0x3B60F7f25b09E71356cdFFC6475c222A466a2AC9',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0xA43d8f6Db69610C8260B953658553cabF01D77c6',
     providerName: 'Re.al',
     walletSettings: {
       chainId: `0x${parseInt('111188', 10).toString(16)}`,
@@ -962,9 +962,13 @@ export const config = {
       blockExplorerUrls: ['https://explorer.re.al/'],
     },
     gas: {
-      type: 'standard',
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.7,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '10000000', // 0.01 gwei
     },
-    stableCoins: [],
+    stableCoins: ['MORE', 'USTB', 'arcUSD', 'UKRE', 'USDC', 'DAI', 'USDT', 'USDR'],
   },
   aurora: {
     name: 'Aurora',
