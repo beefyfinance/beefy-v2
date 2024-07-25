@@ -13,6 +13,10 @@ import type { TvlBreakdown } from './tvl-types';
 export const selectVaultTvl = (state: BeefyState, vaultId: VaultEntity['id']) =>
   state.biz.tvl.byVaultId[vaultId]?.tvl || BIG_ZERO;
 
+/** Vault TVL before any exclusions are subtracted */
+export const selectVaultRawTvl = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  state.biz.tvl.byVaultId[vaultId]?.rawTvl || BIG_ZERO;
+
 export const selectVaultUnderlyingTvlUsd = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
   const breakdown = selectLpBreakdownForVault(state, vault);

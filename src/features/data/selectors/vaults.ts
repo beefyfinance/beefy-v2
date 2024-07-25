@@ -455,3 +455,10 @@ export const selectMaximumUnderlyingVaultTvl = (state: BeefyState) => {
   }
   return maxTvl;
 };
+
+export const selectAllCowcentratedVaults = createSelector(
+  selectAllCowcentratedVaultIds,
+  (state: BeefyState) => state.entities.vaults.byId,
+  (clmIds, vaultsById): VaultCowcentrated[] =>
+    clmIds.map(id => vaultsById[id]).filter(isCowcentratedVault)
+);
