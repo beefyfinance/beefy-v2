@@ -117,9 +117,11 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
       continue;
     }
 
-    newGlobalStats.daily += vaultUsdBalance * apyData.totalDaily;
-    newGlobalStats.monthly += vaultUsdBalance * apyData.totalMonthly;
-    newGlobalStats.yearly += vaultUsdBalance * apyData.totalApy;
+    newGlobalStats.daily += vaultUsdBalance * (apyData?.boostedTotalDaily ?? apyData.totalDaily);
+    newGlobalStats.monthly +=
+      vaultUsdBalance *
+      (apyData?.boostedTotalDaily ? apyData.boostedTotalDaily * 30 : apyData.totalMonthly);
+    newGlobalStats.yearly += vaultUsdBalance * (apyData?.boostedTotalApy ?? apyData.totalApy);
   }
 
   // Skip yield calc if user has no deposits
