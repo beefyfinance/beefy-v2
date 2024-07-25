@@ -2,7 +2,7 @@ import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity } from '../entities/vault';
 import { createSelector } from '@reduxjs/toolkit';
 import { getUnixTime, isAfter } from 'date-fns';
-import { selectVaultTvl } from './tvl';
+import { selectVaultRawTvl } from './tvl';
 import { BIG_ZERO } from '../../../helpers/big-number';
 
 export const selectVaultActiveMerklCampaigns = createSelector(
@@ -30,7 +30,7 @@ export const selectVaultHasActiveMerklCampaigns = createSelector(
 
 export const selectVaultActiveGovRewards = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => state.biz.rewards.gov.byVaultId[vaultId],
-  selectVaultTvl,
+  selectVaultRawTvl,
   (state: BeefyState) => state.entities.tokens.prices.byOracleId,
   (rewards, tvl, priceByOracleId) => {
     if (!rewards || rewards.length === 0 || !tvl || tvl.isZero()) {
