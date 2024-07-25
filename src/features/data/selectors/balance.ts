@@ -4,7 +4,6 @@ import type { BoostEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token';
 import {
-  isCowcentratedGovVault,
   isCowcentratedLikeVault,
   isCowcentratedVault,
   isGovVault,
@@ -52,7 +51,6 @@ import type { UserLpBreakdownBalance, UserLpBreakdownBalanceAsset } from './bala
 import { isUserClmPnl, type UserVaultPnl } from './analytics-types';
 import { selectPlatformById } from './platforms';
 import type { TokenAmount } from '../apis/transact/transact-types';
-import { selectGovVaultHasPoolApr } from './apy';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (walletAddress) {
@@ -215,47 +213,6 @@ export const selectUserVaultBalanceInShareTokenInBridged = (
   return shares;
 };
 
-/**
- * Only includes bare CLM in wallet if vault is CLM Pool
- */
-export const selectUserVaultBalanceInShareTokenInUnderlyingCLM = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  maybeWalletAddress?: string
-) => {
-  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
-  if (!walletAddress) {
-    return BIG_ZERO;
-  }
-
-  const vault = selectVaultById(state, vaultId);
-  if (!isCowcentratedGovVault(vault)) {
-    return BIG_ZERO;
-  }
-
-  return selectUserBalanceOfToken(state, vault.chainId, vault.depositTokenAddress, walletAddress);
-};
-
-/**
- * Only includes bare CLM in wallet if vault is CLM Pool, converted to deposit token
- */
-export const selectUserVaultBalanceInDepositTokenInUnderlyingCLM: UserBalanceSelector =
-  createCachedSelector(
-    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectUserVaultBalanceInShareTokenInUnderlyingCLM(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id']) =>
-      selectVaultSharesToDepositTokenData(state, vaultId),
-    (shares, shareData) =>
-      shareData.shareToken
-        ? mooAmountToOracleAmount(
-            shareData.shareToken,
-            shareData.depositToken,
-            shareData.ppfs,
-            shares
-          )
-        : shares
-  )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
-
 const selectVaultSharesToDepositTokenData = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id']) =>
@@ -316,13 +273,11 @@ export const selectUserVaultBalanceInShareTokenIncludingBoostsBridged: UserBalan
       selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, maybeWalletAddress),
     (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
       selectUserVaultBalanceInShareTokenInBridged(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectUserVaultBalanceInShareTokenInUnderlyingCLM(state, vaultId, maybeWalletAddress),
     (...balances) => balances.reduce((acc, balance) => acc.plus(balance), BIG_ZERO)
   )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
- * Total not earning (via active boost or active reward pool for CLM)
+ * Total not earning (via active boost)
  */
 export const selectUserVaultNotEarningBalanceInShareToken: UserBalanceSelector =
   createCachedSelector(
@@ -333,20 +288,12 @@ export const selectUserVaultNotEarningBalanceInShareToken: UserBalanceSelector =
     (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
       selectUserVaultBalanceInShareTokenInBridged(state, vaultId, maybeWalletAddress),
     (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectUserVaultBalanceInShareTokenInUnderlyingCLM(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
       selectUserVaultBalanceInShareTokenInCurrentBoost(state, vaultId, maybeWalletAddress),
     (state: BeefyState, vaultId: VaultEntity['id']) =>
       selectIsVaultPreStakedOrBoosted(state, vaultId),
-    (state: BeefyState, vaultId: VaultEntity['id']) => selectGovVaultHasPoolApr(state, vaultId),
-    (inVault, inBoosts, inBridge, inUnderlyingCLM, inCurrentBoost, isBoosted, govHasPoolApr) => {
+    (inVault, inBoosts, inBridge, inCurrentBoost, isBoosted) => {
       if (isBoosted) {
-        return inVault.plus(inBoosts).plus(inBridge).plus(inUnderlyingCLM).minus(inCurrentBoost);
-      }
-
-      if (govHasPoolApr) {
-        // govHasPoolApr will be true for any gov vault, but inUnderlyingCLM will only be > 0 for CLM Pools
-        return inUnderlyingCLM;
+        return inVault.plus(inBoosts).plus(inBridge).minus(inCurrentBoost);
       }
 
       return BIG_ZERO;
@@ -373,7 +320,7 @@ export const selectUserVaultBalanceInDepositToken: UserBalanceSelector = createC
 )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
- * Total not earning (via boost or reward pool), converted to deposit token
+ * Total not earning (via boost), converted to deposit token
  */
 export const selectUserVaultNotEarningBalanceInDepositToken: UserBalanceSelector =
   createCachedSelector(
@@ -476,18 +423,11 @@ export type UserVaultBalanceBreakdownBridged = {
   amount: BigNumber;
   chainId: ChainEntity['id'];
 };
-export type UserVaultBalanceBreakdownCLM = {
-  type: 'clm';
-  id: string;
-  amount: BigNumber;
-  chainId: ChainEntity['id'];
-};
 
 export type UserVaultBalanceBreakdownEntry =
   | UserVaultBalanceBreakdownVault
   | UserVaultBalanceBreakdownBoost
-  | UserVaultBalanceBreakdownBridged
-  | UserVaultBalanceBreakdownCLM;
+  | UserVaultBalanceBreakdownBridged;
 
 export type UserVaultBalanceBreakdown = {
   depositToken: TokenEntity;
@@ -516,26 +456,9 @@ export const selectVaultUserBalanceInDepositTokenBreakdown = (
     });
   }
 
-  // normal gov vaults do not have balances elsewhere
-  if (isGovVault(vault) && !isCowcentratedGovVault(vault)) {
+  // gov vaults do not have balances elsewhere
+  if (isGovVault(vault)) {
     return balances;
-  }
-
-  // only gov vaults count CLM in wallet
-  if (isCowcentratedGovVault(vault)) {
-    const clmBalance = selectUserVaultBalanceInShareTokenInUnderlyingCLM(
-      state,
-      vaultId,
-      walletAddress
-    );
-    if (clmBalance.gt(BIG_ZERO)) {
-      balances.entries.push({
-        type: 'clm',
-        id: `clm-${vaultId}`,
-        chainId: vault.chainId,
-        amount: clmBalance,
-      });
-    }
   }
 
   // only standard vaults have boosts or bridged balances

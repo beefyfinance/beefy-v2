@@ -9,7 +9,6 @@ import {
   selectVaultUserBalanceInDepositTokenBreakdown,
   type UserVaultBalanceBreakdownBoost,
   type UserVaultBalanceBreakdownBridged,
-  type UserVaultBalanceBreakdownCLM,
   type UserVaultBalanceBreakdownEntry,
 } from '../../../data/selectors/balance';
 import type { TokenEntity } from '../../../data/entities/token';
@@ -96,37 +95,6 @@ const BridgedEntry = memo<EntryProps<UserVaultBalanceBreakdownBridged>>(function
   );
 });
 
-const CLMEntry = memo<EntryProps<UserVaultBalanceBreakdownCLM>>(function CLMEntry({
-  entry,
-  depositToken,
-}) {
-  const classes = useStyles();
-  const { t } = useTranslation();
-
-  return (
-    <div className={classes.entry}>
-      <TokenImage
-        chainId={depositToken.chainId}
-        tokenAddress={depositToken.address}
-        className={classes.icon}
-      />
-      <div className={classes.text}>
-        <Trans
-          t={t}
-          i18nKey="Transact-Displaced-clm"
-          values={{
-            symbol: depositToken.symbol,
-          }}
-          components={{
-            amount: <TokenAmountFromEntity amount={entry.amount} token={depositToken} />,
-            orange: <span className={classes.tokenAmount} />,
-          }}
-        />
-      </div>
-    </div>
-  );
-});
-
 type EntriesProps<T extends UserVaultBalanceBreakdownEntry = UserVaultBalanceBreakdownEntry> = {
   entries: T[];
   depositToken: TokenEntity;
@@ -161,21 +129,6 @@ const BridgedEntries = memo<EntriesProps<UserVaultBalanceBreakdownBridged>>(
   }
 );
 
-const CLMEntries = memo<EntriesProps<UserVaultBalanceBreakdownCLM>>(function CLMEntries({
-  entries,
-  depositToken,
-}) {
-  const classes = useStyles();
-
-  return (
-    <div className={clsx(classes.entries)}>
-      {entries.map(entry => (
-        <CLMEntry key={entry.id} entry={entry} depositToken={depositToken} />
-      ))}
-    </div>
-  );
-});
-
 type TypeToComponentMap = Omit<
   {
     [T in UserVaultBalanceBreakdownEntry['type']]: FC<EntriesProps>;
@@ -186,7 +139,6 @@ type TypeToComponentMap = Omit<
 const typeToComponent: TypeToComponentMap = {
   boost: BoostEntries,
   bridged: BridgedEntries,
-  clm: CLMEntries,
 };
 
 const Entries = memo<EntriesProps>(function Entries({ entries, depositToken }) {
@@ -234,7 +186,6 @@ export const DisplacedBalancesImpl = memo<DisplacedBalancesProps>(function Displ
       {entries.bridged ? (
         <Entries entries={entries.bridged} depositToken={breakdown.depositToken} />
       ) : null}
-      {entries.clm ? <Entries entries={entries.clm} depositToken={breakdown.depositToken} /> : null}
     </div>
   );
 });

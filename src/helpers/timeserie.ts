@@ -3,8 +3,8 @@ import { fromUnixTime, getUnixTime, isAfter, isBefore, isEqual, max, subDays } f
 import { pick, sortBy, sortedUniq } from 'lodash-es';
 import type { ApiProductPriceRow } from '../features/data/apis/analytics/analytics-types';
 import type {
-  CLMTimelineAnalyticsEntry,
-  VaultTimelineAnalyticsEntry,
+  TimelineEntryCowcentratedPool,
+  TimelineEntryStandard,
 } from '../features/data/entities/analytics';
 import { BIG_ZERO } from './big-number';
 import { roundDownMinutes } from './date';
@@ -44,7 +44,7 @@ function sortAndFixPrices(
 
 export function getInvestorTimeserie(
   timeBucket: GraphBucket,
-  timeline: VaultTimelineAnalyticsEntry[],
+  timeline: TimelineEntryStandard[],
   sharesToUnderlying: ApiProductPriceRow[],
   underlyingToUsd: ApiPoint[],
   firstDate: Date,
@@ -302,7 +302,7 @@ class ClmInvestorOverviewTimeSeriesGenerator {
   protected readonly bucketBeforeFirstUnix: number;
 
   constructor(
-    protected timeline: CLMTimelineAnalyticsEntry[],
+    protected timeline: TimelineEntryCowcentratedPool[],
     protected historicalShareToUsd: ApiPoint[],
     protected historicalUnderlying0ToUsd: ApiPoint[],
     protected historicalUnderlying1ToUsd: ApiPoint[],
@@ -566,7 +566,7 @@ class ClmInvestorFeesTimeSeriesGenerator {
 
 export function getClmInvestorTimeSeries(
   timeBucket: GraphBucket,
-  timeline: CLMTimelineAnalyticsEntry[],
+  timeline: TimelineEntryCowcentratedPool[],
   shareToUsd: ApiPoint[],
   underlying0ToUsd: ApiPoint[],
   underlying1ToUsd: ApiPoint[],

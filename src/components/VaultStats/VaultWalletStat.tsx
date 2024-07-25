@@ -1,4 +1,4 @@
-import { isCowcentratedGovVault, type VaultEntity } from '../../features/data/entities/vault';
+import { type VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
@@ -11,7 +11,6 @@ import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
 } from '../../features/data/selectors/tokens';
-import { BIG_ZERO } from '../../helpers/big-number';
 import {
   selectIsBalanceAvailableForChainUser,
   selectIsPricesAvailable,
@@ -52,9 +51,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultWalletStatProps) {
     };
   }
 
-  const tokensInWallet = isCowcentratedGovVault(vault)
-    ? BIG_ZERO
-    : selectUserBalanceOfToken(state, vault.chainId, vault.depositTokenAddress);
+  const tokensInWallet = selectUserBalanceOfToken(state, vault.chainId, vault.depositTokenAddress);
 
   if (!tokensInWallet.gt(0)) {
     return {

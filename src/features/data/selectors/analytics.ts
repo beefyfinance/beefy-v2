@@ -36,10 +36,10 @@ import { selectWalletAddress } from './wallet';
 import { selectIsConfigAvailable, selectIsUserBalanceAvailable } from './data-loader';
 import type { AnalyticsBucketData, AnalyticsState } from '../reducers/analytics';
 import {
-  type AnyTimelineAnalyticsEntity,
-  type AnyTimelineAnalyticsEntry,
-  isCLMTimelineAnalyticsEntity,
-  isVaultTimelineAnalyticsEntity,
+  type AnyTimelineEntity,
+  type AnyTimelineEntry,
+  isTimelineEntityCowcentratedPool,
+  isTimelineEntityStandard,
 } from '../entities/analytics';
 import { createSelector } from '@reduxjs/toolkit';
 import {
@@ -76,7 +76,7 @@ export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], address?: string) =>
     selectUserAnalytics(state, address),
   (state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId,
-  (userAnalytics, vaultId): undefined | AnyTimelineAnalyticsEntity => {
+  (userAnalytics, vaultId): undefined | AnyTimelineEntity => {
     if (!userAnalytics) {
       return undefined;
     }
@@ -88,7 +88,7 @@ export const selectUserDepositedTimelineByVaultId = createCachedSelector(
 export const selectUserFullTimelineEntriesByVaultId = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], address?: string) =>
     selectUserDepositedTimelineByVaultId(state, vaultId, address),
-  (timeline): undefined | AnyTimelineAnalyticsEntry[] => {
+  (timeline): undefined | AnyTimelineEntry[] => {
     if (!timeline) {
       return undefined;
     }
@@ -187,7 +187,7 @@ export const selectStandardGovPnl = (
 
   const pnl = new PnL();
 
-  if (isVaultTimelineAnalyticsEntity(sortedTimeline) && sortedTimeline.current.length > 0) {
+  if (isTimelineEntityStandard(sortedTimeline) && sortedTimeline.current.length > 0) {
     for (const row of sortedTimeline.current) {
       if (row.shareDiff && row.shareToUnderlyingPrice && row.underlyingToUsdPrice) {
         pnl.addTransaction({
@@ -259,7 +259,7 @@ export const selectClmPnl = (
 
   const pnl = new ClmPnl();
 
-  if (isCLMTimelineAnalyticsEntity(sortedTimeline) && sortedTimeline.current.length > 0) {
+  if (isTimelineEntityCowcentratedPool(sortedTimeline) && sortedTimeline.current.length > 0) {
     for (const tx of sortedTimeline.current) {
       pnl.addTransaction({
         shares: tx.shareDiff,

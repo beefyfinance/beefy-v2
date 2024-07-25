@@ -4,11 +4,11 @@ import BigNumber from 'bignumber.js';
 import type {
   AnalyticsPriceResponse,
   AnalyticsUserTimelineResponse,
-  CLMTimelineAnalyticsConfig,
-  CLMVaultTimelineAnalyticsConfig,
+  TimelineConfigClm,
+  TimelineConfigClassic,
   PriceType,
   TimeBucketType,
-  TimelineAnalyticsConfig,
+  TimelineConfigDatabarn,
 } from './analytics-types';
 import type { VaultEntity } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
@@ -29,19 +29,19 @@ export class AnalyticsApi {
     try {
       const res = await this.api.get<{
         result: {
-          clmTimeline: (CLMTimelineAnalyticsConfig | CLMVaultTimelineAnalyticsConfig)[];
-          databarnTimeline: TimelineAnalyticsConfig[];
+          clmTimeline: (TimelineConfigClm | TimelineConfigClassic)[];
+          databarnTimeline: TimelineConfigDatabarn[];
         };
       }>('/api/v1/timeline', { params: { address } });
 
       const [clmVaultTimeline, clmTimeline] = partition(
         res.data.result.clmTimeline || [],
-        (item): item is CLMVaultTimelineAnalyticsConfig => item.type === 'classic'
+        (item): item is TimelineConfigClassic => item.type === 'classic'
       );
 
       return {
         clmTimeline,
-        clmVaultTimeline,
+        classicTimeline: clmVaultTimeline,
         databarnTimeline: res.data.result.databarnTimeline || [],
       };
     } catch (err) {
@@ -49,7 +49,7 @@ export class AnalyticsApi {
         if (err.response?.status === 404) {
           return {
             clmTimeline: [],
-            clmVaultTimeline: [],
+            classicTimeline: [],
             databarnTimeline: [],
           };
         }
