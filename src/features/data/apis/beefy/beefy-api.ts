@@ -14,6 +14,7 @@ import type {
   BeefySnapshotActiveResponse,
   ZapAggregatorTokenSupportResponse,
 } from './beefy-api-types';
+import { getJson } from '../../../../helpers/http';
 
 export const API_URL = import.meta.env.VITE_API_URL || 'https://api.beefy.finance';
 export const API_ZAP_URL = import.meta.env.VITE_API_ZAP_URL || `${API_URL}/zap`;
@@ -35,19 +36,11 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await fetch(
-      `${this.api}/prices?${handleFetchParams({ ['_']: String(this.getCacheBuster('short')) })}`,
-      { signal: AbortSignal.timeout(this.timeout) }
-    );
-
-    if (!res.ok) {
-      if (res.status === 404) {
-        return {} as BeefyAPITokenPricesResponse;
-      }
-      // throw new Error(`HTTP error! status: ${res.status}`);
-    }
-
-    return await res.json();
+    return await getJson<BeefyAPITokenPricesResponse>({
+      url: `${this.api}/prices`,
+      cacheBuster: 'short',
+      timeout: this.timeout,
+    });
   }
 
   // i'm not 100% certain about the return type

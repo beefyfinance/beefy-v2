@@ -45,7 +45,7 @@ export class OneInchApi implements IOneInchApi {
 
     if (!res.ok) {
       const error = await getErrorMessageFromResponse(res);
-      throw new Error(error);
+      throw new Error(error || `${res.status} ${res.statusText}`);
     }
 
     return await res.json();
