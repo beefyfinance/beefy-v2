@@ -15,6 +15,7 @@ import {
   FetchAbortError,
   FetchError,
   FetchResponseError,
+  FetchResponseJsonParseError,
   FetchResponseNotJsonError,
   FetchTimeoutError,
 } from './errors';
@@ -97,7 +98,7 @@ async function fetchJson<TResponse>(url: string, init: FetchRequestInit): Promis
       } catch (err: unknown) {
         if (err && err instanceof Error) {
           if (err.name === 'SyntaxError') {
-            throw new FetchResponseNotJsonError(res, err);
+            throw new FetchResponseJsonParseError(res, err);
           } else {
             throw new FetchResponseError(res, err.message, err);
           }

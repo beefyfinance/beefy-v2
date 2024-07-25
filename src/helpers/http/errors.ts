@@ -23,6 +23,13 @@ export class FetchResponseNotJsonError extends FetchResponseError {
   }
 }
 
+export class FetchResponseJsonParseError extends FetchResponseError {
+  public constructor(response: Response, cause?: Error) {
+    super(response, `Failed to parse response as JSON`, cause);
+    this.name = 'FetchResponseJsonParseError';
+  }
+}
+
 export class FetchTimeoutError extends FetchError {
   public constructor(cause: Error) {
     super('Request timed out', cause);
@@ -47,6 +54,12 @@ export function isFetchResponseError(value: unknown): value is FetchResponseErro
 
 export function isFetchResponseNotJsonError(value: unknown): value is FetchResponseNotJsonError {
   return isFetchError(value) && value instanceof FetchResponseNotJsonError;
+}
+
+export function isFetchResponseJsonParseError(
+  value: unknown
+): value is FetchResponseJsonParseError {
+  return isFetchError(value) && value instanceof FetchResponseJsonParseError;
 }
 
 export function isFetchTimeoutError(value: unknown): value is FetchTimeoutError {
