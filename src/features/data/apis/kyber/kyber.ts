@@ -6,11 +6,9 @@ import type {
   SwapResponse,
 } from './kyber-types';
 import type { ChainEntity } from '../../entities/chain';
-import type { AxiosInstance } from 'axios';
-import axios from 'axios';
-import { axiosErrorToString } from '../transact/helpers/axios';
 import type { ChainConfig } from '../config-types';
 import { API_ZAP_URL } from '../beefy/beefy-api';
+import { getErrorMessageFromResponse, handleFetchParams } from '../transact/helpers/fetch';
 
 export const supportedChainIds: ChainConfig['id'][] = [
   'ethereum',
@@ -30,60 +28,48 @@ export const supportedChainIds: ChainConfig['id'][] = [
 ];
 
 export class KyberSwapApi implements IKyberSwapApi {
-  protected api: AxiosInstance;
+  protected api: string;
 
   constructor(protected chain: ChainEntity) {
     if (!supportedChainIds.includes(chain.id)) {
       throw new Error(`KyberSwap api is not supported on ${chain.id}`);
     }
 
-    this.api = axios.create({
-      baseURL: `${API_ZAP_URL}/providers/kyber/${chain.id}/`,
-    });
+    this.api = `${API_ZAP_URL}/providers/kyber/${chain.id}`;
   }
 
   protected async get<
     ResponseType extends object,
     RequestType extends Record<string, string | number | boolean | string[]>
   >(url: string, request: RequestType): Promise<ResponseType> {
-    try {
-      const response = await this.api.get<ResponseType>(url, {
-        headers: {
-          Accept: 'application/json',
-        },
-        params: request,
-      });
+    const res = await fetch(`${this.api}${url}?${handleFetchParams(request)}`, {
+      headers: { Accept: 'application/json' },
+    });
 
-      return response.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(axiosErrorToString(error));
-      } else {
-        throw error;
-      }
+    if (!res.ok) {
+      const error = await getErrorMessageFromResponse(res);
+      throw new Error(error);
     }
+
+    return await res.json();
   }
 
   protected async post<ResponseType extends object, RequestType extends Record<string, unknown>>(
     url: string,
     request: RequestType
   ): Promise<ResponseType> {
-    try {
-      const response = await this.api.post<ResponseType>(url, request, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
+    const res = await fetch(`${this.api}${url}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(request),
+    });
 
-      return response.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(axiosErrorToString(error));
-      } else {
-        throw error;
-      }
+    if (!res.ok) {
+      const error = await getErrorMessageFromResponse(res);
+      throw new Error(error);
     }
+
+    return await res.json();
   }
 
   async getQuote(request: QuoteRequest): Promise<QuoteResponse> {

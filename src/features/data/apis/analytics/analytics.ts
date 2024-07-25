@@ -7,6 +7,7 @@ import type {
 } from './analytics-types';
 import type { VaultEntity } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
+import { handleFetchParams } from '../transact/helpers/fetch';
 
 const INVESTOR_API = import.meta.env.VITE_INVESTOR_URL || 'https://investor-api.beefy.finance';
 
@@ -18,9 +19,7 @@ export class AnalyticsApi {
   }
 
   public async getWalletTimeline(address: string): Promise<AnalyticsUserTimelineResponse> {
-    const res = await fetch(
-      `${this.api}/api/v1/timeline?` + new URLSearchParams({ address }).toString()
-    );
+    const res = await fetch(`${this.api}/api/v1/timeline?${handleFetchParams({ address })}`);
 
     if (!res.ok) {
       if (res.status === 404) {
@@ -44,14 +43,13 @@ export class AnalyticsApi {
     chain: ChainEntity['id']
   ): Promise<AnalyticsPriceResponse> {
     const res = await fetch(
-      `${this.api}/api/v1/prices?` +
-        new URLSearchParams({
-          address: address.toLowerCase(),
-          productType,
-          priceType,
-          bucket: timeBucket,
-          chain,
-        }).toString()
+      `${this.api}/api/v1/prices?${handleFetchParams({
+        address: address.toLowerCase(),
+        productType,
+        priceType,
+        bucket: timeBucket,
+        chain,
+      })}`
     );
 
     if (!res.ok) {
@@ -70,11 +68,10 @@ export class AnalyticsApi {
 
   public async getClmPrices(oracleId: string, timebucket: TimeBucketType) {
     const res = await fetch(
-      `${this.api}/api/v1/prices?` +
-        new URLSearchParams({
-          oracle: oracleId,
-          bucket: timebucket,
-        }).toString()
+      `${this.api}/api/v1/prices?${handleFetchParams({
+        oracle: oracleId,
+        bucket: timebucket,
+      })}`
     );
     if (!res.ok) {
       if (res.status === 404) {

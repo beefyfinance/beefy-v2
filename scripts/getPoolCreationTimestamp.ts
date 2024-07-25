@@ -1,6 +1,4 @@
-import axios from 'axios';
-import { chainRpcs, getVaultsForChain } from './common/config';
-
+import { getVaultsForChain } from './common/config';
 const explorerApiUrls = {
   cronos: 'api.cronoscan.com/api',
   bsc: 'api.bscscan.com/api',
@@ -51,43 +49,43 @@ const getCreationTimestamp = async (vaultAddress, explorerUrl, chain) => {
   return timestamp;
 };
 
-const getCreationTimestampHarmonyRpc = async (vaultAddress, chain) => {
-  const url = chainRpcs[chain];
-  const resp = await axios.post(url, {
-    jsonrpc: '2.0',
-    method: 'hmyv2_getTransactionsHistory',
-    params: [
-      {
-        address: vaultAddress,
-        pageIndex: 0,
-        pageSize: 1,
-        fullTx: true,
-        txType: 'ALL',
-        order: 'ASC',
-      },
-    ],
-    id: 1,
-  });
+// const getCreationTimestampHarmonyRpc = async (vaultAddress, chain) => {
+//   const url = chainRpcs[chain];
+//   const resp = await axios.post(url, {
+//     jsonrpc: '2.0',
+//     method: 'hmyv2_getTransactionsHistory',
+//     params: [
+//       {
+//         address: vaultAddress,
+//         pageIndex: 0,
+//         pageSize: 1,
+//         fullTx: true,
+//         txType: 'ALL',
+//         order: 'ASC',
+//       },
+//     ],
+//     id: 1,
+//   });
 
-  if (
-    !resp.data ||
-    resp.data.id !== 1 ||
-    !resp.data.result ||
-    !resp.data.result.transactions ||
-    resp.data.result.transactions.length !== 1
-  ) {
-    console.dir(resp.data, { depth: null });
-    throw new Error('Malformed response');
-  }
+//   if (
+//     !resp.data ||
+//     resp.data.id !== 1 ||
+//     !resp.data.result ||
+//     !resp.data.result.transactions ||
+//     resp.data.result.transactions.length !== 1
+//   ) {
+//     console.dir(resp.data, { depth: null });
+//     throw new Error('Malformed response');
+//   }
 
-  const tx0 = resp.data.result.transactions[0];
-  return tx0.timestamp;
-};
+//   const tx0 = resp.data.result.transactions[0];
+//   return tx0.timestamp;
+// };
 
 const getTimestamp = async (vaultAddress, chain) => {
   if (harmonyRpcChains.has(chain)) {
     console.log('Using Harmony RPC method for this chain');
-    return await getCreationTimestampHarmonyRpc(vaultAddress, chain);
+    // return await getCreationTimestampHarmonyRpc(vaultAddress, chain);
   } else {
     return await getCreationTimestamp(vaultAddress, explorerApiUrls[chain], chain);
   }

@@ -1,5 +1,3 @@
-import type { AxiosInstance } from 'axios';
-import axios from 'axios';
 import type {
   ApiChartData,
   IBeefyDataApi,
@@ -11,18 +9,16 @@ import type {
 import type { VaultEntity } from '../../entities/vault';
 import type { TokenEntity } from '../../entities/token';
 import type { ChainEntity } from '../../entities/chain';
+import { handleFetchParams } from '../transact/helpers/fetch';
 
 export class BeefyDataApi implements IBeefyDataApi {
   private readonly version = 'v2';
-  private readonly data: AxiosInstance;
+  private readonly data: string;
 
   constructor() {
-    this.data = axios.create({
-      baseURL: `${import.meta.env.VITE_DATA_URL || 'https://data.beefy.finance'}/api/${
-        this.version
-      }/`,
-      timeout: 30 * 1000,
-    });
+    this.data = `${import.meta.env.VITE_DATA_URL || 'https://data.beefy.finance'}/api/${
+      this.version
+    }`;
   }
 
   async getAvailableRanges(
@@ -31,16 +27,23 @@ export class BeefyDataApi implements IBeefyDataApi {
     vaultAddress?: VaultEntity['contractAddress'],
     chainId?: ChainEntity['id']
   ): Promise<ApiRanges> {
-    const res = await this.data.get<ApiRanges>(`ranges/`, {
-      params: {
+    const res = await fetch(
+      `${this.data}/ranges?${handleFetchParams({
         vault: vaultId,
         oracle: oracleId,
-        vaultAddress,
-        chain: chainId,
-      },
-    });
+        vaultAddress: vaultAddress || '',
+        chain: chainId || '',
+      })}`
+    );
 
-    return res.data;
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {} as ApiRanges;
+      }
+      // throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    return await res.json();
   }
 
   async getApyChartData(vaultId: VaultEntity['id'], bucket: ApiTimeBucket): Promise<ApiChartData> {
@@ -63,15 +66,22 @@ export class BeefyDataApi implements IBeefyDataApi {
     bucket: ApiTimeBucket,
     chainId: ChainEntity['id']
   ): Promise<ApiCowcentratedChartData> {
-    const res = await this.data.get<ApiCowcentratedChartData>(`clmRanges/`, {
-      params: {
+    const res = await fetch(
+      `${this.data}/clmRanges?${handleFetchParams({
         vaultAddress,
         chain: chainId,
         bucket,
-      },
-    });
+      })}`
+    );
 
-    return res.data;
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {} as ApiCowcentratedChartData;
+      }
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    return await res.json();
   }
 
   private async getChartData(
@@ -80,21 +90,20 @@ export class BeefyDataApi implements IBeefyDataApi {
     value: string,
     bucket: ApiTimeBucket
   ): Promise<ApiChartData> {
-    try {
-      const res = await this.data.get<ApiChartData>(`${stat}/`, {
-        params: {
-          [key]: value,
-          bucket,
-        },
-      });
+    const res = await fetch(
+      `${this.data}/${stat}?${handleFetchParams({
+        [key]: value,
+        bucket,
+      })}`
+    );
 
-      return res.data;
-    } catch (e: unknown) {
-      // on 404 we return empty data so that we don't keep trying to refetch in components
-      if (axios.isAxiosError(e) && e.response?.status === 404) {
-        return [];
+    if (!res.ok) {
+      if (res.status === 404) {
+        return [] as ApiChartData;
       }
-      throw e;
+      throw new Error(`HTTP error! status: ${res.status}`);
     }
+
+    return await res.json();
   }
 }

@@ -1,8 +1,7 @@
-import type { AxiosInstance } from 'axios';
-import axios from 'axios';
 import { mapValuesDeep } from '../../utils/array-utils';
 import { featureFlag_simulateBeefyApiError } from '../../utils/feature-flags';
 import type { TreasuryCompleteBreakdownConfig } from '../config-types';
+import { handleFetchParams } from '../transact/helpers/fetch';
 import type {
   AllCowcentratedVaultRangesResponse,
   ApyFeeData,
@@ -20,15 +19,13 @@ export const API_URL = import.meta.env.VITE_API_URL || 'https://api.beefy.financ
 export const API_ZAP_URL = import.meta.env.VITE_API_ZAP_URL || `${API_URL}/zap`;
 
 export class BeefyAPI {
-  public api: AxiosInstance;
-  public timeout = 30 * 1000;
+  public api: string;
+  public zapApi: string;
+  public timeout: number;
 
   constructor() {
-    // this could be mocked by passing mock axios to the constructor
-    this.api = axios.create({
-      baseURL: API_URL,
-      timeout: 30 * 1000,
-    });
+    this.api = API_URL;
+    this.zapApi = API_ZAP_URL;
     this.timeout = 30 * 1000;
   }
 
@@ -39,7 +36,7 @@ export class BeefyAPI {
     }
 
     const res = await fetch(
-      `${API_URL}/prices?` + new URLSearchParams({ ['_']: String(this.getCacheBuster('short')) }),
+      `${this.api}/prices?${handleFetchParams({ ['_']: String(this.getCacheBuster('short')) })}`,
       { signal: AbortSignal.timeout(this.timeout) }
     );
 
@@ -61,7 +58,7 @@ export class BeefyAPI {
     }
 
     const res = await fetch(
-      `${API_URL}/lps?` + new URLSearchParams({ ['_']: String(this.getCacheBuster('short')) }),
+      `${this.api}/lps?${handleFetchParams({ ['_']: String(this.getCacheBuster('short')) })}`,
       { signal: AbortSignal.timeout(this.timeout) }
     );
 
@@ -81,8 +78,9 @@ export class BeefyAPI {
     }
 
     const res = await fetch(
-      `${API_URL}/lps/breakdown?` +
-        new URLSearchParams({ ['_']: String(this.getCacheBuster('short')) }),
+      `${this.api}/lps/breakdown?${handleFetchParams({
+        ['_']: String(this.getCacheBuster('short')),
+      })}`,
       { signal: AbortSignal.timeout(this.timeout) }
     );
 
@@ -102,8 +100,9 @@ export class BeefyAPI {
     }
 
     const res = await fetch(
-      `${API_URL}/apy/breakdown?` +
-        new URLSearchParams({ ['_']: String(this.getCacheBuster('short')) }),
+      `${this.api}/apy/breakdown?${handleFetchParams({
+        ['_']: String(this.getCacheBuster('short')),
+      })}`,
       { signal: AbortSignal.timeout(this.timeout) }
     );
 
@@ -131,11 +130,21 @@ export class BeefyAPI {
    * TODO: fetch this from the contract directly
    */
   public async getVaultLastHarvest(): Promise<BeefyApiVaultLastHarvestResponse> {
-    const res = await this.api.get<BeefyApiVaultLastHarvestResponse>('/vaults/last-harvest', {
-      params: { _: this.getCacheBuster('short') },
-    });
+    const res = await fetch(
+      `${this.api}/vaults/last-harvest?${handleFetchParams({
+        ['_']: String(this.getCacheBuster('short')),
+      })}`,
+      { signal: AbortSignal.timeout(this.timeout) }
+    );
 
-    return res.data;
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {} as BeefyApiVaultLastHarvestResponse;
+      }
+      // throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    return await res.json();
   }
 
   public async getFees(): Promise<ApyFeeData> {
@@ -143,23 +152,42 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get<ApyFeeData>('/fees', {
-      params: { _: this.getCacheBuster('short') },
-    });
-    return res.data;
+    const res = await fetch(
+      `${this.api}/fees?${handleFetchParams({ ['_']: String(this.getCacheBuster('short')) })}`,
+      { signal: AbortSignal.timeout(this.timeout) }
+    );
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {} as ApyFeeData;
+      }
+      // throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    return await res.json();
   }
 
   public async getZapAggregatorTokenSupport(): Promise<ZapAggregatorTokenSupportResponse> {
     if (featureFlag_simulateBeefyApiError('zap-support')) {
       throw new Error('Simulated beefy api error');
     }
+    const res = await fetch(
+      `${this.zapApi}/swaps?${handleFetchParams({ ['_']: String(this.getCacheBuster('short')) })}`,
+      {
+        signal: AbortSignal.timeout(this.timeout),
+      }
+    );
 
-    const res = await this.api.get<ZapAggregatorTokenSupportResponse>(`${API_ZAP_URL}/swaps`, {
-      params: { _: this.getCacheBuster('short') },
-    });
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {} as ZapAggregatorTokenSupportResponse;
+      }
+      // throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = await res.json();
 
     // Handle api->app chain id
-    const data = res.data;
     if ('one' in data) {
       data['harmony'] = data['one'] as ZapAggregatorTokenSupportResponse['harmony'];
       delete data['one'];
@@ -173,21 +201,42 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get<TreasuryCompleteBreakdownConfig>('/treasury/complete', {
-      params: { _: this.getCacheBuster('short') },
-    });
-    return res.data;
+    const res = await fetch(
+      `${this.api}/treasury/complete?${handleFetchParams({
+        ['_']: String(this.getCacheBuster('short')),
+      })}`,
+      { signal: AbortSignal.timeout(this.timeout) }
+    );
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {} as TreasuryCompleteBreakdownConfig;
+      }
+      // throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    return await res.json();
   }
 
   public async getActiveProposals(): Promise<BeefySnapshotActiveResponse> {
     if (featureFlag_simulateBeefyApiError('snapshot')) {
       throw new Error('Simulated beefy api error');
     }
+    const res = await fetch(
+      `${this.api}/snapshot/active?${handleFetchParams({
+        ['_']: String(this.getCacheBuster('short')),
+      })}`,
+      { signal: AbortSignal.timeout(this.timeout) }
+    );
 
-    const res = await this.api.get<BeefySnapshotActiveResponse>('/snapshot/active', {
-      params: { _: this.getCacheBuster('short') },
-    });
-    return res.data;
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {} as BeefySnapshotActiveResponse;
+      }
+      // throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    return await res.json();
   }
 
   public async getArticles(): Promise<BeefyLastArticleResponse> {
@@ -195,24 +244,57 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get<BeefyLastArticleResponse>('/articles/latest', {
-      params: { _: this.getCacheBuster('short') },
-    });
-    return res.data;
+    const res = await fetch(
+      `${this.api}/articles/latest?${handleFetchParams({
+        ['_']: String(this.getCacheBuster('short')),
+      })}`,
+      { signal: AbortSignal.timeout(this.timeout) }
+    );
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {} as BeefyLastArticleResponse;
+      }
+      // throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    return await res.json();
   }
 
   async getAllCowcentratedVaultRanges(): Promise<AllCowcentratedVaultRangesResponse> {
-    const res = await this.api.get<AllCowcentratedVaultRangesResponse>('/cow-price-ranges', {
-      params: { _: this.getCacheBuster('short') },
-    });
-    return res.data;
+    const res = await fetch(
+      `${this.api}/cow-price-ranges?${handleFetchParams({
+        ['_']: String(this.getCacheBuster('short')),
+      })}`,
+      { signal: AbortSignal.timeout(this.timeout) }
+    );
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        return {} as AllCowcentratedVaultRangesResponse;
+      }
+      // throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    return await res.json();
   }
 
   async getCowcentratedMerklCampaigns(): Promise<BeefyApiMerklCampaign[]> {
-    const res = await this.api.get<BeefyApiMerklCampaign[]>('/cow-merkl-campaigns/all/recent', {
-      params: { _: this.getCacheBuster('short') },
-    });
-    return res.data;
+    const res = await fetch(
+      `${this.api}/cow-merkl-campaigns/all/recent?${handleFetchParams({
+        ['_']: String(this.getCacheBuster('short')),
+      })}`,
+      { signal: AbortSignal.timeout(this.timeout) }
+    );
+
+    if (!res.ok) {
+      if (res.status === 404) {
+        return [] as BeefyApiMerklCampaign[];
+      }
+      // throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    return await res.json();
   }
 
   /**
