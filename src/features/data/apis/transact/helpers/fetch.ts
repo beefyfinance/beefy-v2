@@ -1,13 +1,17 @@
-export async function getErrorMessageFromResponse(res: Response): Promise<string> {
-  if (res.headers.get('Content-Type')?.includes('application/json')) {
-    const json = await res.json();
-    if (json.error && json.description) {
-      const { error: title, description } = json;
-      return `${title}: ${description}`;
+export async function getErrorMessageFromResponse(res: Response): Promise<string | undefined> {
+  try {
+    if (res.headers.get('Content-Type')?.includes('application/json')) {
+      const json = await res.json();
+      if (json.error && json.description) {
+        const { error: title, description } = json;
+        return `${title}: ${description}`;
+      }
     }
+  } catch {
+    /* ignore */
   }
 
-  return `${res.status} ${res.statusText}`;
+  return undefined;
 }
 
 export function handleFetchParams(
