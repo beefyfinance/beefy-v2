@@ -4,7 +4,7 @@ import {
   selectUserUnstakedClms,
 } from '../../../features/data/selectors/balance';
 import { useAppDispatch, useAppSelector } from '../../../store';
-import { Banner } from '../Banner';
+import { Banner, type BannerProps } from '../Banner';
 import { Trans, useTranslation } from 'react-i18next';
 import clmIcon from '../../../images/icons/clm.svg';
 import {
@@ -21,6 +21,8 @@ import { Container, makeStyles } from '@material-ui/core';
 import { selectVaultById } from '../../../features/data/selectors/vaults';
 import { ClmVaultBanner } from '../ClmVaultBanner/ClmVaultBanner';
 import { useHistory } from 'react-router-dom';
+
+const variant: BannerProps['variant'] = 'warning';
 
 const useStyles = makeStyles((theme: Theme) => ({
   clmUnstakedBannerContainer: {
@@ -55,6 +57,7 @@ export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
 
   return (
     <Banner
+      variant={variant}
       icon={<img src={clmIcon} alt="" />}
       text={
         <Trans
@@ -139,6 +142,7 @@ const UnstakedClmBannerVaultImpl = memo<UnstakedClmBannerVaultImplProps>(
 
     return (
       <Banner
+        variant={variant}
         icon={<img src={clmIcon} alt="" width={24} height={24} />}
         text={
           <Trans

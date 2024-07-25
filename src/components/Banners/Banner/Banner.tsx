@@ -12,12 +12,19 @@ export type BannerProps = {
   text: ReactNode;
   onClose?: () => void;
   className?: string;
+  variant?: 'info' | 'warning' | 'error';
 };
-export const Banner = memo<BannerProps>(function Banner({ icon, text, onClose, className }) {
+export const Banner = memo<BannerProps>(function Banner({
+  icon,
+  text,
+  onClose,
+  variant = 'info',
+  className,
+}) {
   const classes = useStyles();
 
   return (
-    <div className={clsx(classes.banner, className)}>
+    <div className={clsx(classes.banner, classes[variant || 'info'], className)}>
       <div className={classes.box}>
         <div className={classes.content}>
           {icon ? <div className={classes.icon}>{icon}</div> : null}
