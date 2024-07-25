@@ -1,7 +1,7 @@
 {
   "mountain": {
     "title": "Mountain",
-    "text": "USDM is a permissionless ERC20, similar to leading fiat-backed stablecoins. USDM Reserves are held in a bankruptcy remote setup, with collateral proof of reserves, third party attestations and regulatory oversight.",
+    "text": "Mountain Protocol is the issuer of USDM, the next generation stablecoin. USDM is the first regulated, permissionless, and yield-bearing stablecoin, fully backed by US Treasuries. USDM follows a proven security model used by all the well-known stablecoins, sharing real yield with holders, currently at a 5% APY.",
     "website": "https://mountainprotocol.com/",
     "social": {
       "twitter": "https://x.com/MountainUSDM"
