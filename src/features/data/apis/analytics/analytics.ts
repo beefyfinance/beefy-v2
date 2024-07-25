@@ -2,12 +2,14 @@ import BigNumber from 'bignumber.js';
 import type {
   AnalyticsPriceResponse,
   AnalyticsUserTimelineResponse,
+  CLMVaultTimelineAnalyticsConfig,
   PriceType,
   TimeBucketType,
 } from './analytics-types';
 import type { VaultEntity } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import { handleFetchParams } from '../transact/helpers/fetch';
+import { partition } from 'lodash-es';
 
 const INVESTOR_API = import.meta.env.VITE_INVESTOR_URL || 'https://investor-api.beefy.finance';
 
@@ -25,14 +27,23 @@ export class AnalyticsApi {
       if (res.status === 404) {
         return {
           clmTimeline: [],
+          clmVaultTimeline: [],
           databarnTimeline: [],
         };
       }
-      // throw new Error(`HTTP error! status: ${res.status}`);
     }
-
     const data = await res.json();
-    return data.result;
+
+    const [clmVaultTimeline, clmTimeline] = partition(
+      data.result.clmTimeline || [],
+      (item): item is CLMVaultTimelineAnalyticsConfig => item.type === 'classic'
+    );
+
+    return {
+      clmTimeline,
+      clmVaultTimeline,
+      databarnTimeline: data.result.databarnTimeline || [],
+    };
   }
 
   public async getVaultPrices(
@@ -56,7 +67,6 @@ export class AnalyticsApi {
       if (res.status === 404) {
         return [] as AnalyticsPriceResponse;
       }
-      // throw new Error(`HTTP error! stat  us: ${res.status}`);
     }
 
     const data = await res.json();
@@ -87,5 +97,3 @@ export class AnalyticsApi {
     });
   }
 }
-
-//

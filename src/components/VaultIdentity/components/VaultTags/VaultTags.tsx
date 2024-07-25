@@ -17,6 +17,7 @@ import { selectTokenByAddress } from '../../../../features/data/selectors/tokens
 import {
   isCowcentratedGovVault,
   isCowcentratedLikeVault,
+  isCowcentratedStandardVault,
   isCowcentratedVault,
   isGovVault,
   isVaultActive,
@@ -27,6 +28,7 @@ import {
   type VaultCowcentratedLike,
   type VaultEntity,
   type VaultGovCowcentrated,
+  type VaultStandardCowcentrated,
 } from '../../../../features/data/entities/vault';
 import { VaultPlatform } from '../../../VaultPlatform';
 import {
@@ -162,13 +164,15 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
   );
 });
 
-const VaultClmPoolTag = memo(function VaultClmPoolTag({
+const VaultClmPoolOrVaultTag = memo(function VaultClmPoolTag({
   vault,
   hideFee,
   hideLabel,
   className,
+  isPool,
 }: {
-  vault: VaultGovCowcentrated;
+  vault: VaultGovCowcentrated | VaultStandardCowcentrated;
+  isPool?: boolean;
   hideFee?: boolean;
   hideLabel?: boolean;
   className?: string;
@@ -183,12 +187,14 @@ const VaultClmPoolTag = memo(function VaultClmPoolTag({
     depositToken?.providerId ? selectPlatformById(state, depositToken.providerId) : undefined
   );
 
+  const typeLabel = isPool ? 'Pool' : 'Vault';
+
   const hasDynamicFee = cowcentratedVault?.feeTier === 'Dynamic';
   return (
     <BaseVaultClmTag
-      label={'CLM Pool'}
+      label={`CLM ${typeLabel}`}
       fee={hasDynamicFee ? cowcentratedVault.feeTier : `${cowcentratedVault.feeTier}%`}
-      longLabel={'Cowcentrated Liquidity Manager Pool'}
+      longLabel={`Cowcentrated Liquidity Manager ${typeLabel}`}
       platformName={provider?.name || 'LP'}
       hideFee={hideFee}
       hideLabel={hideLabel}
@@ -242,7 +248,22 @@ export const VaultClmLikeTag = memo(function VaultClmLikeTag({
 }) {
   if (isCowcentratedGovVault(vault)) {
     return (
-      <VaultClmPoolTag vault={vault} hideFee={true} hideLabel={hideLabel} className={className} />
+      <VaultClmPoolOrVaultTag
+        isPool={true}
+        vault={vault}
+        hideFee={true}
+        hideLabel={hideLabel}
+        className={className}
+      />
+    );
+  } else if (isCowcentratedStandardVault(vault)) {
+    return (
+      <VaultClmPoolOrVaultTag
+        vault={vault}
+        hideFee={true}
+        hideLabel={hideLabel}
+        className={className}
+      />
     );
   } else if (isCowcentratedVault(vault)) {
     return (

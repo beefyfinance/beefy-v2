@@ -138,6 +138,7 @@ const theme = createTheme(
           boost: '#DB8332',
           clm: '#252C63',
           clmPool: '#252C63',
+          clmVault: '#1E2A48',
           inactive: '#242032',
         },
         txsModal: {

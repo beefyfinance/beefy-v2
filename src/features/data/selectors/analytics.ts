@@ -4,7 +4,9 @@ import { ClmPnl, PnL } from '../../../helpers/pnl';
 import type { BeefyState } from '../../../redux-types';
 import type { TimeBucketType } from '../apis/analytics/analytics-types';
 import {
+  isCowcentratedGovVault,
   isCowcentratedLikeVault,
+  isCowcentratedVault,
   isGovVault,
   isStandardVault,
   type VaultCowcentratedLike,
@@ -20,7 +22,7 @@ import {
   selectTokenPriceByAddress,
 } from './tokens';
 import {
-  selectCowcentratedLikeVaultById,
+  selectCowcentratedOrCowcentratedPoolVaultById,
   selectVaultById,
   selectVaultPricePerFullShare,
 } from './vaults';
@@ -172,8 +174,9 @@ export const selectStandardGovPnl = (
   walletAddress?: string
 ): UserStandardPnl | UserGovPnl => {
   const vault = selectVaultById(state, vaultId);
-  if (isCowcentratedLikeVault(vault)) {
-    throw new Error('This function should not be called for cowcentrated vaults');
+  // TODO change when clm standard vault data comes from subgraph
+  if (isCowcentratedVault(vault) || isCowcentratedGovVault(vault)) {
+    throw new Error('This function should not be called for cowcentrated or cowcentrated pools');
   }
 
   const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
@@ -236,7 +239,7 @@ export const selectClmPnl = (
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ): UserClmPnl => {
-  const vault = selectCowcentratedLikeVaultById(state, vaultId);
+  const vault = selectCowcentratedOrCowcentratedPoolVaultById(state, vaultId);
   const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
   const depositTokenPrice = selectTokenPriceByAddress(
     state,
@@ -332,7 +335,8 @@ export const selectVaultPnl = (
   walletAddress?: string
 ): UserVaultPnl => {
   const vault = selectVaultById(state, vaultId);
-  if (isCowcentratedLikeVault(vault)) {
+  // TODO change when clm standard vault data comes from subgraph
+  if (isCowcentratedVault(vault) || isCowcentratedGovVault(vault)) {
     return selectClmPnl(state, vaultId, walletAddress);
   }
   return selectStandardGovPnl(state, vaultId, walletAddress);
@@ -375,6 +379,8 @@ export const selectHasDataToShowGraphByVaultId = createCachedSelector(
       userVaults.includes(vault.id) &&
       !!timeline &&
       timeline.current.length !== 0 &&
+      (timeline.current[0].type !== 'standard' ||
+        timeline.current[0].underlyingToUsdPrice !== null) &&
       statusCondition
     );
   }

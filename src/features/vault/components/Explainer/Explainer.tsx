@@ -18,12 +18,12 @@ export type ExplainerProps = {
 export const Explainer = memo<ExplainerProps>(function Explainer({ vaultId }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
-  if (isStandardVault(vault)) {
-    return <StandardExplainer vaultId={vaultId} />;
-  }
-
   if (isCowcentratedLikeVault(vault)) {
     return <CowcentratedExplainer vaultId={vaultId} />;
+  }
+
+  if (isStandardVault(vault)) {
+    return <StandardExplainer vaultId={vaultId} />;
   }
 
   return <GovExplainer vaultId={vaultId} />;

@@ -1,5 +1,1194 @@
 [
   {
+    "id": "uniswap-cow-arb-rseth-wsteth-vault",
+    "name": "rsETH-wstETH",
+    "type": "standard",
+    "token": "rsETH-wstETH",
+    "tokenAddress": "0x15cfBd3Db5D24360eeac802b3dde4423eb5C3C70",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswaprsETH-wstETH",
+    "earnedTokenAddress": "0x86b81747ffd477907F8dF2DAF67A82314B94ae36",
+    "earnContractAddress": "0x86b81747ffd477907F8dF2DAF67A82314B94ae36",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-rseth-wsteth",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["rsETH", "wstETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-usdc-usdt-vault",
+    "name": "USDC-USDT",
+    "type": "standard",
+    "token": "USDC-USDT",
+    "tokenAddress": "0xFBebeDa38450bBf12aFe5B64df9aC507380C0Cca",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapUSDC-USDT",
+    "earnedTokenAddress": "0x195DE404648C4E9f8778816d1E31566272FBff6b",
+    "earnContractAddress": "0x195DE404648C4E9f8778816d1E31566272FBff6b",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-usdc-usdt",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["USDC", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-usdv-usdc-vault",
+    "name": "USDV-USDC",
+    "type": "standard",
+    "token": "USDV-USDC",
+    "tokenAddress": "0x308aD09fD1577dF61Dd638cd8c81B12072c21665",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapUSDV-USDC",
+    "earnedTokenAddress": "0x04Cd88f56Ea305816c02EBa9B1fCF4E0378424b7",
+    "earnContractAddress": "0x04Cd88f56Ea305816c02EBa9B1fCF4E0378424b7",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-usdv-usdc",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["USDV", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-comp-weth-vault",
+    "name": "COMP-WETH",
+    "type": "standard",
+    "token": "COMP-WETH",
+    "tokenAddress": "0x6781813576efe953a5fb765C1f93757797C40578",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapCOMP-WETH",
+    "earnedTokenAddress": "0x2ec7AF186583Ac9B5E0547709C48f999355768E7",
+    "earnContractAddress": "0x2ec7AF186583Ac9B5E0547709C48f999355768E7",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-comp-weth",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["COMP", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-usdc-aave-vault",
+    "name": "AAVE-USDC",
+    "type": "standard",
+    "token": "AAVE-USDC",
+    "tokenAddress": "0x69f7DB86D2D5d1a1C60336d6d27482EE3AB95C60",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapUSDC-AAVE",
+    "earnedTokenAddress": "0xc714EbA873F3974f53BdCA44381a617ee07A83b7",
+    "earnContractAddress": "0xc714EbA873F3974f53BdCA44381a617ee07A83b7",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-usdc-aave",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["AAVE", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-ldo-usdc-vault",
+    "name": "LDO-USDC",
+    "type": "standard",
+    "token": "LDO-USDC",
+    "tokenAddress": "0xEa8a87E0C28A62770E300e6b692f2b8Bb52795C8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapLDO-USDC",
+    "earnedTokenAddress": "0x817C5fb010E8ADAa3636ef326d628e185Db4c917",
+    "earnContractAddress": "0x817C5fb010E8ADAa3636ef326d628e185Db4c917",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-ldo-usdc",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["LDO", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-uni-usdt-vault",
+    "name": "UNI-USDT",
+    "type": "standard",
+    "token": "UNI-USDT",
+    "tokenAddress": "0xA2EaE1B5b33FD14Ad54bA53fF3799678a84552a4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapUNI-USDT",
+    "earnedTokenAddress": "0xe29B19aCadE6ebE1CbE40D1b8c71cFBec600989D",
+    "earnContractAddress": "0xe29B19aCadE6ebE1CbE40D1b8c71cFBec600989D",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-uni-usdt",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["UNI", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-usdc-uni-vault",
+    "name": "UNI-USDC",
+    "type": "standard",
+    "token": "UNI-USDC",
+    "tokenAddress": "0x18c2CC67AbC8A18efF7d9485ef81d1Eb2d074383",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapUSDC-UNI",
+    "earnedTokenAddress": "0x21bf1E6736E7c5BF9ddc36F25f5cbfc5d465C154",
+    "earnContractAddress": "0x21bf1E6736E7c5BF9ddc36F25f5cbfc5d465C154",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-usdc-uni",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["UNI", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-wbtc-link-vault",
+    "name": "WBTC-LINK",
+    "type": "standard",
+    "token": "WBTC-LINK",
+    "tokenAddress": "0x1664914A92D0655b9fe0cf9B9aBb41eAB36354Cc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapWBTC-LINK",
+    "earnedTokenAddress": "0x25Be9451F45390fBE5b6b748095787abc9a3110A",
+    "earnContractAddress": "0x25Be9451F45390fBE5b6b748095787abc9a3110A",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-wbtc-link",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["WBTC", "LINK"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-link-usdt-vault",
+    "name": "LINK-USDT",
+    "type": "standard",
+    "token": "LINK-USDT",
+    "tokenAddress": "0x13CAF44396293d99F157fe85E0Fc395AcfBA2eF2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapLINK-USDT",
+    "earnedTokenAddress": "0x7aA6a7Cd7E090cb361667aa56F7bC7f443A0E3ab",
+    "earnContractAddress": "0x7aA6a7Cd7E090cb361667aa56F7bC7f443A0E3ab",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-link-usdt",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["LINK", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-usde-usdt-vault",
+    "name": "USDe-USDT",
+    "type": "standard",
+    "token": "USDe-USDT",
+    "tokenAddress": "0xAf4c8cEE65Fd6dD1864f4bb53dbD386B0D092063",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapUSDe-USDT",
+    "earnedTokenAddress": "0xAEF840055a3441F61D8Ef2F7d53fCAf61b9e46E0",
+    "earnContractAddress": "0xAEF840055a3441F61D8Ef2F7d53fCAf61b9e46E0",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-usde-usdt",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["USDe", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-frax-usdt-vault",
+    "name": "FRAX-USDT",
+    "type": "standard",
+    "token": "FRAX-USDT",
+    "tokenAddress": "0x92058bF6685A73D96c3919a8431fC3f4E348B0af",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapFRAX-USDT",
+    "earnedTokenAddress": "0x683AC256ed90f50EEC50691bAc538c96C5a52206",
+    "earnContractAddress": "0x683AC256ed90f50EEC50691bAc538c96C5a52206",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-frax-usdt",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["FRAX", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-crv-weth-vault",
+    "name": "CRV-WETH",
+    "type": "standard",
+    "token": "CRV-WETH",
+    "tokenAddress": "0xa0D5c23D8B848fD235E1E8500c4De5a8C994a3E9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapCRV-WETH",
+    "earnedTokenAddress": "0xD8b6b0ecFc8200F1E2aD594Dca0c524411eeF9F4",
+    "earnContractAddress": "0xD8b6b0ecFc8200F1E2aD594Dca0c524411eeF9F4",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-crv-weth",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["CRV", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-cbeth-weth-vault",
+    "name": "cbETH-WETH",
+    "type": "standard",
+    "token": "cbETH-WETH",
+    "tokenAddress": "0xA8E4a13fC109E83C71cD3E5D6eC727A7158c95cF",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapcbETH-WETH",
+    "earnedTokenAddress": "0xd134De08D6874fE6A2ca3f2365881d720DCf85Ca",
+    "earnContractAddress": "0xd134De08D6874fE6A2ca3f2365881d720DCf85Ca",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-cbeth-weth",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["cbETH", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-weth-rpl-vault",
+    "name": "RPL-WETH",
+    "type": "standard",
+    "token": "RPL-WETH",
+    "tokenAddress": "0xa12f9ef09E3082978cAfe207Af7Ed0168BBD492c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapWETH-RPL",
+    "earnedTokenAddress": "0x8F1382d1ef3A53bb3d736399dAe91f27cd07F4a9",
+    "earnContractAddress": "0x8F1382d1ef3A53bb3d736399dAe91f27cd07F4a9",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-weth-rpl",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["RPL", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-weth-reth-vault",
+    "name": "rETH-WETH",
+    "type": "standard",
+    "token": "rETH-WETH",
+    "tokenAddress": "0xB79D17BE1bd9544e0005FA0F9033f8f78CE06D4c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapWETH-rETH",
+    "earnedTokenAddress": "0xE336ac7DDd4155cf104e0Da78D35e78e2d2A56AC",
+    "earnContractAddress": "0xE336ac7DDd4155cf104e0Da78D35e78e2d2A56AC",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-weth-reth",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["rETH", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-pepe-weth-vault",
+    "name": "PEPE-WETH",
+    "type": "standard",
+    "token": "PEPE-WETH",
+    "tokenAddress": "0xD735eB8193B0Dcf97857611d5c59ea39064325e5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapPEPE-WETH",
+    "earnedTokenAddress": "0x5b7788943F11738FAb0080330faeB48A6b2738De",
+    "earnContractAddress": "0x5b7788943F11738FAb0080330faeB48A6b2738De",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-pepe-weth",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["PEPE", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-wsteth-usdc-vault",
+    "name": "wstETH-USDC",
+    "type": "standard",
+    "token": "wstETH-USDC",
+    "tokenAddress": "0x0E228ec8b88B45fB41bB818E57f1b6625d09E102",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapwstETH-USDC",
+    "earnedTokenAddress": "0x9054f75dB6d5d4A64045195DC7805c450F41B05a",
+    "earnContractAddress": "0x9054f75dB6d5d4A64045195DC7805c450F41B05a",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-wsteth-usdc",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["wstETH", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-tbtc-weth-prod-vault",
+    "name": "tBTC-WETH",
+    "type": "standard",
+    "token": "tBTC-WETH",
+    "tokenAddress": "0xDbaF4a5Ad4352adCDD2E914C1B1515E6F7451A82",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswaptBTC-WETH",
+    "earnedTokenAddress": "0x96a0B5E64CDFb2dE26496D64a4de6Bc8e3953e7F",
+    "earnContractAddress": "0x96a0B5E64CDFb2dE26496D64a4de6Bc8e3953e7F",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-tbtc-weth-prod",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["tBTC", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-wbtc-tbtc-vault",
+    "name": "tBTC-WBTC",
+    "type": "standard",
+    "token": "tBTC-WBTC",
+    "tokenAddress": "0x2668eC44880464412Bb3674875941a014103eD2a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapWBTC-tBTC",
+    "earnedTokenAddress": "0x0c63BBC3712c53214b5489C68cCDC5a9e3bB4800",
+    "earnContractAddress": "0x0c63BBC3712c53214b5489C68cCDC5a9e3bB4800",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-wbtc-tbtc",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["tBTC", "WBTC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-wusdm-wsteth-vault",
+    "name": "wUSDM-wstETH",
+    "type": "standard",
+    "token": "wUSDM-wstETH",
+    "tokenAddress": "0x240939C5e1B63F9bb4c17D69f9BF98dc1bEcb699",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapwUSDM-wstETH",
+    "earnedTokenAddress": "0xDa2Fb8c737e0D1FdaA1B44aD1051aC8D4a1cB1eF",
+    "earnContractAddress": "0xDa2Fb8c737e0D1FdaA1B44aD1051aC8D4a1cB1eF",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-wusdm-wsteth",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["wUSDM", "wstETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721831924,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "ramses-zero-weth-vault",
+    "name": "ZRO-WETH",
+    "type": "standard",
+    "token": "ZRO-WETH",
+    "tokenAddress": "0x72eB356324963A85A3d06c35422b59c87e475195",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "earnedToken": "mooBeefyRamsesZRO-WETH",
+    "earnedTokenAddress": "0xDa42DA88EcDa377e3BA4930A393BE4043EC45C34",
+    "earnContractAddress": "0xDa42DA88EcDa377e3BA4930A393BE4043EC45C34",
+    "oracle": "lps",
+    "oracleId": "ramses-zero-weth",
+    "status": "active",
+    "platformId": "ramses",
+    "assets": ["ZRO", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721779510,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "ramses-cl-weth-usdc-vault",
+    "name": "WETH-USDC",
+    "type": "standard",
+    "token": "WETH-USDC",
+    "tokenAddress": "0x6b17F8f3cf06696bb4Fd90D10b3EdeF8BA36097b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "earnedToken": "mooBeefyRamsesWETH-USDC",
+    "earnedTokenAddress": "0xeEE05484d1b2DCB2D528E29543b73Ce3aeE181c4",
+    "earnContractAddress": "0xeEE05484d1b2DCB2D528E29543b73Ce3aeE181c4",
+    "oracle": "lps",
+    "oracleId": "ramses-cl-weth-usdc",
+    "status": "active",
+    "platformId": "ramses",
+    "assets": ["WETH", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721779510,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "ramses-cl-arb-usdc-vault",
+    "name": "ARB-USDC",
+    "type": "standard",
+    "token": "ARB-USDC",
+    "tokenAddress": "0x8FEf8563EC112e07013D02361C8568b4B6F394d5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "earnedToken": "mooBeefyRamsesARB-USDC",
+    "earnedTokenAddress": "0x31d102B2c131aCd87C093678285E569fC4DDdfef",
+    "earnContractAddress": "0x31d102B2c131aCd87C093678285E569fC4DDdfef",
+    "oracle": "lps",
+    "oracleId": "ramses-cl-arb-usdc",
+    "status": "active",
+    "platformId": "ramses",
+    "assets": ["ARB", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721779510,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "ramses-ethfi-weth-vault",
+    "name": "ETHFI-WETH",
+    "type": "standard",
+    "token": "ETHFI-WETH",
+    "tokenAddress": "0xD5E2F1d85CA1DE69Dba963125CA6B487B382bDC0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "earnedToken": "mooBeefyRamsesETHFI-WETH",
+    "earnedTokenAddress": "0x86c2D1f5D2Cee69D1924b7aF605A0E6473634b56",
+    "earnContractAddress": "0x86c2D1f5D2Cee69D1924b7aF605A0E6473634b56",
+    "oracle": "lps",
+    "oracleId": "ramses-ethfi-weth",
+    "status": "active",
+    "platformId": "ramses",
+    "assets": ["ETHFI", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721779510,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "ramses-cl-wbtc-weth-vault",
+    "name": "WBTC-WETH",
+    "type": "standard",
+    "token": "WBTC-WETH",
+    "tokenAddress": "0xeE480eb145158A176C1e4748003619360B7a2EAd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ramses",
+    "earnedToken": "mooBeefyRamsesWBTC-WETH",
+    "earnedTokenAddress": "0x34d07eEFf5aF38BcdD1CAbcF6C997A9D75A0d1B7",
+    "earnContractAddress": "0x34d07eEFf5aF38BcdD1CAbcF6C997A9D75A0d1B7",
+    "oracle": "lps",
+    "oracleId": "ramses-cl-wbtc-weth",
+    "status": "active",
+    "platformId": "ramses",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721779510,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-weth-uni-vault",
+    "name": "UNI-WETH",
+    "type": "standard",
+    "token": "UNI-WETH",
+    "tokenAddress": "0xD08C0bAf1DfF8B887e9C57c6C2bac24F0c5328d3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapUNI-WETH",
+    "earnedTokenAddress": "0xA2394625BFad0e4A018606BD4F1556d15F13a609",
+    "earnContractAddress": "0xA2394625BFad0e4A018606BD4F1556d15F13a609",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-weth-uni",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["UNI", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721779510,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-weth-dai-vault",
+    "name": "DAI-WETH",
+    "type": "standard",
+    "token": "DAI-WETH",
+    "tokenAddress": "0x4706d4a0D689211f482F4594EF3cDAc6c8B9aC00",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapDAI-WETH",
+    "earnedTokenAddress": "0x155aEbAe69B3Fa2D135146Df6fECa0F8D6FabDD6",
+    "earnContractAddress": "0x155aEbAe69B3Fa2D135146Df6fECa0F8D6FabDD6",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-weth-dai",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["DAI", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721779510,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-wsteth-weth-vault",
+    "name": "wstETH-WETH",
+    "type": "standard",
+    "token": "wstETH-WETH",
+    "tokenAddress": "0x63b54B0e06028802007c5f1eaeaC03d5472B904a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapwstETH-WETH",
+    "earnedTokenAddress": "0x749e0767C811a4AE867dDac6280aE8b2C57b75B1",
+    "earnContractAddress": "0x749e0767C811a4AE867dDac6280aE8b2C57b75B1",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-wsteth-weth",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["wstETH", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721779510,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-eusd-usdc-vault",
+    "name": "eUSD-USDC",
+    "type": "standard",
+    "token": "eUSD-USDC",
+    "tokenAddress": "0xEEA4114Ab4FCb82a28c514e21d656Ca78D75b1A9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapeUSD-USDC",
+    "earnedTokenAddress": "0x02dB67e732748027293C2eaeb21C949d8DF3F6a8",
+    "earnContractAddress": "0x02dB67e732748027293C2eaeb21C949d8DF3F6a8",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-eusd-usdc",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["eUSD", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721779510,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-eusd-knox-vault",
+    "name": "KNOX-eUSD",
+    "type": "standard",
+    "token": "KNOX-eUSD",
+    "tokenAddress": "0xB13872c632ac188596DEceF852c15F3d884CA9C9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapKNOX-eUSD",
+    "earnedTokenAddress": "0x63f20920Bd886D7FDB0c64Fcd4ddF28Ba45055cB",
+    "earnContractAddress": "0x63f20920Bd886D7FDB0c64Fcd4ddF28Ba45055cB",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-eusd-knox",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["KNOX", "eUSD"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721779510,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-eth+-weth-vault",
+    "name": "ETH+-WETH",
+    "type": "standard",
+    "token": "ETH+-WETH",
+    "tokenAddress": "0x6928b8Df875877Ba65Ff53AFF182Ec6B8dFEe90F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapETH+-WETH",
+    "earnedTokenAddress": "0xDd84e4b6ec8A8c05c95f3eC3C7464029Cb900577",
+    "earnContractAddress": "0xDd84e4b6ec8A8c05c95f3eC3C7464029Cb900577",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-eth+-weth",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["ETH+", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721779510,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-arb-link-eth-vault",
+    "name": "LINK-WETH",
+    "type": "standard",
+    "token": "LINK-WETH",
+    "tokenAddress": "0x0D1f71170d93121b48A9e8FC7400e8e6A6821500",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapLINK-WETH",
+    "earnedTokenAddress": "0xC40E0Aa87cdb75bEedeA8fbB5CBb7EaaA64CA0Ee",
+    "earnContractAddress": "0xC40E0Aa87cdb75bEedeA8fbB5CBb7EaaA64CA0Ee",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-arb-link-eth",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["LINK", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1721779510,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-arb-weth-arb-rp",
+    "name": "ARB-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiArbWETH-ARB",
+    "tokenAddress": "0x8bf7D47f17Ea5211a5769a61eaEF0e11d2322968",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnContractAddress": "0x613EB88ccAE8d56de2a7578Ed8Ee89958a0f7E63",
+    "earnedToken": "rcowSushiArbWETH-ARB",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-weth-arb",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["ARB", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-arb-weth-arb",
+    "name": "ARB-WETH",
+    "type": "cowcentrated",
+    "token": "ARB-WETH",
+    "tokenAddress": "0xB3942c9FFA04efBC1Fa746e146bE7565c76E3dC1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0x912CE59144191C1204E64559FE8253a0e49E6548"
+    ],
+    "earnedToken": "cowSushiArbWETH-ARB",
+    "earnedTokenAddress": "0x8bf7D47f17Ea5211a5769a61eaEF0e11d2322968",
+    "earnContractAddress": "0x8bf7D47f17Ea5211a5769a61eaEF0e11d2322968",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-weth-arb",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["ARB", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-arb-zro-weth-rp",
+    "name": "ZRO-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiArbZRO-WETH",
+    "tokenAddress": "0x7257976B27a64FCDA89500F4Cd2375e57bE6eBb0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnContractAddress": "0xa59f706c2f04A6a92ac56089467698FdA869CF79",
+    "earnedToken": "rcowSushiArbZRO-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-zro-weth",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["ZRO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-arb-zro-weth",
+    "name": "ZRO-WETH",
+    "type": "cowcentrated",
+    "token": "ZRO-WETH",
+    "tokenAddress": "0x1797538dd80c041cC2F0C5901D5700868186A9a8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "depositTokenAddresses": [
+      "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowSushiArbZRO-WETH",
+    "earnedTokenAddress": "0x7257976B27a64FCDA89500F4Cd2375e57bE6eBb0",
+    "earnContractAddress": "0x7257976B27a64FCDA89500F4Cd2375e57bE6eBb0",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-zro-weth",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["ZRO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-arb-weth-usdc-rp",
+    "name": "WETH-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiArbWETH-USDC",
+    "tokenAddress": "0x54742a4CF99718FdA55fd8b7636D7FB86edff660",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnContractAddress": "0x4883849fc126F1Bc2DE6377e497656d1A0666c6e",
+    "earnedToken": "rcowSushiArbWETH-USDC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-weth-usdc",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-arb-weth-usdc",
+    "name": "WETH-USDC",
+    "type": "cowcentrated",
+    "token": "WETH-USDC",
+    "tokenAddress": "0xf3Eb87C1F6020982173C908E7eB31aA66c1f0296",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+    ],
+    "earnedToken": "cowSushiArbWETH-USDC",
+    "earnedTokenAddress": "0x54742a4CF99718FdA55fd8b7636D7FB86edff660",
+    "earnContractAddress": "0x54742a4CF99718FdA55fd8b7636D7FB86edff660",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-weth-usdc",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-arb-weth-usdc.e-rp",
+    "name": "WETH-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiArbWETH-USDC.e",
+    "tokenAddress": "0xa80dF57Fa3b92A25179de988D55Dad3f558A348e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnContractAddress": "0x5Eac36721d730E5410C08C6bC6c90043503E5B25",
+    "earnedToken": "rcowSushiArbWETH-USDC.e",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-weth-usdc.e",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["WETH", "arbUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-arb-weth-usdc.e",
+    "name": "WETH-USDC.e",
+    "type": "cowcentrated",
+    "token": "WETH-USDC.e",
+    "tokenAddress": "0x15E444da5b343c5A0931f5d3e85D158d1efC3D40",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "depositTokenAddresses": [
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"
+    ],
+    "earnedToken": "cowSushiArbWETH-USDC.e",
+    "earnedTokenAddress": "0xa80dF57Fa3b92A25179de988D55Dad3f558A348e",
+    "earnContractAddress": "0xa80dF57Fa3b92A25179de988D55Dad3f558A348e",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-arb-weth-usdc.e",
+    "status": "active",
+    "createdAt": 1721742357,
+    "platformId": "sushi",
+    "assets": ["WETH", "arbUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arb-ethfi-weth-rp",
     "name": "ETHFI-WETH Reward Pool",
     "type": "gov",
@@ -143,6 +1332,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -205,6 +1397,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -267,6 +1462,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -329,6 +1527,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -430,6 +1631,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -2292,6 +3496,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -2319,6 +3526,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -2514,6 +3724,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -2545,6 +3758,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -2790,6 +4006,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -2878,6 +4097,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -6044,7 +7266,9 @@
     "earnContractAddress": "0x8Cb60b895FBFDE711622370C7140b554AC3E62Dc",
     "oracle": "lps",
     "oracleId": "curve-arb-knox-rgusd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1721673132,
+    "retireReason": "rewards",
     "createdAt": 1717141130,
     "platformId": "curve",
     "assets": ["KNOX", "rgUSD"],
@@ -6083,7 +7307,9 @@
     "earnContractAddress": "0x447eEeB0bD7f6E93D0C1647498F88130603A9C61",
     "oracle": "lps",
     "oracleId": "curve-arb-rgusd-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1721673132,
+    "retireReason": "rewards",
     "createdAt": 1717141111,
     "platformId": "curve",
     "assets": ["rgUSD", "USDC"],
@@ -6636,7 +7862,9 @@
     "earnContractAddress": "0x928e9075a880Bc40f55BcDB5dF3D8697E924b2c4",
     "oracle": "lps",
     "oracleId": "curve-lend-arb-arb-crvusd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1721673132,
+    "retireReason": "rewards",
     "createdAt": 1713171111,
     "platformId": "curve-lend",
     "assets": ["crvUSD"],
@@ -6659,7 +7887,9 @@
     "earnContractAddress": "0x536CF168B627727acEeCeA4f3C2059F5AA1de456",
     "oracle": "lps",
     "oracleId": "curve-lend-arb-wbtc-crvusd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1721673132,
+    "retireReason": "rewards",
     "createdAt": 1713171101,
     "platformId": "curve-lend",
     "assets": ["crvUSD"],
@@ -6682,7 +7912,9 @@
     "earnContractAddress": "0xb46192aA0640AB9990228d0671DB5ecf67034D27",
     "oracle": "lps",
     "oracleId": "curve-lend-arb-weth-crvusd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1721673132,
+    "retireReason": "rewards",
     "createdAt": 1713171091,
     "platformId": "curve-lend",
     "assets": ["crvUSD"],

@@ -6,6 +6,7 @@ import type { BoostCampaignConfig, BoostPartnerConfig } from '../apis/config-typ
 export interface BoostEntity {
   id: string;
   name: string;
+  version: number; // 1 = legacy 1 token boost contract; 2 = multi reward pool contract
   tagIcon: string | undefined;
   tagText: string | undefined;
 
@@ -37,6 +38,8 @@ export interface BoostEntity {
   partnerIds: BoostPartnerEntity['id'][];
 
   campaignId: BoostCampaignEntity['id'] | undefined;
+
+  pinned: boolean;
 }
 
 export type BoostPartnerEntity = BoostPartnerConfig & {

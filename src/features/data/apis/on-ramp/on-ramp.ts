@@ -25,7 +25,6 @@ export class OnRampApi implements IOnRampApi {
           providers: {},
         } as ApiSupportedResponse;
       }
-      // throw new Error(`HTTP error! stat  us: ${res.status}`);
     }
 
     const data = await res.json();
@@ -43,7 +42,6 @@ export class OnRampApi implements IOnRampApi {
       if (res.status === 404) {
         return {} as ApiQuoteResponse;
       }
-      // throw new Error(`HTTP error! stat  us: ${res.status}`);
     }
 
     const data = await res.json();
@@ -61,7 +59,6 @@ export class OnRampApi implements IOnRampApi {
       if (res.status === 404) {
         return '' as ApiUrlResponse;
       }
-      // throw new Error(`HTTP error! stat  us: ${res.status}`);
     }
 
     const data = await res.json();

@@ -1,7 +1,9 @@
 import React, { memo } from 'react';
 import {
   isCowcentratedGovVault,
+  isCowcentratedVault,
   isCowcentratedLikeVault,
+  isCowcentratedStandardVault,
   isGovVault,
   isVaultRetired,
   type VaultEntity,
@@ -24,9 +26,10 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isRetired = isVaultRetired(vault);
-  const isCowcentratedPool = isCowcentratedGovVault(vault);
-  const isCowcentrated = !isCowcentratedPool && isCowcentratedLikeVault(vault); // cowcentrated or cowcentrated standard
-  const isGov = !isCowcentrated && !isCowcentratedPool && isGovVault(vault); // gov but not cowcentrated pool
+  const isCowcentratedPool = isCowcentratedGovVault(vault); // cowcentrated pool
+  const isCowcentratedStandard = isCowcentratedStandardVault(vault); // cowcentrated vault
+  const isCowcentrated = isCowcentratedVault(vault); // naked clm
+  const isGov = !isCowcentratedLikeVault(vault) && isGovVault(vault); // gov but not cowcentrated pool
 
   return (
     <Link
@@ -35,6 +38,7 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
         [classes.vault]: true,
         [classes.vaultCowcentrated]: isCowcentrated,
         [classes.vaultCowcentratedPool]: isCowcentratedPool,
+        [classes.vaultCowcentratedVault]: isCowcentratedStandard,
         [classes.vaultRetired]: isRetired,
         [classes.vaultEarnings]: isGov,
       })}

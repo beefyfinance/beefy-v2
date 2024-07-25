@@ -37,7 +37,6 @@ const getCreationTimestamp = async (vaultAddress, explorerUrl, chain) => {
     if (res.status === 404) {
       return [];
     }
-    // throw new Error(`HTTP error! stat  us: ${res.status}`);
   }
 
   const data = (await res.json()) as { status: string; message: string; data: any };

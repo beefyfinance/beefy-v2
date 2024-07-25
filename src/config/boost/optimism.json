@@ -3,6 +3,7 @@
     "id": "moo_velo-cow-op-moobifi-usdc-vault",
     "poolId": "velo-cow-op-moobifi-usdc-vault",
     "name": "Beefy",
+    "tagText": "Zap Launch Boost",
     "assets": ["mooBIFI", "USDC"],
     "tokenAddress": "0xD4768E30180786e875a4909472c9826b18931E43",
     "earnedToken": "OP",
@@ -15,9 +16,9 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "campaign": "arb-ltipp",
+    "campaign": "zap-v3",
     "partners": [],
-    "hidden": true
+    "pinned": false
   },
   {
     "id": "moo_velodrome-v2-velo-usdc-beefy",

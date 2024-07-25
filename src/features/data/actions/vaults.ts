@@ -17,6 +17,7 @@ import type {
 } from '../entities/vault';
 import { getVaultNames } from '../utils/vault-utils';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
+import { isDefined } from '../utils/array-utils';
 
 export interface FulfilledAllVaultsPayload {
   byChainId: {
@@ -144,7 +145,7 @@ function getGovVault(
         contractType: 'multi',
         receiptTokenAddress: config.earnContractAddress,
         assetType: 'clm',
-        excludedId: config.excluded || clmBase.cowcentratedStandardId || undefined,
+        excludedIds: [config.excluded, clmBase.cowcentratedStandardId].filter(isDefined),
         name: base.names.short,
         names: {
           short: base.names.short,
@@ -204,7 +205,11 @@ function getCowcentratedVault(
     subType: 'cowcentrated',
     receiptTokenAddress: config.earnContractAddress,
     depositTokenAddress: `${clmBase.poolAddress}-${config.id}`,
-    excludedId: config.excluded || clmBase.cowcentratedGovId || undefined,
+    excludedIds: [
+      config.excluded,
+      clmBase.cowcentratedGovId,
+      clmBase.cowcentratedStandardId,
+    ].filter(isDefined),
     assetType: 'clm',
     hidden: !!clmBase.cowcentratedGovId,
   };
@@ -303,7 +308,7 @@ function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBas
     createdAt: config.createdAt || 0,
     updatedAt: config.updatedAt || config.createdAt || 0,
     zaps: config.zaps || [],
-    excludedId: config.excluded || undefined,
+    excludedIds: config.excluded ? [config.excluded] : [],
     buyTokenUrl: config.buyTokenUrl || undefined,
     addLiquidityUrl: config.addLiquidityUrl || undefined,
     removeLiquidityUrl: config.removeLiquidityUrl || undefined,
