@@ -4,7 +4,7 @@ import { styles } from './styles';
 import type { VaultEntity } from '../../features/data/entities/vault';
 import { useAppSelector } from '../../store';
 import {
-  selectUserVaultNotEarningBalanceInDepositToken,
+  selectUserVaultBalanceNotInActiveBoostInDepositToken,
   selectVaultUserBalanceInDepositTokenBreakdown,
   type UserVaultBalanceBreakdownBoost,
   type UserVaultBalanceBreakdownBridged,
@@ -144,7 +144,7 @@ export const VaultDepositedTooltip = memo<VaultDepositedTooltipProps>(
       selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
     );
     const notEarning = useAppSelector(state =>
-      selectUserVaultNotEarningBalanceInDepositToken(state, vaultId)
+      selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vaultId)
     );
 
     return (
@@ -159,7 +159,7 @@ export const VaultDepositedTooltip = memo<VaultDepositedTooltipProps>(
           />
         ))}
         {notEarning.gt(0) && (
-          <div style={{ gridColumn: '1 / span 2' }}>{t('VaultStat-Deposited-NotEarning')}</div>
+          <div className={classes.notInBoost}>{t('VaultStat-Deposited-NotInActiveBoost')}</div>
         )}
       </div>
     );

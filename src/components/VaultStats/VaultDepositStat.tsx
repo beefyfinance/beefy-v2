@@ -6,7 +6,7 @@ import {
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
   selectUserVaultBalanceInUsdIncludingBoostsBridged,
-  selectUserVaultNotEarningBalanceInDepositToken,
+  selectUserVaultBalanceNotInActiveBoostInDepositToken,
 } from '../../features/data/selectors/balance';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
 import { selectIsBalanceHidden, selectWalletAddress } from '../../features/data/selectors/wallet';
@@ -70,7 +70,7 @@ function selectData(state: BeefyState, vaultId: VaultEntity['id']): SelectDataRe
   }
 
   const hideBalance = selectIsBalanceHidden(state);
-  const notEarning = selectUserVaultNotEarningBalanceInDepositToken(state, vault.id);
+  const notEarning = selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vault.id);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const totalDepositUsd = selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vaultId);
   const vaultDeposit = selectUserVaultBalanceInDepositToken(state, vault.id);

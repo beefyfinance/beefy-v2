@@ -277,9 +277,9 @@ export const selectUserVaultBalanceInShareTokenIncludingBoostsBridged: UserBalan
   )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
- * Total not earning (via active boost)
+ * Total not in active boost
  */
-export const selectUserVaultNotEarningBalanceInShareToken: UserBalanceSelector =
+export const selectUserVaultBalanceNotInActiveBoostInShareToken: UserBalanceSelector =
   createCachedSelector(
     (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
       selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),
@@ -320,12 +320,12 @@ export const selectUserVaultBalanceInDepositToken: UserBalanceSelector = createC
 )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
- * Total not earning (via boost), converted to deposit token
+ * Total not in active boost, converted to deposit token
  */
-export const selectUserVaultNotEarningBalanceInDepositToken: UserBalanceSelector =
+export const selectUserVaultBalanceNotInActiveBoostInDepositToken: UserBalanceSelector =
   createCachedSelector(
     (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectUserVaultNotEarningBalanceInShareToken(state, vaultId, maybeWalletAddress),
+      selectUserVaultBalanceNotInActiveBoostInShareToken(state, vaultId, maybeWalletAddress),
     (state: BeefyState, vaultId: VaultEntity['id']) =>
       selectVaultSharesToDepositTokenData(state, vaultId),
     (shares, shareData) =>
