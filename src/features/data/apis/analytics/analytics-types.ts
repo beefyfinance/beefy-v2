@@ -111,6 +111,10 @@ export type CLMVaultTimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
   actions: CLMVaultTimelineAnalyticsAction[];
 };
 
+export type CommonCLMTimelineAnalyticsConfig =
+  | CLMVaultTimelineAnalyticsConfig
+  | CLMTimelineAnalyticsConfig;
+
 export type AnalyticsUserTimelineResponse = {
   clmTimeline: CLMTimelineAnalyticsConfig[];
   clmVaultTimeline: CLMVaultTimelineAnalyticsConfig[];

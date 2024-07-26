@@ -12,6 +12,7 @@ import { makeBatchRequest, viemToWeb3Abi, type Web3Call } from '../../../../help
 import BigNumber from 'bignumber.js';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
 import { getUnixTime, roundToNearestMinutes } from 'date-fns';
+import { getJson } from '../../../../helpers/http';
 
 const ClmStrategyAbi = [
   {
@@ -62,20 +63,9 @@ export class ClmApi implements IClmApi {
     chainId: ChainEntity['id'],
     vaultAddress: VaultEntity['contractAddress']
   ): Promise<ClmVaultHarvestsResponse> {
-    const res = await fetch(
-      `${this.api}/api/v1/vault/${chainId}/${vaultAddress.toLocaleLowerCase()}/harvests`
-    );
-
-    if (!res.ok) {
-      if (res.status === 404) {
-        return [];
-      }
-      // throw new Error(`HTTP error! status: ${res.status}`);
-    }
-
-    const data = await res.json();
-
-    return data.data;
+    return await getJson<ClmVaultHarvestsResponse>({
+      url: `${this.api}/api/v1/vault/${chainId}/${vaultAddress.toLocaleLowerCase()}/harvests`,
+    });
   }
 
   public async getHarvestsForVaultsSince(
@@ -86,21 +76,10 @@ export class ClmApi implements IClmApi {
     const nearestMinute = roundToNearestMinutes(since);
     const orderedAddresses = vaultAddresses.map(addr => addr.toLowerCase()).sort();
 
-    const res = await fetch(
-      `${this.api}/api/v1/vaults/${chainId}/harvests/${getUnixTime(nearestMinute)}?` +
-        new URLSearchParams(orderedAddresses.map(addr => ['vaults', addr])).toString()
-    );
-
-    if (!res.ok) {
-      if (res.status === 404) {
-        return [];
-      }
-      // throw new Error(`HTTP error! status: ${res.status}`);
-    }
-
-    const data = await res.json();
-
-    return data.data;
+    return await getJson<ClmVaultsHarvestsResponse>({
+      url: `${this.api}/api/v1/vaults/${chainId}/harvests/${getUnixTime(nearestMinute)}`,
+      params: orderedAddresses.map(addr => ['vaults', addr]),
+    });
   }
 
   public async getClmPendingRewards(

@@ -8,7 +8,9 @@ import type {
 import type { ChainEntity } from '../../entities/chain';
 import type { ChainConfig } from '../config-types';
 import { API_ZAP_URL } from '../beefy/beefy-api';
-import { getErrorMessageFromResponse, handleFetchParams } from '../transact/helpers/fetch';
+import { getErrorMessageFromResponse } from '../transact/helpers/fetch';
+import { getJson } from '../../../../helpers/http';
+import { isFetchResponseError } from '../../../../helpers/http/errors';
 
 export const supportedChainIds: ChainConfig['id'][] = [
   'ethereum',
@@ -39,16 +41,20 @@ export class OneInchApi implements IOneInchApi {
     ResponseType extends object,
     RequestType extends Record<string, string | number | boolean>
   >(url: string, request: RequestType): Promise<ResponseType> {
-    const res = await fetch(`${this.api}${url}?${handleFetchParams(request)}`, {
-      headers: { Accept: 'application/json' },
-    });
-
-    if (!res.ok) {
-      const error = await getErrorMessageFromResponse(res);
-      throw new Error(error || `${res.status} ${res.statusText}`);
+    try {
+      return await getJson<ResponseType>({
+        url: `${this.api}${url}`,
+        params: request,
+      });
+    } catch (error: unknown) {
+      if (isFetchResponseError(error)) {
+        const message = await getErrorMessageFromResponse(error.response);
+        if (message) {
+          throw new Error(message);
+        }
+      }
+      throw error;
     }
-
-    return await res.json();
   }
 
   async getQuote(request: QuoteRequest): Promise<QuoteResponse> {

@@ -2,48 +2,53 @@ import BigNumber from 'bignumber.js';
 import type {
   AnalyticsPriceResponse,
   AnalyticsUserTimelineResponse,
-  CLMVaultTimelineAnalyticsConfig,
+  CommonCLMTimelineAnalyticsConfig,
   PriceType,
   TimeBucketType,
 } from './analytics-types';
 import type { VaultEntity } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
-import { handleFetchParams } from '../transact/helpers/fetch';
+import { getErrorStatusFromResponse, handleFetchParams } from '../transact/helpers/fetch';
 import { partition } from 'lodash-es';
-
-const INVESTOR_API = import.meta.env.VITE_INVESTOR_URL || 'https://investor-api.beefy.finance';
+import { getJson } from '../../../../helpers/http';
+import { isFetchResponseError } from '../../../../helpers/http/errors';
 
 export class AnalyticsApi {
   public api: string;
 
   constructor() {
-    this.api = INVESTOR_API;
+    this.api = import.meta.env.VITE_INVESTOR_URL || 'https://investor-api.beefy.finance';
   }
 
   public async getWalletTimeline(address: string): Promise<AnalyticsUserTimelineResponse> {
-    const res = await fetch(`${this.api}/api/v1/timeline?${handleFetchParams({ address })}`);
+    try {
+      const data = await getJson<{ result: AnalyticsUserTimelineResponse }>({
+        url: `${this.api}/api/v1/timeline?${handleFetchParams({ address })}`,
+      });
 
-    if (!res.ok) {
-      if (res.status === 404) {
-        return {
-          clmTimeline: [],
-          clmVaultTimeline: [],
-          databarnTimeline: [],
-        };
+      const [clmVaultTimeline, clmTimeline] = partition(
+        data.result.clmTimeline || [],
+        (item: CommonCLMTimelineAnalyticsConfig) => item.type === 'classic'
+      );
+
+      return {
+        clmTimeline,
+        clmVaultTimeline,
+        databarnTimeline: data.result.databarnTimeline || [],
+      };
+    } catch (error: unknown) {
+      if (isFetchResponseError(error)) {
+        const errorStatus = getErrorStatusFromResponse(error.response);
+        if (errorStatus === 404) {
+          return {
+            clmTimeline: [],
+            clmVaultTimeline: [],
+            databarnTimeline: [],
+          };
+        }
       }
+      throw error;
     }
-    const data = await res.json();
-
-    const [clmVaultTimeline, clmTimeline] = partition(
-      data.result.clmTimeline || [],
-      (item): item is CLMVaultTimelineAnalyticsConfig => item.type === 'classic'
-    );
-
-    return {
-      clmTimeline,
-      clmVaultTimeline,
-      databarnTimeline: data.result.databarnTimeline || [],
-    };
   }
 
   public async getVaultPrices(
@@ -53,44 +58,27 @@ export class AnalyticsApi {
     address: VaultEntity['contractAddress'],
     chain: ChainEntity['id']
   ): Promise<AnalyticsPriceResponse> {
-    const res = await fetch(
-      `${this.api}/api/v1/prices?${handleFetchParams({
-        address: address.toLowerCase(),
-        productType,
-        priceType,
-        bucket: timeBucket,
-        chain,
-      })}`
-    );
-
-    if (!res.ok) {
-      if (res.status === 404) {
-        return [] as AnalyticsPriceResponse;
-      }
-    }
-
-    const data = await res.json();
+    const data = await getJson<{ result: { ts: number; value: number }[] }>({
+      url: `${this.api}/api/v1/prices`,
+      params: { address: address.toLowerCase(), productType, priceType, bucket: timeBucket, chain },
+    });
 
     return data.result.map((row: { ts: number; value: number }) => {
       return { date: new Date(row.ts * 1000), value: new BigNumber(row.value) };
     });
   }
 
-  public async getClmPrices(oracleId: string, timebucket: TimeBucketType) {
-    const res = await fetch(
-      `${this.api}/api/v1/prices?${handleFetchParams({
+  public async getClmPrices(
+    oracleId: string,
+    timebucket: TimeBucketType
+  ): Promise<AnalyticsPriceResponse> {
+    const data = await getJson<{ result: { ts: number; value: number }[] }>({
+      url: `${this.api}/api/v1/prices`,
+      params: {
         oracle: oracleId,
         bucket: timebucket,
-      })}`
-    );
-    if (!res.ok) {
-      if (res.status === 404) {
-        return [] as AnalyticsPriceResponse;
-      }
-      throw new Error(`HTTP error! stat  us: ${res.status}`);
-    }
-
-    const data = await res.json();
+      },
+    });
 
     return data.result.map((row: { ts: number; value: number }) => {
       return { date: new Date(row.ts * 1000), value: new BigNumber(row.value) };

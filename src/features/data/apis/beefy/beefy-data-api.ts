@@ -9,7 +9,7 @@ import type {
 import type { VaultEntity } from '../../entities/vault';
 import type { TokenEntity } from '../../entities/token';
 import type { ChainEntity } from '../../entities/chain';
-import { handleFetchParams } from '../transact/helpers/fetch';
+import { getJson } from '../../../../helpers/http';
 
 export class BeefyDataApi implements IBeefyDataApi {
   private readonly version = 'v2';
@@ -27,23 +27,15 @@ export class BeefyDataApi implements IBeefyDataApi {
     vaultAddress?: VaultEntity['contractAddress'],
     chainId?: ChainEntity['id']
   ): Promise<ApiRanges> {
-    const res = await fetch(
-      `${this.data}/ranges?${handleFetchParams({
+    return await getJson<ApiRanges>({
+      url: `${this.data}/ranges`,
+      params: {
         vault: vaultId,
         oracle: oracleId,
         vaultAddress: vaultAddress || '',
         chain: chainId || '',
-      })}`
-    );
-
-    if (!res.ok) {
-      if (res.status === 404) {
-        return {} as ApiRanges;
-      }
-      // throw new Error(`HTTP error! status: ${res.status}`);
-    }
-
-    return await res.json();
+      },
+    });
   }
 
   async getApyChartData(vaultId: VaultEntity['id'], bucket: ApiTimeBucket): Promise<ApiChartData> {
@@ -66,22 +58,10 @@ export class BeefyDataApi implements IBeefyDataApi {
     bucket: ApiTimeBucket,
     chainId: ChainEntity['id']
   ): Promise<ApiCowcentratedChartData> {
-    const res = await fetch(
-      `${this.data}/clmRanges?${handleFetchParams({
-        vaultAddress,
-        chain: chainId,
-        bucket,
-      })}`
-    );
-
-    if (!res.ok) {
-      if (res.status === 404) {
-        return {} as ApiCowcentratedChartData;
-      }
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-
-    return await res.json();
+    return await getJson<ApiCowcentratedChartData>({
+      url: `${this.data}/clmRanges`,
+      params: { vaultAddress, chain: chainId, bucket },
+    });
   }
 
   private async getChartData(
@@ -90,20 +70,9 @@ export class BeefyDataApi implements IBeefyDataApi {
     value: string,
     bucket: ApiTimeBucket
   ): Promise<ApiChartData> {
-    const res = await fetch(
-      `${this.data}/${stat}?${handleFetchParams({
-        [key]: value,
-        bucket,
-      })}`
-    );
-
-    if (!res.ok) {
-      if (res.status === 404) {
-        return [] as ApiChartData;
-      }
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-
-    return await res.json();
+    return await getJson<ApiChartData>({
+      url: `${this.data}/${stat}`,
+      params: { [key]: value, bucket },
+    });
   }
 }
