@@ -205,6 +205,12 @@
     "website": "https://pacific-bridge.manta.network/"
   },
   {
+    "id": "real-canonical",
+    "name": "re.al Bridge",
+    "tagName": "re.al",
+    "website": "https://www.re.al/bridge"
+  },
+  {
     "id": "ankr",
     "name": "Ankr Bridge",
     "tagName": "Ankr",
