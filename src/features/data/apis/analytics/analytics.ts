@@ -1,4 +1,3 @@
-import type { AxiosInstance } from 'axios';
 import BigNumber from 'bignumber.js';
 import type {
   AnalyticsPriceResponse,
