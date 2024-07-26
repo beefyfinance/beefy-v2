@@ -16,7 +16,7 @@ import { getJson } from '../../../../helpers/http';
 import { isFetchNotFoundError } from '../../../../helpers/http/errors';
 
 export class AnalyticsApi {
-  public api: AxiosInstance;
+  protected api: string;
 
   constructor() {
     this.api = import.meta.env.VITE_INVESTOR_URL || 'https://investor-api.beefy.finance';
