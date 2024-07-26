@@ -20,4 +20,8 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['subline-sm'],
     display: 'none' as const,
   },
+  notInBoost: {
+    gridColumn: '1 / span 2',
+    fontWeight: theme.typography['body-lg-med'].fontWeight,
+  },
 });

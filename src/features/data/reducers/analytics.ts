@@ -9,7 +9,7 @@ import {
   recalculateClmHarvestsForUserVaultId,
 } from '../actions/analytics';
 import type { ApiProductPriceRow, TimeBucketType } from '../apis/analytics/analytics-types';
-import type { AnyTimelineAnalyticsEntity } from '../entities/analytics';
+import type { AnyTimelineEntity } from '../entities/analytics';
 import type { VaultEntity } from '../entities/vault';
 import type { Draft } from 'immer';
 import { BigNumber } from 'bignumber.js';
@@ -45,7 +45,7 @@ export interface AnalyticsState {
     [address: string]: {
       timeline: {
         byVaultId: {
-          [vaultId: VaultEntity['id']]: AnyTimelineAnalyticsEntity;
+          [vaultId: VaultEntity['id']]: AnyTimelineEntity;
         };
       };
       clmHarvests: {

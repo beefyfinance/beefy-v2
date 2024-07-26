@@ -25,6 +25,9 @@ export type ChangeTypeOfKeys<T extends object, Keys extends keyof T, NewType> = 
 
 export type NullToUndefined<T> = T extends null ? Exclude<T | undefined, null> : T;
 
+export type Rest<TPicked, TFull extends Record<keyof TPicked, unknown>> = TPicked &
+  Omit<TFull, keyof TPicked>;
+
 export type MapNullToUndefined<T extends object> = {
   [K in keyof T]: NullToUndefined<T[K]>;
 };

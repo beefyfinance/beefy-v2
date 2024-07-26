@@ -8,21 +8,21 @@ import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens'
 import { isBefore, subDays } from 'date-fns';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import {
-  type CLMTimelineAnalyticsEntry,
-  isCLMTimelineAnalyticsEntry,
-  isVaultTimelineAnalyticsEntry,
-  type VaultTimelineAnalyticsEntry,
+  type TimelineEntryCowcentratedPool,
+  isTimelineEntryCowcentratedPool,
+  isTimelineEntryStandard,
+  type TimelineEntryStandard,
 } from '../../../../../data/entities/analytics';
 
 export type SortedOptions = {
-  sort: 'datetime' | 'amount' | 'balance' | 'mooTokenBal' | 'usdBalance' | 'default';
+  sort: 'datetime' | 'amount' | 'balance' | 'mooTokenBal' | 'usdBalance';
   sortDirection: 'asc' | 'desc';
 };
 
 type VaultTransactionHistory = {
   sortedOptions: SortedOptions;
   handleSort: (field: SortedOptions['sort']) => void;
-  sortedTimeline: (VaultTimelineAnalyticsEntry | CLMTimelineAnalyticsEntry)[];
+  sortedTimeline: (TimelineEntryStandard | TimelineEntryCowcentratedPool)[];
 };
 
 export function useSortedTransactionHistory(
@@ -42,39 +42,31 @@ export function useSortedTransactionHistory(
     if (!fullTimelineEntries) return [];
 
     const oneDayAgo = subDays(new Date(), 1);
-    return fullTimelineEntries.map(
-      (row: VaultTimelineAnalyticsEntry | CLMTimelineAnalyticsEntry) => {
-        if (isVaultTimelineAnalyticsEntry(row) && !row.underlyingToUsdPrice) {
-          const underlyingToUsdPrice =
-            row.underlyingToUsdPrice ??
-            (isBefore(row.datetime, oneDayAgo) ? BIG_ZERO : currentOraclePrice);
+    return fullTimelineEntries.map((row: TimelineEntryStandard | TimelineEntryCowcentratedPool) => {
+      if (isTimelineEntryStandard(row) && !row.underlyingToUsdPrice) {
+        const underlyingToUsdPrice =
+          row.underlyingToUsdPrice ??
+          (isBefore(row.datetime, oneDayAgo) ? BIG_ZERO : currentOraclePrice);
 
-          return {
-            ...row,
-            underlyingToUsdPrice,
-            usdBalance: row.underlyingBalance.times(underlyingToUsdPrice),
-            usdDiff: row.underlyingDiff.times(underlyingToUsdPrice),
-          };
-        }
-
-        return row;
+        return {
+          ...row,
+          underlyingToUsdPrice,
+          usdBalance: row.underlyingBalance.times(underlyingToUsdPrice),
+          usdDiff: row.underlyingDiff.times(underlyingToUsdPrice),
+        };
       }
-    );
+
+      return row;
+    });
   }, [fullTimelineEntries, currentOraclePrice]);
 
   const [sortedOptions, setSortedOptions] = useState<SortedOptions>({
     sortDirection: 'desc',
-    sort: 'default',
+    sort: 'datetime',
   });
 
   const sortedTimeline = useMemo(() => {
     switch (sortedOptions.sort) {
-      case 'datetime':
-        return orderBy(
-          vaultTimelineFixed,
-          [tx => tx.datetime.getTime()],
-          [sortedOptions.sortDirection]
-        );
       case 'amount':
         return orderBy(
           vaultTimelineFixed,
@@ -85,7 +77,7 @@ export function useSortedTransactionHistory(
         return orderBy(
           vaultTimelineFixed,
           tx =>
-            isCLMTimelineAnalyticsEntry(tx)
+            isTimelineEntryCowcentratedPool(tx)
               ? tx.usdBalance
               : tx.shareBalance.times(tx.shareToUnderlyingPrice).toNumber(),
           sortedOptions.sortDirection
@@ -102,8 +94,13 @@ export function useSortedTransactionHistory(
           tx => tx.usdBalance?.toNumber() || 0,
           sortedOptions.sortDirection
         );
+      case 'datetime':
       default:
-        return vaultTimelineFixed;
+        return orderBy(
+          vaultTimelineFixed,
+          [tx => tx.datetime.getTime()],
+          [sortedOptions.sortDirection]
+        );
     }
   }, [sortedOptions.sort, sortedOptions.sortDirection, vaultTimelineFixed]);
 

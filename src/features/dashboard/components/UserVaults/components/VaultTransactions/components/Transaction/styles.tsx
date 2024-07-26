@@ -19,6 +19,10 @@ export const styles = (theme: Theme) => ({
   textFlexStart: {
     textAlign: 'left' as const,
   },
+  txCurrent: {},
+  txPast: {
+    opacity: 0.7,
+  },
   gridMobile: {
     display: 'grid',
     gridTemplateColumns: 'repeat(2,minmax(0, 50fr))',
