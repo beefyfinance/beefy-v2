@@ -14,7 +14,7 @@ import {
   selectTokenPriceByAddress,
 } from '../../../../data/selectors/tokens';
 import { selectWalletAddress } from '../../../../data/selectors/wallet';
-import { isVaultTimelineAnalyticsEntity } from '../../../../data/entities/analytics';
+import { isTimelineEntityStandard } from '../../../../data/entities/analytics';
 import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../../data/selectors/balance';
 import { useVaultIdToUnderlyingUsdPrices } from '../../../../data/hooks/historical';
 import type { GraphBucket } from '../../../../../helpers/graph';
@@ -61,7 +61,7 @@ export const usePnLChartData = (
     if (
       !isLoading &&
       vaultTimeline &&
-      isVaultTimelineAnalyticsEntity(vaultTimeline) &&
+      isTimelineEntityStandard(vaultTimeline) &&
       vaultTimeline.current.length &&
       underlyingToUsd
     ) {

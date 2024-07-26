@@ -52,6 +52,10 @@ export function isFetchResponseError(value: unknown): value is FetchResponseErro
   return isFetchError(value) && value instanceof FetchResponseError;
 }
 
+export function isFetchNotFoundError(value: unknown): value is FetchResponseError {
+  return isFetchResponseError(value) && value.response.status === 404;
+}
+
 export function isFetchResponseNotJsonError(value: unknown): value is FetchResponseNotJsonError {
   return isFetchError(value) && value instanceof FetchResponseNotJsonError;
 }

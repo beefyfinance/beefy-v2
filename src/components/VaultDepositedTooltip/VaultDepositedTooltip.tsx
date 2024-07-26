@@ -4,11 +4,10 @@ import { styles } from './styles';
 import type { VaultEntity } from '../../features/data/entities/vault';
 import { useAppSelector } from '../../store';
 import {
-  selectUserVaultNotEarningBalanceInDepositToken,
+  selectUserVaultBalanceNotInActiveBoostInDepositToken,
   selectVaultUserBalanceInDepositTokenBreakdown,
   type UserVaultBalanceBreakdownBoost,
   type UserVaultBalanceBreakdownBridged,
-  type UserVaultBalanceBreakdownCLM,
   type UserVaultBalanceBreakdownEntry,
   type UserVaultBalanceBreakdownVault,
 } from '../../features/data/selectors/balance';
@@ -105,23 +104,6 @@ const BridgedEntry = memo<EntryProps<UserVaultBalanceBreakdownBridged>>(function
   );
 });
 
-const CLMEntry = memo<EntryProps<UserVaultBalanceBreakdownCLM>>(function CLMEntry({
-  entry,
-  depositToken,
-  price,
-}) {
-  const { t } = useTranslation();
-
-  return (
-    <EntryDisplay
-      entry={entry}
-      depositToken={depositToken}
-      price={price}
-      label={t(`VaultStat-Deposited-${entry.type}`)}
-    />
-  );
-});
-
 type TypeToComponentMap = {
   [T in UserVaultBalanceBreakdownEntry['type']]: FC<{
     entry: UserVaultBalanceBreakdownEntry;
@@ -132,7 +114,6 @@ const typeToComponent: TypeToComponentMap = {
   vault: VaultEntry,
   boost: BoostEntry,
   bridged: BridgedEntry,
-  clm: CLMEntry,
 };
 
 type EntryProps<T extends UserVaultBalanceBreakdownEntry = UserVaultBalanceBreakdownEntry> = {
@@ -163,7 +144,7 @@ export const VaultDepositedTooltip = memo<VaultDepositedTooltipProps>(
       selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
     );
     const notEarning = useAppSelector(state =>
-      selectUserVaultNotEarningBalanceInDepositToken(state, vaultId)
+      selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vaultId)
     );
 
     return (
@@ -178,7 +159,7 @@ export const VaultDepositedTooltip = memo<VaultDepositedTooltipProps>(
           />
         ))}
         {notEarning.gt(0) && (
-          <div style={{ gridColumn: '1 / span 2' }}>{t('VaultStat-Deposited-NotEarning')}</div>
+          <div className={classes.notInBoost}>{t('VaultStat-Deposited-NotInActiveBoost')}</div>
         )}
       </div>
     );

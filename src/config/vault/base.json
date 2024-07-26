@@ -3658,6 +3658,42 @@
     }
   },
   {
+    "id": "aerodrome-aero-l2ve",
+    "name": "L2VE-AERO vLP",
+    "type": "standard",
+    "token": "vAMM-AERO/L2VE",
+    "tokenAddress": "0xFC13b664e814098F08F10bA0fb23b1Bb916F344e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroL2VE-AERO",
+    "earnedTokenAddress": "0x24B455e93cC41cBAC6Cde53F942Fb13db8691CBe",
+    "earnContractAddress": "0x24B455e93cC41cBAC6Cde53F942Fb13db8691CBe",
+    "oracle": "lps",
+    "oracleId": "aerodrome-aero-l2ve",
+    "status": "active",
+    "createdAt": 1721883354,
+    "platformId": "aerodrome",
+    "assets": ["L2VE", "AERO"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x940181a94A35A4569E4529A3CDfB74e38FD98631&token1=0xA19328fb05ce6FD204D16c2a2A98F7CF434c12F4&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-l2ve",
     "name": "L2VE-ETH vLP",
     "type": "standard",

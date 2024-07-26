@@ -183,6 +183,7 @@ type ChainId =
   | 'fraxtal'
   | 'mode'
   | 'manta'
+  | 'real'
   | 'aurora'
   | 'emerald'
   | 'celo'

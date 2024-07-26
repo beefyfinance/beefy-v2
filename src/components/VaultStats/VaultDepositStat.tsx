@@ -5,9 +5,8 @@ import { selectVaultById } from '../../features/data/selectors/vaults';
 import {
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
-  selectUserVaultBalanceInDepositTokenInUnderlyingCLM,
   selectUserVaultBalanceInUsdIncludingBoostsBridged,
-  selectUserVaultNotEarningBalanceInDepositToken,
+  selectUserVaultBalanceNotInActiveBoostInDepositToken,
 } from '../../features/data/selectors/balance';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
 import { selectIsBalanceHidden, selectWalletAddress } from '../../features/data/selectors/wallet';
@@ -48,7 +47,6 @@ type SelectDataReturn =
       totalDepositUsd: BigNumber;
       vaultDeposit: BigNumber;
       notEarning: BigNumber;
-      clmInWallet: BigNumber;
     };
 
 // TEMP: selector instead of connect/mapStateToProps
@@ -72,8 +70,7 @@ function selectData(state: BeefyState, vaultId: VaultEntity['id']): SelectDataRe
   }
 
   const hideBalance = selectIsBalanceHidden(state);
-  const notEarning = selectUserVaultNotEarningBalanceInDepositToken(state, vault.id);
-  const clmInWallet = selectUserVaultBalanceInDepositTokenInUnderlyingCLM(state, vault.id);
+  const notEarning = selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vault.id);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const totalDepositUsd = selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vaultId);
   const vaultDeposit = selectUserVaultBalanceInDepositToken(state, vault.id);
@@ -86,7 +83,6 @@ function selectData(state: BeefyState, vaultId: VaultEntity['id']): SelectDataRe
     totalDepositUsd,
     vaultDeposit,
     notEarning,
-    clmInWallet,
   };
 }
 
@@ -112,7 +108,6 @@ export const VaultDepositStat = memo<VaultDepositStatProps>(function VaultDeposi
 
   const hasDisplacedDeposit = data.vaultDeposit.lt(data.totalDeposit) || data.notEarning.gt(0);
   const isNotEarning = data.notEarning.gt(0);
-  const hasClmInWallet = data.clmInWallet.gt(0);
   const depositFormatted = formatTokenDisplayCondensed(
     data.totalDeposit,
     data.depositToken.decimals,
@@ -124,7 +119,7 @@ export const VaultDepositStat = memo<VaultDepositStatProps>(function VaultDeposi
     <VaultValueStat
       label={label}
       value={
-        isNotEarning || hasClmInWallet ? (
+        isNotEarning ? (
           <div className={classes.depositWithIcon}>
             <IconComponent
               className={clsx(classes.depositIcon, {
