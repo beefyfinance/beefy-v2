@@ -305,7 +305,14 @@
     "createdAt": 1714746204,
     "platformId": "lendle",
     "assets": ["USDe"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
     "network": "mantle",
