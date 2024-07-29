@@ -9,7 +9,7 @@ import {
 } from '../../features/data/selectors/data-loader';
 import {
   selectDidAPIReturnValuesForVault,
-  selectVaultDailyYieldStats,
+  selectVaultYieldStats,
 } from '../../features/data/selectors/apy';
 import { VaultValueStat } from '../VaultValueStat';
 
@@ -64,7 +64,7 @@ function mapStateToProps(
     };
   }
 
-  const { dailyUsd } = selectVaultDailyYieldStats(state, vaultId, walletAddress);
+  const { dailyUsd } = selectVaultYieldStats(state, vaultId, walletAddress);
 
   return {
     label,
