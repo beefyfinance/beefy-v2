@@ -36,6 +36,18 @@ export const excludeChains: Record<string, { count: number; hash: string }> = {
     count: 10,
     hash: 'f74673e540c41ec7ab283c9d07ac2090453ab34be8824e8178c0a853fcaf80b1',
   },
+  aurora: {
+    count: 24,
+    hash: '13d2d19d7c96406a0d46042c521b6d7e19ee63b94474916a21eb2f1d69c15f57',
+  },
+  celo: {
+    count: 14,
+    hash: 'fe0549fd08678e577d17796df5b36ce28e4546bd9a1cc652196c6fa85bcaa482',
+  },
+  moonriver: {
+    count: 53,
+    hash: '17e6fa948469e3d796f3709d39bb01cc4b0ded28cbd30bcbd252eb719a1c0e39',
+  },
 };
 
 export const excludedChainIds = Object.keys(excludeChains);
