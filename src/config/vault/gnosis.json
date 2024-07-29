@@ -25,8 +25,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xc9f00c3a713008ddf69b768d90d4978549bfdf9400000000000000000000006d",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xc9f00c3a713008ddf69b768d90d4978549bfdf9400000000000000000000006d/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xc9f00c3a713008ddf69b768d90d4978549bfdf9400000000000000000000006d/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xc9f00c3a713008ddf69b768d90d4978549bfdf9400000000000000000000006d/withdraw",
     "network": "gnosis"
   },
   {
@@ -55,8 +55,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x4cdabe9e07ca393943acfb9286bbbd0d0a310ff600020000000000000000005c",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x4cdabe9e07ca393943acfb9286bbbd0d0a310ff600020000000000000000005c/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x4cdabe9e07ca393943acfb9286bbbd0d0a310ff600020000000000000000005c/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x4cdabe9e07ca393943acfb9286bbbd0d0a310ff600020000000000000000005c/withdraw",
     "network": "gnosis"
   },
   {
@@ -85,8 +85,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xbc2acf5e821c5c9f8667a36bb1131dad26ed64f9000200000000000000000063",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xbc2acf5e821c5c9f8667a36bb1131dad26ed64f9000200000000000000000063/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xbc2acf5e821c5c9f8667a36bb1131dad26ed64f9000200000000000000000063/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xbc2acf5e821c5c9f8667a36bb1131dad26ed64f9000200000000000000000063/withdraw",
     "network": "gnosis"
   },
   {
@@ -115,8 +115,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066/withdraw",
     "network": "gnosis"
   },
   {
@@ -147,8 +147,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x21d4c792ea7e38e0d0819c2011a2b1cb7252bd9900020000000000000000001e",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x21d4c792ea7e38e0d0819c2011a2b1cb7252bd9900020000000000000000001e/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x21d4c792ea7e38e0d0819c2011a2b1cb7252bd9900020000000000000000001e/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x21d4c792ea7e38e0d0819c2011a2b1cb7252bd9900020000000000000000001e/withdraw",
     "network": "gnosis"
   },
   {
@@ -177,8 +177,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064/withdraw",
     "network": "gnosis"
   },
   {
@@ -207,8 +207,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x00df7f58e1cf932ebe5f54de5970fb2bdf0ef06d00010000000000000000005b",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x00df7f58e1cf932ebe5f54de5970fb2bdf0ef06d00010000000000000000005b/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x00df7f58e1cf932ebe5f54de5970fb2bdf0ef06d00010000000000000000005b/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x00df7f58e1cf932ebe5f54de5970fb2bdf0ef06d00010000000000000000005b/withdraw",
     "network": "gnosis"
   },
   {
@@ -237,8 +237,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x4683e340a8049261057d5ab1b29c8d840e75695e00020000000000000000005a",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x4683e340a8049261057d5ab1b29c8d840e75695e00020000000000000000005a/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x4683e340a8049261057d5ab1b29c8d840e75695e00020000000000000000005a/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x4683e340a8049261057d5ab1b29c8d840e75695e00020000000000000000005a/withdraw",
     "network": "gnosis"
   },
   {
@@ -267,8 +267,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034/withdraw",
     "network": "gnosis"
   }
 ]
