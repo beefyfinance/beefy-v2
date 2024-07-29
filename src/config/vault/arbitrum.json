@@ -4829,7 +4829,7 @@
     "createdAt": 1719321885,
     "platformId": "camelot",
     "assets": ["USDe", "USDC"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED", "OVER_COLLAT_ALGO_STABLECOIN"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
     "feeTier": "Dynamic",

@@ -1401,7 +1401,7 @@
     "createdAt": 1718042017,
     "platformId": "uniswap",
     "assets": ["USDe", "wstETH"],
-    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED", "OVER_COLLAT_ALGO_STABLECOIN"],
     "strategyTypeId": "compounds",
     "network": "optimism",
     "zaps": [
@@ -2505,7 +2505,7 @@
     "createdAt": 1718042016,
     "platformId": "beefy",
     "assets": ["USDe", "wstETH"],
-    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED", "OVER_COLLAT_ALGO_STABLECOIN"],
     "strategyTypeId": "compounds",
     "network": "optimism",
     "type": "cowcentrated",
