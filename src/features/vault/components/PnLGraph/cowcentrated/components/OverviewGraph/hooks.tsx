@@ -9,7 +9,7 @@ import {
 import { selectWalletAddress } from '../../../../../../data/selectors/wallet';
 import { maxBy, minBy } from 'lodash-es';
 import { getClmInvestorTimeSeries } from '../../../../../../../helpers/timeserie';
-import { isCLMTimelineAnalyticsEntity } from '../../../../../../data/entities/analytics';
+import { isTimelineEntityCowcentratedPool } from '../../../../../../data/entities/analytics';
 import { useOracleIdToUsdPrices } from '../../../../../../data/hooks/historical';
 import type { GraphBucket } from '../../../../../../../helpers/graph';
 import { useVaultPeriods } from '../../../standard/hooks';
@@ -61,7 +61,7 @@ export const usePnLChartData = (
   const chartData = useMemo(() => {
     if (
       !isLoading &&
-      isCLMTimelineAnalyticsEntity(vaultTimeline) &&
+      isTimelineEntityCowcentratedPool(vaultTimeline) &&
       vaultTimeline.current.length &&
       sharesToUsd &&
       token0ToUsd &&

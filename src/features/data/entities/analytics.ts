@@ -1,49 +1,45 @@
 import type BigNumber from 'bignumber.js';
-import type {
-  CLMTimelineAnalyticsAction,
-  TimelineAnalyticsConfig,
-} from '../apis/analytics/analytics-types';
-import type { ChangeTypeOfKeys, Prettify, SnakeToCamelCase } from '../utils/types-utils';
+import type { TimelineActionClm, TimelineConfigDatabarn } from '../apis/analytics/analytics-types';
+import type { Prettify, Rest, SnakeToCamelCase } from '../utils/types-utils';
 import type { ChainEntity } from './chain';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import type { NonEmptyArray } from '../utils/array-utils';
+import type { VaultGovCowcentrated } from './vault';
 
-type VTACSnake = {
-  [K in keyof TimelineAnalyticsConfig as SnakeToCamelCase<K>]: TimelineAnalyticsConfig[K];
+type TimelineConfigDatabarnSnake = {
+  [K in keyof TimelineConfigDatabarn as SnakeToCamelCase<K>]: TimelineConfigDatabarn[K];
 };
 
-type VTACBigNumber = ChangeTypeOfKeys<
-  VTACSnake,
-  'shareBalance' | 'shareDiff' | 'shareToUnderlyingPrice' | 'underlyingBalance' | 'underlyingDiff',
-  BigNumber
->;
-
-type VTACOptionalBigNumber = ChangeTypeOfKeys<
-  VTACBigNumber,
-  'underlyingToUsdPrice' | 'usdBalance' | 'usdDiff',
-  BigNumber | null
->;
-
-type VTACWithDateTime = ChangeTypeOfKeys<VTACOptionalBigNumber, 'datetime', Date>;
-
-export type VaultTimelineAnalyticsEntryWithoutVaultId = Prettify<
-  VTACWithDateTime & {
+export type UnprocessedTimelineEntryStandard = Prettify<
+  Rest<
+    Record<
+      | 'shareBalance'
+      | 'shareDiff'
+      | 'shareToUnderlyingPrice'
+      | 'underlyingBalance'
+      | 'underlyingDiff',
+      BigNumber
+    > &
+      Record<'underlyingToUsdPrice' | 'usdBalance' | 'usdDiff', BigNumber | null> &
+      Record<'datetime', Date>,
+    TimelineConfigDatabarnSnake
+  > & {
     type: 'standard';
     transactionId: string;
-    source?: {
-      productKey: string;
-      vaultId: string;
-      chain: ChainEntity['id'];
-    };
   }
 >;
 
-export type VaultTimelineAnalyticsEntry = VaultTimelineAnalyticsEntryWithoutVaultId & {
+export type TimelineEntryStandard = UnprocessedTimelineEntryStandard & {
   vaultId: string;
+  timeline: 'current' | 'past';
+  source?: {
+    productKey: string;
+    vaultId: string;
+    chain: ChainEntity['id'];
+  };
 };
 
-type CLMTimelineAnalyticsEntryBase = {
-  vaultId: string;
+type UnprocessedTimelineEntryCowcentratedBasePart = {
   type: 'cowcentrated';
   transactionId: string;
   datetime: Date;
@@ -66,24 +62,14 @@ type CLMTimelineAnalyticsEntryBase = {
   managerBalance: BigNumber;
   managerDiff: BigNumber;
   managerAddress: string;
-  actions: CLMTimelineAnalyticsAction[];
+  actions: TimelineActionClm[];
 };
 
-export type CLMTimelineAnalyticsEntryNoRewardPoolPart = {
+export type UnprocessedTimelineEntryCowcentratedWithoutRewardPoolPart = {
   hasRewardPool: false;
 };
 
-export type CLMTimelineAnalyticsEntryWithRewardPoolPart = {
-  hasRewardPool: true;
-  /** address of the reward pool */
-  rewardPoolAddress: string;
-  /** balance of reward pool */
-  rewardPoolBalance: BigNumber;
-  /** diff of reward pool balance */
-  rewardPoolDiff: BigNumber;
-};
-
-export type CLMTimelineAnalyticsEntryWithRewardPoolsPart = {
+export type UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart = {
   hasRewardPool: true;
   /** total balance in all reward pools */
   rewardPoolBalance: BigNumber;
@@ -93,28 +79,47 @@ export type CLMTimelineAnalyticsEntryWithRewardPoolsPart = {
   rewardPoolDetails: NonEmptyArray<{ address: string; balance: BigNumber; diff: BigNumber }>;
 };
 
-export type CLMTimelineAnalyticsEntryNoRewardPool = CLMTimelineAnalyticsEntryBase &
-  CLMTimelineAnalyticsEntryNoRewardPoolPart;
-export type CLMTimelineAnalyticsEntryRewardPool = CLMTimelineAnalyticsEntryBase &
-  CLMTimelineAnalyticsEntryWithRewardPoolPart;
-export type CLMTimelineAnalyticsEntryRewardPools = CLMTimelineAnalyticsEntryBase &
-  CLMTimelineAnalyticsEntryWithRewardPoolsPart;
+export type UnprocessedTimelineEntryCowcentratedWithoutRewardPool =
+  UnprocessedTimelineEntryCowcentratedBasePart &
+    UnprocessedTimelineEntryCowcentratedWithoutRewardPoolPart;
+export type UnprocessedTimelineEntryCowcentratedWithRewardPools =
+  UnprocessedTimelineEntryCowcentratedBasePart &
+    UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart;
+export type UnprocessedTimelineEntryCowcentratedPool =
+  | UnprocessedTimelineEntryCowcentratedWithoutRewardPool
+  | UnprocessedTimelineEntryCowcentratedWithRewardPools;
 
-export type CLMTimelineAnalyticsEntry =
-  | CLMTimelineAnalyticsEntryNoRewardPool
-  | CLMTimelineAnalyticsEntryRewardPool;
+export type TimelineEntryCowcentratedPool = {
+  vaultId: VaultGovCowcentrated['id'];
+  type: 'cowcentrated-pool';
+  timeline: 'current' | 'past';
+  transactionId: string;
+  datetime: Date;
+  productKey: string;
+  displayName: string;
+  chain: ChainEntity['id'];
+  isEol: boolean;
+  isDashboardEol: boolean;
+  transactionHash: string;
+  token0ToUsd: BigNumber;
+  underlying0Balance: BigNumber;
+  underlying0Diff: BigNumber;
+  underlying0PerShare: BigNumber;
+  token1ToUsd: BigNumber;
+  underlying1Balance: BigNumber;
+  underlying1Diff: BigNumber;
+  underlying1PerShare: BigNumber;
+  usdBalance: BigNumber;
+  usdDiff: BigNumber;
+  usdPerShare: BigNumber;
+  shareBalance: BigNumber;
+  shareDiff: BigNumber;
+  actions: TimelineActionClm[];
+};
 
-export type CLMTimelineAnalyticsEntryHandleInput =
-  | Omit<CLMTimelineAnalyticsEntryNoRewardPool, 'vaultId'>
-  | Omit<CLMTimelineAnalyticsEntryRewardPools, 'vaultId'>;
+export type AnyTimelineEntry = TimelineEntryStandard | TimelineEntryCowcentratedPool;
 
-export type CLMTimelineAnalyticsEntryHandleInputWithVaultId =
-  | CLMTimelineAnalyticsEntryNoRewardPool
-  | CLMTimelineAnalyticsEntryRewardPools;
-
-export type AnyTimelineAnalyticsEntry = VaultTimelineAnalyticsEntry | CLMTimelineAnalyticsEntry;
-
-export type TimelineAnalyticsEntryToEntity<T extends AnyTimelineAnalyticsEntry> = {
+export type TimelineEntryToEntity<T extends AnyTimelineEntry> = {
   type: T['type'];
   /** transactions since user last fully withdrew */
   current: T[];
@@ -124,33 +129,30 @@ export type TimelineAnalyticsEntryToEntity<T extends AnyTimelineAnalyticsEntry> 
   buckets: ApiTimeBucket[];
 };
 
-export type VaultTimelineAnalyticsEntity =
-  TimelineAnalyticsEntryToEntity<VaultTimelineAnalyticsEntry>;
+export type TimelineEntityStandard = TimelineEntryToEntity<TimelineEntryStandard>;
 
-export type CLMTimelineAnalyticsEntity = TimelineAnalyticsEntryToEntity<CLMTimelineAnalyticsEntry>;
+export type TimelineEntityCowcentratedPool = TimelineEntryToEntity<TimelineEntryCowcentratedPool>;
 
-export type AnyTimelineAnalyticsEntity = VaultTimelineAnalyticsEntity | CLMTimelineAnalyticsEntity;
+export type AnyTimelineEntity = TimelineEntityStandard | TimelineEntityCowcentratedPool;
 
-export function isVaultTimelineAnalyticsEntry(
-  entity: AnyTimelineAnalyticsEntry
-): entity is VaultTimelineAnalyticsEntry {
-  return entity.type === 'standard';
+export function isTimelineEntryStandard(entry: AnyTimelineEntry): entry is TimelineEntryStandard {
+  return entry.type === 'standard';
 }
 
-export function isCLMTimelineAnalyticsEntry(
-  entity: AnyTimelineAnalyticsEntry
-): entity is CLMTimelineAnalyticsEntry {
-  return entity.type === 'cowcentrated';
+export function isTimelineEntryCowcentratedPool(
+  entry: AnyTimelineEntry
+): entry is TimelineEntryCowcentratedPool {
+  return entry.type === 'cowcentrated-pool';
 }
 
-export function isVaultTimelineAnalyticsEntity(
-  entity: AnyTimelineAnalyticsEntity | undefined
-): entity is VaultTimelineAnalyticsEntity {
+export function isTimelineEntityStandard(
+  entity: AnyTimelineEntity | undefined
+): entity is TimelineEntityStandard {
   return !!entity && entity.type === 'standard';
 }
 
-export function isCLMTimelineAnalyticsEntity(
-  entity: AnyTimelineAnalyticsEntity | undefined
-): entity is CLMTimelineAnalyticsEntity {
-  return !!entity && entity.type === 'cowcentrated';
+export function isTimelineEntityCowcentratedPool(
+  entity: AnyTimelineEntity | undefined
+): entity is TimelineEntityCowcentratedPool {
+  return !!entity && entity.type === 'cowcentrated-pool';
 }

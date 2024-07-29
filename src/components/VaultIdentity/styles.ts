@@ -118,4 +118,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-manta': {
     backgroundColor: '#000',
   },
+  'vaultNetwork-real': {
+    backgroundColor: '#FFF',
+  },
 });

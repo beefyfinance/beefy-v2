@@ -2,18 +2,27 @@ import { memo, type ReactNode } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { Link } from 'react-router-dom';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
-export type InternalLinkProps = {
-  to: string;
+type CommonLinkProps = {
   children?: ReactNode;
+  className?: string;
 };
 
-export const InternalLink = memo<InternalLinkProps>(function InternalLink({ to, children }) {
+export type InternalLinkProps = {
+  to: string;
+} & CommonLinkProps;
+
+export const InternalLink = memo<InternalLinkProps>(function InternalLink({
+  to,
+  children,
+  className,
+}) {
   const classes = useStyles();
   return (
-    <Link to={to} className={classes.link}>
+    <Link to={to} className={clsx(classes.link, className)}>
       {children}
     </Link>
   );
@@ -21,13 +30,16 @@ export const InternalLink = memo<InternalLinkProps>(function InternalLink({ to, 
 
 export type ExternalLinkProps = {
   href: string;
-  children?: ReactNode;
-};
+} & CommonLinkProps;
 
-export const ExternalLink = memo<ExternalLinkProps>(function ExternalLink({ href, children }) {
+export const ExternalLink = memo<ExternalLinkProps>(function ExternalLink({
+  href,
+  children,
+  className,
+}) {
   const classes = useStyles();
   return (
-    <a href={href} target="_blank" rel="noopener" className={classes.link}>
+    <a href={href} target="_blank" rel="noopener" className={clsx(classes.link, className)}>
       {children}
     </a>
   );
@@ -35,13 +47,16 @@ export const ExternalLink = memo<ExternalLinkProps>(function ExternalLink({ href
 
 export type ButtonLinkProps = {
   onClick: () => void;
-  children?: ReactNode;
-};
+} & CommonLinkProps;
 
-export const ButtonLink = memo<ButtonLinkProps>(function ButtonLink({ onClick, children }) {
+export const ButtonLink = memo<ButtonLinkProps>(function ButtonLink({
+  onClick,
+  children,
+  className,
+}) {
   const classes = useStyles();
   return (
-    <span onClick={onClick} className={classes.link}>
+    <span onClick={onClick} className={clsx(classes.link, className)}>
       {children}
     </span>
   );

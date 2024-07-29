@@ -1,7 +1,7 @@
 import type BigNumber from 'bignumber.js';
 import type { ChainEntity } from '../../entities/chain';
 
-export interface CommonTimelineAnalyticsConfig {
+export interface TimelineConfigCommon {
   chain: ChainEntity['id'];
   datetime: string;
   display_name: string;
@@ -10,7 +10,7 @@ export interface CommonTimelineAnalyticsConfig {
   product_key: string;
 }
 
-export type TimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
+export type TimelineConfigDatabarn = TimelineConfigCommon & {
   transaction_hash: string | null;
   share_balance: number;
   share_diff: number;
@@ -22,21 +22,21 @@ export type TimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
   underlying_to_usd_price: number | null;
 };
 
-export type CLMTimelineAnalyticsAction =
+export type TimelineActionClm =
   | 'MANAGER_DEPOSIT'
   | 'MANAGER_WITHDRAW'
-  | 'REWARD_POOL_STAKE'
-  | 'REWARD_POOL_UNSTAKE'
-  | 'REWARD_POOL_CLAIM';
+  | 'CLM_REWARD_POOL_STAKE'
+  | 'CLM_REWARD_POOL_UNSTAKE'
+  | 'CLM_REWARD_POOL_CLAIM';
 
-export type CLMVaultTimelineAnalyticsAction =
+export type TimelineActionClassic =
   | 'VAULT_DEPOSIT'
   | 'VAULT_WITHDRAW'
-  | 'REWARD_POOL_STAKE'
-  | 'REWARD_POOL_UNSTAKE'
-  | 'REWARD_POOL_CLAIM';
+  | 'CLASSIC_REWARD_POOL_STAKE'
+  | 'CLASSIC_REWARD_POOL_UNSTAKE'
+  | 'CLASSIC_REWARD_POOL_CLAIM';
 
-export type CLMTimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
+export type TimelineConfigClm = TimelineConfigCommon & {
   type: 'clm';
   transaction_hash: string;
 
@@ -73,10 +73,10 @@ export type CLMTimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
     reward_pool_diff: string;
   }> | null;
 
-  actions: CLMTimelineAnalyticsAction[];
+  actions: TimelineActionClm[];
 };
 
-export type CLMVaultTimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
+export type TimelineConfigClassic = TimelineConfigCommon & {
   type: 'classic';
   transaction_hash: string;
 
@@ -108,22 +108,14 @@ export type CLMVaultTimelineAnalyticsConfig = CommonTimelineAnalyticsConfig & {
     reward_pool_diff: string;
   }> | null;
 
-  actions: CLMVaultTimelineAnalyticsAction[];
+  actions: TimelineActionClassic[];
 };
 
 export type AnalyticsUserTimelineResponse = {
-  clmTimeline: CLMTimelineAnalyticsConfig[];
-  clmVaultTimeline: CLMVaultTimelineAnalyticsConfig[];
-  databarnTimeline: TimelineAnalyticsConfig[];
+  clmTimeline: TimelineConfigClm[];
+  classicTimeline: TimelineConfigClassic[];
+  databarnTimeline: TimelineConfigDatabarn[];
 };
-
-export interface PriceAnalyticsConfig {
-  date: string;
-  open: string;
-  high: string;
-  low: string;
-  close: string;
-}
 
 export interface ApiProductPriceRow {
   date: Date;

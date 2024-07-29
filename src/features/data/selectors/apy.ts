@@ -24,7 +24,6 @@ import type { TotalApy } from '../reducers/apy';
 import { isEmpty } from '../../../helpers/utils';
 import { selectWalletAddress } from './wallet';
 import { BigNumber } from 'bignumber.js';
-import { createCachedSelector } from 're-reselect';
 
 const EMPTY_TOTAL_APY: TotalApy = {
   totalApy: 0,
@@ -49,13 +48,6 @@ export const selectVaultTotalApy = (
 export const selectDidAPIReturnValuesForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
   return state.biz.apy.totalApy.byVaultId[vaultId] !== undefined;
 };
-
-export const selectGovVaultHasPoolApr = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultTotalApyOrUndefined(state, vaultId),
-  apy => {
-    return !!apy && ((apy.rewardPoolApr || 0) > 0 || (apy.rewardPoolTradingApr || 0) > 0);
-  }
-)((_, vaultId) => vaultId);
 
 const EMPTY_GLOBAL_STATS = {
   deposited: 0,

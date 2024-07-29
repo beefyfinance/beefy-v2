@@ -163,11 +163,9 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
           // Add reward to the vault
           addRewardToVault(vault.id, reward);
 
-          // For rewards on CLM, merge them into the CLM Pool and CLM Vault since the CLM page is inaccessible
-          if (isCowcentratedVault(vault)) {
-            [vault.cowcentratedGovId, vault.cowcentratedStandardId]
-              .filter(isDefined)
-              .forEach(otherVaultId => addRewardToVault(otherVaultId, reward));
+          // For rewards on CLM, merge them into the CLM Pool since the CLM page is inaccessible
+          if (isCowcentratedVault(vault) && vault.cowcentratedGovId) {
+            addRewardToVault(vault.cowcentratedGovId, reward);
           }
         }
       }

@@ -2,9 +2,9 @@ import React, { memo, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import {
-  type CLMTimelineAnalyticsEntry,
-  isVaultTimelineAnalyticsEntry,
-  type VaultTimelineAnalyticsEntry,
+  isTimelineEntryStandard,
+  type TimelineEntryCowcentratedPool,
+  type TimelineEntryStandard,
 } from '../../../../../../../data/entities/analytics';
 import clsx from 'clsx';
 import { formatISO9075 } from 'date-fns';
@@ -34,19 +34,19 @@ import type BigNumber from 'bignumber.js';
 const useStyles = makeStyles(styles);
 
 type TransactionProps = {
-  tx: VaultTimelineAnalyticsEntry | CLMTimelineAnalyticsEntry;
+  tx: TimelineEntryStandard | TimelineEntryCowcentratedPool;
 };
 
 type TransactionStatProps<
-  T extends VaultTimelineAnalyticsEntry | CLMTimelineAnalyticsEntry =
-    | VaultTimelineAnalyticsEntry
-    | CLMTimelineAnalyticsEntry
+  T extends TimelineEntryStandard | TimelineEntryCowcentratedPool =
+    | TimelineEntryStandard
+    | TimelineEntryCowcentratedPool
 > = {
   tx: T;
   mobile?: boolean;
 };
 
-const StandardAmountStat = memo<TransactionStatProps<VaultTimelineAnalyticsEntry>>(
+const StandardAmountStat = memo<TransactionStatProps<TimelineEntryStandard>>(
   function StandardAmountStat({ tx, mobile }) {
     const classes = useStyles();
     const { underlyingDiff } = tx;
@@ -65,24 +65,13 @@ const StandardAmountStat = memo<TransactionStatProps<VaultTimelineAnalyticsEntry
   }
 );
 
-const CowcentratedAmountStat = memo<TransactionStatProps<CLMTimelineAnalyticsEntry>>(
+const CowcentratedAmountStat = memo<TransactionStatProps<TimelineEntryCowcentratedPool>>(
   function CowcentratedAmountStat({ tx, mobile }) {
     const classes = useStyles();
-    const { underlying0Diff, underlying1Diff, shareDiff, actions, managerDiff } = tx;
+    const { underlying0Diff, underlying1Diff } = tx;
     const { token0, token1 } = useAppSelector(state =>
       selectCowcentratedLikeVaultDepositTokens(state, tx.vaultId)
     );
-    const action = useMemo(() => {
-      if (shareDiff.isZero() && actions.length === 2) {
-        if (actions.includes('REWARD_POOL_UNSTAKE') && actions.includes('MANAGER_DEPOSIT')) {
-          return 'Pool → CLM';
-        } else if (actions.includes('MANAGER_WITHDRAW') && actions.includes('REWARD_POOL_STAKE')) {
-          return 'CLM → Pool';
-        }
-      }
-
-      return undefined;
-    }, [shareDiff, actions]);
     const variant0 = underlying0Diff.isZero()
       ? 'neutral'
       : underlying0Diff.gt(BIG_ZERO)
@@ -96,33 +85,24 @@ const CowcentratedAmountStat = memo<TransactionStatProps<CLMTimelineAnalyticsEnt
 
     return (
       <div className={classes.cowcentratedTokenAmounts}>
-        {action ? (
-          <div className={mobile ? classes.actionMobile : classes.action}>
-            <TokenAmount amount={managerDiff.abs()} decimals={18} />
-            <div>{action}</div>
-          </div>
-        ) : (
-          <>
-            <TokenIconAmount
-              token={token0}
-              amount={underlying0Diff}
-              mobile={mobile}
-              variant={variant0}
-            />
-            <TokenIconAmount
-              token={token1}
-              amount={underlying1Diff}
-              mobile={mobile}
-              variant={variant1}
-            />
-          </>
-        )}
+        <TokenIconAmount
+          token={token0}
+          amount={underlying0Diff}
+          mobile={mobile}
+          variant={variant0}
+        />
+        <TokenIconAmount
+          token={token1}
+          amount={underlying1Diff}
+          mobile={mobile}
+          variant={variant1}
+        />
       </div>
     );
   }
 );
 
-const StandardBalanceStat = memo<TransactionStatProps<VaultTimelineAnalyticsEntry>>(
+const StandardBalanceStat = memo<TransactionStatProps<TimelineEntryStandard>>(
   function StandardBalanceStat({ tx, mobile }) {
     const classes = useStyles();
     const { shareBalance, shareToUnderlyingPrice } = tx;
@@ -172,7 +152,7 @@ const TokenIconAmount = memo<TokenIconAmountProps>(function IconTokenAmount({
   );
 });
 
-const CowcentratedBalanceStat = memo<TransactionStatProps<CLMTimelineAnalyticsEntry>>(
+const CowcentratedBalanceStat = memo<TransactionStatProps<TimelineEntryCowcentratedPool>>(
   function CowcentratedBalanceStat({ tx, mobile }) {
     const classes = useStyles();
     const { underlying0Balance, underlying1Balance } = tx;
@@ -191,13 +171,18 @@ const CowcentratedBalanceStat = memo<TransactionStatProps<CLMTimelineAnalyticsEn
 
 export const Transaction = memo<TransactionProps>(function Transaction({ tx }) {
   const classes = useStyles();
-  const isStandard = isVaultTimelineAnalyticsEntry(tx);
+  const isStandard = isTimelineEntryStandard(tx);
   const chainId = isStandard ? tx.source?.chain || tx.chain : tx.chain;
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const { datetime, shareBalance, usdBalance, transactionHash } = tx;
 
   return (
-    <Row>
+    <Row
+      className={clsx({
+        [classes.txCurrent]: tx.timeline === 'current',
+        [classes.txPast]: tx.timeline === 'past',
+      })}
+    >
       {/* Date */}
       <div className={clsx(classes.stat, classes.textFlexStart)}>
         <img
@@ -245,7 +230,7 @@ export const Transaction = memo<TransactionProps>(function Transaction({ tx }) {
 export const TransactionMobile = memo<TransactionProps>(function TransactionMobile({ tx }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const isStandard = isVaultTimelineAnalyticsEntry(tx);
+  const isStandard = isTimelineEntryStandard(tx);
   const chainId = isStandard ? tx.source?.chain || tx.chain : tx.chain;
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const { datetime, shareBalance, usdBalance, transactionHash } = tx;
@@ -255,7 +240,12 @@ export const TransactionMobile = memo<TransactionProps>(function TransactionMobi
   }, [shareBalance]);
 
   return (
-    <RowMobile className={classes.gridMobile}>
+    <RowMobile
+      className={clsx(classes.gridMobile, {
+        [classes.txCurrent]: tx.timeline === 'current',
+        [classes.txPast]: tx.timeline === 'past',
+      })}
+    >
       <VaultNetwork className={classes.vaultNetwork} chainId={chainId} />
       <InfoGrid>
         {isStandard ? (

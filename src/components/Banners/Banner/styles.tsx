@@ -23,6 +23,9 @@ export const styles = (theme: Theme) => ({
     flex: 'auto 0 0',
     height: '24px',
     width: '24px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     flexGrow: 1,
@@ -32,6 +35,17 @@ export const styles = (theme: Theme) => ({
     fill: theme.palette.text.middle,
     '&:hover': {
       cursor: 'pointer',
+    },
+  },
+  info: {},
+  warning: {
+    '& $box': {
+      backgroundColor: 'rgba(209, 152, 71, 0.15)',
+    },
+  },
+  error: {
+    '& $box': {
+      backgroundColor: 'rgba(209, 83, 71, 0.15)',
     },
   },
 });
