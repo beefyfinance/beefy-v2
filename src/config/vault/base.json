@@ -162,7 +162,7 @@
     "id": "aero-cow-wsteth-weth",
     "name": "wstETH-WETH",
     "token": "wstETH-WETH aero",
-    "tokenAddress": "0x326841EFD63340767e02ec88E583f18a82AF4A48",
+    "tokenAddress": "0x861A2922bE165a5Bd41b1E482B49216b465e1B5F",
     "tokenDecimals": 18,
     "depositTokenAddresses": [
       "0x4200000000000000000000000000000000000006",
