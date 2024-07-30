@@ -108,7 +108,7 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
     if (isEmpty(apyData)) {
       continue;
     }
-    const { dailyUsd, monthlyUsd, yearlyUsd } = selectVaultYieldStats(
+    const { dailyUsd, monthlyUsd, yearlyUsd } = selectYieldStatsByVaultId(
       state,
       vault.id,
       walletAddress
@@ -130,7 +130,7 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
   return newGlobalStats;
 };
 
-export const selectVaultYieldStats = (
+export const selectYieldStatsByVaultId = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
