@@ -1,5 +1,6 @@
+import { sample } from 'lodash';
+import { ChainId } from 'blockchain-addressbook';
 import { config } from '../../src/config/config';
-import lodash from 'lodash';
 import type {
   AmmConfig,
   BoostConfig,
@@ -12,6 +13,8 @@ const chainConfigs = Object.fromEntries(
   Object.entries(config).map(([chainId, chainConfig]) => [appToAddressBookId(chainId), chainConfig])
 );
 
+export type AddressBookChainId = keyof typeof ChainId;
+export type AppChainId = keyof typeof config;
 export type ChainConfig = (typeof chainConfigs)[keyof typeof chainConfigs];
 
 /**
@@ -45,7 +48,7 @@ export const chainRpcs: Record<string, string> = Object.fromEntries(
   allChainIds.map(chainId => [
     chainId,
     process.env[`${addressBookToAppId(chainId).toUpperCase()}_RPC`] ||
-      lodash.sample(chainConfigs[chainId].rpc)!,
+      sample(chainConfigs[chainId].rpc)!,
   ])
 );
 
@@ -106,10 +109,22 @@ export async function getMintersForChain(chainId: string): Promise<MinterConfig[
   return mintersByChainId[id];
 }
 
-export function appToAddressBookId(chainId: string) {
-  return chainId === 'harmony' ? 'one' : chainId;
+export function appToAddressBookId(chainId: string): AddressBookChainId {
+  if (chainId === 'harmony') {
+    return 'one';
+  }
+  if (chainId in ChainId) {
+    return chainId as AddressBookChainId;
+  }
+  throw new Error(`Unknown app chain id ${chainId}`);
 }
 
-export function addressBookToAppId(chainId: string) {
-  return chainId === 'one' ? 'harmony' : chainId;
+export function addressBookToAppId(chainId: string): AppChainId {
+  if (chainId === 'one') {
+    return 'harmony';
+  }
+  if (chainId in config) {
+    return chainId as AppChainId;
+  }
+  throw new Error(`Unknown address book chain id ${chainId}`);
 }
