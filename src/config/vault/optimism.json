@@ -274,7 +274,7 @@
     "oracle": "lps",
     "oracleId": "aura-op-wsteth-weeth",
     "status": "active",
-    "createdAt": 1722020524,
+    "createdAt": 1722363570,
     "platformId": "aura",
     "assets": ["wstETH", "weETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],

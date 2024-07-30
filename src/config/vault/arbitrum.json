@@ -37,7 +37,7 @@
     "oracle": "lps",
     "oracleId": "aura-arb-susde-sfrax",
     "status": "active",
-    "createdAt": 1722017957,
+    "createdAt": 1722363570,
     "platformId": "aura",
     "assets": ["sUSDe", "sFRAX"],
     "risks": [
@@ -67,7 +67,7 @@
     "oracle": "lps",
     "oracleId": "aura-arb-frax-sfrax",
     "status": "active",
-    "createdAt": 1722017957,
+    "createdAt": 1722363570,
     "platformId": "aura",
     "assets": ["FRAX", "sFRAX"],
     "risks": [
