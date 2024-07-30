@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "lynex-usdc-dusd",
     "status": "active",
-    "createdAt": 1712929204,
+    "createdAt": 1722365753,
     "platformId": "lynex",
     "assets": ["USDC", "DUSD"],
     "risks": [
