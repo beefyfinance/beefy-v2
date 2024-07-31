@@ -91,18 +91,18 @@
     "tokenAddress": "0x9eBB94be20476db4A58E59C764E709B5fA35F8b0",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
+    "earnContractAddress": "0x45eAc6f86b974b0536Aa488eD8DDF3022F4C768E",
     "earnedToken": "mooBeefyRamsesrsETH-WETH",
     "earnedTokenAddress": "0x45eAc6f86b974b0536Aa488eD8DDF3022F4C768E",
-    "earnContractAddress": "0x45eAc6f86b974b0536Aa488eD8DDF3022F4C768E",
     "oracle": "lps",
     "oracleId": "ramses-cl-rseth-weth",
     "status": "active",
+    "createdAt": 1722006568,
     "platformId": "ramses",
     "assets": ["rsETH", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
-    "createdAt": 1722006568,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -158,19 +158,19 @@
       "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
       "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
     ],
+    "earnContractAddress": "0x9eBB94be20476db4A58E59C764E709B5fA35F8b0",
     "earnedToken": "cowRamsesrsETH-WETH",
     "earnedTokenAddress": "0x9eBB94be20476db4A58E59C764E709B5fA35F8b0",
-    "earnContractAddress": "0x9eBB94be20476db4A58E59C764E709B5fA35F8b0",
     "oracle": "lps",
     "oracleId": "ramses-cl-rseth-weth",
     "status": "active",
     "createdAt": 1722006567,
     "platformId": "ramses",
+    "feeTier": "Dynamic",
     "assets": ["rsETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -194,7 +194,7 @@
     "platformId": "uniswap",
     "assets": ["rsETH", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1722006568,
     "zaps": [
@@ -272,18 +272,18 @@
     "tokenAddress": "0x92c1A40CA6E7b6a9DFC6D61CBeB7ddF21eE796Bc",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
+    "earnContractAddress": "0xc16a8425d27567fBeBDa82Bc005377cEDadbFa31",
     "earnedToken": "mooBeefyRamsesweETH-WETH",
     "earnedTokenAddress": "0xc16a8425d27567fBeBDa82Bc005377cEDadbFa31",
-    "earnContractAddress": "0xc16a8425d27567fBeBDa82Bc005377cEDadbFa31",
     "oracle": "lps",
     "oracleId": "ramses-cl-weeth-weth",
     "status": "active",
+    "createdAt": 1722006568,
     "platformId": "ramses",
     "assets": ["weETH", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
-    "createdAt": 1722006568,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -339,19 +339,19 @@
       "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
       "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
     ],
+    "earnContractAddress": "0x92c1A40CA6E7b6a9DFC6D61CBeB7ddF21eE796Bc",
     "earnedToken": "cowRamsesweETH-WETH",
     "earnedTokenAddress": "0x92c1A40CA6E7b6a9DFC6D61CBeB7ddF21eE796Bc",
-    "earnContractAddress": "0x92c1A40CA6E7b6a9DFC6D61CBeB7ddF21eE796Bc",
     "oracle": "lps",
     "oracleId": "ramses-cl-weeth-weth",
     "status": "active",
     "createdAt": 1722006567,
     "platformId": "ramses",
+    "feeTier": "Dynamic",
     "assets": ["weETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -375,7 +375,7 @@
     "platformId": "uniswap",
     "assets": ["rsETH", "wstETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -404,7 +404,7 @@
     "platformId": "uniswap",
     "assets": ["USDC", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -433,7 +433,7 @@
     "platformId": "uniswap",
     "assets": ["USDV", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -462,7 +462,7 @@
     "platformId": "uniswap",
     "assets": ["COMP", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -491,7 +491,7 @@
     "platformId": "uniswap",
     "assets": ["AAVE", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -520,7 +520,7 @@
     "platformId": "uniswap",
     "assets": ["LDO", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -549,7 +549,7 @@
     "platformId": "uniswap",
     "assets": ["UNI", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -578,7 +578,7 @@
     "platformId": "uniswap",
     "assets": ["UNI", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -607,7 +607,7 @@
     "platformId": "uniswap",
     "assets": ["WBTC", "LINK"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -636,7 +636,7 @@
     "platformId": "uniswap",
     "assets": ["LINK", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -665,7 +665,7 @@
     "platformId": "uniswap",
     "assets": ["USDe", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -694,7 +694,7 @@
     "platformId": "uniswap",
     "assets": ["FRAX", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -723,7 +723,7 @@
     "platformId": "uniswap",
     "assets": ["CRV", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -752,7 +752,7 @@
     "platformId": "uniswap",
     "assets": ["cbETH", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -781,7 +781,7 @@
     "platformId": "uniswap",
     "assets": ["RPL", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -810,7 +810,7 @@
     "platformId": "uniswap",
     "assets": ["rETH", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -839,7 +839,7 @@
     "platformId": "uniswap",
     "assets": ["PEPE", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -868,7 +868,7 @@
     "platformId": "uniswap",
     "assets": ["wstETH", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -897,7 +897,7 @@
     "platformId": "uniswap",
     "assets": ["tBTC", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -926,7 +926,7 @@
     "platformId": "uniswap",
     "assets": ["tBTC", "WBTC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -955,7 +955,7 @@
     "platformId": "uniswap",
     "assets": ["wUSDM", "wstETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721831924,
     "zaps": [
@@ -975,18 +975,18 @@
     "tokenAddress": "0x72eB356324963A85A3d06c35422b59c87e475195",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
+    "earnContractAddress": "0xDa42DA88EcDa377e3BA4930A393BE4043EC45C34",
     "earnedToken": "mooBeefyRamsesZRO-WETH",
     "earnedTokenAddress": "0xDa42DA88EcDa377e3BA4930A393BE4043EC45C34",
-    "earnContractAddress": "0xDa42DA88EcDa377e3BA4930A393BE4043EC45C34",
     "oracle": "lps",
     "oracleId": "ramses-zero-weth",
     "status": "active",
+    "createdAt": 1721779510,
     "platformId": "ramses",
     "assets": ["ZRO", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
-    "createdAt": 1721779510,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -1004,18 +1004,18 @@
     "tokenAddress": "0x6b17F8f3cf06696bb4Fd90D10b3EdeF8BA36097b",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
+    "earnContractAddress": "0xeEE05484d1b2DCB2D528E29543b73Ce3aeE181c4",
     "earnedToken": "mooBeefyRamsesWETH-USDC",
     "earnedTokenAddress": "0xeEE05484d1b2DCB2D528E29543b73Ce3aeE181c4",
-    "earnContractAddress": "0xeEE05484d1b2DCB2D528E29543b73Ce3aeE181c4",
     "oracle": "lps",
     "oracleId": "ramses-cl-weth-usdc",
     "status": "active",
+    "createdAt": 1721779510,
     "platformId": "ramses",
     "assets": ["WETH", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
-    "createdAt": 1721779510,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -1033,18 +1033,18 @@
     "tokenAddress": "0x8FEf8563EC112e07013D02361C8568b4B6F394d5",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
+    "earnContractAddress": "0x31d102B2c131aCd87C093678285E569fC4DDdfef",
     "earnedToken": "mooBeefyRamsesARB-USDC",
     "earnedTokenAddress": "0x31d102B2c131aCd87C093678285E569fC4DDdfef",
-    "earnContractAddress": "0x31d102B2c131aCd87C093678285E569fC4DDdfef",
     "oracle": "lps",
     "oracleId": "ramses-cl-arb-usdc",
     "status": "active",
+    "createdAt": 1721779510,
     "platformId": "ramses",
     "assets": ["ARB", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
-    "createdAt": 1721779510,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -1062,18 +1062,18 @@
     "tokenAddress": "0xD5E2F1d85CA1DE69Dba963125CA6B487B382bDC0",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
+    "earnContractAddress": "0x86c2D1f5D2Cee69D1924b7aF605A0E6473634b56",
     "earnedToken": "mooBeefyRamsesETHFI-WETH",
     "earnedTokenAddress": "0x86c2D1f5D2Cee69D1924b7aF605A0E6473634b56",
-    "earnContractAddress": "0x86c2D1f5D2Cee69D1924b7aF605A0E6473634b56",
     "oracle": "lps",
     "oracleId": "ramses-ethfi-weth",
     "status": "active",
+    "createdAt": 1721779510,
     "platformId": "ramses",
     "assets": ["ETHFI", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
-    "createdAt": 1721779510,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -1091,18 +1091,18 @@
     "tokenAddress": "0xeE480eb145158A176C1e4748003619360B7a2EAd",
     "tokenDecimals": 18,
     "tokenProviderId": "ramses",
+    "earnContractAddress": "0x34d07eEFf5aF38BcdD1CAbcF6C997A9D75A0d1B7",
     "earnedToken": "mooBeefyRamsesWBTC-WETH",
     "earnedTokenAddress": "0x34d07eEFf5aF38BcdD1CAbcF6C997A9D75A0d1B7",
-    "earnContractAddress": "0x34d07eEFf5aF38BcdD1CAbcF6C997A9D75A0d1B7",
     "oracle": "lps",
     "oracleId": "ramses-cl-wbtc-weth",
     "status": "active",
+    "createdAt": 1721779510,
     "platformId": "ramses",
     "assets": ["WBTC", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
-    "createdAt": 1721779510,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -1129,7 +1129,7 @@
     "platformId": "uniswap",
     "assets": ["UNI", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721779510,
     "zaps": [
@@ -1158,7 +1158,7 @@
     "platformId": "uniswap",
     "assets": ["DAI", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721779510,
     "zaps": [
@@ -1187,7 +1187,7 @@
     "platformId": "uniswap",
     "assets": ["wstETH", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721779510,
     "zaps": [
@@ -1216,7 +1216,7 @@
     "platformId": "uniswap",
     "assets": ["eUSD", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721779510,
     "zaps": [
@@ -1245,7 +1245,7 @@
     "platformId": "uniswap",
     "assets": ["KNOX", "eUSD"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721779510,
     "zaps": [
@@ -1274,7 +1274,7 @@
     "platformId": "uniswap",
     "assets": ["ETH+", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721779510,
     "zaps": [
@@ -1303,7 +1303,7 @@
     "platformId": "uniswap",
     "assets": ["LINK", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "arbitrum",
     "createdAt": 1721779510,
     "zaps": [
@@ -1709,19 +1709,19 @@
       "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
       "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
     ],
+    "earnContractAddress": "0xeE480eb145158A176C1e4748003619360B7a2EAd",
     "earnedToken": "cowRamsesWBTC-WETH",
     "earnedTokenAddress": "0xeE480eb145158A176C1e4748003619360B7a2EAd",
-    "earnContractAddress": "0xeE480eb145158A176C1e4748003619360B7a2EAd",
     "oracle": "lps",
     "oracleId": "ramses-cl-wbtc-weth",
     "status": "active",
     "createdAt": 1721343401,
     "platformId": "ramses",
+    "feeTier": "Dynamic",
     "assets": ["WBTC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1774,19 +1774,19 @@
       "0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
       "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
     ],
+    "earnContractAddress": "0xD5E2F1d85CA1DE69Dba963125CA6B487B382bDC0",
     "earnedToken": "cowRamsesETHFI-WETH",
     "earnedTokenAddress": "0xD5E2F1d85CA1DE69Dba963125CA6B487B382bDC0",
-    "earnContractAddress": "0xD5E2F1d85CA1DE69Dba963125CA6B487B382bDC0",
     "oracle": "lps",
     "oracleId": "ramses-ethfi-weth",
     "status": "active",
     "createdAt": 1721343401,
     "platformId": "ramses",
+    "feeTier": "Dynamic",
     "assets": ["ETHFI", "WETH"],
     "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1839,19 +1839,19 @@
       "0x912CE59144191C1204E64559FE8253a0e49E6548",
       "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
     ],
+    "earnContractAddress": "0x8FEf8563EC112e07013D02361C8568b4B6F394d5",
     "earnedToken": "cowRamsesARB-USDC",
     "earnedTokenAddress": "0x8FEf8563EC112e07013D02361C8568b4B6F394d5",
-    "earnContractAddress": "0x8FEf8563EC112e07013D02361C8568b4B6F394d5",
     "oracle": "lps",
     "oracleId": "ramses-cl-arb-usdc",
     "status": "active",
     "createdAt": 1721343401,
     "platformId": "ramses",
+    "feeTier": "Dynamic",
     "assets": ["ARB", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1904,19 +1904,19 @@
       "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
       "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
     ],
+    "earnContractAddress": "0x6b17F8f3cf06696bb4Fd90D10b3EdeF8BA36097b",
     "earnedToken": "cowRamsesWETH-USDC",
     "earnedTokenAddress": "0x6b17F8f3cf06696bb4Fd90D10b3EdeF8BA36097b",
-    "earnContractAddress": "0x6b17F8f3cf06696bb4Fd90D10b3EdeF8BA36097b",
     "oracle": "lps",
     "oracleId": "ramses-cl-weth-usdc",
     "status": "active",
     "createdAt": 1721343401,
     "platformId": "ramses",
+    "feeTier": "Dynamic",
     "assets": ["WETH", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2008,19 +2008,19 @@
       "0x6985884C4392D348587B19cb9eAAf157F13271cd",
       "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
     ],
+    "earnContractAddress": "0x72eB356324963A85A3d06c35422b59c87e475195",
     "earnedToken": "cowRamsesZRO-WETH",
     "earnedTokenAddress": "0x72eB356324963A85A3d06c35422b59c87e475195",
-    "earnContractAddress": "0x72eB356324963A85A3d06c35422b59c87e475195",
     "oracle": "lps",
     "oracleId": "ramses-zero-weth",
     "status": "active",
     "createdAt": 1721343401,
     "platformId": "ramses",
+    "feeTier": "Dynamic",
     "assets": ["ZRO", "WETH"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -4419,7 +4419,7 @@
     "createdAt": 1719824584,
     "platformId": "camelot",
     "assets": ["ezETH", "WETH"],
-    "risks": [],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "earningPoints": true,
     "network": "arbitrum",
