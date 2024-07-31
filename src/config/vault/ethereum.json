@@ -1,5 +1,44 @@
 [
   {
+    "id": "curve-stlink-link",
+    "name": "stLINK/LINK",
+    "token": "stLINK-f",
+    "tokenAddress": "0x1c899dED01954d0959E034b62a728e7fEbE593b0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xf445C69765AB4901Ebf2a3afE537B7eCca5e612E",
+    "earnedToken": "mooCurveStLINK-LINK",
+    "earnedTokenAddress": "0xf445C69765AB4901Ebf2a3afE537B7eCca5e612E",
+    "oracle": "lps",
+    "oracleId": "curve-stlink-link",
+    "status": "active",
+    "createdAt": 1722412715,
+    "platformId": "curve",
+    "assets": ["stLINK", "LINK"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-241/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-241/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x1c899dED01954d0959E034b62a728e7fEbE593b0",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x1c899dED01954d0959E034b62a728e7fEbE593b0",
+            "coins": [
+              "0xb8b295df2cd735b15BE5Eb419517Aa626fc43cD5",
+              "0x514910771AF9Ca656af840dff83E8264EcF986CA"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "convex-usd3-eusd",
     "name": "USD3/eUSD",
     "token": "USD3eUSD",
