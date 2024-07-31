@@ -252,6 +252,7 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "mantle",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -582,6 +583,7 @@
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xcda86a272531e8640cd7f1a92c01839911b90bb0",
     "addLiquidityUrl": "https://merchantmoe.com/pool/v1/0x201eba5cc46d216ce6dc03f6a759e8e766e956ae/0xcda86a272531e8640cd7f1a92c01839911b90bb0",
     "network": "mantle",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
@@ -698,6 +700,7 @@
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
     "addLiquidityUrl": "https://merchantmoe.com/pool/v1/0xcda86a272531e8640cd7f1a92c01839911b90bb0/0xdeaddeaddeaddeaddeaddeaddeaddeaddead1111",
     "network": "mantle",
+    "earningPoints": true,
     "zaps": [
       {
         "strategyId": "uniswap-v2",
