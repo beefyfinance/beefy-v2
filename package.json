@@ -80,7 +80,7 @@
     "checkVaultTokenDecimals": "ts-node -r dotenv/config ./scripts/checkVaultTokenDecimals.ts && prettier --write ./src/config/vault/*.json",
     "checkZapAddresses": "ts-node -r dotenv/config ./scripts/checkZapAddresses.ts",
     "makeExcludeConfig": "ts-node -r dotenv/config ./scripts/makeExcludeConfig.ts",
-    "cli": "ts-node -r dotenv/config ./scripts/cli/index.ts",
+    "cli": "npm exec --yes @beefyfinance/beefy-app-cli@latest --",
     "tsc": "tsc",
     "tsc-watch": "tsc --watch",
     "ts-node": "ts-node",
