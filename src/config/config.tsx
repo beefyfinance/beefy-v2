@@ -992,11 +992,8 @@ export const config = {
       blockExplorerUrls: ['https://seitrace.com/'],
     },
     gas: {
-      type: 'eip1559',
-      blocks: 100,
-      percentile: 0.7,
-      baseSafetyMargin: 0.2,
-      priorityMinimum: '10000000', // 0.01 gwei
+      type: 'standard',
+      minimum: '10000000', // 0.01 gwei
     },
     stableCoins: ['USDC', 'USDT'],
   },
