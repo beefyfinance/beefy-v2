@@ -1,5 +1,28 @@
 [
   {
+    "id": "pendle-arb-gusdc-26dec24",
+    "name": "gUSDC 26Dec24",
+    "token": "gUSDC 26Dec24",
+    "tokenAddress": "0xa877a0E177b54A37066c1786F91a1DAb68F094AF",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0x670bA32fbbf1c212E806cbC0FcE56491bA920C00",
+    "earnedToken": "mooPenpie-gUSDC_26DEC24",
+    "earnedTokenAddress": "0x670bA32fbbf1c212E806cbC0FcE56491bA920C00",
+    "oracle": "lps",
+    "oracleId": "pendle-arb-gusdc-26dec24",
+    "status": "active",
+    "createdAt": 1722500526,
+    "platformId": "magpie",
+    "assets": ["gUSDC"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xa877a0E177b54A37066c1786F91a1DAb68F094AF/zap/in?chain=arbitrum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xa877a0E177b54A37066c1786F91a1DAb68F094AF/zap/out?chain=arbitrum",
+    "network": "arbitrum"
+  },
+  {
     "id": "pendle-arb-unieth-26dec24",
     "name": "uniETH 26Dec24",
     "token": "uniETH 26Dec24",

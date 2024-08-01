@@ -54,6 +54,8 @@ async function vaultData(chain, vaultAddress, id) {
       ? ['ethereum-convex']
       : ['curve', 'curve-lend'].includes(provider)
       ? ['l2-convex', 'l2-curve']
+      : ['pendle'].includes(provider)
+      ? ['magpie']
       : [];
 
   let addLiquidityUrl =
