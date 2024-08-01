@@ -34,9 +34,7 @@ const getCreationTimestamp = async (vaultAddress, explorerUrl, chain) => {
   const res = await fetch(url);
 
   if (!res.ok) {
-    if (res.status === 404) {
-      return [];
-    }
+    return [];
   }
 
   const data = (await res.json()) as { status: string; message: string; data: any };

@@ -1,6 +1,6 @@
 import type { IMerklRewardsApi, MerklRewardsRequest, MerklRewardsResponse } from './merkl-types';
 import { featureFlag_simulateMerklApiFailure } from '../../../utils/feature-flags';
-import { handleFetchParams } from '../../transact/helpers/fetch';
+import { getJson } from '../../../../../helpers/http';
 
 export class MerklRewardsApi implements IMerklRewardsApi {
   async fetchRewards(request: MerklRewardsRequest): Promise<MerklRewardsResponse> {
@@ -10,13 +10,7 @@ export class MerklRewardsApi implements IMerklRewardsApi {
       throw new Error('Simulated Merkl API failure');
     }
 
-    const url = `https://api.merkl.xyz/v3/rewards?${handleFetchParams({
-      user: request.user,
-    })}`;
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch merkl rewards: ${response.status} ${response.statusText}`);
-    }
-    return response.json();
+    const url = `https://api.merkl.xyz/v3/rewards`;
+    return await getJson({ url, params: { user: request.user } });
   }
 }
