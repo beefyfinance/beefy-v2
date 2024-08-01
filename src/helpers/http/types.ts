@@ -25,6 +25,7 @@ export type FetchCommonJsonRequest = {
   paramsOptions?: FetchParamsOptions;
   headers?: FetchHeaders;
   cacheBuster?: 'short' | 'long';
+  init?: Omit<RequestInit, 'headers' | 'body' | 'signal' | 'method'>;
 } & FetchAbortSignal;
 
 export type FetchGetJsonRequest = FetchCommonJsonRequest;
@@ -35,5 +36,5 @@ export type FetchPostJsonRequest = FetchCommonJsonRequest & {
 };
 
 export type FetchRequestInit = Omit<RequestInit, 'headers'> & {
-  headers: Headers;
+  headers: Headers; // make headers required
 };

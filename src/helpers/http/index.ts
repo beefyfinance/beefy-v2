@@ -67,6 +67,7 @@ function getRequestUrlInit(request: FetchCommonJsonRequest): {
     init: {
       headers,
       signal,
+      ...(request.init || {}),
     },
   };
 }
