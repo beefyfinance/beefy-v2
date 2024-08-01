@@ -108,10 +108,15 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
     if (isEmpty(apyData)) {
       continue;
     }
+    const { dailyUsd, monthlyUsd, yearlyUsd } = selectYieldStatsByVaultId(
+      state,
+      vault.id,
+      walletAddress
+    );
 
-    newGlobalStats.daily += vaultUsdBalance * apyData.totalDaily;
-    newGlobalStats.monthly += vaultUsdBalance * apyData.totalMonthly;
-    newGlobalStats.yearly += vaultUsdBalance * apyData.totalApy;
+    newGlobalStats.daily += dailyUsd.toNumber();
+    newGlobalStats.monthly += monthlyUsd.toNumber();
+    newGlobalStats.yearly += yearlyUsd.toNumber();
   }
 
   // Skip yield calc if user has no deposits
@@ -125,7 +130,7 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
   return newGlobalStats;
 };
 
-export const selectVaultDailyYieldStats = (
+export const selectYieldStatsByVaultId = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -138,6 +143,10 @@ export const selectVaultDailyYieldStats = (
     return {
       dailyUsd: BIG_ZERO,
       dailyTokens: BIG_ZERO,
+      monthlyTokens: BIG_ZERO,
+      monthlyUsd: BIG_ZERO,
+      yearlyUsd: BIG_ZERO,
+      yearlyTokens: BIG_ZERO,
       oraclePrice,
       tokenDecimals: depositToken.decimals,
     };
@@ -153,10 +162,18 @@ export const selectVaultDailyYieldStats = (
 
   let dailyUsd: BigNumber;
   let dailyTokens: BigNumber;
+  let yearlyTokens: BigNumber;
+  let yearlyUsd: BigNumber;
+  let monthlyTokens: BigNumber;
+  let monthlyUsd: BigNumber;
 
   if (isGovVault(vault)) {
     dailyUsd = vaultUsdBalance.times(apyData.totalDaily);
     dailyTokens = tokenBalance.times(apyData.totalDaily);
+    monthlyUsd = dailyUsd.times(30);
+    monthlyTokens = dailyTokens.times(30);
+    yearlyTokens = tokenBalance.times(apyData.totalApy);
+    yearlyUsd = vaultUsdBalance.times(apyData.totalApy);
   } else {
     const ppfs = selectVaultPricePerFullShare(state, vaultId);
     const boostBalance = selectUserActiveBoostBalanceInToken(state, vaultId, walletAddress)
@@ -169,14 +186,34 @@ export const selectVaultDailyYieldStats = (
 
     dailyUsd = nonBoostBalanceInUsd.times(apyData.totalDaily);
     dailyTokens = nonBoostBalanceInTokens.times(apyData.totalDaily);
+    yearlyTokens = nonBoostBalanceInTokens.times(apyData.totalApy);
+    yearlyUsd = nonBoostBalanceInUsd.times(apyData.totalApy);
 
-    if (apyData.boostedTotalDaily !== undefined && boostBalance.gt(BIG_ZERO)) {
+    if (
+      apyData.boostedTotalDaily !== undefined &&
+      apyData.boostedTotalApy &&
+      boostBalance.gt(BIG_ZERO)
+    ) {
       dailyUsd = dailyUsd.plus(boostBalanceUsd.times(apyData.boostedTotalDaily));
       dailyTokens = dailyTokens.plus(boostBalance.times(apyData.boostedTotalDaily));
+      yearlyTokens = yearlyTokens.plus(boostBalance.times(apyData.boostedTotalApy));
+      yearlyUsd = yearlyUsd.plus(boostBalanceUsd.times(apyData.boostedTotalApy));
     }
   }
 
-  return { dailyUsd, dailyTokens, oraclePrice, tokenDecimals: depositToken.decimals };
+  monthlyTokens = dailyTokens.times(30);
+  monthlyUsd = dailyUsd.times(30);
+
+  return {
+    dailyUsd,
+    dailyTokens,
+    monthlyTokens,
+    monthlyUsd,
+    yearlyTokens,
+    yearlyUsd,
+    oraclePrice,
+    tokenDecimals: depositToken.decimals,
+  };
 };
 
 type ApyVaultUIData =
