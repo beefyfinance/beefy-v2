@@ -36,6 +36,7 @@ export const MERKL_SUPPORTED_CHAINS: Partial<Record<ChainEntity['id'], Address>>
   manta: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
   fraxtal: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
   celo: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  sei: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
 };
 
 function parseReasonId(
