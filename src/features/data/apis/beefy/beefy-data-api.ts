@@ -32,8 +32,8 @@ export class BeefyDataApi implements IBeefyDataApi {
       params: {
         vault: vaultId,
         oracle: oracleId,
-        vaultAddress: vaultAddress || '',
-        chain: chainId || '',
+        vaultAddress: vaultAddress,
+        chain: chainId,
       },
     });
   }

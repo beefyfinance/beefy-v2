@@ -55,7 +55,7 @@ function getRequestUrlInit(request: FetchCommonJsonRequest): {
   const params = request.params
     ? isURLSearchParamsInit(request.params)
       ? new URLSearchParams(request.params)
-      : getUrlSearchParams(request.params)
+      : getUrlSearchParams(request.params, request.paramsOptions)
     : new URLSearchParams();
   if (request.cacheBuster) {
     params.set('_', getCacheBuster(request.cacheBuster));
