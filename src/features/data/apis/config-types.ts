@@ -184,6 +184,7 @@ type ChainId =
   | 'mode'
   | 'manta'
   | 'real'
+  | 'sei'
   | 'aurora'
   | 'emerald'
   | 'celo'

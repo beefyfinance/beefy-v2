@@ -121,4 +121,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-real': {
     backgroundColor: '#FFF',
   },
+  'vaultNetwork-sei': {
+    backgroundColor: '#000',
+  },
 });

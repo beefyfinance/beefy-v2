@@ -1,0 +1,61 @@
+[
+  {
+    "id": "uniswap-cow-sei-weth-usdc-rp",
+    "name": "WETH-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapSeiWETH-USDC",
+    "tokenAddress": "0x0feE8c0140752C62151Aa4F9eA9F564bd40E5B90",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "earnContractAddress": "0xfcdCDb71FF7D0711F8F9A36032Aa3a77A659055D",
+    "earnedToken": "rcowUniswapSeiWETH-USDC",
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-sei-weth-usdc",
+    "status": "active",
+    "createdAt": 1722523990,
+    "platformId": "oku",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sei",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-sei-weth-usdc",
+    "name": "WETH-USDC",
+    "type": "cowcentrated",
+    "token": "WETH-USDC",
+    "tokenAddress": "0x8A1a9Efb7f7F74ACe10A31F2f5f9F7E804f957b1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "depositTokenAddresses": [
+      "0x160345fC359604fC6e70E3c5fAcbdE5F7A9342d8",
+      "0x3894085Ef7Ff0f0aeDf52E2A2704928d1Ec074F1"
+    ],
+    "earnedToken": "cowUniswapSeiWETH-USDC",
+    "earnedTokenAddress": "0x0feE8c0140752C62151Aa4F9eA9F564bd40E5B90",
+    "earnContractAddress": "0x0feE8c0140752C62151Aa4F9eA9F564bd40E5B90",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-sei-weth-usdc",
+    "status": "active",
+    "createdAt": 1722523990,
+    "platformId": "oku",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sei",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  }
+]

@@ -113,5 +113,10 @@
     "chainId": "manta",
     "router": "0x6f66F246Bb436B6f4E66A992C2218b57cD906109",
     "manager": "0xd3d46ff34cd495d5b91b8f3c5c552e81e5e3eab5"
+  },
+  {
+    "chainId": "sei",
+    "router": "0x0465375274301FFCDf3274e59544d535e03B3688",
+    "manager": "0x7B9f2Da828b12fCF7B4154465979a89830C8F57d"
   }
 ]
