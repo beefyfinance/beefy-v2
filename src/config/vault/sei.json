@@ -161,7 +161,7 @@
     "earnedTokenAddress": "0xb2158015044004366e6f72c8c82A0bd355e2ffb3",
     "earnContractAddress": "0xb2158015044004366e6f72c8c82A0bd355e2ffb3",
     "oracle": "lps",
-    "oracleId": "uniswap-cow-sei-weth-wsei",
+    "oracleId": "uniswap-cow-sei-usdc-wsei",
     "status": "active",
     "createdAt": 1722523990,
     "platformId": "oku",
