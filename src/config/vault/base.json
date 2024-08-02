@@ -996,6 +996,62 @@
     ]
   },
   {
+    "id": "aerodrome-usdz-weth",
+    "name": "USDz-ETH vLP",
+    "token": "vAMM-USDz/WETH",
+    "tokenAddress": "0x2ce63497999F520CC2afaaadbCFC37Afd9deF4b0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroUSDz-ETH",
+    "earnedTokenAddress": "0x04B3E65D4f8f722d7B0D2BA76075B1eAC33CE2AF",
+    "earnContractAddress": "0x04B3E65D4f8f722d7B0D2BA76075B1eAC33CE2AF",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usdz-weth",
+    "status": "active",
+    "createdAt": 1722617590,
+    "platformId": "aerodrome",
+    "assets": ["USDz", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x04D5ddf5f3a8939889F11E97f8c4BB48317F1938&token1=0x4200000000000000000000000000000000000006&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-weth-susdz",
+    "name": "sUSDz-ETH vLP",
+    "token": "vAMM-WETH/sUSDz",
+    "tokenAddress": "0x5346a22ee56d200971eC63F98c83e233bd07648d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerosUSDz-WETH",
+    "earnedTokenAddress": "0x0D5228b3F953e919A374fB2428F7eab88Eda5568",
+    "earnContractAddress": "0x0D5228b3F953e919A374fB2428F7eab88Eda5568",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-susdz",
+    "status": "active",
+    "createdAt": 1722617590,
+    "platformId": "aerodrome",
+    "assets": ["sUSDz", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xe31eE12bDFDD0573D634124611e85338e2cBF0cF&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-usdz-susdz",
     "name": "USDz-sUSDz vLP",
     "token": "vAMM-USDz/sUSDz",
