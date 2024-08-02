@@ -46,7 +46,6 @@ import type {
   VaultDetails,
 } from './types';
 import clsx from 'clsx';
-import { handleFetchParams } from '../../../data/apis/transact/helpers/fetch';
 
 const useStyles = makeStyles(styles);
 
@@ -181,14 +180,12 @@ const TwitterItem = memo<ShareServiceItemProps>(function TwitterItem({ details }
     const message = t(`Vault-Share-Message-${details.kind}`, details);
 
     // https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
+    const params = new URLSearchParams({
+      text: message,
+      url: details.vaultUrl,
+    });
 
-    window.open(
-      `https://twitter.com/intent/tweet?${handleFetchParams({
-        text: message,
-        url: details.vaultUrl,
-      })}`,
-      '_blank'
-    );
+    window.open(`https://twitter.com/intent/tweet?${params}`, '_blank');
   }, [details, t]);
 
   return <ShareItem text={t('Vault-Share-Twitter')} onClick={onClick} icon={twitterIcon} />;
@@ -200,13 +197,12 @@ const LensterItem = memo<ShareServiceItemProps>(function LensterItem({ details }
     const message = t(`Vault-Share-Message-${details.kind}`, details);
 
     // https://docs.lens.xyz/docs/integrating-lens
-    window.open(
-      `https://lenster.xyz/?${handleFetchParams({
-        text: message,
-        url: details.vaultUrl,
-      })}`,
-      '_blank'
-    );
+    const params = new URLSearchParams({
+      text: message,
+      url: details.vaultUrl,
+    });
+
+    window.open(`https://lenster.xyz/?${params}`, '_blank');
   }, [details, t]);
 
   return <ShareItem text={t('Vault-Share-Lenster')} onClick={onClick} icon={lensterIcon} />;
@@ -218,13 +214,13 @@ const TelegramItem = memo<ShareServiceItemProps>(function TelegramItem({ details
     const message = t(`Vault-Share-Message-${details.kind}`, details);
 
     // https://core.telegram.org/widgets/share
-    window.open(
-      `https://t.me/share/url?${handleFetchParams({
-        text: message,
-        url: details.vaultUrl,
-      })}`,
-      '_blank'
-    );
+    // https://core.telegram.org/widgets/share
+    const params = new URLSearchParams({
+      text: message,
+      url: details.vaultUrl,
+    });
+
+    window.open(`https://t.me/share/url?${params}`, '_blank');
   }, [details, t]);
 
   return <ShareItem text={t('Vault-Share-Telegram')} onClick={onClick} icon={telegramIcon} />;

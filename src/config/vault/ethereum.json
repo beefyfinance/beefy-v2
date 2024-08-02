@@ -1,5 +1,92 @@
 [
   {
+    "id": "pendle-rsweth-26sep24",
+    "name": "rswETH 26Sep24",
+    "token": "rswETH 26Sep24",
+    "tokenAddress": "0x038C1b03daB3B891AfbCa4371ec807eDAa3e6eB6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0x22b5f6692bAdaB196b4eEBfc1f9DA72D5Cc2af15",
+    "earnedToken": "mooPenpieRswETH_26SEP24",
+    "earnedTokenAddress": "0x22b5f6692bAdaB196b4eEBfc1f9DA72D5Cc2af15",
+    "oracle": "lps",
+    "oracleId": "pendle-rsweth-26sep24",
+    "status": "active",
+    "createdAt": 1722582693,
+    "platformId": "magpie",
+    "assets": ["rswETH"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x038C1b03daB3B891AfbCa4371ec807eDAa3e6eB6/zap/in?chain=ethereum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x038C1b03daB3B891AfbCa4371ec807eDAa3e6eB6/zap/out?chain=ethereum",
+    "network": "ethereum"
+  },
+  {
+    "id": "pendle-unieth-26sep24",
+    "name": "uniETH 26Sep24",
+    "token": "uniETH 26Sep24",
+    "tokenAddress": "0xBaE2Df4DfCd0c613018D6056A40077F2d1eFf28A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0x9A43381249a6417f8ce03CCF26139b5f05527e4F",
+    "earnedToken": "mooPenpieUniETH_26SEP24",
+    "earnedTokenAddress": "0x9A43381249a6417f8ce03CCF26139b5f05527e4F",
+    "oracle": "lps",
+    "oracleId": "pendle-unieth-26sep24",
+    "status": "active",
+    "createdAt": 1722582625,
+    "platformId": "magpie",
+    "assets": ["uniETH"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xBaE2Df4DfCd0c613018D6056A40077F2d1eFf28A/zap/in?chain=ethereum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xBaE2Df4DfCd0c613018D6056A40077F2d1eFf28A/zap/out?chain=ethereum",
+    "network": "ethereum"
+  },
+  {
+    "id": "curve-stlink-link",
+    "name": "stLINK/LINK",
+    "token": "stLINK-f",
+    "tokenAddress": "0x1c899dED01954d0959E034b62a728e7fEbE593b0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xf445C69765AB4901Ebf2a3afE537B7eCca5e612E",
+    "earnedToken": "mooCurveStLINK-LINK",
+    "earnedTokenAddress": "0xf445C69765AB4901Ebf2a3afE537B7eCca5e612E",
+    "oracle": "lps",
+    "oracleId": "curve-stlink-link",
+    "status": "active",
+    "createdAt": 1722412715,
+    "platformId": "curve",
+    "assets": ["stLINK", "LINK"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-241/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-v2-241/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x1c899dED01954d0959E034b62a728e7fEbE593b0",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x1c899dED01954d0959E034b62a728e7fEbE593b0",
+            "coins": [
+              "0xb8b295df2cd735b15BE5Eb419517Aa626fc43cD5",
+              "0x514910771AF9Ca656af840dff83E8264EcF986CA"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "convex-usd3-eusd",
     "name": "USD3/eUSD",
     "token": "USD3eUSD",

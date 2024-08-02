@@ -13,23 +13,3 @@ export async function getErrorMessageFromResponse(res: Response): Promise<string
 
   return undefined;
 }
-
-export function getErrorStatusFromResponse(res: Response): number | undefined {
-  try {
-    if (res.status >= 400) {
-      return res.status;
-    }
-  } catch {
-    /* ignore */
-  }
-}
-
-export function handleFetchParams(
-  params: Record<string, string | number | boolean | string[]>
-): URLSearchParams {
-  return new URLSearchParams(
-    Object.entries(params).flatMap(([k, v]) =>
-      Array.isArray(v) ? v.map(i => [k, i.toString()]) : [[k, v.toString()]]
-    )
-  );
-}
