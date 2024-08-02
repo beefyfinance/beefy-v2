@@ -1,5 +1,193 @@
 [
   {
+    "id": "pancake-cow-arb-cake-weth-vault",
+    "name": "CAKE-WETH",
+    "type": "standard",
+    "token": "CAKE-WETH",
+    "tokenAddress": "0x7A4b631ee867558313F4eE5E76821A4919FE8c47",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooBeefyPancakeCAKE-WETH",
+    "earnedTokenAddress": "0x8513c2835540bd4681f27c171c47a4B4D0c20a2a",
+    "earnContractAddress": "0x8513c2835540bd4681f27c171c47a4B4D0c20a2a",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-arb-cake-weth",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["CAKE", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1722618158,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-arb-cake-weth-rp",
+    "name": "CAKE-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeCAKE-WETH",
+    "tokenAddress": "0x7A4b631ee867558313F4eE5E76821A4919FE8c47",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x431401f8d29bDef342091A6421Cac42460671288",
+    "earnedToken": "rcowPancakeCAKE-WETH",
+    "earnedTokenAddresses": [
+      "0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c",
+      "0x912CE59144191C1204E64559FE8253a0e49E6548"
+    ],
+    "earnedOracleIds": ["Cake", "ARB"],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-arb-cake-weth",
+    "status": "active",
+    "createdAt": 1722618157,
+    "platformId": "pancakeswap",
+    "assets": ["CAKE", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-arb-cake-weth",
+    "name": "CAKE-WETH",
+    "type": "cowcentrated",
+    "token": "CAKE-WETH Cake",
+    "tokenAddress": "0xF5Fac36c2429e1Cf84D4aBACdB18477Ef32589c9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowPancakeCAKE-WETH",
+    "earnedTokenAddress": "0x7A4b631ee867558313F4eE5E76821A4919FE8c47",
+    "earnContractAddress": "0x7A4b631ee867558313F4eE5E76821A4919FE8c47",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-arb-cake-weth",
+    "status": "active",
+    "createdAt": 1722618157,
+    "platformId": "pancakeswap",
+    "assets": ["CAKE", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.25",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-arb-usdc-usdt-vault",
+    "name": "USDC-USDT",
+    "type": "standard",
+    "token": "USDC-USDT",
+    "tokenAddress": "0x784a14a4034e490efeff1638dC30Ea5bA440156F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooBeefyPancakeUSDC-USDT",
+    "earnedTokenAddress": "0x975e9dA3B2D32Dd6F33dA6521362ae2f26de1A40",
+    "earnContractAddress": "0x975e9dA3B2D32Dd6F33dA6521362ae2f26de1A40",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-arb-usdc-usdt",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["USDC", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1722618158,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-arb-usdc-usdt-rp",
+    "name": "USDC-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeUSDC-USDT",
+    "tokenAddress": "0x784a14a4034e490efeff1638dC30Ea5bA440156F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xFe63d7Ad08b38A807CC620f57d7a858080E0774d",
+    "earnedToken": "rcowPancakeUSDC-USDT",
+    "earnedTokenAddresses": [
+      "0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c",
+      "0x912CE59144191C1204E64559FE8253a0e49E6548"
+    ],
+    "earnedOracleIds": ["Cake", "ARB"],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-arb-usdc-usdt",
+    "status": "active",
+    "createdAt": 1722618157,
+    "platformId": "pancakeswap",
+    "assets": ["USDC", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-arb-usdc-usdt",
+    "name": "USDC-USDT",
+    "type": "cowcentrated",
+    "token": "USDC-USDT Cake",
+    "tokenAddress": "0x7e928afb59f5dE9D2f4d162f754C6eB40c88aA8E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+    ],
+    "earnedToken": "cowPancakeUSDC-USDT",
+    "earnedTokenAddress": "0x784a14a4034e490efeff1638dC30Ea5bA440156F",
+    "earnContractAddress": "0x784a14a4034e490efeff1638dC30Ea5bA440156F",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-arb-usdc-usdt",
+    "status": "active",
+    "createdAt": 1722618157,
+    "platformId": "pancakeswap",
+    "assets": ["USDC", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-arb-weth-usdc-500-vault",
     "name": "WETH-USDC",
     "type": "standard",
