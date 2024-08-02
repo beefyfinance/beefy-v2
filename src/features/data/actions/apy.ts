@@ -125,6 +125,10 @@ export const recalculateTotalApyAction = createAsyncThunk<
             // ARB
             '0x912CE59144191C1204E64559FE8253a0e49E6548',
           ],
+          pancakeswap: [
+            // CAKE
+            '0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c',
+          ],
         },
         optimism: {
           velodrome: [
