@@ -2674,38 +2674,6 @@
     ]
   },
   {
-    "id": "aura-r-wsteth",
-    "name": "R-wstETH",
-    "type": "standard",
-    "token": "R-wstETH",
-    "tokenAddress": "0x380aAbE019ed2a9C2d632b51eDDD30fd804d0fAD",
-    "tokenDecimals": 18,
-    "tokenProviderId": "balancer",
-    "earnedToken": "mooAuraR-wstETH",
-    "earnedTokenAddress": "0xfE5716D0C141F3d800995420e1d3fB0D0CFFCC31",
-    "earnContractAddress": "0xfE5716D0C141F3d800995420e1d3fB0D0CFFCC31",
-    "oracle": "lps",
-    "oracleId": "aura-r-wsteth",
-    "status": "eol",
-    "createdAt": 1685985894,
-    "retireReason": "rewards",
-    "retiredAt": 1695146858,
-    "platformId": "aura",
-    "assets": ["R", "wstETH"],
-    "risks": [
-      "COMPLEXITY_MID",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "OVER_COLLAT_ALGO_STABLECOIN",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x380aabe019ed2a9c2d632b51eddd30fd804d0fad000200000000000000000554/invest/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x380aabe019ed2a9c2d632b51eddd30fd804d0fad000200000000000000000554/withdraw",
-    "network": "ethereum"
-  },
-  {
     "id": "aura-r-dai",
     "name": "R-DAI",
     "type": "standard",
