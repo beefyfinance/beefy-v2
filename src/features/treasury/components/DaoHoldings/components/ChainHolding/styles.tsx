@@ -129,6 +129,9 @@ export const styles = (theme: Theme) => ({
   'headerNetwork-real': {
     backgroundColor: 'rgba(28, 18, 44, 0.4)',
   },
+  'headerNetwork-sei': {
+    backgroundColor: 'rgba(28, 18, 44, 0.4)',
+  },
   'headerMM-system9': {
     backgroundColor: 'rgba(243, 243, 200, 0.5)',
   },

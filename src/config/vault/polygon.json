@@ -3112,38 +3112,6 @@
     ]
   },
   {
-    "id": "quick-gamma-usdc-axlusdc-narrow",
-    "name": "axlUSDC-USDC.e Stable LP",
-    "type": "standard",
-    "token": "aaxlUSDC-USDC.e",
-    "tokenAddress": "0x374C44443553d7EB86b5f77597cC67A507b19179",
-    "tokenDecimals": 18,
-    "tokenProviderId": "quickswap",
-    "earnedToken": "mooQuickUSDC-axlUSDC_Stable",
-    "earnedTokenAddress": "0x8070f0c2D01bFB08cC47a18ACf7D551075728F97",
-    "earnContractAddress": "0x8070f0c2D01bFB08cC47a18ACf7D551075728F97",
-    "oracle": "lps",
-    "oracleId": "quick-gamma-usdc-axlusdc-narrow",
-    "status": "eol",
-    "createdAt": 1686917464,
-    "retireReason": "tvl",
-    "retiredAt": 1716482442,
-    "platformId": "gamma",
-    "assets": ["axlUSDC", "pUSDCe"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-axlusdc-stable",
-    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-axlusdc-stable",
-    "network": "polygon",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
-      }
-    ]
-  },
-  {
     "id": "quick-gamma-mimatic-usdt-narrow",
     "name": "MAI-USDT Stable LP",
     "type": "standard",

@@ -211,6 +211,12 @@
     "website": "https://www.re.al/bridge"
   },
   {
+    "id": "sei-canonical",
+    "name": "Sei Bridge",
+    "tagName": "sei",
+    "website": "https://app.sei.io/bridge"
+  },
+  {
     "id": "ankr",
     "name": "Ankr Bridge",
     "tagName": "Ankr",

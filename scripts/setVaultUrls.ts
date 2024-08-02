@@ -8,6 +8,7 @@ import { getTokenById } from './common/tokens';
 import { TokenEntity } from '../src/features/data/entities/token';
 import { getCurvePools } from './addCurveZap';
 import { mapValuesAsync } from './common/utils';
+import { ChainEntity } from '../src/features/data/entities/chain';
 
 const WARN_MISSING_ASSET_ON_ACTIVE_VAULTS_ONLY: boolean = true;
 
@@ -261,7 +262,7 @@ async function getUrlsForVault(
 
     for (const i in vault.assets) {
       const asset = vault.assets[i];
-      const token = await getTokenById(asset, vault.network);
+      const token = await getTokenById(asset, vault.network as ChainEntity['id']);
 
       if (!token) {
         if (!WARN_MISSING_ASSET_ON_ACTIVE_VAULTS_ONLY || vault.status === 'active') {

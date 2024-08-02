@@ -1,5 +1,41 @@
 [
   {
+    "id": "lynex-usdc-dusd",
+    "name": "USDC-DUSD LP",
+    "type": "standard",
+    "token": "USDC-DUSD sLP",
+    "tokenAddress": "0x7088A31d53Fc1fA300Ceb5F9103343137A62b545",
+    "tokenDecimals": 18,
+    "tokenProviderId": "lynex",
+    "earnedToken": "mooLynexUSDC-DUSD",
+    "earnedTokenAddress": "0xEE735Cd490b39cA3555544c39417FFBaC4eACc43",
+    "earnContractAddress": "0xEE735Cd490b39cA3555544c39417FFBaC4eACc43",
+    "oracle": "lps",
+    "oracleId": "lynex-usdc-dusd",
+    "status": "active",
+    "createdAt": 1722365753,
+    "platformId": "lynex",
+    "assets": ["USDC", "DUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x7088A31d53Fc1fA300Ceb5F9103343137A62b545",
+    "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x7088A31d53Fc1fA300Ceb5F9103343137A62b545",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "linea-solidly-lynex"
+      }
+    ]
+  },
+  {
     "id": "sushi-cow-linea-usdc-weth-rp",
     "name": "WETH-USDC Reward Pool",
     "type": "gov",
