@@ -1,5 +1,123 @@
 [
   {
+    "id": "uniswap-cow-sei-usdt-wsei-rp",
+    "name": "USDT-WSEI Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapSeiUSDT-WSEI",
+    "tokenAddress": "0xE8d987e224e50Fb26986ccf11DD4248BF68CaF43",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "earnContractAddress": "0x41c8fDc1f2EB272CB51c224D4C68F277c3C7878B",
+    "earnedToken": "rcowUniswapSeiUSDT-WSEI",
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-sei-usdt-wsei",
+    "status": "active",
+    "createdAt": 1722597986,
+    "platformId": "oku",
+    "assets": ["USDT", "WSEI"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sei",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-sei-usdt-wsei",
+    "name": "USDT-WSEI",
+    "type": "cowcentrated",
+    "token": "USDT-WSEI",
+    "tokenAddress": "0x0493F80f3D4DA87aA0F3713e81e84062d769e5e1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "depositTokenAddresses": [
+      "0xB75D0B03c06A926e488e2659DF1A861F860bD3d1",
+      "0xE30feDd158A2e3b13e9badaeABaFc5516e95e8C7"
+    ],
+    "earnedToken": "cowUniswapSeiUSDT-WSEI",
+    "earnedTokenAddress": "0xE8d987e224e50Fb26986ccf11DD4248BF68CaF43",
+    "earnContractAddress": "0xE8d987e224e50Fb26986ccf11DD4248BF68CaF43",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-sei-usdt-wsei",
+    "status": "active",
+    "createdAt": 1722597986,
+    "platformId": "oku",
+    "assets": ["USDT", "WSEI"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sei",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-sei-usdc-usdt-rp",
+    "name": "USDC-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapSeiUSDC-USDT",
+    "tokenAddress": "0x171897D0e083A5900Fbcd6B68176f5F7261EF7c2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "earnContractAddress": "0xA877cD71F4aF6149240d40A9DAC4e13CB328447C",
+    "earnedToken": "rcowUniswapSeiUSDC-USDT",
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-sei-usdc-usdt",
+    "status": "active",
+    "createdAt": 1722597986,
+    "platformId": "oku",
+    "assets": ["USDC", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sei",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-sei-usdc-usdt",
+    "name": "USDC-USDT",
+    "type": "cowcentrated",
+    "token": "USDC-USDT",
+    "tokenAddress": "0x41eEa09c971294FcDE3B6E553902B04a47be7442",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "depositTokenAddresses": [
+      "0x3894085Ef7Ff0f0aeDf52E2A2704928d1Ec074F1",
+      "0xB75D0B03c06A926e488e2659DF1A861F860bD3d1"
+    ],
+    "earnedToken": "cowUniswapSeiUSDC-USDT",
+    "earnedTokenAddress": "0x171897D0e083A5900Fbcd6B68176f5F7261EF7c2",
+    "earnContractAddress": "0x171897D0e083A5900Fbcd6B68176f5F7261EF7c2",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-sei-usdc-usdt",
+    "status": "active",
+    "createdAt": 1722597986,
+    "platformId": "oku",
+    "assets": ["USDC", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sei",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-sei-weth-usdc-rp",
     "name": "WETH-USDC Reward Pool",
     "type": "gov",
