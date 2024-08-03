@@ -2831,7 +2831,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/base/v2/0xab99a3e856deb448ed99713dfce62f937e2d4d74000000000000000000000118/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0xab99a3e856deb448ed99713dfce62f937e2d4d74000000000000000000000118/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0xab99a3e856deb448ed99713dfce62f937e2d4d74000000000000000000000118/remove-liquidity",
     "network": "base",
     "earningPoints": true
   },
@@ -3319,7 +3319,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/base/v2/0x52e281318fed4efffb8e46c0847a8f9b71a461a8000200000000000000000018/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0x52e281318fed4efffb8e46c0847a8f9b71a461a8000200000000000000000018/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0x52e281318fed4efffb8e46c0847a8f9b71a461a8000200000000000000000018/remove-liquidity",
     "network": "base"
   },
   {
@@ -6121,7 +6121,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/base/v2/0x0c659734f1eef9c63b7ebdf78a164cdd745586db000000000000000000000046/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0x0c659734f1eef9c63b7ebdf78a164cdd745586db000000000000000000000046/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0x0c659734f1eef9c63b7ebdf78a164cdd745586db000000000000000000000046/remove-liquidity",
     "network": "base"
   },
   {
@@ -6152,7 +6152,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/base/v2/0xc771c1a5905420daec317b154eb13e4198ba97d0000000000000000000000023/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0xc771c1a5905420daec317b154eb13e4198ba97d0000000000000000000000023/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0xc771c1a5905420daec317b154eb13e4198ba97d0000000000000000000000023/remove-liquidity",
     "network": "base"
   },
   {
@@ -7934,7 +7934,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/base/v2/0xe58ca65f418d4121d6c70d4c133e60cf6fda363c000000000000000000000013/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0xe58ca65f418d4121d6c70d4c133e60cf6fda363c000000000000000000000013/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0xe58ca65f418d4121d6c70d4c133e60cf6fda363c000000000000000000000013/remove-liquidity",
     "network": "base"
   },
   {
@@ -8285,7 +8285,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/base/v2/0x2db50a0e0310723ef0c2a165cb9a9f80d772ba2f00020000000000000000000d/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0x2db50a0e0310723ef0c2a165cb9a9f80d772ba2f00020000000000000000000d/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0x2db50a0e0310723ef0c2a165cb9a9f80d772ba2f00020000000000000000000d/remove-liquidity",
     "network": "base"
   },
   {
@@ -8317,7 +8317,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/base/v2/0x6fbfcf88db1aada31f34215b2a1df7fafb4883e900000000000000000000000c/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0x6fbfcf88db1aada31f34215b2a1df7fafb4883e900000000000000000000000c/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0x6fbfcf88db1aada31f34215b2a1df7fafb4883e900000000000000000000000c/remove-liquidity",
     "network": "base"
   },
   {
@@ -8350,7 +8350,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/base/v2/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026/remove-liquidity",
     "network": "base"
   }
 ]
