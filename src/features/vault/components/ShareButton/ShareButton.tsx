@@ -214,7 +214,6 @@ const TelegramItem = memo<ShareServiceItemProps>(function TelegramItem({ details
     const message = t(`Vault-Share-Message-${details.kind}`, details);
 
     // https://core.telegram.org/widgets/share
-    // https://core.telegram.org/widgets/share
     const params = new URLSearchParams({
       text: message,
       url: details.vaultUrl,

@@ -140,8 +140,8 @@ export class AxelarSDK implements IAxelarSDK {
 
       headers: {
         'Content-Type': 'application/json',
-        init: 'cors',
       },
+      init: { mode: 'cors' },
       body: JSON.stringify(body),
     });
 

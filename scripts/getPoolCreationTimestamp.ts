@@ -34,7 +34,7 @@ const getCreationTimestamp = async (vaultAddress, explorerUrl, chain) => {
   const res = await fetch(url);
 
   if (!res.ok) {
-    return [];
+    throw new Error(`${res.status} ${res.statusText}`);
   }
 
   const data = (await res.json()) as { status: string; message: string; data: any };
@@ -69,7 +69,6 @@ const getCreationTimestampHarmonyRpc = async (vaultAddress, chain) => {
   });
 
   if (!resp.ok) {
-    console.dir(resp, { depth: null });
     throw new Error('Malformed response');
   }
 
