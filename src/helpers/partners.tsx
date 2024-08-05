@@ -35,6 +35,11 @@ const OpenCover: ChainEntity['id'][] = [
   'gnosis',
   'linea',
   'mantle',
+  'fraxtal',
+  'mode',
+  'manta',
+  'real',
+  'sei',
 ];
 
 export { QiDao, OpenCover, Nexus };
