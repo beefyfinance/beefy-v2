@@ -1,5 +1,3 @@
-import type { AxiosInstance } from 'axios';
-import axios from 'axios';
 import { mapValuesDeep } from '../../utils/array-utils';
 import { featureFlag_simulateBeefyApiError } from '../../utils/feature-flags';
 import type { TreasuryCompleteBreakdownConfig } from '../config-types';
@@ -15,19 +13,20 @@ import type {
   BeefySnapshotActiveResponse,
   ZapAggregatorTokenSupportResponse,
 } from './beefy-api-types';
+import { getJson } from '../../../../helpers/http';
 
 export const API_URL = import.meta.env.VITE_API_URL || 'https://api.beefy.finance';
 export const API_ZAP_URL = import.meta.env.VITE_API_ZAP_URL || `${API_URL}/zap`;
 
 export class BeefyAPI {
-  public api: AxiosInstance;
+  public api: string;
+  public zapApi: string;
+  public timeout: number;
 
   constructor() {
-    // this could be mocked by passing mock axios to the constructor
-    this.api = axios.create({
-      baseURL: API_URL,
-      timeout: 30 * 1000,
-    });
+    this.api = API_URL;
+    this.zapApi = API_ZAP_URL;
+    this.timeout = 30 * 1000;
   }
 
   // here we can nicely type the responses
@@ -36,8 +35,11 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get('/prices', { params: { _: this.getCacheBuster('short') } });
-    return res.data;
+    return await getJson<BeefyAPITokenPricesResponse>({
+      url: `${this.api}/prices`,
+      cacheBuster: 'short',
+      timeout: this.timeout,
+    });
   }
 
   // i'm not 100% certain about the return type
@@ -47,8 +49,11 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get('/lps', { params: { _: this.getCacheBuster('short') } });
-    return res.data;
+    return await getJson<BeefyAPITokenPricesResponse>({
+      url: `${this.api}/lps`,
+      cacheBuster: 'short',
+      timeout: this.timeout,
+    });
   }
 
   public async getLpsBreakdown(): Promise<BeefyAPILpBreakdownResponse> {
@@ -56,10 +61,11 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get('/lps/breakdown', {
-      params: { _: this.getCacheBuster('short') },
+    return await getJson<BeefyAPILpBreakdownResponse>({
+      url: `${this.api}/lps/breakdown`,
+      cacheBuster: 'short',
+      timeout: this.timeout,
     });
-    return res.data;
   }
 
   public async getApyBreakdown(): Promise<BeefyAPIApyBreakdownResponse> {
@@ -67,13 +73,15 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get('/apy/breakdown', {
-      params: { _: this.getCacheBuster('short') },
+    const values = await getJson<BeefyAPIApyBreakdownResponse>({
+      url: `${this.api}/apy/breakdown`,
+      cacheBuster: 'short',
+      timeout: this.timeout,
     });
 
     // somehow, all vaultApr are currently strings, we need to fix that before sending
     // the data to be processed
-    const data = mapValuesDeep(res.data, (val, key) => {
+    const data = mapValuesDeep(values, (val, key) => {
       if (key === 'vaultApr' && typeof val === 'string') {
         val = parseFloat(val);
       }
@@ -88,35 +96,35 @@ export class BeefyAPI {
    * TODO: fetch this from the contract directly
    */
   public async getVaultLastHarvest(): Promise<BeefyApiVaultLastHarvestResponse> {
-    const res = await this.api.get<BeefyApiVaultLastHarvestResponse>('/vaults/last-harvest', {
-      params: { _: this.getCacheBuster('short') },
+    return await getJson<BeefyApiVaultLastHarvestResponse>({
+      url: `${this.api}/vaults/last-harvest`,
+      cacheBuster: 'short',
+      timeout: this.timeout,
     });
-
-    return res.data;
   }
 
   public async getFees(): Promise<ApyFeeData> {
     if (featureFlag_simulateBeefyApiError('fees')) {
       throw new Error('Simulated beefy api error');
     }
-
-    const res = await this.api.get<ApyFeeData>('/fees', {
-      params: { _: this.getCacheBuster('short') },
+    return await getJson<ApyFeeData>({
+      url: `${this.api}/fees`,
+      cacheBuster: 'short',
+      timeout: this.timeout,
     });
-    return res.data;
   }
 
   public async getZapAggregatorTokenSupport(): Promise<ZapAggregatorTokenSupportResponse> {
     if (featureFlag_simulateBeefyApiError('zap-support')) {
       throw new Error('Simulated beefy api error');
     }
-
-    const res = await this.api.get<ZapAggregatorTokenSupportResponse>(`${API_ZAP_URL}/swaps`, {
-      params: { _: this.getCacheBuster('short') },
+    const data = await getJson<ZapAggregatorTokenSupportResponse>({
+      url: `${this.zapApi}/swaps`,
+      cacheBuster: 'short',
+      timeout: this.timeout,
     });
 
     // Handle api->app chain id
-    const data = res.data;
     if ('one' in data) {
       data['harmony'] = data['one'] as ZapAggregatorTokenSupportResponse['harmony'];
       delete data['one'];
@@ -130,21 +138,22 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get<TreasuryCompleteBreakdownConfig>('/treasury/complete', {
-      params: { _: this.getCacheBuster('short') },
+    return await getJson<TreasuryCompleteBreakdownConfig>({
+      url: `${this.api}/treasury/complete`,
+      cacheBuster: 'short',
+      timeout: this.timeout,
     });
-    return res.data;
   }
 
   public async getActiveProposals(): Promise<BeefySnapshotActiveResponse> {
     if (featureFlag_simulateBeefyApiError('snapshot')) {
       throw new Error('Simulated beefy api error');
     }
-
-    const res = await this.api.get<BeefySnapshotActiveResponse>('/snapshot/active', {
-      params: { _: this.getCacheBuster('short') },
+    return await getJson<BeefySnapshotActiveResponse>({
+      url: `${this.api}/snapshot/active`,
+      cacheBuster: 'short',
+      timeout: this.timeout,
     });
-    return res.data;
   }
 
   public async getArticles(): Promise<BeefyLastArticleResponse> {
@@ -152,39 +161,26 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get<BeefyLastArticleResponse>('/articles/latest', {
-      params: { _: this.getCacheBuster('short') },
+    return await getJson<BeefyLastArticleResponse>({
+      url: `${this.api}/articles/latest`,
+      cacheBuster: 'short',
+      timeout: this.timeout,
     });
-    return res.data;
   }
 
   async getAllCowcentratedVaultRanges(): Promise<AllCowcentratedVaultRangesResponse> {
-    const res = await this.api.get<AllCowcentratedVaultRangesResponse>('/cow-price-ranges', {
-      params: { _: this.getCacheBuster('short') },
+    return await getJson<AllCowcentratedVaultRangesResponse>({
+      url: `${this.api}/cow-price-ranges`,
+      cacheBuster: 'short',
+      timeout: this.timeout,
     });
-    return res.data;
   }
 
   async getCowcentratedMerklCampaigns(): Promise<BeefyApiMerklCampaign[]> {
-    const res = await this.api.get<BeefyApiMerklCampaign[]>('/cow-merkl-campaigns/all/recent', {
-      params: { _: this.getCacheBuster('short') },
+    return await getJson<BeefyApiMerklCampaign[]>({
+      url: `${this.api}/cow-merkl-campaigns/all/recent`,
+      cacheBuster: 'short',
+      timeout: this.timeout,
     });
-    return res.data;
-  }
-
-  /**
-   * @param mode short: minutely / long: hourly
-   * @protected
-   */
-  protected getCacheBuster(mode: 'short' | 'long' = 'short'): number {
-    const d = new Date();
-
-    if (mode === 'long') {
-      d.setMinutes(0, 0, 0);
-    } else {
-      d.setSeconds(0, 0);
-    }
-
-    return d.getTime();
   }
 }

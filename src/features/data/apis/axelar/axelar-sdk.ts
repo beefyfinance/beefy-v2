@@ -15,6 +15,7 @@ import type {
   SourceToken,
   Token,
 } from './axelar-sdk-types';
+import { postJson } from '../../../../helpers/http';
 
 /**
  * Slimmed down copy of the Axelar SDK with only a estimateGasFee analog implemented.
@@ -134,14 +135,15 @@ export class AxelarSDK implements IAxelarSDK {
       ...request,
     };
 
-    const response = await fetch(url, {
-      method: 'POST',
+    const response = await postJson<GetFeesResponse>({
+      url,
+
       headers: {
         'Content-Type': 'application/json',
       },
+      init: { mode: 'cors' },
       body: JSON.stringify(body),
-      mode: 'cors',
-    }).then(res => res.json() as Promise<GetFeesResponse>);
+    });
 
     const {
       source_base_fee_string,
