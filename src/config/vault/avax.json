@@ -85,7 +85,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/avalanche/v2/0xfd2620c9cfcec7d152467633b3b0ca338d3d78cc00000000000000000000001c/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/avalanche/v2/0xfd2620c9cfcec7d152467633b3b0ca338d3d78cc00000000000000000000001c/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/avalanche/v2/0xfd2620c9cfcec7d152467633b3b0ca338d3d78cc00000000000000000000001c/remove-liquidity",
     "network": "avax"
   },
   {
@@ -399,7 +399,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/avalanche/v2/0xece571847897fd61e764d455dc15cf1cd9de8d6f000000000000000000000014/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/avalanche/v2/0xece571847897fd61e764d455dc15cf1cd9de8d6f000000000000000000000014/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/avalanche/v2/0xece571847897fd61e764d455dc15cf1cd9de8d6f000000000000000000000014/remove-liquidity",
     "network": "avax"
   },
   {
