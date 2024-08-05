@@ -46,6 +46,7 @@ import { articlesSlice } from './articles';
 import { userRewardsReducer } from './wallet/user-rewards';
 import { versionReducer } from './ui-version';
 import { rewardsReducer } from './rewards';
+import { tenderlyReducer } from './tenderly';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -105,6 +106,16 @@ const uiReducer = combineReducers<BeefyState['ui']>({
   tooltips: tooltipsSlice.reducer,
   addToWallet: addToWalletSlice.reducer,
   version: versionReducer,
+  tenderly: import.meta.env.DEV
+    ? persistReducer(
+        {
+          key: 'tenderly',
+          storage,
+          whitelist: ['credentials'],
+        },
+        tenderlyReducer
+      )
+    : undefined,
 });
 
 export const rootReducer = combineReducers<BeefyState>({

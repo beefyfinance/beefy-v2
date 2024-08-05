@@ -57,7 +57,7 @@ function renderTrackVertical(props) {
 
 export type ScrollableProps = {
   children: ReactNode;
-  autoHeight?: boolean;
+  autoHeight?: boolean | number;
   className?: string;
   shadowClassName?: string;
   topShadowClassName?: string;
@@ -119,8 +119,10 @@ export const Scrollable = memo<ScrollableProps>(function Scrollable({
         renderTrackVertical={renderTrackVertical}
         renderTrackHorizontal={renderTrackHorizontal}
         onUpdate={handleUpdate}
-        autoHeight={autoHeight}
-        autoHeightMax={autoHeight ? 99999999 : undefined}
+        autoHeight={!!autoHeight}
+        autoHeightMax={
+          !autoHeight ? undefined : typeof autoHeight === 'boolean' ? 99999999 : autoHeight
+        }
       >
         {children}
       </ScrollContainer>

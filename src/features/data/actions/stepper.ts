@@ -1,11 +1,9 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { type Action, type ThunkAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { isEmpty } from '../../../helpers/utils';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
 import type { Step } from '../reducers/wallet/stepper';
 import { StepContent, stepperActions } from '../reducers/wallet/stepper';
-import type { ThunkAction } from 'redux-thunk';
-import type { Action } from 'redux';
 
 type StartStepperParams = ChainEntity['id'];
 

@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { type Action, type ThunkAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyDataApi } from '../apis/instances';
 import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault';
