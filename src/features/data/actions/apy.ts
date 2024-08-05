@@ -142,6 +142,12 @@ export const recalculateTotalApyAction = createAsyncThunk<
             '0x940181a94A35A4569E4529A3CDfB74e38FD98631',
           ],
         },
+        linea: {
+          nile: [
+            // NILE
+            '0xAAAac83751090C6ea42379626435f805DDF54DC8',
+          ],
+        },
       };
       const depositToken = selectDepositTokenByVaultId(state, vaultId);
       const baseRewardTokens = depositToken.providerId
