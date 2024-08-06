@@ -762,6 +762,7 @@ export const config = {
       'jEUR',
       'sUSDz',
       'USDT',
+      'EURC',
     ],
   },
   gnosis: {
