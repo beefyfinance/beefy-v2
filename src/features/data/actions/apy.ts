@@ -148,6 +148,12 @@ export const recalculateTotalApyAction = createAsyncThunk<
             '0xAAAac83751090C6ea42379626435f805DDF54DC8',
           ],
         },
+        bsc: {
+          pancakeswap: [
+            // CAKE
+            '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
+          ],
+        },
       };
       const depositToken = selectDepositTokenByVaultId(state, vaultId);
       const baseRewardTokens = depositToken.providerId
