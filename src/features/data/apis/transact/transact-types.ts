@@ -687,6 +687,13 @@ export function isWithdrawQuote(quote: TransactQuote): quote is WithdrawQuote {
   return quote.option.mode === TransactMode.Withdraw;
 }
 
+export function quoteNeedsSlippage(quote: TransactQuote): boolean {
+  if (quote.strategyId === 'reward-pool-to-vault') {
+    return false;
+  }
+  return isZapQuote(quote) || isCowcentratedVaultWithdrawQuote(quote);
+}
+
 export interface ITransactApi {
   fetchDepositOptionsFor(
     vaultId: VaultEntity['id'],
