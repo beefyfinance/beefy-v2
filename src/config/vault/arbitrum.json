@@ -1292,7 +1292,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x59743f1812bb85db83e9e4ee061d124aaa64290000000000000000000000052b/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x59743f1812bb85db83e9e4ee061d124aaa64290000000000000000000000052b/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x59743f1812bb85db83e9e4ee061d124aaa64290000000000000000000000052b/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -1322,7 +1322,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xdfa752ca3ff49d4b6dbe08e2d5a111f51773d3950000000000000000000004e8/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xdfa752ca3ff49d4b6dbe08e2d5a111f51773d3950000000000000000000004e8/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xdfa752ca3ff49d4b6dbe08e2d5a111f51773d3950000000000000000000004e8/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -3408,7 +3408,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xe8a6026365254f779b6927f00f8724ea1b8ae5e0000000000000000000000580/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xe8a6026365254f779b6927f00f8724ea1b8ae5e0000000000000000000000580/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xe8a6026365254f779b6927f00f8724ea1b8ae5e0000000000000000000000580/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -6038,7 +6038,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x90e6cb5249f5e1572afbf8a96d8a1ca6acffd73900000000000000000000055c/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x90e6cb5249f5e1572afbf8a96d8a1ca6acffd73900000000000000000000055c/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x90e6cb5249f5e1572afbf8a96d8a1ca6acffd73900000000000000000000055c/remove-liquidity",
     "earningPoints": true,
     "network": "arbitrum"
   },
@@ -6069,7 +6069,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x7b54c44fbe6db6d97fd22b8756f89c0af16202cc00000000000000000000053c/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x7b54c44fbe6db6d97fd22b8756f89c0af16202cc00000000000000000000053c/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x7b54c44fbe6db6d97fd22b8756f89c0af16202cc00000000000000000000053c/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -8823,47 +8823,6 @@
     ]
   },
   {
-    "id": "curve-arb-eusd-rgusd",
-    "name": "eUSD/rgUSD",
-    "token": "eUSDrgUSD",
-    "tokenAddress": "0xbdf44492aC1C81b1Bd9B9A8B075026d3E8A3225a",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnedToken": "mooCurveEUSD-rgUSD",
-    "earnedTokenAddress": "0x5A8D2889A3135B8e0c7B3D6f55A88374804445d0",
-    "earnContractAddress": "0x5A8D2889A3135B8e0c7B3D6f55A88374804445d0",
-    "oracle": "lps",
-    "oracleId": "curve-arb-eusd-rgusd",
-    "status": "eol",
-    "createdAt": 1717141148,
-    "retireReason": "tvl",
-    "retiredAt": 1719409066,
-    "platformId": "curve",
-    "assets": ["eUSD", "rgUSD"],
-    "migrationIds": ["l2-convex", "l2-curve"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-55/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-55/withdraw",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0xbdf44492aC1C81b1Bd9B9A8B075026d3E8A3225a",
-        "methods": [
-          {
-            "type": "dynamic-deposit",
-            "target": "0xbdf44492aC1C81b1Bd9B9A8B075026d3E8A3225a",
-            "coins": [
-              "0x12275DCB9048680c4Be40942eA4D92c74C63b844",
-              "0x96a993f06951B01430523D0D5590192d650EBf3e"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "curve-arb-eth+-eth",
     "name": "ETH+/WETH",
     "token": "ETH+WETH",
@@ -9375,7 +9334,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516/remove-liquidity",
     "earningPoints": true,
     "network": "arbitrum"
   },
@@ -10285,7 +10244,7 @@
     ],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x2d6ced12420a9af5a83765a8c48be2afcd1a8feb000000000000000000000500/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x2d6ced12420a9af5a83765a8c48be2afcd1a8feb000000000000000000000500/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x2d6ced12420a9af5a83765a8c48be2afcd1a8feb000000000000000000000500/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -10315,7 +10274,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc2598280bfea1fe18dfcabd21c7165c40c6859d30000000000000000000004f3/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc2598280bfea1fe18dfcabd21c7165c40c6859d30000000000000000000004f3/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc2598280bfea1fe18dfcabd21c7165c40c6859d30000000000000000000004f3/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -10408,7 +10367,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xd0ec47c54ca5e20aaae4616c25c825c7f48d40690000000000000000000004ef/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xd0ec47c54ca5e20aaae4616c25c825c7f48d40690000000000000000000004ef/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xd0ec47c54ca5e20aaae4616c25c825c7f48d40690000000000000000000004ef/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -10629,7 +10588,7 @@
     ],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x0c8972437a38b389ec83d1e666b69b8a4fcf8bfd00000000000000000000049e/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x0c8972437a38b389ec83d1e666b69b8a4fcf8bfd00000000000000000000049e/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x0c8972437a38b389ec83d1e666b69b8a4fcf8bfd00000000000000000000049e/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -10987,7 +10946,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xa1a8bf131571a2139feb79401aa4a2e9482df6270002000000000000000004b4/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xa1a8bf131571a2139feb79401aa4a2e9482df6270002000000000000000004b4/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xa1a8bf131571a2139feb79401aa4a2e9482df6270002000000000000000004b4/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -11010,7 +10969,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x2ce4457acac29da4736ae6f5cd9f583a6b335c270000000000000000000004dc/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x2ce4457acac29da4736ae6f5cd9f583a6b335c270000000000000000000004dc/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x2ce4457acac29da4736ae6f5cd9f583a6b335c270000000000000000000004dc/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -11092,7 +11051,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x85ec6ae01624ae0d2a04d0ffaad3a25884c7d0f30002000000000000000004b6/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x85ec6ae01624ae0d2a04d0ffaad3a25884c7d0f30002000000000000000004b6/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x85ec6ae01624ae0d2a04d0ffaad3a25884c7d0f30002000000000000000004b6/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -12459,7 +12418,7 @@
     ],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x423a1323c871abc9d89eb06855bf5347048fc4a5000000000000000000000496/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x423a1323c871abc9d89eb06855bf5347048fc4a5000000000000000000000496/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x423a1323c871abc9d89eb06855bf5347048fc4a5000000000000000000000496/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -12491,7 +12450,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xade4a71bb62bec25154cfc7e6ff49a513b491e81000000000000000000000497/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xade4a71bb62bec25154cfc7e6ff49a513b491e81000000000000000000000497/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xade4a71bb62bec25154cfc7e6ff49a513b491e81000000000000000000000497/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -12522,7 +12481,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x9791d590788598535278552eecd4b211bfc790cb000000000000000000000498/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x9791d590788598535278552eecd4b211bfc790cb000000000000000000000498/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x9791d590788598535278552eecd4b211bfc790cb000000000000000000000498/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -12554,7 +12513,7 @@
     ],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x4a2f6ae7f3e5d715689530873ec35593dc28951b000000000000000000000481/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x4a2f6ae7f3e5d715689530873ec35593dc28951b000000000000000000000481/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x4a2f6ae7f3e5d715689530873ec35593dc28951b000000000000000000000481/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -12584,7 +12543,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x3fd4954a851ead144c2ff72b1f5a38ea5976bd54000000000000000000000480/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x3fd4954a851ead144c2ff72b1f5a38ea5976bd54000000000000000000000480/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x3fd4954a851ead144c2ff72b1f5a38ea5976bd54000000000000000000000480/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -12614,7 +12573,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x32df62dc3aed2cd6224193052ce665dc181658410002000000000000000003bd/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x32df62dc3aed2cd6224193052ce665dc181658410002000000000000000003bd/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x32df62dc3aed2cd6224193052ce665dc181658410002000000000000000003bd/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -12646,7 +12605,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xbe0f30217be1e981add883848d0773a86d2d2cd4000000000000000000000471/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xbe0f30217be1e981add883848d0773a86d2d2cd4000000000000000000000471/awithdraw/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xbe0f30217be1e981add883848d0773a86d2d2cd4000000000000000000000471/awithdraw/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -12678,7 +12637,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x45c4d1376943ab28802b995acffc04903eb5223f000000000000000000000470/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x45c4d1376943ab28802b995acffc04903eb5223f000000000000000000000470/awithdraw/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x45c4d1376943ab28802b995acffc04903eb5223f000000000000000000000470/awithdraw/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -12710,7 +12669,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc6eee8cb7643ec2f05f46d569e9ec8ef8b41b389000000000000000000000475/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc6eee8cb7643ec2f05f46d569e9ec8ef8b41b389000000000000000000000475/awithdraw/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc6eee8cb7643ec2f05f46d569e9ec8ef8b41b389000000000000000000000475/awithdraw/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -12740,7 +12699,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc7fa3a3527435720f0e2a4c1378335324dd4f9b3000200000000000000000459/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc7fa3a3527435720f0e2a4c1378335324dd4f9b3000200000000000000000459/awithdraw/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc7fa3a3527435720f0e2a4c1378335324dd4f9b3000200000000000000000459/awithdraw/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -12770,7 +12729,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x8bc65eed474d1a00555825c91feab6a8255c2107000000000000000000000453/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x8bc65eed474d1a00555825c91feab6a8255c2107000000000000000000000453/awithdraw/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x8bc65eed474d1a00555825c91feab6a8255c2107000000000000000000000453/awithdraw/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -12866,7 +12825,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xee02583596aee94cccb7e8ccd3921d955f17982a00000000000000000000040a/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xee02583596aee94cccb7e8ccd3921d955f17982a00000000000000000000040/awithdraw/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xee02583596aee94cccb7e8ccd3921d955f17982a00000000000000000000040/awithdraw/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -12896,7 +12855,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x542f16da0efb162d20bf4358efa095b70a100f9e000000000000000000000436/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x542f16da0efb162d20bf4358efa095b70a100f9e000000000000000000000436/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x542f16da0efb162d20bf4358efa095b70a100f9e000000000000000000000436/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -12926,7 +12885,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc9f52540976385a84bf416903e1ca3983c539e34000200000000000000000434/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc9f52540976385a84bf416903e1ca3983c539e34000200000000000000000434/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc9f52540976385a84bf416903e1ca3983c539e34000200000000000000000434/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -12989,7 +12948,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x5a7f39435fd9c381e4932fa2047c9a5136a5e3e7000000000000000000000400/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x5a7f39435fd9c381e4932fa2047c9a5136a5e3e7000000000000000000000400/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x5a7f39435fd9c381e4932fa2047c9a5136a5e3e7000000000000000000000400/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -13145,7 +13104,7 @@
     ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xcba9ff45cfb9ce238afde32b0148eb82cbe635620000000000000000000003fd/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xcba9ff45cfb9ce238afde32b0148eb82cbe635620000000000000000000003fd/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xcba9ff45cfb9ce238afde32b0148eb82cbe635620000000000000000000003fd/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -14824,7 +14783,7 @@
     ],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/invest/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -15800,7 +15759,7 @@
     ],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xfb5e6d0c1dfed2ba000fbc040ab8df3615ac329c000000000000000000000159/invest/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xfb5e6d0c1dfed2ba000fbc040ab8df3615ac329c000000000000000000000159/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xfb5e6d0c1dfed2ba000fbc040ab8df3615ac329c000000000000000000000159/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -15832,7 +15791,7 @@
     ],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x178e029173417b1f9c8bc16dcec6f697bc323746000200000000000000000158/invest/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x178e029173417b1f9c8bc16dcec6f697bc323746000200000000000000000158/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x178e029173417b1f9c8bc16dcec6f697bc323746000200000000000000000158/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -15864,7 +15823,7 @@
     ],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/invest/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/remove-liquidity",
     "network": "arbitrum"
   },
   {
@@ -16076,7 +16035,7 @@
     ],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x64541216bafffeec8ea535bb71fbc927831d0595000100000000000000000002/invest/add-liquidity",
-    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x64541216bafffeec8ea535bb71fbc927831d0595000100000000000000000002/withdraw",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x64541216bafffeec8ea535bb71fbc927831d0595000100000000000000000002/remove-liquidity",
     "network": "arbitrum"
   },
   {

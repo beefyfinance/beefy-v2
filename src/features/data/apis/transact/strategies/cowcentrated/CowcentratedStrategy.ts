@@ -424,23 +424,23 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     steps.push(vaultWithdrawn.zap);
 
     // Step 2: Swap(s)
-    if (swapQuotes.length < 1) {
-      throw new Error('Invalid withdraw quote: no swap steps');
-    }
+    // (0 steps are allowed if wanted token is one of the LP tokens and 0 of the other token is split)
     if (swapQuotes.length > 2) {
       throw new Error('Invalid withdraw quote: too many swap steps');
     }
 
-    const insertBalance = allTokensAreDistinct(swapQuotes.map(quoteStep => quoteStep.fromToken));
+    if (swapQuotes.length > 0) {
+      const insertBalance = allTokensAreDistinct(swapQuotes.map(quoteStep => quoteStep.fromToken));
 
-    // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
-    const lastSwapIndex = swapQuotes.length - 1;
-    const swapZaps = await Promise.all(
-      swapQuotes.map((quoteStep, i) =>
-        this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i)
-      )
-    );
-    swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
+      // On withdraw zap the last swap can use 100% of balance even if token was used in previous swaps (since there are no further steps)
+      const lastSwapIndex = swapQuotes.length - 1;
+      const swapZaps = await Promise.all(
+        swapQuotes.map((quoteStep, i) =>
+          this.fetchZapSwap(quoteStep, zapHelpers, insertBalance || lastSwapIndex === i)
+        )
+      );
+      swapZaps.forEach(swap => swap.zaps.forEach(step => steps.push(step)));
+    }
 
     // Build order
     const inputs: OrderInput[] = quote.inputs.map(input => ({
@@ -728,7 +728,8 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     const slippage = selectTransactSlippage(state);
     const wantedOutput = onlyOneToken(wantedOutputs);
     const needsSwap = breakOutputs.map(
-      tokenAmount => !isTokenEqual(wantedOutput, tokenAmount.token)
+      tokenAmount =>
+        !isTokenEqual(wantedOutput, tokenAmount.token) && tokenAmount.amount.gt(BIG_ZERO)
     );
 
     const swapQuotes = await Promise.all(

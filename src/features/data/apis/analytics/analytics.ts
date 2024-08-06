@@ -1,58 +1,52 @@
-import type { AxiosInstance } from 'axios';
-import axios from 'axios';
 import BigNumber from 'bignumber.js';
 import type {
   AnalyticsPriceResponse,
   AnalyticsUserTimelineResponse,
-  TimelineConfigClm,
-  TimelineConfigClassic,
   PriceType,
   TimeBucketType,
+  TimelineConfigClassic,
+  TimelineConfigClm,
   TimelineConfigDatabarn,
 } from './analytics-types';
 import type { VaultEntity } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import { partition } from 'lodash-es';
-
-const INVESTOR_API = import.meta.env.VITE_INVESTOR_URL || 'https://investor-api.beefy.finance';
+import { getJson } from '../../../../helpers/http';
+import { isFetchNotFoundError } from '../../../../helpers/http/errors';
 
 export class AnalyticsApi {
-  public api: AxiosInstance;
+  protected api: string;
 
   constructor() {
-    this.api = axios.create({
-      baseURL: INVESTOR_API,
-    });
+    this.api = import.meta.env.VITE_INVESTOR_URL || 'https://investor-api.beefy.finance';
   }
 
   public async getWalletTimeline(address: string): Promise<AnalyticsUserTimelineResponse> {
     try {
-      const res = await this.api.get<{
+      const res = await getJson<{
         result: {
           clmTimeline: (TimelineConfigClm | TimelineConfigClassic)[];
           databarnTimeline: TimelineConfigDatabarn[];
         };
-      }>('/api/v1/timeline', { params: { address } });
+      }>({ url: `${this.api}/api/v1/timeline`, params: { address } });
 
       const [clmVaultTimeline, clmTimeline] = partition(
-        res.data.result.clmTimeline || [],
+        res.result.clmTimeline || [],
         (item): item is TimelineConfigClassic => item.type === 'classic'
       );
 
       return {
         clmTimeline,
         classicTimeline: clmVaultTimeline,
-        databarnTimeline: res.data.result.databarnTimeline || [],
+        databarnTimeline: res.result.databarnTimeline || [],
       };
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        if (err.response?.status === 404) {
-          return {
-            clmTimeline: [],
-            classicTimeline: [],
-            databarnTimeline: [],
-          };
-        }
+    } catch (err: unknown) {
+      if (isFetchNotFoundError(err)) {
+        return {
+          clmTimeline: [],
+          classicTimeline: [],
+          databarnTimeline: [],
+        };
       }
       throw err;
     }
@@ -65,23 +59,13 @@ export class AnalyticsApi {
     address: VaultEntity['contractAddress'],
     chain: ChainEntity['id']
   ): Promise<AnalyticsPriceResponse> {
-    const res = await this.api.get('/api/v1/prices', {
+    const res = await getJson<{ result: Array<{ ts: number; value: number }> }>({
+      url: `${this.api}/api/v1/prices`,
       params: { address: address.toLowerCase(), productType, priceType, bucket: timeBucket, chain },
     });
 
-    return res.data.result.map((row: { ts: number; value: number }) => {
-      return { date: new Date(row.ts * 1000), value: new BigNumber(row.value) };
-    });
-  }
-
-  public async getClmPrices(oracleId: string, timebucket: TimeBucketType) {
-    const res = await this.api.get('/api/v1/prices', {
-      params: { oracle: oracleId, bucket: timebucket },
-    });
-    return res.data.result.map((row: { ts: number; value: number }) => {
+    return res.result.map(row => {
       return { date: new Date(row.ts * 1000), value: new BigNumber(row.value) };
     });
   }
 }
-
-//

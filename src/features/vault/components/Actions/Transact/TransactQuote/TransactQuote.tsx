@@ -24,8 +24,8 @@ import {
   type CowcentratedVaultDepositQuote,
   type CowcentratedZapDepositQuote,
   isCowcentratedDepositQuote,
-  isCowcentratedVaultWithdrawQuote,
   isZapQuote,
+  quoteNeedsSlippage,
 } from '../../../../../data/apis/transact/transact-types';
 import { ZapRoute } from '../ZapRoute';
 import { QuoteTitleRefresh } from '../QuoteTitleRefresh';
@@ -183,7 +183,7 @@ const QuoteLoaded = memo(function QuoteLoaded() {
   const classes = useStyles();
   const quote = useAppSelector(selectTransactSelectedQuote);
   const isZap = isZapQuote(quote);
-  const needsSlippage = isZap || isCowcentratedVaultWithdrawQuote(quote);
+  const needsSlippage = quoteNeedsSlippage(quote);
 
   return (
     <>

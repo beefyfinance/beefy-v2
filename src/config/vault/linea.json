@@ -1,5 +1,733 @@
 [
   {
+    "id": "nile-cl-weeth-weth-vault",
+    "name": "weETH-WETH",
+    "type": "standard",
+    "token": "weETH-WETH",
+    "tokenAddress": "0x4d13b56f48A6aDD1e59d03735BE79D10e89Cd824",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnedToken": "mooBeefyNileweETH-WETH",
+    "earnedTokenAddress": "0xF92B5561cd983646D7FB149492F6311DaAAA8cB4",
+    "earnContractAddress": "0xF92B5561cd983646D7FB149492F6311DaAAA8cB4",
+    "oracle": "lps",
+    "oracleId": "nile-cl-weeth-weth",
+    "status": "active",
+    "platformId": "nile",
+    "assets": ["weETH", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "pool",
+    "network": "linea",
+    "createdAt": 1722886923,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-weeth-weth-rp",
+    "name": "weETH-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowNileweETH-WETH",
+    "tokenAddress": "0x4d13b56f48A6aDD1e59d03735BE79D10e89Cd824",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnContractAddress": "0x818CFe11Df8fD790c6CAC127A247bb4439089efa",
+    "earnedToken": "rcowNileweETH-WETH",
+    "earnedTokenAddresses": ["0xAAAac83751090C6ea42379626435f805DDF54DC8"],
+    "earnedOracleIds": ["NILE"],
+    "oracle": "lps",
+    "oracleId": "nile-cl-weeth-weth",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["weETH", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-weeth-weth",
+    "name": "weETH-WETH",
+    "type": "cowcentrated",
+    "token": "weETH-WETH",
+    "tokenAddress": "0x183903BDF66EF1dDBCa0BE2E48fC66c4D317E739",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "depositTokenAddresses": [
+      "0x1Bf74C010E6320bab11e2e5A532b5AC15e0b8aA6",
+      "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
+    ],
+    "earnedToken": "cowNileweETH-WETH",
+    "earnedTokenAddress": "0x4d13b56f48A6aDD1e59d03735BE79D10e89Cd824",
+    "earnContractAddress": "0x4d13b56f48A6aDD1e59d03735BE79D10e89Cd824",
+    "oracle": "lps",
+    "oracleId": "nile-cl-weeth-weth",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["weETH", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "earningPoints": true,
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-rseth-weth-vault",
+    "name": "rsETH-WETH",
+    "type": "standard",
+    "token": "rsETH-WETH",
+    "tokenAddress": "0x7c82356b425DaF36D447D24BAa6906eE15EBcf9A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnedToken": "mooBeefyNilersETH-WETH",
+    "earnedTokenAddress": "0x1Ea0a1a0D35f4A72156Aa19AC6322cfAA1f7DFd8",
+    "earnContractAddress": "0x1Ea0a1a0D35f4A72156Aa19AC6322cfAA1f7DFd8",
+    "oracle": "lps",
+    "oracleId": "nile-cl-rseth-weth",
+    "status": "active",
+    "platformId": "nile",
+    "assets": ["wrsETH", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "pool",
+    "network": "linea",
+    "createdAt": 1722886923,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-rseth-weth-rp",
+    "name": "rsETH-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowNilersETH-WETH",
+    "tokenAddress": "0x7c82356b425DaF36D447D24BAa6906eE15EBcf9A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnContractAddress": "0xEF0f0D10A93f5BDeF4aCEFaC02770eeC26302147",
+    "earnedToken": "rcowNilersETH-WETH",
+    "earnedTokenAddresses": ["0xAAAac83751090C6ea42379626435f805DDF54DC8"],
+    "earnedOracleIds": ["NILE"],
+    "oracle": "lps",
+    "oracleId": "nile-cl-rseth-weth",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["wrsETH", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-rseth-weth",
+    "name": "rsETH-WETH",
+    "type": "cowcentrated",
+    "token": "rsETH-WETH",
+    "tokenAddress": "0xCE6f03C4f2D1F23ED1996c85b6FF047FB049B61f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "depositTokenAddresses": [
+      "0xD2671165570f41BBB3B0097893300b6EB6101E6C",
+      "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
+    ],
+    "earnedToken": "cowNilersETH-WETH",
+    "earnedTokenAddress": "0x7c82356b425DaF36D447D24BAa6906eE15EBcf9A",
+    "earnContractAddress": "0x7c82356b425DaF36D447D24BAa6906eE15EBcf9A",
+    "oracle": "lps",
+    "oracleId": "nile-cl-rseth-weth",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["wrsETH", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "earningPoints": true,
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-ezeth-weth-vault",
+    "name": "ezETH-WETH",
+    "type": "standard",
+    "token": "ezETH-WETH",
+    "tokenAddress": "0xD4CC44a7fBc0323d3d74565B558228feCc88A329",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnedToken": "mooBeefyNileezETH-WETH",
+    "earnedTokenAddress": "0xA0a2734F3947C8131603aAfE246A332be7A4AEc1",
+    "earnContractAddress": "0xA0a2734F3947C8131603aAfE246A332be7A4AEc1",
+    "oracle": "lps",
+    "oracleId": "nile-cl-ezeth-weth",
+    "status": "active",
+    "platformId": "nile",
+    "assets": ["ezETH", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "pool",
+    "network": "linea",
+    "createdAt": 1722886923,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-ezeth-weth-rp",
+    "name": "ezETH-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowNileezETH-WETH",
+    "tokenAddress": "0xD4CC44a7fBc0323d3d74565B558228feCc88A329",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnContractAddress": "0xf98793D144392d3fd9c1c52660fB8DA97b46C1ae",
+    "earnedToken": "rcowNileezETH-WETH",
+    "earnedTokenAddresses": ["0xAAAac83751090C6ea42379626435f805DDF54DC8"],
+    "earnedOracleIds": ["NILE"],
+    "oracle": "lps",
+    "oracleId": "nile-cl-ezeth-weth",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["ezETH", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-ezeth-weth",
+    "name": "ezETH-WETH",
+    "type": "cowcentrated",
+    "token": "ezETH-WETH",
+    "tokenAddress": "0x6bA5CCc757541851D610ECc8F8aC3714B5f95314",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "depositTokenAddresses": [
+      "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
+    ],
+    "earnedToken": "cowNileezETH-WETH",
+    "earnedTokenAddress": "0xD4CC44a7fBc0323d3d74565B558228feCc88A329",
+    "earnContractAddress": "0xD4CC44a7fBc0323d3d74565B558228feCc88A329",
+    "oracle": "lps",
+    "oracleId": "nile-cl-ezeth-weth",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["ezETH", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "earningPoints": true,
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-wbtc-weth-vault",
+    "name": "WBTC-WETH",
+    "type": "standard",
+    "token": "WBTC-WETH",
+    "tokenAddress": "0xC1b75C175efcd75057b4325B8133FAd9453843d2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnedToken": "mooBeefyNileWBTC-WETH",
+    "earnedTokenAddress": "0xFD386602204635F04BB0D6F233E67d3E78EE6451",
+    "earnContractAddress": "0xFD386602204635F04BB0D6F233E67d3E78EE6451",
+    "oracle": "lps",
+    "oracleId": "nile-cl-wbtc-weth",
+    "status": "active",
+    "platformId": "nile",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "pool",
+    "network": "linea",
+    "createdAt": 1722886923,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-wbtc-weth-rp",
+    "name": "WBTC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowNileWBTC-WETH",
+    "tokenAddress": "0xC1b75C175efcd75057b4325B8133FAd9453843d2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnContractAddress": "0x9B595098195d6e57E8984F415EF5b73e90F34df4",
+    "earnedToken": "rcowNileWBTC-WETH",
+    "earnedTokenAddresses": ["0xAAAac83751090C6ea42379626435f805DDF54DC8"],
+    "earnedOracleIds": ["NILE"],
+    "oracle": "lps",
+    "oracleId": "nile-cl-wbtc-weth",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-wbtc-weth",
+    "name": "WBTC-WETH",
+    "type": "cowcentrated",
+    "token": "WBTC-WETH",
+    "tokenAddress": "0xF11Bb479dC3DAffe63989b6B95f6c119225dac28",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "depositTokenAddresses": [
+      "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
+      "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
+    ],
+    "earnedToken": "cowNileWBTC-WETH",
+    "earnedTokenAddress": "0xC1b75C175efcd75057b4325B8133FAd9453843d2",
+    "earnContractAddress": "0xC1b75C175efcd75057b4325B8133FAd9453843d2",
+    "oracle": "lps",
+    "oracleId": "nile-cl-wbtc-weth",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "earningPoints": true,
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-usdc-wbtc-vault",
+    "name": "WBTC-USDC",
+    "type": "standard",
+    "token": "WBTC-USDC",
+    "tokenAddress": "0x7E817c545c8532A14AF0eB0a406c5139E6a71Fa0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnedToken": "mooBeefyNileUSDC-WBTC",
+    "earnedTokenAddress": "0xD63fcc1238c5DF4934073E3A1F7878912E8D05a0",
+    "earnContractAddress": "0xD63fcc1238c5DF4934073E3A1F7878912E8D05a0",
+    "oracle": "lps",
+    "oracleId": "nile-cl-usdc-wbtc",
+    "status": "active",
+    "platformId": "nile",
+    "assets": ["WBTC", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "pool",
+    "network": "linea",
+    "createdAt": 1722886923,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-usdc-wbtc-rp",
+    "name": "WBTC-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowNileUSDC-WBTC",
+    "tokenAddress": "0x7E817c545c8532A14AF0eB0a406c5139E6a71Fa0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnContractAddress": "0x57897CA2702AEEC75120B90fDF51C6a807bf6fD8",
+    "earnedToken": "rcowNileUSDC-WBTC",
+    "earnedTokenAddresses": ["0xAAAac83751090C6ea42379626435f805DDF54DC8"],
+    "earnedOracleIds": ["NILE"],
+    "oracle": "lps",
+    "oracleId": "nile-cl-usdc-wbtc",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["WBTC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-usdc-wbtc",
+    "name": "WBTC-USDC",
+    "type": "cowcentrated",
+    "token": "WBTC-USDC",
+    "tokenAddress": "0x0aB43d592F8Fa273ce900D8749c854419e8e1459",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "depositTokenAddresses": [
+      "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
+      "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4"
+    ],
+    "earnedToken": "cowNileUSDC-WBTC",
+    "earnedTokenAddress": "0x7E817c545c8532A14AF0eB0a406c5139E6a71Fa0",
+    "earnContractAddress": "0x7E817c545c8532A14AF0eB0a406c5139E6a71Fa0",
+    "oracle": "lps",
+    "oracleId": "nile-cl-usdc-wbtc",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["WBTC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "earningPoints": true,
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-usdc-usdt-vault",
+    "name": "USDC-USDT",
+    "type": "standard",
+    "token": "USDC-USDT",
+    "tokenAddress": "0x46e9e39fAA114f46Fe59adFC556A079752a6E9C8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnedToken": "mooBeefyNileUSDC-USDT",
+    "earnedTokenAddress": "0x4820d2A8689F381608819a0a38132192b494a364",
+    "earnContractAddress": "0x4820d2A8689F381608819a0a38132192b494a364",
+    "oracle": "lps",
+    "oracleId": "nile-cl-usdc-usdt",
+    "status": "active",
+    "platformId": "nile",
+    "assets": ["USDC", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "pool",
+    "network": "linea",
+    "createdAt": 1722886923,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-usdc-usdt-rp",
+    "name": "USDC-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowNileUSDC-USDT",
+    "tokenAddress": "0x46e9e39fAA114f46Fe59adFC556A079752a6E9C8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnContractAddress": "0x3C802E57c48748FB5494F27E03b57FbB3BBCA909",
+    "earnedToken": "rcowNileUSDC-USDT",
+    "earnedTokenAddresses": ["0xAAAac83751090C6ea42379626435f805DDF54DC8"],
+    "earnedOracleIds": ["NILE"],
+    "oracle": "lps",
+    "oracleId": "nile-cl-usdc-usdt",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["USDC", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-usdc-usdt",
+    "name": "USDC-USDT",
+    "type": "cowcentrated",
+    "token": "USDC-USDT",
+    "tokenAddress": "0xeFD5Ec2CC043e3bd3C840F7998Cc42EE712700ba",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "depositTokenAddresses": [
+      "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
+      "0xA219439258ca9da29E9Cc4cE5596924745e12B93"
+    ],
+    "earnedToken": "cowNileUSDC-USDT",
+    "earnedTokenAddress": "0x46e9e39fAA114f46Fe59adFC556A079752a6E9C8",
+    "earnContractAddress": "0x46e9e39fAA114f46Fe59adFC556A079752a6E9C8",
+    "oracle": "lps",
+    "oracleId": "nile-cl-usdc-usdt",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["USDC", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "earningPoints": true,
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-usdc-weth-vault",
+    "name": "USDC-WETH",
+    "type": "standard",
+    "token": "USDC-WETH",
+    "tokenAddress": "0x8d8A719433bC5221201f52E0277590db88D84080",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnedToken": "mooBeefyNileUSDC-WETH",
+    "earnedTokenAddress": "0xbF01A9f4cf862d6dF827Be7F3461d9F5D263BAd6",
+    "earnContractAddress": "0xbF01A9f4cf862d6dF827Be7F3461d9F5D263BAd6",
+    "oracle": "lps",
+    "oracleId": "nile-cl-usdc-weth",
+    "status": "active",
+    "platformId": "nile",
+    "assets": ["USDC", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "pool",
+    "network": "linea",
+    "createdAt": 1722886923,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-usdc-weth-rp",
+    "name": "USDC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowNileUSDC-WETH",
+    "tokenAddress": "0x8d8A719433bC5221201f52E0277590db88D84080",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnContractAddress": "0x9772687F1Ca50CbfeBa395934d2B4e4a6A799020",
+    "earnedToken": "rcowNileUSDC-WETH",
+    "earnedTokenAddresses": ["0xAAAac83751090C6ea42379626435f805DDF54DC8"],
+    "earnedOracleIds": ["NILE"],
+    "oracle": "lps",
+    "oracleId": "nile-cl-usdc-weth",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["USDC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-usdc-weth",
+    "name": "USDC-WETH",
+    "type": "cowcentrated",
+    "token": "USDC-WETH",
+    "tokenAddress": "0x64bCcad8e7302E81b09894f56F6BBa85ae82CD03",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "depositTokenAddresses": [
+      "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
+      "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
+    ],
+    "earnedToken": "cowNileUSDC-WETH",
+    "earnedTokenAddress": "0x8d8A719433bC5221201f52E0277590db88D84080",
+    "earnContractAddress": "0x8d8A719433bC5221201f52E0277590db88D84080",
+    "oracle": "lps",
+    "oracleId": "nile-cl-usdc-weth",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["USDC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "earningPoints": true,
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-usdt-weth-vault",
+    "name": "USDT-WETH",
+    "type": "standard",
+    "token": "USDT-WETH",
+    "tokenAddress": "0xec3391fD3c18f61a00Be52Eeb264a35Db0D705dd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnedToken": "mooBeefyNileUSDT-WETH",
+    "earnedTokenAddress": "0x3206C34f9A5A300bdd604E7278b54e301e4896A2",
+    "earnContractAddress": "0x3206C34f9A5A300bdd604E7278b54e301e4896A2",
+    "oracle": "lps",
+    "oracleId": "nile-cl-usdt-weth",
+    "status": "active",
+    "platformId": "nile",
+    "assets": ["USDT", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "pool",
+    "network": "linea",
+    "createdAt": 1722886923,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-usdt-weth-rp",
+    "name": "USDT-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowNileUSDT-WETH",
+    "tokenAddress": "0xec3391fD3c18f61a00Be52Eeb264a35Db0D705dd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "earnContractAddress": "0x22986dB8fb43994D2a3e209b22CBacCAc1F3Bc57",
+    "earnedToken": "rcowNileUSDT-WETH",
+    "earnedTokenAddresses": ["0xAAAac83751090C6ea42379626435f805DDF54DC8"],
+    "earnedOracleIds": ["NILE"],
+    "oracle": "lps",
+    "oracleId": "nile-cl-usdt-weth",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["USDT", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "earningPoints": true,
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "nile-cl-usdt-weth",
+    "name": "USDT-WETH",
+    "type": "cowcentrated",
+    "token": "USDT-WETH",
+    "tokenAddress": "0x27ED78122B8eF363F4EF5B3aFe197e0c4A2Fa514",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nile",
+    "depositTokenAddresses": [
+      "0xA219439258ca9da29E9Cc4cE5596924745e12B93",
+      "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
+    ],
+    "earnedToken": "cowNileUSDT-WETH",
+    "earnedTokenAddress": "0xec3391fD3c18f61a00Be52Eeb264a35Db0D705dd",
+    "earnContractAddress": "0xec3391fD3c18f61a00Be52Eeb264a35Db0D705dd",
+    "oracle": "lps",
+    "oracleId": "nile-cl-usdt-weth",
+    "status": "active",
+    "createdAt": 1722886922,
+    "platformId": "nile",
+    "assets": ["USDT", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "linea",
+    "earningPoints": true,
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "lynex-usdc-dusd",
     "name": "USDC-DUSD LP",
     "type": "standard",

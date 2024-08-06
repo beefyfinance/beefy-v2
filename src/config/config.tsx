@@ -786,7 +786,7 @@ export const config = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['xDAI', 'EURe', 'USDC', 'USDT', 'sDAI', 'crvUSD'],
+    stableCoins: ['xDAI', 'EURe', 'USDC', 'USDT', 'sDAI', 'crvUSD', 'stEUR', 'USDCe'],
   },
   linea: {
     name: 'Linea',

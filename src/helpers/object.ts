@@ -1,6 +1,6 @@
 import { BigNumber } from 'bignumber.js';
 import { isBigNumber } from './big-number';
-import { cloneDeepWith } from 'lodash-es';
+import { cloneDeepWith, defaults as defaultsShallow, defaultsDeep } from 'lodash-es';
 
 export function cloneDeep<T>(input: T): T {
   return cloneDeepWith(input, value => {
@@ -76,4 +76,31 @@ export function pushOrSet<K extends string, V>(map: Record<K, V[]>, key: K, valu
     map[key] = [value];
   }
   return map;
+}
+
+export function typedDefaults<T extends object>(
+  input: Partial<T> | undefined | null,
+  defaults: T
+): T {
+  if (!input) {
+    return { ...defaults };
+  }
+  return defaultsShallow({}, input || {}, defaults);
+}
+
+// @dev does not handle arrays, Maps, Sets etc
+type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]>;
+    }
+  : T;
+
+export function typedDefaultsDeep<T extends object>(
+  input: DeepPartial<T> | undefined | null,
+  defaults: T
+): T {
+  if (!input) {
+    return cloneDeep(defaults);
+  }
+  return defaultsDeep({}, input || {}, defaults) as T;
 }
