@@ -5,22 +5,21 @@ export const styles = (theme: Theme) => ({
     display: 'grid',
     gap: '1px',
     gridTemplateColumns: 'repeat(4, 1fr)',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: 'repeat(2, 1fr)',
     },
   },
   itemContainer: {
     display: 'flex',
-    width: '100%',
-    columnGap: '24px',
+    flexDirection: 'column' as const,
+    justifyContent: 'flex-start',
     padding: '16px 24px',
     backgroundColor: theme.palette.background.contentPrimary,
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px',
+    },
   },
-  textContainer: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    width: '95%',
-  },
+
   label: {
     ...theme.typography['body-sm-med'],
     fontWeight: 700,
@@ -43,6 +42,9 @@ export const styles = (theme: Theme) => ({
   },
   greenValue: {
     color: theme.palette.primary.main,
+  },
+  redValue: {
+    color: theme.palette.background.indicators.error,
   },
   subValue: {
     ...theme.typography['body-sm-med'],

@@ -1,4 +1,6 @@
-export const styles = () => ({
+import type { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   tabs: {
     border: 0,
     padding: 0,
@@ -6,6 +8,7 @@ export const styles = () => ({
     gap: '12px',
   },
   tab: {
+    ...theme.typography['body-sm-med'],
     border: 0,
     padding: 0,
     background: 'transparent',

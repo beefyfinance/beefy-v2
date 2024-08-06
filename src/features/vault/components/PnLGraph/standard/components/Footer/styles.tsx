@@ -19,7 +19,7 @@ export const styles = (theme: Theme) => ({
       minHeight: '24px',
     },
     '& .MuiTab-root': {
-      ...theme.typography['subline-lg'],
+      ...theme.typography['body-sm-med'],
       minHeight: '22px',
       padding: '0px',
     },
