@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => ({
     gap: '1px',
     gridTemplateColumns: 'repeat(4, 1fr)',
     [theme.breakpoints.down('xs')]: {
-      gridTemplateColumns: 'repeat(1, 1fr)',
+      gridTemplateColumns: 'repeat(2, 1fr)',
     },
   },
   itemContainer: {
