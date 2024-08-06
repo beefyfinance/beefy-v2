@@ -3,34 +3,35 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   header: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(4,minmax(0,1fr))',
-    padding: '16px 24px',
-    borderRadius: '12px 12px 0px 0px',
-    backgroundColor: theme.palette.background.contentDark,
-    gap: '8px',
-    [theme.breakpoints.down('md')]: {
-      padding: '16px',
-      gridTemplateColumns: 'repeat(2,minmax(0,1fr))',
+    gap: '1px',
+    gridTemplateColumns: 'repeat(4, 1fr)',
+    [theme.breakpoints.down('xs')]: {
+      gridTemplateColumns: 'repeat(1, 1fr)',
     },
   },
-  itemContainer: { display: 'flex', width: '100%', columnGap: '24px' },
+  itemContainer: {
+    display: 'flex',
+    width: '100%',
+    columnGap: '24px',
+    padding: '16px 24px',
+    backgroundColor: theme.palette.background.contentPrimary,
+  },
   textContainer: {
     display: 'flex',
     flexDirection: 'column' as const,
-    rowGap: '4px',
-    width: '85%',
+    width: '95%',
   },
   label: {
-    ...theme.typography['subline-sm'],
+    ...theme.typography['body-sm-med'],
+    fontWeight: 700,
     color: theme.palette.text.dark,
     textTransform: 'uppercase' as const,
-    fontWeight: 700,
   },
   value: {
     display: 'flex',
     alignItems: 'center',
     columnGap: '4px',
-    ...theme.typography.h3,
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.middle,
     fontWeight: 500,
     '& span': {
@@ -44,17 +45,8 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.primary.main,
   },
   subValue: {
-    ...theme.typography['subline-sm'],
+    ...theme.typography['body-sm-med'],
     color: theme.palette.text.dark,
-  },
-  border: {
-    height: '64px',
-    width: '2px',
-    borderRadius: '8px',
-    backgroundColor: theme.palette.background.contentLight,
-    [theme.breakpoints.down('md')]: {
-      display: 'none',
-    },
   },
   withTooltip: {
     textDecoration: 'underline 1px dotted',

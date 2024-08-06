@@ -97,7 +97,7 @@ interface HeaderItemProps {
 
 const HeaderItem = memo<HeaderItemProps>(function HeaderItem({
   label,
-  border = true,
+
   className,
   tooltipText,
   children,
@@ -106,7 +106,6 @@ const HeaderItem = memo<HeaderItemProps>(function HeaderItem({
 
   return (
     <div className={clsx(classes.itemContainer, className)}>
-      {border && <div className={classes.border} />}
       <div className={classes.textContainer}>
         <div className={classes.labelContainer}>
           <div className={classes.label}>{label}</div>

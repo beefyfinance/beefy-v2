@@ -3,11 +3,13 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   footer: {
     display: 'flex',
+    flexWrap: 'nowrap' as const,
+    gap: '16px',
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    padding: '8px 24px',
-    borderTop: `2px solid ${theme.palette.background.border}`,
+    padding: '12px 24px',
     borderRadius: '0px 0px 12px 12px',
-    justifyContent: 'end',
+    backgroundColor: theme.palette.background.contentPrimary,
     [theme.breakpoints.down('sm')]: {
       padding: '8px 16px',
     },
@@ -19,7 +21,7 @@ export const styles = (theme: Theme) => ({
     '& .MuiTab-root': {
       ...theme.typography['subline-lg'],
       minHeight: '22px',
-      padding: '6px 0px',
+      padding: '0px',
     },
     '& .MuiTabs-flexContainer': {
       gap: '12px',
