@@ -51,7 +51,7 @@ async function vaultData(chain, vaultAddress, id) {
   if (platform === 'equilibria') provider = 'pendle';
   const migrationIds =
     ['curve', 'curve-lend'].includes(provider) && chain === 'ethereum'
-      ? ['ethereum-convex']
+      ? ['ethereum-convex', 'ethereum-curve']
       : ['curve', 'curve-lend'].includes(provider)
       ? ['l2-convex', 'l2-curve']
       : ['pendle'].includes(provider)

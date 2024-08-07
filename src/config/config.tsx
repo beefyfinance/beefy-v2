@@ -70,6 +70,7 @@ export const config = {
       'USDM',
       'ULTRA',
       'ShezUSD',
+      'thUSD',
       'USDe',
       'sUSDe',
     ],

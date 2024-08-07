@@ -25087,45 +25087,6 @@
     ]
   },
   {
-    "id": "biswap-wbnb-xvs",
-    "name": "XVS-BNB LP",
-    "type": "standard",
-    "token": "XVS-BNB BiLP",
-    "tokenAddress": "0x753C734Dfe05aF28A732C033e26Ea6D369e07662",
-    "tokenDecimals": 18,
-    "tokenProviderId": "biswap",
-    "earnedToken": "mooBiSwapXVS-BNB",
-    "earnedTokenAddress": "0xB91ae21209e71a92697538D4f2423Cbb2C6D8A93",
-    "earnContractAddress": "0xB91ae21209e71a92697538D4f2423Cbb2C6D8A93",
-    "oracle": "lps",
-    "oracleId": "biswap-wbnb-xvs",
-    "status": "eol",
-    "createdAt": 1655307323,
-    "retireReason": "tvl",
-    "retiredAt": 1661444768,
-    "platformId": "biswap",
-    "assets": ["XVS", "BNB"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://exchange.biswap.org/#/swap?inputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c&outputCurrency=0xcF6BB5389c92Bdda8a3747Ddb454cB7a64626C63",
-    "addLiquidityUrl": "https://exchange.biswap.org/#/add/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0xcF6BB5389c92Bdda8a3747Ddb454cB7a64626C63",
-    "removeLiquidityUrl": "https://exchange.biswap.org/#/remove/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0xcF6BB5389c92Bdda8a3747Ddb454cB7a64626C63",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "bsc-biswap"
-      }
-    ]
-  },
-  {
     "id": "biswap-pae-wbnb",
     "name": "PAE-BNB LP",
     "type": "standard",
