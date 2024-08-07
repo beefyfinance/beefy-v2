@@ -81,14 +81,12 @@ export class BeefyAPI {
 
     // somehow, all vaultApr are currently strings, we need to fix that before sending
     // the data to be processed
-    const data = mapValuesDeep(values, (val, key) => {
+    return mapValuesDeep(values, (val, key) => {
       if (key === 'vaultApr' && typeof val === 'string') {
         val = parseFloat(val);
       }
       return val;
     });
-
-    return data;
   }
 
   /**
