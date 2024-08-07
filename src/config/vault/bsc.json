@@ -26063,45 +26063,6 @@
     ]
   },
   {
-    "id": "biswap-dot-wbnb",
-    "name": "DOT-BNB LP",
-    "type": "standard",
-    "token": "DOT-BNB BiLP",
-    "tokenAddress": "0xe7fbB8bd95322618e925affd84D7eC0E32DC0e57",
-    "tokenDecimals": 18,
-    "tokenProviderId": "biswap",
-    "earnedToken": "mooBiSwapDOT-BNB",
-    "earnedTokenAddress": "0xb326DFd32417C17C1c41FB56ab919f6E548845cD",
-    "earnContractAddress": "0xb326DFd32417C17C1c41FB56ab919f6E548845cD",
-    "oracle": "lps",
-    "oracleId": "biswap-dot-wbnb",
-    "status": "eol",
-    "createdAt": 1655458490,
-    "retireReason": "tvl",
-    "retiredAt": 1661444768,
-    "platformId": "biswap",
-    "assets": ["DOT", "BNB"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://exchange.biswap.org/#/swap?inputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c&outputCurrency=0x7083609fCE4d1d8Dc0C979AAb8c869Ea2C873402",
-    "addLiquidityUrl": "https://exchange.biswap.org/#/add/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0x7083609fCE4d1d8Dc0C979AAb8c869Ea2C873402",
-    "removeLiquidityUrl": "https://exchange.biswap.org/#/remove/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0x7083609fCE4d1d8Dc0C979AAb8c869Ea2C873402",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "bsc-biswap"
-      }
-    ]
-  },
-  {
     "id": "biswap-wbnb-uni",
     "name": "UNI-BNB LP",
     "type": "standard",
