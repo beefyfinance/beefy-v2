@@ -139,7 +139,7 @@ const SharesValue = memo<SharesValueProps>(function SharesValue({
   const classes = useStyles();
 
   const fullAmount = formatTokenDisplay(amount, decimals);
-  const shortAmount = formatTokenDisplayCondensed(amount, decimals, 6);
+  const shortAmount = formatTokenDisplayCondensed(amount, decimals);
 
   return (
     <Tooltip content={<BasicTooltipContent title={fullAmount} />}>
