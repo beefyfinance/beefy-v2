@@ -57,14 +57,20 @@ export function formatTokenDisplayCondensed(
     .absoluteValue()
     .decimalPlaces(0, BigNumber.ROUND_FLOOR)
     .toString(10).length;
-  const decimalDigits = Math.max(digits - wholeDigits, 0);
+  const decimalDigits = digits - wholeDigits;
 
-  // Whole number only if wholeDigits >= digits
-  if (wholeDigits >= digits) {
+  // Whole number only
+  if (decimalDigits <= 0) {
     return formatGrouped(value, 0);
   }
 
-  return condenseDecimalZeros(formatGrouped(value, decimalDigits), decimalDigits);
+  // Handle small numbers with leading decimal zeros using subscript notation
+  if (value.isLessThan(1) && decimalDigits > 0) {
+    return condenseDecimalZeros(formatGrouped(value, decimals), decimalDigits);
+  }
+
+  // For other cases, use the significant decimals calculated
+  return formatGrouped(value, decimalDigits);
 }
 
 /**
