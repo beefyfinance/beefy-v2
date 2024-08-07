@@ -28,11 +28,7 @@ const DISPLAY_ORDER = ((i = 0) =>
  */
 export const getApyComponents = createFactory(() => {
   const { allComponents: baseAll } = getApiApyDataComponents();
-  const components = [
-    ...baseAll,
-    'boost' as const,
-    'rewardPoolTrading' as const,
-  ] as const satisfies TotalApyComponent[];
+  const components = [...baseAll, 'boost' as const] as const satisfies TotalApyComponent[];
 
   components.sort((a, b) => DISPLAY_ORDER[a] - DISPLAY_ORDER[b]);
 
@@ -94,6 +90,7 @@ export const getApiApyDataComponents = createFactory(() => {
     'liquidStaking',
     'composablePool',
     'rewardPool',
+    'rewardPoolTrading',
   ] as const satisfies Array<ApiApyDataAprComponents>;
   const allComponents = [...compoundableComponents, ...nonCompoundableComponents];
   const compoundableDaily = compoundableComponents.map(
