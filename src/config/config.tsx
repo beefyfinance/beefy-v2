@@ -209,6 +209,7 @@ export const config = {
       'vUSDT',
       'USDV',
       'lisUSD',
+      'axlUSDC',
     ],
   },
   optimism: {
