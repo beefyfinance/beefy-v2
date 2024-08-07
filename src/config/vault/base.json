@@ -1,5 +1,33 @@
 [
   {
+    "id": "aerodrome-eurc-usdc",
+    "name": "EURC-USDC vLP",
+    "token": "vAMM-EURC/USDC",
+    "tokenAddress": "0xFDF5139b38525627B47538536042A7c8d2686BD9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroEURC-USDC",
+    "earnedTokenAddress": "0x8772e48116f3bB7A7267F68C7259A16c96E8EBef",
+    "earnContractAddress": "0x8772e48116f3bB7A7267F68C7259A16c96E8EBef",
+    "oracle": "lps",
+    "oracleId": "aerodrome-eurc-usdc",
+    "status": "active",
+    "createdAt": 1722943488,
+    "platformId": "aerodrome",
+    "assets": ["EURC", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aero-cow-usdc-usdt-vault",
     "name": "USDC-USDT",
     "type": "standard",
