@@ -1,4 +1,4 @@
-import { CardContent, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import React, { memo, useCallback, useMemo, useState } from 'react';
 import { useAppSelector } from '../../../../../store';
 import { isStandardVault, type VaultEntity } from '../../../../data/entities/vault';
@@ -11,7 +11,7 @@ import { styles } from './styles';
 import { selectVaultById } from '../../../../data/selectors/vaults';
 import { selectWalletAddress } from '../../../../data/selectors/wallet';
 import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData';
-import { Card, CardHeader, CardTitle } from '../../Card';
+import { Card, CardContent, CardHeader, CardTitle } from '../../Card';
 import { useTranslation } from 'react-i18next';
 import { StatSwitcher } from '../../StatSwitcher';
 
