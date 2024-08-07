@@ -1,4 +1,4 @@
-import { getJson, postJson } from '../../../../helpers/http';
+import { getJson, postJson, postText } from '../../../../helpers/http';
 import type {
   IOnRampApi,
   ApiQuoteRequest,
@@ -27,7 +27,7 @@ export class OnRampApi implements IOnRampApi {
   }
 
   public async getUrl(options: ApiUrlRequest): Promise<ApiUrlResponse> {
-    return await postJson<ApiUrlResponse>({
+    return await postText({
       url: `${this.api}/onboard/init`,
       body: options,
     });
