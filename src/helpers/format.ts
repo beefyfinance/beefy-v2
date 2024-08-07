@@ -49,7 +49,7 @@ export function formatTokenDisplayCondensed(
 
   // Default/Clamp: all decimals
   if (digits === undefined || digits > decimals) {
-    digits = decimals;
+    digits = decimals + 1;
   }
 
   // Work out how many digits we have for whole and fraction
