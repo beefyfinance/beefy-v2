@@ -11529,36 +11529,6 @@
     "network": "arbitrum"
   },
   {
-    "id": "gmx-arb-usdc-dai",
-    "name": "USDC-DAI GM",
-    "type": "standard",
-    "token": "USDC-DAI GM",
-    "tokenAddress": "0xe2fEDb9e6139a182B98e7C2688ccFa3e9A53c665",
-    "tokenDecimals": 18,
-    "tokenProviderId": "gmx",
-    "earnedToken": "mooGmxUSDC-DAI",
-    "earnedTokenAddress": "0x7dE133d98151658baAE3d1Ad94B883C452c87e79",
-    "earnContractAddress": "0x7dE133d98151658baAE3d1Ad94B883C452c87e79",
-    "oracle": "lps",
-    "oracleId": "gmx-arb-usdc-dai",
-    "status": "active",
-    "createdAt": 1700568258,
-    "platformId": "gmx",
-    "assets": ["USDC", "DAI"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "gmx-gm",
-    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "network": "arbitrum"
-  },
-  {
     "id": "gmx-arb-ltc-usdc",
     "name": "LTC-USDC GM",
     "type": "standard",
@@ -14023,44 +13993,6 @@
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://app.ramses.exchange/swap?from=0xff970a61a04b1ca14834a43f5de4533ebddb5cc8&to=0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
     "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0xe25c248ee2d3d5b428f1388659964446b4d78599",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "arbitrum-ramses"
-      }
-    ]
-  },
-  {
-    "id": "ramses-mim-usdc",
-    "name": "MIM-USDC.e sLP",
-    "type": "standard",
-    "token": "MIM-USDC.e sLP",
-    "tokenAddress": "0x7E9e5F35EC3e95AEb58B7E7b218cC334a1f8Bf28",
-    "tokenDecimals": 18,
-    "tokenProviderId": "ramses",
-    "earnedToken": "mooRamsesMIM-USDC",
-    "earnedTokenAddress": "0x667168ef0a78909AB5a456229619a0c3dc905A4F",
-    "earnContractAddress": "0x667168ef0a78909AB5a456229619a0c3dc905A4F",
-    "oracle": "lps",
-    "oracleId": "ramses-mim-usdc",
-    "status": "eol",
-    "createdAt": 1680096681,
-    "retireReason": "tvl",
-    "retiredAt": 1681811085,
-    "platformId": "ramses",
-    "assets": ["MIM", "arbUSDCe"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.ramses.exchange/swap?from=0xff970a61a04b1ca14834a43f5de4533ebddb5cc8&to=0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
-    "addLiquidityUrl": "https://app.ramses.exchange/liquidity/0x7e9e5f35ec3e95aeb58b7e7b218cc334a1f8bf28",
     "network": "arbitrum",
     "zaps": [
       {
