@@ -1,5 +1,28 @@
 [
   {
+    "id": "pendle-usd0-31oct24",
+    "name": "USD0++ 31Oct24",
+    "token": "USD0++ 31Oct24",
+    "tokenAddress": "0x00b321D89A8C36B3929f20B7955080baeD706D1B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0x430060e208E38AeAA8E924BC153CA2929d135cd6",
+    "earnedToken": "mooPenpieUSD0_31OCT24",
+    "earnedTokenAddress": "0x430060e208E38AeAA8E924BC153CA2929d135cd6",
+    "oracle": "lps",
+    "oracleId": "pendle-usd0-31oct24",
+    "status": "active",
+    "createdAt": 1723203987,
+    "platformId": "magpie",
+    "assets": ["USD0++"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x00b321D89A8C36B3929f20B7955080baeD706D1B/zap/in?chain=ethereum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x00b321D89A8C36B3929f20B7955080baeD706D1B/zap/out?chain=ethereum",
+    "network": "ethereum"
+  },
+  {
     "id": "curve-thusd-crvusd",
     "name": "thUSD/crvUSD",
     "token": "thUSDcrvUS",

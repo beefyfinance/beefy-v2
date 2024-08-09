@@ -71,6 +71,8 @@ export const config = {
       'ULTRA',
       'ShezUSD',
       'thUSD',
+      'USD0',
+      'USD0++',
       'USDe',
       'sUSDe',
     ],
