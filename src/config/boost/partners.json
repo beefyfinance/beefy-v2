@@ -8,6 +8,15 @@
       "twitter": "https://x.com/Balancer"
     }
   },
+  "beefy-clm": {
+  "title": "Beefy",
+  "text": "Beefy's CLM vaults allows you to participate in concentrated liquidity pools without actively managing your position, while also compounding every reward available into more of your CLM position. Earn extra OP tokens on top of selected CLM vaults.",
+  "website": "https://app.beefy.finance",
+  "social": {
+    "telegram": "http://t.me/beefyfinance",
+    "twitter": "https://twitter.com/beefyfinance"
+  }
+},
   "shezmu": {
     "title": "Shezmu",
     "text": "Shezmu is a CDP (Collateralized Debt Position) Protocol that allows users to borrow against yield-bearing tokens and NFTs.",
