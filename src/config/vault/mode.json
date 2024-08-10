@@ -35,7 +35,6 @@
         "ammId": "mode-velodrome-v2"
       }
     ],
-    "earningPoints": true,
     "pointStructureIds": ["mode-volume"]
   },
   {
@@ -74,7 +73,6 @@
         "ammId": "mode-velodrome-v2"
       }
     ],
-    "earningPoints": true,
     "pointStructureIds": ["mode-volume", "etherfi"]
   },
   {
@@ -113,7 +111,6 @@
         "ammId": "mode-velodrome-v2"
       }
     ],
-    "earningPoints": true,
     "pointStructureIds": ["mode-volume", "renzo"]
   },
   {
@@ -152,7 +149,6 @@
         "ammId": "mode-velodrome-v2"
       }
     ],
-    "earningPoints": true,
     "pointStructureIds": ["mode-volume"]
   },
   {
@@ -191,7 +187,6 @@
         "ammId": "mode-velodrome-v2"
       }
     ],
-    "earningPoints": true,
     "pointStructureIds": ["mode-volume"]
   },
   {
@@ -230,7 +225,6 @@
         "ammId": "mode-velodrome-v2"
       }
     ],
-    "earningPoints": true,
     "pointStructureIds": ["mode-volume"]
   },
   {
@@ -269,7 +263,6 @@
         "ammId": "mode-velodrome-v2"
       }
     ],
-    "earningPoints": true,
     "pointStructureIds": ["mode-volume"]
   }
 ]
