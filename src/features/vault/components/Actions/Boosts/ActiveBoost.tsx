@@ -26,6 +26,8 @@ import { selectIsStepperStepping } from '../../../../data/selectors/stepper';
 import { startStepper } from '../../../../data/actions/stepper';
 import { BoostActionButton } from './BoostActionButton';
 import { boostActions } from '../../../../data/reducers/wallet/boost';
+import { explorerAddressUrl } from '../../../../../helpers/url';
+import { LinkButton } from '../../../../../components/LinkButton';
 
 const useStyles = makeStyles(styles);
 
@@ -141,6 +143,13 @@ export function ActiveBoost({ boostId, title }: { boostId: BoostEntity['id']; ti
           content={t('Boost-Explain')}
           triggerClass={classes.titleTooltipTrigger}
         />
+
+        <div className={classes.titleButton}>
+          <LinkButton
+            href={explorerAddressUrl(chain, boost.contractAddress)}
+            text={t('Boost-Contract')}
+          />
+        </div>
       </div>
       <div className={classes.boostStats}>
         <div className={classes.boostStat}>
