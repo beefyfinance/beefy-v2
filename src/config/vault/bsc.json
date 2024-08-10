@@ -2071,6 +2071,7 @@
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
     "network": "bsc",
     "earningPoints": true,
+    "pointStructureIds": ["etherfi"],
     "zaps": [
       {
         "strategyId": "gamma",

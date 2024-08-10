@@ -1259,6 +1259,7 @@
     "assets": ["uniETH"],
     "migrationIds": ["magpie"],
     "earningPoints": true,
+    "pointStructureIds": ["bedrock"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x279b44E48226d40Ec389129061cb0B56C5c09e46/zap/in?chain=arbitrum",
@@ -3468,6 +3469,7 @@
     "assets": ["ETH"],
     "migrationIds": ["magpie"],
     "earningPoints": true,
+    "pointStructureIds": ["renzo"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/in?chain=arbitrum",
@@ -3492,6 +3494,7 @@
     "assets": ["ETH"],
     "migrationIds": ["magpie"],
     "earningPoints": true,
+    "pointStructureIds": ["etherfi"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5f3C781B3a20299DB27C8fC5f4415D895677c885/zap/in?chain=arbitrum",
@@ -3516,6 +3519,7 @@
     "assets": ["ETH"],
     "migrationIds": ["magpie"],
     "earningPoints": true,
+    "pointStructureIds": ["kelp"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2aD746fa3faA0AD586021a633d10F4E2785A0349/zap/in?chain=arbitrum",
@@ -5263,6 +5267,7 @@
     "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "earningPoints": true,
+    "pointStructureIds": ["renzo"],
     "network": "arbitrum",
     "zaps": [
       {
@@ -5664,6 +5669,7 @@
     "risks": [],
     "strategyTypeId": "compounds",
     "earningPoints": true,
+    "pointStructureIds": ["renzo"],
     "network": "arbitrum",
     "zaps": [
       {
@@ -5734,6 +5740,7 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2Dfaf9a5E4F293BceedE49f2dBa29aACDD88E0C4/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2Dfaf9a5E4F293BceedE49f2dBa29aACDD88E0C4/zap/out?chain=arbitrum",
     "earningPoints": true,
+    "pointStructureIds": ["TODO"],
     "network": "arbitrum"
   },
   {
@@ -6040,6 +6047,7 @@
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x90e6cb5249f5e1572afbf8a96d8a1ca6acffd73900000000000000000000055c/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x90e6cb5249f5e1572afbf8a96d8a1ca6acffd73900000000000000000000055c/remove-liquidity",
     "earningPoints": true,
+    "pointStructureIds": ["kelp"],
     "network": "arbitrum"
   },
   {
@@ -6286,6 +6294,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "earningPoints": true,
+    "pointStructureIds": ["etherfi"],
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf9F9779d8fF604732EBA9AD345E6A27EF5c2a9d6/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf9F9779d8fF604732EBA9AD345E6A27EF5c2a9d6/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -6310,6 +6319,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "earningPoints": true,
+    "pointStructureIds": ["kelp"],
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xED99fC8bdB8E9e7B8240f62f69609a125A0Fbf14/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xED99fC8bdB8E9e7B8240f62f69609a125A0Fbf14/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -6334,6 +6344,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "earningPoints": true,
+    "pointStructureIds": ["renzo"],
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3dB08a6e9cB4391348b0B404F493E7ae264c0/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3dB08a6e9cB4391348b0B404F493E7ae264c0/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -6358,6 +6369,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "earningPoints": true,
+    "pointStructureIds": ["TODO"],
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2fB73D98B1D60B35FD12508933578098f352cE7e/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2fB73D98B1D60B35FD12508933578098f352cE7e/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -6382,6 +6394,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "earningPoints": true,
+    "pointStructureIds": ["kelp"],
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2aD746fa3faA0AD586021a633d10F4E2785A0349/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2aD746fa3faA0AD586021a633d10F4E2785A0349/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -6406,6 +6419,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "earningPoints": true,
+    "pointStructureIds": ["etherfi"],
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5f3C781B3a20299DB27C8fC5f4415D895677c885/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5f3C781B3a20299DB27C8fC5f4415D895677c885/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -6430,6 +6444,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
     "earningPoints": true,
+    "pointStructureIds": ["renzo"],
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xb4781463a1261F60fca37732EFa510c22DEc5ADa/zap/out?chain=arbitrum",
     "network": "arbitrum"
@@ -6801,6 +6816,7 @@
     "network": "arbitrum",
     "feeTier": "Dynamic",
     "earningPoints": true,
+    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -8142,6 +8158,7 @@
     "network": "arbitrum",
     "feeTier": "0.05",
     "earningPoints": true,
+    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -8643,6 +8660,7 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xED99fC8bdB8E9e7B8240f62f69609a125A0Fbf14/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xED99fC8bdB8E9e7B8240f62f69609a125A0Fbf14/zap/out?chain=arbitrum",
     "earningPoints": true,
+    "pointStructureIds": ["kelp"],
     "network": "arbitrum"
   },
   {
@@ -8966,6 +8984,7 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x1d38d4204159aa5e767afba8f76be22117de61e5/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x1d38d4204159aa5e767afba8f76be22117de61e5/zap/out?chain=arbitrum",
     "earningPoints": true,
+    "pointStructureIds": ["kelp"],
     "network": "arbitrum"
   },
   {
@@ -8990,6 +9009,7 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf9F9779d8fF604732EBA9AD345E6A27EF5c2a9d6/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xf9F9779d8fF604732EBA9AD345E6A27EF5c2a9d6/zap/out?chain=arbitrum",
     "earningPoints": true,
+    "pointStructureIds": ["etherfi"],
     "network": "arbitrum"
   },
   {
@@ -9014,6 +9034,7 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3db08a6e9cb4391348b0b404f493e7ae264c0/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x35f3db08a6e9cb4391348b0b404f493e7ae264c0/zap/out?chain=arbitrum",
     "earningPoints": true,
+    "pointStructureIds": ["renzo"],
     "network": "arbitrum"
   },
   {
@@ -9336,6 +9357,7 @@
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516/remove-liquidity",
     "earningPoints": true,
+    "pointStructureIds": ["renzo"],
     "network": "arbitrum"
   },
   {
@@ -9611,6 +9633,7 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x952083cde7aaa11ab8449057f7de23a970aa8472/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x952083cde7aaa11ab8449057f7de23a970aa8472/zap/out?chain=arbitrum",
     "earningPoints": true,
+    "pointStructureIds": ["etherfi"],
     "network": "arbitrum"
   },
   {
@@ -9637,6 +9660,7 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6ae79089b2cf4be441480801bb741a531d94312b/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6ae79089b2cf4be441480801bb741a531d94312b/zap/out?chain=arbitrum",
     "earningPoints": true,
+    "pointStructureIds": ["kelp"],
     "network": "arbitrum"
   },
   {
@@ -9795,6 +9819,7 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5e03c94fc5fb2e21882000a96df0b63d2c4312e2/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x5e03c94fc5fb2e21882000a96df0b63d2c4312e2/zap/out?chain=arbitrum",
     "earningPoints": true,
+    "pointStructureIds": ["renzo"],
     "network": "arbitrum"
   },
   {
@@ -10417,6 +10442,7 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6f02c88650837c8dfe89f66723c4743e9cf833cd/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x6f02c88650837c8dfe89f66723c4743e9cf833cd/zap/out?chain=arbitrum",
     "earningPoints": true,
+    "pointStructureIds": ["kelp"],
     "network": "arbitrum"
   },
   {
@@ -10443,6 +10469,7 @@
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xe11f9786b06438456b044b3e21712228adcaa0d1/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xe11f9786b06438456b044b3e21712228adcaa0d1/zap/out?chain=arbitrum",
     "earningPoints": true,
+    "pointStructureIds": ["etherfi"],
     "network": "arbitrum"
   },
   {

@@ -318,7 +318,8 @@
     "addLiquidityUrl": "https://op.beets.fi/pool/0x2bb4712247d5f451063b5e4f6948abdfb925d93d000000000000000000000136",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x2bb4712247d5f451063b5e4f6948abdfb925d93d000000000000000000000136",
     "network": "optimism",
-    "earningPoints": true
+    "earningPoints": true,
+    "pointStructureIds": ["etherfi"]
   },
   {
     "id": "sushi-cow-op-weth-wbtc-rp",
@@ -2660,7 +2661,8 @@
     "addLiquidityUrl": "https://op.beets.fi/pool/0x73a7fe27fe9545d53924e529acf11f3073841b9e000000000000000000000133",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x73a7fe27fe9545d53924e529acf11f3073841b9e000000000000000000000133",
     "network": "optimism",
-    "earningPoints": true
+    "earningPoints": true,
+    "pointStructureIds": ["kelp"]
   },
   {
     "id": "stargate-v2-op-weth",
@@ -2905,6 +2907,7 @@
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xE48b4E392E4FC29aC2600c3C8EFe0404A15D60D9",
     "network": "optimism",
     "earningPoints": true,
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "solidly",
