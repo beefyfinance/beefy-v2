@@ -73,7 +73,7 @@
       }
     ],
     "eligibility": {
-      "type": "vault-holding"
+      "type": "vault-whitelist"
     },
     "accounting": [
       {
@@ -158,9 +158,18 @@
     ]
   },
   {
-    "id": "stakestone",
-    "docs": "TODO",
-    "points": ["TODO"],
+    "id": "manta-stakestone",
+    "docs": "https://renewparadigm.manta.network/about",
+    "points": [
+      {
+        "id": "stakestone",
+        "name": "Stakestone Points"
+      },
+      {
+        "id": "eigenlayer",
+        "name": "Eigenlayer Restaked Points"
+      }
+    ],
     "eligibility": {
       "type": "token-holding",
       "tokens": ["STONE"]
@@ -211,5 +220,173 @@
         "role": "Distribution of rewards"
       }
     ]
+  },
+  {
+    "id": "ethena",
+    "docs": "TODO",
+    "points": ["TODO"],
+    "eligibility": {
+      "type": "token-holding",
+      "tokens": ["USDe"]
+    },
+    "accounting": [
+      {
+        "id": "beefy-lrt-subgraph",
+        "role": "Raw indexing of blockchain data, computes time weighted balances",
+        "url": "https://github.com/beefyfinance/lrt-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "ethena",
+        "role": "Distribution of rewards"
+      }
+    ]
+  },
+  {
+    "id": "dolomite",
+    "docs": "TODO",
+    "points": ["TODO"],
+    "eligibility": {
+      "type": "token-holding",
+      "tokens": ["dUSDC"]
+    },
+    "accounting": [
+      {
+        "id": "beefy-lrt-subgraph",
+        "role": "Raw indexing of blockchain data, computes time weighted balances",
+        "url": "https://github.com/beefyfinance/lrt-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "dolomite",
+        "role": "Distribution of rewards"
+      }
+    ]
+  },
+  {
+    "id": "anzen",
+    "docs": "https://docs.anzen.finance/user-guide/earn-z-points",
+    "points": [
+      {
+        "id": "anzen-zpoints",
+        "name": "Anzen Z-Points"
+      }
+    ],
+    "eligibility": {
+      "type": "vault-whitelist"
+    },
+    "accounting": [
+      {
+        "id": "beefy-lrt-subgraph",
+        "role": "Raw indexing of blockchain data, computes time weighted balances",
+        "url": "https://github.com/beefyfinance/lrt-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "anzen",
+        "role": "Distribution of rewards"
+      }
+    ]
+  },
+  {
+    "id": "nektar",
+    "docs": "https://docs.nektar.network/points",
+    "points": [
+      {
+        "id": "nektar-drops",
+        "name": "Nektar Drops"
+      }
+    ],
+    "eligibility": {
+      "type": "vault-whitelist"
+    },
+    "accounting": [
+      {
+        "id": "nektar-drops",
+        "role": "Distribution of rewards"
+      }
+    ]
+  },
+  {
+    "id": "karak",
+    "docs": "https://docs.karak.network/users/xp-faq",
+    "points": [
+      {
+        "id": "karak-xp",
+        "name": "Karak XP"
+      }
+    ],
+    "eligibility": {
+      "type": "vault-whitelist"
+    },
+    "accounting": [
+      {
+        "id": "karak-xp",
+        "role": "Distribution of rewards"
+      }
+    ]
+  },
+  {
+    "id": "vector-reserve",
+    "docs": "https://vector-reserve.gitbook.io/vector-reserve/introduction/veth-and-vec-yield-sources#the-combined-value-proposition",
+    "points": [
+      {
+        "id": "vector-points",
+        "name": "vPoints"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-lrt-subgraph",
+        "role": "Raw indexing of blockchain data, computes time weighted balances",
+        "url": "https://github.com/beefyfinance/lrt-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "vector-reserve",
+        "role": "Distribution of rewards"
+      }
+    ],
+    "claimUrl": "https://www.vectorreserve.com/dapp/points"
+  },
+  {
+    "id": "mantle",
+    "docs": "https://meth.mantle.xyz/campaigns/methamorphosis/earn",
+    "points": [
+      {
+        "id": "mantle-powder",
+        "name": "Mantle Powder"
+      },
+      {
+        "id": "eigenlayer",
+        "name": "Eigenlayer Restaked Points"
+      }
+    ],
+    "eligibility": {
+      "type": "vault-whitelist"
+    },
+    "accounting": [
+      {
+        "id": "mantle-powder",
+        "role": "Distribution of rewards"
+      }
+    ],
+    "claimUrl": "https://meth.mantle.xyz/campaigns/methamorphosis"
   }
 ]

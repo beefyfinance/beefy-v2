@@ -1178,7 +1178,7 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0x93f4d0ab6a8b4271f4a28db399b5e30612d21116&strategy=Yield%20IQ%20(STONE)",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0x93f4d0ab6a8b4271f4a28db399b5e30612d21116&strategy=Yield%20IQ%20(STONE)",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "stakestone"]
+    "pointStructureIds": ["linea-voyage", "manta-stakestone"]
   },
   {
     "id": "lynex-gamma-wsteth-weth",
@@ -1264,7 +1264,7 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/stone-weth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/stone-weth-pegged-price",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "stakestone"],
+    "pointStructureIds": ["linea-voyage", "manta-stakestone"],
     "zaps": [
       {
         "strategyId": "gamma",
@@ -1295,7 +1295,7 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x8f3e0a2378b0b5838e0e0d99fcecc167d47bc9a7",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x8f3e0a2378b0b5838e0e0d99fcecc167d47bc9a7",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "stakestone"],
+    "pointStructureIds": ["linea-voyage", "manta-stakestone"],
     "zaps": [
       {
         "strategyId": "solidly",

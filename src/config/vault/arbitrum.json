@@ -5733,7 +5733,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2Dfaf9a5E4F293BceedE49f2dBa29aACDD88E0C4/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2Dfaf9a5E4F293BceedE49f2dBa29aACDD88E0C4/zap/out?chain=arbitrum",
-    "pointStructureIds": ["TODO"],
+    "pointStructureIds": ["ethena"],
     "network": "arbitrum"
   },
   {
@@ -6357,7 +6357,7 @@
     "migrationIds": ["magpie"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "pointStructureIds": ["TODO"],
+    "pointStructureIds": ["dolomite"],
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2fB73D98B1D60B35FD12508933578098f352cE7e/zap/in?chain=arbitrum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x2fB73D98B1D60B35FD12508933578098f352cE7e/zap/out?chain=arbitrum",
     "network": "arbitrum"

@@ -167,7 +167,7 @@
     "strategyTypeId": "compounds",
     "network": "manta",
     "feeTier": "0.05",
-    "pointStructureIds": ["stakestone"],
+    "pointStructureIds": ["manta-stakestone"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
