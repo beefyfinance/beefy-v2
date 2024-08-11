@@ -1,4 +1,13 @@
 {
+  "beefy-clm": {
+    "title": "Beefy",
+    "text": "Beefy CLM Vaults compound the farming rewards for you, while also allowing you to participate in concentrated liquidity pools.",
+    "website": "https://app.beefy.finance",
+    "social": {
+      "telegram": "http://t.me/beefyfinance",
+      "twitter": "https://twitter.com/beefyfinance"
+    }
+  },
   "balancer": {
     "title": "Balancer",
     "text": "Balancer is a decentralized automated market maker (AMM) protocol built on Ethereum with a clear focus on fungible and yield-bearing liquidity. Balancer's success is intrinsically linked to the success of protocols and products built on the platform.",
