@@ -6,6 +6,14 @@
       {
         "id": "eigenlayer",
         "name": "Eigenlayer Restaked Points"
+      },
+      {
+        "id": "bedrock-diamonds",
+        "name": "Bedrock Diamonds"
+      },
+      {
+        "id": "arbitrum-points",
+        "name": "Arbitrum $ARB Airdrop"
       }
     ],
     "eligibility": {
@@ -25,7 +33,8 @@
       },
       {
         "id": "bedrock",
-        "role": "Distribution of rewards"
+        "role": "Distribution of rewards",
+        "url": "https://app.bedrock.technology/unieth/ecosystem"
       }
     ]
   },
@@ -55,7 +64,8 @@
       },
       {
         "id": "Renzo",
-        "role": "Distribution of rewards"
+        "role": "Distribution of rewards",
+        "url": "https://app.renzoprotocol.com/portfolio"
       }
     ]
   },
@@ -92,7 +102,6 @@
       }
     ]
   },
-
   {
     "id": "kelp",
     "docs": "https://kelp.gitbook.io/kelp/explore-rseth/kelp-miles-and-eigenlayer-points",
@@ -360,10 +369,10 @@
       },
       {
         "id": "vector-reserve",
-        "role": "Distribution of rewards"
+        "role": "Distribution of rewards",
+        "url": "https://www.vectorreserve.com/dapp/points"
       }
-    ],
-    "claimUrl": "https://www.vectorreserve.com/dapp/points"
+    ]
   },
   {
     "id": "mantle",
@@ -384,9 +393,157 @@
     "accounting": [
       {
         "id": "mantle-powder",
-        "role": "Distribution of rewards"
+        "role": "Distribution of rewards",
+        "url": "https://meth.mantle.xyz/campaigns/methamorphosis"
+      }
+    ]
+  },
+  {
+    "id": "mendi-loyalty",
+    "docs": "https://docs.mendi.finance/points-systems/mendi-loyalty-program",
+    "points": [
+      {
+        "id": "mendi-loyalty",
+        "name": "Mendi Loyalty Points"
       }
     ],
-    "claimUrl": "https://meth.mantle.xyz/campaigns/methamorphosis"
+    "eligibility": {
+      "type": "vault-whitelist"
+    },
+    "accounting": [
+      {
+        "id": "beefy-lrt-subgraph",
+        "role": "Raw indexing of blockchain data, computes time weighted balances",
+        "url": "https://github.com/beefyfinance/lrt-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "mendi-loyalty",
+        "role": "Distribution of rewards"
+      }
+    ]
+  },
+  {
+    "id": "kinetix",
+    "docs": "https://docs.kinetix.finance/usdkai-tokenomics/tokens-and-rewards",
+    "points": [
+      {
+        "id": "kinetix-prekfi",
+        "name": "preKFI"
+      }
+    ],
+    "eligibility": {
+      "type": "vault-whitelist"
+    },
+    "accounting": [
+      {
+        "id": "beefy-lrt-subgraph",
+        "role": "Raw indexing of blockchain data, computes time weighted balances",
+        "url": "https://github.com/beefyfinance/lrt-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "kinetix-prekfi",
+        "role": "Distribution of rewards"
+      }
+    ]
+  },
+  {
+    "id": "inception",
+    "docs": "https://docs.inceptionlrt.com/inceptionlrt/overview",
+    "points": [
+      {
+        "id": "eigenlayer",
+        "name": "Eigenlayer Restaked Points"
+      }
+    ],
+    "eligibility": {
+      "type": "token-holding",
+      "tokens": ["inETH", "ainETH"]
+    },
+    "accounting": [
+      {
+        "id": "beefy-lrt-subgraph",
+        "role": "Raw indexing of blockchain data, computes time weighted balances",
+        "url": "https://github.com/beefyfinance/lrt-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "inception",
+        "role": "Distribution of rewards"
+      }
+    ]
+  },
+  {
+    "id": "swell",
+    "docs": "https://docs.swellnetwork.io/swell-staking/introduction",
+    "points": [
+      {
+        "id": "swell-points",
+        "name": "Swell Points"
+      }
+    ],
+    "eligibility": {
+      "type": "vault-whitelist"
+    },
+    "accounting": [
+      {
+        "id": "beefy-lrt-subgraph",
+        "role": "Raw indexing of blockchain data, computes time weighted balances",
+        "url": "https://github.com/beefyfinance/lrt-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "swell-points",
+        "role": "Distribution of rewards"
+      }
+    ]
+  },
+  {
+    "id": "yei",
+    "docs": "https://docs.yei.finance/welcome-to-yei/overview/yei-points#how-to-earn-points",
+    "points": [
+      {
+        "id": "yei-points",
+        "name": "YEI Points"
+      }
+    ],
+    "eligibility": {
+      "type": "token-on-platform",
+      "platform": "yei",
+      "tokens": ["SEI", "WSEI", "USDT", "USDC"]
+    },
+    "accounting": [
+      {
+        "id": "beefy-lrt-subgraph",
+        "role": "Raw indexing of blockchain data, computes time weighted balances",
+        "url": "https://github.com/beefyfinance/lrt-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "yei-points",
+        "role": "Distribution of rewards"
+      }
+    ]
   }
 ]

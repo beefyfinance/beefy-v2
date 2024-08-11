@@ -1025,7 +1025,7 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ineth-wsteth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ineth-wsteth-pegged-price",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
+    "pointStructureIds": ["linea-voyage", "inception"],
     "zaps": [
       {
         "strategyId": "gamma",
@@ -1500,7 +1500,7 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
+    "pointStructureIds": ["linea-voyage", "mendi-loyalty"],
     "zaps": [
       {
         "strategyId": "single"
@@ -1530,7 +1530,7 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
+    "pointStructureIds": ["linea-voyage", "mendi-loyalty"],
     "zaps": [
       {
         "strategyId": "single"
@@ -1559,7 +1559,7 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
+    "pointStructureIds": ["linea-voyage", "mendi-loyalty"],
     "zaps": [
       {
         "strategyId": "single"
@@ -1588,7 +1588,7 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
+    "pointStructureIds": ["linea-voyage", "mendi-loyalty"],
     "zaps": [
       {
         "strategyId": "single"
@@ -1617,7 +1617,7 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
+    "pointStructureIds": ["linea-voyage", "mendi-loyalty"],
     "zaps": [
       {
         "strategyId": "single"
