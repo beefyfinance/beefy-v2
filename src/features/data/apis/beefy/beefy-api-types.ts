@@ -53,6 +53,7 @@ export interface ApyStandard {
 export interface ApyCLM {
   clmApr: number;
   merklApr?: number;
+  stellaSwapApr?: number;
   totalApy: number;
 }
 
