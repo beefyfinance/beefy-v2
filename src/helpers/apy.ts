@@ -18,6 +18,7 @@ const DISPLAY_ORDER = ((i = 0) =>
     rewardPool: i++,
     trading: i++,
     merkl: i++,
+    stellaSwap: i++,
     liquidStaking: i++,
     composablePool: i++,
     boost: i++,
@@ -87,6 +88,7 @@ export const getApiApyDataComponents = createFactory(() => {
   const nonCompoundableComponents = [
     'trading',
     'merkl',
+    'stellaSwap',
     'liquidStaking',
     'composablePool',
     'rewardPool',
