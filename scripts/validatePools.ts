@@ -17,6 +17,7 @@ import { getStrategyIds } from './common/strategies';
 import strategyABI from '../src/config/abi/strategy.json';
 import { StandardVaultAbi } from '../src/config/abi/StandardVaultAbi';
 import platforms from '../src/config/platforms.json';
+import pointProviders from '../src/config/points.json';
 import type { VaultConfig } from '../src/features/data/apis/config-types';
 import partition from 'lodash/partition';
 import { AbiItem } from 'web3-utils';
@@ -94,6 +95,7 @@ const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddres
 
 const validPlatformIds = platforms.map(platform => platform.id);
 const validStrategyIds = getStrategyIds();
+const validPointProviderIds = pointProviders.map(pointProvider => pointProvider.id);
 
 const oldFields = {
   tokenDescription: 'Use addressbook',
@@ -255,6 +257,18 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       console.error(
         `Error: ${pool.id} : platformId ${pool.platformId} not present in platforms.json`
       );
+      exitCode = 1;
+    }
+
+    if (pool.pointStructureIds && pool.pointStructureIds.length > 0) {
+      const invalidPointStructureIds = pool.pointStructureIds!.filter(
+        p => !validPointProviderIds.includes(p)
+      );
+      if (invalidPointStructureIds.length > 0) {
+        console.error(
+          `Error: ${pool.id} : pointStructureId ${invalidPointStructureIds} not present in points.json`
+        );
+      }
       exitCode = 1;
     }
 
