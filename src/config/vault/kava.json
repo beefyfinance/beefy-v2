@@ -42,7 +42,8 @@
     "strategyTypeId": "klp",
     "addLiquidityUrl": "https://perps.kinetix.finance/#/liquidity",
     "removeLiquidityUrl": "https://perps.kinetix.finance/#/liquidity#redeem",
-    "network": "kava"
+    "network": "kava",
+    "pointStructureIds": ["kinetix"]
   },
   {
     "id": "curve-kava-mimusdt-new",

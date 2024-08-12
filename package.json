@@ -135,5 +135,6 @@
   },
   "lint-staged": {
     "*.{ts,tsx,json}": "prettier --write"
-  }
+  },
+  "packageManager": "yarn@1.22.22"
 }

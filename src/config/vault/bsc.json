@@ -2070,7 +2070,7 @@
     "addLiquidityUrl": "https://thena.fi/pools/0xc0e1c9fec0d8888039095da014382d027f27069d",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
     "network": "bsc",
-    "earningPoints": true,
+    "pointStructureIds": ["etherfi"],
     "zaps": [
       {
         "strategyId": "gamma",
