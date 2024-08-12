@@ -1,5 +1,28 @@
 [
   {
+    "id": "equilibria-arb-gusdc-26dec24",
+    "name": "gUSDC 26Dec24",
+    "token": "gUSDC 26Dec24",
+    "tokenAddress": "0xa877a0E177b54A37066c1786F91a1DAb68F094AF",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0xe6128eC694d515DDeCF7707EA301A80A55f067bA",
+    "earnedToken": "mooEqb-gUSDC-26DEC24",
+    "earnedTokenAddress": "0xe6128eC694d515DDeCF7707EA301A80A55f067bA",
+    "oracle": "lps",
+    "oracleId": "equilibria-arb-gusdc-26dec24",
+    "status": "active",
+    "createdAt": 1723452239,
+    "platformId": "equilibria",
+    "assets": ["gUSDC"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xa877a0E177b54A37066c1786F91a1DAb68F094AF/zap/in?chain=arbitrum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xa877a0E177b54A37066c1786F91a1DAb68F094AF/zap/out?chain=arbitrum",
+    "network": "arbitrum"
+  },
+  {
     "id": "pancake-cow-arb-cake-weth-vault",
     "name": "CAKE-WETH",
     "type": "standard",
