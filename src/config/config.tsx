@@ -70,6 +70,9 @@ export const config = {
       'USDM',
       'ULTRA',
       'ShezUSD',
+      'thUSD',
+      'USD0',
+      'USD0++',
       'USDe',
       'sUSDe',
     ],
@@ -155,7 +158,7 @@ export const config = {
     explorerUrl: 'https://bscscan.com',
     multicallAddress: '0xB94858b0bB5437498F5453A16039337e5Fdc269C',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x72580937d2B5563792793e72200fC8942a4045D6',
+    appMulticallContractAddress: '0x073d1752efe671AAE0E609a8f61663e3660673d3',
     providerName: 'binance',
     walletSettings: {
       chainId: `0x${parseInt('56', 10).toString(16)}`,
@@ -207,6 +210,8 @@ export const config = {
       'USDT+',
       'vUSDT',
       'USDV',
+      'lisUSD',
+      'axlUSDC',
     ],
   },
   optimism: {
@@ -761,6 +766,8 @@ export const config = {
       'USDz',
       'jEUR',
       'sUSDz',
+      'USDT',
+      'EURC',
     ],
   },
   gnosis: {

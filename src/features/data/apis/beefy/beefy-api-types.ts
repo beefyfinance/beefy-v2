@@ -46,6 +46,7 @@ export interface ApyStandard {
   composablePoolApr?: number;
   liquidStakingApr?: number;
   rewardPoolApr?: number;
+  rewardPoolTradingApr?: number;
   totalApy: number;
 }
 

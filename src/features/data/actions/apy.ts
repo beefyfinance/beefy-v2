@@ -10,9 +10,6 @@ import { compoundInterest, yearlyToDaily } from '../../../helpers/number';
 import { isDefined } from '../utils/array-utils';
 import { getApiApyDataComponents } from '../../../helpers/apy';
 import type { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api-types';
-import { selectVaultActiveGovRewards } from '../selectors/rewards';
-import { selectDepositTokenByVaultId } from '../selectors/tokens';
-import type { ChainId } from '../entities/chain';
 
 export interface FetchAllApyFulfilledPayload {
   data: BeefyAPIApyBreakdownResponse;
@@ -102,6 +99,7 @@ export const recalculateTotalApyAction = createAsyncThunk<
       total.totalMonthly = total.totalDaily * 30;
     }
 
+    // Boosts
     const activeBoostId = first(selectActiveVaultBoostIds(state, vaultId));
     if (activeBoostId) {
       const boostApr = state.biz.apy.rawApy.byBoostId[activeBoostId]?.apr || 0;
@@ -116,96 +114,7 @@ export const recalculateTotalApyAction = createAsyncThunk<
 
     // Mark CLM Pools as boosted if they have extra pool rewards
     if (isCowcentratedGovVault(vault)) {
-      // TODO find a better place for these
-      const baseRewardTokensByChainProvider: Partial<Record<ChainId, Record<string, string[]>>> = {
-        arbitrum: {
-          ramses: [
-            // RAM
-            '0xAAA6C1E32C55A7Bfa8066A6FAE9b42650F262418',
-            // ARB
-            '0x912CE59144191C1204E64559FE8253a0e49E6548',
-          ],
-          pancakeswap: [
-            // CAKE
-            '0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c',
-          ],
-        },
-        optimism: {
-          velodrome: [
-            // VELOv2
-            '0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db',
-          ],
-        },
-        base: {
-          aerodrome: [
-            // AERO
-            '0x940181a94A35A4569E4529A3CDfB74e38FD98631',
-          ],
-        },
-        linea: {
-          nile: [
-            // NILE
-            '0xAAAac83751090C6ea42379626435f805DDF54DC8',
-          ],
-        },
-      };
-      const depositToken = selectDepositTokenByVaultId(state, vaultId);
-      const baseRewardTokens = depositToken.providerId
-        ? baseRewardTokensByChainProvider[vault.chainId]?.[depositToken.providerId]
-        : undefined;
-      // for 'pool' type (e.g. velodrome) we need to separate that part from fees vs additional rewards
-      if (baseRewardTokens?.length) {
-        const poolRewards = selectVaultActiveGovRewards(state, vaultId);
-        if (poolRewards && poolRewards.length > 0) {
-          const { rewardPoolApr, rewardPoolTradingApr } = poolRewards.reduce(
-            (acc, r) => {
-              // if reward is a base reward token, it's pool trading apr
-              if (
-                baseRewardTokens.some(
-                  address => r.token.address.toLowerCase() === address.toLowerCase()
-                )
-              ) {
-                acc.rewardPoolTradingApr += r.apr;
-              } else {
-                acc.rewardPoolApr += r.apr;
-              }
-              return acc;
-            },
-            { rewardPoolApr: 0, rewardPoolTradingApr: 0 }
-          );
-
-          const existingRewardPoolApr = total.rewardPoolApr || 0;
-          const existingRewardPoolDaily = total.rewardPoolDaily || 0;
-          const rewardPoolDaily = rewardPoolApr / 365;
-          const rewardPoolTradingDaily = rewardPoolTradingApr / 365;
-
-          if (rewardPoolApr > 0) {
-            total.rewardPoolApr = rewardPoolApr;
-            total.rewardPoolDaily = rewardPoolDaily;
-          } else {
-            delete total.rewardPoolApr;
-            delete total.rewardPoolDaily;
-          }
-          total.rewardPoolTradingApr = rewardPoolTradingApr;
-          total.rewardPoolTradingDaily = rewardPoolTradingDaily;
-          total.totalApy =
-            total.totalApy - existingRewardPoolApr + rewardPoolApr + rewardPoolTradingApr;
-          total.totalDaily =
-            total.totalDaily - existingRewardPoolDaily + rewardPoolDaily + rewardPoolTradingDaily;
-          if (total.boostedTotalApy !== undefined) {
-            total.boostedTotalApy =
-              total.boostedTotalApy - existingRewardPoolApr + rewardPoolApr + rewardPoolTradingApr;
-          }
-          if (total.boostedTotalDaily !== undefined) {
-            total.boostedTotalDaily =
-              total.boostedTotalDaily -
-              existingRewardPoolDaily +
-              rewardPoolDaily +
-              rewardPoolTradingDaily;
-          }
-        }
-      }
-
+      // anything in 'rewardPoolApr' (i.e. not in 'rewardPoolTradingApr') is considered a soft-boost on the pool
       const additionalApr = total.rewardPoolApr || 0;
       if (additionalApr > 0) {
         total.boostedTotalApy = total.boostedTotalApy ?? total.totalApy;

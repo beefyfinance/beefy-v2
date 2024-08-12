@@ -12,6 +12,20 @@ export class FetchResponseError extends FetchError {
   }
 }
 
+export class FetchResponseDecodeError extends FetchResponseError {
+  public constructor(response: Response, cause?: Error) {
+    super(response, `Failed to decode response body`, cause);
+    this.name = 'FetchResponseDecodeError';
+  }
+}
+
+export class FetchResponseBodyTextError extends FetchResponseError {
+  public constructor(response: Response, cause?: Error) {
+    super(response, `Failed to decode response body as text`, cause);
+    this.name = 'FetchResponseBodyTextError';
+  }
+}
+
 export class FetchResponseNotJsonError extends FetchResponseError {
   public constructor(response: Response, cause?: Error) {
     super(

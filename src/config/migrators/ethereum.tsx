@@ -12,6 +12,11 @@ export const migrators = [
     icon: 'CVX',
   },
   {
+    id: 'ethereum-curve',
+    name: 'Curve',
+    icon: 'CRV',
+  },
+  {
     id: 'ethereum-prisma',
     name: 'Prisma',
     icon: 'PRISMA',
