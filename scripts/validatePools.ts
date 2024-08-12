@@ -268,8 +268,8 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
         console.error(
           `Error: ${pool.id} : pointStructureId ${invalidPointStructureIds} not present in points.json`
         );
+        exitCode = 1;
       }
-      exitCode = 1;
     }
 
     if (pool.oracle === 'lps') {
