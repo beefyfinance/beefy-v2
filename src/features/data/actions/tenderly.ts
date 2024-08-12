@@ -16,6 +16,8 @@ import {
 } from '../selectors/tenderly';
 import type { TenderlySimulateRequest, TenderlySimulateResponse } from '../apis/tenderly/types';
 import { selectChainById } from '../selectors/chains';
+import type { VaultEntity } from '../entities/vault';
+import { walletActions } from './wallet-actions';
 
 export type TenderlyTxCallRequest = {
   data: string;
@@ -195,6 +197,51 @@ export const tenderlySimulateTransactQuote = createAsyncThunk<
   const steps = await getTransactSteps(quote, t, getState);
   const txs = await captureTransactionsFromSteps(steps, dispatch);
   return { chainId: option.chainId, calls: txs };
+});
+
+type TenderlyStellaSwapClaimButtonParams = {
+  chainId: ChainId;
+  vaultId: VaultEntity['id'];
+  t: TFunction;
+};
+
+export const tenderlySimulateStellaSwapClaim = createAsyncThunk<
+  TenderlyOpenSimulationPayload,
+  TenderlyStellaSwapClaimButtonParams,
+  { state: BeefyState }
+>('tenderly/simulateStellaSwapClaim', async ({ chainId, vaultId, t }, { dispatch }) => {
+  const steps: Step[] = [
+    {
+      step: 'claim-rewards',
+      message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
+      action: walletActions.claimStellaSwap(chainId, vaultId),
+      pending: false,
+    },
+  ];
+  const txs = await captureTransactionsFromSteps(steps, dispatch);
+  return { chainId: chainId, calls: txs };
+});
+
+type TenderlyMerklClaimButtonParams = {
+  chainId: ChainId;
+  t: TFunction;
+};
+
+export const tenderlySimulateMerklClaim = createAsyncThunk<
+  TenderlyOpenSimulationPayload,
+  TenderlyMerklClaimButtonParams,
+  { state: BeefyState }
+>('tenderly/simulateMerklClaim', async ({ chainId, t }, { dispatch }) => {
+  const steps: Step[] = [
+    {
+      step: 'claim-rewards',
+      message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
+      action: walletActions.claimMerkl(chainId),
+      pending: false,
+    },
+  ];
+  const txs = await captureTransactionsFromSteps(steps, dispatch);
+  return { chainId: chainId, calls: txs };
 });
 
 export type TenderlySimulateConfig = {

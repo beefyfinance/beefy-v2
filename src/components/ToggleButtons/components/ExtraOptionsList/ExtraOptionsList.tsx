@@ -1,7 +1,7 @@
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import type { FC, MouseEventHandler, MutableRefObject } from 'react';
-import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Floating } from '../../../Floating';
 import { styles } from '../../styles';

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import type { StepType } from '../Step';
 import { Step } from '../Step';
 import { LoadingIndicator } from '../LoadingIndicator';

@@ -3,6 +3,7 @@ import {
   tenderlyLogin,
   type TenderlyOpenSimulationPayload,
   tenderlySimulate,
+  tenderlySimulateMerklClaim,
   tenderlySimulateStellaSwapClaim,
   tenderlySimulateTransactQuote,
 } from '../actions/tenderly';
@@ -31,21 +32,8 @@ export const tenderlySlice = createSlice({
     },
   },
   extraReducers: builder => {
-    const handleBuildPending = (
-      thunk: AsyncThunk<
-        TenderlyOpenSimulationPayload,
-        unknown,
-        {
-          state: BeefyState;
-          extra?: unknown;
-          dispatch?: Dispatch | undefined;
-          rejectValue?: unknown;
-          serializedErrorType?: unknown;
-          pendingMeta?: unknown;
-          fulfilledMeta?: unknown;
-          rejectedMeta?: unknown;
-        }
-      >
+    const handleCalls = (
+      thunk: AsyncThunk<TenderlyOpenSimulationPayload, unknown, { state: BeefyState }>
     ) => {
       builder
         .addCase(thunk.pending, state => {
@@ -84,7 +72,9 @@ export const tenderlySlice = createSlice({
         });
     };
 
-    handleBuildPending(tenderlySimulateTransactQuote);
+    handleCalls(tenderlySimulateTransactQuote);
+    handleCalls(tenderlySimulateMerklClaim);
+    handleCalls(tenderlySimulateStellaSwapClaim);
 
     builder
       .addCase(transactActions.confirmRejected, state => {

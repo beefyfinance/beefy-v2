@@ -1,5 +1,5 @@
 import type { FC, SVGProps } from 'react';
-import React, { memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import { selectActiveChainIds, selectChainById } from '../../../../../data/selectors/chains';
 import { makeStyles, Tooltip } from '@material-ui/core';

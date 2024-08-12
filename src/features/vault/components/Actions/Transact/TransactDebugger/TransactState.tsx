@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useAppSelector } from '../../../../../../store';
 import type { BeefyState } from '../../../../../../redux-types';

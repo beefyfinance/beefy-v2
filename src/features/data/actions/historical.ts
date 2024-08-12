@@ -11,8 +11,6 @@ import type {
 import { selectCowcentratedLikeVaultById, selectVaultById } from '../selectors/vaults';
 import { selectTokenByAddress } from '../selectors/tokens';
 import type { TokenEntity } from '../entities/token';
-import type { ThunkAction } from 'redux-thunk';
-import type { Action } from 'redux';
 import { featureFlag_simulateBeefyApiError } from '../utils/feature-flags';
 import { sleep } from '../utils/async-utils';
 import type { ChartStat } from '../../vault/components/HistoricGraph/types';

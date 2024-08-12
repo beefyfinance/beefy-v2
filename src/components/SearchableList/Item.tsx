@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import React, { memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import type { ItemInnerProps } from './ItemInner';
 import { ItemInner } from './ItemInner';
 import clsx from 'clsx';

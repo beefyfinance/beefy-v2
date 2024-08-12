@@ -1,6 +1,6 @@
 import { Container, Hidden, makeStyles } from '@material-ui/core';
 import type { PropsWithChildren } from 'react';
-import React, { lazy, memo } from 'react';
+import { lazy, memo } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { styles } from './styles';
 import { SafetyCard } from './components/SafetyCard';

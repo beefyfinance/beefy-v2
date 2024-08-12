@@ -1,5 +1,5 @@
 import { type VaultEntity } from '../../features/data/entities/vault';
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { formatTotalApy } from '../../helpers/format';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat';

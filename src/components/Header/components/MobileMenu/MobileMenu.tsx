@@ -1,4 +1,4 @@
-import React, { Fragment, memo, useState } from 'react';
+import { Fragment, memo, useState } from 'react';
 import { Divider, Drawer, makeStyles } from '@material-ui/core';
 import { Close, Menu } from '@material-ui/icons';
 import { styles } from './styles';

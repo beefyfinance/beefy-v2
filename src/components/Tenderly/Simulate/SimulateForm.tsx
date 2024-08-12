@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { TechLoader } from '../../TechLoader';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { selectTenderlyStatus } from '../../../features/data/selectors/tenderly';

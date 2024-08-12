@@ -3,7 +3,7 @@ import type {
   TenderlySimulateRequest,
   TenderlySimulateResponse,
 } from '../../../features/data/apis/tenderly/types';
-import React, { Fragment, memo, useMemo } from 'react';
+import { Fragment, memo, useMemo } from 'react';
 import { useAppSelector } from '../../../store';
 import {
   selectTenderlyCredentialsOrUndefined,

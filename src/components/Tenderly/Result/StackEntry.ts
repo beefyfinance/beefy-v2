@@ -2,7 +2,6 @@ import type {
   TenderlyCallTrace,
   TenderlySimulateResponseContract,
 } from '../../../features/data/apis/tenderly/types';
-import { formatAddressShort } from '../../../helpers/format';
 
 export class StackEntry {
   constructor(

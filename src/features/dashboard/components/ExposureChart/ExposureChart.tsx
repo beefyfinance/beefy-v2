@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { PieChart } from '../../../../components/PieChart/PieChart';
 import { ChartDetails } from '../ChartDetails';
 import { styles } from './styles';

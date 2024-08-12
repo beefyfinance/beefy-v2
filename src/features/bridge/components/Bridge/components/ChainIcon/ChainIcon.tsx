@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 

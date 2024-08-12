@@ -1,5 +1,12 @@
-import type { ChangeEventHandler, MouseEventHandler, MutableRefObject } from 'react';
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type {
+  ButtonHTMLAttributes,
+  ChangeEventHandler,
+  DetailedHTMLProps,
+  FocusEventHandler,
+  MouseEventHandler,
+  MutableRefObject,
+} from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
@@ -65,8 +72,8 @@ function numberToString(value: number, maxDecimals: number = 1): string {
   });
 }
 
-// type InputProps = React.DetailedHTMLProps<
-//   React.InputHTMLAttributes<HTMLInputElement>,
+// type InputProps = DetailedHTMLProps<
+//   InputHTMLAttributes<HTMLInputElement>,
 //   HTMLInputElement
 // >;
 type CustomSlippageInputProps = {
@@ -120,13 +127,13 @@ const CustomSlippageInput = memo<CustomSlippageInputProps>(function CustomSlippa
     [setInput]
   );
 
-  const handleBlur = useCallback<React.FocusEventHandler<HTMLInputElement>>(() => {
+  const handleBlur = useCallback<FocusEventHandler<HTMLInputElement>>(() => {
     setInputMode(false);
     onChange(clampRangeDecimals(numberInputStringToNumber(input), INPUT_MIN, INPUT_MAX, 1));
     onFocus(false);
   }, [onFocus, input, onChange, setInputMode]);
 
-  const handleFocus = useCallback<React.FocusEventHandler<HTMLInputElement>>(
+  const handleFocus = useCallback<FocusEventHandler<HTMLInputElement>>(
     e => {
       e.target.select();
       setInputMode(true);
@@ -166,10 +173,7 @@ const CustomSlippageInput = memo<CustomSlippageInputProps>(function CustomSlippa
   );
 });
 
-type ButtonProps = React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
->;
+type ButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 type SlippageButtonProps = Omit<ButtonProps, 'onChange' | 'onClick' | 'value'> & {
   value: number;
   onChange: (value: number) => void;

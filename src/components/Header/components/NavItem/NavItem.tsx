@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { NavLinkProps } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';

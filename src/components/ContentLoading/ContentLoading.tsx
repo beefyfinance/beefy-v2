@@ -1,5 +1,5 @@
-import React from 'react';
 import ContentLoader from 'react-content-loader';
+import { memo } from 'react';
 
 const _ContentLoading = ({ backgroundColor = '#313759', foregroundColor = '#8585A6' }) => {
   return (
@@ -14,4 +14,4 @@ const _ContentLoading = ({ backgroundColor = '#313759', foregroundColor = '#8585
     </ContentLoader>
   );
 };
-export const ContentLoading = React.memo(_ContentLoading);
+export const ContentLoading = memo(_ContentLoading);

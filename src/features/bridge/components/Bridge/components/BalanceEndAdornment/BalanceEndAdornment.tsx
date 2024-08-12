@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { formatTokenDisplayCondensed } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';

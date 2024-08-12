@@ -1,4 +1,4 @@
-import React, { type ChangeEventHandler, memo, type ReactNode, useCallback, useState } from 'react';
+import { type ChangeEventHandler, memo, type ReactNode, useCallback, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import {
   selectTenderlyCredentialsOrUndefined,

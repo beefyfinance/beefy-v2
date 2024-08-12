@@ -2,7 +2,7 @@ import {
   tenderlySimulate,
   type TenderlySimulateConfig,
 } from '../../../features/data/actions/tenderly';
-import React, { Fragment, memo, useCallback, useState } from 'react';
+import { Fragment, memo, useCallback, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import {
   selectTenderlyRequestOrUndefined,

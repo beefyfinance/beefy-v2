@@ -1,5 +1,4 @@
-import type { FC } from 'react';
-import React from 'react';
+import { type FC, memo, useEffect } from 'react';
 import { makeStyles, Snackbar } from '@material-ui/core';
 import { isEmpty } from '../../helpers/utils';
 import { styles } from './styles';
@@ -38,7 +37,7 @@ const _Stepper = () => {
 
   const steps = useAppSelector(selectStepperState);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isEmpty(currentStepData) && steps.modal && currentStepData.pending === false) {
       dispatch(stepperActions.updateCurrentStep({ pending: true }));
       dispatch(currentStepData.action);
@@ -62,4 +61,4 @@ const _Stepper = () => {
   );
 };
 
-export const Stepper = React.memo(_Stepper);
+export const Stepper = memo(_Stepper);

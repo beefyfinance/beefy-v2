@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { LoadingStep as BaseLoadingStep } from '../../../../../../components/LoadingStep';
 
 const _LoadingStep = () => {

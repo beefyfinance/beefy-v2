@@ -1,5 +1,5 @@
 import type { VaultEntity } from '../../../data/entities/vault';
-import React, { memo, useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';

@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo, useCallback } from 'react';
+import { memo, type ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { Button } from '../../../../components/Button';
@@ -20,8 +20,8 @@ interface RewardTokenDetailsProps {
   token: TokenEntity;
   chainId: ChainEntity['id'];
   className?: string;
-  prependButtons?: React.ReactNode;
-  appendText?: React.ReactNode;
+  prependButtons?: ReactNode;
+  appendText?: ReactNode;
 }
 
 export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardTokenDetails({

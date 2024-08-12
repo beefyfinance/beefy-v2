@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../../store';
@@ -9,8 +9,12 @@ import { selectWalletAddress } from '../../../../../data/selectors/wallet';
 import { selectHasUserDepositInVault } from '../../../../../data/selectors/balance';
 import { MerklRewards } from './Merkl/MerklRewards';
 import { GovRewards } from './Gov/GovRewards';
-import { selectVaultHasActiveMerklCampaigns } from '../../../../../data/selectors/rewards';
+import {
+  selectVaultHasActiveMerklCampaigns,
+  selectVaultHasActiveStellaSwapCampaigns,
+} from '../../../../../data/selectors/rewards';
 import { useTranslation } from 'react-i18next';
+import { StellaSwapRewards } from './StellaSwap/StellaSwapRewards';
 
 const useStyles = makeStyles(styles);
 
@@ -23,6 +27,9 @@ export const ClaimFormLoader = memo(function ClaimFormLoader() {
   const deposited = useAppSelector(state => selectHasUserDepositInVault(state, vaultId));
   const hasActiveMerkl = useAppSelector(state =>
     selectVaultHasActiveMerklCampaigns(state, vaultId)
+  );
+  const hasActiveStellaSwap = useAppSelector(state =>
+    selectVaultHasActiveStellaSwapCampaigns(state, vaultId)
   );
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
 
@@ -37,8 +44,11 @@ export const ClaimFormLoader = memo(function ClaimFormLoader() {
     if (hasActiveMerkl) {
       type += '-merkl';
     }
+    if (hasActiveStellaSwap) {
+      type += '-stellaswap';
+    }
     return type;
-  }, [vault, isCowcentratedLike, hasActiveMerkl]);
+  }, [vault, isCowcentratedLike, hasActiveMerkl, hasActiveStellaSwap]);
   const descriptionKey = `Transact-Claim-Description-${rewardType}`;
 
   return (
@@ -53,6 +63,12 @@ export const ClaimFormLoader = memo(function ClaimFormLoader() {
         />
       ) : null}
       <MerklRewards
+        vaultId={vault.id}
+        chainId={vault.chainId}
+        walletAddress={walletAddress}
+        deposited={deposited}
+      />
+      <StellaSwapRewards
         vaultId={vault.id}
         chainId={vault.chainId}
         walletAddress={walletAddress}

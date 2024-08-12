@@ -1,7 +1,6 @@
 import { Dropdown } from '../../../../components/Dropdown';
 import ShareIcon from '@material-ui/icons/Share';
 import { Button } from '../../../../components/Button';
-import * as React from 'react';
 import {
   memo,
   type MutableRefObject,

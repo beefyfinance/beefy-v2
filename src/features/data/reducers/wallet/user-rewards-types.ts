@@ -2,7 +2,7 @@ import type { Address } from 'viem';
 import type { ChainId } from '../../entities/chain';
 import type { BigNumber } from 'bignumber.js';
 
-export type MerklToken = {
+export type RewardToken = {
   decimals: number;
   symbol: string;
   address: Address;
@@ -11,13 +11,13 @@ export type MerklToken = {
 
 export type MerklVaultReward = {
   campaignIds: string[];
-  token: MerklToken;
+  token: RewardToken;
   accumulated: BigNumber;
   unclaimed: BigNumber;
 };
 
 export type MerklTokenReward = {
-  token: MerklToken;
+  token: RewardToken;
   accumulated: BigNumber;
   unclaimed: BigNumber;
   proof: string[];
@@ -32,11 +32,28 @@ export type MerklRewardsState = {
   };
 };
 
+export type StellaSwapVaultReward = {
+  position: number;
+  token: RewardToken;
+  proofs: string[];
+  isNative: boolean;
+  accumulated: BigNumber;
+  unclaimed: BigNumber;
+  claimContractAddress: string;
+};
+
+export type StellaSwapRewardsState = {
+  byVaultId: {
+    [vaultId: string]: StellaSwapVaultReward[];
+  };
+};
+
 export type UserRewardsState = {
   byUser: {
     [userAddress: string]: {
       byProvider: {
         merkl: MerklRewardsState;
+        stellaswap: StellaSwapRewardsState;
       };
     };
   };

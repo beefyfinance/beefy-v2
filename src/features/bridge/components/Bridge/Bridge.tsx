@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import React, { memo, useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../store';

@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { AssetsImage } from '../../../../../../components/AssetsImage';

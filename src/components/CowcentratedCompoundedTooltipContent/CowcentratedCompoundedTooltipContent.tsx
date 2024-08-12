@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';

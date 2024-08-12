@@ -1,13 +1,13 @@
-import React, { memo } from 'react';
+import { memo, type ReactNode } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
 export type LayoutProps = {
-  header: React.ReactNode;
-  footer: React.ReactNode;
-  children: React.ReactNode;
+  header: ReactNode;
+  footer: ReactNode;
+  children: ReactNode;
 };
 
 export const Layout = memo<LayoutProps>(function Layout({ header, footer, children }) {

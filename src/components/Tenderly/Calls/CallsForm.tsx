@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { TechLoader } from '../../TechLoader';
 import { useAppSelector } from '../../../store';
 import { selectTenderlyStatus } from '../../../features/data/selectors/tenderly';

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { AlertError } from '../../Alerts';
 import { useAppSelector } from '../../../store';
 import { selectTenderlyErrorOrUndefined } from '../../../features/data/selectors/tenderly';

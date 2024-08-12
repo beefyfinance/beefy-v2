@@ -1,9 +1,9 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import QiDaoLogo from '../../../../images/partners/qidao.svg';
 
 import { PartnerCard } from '../PartnerCard';
+import { memo } from 'react';
 
 const QiDaoCard = () => {
   const { t } = useTranslation();
@@ -18,4 +18,4 @@ const QiDaoCard = () => {
   );
 };
 
-export const QiDao = React.memo(QiDaoCard);
+export const QiDao = memo(QiDaoCard);

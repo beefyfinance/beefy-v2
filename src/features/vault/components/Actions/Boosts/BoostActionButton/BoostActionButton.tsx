@@ -2,7 +2,7 @@ import { Collapse, IconButton, InputBase, makeStyles } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import type BigNumber from 'bignumber.js';
 import clsx from 'clsx';
-import React, { memo, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button';
 import { formatTokenDisplayCondensed, formatTokenDisplay } from '../../../../../../helpers/format';
@@ -87,7 +87,7 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
 
   // initialize our form
   const store = useAppStore();
-  React.useEffect(() => {
+  useEffect(() => {
     if (open) {
       initBoostForm(store, boostId, type, walletAddress);
     }

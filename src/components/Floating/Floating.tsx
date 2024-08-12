@@ -1,5 +1,5 @@
 import type { MutableRefObject, ReactNode } from 'react';
-import React, { memo, useLayoutEffect, useMemo } from 'react';
+import { memo, useLayoutEffect, useMemo } from 'react';
 import {
   autoUpdate,
   flip as flipFloating,

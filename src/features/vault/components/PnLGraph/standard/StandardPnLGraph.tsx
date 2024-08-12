@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useAppSelector } from '../../../../../store';
 import { isStandardVault, type VaultEntity } from '../../../../data/entities/vault';
 import { selectHasDataToShowGraphByVaultId } from '../../../../data/selectors/analytics';

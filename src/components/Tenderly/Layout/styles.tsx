@@ -4,7 +4,7 @@ type StylesProps = {
   gap?: number;
 };
 
-export const styles = (theme: Theme) => ({
+export const styles = (_theme: Theme) => ({
   vertical: {
     display: 'flex',
     gap: (props?: StylesProps) => props?.gap || 16,

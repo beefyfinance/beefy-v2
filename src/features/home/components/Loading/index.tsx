@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { TechLoader } from '../../../../components/TechLoader';
 import { useTranslation } from 'react-i18next';
 

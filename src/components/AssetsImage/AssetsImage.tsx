@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { memo, type ReactNode, useMemo } from 'react';
 import { DEFAULT_SIZE, styles } from './styles';
 import { makeStyles } from '@material-ui/core';
@@ -37,7 +36,7 @@ export const AssetsImage = memo<AssetsImageProps>(function AssetsImage({
       className={className}
     >
       {assetSymbols.slice(0, maxSupportedAssets).map(symbol => (
-        <Asset key={symbol} symbol={symbol} chainId={chainId} size={size} />
+        <Asset key={`${symbol}.${chainId}`} symbol={symbol} chainId={chainId} size={size} />
       ))}
     </Icon>
   );

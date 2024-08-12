@@ -79,7 +79,12 @@ import { selectTransactSelectedQuote, selectTransactSlippage } from '../selector
 import { AngleMerklDistributorAbi } from '../../../config/abi/AngleMerklDistributor';
 import { isDefined } from '../utils/array-utils';
 import { slipAllBy } from '../apis/transact/helpers/amounts';
-import { fetchUserMerklRewardsAction, MERKL_SUPPORTED_CHAINS } from './user-rewards';
+import {
+  fetchUserMerklRewardsAction,
+  MERKL_SUPPORTED_CHAINS,
+} from './user-rewards/merkl-user-rewards';
+import { fetchUserStellaSwapRewardsAction } from './user-rewards/stellaswap-user-rewards';
+import { stellaswapRewarderAbi } from '../../../config/abi/StellaSwapRewarder';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -1232,6 +1237,89 @@ const claimMerkl = (chainId: ChainEntity['id']) => {
   });
 };
 
+const claimStellaSwap = (chainId: ChainEntity['id'], vaultId: VaultEntity['id']) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    txStart(dispatch);
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+    if (chainId !== 'moonbeam') {
+      throw new Error(`Can't claimStellaSwap on ${chainId}`);
+    }
+
+    const chain = selectChainById(state, chainId);
+    const native = selectChainNativeToken(state, chainId);
+    const { byVaultId } = await dispatch(
+      fetchUserStellaSwapRewardsAction({ walletAddress: address, vaultId, force: true })
+    ).unwrap();
+    const vaultRewards = byVaultId[vaultId];
+    if (!vaultRewards) {
+      throw new Error(`No unclaimed stellaswap rewards found for ${vaultId}`);
+    }
+    const unclaimedRewards = vaultRewards
+      .filter(({ unclaimed }) => unclaimed.gt(BIG_ZERO))
+      .map(({ token, accumulated, proofs, position, isNative, claimContractAddress }) => ({
+        claimContractAddress,
+        claim: {
+          user: address,
+          position,
+          token: token.address,
+          amount: toWeiString(accumulated, token.decimals), // TODO proof requires 'accumulated' amount?
+          isNative,
+          proof: proofs,
+        },
+      }));
+    if (!unclaimedRewards.length) {
+      throw new Error(`No unclaimed stellaswap rewards found for ${vaultId}`);
+    }
+
+    const claimsByContract = Object.values(
+      groupBy(unclaimedRewards, r => r.claimContractAddress)
+    ).map(rewards => ({
+      to: rewards[0].claimContractAddress,
+      claims: rewards.map(({ claim }) => claim),
+    }));
+
+    const walletApi = await getWalletConnectionApi();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const abi = viemToWeb3Abi(stellaswapRewarderAbi);
+    const gasPrices = await getGasPriceOptions(chain);
+
+    const makeTransaction = () => {
+      if (claimsByContract.length === 1) {
+        const { to, claims } = claimsByContract[0];
+        console.log(claims);
+        const contract = new web3.eth.Contract(abi, to);
+        return contract.methods.claim(claims).send({ from: address, ...gasPrices });
+      } else {
+        throw new Error('TODO: implement multi-rewarder contract claim');
+      }
+    };
+
+    txWallet(dispatch);
+    const transaction = makeTransaction();
+
+    const spenderAddress = first(unclaimedRewards)!.claimContractAddress;
+    const tokens = unclaimedRewards.map(r => r.claim.token);
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      { amount: BIG_ZERO, token: native }, // TODO fix so these are not required
+      {
+        walletAddress: address,
+        chainId: chainId,
+        spenderAddress, // TODO fix so these are not required
+        tokens: tokens
+          .map(token => selectTokenByAddressOrUndefined(state, chainId, token))
+          .filter(isDefined),
+        rewards: true,
+      }
+    );
+  });
+};
+
 const resetWallet = () => {
   return captureWalletErrors(async dispatch => {
     dispatch(createWalletActionResetAction());
@@ -1259,6 +1347,7 @@ export const walletActions = {
   migrateUnstake,
   bridgeViaCommonInterface,
   claimMerkl,
+  claimStellaSwap,
 };
 
 export function captureWalletErrors(

@@ -1,6 +1,6 @@
 import type { VaultEntity } from '../../../../data/entities/vault';
 import type { TokenEntity } from '../../../../data/entities/token';
-import React, { memo, useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { useAppSelector } from '../../../../../store';
 import { selectHistoricalAvailableBuckets } from '../../../../data/selectors/historical';
 import { GraphLoader } from '../../GraphLoader';
