@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Collapsable } from '../../../../components/Collapsable';
 import { useAppSelector } from '../../../../store';

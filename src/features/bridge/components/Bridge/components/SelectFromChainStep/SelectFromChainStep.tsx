@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { bridgeActions, FormStep } from '../../../../../data/reducers/wallet/bridge';
 import { SearchableList } from '../../../../../../components/SearchableList';

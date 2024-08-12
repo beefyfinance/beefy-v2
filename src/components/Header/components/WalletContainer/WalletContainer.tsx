@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, FormControl, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { connect } from 'react-redux';
@@ -22,6 +21,7 @@ import { useAppDispatch } from '../../../../store';
 import { formatAddressShort, formatDomain } from '../../../../helpers/format';
 import { useResolveAddress } from '../../../../features/data/hooks/resolver';
 import { isFulfilledStatus } from '../../../../features/data/reducers/wallet/resolver-types';
+import { Fragment } from 'react';
 
 const useStyles = makeStyles(styles);
 
@@ -83,7 +83,7 @@ export const WalletContainer = connect((state: BeefyState) => {
                 />
               </Box>
             ) : (
-              <React.Fragment>
+              <Fragment>
                 <div className={clsx(classes.address, { [classes.blurred]: blurred })}>
                   {walletAddress
                     ? isFulfilledStatus(resolverStatus)
@@ -91,7 +91,7 @@ export const WalletContainer = connect((state: BeefyState) => {
                       : formatAddressShort(walletAddress)
                     : t('Network-ConnectWallet')}
                 </div>
-              </React.Fragment>
+              </Fragment>
             )}
           </div>
         </FormControl>

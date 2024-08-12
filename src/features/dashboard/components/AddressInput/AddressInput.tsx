@@ -1,6 +1,8 @@
 import { CircularProgress, InputBase, makeStyles } from '@material-ui/core';
 import { CloseRounded, Search } from '@material-ui/icons';
-import React, {
+import {
+  type ChangeEvent,
+  type KeyboardEvent,
   memo,
   type MutableRefObject,
   useCallback,
@@ -37,7 +39,7 @@ export const AddressInput = memo(function AddressInput({ className }: { classNam
   const history = useHistory();
 
   const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const input = e.target.value;
       if (isMaybeDomain(input)) {
         setInputMode('domain');
@@ -61,7 +63,7 @@ export const AddressInput = memo(function AddressInput({ className }: { classNam
   const isValid = useMemo(() => isAddressValid || isDomainValid, [isAddressValid, isDomainValid]);
 
   const handleGoToDashboardOnEnterKey = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
+    (e: KeyboardEvent<HTMLDivElement>) => {
       if (e.key === 'Enter' && isValid) {
         history.push(`/dashboard/${userInput}`);
         handleClear();

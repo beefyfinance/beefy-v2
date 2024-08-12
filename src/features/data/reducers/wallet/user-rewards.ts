@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchUserMerklRewardsAction } from '../../actions/user-rewards';
+import { fetchUserMerklRewardsAction } from '../../actions/user-rewards/merkl-user-rewards';
 import type { Draft } from 'immer';
 import type { UserRewardsState } from './user-rewards-types';
+import { fetchUserStellaSwapRewardsAction } from '../../actions/user-rewards/stellaswap-user-rewards';
 
 const initialState: UserRewardsState = {
   byUser: {},
@@ -14,16 +15,24 @@ export const userRewardsSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    builder.addCase(fetchUserMerklRewardsAction.fulfilled, (sliceState, action) => {
-      // @dev the action already filters out rewards with 0 unclaimed
-      const userState = getMerklUserState(sliceState, action.payload.walletAddress.toLowerCase());
-      userState.byChainId = action.payload.byChainId;
-      userState.byVaultId = action.payload.byVaultId;
-    });
+    builder
+      .addCase(fetchUserMerklRewardsAction.fulfilled, (sliceState, action) => {
+        // @dev the action already filters out rewards with 0 unclaimed
+        const userState = getMerklUserState(sliceState, action.payload.walletAddress.toLowerCase());
+        userState.byChainId = action.payload.byChainId;
+        userState.byVaultId = action.payload.byVaultId;
+      })
+      .addCase(fetchUserStellaSwapRewardsAction.fulfilled, (sliceState, action) => {
+        const userState = getStellaSwapUserState(
+          sliceState,
+          action.payload.walletAddress.toLowerCase()
+        );
+        userState.byVaultId = action.payload.byVaultId;
+      });
   },
 });
 
-function getMerklUserState(sliceState: Draft<UserRewardsState>, userAddress: string) {
+function getUserState(sliceState: Draft<UserRewardsState>, userAddress: string) {
   let userState = sliceState.byUser[userAddress];
   if (!userState) {
     userState = sliceState.byUser[userAddress] = {
@@ -32,11 +41,22 @@ function getMerklUserState(sliceState: Draft<UserRewardsState>, userAddress: str
           byVaultId: {},
           byChainId: {},
         },
+        stellaswap: {
+          byVaultId: {},
+        },
       },
     };
   }
 
-  return userState.byProvider.merkl;
+  return userState;
+}
+
+function getMerklUserState(sliceState: Draft<UserRewardsState>, userAddress: string) {
+  return getUserState(sliceState, userAddress).byProvider.merkl;
+}
+
+function getStellaSwapUserState(sliceState: Draft<UserRewardsState>, userAddress: string) {
+  return getUserState(sliceState, userAddress).byProvider.stellaswap;
 }
 
 export const userRewardsReducer = userRewardsSlice.reducer;

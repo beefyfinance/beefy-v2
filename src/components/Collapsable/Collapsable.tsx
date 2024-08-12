@@ -2,7 +2,7 @@ import { Collapse, makeStyles } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
-import React, { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { Button } from '../Button';
 import { styles } from './styles';
 

@@ -1,5 +1,5 @@
 import { IconButton, makeStyles } from '@material-ui/core';
-import React, { memo, useCallback, useRef } from 'react';
+import { memo, useCallback, useRef } from 'react';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { Modal } from '../Modal';

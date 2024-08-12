@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import type { TokenEntity } from '../../features/data/entities/token';
@@ -14,6 +13,7 @@ import {
   selectIsPricesAvailable,
 } from '../../features/data/selectors/data-loader';
 import { selectTokenByAddress } from '../../features/data/selectors/tokens';
+import { memo } from 'react';
 
 type GovVaultRewardsProps =
   | {
@@ -110,4 +110,4 @@ const _GovVaultRewards = connect(
     />
   );
 });
-export const GovVaultRewards = React.memo(_GovVaultRewards);
+export const GovVaultRewards = memo(_GovVaultRewards);

@@ -8,6 +8,7 @@ import { createCachedSelector } from 're-reselect';
 import {
   createAddressChainDataSelector,
   createAddressDataSelector,
+  createAddressVaultDataSelector,
   createChainDataSelector,
   createGlobalDataSelector,
   createHasLoaderDispatchedRecentlyEvaluator,
@@ -200,6 +201,17 @@ export const selectDashboardShouldLoadBalanceForChainUser = createAddressChainDa
   5
 );
 
+export const selectHasMerklRewardsDispatchedRecentlyForAnyUser = createGlobalDataSelector(
+  'merklRewards',
+  createHasLoaderDispatchedRecentlyEvaluator(15),
+  5
+);
+
+export const selectFetchMerklRewardsLastDispatched = createGlobalDataSelector(
+  'merklRewards',
+  loader => loader?.lastDispatched || 0
+);
+
 export const selectMerklRewardsForUserShouldLoad = createAddressDataSelector(
   'merklRewards',
   createShouldLoaderLoadRecentEvaluator(30 * 60),
@@ -221,12 +233,6 @@ export const selectMerklRewardsForUserIsPending = createAddressDataSelector(
   isLoaderPending
 );
 
-export const selectHasMerklRewardsDispatchedRecentlyForAnyUser = createGlobalDataSelector(
-  'merklRewards',
-  createHasLoaderDispatchedRecentlyEvaluator(15),
-  5
-);
-
 export const selectMerklUserRewardsStatus = createSelector(
   selectMerklRewardsForUserHasFulfilledOnce,
   selectMerklRewardsForUserShouldLoad,
@@ -241,9 +247,50 @@ export const selectMerklUserRewardsStatus = createSelector(
   })
 );
 
-export const selectFetchMerklRewardsLastDispatched = createGlobalDataSelector(
-  'merklRewards',
+export const selectHasStellaSwapRewardsDispatchedRecentlyForAnyUser = createGlobalDataSelector(
+  'stellaSwapRewards',
+  createHasLoaderDispatchedRecentlyEvaluator(15),
+  5
+);
+
+export const selectFetchStellaSwapRewardsLastDispatched = createGlobalDataSelector(
+  'stellaSwapRewards',
   loader => loader?.lastDispatched || 0
+);
+
+export const selectStellaSwapRewardsForUserShouldLoad = createAddressVaultDataSelector(
+  'stellaSwapRewards',
+  createShouldLoaderLoadRecentEvaluator(30 * 60),
+  5
+);
+
+export const selectStellaSwapRewardsForUserHasFulfilledOnce = createAddressVaultDataSelector(
+  'stellaSwapRewards',
+  hasLoaderFulfilledOnce
+);
+
+export const selectStellaSwapRewardsForUserIsRejected = createAddressVaultDataSelector(
+  'stellaSwapRewards',
+  isLoaderRejected
+);
+
+export const selectStellaSwapRewardsForUserIsPending = createAddressVaultDataSelector(
+  'stellaSwapRewards',
+  isLoaderPending
+);
+
+export const selectStellaSwapUserRewardsStatus = createSelector(
+  selectStellaSwapRewardsForUserHasFulfilledOnce,
+  selectStellaSwapRewardsForUserShouldLoad,
+  selectStellaSwapRewardsForUserIsRejected,
+  selectStellaSwapRewardsForUserIsPending,
+  selectHasStellaSwapRewardsDispatchedRecentlyForAnyUser,
+  (userFulfilled, userShouldLoad, userRejected, userPending, anyUserDispatchedRecently) => ({
+    canLoad: userShouldLoad && !anyUserDispatchedRecently,
+    isLoaded: userFulfilled,
+    isLoading: userPending,
+    isError: !userFulfilled && userRejected,
+  })
 );
 
 export const selectShouldLoadAllCurrentCowcentratedRanges = createGlobalDataSelector(

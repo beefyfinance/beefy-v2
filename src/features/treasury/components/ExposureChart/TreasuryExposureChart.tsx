@@ -1,5 +1,5 @@
 import { Hidden, makeStyles } from '@material-ui/core';
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { PieChart } from '../../../../components/PieChart/PieChart';
 import { ExposureBar } from '../ExposureBar';
 import { ExposureLegend } from '../ExposureLegend';

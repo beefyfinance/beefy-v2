@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { isStandardVault, type VaultEntity } from '../../../../data/entities/vault';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../store';

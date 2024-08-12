@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
@@ -99,4 +99,4 @@ function _Preview() {
   );
 }
 
-export const Preview = React.memo(_Preview);
+export const Preview = memo(_Preview);

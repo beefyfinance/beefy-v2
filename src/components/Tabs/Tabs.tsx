@@ -1,4 +1,3 @@
-import React from 'react';
 import { makeStyles, Tabs as MuiTabs, Tab } from '@material-ui/core';
 
 import { styles } from './styles';

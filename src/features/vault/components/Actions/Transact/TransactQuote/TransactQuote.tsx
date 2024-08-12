@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import { Trans, useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import React, { memo, useEffect, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {

@@ -1,5 +1,5 @@
 import type { ComponentType, ReactNode } from 'react';
-import React, { Fragment, memo, useCallback, useMemo } from 'react';
+import { Fragment, memo, useCallback, useMemo } from 'react';
 import {
   isCowcentratedDepositQuote,
   type TokenAmount,

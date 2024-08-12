@@ -43,6 +43,7 @@ import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotic
 import { NotEnoughNotice } from '../NotEnoughNotice';
 import { WithdrawFees } from '../VaultFees';
 import { selectWalletAddress } from '../../../../../data/selectors/wallet';
+import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton';
 
 const useStyles = makeStyles(styles);
 
@@ -183,6 +184,7 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ optio
             {t(isMaxAll ? 'Transact-WithdrawAll' : 'Transact-Withdraw')}
           </Button>
         </ActionConnectSwitch>
+        {import.meta.env.DEV ? <TenderlyTransactButton option={option} quote={quote} /> : null}
         <WithdrawFees />
       </div>
     </div>
@@ -250,6 +252,7 @@ const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimW
             <WithdrawFees />
           </div>
         </ActionConnectSwitch>
+        {import.meta.env.DEV ? <TenderlyTransactButton option={option} quote={quote} /> : null}
       </div>
     </div>
   );

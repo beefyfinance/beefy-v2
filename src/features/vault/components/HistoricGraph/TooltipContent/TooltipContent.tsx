@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import type { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
 import type { LineTogglesState } from '../LineToggles';

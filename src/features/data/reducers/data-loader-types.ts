@@ -85,32 +85,40 @@ export interface DataLoaderState {
     merklCampaigns: LoaderState;
     currentCowcentratedRanges: LoaderState;
     merklRewards: LoaderState;
+    stellaSwapRewards: LoaderState;
   };
   byChainId: {
-    [chainId in ChainEntity['id']]?: ChainIdDataEntity;
+    [chainId in ChainEntity['id']]?: ByChainDataEntity;
   };
   byAddress: {
     [address: string]: {
-      global: GlobalDataByAddressEntity;
+      global: ByAddressGlobalDataEntity;
       byChainId: {
-        [chainId in ChainEntity['id']]?: ChainIdDataByAddressByChainEntity;
+        [chainId in ChainEntity['id']]?: ByAddressByChainDataEntity;
+      };
+      byVaultId: {
+        [vaultId: string]: ByAddressByVaultDataEntity;
       };
     };
   };
 }
 
-export interface ChainIdDataEntity {
+export interface ByChainDataEntity {
   contractData: LoaderState;
   addressBook: LoaderState;
 }
 
-export interface ChainIdDataByAddressByChainEntity {
+export interface ByAddressByChainDataEntity {
   balance: LoaderState;
   allowance: LoaderState;
   clmHarvests: LoaderState;
 }
 
-export interface GlobalDataByAddressEntity {
+export interface ByAddressByVaultDataEntity {
+  stellaSwapRewards: LoaderState;
+}
+
+export interface ByAddressGlobalDataEntity {
   timeline: LoaderState;
   depositedVaults: LoaderState;
   dashboard: LoaderState;
@@ -119,6 +127,7 @@ export interface GlobalDataByAddressEntity {
 }
 
 export type LoaderGlobalKey = keyof DataLoaderState['global'];
-export type LoaderChainKey = keyof ChainIdDataEntity;
-export type LoaderChainAddressKey = keyof ChainIdDataByAddressByChainEntity;
-export type LoaderAddressKey = keyof GlobalDataByAddressEntity;
+export type LoaderChainKey = keyof ByChainDataEntity;
+export type LoaderAddressKey = keyof ByAddressGlobalDataEntity;
+export type LoaderAddressChainKey = keyof ByAddressByChainDataEntity;
+export type LoaderAddressVaultKey = keyof ByAddressByVaultDataEntity;

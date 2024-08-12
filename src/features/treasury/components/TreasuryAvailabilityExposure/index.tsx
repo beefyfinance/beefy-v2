@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAppSelector } from '../../../../store';
 import { selectTreasuryExposureByAvailability } from '../../../data/selectors/treasury';
 import { cammelCaseToText } from '../../../data/utils/string-utils';

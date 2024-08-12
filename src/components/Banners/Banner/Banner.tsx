@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
 import clsx from 'clsx';

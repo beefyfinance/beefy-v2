@@ -25,6 +25,7 @@ import { type ActionButtonProps, ActionConnectSwitch } from '../CommonActions';
 import { GlpDepositNotice } from '../GlpNotices';
 import { NotEnoughNotice } from '../NotEnoughNotice';
 import { VaultFees } from '../VaultFees';
+import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton';
 
 const useStyles = makeStyles(styles);
 
@@ -125,6 +126,7 @@ const ActionDeposit = memo<ActionDepositProps>(function ActionDeposit({
             {t(isMaxAll && !isCowDepositQuote ? 'Transact-DepositAll' : 'Transact-Deposit')}
           </Button>
         </ActionConnectSwitch>
+        {import.meta.env.DEV ? <TenderlyTransactButton option={option} quote={quote} /> : null}
         <VaultFees />
       </div>
     </div>

@@ -1,19 +1,21 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
 import type {
-  ChainIdDataByAddressByChainEntity,
-  ChainIdDataEntity,
+  ByAddressByChainDataEntity,
+  ByChainDataEntity,
   DataLoaderState,
-  GlobalDataByAddressEntity,
+  ByAddressGlobalDataEntity,
   LoaderState,
   LoaderStateFulfilled,
   LoaderStateIdle,
   LoaderStatePending,
   LoaderStateRejected,
+  ByAddressByVaultDataEntity,
 } from '../reducers/data-loader-types';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
 import { createCachedFactory } from '../utils/factory-utils';
+import type { VaultEntity } from '../entities/vault';
 
 // time since a loader was last dispatched before it is allowed to be dispatched again
 const DEFAULT_DISPATCHED_RECENT_SECONDS = 30;
@@ -27,6 +29,11 @@ export type AddressDataSelectorFn<T = boolean> = (state: BeefyState, walletAddre
 export type AddressChainDataSelectorFn<T = boolean> = (
   state: BeefyState,
   chainId: ChainEntity['id'],
+  walletAddress: string
+) => T;
+export type AddressVaultDataSelectorFn<T = boolean> = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
   walletAddress: string
 ) => T;
 
@@ -174,7 +181,7 @@ export function createGlobalDataSelector<T>(
 }
 
 export function createChainDataSelector<T>(
-  key: keyof ChainIdDataEntity,
+  key: keyof ByChainDataEntity,
   evaluateFn: LoaderEvaluatorFn<T>,
   invalidateCacheAfterSeconds?: number
 ): ChainDataSelectorFn<T> {
@@ -187,7 +194,7 @@ export function createChainDataSelector<T>(
 }
 
 export function createAddressDataSelector<T>(
-  key: keyof GlobalDataByAddressEntity,
+  key: keyof ByAddressGlobalDataEntity,
   evaluateFn: LoaderEvaluatorFn<T>,
   invalidateCacheAfterSeconds?: number
 ): AddressDataSelectorFn<T> {
@@ -200,13 +207,26 @@ export function createAddressDataSelector<T>(
 }
 
 export function createAddressChainDataSelector<T>(
-  key: keyof ChainIdDataByAddressByChainEntity,
+  key: keyof ByAddressByChainDataEntity,
   evaluateFn: LoaderEvaluatorFn<T>,
   invalidateCacheAfterSeconds?: number
 ): AddressChainDataSelectorFn<T> {
   return createCachedSelector(
     (state: BeefyState, chainId: ChainEntity['id'], walletAddress: string) =>
       state.ui.dataLoader.byAddress[walletAddress.toLowerCase()]?.byChainId[chainId]?.[key],
+    createTimeCacheInvalidator(invalidateCacheAfterSeconds),
+    evaluateFn
+  )((_, walletAddress) => walletAddress.toLowerCase());
+}
+
+export function createAddressVaultDataSelector<T>(
+  key: keyof ByAddressByVaultDataEntity,
+  evaluateFn: LoaderEvaluatorFn<T>,
+  invalidateCacheAfterSeconds?: number
+): AddressVaultDataSelectorFn<T> {
+  return createCachedSelector(
+    (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+      state.ui.dataLoader.byAddress[walletAddress.toLowerCase()]?.byVaultId[vaultId]?.[key],
     createTimeCacheInvalidator(invalidateCacheAfterSeconds),
     evaluateFn
   )((_, walletAddress) => walletAddress.toLowerCase());

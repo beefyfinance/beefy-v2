@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { Trans, useTranslation } from 'react-i18next';
 import { RISKS } from '../../../../config/risk';

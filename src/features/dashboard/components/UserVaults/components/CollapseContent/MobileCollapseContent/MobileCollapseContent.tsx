@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { VaultDashboardMobileStats } from './components/VaultDashboardMobileStats';

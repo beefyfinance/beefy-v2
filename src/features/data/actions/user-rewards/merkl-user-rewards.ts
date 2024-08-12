@@ -1,20 +1,24 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import { getMerklRewardsApi } from '../apis/instances';
-import type { ChainEntity } from '../entities/chain';
-import { selectAllChainIds, selectChainByNetworkChainId } from '../selectors/chains';
-import { selectVaultByAddressOrUndefined } from '../selectors/vaults';
-import { selectMerklRewardsForUserShouldLoad } from '../selectors/data-loader';
+import type { BeefyState } from '../../../../redux-types';
+import { getMerklRewardsApi } from '../../apis/instances';
+import type { ChainEntity } from '../../entities/chain';
+import { selectAllChainIds, selectChainByNetworkChainId } from '../../selectors/chains';
+import { selectVaultByAddressOrUndefined } from '../../selectors/vaults';
+import { selectMerklRewardsForUserShouldLoad } from '../../selectors/data-loader';
 import { type Address, getAddress } from 'viem';
-import { isCowcentratedLikeVault, isCowcentratedVault, type VaultEntity } from '../entities/vault';
-import { isDefined } from '../utils/array-utils';
-import { fromWeiString } from '../../../helpers/big-number';
-import { pushOrSet } from '../../../helpers/object';
-import type { MerklTokenReward, MerklVaultReward } from '../reducers/wallet/user-rewards-types';
+import {
+  isCowcentratedLikeVault,
+  isCowcentratedVault,
+  type VaultEntity,
+} from '../../entities/vault';
+import { isDefined } from '../../utils/array-utils';
+import { fromWeiString } from '../../../../helpers/big-number';
+import { pushOrSet } from '../../../../helpers/object';
+import type { MerklTokenReward, MerklVaultReward } from '../../reducers/wallet/user-rewards-types';
 import type {
   FetchUserMerklRewardsActionParams,
   FetchUserMerklRewardsFulfilledPayload,
-} from './user-rewards-types';
+} from './merkl-user-rewards-types';
 
 // ChainId -> Merkl Distributor contract address
 // https://app.merkl.xyz/status

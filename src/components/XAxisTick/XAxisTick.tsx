@@ -1,4 +1,3 @@
-import React from 'react';
 import type { TextProps } from 'recharts';
 import { Text } from 'recharts';
 import { omit } from 'lodash-es';

@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import React, { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import type { Theme } from '@material-ui/core';
 import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';

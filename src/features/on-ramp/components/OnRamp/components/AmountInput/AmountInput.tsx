@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { InputBase, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';

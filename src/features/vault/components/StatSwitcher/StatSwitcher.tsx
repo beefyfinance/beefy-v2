@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { ToggleButtons } from '../../../../components/ToggleButtons';
 import { makeStyles, useMediaQuery, type Theme } from '@material-ui/core';
 import { styles } from './styles';

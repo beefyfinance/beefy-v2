@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { LabeledStat } from '../LabeledStat';
 import { useTranslation } from 'react-i18next';
 import { formatTotalApy } from '../../helpers/format';

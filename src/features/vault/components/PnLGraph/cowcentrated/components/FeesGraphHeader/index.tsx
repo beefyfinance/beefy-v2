@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { memo } from 'react';
+import { memo } from 'react';
 import type { VaultEntity } from '../../../../../../data/entities/vault';
 import { makeStyles } from '@material-ui/core';
 import { Stat } from '../Stat';

@@ -66,6 +66,11 @@ export const getMerklRewardsApi = createDependencyFactory(
   () => import('./rewards/merkl/merkl-api')
 );
 
+export const getStellaSwapRewardsApi = createDependencyFactory(
+  async ({ StellaSwapRewardsApi }) => new StellaSwapRewardsApi(),
+  () => import('./rewards/stellaswap/stellaswap-api')
+);
+
 export const getSwapAggregator = createDependencyFactory(
   async ({ SwapAggregator, WNativeSwapProvider, OneInchSwapProvider, KyberSwapProvider }) => {
     const providers: ISwapProvider[] = [new WNativeSwapProvider()];

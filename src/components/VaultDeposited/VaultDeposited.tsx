@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import type { VaultEntity } from '../../features/data/entities/vault';
@@ -20,6 +19,7 @@ import {
   selectIsBalanceAvailableForChainUser,
   selectIsPricesAvailable,
 } from '../../features/data/selectors/data-loader';
+import { memo } from 'react';
 
 const _VaultDeposited = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
@@ -85,4 +85,4 @@ const _VaultDeposited = connect(
   }
 );
 
-export const VaultDeposited = React.memo(_VaultDeposited);
+export const VaultDeposited = memo(_VaultDeposited);

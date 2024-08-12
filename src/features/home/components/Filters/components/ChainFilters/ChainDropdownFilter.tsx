@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import React, { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';

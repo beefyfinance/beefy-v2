@@ -1,5 +1,5 @@
 import type { VaultEntity } from '../../features/data/entities/vault';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';

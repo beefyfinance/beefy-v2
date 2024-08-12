@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { formatLargePercent } from '../../../../helpers/format';
 import type { BaseEntry } from '../../../data/utils/array-utils';
 import { styles } from './styles';

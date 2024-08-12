@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { Button, InputBase, makeStyles, Paper } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { CardContent } from '../../../../Card';
@@ -67,7 +67,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   const totalSupply = useAppSelector(state => selectMinterTotalSupply(state, minter.id));
   const isStepping = useAppSelector(selectIsStepperStepping);
 
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState({
     withdraw: {
       input: '',
       amount: BIG_ZERO,

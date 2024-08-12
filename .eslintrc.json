@@ -31,8 +31,23 @@
     "no-restricted-imports": [
       "error",
       {
-        "name": "lodash",
-        "message": "Use lodash-es instead"
+        "paths": [
+          {
+            "name": "lodash",
+            "message": "Use lodash-es instead"
+          },
+          {
+            "name": "react",
+            "importNames": ["default"],
+            "message": "Use named imports only for React"
+          }
+        ],
+        "patterns": [
+          {
+            "group": ["lodash/*"],
+            "message": "Use lodash-es instead"
+          }
+        ]
       }
     ],
     "no-mixed-operators": "off",
