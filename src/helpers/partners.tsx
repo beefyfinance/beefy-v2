@@ -1,6 +1,6 @@
 import type { ChainEntity } from '../features/data/entities/chain';
 
-const QiDao = [
+export const QiDao = [
   'fantom-bifi-maxi',
   'scream-eth',
   'scream-wbtc',
@@ -14,32 +14,4 @@ const QiDao = [
   'curve-op-f-wsteth',
 ];
 
-const Nexus: ChainEntity['id'][] = ['ethereum'];
-const OpenCover: ChainEntity['id'][] = [
-  'polygon',
-  'bsc',
-  'optimism',
-  'fantom',
-  'arbitrum',
-  'avax',
-  'cronos',
-  'moonbeam',
-  'moonriver',
-  'metis',
-  'fuse',
-  'kava',
-  'canto',
-  'zksync',
-  'zkevm',
-  'base',
-  'gnosis',
-  'linea',
-  'mantle',
-  'fraxtal',
-  'mode',
-  'manta',
-  'real',
-  'sei',
-];
-
-export { QiDao, OpenCover, Nexus };
+export const Nexus: ChainEntity['id'][] = ['ethereum'];
