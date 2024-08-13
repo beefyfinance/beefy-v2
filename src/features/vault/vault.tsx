@@ -21,12 +21,12 @@ import { BusdBannerVault } from '../../components/Banners/BusdBanner';
 import { VaultsStats } from './components/VaultsStats';
 import { HistoricGraphsLoader } from './components/HistoricGraph';
 import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
-import { GamingCards } from './components/GamingCards';
 import { VaultMeta } from '../../components/Meta/VaultMeta';
 import { PnLGraphIfWallet } from './components/PnLGraph/PnLGraphIfWallet';
 import { Explainer } from './components/Explainer/Explainer';
 import { UnstakedClmBannerVault } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
 import { featureFlag_disableRedirect } from '../data/utils/feature-flags';
+import { GamingCards } from './components/GamingCards';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));

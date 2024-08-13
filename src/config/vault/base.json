@@ -6676,7 +6676,7 @@
   },
   {
     "id": "aerodrome-weth-well",
-    "name": "WELL-ETH vLP",
+    "name": "WELL.wh-ETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/WELL",
     "tokenAddress": "0xffA3F8737C39e36dec4300B162c2153c67c8352f",

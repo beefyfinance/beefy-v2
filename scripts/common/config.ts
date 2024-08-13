@@ -1,4 +1,4 @@
-import { sample } from 'lodash';
+import { sample } from 'lodash-es';
 import { ChainId } from 'blockchain-addressbook';
 import { config } from '../../src/config/config';
 import type {
@@ -50,6 +50,10 @@ export const excludeChains: Record<string, { count: number; hash: string }> = {
   moonriver: {
     count: 53,
     hash: '17e6fa948469e3d796f3709d39bb01cc4b0ded28cbd30bcbd252eb719a1c0e39',
+  },
+  canto: {
+    count: 36,
+    hash: '263fc197d9d5447d4a47854cf12dd8abac9c891573dedeb6db3d14ebdc75cc53',
   },
 };
 
