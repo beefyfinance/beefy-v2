@@ -1,5 +1,44 @@
 [
   {
+    "id": "curve-ebtc-tbtc",
+    "name": "eBTC/tBTC",
+    "token": "eBTCtBTC",
+    "tokenAddress": "0x272BF7e4Ce3308B1Fb5e54d6a1Fc32113619c401",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xBbAeb1aA33ca67c4875631a282e7925dF6b474c2",
+    "earnedToken": "mooCurveEBTC-tBTC",
+    "earnedTokenAddress": "0xBbAeb1aA33ca67c4875631a282e7925dF6b474c2",
+    "oracle": "lps",
+    "oracleId": "curve-ebtc-tbtc",
+    "status": "active",
+    "createdAt": 1723536458,
+    "platformId": "convex",
+    "assets": ["eBTC", "tBTC"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-183/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-183/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x272BF7e4Ce3308B1Fb5e54d6a1Fc32113619c401",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x272BF7e4Ce3308B1Fb5e54d6a1Fc32113619c401",
+            "coins": [
+              "0x661c70333AA1850CcDBAe82776Bb436A0fCfeEfB",
+              "0x18084fbA666a33d37592fA2633fD49a74DD93a88"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "pendle-usd0-31oct24",
     "name": "USD0++ 31Oct24",
     "token": "USD0++ 31Oct24",

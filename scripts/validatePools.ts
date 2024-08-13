@@ -90,7 +90,14 @@ const nonHarvestOnDepositPools = [
   'silo-eth-pendle-weeth',
   'silo-op-tbtc-tbtc',
 ];
-
+const excludedAbPools = [
+  'gmx-arb-near-usdc',
+  'gmx-arb-atom-usdc',
+  'gmx-arb-bnb-usdc',
+  'gmx-arb-ltc-usdc',
+  'gmx-arb-xrp-usdc',
+  'gmx-arb-doge-usdc',
+];
 const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddress'];
 
 const validPlatformIds = platforms.map(platform => platform.id);
@@ -343,6 +350,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     } else if (pool.status !== 'eol') {
       for (const assetId of pool.assets) {
         if (!(assetId in addressBook[chainId].tokens)) {
+          if (excludedAbPools.includes(pool.id)) continue;
           // just warn for now
           console.warn(`Warning: ${pool.id} : Asset ${assetId} not in addressbook on ${chainId}`);
           // exitCode = 1;
