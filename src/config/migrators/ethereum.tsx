@@ -12,8 +12,18 @@ export const migrators = [
     icon: 'CVX',
   },
   {
+    id: 'ethereum-curve',
+    name: 'Curve',
+    icon: 'CRV',
+  },
+  {
     id: 'ethereum-prisma',
     name: 'Prisma',
     icon: 'PRISMA',
+  },
+  {
+    id: 'magpie',
+    name: 'Magpie',
+    icon: 'mPENDLE',
   },
 ] as const satisfies ReadonlyArray<MigrationConfig>;

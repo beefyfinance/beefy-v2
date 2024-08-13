@@ -10,11 +10,14 @@ import type {
   UserCategoryType,
   VaultAssetType,
   VaultCategoryType,
+  StrategiesType,
 } from './filtered-vaults-types';
 import { isValidUserCategory } from './filtered-vaults-types';
 import type { VaultEntity } from '../entities/vault';
 import { fetchAllVaults } from '../actions/vaults';
 import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults';
+import BigNumber from 'bignumber.js';
+import { BIG_ZERO } from '../../../helpers/big-number';
 
 /**
  * State containing Vault infos
@@ -28,9 +31,10 @@ export type FilteredVaultsState = {
   reseted: boolean;
   sort: SortType;
   sortDirection: SortDirectionType;
-  vaultCategory: VaultCategoryType;
+  vaultCategory: VaultCategoryType[];
   userCategory: UserCategoryType;
-  assetType: VaultAssetType;
+  strategyType: StrategiesType;
+  assetType: VaultAssetType[];
   searchText: string;
   chainIds: ChainEntity['id'][];
   platformIds: PlatformEntity['id'][];
@@ -39,18 +43,25 @@ export type FilteredVaultsState = {
   onlyBoosted: boolean;
   onlyZappable: boolean;
   onlyEarningPoints: boolean;
+  onlyUnstakedClm: boolean;
   filteredVaultIds: VaultEntity['id'][];
   sortedFilteredVaultIds: VaultEntity['id'][];
+  showMinimumUnderlyingTvl: boolean;
+  showMinimumUnderlyingTvlLarge: boolean;
+  minimumUnderlyingTvl: BigNumber;
 };
 export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
+
+export type FilteredVaultBigNumberKeys = KeysOfType<FilteredVaultsState, BigNumber>;
 
 const initialFilteredVaultsState: FilteredVaultsState = {
   reseted: true,
   sort: 'default',
   sortDirection: 'desc',
-  vaultCategory: 'all',
+  vaultCategory: [],
   userCategory: 'all',
-  assetType: 'all',
+  strategyType: 'all',
+  assetType: [],
   searchText: '',
   chainIds: [],
   platformIds: [],
@@ -59,8 +70,12 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   onlyBoosted: false,
   onlyZappable: false,
   onlyEarningPoints: false,
+  onlyUnstakedClm: false,
   filteredVaultIds: [],
   sortedFilteredVaultIds: [],
+  showMinimumUnderlyingTvl: false,
+  showMinimumUnderlyingTvlLarge: false,
+  minimumUnderlyingTvl: BIG_ZERO,
 };
 
 export const filteredVaultsSlice = createSlice({
@@ -97,9 +112,14 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState.vaultCategory = action.payload;
     },
+    setStrategyType(sliceState, action: PayloadAction<FilteredVaultsState['strategyType']>) {
+      sliceState.reseted = false;
+      sliceState.strategyType = action.payload;
+    },
     setUserCategory(sliceState, action: PayloadAction<FilteredVaultsState['userCategory']>) {
       sliceState.reseted = false;
       sliceState.userCategory = action.payload;
+      sliceState.onlyUnstakedClm = false; // reset this filter when user category changes
     },
     setAssetType(sliceState, action: PayloadAction<FilteredVaultsState['assetType']>) {
       sliceState.reseted = false;
@@ -119,7 +139,20 @@ export const filteredVaultsSlice = createSlice({
     },
     setBoolean(
       sliceState,
-      action: PayloadAction<{ filter: FilteredVaultBooleanKeys; value: boolean }>
+      action: PayloadAction<{
+        filter: FilteredVaultBooleanKeys;
+        value: boolean;
+      }>
+    ) {
+      sliceState.reseted = false;
+      sliceState[action.payload.filter] = action.payload.value;
+    },
+    setBigNumber(
+      sliceState,
+      action: PayloadAction<{
+        filter: FilteredVaultBigNumberKeys;
+        value: BigNumber;
+      }>
     ) {
       sliceState.reseted = false;
       sliceState[action.payload.filter] = action.payload.value;
@@ -130,7 +163,7 @@ export const filteredVaultsSlice = createSlice({
       .addCase(fetchAllVaults.fulfilled, (state, action) => {
         if (state.filteredVaultIds.length === 0) {
           const allVaultIds = Object.values(action.payload.byChainId).flatMap(vaults =>
-            vaults.map(v => v.id)
+            vaults.map(v => v.entity.id)
           );
           state.filteredVaultIds = allVaultIds;
           state.sortedFilteredVaultIds = allVaultIds;
@@ -153,11 +186,19 @@ export const userCategoryTransform = createTransform(
   { whitelist: ['userCategory'] }
 );
 
-export const chanIdsTransform = createTransform(
+export const bigNumberTransform = createTransform(
+  (bigNumber: BigNumber) => bigNumber.toString(),
+  (storedBigNumber: string) => new BigNumber(storedBigNumber),
+  { whitelist: ['minimumUnderlyingTvl'] }
+);
+
+export const chainIdsTransform = createTransform(
   (chanIds: FilteredVaultsState['chainIds']) => chanIds,
   (chainIdsFromLocalStorage: FilteredVaultsState['chainIds']) => {
     // TODO fix so we use real list of eol chains
-    return chainIdsFromLocalStorage.filter(chainId => !['heco', 'harmony'].includes(chainId));
+    return chainIdsFromLocalStorage.filter(
+      chainId => !['heco', 'harmony', 'moonriver', 'aurora', 'emerald', 'celo'].includes(chainId)
+    );
   },
   { whitelist: ['chainIds'] }
 );

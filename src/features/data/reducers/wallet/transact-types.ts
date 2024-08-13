@@ -3,11 +3,11 @@ import type {
   TransactOption,
   TransactQuote,
 } from '../../apis/transact/transact-types';
-import type { SerializedError } from '@reduxjs/toolkit';
 import type { VaultEntity } from '../../entities/vault';
 import type { TokenEntity } from '../../entities/token';
 import type { ChainEntity } from '../../entities/chain';
 import type { BigNumber } from 'bignumber.js';
+import type { SerializedError } from '../../apis/transact/strategies/error-types';
 
 export enum TransactStep {
   Loading,
@@ -19,6 +19,7 @@ export enum TransactStep {
 export enum TransactMode {
   Deposit,
   Withdraw,
+  Claim,
 }
 
 export enum TransactStatus {
@@ -69,20 +70,18 @@ export type TransactConfirm = {
 
 export type TransactState = {
   vaultId: VaultEntity['id'] | undefined;
+  pendingVaultId: VaultEntity['id'] | undefined;
   selectedChainId: ChainEntity['id'] | undefined;
   selectedSelectionId: string | undefined;
   selectedQuoteId: string | undefined;
   swapSlippage: number;
-  inputAmount: BigNumber;
-  inputMax: boolean;
-  dualInputAmounts: BigNumber[];
-  dualInputMax: boolean[];
+  inputAmounts: BigNumber[];
+  inputMaxes: boolean[];
   mode: TransactMode;
   step: TransactStep;
   forceSelection: boolean;
   selections: TransactSelections;
   options: TransactOptions;
   quotes: TransactQuotes;
-  migrateQuotes: TransactQuotes;
   confirm: TransactConfirm;
 };

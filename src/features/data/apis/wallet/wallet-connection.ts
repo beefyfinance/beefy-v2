@@ -11,6 +11,7 @@ import standardInjectedWallets from '@web3-onboard/injected-wallets/dist/wallets
 import createCoinbaseWalletModule from '@web3-onboard/coinbase';
 import createWalletConnectModule from '@web3-onboard/walletconnect';
 import createMetamaskModule from '@web3-onboard/metamask';
+import createTrustDesktopModule from '@web3-onboard/trust';
 import type { ConnectOptions } from '@web3-onboard/core/dist/types';
 import type { WalletInit } from '@web3-onboard/common';
 import { createEIP1193Provider } from '@web3-onboard/common';
@@ -19,7 +20,7 @@ import { createWeb3Instance } from '../../../../helpers/web3';
 import appIcon from '../../../../images/bifi-logos/header-logo-notext.svg';
 import appLogo from '../../../../images/bifi-logos/header-logo.svg';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
-import type { provider } from 'web3-core';
+import type { AbstractProvider } from 'web3-core';
 import { featureFlag_walletConnectChainId } from '../../utils/feature-flags';
 import type { WalletHelpers } from '@web3-onboard/common/dist/types';
 import type { WalletConnectOptions } from '@web3-onboard/walletconnect/dist/types';
@@ -34,6 +35,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | undefined;
   protected onboardWalletInitializers: WalletInit[] | undefined;
   protected ignoreDisconnectFromAutoConnect = false;
+  protected providerWrapper: ((provider: AbstractProvider) => AbstractProvider) | undefined;
 
   constructor(protected options: WalletConnectionOptions) {
     this.onboard = undefined;
@@ -135,6 +137,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       WalletConnectionApi.createMetamaskModule(),
       createCoinbaseWalletModule(),
       WalletConnectionApi.createCDCWalletModule(),
+      createTrustDesktopModule(),
       WalletConnectionApi.createWalletConnectFireblocksModule(),
     ];
   }
@@ -440,7 +443,23 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     const onboard = this.getOnboard();
     const wallet = onboard.state.get().wallets[0];
-    return createWeb3Instance(wallet.provider as unknown as provider);
+    const realProvider = wallet.provider as unknown as AbstractProvider;
+    const wrappedProvider = this.providerWrapper
+      ? this.providerWrapper(realProvider)
+      : realProvider;
+    return createWeb3Instance(wrappedProvider);
+  }
+
+  public async withProviderWrapper<T>(
+    wrapFn: (provider: AbstractProvider) => AbstractProvider,
+    callback: () => Promise<T>
+  ) {
+    try {
+      this.providerWrapper = wrapFn;
+      return await callback();
+    } finally {
+      this.providerWrapper = undefined;
+    }
   }
 
   /**

@@ -1,19 +1,7 @@
-import type { ChainEntity } from '../entities/chain';
-import type { TokenEntity } from '../entities/token';
+import type { ChainId } from '../entities/chain';
+import type { TokenErc20 } from '../entities/token';
 import type { BoostConfig, VaultConfig } from '../apis/config-types';
 
-/**
- * let tokenId = apiBoost.earnedOracleId;
-  // for convenience, the config puts "BIFI" as oracle token of all mooXBIFI
-  // but we need to distinguish those tokens
-  if (
-    tokenId === 'BIFI' &&
-    apiBoost.earnedToken.startsWith('moo') &&
-    apiBoost.earnedToken.endsWith('BIFI')
-  ) {
-    tokenId = apiBoost.earnedToken;
-  }
- */
 export function getBoostTokenIdFromLegacyConfig(apiBoost: BoostConfig) {
   let tokenId = apiBoost.earnedToken;
   if (
@@ -39,17 +27,26 @@ export function getBoostTokenAddressFromLegacyConfig(apiBoost: BoostConfig) {
   return apiBoost.earnedTokenAddress;
 }
 
-export function getDepositTokenFromLegacyVaultConfig(chain: ChainEntity, apiVault: VaultConfig) {
-  let token: TokenEntity;
-  if (apiVault.tokenAddress) {
-    token = {
-      id: apiVault.token,
-      chainId: chain.id,
-      oracleId: apiVault.oracleId,
-      address: apiVault.tokenAddress,
-      decimals: apiVault.tokenDecimals,
-      symbol: apiVault.token,
-      providerId: apiVault.tokenProviderId,
+/**
+ * Get the deposit token from a legacy vault config if it is an ERC20
+ * @dev we do not need to native token as it will be added to state from the chain config
+ */
+export function getDepositTokenFromLegacyVaultConfig(
+  chainId: ChainId,
+  vaultConfig: VaultConfig
+): TokenErc20 | undefined {
+  if (vaultConfig.tokenAddress) {
+    return {
+      id: vaultConfig.token,
+      chainId,
+      oracleId: vaultConfig.oracleId,
+      address:
+        vaultConfig.type === 'cowcentrated'
+          ? vaultConfig.tokenAddress + '-' + vaultConfig.id
+          : vaultConfig.tokenAddress,
+      decimals: vaultConfig.tokenDecimals,
+      symbol: vaultConfig.token,
+      providerId: vaultConfig.tokenProviderId,
       buyUrl: undefined,
       description: undefined,
       website: undefined,
@@ -57,21 +54,7 @@ export function getDepositTokenFromLegacyVaultConfig(chain: ChainEntity, apiVaul
       documentation: undefined,
       risks: [],
     };
-  } else {
-    token = {
-      id: chain.walletSettings.nativeCurrency.symbol,
-      chainId: chain.id,
-      oracleId: chain.walletSettings.nativeCurrency.symbol,
-      address: 'native',
-      decimals: chain.walletSettings.nativeCurrency.decimals,
-      symbol: chain.walletSettings.nativeCurrency.symbol,
-      providerId: apiVault.tokenProviderId,
-      buyUrl: undefined,
-      description: undefined,
-      website: undefined,
-      type: 'native',
-      documentation: undefined,
-    };
   }
-  return token;
+
+  return undefined;
 }

@@ -8,6 +8,8 @@ import { VaultCategoryDropdownFilter } from '../VaultCategoryFilters';
 import { CheckboxFilter } from '../CheckboxFilter';
 import { ShownVaultsCount } from './ShownVaultsCount';
 import { AssetTypeDropdownFilter } from '../AssetTypeFilters';
+import { MinTvlFilter } from '../MinTvlFilter';
+import { StrategyTypeDropdownFilter } from '../StrategyTypeFilters';
 
 const useStyles = makeStyles(styles);
 
@@ -46,10 +48,12 @@ export const ExtendedFilters = memo<ExtendedFiltersProps>(function ExtendedFilte
         label={t('Filter-Retired')}
       />
       <CheckboxFilter className={classes.checkbox} filter="onlyPaused" label={t('Filter-Paused')} />
+      <MinTvlFilter />
       {!desktopView ? (
         <>
           <VaultCategoryDropdownFilter className={classes.selector} />
           <AssetTypeDropdownFilter className={classes.selector} />
+          <StrategyTypeDropdownFilter className={classes.selector} />
         </>
       ) : null}
 

@@ -22,6 +22,7 @@ import { VelodromeSolidlyPool } from './solidly/VelodromeSolidlyPool';
 import { EthereumSolidlyPool } from './solidly/EthereumSolidlyPool';
 import { VelodromeV2SolidlyPool } from './solidly/VelodromeV2SolidlyPool';
 import { BVMSolidlyPool } from './solidly/BVMSolidlyPool';
+import { VelodromeV2ModeSolidlyPool } from './solidly/VelodromeV2ModeSolidlyPool';
 
 const mapUniswapV2 = {
   'avax-swapsicle': SwapsicleUniswapV2Pool,
@@ -39,7 +40,10 @@ const mapSolidly = {
   'fantom-spirit-v2': SpiritSwapV2SolidlyPool,
   'fantom-fvm': BVMSolidlyPool,
   'optimism-velodrome': VelodromeSolidlyPool,
+  'linea-solidly-nile': VelodromeSolidlyPool,
+  'fraxtal-ra': VelodromeSolidlyPool,
   'optimism-velodrome-v2': VelodromeV2SolidlyPool,
+  'mode-velodrome-v2': VelodromeV2ModeSolidlyPool,
   'base-aerodrome': VelodromeV2SolidlyPool,
   'fantom-equalizer': VelodromeSolidlyPool,
   'canto-velocimeter': VelodromeSolidlyPool,

@@ -2,28 +2,30 @@ import BigNumber from 'bignumber.js';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO, isFiniteBigNumber } from '../../../helpers/big-number';
 import type { BeefyState } from '../../../redux-types';
-import type { ChainEntity } from '../entities/chain';
+import type { ChainEntity, ChainId } from '../entities/chain';
 import type { TokenHoldingEntity, TreasuryHoldingEntity } from '../entities/treasury';
 import { isTokenHoldingEntity, isVaultHoldingEntity } from '../entities/treasury';
-import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectLpBreakdownBalance } from './balance';
 import { selectChainById } from './chains';
 import {
+  selectHasBreakdownDataByOracleId,
   selectIsTokenStable,
   selectLpBreakdownByOracleId,
-  selectHasBreakdownDataByOracleId,
-  selectWrappedToNativeSymbolOrTokenSymbol,
   selectVaultTokenSymbols,
+  selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens';
 import { selectIsVaultStable, selectVaultPricePerFullShare } from './vaults';
 import { explorerAddressUrl } from '../../../helpers/url';
 import { entries, keys } from '../../../helpers/object';
+import {
+  createGlobalDataSelector,
+  hasLoaderFulfilledOnce,
+  shouldLoaderLoadOnce,
+} from './data-loader-helpers';
 
-export const selectIsTreasuryLoaded = (state: BeefyState) =>
-  state.ui.dataLoader.global.treasury.alreadyLoadedOnce;
+export const selectIsTreasuryLoaded = createGlobalDataSelector('treasury', hasLoaderFulfilledOnce);
 
-export const selectShouldInitTreasury = (state: BeefyState) =>
-  isInitialLoader(state.ui.dataLoader.global.treasury);
+export const selectShouldInitTreasury = createGlobalDataSelector('treasury', shouldLoaderLoadOnce);
 
 export const selectTreasury = (state: BeefyState) => {
   return state.ui.treasury.byChainId;
@@ -394,7 +396,7 @@ export const selectTreasuryExposureByChain = (state: BeefyState) => {
   const treasury = selectTreasury(state);
   const mmHoldings = selectMMAssets(state);
 
-  const chains: Record<string, BigNumber> = {};
+  const chains: Partial<Record<ChainId, BigNumber>> = {};
 
   for (const chainId of keys(treasury)) {
     const totalUsdPerChain = selectTreasuryBalanceByChainId(state, chainId);
@@ -408,12 +410,12 @@ export const selectTreasuryExposureByChain = (state: BeefyState) => {
 
   const totalTreasury = Object.keys(chains).reduce((cur, tot) => chains[tot].plus(cur), BIG_ZERO);
 
-  const treasuryExposureBychain = Object.keys(chains).map(chainId => {
+  const treasuryExposureBychain = keys(chains).map(chainId => {
     const chain = selectChainById(state, chainId);
     return {
-      key: chainId,
-      value: chains[chainId],
-      percentage: chains[chainId].dividedBy(totalTreasury).toNumber(),
+      key: chain.id,
+      value: chains[chainId]!,
+      percentage: chains[chainId]!.dividedBy(totalTreasury).toNumber(),
       label: chain.name,
     };
   });

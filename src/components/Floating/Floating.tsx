@@ -1,5 +1,5 @@
 import type { MutableRefObject, ReactNode } from 'react';
-import React, { memo, useLayoutEffect, useMemo } from 'react';
+import { memo, useLayoutEffect, useMemo } from 'react';
 import {
   autoUpdate,
   flip as flipFloating,
@@ -52,7 +52,8 @@ export const Floating = memo<FloatingProps>(function Floating({
           padding: 16,
           apply({ availableWidth, availableHeight, elements }) {
             if (autoWidth) {
-              elements.floating.style.width = elements.reference.offsetWidth + 'px';
+              elements.floating.style.width =
+                elements.reference.getBoundingClientRect().width + 'px';
               elements.floating.style.maxWidth = availableWidth + 'px';
             }
             if (autoHeight) {

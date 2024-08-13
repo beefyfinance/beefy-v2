@@ -1,5 +1,125 @@
 [
   {
+    "id": "aura-gyro-gnosis-weth-reth",
+    "name": "Gyroscope rETH-WETH",
+    "type": "standard",
+    "token": "ECLP rETH/WETH Gnosis",
+    "tokenAddress": "0x71E1179C5e197FA551BEEC85ca2EF8693c61b85b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraGnosisWETH-rETH",
+    "earnedTokenAddress": "0x1DE0375e770EFb9C92d7958cbb5B53c9Fb8eB1Cb",
+    "earnContractAddress": "0x1DE0375e770EFb9C92d7958cbb5B53c9Fb8eB1Cb",
+    "oracle": "lps",
+    "oracleId": "aura-gyro-gnosis-weth-reth",
+    "status": "active",
+    "createdAt": 1722694393,
+    "platformId": "aura",
+    "assets": ["rETH", "WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x71E1179C5e197FA551BEEC85ca2EF8693c61b85b/",
+    "removeLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x71E1179C5e197FA551BEEC85ca2EF8693c61b85b/",
+    "network": "gnosis"
+  },
+  {
+    "id": "aura-gyro-gnosis-weth-wsteth",
+    "name": "Gyroscope wstETH-WETH",
+    "type": "standard",
+    "token": "ECLP wstETH/WETH Gnosis",
+    "tokenAddress": "0x8DD4df4Ce580b9644437f3375e54f1ab09808228",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraGnosisWETH-wstETH",
+    "earnedTokenAddress": "0x50583F8DCE18D4180f074bE7332b4734968246EC",
+    "earnContractAddress": "0x50583F8DCE18D4180f074bE7332b4734968246EC",
+    "oracle": "lps",
+    "oracleId": "aura-gyro-gnosis-weth-wsteth",
+    "status": "active",
+    "createdAt": 1722694393,
+    "platformId": "aura",
+    "assets": ["wstETH", "WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x8dd4df4ce580b9644437f3375e54f1ab09808228/",
+    "removeLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x8dd4df4ce580b9644437f3375e54f1ab09808228/",
+    "network": "gnosis"
+  },
+  {
+    "id": "aura-gnosis-usdc.e-usdt-sdai",
+    "name": "USDC.e/USDT/sDAI",
+    "type": "standard",
+    "token": "USDC.e/USDT/sDAI Gnosis",
+    "tokenAddress": "0xfC095C811fE836Ed12f247BCf042504342B73FB7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraGnosisUSDC.e/USDT/sDAI",
+    "earnedTokenAddress": "0xe21396A3F0e752AC03b195Cf140de84E58E58771",
+    "earnContractAddress": "0xe21396A3F0e752AC03b195Cf140de84E58E58771",
+    "oracle": "lps",
+    "oracleId": "aura-gnosis-usdc.e-usdt-sdai",
+    "status": "active",
+    "createdAt": 1722694393,
+    "platformId": "aura",
+    "assets": ["USDCe", "USDT", "sDAI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xfc095c811fe836ed12f247bcf042504342b73fb700000000000000000000009f/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xfc095c811fe836ed12f247bcf042504342b73fb700000000000000000000009f/remove-liquidity",
+    "network": "gnosis"
+  },
+  {
+    "id": "aura-gnosis-steur-eure",
+    "name": "stEUR-EURe",
+    "type": "standard",
+    "token": "stEUR-EURe Gnosis",
+    "tokenAddress": "0x06135A9Ae830476d3a941baE9010B63732a055F4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraGnosisstEUR-EURe",
+    "earnedTokenAddress": "0x78c90c28eDc5F4B266bfD40b01e7dE8Ebb3682F7",
+    "earnContractAddress": "0x78c90c28eDc5F4B266bfD40b01e7dE8Ebb3682F7",
+    "oracle": "lps",
+    "oracleId": "aura-gnosis-steur-eure",
+    "status": "active",
+    "createdAt": 1722694393,
+    "platformId": "aura",
+    "assets": ["stEUR", "EURe"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x06135a9ae830476d3a941bae9010b63732a055f4000000000000000000000065/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x06135a9ae830476d3a941bae9010b63732a055f4000000000000000000000065/remove-liquidity",
+    "network": "gnosis"
+  },
+  {
     "id": "aura-gnosis-crvusd-sdai",
     "name": "crvUSD-sDAI",
     "type": "standard",
@@ -25,8 +145,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xc9f00c3a713008ddf69b768d90d4978549bfdf9400000000000000000000006d",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xc9f00c3a713008ddf69b768d90d4978549bfdf9400000000000000000000006d/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xc9f00c3a713008ddf69b768d90d4978549bfdf9400000000000000000000006d/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xc9f00c3a713008ddf69b768d90d4978549bfdf9400000000000000000000006d/remove-liquidity",
     "network": "gnosis"
   },
   {
@@ -55,8 +175,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x4cdabe9e07ca393943acfb9286bbbd0d0a310ff600020000000000000000005c",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x4cdabe9e07ca393943acfb9286bbbd0d0a310ff600020000000000000000005c/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x4cdabe9e07ca393943acfb9286bbbd0d0a310ff600020000000000000000005c/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x4cdabe9e07ca393943acfb9286bbbd0d0a310ff600020000000000000000005c/remove-liquidity",
     "network": "gnosis"
   },
   {
@@ -85,8 +205,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xbc2acf5e821c5c9f8667a36bb1131dad26ed64f9000200000000000000000063",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xbc2acf5e821c5c9f8667a36bb1131dad26ed64f9000200000000000000000063/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xbc2acf5e821c5c9f8667a36bb1131dad26ed64f9000200000000000000000063/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xbc2acf5e821c5c9f8667a36bb1131dad26ed64f9000200000000000000000063/remove-liquidity",
     "network": "gnosis"
   },
   {
@@ -115,8 +235,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066/remove-liquidity",
     "network": "gnosis"
   },
   {
@@ -147,8 +267,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x21d4c792ea7e38e0d0819c2011a2b1cb7252bd9900020000000000000000001e",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x21d4c792ea7e38e0d0819c2011a2b1cb7252bd9900020000000000000000001e/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x21d4c792ea7e38e0d0819c2011a2b1cb7252bd9900020000000000000000001e/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x21d4c792ea7e38e0d0819c2011a2b1cb7252bd9900020000000000000000001e/remove-liquidity",
     "network": "gnosis"
   },
   {
@@ -177,8 +297,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064/remove-liquidity",
     "network": "gnosis"
   },
   {
@@ -207,8 +327,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x00df7f58e1cf932ebe5f54de5970fb2bdf0ef06d00010000000000000000005b",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x00df7f58e1cf932ebe5f54de5970fb2bdf0ef06d00010000000000000000005b/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x00df7f58e1cf932ebe5f54de5970fb2bdf0ef06d00010000000000000000005b/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x00df7f58e1cf932ebe5f54de5970fb2bdf0ef06d00010000000000000000005b/remove-liquidity",
     "network": "gnosis"
   },
   {
@@ -237,8 +357,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x4683e340a8049261057d5ab1b29c8d840e75695e00020000000000000000005a",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0x4683e340a8049261057d5ab1b29c8d840e75695e00020000000000000000005a/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x4683e340a8049261057d5ab1b29c8d840e75695e00020000000000000000005a/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0x4683e340a8049261057d5ab1b29c8d840e75695e00020000000000000000005a/remove-liquidity",
     "network": "gnosis"
   },
   {
@@ -267,8 +387,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/gnosis-chain/pool/0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/gnosis/v2/0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034/remove-liquidity",
     "network": "gnosis"
   }
 ]

@@ -1,5 +1,6 @@
+import { sample } from 'lodash';
+import { ChainId } from 'blockchain-addressbook';
 import { config } from '../../src/config/config';
-import lodash from 'lodash';
 import type {
   AmmConfig,
   BoostConfig,
@@ -12,6 +13,8 @@ const chainConfigs = Object.fromEntries(
   Object.entries(config).map(([chainId, chainConfig]) => [appToAddressBookId(chainId), chainConfig])
 );
 
+export type AddressBookChainId = keyof typeof ChainId;
+export type AppChainId = keyof typeof config;
 export type ChainConfig = (typeof chainConfigs)[keyof typeof chainConfigs];
 
 /**
@@ -22,23 +25,31 @@ export type ChainConfig = (typeof chainConfigs)[keyof typeof chainConfigs];
 export const excludeChains: Record<string, { count: number; hash: string }> = {
   heco: {
     count: 35,
-    hash: '0x9b0d945a620022e303085619428f8476b0815be63de66c381985b1600a6ed424',
+    hash: 'ccab3fea9945e6474f803946d72001a04245fb2556f340ebee7a65af61be4773',
   },
   one: {
     count: 22,
-    hash: '0x90ed7bc48e41fcefe008e61a93d8ef4bb9ffc10929e098c2e9963ddf64beadf8',
+    hash: '104ab490f7be1037e0a8b5c545db505cd2ae644ba73fd958d33ab9435202e00a',
   },
   fuse: {
     count: 28,
-    hash: '0x684a1f39fbb159ed063810479c1d0fcc8c9dfbc200238442582e9916becf660e',
+    hash: '496b1a976f7d822f32cb4d19e570aa77ea3aef6a0ad77045146c9039c12e9f17',
   },
   emerald: {
     count: 10,
-    hash: '0x8bc8e4abf4228c9dcf41bf674a325cddfc0956bad8af1c4d6a57a340057fcd67',
+    hash: 'f74673e540c41ec7ab283c9d07ac2090453ab34be8824e8178c0a853fcaf80b1',
   },
-  mantle: {
-    count: 25,
-    hash: '0x8cb505cef33d683c017aca1fe2176f52168cf362ef24214cbb9ba1b252521f3a',
+  aurora: {
+    count: 24,
+    hash: '13d2d19d7c96406a0d46042c521b6d7e19ee63b94474916a21eb2f1d69c15f57',
+  },
+  celo: {
+    count: 14,
+    hash: 'fe0549fd08678e577d17796df5b36ce28e4546bd9a1cc652196c6fa85bcaa482',
+  },
+  moonriver: {
+    count: 53,
+    hash: '17e6fa948469e3d796f3709d39bb01cc4b0ded28cbd30bcbd252eb719a1c0e39',
   },
 };
 
@@ -49,7 +60,7 @@ export const chainRpcs: Record<string, string> = Object.fromEntries(
   allChainIds.map(chainId => [
     chainId,
     process.env[`${addressBookToAppId(chainId).toUpperCase()}_RPC`] ||
-      lodash.sample(chainConfigs[chainId].rpc)!,
+      sample(chainConfigs[chainId].rpc)!,
   ])
 );
 
@@ -110,10 +121,22 @@ export async function getMintersForChain(chainId: string): Promise<MinterConfig[
   return mintersByChainId[id];
 }
 
-export function appToAddressBookId(chainId: string) {
-  return chainId === 'harmony' ? 'one' : chainId;
+export function appToAddressBookId(chainId: string): AddressBookChainId {
+  if (chainId === 'harmony') {
+    return 'one';
+  }
+  if (chainId in ChainId) {
+    return chainId as AddressBookChainId;
+  }
+  throw new Error(`Unknown app chain id ${chainId}`);
 }
 
-export function addressBookToAppId(chainId: string) {
-  return chainId === 'one' ? 'harmony' : chainId;
+export function addressBookToAppId(chainId: string): AppChainId {
+  if (chainId === 'one') {
+    return 'harmony';
+  }
+  if (chainId in config) {
+    return chainId as AppChainId;
+  }
+  throw new Error(`Unknown address book chain id ${chainId}`);
 }

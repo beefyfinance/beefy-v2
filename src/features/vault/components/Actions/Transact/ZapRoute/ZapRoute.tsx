@@ -1,14 +1,16 @@
-import type { ComponentType } from 'react';
-import React, { Fragment, memo, useCallback, useMemo } from 'react';
-import type {
-  ZapQuote,
-  ZapQuoteStep,
-  ZapQuoteStepBuild,
-  ZapQuoteStepDeposit,
-  ZapQuoteStepSplit,
-  ZapQuoteStepSwap,
-  ZapQuoteStepUnused,
-  ZapQuoteStepWithdraw,
+import type { ComponentType, ReactNode } from 'react';
+import { Fragment, memo, useCallback, useMemo } from 'react';
+import {
+  isCowcentratedDepositQuote,
+  type TokenAmount,
+  type ZapQuote,
+  type ZapQuoteStep,
+  type ZapQuoteStepBuild,
+  type ZapQuoteStepDeposit,
+  type ZapQuoteStepSplit,
+  type ZapQuoteStepSwap,
+  type ZapQuoteStepUnused,
+  type ZapQuoteStepWithdraw,
 } from '../../../../../data/apis/transact/transact-types';
 import { Trans, useTranslation } from 'react-i18next';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
@@ -23,8 +25,20 @@ import { QuoteTitle } from '../QuoteTitle';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { TransactStep } from '../../../../../data/reducers/wallet/transact-types';
 import { selectZapSwapProviderName } from '../../../../../data/selectors/zap';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
+
+function useTokenAmounts(tokenAmounts: TokenAmount[]): ReactNode[] {
+  return useMemo(() => {
+    return tokenAmounts.map(tokenAmount => (
+      <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
+        <TokenAmountFromEntity amount={tokenAmount.amount} token={tokenAmount.token} />{' '}
+        {tokenAmount.token.symbol}
+      </Fragment>
+    ));
+  }, [tokenAmounts]);
+}
 
 type StepContentProps<T extends ZapQuoteStep> = {
   step: T;
@@ -56,16 +70,8 @@ const StepContentSwap = memo<StepContentProps<ZapQuoteStepSwap>>(function StepCo
         via: platformName,
       }}
       components={{
-        fromAmount: (
-          <TokenAmountFromEntity
-            amount={step.fromAmount}
-            token={step.fromToken}
-            minShortPlaces={4}
-          />
-        ),
-        toAmount: (
-          <TokenAmountFromEntity amount={step.toAmount} token={step.toToken} minShortPlaces={4} />
-        ),
+        fromAmount: <TokenAmountFromEntity amount={step.fromAmount} token={step.fromToken} />,
+        toAmount: <TokenAmountFromEntity amount={step.toAmount} token={step.toToken} />,
       }}
     />
   );
@@ -79,18 +85,7 @@ const StepContentBuild = memo<StepContentProps<ZapQuoteStepBuild>>(function Step
     const id = step.providerId || step.outputToken.providerId;
     return id ? selectPlatformById(state, id) : undefined;
   });
-  const tokenAmounts = useMemo(() => {
-    return step.inputs.map(tokenAmount => (
-      <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
-        <TokenAmountFromEntity
-          amount={tokenAmount.amount}
-          token={tokenAmount.token}
-          minShortPlaces={4}
-        />{' '}
-        {tokenAmount.token.symbol}
-      </Fragment>
-    ));
-  }, [step]);
+  const tokenAmounts = useTokenAmounts(step.inputs);
 
   return (
     <>
@@ -112,36 +107,62 @@ const StepContentDeposit = memo<StepContentProps<ZapQuoteStepDeposit>>(function 
   step,
 }) {
   const { t } = useTranslation();
+  const tokenAmounts = useTokenAmounts(step.inputs);
   return (
     <Trans
       t={t}
       i18nKey="Transact-Route-Step-Deposit"
-      values={{
-        token: step.token.symbol,
-      }}
       components={{
-        amount: (
-          <TokenAmountFromEntity amount={step.amount} token={step.token} minShortPlaces={4} />
-        ),
+        tokenAmounts: <ListJoin items={tokenAmounts} />,
       }}
     />
   );
 });
 
+const StepContentStake = memo<StepContentProps<ZapQuoteStepDeposit>>(function StepContentDeposit({
+  step,
+}) {
+  const { t } = useTranslation();
+  const tokenAmounts = useTokenAmounts(step.inputs);
+  return (
+    <Trans
+      t={t}
+      i18nKey="Transact-Route-Step-Stake"
+      components={{
+        tokenAmounts: <ListJoin items={tokenAmounts} />,
+      }}
+    />
+  );
+});
+
+const StepContentUnstake = memo<StepContentProps<ZapQuoteStepWithdraw>>(
+  function StepContentWithdraw({ step }) {
+    const { t } = useTranslation();
+    const tokenAmounts = useTokenAmounts(step.outputs);
+
+    return (
+      <Trans
+        t={t}
+        i18nKey="Transact-Route-Step-Unstake"
+        components={{
+          tokenAmounts: <ListJoin items={tokenAmounts} />,
+        }}
+      />
+    );
+  }
+);
+
 const StepContentWithdraw = memo<StepContentProps<ZapQuoteStepWithdraw>>(
   function StepContentWithdraw({ step }) {
     const { t } = useTranslation();
+    const tokenAmounts = useTokenAmounts(step.outputs);
+
     return (
       <Trans
         t={t}
         i18nKey="Transact-Route-Step-Withdraw"
-        values={{
-          token: step.token.symbol,
-        }}
         components={{
-          amount: (
-            <TokenAmountFromEntity amount={step.amount} token={step.token} minShortPlaces={4} />
-          ),
+          tokenAmounts: <ListJoin items={tokenAmounts} />,
         }}
       />
     );
@@ -155,18 +176,7 @@ const StepContentSplit = memo<StepContentProps<ZapQuoteStepSplit>>(function Step
   const provider = useAppSelector(state =>
     step.inputToken.providerId ? selectPlatformById(state, step.inputToken.providerId) : undefined
   );
-  const tokenAmounts = useMemo(() => {
-    return step.outputs.map(tokenAmount => (
-      <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
-        <TokenAmountFromEntity
-          amount={tokenAmount.amount}
-          token={tokenAmount.token}
-          minShortPlaces={4}
-        />{' '}
-        {tokenAmount.token.symbol}
-      </Fragment>
-    ));
-  }, [step]);
+  const tokenAmounts = useTokenAmounts(step.outputs);
 
   return (
     <>
@@ -191,11 +201,7 @@ const StepContentUnused = memo<StepContentProps<ZapQuoteStepUnused>>(function St
   const tokenAmounts = useMemo(() => {
     return step.outputs.map(tokenAmount => (
       <Fragment key={`${tokenAmount.token.chainId}-${tokenAmount.token.address}`}>
-        <TokenAmountFromEntity
-          amount={tokenAmount.amount}
-          token={tokenAmount.token}
-          minShortPlaces={4}
-        />{' '}
+        <TokenAmountFromEntity amount={tokenAmount.amount} token={tokenAmount.token} />{' '}
         {tokenAmount.token.symbol}
       </Fragment>
     ));
@@ -224,6 +230,8 @@ const StepContentComponents: Record<
   withdraw: StepContentWithdraw,
   split: StepContentSplit,
   unused: StepContentUnused,
+  stake: StepContentStake,
+  unstake: StepContentUnstake,
 };
 
 type StepProps = {
@@ -257,6 +265,13 @@ export const ZapRoute = memo<ZapRouteProps>(function ZapRoute({ quote, className
   const handleSwitch = useCallback(() => {
     dispatch(transactActions.switchStep(TransactStep.QuoteSelect));
   }, [dispatch]);
+
+  if (
+    isCowcentratedDepositQuote(quote) &&
+    quote.outputs.every(output => output.amount.lte(BIG_ZERO))
+  ) {
+    return null;
+  }
 
   return (
     <div className={clsx(classes.holder, className)}>

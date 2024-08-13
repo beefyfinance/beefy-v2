@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import type { ReactNode } from 'react';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { useAppSelector } from '../../store';
-import { selectAddressDepositedVaultIds } from '../data/selectors/balance';
+import { selectUserDepositedVaultIds } from '../data/selectors/balance';
 import { DepositSummary } from './components/DepositSummary';
 import { InvalidAddress, InvalidDomain, NoResults, NotConnected } from './components/NoResults';
 import { UserExposure } from './components/UserExposure';
@@ -16,7 +16,8 @@ import { isMaybeDomain, isValidAddress } from '../../helpers/addresses';
 import { isFulfilledStatus, isRejectedStatus } from '../data/reducers/wallet/resolver-types';
 import { useTranslation } from 'react-i18next';
 import { useResolveDomain } from '../data/hooks/resolver';
-import { selectIsDashboardDataLoadedByAddress } from '../data/selectors/analytics';
+import { DashboardMeta } from '../../components/Meta/DashboardMeta';
+import { UnstakedClmBannerDashboard } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
 
 const useStyles = makeStyles(styles);
 
@@ -25,7 +26,12 @@ export type DashboardProps = {
 };
 
 export const Dashboard = memo<DashboardProps>(function Dashboard({ mode }) {
-  return mode === 'url' ? <DashboardFromUrl /> : <DashboardFromWallet />;
+  return (
+    <>
+      <DashboardMeta />
+      {mode === 'url' ? <DashboardFromUrl /> : <DashboardFromWallet />}
+    </>
+  );
 });
 
 const DashboardFromUrl = memo(function DashboardFromWallet() {
@@ -101,16 +107,15 @@ const DashboardForAddress = memo<DashboardForAddressProps>(function DashboardFor
   address,
   addressLabel,
 }) {
-  useInitDashboard(address);
-  const userVaults = useAppSelector(state => selectAddressDepositedVaultIds(state, address));
-  const dashboardDataAvilable = useAppSelector(state =>
-    selectIsDashboardDataLoadedByAddress(state, address)
-  );
+  const loading = useInitDashboard(address);
+  const userVaults = useAppSelector(state => selectUserDepositedVaultIds(state, address));
 
   return (
     <DashboardContainer>
+      <DashboardMeta wallet={addressLabel || address} />
+      <UnstakedClmBannerDashboard address={address} />
       <DepositSummary address={address} addressLabel={addressLabel} />
-      {!dashboardDataAvilable ? (
+      {loading ? (
         <TechLoader />
       ) : userVaults.length > 0 ? (
         <>

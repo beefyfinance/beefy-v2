@@ -15,9 +15,9 @@ import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import { mkdir } from 'node:fs/promises';
 import * as path from 'node:path';
 import { isNonEmptyArray, NonEmptyArray, sleep } from './common/utils';
-import { getAddress } from '@ethersproject/address';
-import type { CurveStrategyOptions } from '../src/features/data/apis/transact/strategies/IStrategy';
+import type { CurveStrategyConfig } from '../src/features/data/apis/transact/strategies/strategy-configs';
 import type { CurveMethodTypes } from '../src/features/data/apis/transact/strategies/curve/types';
+import { getAddress } from 'viem';
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const EEEE_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
@@ -170,6 +170,7 @@ const chainIdToCurveChainId = {
 const curveEndpoints = [
   'factory',
   'factory-tricrypto',
+  'factory-twocrypto',
   'factory-stable-ng',
   'crypto',
   'factory-crvusd',
@@ -701,6 +702,7 @@ function poolEndpointToIndexType(
       return 'int128';
     case 'factory-crypto':
     case 'factory-tricrypto':
+    case 'factory-twocrypto':
     case 'crypto':
       return 'uint256';
     default:
@@ -987,6 +989,7 @@ async function poolToMethods(pool: CurveApiPoolWithChain): Promise<CurveMethods[
   if (
     endpoint === 'factory' ||
     endpoint === 'factory-tricrypto' ||
+    endpoint === 'factory-twocrypto' ||
     endpoint === 'factory-crypto' ||
     endpoint === 'factory-crvusd'
   ) {
@@ -1058,7 +1061,7 @@ export async function discoverCurveZap(args: RunArgs) {
 
   const methods = await poolToMethods(pool);
   if (methods.length) {
-    const zap: CurveStrategyOptions = {
+    const zap: CurveStrategyConfig = {
       strategyId: 'curve',
       poolAddress: pool.address,
       methods,
@@ -1070,7 +1073,7 @@ export async function discoverCurveZap(args: RunArgs) {
   }
 }
 
-async function saveZap(chainId: string, vaultId: string, zap: CurveStrategyOptions) {
+async function saveZap(chainId: string, vaultId: string, zap: CurveStrategyConfig) {
   const path = `./src/config/vault/${addressBookToAppId(chainId)}.json`;
   const vaults = await loadJson<VaultConfig[]>(path);
   let found = false;

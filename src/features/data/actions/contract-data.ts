@@ -3,12 +3,13 @@ import type { BeefyState } from '../../../redux-types';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { getContractDataApi } from '../apis/instances';
 import type { ChainEntity } from '../entities/chain';
-import type { VaultCowcentrated, VaultGov, VaultStandard } from '../entities/vault';
-import { isGovVault, isStandardVault } from '../entities/vault';
+import type { VaultCowcentrated, VaultGov, VaultGovMulti, VaultStandard } from '../entities/vault';
+import { isGovVault, isGovVaultMulti, isGovVaultSingle, isStandardVault } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
-import { selectVaultIdsByChainId, selectVaultById } from '../selectors/vaults';
+import { selectVaultById, selectVaultIdsByChainIdIncludingHidden } from '../selectors/vaults';
 import { featureFlag_simulateRpcError } from '../utils/feature-flags';
+import { partition } from 'lodash-es';
 
 interface ActionParams {
   chainId: ChainEntity['id'];
@@ -35,31 +36,39 @@ export const fetchAllContractDataByChainAction = createAsyncThunk<
   const contractApi = await getContractDataApi(chain);
 
   // maybe have a way to retrieve those easily
-  const boosts = selectBoostsByChainId(state, chainId).map(vaultId =>
+  const allBoosts = selectBoostsByChainId(state, chainId).map(vaultId =>
     selectBoostById(state, vaultId)
   );
-  const allVaults = selectVaultIdsByChainId(state, chainId).map(vaultId =>
+  const allVaults = selectVaultIdsByChainIdIncludingHidden(state, chainId).map(vaultId =>
     selectVaultById(state, vaultId)
   );
   const standardVaults: VaultStandard[] = [];
   const govVaults: VaultGov[] = [];
+  const govVaultsMulti: VaultGovMulti[] = [];
   const cowcentratedLiquidityVaults: VaultCowcentrated[] = [];
   for (const vault of allVaults) {
     if (isGovVault(vault)) {
-      govVaults.push(vault);
+      if (isGovVaultSingle(vault)) {
+        govVaults.push(vault);
+      } else if (isGovVaultMulti(vault)) {
+        govVaultsMulti.push(vault);
+      }
     } else if (isStandardVault(vault)) {
       standardVaults.push(vault);
     } else {
       cowcentratedLiquidityVaults.push(vault);
     }
   }
+  const [boostsMulti, boosts] = partition(allBoosts, b => b.version >= 2);
 
   const res = await contractApi.fetchAllContractData(
     state,
     standardVaults,
     govVaults,
+    govVaultsMulti,
     cowcentratedLiquidityVaults,
-    boosts
+    boosts,
+    boostsMulti
   );
 
   // always re-fetch the latest state

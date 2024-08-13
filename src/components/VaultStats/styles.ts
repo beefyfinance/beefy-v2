@@ -92,4 +92,18 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
   },
+  depositWithIcon: {
+    display: 'flex',
+    gap: '4px',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  depositIcon: {
+    width: '20px',
+    height: '20px',
+    color: 'inherit',
+  },
+  depositIconNotEarning: {
+    color: theme.palette.background.buttons.boost,
+  },
 });

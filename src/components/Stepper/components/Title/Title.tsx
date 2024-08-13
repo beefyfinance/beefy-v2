@@ -1,6 +1,6 @@
 import { IconButton, makeStyles } from '@material-ui/core';
-import type { ReactNode } from 'react';
-import React, { memo } from 'react';
+import { type ReactNode, useCallback } from 'react';
+import { memo } from 'react';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 
 import { useAppDispatch } from '../../../../store';
@@ -17,7 +17,7 @@ interface TitleProps {
 export const Title = memo<TitleProps>(function Title({ text }) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const handleClose = React.useCallback(() => {
+  const handleClose = useCallback(() => {
     dispatch(stepperActions.reset());
   }, [dispatch]);
 

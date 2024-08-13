@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { formatLargePercent } from '../../../../helpers/format';
 import type { BaseEntry } from '../../../data/utils/array-utils';
 import { styles } from './styles';
@@ -22,7 +22,7 @@ export const ChartDetails = memo<ChartDetailsProps>(function ChartDetails({ data
         <div key={item.key} className={classes.item}>
           <div className={classes.flex}>
             <div
-              style={{ backgroundColor: CHART_COLORS[i % data.length] }}
+              style={{ backgroundColor: CHART_COLORS[i % CHART_COLORS.length] }}
               className={classes.square}
             />
             <div className={classes.label}>{item.label ?? item.key}</div>

@@ -1,18 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+  type ClmUserHarvestsTimeline,
+  fetchClmHarvestsForUserChain,
+  fetchClmHarvestsForUserVault,
+  fetchClmPendingRewards,
   fetchShareToUnderlying,
-  fetchUnderlyingToUsd,
   fetchWalletTimeline,
+  recalculateClmHarvestsForUserVaultId,
 } from '../actions/analytics';
 import type { ApiProductPriceRow, TimeBucketType } from '../apis/analytics/analytics-types';
-import type { VaultTimelineAnalyticsEntity } from '../entities/analytics';
+import type { AnyTimelineEntity } from '../entities/analytics';
 import type { VaultEntity } from '../entities/vault';
 import type { Draft } from 'immer';
-import { groupBy, partition, sortBy } from 'lodash-es';
-import { selectAllVaultsWithBridgedVersion } from '../selectors/vaults';
-import { BIG_ZERO } from '../../../helpers/big-number';
-import type { ChainEntity } from '../entities/chain';
-import { entries } from '../../../helpers/object';
+import { BigNumber } from 'bignumber.js';
+import type { ApiClmHarvestPriceRow } from '../apis/clm-api/clm-api-types';
+import { fromUnixTime } from 'date-fns';
+import { orderBy, uniqBy } from 'lodash-es';
 
 type StatusType = 'idle' | 'pending' | 'fulfilled' | 'rejected';
 
@@ -21,44 +24,65 @@ export interface AnalyticsBucketData {
   data: ApiProductPriceRow[];
 }
 
+export interface ClmHarvest {
+  timestamp: Date;
+  compoundedAmount0: BigNumber;
+  compoundedAmount1: BigNumber;
+  token0ToUsd: BigNumber;
+  token1ToUsd: BigNumber;
+  totalSupply: BigNumber;
+  transactionHash: string;
+}
+
+export interface ClmPendingRewards {
+  fees0: BigNumber;
+  fees1: BigNumber;
+  totalSupply: BigNumber;
+}
+
 export interface AnalyticsState {
   byAddress: {
     [address: string]: {
       timeline: {
         byVaultId: {
-          [vaultId: VaultEntity['id']]: VaultTimelineAnalyticsEntity[];
+          [vaultId: VaultEntity['id']]: AnyTimelineEntity;
         };
       };
-      shareToUnderlying: {
+      clmHarvests: {
         byVaultId: {
-          [vaultId: VaultEntity['id']]: {
-            byTimebucket: {
-              [K in TimeBucketType]?: AnalyticsBucketData;
-            };
-          };
-        };
-      };
-      underlyingToUsd: {
-        byVaultId: {
-          [vaultId: VaultEntity['id']]: {
-            byTimebucket: {
-              [K in TimeBucketType]?: AnalyticsBucketData;
-            };
-          };
+          [vaultId: VaultEntity['id']]: ClmUserHarvestsTimeline;
         };
       };
     };
+  };
+  shareToUnderlying: {
+    byVaultId: {
+      [vaultId: VaultEntity['id']]: {
+        byTimebucket: {
+          [K in TimeBucketType]?: AnalyticsBucketData;
+        };
+      };
+    };
+  };
+  clmHarvests: {
+    byVaultId: Record<VaultEntity['id'], ClmHarvest[]>;
+  };
+  clmPendingRewards: {
+    byVaultId: Record<VaultEntity['id'], ClmPendingRewards>;
   };
 }
 
 const initialState: AnalyticsState = {
   byAddress: {},
-};
-
-type BaseVault = {
-  productKey: string;
-  vaultId: string;
-  chainId: string;
+  shareToUnderlying: {
+    byVaultId: {},
+  },
+  clmHarvests: {
+    byVaultId: {},
+  },
+  clmPendingRewards: {
+    byVaultId: {},
+  },
 };
 
 export const analyticsSlice = createSlice({
@@ -67,226 +91,78 @@ export const analyticsSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchWalletTimeline.fulfilled, (sliceState, action) => {
-      const { timeline, state } = action.payload;
       const walletAddress = action.payload.walletAddress.toLowerCase();
-
-      // Separate out all boost txs
-      const [boostTxs, vaultTxs] = partition(timeline, tx =>
-        tx.productKey.startsWith('beefy:boost')
-      );
-
-      // Grab all the tx hashes from the boost txs, and filter out any vault txs that have the same hash
-      const boostTxIds = new Set(boostTxs.map(tx => tx.transactionId));
-      const vaultIdsWithMerges = new Set<string>();
-      const vaultTxsIgnoringBoosts = vaultTxs.filter(tx => {
-        if (boostTxIds.has(tx.transactionId)) {
-          vaultIdsWithMerges.add(tx.displayName);
-          return false;
-        }
-        return true;
-      });
-
-      // Build a map of bridge vaults to their base vaults
-      const bridgeVaultIds = selectAllVaultsWithBridgedVersion(state);
-      const bridgeToBaseId = bridgeVaultIds.reduce(
-        (accum: Partial<Record<ChainEntity['id'], BaseVault>>, vault) => {
-          if (vault.bridged) {
-            for (const [chainId, address] of entries(vault.bridged)) {
-              accum[`beefy:vault:${chainId}:${address.toLowerCase()}`] = {
-                vaultId: vault.id,
-                chainId: vault.chainId,
-                productKey: `beefy:vault:${
-                  vault.chainId
-                }:${vault.earnContractAddress.toLowerCase()}`,
-              };
-            }
-          }
-          return accum;
-        },
-        {}
-      );
-
-      // Modify the vault txs to use the base vault product key etc.
-      // We have to sort since the timeline is not guaranteed to be in order after merge
-      const vaultTxsWithBridgeMerged = sortBy(
-        vaultTxsIgnoringBoosts.map((tx): VaultTimelineAnalyticsEntity => {
-          const base = bridgeToBaseId[tx.productKey];
-          if (base) {
-            vaultIdsWithMerges.add(base.vaultId);
-            return {
-              ...tx,
-              productKey: base.productKey,
-              displayName: base.vaultId,
-              chain: base.chainId,
-              source: {
-                productKey: tx.productKey,
-                displayName: tx.displayName,
-                chain: tx.chain,
-              },
-            };
-          }
-
-          return tx;
-        }),
-        tx => tx.datetime.getTime()
-      );
-
-      // Group txs by vault id (display name = vault id)
-      const byVaultId = groupBy(vaultTxsWithBridgeMerged, tx => tx.displayName);
-
-      // Recalc balances for vaults we merged (boosts and bridge vaults)
-      vaultIdsWithMerges.forEach(vaultId => {
-        const txs = byVaultId[vaultId];
-        if (txs && txs.length > 1) {
-          for (let i = 1; i < txs.length; ++i) {
-            const tx = txs[i];
-            const prevTx = txs[i - 1];
-
-            tx.shareBalance = prevTx.shareBalance.plus(tx.shareDiff);
-
-            const underlyingPerShare = tx.shareDiff.isZero()
-              ? BIG_ZERO
-              : tx.underlyingDiff.dividedBy(tx.shareDiff).absoluteValue();
-            tx.underlyingBalance = tx.shareBalance.multipliedBy(underlyingPerShare);
-
-            // usd can be null if price was missing
-            if (tx.usdDiff) {
-              const usdPerShare = tx.shareDiff.isZero()
-                ? BIG_ZERO
-                : tx.usdDiff.dividedBy(tx.shareDiff).absoluteValue();
-              tx.usdBalance = tx.shareBalance.multipliedBy(usdPerShare);
-            } else {
-              tx.usdBalance = prevTx.usdBalance;
-            }
-          }
-        }
-      });
-
       const addressState = getOrCreateAnalyticsAddressState(sliceState, walletAddress);
-      addressState.timeline.byVaultId = byVaultId;
+      addressState.timeline.byVaultId = action.payload.timelines;
     });
 
     builder.addCase(fetchShareToUnderlying.fulfilled, (sliceState, action) => {
-      const { data, vaultId, walletAddress, timebucket } = action.payload;
-      const bucketState = setStatus(
-        sliceState,
-        'shareToUnderlying',
-        vaultId,
-        timebucket,
-        walletAddress,
-        'fulfilled'
-      );
+      const { data, vaultId, timebucket } = action.payload;
+      const bucketState = getOrCreateShareToUnderlyingBucketState(sliceState, vaultId, timebucket);
+      bucketState.status = 'fulfilled';
       bucketState.data = data;
     });
 
     builder.addCase(fetchShareToUnderlying.pending, (sliceState, action) => {
-      const { timebucket, walletAddress, vaultId } = action.meta.arg;
-      setStatus(sliceState, 'shareToUnderlying', vaultId, timebucket, walletAddress, 'pending');
+      const { timebucket, vaultId } = action.meta.arg;
+      const bucketState = getOrCreateShareToUnderlyingBucketState(sliceState, vaultId, timebucket);
+      bucketState.status = 'pending';
     });
 
     builder.addCase(fetchShareToUnderlying.rejected, (sliceState, action) => {
-      const { timebucket, walletAddress, vaultId } = action.meta.arg;
-      setStatus(sliceState, 'shareToUnderlying', vaultId, timebucket, walletAddress, 'rejected');
+      const { timebucket, vaultId } = action.meta.arg;
+      const bucketState = getOrCreateShareToUnderlyingBucketState(sliceState, vaultId, timebucket);
+      bucketState.status = 'rejected';
     });
 
-    builder.addCase(fetchUnderlyingToUsd.fulfilled, (sliceState, action) => {
-      const { data, vaultId, walletAddress, timebucket } = action.payload;
-      const bucketState = setStatus(
-        sliceState,
-        'underlyingToUsd',
-        vaultId,
-        timebucket,
-        walletAddress,
-        'fulfilled'
-      );
-      bucketState.data = data;
+    builder.addCase(fetchClmHarvestsForUserVault.fulfilled, (sliceState, action) => {
+      const { harvests, vaultId } = action.payload;
+      addClmHarvestsToState(sliceState, vaultId, harvests);
     });
 
-    builder.addCase(fetchUnderlyingToUsd.pending, (sliceState, action) => {
-      const { timebucket, walletAddress, vaultId } = action.meta.arg;
-      setStatus(sliceState, 'underlyingToUsd', vaultId, timebucket, walletAddress, 'pending');
+    builder.addCase(fetchClmHarvestsForUserChain.fulfilled, (sliceState, action) => {
+      for (const { harvests, vaultId } of action.payload) {
+        addClmHarvestsToState(sliceState, vaultId, harvests);
+      }
     });
 
-    builder.addCase(fetchUnderlyingToUsd.rejected, (sliceState, action) => {
-      const { timebucket, walletAddress, vaultId } = action.meta.arg;
-      setStatus(sliceState, 'underlyingToUsd', vaultId, timebucket, walletAddress, 'rejected');
+    builder.addCase(fetchClmPendingRewards.fulfilled, (sliceState, action) => {
+      const { data, vaultIds } = action.payload;
+      const { fees1, fees0, totalSupply } = data;
+
+      for (const vaultId of vaultIds) {
+        sliceState.clmPendingRewards.byVaultId[vaultId] = {
+          fees1,
+          fees0,
+          totalSupply,
+        };
+      }
+    });
+
+    builder.addCase(recalculateClmHarvestsForUserVaultId.fulfilled, (sliceState, action) => {
+      const { vaultId, timeline, walletAddress } = action.payload;
+      const addressState = getOrCreateAnalyticsAddressState(sliceState, walletAddress);
+      addressState.clmHarvests.byVaultId[vaultId] = timeline;
     });
   },
 });
 
-function setStatus(
+function getOrCreateShareToUnderlyingBucketState(
   sliceState: Draft<AnalyticsState>,
-  part: 'shareToUnderlying' | 'underlyingToUsd',
-  vaultId: VaultEntity['id'],
-  timebucket: TimeBucketType,
-  walletAddress: string,
-  status: StatusType
-) {
-  const bucketState = getOrCreateAnalyticsAddressPartVaultTimeBucketState(
-    sliceState,
-    walletAddress,
-    part,
-    vaultId,
-    timebucket
-  );
-  bucketState.status = status;
-  return bucketState;
-}
-
-function getOrCreateAnalyticsAddressPartVaultTimeBucketState(
-  sliceState: Draft<AnalyticsState>,
-  walletAddress: string,
-  part: 'shareToUnderlying' | 'underlyingToUsd',
   vaultId: VaultEntity['id'],
   timebucket: TimeBucketType
 ) {
-  const partState = getOrCreateAnalyticsAddressPartVaultState(
-    sliceState,
-    walletAddress,
-    part,
-    vaultId
-  );
-  let bucketState = partState.byTimebucket[timebucket];
+  let vaultState = sliceState.shareToUnderlying.byVaultId[vaultId];
+  if (!vaultState) {
+    vaultState = sliceState.shareToUnderlying.byVaultId[vaultId] = { byTimebucket: {} };
+  }
 
+  let bucketState = vaultState.byTimebucket[timebucket];
   if (!bucketState) {
-    bucketState = partState.byTimebucket[timebucket] = {
-      data: [],
-      status: 'idle',
-    };
+    bucketState = vaultState.byTimebucket[timebucket] = { data: [], status: 'idle' };
   }
 
   return bucketState;
-}
-
-function getOrCreateAnalyticsAddressPartVaultState(
-  sliceState: Draft<AnalyticsState>,
-  walletAddress: string,
-  part: 'shareToUnderlying' | 'underlyingToUsd',
-  vaultId: VaultEntity['id']
-) {
-  const partState = getOrCreateAnalyticsAddressPartState(sliceState, walletAddress, part);
-  let vaultState = partState.byVaultId[vaultId];
-
-  if (!vaultState) {
-    vaultState = partState.byVaultId[vaultId] = { byTimebucket: {} };
-  }
-
-  return vaultState;
-}
-
-function getOrCreateAnalyticsAddressPartState(
-  sliceState: Draft<AnalyticsState>,
-  walletAddress: string,
-  part: 'shareToUnderlying' | 'underlyingToUsd'
-) {
-  const addressState = getOrCreateAnalyticsAddressState(sliceState, walletAddress);
-  let partState = addressState[part];
-
-  if (!partState) {
-    partState = addressState[part] = { byVaultId: {} };
-  }
-
-  return partState;
 }
 
 function getOrCreateAnalyticsAddressState(
@@ -299,10 +175,42 @@ function getOrCreateAnalyticsAddressState(
   if (!addressState) {
     addressState = sliceState.byAddress[walletAddress] = {
       timeline: { byVaultId: {} },
-      shareToUnderlying: { byVaultId: {} },
-      underlyingToUsd: { byVaultId: {} },
+      clmHarvests: { byVaultId: {} },
     };
   }
 
   return addressState;
+}
+
+function addClmHarvestsToState(
+  state: Draft<AnalyticsState>,
+  vaultId: VaultEntity['id'],
+  harvests: ApiClmHarvestPriceRow[]
+) {
+  const existing: ClmHarvest[] = (state.clmHarvests.byVaultId[vaultId] as ClmHarvest[]) ?? [];
+  const toAdd: ClmHarvest[] = harvests
+    .map(
+      (row): ClmHarvest => ({
+        timestamp: fromUnixTime(Number(row.timestamp)),
+        compoundedAmount0: new BigNumber(row.compoundedAmount0),
+        compoundedAmount1: new BigNumber(row.compoundedAmount1),
+        token0ToUsd: new BigNumber(row.token0ToUsd),
+        token1ToUsd: new BigNumber(row.token1ToUsd),
+        totalSupply: new BigNumber(row.totalSupply),
+        transactionHash: row.transactionHash,
+      })
+    )
+    .filter(h => h.compoundedAmount0.gt(0) || h.compoundedAmount1.gt(0));
+
+  state.clmHarvests.byVaultId[vaultId] = orderBy(
+    uniqBy(
+      existing.concat(toAdd),
+      h =>
+        `${h.transactionHash}-${h.compoundedAmount0.toString(10)}-${h.compoundedAmount1.toString(
+          10
+        )}`
+    ),
+    h => h.timestamp.getTime(),
+    'asc'
+  );
 }

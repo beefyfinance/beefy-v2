@@ -55,18 +55,15 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
     };
 
     for (const standardVault of standardVaults) {
-      addTokenAddressesToCalls(standardVault.earnedTokenAddress, standardVault.earnContractAddress);
-      addTokenAddressesToCalls(
-        standardVault.depositTokenAddress,
-        standardVault.earnContractAddress
-      );
+      addTokenAddressesToCalls(standardVault.receiptTokenAddress, standardVault.contractAddress);
+      addTokenAddressesToCalls(standardVault.depositTokenAddress, standardVault.contractAddress);
     }
     for (const govVault of govVaults) {
-      addTokenAddressesToCalls(govVault.depositTokenAddress, govVault.earnContractAddress);
+      addTokenAddressesToCalls(govVault.depositTokenAddress, govVault.contractAddress);
     }
     for (const boost of boosts) {
       const vault = selectVaultById(state, boost.vaultId);
-      addTokenAddressesToCalls(vault.earnedTokenAddress, boost.earnContractAddress);
+      addTokenAddressesToCalls(vault.contractAddress, boost.contractAddress);
     }
 
     // if we send too much in a single call, we get "execution reversed"

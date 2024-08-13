@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo } from 'react';
+import { Fragment, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../store';
 import type { ChainEntity } from '../../../../../data/entities/chain';
@@ -36,12 +36,12 @@ export const Assets = memo<AssetsProps>(function Assets({ chainId }) {
       {Object.keys(chainAssetTypes).map(
         assetType =>
           sortedAssets[assetType].length > 0 && (
-            <React.Fragment key={assetType}>
+            <Fragment key={assetType}>
               <div className={classes.assetTypes}>{t(chainAssetTypes[assetType])}</div>
               {sortedAssets[assetType].map(token => {
                 return <AssetInfo key={token.address} chainId={chainId} token={token} />;
               })}
-            </React.Fragment>
+            </Fragment>
           )
       )}
     </div>
@@ -61,12 +61,12 @@ export const MMAssets = memo<MMAssetsProps>(function MMAssets({ mmId }) {
       {Object.keys(sortedAssetsByExchange).map(
         exchangeId =>
           sortedAssetsByExchange[exchangeId].length > 0 && (
-            <React.Fragment key={exchangeId}>
+            <Fragment key={exchangeId}>
               <div className={classes.assetTypes}>{exchangeId.toUpperCase()}</div>
               {sortedAssetsByExchange[exchangeId].map((token, index) => {
                 return <AssetInfoMM key={token.symbol + index} holding={token} />;
               })}
-            </React.Fragment>
+            </Fragment>
           )
       )}
     </div>

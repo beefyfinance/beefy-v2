@@ -1,12 +1,12 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo } from 'react';
+import { type FC, memo } from 'react';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
 interface SummaryStatProps {
   title: string;
-  Icon: React.FC;
+  Icon: FC;
   value: string;
 }
 

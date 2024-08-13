@@ -1,11 +1,10 @@
 /* eslint-disable */
-import React, { Fragment, memo, useEffect, useState } from 'react';
+import { Fragment, memo, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useAppSelector, useAppStore } from '../../../../../../store';
 import { styles } from './styles';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { isStandardVault, type VaultStandard } from '../../../../../data/entities/vault';
-import type { CurveStrategyOptions } from '../../../../../data/apis/transact/strategies/IStrategy';
 import {
   selectTokenByAddressOrUndefined,
   selectTokenPriceByTokenOracleId,
@@ -16,6 +15,11 @@ import { getSwapAggregator } from '../../../../../data/apis/instances';
 import { uniqBy } from 'lodash-es';
 import { formatLargeUsd } from '../../../../../../helpers/format';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
+import {
+  selectIsAddressBookLoaded,
+  selectIsZapLoaded,
+} from '../../../../../data/selectors/data-loader';
+import type { CurveStrategyConfig } from '../../../../../data/apis/transact/strategies/strategy-configs';
 
 const useStyles = makeStyles(styles);
 
@@ -26,7 +30,7 @@ const CurveZap = memo<CurveZapProps>(function CurveZap({ vaultId }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const zap = isStandardVault(vault)
-    ? vault.zaps.find((zap): zap is CurveStrategyOptions => zap.strategyId === 'curve')
+    ? vault.zaps.find((zap): zap is CurveStrategyConfig => zap.strategyId === 'curve')
     : undefined;
 
   return (
@@ -43,24 +47,19 @@ const NoZap = memo(function NoZap() {
 
 type ZapLoaderProps = {
   vault: VaultStandard;
-  zap: CurveStrategyOptions;
+  zap: CurveStrategyConfig;
 };
 
 type ZapProps = {
   aggregatorSupportedTokens: TokenEntity[];
   vault: VaultStandard;
-  zap: CurveStrategyOptions;
+  zap: CurveStrategyConfig;
 };
 
 const ZapLoader = memo<ZapLoaderProps>(function ZapLoader({ vault, zap }) {
   const store = useAppStore();
   const swapLoaded = useAppSelector(
-    state =>
-      state.ui.dataLoader.global.zapAggregatorTokenSupport?.alreadyLoadedOnce === true &&
-      state.ui.dataLoader.global.zapAmms?.alreadyLoadedOnce === true &&
-      state.ui.dataLoader.global.zapConfigs?.alreadyLoadedOnce === true &&
-      state.ui.dataLoader.global.zapSwapAggregators?.alreadyLoadedOnce === true &&
-      state.ui.dataLoader.global.addressBook?.alreadyLoadedOnce === true
+    state => selectIsZapLoaded(state) && selectIsAddressBookLoaded(state, vault.chainId)
   );
   const tokens = useAppSelector(state =>
     uniqBy(

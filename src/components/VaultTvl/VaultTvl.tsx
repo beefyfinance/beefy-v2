@@ -1,29 +1,26 @@
-import React, { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { isCowcentratedLiquidityVault, type VaultEntity } from '../../features/data/entities/vault';
-import { selectVaultTvl } from '../../features/data/selectors/tvl';
+import { type VaultEntity } from '../../features/data/entities/vault';
+import { selectTvlBreakdownByVaultId } from '../../features/data/selectors/tvl';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { formatLargeUsd } from '../../helpers/format';
 import type { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { BIG_ZERO } from '../../helpers/big-number';
-import {
-  selectLpBreakdownByTokenAddress,
-  selectTokenByAddress,
-} from '../../features/data/selectors/tokens';
-import type { LpData } from '../../features/data/apis/beefy/beefy-api';
 import { TvlShareTooltip } from '../VaultStats/VaultTvlStat';
-import type { PlatformEntity } from '../../features/data/entities/platform';
-import { getVaultUnderlyingTvlAndBeefySharePercent } from '../../helpers/tvl';
 import type BigNumber from 'bignumber.js';
+import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types';
+import {
+  selectIsContractDataLoadedOnChain,
+  selectIsPricesAvailable,
+} from '../../features/data/selectors/data-loader';
 
 const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
   const label = 'VaultStat-TVL';
   const vault = selectVaultById(state, vaultId);
   const isLoaded =
-    state.ui.dataLoader.byChainId[vault.chainId]?.contractData.alreadyLoadedOnce &&
-    state.ui.dataLoader.global.prices.alreadyLoadedOnce;
+    selectIsPricesAvailable(state) && selectIsContractDataLoadedOnChain(state, vault.chainId);
 
   if (!isLoaded) {
     return {
@@ -34,41 +31,23 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
       breakdown: null,
     };
   }
-  // deposit can be moo or oracle
-  const tvl = selectVaultTvl(state, vaultId);
-  const breakdown = selectLpBreakdownByTokenAddress(
-    state,
-    vault.chainId,
-    vault.depositTokenAddress
-  );
 
-  const token = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-
-  const platformId = isCowcentratedLiquidityVault(vault) ? token.providerId : vault.platformId;
-
-  if (!breakdown) {
+  const breakdown = selectTvlBreakdownByVaultId(state, vaultId);
+  if (!breakdown || !('underlyingTvl' in breakdown)) {
     return {
       label,
-      vaultTvl: tvl,
+      vaultTvl: breakdown.vaultTvl,
       subValue: null,
       loading: false,
       breakdown: null,
     };
   }
 
-  const { percent, underlyingTvl } = getVaultUnderlyingTvlAndBeefySharePercent(
-    vault,
-    breakdown,
-    tvl
-  );
-
   return {
     label,
-    vaultTvl: tvl,
-    underlyingTvl: underlyingTvl,
+    vaultTvl: breakdown.vaultTvl,
+    underlyingTvl: breakdown.underlyingTvl,
     loading: !isLoaded,
-    percent,
-    platformId,
     breakdown,
   };
 })(
@@ -78,16 +57,12 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
     loading,
     breakdown,
     underlyingTvl,
-    platformId,
-    percent,
   }: {
     label: string;
     vaultTvl: BigNumber;
     underlyingTvl: BigNumber;
     loading: boolean;
-    percent: number;
-    breakdown: LpData;
-    platformId: PlatformEntity['id'];
+    breakdown: TvlBreakdownUnderlying;
   }) => {
     const { t } = useTranslation();
 
@@ -106,22 +81,9 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
         blurred={false}
         loading={loading}
         usdValue={subValue}
-        tooltip={
-          breakdown
-            ? {
-                content: (
-                  <TvlShareTooltip
-                    platformId={platformId}
-                    underlyingTvl={underlyingTvl}
-                    vaultTvl={vaultTvl}
-                    percent={percent}
-                  />
-                ),
-              }
-            : undefined
-        }
+        tooltip={breakdown ? <TvlShareTooltip breakdown={breakdown} /> : undefined}
       />
     );
   }
 );
-export const VaultTvl = React.memo(_VaultTvl);
+export const VaultTvl = memo(_VaultTvl);

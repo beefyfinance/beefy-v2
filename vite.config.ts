@@ -1,16 +1,22 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import RollupNodePolyFillPlugin from 'rollup-plugin-polyfill-node';
 import react from '@vitejs/plugin-react';
 import svgrPlugin from 'vite-plugin-svgr';
 import eslint from 'vite-plugin-eslint';
 import { visualizer } from 'rollup-plugin-visualizer';
-import * as path from 'path';
+import * as path from 'node:path';
+import versionPlugin from './version-plugin';
 
-const optionalPlugins = [];
+const optionalPlugins: Plugin[] = [];
 
 if (process.env.NODE_ENV === 'development') {
-  optionalPlugins.push(eslint());
+  optionalPlugins.push(
+    eslint({
+      failOnError: false,
+      failOnWarning: false,
+    })
+  );
 }
 
 if (process.env.ANALYZE_BUNDLE) {
@@ -36,6 +42,7 @@ export default defineConfig({
       ...svgrPlugin(),
       enforce: 'post',
     },
+    versionPlugin(),
     ...optionalPlugins,
   ],
   optimizeDeps: {
@@ -52,10 +59,52 @@ export default defineConfig({
   build: {
     outDir: 'build',
     assetsInlineLimit: 0,
+    sourcemap: false,
     commonjsOptions: {
       transformMixedEsModules: true,
     },
     rollupOptions: {
+      output: {
+        entryFileNames: 'assets/js/entry-[name]-[hash].js',
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash][extname]',
+        manualChunks: id => {
+          if (id.includes('@material-ui')) {
+            return 'material-ui';
+          }
+          if (id.includes('node_modules/lodash')) {
+            return 'lodash';
+          }
+        },
+      },
+      treeshake: {
+        manualPureFunctions: [
+          'memo',
+          'lazy',
+          'createTheme',
+          'makeStyles',
+          'createAsyncThunk',
+          'createSlice',
+          'createSelector',
+          'createCachedSelector',
+          'createFactory',
+          'createCachedFactory',
+          'createDependencyFactory',
+          'createDependencyInitializerFactory',
+          'createDependencyFactoryWithCacheByChain',
+          'configureStore',
+          'persistStore',
+          'createHasLoaderFulfilledRecentlyEvaluator',
+          'createHasLoaderDispatchedRecentlyEvaluator',
+          'createShouldLoaderLoadOnceEvaluator',
+          'createShouldLoaderLoadRecentEvaluator',
+          'createGlobalDataSelector',
+          'createChainDataSelector',
+          'createAddressDataSelector',
+          'createAddressChainDataSelector',
+          'createAddressVaultDataSelector',
+        ],
+      },
       plugins: [RollupNodePolyFillPlugin()],
     },
   },

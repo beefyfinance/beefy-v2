@@ -17,6 +17,7 @@ import { getStrategyIds } from './common/strategies';
 import strategyABI from '../src/config/abi/strategy.json';
 import { StandardVaultAbi } from '../src/config/abi/StandardVaultAbi';
 import platforms from '../src/config/platforms.json';
+import pointProviders from '../src/config/points.json';
 import type { VaultConfig } from '../src/features/data/apis/config-types';
 import partition from 'lodash/partition';
 import { AbiItem } from 'web3-utils';
@@ -29,6 +30,10 @@ const overrides = {
   'kinetix-klp': { harvestOnDeposit: undefined },
   'bifi-vault': { beefyFeeRecipient: undefined }, // TODO: remove
   'png-wbtc.e-usdc': { harvestOnDeposit: undefined },
+  'gmx-arb-glp': { harvestOnDeposit: undefined },
+  'gmx-arb-gmx': { harvestOnDeposit: undefined },
+  'swapbased-usd+-usdbc': { harvestOnDeposit: undefined },
+  'swapbased-dai+-usd+': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
@@ -41,7 +46,41 @@ const oldValidFeeRecipients = {
   canto: '0xF09d213EE8a8B159C884b276b86E08E26B3bfF75',
   kava: '0x07F29FE11FbC17876D9376E3CD6F2112e81feA6F',
   moonriver: '0x617f12E04097F16e73934e84f35175a1B8196551',
-  moonbeam: '0x3E7F60B442CEAE0FE5e48e07EB85Cfb1Ed60e81A',
+  moonbeam: [
+    '0x00aec34489a7ade91a0507b6b9dbb0a50938b7c0',
+    '0x3E7F60B442CEAE0FE5e48e07EB85Cfb1Ed60e81A',
+  ],
+};
+
+const oldValidRewardPoolOwners = {
+  polygon: [
+    '0x7313533ed72D2678bFD9393480D0A30f9AC45c1f',
+    '0x97bfa4b212A153E15dCafb799e733bc7d1b70E72',
+  ],
+  kava: '0xF0d26842c3935A618e6980C53fDa3A2D10A02eb7',
+  metis: '0x2cC364255206A7e14bF59ADB1fc5770DbA48CB3f',
+  cronos: '0xF9eBb381dC153D0966B2BaEe776de2F400405755',
+  celo: '0x32C82EE8Fca98ce5114D2060c5715AEc714152FB',
+  canto: '0xeD7b88EDd899d578581DCcfce80F43D1F395b93f',
+  moonriver: '0xD5e8D34dE3B1A6fd54e87B5d4a857CBB762d0C8A',
+  moonbeam: '0x00AeC34489A7ADE91A0507B6b9dBb0a50938B7c0',
+  aurora: '0x9dA9f3C6c45F1160b53D395b0A982aEEE1D212fE',
+  ethereum: [
+    '0x1c9270ac5C42E51611d7b97b1004313D52c80293',
+    '0x8237f3992526036787E8178Def36291Ab94638CD',
+  ],
+  avax: [
+    '0x48beD04cBC52B5676C04fa94be5786Cdc9f266f5',
+    '0xc1464638B11b9BAac9525cf7bF2B4A52Ccbde885',
+  ],
+  arbitrum: '0xFEd99885fE647dD44bEA2B375Bd8A81490bF6E0f',
+  bsc: ['0xAb4e8665E7b0E6D83B65b8FF6521E347ca93E4F8', '0x0000000000000000000000000000000000000000'],
+  fantom: '0x35F43b181957824f2b5C0EF9856F85c90fECb3c8',
+  optimism: [
+    '0xEDFBeC807304951785b581dB401fDf76b4bAd1b0',
+    '0x3Cd5Ae887Ddf78c58c9C1a063EB343F942DbbcE8',
+    addressBook.optimism.platforms.beefyfinance.strategyOwner,
+  ],
 };
 
 const nonHarvestOnDepositChains = ['ethereum', 'avax'];
@@ -49,12 +88,21 @@ const nonHarvestOnDepositPools = [
   'venus-bnb',
   'equilibria-arb-silo-usdc.e',
   'silo-eth-pendle-weeth',
+  'silo-op-tbtc-tbtc',
 ];
-
+const excludedAbPools = [
+  'gmx-arb-near-usdc',
+  'gmx-arb-atom-usdc',
+  'gmx-arb-bnb-usdc',
+  'gmx-arb-ltc-usdc',
+  'gmx-arb-xrp-usdc',
+  'gmx-arb-doge-usdc',
+];
 const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddress'];
 
 const validPlatformIds = platforms.map(platform => platform.id);
-const { gov: validGovStrategyIds, vault: validVaultStrategyIds } = getStrategyIds();
+const validStrategyIds = getStrategyIds();
+const validPointProviderIds = pointProviders.map(pointProvider => pointProvider.id);
 
 const oldFields = {
   tokenDescription: 'Use addressbook',
@@ -152,6 +200,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
 
   let updates: Record<string, Record<string, any>> = {};
   let exitCode = 0;
+
   //Governance pools should be separately verified
   const [govPools, vaultPools] = partition(pools, pool => pool.type === 'gov');
   pools = vaultPools;
@@ -160,14 +209,17 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   const uniqueEarnedToken = new Set();
   const uniqueEarnedTokenAddress = new Set();
   const uniqueOracleId = new Set();
+  const govPoolsByDepositAddress = new Map(govPools.map(pool => [pool.tokenAddress, pool]));
   let activePools = 0;
 
   // Populate some extra data.
   const web3 = new Web3(chainRpcs[chainId]);
+  const poolsWithGovData = await populateGovData(chainId, govPools, web3);
   const poolsWithVaultData = await populateVaultsData(chainId, pools, web3);
   const poolsWithStrategyData = override(
     await populateStrategyData(chainId, poolsWithVaultData, web3)
   );
+  const clmsWithData = await populateCowcentratedData(chainId, pools, web3);
 
   poolsWithStrategyData.forEach(pool => {
     // Errors, should not proceed with build
@@ -198,9 +250,9 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     if (!pool.strategyTypeId) {
       console.error(`Error: ${pool.id} : strategyTypeId missing vault strategy type`);
       exitCode = 1;
-    } else if (!validVaultStrategyIds.includes(pool.strategyTypeId)) {
+    } else if (!validStrategyIds[pool.type].has(pool.strategyTypeId)) {
       console.error(
-        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription-${pool.strategyTypeId}" not present in locales/en/risks.json`
+        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription-${pool.type}-${pool.strategyTypeId}" not present in locales/en/risks.json`
       );
       exitCode = 1;
     }
@@ -213,6 +265,18 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
         `Error: ${pool.id} : platformId ${pool.platformId} not present in platforms.json`
       );
       exitCode = 1;
+    }
+
+    if (pool.pointStructureIds && pool.pointStructureIds.length > 0) {
+      const invalidPointStructureIds = pool.pointStructureIds!.filter(
+        p => !validPointProviderIds.includes(p)
+      );
+      if (invalidPointStructureIds.length > 0) {
+        console.error(
+          `Error: ${pool.id} : pointStructureId ${invalidPointStructureIds} not present in points.json`
+        );
+        exitCode = 1;
+      }
     }
 
     if (pool.oracle === 'lps') {
@@ -286,10 +350,20 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     } else if (pool.status !== 'eol') {
       for (const assetId of pool.assets) {
         if (!(assetId in addressBook[chainId].tokens)) {
+          if (excludedAbPools.includes(pool.id)) continue;
           // just warn for now
           console.warn(`Warning: ${pool.id} : Asset ${assetId} not in addressbook on ${chainId}`);
           // exitCode = 1;
         }
+      }
+    }
+
+    // Cowcentrated should have RP
+    if (pool.type === 'cowcentrated' && pool.status !== 'eol') {
+      const govPool = govPoolsByDepositAddress.get(pool.earnContractAddress);
+      if (!govPool) {
+        console.error(`Error: ${pool.id} : CLM missing CLM pool`);
+        exitCode = 1;
       }
     }
 
@@ -319,7 +393,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       activePools++;
     }
 
-    if (new BigNumber(pool.totalSupply).isZero()) {
+    if (new BigNumber(pool.totalSupply || '0').isZero()) {
       if (pool.status !== 'eol') {
         console.error(`Error: ${pool.id} : Pool is empty`);
         exitCode = 1;
@@ -355,13 +429,31 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   });
 
   // Gov Pools
-  govPools.forEach(pool => {
+  poolsWithGovData.forEach(pool => {
     if (!pool.strategyTypeId) {
       console.error(`Error: ${pool.id} : strategyTypeId missing gov strategy type`);
       exitCode = 1;
-    } else if (!validGovStrategyIds.includes(pool.strategyTypeId)) {
+    } else if (!validStrategyIds.gov.has(pool.strategyTypeId)) {
       console.error(
-        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription-Gov-${pool.strategyTypeId}" not present in locales/en/risks.json`
+        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription-${pool.type}-${pool.strategyTypeId}" not present in locales/en/risks.json`
+      );
+      exitCode = 1;
+    }
+    const { devMultisig } = addressBook[chainId].platforms.beefyfinance;
+    updates = isRewardPoolOwnerCorrect(pool, chainId, devMultisig, updates);
+  });
+
+  // CLMs
+  clmsWithData.forEach(clm => {
+    if (!clm.oracleForToken0) {
+      console.error(
+        `Error: ${clm.id} : Beefy oracle has no subOracle entry for token0 ${clm.token0}`
+      );
+      exitCode = 1;
+    }
+    if (!clm.oracleForToken1) {
+      console.error(
+        `Error: ${clm.id} : Beefy oracle has no subOracle entry for token1 ${clm.token1}`
       );
       exitCode = 1;
     }
@@ -424,6 +516,30 @@ const isVaultOwnerCorrect = (pool, chain, owner, updates) => {
       updates.vaultOwner[chain][pool.vaultOwner].push(pool.earnContractAddress);
     } else {
       updates.vaultOwner[chain][pool.vaultOwner] = [pool.earnContractAddress];
+    }
+  }
+
+  return updates;
+};
+
+const isRewardPoolOwnerCorrect = (pool, chain, owner, updates) => {
+  const validOwners: string[] = oldValidRewardPoolOwners[chain] || [];
+  if (
+    pool.rewardPoolOwner !== undefined &&
+    pool.rewardPoolOwner !== owner &&
+    !validOwners.includes(pool.rewardPoolOwner)
+  ) {
+    console.log(
+      `Reward Pool ${pool.id} should update owner. From: ${pool.rewardPoolOwner} To: ${owner}`
+    );
+
+    if (!('rewardPoolOwner' in updates)) updates['rewardPoolOwner'] = {};
+    if (!(chain in updates.rewardPoolOwner)) updates.rewardPoolOwner[chain] = {};
+
+    if (pool.rewardPoolOwner in updates.rewardPoolOwner[chain]) {
+      updates.rewardPoolOwner[chain][pool.rewardPoolOwner].push(pool.earnContractAddress);
+    } else {
+      updates.rewardPoolOwner[chain][pool.rewardPoolOwner] = [pool.earnContractAddress];
     }
   }
 
@@ -505,7 +621,204 @@ const isHarvestOnDepositCorrect = (pool, chain, updates) => {
 
 // Helpers to populate required addresses.
 
-type VaultConfigWithVaultData = VaultConfig & {
+type VaultConfigWithGovData = Omit<VaultConfig, 'type'> & {
+  type: NonNullable<VaultConfig['type']>;
+  rewardPoolOwner: string | undefined;
+};
+const populateGovData = async (
+  chain,
+  pools: VaultConfig[],
+  web3
+): Promise<VaultConfigWithGovData[]> => {
+  try {
+    const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
+
+    const calls = pools.map(pool => {
+      const vaultContract = new web3.eth.Contract(
+        StandardVaultAbi as unknown as AbiItem[],
+        pool.earnContractAddress
+      );
+      return {
+        owner: vaultContract.methods.owner(),
+      };
+    });
+
+    const [results] = await multicall.all([calls]);
+
+    return pools.map((pool, i) => {
+      return {
+        ...pool,
+        type: pool.type || 'gov',
+        rewardPoolOwner: results[i].owner,
+      };
+    });
+  } catch (e) {
+    throw new Error(`Failed to populate gov data for ${chain}`, { cause: e });
+  }
+};
+
+type ClmVaultConfig = Omit<VaultConfig, 'type'> & { type: 'cowcentrated' };
+type VaultConfigWithCowcentratedData = ClmVaultConfig & {
+  token0: string;
+  token1: string;
+  oracleForToken0: boolean;
+  oracleForToken1: boolean;
+};
+
+const populateCowcentratedData = async (
+  chain: keyof typeof addressBook,
+  pools: VaultConfig[],
+  web3: Web3
+): Promise<VaultConfigWithCowcentratedData[]> => {
+  try {
+    const clms = pools.filter((p): p is ClmVaultConfig => p.type === 'cowcentrated');
+    if (clms.length === 0) {
+      return [];
+    }
+
+    const { multicall: multicallAddress, beefyOracle: beefyOracleAddress } =
+      addressBook[chain].platforms.beefyfinance;
+    if (!multicallAddress || !beefyOracleAddress) {
+      throw new Error('Missing multicall or beefyOracle address');
+    }
+
+    const multicall = new MultiCall(web3, multicallAddress);
+    const beefyOracle = new web3.eth.Contract(
+      [
+        {
+          inputs: [
+            {
+              internalType: 'address',
+              name: '',
+              type: 'address',
+            },
+          ],
+          name: 'subOracle',
+          outputs: [
+            {
+              internalType: 'address',
+              name: 'oracle',
+              type: 'address',
+            },
+            {
+              internalType: 'bytes',
+              name: 'data',
+              type: 'bytes',
+            },
+          ],
+          stateMutability: 'view',
+          type: 'function',
+        },
+        {
+          inputs: [
+            {
+              internalType: 'address',
+              name: '',
+              type: 'address',
+            },
+            {
+              internalType: 'address',
+              name: '',
+              type: 'address',
+            },
+          ],
+          name: 'subOracle',
+          outputs: [
+            {
+              internalType: 'address',
+              name: 'oracle',
+              type: 'address',
+            },
+            {
+              internalType: 'bytes',
+              name: 'data',
+              type: 'bytes',
+            },
+          ],
+          stateMutability: 'view',
+          type: 'function',
+        },
+      ],
+      beefyOracleAddress
+    );
+    const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+
+    const tokenResults = (
+      await multicall.all([
+        clms.map(clm => {
+          const vaultContract = new web3.eth.Contract(
+            [
+              {
+                inputs: [],
+                name: 'wants',
+                outputs: [
+                  {
+                    internalType: 'address',
+                    name: 'token0',
+                    type: 'address',
+                  },
+                  {
+                    internalType: 'address',
+                    name: 'token1',
+                    type: 'address',
+                  },
+                ],
+                stateMutability: 'view',
+                type: 'function',
+              },
+            ],
+            clm.earnContractAddress
+          );
+          return {
+            wants: vaultContract.methods.wants(),
+          };
+        }),
+      ])
+    )
+      .flat()
+      .map(result => ({
+        token0: result.wants[0],
+        token1: result.wants[1],
+      }));
+
+    const oracleResults = (
+      await multicall.all([
+        tokenResults.map(result => ({
+          token0: beefyOracle.methods.subOracle(result.token0),
+          token1: beefyOracle.methods.subOracle(result.token1),
+          token0For0xZero: beefyOracle.methods.subOracle(ZERO_ADDRESS, result.token0),
+          token1For0xZero: beefyOracle.methods.subOracle(ZERO_ADDRESS, result.token1),
+        })),
+      ])
+    )
+      .flat()
+      .map(result => ({
+        oracleForToken0:
+          (result.token0 && result.token0[0] && result.token0[0] !== ZERO_ADDRESS) ||
+          (result.token0For0xZero &&
+            result.token0For0xZero[0] &&
+            result.token0For0xZero[0] !== ZERO_ADDRESS),
+        oracleForToken1:
+          (result.token1 && result.token1[0] && result.token1[0] !== ZERO_ADDRESS) ||
+          (result.token1For0xZero &&
+            result.token1For0xZero[0] &&
+            result.token1For0xZero[0] !== ZERO_ADDRESS),
+      }));
+
+    return clms.map((clm, i) => ({
+      ...clm,
+      token0: tokenResults[i].token0,
+      token1: tokenResults[i].token1,
+      oracleForToken0: oracleResults[i].oracleForToken0,
+      oracleForToken1: oracleResults[i].oracleForToken1,
+    }));
+  } catch (e) {
+    throw new Error(`Failed to populate cowcentrated data for ${chain}`, { cause: e });
+  }
+};
+
+type VaultConfigWithVaultData = Omit<VaultConfig, 'type'> & {
+  type: NonNullable<VaultConfig['type']>;
   strategy: string | undefined;
   vaultOwner: string | undefined;
   totalSupply: string | undefined;
@@ -515,30 +828,35 @@ const populateVaultsData = async (
   pools: VaultConfig[],
   web3
 ): Promise<VaultConfigWithVaultData[]> => {
-  const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
+  try {
+    const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
 
-  const calls = pools.map(pool => {
-    const vaultContract = new web3.eth.Contract(
-      StandardVaultAbi as unknown as AbiItem[],
-      pool.earnContractAddress
-    );
-    return {
-      strategy: vaultContract.methods.strategy(),
-      owner: vaultContract.methods.owner(),
-      totalSupply: vaultContract.methods.totalSupply(),
-    };
-  });
+    const calls = pools.map(pool => {
+      const vaultContract = new web3.eth.Contract(
+        StandardVaultAbi as unknown as AbiItem[],
+        pool.earnContractAddress
+      );
+      return {
+        strategy: vaultContract.methods.strategy(),
+        owner: vaultContract.methods.owner(),
+        totalSupply: vaultContract.methods.totalSupply(),
+      };
+    });
 
-  const [results] = await multicall.all([calls]);
+    const [results] = await multicall.all([calls]);
 
-  return pools.map((pool, i) => {
-    return {
-      ...pool,
-      strategy: results[i].strategy,
-      vaultOwner: results[i].owner,
-      totalSupply: results[i].totalSupply,
-    };
-  });
+    return pools.map((pool, i) => {
+      return {
+        ...pool,
+        type: pool.type || 'standard',
+        strategy: results[i].strategy,
+        vaultOwner: results[i].owner,
+        totalSupply: results[i].totalSupply,
+      };
+    });
+  } catch (e) {
+    throw new Error(`Failed to populate vault data for ${chain}`, { cause: e });
+  }
 };
 
 type VaultConfigWithStrategyData = VaultConfigWithVaultData & {
@@ -580,7 +898,7 @@ const populateStrategyData = async (
   });
 };
 
-const override = pools => {
+const override = (pools: VaultConfigWithVaultData[]): VaultConfigWithVaultData[] => {
   Object.keys(overrides).forEach(id => {
     pools
       .filter(p => p.id.includes(id))

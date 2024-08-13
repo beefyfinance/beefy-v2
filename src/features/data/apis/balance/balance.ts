@@ -1,17 +1,24 @@
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi';
 import type Web3 from 'web3';
-import type { VaultGov } from '../../entities/vault';
+import {
+  isGovVaultSingle,
+  type VaultGov,
+  type VaultGovCowcentrated,
+  type VaultGovMulti,
+  type VaultGovSingle,
+} from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import type { AsWeb3Result } from '../../utils/types-utils';
 import type { BoostEntity } from '../../entities/boost';
-import { chunk, groupBy } from 'lodash-es';
+import { chunk, partition } from 'lodash-es';
 
 import type {
   BoostBalance,
   FetchAllBalancesResult,
   GovVaultBalance,
   GovVaultV2Balance,
+  GovVaultV2BalanceResult,
   IBalanceApi,
   TokenBalance,
 } from './balance-types';
@@ -31,6 +38,9 @@ import {
   type Web3Call,
   type Web3CallMethod,
 } from '../../../../helpers/web3';
+import { selectTokenByAddress } from '../../selectors/tokens';
+import { BIG_ZERO, fromWeiString, isFiniteBigNumber } from '../../../../helpers/big-number';
+import { isDefined } from '../../utils/array-utils';
 
 export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   constructor(protected web3: Web3, protected chain: T) {}
@@ -62,29 +72,28 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       }
     }
 
-    const govVaultsByVersion = groupBy(govVaults, 'version');
-    const govVaultsV1 = govVaultsByVersion['1'] || [];
-    const govVaultsV2 = govVaultsByVersion['2'] || [];
+    const [govVaultsV1, govVaultsV2] = partition(govVaults, isGovVaultSingle);
+    const [boostsV1, boostsV2] = partition(boosts, b => b.version === 1);
     const erc20TokensBatches = chunk(erc20Tokens, CHUNK_SIZE);
-    const boostAndGovVaultBatches = chunk([...boosts, ...govVaultsV1], CHUNK_SIZE);
-    const govVaultsV2Batches = chunk(govVaultsV2, CHUNK_SIZE);
+    const boostAndGovVaultV1Batches = chunk([...boostsV1, ...govVaultsV1], CHUNK_SIZE);
+    const boostAndGovVaultsV2Batches = chunk([...boostsV2, ...govVaultsV2], CHUNK_SIZE);
 
     const requestsForBatch: Web3Call[] = [];
 
-    boostAndGovVaultBatches.forEach(boostAndGovVaultBatch => {
+    boostAndGovVaultV1Batches.forEach(boostAndGovVaultBatch => {
       requestsForBatch.push({
         method: mc.methods.getBoostOrGovBalance(
-          boostAndGovVaultBatch.map(boostOrGovVaultt => boostOrGovVaultt.earnContractAddress),
+          boostAndGovVaultBatch.map(boostOrGovVault => boostOrGovVault.contractAddress),
           walletAddress
         ).call,
         params: { from: '0x0000000000000000000000000000000000000000' },
       });
     });
 
-    govVaultsV2Batches.forEach(govVaultsV2Batch => {
+    boostAndGovVaultsV2Batches.forEach(govVaultsV2Batch => {
       requestsForBatch.push({
         method: mc.methods.getGovVaultMultiBalance(
-          govVaultsV2Batch.map(gov => gov.earnContractAddress),
+          govVaultsV2Batch.map(gov => gov.contractAddress),
           walletAddress
         ).call,
         params: { from: '0x0000000000000000000000000000000000000000' },
@@ -118,39 +127,56 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     let resultsIdx = 0;
 
-    let boostIndex = 0;
-    for (let j = 0; j < boostAndGovVaultBatches.length; j++) {
-      const batchResults = results[resultsIdx] as unknown[];
-      for (let i = 0; i < batchResults.length; i++) {
-        const boostOrGovVaultRes = batchResults[i];
-        if (boostIndex < boosts.length) {
-          res.boosts.push(
-            this.boostFormatter(
-              state,
-              boostOrGovVaultRes as AsWeb3Result<BoostBalance>,
-              boosts[boostIndex]
-            )
-          );
-        } else {
-          res.govVaults.push(
-            this.govVaultFormatter(
-              state,
-              boostOrGovVaultRes as AsWeb3Result<GovVaultBalance>,
-              govVaultsV1[boostIndex - boosts.length]
-            )
-          );
+    {
+      let boostIndex = 0;
+      for (let j = 0; j < boostAndGovVaultV1Batches.length; j++) {
+        const batchResults = results[resultsIdx] as unknown[];
+        for (let i = 0; i < batchResults.length; i++) {
+          const boostOrGovVaultRes = batchResults[i];
+          if (boostIndex < boostsV1.length) {
+            res.boosts.push(
+              this.boostFormatter(
+                state,
+                boostOrGovVaultRes as AsWeb3Result<BoostBalance>,
+                boostsV1[boostIndex]
+              )
+            );
+          } else {
+            res.govVaults.push(
+              this.govVaultFormatter(
+                state,
+                boostOrGovVaultRes as AsWeb3Result<GovVaultBalance>,
+                govVaultsV1[boostIndex - boostsV1.length]
+              )
+            );
+          }
+          boostIndex++;
         }
-        boostIndex++;
+        resultsIdx++;
       }
-      resultsIdx++;
     }
 
-    for (const govVaultsV2Batch of govVaultsV2Batches) {
-      const batchRes = (results[resultsIdx] as AsWeb3Result<GovVaultV2Balance>[]).map(
-        (vaultRes, elemidx) => this.govVaultV2Formatter(state, vaultRes, govVaultsV2Batch[elemidx])
-      );
-      res.govVaults = res.govVaults.concat(batchRes);
-      resultsIdx++;
+    {
+      let boostIndex = 0;
+      for (let j = 0; j < boostAndGovVaultsV2Batches.length; j++) {
+        const batchResults = results[resultsIdx] as AsWeb3Result<GovVaultV2BalanceResult>[];
+        for (let i = 0; i < batchResults.length; i++) {
+          const boostOrGovVaultRes = batchResults[i];
+          if (boostIndex < boostsV2.length) {
+            res.boosts.push(this.boostV2Formatter(state, boostOrGovVaultRes, boostsV2[boostIndex]));
+          } else {
+            res.govVaults.push(
+              this.govVaultV2Formatter(
+                state,
+                boostOrGovVaultRes,
+                govVaultsV2[boostIndex - boostsV2.length]
+              )
+            );
+          }
+          boostIndex++;
+        }
+        resultsIdx++;
+      }
     }
 
     for (const erc20TokenBatch of erc20TokensBatches) {
@@ -189,16 +215,23 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   protected govVaultFormatter(
     state: BeefyState,
     result: AsWeb3Result<GovVaultBalance>,
-    govVault: VaultGov
-  ): GovVaultBalance {
+    govVault: VaultGovSingle
+  ): GovVaultV2Balance {
     const balanceToken = selectGovVaultBalanceTokenEntity(state, govVault.id);
     const rewardsToken = selectGovVaultRewardsTokenEntity(state, govVault.id);
-    const rawBalance = new BigNumber(result.balance);
-    const rawRewards = new BigNumber(result.rewards);
+    const balance = fromWeiString(result.balance, balanceToken.decimals);
+    const rewards = fromWeiString(result.rewards, rewardsToken.decimals);
     return {
       vaultId: govVault.id,
-      balance: rawBalance.shiftedBy(-balanceToken.decimals),
-      rewards: rawRewards.shiftedBy(-rewardsToken.decimals),
+      balance: balance,
+      rewards: [
+        {
+          tokenAddress: rewardsToken.address,
+          chainId: rewardsToken.chainId,
+          amount: rewards,
+          index: 0,
+        },
+      ],
     };
   }
 
@@ -218,31 +251,89 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     };
   }
 
-  /**
-   * For now this converts the result of new v2 gov vaults (multiple reward tokens) to the old 1 token format
-   */
   protected govVaultV2Formatter(
     state: BeefyState,
-    result: AsWeb3Result<GovVaultV2Balance>,
-    govVault: VaultGov
-  ): GovVaultBalance {
-    if (result.rewards.length !== result.rewardTokens.length || result.rewards.length === 0) {
+    result: AsWeb3Result<GovVaultV2BalanceResult>,
+    govVault: VaultGovMulti | VaultGovCowcentrated
+  ): GovVaultV2Balance {
+    if (result.rewards.length !== result.rewardTokens.length) {
       throw new Error(`Invalid rewards and rewardTokens length`);
     }
 
     const balanceToken = selectGovVaultBalanceTokenEntity(state, govVault.id);
-    const rewardsToken = selectGovVaultRewardsTokenEntity(state, govVault.id);
-    const rawBalance = new BigNumber(result.balance);
-    const index = result.rewardTokens.findIndex(token => token === govVault.earnedTokenAddress);
-    if (index === -1) {
-      throw new Error(`Config reward token not found in result`);
-    }
-    const rawRewards = new BigNumber(result.rewards[index]);
+
+    const rewards = result.rewardTokens
+      .map((rewardTokenAddress, index) => {
+        const rewardToken = selectTokenByAddress(state, govVault.chainId, rewardTokenAddress);
+        if (!rewardToken) {
+          console.warn(
+            `${govVault.id} Reward token ${rewardTokenAddress} not found in address book`
+          );
+          return undefined;
+        }
+
+        const amount = fromWeiString(result.rewards[index] || '0', rewardToken.decimals);
+
+        return {
+          tokenAddress: rewardToken.address,
+          chainId: rewardToken.chainId,
+          amount: isFiniteBigNumber(amount) ? amount : BIG_ZERO,
+          index,
+        };
+      })
+      .filter(isDefined);
 
     return {
       vaultId: govVault.id,
-      balance: rawBalance.shiftedBy(-balanceToken.decimals),
-      rewards: rawRewards.shiftedBy(-rewardsToken.decimals),
+      balance: fromWeiString(result.balance, balanceToken.decimals),
+      rewards,
+    };
+  }
+
+  protected boostV2Formatter(
+    state: BeefyState,
+    result: AsWeb3Result<GovVaultV2BalanceResult>,
+    boost: BoostEntity
+  ): BoostBalance {
+    if (result.rewards.length !== result.rewardTokens.length) {
+      throw new Error(`Invalid rewards and rewardTokens length`);
+    }
+
+    const balanceToken = selectBoostBalanceTokenEntity(state, boost.id);
+    const rewards = result.rewardTokens
+      .map((rewardTokenAddress, index) => {
+        const rewardToken = selectTokenByAddress(state, boost.chainId, rewardTokenAddress);
+        if (!rewardToken) {
+          console.warn(`${boost.id} Reward token ${rewardTokenAddress} not found in address book`);
+          return undefined;
+        }
+
+        const amount = fromWeiString(result.rewards[index] || '0', rewardToken.decimals);
+
+        return {
+          tokenAddress: rewardToken.address,
+          chainId: rewardToken.chainId,
+          amount: isFiniteBigNumber(amount) ? amount : BIG_ZERO,
+          index,
+        };
+      })
+      .filter(isDefined);
+
+    if (rewards.length === 0) {
+      rewards.push({
+        tokenAddress: boost.earnedTokenAddress,
+        chainId: boost.chainId,
+        amount: BIG_ZERO,
+        index: 0,
+      });
+    }
+
+    // TODO support multiple rewards
+    const reward = rewards.find(r => r.tokenAddress === boost.earnedTokenAddress);
+    return {
+      boostId: boost.id,
+      balance: fromWeiString(result.balance, balanceToken.decimals),
+      rewards: reward?.amount || BIG_ZERO,
     };
   }
 }

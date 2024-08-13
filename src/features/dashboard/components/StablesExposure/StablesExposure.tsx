@@ -1,9 +1,9 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatLargePercent } from '../../../../helpers/format';
 import { useAppSelector } from '../../../../store';
-import { selectUserStablecoinsExposure } from '../../../data/selectors/balance';
+import { selectDashboardUserStablecoinsExposure } from '../../../data/selectors/balance';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
@@ -15,7 +15,7 @@ interface StablesExposureProps {
 export const StablesExposure = memo<StablesExposureProps>(function StablesExposure({ address }) {
   const { t } = useTranslation();
   const stablecoinsExposureData = useAppSelector(state =>
-    selectUserStablecoinsExposure(state, address)
+    selectDashboardUserStablecoinsExposure(state, address)
   );
   const stablePercentage = stablecoinsExposureData.filter(item => item.key === 'stable');
   const classes = useStyles({
@@ -31,7 +31,10 @@ export const StablesExposure = memo<StablesExposureProps>(function StablesExposu
         {stablecoinsExposureData.map(item => {
           return (
             <div key={item.key} className={classes.legendItem}>
-              <div className={classes.square} style={{ backgroundColor: item.color }} />
+              <div
+                className={classes.square}
+                style={{ backgroundColor: item.key === 'stable' ? '#3D5CF5' : '#C2D65C' }}
+              />
               <div className={classes.label}>
                 {item.key} <span>{formatLargePercent(item.percentage, 2, '0%')}</span>
               </div>

@@ -1,4 +1,4 @@
-import type { IStrategy, SingleStrategyOptions, ZapTransactHelpers } from '../IStrategy';
+import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy';
 import {
   type ConicDepositOption,
   type ConicDepositQuote,
@@ -26,7 +26,6 @@ import {
   onlyOneInput,
   onlyOneToken,
   onlyOneTokenAmount,
-  onlyVaultStandard,
 } from '../../helpers/options';
 import { TransactMode } from '../../../../reducers/wallet/transact-types';
 import {
@@ -49,7 +48,7 @@ import { selectChainById } from '../../../../selectors/chains';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { BeefyThunk } from '../../../../../../redux-types';
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes';
-import { isStandardVault } from '../../../../entities/vault';
+import { isStandardVault, type VaultStandard } from '../../../../entities/vault';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import ZapAbi from '../../../../../../config/abi/zap.json';
 import type { AbiItem } from 'web3-utils';
@@ -68,18 +67,34 @@ import { first, uniqBy } from 'lodash-es';
 import { slipBy } from '../../helpers/amounts';
 import coder from 'web3-eth-abi';
 import { fetchZapAggregatorSwap } from '../../zap/swap';
+import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
+import type { ConicStrategyConfig } from '../strategy-configs';
 
-export class ConicStrategy implements IStrategy {
-  readonly id: string = 'conic';
+const strategyId = 'conic' as const;
+type StrategyId = typeof strategyId;
+
+class ConicStrategyImp implements IZapStrategy<StrategyId> {
+  public static readonly id = strategyId;
+  public readonly id = strategyId;
+
   protected readonly conicZap = '0x1F3aabF169aE52E868a6065CD1AE6B29Ae1a0368';
   protected readonly tokens: TokenEntity[];
   protected readonly cnc: TokenErc20;
   protected readonly native: TokenNative;
   protected readonly wnative: TokenErc20;
+  protected readonly vault: VaultStandard;
+  protected readonly vaultType: IStandardVaultType;
 
-  constructor(protected options: SingleStrategyOptions, protected helpers: ZapTransactHelpers) {
-    const { vault, getState } = this.helpers;
-    onlyVaultStandard(vault);
+  constructor(protected options: ConicStrategyConfig, protected helpers: ZapTransactHelpers) {
+    const { vault, vaultType, getState } = this.helpers;
+
+    if (!isStandardVault(vault)) {
+      throw new Error('Vault is not a standard vault');
+    }
+    if (!isStandardVaultType(vaultType)) {
+      throw new Error('Vault type is not standard');
+    }
+
     onlyAssetCount(vault, 1);
     const state = getState();
     for (let i = 0; i < vault.assetIds.length; ++i) {
@@ -88,6 +103,8 @@ export class ConicStrategy implements IStrategy {
       }
     }
 
+    this.vault = vault;
+    this.vaultType = vaultType;
     this.native = selectChainNativeToken(state, vault.chainId);
     this.wnative = selectChainWrappedNativeToken(state, vault.chainId);
     this.cnc = selectErc20TokenByAddress(
@@ -104,15 +121,14 @@ export class ConicStrategy implements IStrategy {
   }
 
   async fetchDepositOptions(): Promise<ConicDepositOption[]> {
-    const { vault, vaultType } = this.helpers;
-    const outputs = [vaultType.depositToken];
+    const outputs = [this.vaultType.depositToken];
     return this.tokens.map(token => {
       const inputs = [token];
-      const selectionId = createSelectionId(vault.chainId, inputs);
+      const selectionId = createSelectionId(this.vault.chainId, inputs);
       return {
-        id: createOptionId('conic', vault.id, selectionId),
-        vaultId: vault.id,
-        chainId: vault.chainId,
+        id: createOptionId('conic', this.vault.id, selectionId),
+        vaultId: this.vault.id,
+        chainId: this.vault.chainId,
         selectionId,
         selectionOrder: 3,
         inputs,
@@ -127,7 +143,7 @@ export class ConicStrategy implements IStrategy {
     inputs: InputTokenAmount[],
     option: ConicDepositOption
   ): Promise<ConicDepositQuote> {
-    const { vault, vaultType, zap, getState } = this.helpers;
+    const { zap, getState } = this.helpers;
     const state = getState();
 
     // Input
@@ -147,15 +163,15 @@ export class ConicStrategy implements IStrategy {
         ]
       : [];
 
-    const chain = selectChainById(state, vault.chainId);
+    const chain = selectChainById(state, this.vault.chainId);
     const web3 = await getWeb3Instance(chain);
     const zapContract = new web3.eth.Contract(ZapAbi as AbiItem[], this.conicZap);
     const zapTokenIn = nativeToWNative(input.token, this.wnative);
     const userAmountInWei = toWeiString(input.amount, input.token.decimals);
     const estimate = await zapContract.methods
-      .estimateSwap(vault.earnContractAddress, zapTokenIn.address, userAmountInWei)
+      .estimateSwap(this.vault.contractAddress, zapTokenIn.address, userAmountInWei)
       .call();
-    const lpToken = vaultType.depositToken;
+    const lpToken = this.vaultType.depositToken;
     const swapAmountOut = fromWeiString(estimate.swapAmountOut, lpToken.decimals);
     const outputs: TokenAmount[] = [{ token: lpToken, amount: swapAmountOut }];
     const returned: TokenAmount[] = [];
@@ -169,8 +185,7 @@ export class ConicStrategy implements IStrategy {
       },
       {
         type: 'deposit',
-        token: vaultType.depositToken,
-        amount: swapAmountOut,
+        inputs: [{ token: this.vaultType.depositToken, amount: swapAmountOut }],
       },
     ];
 
@@ -189,11 +204,6 @@ export class ConicStrategy implements IStrategy {
   }
 
   async fetchDepositStep(quote: ConicDepositQuote, t: TFunction<Namespace>): Promise<Step> {
-    const { vault } = this.helpers;
-    if (!isStandardVault(vault)) {
-      throw new Error('Vault is not standard');
-    }
-
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
       const slippage = selectTransactSlippage(state);
@@ -206,9 +216,9 @@ export class ConicStrategy implements IStrategy {
       );
       const isNative = isTokenNative(input.token);
       const data = isNative
-        ? this.encodeBeefInETHCall(vault.earnContractAddress, amountOutMin)
+        ? this.encodeBeefInETHCall(this.vault.contractAddress, amountOutMin)
         : this.encodeBeefInCall(
-            vault.earnContractAddress,
+            this.vault.contractAddress,
             amountOutMin,
             getTokenAddress(input.token),
             toWeiString(input.amount, input.token.decimals)
@@ -233,7 +243,11 @@ export class ConicStrategy implements IStrategy {
         amount: toWeiString(input.amount, input.token.decimals),
       }));
 
-      const shareToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
+      const shareToken = selectTokenByAddress(
+        state,
+        this.vault.chainId,
+        this.vault.contractAddress
+      );
       const requiredOutputs: OrderOutput[] = [
         {
           token: getTokenAddress(shareToken),
@@ -284,16 +298,15 @@ export class ConicStrategy implements IStrategy {
   }
 
   async fetchWithdrawOptions(): Promise<ConicWithdrawOption[]> {
-    const { vault, vaultType } = this.helpers;
-    const inputs = [vaultType.depositToken];
+    const inputs = [this.vaultType.depositToken];
 
     return this.tokens.map(token => {
       const outputs = [token];
-      const selectionId = createSelectionId(vault.chainId, outputs);
+      const selectionId = createSelectionId(this.vault.chainId, outputs);
       return {
-        id: createOptionId('conic', vault.id, selectionId),
-        vaultId: vault.id,
-        chainId: vault.chainId,
+        id: createOptionId('conic', this.vault.id, selectionId),
+        vaultId: this.vault.id,
+        chainId: this.vault.chainId,
         selectionId,
         selectionOrder: 3,
         inputs,
@@ -308,10 +321,7 @@ export class ConicStrategy implements IStrategy {
     inputs: InputTokenAmount[],
     option: ConicWithdrawOption
   ): Promise<ConicWithdrawQuote> {
-    const { vault, zap, swapAggregator, getState } = this.helpers;
-    if (!isStandardVault(vault)) {
-      throw new Error('Vault is not standard');
-    }
+    const { zap, swapAggregator, getState } = this.helpers;
 
     // Input
     const input = onlyOneInput(inputs);
@@ -325,7 +335,7 @@ export class ConicStrategy implements IStrategy {
     // Token Allowances
     const state = getState();
     const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, vault, state);
+      getVaultWithdrawnFromState(input, this.vault, state);
     const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
     const allowances = [
       {
@@ -335,7 +345,7 @@ export class ConicStrategy implements IStrategy {
       },
     ];
 
-    const chain = selectChainById(state, vault.chainId);
+    const chain = selectChainById(state, this.vault.chainId);
     const web3 = await getWeb3Instance(chain);
     const zapContract = new web3.eth.Contract(ZapAbi as AbiItem[], this.conicZap);
     const poolOutputToken = nativeToWNative(desiredToken, this.wnative); // pool withdraws are always erc20...
@@ -344,7 +354,7 @@ export class ConicStrategy implements IStrategy {
     // Withdraw and split via custom zap contract
     const estimate = await zapContract.methods
       .estimateSwapOut(
-        vault.earnContractAddress,
+        this.vault.contractAddress,
         poolOutputToken.address,
         sharesToWithdrawWei.toString(10)
       )
@@ -354,8 +364,12 @@ export class ConicStrategy implements IStrategy {
     const steps: ZapQuoteStep[] = [
       {
         type: 'withdraw',
-        token: withdrawnToken,
-        amount: withdrawnAmountAfterFee,
+        outputs: [
+          {
+            token: withdrawnToken,
+            amount: withdrawnAmountAfterFee,
+          },
+        ],
       },
       {
         type: 'split',
@@ -376,7 +390,7 @@ export class ConicStrategy implements IStrategy {
           fromAmount: swapAmountOut,
           fromToken: customOutputToken,
           toToken: desiredToken,
-          vaultId: vault.id,
+          vaultId: this.vault.id,
         },
         state
       );
@@ -416,7 +430,7 @@ export class ConicStrategy implements IStrategy {
   }
 
   async fetchWithdrawStep(quote: ConicWithdrawQuote, t: TFunction<Namespace>): Promise<Step> {
-    const { vault, swapAggregator, zap, vaultType } = this.helpers;
+    const { swapAggregator, zap } = this.helpers;
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
       const slippage = selectTransactSlippage(state);
@@ -428,7 +442,7 @@ export class ConicStrategy implements IStrategy {
       const extraDustOutputs: TokenAmount[] = [{ token: this.cnc, amount: BIG_ZERO }];
 
       // Pretend to withdraw from vault, to get the correct number of shares
-      const vaultWithdraw = await vaultType.fetchZapWithdraw({
+      const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
       });
       const sharesToWithdraw = onlyOneTokenAmount(vaultWithdraw.inputs);
@@ -449,7 +463,7 @@ export class ConicStrategy implements IStrategy {
           target: this.conicZap,
           value: '0',
           data: this.encodeBeefOutAndSwap(
-            vault.earnContractAddress,
+            this.vault.contractAddress,
             sharesToWithdrawWei,
             zapOutTokenAddress,
             amountOutMinWei
@@ -585,3 +599,5 @@ export class ConicStrategy implements IStrategy {
     );
   }
 }
+
+export const ConicStrategy = ConicStrategyImp satisfies IZapStrategyStatic<StrategyId>;

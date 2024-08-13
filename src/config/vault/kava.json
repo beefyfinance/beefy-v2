@@ -17,8 +17,8 @@
     "assets": ["USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "single-lp",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDT-KAVA/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/USDT-KAVA/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/kava:0xAad094F6A75A14417d39f04E690fC216f080A41a",
+    "removeLiquidityUrl": "https://stargate.finance/pool/kava:0xAad094F6A75A14417d39f04E690fC216f080A41a/remove",
     "network": "kava"
   },
   {
@@ -37,12 +37,13 @@
     "status": "active",
     "createdAt": 1695916394,
     "platformId": "kinetix",
-    "assets": ["WKAVA", "axlETH", "USDT", "ATOM", "axlWBTC"],
+    "assets": ["WKAVA", "axlETH", "USDT", "ATOM", "axlWBTC", "lzETH", "lzWBTC"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "klp",
     "addLiquidityUrl": "https://perps.kinetix.finance/#/liquidity",
     "removeLiquidityUrl": "https://perps.kinetix.finance/#/liquidity#redeem",
-    "network": "kava"
+    "network": "kava",
+    "pointStructureIds": ["kinetix"]
   },
   {
     "id": "curve-kava-mimusdt-new",
@@ -1024,7 +1025,9 @@
     "earnContractAddress": "0xd5BC6DEa24A93A542C0d3Aa7e4dFBD05d97AF0F8",
     "oracle": "lps",
     "oracleId": "curve-kava-axlusdt-f",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
+    "retiredAt": 1723549745,
     "createdAt": 1689035208,
     "platformId": "curve",
     "assets": ["axlUSDT", "USDT"],

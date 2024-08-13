@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { PropsWithChildren } from 'react';
 import { memo, useEffect } from 'react';
 import type { VaultEntity } from '../../../../data/entities/vault';

@@ -1,40 +1,41 @@
-import type { AxiosInstance } from 'axios';
-import axios from 'axios';
 import type {
   ApiChartData,
   IBeefyDataApi,
   ApiRanges,
   ApiStat,
   ApiTimeBucket,
+  ApiCowcentratedChartData,
 } from './beefy-data-api-types';
 import type { VaultEntity } from '../../entities/vault';
 import type { TokenEntity } from '../../entities/token';
+import type { ChainEntity } from '../../entities/chain';
+import { getJson } from '../../../../helpers/http';
 
 export class BeefyDataApi implements IBeefyDataApi {
   private readonly version = 'v2';
-  private readonly data: AxiosInstance;
+  private readonly data: string;
 
   constructor() {
-    this.data = axios.create({
-      baseURL: `${import.meta.env.VITE_DATA_URL || 'https://data.beefy.finance'}/api/${
-        this.version
-      }/`,
-      timeout: 30 * 1000,
-    });
+    this.data = `${import.meta.env.VITE_DATA_URL || 'https://data.beefy.finance'}/api/${
+      this.version
+    }`;
   }
 
   async getAvailableRanges(
     vaultId: VaultEntity['id'],
-    oracleId: TokenEntity['oracleId']
+    oracleId: TokenEntity['oracleId'],
+    vaultAddress?: VaultEntity['contractAddress'],
+    chainId?: ChainEntity['id']
   ): Promise<ApiRanges> {
-    const res = await this.data.get<ApiRanges>(`ranges/`, {
+    return await getJson<ApiRanges>({
+      url: `${this.data}/ranges`,
       params: {
         vault: vaultId,
         oracle: oracleId,
+        vaultAddress: vaultAddress,
+        chain: chainId,
       },
     });
-
-    return res.data;
   }
 
   async getApyChartData(vaultId: VaultEntity['id'], bucket: ApiTimeBucket): Promise<ApiChartData> {
@@ -52,19 +53,26 @@ export class BeefyDataApi implements IBeefyDataApi {
     return this.getChartData('tvls', 'vault', vaultId, bucket);
   }
 
+  async getCowcentratedRangesChartData(
+    vaultAddress: VaultEntity['contractAddress'],
+    bucket: ApiTimeBucket,
+    chainId: ChainEntity['id']
+  ): Promise<ApiCowcentratedChartData> {
+    return await getJson<ApiCowcentratedChartData>({
+      url: `${this.data}/clmRanges`,
+      params: { vaultAddress, chain: chainId, bucket },
+    });
+  }
+
   private async getChartData(
     stat: ApiStat,
     key: 'vault' | 'oracle',
     value: string,
     bucket: ApiTimeBucket
   ): Promise<ApiChartData> {
-    const res = await this.data.get<ApiChartData>(`${stat}/`, {
-      params: {
-        [key]: value,
-        bucket,
-      },
+    return await getJson<ApiChartData>({
+      url: `${this.data}/${stat}`,
+      params: { [key]: value, bucket },
     });
-
-    return res.data;
   }
 }

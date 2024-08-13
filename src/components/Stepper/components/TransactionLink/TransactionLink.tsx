@@ -12,10 +12,13 @@ const useStyles = makeStyles(styles);
 export function TransactionLink() {
   const classes = useStyles();
   const { t } = useTranslation();
-
   const chainId = useAppSelector(selectStepperChainId);
   const walletActionsState = useAppSelector(state => state.user.walletActions);
-  const chain = useAppSelector(state => selectChainById(state, chainId));
+  const chain = useAppSelector(state => (chainId ? selectChainById(state, chainId) : undefined));
+
+  if (!chain) {
+    return null;
+  }
 
   const hash =
     walletActionsState.result === 'success'

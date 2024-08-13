@@ -1,5 +1,1695 @@
 [
   {
+    "id": "sushi-cow-poly-wmatic-usdc-rp",
+    "name": "WMATIC-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiPolyWMATIC-USDC",
+    "tokenAddress": "0x935cA8F3c323e67F2C90616AC61D53e05B4ed7B7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnContractAddress": "0xa52c8A61647D9f4615b1a4d15D350BC2438D9BBa",
+    "earnedToken": "rcowSushiPolyWMATIC-USDC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "sushi-cow-poly-wmatic-usdc",
+    "status": "active",
+    "createdAt": 1721752391,
+    "platformId": "sushi",
+    "assets": ["WMATIC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-poly-wmatic-usdc",
+    "name": "WMATIC-USDC",
+    "token": "WMATIC-USDC",
+    "tokenAddress": "0x562A0460FE6cfc2E610AE5596c5b4ACe94d97C56",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"
+    ],
+    "tokenProviderId": "sushi",
+    "earnedToken": "cowSushiPolyWMATIC-USDC",
+    "earnedTokenAddress": "0x935cA8F3c323e67F2C90616AC61D53e05B4ed7B7",
+    "earnContractAddress": "0x935cA8F3c323e67F2C90616AC61D53e05B4ed7B7",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-poly-wmatic-usdc",
+    "status": "active",
+    "createdAt": 1721752391,
+    "platformId": "sushi",
+    "assets": ["WMATIC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wbtc-usdc-rp",
+    "name": "WBTC-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWBTC-USDC",
+    "tokenAddress": "0xF93402fddbC5F94fe81998aB2ef2fC6E12E26b1e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x82ff162e9e30311563052c6D69dEb7e1ec9e6A6a",
+    "earnedToken": "rcowUniswapPolyWBTC-USDC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wbtc-usdc",
+    "status": "active",
+    "createdAt": 1719408543,
+    "platformId": "uniswap",
+    "assets": ["WBTC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-wbtc-rp",
+    "name": "WBTC-WMATIC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-WBTC",
+    "tokenAddress": "0xc96153bdA547d4a6066B8a08AE239EF757BF35aE",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x4c58e6C9E55Ee55C06154255a352c7da013dE571",
+    "earnedToken": "rcowUniswapPolyWMATIC-WBTC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-wbtc",
+    "status": "active",
+    "createdAt": 1719408543,
+    "platformId": "uniswap",
+    "assets": ["WBTC", "WMATIC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdt-lcd-rp",
+    "name": "LCD-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyUSDT-LCD",
+    "tokenAddress": "0x1f41a97Ccb116C7F86d7120669Bd659A303DE718",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xE2859af0575bfaE3E12013FD861437533bEdCCe1",
+    "earnedToken": "rcowUniswapPolyUSDT-LCD",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdt-lcd",
+    "status": "active",
+    "createdAt": 1719408543,
+    "platformId": "uniswap",
+    "assets": ["LCD", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdc-link-rp",
+    "name": "LINK-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyUSDC-LINK",
+    "tokenAddress": "0x195247799ac0B36CF6b9AC5Eb84ceE3bc17fe2dB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xc9B9CC3C54d13E849c92f24AB8318A40439c0A06",
+    "earnedToken": "rcowUniswapPolyUSDC-LINK",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdc-link",
+    "status": "active",
+    "createdAt": 1719408543,
+    "platformId": "uniswap",
+    "assets": ["oldLINK", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-link-rp",
+    "name": "LINK-WMATIC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-LINK",
+    "tokenAddress": "0xBC82E4724f143eebA9C5b6B7f35361380A88995c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x784561E787E835C1b4787728025C8B71Cc1FDD46",
+    "earnedToken": "rcowUniswapPolyWMATIC-LINK",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-link",
+    "status": "active",
+    "createdAt": 1719408543,
+    "platformId": "uniswap",
+    "assets": ["oldLINK", "WMATIC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-weth-aave-rp",
+    "name": "AAVE-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWETH-AAVE",
+    "tokenAddress": "0x69c3F6c3cc1b277BB4370E1A63EfEE19fccE0e74",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xA4BcC2624eab34745CFE81501399E3B6Da6Df779",
+    "earnedToken": "rcowUniswapPolyWETH-AAVE",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-weth-aave",
+    "status": "active",
+    "createdAt": 1719408543,
+    "platformId": "uniswap",
+    "assets": ["AAVE", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-aave-rp",
+    "name": "AAVE-WMATIC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-AAVE",
+    "tokenAddress": "0xEefe81030D5Fb355b627a047F48b48480D5b7F09",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xf587753417dd5EA6e8eA0CBC875Bace0F1Fd97A4",
+    "earnedToken": "rcowUniswapPolyWMATIC-AAVE",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-aave",
+    "status": "active",
+    "createdAt": 1719408543,
+    "platformId": "uniswap",
+    "assets": ["AAVE", "WMATIC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdc.e-weth-rp",
+    "name": "WETH-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyUSDC.e-WETH",
+    "tokenAddress": "0xa55eEB0b0ef32Bf25425C2107350b07E1e8e1346",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x4eB5675C74dF65e5ce61bD26d76166259753218f",
+    "earnedToken": "rcowUniswapPolyUSDC.e-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdc.e-weth",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "uniswap",
+    "assets": ["ETH", "pUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdc-weth-rp",
+    "name": "WETH-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyUSDC-WETH",
+    "tokenAddress": "0xc6985d660B9A6560Ffc249655f044a9ee44e61d5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xd29b224d938Ac074C47516D3524D416C0C2E5524",
+    "earnedToken": "rcowUniswapPolyUSDC-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdc-weth",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "uniswap",
+    "assets": ["ETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-weth-usdt-rp",
+    "name": "WETH-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWETH-USDT",
+    "tokenAddress": "0x22720E26712584a8234C5545B8DfE6a8FB48F453",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x13afcAb699e8f08516Fa4e9CcBe96c0020a9E38e",
+    "earnedToken": "rcowUniswapPolyWETH-USDT",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-weth-usdt",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "uniswap",
+    "assets": ["ETH", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wbtc-usdc.e-rp",
+    "name": "WBTC-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWBTC-USDC.e",
+    "tokenAddress": "0x71d38eEC002E65ec38343C44B2AaED707eD56027",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x827394689920d94aCC2c21BDF190E54501E8c742",
+    "earnedToken": "rcowUniswapPolyWBTC-USDC.e",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wbtc-usdc.e",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "uniswap",
+    "assets": ["WBTC", "pUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wbtc-weth-rp",
+    "name": "WBTC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWBTC-WETH",
+    "tokenAddress": "0x081901d477A296CDDE2084697c25Cfd52805BA31",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x74613aB5306B5D4f3746bbD7ad2FF5906E814c60",
+    "earnedToken": "rcowUniswapPolyWBTC-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wbtc-weth",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "uniswap",
+    "assets": ["WBTC", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-weth-rp",
+    "name": "WMATIC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-WETH",
+    "tokenAddress": "0x064e2dDf54ca08bbe44De8e46bF475F510dcb503",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x4DD7bEa937B25C4d81A4C2c8F19b1BcEc501378A",
+    "earnedToken": "rcowUniswapPolyWMATIC-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-weth",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "uniswap",
+    "assets": ["WMATIC", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-usdt-rp",
+    "name": "WMATIC-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-USDT",
+    "tokenAddress": "0xa37378E6e42F8b1586E6B272A56AC285EbF44E1B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x6fF8b3E4f9eBC8c937Fcd2E79bD16f6a0Ad47fA9",
+    "earnedToken": "rcowUniswapPolyWMATIC-USDT",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-usdt",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "uniswap",
+    "assets": ["WMATIC", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-usdc.e-rp",
+    "name": "WMATIC-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-USDC.e",
+    "tokenAddress": "0xd8B28ebdE520DEE6248dFb4998d0a2ee791D8940",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xb3B1D783DCFb66CfD4e748C03757D96196b3da26",
+    "earnedToken": "rcowUniswapPolyWMATIC-USDC.e",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-usdc.e",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "uniswap",
+    "assets": ["WMATIC", "pUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-usdc-rp",
+    "name": "WMATIC-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-USDC",
+    "tokenAddress": "0xD27914D1fFc272d37d3B6dD8A2adeb8bf88251C8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xB470e9a07486d3e2510822c4B2f04e595ce3801F",
+    "earnedToken": "rcowUniswapPolyWMATIC-USDC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-usdc",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "uniswap",
+    "assets": ["WMATIC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-ldo-rp",
+    "name": "LDO-WMATIC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWMATIC-LDO",
+    "tokenAddress": "0x7f14AAEb965028Ea56c10a1B758fB61BC90Cd770",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xaf6EF2222bF16bC7ca86C3a04F7D427c5eFEE7C3",
+    "earnedToken": "rcowUniswapPolyWMATIC-LDO",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-ldo",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "uniswap",
+    "assets": ["LDO", "WMATIC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-weth-ldo-rp",
+    "name": "LDO-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWETH-LDO",
+    "tokenAddress": "0x1bFac0A539C9A28c9d59cD39C3cC1AB4247A13E2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x004D7f1f84aa7285188404Db99fE63Edc8D568Ed",
+    "earnedToken": "rcowUniswapPolyWETH-LDO",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-weth-ldo",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "uniswap",
+    "assets": ["LDO", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdc.e-link-rp",
+    "name": "LINK-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyUSDC.e-LINK",
+    "tokenAddress": "0xcc8f331385963894E33195961BA5D2A26194aACC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xdd8543d1d85f1C21865B698C8d4fE258412533ef",
+    "earnedToken": "rcowUniswapPolyUSDC.e-LINK",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdc.e-link",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "uniswap",
+    "assets": ["oldLINK", "pUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-link-weth-rp",
+    "name": "LINK-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyLINK-WETH",
+    "tokenAddress": "0x5F35d9840A66C7D97d61faFAA969744783D58F37",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xbAA0619f0441C75ed1348193b07bdd18723558e4",
+    "earnedToken": "rcowUniswapPolyLINK-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-link-weth",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "uniswap",
+    "assets": ["oldLINK", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-weth-uni-rp",
+    "name": "UNI-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapPolyWETH-UNI",
+    "tokenAddress": "0x9b6ed34a879fc5f4a6945978d12a3c41eC500B93",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xD63EE2E094704A35867c0E782f74cA20F78F001E",
+    "earnedToken": "rcowUniswapPolyWETH-UNI",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-weth-uni",
+    "status": "active",
+    "createdAt": 1718739942,
+    "platformId": "uniswap",
+    "assets": ["UNI", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "balancer-polygon-wbtc-usdc-eth",
+    "name": "WBTC/USDC/ETH",
+    "type": "standard",
+    "token": "WBTC/USDC/ETH Poly",
+    "tokenAddress": "0x1DCeA0BfBBe6848F117640D534C9B60f41b9F2A8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerPolygonWBTC/USDC/ETH",
+    "earnedTokenAddress": "0x2956333ca76D156A86533E6D1D8209E9B04D69a5",
+    "earnContractAddress": "0x2956333ca76D156A86533E6D1D8209E9B04D69a5",
+    "oracle": "lps",
+    "oracleId": "balancer-polygon-wbtc-usdc-eth",
+    "status": "active",
+    "createdAt": 1719920477,
+    "platformId": "balancer",
+    "assets": ["WBTC", "USDC", "ETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x1dcea0bfbbe6848f117640d534c9b60f41b9f2a8000100000000000000000ea1/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x1dcea0bfbbe6848f117640d534c9b60f41b9f2a8000100000000000000000ea1/remove-liquidity",
+    "network": "polygon"
+  },
+  {
+    "id": "balancer-polygon-usdc-dai-usdt",
+    "name": "USDC/DAI/USDT",
+    "type": "standard",
+    "token": "USDC/DAI/USDT Poly",
+    "tokenAddress": "0x4B7586A4F49841447150D3d92d9E9e000f766c30",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerPolygonUSDC/DAI/USDT",
+    "earnedTokenAddress": "0xF4C44A0A7b48A016861eE5cAe3dE82126366cCC9",
+    "earnContractAddress": "0xF4C44A0A7b48A016861eE5cAe3dE82126366cCC9",
+    "oracle": "lps",
+    "oracleId": "balancer-polygon-usdc-dai-usdt",
+    "status": "active",
+    "createdAt": 1719920477,
+    "platformId": "balancer",
+    "assets": ["USDC", "DAI", "USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4b7586a4f49841447150d3d92d9e9e000f766c30000000000000000000000e8a/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4b7586a4f49841447150d3d92d9e9e000f766c30000000000000000000000e8a/remove-liquidity",
+    "network": "polygon"
+  },
+  {
+    "id": "aura-polygon-wmatic-maticx",
+    "name": "MaticX-MATIC",
+    "type": "standard",
+    "token": "MaticX-MATIC Poly",
+    "tokenAddress": "0xcd78A20c597E367A4e478a2411cEB790604D7c8F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraPolygonWMATIC-MaticX",
+    "earnedTokenAddress": "0xF3B13e9D8133CeF4eb77Fc2134c5Af82d686bC17",
+    "earnContractAddress": "0xF3B13e9D8133CeF4eb77Fc2134c5Af82d686bC17",
+    "oracle": "lps",
+    "oracleId": "aura-polygon-wmatic-maticx",
+    "status": "active",
+    "createdAt": 1719920477,
+    "platformId": "aura",
+    "assets": ["MaticX", "MATIC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xcd78a20c597e367a4e478a2411ceb790604d7c8f000000000000000000000c22/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xcd78a20c597e367a4e478a2411ceb790604d7c8f000000000000000000000c22/remove-liquidity",
+    "network": "polygon"
+  },
+  {
+    "id": "uniswap-cow-poly-wbtc-usdc",
+    "name": "WBTC-USDC",
+    "token": "WBTC-USDC",
+    "tokenAddress": "0x32FAE204835e08b9374493d6B4628FD1F87DD045",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+      "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWBTC-USDC",
+    "earnedTokenAddress": "0xF93402fddbC5F94fe81998aB2ef2fC6E12E26b1e",
+    "earnContractAddress": "0xF93402fddbC5F94fe81998aB2ef2fC6E12E26b1e",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wbtc-usdc",
+    "status": "active",
+    "createdAt": 1719408542,
+    "platformId": "uniswap",
+    "assets": ["WBTC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-wbtc",
+    "name": "WBTC-WMATIC",
+    "token": "WBTC-WMATIC",
+    "tokenAddress": "0x6b75F2189F0E11C52e814E09e280eb1a9A8A094a",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWMATIC-WBTC",
+    "earnedTokenAddress": "0xc96153bdA547d4a6066B8a08AE239EF757BF35aE",
+    "earnContractAddress": "0xc96153bdA547d4a6066B8a08AE239EF757BF35aE",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-wbtc",
+    "status": "active",
+    "createdAt": 1719408542,
+    "platformId": "uniswap",
+    "assets": ["WBTC", "WMATIC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdt-lcd",
+    "name": "LCD-USDT",
+    "token": "LCD-USDT",
+    "tokenAddress": "0xc7cfD91eE811E1Fc981A07Cf6890eA3db1b4e542",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+      "0xc2A45FE7d40bCAc8369371B08419DDAFd3131b4a"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyUSDT-LCD",
+    "earnedTokenAddress": "0x1f41a97Ccb116C7F86d7120669Bd659A303DE718",
+    "earnContractAddress": "0x1f41a97Ccb116C7F86d7120669Bd659A303DE718",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdt-lcd",
+    "status": "active",
+    "createdAt": 1719408542,
+    "platformId": "uniswap",
+    "assets": ["LCD", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdc-link",
+    "name": "LINK-USDC",
+    "token": "LINK-USDC",
+    "tokenAddress": "0x79E4240E33C121402dfc9009dE266356c91f241d",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyUSDC-LINK",
+    "earnedTokenAddress": "0x195247799ac0B36CF6b9AC5Eb84ceE3bc17fe2dB",
+    "earnContractAddress": "0x195247799ac0B36CF6b9AC5Eb84ceE3bc17fe2dB",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdc-link",
+    "status": "active",
+    "createdAt": 1719408542,
+    "platformId": "uniswap",
+    "assets": ["oldLINK", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-link",
+    "name": "LINK-WMATIC",
+    "token": "LINK-WMATIC",
+    "tokenAddress": "0x0A28C2F5E0E8463E047C203F00F649812aE67E4f",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWMATIC-LINK",
+    "earnedTokenAddress": "0xBC82E4724f143eebA9C5b6B7f35361380A88995c",
+    "earnContractAddress": "0xBC82E4724f143eebA9C5b6B7f35361380A88995c",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-link",
+    "status": "active",
+    "createdAt": 1719408542,
+    "platformId": "uniswap",
+    "assets": ["oldLINK", "WMATIC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-weth-aave",
+    "name": "AAVE-WETH",
+    "token": "AAVE-WETH",
+    "tokenAddress": "0x2aCeda63B5e958c45bd27d916ba701BC1DC08F7a",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+      "0xD6DF932A45C0f255f85145f286eA0b292B21C90B"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWETH-AAVE",
+    "earnedTokenAddress": "0x69c3F6c3cc1b277BB4370E1A63EfEE19fccE0e74",
+    "earnContractAddress": "0x69c3F6c3cc1b277BB4370E1A63EfEE19fccE0e74",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-weth-aave",
+    "status": "active",
+    "createdAt": 1719408542,
+    "platformId": "uniswap",
+    "assets": ["AAVE", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-aave",
+    "name": "AAVE-WMATIC",
+    "token": "AAVE-WMATIC",
+    "tokenAddress": "0xa9077cDB3D13F45B8B9d87C43E11bCe0e73d8631",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "0xD6DF932A45C0f255f85145f286eA0b292B21C90B"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWMATIC-AAVE",
+    "earnedTokenAddress": "0xEefe81030D5Fb355b627a047F48b48480D5b7F09",
+    "earnContractAddress": "0xEefe81030D5Fb355b627a047F48b48480D5b7F09",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-aave",
+    "status": "active",
+    "createdAt": 1719408542,
+    "platformId": "uniswap",
+    "assets": ["AAVE", "WMATIC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdc.e-weth",
+    "name": "WETH-USDC.e",
+    "token": "WETH-USDC.e",
+    "tokenAddress": "0x45dDa9cb7c25131DF268515131f647d726f50608",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyUSDC.e-WETH",
+    "earnedTokenAddress": "0xa55eEB0b0ef32Bf25425C2107350b07E1e8e1346",
+    "earnContractAddress": "0xa55eEB0b0ef32Bf25425C2107350b07E1e8e1346",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdc.e-weth",
+    "status": "active",
+    "createdAt": 1718739941,
+    "platformId": "uniswap",
+    "assets": ["ETH", "pUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdc-weth",
+    "name": "WETH-USDC",
+    "token": "WETH-USDC",
+    "tokenAddress": "0xA4D8c89f0c20efbe54cBa9e7e7a7E509056228D9",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyUSDC-WETH",
+    "earnedTokenAddress": "0xc6985d660B9A6560Ffc249655f044a9ee44e61d5",
+    "earnContractAddress": "0xc6985d660B9A6560Ffc249655f044a9ee44e61d5",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdc-weth",
+    "status": "active",
+    "createdAt": 1718739941,
+    "platformId": "uniswap",
+    "assets": ["ETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-weth-usdt",
+    "name": "WETH-USDT",
+    "token": "WETH-USDT",
+    "tokenAddress": "0x4CcD010148379ea531D6C587CfDd60180196F9b1",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+      "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWETH-USDT",
+    "earnedTokenAddress": "0x22720E26712584a8234C5545B8DfE6a8FB48F453",
+    "earnContractAddress": "0x22720E26712584a8234C5545B8DfE6a8FB48F453",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-weth-usdt",
+    "status": "active",
+    "createdAt": 1718739941,
+    "platformId": "uniswap",
+    "assets": ["ETH", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wbtc-usdc.e",
+    "name": "WBTC-USDC.e",
+    "token": "WBTC-USDC.e",
+    "tokenAddress": "0xeEF1A9507B3D505f0062f2be9453981255b503c8",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+      "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWBTC-USDC.e",
+    "earnedTokenAddress": "0x71d38eEC002E65ec38343C44B2AaED707eD56027",
+    "earnContractAddress": "0x71d38eEC002E65ec38343C44B2AaED707eD56027",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wbtc-usdc.e",
+    "status": "active",
+    "createdAt": 1718739941,
+    "platformId": "uniswap",
+    "assets": ["WBTC", "pUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wbtc-weth",
+    "name": "WBTC-WETH",
+    "token": "WBTC-WETH",
+    "tokenAddress": "0x50eaEDB835021E4A108B7290636d62E9765cc6d7",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWBTC-WETH",
+    "earnedTokenAddress": "0x081901d477A296CDDE2084697c25Cfd52805BA31",
+    "earnContractAddress": "0x081901d477A296CDDE2084697c25Cfd52805BA31",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wbtc-weth",
+    "status": "active",
+    "createdAt": 1718739941,
+    "platformId": "uniswap",
+    "assets": ["WBTC", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-weth",
+    "name": "WMATIC-WETH",
+    "token": "WMATIC-WETH",
+    "tokenAddress": "0x86f1d8390222A3691C28938eC7404A1661E618e0",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWMATIC-WETH",
+    "earnedTokenAddress": "0x064e2dDf54ca08bbe44De8e46bF475F510dcb503",
+    "earnContractAddress": "0x064e2dDf54ca08bbe44De8e46bF475F510dcb503",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-weth",
+    "status": "active",
+    "createdAt": 1718739941,
+    "platformId": "uniswap",
+    "assets": ["WMATIC", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-usdt",
+    "name": "WMATIC-USDT",
+    "token": "WMATIC-USDT",
+    "tokenAddress": "0x9B08288C3Be4F62bbf8d1C20Ac9C5e6f9467d8B7",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWMATIC-USDT",
+    "earnedTokenAddress": "0xa37378E6e42F8b1586E6B272A56AC285EbF44E1B",
+    "earnContractAddress": "0xa37378E6e42F8b1586E6B272A56AC285EbF44E1B",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-usdt",
+    "status": "active",
+    "createdAt": 1718739941,
+    "platformId": "uniswap",
+    "assets": ["WMATIC", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-usdc.e",
+    "name": "WMATIC-USDC.e",
+    "token": "WMATIC-USDC.e",
+    "tokenAddress": "0xA374094527e1673A86dE625aa59517c5dE346d32",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWMATIC-USDC.e",
+    "earnedTokenAddress": "0xd8B28ebdE520DEE6248dFb4998d0a2ee791D8940",
+    "earnContractAddress": "0xd8B28ebdE520DEE6248dFb4998d0a2ee791D8940",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-usdc.e",
+    "status": "active",
+    "createdAt": 1718739941,
+    "platformId": "uniswap",
+    "assets": ["WMATIC", "pUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-usdc",
+    "name": "WMATIC-USDC",
+    "token": "WMATIC-USDC",
+    "tokenAddress": "0xB6e57ed85c4c9dbfEF2a68711e9d6f36c56e0FcB",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWMATIC-USDC",
+    "earnedTokenAddress": "0xD27914D1fFc272d37d3B6dD8A2adeb8bf88251C8",
+    "earnContractAddress": "0xD27914D1fFc272d37d3B6dD8A2adeb8bf88251C8",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-usdc",
+    "status": "active",
+    "createdAt": 1718739941,
+    "platformId": "uniswap",
+    "assets": ["WMATIC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-wmatic-ldo",
+    "name": "LDO-WMATIC",
+    "token": "LDO-WMATIC",
+    "tokenAddress": "0xD866faC7dB79994D08C0CA2221fee08935595B4B",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWMATIC-LDO",
+    "earnedTokenAddress": "0x7f14AAEb965028Ea56c10a1B758fB61BC90Cd770",
+    "earnContractAddress": "0x7f14AAEb965028Ea56c10a1B758fB61BC90Cd770",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-wmatic-ldo",
+    "status": "active",
+    "createdAt": 1718739941,
+    "platformId": "uniswap",
+    "assets": ["LDO", "WMATIC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-weth-ldo",
+    "name": "LDO-WETH",
+    "token": "LDO-WETH",
+    "tokenAddress": "0xda908C0bf14AD0B61Ea5eBe671aC59B2cE091cBf",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+      "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWETH-LDO",
+    "earnedTokenAddress": "0x1bFac0A539C9A28c9d59cD39C3cC1AB4247A13E2",
+    "earnContractAddress": "0x1bFac0A539C9A28c9d59cD39C3cC1AB4247A13E2",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-weth-ldo",
+    "status": "active",
+    "createdAt": 1718739941,
+    "platformId": "uniswap",
+    "assets": ["LDO", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-usdc.e-link",
+    "name": "LINK-USDC.e",
+    "token": "LINK-USDC.e",
+    "tokenAddress": "0x94Ab9E4553fFb839431E37CC79ba8905f45BfBeA",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+      "0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyUSDC.e-LINK",
+    "earnedTokenAddress": "0xcc8f331385963894E33195961BA5D2A26194aACC",
+    "earnContractAddress": "0xcc8f331385963894E33195961BA5D2A26194aACC",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-usdc.e-link",
+    "status": "active",
+    "createdAt": 1718739941,
+    "platformId": "uniswap",
+    "assets": ["oldLINK", "pUSDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-link-weth",
+    "name": "LINK-WETH",
+    "token": "LINK-WETH",
+    "tokenAddress": "0x3e31AB7f37c048FC6574189135D108df80F0ea26",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39",
+      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyLINK-WETH",
+    "earnedTokenAddress": "0x5F35d9840A66C7D97d61faFAA969744783D58F37",
+    "earnContractAddress": "0x5F35d9840A66C7D97d61faFAA969744783D58F37",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-link-weth",
+    "status": "active",
+    "createdAt": 1718739941,
+    "platformId": "uniswap",
+    "assets": ["oldLINK", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-poly-weth-uni",
+    "name": "UNI-WETH",
+    "token": "UNI-WETH",
+    "tokenAddress": "0x357faF5843c7FD7fb4E34FBEabDAc16eabE8a5bc",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+      "0xb33EaAd8d922B1083446DC23f610c2567fB5180f"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapPolyWETH-UNI",
+    "earnedTokenAddress": "0x9b6ed34a879fc5f4a6945978d12a3c41eC500B93",
+    "earnContractAddress": "0x9b6ed34a879fc5f4a6945978d12a3c41eC500B93",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-poly-weth-uni",
+    "status": "active",
+    "createdAt": 1718739941,
+    "platformId": "uniswap",
+    "assets": ["UNI", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "polygon",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "curve-poly-mai-usdc.e",
+    "name": "MAI/USDC.e",
+    "token": "MAIUSDC.e-f",
+    "tokenAddress": "0x53C38755748745e2dd7D0a136FBCC9fB1A5B83b2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveMAI-USDC.e",
+    "earnedTokenAddress": "0x378FcE425239B0c6B43eF79E773794dd2e9979AD",
+    "earnContractAddress": "0x378FcE425239B0c6B43eF79E773794dd2e9979AD",
+    "oracle": "lps",
+    "oracleId": "curve-poly-mai-usdc.e",
+    "status": "active",
+    "createdAt": 1718038164,
+    "platformId": "curve",
+    "assets": ["MAI", "pUSDCe"],
+    "migrationIds": ["l2-curve"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-498/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-v2-498/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x53C38755748745e2dd7D0a136FBCC9fB1A5B83b2",
+        "methods": [
+          {
+            "type": "fixed-deposit-int128",
+            "target": "0x53C38755748745e2dd7D0a136FBCC9fB1A5B83b2",
+            "coins": [
+              "0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
+              "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "stargate-v2-polygon-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+    "tokenDecimals": 6,
+    "earnedToken": "mooStargateV2USDC",
+    "earnedTokenAddress": "0x8532cB33dD93e019913bC7b11324Aa19AAcF935D",
+    "earnContractAddress": "0x8532cB33dD93e019913bC7b11324Aa19AAcF935D",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1717933039,
+    "platformId": "stargate",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://app.1inch.io/#/137/advanced/swap/MATIC/USDC",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "stargate-v2-polygon-usdt",
+    "name": "USDT",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+    "tokenDecimals": 6,
+    "earnedToken": "mooStargateV2USDT",
+    "earnedTokenAddress": "0xE97319aBA72938379c94fAe2C1fFfC40973c4A01",
+    "earnContractAddress": "0xE97319aBA72938379c94fAe2C1fFfC40973c4A01",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1717933039,
+    "platformId": "stargate",
+    "assets": ["USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "buyTokenUrl": "https://app.1inch.io/#/137/advanced/swap/MATIC/USDT",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-gamma-polygon-matic-usdc",
+    "name": "MATIC-USDC LP",
+    "type": "standard",
+    "token": "xMATIC-USDC",
+    "tokenAddress": "0xE583b04b9a8F576aa7F17ECc6eB662499B5A8793",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooUniswapGammaMATIC-USDC",
+    "earnedTokenAddress": "0x1B197B90c86BF04D221D94F773e5C7984d6a1D4c",
+    "earnContractAddress": "0x1B197B90c86BF04D221D94F773e5C7984d6a1D4c",
+    "oracle": "lps",
+    "oracleId": "uniswap-gamma-polygon-matic-usdc",
+    "status": "active",
+    "createdAt": 1716899978,
+    "platformId": "gamma",
+    "assets": ["MATIC", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/wmatic-usdc-500-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/wmatic-usdc-500-narrow",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-uniswap-v3",
+        "tokenHolder": "0x144Dc3396976Aa0955Ca6Ee1aC4a2f9842198BA0"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-gamma-polygon-usdc-weth",
+    "name": "USDC-ETH LP",
+    "type": "standard",
+    "token": "xUSDC-ETH",
+    "tokenAddress": "0x1Fd452156b12FB5D74680C5Ff166303E6dd12A78",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooUniswapGammaUSDC-ETH",
+    "earnedTokenAddress": "0xf9Ba6b4f3386BEe60fE1f20e82CbEce530f6cbe1",
+    "earnContractAddress": "0xf9Ba6b4f3386BEe60fE1f20e82CbEce530f6cbe1",
+    "oracle": "lps",
+    "oracleId": "uniswap-gamma-polygon-usdc-weth",
+    "status": "active",
+    "createdAt": 1716899978,
+    "platformId": "gamma",
+    "assets": ["USDC", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/usdc-weth-500-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/usdc-weth-500-narrow",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-uniswap-v3",
+        "tokenHolder": "0x4215bc71b52ef6D0D31046d66eE0eD9A84744Eb6"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-gamma-polygon-usdc-usdt",
+    "name": "USDC-USDT LP",
+    "type": "standard",
+    "token": "xUSDC-USDT",
+    "tokenAddress": "0x8c6FE430cf06e56BE7c092AD3A249BF0BcB388B9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooUniswapGammaUSDC-USDT",
+    "earnedTokenAddress": "0x86aAd005769D9aedeb59df6e4B4b68974Bdd86fD",
+    "earnContractAddress": "0x86aAd005769D9aedeb59df6e4B4b68974Bdd86fD",
+    "oracle": "lps",
+    "oracleId": "uniswap-gamma-polygon-usdc-usdt",
+    "status": "active",
+    "createdAt": 1716899978,
+    "platformId": "gamma",
+    "assets": ["USDC", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/usdc-usdt-100-stable",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/usdc-usdt-100-stable",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-uniswap-v3",
+        "tokenHolder": "0xABc34b7cBE6e850694A1D8cE7C5FE88e2f1E7097"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-gamma-polygon-usdc-dai",
+    "name": "USDC-DAI LP",
+    "type": "standard",
+    "token": "xUSDC-DAI",
+    "tokenAddress": "0x831231E16D95Eb3D54Bf2C80968F35A5F4483447",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooUniswapGammaUSDC-DAI",
+    "earnedTokenAddress": "0x0Aa691fE4188F6D6467269a401af393869C6e982",
+    "earnContractAddress": "0x0Aa691fE4188F6D6467269a401af393869C6e982",
+    "oracle": "lps",
+    "oracleId": "uniswap-gamma-polygon-usdc-dai",
+    "status": "active",
+    "createdAt": 1716899978,
+    "platformId": "gamma",
+    "assets": ["USDC", "DAI"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/usdc-dai-100-stable",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/polygon/details/usdc-dai-100-stable",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-uniswap-v3",
+        "tokenHolder": "0xf45c2Cb5E8145E820365618188E54F869A92B7Cb"
+      }
+    ]
+  },
+  {
+    "id": "curve-poly-asdcrv",
+    "name": "CRV/asdCRV",
+    "token": "asdCRVCRV-f",
+    "tokenAddress": "0x7101308DAF4E16c822083A458dC9395039c08f2D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveAsdCRV",
+    "earnedTokenAddress": "0x5d57B68f8BaF06A88AD88B751702ac7f2aCb357d",
+    "earnContractAddress": "0x5d57B68f8BaF06A88AD88B751702ac7f2aCb357d",
+    "oracle": "lps",
+    "oracleId": "curve-poly-asdcrv",
+    "status": "active",
+    "createdAt": 1716455129,
+    "platformId": "convex",
+    "assets": ["CRV", "asdCRV"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-210/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/polygon/pools/factory-crypto-210/withdraw",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x5D8c2b31e80a35E211D51e62B1c7FB70322cbf25",
+        "methods": [
+          {
+            "type": "fixed",
+            "target": "0x5D8c2b31e80a35E211D51e62B1c7FB70322cbf25",
+            "coins": [
+              "0x172370d5Cd63279eFa6d502DAB29171933a610AF",
+              "0x75289388d50364c3013583d97bd70cED0e183e32"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quick-gamma-wmatic-nativeusdc-narrow",
+    "name": "USDC-MATIC Narrow LP",
+    "type": "standard",
+    "token": "aWMATIC-USDC",
+    "tokenAddress": "0x1cf4293125913cB3Dea4aD7f2bb4795B9e896CE9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "quickswap",
+    "earnedToken": "mooQuickWMATIC-USDCNarrow",
+    "earnedTokenAddress": "0xaF8E862E654035eFb2c11146Ae76599e198C5B72",
+    "earnContractAddress": "0xaF8E862E654035eFb2c11146Ae76599e198C5B72",
+    "oracle": "lps",
+    "oracleId": "quick-gamma-wmatic-nativeusdc-narrow",
+    "status": "active",
+    "createdAt": 1715336299,
+    "platformId": "gamma",
+    "assets": ["USDC", "MATIC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdc-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdc-narrow",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0xcA1ff0cd9c244198bEDE277F56CE6EAF47ADfd66"
+      }
+    ]
+  },
+  {
+    "id": "quick-gamma-wmatic-usdt-narrow",
+    "name": "USDT-MATIC Narrow LP",
+    "type": "standard",
+    "token": "aWMATIC-USDT",
+    "tokenAddress": "0x598cA33b7F5FAB560ddC8E76D94A4b4AA52566d7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "quickswap",
+    "earnedToken": "mooQuickWMATIC-USDTNarrow",
+    "earnedTokenAddress": "0xC2a4c0682f32734cC75eB3eCC02ba6C9A546E836",
+    "earnContractAddress": "0xC2a4c0682f32734cC75eB3eCC02ba6C9A546E836",
+    "oracle": "lps",
+    "oracleId": "quick-gamma-wmatic-usdt-narrow",
+    "status": "active",
+    "createdAt": 1715336299,
+    "platformId": "gamma",
+    "assets": ["USDT", "MATIC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "managed-conc-lp",
+    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdt-narrow",
+    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-usdt-narrow",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "gamma",
+        "ammId": "polygon-gamma-quickswap-a42d",
+        "tokenHolder": "0xa9B0eA1938116C46C37EcD5D7a58a43d8D263DBe"
+      }
+    ]
+  },
+  {
     "id": "quick-gamma-nativeusdc-weth-narrow",
     "name": "USDC-ETH Narrow LP",
     "type": "standard",
@@ -203,8 +1893,10 @@
     "earnContractAddress": "0x48262B3438e20566792ada95C8bb3BA1168BC90D",
     "oracle": "lps",
     "oracleId": "quick-gamma-fxcbeth-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1700229087,
+    "retireReason": "tvl",
+    "retiredAt": 1716482439,
     "platformId": "gamma",
     "assets": ["cbETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -291,7 +1983,7 @@
   },
   {
     "id": "quick-gamma-weth-usdt",
-    "name": "USDT-WETH Narrow LP",
+    "name": "ETH-USDT Narrow LP",
     "type": "standard",
     "token": "aWETH-USDT",
     "tokenAddress": "0x5928f9f61902b139e1c40cBa59077516734ff09f",
@@ -307,7 +1999,7 @@
     "updatedAt": 1714127710,
     "platformId": "gamma",
     "assets": ["ETH", "USDT"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-usdt-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/weth-usdt-narrow",
@@ -337,7 +2029,7 @@
     "createdAt": 1698862190,
     "updatedAt": 1714127710,
     "platformId": "gamma",
-    "assets": ["QUICK", "MATIC"],
+    "assets": ["newQUICK", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/wmatic-quick-narrow",
@@ -366,6 +2058,7 @@
     "oracleId": "quick-gamma-link-weth",
     "status": "active",
     "createdAt": 1698862190,
+    "updatedAt": 1716216604,
     "platformId": "gamma",
     "assets": ["oldLINK", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -377,7 +2070,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0x558BDe303ae5C36536B0FB60D9311B2354B4411F"
       }
     ]
   },
@@ -396,6 +2089,7 @@
     "oracleId": "quick-gamma-weth-aave",
     "status": "active",
     "createdAt": 1698862190,
+    "updatedAt": 1716216604,
     "platformId": "gamma",
     "assets": ["AAVE", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -407,7 +2101,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0xCc8F6eE92BA32B926fBDa053333F4dE45842A4A6"
       }
     ]
   },
@@ -457,9 +2151,9 @@
     "oracle": "lps",
     "oracleId": "retro-gamma-cash-weth",
     "status": "eol",
+    "createdAt": 1693479128,
     "retireReason": "tvl",
     "retiredAt": 1709727638,
-    "createdAt": 1693479128,
     "platformId": "gamma",
     "assets": ["CASH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -487,8 +2181,10 @@
     "earnContractAddress": "0xF42D47cAaD6fb299aCc998921EffeaDE5aBEe971",
     "oracle": "lps",
     "oracleId": "retro-gamma-wmatic-cash",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1693479128,
+    "retireReason": "rewards",
+    "retiredAt": 1718118986,
     "platformId": "gamma",
     "assets": ["CASH", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -602,9 +2298,9 @@
     "oracle": "lps",
     "oracleId": "aura-polygon-gyro-matic-maticx",
     "status": "eol",
-    "createdAt": 1693479127,
+    "retiredAt": 1722030032,
     "retireReason": "rewards",
-    "retiredAt": 1694446712,
+    "createdAt": 1693479127,
     "platformId": "aura",
     "assets": ["MaticX", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -656,9 +2352,9 @@
     "oracle": "lps",
     "oracleId": "retro-gamma-wmatic-frxeth-narrow",
     "status": "eol",
+    "createdAt": 1693395784,
     "retireReason": "tvl",
     "retiredAt": 1709727638,
-    "createdAt": 1693395784,
     "platformId": "gamma",
     "assets": ["frxETH", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -747,9 +2443,9 @@
     "oracle": "lps",
     "oracleId": "retro-gamma-wmatic-stmatic",
     "status": "eol",
+    "createdAt": 1691499559,
     "retireReason": "rewards",
     "retiredAt": 1711478442,
-    "createdAt": 1691499559,
     "platformId": "gamma",
     "assets": ["stMATIC", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -778,9 +2474,9 @@
     "oracle": "lps",
     "oracleId": "retro-gamma-usdc-ageur-narrow",
     "status": "eol",
+    "createdAt": 1691447788,
     "retireReason": "rewards",
     "retiredAt": 1714130472,
-    "createdAt": 1691447788,
     "platformId": "gamma",
     "assets": ["EURA", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -809,9 +2505,9 @@
     "oracle": "lps",
     "oracleId": "retro-gamma-weth-frxeth-narrow",
     "status": "eol",
+    "createdAt": 1691447788,
     "retireReason": "rewards",
     "retiredAt": 1713202188,
-    "createdAt": 1691447788,
     "platformId": "gamma",
     "assets": ["frxETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -839,8 +2535,10 @@
     "earnContractAddress": "0xAb4E02911A7d09BC8300F39332F087d51c183038",
     "oracle": "lps",
     "oracleId": "retro-gamma-usdc-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1691447788,
+    "retireReason": "rewards",
+    "retiredAt": 1718118986,
     "platformId": "gamma",
     "assets": ["pUSDCe", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1025,8 +2723,10 @@
     "earnContractAddress": "0x5268F5F2a9799f747A55f193d2E266c77653E518",
     "oracle": "lps",
     "oracleId": "retro-gamma-usdc-weth-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1691364568,
+    "retireReason": "rewards",
+    "retiredAt": 1718118986,
     "platformId": "gamma",
     "assets": ["pUSDCe", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1301,6 +3001,7 @@
     "oracleId": "quick-gamma-wbtc-usdc-narrow",
     "status": "active",
     "createdAt": 1686917465,
+    "updatedAt": 1716216604,
     "platformId": "gamma",
     "assets": ["WBTC", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1312,7 +3013,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0xD4a88FDBdd57c465E125c0021b40f58eb86aA13E"
       }
     ]
   },
@@ -1331,6 +3032,7 @@
     "oracleId": "quick-gamma-wbtc-weth-narrow",
     "status": "active",
     "createdAt": 1686917465,
+    "updatedAt": 1716216604,
     "platformId": "gamma",
     "assets": ["WBTC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1342,7 +3044,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0xf68A6697831FBA78f25CdFb1394b858fEd6F3659"
       }
     ]
   },
@@ -1350,7 +3052,7 @@
     "id": "quick-gamma-usdc-weth-wide",
     "name": "USDC.e-ETH Wide LP",
     "type": "standard",
-    "token": "awETH-USDC.e",
+    "token": "aUSDC.e-WETH",
     "tokenAddress": "0x6077177d4c41E114780D9901C9b5c784841C523f",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -1393,6 +3095,7 @@
     "oracleId": "quick-gamma-usdc-weth-narrow",
     "status": "active",
     "createdAt": 1686917465,
+    "updatedAt": 1716216604,
     "platformId": "gamma",
     "assets": ["ETH", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1404,69 +3107,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
-      }
-    ]
-  },
-  {
-    "id": "quick-gamma-usdc-axlusdc-narrow",
-    "name": "axlUSDC-USDC.e Stable LP",
-    "type": "standard",
-    "token": "aaxlUSDC-USDC.e",
-    "tokenAddress": "0x374C44443553d7EB86b5f77597cC67A507b19179",
-    "tokenDecimals": 18,
-    "tokenProviderId": "quickswap",
-    "earnedToken": "mooQuickUSDC-axlUSDC_Stable",
-    "earnedTokenAddress": "0x8070f0c2D01bFB08cC47a18ACf7D551075728F97",
-    "earnContractAddress": "0x8070f0c2D01bFB08cC47a18ACf7D551075728F97",
-    "oracle": "lps",
-    "oracleId": "quick-gamma-usdc-axlusdc-narrow",
-    "status": "active",
-    "createdAt": 1686917464,
-    "platformId": "gamma",
-    "assets": ["axlUSDC", "pUSDCe"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-axlusdc-stable",
-    "removeLiquidityUrl": "https://app.gamma.xyz/vault/qi/polygon/details/usdc.e-axlusdc-stable",
-    "network": "polygon",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
-      }
-    ]
-  },
-  {
-    "id": "quick-gamma-dai-mimatic-narrow",
-    "name": "MAI-DAI Stable LP",
-    "type": "standard",
-    "token": "awMAI-DAI",
-    "tokenAddress": "0x3273c153Ecc6891A68aF60ee0b67c16DD7B2C7E5",
-    "tokenDecimals": 18,
-    "tokenProviderId": "quickswap",
-    "earnedToken": "mooQuickMAI-DAI_Stable",
-    "earnedTokenAddress": "0x02085483c63fe8D2Bcb292999367fc586F88E35F",
-    "earnContractAddress": "0x02085483c63fe8D2Bcb292999367fc586F88E35F",
-    "oracle": "lps",
-    "oracleId": "quick-gamma-dai-mimatic-narrow",
-    "status": "eol",
-    "createdAt": 1686917464,
-    "retireReason": "rewards",
-    "retiredAt": 1698574248,
-    "platformId": "gamma",
-    "assets": ["MAI", "DAI"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
-    "network": "polygon",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "polygon-gamma-quickswap-e0a6",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0x63E495D7e87CF451d986D6E03015cD78b0CaEeda"
       }
     ]
   },
@@ -1474,7 +3115,7 @@
     "id": "quick-gamma-mimatic-usdt-narrow",
     "name": "MAI-USDT Stable LP",
     "type": "standard",
-    "token": "awMAI-USDT",
+    "token": "aMAI-USDT",
     "tokenAddress": "0x1825c76cED3c1625250B8af6204Bf4fc4e5b9FCF",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -1506,7 +3147,7 @@
     "id": "quick-gamma-usdc-dai-narrow",
     "name": "USDC.e-DAI Stable LP",
     "type": "standard",
-    "token": "awUSDC.e-DAI",
+    "token": "aUSDC.e-DAI",
     "tokenAddress": "0x9E31214Db6931727B7d63a0D2b6236DB455c0965",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -1537,7 +3178,7 @@
     "id": "quick-gamma-usdc-usdt-narrow",
     "name": "USDC.e-USDT Stable LP",
     "type": "standard",
-    "token": "awUSDC.e-USDT",
+    "token": "aUSDC.e-USDT",
     "tokenAddress": "0x795f8c9B0A0Da9Cd8dea65Fc10f9B57AbC532E58",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -1546,8 +3187,10 @@
     "earnContractAddress": "0xf33918B87ef68cfB9C46Be57bDE5a2f2Dc7D2c36",
     "oracle": "lps",
     "oracleId": "quick-gamma-usdc-usdt-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1686917464,
+    "retireReason": "tvl",
+    "retiredAt": 1716482445,
     "platformId": "gamma",
     "assets": ["pUSDCe", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1578,6 +3221,7 @@
     "oracleId": "quick-gamma-wmatic-usdc-narrow",
     "status": "active",
     "createdAt": 1686917464,
+    "updatedAt": 1716216604,
     "platformId": "gamma",
     "assets": ["MATIC", "pUSDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1589,7 +3233,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0x24E4538ED0AC083a870828236DAa2c0F95ae6b30"
       }
     ]
   },
@@ -1629,7 +3273,7 @@
     "id": "quick-gamma-wmatic-stmatic-narrow",
     "name": "stMATIC-MATIC Pegged LP",
     "type": "standard",
-    "token": "awMATIC-stMATIC",
+    "token": "aWMATIC-stMATIC",
     "tokenAddress": "0xccBcaf47E87F50A338FaC9bF58e567eD1C87be2b",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -1638,8 +3282,10 @@
     "earnContractAddress": "0x2FbE43adaf91EE9A6B8252A017297007Acf696a3",
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-stmatic-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1686878623,
+    "retireReason": "tvl",
+    "retiredAt": 1716482448,
     "platformId": "gamma",
     "assets": ["stMATIC", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1659,7 +3305,7 @@
     "id": "quick-gamma-wmatic-maticx-narrow",
     "name": "MaticX-MATIC Pegged LP",
     "type": "standard",
-    "token": "awMATIC-MaticX",
+    "token": "aWMATIC-MaticX",
     "tokenAddress": "0x8dd3BF71eF18dd88869d128BDE058C9d8c270176",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
@@ -1668,8 +3314,10 @@
     "earnContractAddress": "0xF67bbdEAAF8e537c49091d75A320C64BF6D92897",
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-maticx-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1686878623,
+    "retireReason": "tvl",
+    "retiredAt": 1716482451,
     "platformId": "gamma",
     "assets": ["MaticX", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1700,6 +3348,7 @@
     "oracleId": "quick-gamma-wmatic-weth-narrow",
     "status": "active",
     "createdAt": 1686878623,
+    "updatedAt": 1716216604,
     "platformId": "gamma",
     "assets": ["MATIC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -1711,7 +3360,7 @@
       {
         "strategyId": "gamma",
         "ammId": "polygon-gamma-quickswap-a42d",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
+        "tokenHolder": "0x14bcD2bC6e516fa296636a55d1cc24fa89Cbc5B1"
       }
     ]
   },
@@ -1838,8 +3487,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0xd00f9ca46ce0e4a63067c4657986f0167b0de1e5000000000000000000000b42/add-liquidity",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0xd00f9ca46ce0e4a63067c4657986f0167b0de1e5000000000000000000000b42/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xd00f9ca46ce0e4a63067c4657986f0167b0de1e5000000000000000000000b42/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xd00f9ca46ce0e4a63067c4657986f0167b0de1e5000000000000000000000b42/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -1870,8 +3519,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x4a77ef015ddcd972fd9ba2c7d5d658689d090f1a000000000000000000000b38/add-liquidity",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x4a77ef015ddcd972fd9ba2c7d5d658689d090f1a000000000000000000000b38/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4a77ef015ddcd972fd9ba2c7d5d658689d090f1a000000000000000000000b38/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4a77ef015ddcd972fd9ba2c7d5d658689d090f1a000000000000000000000b38/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -1902,8 +3551,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0xe78b25c06db117fdf8f98583cdaaa6c92b79e917000000000000000000000b2b/add-liquidity",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0xe78b25c06db117fdf8f98583cdaaa6c92b79e917000000000000000000000b2b/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xe78b25c06db117fdf8f98583cdaaa6c92b79e917000000000000000000000b2b/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xe78b25c06db117fdf8f98583cdaaa6c92b79e917000000000000000000000b2b/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -1934,8 +3583,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x216690738aac4aa0c4770253ca26a28f0115c595000000000000000000000b2c/add-liquidity",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x216690738aac4aa0c4770253ca26a28f0115c595000000000000000000000b2c/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x216690738aac4aa0c4770253ca26a28f0115c595000000000000000000000b2c/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x216690738aac4aa0c4770253ca26a28f0115c595000000000000000000000b2c/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -2019,8 +3668,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x4973f591784d9c94052a6c3ebd553fcd37bb0e5500020000000000000000087f/add-liquidity",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x4973f591784d9c94052a6c3ebd553fcd37bb0e5500020000000000000000087f/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4973f591784d9c94052a6c3ebd553fcd37bb0e5500020000000000000000087f/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4973f591784d9c94052a6c3ebd553fcd37bb0e5500020000000000000000087f/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -2122,8 +3771,8 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b/invest",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -2154,8 +3803,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x5dee84ffa2dc27419ba7b3419d7146e53e4f7ded000200000000000000000a4e/invest",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x5dee84ffa2dc27419ba7b3419d7146e53e4f7ded000200000000000000000a4e/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x5dee84ffa2dc27419ba7b3419d7146e53e4f7ded000200000000000000000a4e/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x5dee84ffa2dc27419ba7b3419d7146e53e4f7ded000200000000000000000a4e/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -2171,7 +3820,9 @@
     "earnContractAddress": "0x23c65213458A2dcc1321f84Ab42dCaECD79C2215",
     "oracle": "lps",
     "oracleId": "curve-poly-matic3crypto",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1722030032,
+    "retireReason": "rewards",
     "createdAt": 1678427112,
     "platformId": "convex",
     "assets": ["MATIC", "DAI", "pUSDCe", "USDT", "WBTC", "ETH"],
@@ -2239,8 +3890,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x65fe9314be50890fb01457be076fafd05ff32b9a000000000000000000000a96/invest",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x65fe9314be50890fb01457be076fafd05ff32b9a000000000000000000000a96/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x65fe9314be50890fb01457be076fafd05ff32b9a000000000000000000000a96/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x65fe9314be50890fb01457be076fafd05ff32b9a000000000000000000000a96/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -2272,8 +3923,8 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/invest",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -2305,41 +3956,8 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x7d60a4cb5ca92e2da965637025122296ea6854f900000000000000000000085e/invest",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x7d60a4cb5ca92e2da965637025122296ea6854f900000000000000000000085e/withdraw",
-    "network": "polygon"
-  },
-  {
-    "id": "balancer-jeur-ageur",
-    "name": "jEUR-EURA",
-    "type": "standard",
-    "token": "jEUR-EURA",
-    "tokenAddress": "0xa48D164F6eB0EDC68bd03B56fa59E12F24499aD1",
-    "tokenDecimals": 18,
-    "tokenProviderId": "balancer",
-    "earnedToken": "mooBalancerjEUR-agEUR",
-    "earnedTokenAddress": "0xAcB4F57973A9B3274fb9ff5CE7c582Ab35ef8fc8",
-    "earnContractAddress": "0xAcB4F57973A9B3274fb9ff5CE7c582Ab35ef8fc8",
-    "oracle": "lps",
-    "oracleId": "balancer-jeur-ageur",
-    "status": "eol",
-    "createdAt": 1675704048,
-    "retireReason": "rewards",
-    "retiredAt": 1679770018,
-    "platformId": "balancer",
-    "assets": ["jEUR", "EURA"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0xa48d164f6eb0edc68bd03b56fa59e12f24499ad10000000000000000000007c4/invest",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0xa48d164f6eb0edc68bd03b56fa59e12f24499ad10000000000000000000007c4/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x7d60a4cb5ca92e2da965637025122296ea6854f900000000000000000000085e/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x7d60a4cb5ca92e2da965637025122296ea6854f900000000000000000000085e/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -2466,9 +4084,9 @@
     "oracle": "lps",
     "oracleId": "mvx-mvlp",
     "status": "eol",
+    "createdAt": 1672503161,
     "retireReason": "rewards",
     "retiredAt": 1714130472,
-    "createdAt": 1672503161,
     "platformId": "mvx",
     "assets": [
       "MATIC",
@@ -2510,9 +4128,9 @@
     "oracle": "tokens",
     "oracleId": "MVX",
     "status": "eol",
+    "createdAt": 1672503160,
     "retireReason": "rewards",
     "retiredAt": 1714130472,
-    "createdAt": 1672503160,
     "platformId": "mvx",
     "assets": ["MVX"],
     "risks": [
@@ -2902,8 +4520,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDC-POLYGON/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/usdc-polygon/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/polygon:0x1205f31718499dBf1fCa446663B532Ef87481fe1",
+    "removeLiquidityUrl": "https://stargate.finance/pool/polygon:0x1205f31718499dBf1fCa446663B532Ef87481fe1/remove",
     "network": "polygon"
   },
   {
@@ -2933,8 +4551,8 @@
     ],
     "strategyTypeId": "single-lp",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-    "addLiquidityUrl": "https://stargate.finance/pool/USDT-POLYGON/add",
-    "removeLiquidityUrl": "https://stargate.finance/pool/usdt-polygon/remove",
+    "addLiquidityUrl": "https://stargate.finance/pool/polygon:0x29e38769f23701A2e4A8Ef0492e19dA4604Be62c",
+    "removeLiquidityUrl": "https://stargate.finance/pool/polygon:0x29e38769f23701A2e4A8Ef0492e19dA4604Be62c/remove",
     "network": "polygon"
   },
   {
@@ -3111,8 +4729,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x4a0b73f0d13ff6d43e304a174697e3d5cfd310a400020000000000000000091c/invest",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x4a0b73f0d13ff6d43e304a174697e3d5cfd310a400020000000000000000091c/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4a0b73f0d13ff6d43e304a174697e3d5cfd310a400020000000000000000091c/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4a0b73f0d13ff6d43e304a174697e3d5cfd310a400020000000000000000091c/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -3144,8 +4762,8 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0xe22483774bd8611be2ad2f4194078dac9159f4ba0000000000000000000008f0/invest",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0xe22483774bd8611be2ad2f4194078dac9159f4ba0000000000000000000008f0/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xe22483774bd8611be2ad2f4194078dac9159f4ba0000000000000000000008f0/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xe22483774bd8611be2ad2f4194078dac9159f4ba0000000000000000000008f0/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -3176,8 +4794,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x48e6b98ef6329f8f0a30ebb8c7c960330d64808500000000000000000000075b/invest",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/polygon/pool/0x48e6b98ef6329f8f0a30ebb8c7c960330d64808500000000000000000000075b/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x48e6b98ef6329f8f0a30ebb8c7c960330d64808500000000000000000000075b/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x48e6b98ef6329f8f0a30ebb8c7c960330d64808500000000000000000000075b/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -3208,8 +4826,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x0297e37f1873d2dab4487aa67cd56b58e2f27875000100000000000000000002/invest",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x0297e37f1873d2dab4487aa67cd56b58e2f27875000100000000000000000002/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x0297e37f1873d2dab4487aa67cd56b58e2f27875000100000000000000000002/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x0297e37f1873d2dab4487aa67cd56b58e2f27875000100000000000000000002/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -3240,8 +4858,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x36128d5436d2d70cab39c9af9cce146c38554ff0000100000000000000000008/invest",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x36128d5436d2d70cab39c9af9cce146c38554ff0000100000000000000000008/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x36128d5436d2d70cab39c9af9cce146c38554ff0000100000000000000000008/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x36128d5436d2d70cab39c9af9cce146c38554ff0000100000000000000000008/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -3272,8 +4890,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xce66904b68f1f070332cbc631de7ee98b650b499000100000000000000000009/invest",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xce66904b68f1f070332cbc631de7ee98b650b499000100000000000000000009/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xce66904b68f1f070332cbc631de7ee98b650b499000100000000000000000009/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xce66904b68f1f070332cbc631de7ee98b650b499000100000000000000000009/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -3334,8 +4952,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4/invest",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -3366,8 +4984,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xb20fc01d21a50d2c734c4a1262b4404d41fa7bf000000000000000000000075c/invest",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xb20fc01d21a50d2c734c4a1262b4404d41fa7bf000000000000000000000075c/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xb20fc01d21a50d2c734c4a1262b4404d41fa7bf000000000000000000000075c/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xb20fc01d21a50d2c734c4a1262b4404d41fa7bf000000000000000000000075c/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -3398,8 +5016,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x8159462d255c1d24915cb51ec361f700174cd99400000000000000000000075d/invest",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x8159462d255c1d24915cb51ec361f700174cd99400000000000000000000075d/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x8159462d255c1d24915cb51ec361f700174cd99400000000000000000000075d/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x8159462d255c1d24915cb51ec361f700174cd99400000000000000000000075d/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -3430,8 +5048,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366/invest",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366/remove-liquidity",
     "network": "polygon"
   },
   {
@@ -3542,8 +5160,9 @@
     "oracle": "tokens",
     "oracleId": "beQI",
     "status": "eol",
-    "retireReason": "rewards",
     "createdAt": 1650557675,
+    "retireReason": "rewards",
+    "retiredAt": 1708531102,
     "platformId": "beefy",
     "assets": ["beQI"],
     "risks": [
@@ -3556,8 +5175,7 @@
     ],
     "strategyTypeId": "beqi",
     "excluded": "beefy-beqi",
-    "network": "polygon",
-    "retiredAt": 1708531102
+    "network": "polygon"
   },
   {
     "id": "giddy-giddy",
@@ -8813,7 +10431,9 @@
     "earnContractAddress": "0x108c7a293162Adff86DA216AB5F91e56723125dc",
     "oracle": "lps",
     "oracleId": "curve-poly-eurt",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1722030032,
+    "retireReason": "rewards",
     "createdAt": 1678690832,
     "platformId": "convex",
     "assets": ["EURt", "DAI", "pUSDCe", "USDT"],
@@ -11691,8 +13311,9 @@
     "oracle": "tokens",
     "oracleId": "beQI",
     "status": "eol",
-    "retireReason": "rewards",
     "createdAt": 1650557677,
+    "retireReason": "rewards",
+    "retiredAt": 1708531102,
     "platformId": "beefy",
     "assets": ["beQI"],
     "risks": [
@@ -11705,8 +13326,7 @@
     ],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0x580A84C73811E1839F75d86d75d88cCa0c241fF4",
-    "network": "polygon",
-    "retiredAt": 1708531102
+    "network": "polygon"
   },
   {
     "id": "quick-wmatic-maticx",
@@ -13316,8 +14936,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a/invest",
-    "removeLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a/invest/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a/remove-liquidity",
     "network": "polygon"
   },
   {

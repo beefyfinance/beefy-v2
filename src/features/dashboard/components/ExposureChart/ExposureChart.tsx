@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { PieChart } from '../../../../components/PieChart/PieChart';
 import { ChartDetails } from '../ChartDetails';
 import { styles } from './styles';
@@ -9,20 +9,19 @@ const useStyles = makeStyles(styles);
 
 export const ExposureChart = memo<ExposureDashboardChartProps>(function ExposureChart({
   title,
-  data,
-  type,
+  ...rest
 }) {
   const classes = useStyles();
 
   return (
     <div className={classes.container}>
-      {title && <div className={classes.title}>{title}</div>}
-      {data && (
+      {title ? <div className={classes.title}>{title}</div> : null}
+      {rest.data ? (
         <div className={classes.infoContainer}>
-          <PieChart data={data} type={type} />
-          <ChartDetails data={data} />
+          <PieChart {...rest} />
+          <ChartDetails data={rest.data} />
         </div>
-      )}
+      ) : null}
     </div>
   );
 });

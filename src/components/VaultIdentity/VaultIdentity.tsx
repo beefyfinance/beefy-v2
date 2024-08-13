@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault';
 import { useAppSelector } from '../../store';
 import { selectVaultById } from '../../features/data/selectors/vaults';
@@ -34,7 +34,7 @@ export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, isLi
           [classes.vaultNameBoosted]: isBoosted,
         })}
       >
-        {punctuationWrap(vault.id === 'bifi-vault' ? `${vault.name} Vault` : vault.name)}
+        {punctuationWrap(vault.names.list)}
       </Link>
     );
   }
@@ -46,7 +46,7 @@ export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, isLi
         [classes.vaultNameBoosted]: isBoosted,
       })}
     >
-      {punctuationWrap(vault.id === 'bifi-vault' ? `${vault.name} Vault` : vault.name)}
+      {punctuationWrap(vault.names.list)}
     </div>
   );
 });

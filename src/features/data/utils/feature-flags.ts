@@ -1,4 +1,5 @@
 import type { ChainEntity } from '../entities/chain';
+import { clamp } from '../../../helpers/number';
 
 const DEFAULT_CHUNK_SIZE = 468;
 const DEFAULT_CHUNK_SIZE_BY_CHAIN: Record<string, number> = {
@@ -183,6 +184,7 @@ export function featureFlag_simulateBeefyApiError(
     | 'snapshot'
     | 'zap-support'
     | 'articles'
+    | 'historical-prices'
 ) {
   const isAuthorizedDomain =
     window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
@@ -245,4 +247,28 @@ export function featureFlag_disableOneInch(): boolean {
 export function featureFlag_disableKyber(): boolean {
   const params = getSearchParams();
   return params.has('__disable_kyber');
+}
+
+export function featureFlag_debugGraph(): boolean {
+  const params = getSearchParams();
+  return params.has('__debug_graph');
+}
+
+export function featureFlag_simUpdate(): boolean {
+  const params = getSearchParams();
+  return params.has('__sim_update');
+}
+
+export function featureFlag_disableRedirect(): boolean {
+  const params = getSearchParams();
+  return params.has('__disable_redirect');
+}
+
+export function featureFlag_simulateMerklApiFailure(): number | false {
+  const params = getSearchParams();
+  if (!params.has('__simulate_merkl_api_failure')) {
+    return false;
+  }
+
+  return clamp(parseFloat(params.get('__simulate_merkl_api_failure') || '0'), 0, 1);
 }

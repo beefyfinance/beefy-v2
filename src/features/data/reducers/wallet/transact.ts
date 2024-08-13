@@ -2,9 +2,13 @@ import type { BigNumber } from 'bignumber.js';
 import { first } from 'lodash-es';
 import type { PayloadAction, SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { transactFetchOptions, transactFetchQuotes, transactInit } from '../../actions/transact';
 import {
-  isCowcentratedDepositQuote,
+  transactFetchOptions,
+  transactFetchQuotes,
+  transactInit,
+  transactInitReady,
+} from '../../actions/transact';
+import {
   type QuoteOutputTokenAmountChange,
   type TransactOption,
   type TransactQuote,
@@ -54,21 +58,19 @@ const initialTransactConfirm = {
 
 const initialTransactState: TransactState = {
   vaultId: undefined,
+  pendingVaultId: undefined,
   selectedChainId: undefined,
   selectedSelectionId: undefined,
   selectedQuoteId: undefined,
   swapSlippage: 0.01, // 1% default
-  inputAmount: BIG_ZERO,
-  inputMax: false,
-  dualInputAmounts: [BIG_ZERO, BIG_ZERO],
-  dualInputMax: [false, false],
+  inputAmounts: [BIG_ZERO],
+  inputMaxes: [false],
   mode: TransactMode.Deposit,
   step: TransactStep.Form,
   selections: initialTransactTokens,
   forceSelection: false,
   options: initialTransactOptions,
   quotes: initialTransactQuotes,
-  migrateQuotes: initialTransactQuotes,
   confirm: initialTransactConfirm,
 };
 
@@ -79,8 +81,8 @@ const transactSlice = createSlice({
     switchMode(sliceState, action: PayloadAction<TransactMode>) {
       sliceState.mode = action.payload;
       sliceState.step = TransactStep.Form;
-      sliceState.inputAmount = BIG_ZERO;
-      sliceState.dualInputAmounts = [BIG_ZERO, BIG_ZERO];
+      sliceState.inputAmounts = [BIG_ZERO];
+      sliceState.inputMaxes = [false];
     },
     switchStep(sliceState, action: PayloadAction<TransactStep>) {
       sliceState.step = action.payload;
@@ -93,36 +95,23 @@ const transactSlice = createSlice({
       sliceState.step = TransactStep.Form;
       sliceState.forceSelection = false;
       if (action.payload.resetInput) {
-        sliceState.inputAmount = BIG_ZERO;
-        sliceState.inputMax = false;
-        sliceState.dualInputAmounts = [BIG_ZERO, BIG_ZERO];
-        sliceState.dualInputMax = [false, false];
+        clearInputs(sliceState);
       }
     },
-    setInputAmount(sliceState, action: PayloadAction<{ amount: BigNumber; max: boolean }>) {
-      if (!sliceState.inputAmount.isEqualTo(action.payload.amount)) {
-        sliceState.inputAmount = action.payload.amount;
-      }
-      if (sliceState.inputMax !== action.payload.max) {
-        sliceState.inputMax = action.payload.max;
-      }
-    },
-    setDualInputAmount(
+    setInputAmount(
       sliceState,
       action: PayloadAction<{ index: number; amount: BigNumber; max: boolean }>
     ) {
-      if (!sliceState.dualInputAmounts[action.payload.index].isEqualTo(action.payload.amount)) {
-        sliceState.dualInputAmounts[action.payload.index] = action.payload.amount;
+      const { index, amount, max } = action.payload;
+      if (!sliceState.inputAmounts[index] || !sliceState.inputAmounts[index].isEqualTo(amount)) {
+        sliceState.inputAmounts[index] = amount;
       }
-      if (sliceState.dualInputMax[action.payload.index] !== action.payload.max) {
-        sliceState.dualInputMax[action.payload.index] = action.payload.max;
+      if (!sliceState.inputMaxes[index] || sliceState.inputMaxes[index] !== max) {
+        sliceState.inputMaxes[index] = max;
       }
     },
     clearInput(sliceState) {
-      sliceState.inputAmount = BIG_ZERO;
-      sliceState.inputMax = false;
-      sliceState.dualInputAmounts = [BIG_ZERO, BIG_ZERO];
-      sliceState.dualInputMax = [false, false];
+      clearInputs(sliceState);
       resetQuotes(sliceState);
     },
     clearQuotes(sliceState) {
@@ -189,18 +178,31 @@ const transactSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(transactInit.pending, (sliceState, action) => {
+      .addCase(transactInit, (sliceState, action) => {
+        const isReady = sliceState.vaultId === action.payload.vaultId;
+        const isPending = sliceState.pendingVaultId === action.payload.vaultId;
+
         resetForm(sliceState);
 
-        sliceState.vaultId = action.meta.arg.vaultId;
-        sliceState.step = TransactStep.Loading;
-        sliceState.mode = TransactMode.Deposit;
-        sliceState.options = initialTransactState['options'];
+        if (isReady) {
+          return;
+        }
+
+        if (!isPending) {
+          sliceState.vaultId = undefined;
+          sliceState.pendingVaultId = action.payload.vaultId;
+          sliceState.step = TransactStep.Loading;
+          sliceState.mode = TransactMode.Deposit;
+          sliceState.options = initialTransactState['options'];
+        }
       })
-      .addCase(transactInit.fulfilled, (sliceState, action) => {
-        sliceState.vaultId = action.meta.arg.vaultId;
-        sliceState.step = TransactStep.Form;
-        sliceState.mode = TransactMode.Deposit;
+      .addCase(transactInitReady, (sliceState, action) => {
+        if (sliceState.pendingVaultId === action.payload.vaultId) {
+          sliceState.vaultId = action.payload.vaultId;
+          sliceState.pendingVaultId = undefined;
+          sliceState.step = TransactStep.Form;
+          sliceState.mode = TransactMode.Deposit;
+        }
       })
       .addCase(transactFetchOptions.pending, (sliceState, action) => {
         resetForm(sliceState);
@@ -229,6 +231,7 @@ const transactSlice = createSlice({
             sliceState.selectedChainId = defaultOption.chainId;
             sliceState.forceSelection = options.length > 1;
           }
+          clearInputs(sliceState);
         }
       })
       .addCase(transactFetchQuotes.pending, (sliceState, action) => {
@@ -239,32 +242,20 @@ const transactSlice = createSlice({
       .addCase(transactFetchQuotes.rejected, (sliceState, action) => {
         if (sliceState.quotes.requestId === action.meta.requestId) {
           sliceState.quotes.status = TransactStatus.Rejected;
-          sliceState.quotes.error = action.error;
-          console.error(action.error);
+          sliceState.quotes.error = action.meta.rejectedWithValue ? action.payload : action.error;
+          console.error(sliceState.quotes.error);
         }
       })
       .addCase(transactFetchQuotes.fulfilled, (sliceState, action) => {
         if (sliceState.quotes.requestId === action.meta.requestId) {
-          if (action.payload.quotes.length === 0) {
-            sliceState.quotes.status = TransactStatus.Rejected;
-            sliceState.quotes.error = { name: 'No quotes returned.' };
-          } else if (
-            isCowcentratedDepositQuote(action.payload.quotes[0]) &&
-            !action.payload.quotes[0].isCalm
-          ) {
-            sliceState.quotes.status = TransactStatus.Rejected;
-            sliceState.quotes.error = { code: 'calm' };
-          } else {
-            isCowcentratedDepositQuote(action.payload.quotes[0]);
-            sliceState.quotes.status = TransactStatus.Fulfilled;
+          sliceState.quotes.status = TransactStatus.Fulfilled;
 
-            addQuotesToState(sliceState, action.payload.quotes);
+          addQuotesToState(sliceState, action.payload.quotes);
 
-            if (sliceState.selectedQuoteId === undefined) {
-              const firstQuote = first(action.payload.quotes);
-              if (firstQuote) {
-                sliceState.selectedQuoteId = firstQuote.id;
-              }
+          if (sliceState.selectedQuoteId === undefined) {
+            const firstQuote = first(action.payload.quotes);
+            if (firstQuote) {
+              sliceState.selectedQuoteId = firstQuote.id;
             }
           }
         }
@@ -272,13 +263,24 @@ const transactSlice = createSlice({
   },
 });
 
+function clearInputs(sliceState: Draft<TransactState>) {
+  const selection = sliceState.selectedSelectionId
+    ? sliceState.selections.bySelectionId[sliceState.selectedSelectionId]
+    : undefined;
+  if (selection) {
+    sliceState.inputAmounts = selection.tokens.map(() => BIG_ZERO);
+    sliceState.inputMaxes = selection.tokens.map(() => false);
+  } else {
+    sliceState.inputAmounts = [BIG_ZERO];
+    sliceState.inputMaxes = [false];
+  }
+}
+
 function resetForm(sliceState: Draft<TransactState>) {
   sliceState.selectedChainId = undefined;
   sliceState.selectedSelectionId = undefined;
-  sliceState.inputAmount = BIG_ZERO;
-  sliceState.inputMax = false;
-  sliceState.dualInputAmounts = [BIG_ZERO, BIG_ZERO];
-  sliceState.dualInputMax = [false, false];
+  sliceState.inputAmounts = [BIG_ZERO];
+  sliceState.inputMaxes = [false];
   sliceState.forceSelection = false;
 
   sliceState.options.status = TransactStatus.Idle;
@@ -293,7 +295,6 @@ function resetForm(sliceState: Draft<TransactState>) {
   sliceState.selections.byChainId = {};
 
   resetQuotes(sliceState);
-  sliceState.migrateQuotes = initialTransactQuotes;
 }
 
 function resetQuotes(sliceState: Draft<TransactState>) {

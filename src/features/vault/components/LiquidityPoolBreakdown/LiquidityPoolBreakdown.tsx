@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { ToggleButtons } from '../../../../components/ToggleButtons';
 import { useTranslation } from 'react-i18next';
 import { BreakdownTable } from './components/BreakdownTable';
 import type { BreakdownMode } from './types';
@@ -14,14 +13,15 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import type { TokenLpBreakdown } from '../../../data/entities/token';
 import {
   selectHasBreakdownDataByTokenAddress,
-  selectLpBreakdownByTokenAddress,
+  selectLpBreakdownForVault,
 } from '../../../data/selectors/tokens';
-import type { VaultEntity } from '../../../data/entities/vault';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../../data/entities/vault';
 import {
   selectIsAddressBookLoaded,
   selectShouldInitAddressBook,
 } from '../../../data/selectors/data-loader';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
+import { StatSwitcher } from '../StatSwitcher';
 
 const useStyles = makeStyles(styles);
 
@@ -37,6 +37,7 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
     const { userBalance } = calculatedBreakdown;
     const [tab, setTab] = useState<BreakdownMode>(userBalance.gt(BIG_ZERO) ? 'user' : 'total');
     const [haveSwitchedTab, setHaveSwitchedTab] = useState(false);
+    const isForCowcentrated = isCowcentratedLikeVault(vault);
 
     const tabs: Partial<Record<BreakdownMode, string>> = useMemo(() => {
       const map = {};
@@ -44,9 +45,14 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
         map['user'] = t('Vault-LpBreakdown-YourDeposit');
       }
       map['one'] = t('Vault-LpBreakdown-1LP');
-      map['total'] = t('Vault-LpBreakdown-TotalPool');
+      map['total'] = t(
+        isForCowcentrated ? 'Vault-LpBreakdown-ClmPool' : 'Vault-LpBreakdown-TotalPool'
+      );
+      if (isForCowcentrated) {
+        map['underlying'] = t('Vault-LpBreakdown-Underlying');
+      }
       return map;
-    }, [userBalance, t]);
+    }, [userBalance, t, isForCowcentrated]);
 
     const onTabChange = useCallback(
       (newTab: string) => {
@@ -67,15 +73,10 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
       <Card>
         <CardHeader className={classes.header}>
           <CardTitle title={'LP Breakdown'} />
-          <ToggleButtons
-            buttonsClass={classes.tabs}
-            options={tabs}
-            onChange={onTabChange}
-            value={tab}
-          />
+          <StatSwitcher onChange={onTabChange} options={tabs} stat={tab} />
         </CardHeader>
         <CardContent disableDefaultClass={true} className={classes.layout}>
-          <ChartWithLegend breakdown={calculatedBreakdown} />
+          <ChartWithLegend breakdown={calculatedBreakdown} tab={tab} />
           <BreakdownTable mode={tab} breakdown={calculatedBreakdown} />
         </CardContent>
       </Card>
@@ -96,9 +97,7 @@ export const LiquidityPoolBreakdownLoader = memo<LiquidityPoolBreakdownLoaderPro
     const shouldInitAddressBook = useAppSelector(state =>
       selectShouldInitAddressBook(state, chainId)
     );
-    const breakdown = useAppSelector(state =>
-      selectLpBreakdownByTokenAddress(state, chainId, vault.depositTokenAddress)
-    );
+    const breakdown = useAppSelector(state => selectLpBreakdownForVault(state, vault));
     const haveBreakdownData = useAppSelector(state =>
       selectHasBreakdownDataByTokenAddress(state, vault.depositTokenAddress, vault.chainId)
     );

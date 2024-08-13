@@ -1,18 +1,16 @@
-import React, { type FC, memo } from 'react';
+import { type FC, memo, useMemo } from 'react';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
-import { selectStandardVaultById } from '../../../data/selectors/vaults';
 import {
-  selectStandardVaultUserBalanceInDepositTokenBreakdown,
-  selectUserVaultDepositInDepositToken,
-  selectUserVaultDepositInDepositTokenExcludingBoostsBridged,
-  type StandardVaultBalanceBreakdownBoost,
-  type StandardVaultBalanceBreakdownBridged,
-  type StandardVaultBalanceBreakdownEntry,
+  selectUserVaultBalanceInDepositToken,
+  selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
+  selectVaultUserBalanceInDepositTokenBreakdown,
+  type UserVaultBalanceBreakdownBoost,
+  type UserVaultBalanceBreakdownBridged,
+  type UserVaultBalanceBreakdownEntry,
 } from '../../../data/selectors/balance';
-import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import type { TokenEntity } from '../../../data/entities/token';
 import { TokenImage } from '../../../../components/TokenImage/TokenImage';
 import { Trans, useTranslation } from 'react-i18next';
@@ -25,13 +23,12 @@ import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(styles);
 
-type EntryProps<T extends StandardVaultBalanceBreakdownEntry = StandardVaultBalanceBreakdownEntry> =
-  {
-    entry: T;
-    depositToken: TokenEntity;
-  };
+type EntryProps<T extends UserVaultBalanceBreakdownEntry = UserVaultBalanceBreakdownEntry> = {
+  entry: T;
+  depositToken: TokenEntity;
+};
 
-const BoostEntry = memo<EntryProps<StandardVaultBalanceBreakdownBoost>>(function BoostEntry({
+const BoostEntry = memo<EntryProps<UserVaultBalanceBreakdownBoost>>(function BoostEntry({
   entry,
   depositToken,
 }) {
@@ -49,7 +46,7 @@ const BoostEntry = memo<EntryProps<StandardVaultBalanceBreakdownBoost>>(function
       <div className={classes.text}>
         <Trans
           t={t}
-          i18nKey="Transact-StakedInBoost"
+          i18nKey="Transact-Displaced-boost"
           values={{
             symbol: depositToken.symbol,
             boost: boost.name,
@@ -64,7 +61,7 @@ const BoostEntry = memo<EntryProps<StandardVaultBalanceBreakdownBoost>>(function
   );
 });
 
-const BridgedEntry = memo<EntryProps<StandardVaultBalanceBreakdownBridged>>(function BridgedEntry({
+const BridgedEntry = memo<EntryProps<UserVaultBalanceBreakdownBridged>>(function BridgedEntry({
   entry,
   depositToken,
 }) {
@@ -82,7 +79,7 @@ const BridgedEntry = memo<EntryProps<StandardVaultBalanceBreakdownBridged>>(func
       <div className={classes.text}>
         <Trans
           t={t}
-          i18nKey="Transact-BridgeReceipt"
+          i18nKey="Transact-Displaced-bridged"
           values={{
             symbol: depositToken.symbol,
             chain: chain.name,
@@ -98,14 +95,12 @@ const BridgedEntry = memo<EntryProps<StandardVaultBalanceBreakdownBridged>>(func
   );
 });
 
-type EntriesProps<
-  T extends StandardVaultBalanceBreakdownEntry = StandardVaultBalanceBreakdownEntry
-> = {
+type EntriesProps<T extends UserVaultBalanceBreakdownEntry = UserVaultBalanceBreakdownEntry> = {
   entries: T[];
   depositToken: TokenEntity;
 };
 
-const BoostEntries = memo<EntriesProps<StandardVaultBalanceBreakdownBoost>>(function BoostEntries({
+const BoostEntries = memo<EntriesProps<UserVaultBalanceBreakdownBoost>>(function BoostEntries({
   entries,
   depositToken,
 }) {
@@ -120,8 +115,8 @@ const BoostEntries = memo<EntriesProps<StandardVaultBalanceBreakdownBoost>>(func
   );
 });
 
-const BridgedEntries = memo<EntriesProps<StandardVaultBalanceBreakdownBridged>>(
-  function BoostEntries({ entries, depositToken }) {
+const BridgedEntries = memo<EntriesProps<UserVaultBalanceBreakdownBridged>>(
+  function BridgedEntries({ entries, depositToken }) {
     const classes = useStyles();
 
     return (
@@ -136,7 +131,7 @@ const BridgedEntries = memo<EntriesProps<StandardVaultBalanceBreakdownBridged>>(
 
 type TypeToComponentMap = Omit<
   {
-    [T in StandardVaultBalanceBreakdownEntry['type']]: FC<EntriesProps>;
+    [T in UserVaultBalanceBreakdownEntry['type']]: FC<EntriesProps>;
   },
   'vault'
 >;
@@ -158,10 +153,10 @@ interface DisplacedBalancesProps {
 export const DisplacedBalances = memo<DisplacedBalancesProps>(function DisplacedBalances({
   vaultId,
 }) {
-  const total = useAppSelector(state => selectUserVaultDepositInDepositToken(state, vaultId));
-  const vaultOnly = useAppSelector(state =>
-    selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId)
+  const total = useAppSelector(state =>
+    selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(state, vaultId)
   );
+  const vaultOnly = useAppSelector(state => selectUserVaultBalanceInDepositToken(state, vaultId));
 
   if (vaultOnly.gte(total)) {
     return null;
@@ -178,19 +173,19 @@ export const DisplacedBalancesImpl = memo<DisplacedBalancesProps>(function Displ
   vaultId,
 }) {
   const classes = useStyles();
-  const vault = useAppSelector(state => selectStandardVaultById(state, vaultId));
-  const depositToken = useAppSelector(state =>
-    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
-  );
   const breakdown = useAppSelector(state =>
-    selectStandardVaultUserBalanceInDepositTokenBreakdown(state, vaultId)
+    selectVaultUserBalanceInDepositTokenBreakdown(state, vaultId)
   );
-  const entries = groupBy(breakdown, 'type');
+  const entries = useMemo(() => groupBy(breakdown.entries, 'type'), [breakdown.entries]);
 
   return (
     <div className={classes.container}>
-      {entries.boost ? <Entries entries={entries.boost} depositToken={depositToken} /> : null}
-      {entries.bridged ? <Entries entries={entries.bridged} depositToken={depositToken} /> : null}
+      {entries.boost ? (
+        <Entries entries={entries.boost} depositToken={breakdown.depositToken} />
+      ) : null}
+      {entries.bridged ? (
+        <Entries entries={entries.bridged} depositToken={breakdown.depositToken} />
+      ) : null}
     </div>
   );
 });

@@ -49,10 +49,10 @@ export const boostSlice = createSlice({
       const boost = selectBoostById(state, sliceState.boostId);
       const vault = selectVaultById(state, boost.vaultId);
 
-      const balanceToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+      const balanceToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
       const balance =
         sliceState.mode === 'stake'
-          ? selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenAddress) // mootoken
+          ? selectUserBalanceOfToken(state, vault.chainId, vault.contractAddress) // mootoken
           : selectBoostUserBalanceInToken(state, boost.id); // staked
       sliceState.amount = balance;
       sliceState.formattedInput = formatTokenInput(balance, balanceToken.decimals);
@@ -69,7 +69,7 @@ export const boostSlice = createSlice({
       const state = action.payload.state;
       const boost = selectBoostById(state, sliceState.boostId);
       const vault = selectVaultById(state, boost.vaultId);
-      const balanceToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+      const balanceToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
 
       const input = action.payload.amount.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
 

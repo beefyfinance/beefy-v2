@@ -1,6 +1,5 @@
-import type { GammaStrategyOptions, IStrategy, ZapTransactHelpers } from '../IStrategy';
+import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy';
 import {
-  type DepositOption,
   type GammaDepositOption,
   type GammaDepositQuote,
   type GammaWithdrawOption,
@@ -31,7 +30,6 @@ import {
   onlyOneInput,
   onlyOneToken,
   onlyOneTokenAmount,
-  onlyVaultStandard,
 } from '../../helpers/options';
 import {
   selectChainNativeToken,
@@ -78,10 +76,12 @@ import type { IGammaPool } from '../../../amm/types';
 import { GammaPool } from '../../../amm/gamma/GammaPool';
 import { selectAmmById } from '../../../../selectors/zap';
 import { type AmmEntityGamma, isGammaAmm } from '../../../../entities/zap';
-import { isStandardVault } from '../../../../entities/vault';
+import { isStandardVault, type VaultStandard } from '../../../../entities/vault';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import { selectVaultStrategyAddress } from '../../../../selectors/vaults';
-import { QuoteChangedError } from '../errors';
+import { QuoteChangedError } from '../error';
+import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
+import type { GammaStrategyConfig } from '../strategy-configs';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -91,8 +91,13 @@ type ZapHelpers = {
 
 type PartialWithdrawQuote = Pick<GammaWithdrawQuote, 'steps' | 'outputs' | 'fee' | 'returned'>;
 
-export class GammaStrategy implements IStrategy {
-  public readonly id: string = 'gamma';
+const strategyId = 'gamma' as const;
+type StrategyId = typeof strategyId;
+
+class GammaStrategyImpl implements IZapStrategy<StrategyId> {
+  public static readonly id = strategyId;
+  public readonly id = strategyId;
+
   protected readonly wnative: TokenErc20;
   protected readonly tokens: TokenEntity[];
   protected readonly lpTokens: TokenErc20[];
@@ -101,11 +106,19 @@ export class GammaStrategy implements IStrategy {
   protected readonly pool: IGammaPool;
   protected readonly chain: ChainEntity;
   protected readonly depositToken: TokenEntity;
+  protected readonly vault: VaultStandard;
+  protected readonly vaultType: IStandardVaultType;
 
-  constructor(protected options: GammaStrategyOptions, protected helpers: ZapTransactHelpers) {
+  constructor(protected options: GammaStrategyConfig, protected helpers: ZapTransactHelpers) {
     const { vault, vaultType, getState } = this.helpers;
 
-    onlyVaultStandard(vault);
+    if (!isStandardVault(vault)) {
+      throw new Error('Vault is not a standard vault');
+    }
+    if (!isStandardVaultType(vaultType)) {
+      throw new Error('Vault type is not standard');
+    }
+
     onlyAssetCount(vault, 2);
 
     const state = getState();
@@ -124,6 +137,8 @@ export class GammaStrategy implements IStrategy {
       throw new Error(`Gamma strategy: AMM ${this.options.ammId} not gamma`);
     }
 
+    this.vault = vault;
+    this.vaultType = vaultType;
     this.amm = amm;
     this.native = selectChainNativeToken(state, vault.chainId);
     this.wnative = selectChainWrappedNativeToken(state, vault.chainId);
@@ -142,26 +157,25 @@ export class GammaStrategy implements IStrategy {
     await this.pool.updateAllData();
   }
 
-  async fetchDepositOptions(): Promise<DepositOption[]> {
-    const { vault, vaultType } = this.helpers;
+  async fetchDepositOptions(): Promise<GammaDepositOption[]> {
     const supportedAggregatorTokens = await this.aggregatorTokenSupport();
-    const outputs = [vaultType.depositToken];
+    const outputs = [this.vaultType.depositToken];
 
     return supportedAggregatorTokens.map(token => {
       const inputs = [token];
-      const selectionId = createSelectionId(vault.chainId, inputs);
+      const selectionId = createSelectionId(this.vault.chainId, inputs);
 
       return {
-        id: createOptionId(this.id, vault.id, selectionId),
-        vaultId: vault.id,
-        chainId: vault.chainId,
+        id: createOptionId(this.id, this.vault.id, selectionId),
+        vaultId: this.vault.id,
+        chainId: this.vault.chainId,
         selectionId,
         selectionOrder: 3,
         inputs,
         wantedOutputs: outputs,
         mode: TransactMode.Deposit,
         strategyId: 'gamma',
-        depositToken: vaultType.depositToken,
+        depositToken: this.vaultType.depositToken,
         lpTokens: this.lpTokens,
         swapVia: 'aggregator',
       };
@@ -229,7 +243,7 @@ export class GammaStrategy implements IStrategy {
     inputs: InputTokenAmount[],
     option: GammaDepositOption
   ): Promise<GammaDepositQuote> {
-    const { zap, vault, swapAggregator, getState } = this.helpers;
+    const { zap, swapAggregator, getState } = this.helpers;
     const { lpTokens, depositToken } = option;
     const state = getState();
     const slippage = selectTransactSlippage(state);
@@ -268,7 +282,7 @@ export class GammaStrategy implements IStrategy {
       isTokenEqual(lpTokenN, input.token) || swapInAmounts[i].lte(BIG_ZERO)
         ? undefined
         : {
-            vaultId: vault.id,
+            vaultId: this.vault.id,
             fromToken: input.token,
             fromAmount: swapInAmounts[i],
             toToken: lpTokenN,
@@ -354,8 +368,12 @@ export class GammaStrategy implements IStrategy {
 
     steps.push({
       type: 'deposit',
-      token: depositToken,
-      amount: liquidity.amount,
+      inputs: [
+        {
+          token: depositToken,
+          amount: liquidity.amount,
+        },
+      ],
     });
 
     // Build quote outputs
@@ -437,10 +455,10 @@ export class GammaStrategy implements IStrategy {
     minInputs: TokenAmount[],
     zapHelpers: ZapHelpers
   ): Promise<ZapStepResponse> {
-    const { zap, vaultType } = this.helpers;
+    const { zap } = this.helpers;
     const { slippage } = zapHelpers;
     const { liquidity, used, unused } = await this.quoteAddLiquidity(
-      vaultType.depositToken,
+      this.vaultType.depositToken,
       minInputs
     );
 
@@ -448,7 +466,7 @@ export class GammaStrategy implements IStrategy {
 
     return this.pool.getZapAddLiquidity({
       inputs: used,
-      outputs: [{ token: vaultType.depositToken, amount: liquidity.amount }],
+      outputs: [{ token: this.vaultType.depositToken, amount: liquidity.amount }],
       maxSlippage: slippage,
       zapRouter: zap.router,
       insertBalance: false,
@@ -456,11 +474,9 @@ export class GammaStrategy implements IStrategy {
   }
 
   async fetchDepositStep(quote: GammaDepositQuote, t: TFunction<Namespace>): Promise<Step> {
-    const { vault, vaultType } = this.helpers;
-
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
-      const chain = selectChainById(state, vault.chainId);
+      const chain = selectChainById(state, this.vault.chainId);
       const slippage = selectTransactSlippage(state);
       const zapHelpers: ZapHelpers = { chain, slippage, state };
       const steps: ZapStep[] = [];
@@ -508,7 +524,7 @@ export class GammaStrategy implements IStrategy {
       minBalances.addMany(buildZap.minOutputs);
 
       // Deposit in vault
-      const vaultDeposit = await vaultType.fetchZapDeposit({
+      const vaultDeposit = await this.vaultType.fetchZapDeposit({
         inputs: [
           {
             token: buildQuote.outputToken,
@@ -593,41 +609,40 @@ export class GammaStrategy implements IStrategy {
   }
 
   async fetchWithdrawOptions(): Promise<GammaWithdrawOption[]> {
-    const { vault, vaultType } = this.helpers;
     const supportedAggregatorTokens = await this.aggregatorTokenSupport();
-    const inputs = [vaultType.depositToken];
+    const inputs = [this.vaultType.depositToken];
 
-    const breakSelectionId = createSelectionId(vault.chainId, this.lpTokens);
+    const breakSelectionId = createSelectionId(this.vault.chainId, this.lpTokens);
     const breakOption: GammaWithdrawOption = {
-      id: createOptionId(this.id, vault.id, breakSelectionId),
-      vaultId: vault.id,
-      chainId: vault.chainId,
+      id: createOptionId(this.id, this.vault.id, breakSelectionId),
+      vaultId: this.vault.id,
+      chainId: this.vault.chainId,
       selectionId: breakSelectionId,
       selectionOrder: 2,
       inputs,
       wantedOutputs: this.lpTokens,
       mode: TransactMode.Withdraw,
       strategyId: 'gamma',
-      depositToken: vaultType.depositToken,
+      depositToken: this.vaultType.depositToken,
       lpTokens: this.lpTokens,
     };
 
     return [breakOption].concat(
       supportedAggregatorTokens.map(token => {
         const outputs = [token];
-        const selectionId = createSelectionId(vault.chainId, outputs);
+        const selectionId = createSelectionId(this.vault.chainId, outputs);
 
         return {
-          id: createOptionId(this.id, vault.id, selectionId),
-          vaultId: vault.id,
-          chainId: vault.chainId,
+          id: createOptionId(this.id, this.vault.id, selectionId),
+          vaultId: this.vault.id,
+          chainId: this.vault.chainId,
           selectionId,
           selectionOrder: 3,
           inputs,
           wantedOutputs: outputs,
           mode: TransactMode.Withdraw,
           strategyId: 'gamma',
-          depositToken: vaultType.depositToken,
+          depositToken: this.vaultType.depositToken,
           lpTokens: this.lpTokens,
           swapVia: 'aggregator',
         };
@@ -644,21 +659,22 @@ export class GammaStrategy implements IStrategy {
       throw new Error('Quote called with 0 input amount');
     }
 
-    const { vault, vaultType, zap, getState } = this.helpers;
-    if (!isStandardVault(vault)) {
-      throw new Error('Vault is not standard');
-    }
+    const { zap, getState } = this.helpers;
 
     // Common: Withdraw from vault
     const state = getState();
     const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, vault, state);
+      getVaultWithdrawnFromState(input, this.vault, state);
     const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
     const breakSteps: ZapQuoteStep[] = [
       {
         type: 'withdraw',
-        token: vaultType.depositToken,
-        amount: withdrawnAmountAfterFee,
+        outputs: [
+          {
+            token: this.vaultType.depositToken,
+            amount: withdrawnAmountAfterFee,
+          },
+        ],
       },
     ];
 
@@ -672,7 +688,7 @@ export class GammaStrategy implements IStrategy {
     ];
 
     // Common: Break LP
-    const strategyAddress = selectVaultStrategyAddress(state, vault.id);
+    const strategyAddress = selectVaultStrategyAddress(state, this.vault.id);
     const tokenHolders: [string, ...string[]] = this.options.tokenHolder
       ? [this.options.tokenHolder, strategyAddress]
       : [strategyAddress];
@@ -688,7 +704,7 @@ export class GammaStrategy implements IStrategy {
 
     breakSteps.push({
       type: 'split',
-      inputToken: vaultType.depositToken,
+      inputToken: this.vaultType.depositToken,
       inputAmount: withdrawnAmountAfterFee,
       outputs: breakOutputs,
     });
@@ -826,11 +842,11 @@ export class GammaStrategy implements IStrategy {
     inputs: TokenAmount[],
     zapHelpers: ZapHelpers
   ): Promise<ZapStepResponse> {
-    const { zap, getState, vault } = this.helpers;
+    const { zap, getState } = this.helpers;
     const { slippage } = zapHelpers;
     const state = getState();
 
-    const strategyAddress = selectVaultStrategyAddress(state, vault.id);
+    const strategyAddress = selectVaultStrategyAddress(state, this.vault.id);
     const tokenHolders: [string, ...string[]] = this.options.tokenHolder
       ? [this.options.tokenHolder, strategyAddress]
       : [strategyAddress];
@@ -887,11 +903,9 @@ export class GammaStrategy implements IStrategy {
     quote: GammaWithdrawQuote,
     t: TFunction<Namespace>
   ): Promise<Step> {
-    const { vault, vaultType } = this.helpers;
-
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
-      const chain = selectChainById(state, vault.chainId);
+      const chain = selectChainById(state, this.vault.chainId);
       const slippage = selectTransactSlippage(state);
       const zapHelpers: ZapHelpers = { chain, slippage, state };
       const withdrawQuote = quote.steps.find(isZapQuoteStepWithdraw);
@@ -903,7 +917,7 @@ export class GammaStrategy implements IStrategy {
       }
 
       // Step 1. Withdraw from vault
-      const vaultWithdraw = await vaultType.fetchZapWithdraw({
+      const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
       });
       if (vaultWithdraw.outputs.length !== 1) {
@@ -1020,12 +1034,12 @@ export class GammaStrategy implements IStrategy {
   }
 
   protected async aggregatorTokenSupport() {
-    const { vault, swapAggregator, getState } = this.helpers;
+    const { swapAggregator, getState } = this.helpers;
     const state = getState();
     const tokenSupport = await swapAggregator.fetchTokenSupport(
       this.lpTokens,
-      vault.id,
-      vault.chainId,
+      this.vault.id,
+      this.vault.chainId,
       state,
       this.options.swap
     );
@@ -1039,3 +1053,5 @@ export class GammaStrategy implements IStrategy {
     });
   }
 }
+
+export const GammaStrategy = GammaStrategyImpl satisfies IZapStrategyStatic<StrategyId>;

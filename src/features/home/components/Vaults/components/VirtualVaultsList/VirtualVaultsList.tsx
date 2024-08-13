@@ -1,7 +1,7 @@
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import type { Theme } from '@material-ui/core';
 import type { CSSProperties, MutableRefObject } from 'react';
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { debounce } from 'lodash-es';
 import { useInView } from 'react-intersection-observer';
 import { Vault } from '../../../Vault';

@@ -1,272 +1,68 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { LabeledStat } from '../LabeledStat';
 import { useTranslation } from 'react-i18next';
 import { formatTotalApy } from '../../helpers/format';
-import { selectVaultById } from '../../features/data/selectors/vaults';
-import {
-  selectDidAPIReturnValuesForVault,
-  selectVaultTotalApy,
-} from '../../features/data/selectors/apy';
+import { selectApyVaultUIData } from '../../features/data/selectors/apy';
 import type { VaultEntity } from '../../features/data/entities/vault';
-import { isGovVault, shouldVaultShowInterest } from '../../features/data/entities/vault';
-import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
-import { selectVaultApyAvailable } from '../../features/data/selectors/data-loader';
-import type { TotalApy } from '../../features/data/reducers/apy';
-import type { AllValuesAsString } from '../../features/data/utils/types-utils';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { useAppSelector } from '../../store';
-import { InterestTooltipContent } from '../InterestTooltipContent';
+import { ApyTooltipContent } from '../VaultStats/VaultApyStat';
 
-const _YearlyBreakdownTooltip = ({
-  isGovVault,
-  boosted,
-  rates,
-}: {
-  isGovVault: boolean;
-  boosted: boolean;
-  // here we get formatted values
-  rates: AllValuesAsString<TotalApy>;
-}) => {
-  const rows: { label: string; value: string; last?: boolean }[] = [];
+type ApyStatsProps = { vaultId: VaultEntity['id']; type: 'yearly' | 'daily' };
+
+export const ApyStats = memo<ApyStatsProps>(function ApyStats({ vaultId, type }) {
   const { t } = useTranslation();
-
-  if (isGovVault) {
-    rows.push({
-      label: t('Pool-Apr'),
-      value: rates.vaultApr ?? '?',
-      last: true,
-    });
-    return <InterestTooltipContent rows={rows} />;
-  }
-
-  if ('vaultApr' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-VaultApr'),
-      value: rates.vaultApr ?? '?',
-      last: false,
-    });
-  }
-
-  if ('tradingApr' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-TradingApr'),
-      value: rates.tradingApr ?? '?',
-      last: false,
-    });
-  }
-
-  if ('liquidStakingApr' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-LiquidStakingApr'),
-      value: rates.liquidStakingApr ?? '?',
-      last: false,
-    });
-  }
-
-  if ('composablePoolApr' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-ComposablePoolApr'),
-      value: rates.composablePoolApr ?? '?',
-      last: false,
-    });
-  }
-
-  if ('boostApr' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-BoostApr'),
-      value: rates.boostApr ?? '?',
-      last: false,
-    });
-  }
-
-  if ('clmApr' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-CLMApr'),
-      value: rates.clmApr ?? '?',
-      last: false,
-    });
-  }
-
-  if ('merklApr' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-MerklApr'),
-      value: rates.merklApr ?? '?',
-      last: false,
-    });
-  }
-
-  rows.push({
-    label: t('APY'),
-    value: boosted ? rates.boostedTotalApy ?? '?' : rates.totalApy,
-    last: true,
-  });
-
-  return <InterestTooltipContent rows={rows} />;
-};
-
-const YearlyBreakdownTooltip = memo(_YearlyBreakdownTooltip);
-
-const _DailyBreakdownTooltip = ({
-  isGovVault,
-  boosted,
-  rates,
-}: {
-  isGovVault: boolean;
-  boosted: boolean;
-  // here we get formatted values
-  rates: AllValuesAsString<TotalApy>;
-}) => {
-  const rows: { label: string; value: string; last?: boolean }[] = [];
-  const { t } = useTranslation();
-
-  if (isGovVault) {
-    rows.push({
-      label: t('Pool-AprDaily'),
-      value: rates.vaultDaily ?? '?',
-      last: true,
-    });
-    return <InterestTooltipContent rows={rows} />;
-  }
-
-  if ('vaultDaily' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-VaultDaily'),
-      value: rates.vaultDaily ?? '?',
-      last: false,
-    });
-  }
-
-  if ('tradingDaily' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-TradingDaily'),
-      value: rates.tradingDaily ?? '?',
-      last: false,
-    });
-  }
-
-  if ('liquidStakingDaily' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-LiquidStakingDaily'),
-      value: rates.liquidStakingDaily ?? '?',
-      last: false,
-    });
-  }
-
-  if ('composablePoolDaily' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-ComposablePoolDaily'),
-      value: rates.composablePoolDaily ?? '?',
-      last: false,
-    });
-  }
-
-  if ('boostDaily' in rates) {
-    rows.push({
-      label: t('Vault-Breakdown-BoostDaily'),
-      value: rates.boostDaily ?? '?',
-      last: false,
-    });
-  }
-
-  rows.push({
-    label: t('Vault-Breakdown-DailyAPY'),
-    value: boosted ? rates.boostedTotalDaily ?? '?' : rates.totalDaily,
-    last: true,
-  });
-
-  return <InterestTooltipContent rows={rows} />;
-};
-
-const DailyBreakdownTooltip = memo(_DailyBreakdownTooltip);
-
-function _YearlyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
-  const { t } = useTranslation();
-
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
-  const shouldShowApy = shouldVaultShowInterest(vault);
-
-  const isLoading = useAppSelector(
-    state =>
-      // sometimes, the api skips some vaults, for now, we consider the vault loading
-      !selectVaultApyAvailable(state, vaultId) || !selectDidAPIReturnValuesForVault(state, vaultId)
+  const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
+  const label = useMemo(
+    () =>
+      t(
+        type === 'daily'
+          ? 'VaultStat-DAILY'
+          : data.type === 'apr'
+          ? 'VaultStat-APR'
+          : 'VaultStat-APY'
+      ),
+    [t, type, data.type]
   );
-  const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
+  const formatted = useMemo(
+    () => (data.status === 'available' ? formatTotalApy(data.values, '???') : undefined),
+    [data]
+  );
+  const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';
+  const boostedTotalKey = type === 'daily' ? 'boostedTotalDaily' : 'boostedTotalApy';
 
-  const formatted = formatTotalApy(values);
+  if (data.status == 'loading') {
+    return <ValueBlock label={label} value="-" loading={true} />;
+  }
+
+  if (data.status !== 'available' || !formatted) {
+    return (
+      <ValueBlock label={label} value={data.status === 'hidden' ? '-' : '???'} loading={false} />
+    );
+  }
+
+  const isBoosted = !!data.boosted;
 
   return (
     <ValueBlock
-      label={isGovVault(vault) ? t('APR') : t('APY')}
+      label={label}
       textContent={false}
       value={
         <LabeledStat
-          boosted={isBoosted && shouldShowApy ? formatted.boostedTotalApy : null}
-          value={shouldShowApy ? formatted.totalApy : '-'}
+          boosted={
+            data.boosted === 'prestake'
+              ? t('PRE-STAKE')
+              : data.boosted === 'active'
+              ? formatted[boostedTotalKey]
+              : undefined
+          }
+          value={formatted[totalKey]}
         />
       }
       tooltip={
-        shouldShowApy
-          ? {
-              content: (
-                <YearlyBreakdownTooltip
-                  isGovVault={isGovVault(vault)}
-                  boosted={isBoosted}
-                  rates={formatted}
-                />
-              ),
-            }
-          : undefined
+        <ApyTooltipContent vaultId={vaultId} type={type} isBoosted={isBoosted} rates={formatted} />
       }
-      loading={shouldShowApy && isLoading}
+      loading={false}
     />
   );
-}
-
-export const YearlyApyStats = memo(_YearlyApyStats);
-
-function _DailyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
-  const { t } = useTranslation();
-
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
-  const shouldShowApy = shouldVaultShowInterest(vault);
-
-  const isLoading = useAppSelector(
-    state =>
-      // sometimes, the api skips some vaults, for now, we consider the vault loading
-      !selectVaultApyAvailable(state, vaultId) || !selectDidAPIReturnValuesForVault(state, vaultId)
-  );
-  const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
-
-  const formatted = formatTotalApy(values);
-
-  return (
-    <ValueBlock
-      label={t('Vault-Daily')}
-      textContent={false}
-      value={
-        <LabeledStat
-          boosted={isBoosted && shouldShowApy ? formatted.boostedTotalDaily : null}
-          value={shouldShowApy ? formatted.totalDaily : '-'}
-        />
-      }
-      tooltip={
-        shouldShowApy
-          ? {
-              content: (
-                <DailyBreakdownTooltip
-                  isGovVault={isGovVault(vault)}
-                  boosted={isBoosted}
-                  rates={formatted}
-                />
-              ),
-            }
-          : undefined
-      }
-      loading={shouldShowApy && isLoading}
-    />
-  );
-}
-
-export const DailyApyStats = memo(_DailyApyStats);
+});

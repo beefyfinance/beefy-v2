@@ -1,7 +1,7 @@
 import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
-  stats: {
+  boxes: {
     display: 'grid',
     gridTemplateColumns: '100%',
     rowGap: '24px',
@@ -11,89 +11,55 @@ export const styles = (theme: Theme) => ({
       gridTemplateColumns: 'minmax(0,666fr) minmax(0,333fr)',
     },
   },
-  interestStats: {
-    width: '100%',
-  },
-  interestStatsBox: {
-    height: 96,
-    display: 'flex',
-    justifyContent: 'flex-start',
+  stats: {
+    display: 'grid',
+    minHeight: '96px',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(0, 1fr))',
     backgroundColor: theme.palette.background.contentDark,
     borderRadius: '8px',
-    padding: '16px 24px',
-    [theme.breakpoints.down('md')]: {
-      padding: '16px',
+    padding: '16px',
+    columnGap: '48px',
+    [theme.breakpoints.up('lg')]: {
+      padding: '16px 24px',
     },
   },
-  depositStats: {
-    width: '100%',
+  statsInterest: {
+    '& $stat': {
+      textAlign: 'left' as const,
+      '& *': {
+        textAlign: 'left' as const,
+      },
+    },
   },
-  depositStatsBox: {
-    height: 96,
-    display: 'flex',
-    flexWrap: 'nowrap' as const,
-    justifyContent: 'flex-end',
-    textAlign: 'end' as const,
-    backgroundColor: theme.palette.background.contentDark,
-    borderRadius: '8px',
-    padding: '16px 24px',
-    [theme.breakpoints.down('md')]: {
-      justifyContent: 'flex-start',
-      textAlign: 'start' as const,
-      padding: '16px',
+  statsDeposit: {
+    '& $stat *': {
+      textAlign: 'left' as const,
+    },
+    [theme.breakpoints.up('lg')]: {
+      '& $stat': {
+        textAlign: 'right' as const,
+        '& *': {
+          textAlign: 'right' as const,
+          justifyContent: 'flex-end' as const,
+        },
+      },
     },
   },
   stat: {
-    display: 'flex',
-    width: '33%',
-    paddingTop: 0,
-    paddingBottom: 0,
-    marginRight: '32px',
-    [theme.breakpoints.down('md')]: {
-      marginRight: '16px',
+    position: 'relative' as const,
+    '&::before': {
+      content: '""',
+      position: 'absolute' as const,
+      display: 'block' as const,
+      background: theme.palette.background.border,
+      width: '2px',
+      height: '100%',
+      left: -25,
+      top: 0,
     },
-  },
-  stat1: {
-    paddingTop: 0,
-    paddingBottom: 0,
-    display: 'flex',
-    justifyContent: 'flex-end',
-    [theme.breakpoints.down('md')]: {
-      marginLeft: 0,
-      marginRight: '32px',
-      justifyContent: 'flex-start',
-    },
-  },
-  stat3: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-  },
-  stat4: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-end',
-    [theme.breakpoints.down('md')]: {
-      alignItems: 'flex-start',
-    },
-  },
-  divider: {
-    marginRight: '24px',
-    width: 2,
-    backgroundColor: theme.palette.background.buttons.button,
-    [theme.breakpoints.down('sm')]: {
-      marginRight: '20px',
-    },
-  },
-  divider1: {
-    width: 2,
-    backgroundColor: theme.palette.background.buttons.button,
-    marginLeft: '24px',
-    [theme.breakpoints.down('md')]: {
-      marginLeft: 0,
-      marginRight: '20px',
+    '&:first-child::before': {
+      content: 'none',
+      display: 'none',
     },
   },
 });

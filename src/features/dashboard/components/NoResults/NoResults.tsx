@@ -1,5 +1,5 @@
 import { makeStyles, useMediaQuery } from '@material-ui/core';
-import React, { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonLink } from '../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../store';

@@ -20,6 +20,11 @@
     "name": "Equilibria"
   },
   {
+    "id": "magpie",
+    "name": "Magpie",
+    "risks": ["NO_TIMELOCK"]
+  },
+  {
     "id": "pendle",
     "name": "Pendle"
   },
@@ -970,6 +975,32 @@
   {
     "id": "mshards",
     "name": "mShards",
+    "filter": true
+  },
+  {
+    "id": "ra",
+    "name": "Ra",
+    "filter": true,
+    "risks": ["NO_TIMELOCK"]
+  },
+  {
+    "id": "stakedao",
+    "name": "StakeDAO",
+    "risks": ["NO_TIMELOCK"]
+  },
+  {
+    "id": "nile",
+    "name": "Nile",
+    "filter": true
+  },
+  {
+    "id": "oku",
+    "name": "Uniswap (Oku)",
+    "filter": true
+  },
+  {
+    "id": "camelot",
+    "name": "Camelot",
     "filter": true
   }
 ]

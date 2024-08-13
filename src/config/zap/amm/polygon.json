@@ -150,5 +150,11 @@
     "type": "gamma",
     "name": "Gamma Quickswap",
     "proxyAddress": "0xe0A61107E250f8B5B24bf272baBFCf638569830C"
+  },
+  {
+    "id": "polygon-gamma-uniswap-v3",
+    "type": "gamma",
+    "name": "Gamma Uniswap",
+    "proxyAddress": "0x48975Ea6aA25914927241C3A9F493BfEEb8CA591"
   }
 ]

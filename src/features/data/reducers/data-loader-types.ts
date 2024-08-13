@@ -1,4 +1,4 @@
-import type { ChainEntity } from '../entities/chain';
+import type { ChainEntity, ChainId } from '../entities/chain';
 
 /**
  * because we want to be smart about data loading
@@ -8,52 +8,43 @@ import type { ChainEntity } from '../entities/chain';
  * and this slice can focus on data fetching
  * maybe it's dumb though, but it can be refactored
  **/
-interface LoaderStateInit {
-  alreadyLoadedOnce: boolean;
-  status: 'init';
+export interface LoaderStateIdle {
+  lastDispatched: undefined;
+  lastFulfilled: undefined;
+  lastRejected: undefined;
+  status: 'idle';
   error: null;
 }
 
-interface LoaderStatePending {
-  alreadyLoadedOnce: boolean;
+export interface LoaderStatePending {
+  lastDispatched: number;
+  lastFulfilled: number | undefined;
+  lastRejected: number | undefined;
   status: 'pending';
   error: null;
 }
 
-interface LoaderStateRejected {
-  alreadyLoadedOnce: boolean;
+export interface LoaderStateRejected {
+  lastDispatched: number;
+  lastFulfilled: number | undefined;
+  lastRejected: number;
   status: 'rejected';
   error: string;
 }
 
-interface LoaderStateFulfilled {
-  alreadyLoadedOnce: boolean;
+export interface LoaderStateFulfilled {
+  lastDispatched: number;
+  lastFulfilled: number;
+  lastRejected: number | undefined;
   status: 'fulfilled';
   error: null;
 }
 
 export type LoaderState =
-  | LoaderStateInit
+  | LoaderStateIdle
   | LoaderStatePending
   | LoaderStateRejected
   | LoaderStateFulfilled;
-
-// some example of a type guard
-export function isFulfilled(state: LoaderState): state is LoaderStateFulfilled {
-  return state.status === 'fulfilled';
-}
-
-export function isPending(state: LoaderState): state is LoaderStatePending {
-  return state.status === 'pending';
-}
-
-export function isInitialLoader(state: LoaderState): state is LoaderStateInit {
-  return state.status === 'init';
-}
-
-export function isRejected(state: LoaderState): state is LoaderStateRejected {
-  return state.status === 'rejected';
-}
 
 export interface DataLoaderState {
   instances: {
@@ -61,6 +52,7 @@ export interface DataLoaderState {
   };
   statusIndicator: {
     open: boolean;
+    excludeChainIds: ChainId[];
   };
   global: {
     chainConfig: LoaderState;
@@ -90,30 +82,52 @@ export interface DataLoaderState {
     bridges: LoaderState;
     migrators: LoaderState;
     articles: LoaderState;
+    merklCampaigns: LoaderState;
+    currentCowcentratedRanges: LoaderState;
+    merklRewards: LoaderState;
+    stellaSwapRewards: LoaderState;
   };
   byChainId: {
-    [chainId in ChainEntity['id']]?: ChainIdDataEntity;
+    [chainId in ChainEntity['id']]?: ByChainDataEntity;
   };
   byAddress: {
     [address: string]: {
-      global: GlobalDataByAddressEntity;
+      global: ByAddressGlobalDataEntity;
       byChainId: {
-        [chainId in ChainEntity['id']]?: ChainIdDataByAddressByChainEntity;
+        [chainId in ChainEntity['id']]?: ByAddressByChainDataEntity;
+      };
+      byVaultId: {
+        [vaultId: string]: ByAddressByVaultDataEntity;
       };
     };
   };
 }
 
-export interface ChainIdDataEntity {
+export interface ByChainDataEntity {
   contractData: LoaderState;
   addressBook: LoaderState;
 }
 
-export interface ChainIdDataByAddressByChainEntity {
+export interface ByAddressByChainDataEntity {
   balance: LoaderState;
   allowance: LoaderState;
+  clmHarvests: LoaderState;
 }
 
-export interface GlobalDataByAddressEntity {
-  timeline: LoaderState;
+export interface ByAddressByVaultDataEntity {
+  stellaSwapRewards: LoaderState;
 }
+
+export interface ByAddressGlobalDataEntity {
+  timeline: LoaderState;
+  depositedVaults: LoaderState;
+  dashboard: LoaderState;
+  clmHarvests: LoaderState;
+  merklRewards: LoaderState;
+}
+
+export type LoaderGlobalKey = keyof DataLoaderState['global'];
+export type LoaderChainKey = keyof ByChainDataEntity;
+export type LoaderAddressKey = keyof ByAddressGlobalDataEntity;
+export type LoaderAddressChainKey = keyof ByAddressByChainDataEntity;
+export type LoaderAddressVaultKey = keyof ByAddressByVaultDataEntity;

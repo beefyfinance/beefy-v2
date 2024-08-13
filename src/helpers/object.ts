@@ -1,6 +1,6 @@
 import { BigNumber } from 'bignumber.js';
 import { isBigNumber } from './big-number';
-import { cloneDeepWith } from 'lodash-es';
+import { cloneDeepWith, defaults as defaultsShallow, defaultsDeep } from 'lodash-es';
 
 export function cloneDeep<T>(input: T): T {
   return cloneDeepWith(input, value => {
@@ -36,4 +36,84 @@ type Keys<T> = (keyof T)[];
 /** Key type preserving Object.keys - assumes the object input only has the keys in type T */
 export function keys<T extends Record<string, unknown>>(input: T): Keys<T> {
   return Object.keys(input) as Keys<T>;
+}
+
+export function fromKeys<K extends string, V>(arr: K[], value: V): Record<K, V> {
+  return arr.reduce((acc, key) => {
+    acc[key] = value;
+    return acc;
+  }, {} as Record<K, V>);
+}
+
+export function fromKeysBy<K extends string, V>(arr: K[], valueFn: (key: K) => V): Record<K, V> {
+  return arr.reduce((acc, key) => {
+    acc[key] = valueFn(key);
+    return acc;
+  }, {} as Record<K, V>);
+}
+
+type Mapped<T extends string, V, K extends string, KF extends (key: T) => K> = {
+  [key in T as KF extends (key: key) => infer U ? U : never]: V;
+};
+
+export function fromKeysMapper<T extends string, V, K extends string, KF extends (key: T) => K>(
+  arr: T[],
+  valueFn: (key: T) => V,
+  keyFn: KF
+): Mapped<T, V, K, KF> {
+  return arr.reduce((acc, key) => {
+    // @ts-ignore
+    acc[keyFn(key)] = valueFn(key);
+    return acc;
+  }, {} as Mapped<T, V, K, KF>);
+}
+
+/** Push value to array at map[key], or set map key to [value] if array does not exist yet */
+export function pushOrSet<K extends string, V>(map: Record<K, V[]>, key: K, value: V) {
+  if (map[key]) {
+    map[key].push(value);
+  } else {
+    map[key] = [value];
+  }
+  return map;
+}
+
+export function typedDefaults<T extends object>(
+  input: Partial<T> | undefined | null,
+  defaults: T
+): T {
+  if (!input) {
+    return { ...defaults };
+  }
+  return defaultsShallow({}, input || {}, defaults);
+}
+
+// @dev does not handle arrays, Maps, Sets etc
+type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]>;
+    }
+  : T;
+
+export function typedDefaultsDeep<T extends object>(
+  input: DeepPartial<T> | undefined | null,
+  defaults: T
+): T {
+  if (!input) {
+    return cloneDeep(defaults);
+  }
+  return defaultsDeep({}, input || {}, defaults) as T;
+}
+
+type DistributedOmit<TEntry, TKeys extends keyof TEntry> = {
+  [K in keyof TEntry as K extends TKeys ? never : K]: TEntry[K];
+};
+
+export function distributedOmit<
+  TEntry extends { [key: string]: unknown },
+  TKeys extends keyof TEntry
+>(entry: TEntry, ...keys: TKeys[]): DistributedOmit<TEntry, TKeys> {
+  return Object.fromEntries(
+    Object.entries(entry).filter(([key]) => !keys.includes(key as TKeys))
+  ) as DistributedOmit<TEntry, TKeys>;
 }

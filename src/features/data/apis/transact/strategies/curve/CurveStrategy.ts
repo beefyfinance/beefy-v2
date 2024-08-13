@@ -26,7 +26,7 @@ import {
   type ZapQuoteStepSwap,
   type ZapQuoteStepSwapAggregator,
 } from '../../transact-types';
-import type { CurveStrategyOptions, IStrategy, ZapTransactHelpers } from '../IStrategy';
+import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy';
 import type { ChainEntity } from '../../../../entities/chain';
 import {
   createOptionId,
@@ -35,7 +35,6 @@ import {
   onlyOneInput,
   onlyOneToken,
   onlyOneTokenAmount,
-  onlyVaultStandard,
 } from '../../helpers/options';
 import {
   selectChainNativeToken,
@@ -73,12 +72,14 @@ import { getTokenAddress, NO_RELAY } from '../../helpers/zap';
 import { slipBy } from '../../helpers/amounts';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens';
 import { walletActions } from '../../../../actions/wallet-actions';
-import { isStandardVault } from '../../../../entities/vault';
+import { isStandardVault, type VaultStandard } from '../../../../entities/vault';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import { buildTokenApproveTx } from '../../zap/approve';
 import { CurvePool } from './CurvePool';
 import { isFulfilledResult } from '../../../../../../helpers/promises';
 import { isDefined } from '../../../../utils/array-utils';
+import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
+import type { CurveStrategyConfig } from '../strategy-configs';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -103,19 +104,31 @@ type WithdrawLiquidity = DepositLiquidity & {
   split: TokenAmount;
 };
 
-export class CurveStrategy implements IStrategy {
-  public readonly id = 'curve';
+const strategyId = 'curve' as const;
+type StrategyId = typeof strategyId;
+
+class CurveStrategyImpl implements IZapStrategy<StrategyId> {
+  public static readonly id = strategyId;
+  public readonly id = strategyId;
+
   protected readonly native: TokenNative;
   protected readonly wnative: TokenErc20;
   protected readonly possibleTokens: CurveTokenOption[];
   protected readonly chain: ChainEntity;
   protected readonly depositToken: TokenEntity;
   protected readonly poolAddress: string;
+  protected readonly vault: VaultStandard;
+  protected readonly vaultType: IStandardVaultType;
 
-  constructor(protected options: CurveStrategyOptions, protected helpers: ZapTransactHelpers) {
+  constructor(protected options: CurveStrategyConfig, protected helpers: ZapTransactHelpers) {
     const { vault, vaultType, getState } = this.helpers;
 
-    onlyVaultStandard(vault);
+    if (!isStandardVault(vault)) {
+      throw new Error('Vault is not a standard vault');
+    }
+    if (!isStandardVaultType(vaultType)) {
+      throw new Error('Vault type is not standard');
+    }
 
     const state = getState();
     for (let i = 0; i < vault.assetIds.length; ++i) {
@@ -124,6 +137,8 @@ export class CurveStrategy implements IStrategy {
       }
     }
 
+    this.vault = vault;
+    this.vaultType = vaultType;
     this.native = selectChainNativeToken(state, vault.chainId);
     this.wnative = selectChainWrappedNativeToken(state, vault.chainId);
     this.depositToken = vaultType.depositToken;
@@ -180,17 +195,16 @@ export class CurveStrategy implements IStrategy {
   }
 
   public async fetchDepositOptions(): Promise<CurveDepositOption[]> {
-    const { vault, vaultType } = this.helpers;
-    const outputs = [vaultType.depositToken];
+    const outputs = [this.vaultType.depositToken];
 
     const baseOptions: CurveDepositOption[] = this.possibleTokens.map(depositToken => {
       const inputs = [depositToken.token];
-      const selectionId = createSelectionId(vault.chainId, inputs);
+      const selectionId = createSelectionId(this.vault.chainId, inputs);
 
       return {
-        id: createOptionId(this.id, vault.id, selectionId, 'direct'),
-        vaultId: vault.id,
-        chainId: vault.chainId,
+        id: createOptionId(this.id, this.vault.id, selectionId, 'direct'),
+        vaultId: this.vault.id,
+        chainId: this.vault.chainId,
         selectionId,
         selectionOrder: 2,
         inputs,
@@ -209,18 +223,18 @@ export class CurveStrategy implements IStrategy {
       .filter(token => tokenToDepositTokens[token.address].length > 0)
       .map(token => {
         const inputs = [token];
-        const selectionId = createSelectionId(vault.chainId, inputs);
+        const selectionId = createSelectionId(this.vault.chainId, inputs);
         const possible = tokenToDepositTokens[token.address];
 
         if (possible.length === 0) {
-          console.error({ vault: vault.id, token, possible });
+          console.error({ vault: this.vault.id, token, possible });
           throw new Error(`No other tokens supported for ${token.symbol}`);
         }
 
         return {
-          id: createOptionId(this.id, vault.id, selectionId, 'aggregator'),
-          vaultId: vault.id,
-          chainId: vault.chainId,
+          id: createOptionId(this.id, this.vault.id, selectionId, 'aggregator'),
+          vaultId: this.vault.id,
+          chainId: this.vault.chainId,
           selectionId,
           selectionOrder: 3,
           inputs,
@@ -255,14 +269,14 @@ export class CurveStrategy implements IStrategy {
     input: InputTokenAmount,
     depositVias: CurveTokenOption[]
   ): Promise<DepositLiquidity> {
-    const { vault, swapAggregator } = this.helpers;
+    const { swapAggregator } = this.helpers;
 
     // Fetch quotes from input token, to each possible deposit via token
     const maybeQuotes = await Promise.allSettled(
       depositVias.map(async depositVia => {
         const quotes = await swapAggregator.fetchQuotes(
           {
-            vaultId: vault.id,
+            vaultId: this.vault.id,
             fromToken: input.token,
             fromAmount: input.amount,
             toToken: depositVia.token,
@@ -366,8 +380,12 @@ export class CurveStrategy implements IStrategy {
 
     steps.push({
       type: 'deposit',
-      token: depositLiquidity.output.token,
-      amount: depositLiquidity.output.amount,
+      inputs: [
+        {
+          token: depositLiquidity.output.token,
+          amount: depositLiquidity.output.amount,
+        },
+      ],
     });
 
     // Build quote outputs
@@ -457,10 +475,9 @@ export class CurveStrategy implements IStrategy {
     quote: CurveDepositQuote,
     t: TFunction<Namespace<string>>
   ): Promise<Step> {
-    const { vault, vaultType } = this.helpers;
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
-      const chain = selectChainById(state, vault.chainId);
+      const chain = selectChainById(state, this.vault.chainId);
       const slippage = selectTransactSlippage(state);
       const zapHelpers: ZapHelpers = {
         chain,
@@ -511,7 +528,7 @@ export class CurveStrategy implements IStrategy {
       minBalances.addMany(buildZap.minOutputs);
 
       // Deposit in vault
-      const vaultDeposit = await vaultType.fetchZapDeposit({
+      const vaultDeposit = await this.vaultType.fetchZapDeposit({
         inputs: [
           {
             token: buildQuote.outputToken,
@@ -595,17 +612,16 @@ export class CurveStrategy implements IStrategy {
   }
 
   async fetchWithdrawOptions(): Promise<CurveWithdrawOption[]> {
-    const { vault, vaultType } = this.helpers;
-    const inputs = [vaultType.depositToken];
+    const inputs = [this.vaultType.depositToken];
 
     const baseOptions: CurveWithdrawOption[] = this.possibleTokens.map(depositToken => {
       const outputs = [depositToken.token];
-      const selectionId = createSelectionId(vault.chainId, outputs);
+      const selectionId = createSelectionId(this.vault.chainId, outputs);
 
       return {
-        id: createOptionId(this.id, vault.id, selectionId, 'direct'),
-        vaultId: vault.id,
-        chainId: vault.chainId,
+        id: createOptionId(this.id, this.vault.id, selectionId, 'direct'),
+        vaultId: this.vault.id,
+        chainId: this.vault.chainId,
         selectionId,
         selectionOrder: 2,
         inputs,
@@ -624,18 +640,18 @@ export class CurveStrategy implements IStrategy {
       .filter(token => tokenToDepositTokens[token.address].length > 0)
       .map(token => {
         const outputs = [token];
-        const selectionId = createSelectionId(vault.chainId, outputs);
+        const selectionId = createSelectionId(this.vault.chainId, outputs);
         const possible = tokenToDepositTokens[token.address];
 
         if (possible.length === 0) {
-          console.error({ vault: vault.id, token, possible });
+          console.error({ vault: this.vault.id, token, possible });
           throw new Error(`No other tokens supported for ${token.symbol}`);
         }
 
         return {
-          id: createOptionId(this.id, vault.id, selectionId, 'aggregator'),
-          vaultId: vault.id,
-          chainId: vault.chainId,
+          id: createOptionId(this.id, this.vault.id, selectionId, 'aggregator'),
+          vaultId: this.vault.id,
+          chainId: this.vault.chainId,
           selectionId,
           selectionOrder: 3,
           inputs,
@@ -674,7 +690,7 @@ export class CurveStrategy implements IStrategy {
     wanted: TokenEntity,
     withdrawVias: CurveTokenOption[]
   ): Promise<WithdrawLiquidity> {
-    const { vault, swapAggregator } = this.helpers;
+    const { swapAggregator } = this.helpers;
     const slippage = selectTransactSlippage(state);
 
     // Fetch withdraw liquidity quotes for each possible withdraw via token
@@ -691,7 +707,7 @@ export class CurveStrategy implements IStrategy {
       quotes.map(async ({ via, split }) => {
         const quotes = await swapAggregator.fetchQuotes(
           {
-            vaultId: vault.id,
+            vaultId: this.vault.id,
             fromToken: split.token,
             fromAmount: slipBy(split.amount, slippage, split.token.decimals), // we have to assume it will slip 100% since we can't modify the call data later
             toToken: wanted,
@@ -742,15 +758,12 @@ export class CurveStrategy implements IStrategy {
       throw new Error('Can only swap to 1 output token');
     }
 
-    const { vault, vaultType, zap, getState } = this.helpers;
-    if (!isStandardVault(vault)) {
-      throw new Error('Vault is not standard');
-    }
+    const { zap, getState } = this.helpers;
 
     // Common: Withdraw from vault
     const state = getState();
     const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, vault, state);
+      getVaultWithdrawnFromState(input, this.vault, state);
     const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
     const liquidityWithdrawn = { amount: withdrawnAmountAfterFee, token: withdrawnToken };
     const wantedToken = onlyOneToken(option.wantedOutputs);
@@ -777,8 +790,12 @@ export class CurveStrategy implements IStrategy {
     const steps: ZapQuoteStep[] = [
       {
         type: 'withdraw',
-        token: vaultType.depositToken,
-        amount: withdrawnAmountAfterFee,
+        outputs: [
+          {
+            token: this.vaultType.depositToken,
+            amount: withdrawnAmountAfterFee,
+          },
+        ],
       },
     ];
 
@@ -878,11 +895,9 @@ export class CurveStrategy implements IStrategy {
     quote: CurveWithdrawQuote,
     t: TFunction<Namespace<string>>
   ): Promise<Step> {
-    const { vault, vaultType } = this.helpers;
-
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
-      const chain = selectChainById(state, vault.chainId);
+      const chain = selectChainById(state, this.vault.chainId);
       const slippage = selectTransactSlippage(state);
       const zapHelpers: ZapHelpers = {
         chain,
@@ -899,7 +914,7 @@ export class CurveStrategy implements IStrategy {
       }
 
       // Step 1. Withdraw from vault
-      const vaultWithdraw = await vaultType.fetchZapWithdraw({
+      const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
       });
       if (vaultWithdraw.outputs.length !== 1) {
@@ -1022,12 +1037,12 @@ export class CurveStrategy implements IStrategy {
   }
 
   protected async aggregatorTokenSupport() {
-    const { vault, swapAggregator, getState } = this.helpers;
+    const { swapAggregator, getState } = this.helpers;
     const state = getState();
     const supportedAggregatorTokens = await swapAggregator.fetchTokenSupport(
       this.possibleTokens.map(option => option.token),
-      vault.id,
-      vault.chainId,
+      this.vault.id,
+      this.vault.chainId,
       state,
       this.options.swap
     );
@@ -1053,3 +1068,5 @@ export class CurveStrategy implements IStrategy {
     };
   }
 }
+
+export const CurveStrategy = CurveStrategyImpl satisfies IZapStrategyStatic<StrategyId>;

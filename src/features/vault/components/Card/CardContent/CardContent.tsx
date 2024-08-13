@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo, type ReactNode } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
@@ -6,7 +6,7 @@ import clsx from 'clsx';
 const useStyles = makeStyles(styles);
 
 type CardContentProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   disableDefaultClass?: boolean;
 };

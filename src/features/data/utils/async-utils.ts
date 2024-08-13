@@ -179,3 +179,20 @@ export function createFulfilledActionCapturer(store: Store) {
     });
   };
 }
+
+/** wait at most ms for the result of a promise created */
+export function withTimeoutSignal<T>(
+  ms: number,
+  creator: (signal: AbortSignal) => Promise<T>
+): Promise<T> {
+  const controller = new AbortController();
+  return Promise.race([
+    creator(controller.signal),
+    new Promise<T>((_, reject) => {
+      setTimeout(() => {
+        controller.abort();
+        reject(new Error('Timeout'));
+      }, ms);
+    }),
+  ]);
+}

@@ -1,19 +1,13 @@
-import { type AnyAction, createAsyncThunk, miniSerializeError, nanoid } from '@reduxjs/toolkit';
-import type { BeefyState, BeefyThunk } from '../../../redux-types';
-import type { VaultEntity, VaultGov } from '../entities/vault';
+import { type ThunkAction, createAction, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
+import type { BeefyState, BeefyThunk, GetStateFn } from '../../../redux-types';
+import { isCowcentratedVault, type VaultEntity, type VaultGov } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
-import { selectShouldInitAddressBook } from '../selectors/data-loader';
-import { fetchAddressBookAction } from './tokens';
-import { isInitialLoader } from '../reducers/data-loader-types';
-import { fetchZapAmmsAction, fetchZapConfigsAction, fetchZapSwapAggregatorsAction } from './zap';
 import { getTransactApi } from '../apis/instances';
 import { transactActions } from '../reducers/wallet/transact';
 import {
   selectTokenAmountsTotalValue,
-  selectTransactDualInputAmounts,
-  selectTransactDualMaxAmounts,
-  selectTransactInputAmount,
-  selectTransactInputMax,
+  selectTransactInputAmounts,
+  selectTransactInputMaxes,
   selectTransactOptionsForSelectionId,
   selectTransactOptionsMode,
   selectTransactOptionsVaultId,
@@ -24,7 +18,6 @@ import {
   selectTransactSelectionById,
   selectTransactSlippage,
   selectTransactVaultId,
-  selectTransactVaultIdOrUndefined,
 } from '../selectors/transact';
 import type {
   InputTokenAmount,
@@ -49,68 +42,24 @@ import type { Step } from '../reducers/wallet/stepper';
 import { stepperActions } from '../reducers/wallet/stepper';
 import { selectAllowanceByTokenAddress } from '../selectors/allowances';
 import { walletActions } from './wallet-actions';
-import type { ThunkAction } from 'redux-thunk';
 import { startStepperWithSteps } from './stepper';
 import { TransactMode, TransactStatus } from '../reducers/wallet/transact-types';
 import { selectTokenByAddress } from '../selectors/tokens';
 import { groupBy, uniqBy } from 'lodash-es';
 import { fetchAllowanceAction } from './allowance';
-import { fetchFees } from './fees';
 import { uniqueTokens } from '../../../helpers/tokens';
 import { fetchBalanceAction } from './balance';
 import type { Action } from 'redux';
 import { selectWalletAddress } from '../selectors/wallet';
-import { onlyOneInput } from '../apis/transact/helpers/options';
+import { isSerializableError, serializeError } from '../apis/transact/strategies/error';
+import type { SerializedError } from '../apis/transact/strategies/error-types';
 
 export type TransactInitArgs = {
   vaultId: VaultEntity['id'];
 };
 
-export type TransactInitPayload = void;
-
-export const transactInit = createAsyncThunk<
-  TransactInitPayload,
-  TransactInitArgs,
-  { state: BeefyState }
->(
-  'transact/init',
-  async ({ vaultId }, { getState, dispatch }) => {
-    const vault = selectVaultById(getState(), vaultId);
-    const loaders: Promise<AnyAction>[] = [];
-
-    if (selectShouldInitAddressBook(getState(), vault.chainId)) {
-      loaders.push(dispatch(fetchAddressBookAction({ chainId: vault.chainId })));
-    }
-
-    const ammsLoader = getState().ui.dataLoader.global.zapAmms;
-    if (ammsLoader && isInitialLoader(ammsLoader)) {
-      loaders.push(dispatch(fetchZapAmmsAction()));
-    }
-
-    const zapsLoader = getState().ui.dataLoader.global.zapConfigs;
-    if (zapsLoader && isInitialLoader(zapsLoader)) {
-      loaders.push(dispatch(fetchZapConfigsAction()));
-    }
-
-    const swapAggregatorsLoader = getState().ui.dataLoader.global.zapSwapAggregators;
-    if (swapAggregatorsLoader && isInitialLoader(swapAggregatorsLoader)) {
-      loaders.push(dispatch(fetchZapSwapAggregatorsAction()));
-    }
-
-    const feesLoader = getState().ui.dataLoader.global.fees;
-    if (feesLoader && isInitialLoader(feesLoader)) {
-      loaders.push(dispatch(fetchFees()));
-    }
-
-    await Promise.all(loaders);
-  },
-  {
-    condition({ vaultId }, { getState }) {
-      // only dispatch if needed
-      return selectTransactVaultIdOrUndefined(getState()) !== vaultId;
-    },
-  }
-);
+export const transactInit = createAction<TransactInitArgs>('transact/init');
+export const transactInitReady = createAction<TransactInitArgs>('transact/init/ready');
 
 export type TransactFetchOptionsArgs = {
   vaultId: VaultEntity['id'];
@@ -124,7 +73,7 @@ export type TransactFetchOptionsPayload = {
 const optionsForByMode = {
   [TransactMode.Deposit]: 'fetchDepositOptionsFor',
   [TransactMode.Withdraw]: 'fetchWithdrawOptionsFor',
-} as const satisfies Record<TransactMode, keyof ITransactApi>;
+} as const satisfies Partial<Record<TransactMode, keyof ITransactApi>>;
 
 export const transactFetchOptions = createAsyncThunk<
   TransactFetchOptionsPayload,
@@ -167,8 +116,11 @@ export const transactFetchOptions = createAsyncThunk<
   },
   {
     condition({ mode }, { getState }) {
-      const state = getState();
+      if (!(mode in optionsForByMode)) {
+        return false;
+      }
 
+      const state = getState();
       return (
         selectTransactOptionsMode(state) !== mode ||
         selectTransactVaultId(state) !== selectTransactOptionsVaultId(state)
@@ -195,126 +147,125 @@ export type TransactFetchQuotesPayload = {
 export const transactFetchQuotes = createAsyncThunk<
   TransactFetchQuotesPayload,
   void,
-  { state: BeefyState }
->('transact/fetchQuotes', async (_, { getState, dispatch }) => {
-  const api = await getTransactApi();
-  const state = getState();
-  const mode = selectTransactOptionsMode(state);
-  const inputAmount = selectTransactInputAmount(state);
-  const inputMax = selectTransactInputMax(state);
-  const dualInputAmounts = selectTransactDualInputAmounts(state);
-  const dualMaxAmounts = selectTransactDualMaxAmounts(state);
-  const walletAddress = selectWalletAddress(state);
+  { state: BeefyState; rejectValue: SerializedError }
+>('transact/fetchQuotes', async (_, { getState, dispatch, rejectWithValue }) => {
+  try {
+    const api = await getTransactApi();
+    const state = getState();
+    const mode = selectTransactOptionsMode(state);
+    const inputAmounts = selectTransactInputAmounts(state);
+    const inputMaxes = selectTransactInputMaxes(state);
+    const walletAddress = selectWalletAddress(state);
+    const vaultId = selectTransactVaultId(state);
+    const vault = selectVaultById(state, vaultId);
 
-  const vaultId = selectTransactVaultId(state);
-  const vault = selectVaultById(state, vaultId);
-  // This can be improved, don't worry chimpo
-
-  if (vault.type !== 'cowcentrated' && inputAmount.lte(BIG_ZERO)) {
-    throw new Error(`Can not quote for 0`);
-  }
-  if (vault.type === 'cowcentrated') {
-    if (mode === TransactMode.Deposit && dualInputAmounts.every(amount => amount.lte(BIG_ZERO))) {
-      throw new Error(`Can not quote for [0, 0]`);
-    } else if (mode === TransactMode.Withdraw && inputAmount.lte(BIG_ZERO)) {
+    if (inputAmounts.every(amount => amount.lte(BIG_ZERO))) {
       throw new Error(`Can not quote for 0`);
     }
-  }
 
-  const selectionId = selectTransactSelectedSelectionId(state);
-  if (!selectionId) {
-    throw new Error(`No selectionId selected`);
-  }
+    const selectionId = selectTransactSelectedSelectionId(state);
+    if (!selectionId) {
+      throw new Error(`No selectionId selected`);
+    }
 
-  const chainId = selectTransactSelectedChainId(state);
-  if (!chainId) {
-    throw new Error(`No chainId selected`);
-  }
+    const chainId = selectTransactSelectedChainId(state);
+    if (!chainId) {
+      throw new Error(`No chainId selected`);
+    }
 
-  const options = selectTransactOptionsForSelectionId(state, selectionId);
-  if (!options || options.length === 0) {
-    throw new Error(`No options for selectionId ${selectionId}`);
-  }
+    const options = selectTransactOptionsForSelectionId(state, selectionId);
+    if (!options || options.length === 0) {
+      throw new Error(`No options for selectionId ${selectionId}`);
+    }
 
-  const selection = selectTransactSelectionById(state, selectionId);
-  if (!selection || selection.tokens.length === 0) {
-    throw new Error(`No tokens for selectionId ${selectionId}`);
-  }
+    const selection = selectTransactSelectionById(state, selectionId);
+    if (!selection || selection.tokens.length === 0) {
+      throw new Error(`No tokens for selectionId ${selectionId}`);
+    }
 
-  // const vaultId = selectTransactVaultId(state);
-  // const vault = selectVaultById(state, vaultId);
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const quoteInputAmounts: InputTokenAmount[] = [];
+    if (mode == TransactMode.Deposit) {
+      // For deposit, user enters number of the selected token(s) to deposit
+      selection.tokens.forEach((token, index) => {
+        quoteInputAmounts.push({
+          token,
+          amount: inputAmounts[index] || BIG_ZERO,
+          max: inputMaxes[index] || false,
+        });
+      });
+    } else {
+      let inputToken: TokenEntity;
+      if (isCowcentratedVault(vault)) {
+        // For CLM vaults, user enters number of shares to withdraw
+        inputToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
+      } else {
+        // For standard/gov vaults, user enters number of deposit token to withdraw
+        inputToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+      }
+      quoteInputAmounts.push({
+        token: inputToken,
+        amount: inputAmounts[0] || BIG_ZERO,
+        max: inputMaxes[0] || false,
+      });
+    }
 
-  // TODO handle differently for univ3 with multiple deposit tokens
-  const inputAmounts: InputTokenAmount[] =
-    vault.type !== 'cowcentrated' || mode === TransactMode.Withdraw
-      ? [
-          {
-            amount: inputAmount,
-            token: mode === TransactMode.Withdraw ? depositToken : selection.tokens[0], // for withdraw this is always depositToken / deposit is only token of selection
-            max: inputMax,
-          },
-        ]
-      : [
-          {
-            amount: dualInputAmounts[0],
-            token: selection.tokens[0],
-            max: dualMaxAmounts[0],
-          },
-          {
-            amount: dualInputAmounts[1],
-            token: selection.tokens[1],
-            max: dualMaxAmounts[1],
-          },
-        ];
+    let quotes: TransactQuote[];
+    if (options.every(isDepositOption)) {
+      quotes = await api.fetchDepositQuotesFor(options, quoteInputAmounts, getState);
+    } else if (options.every(isWithdrawOption)) {
+      quotes = await api.fetchWithdrawQuotesFor(options, quoteInputAmounts, getState);
+    } else {
+      throw new Error(`Invalid options`);
+    }
 
-  let quotes: TransactQuote[];
-  if (options.every(isDepositOption)) {
-    quotes = await api.fetchDepositQuotesFor(options, inputAmounts, getState);
-  } else if (options.every(isWithdrawOption)) {
-    quotes = await api.fetchWithdrawQuotesFor(options, inputAmounts, getState);
-  } else {
-    throw new Error(`Invalid options`);
-  }
+    quotes.sort((a, b) => {
+      const valueA = selectTokenAmountsTotalValue(state, a.outputs);
+      const valueB = selectTokenAmountsTotalValue(state, b.outputs);
+      return valueB.comparedTo(valueA);
+    });
 
-  quotes.sort((a, b) => {
-    const valueA = selectTokenAmountsTotalValue(state, a.outputs);
-    const valueB = selectTokenAmountsTotalValue(state, b.outputs);
-    return valueB.comparedTo(valueA);
-  });
+    // update allowances
+    if (walletAddress) {
+      const uniqueAllowances = uniqBy(
+        quotes.map(quote => quote.allowances).flat(),
+        allowance =>
+          `${allowance.token.chainId}-${allowance.spenderAddress}-${allowance.token.address}`
+      );
+      const allowancesPerChainSpender = groupBy(
+        uniqueAllowances,
+        allowance => `${allowance.token.chainId}-${allowance.spenderAddress}`
+      );
 
-  // update allowances
-  if (walletAddress) {
-    const uniqueAllowances = uniqBy(
-      quotes.map(quote => quote.allowances).flat(),
-      allowance =>
-        `${allowance.token.chainId}-${allowance.spenderAddress}-${allowance.token.address}`
-    );
-    const allowancesPerChainSpender = groupBy(
-      uniqueAllowances,
-      allowance => `${allowance.token.chainId}-${allowance.spenderAddress}`
-    );
-
-    await Promise.all(
-      Object.values(allowancesPerChainSpender).map(allowances =>
-        dispatch(
-          fetchAllowanceAction({
-            chainId: allowances[0].token.chainId,
-            spenderAddress: allowances[0].spenderAddress,
-            tokens: allowances.map(allowance => allowance.token),
-            walletAddress,
-          })
+      await Promise.all(
+        Object.values(allowancesPerChainSpender).map(allowances =>
+          dispatch(
+            fetchAllowanceAction({
+              chainId: allowances[0].token.chainId,
+              spenderAddress: allowances[0].spenderAddress,
+              tokens: allowances.map(allowance => allowance.token),
+              walletAddress,
+            })
+          )
         )
-      )
-    );
-  }
+      );
+    }
 
-  return {
-    selectionId,
-    chainId,
-    inputAmounts,
-    quotes,
-  };
+    if (quotes.length === 0) {
+      throw new Error(`No quotes available`);
+    }
+
+    return {
+      selectionId,
+      chainId,
+      inputAmounts: quoteInputAmounts,
+      quotes,
+    };
+  } catch (e: unknown) {
+    if (isSerializableError(e)) {
+      return rejectWithValue(e.serialize());
+    }
+    throw e;
+  }
 });
 
 export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state: BeefyState }>(
@@ -329,13 +280,10 @@ export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state:
       const vaultId = selectTransactVaultId(state);
       const chainId = selectTransactSelectedChainId(state);
       const selectionId = selectTransactSelectedSelectionId(state);
-      const inputAmount = selectTransactInputAmount(state);
-      const inputAmounts = selectTransactDualInputAmounts(state);
-
+      const inputAmounts = selectTransactInputAmounts(state);
       const matchingInputs =
-        quote.option.mode === TransactMode.Deposit && quote.option.strategyId === 'cowcentrated'
-          ? inputAmounts.every((amount, index) => amount === quote.inputs[index]?.amount)
-          : onlyOneInput(quote.inputs).amount.eq(inputAmount);
+        inputAmounts.length === quote.inputs.length &&
+        inputAmounts.every((amount, index) => amount.eq(quote.inputs[index].amount));
 
       shouldFetch =
         option.chainId !== chainId ||
@@ -350,6 +298,52 @@ export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state:
   }
 );
 
+export async function getTransactSteps(
+  quote: TransactQuote,
+  t: TFunction<Namespace>,
+  getState: GetStateFn
+): Promise<Step[]> {
+  const steps: Step[] = [];
+  const state = getState();
+  const api = await getTransactApi();
+
+  for (const allowanceTokenAmount of quote.allowances) {
+    if (isTokenErc20(allowanceTokenAmount.token)) {
+      const allowance = selectAllowanceByTokenAddress(
+        state,
+        allowanceTokenAmount.token.chainId,
+        allowanceTokenAmount.token.address,
+        allowanceTokenAmount.spenderAddress
+      );
+
+      if (allowance.lt(allowanceTokenAmount.amount)) {
+        steps.push({
+          step: 'approve',
+          message: t('Vault-ApproveMsg'),
+          action: walletActions.approval(
+            allowanceTokenAmount.token,
+            allowanceTokenAmount.spenderAddress
+          ),
+          pending: false,
+        });
+      }
+    }
+  }
+
+  let originalStep: Step;
+  if (isDepositQuote(quote)) {
+    originalStep = await api.fetchDepositStep(quote, getState, t);
+  } else if (isWithdrawQuote(quote)) {
+    originalStep = await api.fetchWithdrawStep(quote, getState, t);
+  } else {
+    throw new Error(`Invalid quote`);
+  }
+
+  steps.push(wrapStepConfirmQuote(originalStep, quote));
+
+  return steps;
+}
+
 /**
  * Steps to deposit into or withdraw from a vault
  * Builds allowance steps from quote data,
@@ -361,44 +355,7 @@ export function transactSteps(
   t: TFunction<Namespace>
 ): ThunkAction<void, BeefyState, void, Action> {
   return async function (dispatch, getState) {
-    const steps: Step[] = [];
-    const state = getState();
-    const api = await getTransactApi();
-
-    for (const allowanceTokenAmount of quote.allowances) {
-      if (isTokenErc20(allowanceTokenAmount.token)) {
-        const allowance = selectAllowanceByTokenAddress(
-          state,
-          allowanceTokenAmount.token.chainId,
-          allowanceTokenAmount.token.address,
-          allowanceTokenAmount.spenderAddress
-        );
-
-        if (allowance.lt(allowanceTokenAmount.amount)) {
-          steps.push({
-            step: 'approve',
-            message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(
-              allowanceTokenAmount.token,
-              allowanceTokenAmount.spenderAddress
-            ),
-            pending: false,
-          });
-        }
-      }
-    }
-
-    let originalStep: Step;
-    if (isDepositQuote(quote)) {
-      originalStep = await api.fetchDepositStep(quote, getState, t);
-    } else if (isWithdrawQuote(quote)) {
-      originalStep = await api.fetchWithdrawStep(quote, getState, t);
-    } else {
-      throw new Error(`Invalid quote`);
-    }
-
-    steps.push(wrapStepConfirmQuote(originalStep, quote));
-
+    const steps = await getTransactSteps(quote, t, getState);
     dispatch(startStepperWithSteps(steps, quote.inputs[0].token.chainId));
   };
 }
@@ -511,7 +468,7 @@ function wrapStepConfirmQuote(originalStep: Step, originalQuote: TransactQuote):
     } catch (error) {
       // Hide stepper (as UI will now show error)
       dispatch(stepperActions.reset());
-      dispatch(transactActions.confirmRejected({ requestId, error: miniSerializeError(error) }));
+      dispatch(transactActions.confirmRejected({ requestId, error: serializeError(error) }));
       return;
     }
   };

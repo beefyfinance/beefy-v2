@@ -1,19 +1,16 @@
+import { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import React, { memo } from 'react';
-import type { VaultEntity } from '../../features/data/entities/vault';
-import { isGovVault } from '../../features/data/entities/vault';
+import { type VaultEntity } from '../../features/data/entities/vault';
 import clsx from 'clsx';
 import { VaultDailyUsdStat } from './VaultDailyUsdStat';
 import { VaultPnlStat } from './VaultPnlStat';
 import { VaultAtDepositStat } from './VaultAtDepositStat';
 import { VaultNowStat } from './VaultNowStat';
-import { VaultYearlyStat } from './VaultYearlyStat';
+import { VaultApyStat } from './VaultApyStat';
 import { useAppSelector } from '../../store';
-import { selectVaultById } from '../../features/data/selectors/vaults';
-import { VaultRewardsStat } from './VaultRewardsStat';
-import { VaultYieldWithRewardsStat } from './VaultYieldWithRewardsStat';
 import { selectVaultPnl } from '../../features/data/selectors/analytics';
+import { VaultYieldRewardsStat } from './VaultYieldRewardsStat';
 
 const useStyles = makeStyles(styles);
 
@@ -23,8 +20,6 @@ export type VaultStatsProps = {
 };
 export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ vaultId, address }) {
   const classes = useStyles();
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
   const pnlData = useAppSelector(state => selectVaultPnl(state, vaultId, address));
 
   return (
@@ -51,15 +46,12 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
           />
         </div>
         <div className={clsx(classes.column, classes.hideSm)}>
-          {isGovVault(vault) ? (
-            <VaultRewardsStat walletAddress={address} showLabel={false} vaultId={vaultId} />
-          ) : (
-            <VaultYieldWithRewardsStat
-              walletAddress={address}
-              pnlData={pnlData}
-              vaultId={vaultId}
-            />
-          )}
+          <VaultYieldRewardsStat
+            showLabel={false}
+            vaultId={vaultId}
+            walletAddress={address}
+            pnlData={pnlData}
+          />
         </div>
         <div className={classes.column}>
           <VaultPnlStat
@@ -70,7 +62,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
           />
         </div>
         <div className={clsx(classes.column, classes.hideMd)}>
-          <VaultYearlyStat showLabel={false} vaultId={vaultId} />
+          <VaultApyStat type="yearly" showLabel={false} vaultId={vaultId} />
         </div>
         <div className={clsx(classes.column, classes.hideMd)}>
           <VaultDailyUsdStat

@@ -1,5 +1,5 @@
 import type { ChainEntity } from '../../../../../data/entities/chain';
-import { memo, type ReactNode, useCallback } from 'react';
+import { type FC, memo, type ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectChainById } from '../../../../../data/selectors/chains';
@@ -9,6 +9,7 @@ import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../../../../data/selectors/wallet';
+import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 
 export type ActionButtonProps = {
   className?: string;
@@ -17,6 +18,7 @@ export type ActionButtonProps = {
 export const ActionConnect = memo<ActionButtonProps>(function ActionConnect({ className }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const isStepping = useAppSelector(selectIsStepperStepping);
   const handleClick = useCallback(() => {
     dispatch(askForWalletConnection());
   }, [dispatch]);
@@ -28,6 +30,7 @@ export const ActionConnect = memo<ActionButtonProps>(function ActionConnect({ cl
       borderless={true}
       className={className}
       onClick={handleClick}
+      disabled={isStepping}
     >
       {t('Network-ConnectWallet')}
     </Button>
@@ -38,6 +41,7 @@ export type ActionSwitchProps = { chainId: ChainEntity['id'] } & ActionButtonPro
 export const ActionSwitch = memo<ActionSwitchProps>(function ActionSwitch({ chainId, className }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const isStepping = useAppSelector(selectIsStepperStepping);
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const handleClick = useCallback(() => {
     dispatch(askForNetworkChange({ chainId }));
@@ -50,6 +54,7 @@ export const ActionSwitch = memo<ActionSwitchProps>(function ActionSwitch({ chai
       borderless={true}
       className={className}
       onClick={handleClick}
+      disabled={isStepping}
     >
       {t('Network-Change', { network: chain.name })}
     </Button>
@@ -60,7 +65,7 @@ export type ActionConnectSwitchProps = {
   className?: string;
   chainId?: ChainEntity['id'];
   children: ReactNode;
-  FeesComponent?: React.FC;
+  FeesComponent?: FC;
 };
 
 export const ActionConnectSwitch = memo<ActionConnectSwitchProps>(function ActionConnectSwitch({

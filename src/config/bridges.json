@@ -88,6 +88,12 @@
     "website": "https://mainnet.frax.com/tools/bridge/deposit"
   },
   {
+    "id": "mode-canonical",
+    "name": "Mode Bridge",
+    "tagName": "Mode",
+    "website": "https://app.mode.network/"
+  },
+  {
     "id": "avax-canonical",
     "name": "Avax Bridge",
     "tagName": "Avax",
@@ -185,5 +191,41 @@
     "name": "Mantle Bridge",
     "tagName": "Mantle",
     "website": "https://bridge.mantle.xyz/"
+  },
+  {
+    "id": "inception",
+    "name": "Inception Bridge",
+    "tagName": "Inception",
+    "website": "https://www.inceptionlrt.com/app/bridge/"
+  },
+  {
+    "id": "manta-canonical",
+    "name": "Manta Bridge",
+    "tagName": "Manta",
+    "website": "https://pacific-bridge.manta.network/"
+  },
+  {
+    "id": "real-canonical",
+    "name": "re.al Bridge",
+    "tagName": "re.al",
+    "website": "https://www.re.al/bridge"
+  },
+  {
+    "id": "sei-canonical",
+    "name": "Sei Bridge",
+    "tagName": "sei",
+    "website": "https://app.sei.io/bridge"
+  },
+  {
+    "id": "ankr",
+    "name": "Ankr Bridge",
+    "tagName": "Ankr",
+    "website": "https://www.ankr.com/staking/bridge/"
+  },
+  {
+    "id": "chainlink-ccip",
+    "name": "Chainlink CCIP",
+    "tagName": "Chainlink CCIP",
+    "website": "https://chain.link/cross-chain"
   }
 ]

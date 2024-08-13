@@ -1,6 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import {
+  isCowcentratedLikeVault,
+  isGovVault,
   isVaultEarningPoints,
   isVaultPaused,
   isVaultRetired,
@@ -10,14 +12,14 @@ import {
 import {
   selectFilterOptions,
   selectFilterPlatformIdsForVault,
+  selectVaultIsBoostedForFilter,
+  selectVaultIsBoostedForSorting,
   selectVaultMatchesText,
 } from '../selectors/filtered-vaults';
 import {
-  selectAllVaultIds,
+  selectAllVisibleVaultIds,
   selectIsVaultBlueChip,
   selectIsVaultCorrelated,
-  selectIsVaultCowcentrated,
-  selectIsVaultFeatured,
   selectIsVaultStable,
   selectVaultById,
 } from '../selectors/vaults';
@@ -25,13 +27,13 @@ import { selectActiveChainIds, selectAllChainIds } from '../selectors/chains';
 import { selectVaultSupportsZap } from '../selectors/zap';
 import {
   selectIsVaultPrestakedBoost,
-  selectIsVaultPreStakedOrBoosted,
   selectVaultsActiveBoostPeriodFinish,
 } from '../selectors/boosts';
 import { selectIsVaultIdSaved } from '../selectors/saved-vaults';
 import {
   selectHasUserDepositInVault,
-  selectUserVaultDepositInUsd,
+  selectUserBalanceOfToken,
+  selectUserVaultBalanceInUsdIncludingBoostsBridged,
   selectUserVaultDepositTokenWalletBalanceInUsd,
 } from '../selectors/balance';
 import { simplifySearchText } from '../../../helpers/string';
@@ -39,7 +41,7 @@ import type { FilteredVaultsState } from '../reducers/filtered-vaults';
 import { orderBy, sortBy } from 'lodash-es';
 import type { TotalApy } from '../reducers/apy';
 import { selectVaultTotalApy } from '../selectors/apy';
-import { selectVaultTvl } from '../selectors/tvl';
+import { selectVaultTvl, selectVaultUnderlyingTvlUsd } from '../selectors/tvl';
 
 export type RecalculateFilteredVaultsParams = {
   dataChanged?: boolean;
@@ -73,81 +75,107 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
         filterOptions.chainIds.length === 0 ? allChainIds : filterOptions.chainIds
       );
       const searchText = simplifySearchText(filterOptions.searchText);
-      const allVaults = selectAllVaultIds(state).map(id => selectVaultById(state, id));
+      const allVaults = selectAllVisibleVaultIds(state).map(id => selectVaultById(state, id));
+
+      /*
+       @dev every filter that can be applied without using a selector should come first
+       then cheap selectors, then expensive selectors last
+      */
       filteredVaults = allVaults.filter(vault => {
         // Chains
         if (!visibleChains.has(vault.chainId)) {
           return false;
         }
 
-        // Asset type
-        if (filterOptions.assetType === 'lps' && vault.assetType !== 'lps') {
-          return false;
-        }
-        if (filterOptions.assetType === 'single' && vault.assetType !== 'single') {
+        // Strategy Type
+        if (filterOptions.strategyType === 'pools' && !isGovVault(vault)) {
           return false;
         }
 
-        // Vault Category
-        if (filterOptions.vaultCategory === 'featured' && !selectIsVaultFeatured(state, vault.id)) {
-          return false;
-        }
-        if (filterOptions.vaultCategory === 'bluechip' && !selectIsVaultBlueChip(state, vault.id)) {
-          return false;
-        }
-        if (filterOptions.vaultCategory === 'stable' && !selectIsVaultStable(state, vault.id)) {
-          return false;
-        }
-        if (filterOptions.vaultCategory === 'clm' && !selectIsVaultCowcentrated(state, vault.id)) {
-          return false;
-        }
-        if (
-          filterOptions.vaultCategory === 'correlated' &&
-          !selectIsVaultCorrelated(state, vault.id)
-        ) {
+        // TODO change to !isStandardVault if we get rid of base clm
+        if (filterOptions.strategyType === 'vaults' && isGovVault(vault)) {
           return false;
         }
 
-        // Checkboxes
+        // Hide non-EOL if onlyRetired is checked
         if (filterOptions.onlyRetired && !isVaultRetired(vault)) {
           return false;
         }
 
+        // Hide non-paused if onlyPaused is checked
         if (filterOptions.onlyPaused && !isVaultPaused(vault)) {
           return false;
         }
 
-        if (filterOptions.onlyZappable && !selectVaultSupportsZap(state, vault.id)) {
-          return false;
-        }
-
-        if (filterOptions.onlyEarningPoints && !isVaultEarningPoints(vault)) {
-          return false;
-        }
-
-        if (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) {
-          return false;
-        }
-
-        // User category: All / Saved Vaults / My Vaults
-        if (filterOptions.userCategory === 'saved' && !selectIsVaultIdSaved(state, vault.id)) {
-          return false;
-        }
-
-        if (
-          filterOptions.userCategory === 'deposited' &&
-          !selectHasUserDepositInVault(state, vault.id)
-        ) {
-          return false;
-        }
-
+        // Hide EOL unless onlyRetired is checked or user category is 'My'
         if (
           !filterOptions.onlyRetired &&
           filterOptions.userCategory !== 'deposited' &&
           isVaultRetired(vault)
         ) {
-          // Hide all eol vaults that user is not deposited in if on 'my vaults' tab and only retired is not checked
           return false;
+        }
+
+        // Hide not earning points if onlyEarningPoints checked
+        if (filterOptions.onlyEarningPoints && !isVaultEarningPoints(vault)) {
+          return false;
+        }
+
+        // Hide non-zappable if onlyZappable checked
+        if (filterOptions.onlyZappable && !selectVaultSupportsZap(state, vault.id)) {
+          return false;
+        }
+
+        // Hide unselected asset types (if any asset type selected)
+        if (filterOptions.assetType.length && !filterOptions.assetType.includes(vault.assetType)) {
+          return false;
+        }
+
+        // Hide non-boosted if onlyBoosted checked
+        if (filterOptions.onlyBoosted && !selectVaultIsBoostedForFilter(state, vault.id)) {
+          return false;
+        }
+
+        // Vault Category
+        if (filterOptions.vaultCategory.length) {
+          if (
+            filterOptions.vaultCategory.includes('bluechip') &&
+            !selectIsVaultBlueChip(state, vault.id)
+          ) {
+            return false;
+          }
+          if (
+            filterOptions.vaultCategory.includes('stable') &&
+            !selectIsVaultStable(state, vault.id)
+          ) {
+            return false;
+          }
+          if (
+            filterOptions.vaultCategory.includes('correlated') &&
+            !selectIsVaultCorrelated(state, vault.id)
+          ) {
+            return false;
+          }
+        }
+
+        // User category: 'Saved'
+        if (filterOptions.userCategory === 'saved' && !selectIsVaultIdSaved(state, vault.id)) {
+          return false;
+        }
+
+        // User category: 'My Positions'
+        if (filterOptions.userCategory === 'deposited') {
+          // + onlyUnstakedClm
+          if (filterOptions.onlyUnstakedClm) {
+            if (
+              !isCowcentratedLikeVault(vault) ||
+              selectUserBalanceOfToken(state, vault.chainId, vault.depositTokenAddress).isZero()
+            ) {
+              return false;
+            }
+          } else if (!selectHasUserDepositInVault(state, vault.id)) {
+            return false;
+          }
         }
 
         // Platform
@@ -160,6 +188,15 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
 
         // Search
         if (searchText.length > 0 && !selectVaultMatchesText(state, vault, searchText)) {
+          return false;
+        }
+
+        // Underlying TVL
+        if (
+          filterOptions.showMinimumUnderlyingTvl &&
+          filterOptions.minimumUnderlyingTvl.gt(0) &&
+          selectVaultUnderlyingTvlUsd(state, vault.id).lt(filterOptions.minimumUnderlyingTvl)
+        ) {
           return false;
         }
 
@@ -200,7 +237,10 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
       }
     }
 
-    return { filtered: filteredVaults.map(v => v.id), sorted: sortedVaultIds };
+    return {
+      filtered: filteredVaults.map(v => v.id),
+      sorted: sortedVaultIds,
+    };
   },
   {
     condition: ({ filtersChanged, sortChanged, dataChanged }) => {
@@ -215,11 +255,9 @@ function applyDefaultSort(
   vaults: VaultEntity[],
   filters: FilteredVaultsState
 ): VaultEntity['id'][] {
-  const vaultIsActiveAndBoosted = new Set<VaultEntity['id']>(
+  const boostedVaultsToPin = new Set<VaultEntity['id']>(
     vaults
-      .filter(
-        vault => vault.status === 'active' && selectIsVaultPreStakedOrBoosted(state, vault.id)
-      )
+      .filter(vault => vault.status === 'active' && selectVaultIsBoostedForSorting(state, vault.id))
       .map(v => v.id)
   );
 
@@ -230,7 +268,7 @@ function applyDefaultSort(
         ? -3
         : vault.status === 'paused'
         ? -2
-        : vaultIsActiveAndBoosted.has(vault.id)
+        : boostedVaultsToPin.has(vault.id)
         ? -1
         : 1
     ).map(v => v.id);
@@ -238,7 +276,7 @@ function applyDefaultSort(
 
   // Surface boosted
   return sortBy(vaults, vault =>
-    vaultIsActiveAndBoosted.has(vault.id)
+    boostedVaultsToPin.has(vault.id)
       ? selectIsVaultPrestakedBoost(state, vault.id)
         ? -Number.MAX_SAFE_INTEGER
         : -selectVaultsActiveBoostPeriodFinish(state, vault.id)
@@ -312,7 +350,7 @@ function applyDepositValueSort(
   return orderBy(
     vaults,
     vault => {
-      const value = selectUserVaultDepositInUsd(state, vault.id);
+      const value = selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vault.id);
       if (!value) {
         return -1;
       }

@@ -1,4 +1,4 @@
-import type { IStrategy, UniswapLikeStrategyOptions, ZapTransactHelpers } from './IStrategy';
+import type { ZapTransactHelpers } from './IStrategy';
 import type {
   InputTokenAmount,
   TokenAmount,
@@ -44,7 +44,6 @@ import {
   onlyAssetCount,
   onlyOneInput,
   onlyOneToken,
-  onlyVaultStandard,
 } from '../helpers/options';
 import { TransactMode } from '../../../reducers/wallet/transact-types';
 import { calculatePriceImpact, highestFeeOrZero, ZERO_FEE } from '../helpers/quotes';
@@ -75,14 +74,16 @@ import type { ChainEntity } from '../../../entities/chain';
 import { fetchZapAggregatorSwap } from '../zap/swap';
 import { walletActions } from '../../../actions/wallet-actions';
 import { Balances } from '../helpers/Balances';
-import { isStandardVault } from '../../../entities/vault';
+import { isStandardVault, type VaultStandard } from '../../../entities/vault';
 import { getVaultWithdrawnFromState } from '../helpers/vault';
 import { BigNumber } from 'bignumber.js';
 import { slipBy, tokenAmountToWei } from '../helpers/amounts';
 import type { IUniswapLikePool } from '../../amm/types';
-import { QuoteChangedError } from './errors';
+import { QuoteChangedError } from './error';
 import { selectAmmById } from '../../../selectors/zap';
 import { type AmmEntityUniswapLike, isUniswapLikeAmm } from '../../../entities/zap';
+import { isStandardVaultType, type IStandardVaultType } from '../vaults/IVaultType';
+import type { UniswapLikeStrategyConfig } from './strategy-configs';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -91,8 +92,8 @@ type ZapHelpers = {
   state: BeefyState;
 };
 
-type PartialWithdrawQuote = Pick<
-  UniswapLikeWithdrawQuote,
+type PartialWithdrawQuote<TAmm extends AmmEntityUniswapLike> = Pick<
+  UniswapLikeWithdrawQuote<UniswapLikeWithdrawOption<TAmm>>,
   'steps' | 'outputs' | 'fee' | 'returned'
 >;
 
@@ -101,14 +102,15 @@ type PartialWithdrawQuote = Pick<
  */
 export abstract class UniswapLikeStrategy<
   TAmm extends AmmEntityUniswapLike,
-  TOptions extends UniswapLikeStrategyOptions<TAmm>
-> implements IStrategy
-{
+  TOptions extends UniswapLikeStrategyConfig<TAmm>
+> {
   protected readonly wnative: TokenErc20;
   protected readonly tokens: TokenEntity[];
   protected readonly lpTokens: TokenErc20[];
   protected readonly native: TokenNative;
   protected readonly amm: TAmm;
+  protected readonly vault: VaultStandard;
+  protected readonly vaultType: IStandardVaultType;
 
   public abstract get id(): TOptions['strategyId'];
 
@@ -116,9 +118,15 @@ export abstract class UniswapLikeStrategy<
 
   constructor(protected options: TOptions, protected helpers: ZapTransactHelpers) {
     // Make sure zap was configured correctly for this vault
-    const { vault, getState } = this.helpers;
+    const { vault, vaultType, getState } = this.helpers;
 
-    onlyVaultStandard(vault);
+    if (!isStandardVault(vault)) {
+      throw new Error('Vault is not a standard vault');
+    }
+    if (!isStandardVaultType(vaultType)) {
+      throw new Error('Vault type is not standard');
+    }
+
     onlyAssetCount(vault, 2);
 
     const state = getState();
@@ -142,6 +150,8 @@ export abstract class UniswapLikeStrategy<
     }
 
     // Configure
+    this.vault = vault;
+    this.vaultType = vaultType;
     this.amm = amm;
     this.native = selectChainNativeToken(state, vault.chainId);
     this.wnative = selectChainWrappedNativeToken(state, vault.chainId);
@@ -150,12 +160,12 @@ export abstract class UniswapLikeStrategy<
   }
 
   async aggregatorTokenSupport() {
-    const { vault, swapAggregator, getState } = this.helpers;
+    const { swapAggregator, getState } = this.helpers;
     const state = getState();
     const tokenSupport = await swapAggregator.fetchTokenSupport(
       this.lpTokens,
-      vault.id,
-      vault.chainId,
+      this.vault.id,
+      this.vault.chainId,
       state,
       this.options.swap
     );
@@ -169,9 +179,7 @@ export abstract class UniswapLikeStrategy<
     });
   }
 
-  async fetchDepositOptions(): Promise<UniswapLikeDepositOption<AmmEntityUniswapLike>[]> {
-    const { vault, vaultType } = this.helpers;
-
+  async fetchDepositOptions(): Promise<UniswapLikeDepositOption<TAmm>[]> {
     // what tokens can we can zap via pool with
     const poolTokens = includeNativeAndWrapped(this.tokens, this.wnative, this.native).map(
       token => ({
@@ -183,37 +191,37 @@ export abstract class UniswapLikeStrategy<
     // what tokens we can zap via swap aggregator with
     const supportedAggregatorTokens = await this.aggregatorTokenSupport();
     const aggregatorTokens = supportedAggregatorTokens
-      .filter(token => !isTokenEqual(token, vaultType.depositToken))
+      .filter(token => !isTokenEqual(token, this.vaultType.depositToken))
       .map(token => ({ token, swap: 'aggregator' as const }));
 
     const zapTokens = [...poolTokens, ...aggregatorTokens];
-    const outputs = [vaultType.depositToken];
+    const outputs = [this.vaultType.depositToken];
 
     return zapTokens.map(({ token, swap }) => {
       const inputs = [token];
-      const selectionId = createSelectionId(vault.chainId, inputs);
+      const selectionId = createSelectionId(this.vault.chainId, inputs);
 
       return {
-        id: createOptionId(this.id, vault.id, selectionId, swap),
-        vaultId: vault.id,
-        chainId: vault.chainId,
+        id: createOptionId(this.id, this.vault.id, selectionId, swap),
+        vaultId: this.vault.id,
+        chainId: this.vault.chainId,
         selectionId,
         selectionOrder: swap === 'pool' ? 2 : 3,
         inputs,
         wantedOutputs: outputs,
         mode: TransactMode.Deposit,
         strategyId: this.id,
-        depositToken: vaultType.depositToken,
+        depositToken: this.vaultType.depositToken,
         lpTokens: this.lpTokens,
         swapVia: swap,
-      };
+      } as const satisfies UniswapLikeDepositOption<TAmm>;
     });
   }
 
   async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: UniswapLikeDepositOption<AmmEntityUniswapLike>
-  ): Promise<UniswapLikeDepositQuote> {
+    option: UniswapLikeDepositOption<TAmm>
+  ): Promise<UniswapLikeDepositQuote<UniswapLikeDepositOption<TAmm>>> {
     const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Uniswap v2 strategy: Quote called with 0 input amount');
@@ -228,9 +236,9 @@ export abstract class UniswapLikeStrategy<
 
   protected async fetchDepositQuotePool(
     input: InputTokenAmount,
-    option: UniswapLikeDepositOption<AmmEntityUniswapLike>
-  ): Promise<UniswapLikeDepositQuote> {
-    const { zap, vault, swapAggregator, getState } = this.helpers;
+    option: UniswapLikeDepositOption<TAmm>
+  ): Promise<UniswapLikeDepositQuote<UniswapLikeDepositOption<TAmm>>> {
+    const { zap, swapAggregator, getState } = this.helpers;
     const { depositToken } = option;
     const state = getState();
     const chain = selectChainById(state, this.native.chainId);
@@ -298,7 +306,7 @@ export abstract class UniswapLikeStrategy<
           fromAmount: input.amount,
           fromToken: input.token,
           toToken: this.wnative,
-          vaultId: vault.id,
+          vaultId: this.vault.id,
         },
         state
       );
@@ -339,8 +347,7 @@ export abstract class UniswapLikeStrategy<
 
     steps.push({
       type: 'deposit',
-      token: depositToken,
-      amount: liquidityAmount,
+      inputs: [{ token: depositToken, amount: liquidityAmount }],
     });
 
     // Build quote outputs
@@ -375,13 +382,13 @@ export abstract class UniswapLikeStrategy<
 
   protected async fetchDepositQuoteAggregator(
     input: InputTokenAmount,
-    option: UniswapLikeDepositOption<AmmEntityUniswapLike>
-  ): Promise<UniswapLikeDepositQuote> {
-    const { zap, vault, swapAggregator, getState } = this.helpers;
+    option: UniswapLikeDepositOption<TAmm>
+  ): Promise<UniswapLikeDepositQuote<UniswapLikeDepositOption<TAmm>>> {
+    const { zap, swapAggregator, getState } = this.helpers;
     const { lpTokens, depositToken } = option;
 
     const state = getState();
-    const chain = selectChainById(state, vault.chainId);
+    const chain = selectChainById(state, this.vault.chainId);
     const pool = await getUniswapLikePool(depositToken.address, this.amm, chain);
 
     // Token allowances
@@ -407,7 +414,7 @@ export abstract class UniswapLikeStrategy<
       isTokenEqual(lpTokenN, input.token)
         ? undefined
         : {
-            vaultId: vault.id,
+            vaultId: this.vault.id,
             fromToken: input.token,
             fromAmount: swapInAmounts[i],
             toToken: lpTokenN,
@@ -500,8 +507,7 @@ export abstract class UniswapLikeStrategy<
 
     steps.push({
       type: 'deposit',
-      token: depositToken,
-      amount: liquidityAmount,
+      inputs: [{ token: depositToken, amount: liquidityAmount }],
     });
 
     // Build quote outputs
@@ -685,13 +691,14 @@ export abstract class UniswapLikeStrategy<
     });
   }
 
-  async fetchDepositStep(quote: UniswapLikeDepositQuote, t: TFunction<Namespace>): Promise<Step> {
-    const { vault, vaultType } = this.helpers;
-
+  async fetchDepositStep(
+    quote: UniswapLikeDepositQuote<UniswapLikeDepositOption<TAmm>>,
+    t: TFunction<Namespace>
+  ): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
-      const chain = selectChainById(state, vault.chainId);
-      const pool = await getUniswapLikePool(vaultType.depositToken.address, this.amm, chain);
+      const chain = selectChainById(state, this.vault.chainId);
+      const pool = await getUniswapLikePool(this.vaultType.depositToken.address, this.amm, chain);
       const slippage = selectTransactSlippage(state);
       const zapHelpers: ZapHelpers = { chain, pool, slippage, state };
       const steps: ZapStep[] = [];
@@ -734,7 +741,7 @@ export abstract class UniswapLikeStrategy<
       minBalances.addMany(buildZap.minOutputs);
 
       // Deposit in vault
-      const vaultDeposit = await vaultType.fetchZapDeposit({
+      const vaultDeposit = await this.vaultType.fetchZapDeposit({
         inputs: [
           {
             token: buildQuote.outputToken,
@@ -818,9 +825,7 @@ export abstract class UniswapLikeStrategy<
     };
   }
 
-  async fetchWithdrawOptions(): Promise<UniswapLikeWithdrawOption<AmmEntityUniswapLike>[]> {
-    const { vault, vaultType } = this.helpers;
-
+  async fetchWithdrawOptions(): Promise<UniswapLikeWithdrawOption<TAmm>[]> {
     // what tokens can we directly zap with
     const poolTokens = includeNativeAndWrapped(this.tokens, this.wnative, this.native).map(
       token => ({
@@ -832,43 +837,43 @@ export abstract class UniswapLikeStrategy<
     // what tokens we can zap via swap aggregator with
     const supportedAggregatorTokens = await this.aggregatorTokenSupport();
     const aggregatorTokens = supportedAggregatorTokens
-      .filter(token => !isTokenEqual(token, vaultType.depositToken))
+      .filter(token => !isTokenEqual(token, this.vaultType.depositToken))
       .map(token => ({ token, swap: 'aggregator' as const }));
 
     const zapTokens = [...poolTokens, ...aggregatorTokens];
-    const inputs = [vaultType.depositToken];
+    const inputs = [this.vaultType.depositToken];
 
-    const breakSelectionId = createSelectionId(vault.chainId, this.lpTokens);
+    const breakSelectionId = createSelectionId(this.vault.chainId, this.lpTokens);
     const breakOption: UniswapLikeWithdrawOption<TAmm> = {
-      id: createOptionId(this.id, vault.id, breakSelectionId),
-      vaultId: vault.id,
-      chainId: vault.chainId,
+      id: createOptionId(this.id, this.vault.id, breakSelectionId),
+      vaultId: this.vault.id,
+      chainId: this.vault.chainId,
       selectionId: breakSelectionId,
       selectionOrder: 2,
       inputs,
       wantedOutputs: this.lpTokens,
       mode: TransactMode.Withdraw,
       strategyId: this.id,
-      depositToken: vaultType.depositToken,
+      depositToken: this.vaultType.depositToken,
       lpTokens: this.lpTokens,
     };
 
     return [breakOption].concat(
       zapTokens.map(({ token, swap }) => {
         const outputs = [token];
-        const selectionId = createSelectionId(vault.chainId, outputs);
+        const selectionId = createSelectionId(this.vault.chainId, outputs);
 
         return {
-          id: createOptionId(this.id, vault.id, selectionId, swap),
-          vaultId: vault.id,
-          chainId: vault.chainId,
+          id: createOptionId(this.id, this.vault.id, selectionId, swap),
+          vaultId: this.vault.id,
+          chainId: this.vault.chainId,
           selectionId,
           selectionOrder: 3,
           inputs,
           wantedOutputs: outputs,
           mode: TransactMode.Withdraw,
           strategyId: this.id,
-          depositToken: vaultType.depositToken,
+          depositToken: this.vaultType.depositToken,
           lpTokens: this.lpTokens,
           swapVia: swap,
         };
@@ -878,29 +883,30 @@ export abstract class UniswapLikeStrategy<
 
   async fetchWithdrawQuote(
     inputs: InputTokenAmount[],
-    option: UniswapLikeWithdrawOption<AmmEntityUniswapLike>
-  ): Promise<UniswapLikeWithdrawQuote> {
+    option: UniswapLikeWithdrawOption<TAmm>
+  ): Promise<UniswapLikeWithdrawQuote<UniswapLikeWithdrawOption<TAmm>>> {
     const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Quote called with 0 input amount');
     }
 
-    const { vault, vaultType, zap, getState } = this.helpers;
-    if (!isStandardVault(vault)) {
-      throw new Error('Vault is not standard');
-    }
+    const { zap, getState } = this.helpers;
 
     // Common: Withdraw from vault
     const state = getState();
     const { withdrawnAmountAfterFeeWei, withdrawnToken, shareToken, sharesToWithdrawWei } =
-      getVaultWithdrawnFromState(input, vault, state);
+      getVaultWithdrawnFromState(input, this.vault, state);
     const withdrawnAmountAfterFee = fromWei(withdrawnAmountAfterFeeWei, withdrawnToken.decimals);
-    const chain = selectChainById(state, vault.chainId);
+    const chain = selectChainById(state, this.vault.chainId);
     const breakSteps: ZapQuoteStep[] = [
       {
         type: 'withdraw',
-        token: vaultType.depositToken,
-        amount: withdrawnAmountAfterFee,
+        outputs: [
+          {
+            token: this.vaultType.depositToken,
+            amount: withdrawnAmountAfterFee,
+          },
+        ],
       },
     ];
 
@@ -935,7 +941,7 @@ export abstract class UniswapLikeStrategy<
     });
     breakSteps.push({
       type: 'split',
-      inputToken: vaultType.depositToken,
+      inputToken: this.vaultType.depositToken,
       inputAmount: withdrawnAmountAfterFee,
       outputs: breakOutputs,
     });
@@ -983,12 +989,12 @@ export abstract class UniswapLikeStrategy<
   }
 
   async fetchWithdrawQuotePool(
-    option: UniswapLikeWithdrawOption<AmmEntityUniswapLike>,
+    option: UniswapLikeWithdrawOption<TAmm>,
     breakOutputs: TokenAmount[],
     breakReturned: TokenAmount[],
     steps: ZapQuoteStep[],
     pool: IUniswapLikePool
-  ): Promise<PartialWithdrawQuote> {
+  ): Promise<PartialWithdrawQuote<TAmm>> {
     const { wantedOutputs, depositToken } = option;
     const wantedOutput = onlyOneToken(wantedOutputs);
     const isWantedOutputNative = isTokenNative(wantedOutput);
@@ -1028,14 +1034,14 @@ export abstract class UniswapLikeStrategy<
 
     const outputAmount = keepTokenAmount.amount.plus(swapOutAmount);
     if (isWantedOutputNative && !nativeAndWrappedAreSame(wantedOutput.chainId)) {
-      const { swapAggregator, getState, vault } = this.helpers;
+      const { swapAggregator, getState } = this.helpers;
       const state = getState();
       const unwrapQuotes = await swapAggregator.fetchQuotes(
         {
           fromAmount: outputAmount,
           fromToken: this.wnative,
           toToken: this.native,
-          vaultId: vault.id,
+          vaultId: this.vault.id,
         },
         state
       );
@@ -1068,11 +1074,11 @@ export abstract class UniswapLikeStrategy<
   }
 
   async fetchWithdrawQuoteAggregator(
-    option: UniswapLikeWithdrawOption<AmmEntityUniswapLike>,
+    option: UniswapLikeWithdrawOption<TAmm>,
     breakOutputs: TokenAmount[],
     breakReturned: TokenAmount[],
     steps: ZapQuoteStep[]
-  ): Promise<PartialWithdrawQuote> {
+  ): Promise<PartialWithdrawQuote<TAmm>> {
     const { wantedOutputs } = option;
     const { swapAggregator, getState } = this.helpers;
     const state = getState();
@@ -1141,13 +1147,14 @@ export abstract class UniswapLikeStrategy<
     };
   }
 
-  async fetchWithdrawStep(quote: UniswapLikeWithdrawQuote, t: TFunction<Namespace>): Promise<Step> {
-    const { vault, vaultType } = this.helpers;
-
+  async fetchWithdrawStep(
+    quote: UniswapLikeWithdrawQuote<UniswapLikeWithdrawOption<TAmm>>,
+    t: TFunction<Namespace>
+  ): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
-      const chain = selectChainById(state, vault.chainId);
-      const pool = await getUniswapLikePool(vaultType.depositToken.address, this.amm, chain);
+      const chain = selectChainById(state, this.vault.chainId);
+      const pool = await getUniswapLikePool(this.vaultType.depositToken.address, this.amm, chain);
       const slippage = selectTransactSlippage(state);
       const zapHelpers: ZapHelpers = { chain, pool, slippage, state };
       const withdrawQuote = quote.steps.find(isZapQuoteStepWithdraw);
@@ -1159,7 +1166,7 @@ export abstract class UniswapLikeStrategy<
       }
 
       // Step 1. Withdraw from vault
-      const vaultWithdraw = await vaultType.fetchZapWithdraw({
+      const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
       });
       if (vaultWithdraw.outputs.length !== 1) {

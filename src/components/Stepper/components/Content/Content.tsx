@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
-import type { ReactNode } from 'react';
-import React, { memo, useMemo } from 'react';
+import { type ReactNode, useCallback } from 'react';
+import { memo, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import type { Step } from '../../../../features/data/reducers/wallet/stepper';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
@@ -123,7 +123,7 @@ export const CloseButton = memo(function CloseButton() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const handleClose = React.useCallback(() => {
+  const handleClose = useCallback(() => {
     dispatch(stepperActions.reset());
     dispatch(walletActions.resetWallet());
   }, [dispatch]);

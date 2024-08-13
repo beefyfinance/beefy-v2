@@ -1,15 +1,11 @@
-import React, { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { memo, useCallback } from 'react';
 import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
 import { Banner } from '../Banner';
 import clm from '../../../images/icons/clm.svg';
-
-const useStyles = makeStyles(styles);
+import { ExternalLink } from '../Links/Links';
 
 export const AnnouncementBanner = memo(function AnnouncementBanner() {
-  const classes = useStyles();
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideClmbanner', false);
+  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideClmbannerprod', false);
 
   const closeBanner = useCallback(() => {
     setHideBanner(true);
@@ -21,24 +17,11 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
 
   return (
     <Banner
-      icon={<img alt="snapshot" src={clm} className={classes.icon} />}
+      icon={<img alt="snapshot" src={clm} width={24} height={24} />}
       text={
         <>
-          {`Beefy's revolutionary Cowcentrated Liquidity Management beta is live! Discover a wealth of
-          features in a whole new approach to liquidity and learn more with our launch`}{' '}
-          <a className={classes.link} target="__blank" href="https://beefy.com/articles/clm/">
-            blog post
-          </a>{' '}
-          and new{' '}
-          <a
-            className={classes.link}
-            href="https://docs.beefy.finance/beefy-products/clm"
-            target="_blank"
-            rel="noopener"
-          >
-            documentation
-          </a>
-          .
+          <ExternalLink href="https://beefy.com/articles/ltipp/">Unleashing the CLM:</ExternalLink>{' '}
+          {`The full functionality of Beefy’s app arrives for CLM across the chains. ZAP, Yield Module, Dashboard, and 12 weeks of ARB incentives kick off to turbocharge CLM yields for users. Cowcentrate your liquidity today!`}
         </>
       }
       onClose={closeBanner}

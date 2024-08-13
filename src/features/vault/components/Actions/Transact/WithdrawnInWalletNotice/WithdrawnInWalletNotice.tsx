@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { AlertInfo } from '../../../../../../components/Alerts';
 import { Trans, useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../store';

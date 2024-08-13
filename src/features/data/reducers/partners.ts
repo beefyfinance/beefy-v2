@@ -7,11 +7,6 @@ import { fetchPartnersConfig } from '../actions/partners';
  * State containing Vault infos
  */
 export type PartnersState = {
-  openCover: {
-    byChainId: {
-      [chainId in ChainEntity['id']]?: boolean;
-    };
-  };
   qidao: {
     byVaultId: {
       [vaultId: VaultEntity['id']]: boolean;
@@ -24,9 +19,6 @@ export type PartnersState = {
   };
 };
 export const initialPartnersState: PartnersState = {
-  openCover: {
-    byChainId: {},
-  },
   qidao: {
     byVaultId: {},
   },
@@ -43,11 +35,6 @@ export const partnersSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchPartnersConfig.fulfilled, (sliceState, action) => {
-      for (const chainId of action.payload.OpenCover) {
-        if (!sliceState.openCover.byChainId[chainId]) {
-          sliceState.openCover.byChainId[chainId] = true;
-        }
-      }
       for (const vaultId of action.payload.QiDao) {
         if (!sliceState.qidao.byVaultId[vaultId]) {
           sliceState.qidao.byVaultId[vaultId] = true;

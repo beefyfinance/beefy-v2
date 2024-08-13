@@ -15,9 +15,16 @@ export const styles = (theme: Theme) => ({
     },
   },
   content: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '1px',
     padding: 0,
-  },
-  cowcentrated: {
     backgroundColor: 'transparent',
+  },
+  container: {
+    backgroundColor: 'transparent',
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '1px',
   },
 });

@@ -1,55 +1,71 @@
-import type { AxiosInstance } from 'axios';
-import axios from 'axios';
 import BigNumber from 'bignumber.js';
 import type {
   AnalyticsPriceResponse,
   AnalyticsUserTimelineResponse,
-  ApiProductPriceRow,
   PriceType,
   TimeBucketType,
+  TimelineConfigClassic,
+  TimelineConfigClm,
+  TimelineConfigDatabarn,
 } from './analytics-types';
+import type { VaultEntity } from '../../entities/vault';
+import type { ChainEntity } from '../../entities/chain';
+import { partition } from 'lodash-es';
+import { getJson } from '../../../../helpers/http';
+import { isFetchNotFoundError } from '../../../../helpers/http/errors';
 
 export class AnalyticsApi {
-  public api: AxiosInstance;
+  protected api: string;
 
   constructor() {
-    this.api = axios.create({
-      baseURL: 'https://databarn.beefy.finance/api',
-    });
+    this.api = import.meta.env.VITE_INVESTOR_URL || 'https://investor-api.beefy.finance';
   }
 
   public async getWalletTimeline(address: string): Promise<AnalyticsUserTimelineResponse> {
     try {
-      const res = await this.api.get('/v1/beefy/timeline', { params: { address } });
-      return res.data;
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        if (err.response?.status === 404) {
-          return [];
-        }
+      const res = await getJson<{
+        result: {
+          clmTimeline: (TimelineConfigClm | TimelineConfigClassic)[];
+          databarnTimeline: TimelineConfigDatabarn[];
+        };
+      }>({ url: `${this.api}/api/v1/timeline`, params: { address } });
+
+      const [clmVaultTimeline, clmTimeline] = partition(
+        res.result.clmTimeline || [],
+        (item): item is TimelineConfigClassic => item.type === 'classic'
+      );
+
+      return {
+        clmTimeline,
+        classicTimeline: clmVaultTimeline,
+        databarnTimeline: res.result.databarnTimeline || [],
+      };
+    } catch (err: unknown) {
+      if (isFetchNotFoundError(err)) {
+        return {
+          clmTimeline: [],
+          classicTimeline: [],
+          databarnTimeline: [],
+        };
       }
       throw err;
     }
   }
 
   public async getVaultPrices(
-    productKey: string,
+    productType: 'vault' | 'boost',
     priceType: PriceType,
-    timeBucket: TimeBucketType
+    timeBucket: TimeBucketType,
+    address: VaultEntity['contractAddress'],
+    chain: ChainEntity['id']
   ): Promise<AnalyticsPriceResponse> {
-    const res = await this.api.get('/v1/price', {
-      params: { product_key: productKey, price_type: priceType, time_bucket: timeBucket },
+    const res = await getJson<{ result: Array<{ ts: number; value: number }> }>({
+      url: `${this.api}/api/v1/prices`,
+      params: { address: address.toLowerCase(), productType, priceType, bucket: timeBucket, chain },
     });
 
-    // [datetime, open, high, low, close]
-    const datetimeIdx = 0;
-    const openIdx = 1;
-
-    return res.data.map(
-      (row): ApiProductPriceRow => ({
-        date: new Date(row[datetimeIdx]),
-        value: new BigNumber(row[openIdx]),
-      })
-    );
+    return res.result.map(row => {
+      return { date: new Date(row.ts * 1000), value: new BigNumber(row.value) };
+    });
   }
 }

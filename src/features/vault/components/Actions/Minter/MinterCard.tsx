@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import type { VaultEntity } from '../../../../data/entities/vault';
 import type { MinterEntity } from '../../../../data/entities/minter';
 import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loader';
@@ -7,10 +7,10 @@ import { initMinterForm } from '../../../../data/actions/scenarios';
 import { selectMinterById } from '../../../../data/selectors/minters';
 import MintBurnCard from './MintBurnCard';
 import { useAppSelector, useAppStore } from '../../../../../store';
-import { isFulfilled } from '../../../../data/reducers/data-loader-types';
 import { LoadingIndicator } from '../../../../../components/LoadingIndicator';
 import { Card } from '../../Card';
 import { makeStyles } from '@material-ui/core';
+import { isLoaderFulfilled } from '../../../../data/selectors/data-loader-helpers';
 
 const useStyles = makeStyles(() => ({
   loadingCardContainer: {
@@ -30,8 +30,8 @@ export const MinterCard = memo(function MinterCard({ vaultId, minterId }: Minter
     return (
       selectIsAddressBookLoaded(state, minter.chainId) &&
       minterChain &&
-      isFulfilled(minterChain.contractData) &&
-      isFulfilled(state.ui.dataLoader.global.minterForm)
+      isLoaderFulfilled(minterChain.contractData) &&
+      isLoaderFulfilled(state.ui.dataLoader.global.minterForm)
     );
   });
   const walletAddress = useAppSelector(state =>

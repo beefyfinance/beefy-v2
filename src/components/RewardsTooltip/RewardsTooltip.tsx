@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
 import type { VaultEntity } from '../../features/data/entities/vault';
@@ -6,7 +6,7 @@ import { Tooltip } from '../Tooltip';
 import { AssetsImage } from '../AssetsImage';
 import { useAppSelector } from '../../store';
 import { useTranslation } from 'react-i18next';
-import { selectUserRewardsByVaultId } from '../../features/data/selectors/balance';
+import { selectDashboardUserRewardsByVaultId } from '../../features/data/selectors/balance';
 import type { TokenEntity } from '../../features/data/entities/token';
 import type BigNumber from 'bignumber.js';
 import { formatTokenDisplayCondensed, formatLargeUsd } from '../../helpers/format';
@@ -28,7 +28,7 @@ export const RewardsTooltip = memo<RewardsTooltipProps>(function RewardsTooltip(
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const { rewards, rewardsTokens } = useAppSelector(state =>
-    selectUserRewardsByVaultId(state, vaultId, walletAddress)
+    selectDashboardUserRewardsByVaultId(state, vaultId, walletAddress)
   );
 
   if (rewards.length === 0) {

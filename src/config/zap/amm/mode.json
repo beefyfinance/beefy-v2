@@ -1,0 +1,14 @@
+[
+  {
+    "id": "mode-velodrome-v2",
+    "name": "Velodrome",
+    "type": "solidly",
+    "routerAddress": "0x3a63171DD9BebF4D07BC782FECC7eb0b890C2A45",
+    "factoryAddress": "not-used",
+    "pairInitHash": "not-used",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "30",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
+  }
+]

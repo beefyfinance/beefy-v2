@@ -291,6 +291,54 @@ export const BeefyV2AppMulticallAbi = [
     inputs: [
       {
         internalType: 'address[]',
+        name: 'govVaults',
+        type: 'address[]',
+      },
+    ],
+    name: 'getGovVaultMultiInfo',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'totalSupply',
+            type: 'uint256',
+          },
+          {
+            components: [
+              {
+                internalType: 'address',
+                name: 'rewardAddress',
+                type: 'address',
+              },
+              {
+                internalType: 'uint256',
+                name: 'rate',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
+                name: 'periodFinish',
+                type: 'uint256',
+              },
+            ],
+            internalType: 'struct RewardInfo[]',
+            name: 'rewards',
+            type: 'tuple[]',
+          },
+        ],
+        internalType: 'struct GovVaultMultiInfo[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address[]',
         name: 'tokens',
         type: 'address[]',
       },

@@ -1,7 +1,4 @@
-import axios from 'axios';
-import Web3 from 'web3';
 import { chainRpcs, getVaultsForChain } from './common/config';
-
 const explorerApiUrls = {
   cronos: 'api.cronoscan.com/api',
   bsc: 'api.bscscan.com/api',
@@ -22,21 +19,28 @@ const explorerApiUrls = {
   kava: 'explorer.kava.io/api',
   ethereum: 'api.etherscan.io/api',
   canto: 'tuber.build/api',
+  base: 'api.basescan.org/api',
 };
 
 const blockScoutChains = new Set(['fuse', 'metis', 'emerald', 'aurora', 'kava', 'canto']);
 const harmonyRpcChains = new Set(['one']);
 
 const getCreationTimestamp = async (vaultAddress, explorerUrl, chain) => {
-  var url =
+  const url =
     `https://${explorerUrl}?module=account&action=txlist&address=${vaultAddress}` +
     `&startblock=1&endblock=99999999&page=1&sort=asc&limit=1${
       !blockScoutChains.has(chain) ? '&offset=1' : ''
     }`;
-  const resp = await axios.get(url);
+  const res = await fetch(url);
 
-  const block = resp.data.result[0].blockNumber;
-  const timestamp = resp.data.result[0].timeStamp;
+  if (!res.ok) {
+    throw new Error(`${res.status} ${res.statusText}`);
+  }
+
+  const data = (await res.json()) as { status: string; message: string; data: any };
+
+  const block = data.data.result[0].blockNumber;
+  const timestamp = data.data.result[0].timeStamp;
 
   console.log(`Creation block: ${block} - timestamp: ${timestamp}`);
   return timestamp;
@@ -44,34 +48,45 @@ const getCreationTimestamp = async (vaultAddress, explorerUrl, chain) => {
 
 const getCreationTimestampHarmonyRpc = async (vaultAddress, chain) => {
   const url = chainRpcs[chain];
-  const resp = await axios.post(url, {
-    jsonrpc: '2.0',
-    method: 'hmyv2_getTransactionsHistory',
-    params: [
-      {
-        address: vaultAddress,
-        pageIndex: 0,
-        pageSize: 1,
-        fullTx: true,
-        txType: 'ALL',
-        order: 'ASC',
-      },
-    ],
-    id: 1,
+
+  const resp = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'hmyv2_getTransactionsHistory',
+      params: [
+        {
+          address: vaultAddress,
+          pageIndex: 0,
+          pageSize: 1,
+          fullTx: true,
+          txType: 'ALL',
+          order: 'ASC',
+        },
+      ],
+      id: 1,
+    }),
   });
 
-  if (
-    !resp.data ||
-    resp.data.id !== 1 ||
-    !resp.data.result ||
-    !resp.data.result.transactions ||
-    resp.data.result.transactions.length !== 1
-  ) {
-    console.dir(resp.data, { depth: null });
+  if (!resp.ok) {
     throw new Error('Malformed response');
   }
 
-  const tx0 = resp.data.result.transactions[0];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data: any = await resp.json();
+
+  if (
+    !data ||
+    data.id !== 1 ||
+    !data.result ||
+    !data.result.transactions ||
+    data.result.transactions.length !== 1
+  ) {
+    console.dir(resp, { depth: null });
+    throw new Error('Malformed response');
+  }
+
+  const tx0 = data.result.transactions[0];
   return tx0.timestamp;
 };
 

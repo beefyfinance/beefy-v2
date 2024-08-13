@@ -10,11 +10,15 @@ import {
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact';
 import type {
+  GovComposerZapWithdrawQuote,
   GovVaultWithdrawQuote,
   TransactOption,
   TransactQuote,
 } from '../../../../../data/apis/transact/transact-types';
-import { isGovVaultWithdrawQuote } from '../../../../../data/apis/transact/transact-types';
+import {
+  isGovComposerWithdrawQuote,
+  isGovVaultWithdrawQuote,
+} from '../../../../../data/apis/transact/transact-types';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 import { PriceImpactNotice } from '../PriceImpactNotice';
 import { transactSteps, transactStepsClaimGov } from '../../../../../data/actions/transact';
@@ -27,13 +31,19 @@ import {
   selectVaultById,
 } from '../../../../../data/selectors/vaults';
 import { type ActionButtonProps, ActionConnectSwitch } from '../CommonActions';
-import { selectGovVaultPendingRewardsInToken } from '../../../../../data/selectors/balance';
-import { isGovVault, type VaultGov } from '../../../../../data/entities/vault';
+import { selectGovVaultPendingRewards } from '../../../../../data/selectors/balance';
+import {
+  isCowcentratedLikeVault,
+  isGovVault,
+  type VaultGov,
+} from '../../../../../data/entities/vault';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { GlpWithdrawNotice } from '../GlpNotices';
 import { ScreamAvailableLiquidityNotice } from '../ScreamAvailableLiquidityNotice';
 import { NotEnoughNotice } from '../NotEnoughNotice';
 import { WithdrawFees } from '../VaultFees';
+import { selectWalletAddress } from '../../../../../data/selectors/wallet';
+import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton';
 
 const useStyles = makeStyles(styles);
 
@@ -66,8 +76,12 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
   const vault = useAppSelector(state => selectGovVaultById(state, vaultId));
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
+
   const showWithdraw =
-    quote && isGovVaultWithdrawQuote(quote) && quoteStatus === TransactStatus.Fulfilled;
+    quote &&
+    (isGovVaultWithdrawQuote(quote) || isGovComposerWithdrawQuote(quote)) &&
+    quoteStatus === TransactStatus.Fulfilled;
+  const showClaim = !isCowcentratedLikeVault(vault);
 
   return (
     <>
@@ -82,7 +96,7 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
           <div className={classes.buttons}>
             <ActionWithdrawDisabled />
             <div className={classes.feesContainer}>
-              <ActionClaim vault={vault} />
+              {showClaim ? <ActionClaim vault={vault} /> : null}
               <WithdrawFees />
             </div>
           </div>
@@ -170,6 +184,7 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ optio
             {t(isMaxAll ? 'Transact-WithdrawAll' : 'Transact-Withdraw')}
           </Button>
         </ActionConnectSwitch>
+        {import.meta.env.DEV ? <TenderlyTransactButton option={option} quote={quote} /> : null}
         <WithdrawFees />
       </div>
     </div>
@@ -177,7 +192,7 @@ const ActionWithdraw = memo<ActionWithdrawProps>(function ActionWithdraw({ optio
 });
 
 type ActionClaimWithdrawProps = {
-  quote: GovVaultWithdrawQuote;
+  quote: GovVaultWithdrawQuote | GovComposerZapWithdrawQuote;
   vault: VaultGov;
 } & ActionButtonProps;
 const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimWithdraw({
@@ -199,6 +214,7 @@ const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimW
 
   const isDisabled =
     isTxInProgress || isDisabledByPriceImpact || isDisabledByConfirm || isDisabledByNotEnoughInput;
+  const showClaim = !isCowcentratedLikeVault(vault);
 
   const handleWithdraw = useCallback(() => {
     dispatch(transactSteps(quote, t));
@@ -225,17 +241,18 @@ const ActionClaimWithdraw = memo<ActionClaimWithdrawProps>(function ActionClaimW
           >
             {t(
               isMaxAll
-                ? quote.outputs.length > 1
-                  ? 'Transact-ClaimWithdrawAll'
+                ? quote.outputs.length > 1 && showClaim
+                  ? 'Transact-Claim-WithdrawAll'
                   : 'Transact-WithdrawAll'
                 : 'Transact-Withdraw'
             )}
           </Button>
           <div className={classes.feesContainer}>
-            <ActionClaim vault={vault} />
+            {showClaim ? <ActionClaim vault={vault} /> : null}
             <WithdrawFees />
           </div>
         </ActionConnectSwitch>
+        {import.meta.env.DEV ? <TenderlyTransactButton option={option} quote={quote} /> : null}
       </div>
     </div>
   );
@@ -247,11 +264,14 @@ type ActionClaimProps = {
 const ActionClaim = memo<ActionClaimProps>(function ActionClaim({ vault }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const walletAddress = useAppSelector(selectWalletAddress);
   const pendingRewards = useAppSelector(state =>
-    selectGovVaultPendingRewardsInToken(state, vault.id)
+    selectGovVaultPendingRewards(state, vault.id, walletAddress)
   );
   const isTxInProgress = useAppSelector(selectIsStepperStepping);
-  const isDisabled = isTxInProgress || pendingRewards.lte(BIG_ZERO);
+  const isDisabled = useMemo(() => {
+    return isTxInProgress || !pendingRewards.some(r => r.amount.gt(BIG_ZERO));
+  }, [pendingRewards, isTxInProgress]);
   const handleClaim = useCallback(() => {
     dispatch(transactStepsClaimGov(vault, t));
   }, [dispatch, vault, t]);
@@ -264,7 +284,7 @@ const ActionClaim = memo<ActionClaimProps>(function ActionClaim({ vault }) {
       borderless={true}
       onClick={handleClaim}
     >
-      {t('Transact-ClaimRewards')}
+      {t('Transact-Claim-RewardsOnly')}
     </Button>
   );
 });

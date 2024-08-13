@@ -2,7 +2,7 @@ import { Collapse, IconButton, InputBase, makeStyles } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import type BigNumber from 'bignumber.js';
 import clsx from 'clsx';
-import React, { memo, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button';
 import { formatTokenDisplayCondensed, formatTokenDisplay } from '../../../../../../helpers/format';
@@ -11,7 +11,6 @@ import { initBoostForm } from '../../../../../data/actions/scenarios';
 import { startStepper } from '../../../../../data/actions/stepper';
 import { walletActions } from '../../../../../data/actions/wallet-actions';
 import type { BoostEntity } from '../../../../../data/entities/boost';
-import { isFulfilled } from '../../../../../data/reducers/data-loader-types';
 import { boostActions } from '../../../../../data/reducers/wallet/boost';
 import { stepperActions } from '../../../../../data/reducers/wallet/stepper';
 import {
@@ -28,6 +27,7 @@ import { selectIsApprovalNeededForBoostStaking } from '../../../../../data/selec
 import { styles } from './styles';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
+import { isLoaderFulfilled } from '../../../../../data/selectors/data-loader-helpers';
 
 const useStyles = makeStyles(styles);
 
@@ -52,12 +52,12 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
   const boost = useAppSelector(state => selectBoostById(state, boostId));
   const vault = useAppSelector(state => selectStandardVaultById(state, boost.vaultId));
   const formState = useAppSelector(state => state.ui.boost);
-  const spenderAddress = boost.earnContractAddress;
+  const spenderAddress = boost.contractAddress;
   const needsApproval = useAppSelector(state =>
     selectIsApprovalNeededForBoostStaking(state, spenderAddress)
   );
   const mooToken = useAppSelector(state =>
-    selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
+    selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress)
   );
   const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
   const boostPendingRewards = useAppSelector(state =>
@@ -67,7 +67,7 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
   const formReady = useAppSelector(
     state =>
       selectIsAddressBookLoaded(state, boost.chainId) &&
-      isFulfilled(state.ui.dataLoader.global.boostForm)
+      isLoaderFulfilled(state.ui.dataLoader.global.boostForm)
   );
   const walletAddress = useAppSelector(state =>
     selectIsWalletKnown(state) ? selectWalletAddress(state) : undefined
@@ -87,7 +87,7 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
 
   // initialize our form
   const store = useAppStore();
-  React.useEffect(() => {
+  useEffect(() => {
     if (open) {
       initBoostForm(store, boostId, type, walletAddress);
     }

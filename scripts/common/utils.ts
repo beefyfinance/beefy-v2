@@ -1,16 +1,25 @@
-import { getAddress } from '@ethersproject/address';
+import { Address, getAddress } from 'viem';
 
 const trimReg = /(^\s*)|(\s*$)/g;
 
-export function isValidChecksumAddress(address) {
-  try {
-    return address === getAddress(address);
-  } catch {}
+export function isValidChecksumAddress(address: unknown): address is Address {
+  if (typeof address !== 'string') {
+    return false;
+  }
 
-  return false;
+  try {
+    const checksumAddress = getAddress(address);
+    return address === checksumAddress;
+  } catch {
+    return false;
+  }
 }
 
-export function maybeChecksumAddress(address) {
+export function maybeChecksumAddress(address: unknown): Address | false {
+  if (typeof address !== 'string') {
+    return false;
+  }
+
   try {
     return getAddress(address);
   } catch {}
@@ -87,6 +96,7 @@ export async function sleep(ms: number): Promise<void> {
 }
 
 export type NonEmptyArray<T> = [T, ...T[]];
+
 export function isNonEmptyArray<T>(arr: T[]): arr is NonEmptyArray<T> {
   return arr.length > 0;
 }

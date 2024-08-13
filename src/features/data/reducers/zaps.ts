@@ -26,11 +26,13 @@ export type ZapsState = {
    * Swap aggregator configs for each chain
    */
   aggregators: {
+    allIds: SwapAggregatorEntity['id'][];
     byId: {
       [aggregatorId: string]: SwapAggregatorEntity;
     };
     byChainId: {
       [chainId in ChainEntity['id']]?: {
+        allIds: SwapAggregatorEntity['id'][];
         byType: {
           [aggregatorType in SwapAggregatorEntity['type']]?: SwapAggregatorEntity['id'];
         };
@@ -88,6 +90,7 @@ const initialZapsState: ZapsState = {
     byChainId: {},
   },
   aggregators: {
+    allIds: [],
     byId: {},
     byChainId: {},
   },
@@ -122,16 +125,25 @@ export const zapsSlice = createSlice({
       .addCase(fetchZapSwapAggregatorsAction.fulfilled, (sliceState, action) => {
         for (const aggregator of action.payload.aggregators) {
           // Aggregator
-          sliceState.aggregators.byId[aggregator.id] = aggregator;
+          if (!sliceState.aggregators.byId[aggregator.id]) {
+            sliceState.aggregators.byId[aggregator.id] = aggregator;
+            sliceState.aggregators.allIds.push(aggregator.id);
+          } else {
+            console.warn(`Ignoring duplicate aggregator id ${aggregator.id}`);
+          }
 
           let aggByChainId = sliceState.aggregators.byChainId[aggregator.chainId];
           if (!aggByChainId) {
-            aggByChainId = sliceState.aggregators.byChainId[aggregator.chainId] = { byType: {} };
+            aggByChainId = sliceState.aggregators.byChainId[aggregator.chainId] = {
+              allIds: [],
+              byType: {},
+            };
           }
 
           let aggByType = aggByChainId.byType[aggregator.type];
           if (!aggByType) {
             aggByType = aggByChainId.byType[aggregator.type] = aggregator.id;
+            aggByChainId.allIds.push(aggregator.id);
           } else {
             console.warn(
               `Ignoring duplicate aggregator type ${aggregator.type} for chain ${aggregator.chainId}`
@@ -153,8 +165,8 @@ export const zapsSlice = createSlice({
         sliceState.vaults.byId = Object.values(action.payload.byChainId)
           .flat()
           .reduce((acc, vault) => {
-            if (vault.type === 'standard' && isNonEmptyArray(vault.zaps)) {
-              acc[vault.id] = true;
+            if (isNonEmptyArray(vault.entity.zaps)) {
+              acc[vault.entity.id] = true;
             }
             return acc;
           }, {} as Record<VaultEntity['id'], boolean>);

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import type { ChangeEvent } from 'react';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { SortColumnHeader } from '../../../../../../components/SortColumnHeader';
 import { styles } from './styles';
 import type { SortedOptions } from '../../hook';
@@ -30,6 +30,7 @@ export const Filter = memo<FilterProps>(function Filter({
         handleSearchText={handleSearchText}
         searchText={searchText}
         handleClearText={handleClearText}
+        className={classes.searchWidth}
       />
       <SortColumns sortOptions={sortOptions} handleSort={handleSort} />
     </div>

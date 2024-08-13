@@ -1,8 +1,7 @@
 import type { PopperPlacementType } from '@material-ui/core';
 import { makeStyles, Popper } from '@material-ui/core';
-import React, { memo, type ReactNode, useState } from 'react';
+import { memo, type MouseEvent, type ReactNode, useState } from 'react';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-
 import { styles } from './styles';
 import { HelpOutline } from '@material-ui/icons';
 import clsx from 'clsx';
@@ -27,7 +26,7 @@ const _Popover = ({
   const [arrowRef, setArrowRef] = useState<HTMLSpanElement | null>(null);
   const [_placement, setPlacement] = useState<PopperPlacementType>(placement);
 
-  const handlePopoverOpen = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handlePopoverOpen = (event: MouseEvent<HTMLDivElement>) => {
     setAnchorEl(event.currentTarget);
     setIsOpen(prev => !prev);
     setPlacement(placement);

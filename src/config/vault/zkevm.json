@@ -27,8 +27,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0x65da876a95cd5b6a5880710628c436409b1b29fa00000000000000000000005b/add-liquidity",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0x65da876a95cd5b6a5880710628c436409b1b29fa00000000000000000000005b/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/zkevm/v2/0x65da876a95cd5b6a5880710628c436409b1b29fa00000000000000000000005b/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/zkevm/v2/0x65da876a95cd5b6a5880710628c436409b1b29fa00000000000000000000005b/remove-liquidity",
     "network": "zkevm"
   },
   {
@@ -44,7 +44,9 @@
     "earnContractAddress": "0xae20768099625130b2659D805B448ECe5ff998FD",
     "oracle": "lps",
     "oracleId": "balancer-zkevm-gyro-reth-eth",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
+    "retiredAt": 1715784934,
     "createdAt": 1701092834,
     "platformId": "balancer",
     "assets": ["rETH", "ETH"],
@@ -202,7 +204,9 @@
     "earnContractAddress": "0xdA86D4168e63111055b6ffEf0AbA1ca5A9aD98B1",
     "oracle": "lps",
     "oracleId": "quick-zk-qlp",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1720460147,
+    "retireReason": "rewards",
     "createdAt": 1691170243,
     "platformId": "quickswap",
     "assets": ["WETH", "WBTC", "MATIC", "USDC", "USDT", "DAI"],
@@ -375,8 +379,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0x1d0a8a31cdb04efac3153237526fb15cc65a252000000000000000000000000f/add-liquidity",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0x1d0a8a31cdb04efac3153237526fb15cc65a252000000000000000000000000f/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/zkevm/v2/0x1d0a8a31cdb04efac3153237526fb15cc65a252000000000000000000000000f/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/zkevm/v2/0x1d0a8a31cdb04efac3153237526fb15cc65a252000000000000000000000000f/remove-liquidity",
     "network": "zkevm"
   },
   {
@@ -407,8 +411,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0xdf725fde6e89981fb30d9bf999841ac2c160b512000000000000000000000010/add-liquidity",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0xdf725fde6e89981fb30d9bf999841ac2c160b512000000000000000000000010/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/zkevm/v2/0xdf725fde6e89981fb30d9bf999841ac2c160b512000000000000000000000010/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/zkevm/v2/0xdf725fde6e89981fb30d9bf999841ac2c160b512000000000000000000000010/remove-liquidity",
     "network": "zkevm"
   },
   {
@@ -439,8 +443,8 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0xe1f2c039a68a216de6dd427be6c60decf405762a00000000000000000000000e/add-liquidity",
-    "removeLiquidityUrl": "https://app.balancer.fi/#/zkevm/pool/0xe1f2c039a68a216de6dd427be6c60decf405762a00000000000000000000000e/withdraw",
+    "addLiquidityUrl": "https://balancer.fi/pools/zkevm/v2/0xe1f2c039a68a216de6dd427be6c60decf405762a00000000000000000000000e/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/zkevm/v2/0xe1f2c039a68a216de6dd427be6c60decf405762a00000000000000000000000e/remove-liquidity",
     "network": "zkevm"
   }
 ]

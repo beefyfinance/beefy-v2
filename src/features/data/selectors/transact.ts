@@ -1,16 +1,11 @@
 import type { BeefyState } from '../../../redux-types';
 import { createSelector } from '@reduxjs/toolkit';
 import type { ChainEntity } from '../entities/chain';
-import { first, orderBy } from 'lodash-es';
+import { orderBy } from 'lodash-es';
 import { selectTokenPriceByAddress } from './tokens';
 import { selectWalletAddressIfKnown } from './wallet';
+import { selectUserBalanceOfToken, selectUserVaultBalanceInDepositToken } from './balance';
 import {
-  selectUserBalanceOfToken,
-  selectUserVaultDepositInDepositTokenExcludingBoostsBridged,
-} from './balance';
-import {
-  isCowcentratedDepositQuote,
-  type InputTokenAmount,
   type TokenAmount,
   type TransactOption,
   type TransactQuote,
@@ -19,12 +14,25 @@ import BigNumber from 'bignumber.js';
 import { TransactStatus } from '../reducers/wallet/transact-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { valueOrThrow } from '../utils/selector-utils';
-import type { TokenEntity } from '../entities/token';
+import {
+  selectVaultHasActiveGovRewards,
+  selectVaultHasActiveMerklCampaigns,
+  selectVaultHasActiveStellaSwapCampaigns,
+} from './rewards';
+import {
+  selectConnectedUserHasGovRewardsForVault,
+  selectConnectedUserHasMerklRewardsForVault,
+  selectConnectedUserHasStellaSwapRewardsForVault,
+} from './user-rewards';
+import { selectVaultById } from './vaults';
+import { isSingleGovVault } from '../entities/vault';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
   valueOrThrow(state.ui.transact.vaultId, 'No transact vaultId found');
 export const selectTransactVaultIdOrUndefined = (state: BeefyState) => state.ui.transact.vaultId;
+export const selectTransactPendingVaultIdOrUndefined = (state: BeefyState) =>
+  state.ui.transact.pendingVaultId;
 
 export const selectTransactMode = (state: BeefyState) => state.ui.transact.mode;
 export const selectTransactSlippage = (state: BeefyState) => state.ui.transact.swapSlippage;
@@ -40,16 +48,15 @@ export const selectTransactOptionsVaultId = (state: BeefyState) =>
   state.ui.transact.options.vaultId;
 export const selectTransactOptionsMode = (state: BeefyState) => state.ui.transact.options.mode;
 
-export const selectTransactInputAmount = (state: BeefyState) => state.ui.transact.inputAmount;
-export const selectTransactInputMax = (state: BeefyState) => state.ui.transact.inputMax;
+export const selectTransactInputAmounts = (state: BeefyState) => state.ui.transact.inputAmounts;
 
-export const selectTransactDualInputAmount = (state: BeefyState, index: number) =>
-  state.ui.transact.dualInputAmounts[index] ?? BIG_ZERO;
-export const selectTransactDualInputAmounts = (state: BeefyState) =>
-  state.ui.transact.dualInputAmounts;
-export const selectTransactDualMaxAmount = (state: BeefyState, index: number) =>
-  state.ui.transact.dualInputMax[index] ?? false;
-export const selectTransactDualMaxAmounts = (state: BeefyState) => state.ui.transact.dualInputMax;
+export const selectTransactInputMaxes = (state: BeefyState) => state.ui.transact.inputMaxes;
+
+export const selectTransactInputIndexAmount = (state: BeefyState, index: number) =>
+  state.ui.transact.inputAmounts[index] || BIG_ZERO;
+
+export const selectTransactInputIndexMax = (state: BeefyState, index: number) =>
+  state.ui.transact.inputMaxes[index] || false;
 
 export const selectTransactSelectedChainId = (state: BeefyState) =>
   state.ui.transact.selectedChainId;
@@ -107,50 +114,21 @@ export const selectTransactSelected = createSelector(
 
 export const selectTransactDepositInputAmountExceedsBalance = (state: BeefyState) => {
   const selection = selectTransactSelected(state);
-  const depositToken = selection.tokens[0];
-  const userBalance = selectUserBalanceOfToken(state, depositToken.chainId, depositToken.address);
-  const value = selectTransactInputAmount(state);
-
-  return value.gt(userBalance);
-};
-
-export const selectTransactDepositInputAmountsExceedBalances = (state: BeefyState) => {
-  const selection = selectTransactSelected(state);
-  const depositTokens = selection.tokens;
-  const inputAmounts = selectTransactDualInputAmounts(state);
-  const userBalances = depositTokens.map(token =>
+  const inputAmounts = selectTransactInputAmounts(state);
+  const userBalances = selection.tokens.map(token =>
     selectUserBalanceOfToken(state, token.chainId, token.address)
   );
-  return depositTokens.some((_, index) => inputAmounts[index].gt(userBalances[index]));
+  return selection.tokens.some((_, index) =>
+    (inputAmounts[index] || BIG_ZERO).gt(userBalances[index])
+  );
 };
 
 export const selectTransactWithdrawInputAmountExceedsBalance = (state: BeefyState) => {
   const vaultId = selectTransactVaultId(state);
-  const userBalance = selectUserVaultDepositInDepositTokenExcludingBoostsBridged(state, vaultId);
-  const value = selectTransactInputAmount(state);
+  const userBalance = selectUserVaultBalanceInDepositToken(state, vaultId);
+  const value = selectTransactInputIndexAmount(state, 0);
 
   return value.gt(userBalance);
-};
-
-export const selectTransactCowcentratedDepositNotSingleSideAllowed = (state: BeefyState) => {
-  const quote = selectTransactSelectedQuote(state);
-
-  const noSingleSideAllowed =
-    isCowcentratedDepositQuote(quote) &&
-    quote.outputs.every(inputToken => inputToken.amount.eq(BIG_ZERO));
-
-  let inputToken: InputTokenAmount<TokenEntity> | null = null;
-  let neededToken: InputTokenAmount<TokenEntity> | null = null;
-
-  for (const input of quote.inputs) {
-    if (input.amount.gt(BIG_ZERO)) {
-      inputToken = input;
-    } else {
-      neededToken = input;
-    }
-  }
-
-  return { noSingleSideAllowed, inputToken, neededToken };
 };
 
 export const selectTransactTokenChains = (state: BeefyState) =>
@@ -235,31 +213,39 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
   );
 
   return orderBy(
-    options
-      .filter(option => option.tokens.length === 1) // can only deposit 1 token
-      .map(option => {
-        const tokens = option.tokens;
-        const token = first(tokens);
-        if (!token) {
-          throw new Error('Missing token from options');
-        }
+    options.map(option => {
+      const tokens = option.tokens;
+      const balances = tokens.map(token =>
+        selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress)
+      );
+      const prices = tokens.map(token =>
+        selectTokenPriceByAddress(state, token.chainId, token.address)
+      );
+      const balanceValues = balances.map((balance, index) => balance.multipliedBy(prices[index]));
+      const balanceValueTotal = balanceValues.reduce((acc, value) => acc.plus(value), BIG_ZERO);
 
-        const balance = selectUserBalanceOfToken(
-          state,
-          token.chainId,
-          token.address,
-          walletAddress
-        );
-        const price = selectTokenPriceByAddress(state, token.chainId, token.address);
+      const optionWithBalances = {
+        ...option,
+        balances,
+        prices,
+        balanceValues,
+        balanceValue: balanceValueTotal,
+        balance: undefined,
+        decimals: 0,
+        price: undefined,
+      };
 
+      if (tokens.length === 1) {
         return {
-          ...option,
-          balance,
-          decimals: token.decimals,
-          price,
-          balanceValue: balance.multipliedBy(price),
+          ...optionWithBalances,
+          balance: balances[0],
+          decimals: tokens[0].decimals,
+          price: prices[0],
         };
-      }),
+      }
+
+      return optionWithBalances;
+    }),
     [o => o.order, o => o.balanceValue.toNumber()],
     ['asc', 'desc']
   );
@@ -306,4 +292,47 @@ export const selectTransactConfirmError = (state: BeefyState) => state.ui.transa
 export const selectTransactConfirmChanges = (state: BeefyState) =>
   state.ui.transact.confirm.changes;
 
-export const selecTransactForceSelection = (state: BeefyState) => state.ui.transact.forceSelection;
+export const selectTransactForceSelection = (state: BeefyState) => state.ui.transact.forceSelection;
+
+export const selectTransactShouldShowClaims = createSelector(
+  selectVaultById,
+  selectVaultHasActiveGovRewards,
+  selectConnectedUserHasGovRewardsForVault,
+  selectVaultHasActiveMerklCampaigns,
+  selectConnectedUserHasMerklRewardsForVault,
+  selectVaultHasActiveStellaSwapCampaigns,
+  selectConnectedUserHasStellaSwapRewardsForVault,
+  (
+    vault,
+    vaultHasActiveGovRewards,
+    userHasUnclaimedGovRewards,
+    vaultHasActiveMerklCampaigns,
+    userHasUnclaimedMerklRewards,
+    vaultHasActiveStellaSwapCampaigns,
+    userHasUnclaimedStellaSwapRewards
+  ) => {
+    // single gov vault do not have periodFinish/rewardRate data
+    return (
+      isSingleGovVault(vault) ||
+      vaultHasActiveGovRewards ||
+      vaultHasActiveMerklCampaigns ||
+      vaultHasActiveStellaSwapCampaigns ||
+      userHasUnclaimedGovRewards ||
+      userHasUnclaimedMerklRewards ||
+      userHasUnclaimedStellaSwapRewards
+    );
+  }
+);
+
+export const selectTransactShouldShowClaimsNotification = createSelector(
+  selectConnectedUserHasGovRewardsForVault,
+  selectConnectedUserHasMerklRewardsForVault,
+  selectConnectedUserHasStellaSwapRewardsForVault,
+  (userHasUnclaimedGovRewards, userHasUnclaimedMerklRewards, userHasUnclaimedStellaSwapRewards) => {
+    return (
+      userHasUnclaimedGovRewards ||
+      userHasUnclaimedMerklRewards ||
+      userHasUnclaimedStellaSwapRewards
+    );
+  }
+);

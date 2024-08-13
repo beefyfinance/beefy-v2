@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { uniqBy } from 'lodash-es';
+import { first, groupBy, uniqBy } from 'lodash-es';
 import type { Action } from 'redux';
 import boostAbi from '../../../config/abi/boost.json';
 import { ERC20Abi } from '../../../config/abi/ERC20Abi';
@@ -11,8 +11,16 @@ import type { BoostEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenEqual, isTokenNative } from '../entities/token';
-import type { VaultCowcentrated, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
-import { isCowcentratedLiquidityVault, isStandardVault } from '../entities/vault';
+import {
+  isCowcentratedLikeVault,
+  isCowcentratedVault,
+  isGovVault,
+  isStandardVault,
+  type VaultCowcentrated,
+  type VaultEntity,
+  type VaultGov,
+  type VaultStandard,
+} from '../entities/vault';
 import {
   createWalletActionErrorAction,
   createWalletActionPendingAction,
@@ -26,22 +34,20 @@ import {
 import {
   selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
-  selectGovVaultPendingRewardsInToken,
-  selectGovVaultRewardsTokenEntity,
+  selectGovVaultPendingRewards,
   selectGovVaultUserStakedBalanceInDepositToken,
 } from '../selectors/balance';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
   selectErc20TokenByAddress,
-  selectIsTokenLoaded,
+  selectGovVaultEarnedTokens,
   selectTokenByAddress,
   selectTokenByAddressOrUndefined,
-  selectTokenById,
+  selectTokenByIdOrUndefined,
 } from '../selectors/tokens';
-import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
+import { selectVaultById } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
-import { oracleAmountToMooAmount } from '../utils/ppfs';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
 import { getGasPriceOptions } from '../utils/gas-utils';
 import type { AbiItem } from 'web3-utils';
@@ -54,9 +60,9 @@ import { BIG_ZERO, toWei, toWeiString } from '../../../helpers/big-number';
 import { updateSteps } from './stepper';
 import { StepContent, stepperActions } from '../reducers/wallet/stepper';
 import type { PromiEvent } from 'web3-core';
-import type { ThunkDispatch } from 'redux-thunk';
+import type { ThunkDispatch } from '@reduxjs/toolkit';
 import { selectOneInchSwapAggregatorForChain, selectZapByChainId } from '../selectors/zap';
-import type { UserlessZapRequest, ZapOrder } from '../apis/transact/zap/types';
+import type { UserlessZapRequest, ZapOrder, ZapStep } from '../apis/transact/zap/types';
 import { ZERO_ADDRESS } from '../../../helpers/addresses';
 import { MultiCall } from 'eth-multicall';
 import { getVaultWithdrawnFromContract } from '../apis/transact/helpers/vault';
@@ -69,7 +75,16 @@ import { viemToWeb3Abi } from '../../../helpers/web3';
 import { BeefyCommonBridgeAbi } from '../../../config/abi/BeefyCommonBridgeAbi';
 import { BeefyZapRouterAbi } from '../../../config/abi/BeefyZapRouterAbi';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
-import { selectTransactSelectedQuote } from '../selectors/transact';
+import { selectTransactSelectedQuote, selectTransactSlippage } from '../selectors/transact';
+import { AngleMerklDistributorAbi } from '../../../config/abi/AngleMerklDistributor';
+import { isDefined } from '../utils/array-utils';
+import { slipAllBy } from '../apis/transact/helpers/amounts';
+import {
+  fetchUserMerklRewardsAction,
+  MERKL_SUPPORTED_CHAINS,
+} from './user-rewards/merkl-user-rewards';
+import { fetchUserStellaSwapRewardsAction } from './user-rewards/stellaswap-user-rewards';
+import { stellaswapRewarderAbi } from '../../../config/abi/StellaSwapRewarder';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -84,6 +99,7 @@ type TxRefreshOnSuccess = {
   minterId?: MinterEntity['id'];
   vaultId?: VaultEntity['id'];
   migrationId?: MigrationConfig['id'];
+  rewards?: boolean;
   clearInput?: boolean;
 };
 
@@ -147,6 +163,7 @@ function txMined(
       vaultId,
       migrationId,
       clearInput,
+      rewards,
     } = refreshOnSuccess;
 
     dispatch(
@@ -175,6 +192,20 @@ function txMined(
 
     if (clearInput) {
       dispatch(transactActions.clearInput());
+    }
+
+    if (rewards) {
+      // Wait 60s before checking rewards after tx success
+      setTimeout(
+        () =>
+          dispatch(
+            fetchUserMerklRewardsAction({
+              walletAddress,
+              force: true,
+            })
+          ),
+        60 * 1000
+      );
     }
   }
 }
@@ -254,11 +285,11 @@ const migrateUnstake = (
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: vault.earnContractAddress, amount, token: depositToken },
+      { spender: vault.contractAddress, amount, token: depositToken },
       {
         walletAddress: address,
         chainId: vault.chainId,
-        spenderAddress: vault.earnContractAddress,
+        spenderAddress: vault.contractAddress,
         tokens: selectVaultTokensToRefresh(state, vault),
         migrationId,
         vaultId: vault.id,
@@ -280,7 +311,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+    const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.contractAddress);
 
     const native = selectChainNativeToken(state, vault.chainId);
     const isNativeToken = depositToken.id === native.id;
@@ -343,7 +374,7 @@ const v3Deposit = (vault: VaultCowcentrated, amountToken0: BigNumber, amountToke
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contract = new web3.eth.Contract(
       viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
-      vault.earnContractAddress
+      vault.contractAddress
     );
     const tokens = vault.depositTokenAddresses.map(address =>
       selectTokenByAddress(state, vault.chainId, address)
@@ -369,14 +400,14 @@ const v3Deposit = (vault: VaultCowcentrated, amountToken0: BigNumber, amountToke
       dispatch,
       transaction,
       {
-        spender: vault.earnContractAddress,
+        spender: vault.contractAddress,
         amount: selectTransactSelectedQuote(state)?.outputs[0].amount,
         token: depositToken,
       },
       {
         walletAddress: address,
         chainId: vault.chainId,
-        spenderAddress: vault.earnContractAddress,
+        spenderAddress: vault.contractAddress,
         tokens: selectVaultTokensToRefresh(state, vault),
         clearInput: true,
       }
@@ -414,10 +445,7 @@ const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) =
 
     const native = selectChainNativeToken(state, vault.chainId);
     const isNativeToken = depositToken.id === native.id;
-    const contract = new web3.eth.Contract(
-      viemToWeb3Abi(StandardVaultAbi),
-      vault.earnContractAddress
-    );
+    const contract = new web3.eth.Contract(viemToWeb3Abi(StandardVaultAbi), vault.contractAddress);
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
@@ -444,10 +472,10 @@ const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) =
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: vault.earnContractAddress, amount: oracleAmount, token: depositToken },
+      { spender: vault.contractAddress, amount: oracleAmount, token: depositToken },
       {
         chainId: vault.chainId,
-        spenderAddress: vault.earnContractAddress,
+        spenderAddress: vault.contractAddress,
         tokens: selectVaultTokensToRefresh(state, vault),
         walletAddress: address,
         clearInput: true,
@@ -468,35 +496,30 @@ const v3Withdraw = (vault: VaultCowcentrated, withdrawAmount: BigNumber, max: bo
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const chain = selectChainById(state, vault.chainId);
+    const slippage = selectTransactSlippage(state);
 
     const contract = new web3.eth.Contract(
       viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
-      vault.earnContractAddress
+      vault.contractAddress
     );
     const gasPrices = await getGasPriceOptions(chain);
 
     const outputs = selectTransactSelectedQuote(state).outputs;
-
-    const estimatedLiquidity0 = toWeiString(
-      outputs[0].amount.times(0.99),
-      outputs[0].token.decimals
+    const minOutputs = slipAllBy(outputs, slippage);
+    const minOutputsWei = minOutputs.map(output =>
+      toWeiString(output.amount, output.token.decimals)
     );
-    const estimatedLiquidity1 = toWeiString(
-      outputs[1].amount.times(0.99),
-      outputs[1].token.decimals
-    );
-
     const sharesToWithdrawWei = toWeiString(withdrawAmount, 18);
 
     txWallet(dispatch);
     const transaction = (() => {
       if (max) {
         return contract.methods
-          .withdrawAll(estimatedLiquidity0, estimatedLiquidity1)
+          .withdrawAll(minOutputsWei[0], minOutputsWei[1])
           .send({ from: address, ...gasPrices });
       } else {
         return contract.methods
-          .withdraw(sharesToWithdrawWei, estimatedLiquidity0, estimatedLiquidity1)
+          .withdraw(sharesToWithdrawWei, minOutputsWei[0], minOutputsWei[1])
           .send({ from: address, ...gasPrices });
       }
     })();
@@ -505,13 +528,13 @@ const v3Withdraw = (vault: VaultCowcentrated, withdrawAmount: BigNumber, max: bo
       dispatch,
       transaction,
       {
-        spender: vault.earnContractAddress,
+        spender: vault.contractAddress,
         amount: withdrawAmount,
-        token: selectTokenByAddress(state, vault.chainId, vault.earnContractAddress),
+        token: selectTokenByAddress(state, vault.chainId, vault.contractAddress),
       },
       {
         chainId: vault.chainId,
-        spenderAddress: vault.earnContractAddress,
+        spenderAddress: vault.contractAddress,
         tokens: selectVaultTokensToRefresh(state, vault),
         walletAddress: address,
         clearInput: true,
@@ -533,7 +556,7 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
     const inputToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
-    const contractAddr = vault.earnContractAddress;
+    const contractAddr = vault.contractAddress;
     const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const chain = selectChainById(state, vault.chainId);
@@ -572,17 +595,9 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
-    const ppfs = selectVaultPricePerFullShare(state, vault.chainId);
+    const rawAmount = toWei(amount, depositToken.decimals);
 
-    // amount is in oracle token, we need it in moo token
-    const mooAmount = oracleAmountToMooAmount(mooToken, depositToken, ppfs, amount);
-
-    const rawAmount = mooAmount
-      .shiftedBy(mooToken.decimals)
-      .decimalPlaces(0, BigNumber.ROUND_FLOOR);
-
-    const contractAddr = vault.earnContractAddress;
+    const contractAddr = vault.contractAddress;
     const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
@@ -614,15 +629,21 @@ const claimGovVault = (vault: VaultGov) => {
     const state = getState();
     const address = selectWalletAddress(state);
     if (!address) {
-      return;
+      throw new Error(`Wallet not connected`);
     }
 
-    const amount = selectGovVaultPendingRewardsInToken(state, vault.id);
-    const token = selectGovVaultRewardsTokenEntity(state, vault.id);
+    const pendingRewards = selectGovVaultPendingRewards(state, vault.id, address).filter(r =>
+      r.amount.gt(BIG_ZERO)
+    );
+    if (!pendingRewards.length) {
+      throw new Error(`No rewards to claim`);
+    }
+
+    const { amount, token } = pendingRewards[0];
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contractAddr = vault.earnContractAddress;
+    const contractAddr = vault.contractAddress;
 
     const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
     const chain = selectChainById(state, vault.chainId);
@@ -661,7 +682,7 @@ const exitGovVault = (vault: VaultGov) => {
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contractAddr = vault.earnContractAddress;
+    const contractAddr = vault.contractAddress;
 
     const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
 
@@ -707,7 +728,7 @@ const claimBoost = (boost: BoostEntity) => {
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contractAddr = boost.earnContractAddress;
+    const contractAddr = boost.contractAddress;
 
     const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
     const chain = selectChainById(state, vault.chainId);
@@ -742,11 +763,11 @@ const exitBoost = (boost: BoostEntity) => {
 
     const boostAmount = selectBoostUserBalanceInToken(state, boost.id);
     const vault = selectVaultById(state, boost.vaultId);
-    const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+    const token = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contractAddr = boost.earnContractAddress;
+    const contractAddr = boost.contractAddress;
 
     const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
 
@@ -790,9 +811,9 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const vault = selectVaultById(state, boost.vaultId);
-    const inputToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+    const inputToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
 
-    const contractAddr = boost.earnContractAddress;
+    const contractAddr = boost.contractAddress;
     const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const chain = selectChainById(state, vault.chainId);
@@ -831,9 +852,9 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const vault = selectVaultById(state, boost.vaultId);
-    const inputToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+    const inputToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
 
-    const contractAddr = boost.earnContractAddress;
+    const contractAddr = boost.contractAddress;
     const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const chain = selectChainById(state, vault.chainId);
@@ -1090,7 +1111,7 @@ const zapExecuteOrder = (
     const state = getState();
     const address = selectWalletAddress(state);
     if (!address) {
-      return;
+      throw new Error(`No wallet connected`);
     }
 
     const vault = selectVaultById(state, vaultId);
@@ -1101,12 +1122,20 @@ const zapExecuteOrder = (
     }
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
-    const order = {
+    const order: ZapOrder = {
       ...params.order,
+      inputs: params.order.inputs.filter(i => BIG_ZERO.lt(i.amount)), // remove <= zero amounts
       user: address,
       recipient: address,
     };
-    const steps = params.steps;
+    if (!order.inputs.length) {
+      throw new Error('No inputs provided');
+    }
+
+    const steps: ZapStep[] = params.steps;
+    if (!steps.length) {
+      throw new Error('No steps provided');
+    }
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
@@ -1139,6 +1168,153 @@ const zapExecuteOrder = (
         spenderAddress: zap.manager,
         tokens: selectZapTokensToRefresh(state, vault, order),
         clearInput: true,
+        ...(isGovVault(vault) ? { govVaultId: vault.id } : {}),
+      }
+    );
+  });
+};
+
+const claimMerkl = (chainId: ChainEntity['id']) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    txStart(dispatch);
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const distributorAddress = MERKL_SUPPORTED_CHAINS[chainId];
+    if (!distributorAddress) {
+      throw new Error(`No Merkl contract found for chain ${chainId}`);
+    }
+
+    const chain = selectChainById(state, chainId);
+    const native = selectChainNativeToken(state, chainId);
+    const { byChainId } = await dispatch(
+      fetchUserMerklRewardsAction({ walletAddress: address, force: true })
+    ).unwrap();
+    const unclaimedRewards = (byChainId[chain.id] || []).map(({ token, accumulated, proof }) => ({
+      token: token.address,
+      amount: toWeiString(accumulated, token.decimals), // proof requires 'accumulated' amount
+      proof: proof,
+    }));
+    if (!unclaimedRewards.length) {
+      throw new Error('No unclaimed merkl rewards found');
+    }
+
+    const users = new Array<string>(unclaimedRewards.length).fill(address);
+    const tokens = unclaimedRewards.map(reward => reward.token);
+    const amounts = unclaimedRewards.map(reward => reward.amount);
+    const proofs = unclaimedRewards.map(reward => reward.proof);
+
+    const walletApi = await getWalletConnectionApi();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const contract = new web3.eth.Contract(
+      viemToWeb3Abi(AngleMerklDistributorAbi),
+      distributorAddress
+    );
+    const gasPrices = await getGasPriceOptions(chain);
+
+    txWallet(dispatch);
+    const transaction = contract.methods
+      .claim(users, tokens, amounts, proofs)
+      .send({ from: address, ...gasPrices });
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      { amount: BIG_ZERO, token: native }, // TODO fix so these are not required
+      {
+        walletAddress: address,
+        chainId: chainId,
+        spenderAddress: distributorAddress, // TODO fix so these are not required
+        tokens: tokens
+          .map(token => selectTokenByAddressOrUndefined(state, chainId, token))
+          .filter(isDefined),
+        rewards: true,
+      }
+    );
+  });
+};
+
+const claimStellaSwap = (chainId: ChainEntity['id'], vaultId: VaultEntity['id']) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    txStart(dispatch);
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+    if (chainId !== 'moonbeam') {
+      throw new Error(`Can't claimStellaSwap on ${chainId}`);
+    }
+
+    const chain = selectChainById(state, chainId);
+    const native = selectChainNativeToken(state, chainId);
+    const { byVaultId } = await dispatch(
+      fetchUserStellaSwapRewardsAction({ walletAddress: address, vaultId, force: true })
+    ).unwrap();
+    const vaultRewards = byVaultId[vaultId];
+    if (!vaultRewards) {
+      throw new Error(`No unclaimed stellaswap rewards found for ${vaultId}`);
+    }
+    const unclaimedRewards = vaultRewards
+      .filter(({ unclaimed }) => unclaimed.gt(BIG_ZERO))
+      .map(({ token, accumulated, proofs, position, isNative, claimContractAddress }) => ({
+        claimContractAddress,
+        claim: {
+          user: address,
+          position,
+          token: token.address,
+          amount: toWeiString(accumulated, token.decimals), // TODO proof requires 'accumulated' amount?
+          isNative,
+          proof: proofs,
+        },
+      }));
+    if (!unclaimedRewards.length) {
+      throw new Error(`No unclaimed stellaswap rewards found for ${vaultId}`);
+    }
+
+    const claimsByContract = Object.values(
+      groupBy(unclaimedRewards, r => r.claimContractAddress)
+    ).map(rewards => ({
+      to: rewards[0].claimContractAddress,
+      claims: rewards.map(({ claim }) => claim),
+    }));
+
+    const walletApi = await getWalletConnectionApi();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const abi = viemToWeb3Abi(stellaswapRewarderAbi);
+    const gasPrices = await getGasPriceOptions(chain);
+
+    const makeTransaction = () => {
+      if (claimsByContract.length === 1) {
+        const { to, claims } = claimsByContract[0];
+        console.log(claims);
+        const contract = new web3.eth.Contract(abi, to);
+        return contract.methods.claim(claims).send({ from: address, ...gasPrices });
+      } else {
+        throw new Error('TODO: implement multi-rewarder contract claim');
+      }
+    };
+
+    txWallet(dispatch);
+    const transaction = makeTransaction();
+
+    const spenderAddress = first(unclaimedRewards)!.claimContractAddress;
+    const tokens = unclaimedRewards.map(r => r.claim.token);
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      { amount: BIG_ZERO, token: native }, // TODO fix so these are not required
+      {
+        walletAddress: address,
+        chainId: chainId,
+        spenderAddress, // TODO fix so these are not required
+        tokens: tokens
+          .map(token => selectTokenByAddressOrUndefined(state, chainId, token))
+          .filter(isDefined),
+        rewards: true,
       }
     );
   });
@@ -1170,6 +1346,8 @@ export const walletActions = {
   zapExecuteOrder,
   migrateUnstake,
   bridgeViaCommonInterface,
+  claimMerkl,
+  claimStellaSwap,
 };
 
 export function captureWalletErrors(
@@ -1216,27 +1394,35 @@ function bindTransactionEvents(
 function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
   const tokens: TokenEntity[] = [];
 
-  // refresh vault tokens
-  if (isStandardVault(vault)) {
-    for (const assetId of vault.assetIds) {
-      // selectTokenById throws if token does not exist;
-      // tokens in assetIds[] might not exist if vault does not have ZAP
-      if (selectIsTokenLoaded(state, vault.chainId, assetId)) {
-        tokens.push(selectTokenById(state, vault.chainId, assetId));
-      }
-    }
-  }
-  if (isCowcentratedLiquidityVault(vault)) {
+  // token0/1 for CLM-like
+  if (isCowcentratedLikeVault(vault)) {
     vault.depositTokenAddresses.forEach(tokenAddress => {
       tokens.push(selectTokenByAddress(state, vault.chainId, tokenAddress));
     });
   }
 
-  // clm deposit tokens aren't erc20 and don't share balanceOf
-  if (!isCowcentratedLiquidityVault(vault)) {
+  // depositTokenAddress for CLM is the pool address not an ERC20 therefore we just updated token0/1
+  if (!isCowcentratedVault(vault)) {
     tokens.push(selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress));
   }
-  tokens.push(selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress));
+
+  // receipt token
+  // gov v1 vaults do not have a receipt token
+  if ('receiptTokenAddress' in vault) {
+    tokens.push(selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress));
+  }
+
+  // related tokens
+  if (isStandardVault(vault)) {
+    // assets from LP that may have been split
+    vault.assetIds
+      .map(assetId => selectTokenByIdOrUndefined(state, vault.chainId, assetId))
+      .filter(isDefined)
+      .forEach(token => tokens.push(token));
+  } else if (isGovVault(vault)) {
+    // any earned token user may have claimed
+    selectGovVaultEarnedTokens(state, vault.chainId, vault.id).forEach(token => tokens.push(token));
+  }
 
   // and native token because we spent gas
   tokens.push(selectChainNativeToken(state, vault.chainId));

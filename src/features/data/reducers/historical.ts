@@ -3,15 +3,26 @@ import type { SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchHistoricalApys,
+  fetchHistoricalCowcentratedRanges,
   fetchHistoricalPrices,
   fetchHistoricalRanges,
   fetchHistoricalTvls,
 } from '../actions/historical';
-import { fromUnixTime, isAfter, isBefore, sub } from 'date-fns';
-import type { HistoricalState, TimeBucketsState, TimeBucketState } from './historical-types';
+import { fromUnixTime, getUnixTime, isAfter, isBefore, sub } from 'date-fns';
+import type {
+  AnyChartData,
+  HistoricalState,
+  HistoricalTimeBucketStateKeys,
+  TimeBucketsState,
+  TimeBucketState,
+} from './historical-types';
 import type { Draft } from 'immer';
-import { mapValues } from 'lodash-es';
-import { TIME_BUCKETS } from '../../vault/components/HistoricGraph/utils';
+import {
+  allDataApiBuckets,
+  getDataApiBucket,
+  getDataApiBucketsShorterThan,
+} from '../apis/beefy/beefy-data-api-helpers';
+import { fromKeys, fromKeysBy } from '../../../helpers/object';
 
 const initialState: HistoricalState = {
   ranges: {
@@ -26,11 +37,15 @@ const initialState: HistoricalState = {
   tvls: {
     byVaultId: {},
   },
+  clm: {
+    byVaultId: {},
+  },
 };
 
-const initialTimeBucketsState = (): TimeBucketsState => ({
-  availableTimebuckets: mapValues(TIME_BUCKETS, () => false),
-  loadedTimebuckets: mapValues(TIME_BUCKETS, () => false),
+const initialTimeBucketsState = <T extends AnyChartData = AnyChartData>(): TimeBucketsState<T> => ({
+  available: fromKeys(allDataApiBuckets, false),
+  alreadyFulfilled: fromKeys(allDataApiBuckets, false),
+  hasData: fromKeys(allDataApiBuckets, false),
   byTimebucket: {},
 });
 
@@ -45,6 +60,7 @@ export const historicalSlice = createSlice({
 
         state.ranges.byVaultId[vaultId] = {
           status: 'pending',
+          alreadyFulfilled: state.ranges.byVaultId[vaultId]?.alreadyFulfilled || false,
         };
       })
       .addCase(fetchHistoricalRanges.rejected, (state, action) => {
@@ -52,21 +68,26 @@ export const historicalSlice = createSlice({
 
         state.ranges.byVaultId[vaultId] = {
           status: 'rejected',
+          alreadyFulfilled: state.ranges.byVaultId[vaultId]?.alreadyFulfilled || false,
           error: action.error,
         };
       })
-      .addCase(fetchHistoricalRanges.fulfilled, (state, action) => {
-        const { vaultId, oracleId, ranges } = action.payload;
+      .addCase(fetchHistoricalRanges.fulfilled, (sliceState, action) => {
+        const { vaultId, oracleId, ranges, isCowcentrated } = action.payload;
 
-        state.ranges.byVaultId[vaultId] = {
+        sliceState.ranges.byVaultId[vaultId] = {
           status: 'fulfilled',
+          alreadyFulfilled: true,
           ranges,
         };
 
-        initAllTimeBuckets(state, oracleId, vaultId);
-        state.apys.byVaultId[vaultId].availableTimebuckets = getBucketsFromRange(ranges.apys);
-        state.tvls.byVaultId[vaultId].availableTimebuckets = getBucketsFromRange(ranges.tvls);
-        state.prices.byOracleId[oracleId].availableTimebuckets = getBucketsFromRange(ranges.prices);
+        initAllTimeBuckets(sliceState, oracleId, vaultId);
+        sliceState.apys.byVaultId[vaultId].available = getBucketsFromRange(ranges.apys);
+        sliceState.tvls.byVaultId[vaultId].available = getBucketsFromRange(ranges.tvls);
+        if (isCowcentrated) {
+          sliceState.clm.byVaultId[vaultId].available = getBucketsFromRange(ranges.clm);
+        }
+        sliceState.prices.byOracleId[oracleId].available = getBucketsFromRange(ranges.prices);
       })
       .addCase(fetchHistoricalApys.pending, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
@@ -103,20 +124,32 @@ export const historicalSlice = createSlice({
       .addCase(fetchHistoricalPrices.fulfilled, (state, action) => {
         const { oracleId, bucket } = action.meta.arg;
         setTimebucketFulfilled(state.prices.byOracleId[oracleId], bucket, action.payload.data);
+      })
+      .addCase(fetchHistoricalCowcentratedRanges.pending, (state, action) => {
+        const { vaultId, bucket } = action.meta.arg;
+        setTimebucketPending(getOrCreateTimeBucketFor('clm', vaultId, state), bucket);
+      })
+      .addCase(fetchHistoricalCowcentratedRanges.rejected, (state, action) => {
+        const { vaultId, bucket } = action.meta.arg;
+        setTimebucketRejected(state.clm.byVaultId[vaultId], bucket, action.error);
+      })
+      .addCase(fetchHistoricalCowcentratedRanges.fulfilled, (state, action) => {
+        const { vaultId, bucket } = action.meta.arg;
+        setTimebucketFulfilled(state.clm.byVaultId[vaultId], bucket, action.payload.data);
       });
   },
 });
 
 function getOrCreateTimeBucketFor(
-  key: 'tvls' | 'prices' | 'apys',
-  oracleOrVaultId: string,
+  key: HistoricalTimeBucketStateKeys,
+  oracleOrVaultIdOrVaultAddress: string,
   state: Draft<HistoricalState>
 ): Draft<TimeBucketsState> {
   const subKey = key === 'prices' ? 'byOracleId' : 'byVaultId';
-  if (!state[key][subKey][oracleOrVaultId]) {
-    state[key][subKey][oracleOrVaultId] = initialTimeBucketsState();
+  if (!state[key][subKey][oracleOrVaultIdOrVaultAddress]) {
+    state[key][subKey][oracleOrVaultIdOrVaultAddress] = initialTimeBucketsState();
   }
-  return state[key][subKey][oracleOrVaultId];
+  return state[key][subKey][oracleOrVaultIdOrVaultAddress];
 }
 
 function getOrCreateTimeBucketBucket(
@@ -128,37 +161,56 @@ function getOrCreateTimeBucketBucket(
   if (!bucketState) {
     bucketState = state.byTimebucket[bucket] = {
       status: 'idle',
+      alreadyFulfilled: false,
     };
   }
 
   return bucketState;
 }
 
-function setTimebucketPending(state: Draft<TimeBucketsState>, bucket: ApiTimeBucket) {
-  const bucketState = getOrCreateTimeBucketBucket(state, bucket);
+function setTimebucketPending(state: Draft<TimeBucketsState>, bucketKey: ApiTimeBucket) {
+  const bucketState = getOrCreateTimeBucketBucket(state, bucketKey);
   bucketState.status = 'pending';
 }
 
 function setTimebucketRejected(
   state: Draft<TimeBucketsState>,
-  bucket: ApiTimeBucket,
+  bucketKey: ApiTimeBucket,
   error: SerializedError
 ) {
-  const bucketState = getOrCreateTimeBucketBucket(state, bucket);
+  const bucketState = getOrCreateTimeBucketBucket(state, bucketKey);
   bucketState.status = 'rejected';
   bucketState.error = error;
 }
 
 function setTimebucketFulfilled(
   state: Draft<TimeBucketsState>,
-  bucket: ApiTimeBucket,
-  data: ApiChartData
+  bucketKey: ApiTimeBucket,
+  data: ApiChartData,
+  fillOtherBuckets: boolean = true
 ) {
-  const bucketState = getOrCreateTimeBucketBucket(state, bucket);
+  const bucketState = getOrCreateTimeBucketBucket(state, bucketKey);
   bucketState.status = 'fulfilled';
   bucketState.error = undefined;
   bucketState.data = data;
-  state.loadedTimebuckets[bucket] = data.length > 0;
+  bucketState.alreadyFulfilled = true;
+  state.alreadyFulfilled[bucketKey] = true;
+  state.hasData[bucketKey] = data.length > 0;
+
+  // Fill other buckets that have the same interval but a smaller range
+  if (fillOtherBuckets && data.length > 0) {
+    const now = new Date();
+    const shorterBuckets = getDataApiBucketsShorterThan(bucketKey);
+    for (const smallerBucket of shorterBuckets) {
+      const startDate = getUnixTime(sub(sub(now, smallerBucket.range), smallerBucket.maPeriod));
+      setTimebucketFulfilled(
+        state,
+        smallerBucket.id,
+        data.filter(p => p.t >= startDate),
+        false
+      );
+    }
+  }
 }
 
 function initAllTimeBuckets(state: Draft<HistoricalState>, oracleId: string, vaultId: string) {
@@ -173,18 +225,22 @@ function initAllTimeBuckets(state: Draft<HistoricalState>, oracleId: string, vau
   if (!(vaultId in state.tvls.byVaultId)) {
     state.tvls.byVaultId[vaultId] = initialTimeBucketsState();
   }
+
+  if (!(vaultId in state.clm.byVaultId)) {
+    state.clm.byVaultId[vaultId] = initialTimeBucketsState();
+  }
 }
 
-function getBucketsFromRange(range: ApiRange): Record<ApiTimeBucket, boolean> {
-  if (range.min === 0) {
-    return mapValues(TIME_BUCKETS, () => false);
+function getBucketsFromRange(range: ApiRange | undefined): Record<ApiTimeBucket, boolean> {
+  if (!range || range.min === 0) {
+    return fromKeys(allDataApiBuckets, false);
   }
 
   const now = new Date();
   const min = fromUnixTime(range.min);
   const max = fromUnixTime(range.max);
-  return mapValues(
-    TIME_BUCKETS,
-    bucket => isBefore(min, sub(now, bucket.available)) && isAfter(max, sub(now, bucket.range))
-  );
+  return fromKeysBy(allDataApiBuckets, bucketKey => {
+    const bucket = getDataApiBucket(bucketKey);
+    return isBefore(min, sub(now, bucket.available)) && isAfter(max, sub(now, bucket.range));
+  });
 }

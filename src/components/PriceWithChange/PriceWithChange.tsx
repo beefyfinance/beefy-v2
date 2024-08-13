@@ -1,10 +1,9 @@
 import { memo, useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { selectPriceWithChange } from '../../features/data/selectors/tokens';
-import { formatLargeUsd, formatLargePercent, formatUsd } from '../../helpers/format';
+import { formatLargePercent, formatLargeUsd, formatUsd } from '../../helpers/format';
 import type BigNumber from 'bignumber.js';
 import { fetchHistoricalPrices } from '../../features/data/actions/historical';
-import type { ApiTimeBucket } from '../../features/data/apis/beefy/beefy-data-api-types';
 import { BIG_ZERO } from '../../helpers/big-number';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
@@ -24,10 +23,9 @@ export const PriceWithChange = memo<PriceWithChangeProps>(function PriceWithChan
   oracleId,
   className,
 }) {
-  const bucket: ApiTimeBucket = '1h_1d';
   const dispatch = useAppDispatch();
-  const { price, shouldLoad, previousPrice, previousDate } = useAppSelector(state =>
-    selectPriceWithChange(state, oracleId, bucket)
+  const { price, bucket, shouldLoad, previousPrice, previousDate } = useAppSelector(state =>
+    selectPriceWithChange(state, oracleId, '1h_1d')
   );
 
   useEffect(() => {
@@ -94,8 +92,10 @@ const WithChange = memo<WithChangeProps>(function WithChange({
     date: format(previousDate, 'MMM d, yyyy h:mm a'),
   });
   const handleTooltipClick = useCallback<Exclude<TooltipProps['onTriggerClick'], undefined>>(e => {
-    // don't bubble up
-    e.preventDefault();
+    if (e) {
+      // don't bubble up
+      e.preventDefault();
+    }
   }, []);
 
   return (

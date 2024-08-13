@@ -19,11 +19,17 @@ export const styles = (theme: Theme) => ({
   vaultEarnings: {
     backgroundColor: theme.palette.background.vaults.gov,
   },
-  vaultRetired: {
-    backgroundColor: theme.palette.background.vaults.inactive,
-  },
   vaultCowcentrated: {
     backgroundColor: theme.palette.background.vaults.clm,
+  },
+  vaultCowcentratedPool: {
+    backgroundColor: theme.palette.background.vaults.clmPool,
+  },
+  vaultCowcentratedVault: {
+    backgroundColor: theme.palette.background.vaults.clmVault,
+  },
+  vaultRetired: {
+    backgroundColor: theme.palette.background.vaults.inactive,
   },
   vaultInner: {
     display: 'grid',
@@ -32,7 +38,7 @@ export const styles = (theme: Theme) => ({
     rowGap: '24px',
     width: '100%',
     [theme.breakpoints.up('lg')]: {
-      gridTemplateColumns: 'minmax(0, 30fr) minmax(0, 70fr)',
+      gridTemplateColumns: 'minmax(0, 40fr) minmax(0, 60fr)',
     },
   },
 });

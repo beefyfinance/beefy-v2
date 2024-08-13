@@ -1,0 +1,239 @@
+[
+  {
+    "id": "uniswap-cow-manta-manta-usdc-rp",
+    "name": "MANTA-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapMantaMANTA-USDC",
+    "tokenAddress": "0x9E6B9518978bb7caf2ad70778E9AEED9eDb3DB78",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "earnContractAddress": "0x9f841372612E0106Cd540AB976656cDd8F1553C5",
+    "earnedToken": "rcowUniswapMantaMANTA-USDC",
+    "earnedTokenAddresses": ["0x95CeF13441Be50d20cA4558CC0a27B601aC544E5"],
+    "earnedOracleIds": ["MANTA"],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-manta-manta-usdc",
+    "status": "active",
+    "createdAt": 1719840193,
+    "platformId": "oku",
+    "assets": ["MANTA", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "manta",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-manta-weth-stone-rp",
+    "name": "STONE-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapMantaWETH-STONE",
+    "tokenAddress": "0x906e60166A4B185016e53597fA12FBB1424e47d7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "earnContractAddress": "0x1386A611e2B692E79Bcfa7dC84AAbB5728f08E44",
+    "earnedToken": "rcowUniswapMantaWETH-STONE",
+    "earnedTokenAddresses": ["0x95CeF13441Be50d20cA4558CC0a27B601aC544E5"],
+    "earnedOracleIds": ["MANTA"],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-manta-weth-stone",
+    "status": "active",
+    "createdAt": 1719489894,
+    "platformId": "oku",
+    "assets": ["STONE", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "manta",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-manta-weth-usdc-rp",
+    "name": "WETH-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapMantaWETH-USDC",
+    "tokenAddress": "0x756bd7f54675112b6c689DFFBDa8505566d20C6c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "earnContractAddress": "0x816716ebDB0D4c882d364C61aD3373eEAD91C86a",
+    "earnedToken": "rcowUniswapMantaWETH-USDC",
+    "earnedTokenAddresses": ["0x95CeF13441Be50d20cA4558CC0a27B601aC544E5"],
+    "earnedOracleIds": ["MANTA"],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-manta-weth-usdc",
+    "status": "active",
+    "createdAt": 1719489894,
+    "platformId": "oku",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "manta",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-manta-usdc-usdt-rp",
+    "name": "USDC-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapMantaUSDC-USDT",
+    "tokenAddress": "0x01Fbf9B624a6133Ab04Fc4000ae513AC97e4d114",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "earnContractAddress": "0x873629E73CD5FAc9e3Ee1963A796Ad0aBDf17542",
+    "earnedToken": "rcowUniswapMantaUSDC-USDT",
+    "earnedTokenAddresses": ["0x95CeF13441Be50d20cA4558CC0a27B601aC544E5"],
+    "earnedOracleIds": ["MANTA"],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-manta-usdc-usdt",
+    "status": "active",
+    "createdAt": 1719489894,
+    "platformId": "oku",
+    "assets": ["USDC", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "manta",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-manta-manta-usdc",
+    "name": "MANTA-USDC",
+    "type": "cowcentrated",
+    "token": "MANTA-USDC",
+    "tokenAddress": "0x775EAc394b56CFad02d963c9c3C9CD2e425Dab4e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "depositTokenAddresses": [
+      "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
+      "0xb73603C5d87fA094B7314C74ACE2e64D165016fb"
+    ],
+    "earnedToken": "cowUniswapMantaMANTA-USDC",
+    "earnedTokenAddress": "0x9E6B9518978bb7caf2ad70778E9AEED9eDb3DB78",
+    "earnContractAddress": "0x9E6B9518978bb7caf2ad70778E9AEED9eDb3DB78",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-manta-manta-usdc",
+    "status": "active",
+    "createdAt": 1719840192,
+    "platformId": "oku",
+    "assets": ["MANTA", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "manta",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-manta-weth-stone",
+    "name": "STONE-WETH",
+    "type": "cowcentrated",
+    "token": "STONE-WETH",
+    "tokenAddress": "0x7881dc8E59E644517a95A9687a6b58b86d98DB78",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "depositTokenAddresses": [
+      "0x0Dc808adcE2099A9F62AA87D9670745AbA741746",
+      "0xec901da9c68e90798bbbb74c11406a32a70652c3"
+    ],
+    "earnedToken": "cowUniswapMantaWETH-STONE",
+    "earnedTokenAddress": "0x906e60166A4B185016e53597fA12FBB1424e47d7",
+    "earnContractAddress": "0x906e60166A4B185016e53597fA12FBB1424e47d7",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-manta-weth-stone",
+    "status": "active",
+    "createdAt": 1719489893,
+    "platformId": "oku",
+    "assets": ["STONE", "WETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "manta",
+    "feeTier": "0.05",
+    "pointStructureIds": ["manta-stakestone"],
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-manta-weth-usdc",
+    "name": "WETH-USDC",
+    "type": "cowcentrated",
+    "token": "WETH-USDC",
+    "tokenAddress": "0xC108d8702D42baE7b3D7d8209a9B40613A7B1d37",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "depositTokenAddresses": [
+      "0x0Dc808adcE2099A9F62AA87D9670745AbA741746",
+      "0xb73603C5d87fA094B7314C74ACE2e64D165016fb"
+    ],
+    "earnedToken": "cowUniswapMantaWETH-USDC",
+    "earnedTokenAddress": "0x756bd7f54675112b6c689DFFBDa8505566d20C6c",
+    "earnContractAddress": "0x756bd7f54675112b6c689DFFBDa8505566d20C6c",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-manta-weth-usdc",
+    "status": "active",
+    "createdAt": 1719489893,
+    "platformId": "oku",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "manta",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-manta-usdc-usdt",
+    "name": "USDC-USDT",
+    "type": "cowcentrated",
+    "token": "USDC-USDT",
+    "tokenAddress": "0x060f2bAbc09826687be9cBF5c7Ede3B3cd00Dd78",
+    "tokenDecimals": 18,
+    "tokenProviderId": "oku",
+    "depositTokenAddresses": [
+      "0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
+      "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f"
+    ],
+    "earnedToken": "cowUniswapMantaUSDC-USDT",
+    "earnedTokenAddress": "0x01Fbf9B624a6133Ab04Fc4000ae513AC97e4d114",
+    "earnContractAddress": "0x01Fbf9B624a6133Ab04Fc4000ae513AC97e4d114",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-manta-usdc-usdt",
+    "status": "active",
+    "createdAt": 1719489893,
+    "platformId": "oku",
+    "assets": ["USDC", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "manta",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  }
+]

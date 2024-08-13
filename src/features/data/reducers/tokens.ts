@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import type { Draft } from 'immer';
-import type { BeefyState } from '../../../redux-types';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllPricesAction } from '../actions/prices';
@@ -9,29 +8,34 @@ import type { FetchAddressBookPayload } from '../actions/tokens';
 import {
   fetchAddressBookAction,
   fetchAllAddressBookAction,
-  fetchAllCowcentratedVaultRanges,
+  fetchAllCurrentCowcentratedRanges,
 } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
 import type { ChainEntity } from '../entities/chain';
 import type {
-  CowcentratedRanges,
+  CurrentCowcentratedRangeData,
   TokenEntity,
   TokenErc20,
   TokenLpBreakdown,
   TokenNative,
 } from '../entities/token';
 import { isTokenErc20, isTokenNative } from '../entities/token';
-import { selectChainById } from '../selectors/chains';
 import {
   getBoostTokenAddressFromLegacyConfig,
   getDepositTokenFromLegacyVaultConfig,
 } from '../utils/config-hacks';
 import { fetchAllMinters } from '../actions/minters';
 import type { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
-import type { LpData } from '../apis/beefy/beefy-api';
 import { isNativeAlternativeAddress } from '../../../helpers/addresses';
 import { fetchBridgeConfig } from '../actions/bridge';
 import { entries } from '../../../helpers/object';
+import type { LpData } from '../apis/beefy/beefy-api-types';
+import {
+  isCowcentratedGovVault,
+  isCowcentratedStandardVault,
+  isCowcentratedVault,
+  type VaultEntity,
+} from '../entities/vault';
 
 /**
  * State containing Vault infos
@@ -71,8 +75,8 @@ export type TokensState = {
     };
   };
   cowcentratedRanges: {
-    byVaultId: {
-      [tokenId: TokenEntity['oracleId']]: CowcentratedRanges;
+    byOracleId: {
+      [tokenId: TokenEntity['oracleId']]: CurrentCowcentratedRangeData;
     };
   };
 };
@@ -80,7 +84,7 @@ export const initialTokensState: TokensState = {
   byChainId: {},
   prices: { byOracleId: {} },
   breakdown: { byOracleId: {} },
-  cowcentratedRanges: { byVaultId: {} },
+  cowcentratedRanges: { byOracleId: {} },
 };
 
 export const tokensSlice = createSlice({
@@ -119,12 +123,9 @@ export const tokensSlice = createSlice({
 
     // when vault list is fetched, add all new tokens
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
-      for (const [chainId, vaults] of entries(action.payload.byChainId)) {
-        if (vaults) {
-          const chain = selectChainById(action.payload.state, chainId);
-          for (const vault of vaults) {
-            addVaultToState(action.payload.state, sliceState, chain, vault);
-          }
+      for (const vaults of Object.values(action.payload.byChainId)) {
+        for (const vault of vaults) {
+          addVaultToState(sliceState, vault.config, vault.entity);
         }
       }
     });
@@ -213,9 +214,9 @@ export const tokensSlice = createSlice({
           addBridgeTokenToState(sliceState, token, !isSourceXErc20);
         }
       })
-      .addCase(fetchAllCowcentratedVaultRanges.fulfilled, (sliceState, action) => {
+      .addCase(fetchAllCurrentCowcentratedRanges.fulfilled, (sliceState, action) => {
         for (const [oracleId, value] of Object.entries(action.payload)) {
-          sliceState.cowcentratedRanges.byVaultId[oracleId] = {
+          sliceState.cowcentratedRanges.byOracleId[oracleId] = {
             priceRangeMax: new BigNumber(value.priceRangeMax),
             priceRangeMin: new BigNumber(value.priceRangeMin),
             currentPrice: new BigNumber(value.currentPrice),
@@ -309,6 +310,7 @@ function addBreakdownToState(sliceState: Draft<TokensState>, oracleId: string, b
   }
 
   if (
+    'underlyingBalances' in breakdown &&
     breakdown.underlyingBalances &&
     breakdown.underlyingBalances.length !== breakdown.tokens.length
   ) {
@@ -455,18 +457,13 @@ function addMinterToState(
   }
 }
 
-function addVaultToState(
-  state: BeefyState,
-  sliceState: Draft<TokensState>,
-  chain: ChainEntity,
-  vault: VaultConfig
-) {
-  const chainId = chain.id;
+function addVaultToState(sliceState: Draft<TokensState>, config: VaultConfig, entity: VaultEntity) {
+  const chainId = entity.chainId;
   const chainState = getOrCreateTokensChainState(sliceState, chainId);
 
   // add assets id's from active vaults to state
-  if (vault.status === 'active' && vault.assets) {
-    for (const assetId of vault.assets) {
+  if (config.status === 'active' && config.assets) {
+    for (const assetId of config.assets) {
       if (!chainState.tokenIdsInActiveVaults.includes(assetId)) {
         chainState.tokenIdsInActiveVaults.push(assetId);
       }
@@ -476,92 +473,79 @@ function addVaultToState(
   //
   // Deposit token
   //
-  const depositToken = getDepositTokenFromLegacyVaultConfig(chain, vault);
-  const depositAddressKey = depositToken.address.toLowerCase();
-  const existingDepositToken = chainState.byAddress[depositAddressKey];
-  if (existingDepositToken === undefined) {
-    // Add the token
-    addTokenToState(sliceState, depositToken, vault.type !== 'cowcentrated');
-  } else {
-    // Only add missing information
-    // Note: we no longer overwrite oracleId as addressbook is now source of truth
-    if (!existingDepositToken.providerId) {
-      existingDepositToken.providerId = depositToken.providerId;
+  const depositToken = getDepositTokenFromLegacyVaultConfig(chainId, config);
+  if (depositToken) {
+    const depositAddressKey = depositToken.address.toLowerCase();
+    const existingDepositToken = chainState.byAddress[depositAddressKey];
+    if (existingDepositToken === undefined) {
+      // Add the token
+      addTokenToState(sliceState, depositToken, config.type !== 'cowcentrated');
+    } else {
+      // Only add missing information
+      // Note: we no longer overwrite oracleId as addressbook is now source of truth
+      if (!existingDepositToken.providerId) {
+        existingDepositToken.providerId = depositToken.providerId;
+      }
+    }
+    if (config.type === 'cowcentrated' && config.depositTokenAddresses) {
+      config.depositTokenAddresses.forEach(address =>
+        ensureInterestingToken(address, chainId, sliceState)
+      );
     }
   }
 
   //
-  // Earned token
+  // Receipt token
   //
-  const earnedAddressKey = vault.earnedTokenAddress
-    ? vault.earnedTokenAddress.toLowerCase()
-    : 'native';
-  const existingEarnedToken = chainState.byAddress[earnedAddressKey];
-  if (existingEarnedToken === undefined) {
-    // Do not add native token from configs, keep config as source of truth
-    if (earnedAddressKey !== 'native') {
-      let token: TokenErc20;
+  // (Only v2 + of gov vaults have a receipt token)
+  if (config.type !== 'gov' || (config.version || 1) > 1) {
+    // rename clm and clm reward pool receipt tokens to a friendlier name
+    const receiptTokenSymbol = isCowcentratedVault(entity)
+      ? `${entity.names.short} CLM`
+      : isCowcentratedGovVault(entity)
+      ? `${entity.names.short} rCLM`
+      : isCowcentratedStandardVault(entity)
+      ? `${entity.names.short} mooCLM`
+      : config.earnedToken;
 
-      if (vault.type === 'gov') {
-        // Add earned token
-        token = {
-          type: 'erc20',
-          id: vault.earnedToken,
-          chainId: chainId,
-          oracleId: vault.oracleId,
-          decimals: vault.earnedTokenDecimals ?? 18,
-          address: vault.earnedTokenAddress,
-          symbol: vault.earnedToken,
-          buyUrl: undefined,
-          website: undefined,
-          description: undefined,
-          documentation: undefined,
-          risks: [],
-        };
-      } else if (
-        vault.type === 'standard' ||
-        vault.type === 'cowcentrated' ||
-        vault.type === undefined
-      ) {
-        // Add receipt token
-        token = {
-          type: 'erc20',
-          id: vault.earnedToken,
-          chainId: chainId,
-          oracleId: vault.oracleId,
-          address: vault.earnedTokenAddress,
-          decimals: 18, // receipt token always has 18 decimals
-          symbol: vault.earnedToken,
-          buyUrl: undefined,
-          website: undefined,
-          description: undefined,
-          documentation: undefined,
-          risks: [],
-        };
+    const receiptToken: TokenErc20 = {
+      type: 'erc20',
+      id: config.id,
+      chainId: chainId,
+      oracleId: config.oracleId,
+      address: config.earnContractAddress,
+      providerId: config.tokenProviderId, // FIXME only true for cowcentrated gov pools
+      decimals: 18, // receipt token always has 18 decimals
+      symbol: receiptTokenSymbol, // earnedToken === receipt token in this context
+      buyUrl: undefined,
+      website: undefined,
+      description: undefined,
+      documentation: undefined,
+      risks: [],
+    };
 
-        // Add bridged versions of receipt token
-        if (vault.bridged) {
-          addBridgedReceiptTokensToState(vault, token, sliceState);
-        }
-      } else {
-        throw new Error(`Unknown vault type ${vault.type}`);
-      }
+    // We always let the vault overwrite the receipt token, even if it was added via deposit token of another vault
+    addTokenToState(sliceState, receiptToken, true);
 
-      addTokenToState(sliceState, token, true);
+    // Add bridged versions of receipt token
+    if (config.bridged) {
+      addBridgedReceiptTokensToState(config, receiptToken, sliceState);
     }
-  } else {
-    /** address book loaded first, and the vault receipt token is in the address book */
-    // make sure vault token is still tagged as an interesting address
-    if (vault.earnedTokenAddress && vault.earnedTokenAddress !== 'native') {
-      ensureInterestingToken(vault.earnedTokenAddress, chainId, sliceState);
-    }
+  }
 
-    // make sure bridged tokens are added/are marked as interesting
-    if (vault.type !== 'gov' && vault.bridged) {
-      const token = chainState.byAddress[earnedAddressKey];
-      if (isTokenErc20(token)) {
-        addBridgedReceiptTokensToState(vault, token, sliceState);
+  //
+  // Earned Token
+  //
+  // Only gov vaults have an earned token that isn't the receipt token
+  if (config.type === 'gov') {
+    // We just make sure we fetch balances of them
+    // The tokens should exist in the address book
+    if (config.earnedTokenAddresses) {
+      for (const address of config.earnedTokenAddresses) {
+        ensureInterestingToken(address, chainId, sliceState);
       }
+    } else if (config.earnedTokenAddress) {
+      ensureInterestingToken(config.earnedTokenAddress, chainId, sliceState);
     }
   }
 }
@@ -641,6 +625,6 @@ function addTokenToState(
   chainState.byId[token.id] = token.address.toLowerCase();
   chainState.byAddress[addressKey] = token;
   if (interesting) {
-    chainState.interestingBalanceTokenAddresses.push(token.address);
+    ensureInterestingToken(token.address, token.chainId, sliceState);
   }
 }

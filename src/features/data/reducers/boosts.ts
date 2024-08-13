@@ -219,13 +219,15 @@ function addBoostToState(
     chainId: chainId,
     assets: apiBoost.assets || [],
     earnedTokenAddress: apiBoost.earnedTokenAddress,
-    earnContractAddress: apiBoost.earnContractAddress,
+    contractAddress: apiBoost.earnContractAddress,
     tagIcon: apiBoost.tagIcon || undefined,
     tagText: apiBoost.tagText || undefined,
     name: apiBoost.name,
     partnerIds: apiBoost.partners?.length ? apiBoost.partners : [],
     campaignId: apiBoost.campaign ? apiBoost.campaign : undefined,
     vaultId: apiBoost.poolId,
+    version: apiBoost.version || 1,
+    pinned: apiBoost.pinned === undefined ? true : apiBoost.pinned, // default to true
   };
   sliceState.byId[boost.id] = boost;
   sliceState.allIds.push(boost.id);

@@ -10,11 +10,12 @@ const FIELD_ORDER = [
   'tokenAddress',
   'tokenDecimals',
   'tokenProviderId',
-  'zap',
+  'depositTokenAddresses',
+  'earnContractAddress',
   'earnedToken',
   'earnedTokenAddress',
   'earnedTokenDecimals',
-  'earnContractAddress',
+  'earnedTokenAddresses',
   'oracle',
   'oracleId',
   'status',
@@ -25,6 +26,7 @@ const FIELD_ORDER = [
   'pauseReason',
   'pausedAt',
   'platformId',
+  'feeTier',
   'assets',
   'migrationIds',
   'risks',
@@ -39,7 +41,10 @@ const FIELD_ORDER = [
   'refundContractAddress',
   'showWarning',
   'warning',
+  'earningPoints',
+  'pointStructureIds',
   'network',
+  'zaps',
 ].reduce((fields: {}, field, i) => {
   fields[field] = i + 1;
   return fields;

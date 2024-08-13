@@ -1,12 +1,16 @@
-import React, { memo } from 'react';
-import type { VaultEntity } from '../../../data/entities/vault';
+import { memo } from 'react';
+import {
+  isCowcentratedGovVault,
+  isCowcentratedVault,
+  isCowcentratedLikeVault,
+  isCowcentratedStandardVault,
+  isGovVault,
+  isVaultRetired,
+  type VaultEntity,
+} from '../../../data/entities/vault';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import {
-  selectIsVaultCowcentrated,
-  selectIsVaultGov,
-  selectIsVaultRetired,
-} from '../../../data/selectors/vaults';
+import { selectVaultById } from '../../../data/selectors/vaults';
 import clsx from 'clsx';
 import { useAppSelector } from '../../../../store';
 import { Link } from 'react-router-dom';
@@ -20,18 +24,23 @@ export type VaultProps = {
 };
 export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
   const classes = useStyles();
-  const isRetired = useAppSelector(state => selectIsVaultRetired(state, vaultId));
-  const isGov = useAppSelector(state => selectIsVaultGov(state, vaultId));
-  const isCowcentrated = useAppSelector(state => selectIsVaultCowcentrated(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const isRetired = isVaultRetired(vault);
+  const isCowcentratedPool = isCowcentratedGovVault(vault); // cowcentrated pool
+  const isCowcentratedStandard = isCowcentratedStandardVault(vault); // cowcentrated vault
+  const isCowcentrated = isCowcentratedVault(vault); // naked clm
+  const isGov = !isCowcentratedLikeVault(vault) && isGovVault(vault); // gov but not cowcentrated pool
 
   return (
     <Link
       to={`/vault/${vaultId}`}
       className={clsx({
         [classes.vault]: true,
+        [classes.vaultCowcentrated]: isCowcentrated,
+        [classes.vaultCowcentratedPool]: isCowcentratedPool,
+        [classes.vaultCowcentratedVault]: isCowcentratedStandard,
         [classes.vaultRetired]: isRetired,
         [classes.vaultEarnings]: isGov,
-        [classes.vaultCowcentrated]: isCowcentrated,
       })}
     >
       <div className={classes.vaultInner}>

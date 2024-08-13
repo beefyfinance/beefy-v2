@@ -1,4 +1,3 @@
-import React from 'react';
 import ContentLoader from 'react-content-loader';
 
 export const StatLoader = ({ backgroundColor = '#313759', foregroundColor = '#8585A6' }) => {

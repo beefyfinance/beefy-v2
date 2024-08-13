@@ -1,23 +1,15 @@
 import { Container, Hidden, makeStyles } from '@material-ui/core';
 import type { PropsWithChildren } from 'react';
-import React, { lazy, memo } from 'react';
+import { lazy, memo } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { styles } from './styles';
-import { StrategyCard } from './components/StrategyCard';
 import { SafetyCard } from './components/SafetyCard';
 import { BoostCard } from './components/BoostCard';
-import { GovDetailsCard } from './components/GovDetailsCard';
-import {
-  selectVaultById,
-  selectVaultExistsById,
-  selectVaultIdIgnoreCase,
-} from '../data/selectors/vaults';
+import { selectVaultByIdOrUndefined, selectVaultIdIgnoreCase } from '../data/selectors/vaults';
 import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
-import type { VaultEntity } from '../data/entities/vault';
-import { isCowcentratedLiquidityVault, isGovVault } from '../data/entities/vault';
+import { isCowcentratedVault, type VaultEntity } from '../data/entities/vault';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { TechLoader } from '../../components/TechLoader';
-import { VaultMeta } from './components/VaultMeta';
 import { useAppSelector } from '../../store';
 import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdown';
 import { AssetsCard } from './components/AssetsCard';
@@ -26,12 +18,15 @@ import { LeverageCards } from './components/LeverageCards';
 import { Actions } from './components/Actions';
 import { VaultHeader } from './components/VaultHeader';
 import { BusdBannerVault } from '../../components/Banners/BusdBanner';
-import { PnLGraphLoader } from './components/PnLGraph';
 import { VaultsStats } from './components/VaultsStats';
 import { HistoricGraphsLoader } from './components/HistoricGraph';
 import { selectWalletAddressIfKnown } from '../data/selectors/wallet';
-import { CLMBanner } from './components/CLMBanner';
 import { GamingCards } from './components/GamingCards';
+import { VaultMeta } from '../../components/Meta/VaultMeta';
+import { PnLGraphIfWallet } from './components/PnLGraph/PnLGraphIfWallet';
+import { Explainer } from './components/Explainer/Explainer';
+import { UnstakedClmBannerVault } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
+import { featureFlag_disableRedirect } from '../data/utils/feature-flags';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -42,13 +37,22 @@ type VaultUrlParams = {
 export const Vault = memo(function Vault() {
   const { id } = useParams<VaultUrlParams>();
   const isLoaded = useAppSelector(selectIsConfigAvailable);
-  const vaultExists = useAppSelector(state => selectVaultExistsById(state, id));
+  const vault = useAppSelector(state => selectVaultByIdOrUndefined(state, id));
 
   if (!isLoaded) {
     return <TechLoader text="Loading..." />;
   }
 
-  if (!vaultExists) {
+  // CLM -> CLM Pool
+  if (vault && vault.hidden && isCowcentratedVault(vault) && vault.cowcentratedGovId) {
+    return featureFlag_disableRedirect() ? (
+      <VaultContent vaultId={id} />
+    ) : (
+      <Redirect to={`/vault/${vault.cowcentratedGovId}`} />
+    );
+  }
+
+  if (!vault || vault.hidden) {
     return <VaultNotFound id={id} />;
   }
 
@@ -71,7 +75,6 @@ type VaultContentProps = PropsWithChildren<{
 }>;
 const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) {
   const classes = useStyles();
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
   const isBoostedOrPreStake = useAppSelector(state =>
     selectIsVaultPreStakedOrBoosted(state, vaultId)
@@ -81,8 +84,8 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
     <Container maxWidth="lg" className={classes.page}>
       <VaultMeta vaultId={vaultId} />
       <BusdBannerVault vaultId={vaultId} />
+      <UnstakedClmBannerVault vaultId={vaultId} fromVault={true} />
       <VaultHeader vaultId={vaultId} />
-      {isCowcentratedLiquidityVault(vault) && <CLMBanner />}
       <VaultsStats vaultId={vaultId} />
       <div className={classes.contentContainer}>
         <div className={classes.contentColumns}>
@@ -96,16 +99,12 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
           </div>
           <div className={classes.columnInfo}>
             {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
-
-            {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
-            {!isGovVault(vault) ? (
-              <PnLGraphLoader vaultId={vaultId} address={walletAddress} />
-            ) : null}
+            <PnLGraphIfWallet vaultId={vaultId} walletAddress={walletAddress} />
             <HistoricGraphsLoader vaultId={vaultId} />
             <LiquidityPoolBreakdownLoader vaultId={vaultId} />
             <SafetyCard vaultId={vaultId} />
-            {!isGovVault(vault) ? <StrategyCard vaultId={vaultId} /> : null}
-            <AssetsCard vaultId={vault.id} />
+            <Explainer vaultId={vaultId} />
+            <AssetsCard vaultId={vaultId} />
             <Hidden mdUp>
               <InsuranceCards vaultId={vaultId} />
               <LeverageCards vaultId={vaultId} />

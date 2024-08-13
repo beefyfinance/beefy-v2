@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LinkButton } from '../../../../components/LinkButton';
 import { CardContent } from '../Card';
@@ -17,7 +17,7 @@ import Twitter from '../../../../images/icons/twitter.svg';
 import Telegram from '../../../../images/icons/telegram.svg';
 import Discord from '../../../../images/icons/discord.svg';
 import { selectBoostRewardsTokenEntity } from '../../../data/selectors/balance';
-import { RewardTokenDetails } from '../AddTokenToWallet';
+import { RewardTokenDetails } from '../RewardTokenDetails';
 import type { BoostEntity } from '../../../data/entities/boost';
 import type { TokenEntity } from '../../../data/entities/token';
 import { Link } from '@material-ui/icons';

@@ -46,11 +46,36 @@ async function vaultData(chain, vaultAddress, id) {
     : params.mooToken.startsWith('mooThena')
     ? 'thena'
     : id.substring(0, id.indexOf('-'));
-  const platform = params.mooToken.startsWith('mooConvex') ? 'convex' : provider;
+  let platform = params.mooToken.startsWith('mooConvex') ? 'convex' : provider;
+  if (provider === 'pendle') platform = 'magpie';
   if (platform === 'equilibria') provider = 'pendle';
-  const ammId = `${chain}-${platform}`;
+  const migrationIds =
+    ['curve', 'curve-lend'].includes(provider) && chain === 'ethereum'
+      ? ['ethereum-convex', 'ethereum-curve']
+      : ['curve', 'curve-lend'].includes(provider)
+      ? ['l2-convex', 'l2-curve']
+      : ['pendle'].includes(provider)
+      ? ['magpie']
+      : [];
 
-  return { ...params, ...token, ...{ provider, platform, ammId } };
+  let addLiquidityUrl =
+    provider === 'pendle'
+      ? `https://app.pendle.finance/trade/pools/${params.want}/zap/in?chain=${chain}`
+      : 'XXX';
+  let removeLiquidityUrl =
+    provider === 'pendle'
+      ? `https://app.pendle.finance/trade/pools/${params.want}/zap/out?chain=${chain}`
+      : 'XXX';
+
+  return {
+    ...params,
+    ...token,
+    provider,
+    platform,
+    migrationIds,
+    addLiquidityUrl,
+    removeLiquidityUrl,
+  };
 }
 
 async function generateVault() {
@@ -76,10 +101,11 @@ async function generateVault() {
     status: 'active',
     platformId: vault.platform,
     assets: [vault.token],
+    migrationIds: vault.migrationIds,
     strategyTypeId: 'multi-lp',
     risks: ['COMPLEXITY_LOW', 'IL_NONE', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
-    addLiquidityUrl: 'XXX',
-    removeLiquidityUrl: 'XXX',
+    addLiquidityUrl: vault.addLiquidityUrl,
+    removeLiquidityUrl: vault.removeLiquidityUrl,
     network: chain,
     createdAt: Math.floor(Date.now() / 1000),
   });

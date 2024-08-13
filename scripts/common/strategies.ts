@@ -1,20 +1,39 @@
 import riskStrings from '../../src/locales/en/risks.json';
-import partition from 'lodash/partition';
 
-let strategyIdsCache: { gov: string[]; vault: string[] } | undefined;
+let strategyIdsCache:
+  | { standard: Set<string>; gov: Set<string>; cowcentrated: Set<string> }
+  | undefined;
+
+const regex =
+  /^StrategyDescription-(?:(?<type>gov|cowcentrated|standard)-)?(?:(?<subtype>gov|cowcentrated|standard)-)?(?<id>.+)$/;
 
 export function getStrategyIds() {
   if (!strategyIdsCache) {
-    const [gov, vault] = partition(
-      Object.keys(riskStrings)
-        .filter(key => key.startsWith('StrategyDescription-'))
-        .map(key => key.substring(20)),
-      key => key.startsWith('Gov-')
+    strategyIdsCache = Object.keys(riskStrings).reduce(
+      (acc, key) => {
+        const match = key.match(regex);
+        if (!match) {
+          return acc;
+        }
+
+        const id = match.groups?.id;
+        if (!id) {
+          return acc;
+        }
+
+        const type = (match.groups?.subtype || match.groups?.type || 'standard') as
+          | 'standard'
+          | 'gov'
+          | 'cowcentrated';
+        acc[type].add(id);
+        return acc;
+      },
+      {
+        standard: new Set<string>(),
+        gov: new Set<string>(),
+        cowcentrated: new Set<string>(),
+      }
     );
-    strategyIdsCache = {
-      gov: gov.map(key => key.substring(4)),
-      vault,
-    };
   }
 
   return strategyIdsCache;

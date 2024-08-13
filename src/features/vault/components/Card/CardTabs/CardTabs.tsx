@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
@@ -10,6 +10,7 @@ export type CardTabProps = {
   options: { value: string; label: string }[];
   onChange: (value: string) => void;
   className?: string;
+  highlight?: string;
 };
 
 export const CardsTabs = memo<CardTabProps>(function CardsTabs({
@@ -17,6 +18,7 @@ export const CardsTabs = memo<CardTabProps>(function CardsTabs({
   options,
   onChange,
   className,
+  highlight,
 }) {
   const classes = useStyles();
 
@@ -29,6 +31,7 @@ export const CardsTabs = memo<CardTabProps>(function CardsTabs({
           value={value}
           onChange={onChange}
           selected={selected === value}
+          highlight={highlight === value}
         />
       ))}
     </div>
@@ -41,8 +44,16 @@ type TabProps = {
   onChange: (selected: string) => void;
   selected: boolean;
   className?: string;
+  highlight?: boolean;
 };
-const Tab = memo<TabProps>(function Tab({ value, label, onChange, selected, className }) {
+const Tab = memo<TabProps>(function Tab({
+  value,
+  label,
+  onChange,
+  selected,
+  highlight,
+  className,
+}) {
   const classes = useStyles();
   const handleClick = useCallback(() => {
     onChange(value);
@@ -50,7 +61,10 @@ const Tab = memo<TabProps>(function Tab({ value, label, onChange, selected, clas
 
   return (
     <button
-      className={clsx(classes.tab, className, { [classes.selectedTab]: selected })}
+      className={clsx(classes.tab, className, {
+        [classes.selectedTab]: selected,
+        [classes.highlightTab]: highlight,
+      })}
       onClick={handleClick}
     >
       {label}

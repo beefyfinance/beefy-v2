@@ -1,5 +1,4 @@
 import type { FC, MouseEventHandler, ReactNode } from 'react';
-import * as React from 'react';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import { orderBy } from 'lodash-es';

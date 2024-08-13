@@ -1,30 +1,48 @@
 import type { BeefyState } from '../../../redux-types';
-import type { VaultEntity } from '../entities/vault';
-import { isGovVault, isVaultActive } from '../entities/vault';
 import {
-  selectAddressDepositedVaultIds,
-  selectGovVaultUserStakedBalanceInDepositToken,
-  selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged,
-  selectUserVaultDepositInDepositToken,
+  isCowcentratedGovVault,
+  isCowcentratedVault,
+  isGovVault,
+  isVaultActive,
+  type VaultEntity,
+} from '../entities/vault';
+import {
+  selectUserDepositedVaultIds,
+  selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
+  selectUserVaultBalanceInUsdIncludingBoostsBridged,
 } from './balance';
-import { selectIsUserBalanceAvailable } from './data-loader';
+import {
+  selectIsUserBalanceAvailable,
+  selectIsVaultApyAvailable,
+  selectVaultShouldShowInterest,
+} from './data-loader';
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { selectUserActiveBoostBalanceInToken } from './boosts';
+import { selectUserActiveBoostBalanceInToken, selectVaultCurrentBoostIdWithStatus } from './boosts';
 import type { TotalApy } from '../reducers/apy';
-import { compoundInterest } from '../../../helpers/number';
 import { isEmpty } from '../../../helpers/utils';
 import { selectWalletAddress } from './wallet';
+import { BigNumber } from 'bignumber.js';
 
 const EMPTY_TOTAL_APY: TotalApy = {
   totalApy: 0,
+  totalMonthly: 0,
   totalDaily: 0,
 };
 
-export const selectVaultTotalApy = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const result = state.biz.apy.totalApy.byVaultId[vaultId] || { ...EMPTY_TOTAL_APY };
-  return result;
+export const selectVaultTotalApyOrUndefined = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): Readonly<TotalApy> | undefined => {
+  return state.biz.apy.totalApy.byVaultId[vaultId] || undefined;
+};
+
+export const selectVaultTotalApy = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): Readonly<TotalApy> => {
+  return selectVaultTotalApyOrUndefined(state, vaultId) || EMPTY_TOTAL_APY;
 };
 
 export const selectDidAPIReturnValuesForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
@@ -39,6 +57,10 @@ const EMPTY_GLOBAL_STATS = {
   apy: 0,
   depositedVaults: 0,
 };
+
+/**
+ * Ignores boost component of APY
+ */
 export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
   const walletAddress = address || selectWalletAddress(state);
   if (!walletAddress) {
@@ -49,7 +71,7 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
     return EMPTY_GLOBAL_STATS;
   }
 
-  const userVaultIds = selectAddressDepositedVaultIds(state, walletAddress);
+  const userVaultIds = selectUserDepositedVaultIds(state, walletAddress);
 
   if (userVaultIds.length === 0) {
     return EMPTY_GLOBAL_STATS;
@@ -63,73 +85,38 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
   const userVaults = userVaultIds.map(vaultId => selectVaultById(state, vaultId));
 
   for (const vault of userVaults) {
-    const tokenBalance = isGovVault(vault)
-      ? selectGovVaultUserStakedBalanceInDepositToken(state, vault.id, walletAddress)
-      : selectStandardVaultUserBalanceInDepositTokenIncludingBoostsBridged(
-          state,
-          vault.id,
-          walletAddress
-        );
+    const vaultUsdBalance = selectUserVaultBalanceInUsdIncludingBoostsBridged(
+      state,
+      vault.id,
+      walletAddress
+    ).toNumber();
 
-    if (tokenBalance.lte(BIG_ZERO)) {
+    if (vaultUsdBalance <= 0) {
       continue;
     }
-
-    const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
-    const vaultUsdBalance = tokenBalance.times(oraclePrice).toNumber();
 
     // Add vault balance to total
     newGlobalStats.deposited += vaultUsdBalance;
 
-    if (!isVaultActive(vault) || vaultUsdBalance <= 0) {
+    if (!isVaultActive(vault)) {
       continue;
     }
 
-    // Collect yield for each vault
+    // Add period totals for each vault
     const apyData = selectVaultTotalApy(state, vault.id);
 
     if (isEmpty(apyData)) {
       continue;
     }
+    const { dailyUsd, monthlyUsd, yearlyUsd } = selectYieldStatsByVaultId(
+      state,
+      vault.id,
+      walletAddress
+    );
 
-    if (isGovVault(vault)) {
-      newGlobalStats.daily += vaultUsdBalance * apyData.totalDaily;
-      newGlobalStats.monthly += vaultUsdBalance * apyData.totalDaily * 30;
-      newGlobalStats.yearly += vaultUsdBalance * apyData.totalApy;
-    } else {
-      const nonCompoundableComponents: (keyof TotalApy)[] = [
-        'tradingDaily',
-        'composablePoolDaily',
-        'liquidStakingDaily',
-      ];
-      // if none of the breakdown is available, we assume totalApy is 100% vault earnings (=compoundable)
-      const useBreakdown =
-        apyData.vaultDaily ||
-        apyData.tradingDaily ||
-        apyData.composablePoolDaily ||
-        apyData.liquidStakingApr;
-      const vaultDaily = useBreakdown ? apyData.vaultDaily || 0 : apyData.totalDaily;
-
-      // non-compoundable components
-      let totalNonCompoundableDaily = 0;
-      for (const key of nonCompoundableComponents) {
-        const daily = key in apyData ? apyData[key] || 0 : 0;
-        if (daily > 0) {
-          totalNonCompoundableDaily += daily;
-        }
-      }
-
-      // compoundable components
-      const totalCompoundableDaily = vaultDaily;
-
-      // total
-      newGlobalStats.daily +=
-        vaultUsdBalance * (totalNonCompoundableDaily + totalCompoundableDaily);
-      newGlobalStats.monthly +=
-        vaultUsdBalance * totalNonCompoundableDaily * 30 +
-        compoundInterest(totalCompoundableDaily, vaultUsdBalance, 1, 30);
-      newGlobalStats.yearly += vaultUsdBalance * apyData.totalApy;
-    }
+    newGlobalStats.daily += dailyUsd.toNumber();
+    newGlobalStats.monthly += monthlyUsd.toNumber();
+    newGlobalStats.yearly += yearlyUsd.toNumber();
   }
 
   // Skip yield calc if user has no deposits
@@ -143,31 +130,55 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
   return newGlobalStats;
 };
 
-export const selectVaultDailyYieldStats = (
+export const selectYieldStatsByVaultId = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ) => {
   const vault = selectVaultById(state, vaultId);
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const ppfs = selectVaultPricePerFullShare(state, vaultId);
-  const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
-  const tokenBalance = selectUserVaultDepositInDepositToken(state, vault.id, walletAddress);
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+
+  if (!isVaultActive(vault)) {
+    return {
+      dailyUsd: BIG_ZERO,
+      dailyTokens: BIG_ZERO,
+      monthlyTokens: BIG_ZERO,
+      monthlyUsd: BIG_ZERO,
+      yearlyUsd: BIG_ZERO,
+      yearlyTokens: BIG_ZERO,
+      oraclePrice,
+      tokenDecimals: depositToken.decimals,
+    };
+  }
+
+  const tokenBalance = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(
+    state,
+    vault.id,
+    walletAddress
+  );
   const vaultUsdBalance = tokenBalance.times(oraclePrice);
   const apyData = selectVaultTotalApy(state, vault.id);
 
-  let dailyUsd = BIG_ZERO;
-  let dailyTokens = BIG_ZERO;
+  let dailyUsd: BigNumber;
+  let dailyTokens: BigNumber;
+  let yearlyTokens: BigNumber;
+  let yearlyUsd: BigNumber;
+  let monthlyTokens: BigNumber;
+  let monthlyUsd: BigNumber;
 
   if (isGovVault(vault)) {
     dailyUsd = vaultUsdBalance.times(apyData.totalDaily);
     dailyTokens = tokenBalance.times(apyData.totalDaily);
+    monthlyUsd = dailyUsd.times(30);
+    monthlyTokens = dailyTokens.times(30);
+    yearlyTokens = tokenBalance.times(apyData.totalApy);
+    yearlyUsd = vaultUsdBalance.times(apyData.totalApy);
   } else {
-    const boostBalance = selectUserActiveBoostBalanceInToken(
-      state,
-      vaultId,
-      walletAddress
-    ).multipliedBy(ppfs);
+    const ppfs = selectVaultPricePerFullShare(state, vaultId);
+    const boostBalance = selectUserActiveBoostBalanceInToken(state, vaultId, walletAddress)
+      .multipliedBy(ppfs)
+      .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR);
     const boostBalanceUsd = boostBalance.times(oraclePrice);
 
     const nonBoostBalanceInTokens = tokenBalance.minus(boostBalance);
@@ -175,12 +186,82 @@ export const selectVaultDailyYieldStats = (
 
     dailyUsd = nonBoostBalanceInUsd.times(apyData.totalDaily);
     dailyTokens = nonBoostBalanceInTokens.times(apyData.totalDaily);
+    yearlyTokens = nonBoostBalanceInTokens.times(apyData.totalApy);
+    yearlyUsd = nonBoostBalanceInUsd.times(apyData.totalApy);
 
-    if (apyData.boostedTotalDaily !== undefined && boostBalance.gt(BIG_ZERO)) {
+    if (
+      apyData.boostedTotalDaily !== undefined &&
+      apyData.boostedTotalApy &&
+      boostBalance.gt(BIG_ZERO)
+    ) {
       dailyUsd = dailyUsd.plus(boostBalanceUsd.times(apyData.boostedTotalDaily));
       dailyTokens = dailyTokens.plus(boostBalance.times(apyData.boostedTotalDaily));
+      yearlyTokens = yearlyTokens.plus(boostBalance.times(apyData.boostedTotalApy));
+      yearlyUsd = yearlyUsd.plus(boostBalanceUsd.times(apyData.boostedTotalApy));
     }
   }
 
-  return { dailyUsd, dailyTokens, oraclePrice, tokenDecimals: token.decimals };
+  monthlyTokens = dailyTokens.times(30);
+  monthlyUsd = dailyUsd.times(30);
+
+  return {
+    dailyUsd,
+    dailyTokens,
+    monthlyTokens,
+    monthlyUsd,
+    yearlyTokens,
+    yearlyUsd,
+    oraclePrice,
+    tokenDecimals: depositToken.decimals,
+  };
 };
+
+type ApyVaultUIData =
+  | { status: 'loading' | 'missing' | 'hidden'; type: 'apy' | 'apr' }
+  | {
+      status: 'available';
+      type: 'apy' | 'apr';
+      values: TotalApy;
+      boosted: 'active' | 'prestake' | undefined;
+    };
+
+// TEMP: selector instead of connect/mapStateToProps
+export function selectApyVaultUIData(
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): ApyVaultUIData {
+  const vault = selectVaultById(state, vaultId);
+  const type: 'apr' | 'apy' = vault.type === 'gov' ? 'apr' : 'apy';
+
+  const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
+  if (!shouldShowInterest) {
+    return { status: 'hidden', type };
+  }
+
+  const isLoaded = selectIsVaultApyAvailable(state, vaultId);
+  if (!isLoaded) {
+    return { status: 'loading', type };
+  }
+
+  const exists = selectDidAPIReturnValuesForVault(state, vaultId);
+  if (!exists) {
+    return { status: 'missing', type };
+  }
+
+  const values = selectVaultTotalApy(state, vaultId);
+  const boost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
+  if (boost) {
+    return { status: 'available', type, values, boosted: boost.status };
+  }
+
+  if (!isCowcentratedVault(vault) && !isCowcentratedGovVault(vault)) {
+    return { status: 'available', type, values, boosted: undefined };
+  }
+
+  return {
+    status: 'available',
+    type: vault.strategyTypeId === 'compounds' ? 'apy' : 'apr',
+    values,
+    boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
+  };
+}

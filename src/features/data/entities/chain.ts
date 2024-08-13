@@ -17,3 +17,5 @@ export type ChainEntity = Omit<
   explorerAddressUrlTemplate: string;
   explorerTxUrlTemplate: string;
 };
+
+export type ChainId = ChainEntity['id'];

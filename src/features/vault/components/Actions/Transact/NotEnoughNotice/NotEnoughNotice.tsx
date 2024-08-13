@@ -4,11 +4,12 @@ import { AlertError } from '../../../../../../components/Alerts';
 import { useAppSelector } from '../../../../../../store';
 import {
   selectTransactDepositInputAmountExceedsBalance,
-  selectTransactDepositInputAmountsExceedBalances,
   selectTransactSelectedQuote,
   selectTransactWithdrawInputAmountExceedsBalance,
 } from '../../../../../data/selectors/transact';
 import { selectIsWalletConnected } from '../../../../../data/selectors/wallet';
+import { isCowcentratedDepositQuote } from '../../../../../data/apis/transact/transact-types';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 export type NotEnoughProps = {
   onChange: (shouldDisable: boolean) => void;
@@ -22,21 +23,22 @@ export const NotEnoughNotice = memo<NotEnoughProps>(function NotEnoughNotice({
 }) {
   const { t } = useTranslation();
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
-  const selection = useAppSelector(selectTransactSelectedQuote);
-  const strategyId = selection.strategyId;
   const inputAmountExceedsBalance = useAppSelector(
     mode === 'deposit'
-      ? strategyId === 'cowcentrated'
-        ? selectTransactDepositInputAmountsExceedBalances
-        : selectTransactDepositInputAmountExceedsBalance
+      ? selectTransactDepositInputAmountExceedsBalance
       : selectTransactWithdrawInputAmountExceedsBalance
   );
+  const quote = useAppSelector(selectTransactSelectedQuote);
+  const isInvalidCowcentratedDeposit =
+    quote &&
+    isCowcentratedDepositQuote(quote) &&
+    quote.outputs.every(output => output.amount.lte(BIG_ZERO));
 
   useEffect(() => {
     onChange(inputAmountExceedsBalance);
   }, [inputAmountExceedsBalance, onChange]);
 
-  if (!inputAmountExceedsBalance || !isWalletConnected) {
+  if (!inputAmountExceedsBalance || !isWalletConnected || isInvalidCowcentratedDeposit) {
     return null;
   }
 

@@ -67,7 +67,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: 'rgba(252, 254, 83, 0.14)',
   },
   'headerNetwork-moonriver': {
-    backgroundColor: 'rgba(195, 19, 111, 0.2)',
+    backgroundColor: 'rgba(6, 53, 61, 0.4)',
   },
   'headerNetwork-cronos': {
     backgroundColor: 'rgba(18, 25, 38, 1)',
@@ -82,7 +82,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: 'rgba(112, 212, 75, 0.2)',
   },
   'headerNetwork-moonbeam': {
-    backgroundColor: 'rgba(33, 20, 56, 0.4)',
+    backgroundColor: 'rgba(149, 143, 220, 0.4)',
   },
   'headerNetwork-optimism': {
     backgroundColor: 'rgba(255, 4, 32, 0.2)',
@@ -119,6 +119,18 @@ export const styles = (theme: Theme) => ({
   },
   'headerNetwork-fraxtal': {
     backgroundColor: 'rgba(18, 18, 18, 0.2)',
+  },
+  'headerNetwork-mode': {
+    backgroundColor: 'rgba(18, 18, 18, 0.2)',
+  },
+  'headerNetwork-manta': {
+    backgroundColor: 'rgba(18, 18, 18, 0.2)',
+  },
+  'headerNetwork-real': {
+    backgroundColor: 'rgba(28, 18, 44, 0.4)',
+  },
+  'headerNetwork-sei': {
+    backgroundColor: 'rgba(28, 18, 44, 0.4)',
   },
   'headerMM-system9': {
     backgroundColor: 'rgba(243, 243, 200, 0.5)',

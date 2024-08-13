@@ -1,7 +1,8 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchLastArticle } from '../actions/articles';
-import type { BeefyArticleConfig } from '../apis/beefy/beefy-api';
+
+import type { BeefyArticleConfig } from '../apis/beefy/beefy-api-types';
 
 type ArticleEntity = BeefyArticleConfig;
 

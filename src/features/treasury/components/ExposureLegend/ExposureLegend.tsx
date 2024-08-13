@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { formatLargePercent } from '../../../../helpers/format';
 import type { BaseEntry } from '../../../data/utils/array-utils';
 import { styles } from './styles';
@@ -23,7 +23,10 @@ export const ExposureLegend = memo<ExposureLegendProps>(function ExposureLegend(
       {Object.values(data).map((item, i) => {
         return (
           <div key={item.key} className={classes.legendItem}>
-            <div className={classes.square} style={{ backgroundColor: CHART_COLORS[i] }} />
+            <div
+              className={classes.square}
+              style={{ backgroundColor: CHART_COLORS[i % CHART_COLORS.length] }}
+            />
             <Label item={item} formatter={formatter} />
           </div>
         );

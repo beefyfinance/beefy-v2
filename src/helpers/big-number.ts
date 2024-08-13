@@ -1,5 +1,6 @@
 import { BigNumber } from 'bignumber.js';
 import { mapValues } from 'lodash-es';
+import type { TokenAmount } from '../features/data/apis/transact/transact-types';
 
 export type BigNumberish = BigNumber.Value;
 
@@ -52,6 +53,14 @@ export function toWei(value: BigNumber, decimals: number): BigNumber {
   return value.shiftedBy(decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
 }
 
+export function toWeiFromString(value: string, decimals: number): BigNumber {
+  return toWei(new BigNumber(value), decimals);
+}
+
+export function tokenAmountToWei(tokenAmount: TokenAmount): BigNumber {
+  return toWei(tokenAmount.amount, tokenAmount.token.decimals);
+}
+
 export function toWeiString(value: BigNumber, decimals: number): string {
   return toWei(value, decimals).toString(10);
 }
@@ -66,13 +75,17 @@ export function fromWeiString(value: string, decimals: number): BigNumber {
 
 /**
  * Recursively maps over an object and replaces any BigNumber object with string value
- * e.g. "BigNumber(123.567)"
+ * e.g. "BN(123.567)"
  * Use only for debugging
  */
 export function bigNumberToStringDeep(input: unknown) {
   if (input && typeof input === 'object') {
+    if (input instanceof Date) {
+      return input;
+    }
+
     if (BigNumber.isBigNumber(input)) {
-      return `BigNumber(${input.toString(10)})`;
+      return `BN(${input.toString(10)})`;
     }
 
     if (Array.isArray(input)) {

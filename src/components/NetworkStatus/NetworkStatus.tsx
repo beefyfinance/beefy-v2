@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { isEqual, sortedUniq, uniq } from 'lodash-es';
-import React, { memo, type RefObject, useCallback } from 'react';
+import { memo, type RefObject, useCallback } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import type { ChainEntity } from '../../features/data/entities/chain';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader';
@@ -12,7 +12,6 @@ import { Floating } from '../Floating';
 import { useAppDispatch, useAppSelector } from '../../store';
 import CloseIcon from '@material-ui/icons/Close';
 import type { DataLoaderState, LoaderState } from '../../features/data/reducers/data-loader-types';
-import { isPending, isRejected } from '../../features/data/reducers/data-loader-types';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
@@ -22,6 +21,10 @@ import { selectChainById, selectEolChainIds } from '../../features/data/selector
 import { getNetworkSrc } from '../../helpers/networkSrc';
 import iconUnsupportedChain from '../../images/icons/navigation/unsuported-chain.svg';
 import { entries } from '../../helpers/object';
+import {
+  isLoaderPending,
+  isLoaderRejected,
+} from '../../features/data/selectors/data-loader-helpers';
 
 const useStyles = makeStyles(styles);
 const ActiveChain = ({ chainId }: { chainId: ChainEntity['id'] | null }) => {
@@ -55,12 +58,12 @@ export const NetworkStatus = memo(function NetworkStatus({
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const currentChainId = useAppSelector(selectCurrentChainId);
 
-  const rpcErrors = useNetStatus(findChainIdMatching, isRejected);
-  const rpcPending = useNetStatus(findChainIdMatching, isPending);
-  const beefyErrors = useNetStatus(findBeefyApiMatching, isRejected);
-  const beefyPending = useNetStatus(findBeefyApiMatching, isPending);
-  const configErrors = useNetStatus(findConfigMatching, isRejected);
-  const configPending = useNetStatus(findConfigMatching, isPending);
+  const rpcErrors = useNetStatus(findChainIdMatching, isLoaderRejected);
+  const rpcPending = useNetStatus(findChainIdMatching, isLoaderPending);
+  const beefyErrors = useNetStatus(findBeefyApiMatching, isLoaderRejected);
+  const beefyPending = useNetStatus(findBeefyApiMatching, isLoaderPending);
+  const configErrors = useNetStatus(findConfigMatching, isLoaderRejected);
+  const configPending = useNetStatus(findConfigMatching, isLoaderPending);
 
   const hasAnyError = rpcErrors.length > 0 || beefyErrors.length > 0 || configErrors.length > 0;
   const hasAnyLoading =

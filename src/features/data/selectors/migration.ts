@@ -1,14 +1,14 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { VaultEntity } from '../entities/vault';
-import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectWalletAddress } from './wallet';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectVaultById } from './vaults';
 import type { MigrationConfig } from '../reducers/wallet/migration';
+import { isLoaderIdle } from './data-loader-helpers';
 
 export const selectShouldInitMigration = (state: BeefyState) =>
-  isInitialLoader(state.ui.dataLoader.global.migrators);
+  isLoaderIdle(state.ui.dataLoader.global.migrators);
 
 export const selectUserBalanceToMigrateByVaultId = createSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], _migrationId: MigrationConfig['id']) =>
@@ -22,7 +22,7 @@ export const selectUserBalanceToMigrateByVaultId = createSelector(
     if (!walletAddress) return { balance: BIG_ZERO, initialized: false };
 
     return (
-      migrationState.byUserAddress[walletAddress]?.byVaultId[vaultId]?.byMigrationId[
+      migrationState.byUserAddress[walletAddress.toLowerCase()]?.byVaultId[vaultId]?.byMigrationId[
         migrationId
       ] || { balance: BIG_ZERO, initialized: false }
     );

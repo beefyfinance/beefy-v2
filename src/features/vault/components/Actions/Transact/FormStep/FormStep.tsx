@@ -1,21 +1,29 @@
-import type { ComponentType } from 'react';
-import React, { memo, useCallback, useEffect, useMemo } from 'react';
+import { type ComponentType, lazy, memo, Suspense, useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { selectTransactMode, selectTransactVaultId } from '../../../../../data/selectors/transact';
+import {
+  selectTransactShouldShowClaims,
+  selectTransactMode,
+  selectTransactVaultId,
+  selectTransactShouldShowClaimsNotification,
+} from '../../../../../data/selectors/transact';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { CardsTabs } from '../../../Card/CardTabs';
-import { DepositFormLoader } from '../DepositForm';
 import { transactFetchOptions } from '../../../../../data/actions/transact';
-import { WithdrawFormLoader } from '../WithdrawForm';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types';
+import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
 
 const useStyles = makeStyles(styles);
 
+const DepositFormLoader = lazy(() => import('../DepositForm'));
+const ClaimFormLoader = lazy(() => import('../ClaimForm'));
+const WithdrawFormLoader = lazy(() => import('../WithdrawForm'));
+
 const modeToComponent: Record<TransactMode, ComponentType> = {
   [TransactMode.Deposit]: DepositFormLoader,
+  [TransactMode.Claim]: ClaimFormLoader,
   [TransactMode.Withdraw]: WithdrawFormLoader,
 };
 
@@ -25,6 +33,10 @@ export const FormStep = memo(function FormStep() {
   const classes = useStyles();
   const mode = useAppSelector(selectTransactMode);
   const vaultId = useAppSelector(selectTransactVaultId);
+  const showClaim = useAppSelector(state => selectTransactShouldShowClaims(state, vaultId));
+  const highlightClaim = useAppSelector(state =>
+    selectTransactShouldShowClaimsNotification(state, vaultId)
+  );
   const Component = modeToComponent[mode];
   const handleModeChange = useCallback(
     (mode: string) => {
@@ -35,9 +47,12 @@ export const FormStep = memo(function FormStep() {
   const modeOptions = useMemo(
     () => [
       { value: TransactMode[TransactMode.Deposit], label: t('Transact-Deposit') },
+      ...(showClaim
+        ? [{ value: TransactMode[TransactMode.Claim], label: t('Transact-Claim') }]
+        : []),
       { value: TransactMode[TransactMode.Withdraw], label: t('Transact-Withdraw') },
     ],
-    [t]
+    [t, showClaim]
   );
 
   useEffect(() => {
@@ -47,8 +62,15 @@ export const FormStep = memo(function FormStep() {
 
   return (
     <div className={classes.container}>
-      <CardsTabs selected={TransactMode[mode]} options={modeOptions} onChange={handleModeChange} />
-      <Component />
+      <CardsTabs
+        selected={TransactMode[mode]}
+        options={modeOptions}
+        onChange={handleModeChange}
+        highlight={highlightClaim ? TransactMode[TransactMode.Claim] : undefined}
+      />
+      <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} />}>
+        <Component />
+      </Suspense>
     </div>
   );
 });

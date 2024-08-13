@@ -19,15 +19,27 @@ export const styles = (theme: Theme) => ({
   textFlexStart: {
     textAlign: 'left' as const,
   },
+  txCurrent: {},
+  txPast: {
+    opacity: 0.7,
+  },
   gridMobile: {
     display: 'grid',
     gridTemplateColumns: 'repeat(2,minmax(0, 50fr))',
     columnGap: '8px',
     position: 'relative' as const,
+    alignItems: 'start',
   },
   statMobile: {
     ...theme.typography['body-sm'],
     color: theme.palette.text.middle,
+  },
+  action: {
+    ...theme.typography['body-lg-med'],
+    color: theme.palette.text.middle,
+  },
+  actionMobile: {
+    ...theme.typography['body-sm'],
   },
   network: {
     display: 'block',
@@ -65,5 +77,32 @@ export const styles = (theme: Theme) => ({
       width: '16px',
       height: '16px',
     },
+  },
+  cowcentratedTokenAmounts: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '4px',
+  },
+  tokenIconAmount: {
+    ...theme.typography['body-lg-med'],
+    color: theme.palette.text.middle,
+    display: 'flex',
+    gap: '4px',
+    alignItems: 'center',
+  },
+  tokenIcon: {
+    flex: '0 0 auto',
+  },
+  tokenAmount: {
+    flex: '1 1 50%',
+  },
+  tokenIconAmountMobile: {
+    ...theme.typography['body-sm'],
+  },
+  tokenIconAmountPositive: {
+    color: theme.palette.primary.main,
+  },
+  tokenIconAmountNegative: {
+    color: theme.palette.background.indicators.error,
   },
 });

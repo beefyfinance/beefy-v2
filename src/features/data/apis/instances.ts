@@ -14,6 +14,7 @@ import {
 import { createPublicClient, type PublicClient } from 'viem';
 import { buildViemChain } from './viem/chains';
 import { makeCustomFallbackTransport } from './viem/transports';
+import type { ChainEntity, ChainId } from '../entities/chain';
 
 export const getBeefyApi = createDependencyFactory(
   async ({ BeefyAPI }) => new BeefyAPI(),
@@ -28,6 +29,11 @@ export const getConfigApi = createDependencyFactory(
 export const getAnalyticsApi = createDependencyFactory(
   async ({ AnalyticsApi }) => new AnalyticsApi(),
   () => import('./analytics/analytics')
+);
+
+export const getClmApi = createDependencyFactory(
+  async ({ ClmApi }) => new ClmApi(),
+  () => import('./clm-api/clm-api')
 );
 
 export const getBeefyDataApi = createDependencyFactory(
@@ -45,11 +51,6 @@ export const getBridgeApi = createDependencyFactory(
   () => import('./bridge/bridge-api')
 );
 
-export const getAxelarApi = createDependencyFactory(
-  async ({ AxelarApi }) => new AxelarApi(),
-  () => import('./axelar/axelar')
-);
-
 export const getOnRampApi = createDependencyFactory(
   async ({ OnRampApi }) => new OnRampApi(),
   () => import('./on-ramp/on-ramp')
@@ -58,6 +59,16 @@ export const getOnRampApi = createDependencyFactory(
 export const getTransactApi = createDependencyFactory(
   async ({ TransactApi }) => new TransactApi(),
   () => import('./transact/transact')
+);
+
+export const getMerklRewardsApi = createDependencyFactory(
+  async ({ MerklRewardsApi }) => new MerklRewardsApi(),
+  () => import('./rewards/merkl/merkl-api')
+);
+
+export const getStellaSwapRewardsApi = createDependencyFactory(
+  async ({ StellaSwapRewardsApi }) => new StellaSwapRewardsApi(),
+  () => import('./rewards/stellaswap/stellaswap-api')
 );
 
 export const getSwapAggregator = createDependencyFactory(
@@ -156,4 +167,10 @@ export const getOneInchApi = createDependencyFactoryWithCacheByChain(
 export const getKyberSwapApi = createDependencyFactoryWithCacheByChain(
   async (chain, { KyberSwapApi }) => new KyberSwapApi(chain),
   () => import('./kyber')
+);
+
+export const getNameServicesApi = createDependencyInitializerFactory(
+  async (chainIdToEntity: Record<ChainId, ChainEntity>, { NameServicesApi }) =>
+    new NameServicesApi(chainIdToEntity),
+  () => import('./name-services/name-services-api')
 );

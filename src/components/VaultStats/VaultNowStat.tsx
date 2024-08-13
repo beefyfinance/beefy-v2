@@ -1,11 +1,11 @@
 import type { VaultEntity } from '../../features/data/entities/vault';
-import { memo } from 'react';
+import { memo, type ReactNode } from 'react';
 import { connect } from 'react-redux';
 import type { BeefyState } from '../../redux-types';
 import {
-  formatTokenDisplayCondensed,
-  formatTokenDisplay,
   formatLargeUsd,
+  formatTokenDisplay,
+  formatTokenDisplayCondensed,
 } from '../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
 import {
@@ -13,13 +13,12 @@ import {
   selectUserDepositedTimelineByVaultId,
 } from '../../features/data/selectors/analytics';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
-import type { VaultPnLDataType } from './types';
-import { selectIsVaultCowcentrated } from '../../features/data/selectors/vaults';
+import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types';
 
 export type VaultNowStatProps = {
   vaultId: VaultEntity['id'];
   className?: string;
-  pnlData: VaultPnLDataType;
+  pnlData: UserVaultPnl;
   walletAddress: string;
 };
 
@@ -30,23 +29,9 @@ function mapStateToProps(
   { vaultId, className, pnlData, walletAddress }: VaultNowStatProps
 ) {
   const label = 'VaultStat-Now';
-
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
-
   const isLoaded = selectIsAnalyticsLoadedByAddress(state, walletAddress);
 
-  const isCowcentratedVault = selectIsVaultCowcentrated(state, vaultId);
-
-  if (!vaultTimeline || isCowcentratedVault) {
-    return {
-      label,
-      value: '-',
-      subValue: null,
-      blur: false,
-      loading: false,
-      className: className ?? '',
-    };
-  }
   if (!isLoaded) {
     return {
       label,
@@ -58,16 +43,38 @@ function mapStateToProps(
     };
   }
 
-  const { deposit, depositUsd, tokenDecimals } = pnlData;
+  if (!vaultTimeline || !vaultTimeline.current.length) {
+    return {
+      label,
+      value: '-',
+      subValue: null,
+      blur: false,
+      loading: false,
+      className: className ?? '',
+    };
+  }
+
+  let value: string, subValue: string, tooltip: ReactNode;
+  if (isUserClmPnl(pnlData)) {
+    const { sharesNow, sharesNowInUsd } = pnlData;
+    value = formatTokenDisplayCondensed(sharesNow, 18);
+    subValue = formatLargeUsd(sharesNowInUsd);
+    tooltip = <BasicTooltipContent title={formatTokenDisplay(sharesNow, 18)} />;
+  } else {
+    const { deposit, depositUsd, tokenDecimals } = pnlData;
+    value = formatTokenDisplayCondensed(deposit, tokenDecimals);
+    subValue = formatLargeUsd(depositUsd);
+    tooltip = <BasicTooltipContent title={formatTokenDisplay(deposit, tokenDecimals)} />;
+  }
 
   return {
     label,
-    value: formatTokenDisplayCondensed(deposit, tokenDecimals),
-    subValue: formatLargeUsd(depositUsd),
+    value,
+    subValue,
     blur: false,
     loading: !isLoaded,
     boosted: false,
-    tooltip: <BasicTooltipContent title={formatTokenDisplay(deposit, tokenDecimals)} />,
+    tooltip,
     className: className ?? '',
   };
 }

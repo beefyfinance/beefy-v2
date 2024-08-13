@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { Button, InputBase, makeStyles, Paper } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { CardContent } from '../../../../Card';
@@ -77,7 +77,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
 
   const isStepping = useAppSelector(selectIsStepperStepping);
 
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState({
     deposit: {
       input: '',
       amount: BIG_ZERO,

@@ -1,5 +1,4 @@
 import { config as chainConfigs } from '../../../config/config';
-import { Nexus, QiDao, OpenCover } from '../../../helpers/partners';
 import type { ChainEntity } from '../entities/chain';
 import type {
   AmmConfig,
@@ -9,7 +8,6 @@ import type {
   BoostPartnerConfig,
   BridgeConfig,
   ChainConfig,
-  FeaturedVaultConfig,
   MinterConfig,
   PartnersConfig,
   PlatformConfig,
@@ -31,12 +29,8 @@ export class ConfigAPI {
     return entries(chainConfigs).map(([id, chain]) => ({ id, ...chain }));
   }
 
-  public async fetchFeaturedVaults(): Promise<FeaturedVaultConfig> {
-    return (await import('../../../config/vault/featured.json')).default;
-  }
-
   public async fetchPartnersConfig(): Promise<PartnersConfig> {
-    return { QiDao, OpenCover, Nexus };
+    return { ...(await import('../../../helpers/partners')) };
   }
 
   public async fetchZapAmms(): Promise<{ [chainId in ChainEntity['id']]: AmmConfig[] }> {
@@ -68,7 +62,7 @@ export class ConfigAPI {
   }
 
   public async fetchAllVaults(): Promise<{ [chainId in ChainEntity['id']]: VaultConfig[] }> {
-    return Object.fromEntries(
+    const vaultsByChainId: { [chainId in ChainEntity['id']]: VaultConfig[] } = Object.fromEntries(
       await Promise.all(
         keys(chainConfigs).map(async chainId => [
           chainId,
@@ -76,6 +70,8 @@ export class ConfigAPI {
         ])
       )
     );
+
+    return mapValues(vaultsByChainId, vaults => vaults.filter(v => !v.hidden));
   }
 
   public async fetchAllBoosts(): Promise<{
@@ -96,11 +92,13 @@ export class ConfigAPI {
     );
 
     const boostsByChainId = mapValues(boosts, boosts =>
-      boosts.map(boost => ({
-        ...boost,
-        partners: (boost.partners || []).filter(id => !!partnersById[id]),
-        campaign: boost.campaign && campaignsById[boost.campaign] ? boost.campaign : undefined,
-      }))
+      boosts
+        .map(boost => ({
+          ...boost,
+          partners: (boost.partners || []).filter(id => !!partnersById[id]),
+          campaign: boost.campaign && campaignsById[boost.campaign] ? boost.campaign : undefined,
+        }))
+        .filter(b => !b.hidden)
     );
 
     return { boostsByChainId, partnersById, campaignsById };

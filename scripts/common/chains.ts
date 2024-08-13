@@ -12,7 +12,7 @@ export const chainsByAppId: Record<AppChainId, ChainEntity> = Object.entries(con
     };
     return acc;
   },
-  {}
+  {} as Record<AppChainId, ChainEntity>
 );
 
-export const allChainIds: AppChainId[] = Object.keys(chainsByAppId);
+export const allChainIds: AppChainId[] = Object.keys(chainsByAppId) as AppChainId[];

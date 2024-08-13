@@ -1,8 +1,8 @@
-import type { ActionReducerMapBuilder, AsyncThunk } from '@reduxjs/toolkit';
+import type { ActionReducerMapBuilder, AsyncThunk, SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllAllowanceAction } from '../actions/allowance';
 import { fetchApyAction } from '../actions/apy';
-import { fetchAllBalanceAction } from '../actions/balance';
+import { fetchAllBalanceAction, recalculateDepositedVaultsAction } from '../actions/balance';
 import { fetchAllBoosts, initiateBoostForm } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
@@ -10,6 +10,7 @@ import { fetchAllPricesAction } from '../actions/prices';
 import {
   fetchAddressBookAction,
   fetchAllAddressBookAction,
+  fetchAllCurrentCowcentratedRanges,
   reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
 } from '../actions/tokens';
 import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults';
@@ -20,10 +21,10 @@ import {
   initWallet,
 } from '../actions/wallet';
 import {
-  fetchZapSwapAggregatorsAction,
-  fetchZapConfigsAction,
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
+  fetchZapConfigsAction,
+  fetchZapSwapAggregatorsAction,
 } from '../actions/zap';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters';
 import { fetchBridgeConfig } from '../actions/bridge';
@@ -31,55 +32,75 @@ import { fetchPlatforms } from '../actions/platforms';
 import { fetchOnRampSupportedProviders } from '../actions/on-ramp';
 import { fetchFees } from '../actions/fees';
 import type {
-  ChainIdDataByAddressByChainEntity,
-  ChainIdDataEntity,
+  ByAddressByChainDataEntity,
+  ByAddressByVaultDataEntity,
+  ByChainDataEntity,
   DataLoaderState,
-  GlobalDataByAddressEntity,
+  LoaderAddressKey,
+  LoaderAddressVaultKey,
+  LoaderAddressChainKey,
+  LoaderChainKey,
+  LoaderGlobalKey,
   LoaderState,
+  LoaderStateFulfilled,
+  LoaderStateIdle,
+  LoaderStatePending,
+  LoaderStateRejected,
 } from './data-loader-types';
 import { errorToString } from '../../../helpers/format';
 import { fetchTreasury } from '../actions/treasury';
-import { fetchWalletTimeline } from '../actions/analytics';
+import {
+  fetchClmHarvestsForUser,
+  fetchClmHarvestsForUserChain,
+  fetchWalletTimeline,
+  initDashboardByAddress,
+} from '../actions/analytics';
 import { fetchActiveProposals } from '../actions/proposal';
 import { fetchBridges } from '../actions/bridges';
 import { fetchAllMigrators } from '../actions/migrator';
 import { fetchLastArticle } from '../actions/articles';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
+import type { Draft } from 'immer';
+import { cloneDeep } from 'lodash-es';
+import { fetchUserMerklRewardsAction } from '../actions/user-rewards/merkl-user-rewards';
+import { fetchOffChainCampaignsAction } from '../actions/rewards';
+import type { VaultEntity } from '../entities/vault';
+import { fetchUserStellaSwapRewardsAction } from '../actions/user-rewards/stellaswap-user-rewards';
 
-const dataLoaderStateInit: LoaderState = {
-  alreadyLoadedOnce: false,
-  status: 'init',
+const dataLoaderStateInit: LoaderStateIdle = {
+  lastFulfilled: undefined,
+  lastDispatched: undefined,
+  lastRejected: undefined,
+  status: 'idle',
   error: null,
 };
 
-const dataLoaderStateFulfilled: LoaderState = {
-  alreadyLoadedOnce: true,
-  status: 'fulfilled',
-  error: null,
-};
-
-const dataLoaderStatePending: LoaderState = {
-  alreadyLoadedOnce: false,
-  status: 'pending',
-  error: null,
-};
-
-const dataLoaderStateInitByChainId: ChainIdDataEntity = {
+const dataLoaderStateInitByChainId: ByChainDataEntity = {
   contractData: dataLoaderStateInit,
   addressBook: dataLoaderStateInit,
 };
 
-const dataLoaderStateInitByAddress = {
+const dataLoaderStateInitByAddress: DataLoaderState['byAddress'][string] = {
   byChainId: {},
+  byVaultId: {},
   global: {
     timeline: dataLoaderStateInit,
+    depositedVaults: dataLoaderStateInit,
+    dashboard: dataLoaderStateInit,
+    clmHarvests: dataLoaderStateInit,
+    merklRewards: dataLoaderStateInit,
   },
 };
 
-const dataLoaderStateInitByAddressByChainId: ChainIdDataByAddressByChainEntity = {
+const dataLoaderStateInitByAddressByChainId: ByAddressByChainDataEntity = {
   balance: dataLoaderStateInit,
   allowance: dataLoaderStateInit,
+  clmHarvests: dataLoaderStateInit,
+};
+
+const dataLoaderStateInitByAddressByVaultId: ByAddressByVaultDataEntity = {
+  stellaSwapRewards: dataLoaderStateInit,
 };
 
 export const initialDataLoaderState: DataLoaderState = {
@@ -88,6 +109,7 @@ export const initialDataLoaderState: DataLoaderState = {
   },
   statusIndicator: {
     open: false,
+    excludeChainIds: [],
   },
   global: {
     chainConfig: dataLoaderStateInit,
@@ -117,10 +139,44 @@ export const initialDataLoaderState: DataLoaderState = {
     bridges: dataLoaderStateInit,
     migrators: dataLoaderStateInit,
     articles: dataLoaderStateInit,
+    merklCampaigns: dataLoaderStateInit,
+    currentCowcentratedRanges: dataLoaderStateInit,
+    merklRewards: dataLoaderStateInit,
+    stellaSwapRewards: dataLoaderStateInit,
   },
   byChainId: {},
   byAddress: {},
 };
+
+function makePendingState(existing: LoaderState | undefined): LoaderStatePending {
+  return {
+    lastDispatched: Date.now(),
+    lastFulfilled: existing?.lastFulfilled || undefined,
+    lastRejected: existing?.lastRejected || undefined,
+    status: 'pending',
+    error: null,
+  };
+}
+
+function makeRejectedState(existing: LoaderState | undefined, error: string): LoaderStateRejected {
+  return {
+    lastDispatched: existing?.lastDispatched || Date.now(),
+    lastFulfilled: existing?.lastFulfilled || undefined,
+    lastRejected: Date.now(),
+    status: 'rejected',
+    error,
+  };
+}
+
+function makeFulfilledState(existing: LoaderState | undefined): LoaderStateFulfilled {
+  return {
+    lastDispatched: existing?.lastDispatched || Date.now(),
+    lastFulfilled: Date.now(),
+    lastRejected: existing?.lastRejected || undefined,
+    status: 'fulfilled',
+    error: null,
+  };
+}
 
 /**
  * Handling those async actions is very generic
@@ -129,38 +185,52 @@ export const initialDataLoaderState: DataLoaderState = {
 function addGlobalAsyncThunkActions(
   builder: ActionReducerMapBuilder<DataLoaderState>,
   action: AsyncThunk<unknown, unknown, { state: BeefyState }>,
-  stateKey: keyof DataLoaderState['global'],
+  stateKey: LoaderGlobalKey,
   openNetworkModalOnReject: boolean = false
 ) {
   builder.addCase(action.pending, sliceState => {
-    sliceState.global[stateKey] = {
-      ...dataLoaderStatePending,
-      alreadyLoadedOnce: sliceState.global[stateKey].alreadyLoadedOnce,
-    };
+    setGlobalPending(sliceState, stateKey);
   });
   builder.addCase(action.rejected, (sliceState, action) => {
-    const msg = errorToString(action.error);
-    // here, maybe put an error message
-    sliceState.global[stateKey] = {
-      status: 'rejected',
-      error: msg,
-      alreadyLoadedOnce: sliceState.global[stateKey].alreadyLoadedOnce,
-    };
-
-    // something got rejected, we want to auto-open the indicator
-    if (openNetworkModalOnReject) {
-      sliceState.statusIndicator.open = true;
-    }
+    setGlobalRejected(sliceState, stateKey, action.error, openNetworkModalOnReject);
   });
-  builder.addCase(action.fulfilled, sliceState => {
-    sliceState.global[stateKey] = dataLoaderStateFulfilled;
+  builder.addCase(action.fulfilled, (sliceState, action) => {
+    setGlobalFulfilled(sliceState, stateKey);
+    if (fetchChainConfigs.fulfilled.match(action)) {
+      sliceState.statusIndicator.excludeChainIds = action.payload.chainConfigs
+        .filter(c => c.eol)
+        .map(c => c.id);
+    }
   });
 }
 
-function getOrCreateChainState(sliceState: DataLoaderState, chainId: string) {
-  let chainState: ChainIdDataEntity | undefined = sliceState.byChainId[chainId];
+function setGlobalPending(sliceState: Draft<DataLoaderState>, stateKey: LoaderGlobalKey) {
+  sliceState.global[stateKey] = makePendingState(sliceState.global[stateKey]);
+}
+
+function setGlobalRejected(
+  sliceState: Draft<DataLoaderState>,
+  stateKey: LoaderGlobalKey,
+  error: SerializedError | string | undefined | null,
+  openModal?: boolean
+) {
+  sliceState.global[stateKey] = makeRejectedState(
+    sliceState.global[stateKey],
+    errorToString(error)
+  );
+  if (openModal) {
+    sliceState.statusIndicator.open = true;
+  }
+}
+
+function setGlobalFulfilled(sliceState: Draft<DataLoaderState>, stateKey: LoaderGlobalKey) {
+  sliceState.global[stateKey] = makeFulfilledState(sliceState.global[stateKey]);
+}
+
+function getOrCreateChainState(sliceState: Draft<DataLoaderState>, chainId: string) {
+  let chainState: ByChainDataEntity | undefined = sliceState.byChainId[chainId];
   if (!chainState) {
-    chainState = { ...dataLoaderStateInitByChainId };
+    chainState = cloneDeep(dataLoaderStateInitByChainId);
     sliceState.byChainId = {
       ...sliceState.byChainId,
       [chainId]: chainState,
@@ -169,13 +239,14 @@ function getOrCreateChainState(sliceState: DataLoaderState, chainId: string) {
   return chainState;
 }
 
-function getOrCreateAddressState(sliceState: DataLoaderState, address: string) {
-  let addressState = sliceState.byAddress[address];
+function getOrCreateAddressState(sliceState: Draft<DataLoaderState>, address: string) {
+  const addressKey = address.toLowerCase();
+  let addressState = sliceState.byAddress[addressKey];
   if (!addressState) {
-    addressState = { ...dataLoaderStateInitByAddress };
+    addressState = cloneDeep(dataLoaderStateInitByAddress);
     sliceState.byAddress = {
       ...sliceState.byAddress,
-      [address]: addressState,
+      [addressKey]: addressState,
     };
   }
 
@@ -183,17 +254,18 @@ function getOrCreateAddressState(sliceState: DataLoaderState, address: string) {
 }
 
 function getOrCreateAddressChainState(
-  sliceState: DataLoaderState,
+  sliceState: Draft<DataLoaderState>,
   chainId: string,
   address: string
 ) {
-  const addressState = getOrCreateAddressState(sliceState, address);
+  const addressKey = address.toLowerCase();
+  const addressState = getOrCreateAddressState(sliceState, addressKey);
 
-  let chainState: ChainIdDataByAddressByChainEntity | undefined = addressState.byChainId[chainId];
+  let chainState: ByAddressByChainDataEntity | undefined = addressState.byChainId[chainId];
   if (!chainState) {
-    chainState = { ...dataLoaderStateInitByAddressByChainId };
-    sliceState.byAddress[address].byChainId = {
-      ...sliceState.byAddress[address].byChainId,
+    chainState = cloneDeep(dataLoaderStateInitByAddressByChainId);
+    sliceState.byAddress[addressKey].byChainId = {
+      ...sliceState.byAddress[addressKey].byChainId,
       [chainId]: chainState,
     };
   }
@@ -201,20 +273,37 @@ function getOrCreateAddressChainState(
   return chainState;
 }
 
+function getOrCreateAddressVaultState(
+  sliceState: Draft<DataLoaderState>,
+  vaultId: string,
+  address: string
+) {
+  const addressKey = address.toLowerCase();
+  const addressState = getOrCreateAddressState(sliceState, addressKey);
+
+  let vaultState: ByAddressByVaultDataEntity | undefined = addressState.byVaultId[vaultId];
+  if (!vaultState) {
+    vaultState = cloneDeep(dataLoaderStateInitByAddressByVaultId);
+    sliceState.byAddress[addressKey].byVaultId = {
+      ...sliceState.byAddress[addressKey].byVaultId,
+      [vaultId]: vaultState,
+    };
+  }
+
+  return vaultState;
+}
+
 function addByChainAsyncThunkActions<ActionParams extends { chainId: ChainEntity['id'] }>(
   builder: ActionReducerMapBuilder<DataLoaderState>,
   action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
-  stateKeys: Array<keyof ChainIdDataEntity>
+  stateKeys: Array<LoaderChainKey>
 ) {
   builder
     .addCase(action.pending, (sliceState, action) => {
       const chainId = action.meta?.arg.chainId;
       const chainState = getOrCreateChainState(sliceState, chainId);
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = {
-          ...dataLoaderStatePending,
-          alreadyLoadedOnce: true,
-        };
+        chainState[stateKey] = makePendingState(chainState[stateKey]);
       }
     })
     .addCase(action.rejected, (sliceState, action) => {
@@ -223,14 +312,11 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: ChainEntity
       const error = errorToString(action.error);
 
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = {
-          alreadyLoadedOnce: chainState[stateKey].alreadyLoadedOnce,
-          status: 'rejected',
-          error,
-        };
+        chainState[stateKey] = makeRejectedState(chainState[stateKey], error);
 
-        // something got rejected, we want to auto-open the indicator
-        sliceState.statusIndicator.open = true;
+        // something got rejected, we want to auto-open the indicator if not eol chain
+        sliceState.statusIndicator.open =
+          !sliceState.statusIndicator.excludeChainIds.includes(chainId);
       }
     })
     .addCase(action.fulfilled, (sliceState, action) => {
@@ -238,7 +324,7 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: ChainEntity
       const chainState = getOrCreateChainState(sliceState, chainId);
 
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = { ...dataLoaderStateFulfilled };
+        chainState[stateKey] = makeFulfilledState(chainState[stateKey]);
       }
     });
 }
@@ -248,7 +334,7 @@ function addByAddressByChainAsyncThunkActions<
 >(
   builder: ActionReducerMapBuilder<DataLoaderState>,
   action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
-  stateKeys: Array<keyof ChainIdDataByAddressByChainEntity>
+  stateKeys: Array<LoaderAddressChainKey>
 ) {
   builder
     .addCase(action.pending, (sliceState, action) => {
@@ -260,10 +346,7 @@ function addByAddressByChainAsyncThunkActions<
       );
 
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = {
-          ...dataLoaderStatePending,
-          alreadyLoadedOnce: true,
-        };
+        chainState[stateKey] = makePendingState(chainState[stateKey]);
       }
     })
     .addCase(action.rejected, (sliceState, action) => {
@@ -276,11 +359,7 @@ function addByAddressByChainAsyncThunkActions<
       const error = errorToString(action.error);
 
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = {
-          alreadyLoadedOnce: chainState[stateKey].alreadyLoadedOnce,
-          status: 'rejected',
-          error,
-        };
+        chainState[stateKey] = makeRejectedState(chainState[stateKey], error);
       }
     })
     .addCase(action.fulfilled, (sliceState, action) => {
@@ -292,7 +371,54 @@ function addByAddressByChainAsyncThunkActions<
       );
 
       for (const stateKey of stateKeys) {
-        chainState[stateKey] = { ...dataLoaderStateFulfilled };
+        chainState[stateKey] = makeFulfilledState(chainState[stateKey]);
+      }
+    });
+}
+
+function addByAddressByVaultAsyncThunkActions<
+  ActionParams extends { vaultId: VaultEntity['id']; walletAddress: string }
+>(
+  builder: ActionReducerMapBuilder<DataLoaderState>,
+  action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
+  stateKeys: Array<LoaderAddressVaultKey>
+) {
+  builder
+    .addCase(action.pending, (sliceState, action) => {
+      const vaultId = action.meta.arg.vaultId;
+      const vaultState = getOrCreateAddressVaultState(
+        sliceState,
+        vaultId,
+        action.meta.arg.walletAddress
+      );
+
+      for (const stateKey of stateKeys) {
+        vaultState[stateKey] = makePendingState(vaultState[stateKey]);
+      }
+    })
+    .addCase(action.rejected, (sliceState, action) => {
+      const vaultId = action.meta?.arg.vaultId;
+      const vaultState = getOrCreateAddressVaultState(
+        sliceState,
+        vaultId,
+        action.meta.arg.walletAddress
+      );
+      const error = errorToString(action.error);
+
+      for (const stateKey of stateKeys) {
+        vaultState[stateKey] = makeRejectedState(vaultState[stateKey], error);
+      }
+    })
+    .addCase(action.fulfilled, (sliceState, action) => {
+      const vaultId = action.meta?.arg.vaultId;
+      const vaultState = getOrCreateAddressVaultState(
+        sliceState,
+        vaultId,
+        action.meta.arg.walletAddress
+      );
+
+      for (const stateKey of stateKeys) {
+        vaultState[stateKey] = makeFulfilledState(vaultState[stateKey]);
       }
     });
 }
@@ -300,37 +426,37 @@ function addByAddressByChainAsyncThunkActions<
 function addByAddressAsyncThunkActions<ActionParams extends { walletAddress: string }>(
   builder: ActionReducerMapBuilder<DataLoaderState>,
   action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
-  stateKeys: Array<keyof GlobalDataByAddressEntity>
+  addressKeys: Array<LoaderAddressKey>,
+  globalKeys?: Array<LoaderGlobalKey>
 ) {
   builder
     .addCase(action.pending, (sliceState, action) => {
       const addressState = getOrCreateAddressState(sliceState, action.meta.arg.walletAddress);
 
-      for (const stateKey of stateKeys) {
-        addressState.global[stateKey] = {
-          ...dataLoaderStatePending,
-          alreadyLoadedOnce: true,
-        };
+      for (const addressKey of addressKeys) {
+        addressState.global[addressKey] = makePendingState(addressState.global[addressKey]);
       }
+
+      globalKeys?.forEach(globalKey => setGlobalPending(sliceState, globalKey));
     })
     .addCase(action.rejected, (sliceState, action) => {
       const addressState = getOrCreateAddressState(sliceState, action.meta.arg.walletAddress);
       const error = errorToString(action.error);
 
-      for (const stateKey of stateKeys) {
-        addressState.global[stateKey] = {
-          alreadyLoadedOnce: addressState[stateKey].alreadyLoadedOnce,
-          status: 'rejected',
-          error,
-        };
+      for (const addressKey of addressKeys) {
+        addressState.global[addressKey] = makeRejectedState(addressState.global[addressKey], error);
       }
+
+      globalKeys?.forEach(globalKey => setGlobalRejected(sliceState, globalKey, action.error));
     })
     .addCase(action.fulfilled, (sliceState, action) => {
       const addressState = getOrCreateAddressState(sliceState, action.meta.arg.walletAddress);
 
-      for (const stateKey of stateKeys) {
-        addressState.global[stateKey] = { ...dataLoaderStateFulfilled };
+      for (const addressKey of addressKeys) {
+        addressState.global[addressKey] = makeFulfilledState(addressState.global[addressKey]);
       }
+
+      globalKeys?.forEach(globalKey => setGlobalFulfilled(sliceState, globalKey));
     });
 }
 
@@ -378,6 +504,13 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury', true);
     addGlobalAsyncThunkActions(builder, fetchActiveProposals, 'proposals', false);
     addGlobalAsyncThunkActions(builder, fetchLastArticle, 'articles', false);
+    addGlobalAsyncThunkActions(builder, fetchOffChainCampaignsAction, 'merklCampaigns', false);
+    addGlobalAsyncThunkActions(
+      builder,
+      fetchAllCurrentCowcentratedRanges,
+      'currentCowcentratedRanges',
+      false
+    );
 
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);
@@ -389,8 +522,22 @@ export const dataLoaderSlice = createSlice({
       reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
       ['balance', 'allowance']
     );
+    addByAddressByChainAsyncThunkActions(builder, fetchClmHarvestsForUserChain, ['clmHarvests']);
+
+    addByAddressByVaultAsyncThunkActions(builder, fetchUserStellaSwapRewardsAction, [
+      'stellaSwapRewards',
+    ]);
 
     addByAddressAsyncThunkActions(builder, fetchWalletTimeline, ['timeline']);
+    addByAddressAsyncThunkActions(builder, recalculateDepositedVaultsAction, ['depositedVaults']);
+    addByAddressAsyncThunkActions(builder, initDashboardByAddress, ['dashboard']);
+    addByAddressAsyncThunkActions(builder, fetchClmHarvestsForUser, ['clmHarvests']);
+    addByAddressAsyncThunkActions(
+      builder,
+      fetchUserMerklRewardsAction,
+      ['merklRewards'],
+      ['merklRewards']
+    );
   },
 });
 

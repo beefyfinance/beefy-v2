@@ -1,5 +1,4 @@
-import type { AxiosInstance } from 'axios';
-import axios from 'axios';
+import { getJson, postJson, postText } from '../../../../helpers/http';
 import type {
   IOnRampApi,
   ApiQuoteRequest,
@@ -10,26 +9,27 @@ import type {
 } from './on-ramp-types';
 
 export class OnRampApi implements IOnRampApi {
-  public api: AxiosInstance;
+  public api: string;
 
   constructor() {
-    this.api = axios.create({
-      baseURL: import.meta.env.VITE_ONRAMP_URL || 'https://onramp.beefy.finance',
-    });
+    this.api = import.meta.env.VITE_ONRAMP_URL || 'https://onramp.beefy.finance';
   }
 
   public async getSupported(): Promise<ApiSupportedResponse> {
-    const res = await this.api.get<ApiSupportedResponse>('/onboard');
-    return res.data;
+    return await getJson<ApiSupportedResponse>({ url: `${this.api}/onboard` });
   }
 
   public async getQuote(options: ApiQuoteRequest): Promise<ApiQuoteResponse> {
-    const res = await this.api.post<ApiQuoteResponse>('/onboard/quote', options);
-    return res.data;
+    return await postJson<ApiQuoteResponse>({
+      url: `${this.api}/onboard/quote`,
+      body: options,
+    });
   }
 
   public async getUrl(options: ApiUrlRequest): Promise<ApiUrlResponse> {
-    const res = await this.api.post<ApiUrlResponse>('/onboard/init', options);
-    return res.data;
+    return await postText({
+      url: `${this.api}/onboard/init`,
+      body: options,
+    });
   }
 }

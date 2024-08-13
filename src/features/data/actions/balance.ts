@@ -5,34 +5,27 @@ import { getBalanceApi } from '../apis/instances';
 import type { ChainEntity } from '../entities/chain';
 import {
   selectAllTokenWhereUserCouldHaveBalance,
-  selectBoostUserBalanceInToken,
-  selectGovVaultUserStakedBalanceInDepositToken,
-  selectUserBalanceOfToken,
+  selectUserDepositedVaultIds,
+  selectUserVaultBalanceInShareTokenIncludingBoostsBridged,
 } from '../selectors/balance';
-import {
-  selectAllVaultBoostIds,
-  selectBoostById,
-  selectBoostsByChainId,
-} from '../selectors/boosts';
+import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
-import { selectTokenByAddress } from '../selectors/tokens';
 import {
-  selectAllGovVaultsByChainId,
-  selectAllVaultIds,
-  selectVaultById,
-} from '../selectors/vaults';
+  selectCowcentratedLikeVaultDepositTokens,
+  selectTokenByAddress,
+} from '../selectors/tokens';
+import { selectAllGovVaultsByChainId, selectAllVisibleVaultIds } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 import type { TokenEntity } from '../entities/token';
 import {
-  isCowcentratedLiquidityVault,
+  isCowcentratedLikeVault,
+  isCowcentratedVault,
   isGovVault,
-  isStandardVault,
   type VaultEntity,
   type VaultGov,
 } from '../entities/vault';
 import { uniqueTokens } from '../../../helpers/tokens';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { entries } from '../../../helpers/object';
 import type { BoostEntity } from '../entities/boost';
 
 export interface FetchAllBalanceActionParams {
@@ -106,10 +99,15 @@ export const fetchBalanceAction = createAsyncThunk<
         if (isGovVault(vault)) {
           govVaults.push(vault);
         } else {
-          if (!isCowcentratedLiquidityVault(vault)) {
+          if (isCowcentratedLikeVault(vault)) {
+            Object.values(selectCowcentratedLikeVaultDepositTokens(state, vault.id)).forEach(
+              token => tokens.push(token)
+            );
+          }
+          if (!isCowcentratedVault(vault)) {
             tokens.push(selectTokenByAddress(state, chain.id, vault.depositTokenAddress));
           }
-          tokens.push(selectTokenByAddress(state, chain.id, vault.earnedTokenAddress));
+          tokens.push(selectTokenByAddress(state, chain.id, vault.receiptTokenAddress));
         }
       }
     }
@@ -133,11 +131,13 @@ export const fetchBalanceAction = createAsyncThunk<
 
 export type RecalculateDepositedVaultsParams = {
   walletAddress: string;
+  fromTimelineListener?: boolean;
 };
 
 export type RecalculateDepositedVaultsPayload = {
   walletAddress: string;
   vaultIds: VaultEntity['id'][];
+  addedVaultIds: VaultEntity['id'][];
 };
 
 export const recalculateDepositedVaultsAction = createAsyncThunk<
@@ -146,62 +146,26 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
   { state: BeefyState }
 >('balance/recalculateDepositedVaultsAction', async ({ walletAddress }, { getState }) => {
   const state = getState();
-  const allVaultIds = selectAllVaultIds(state);
+  const allVaultIds = selectAllVisibleVaultIds(state);
   const depositedIds: VaultEntity['id'][] = [];
 
   for (const vaultId of allVaultIds) {
-    const vault = selectVaultById(state, vaultId);
-
-    if (isStandardVault(vault) || isCowcentratedLiquidityVault(vault)) {
-      // standard vaults via receipt tokens
-      let deposited = false;
-      const balance = selectUserBalanceOfToken(
-        state,
-        vault.chainId,
-        vault.earnContractAddress,
-        walletAddress
-      );
-      if (balance.gt(BIG_ZERO)) {
-        deposited = true;
-      }
-
-      // + boosts
-      if (!deposited) {
-        const boostIds = selectAllVaultBoostIds(state, vault.id);
-        for (const boostId of boostIds) {
-          const balance = selectBoostUserBalanceInToken(state, boostId, walletAddress);
-          if (balance.gt(BIG_ZERO)) {
-            deposited = true;
-            break;
-          }
-        }
-      }
-
-      // + bridged
-      if (!deposited && vault.bridged) {
-        for (const [chainId, bridgedAddress] of entries(vault.bridged)) {
-          const balance = selectUserBalanceOfToken(state, chainId, bridgedAddress, walletAddress);
-          if (balance.gt(BIG_ZERO)) {
-            deposited = true;
-            break;
-          }
-        }
-      }
-
-      // add?
-      if (deposited) {
-        depositedIds.push(vault.id);
-      }
-    } else if (isGovVault(vault)) {
-      const balance = selectGovVaultUserStakedBalanceInDepositToken(state, vault.id, walletAddress);
-      if (balance.gt(BIG_ZERO)) {
-        depositedIds.push(vault.id);
-      }
+    const balance = selectUserVaultBalanceInShareTokenIncludingBoostsBridged(
+      state,
+      vaultId,
+      walletAddress
+    );
+    if (balance.gt(BIG_ZERO)) {
+      depositedIds.push(vaultId);
     }
   }
+
+  const existingVaultIds = selectUserDepositedVaultIds(state, walletAddress);
+  const addedVaultIds = depositedIds.filter(id => !existingVaultIds.includes(id));
 
   return {
     walletAddress,
     vaultIds: depositedIds,
+    addedVaultIds,
   };
 });

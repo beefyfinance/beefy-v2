@@ -1,14 +1,14 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
-import type { VaultEntity } from '../entities/vault';
-import { isGovVault } from '../entities/vault';
+import { isCowcentratedGovVault, isGovVault, type VaultEntity } from '../entities/vault';
 import { selectUserDepositedVaultIds } from './balance';
 import {
   selectBoostById,
   selectIsVaultPreStakedOrBoosted,
   selectPreStakeOrActiveBoostIds,
+  selectVaultCurrentBoostId,
 } from './boosts';
-import { selectVaultById } from './vaults';
+import { selectAllVisibleVaultIds, selectVaultById } from './vaults';
 import { selectTokenByAddress } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import type { KeysOfType } from '../utils/types-utils';
@@ -16,9 +16,10 @@ import type { FilteredVaultsState } from '../reducers/filtered-vaults';
 import type { PlatformEntity } from '../entities/platform';
 import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string';
 import escapeStringRegexp from 'escape-string-regexp';
+import type BigNumber from 'bignumber.js';
+import { selectVaultTotalApy } from './apy';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
-
 export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
 export const selectFilterChainIds = (state: BeefyState) => state.ui.filteredVaults.chainIds;
 export const selectFilterSearchSortField = (state: BeefyState) => state.ui.filteredVaults.sort;
@@ -26,6 +27,7 @@ export const selectFilterSearchSortDirection = (state: BeefyState) =>
   state.ui.filteredVaults.sortDirection;
 export const selectFilterUserCategory = (state: BeefyState) => state.ui.filteredVaults.userCategory;
 export const selectFilterAssetType = (state: BeefyState) => state.ui.filteredVaults.assetType;
+export const selectFilterStrategyType = (state: BeefyState) => state.ui.filteredVaults.strategyType;
 export const selectFilterVaultCategory = (state: BeefyState) =>
   state.ui.filteredVaults.vaultCategory;
 export const selectFilterPlatformIds = (state: BeefyState) => state.ui.filteredVaults.platformIds;
@@ -36,6 +38,12 @@ export const selectFilterBoolean = createCachedSelector(
   (key, filters) => filters[key]
 )((state: BeefyState, key: KeysOfType<FilteredVaultsState, boolean>) => key);
 
+export const selectFilterBigNumber = createCachedSelector(
+  (state: BeefyState, key: KeysOfType<FilteredVaultsState, BigNumber>) => key,
+  (state: BeefyState) => state.ui.filteredVaults,
+  (key, filters) => filters[key]
+)((state: BeefyState, key: KeysOfType<FilteredVaultsState, BigNumber>) => key);
+
 export const selectFilterPopinFilterCount = createSelector(
   selectFilterOptions,
   filterOptions =>
@@ -44,43 +52,39 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.onlyZappable ? 1 : 0) +
     (filterOptions.onlyEarningPoints ? 1 : 0) +
-    (filterOptions.assetType !== 'all' ? 1 : 0) +
-    (filterOptions.vaultCategory !== 'all' ? 1 : 0) +
+    (filterOptions.onlyUnstakedClm ? 1 : 0) +
+    filterOptions.assetType.length +
+    filterOptions.vaultCategory.length +
+    (filterOptions.strategyType !== 'all' ? 1 : 0) +
     (filterOptions.sort !== 'default' ? 1 : 0) +
     filterOptions.chainIds.length +
-    filterOptions.platformIds.length
-);
-
-export const selectHasActiveFilter = createSelector(
-  selectFilterOptions,
-  filterOptions =>
-    filterOptions.vaultCategory !== 'all' ||
-    filterOptions.userCategory !== 'all' ||
-    filterOptions.assetType !== 'all' ||
-    filterOptions.onlyRetired !== false ||
-    filterOptions.onlyPaused !== false ||
-    filterOptions.onlyBoosted !== false ||
-    filterOptions.onlyZappable !== false ||
-    filterOptions.onlyEarningPoints !== false ||
-    filterOptions.searchText !== '' ||
-    filterOptions.platformIds.length > 0 ||
-    filterOptions.sort !== 'default' ||
-    filterOptions.chainIds.length > 0
+    filterOptions.platformIds.length +
+    (filterOptions.showMinimumUnderlyingTvl && filterOptions.minimumUnderlyingTvl.gt(0) ? 1 : 0)
 );
 
 export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
   selectFilterOptions,
   filterOptions =>
-    filterOptions.vaultCategory !== 'all' ||
-    filterOptions.assetType !== 'all' ||
-    filterOptions.onlyRetired !== false ||
-    filterOptions.onlyPaused !== false ||
-    filterOptions.onlyBoosted !== false ||
-    filterOptions.onlyZappable !== false ||
-    filterOptions.onlyEarningPoints !== false ||
+    filterOptions.vaultCategory.length > 0 ||
+    filterOptions.assetType.length > 0 ||
+    filterOptions.strategyType !== 'all' ||
+    filterOptions.onlyRetired ||
+    filterOptions.onlyPaused ||
+    filterOptions.onlyBoosted ||
+    filterOptions.onlyZappable ||
+    filterOptions.onlyEarningPoints ||
+    filterOptions.onlyUnstakedClm ||
     filterOptions.searchText !== '' ||
     filterOptions.platformIds.length > 0 ||
-    filterOptions.chainIds.length > 0
+    filterOptions.chainIds.length > 0 ||
+    (filterOptions.showMinimumUnderlyingTvl && filterOptions.minimumUnderlyingTvl.gt(0))
+);
+
+export const selectHasActiveFilter = createSelector(
+  selectHasActiveFilterExcludingUserCategoryAndSort,
+  selectFilterOptions,
+  (activeFilter, filterOptions) =>
+    activeFilter || filterOptions.userCategory !== 'all' || filterOptions.sort !== 'default'
 );
 
 export const selectVaultCategory = createSelector(
@@ -94,7 +98,7 @@ function fuzzyTokenRegex(token: string) {
 }
 
 function vaultNameMatches(vault: VaultEntity, searchText: string) {
-  return stringFoundAnywhere(simplifySearchText(vault.name), searchText);
+  return stringFoundAnywhere(simplifySearchText(vault.names.list), searchText);
 }
 
 function searchTextToFuzzyTokenMatchers(searchText: string) {
@@ -134,7 +138,10 @@ export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, se
     // In gov earned token
     if (
       isGovVault(vault) &&
-      selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress).id.match(token)
+      !isCowcentratedGovVault(vault) &&
+      vault.earnedTokenAddresses
+        .map(address => selectTokenByAddress(state, vault.chainId, address))
+        .some(earnedToken => earnedToken.id.match(token))
     ) {
       return true;
     }
@@ -162,6 +169,7 @@ export const selectUserDashboardFilteredVaults = (
   text: string,
   walletAddress?: string
 ) => {
+  if (!walletAddress) return [];
   const vaults = selectUserDepositedVaultIds(state, walletAddress).map(id =>
     selectVaultById(state, id)
   );
@@ -202,7 +210,28 @@ export const selectFilteredVaults = (state: BeefyState) =>
 
 export const selectFilteredVaultCount = createSelector(selectFilteredVaults, ids => ids.length);
 
-export const selectTotalVaultCount = createSelector(
-  (state: BeefyState) => state.entities.vaults.allIds.length,
-  c => c
-);
+export const selectTotalVaultCount = (state: BeefyState) => selectAllVisibleVaultIds(state).length;
+
+/** standard boost, or anything with boostedTotalDaily entry */
+export const selectVaultIsBoostedForFilter = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  if (selectIsVaultPreStakedOrBoosted(state, vaultId)) {
+    return true;
+  }
+
+  const apy = selectVaultTotalApy(state, vaultId);
+  return !!apy && (apy.boostedTotalDaily || 0) > 0;
+};
+
+export const selectVaultIsBoostedForSorting = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const boostId = selectVaultCurrentBoostId(state, vaultId);
+  if (!boostId) {
+    return false;
+  }
+
+  const boost = selectBoostById(state, boostId);
+  if (!boost) {
+    return false;
+  }
+
+  return boost.pinned;
+};

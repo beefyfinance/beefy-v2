@@ -1,27 +1,29 @@
-import { sortBy } from 'lodash-es';
-import { useState, useCallback, useMemo } from 'react';
+import { orderBy } from 'lodash-es';
+import { useCallback, useMemo, useState } from 'react';
 import { useAppSelector } from '../../../../store';
-import { selectUserVaultsPnl } from '../../../data/selectors/balance';
+import { selectDashboardUserVaultsPnl } from '../../../data/selectors/balance';
 import { selectUserDashboardFilteredVaults } from '../../../data/selectors/filtered-vaults';
+import { isUserClmPnl } from '../../../data/selectors/analytics-types';
+import { isVaultActive } from '../../../data/entities/vault';
 
 export type SortedOptions = {
   sort: 'atDeposit' | 'now' | 'yield' | 'pnl' | 'apy' | 'dailyYield' | 'default';
-  sortDirection: 'asc' | 'desc' | 'none';
+  sortDirection: 'asc' | 'desc';
 };
 
 export function useSortedDashboardVaults(address: string) {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState<string>('');
 
   const [sortedOptions, setSortedOptions] = useState<SortedOptions>({
     sortDirection: 'desc',
     sort: 'now',
   });
 
-  const handleSearchText = useCallback(e => setSearchText(e.target.value), []);
+  const handleSearchText = useCallback(e => setSearchText(e.target.value), [setSearchText]);
 
   const handleClearText = useCallback(() => {
     setSearchText('');
-  }, []);
+  }, [setSearchText]);
 
   const filteredVaults = useAppSelector(state =>
     selectUserDashboardFilteredVaults(state, searchText, address)
@@ -29,63 +31,71 @@ export function useSortedDashboardVaults(address: string) {
 
   const apyByVaultId = useAppSelector(state => state.biz.apy.totalApy.byVaultId);
 
-  const userVaultsPnl = useAppSelector(state => selectUserVaultsPnl(state, address));
+  const userVaultsPnl = useAppSelector(state => selectDashboardUserVaultsPnl(state, address));
 
   const sortedFilteredVaults = useMemo(() => {
-    const sortDirMul = sortedOptions.sortDirection === 'desc' ? -1 : 1;
-    let sortedResult = filteredVaults;
-    if (sortedOptions.sort === 'atDeposit') {
-      sortedResult = sortBy(filteredVaults, vault => {
-        const vaultPnl = userVaultsPnl[vault.id];
-        return vaultPnl.usdBalanceAtDeposit.toNumber() * sortDirMul;
-      });
-    }
-    if (sortedOptions.sort === 'now') {
-      sortedResult = sortBy(filteredVaults, vault => {
-        const vaultPnl = userVaultsPnl[vault.id];
-        return vaultPnl.depositUsd.toNumber() * sortDirMul;
-      });
-    }
-    if (sortedOptions.sort === 'yield') {
-      sortedResult = sortBy(filteredVaults, vault => {
-        const vaultPnl = userVaultsPnl[vault.id];
-        return vaultPnl.totalYieldUsd.toNumber() * sortDirMul;
-      });
-    }
-    if (sortedOptions.sort === 'pnl') {
-      sortedResult = sortBy(filteredVaults, vault => {
-        const vaultPnl = userVaultsPnl[vault.id];
-        return vaultPnl.totalPnlUsd.toNumber() * sortDirMul;
-      });
-    }
-    if (sortedOptions.sort === 'apy') {
-      sortedResult = sortBy(filteredVaults, vault => {
-        const apy = apyByVaultId[vault.id];
-        if (!apy) {
-          return -1;
-        }
-        if (apy.boostedTotalApy !== undefined) {
-          return sortDirMul * apy.boostedTotalApy;
-        } else if (apy.totalApy !== undefined) {
-          return sortDirMul * apy.totalApy;
-        } else if (apy.vaultApr !== undefined) {
-          return sortDirMul * apy.vaultApr;
-        } else {
-          throw new Error('Apy type not supported');
-        }
-      });
-    }
-    if (sortedOptions.sort === 'dailyYield') {
-      sortedResult = sortBy(filteredVaults, vault => {
-        const apy = apyByVaultId[vault.id];
-        if (!apy) {
-          return -1;
-        }
-        const { deposit, oraclePrice } = userVaultsPnl[vault.id];
-        return sortDirMul * deposit.times(oraclePrice).times(apy.totalDaily).toNumber();
-      });
-    }
-    return sortedResult;
+    return sortedOptions.sort === 'default'
+      ? filteredVaults
+      : orderBy(
+          filteredVaults,
+          vault => {
+            const vaultPnl = userVaultsPnl[vault.id];
+            const apy = apyByVaultId[vault.id];
+            switch (sortedOptions.sort) {
+              case 'atDeposit': {
+                if (isUserClmPnl(vaultPnl)) {
+                  return vaultPnl.sharesAtDepositInUsd.toNumber();
+                }
+                return vaultPnl.usdBalanceAtDeposit.toNumber();
+              }
+              case 'now': {
+                if (isUserClmPnl(vaultPnl)) {
+                  return vaultPnl.sharesNowInUsd.toNumber();
+                }
+                return vaultPnl.depositUsd.toNumber();
+              }
+              case 'yield': {
+                if (isUserClmPnl(vaultPnl)) {
+                  return vaultPnl.totalCompoundedUsd.toNumber();
+                }
+                return vaultPnl.totalYieldUsd.toNumber();
+              }
+              case 'pnl': {
+                if (isUserClmPnl(vaultPnl)) {
+                  return vaultPnl.pnl.toNumber();
+                }
+                return vaultPnl.totalPnlUsd.toNumber();
+              }
+              case 'apy': {
+                if (!isVaultActive(vault) || !apy) {
+                  return -1;
+                }
+                if (apy.boostedTotalApy !== undefined) {
+                  return apy.boostedTotalApy;
+                } else if (apy.totalApy !== undefined) {
+                  return apy.totalApy;
+                } else if (apy.vaultApr !== undefined) {
+                  return apy.vaultApr;
+                } else {
+                  throw new Error('Apy type not supported');
+                }
+              }
+              case 'dailyYield': {
+                if (!isVaultActive(vault) || !apy) {
+                  return -1;
+                }
+                if (isUserClmPnl(vaultPnl)) {
+                  return vaultPnl.sharesNowInUsd.times(apy.totalDaily).toNumber();
+                }
+                return vaultPnl.deposit
+                  .times(vaultPnl.oraclePrice)
+                  .times(apy.totalDaily)
+                  .toNumber();
+              }
+            }
+          },
+          sortedOptions.sortDirection
+        );
   }, [
     sortedOptions.sortDirection,
     sortedOptions.sort,
@@ -95,7 +105,7 @@ export function useSortedDashboardVaults(address: string) {
   ]);
 
   const handleSort = useCallback(
-    field => {
+    (field: SortedOptions['sort']) => {
       if (field === sortedOptions.sort) {
         setSortedOptions({
           ...sortedOptions,

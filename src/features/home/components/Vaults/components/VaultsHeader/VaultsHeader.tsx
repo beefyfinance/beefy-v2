@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { VaultsSearch } from '../VaultsSearch';
@@ -11,7 +11,7 @@ export const VaultsHeader = memo(function VaultsHeader() {
 
   return (
     <div className={classes.header}>
-      <VaultsSearch />
+      <VaultsSearch className={classes.searchWidth} />
       <VaultsSort />
     </div>
   );

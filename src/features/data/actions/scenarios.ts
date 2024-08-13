@@ -7,7 +7,7 @@ import { fetchApyAction } from './apy';
 import { fetchAllBoosts, initiateBoostForm } from './boosts';
 import { fetchChainConfigs } from './chains';
 import { fetchAllPricesAction } from './prices';
-import { fetchAllVaults, fetchFeaturedVaults, fetchVaultsLastHarvests } from './vaults';
+import { fetchAllVaults, fetchVaultsLastHarvests } from './vaults';
 import { fetchAllBalanceAction } from './balance';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_noDataPolling } from '../utils/feature-flags';
@@ -32,7 +32,7 @@ import {
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
 } from './zap';
-import { fetchWalletTimeline } from './analytics';
+import { fetchOffChainCampaignsAction } from './rewards';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 
@@ -53,7 +53,7 @@ export const chains = chainsConfig.map(id => ({ id }));
 /**
  * Fetch all necessary information for the home page
  */
-export async function initHomeDataV4(store: BeefyStore) {
+export async function initAppData(store: BeefyStore) {
   const captureFulfill = createFulfilledActionCapturer(store);
 
   // start fetching chain config
@@ -71,8 +71,6 @@ export async function initHomeDataV4(store: BeefyStore) {
     // we can start fetching apy, it will arrive when it wants, nothing depends on it
     store.dispatch(fetchApyAction());
 
-    store.dispatch(fetchFeaturedVaults());
-
     store.dispatch(fetchPartnersConfig());
 
     store.dispatch(fetchPlatforms());
@@ -80,6 +78,8 @@ export async function initHomeDataV4(store: BeefyStore) {
     store.dispatch(fetchBridges());
 
     store.dispatch(fetchVaultsLastHarvests());
+
+    store.dispatch(fetchOffChainCampaignsAction());
 
     // Zap (we need the data to know if zap is available for each vault)
     store.dispatch(fetchZapConfigsAction());
@@ -125,14 +125,6 @@ export async function initHomeDataV4(store: BeefyStore) {
   // before doing anything else, we need our prices
   await pricesPromise;
 
-  // pnl timeline
-  if (selectIsWalletKnown(store.getState())) {
-    const walletAddress = selectWalletAddress(store.getState());
-    if (walletAddress) {
-      await store.dispatch(fetchWalletTimeline({ walletAddress }));
-    }
-  }
-
   for (const chain of chains) {
     // run in an async block se we don't wait for a slow chain
     (async () => {
@@ -151,7 +143,6 @@ export async function initHomeDataV4(store: BeefyStore) {
     });
   }
 
-  await addressBookPromise;
   // ok all data is fetched, now we start the poll functions
 
   if (featureFlag_noDataPolling()) {
@@ -272,11 +263,13 @@ export async function dispatchUserFfs(
  * we want to preload the vault page to make it fast on the first click
  */
 function preLoadPages() {
-  window.requestIdleCallback(async () => {
-    console.debug('pre-loading vault page...');
-    await import('../../../features/vault');
-    console.debug('pre-loading vault page done');
-  });
+  window.setTimeout(() => {
+    window.requestIdleCallback(async () => {
+      console.debug('pre-loading vault page...');
+      await import('../../../features/vault');
+      console.debug('pre-loading vault page done');
+    });
+  }, 10_000);
 }
 
 export async function initBoostForm(
