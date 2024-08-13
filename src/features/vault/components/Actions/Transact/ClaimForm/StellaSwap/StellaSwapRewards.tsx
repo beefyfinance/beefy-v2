@@ -87,7 +87,7 @@ export const StellaSwapRewards = memo<StellaSwapRewardsProps>(function StellaSwa
       ) : (
         <Source
           key={chainId}
-          title={t('Transact-Claim-Rewards-merkl')}
+          title={t('Transact-Claim-Rewards-stellaswap')}
           refresh={
             walletAddress ? (
               <UserRewardsRefreshButton walletAddress={walletAddress} vaultId={vaultId} />
