@@ -991,8 +991,7 @@
   {
     "id": "nile",
     "name": "Nile",
-    "filter": true,
-    "risks": ["NO_TIMELOCK"]
+    "filter": true
   },
   {
     "id": "oku",
