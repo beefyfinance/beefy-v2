@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Box, Grid, makeStyles } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { formatLargeUsd } from '../../../../../helpers/format';
 import { StatLoader } from '../../../../../components/StatLoader';
@@ -30,23 +30,23 @@ export const VaultsStats = () => {
 
   return (
     <Grid container className={classes.userStats}>
-      <Box className={classes.stat}>
-        <Box className={classes.labelWithIcon}>
+      <div className={classes.stat}>
+        <div className={classes.labelWithIcon}>
           <div className={classes.label}>{t('TVL')}</div>
           <div onClick={handleTvlModalOpen}>
             <img className={classes.icon} src={infoIcon} alt="i" />
           </div>
-        </Box>
+        </div>
         <div className={classes.value}>
           <ValueText value={formatLargeUsd(totalTvl)} />
         </div>
-      </Box>
-      <Box className={classes.stat}>
+      </div>
+      <div className={classes.stat}>
         <div className={classes.label}>{t('Vaults-Title')}</div>
         <div className={classes.value}>
           <ValueText value={totalActiveVaults} />
         </div>
-      </Box>
+      </div>
       <Modal open={isTvlModalOpen} onClose={handleTvlModalClose}>
         <ModalTvl close={handleTvlModalClose} />
       </Modal>

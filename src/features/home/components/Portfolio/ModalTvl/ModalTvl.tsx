@@ -1,4 +1,4 @@
-import { Box, IconButton, makeStyles } from '@material-ui/core';
+import { IconButton, makeStyles } from '@material-ui/core';
 import { forwardRef, memo, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../../vault/components/Card';
 import CloseIcon from '@material-ui/icons/Close';
@@ -76,9 +76,9 @@ const Chain = memo<ChainProps>(function Chain({ chainId, tvl }) {
   const chain = useAppSelector(state => selectChainById(state, chainId));
 
   return (
-    <Box className={classes.chain}>
+    <div className={classes.chain}>
       <img className={classes.chainLogo} alt={chain.id} src={getNetworkSrc(chain.id)} />
-      <Box>
+      <div>
         <div className={classes.chainText}>{chain.name}</div>
         <>
           {tvl ? (
@@ -87,7 +87,7 @@ const Chain = memo<ChainProps>(function Chain({ chainId, tvl }) {
             <ContentLoading />
           )}
         </>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 });

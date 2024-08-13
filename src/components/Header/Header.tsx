@@ -1,14 +1,6 @@
 import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  AppBar,
-  Box,
-  Container,
-  Hidden,
-  makeStyles,
-  Toolbar,
-  useMediaQuery,
-} from '@material-ui/core';
+import { AppBar, Container, Hidden, makeStyles, Toolbar, useMediaQuery } from '@material-ui/core';
 import clsx from 'clsx';
 import { styles } from './styles';
 import { NavItem } from './components/NavItem';
@@ -55,7 +47,7 @@ export const Header = memo(function Header() {
   }, [dispatch, shoudLoadArticles]);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <div className={classes.headerContainer}>
       <AppBar className={clsx([classes.navHeader, classes.hasPortfolio])} position="static">
         <Container className={classes.container} maxWidth="lg">
           <Toolbar className={classes.content} disableGutters={true}>
@@ -99,6 +91,6 @@ export const Header = memo(function Header() {
           </Toolbar>
         </Container>
       </AppBar>
-    </Box>
+    </div>
   );
 });

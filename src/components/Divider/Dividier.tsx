@@ -1,21 +1,24 @@
 import { ReactComponent as ArrowDown } from '../../images/icons/arrowDown.svg';
-import { Box, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { memo } from 'react';
 
 const useStyles = makeStyles(styles);
 
-const _Divider = ({ onClick, clickleable }: { onClick?: () => void; clickleable?: boolean }) => {
+interface DividerProps {
+  onClick?: () => void;
+  clickleable?: boolean;
+}
+
+export const Divider = memo<DividerProps>(function Divider({ onClick, clickleable }) {
   const classes = useStyles({ clickleable });
   return (
-    <Box className={classes.customDivider}>
-      <Box className={classes.line} />
-      <Box className={classes.arrowContainer}>
+    <div className={classes.customDivider}>
+      <div className={classes.line} />
+      <div className={classes.arrowContainer}>
         <ArrowDown onClick={onClick} />
-      </Box>
-      <Box className={classes.line} />
-    </Box>
+      </div>
+      <div className={classes.line} />
+    </div>
   );
-};
-
-export const Divider = memo(_Divider);
+});

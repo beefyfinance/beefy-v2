@@ -1,4 +1,4 @@
-import { Box, FormControl, makeStyles } from '@material-ui/core';
+import { FormControl, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -65,7 +65,7 @@ export const WalletContainer = connect((state: BeefyState) => {
     };
 
     return (
-      <Box
+      <div
         className={clsx({
           [classes.container]: true,
           [classes.known]: !!walletAddress,
@@ -76,12 +76,12 @@ export const WalletContainer = connect((state: BeefyState) => {
         <FormControl {...formControlProps}>
           <div>
             {walletPending && !walletAddress ? (
-              <Box className={classes.loading}>
+              <div className={classes.loading}>
                 <StatLoader
                   foregroundColor={theme.palette.primary.light}
                   backgroundColor={theme.palette.primary.dark}
                 />
-              </Box>
+              </div>
             ) : (
               <Fragment>
                 <div className={clsx(classes.address, { [classes.blurred]: blurred })}>
@@ -95,7 +95,7 @@ export const WalletContainer = connect((state: BeefyState) => {
             )}
           </div>
         </FormControl>
-      </Box>
+      </div>
     );
   }
 );
