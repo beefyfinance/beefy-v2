@@ -1,5 +1,4 @@
 import { config as chainConfigs } from '../../../config/config';
-import { Nexus, QiDao, OpenCover } from '../../../helpers/partners';
 import type { ChainEntity } from '../entities/chain';
 import type {
   AmmConfig,
@@ -31,7 +30,7 @@ export class ConfigAPI {
   }
 
   public async fetchPartnersConfig(): Promise<PartnersConfig> {
-    return { QiDao, OpenCover, Nexus };
+    return { ...(await import('../../../helpers/partners')) };
   }
 
   public async fetchZapAmms(): Promise<{ [chainId in ChainEntity['id']]: AmmConfig[] }> {
