@@ -20,7 +20,7 @@ import platforms from '../src/config/platforms.json';
 import pointProviders from '../src/config/points.json';
 import type { VaultConfig } from '../src/features/data/apis/config-types';
 import partition from 'lodash/partition';
-import { AbiItem } from 'web3-utils';
+import type { AbiItem } from 'web3-utils';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
@@ -274,6 +274,38 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       if (invalidPointStructureIds.length > 0) {
         console.error(
           `Error: ${pool.id} : pointStructureId ${invalidPointStructureIds} not present in points.json`
+        );
+        exitCode = 1;
+      }
+    }
+
+    // check for the provider eligibility
+    for (const pointProvider of pointProviders) {
+      const eligibility = pointProvider.eligibility;
+      const hasProvider = pool.pointStructureIds?.includes(pointProvider.id);
+
+      let shouldHaveProvider = false;
+      if (eligibility.type === 'token-on-platform') {
+        shouldHaveProvider =
+          (eligibility.platform === pool.platformId &&
+            pool.assets?.some(a => eligibility.tokens.includes(a))) ??
+          false;
+      } else if (eligibility.type === 'token-holding') {
+        shouldHaveProvider = pool.assets?.some(a => eligibility?.tokens?.includes(a)) ?? false;
+      } else if (eligibility.type === 'on-chain-lp') {
+        shouldHaveProvider = pool.network === eligibility.chain;
+      } else if (eligibility.type === 'vault-whitelist') {
+        continue;
+      }
+
+      if (shouldHaveProvider && !hasProvider) {
+        console.error(
+          `Error: ${pool.id} : pointStructureId ${pointProvider.id} should be present in pointStructureIds`
+        );
+        exitCode = 1;
+      } else if (!shouldHaveProvider && hasProvider) {
+        console.error(
+          `Error: ${pool.id} : pointStructureId ${pointProvider.id} should NOT be present in pointStructureIds`
         );
         exitCode = 1;
       }

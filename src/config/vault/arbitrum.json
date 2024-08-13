@@ -74,6 +74,7 @@
     "earningPoints": true,
     "network": "arbitrum",
     "createdAt": 1723477742,
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -144,6 +145,7 @@
     "earningPoints": true,
     "network": "arbitrum",
     "feeTier": "Dynamic",
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1570,6 +1572,7 @@
     "strategyTypeId": "pool",
     "network": "arbitrum",
     "createdAt": 1722459102,
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -1638,6 +1641,7 @@
     "strategyTypeId": "compounds",
     "network": "arbitrum",
     "feeTier": "0.01",
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1959,6 +1963,7 @@
     "strategyTypeId": "pool",
     "network": "arbitrum",
     "createdAt": 1722006568,
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -2027,6 +2032,7 @@
     "strategyTypeId": "compounds",
     "network": "arbitrum",
     "feeTier": "Dynamic",
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2053,6 +2059,7 @@
     "strategyTypeId": "pool",
     "network": "arbitrum",
     "createdAt": 1722006568,
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -2114,6 +2121,7 @@
     "strategyTypeId": "compounds",
     "network": "arbitrum",
     "feeTier": "0.01",
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2234,6 +2242,7 @@
     "strategyTypeId": "pool",
     "network": "arbitrum",
     "createdAt": 1721831924,
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -2524,6 +2533,7 @@
     "strategyTypeId": "pool",
     "network": "arbitrum",
     "createdAt": 1721831924,
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -3482,6 +3492,7 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -3513,6 +3524,7 @@
     "strategyTypeId": "compounds",
     "network": "arbitrum",
     "feeTier": "Dynamic",
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -4079,7 +4091,7 @@
     "status": "active",
     "createdAt": 1720078086,
     "platformId": "equilibria",
-    "assets": ["ETH"],
+    "assets": ["ezETH"],
     "migrationIds": ["magpie"],
     "pointStructureIds": ["renzo"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -4127,7 +4139,7 @@
     "status": "active",
     "createdAt": 1720077891,
     "platformId": "equilibria",
-    "assets": ["ETH"],
+    "assets": ["rsETH"],
     "migrationIds": ["magpie"],
     "pointStructureIds": ["kelp"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -6750,6 +6762,7 @@
     "strategyTypeId": "compounds",
     "network": "arbitrum",
     "feeTier": "Dynamic",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -6967,7 +6980,7 @@
     "status": "active",
     "createdAt": 1719221816,
     "platformId": "magpie",
-    "assets": ["USDC"],
+    "assets": ["dUSDC"],
     "migrationIds": ["magpie"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
@@ -6991,7 +7004,7 @@
     "status": "active",
     "createdAt": 1719221758,
     "platformId": "magpie",
-    "assets": ["ETH"],
+    "assets": ["rsETH"],
     "migrationIds": ["magpie"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
@@ -7039,7 +7052,7 @@
     "status": "active",
     "createdAt": 1719221661,
     "platformId": "magpie",
-    "assets": ["ETH"],
+    "assets": ["ezETH"],
     "migrationIds": ["magpie"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
@@ -8168,6 +8181,7 @@
     "strategyTypeId": "compounds",
     "network": "arbitrum",
     "feeTier": "0.05",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -8724,6 +8738,7 @@
     "strategyTypeId": "compounds",
     "network": "arbitrum",
     "feeTier": "0.05",
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -8787,6 +8802,7 @@
     "strategyTypeId": "compounds",
     "network": "arbitrum",
     "feeTier": "0.05",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "cowcentrated"

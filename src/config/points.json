@@ -117,7 +117,7 @@
     ],
     "eligibility": {
       "type": "token-holding",
-      "tokens": ["rsETH"]
+      "tokens": ["rsETH", "wrsETH", "rswETH"]
     },
     "accounting": [
       {
@@ -232,8 +232,13 @@
   },
   {
     "id": "ethena",
-    "docs": "TODO",
-    "points": ["TODO"],
+    "docs": "https://ethena.notion.site/Sats-Campaign-FAQ-3ae1f067ff834efc95b12148a434f668",
+    "points": [
+      {
+        "id": "ethena-sats",
+        "name": "Ethena Sats"
+      }
+    ],
     "eligibility": {
       "type": "token-holding",
       "tokens": ["USDe"]
@@ -257,8 +262,13 @@
   },
   {
     "id": "dolomite",
-    "docs": "TODO",
-    "points": ["TODO"],
+    "docs": "https://app.dolomite.io/minerals",
+    "points": [
+      {
+        "id": "dolomite-minerals",
+        "name": "Dolomite Minerals"
+      }
+    ],
     "eligibility": {
       "type": "token-holding",
       "tokens": ["dUSDC"]
@@ -276,7 +286,8 @@
       },
       {
         "id": "dolomite",
-        "role": "Distribution of rewards"
+        "role": "Distribution of rewards",
+        "url": "https://app.dolomite.io/minerals"
       }
     ]
   },
@@ -356,6 +367,10 @@
         "name": "vPoints"
       }
     ],
+    "eligibility": {
+      "type": "token-holding",
+      "tokens": ["vETH"]
+    },
     "accounting": [
       {
         "id": "beefy-lrt-subgraph",

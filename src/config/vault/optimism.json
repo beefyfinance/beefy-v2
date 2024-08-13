@@ -113,6 +113,7 @@
     "strategyTypeId": "pool",
     "network": "optimism",
     "createdAt": 1722192821,
+    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -636,6 +637,7 @@
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.01",
+    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2570,6 +2572,7 @@
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.05",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2601,6 +2604,7 @@
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.05",
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
