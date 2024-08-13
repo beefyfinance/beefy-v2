@@ -1,4 +1,4 @@
-import React, { Fragment, memo, useMemo } from 'react';
+import { Fragment, memo, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { formatTotalApy } from '../../../../../helpers/format';

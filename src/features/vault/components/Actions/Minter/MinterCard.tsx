@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import type { VaultEntity } from '../../../../data/entities/vault';
 import type { MinterEntity } from '../../../../data/entities/minter';
 import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loader';

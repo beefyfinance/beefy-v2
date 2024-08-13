@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 
 import { selectUserDepositedVaultIdsForAsset } from '../../../features/data/selectors/balance';
 import { useAppSelector } from '../../../store';

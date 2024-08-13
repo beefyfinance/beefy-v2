@@ -1,7 +1,7 @@
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import type { MouseEventHandler } from 'react';
-import React, { memo, useCallback, useRef, useState } from 'react';
+import type { FC, MouseEventHandler } from 'react';
+import { memo, useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ExpandMore } from '@material-ui/icons';
 import { Floating } from '../../../Floating';
@@ -14,7 +14,7 @@ const useStyles = makeStyles(styles);
 
 interface DropNavItemProps {
   title: string;
-  Icon: React.FC;
+  Icon: FC;
   items: NavItemConfig[];
   Badge?: BadgeComponent;
 }

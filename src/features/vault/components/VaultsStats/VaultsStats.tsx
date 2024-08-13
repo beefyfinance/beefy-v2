@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
@@ -60,4 +60,4 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   );
 }
 
-export const VaultsStats = React.memo(VaultsStatsComponent);
+export const VaultsStats = memo(VaultsStatsComponent);

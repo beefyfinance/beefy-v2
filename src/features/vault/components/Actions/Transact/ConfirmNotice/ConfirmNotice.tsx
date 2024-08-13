@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { AlertError, AlertWarning } from '../../../../../../components/Alerts';
 import { Trans, useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../store';

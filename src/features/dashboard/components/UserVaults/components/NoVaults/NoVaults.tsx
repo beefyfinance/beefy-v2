@@ -1,6 +1,6 @@
 import type { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme: Theme) => ({

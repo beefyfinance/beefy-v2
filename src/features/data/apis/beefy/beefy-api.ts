@@ -6,10 +6,10 @@ import type {
   ApyFeeData,
   BeefyAPIApyBreakdownResponse,
   BeefyAPILpBreakdownResponse,
-  BeefyApiMerklCampaign,
   BeefyAPITokenPricesResponse,
   BeefyApiVaultLastHarvestResponse,
   BeefyLastArticleResponse,
+  BeefyOffChainRewardsCampaign,
   BeefySnapshotActiveResponse,
   ZapAggregatorTokenSupportResponse,
 } from './beefy-api-types';
@@ -81,14 +81,12 @@ export class BeefyAPI {
 
     // somehow, all vaultApr are currently strings, we need to fix that before sending
     // the data to be processed
-    const data = mapValuesDeep(values, (val, key) => {
+    return mapValuesDeep(values, (val, key) => {
       if (key === 'vaultApr' && typeof val === 'string') {
         val = parseFloat(val);
       }
       return val;
     });
-
-    return data;
   }
 
   /**
@@ -176,9 +174,9 @@ export class BeefyAPI {
     });
   }
 
-  async getCowcentratedMerklCampaigns(): Promise<BeefyApiMerklCampaign[]> {
-    return await getJson<BeefyApiMerklCampaign[]>({
-      url: `${this.api}/cow-merkl-campaigns/all/recent`,
+  async getOffChainRewardCampaigns(): Promise<BeefyOffChainRewardsCampaign[]> {
+    return await getJson<BeefyOffChainRewardsCampaign[]>({
+      url: `${this.api}/offchain-rewards/active`,
       cacheBuster: 'short',
       timeout: this.timeout,
     });

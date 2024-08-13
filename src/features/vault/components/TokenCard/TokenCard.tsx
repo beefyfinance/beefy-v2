@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React from 'react';
+
 import { useTranslation } from 'react-i18next';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
 import type { ChainEntity } from '../../../data/entities/chain';
@@ -21,6 +21,7 @@ import { PriceWithChange } from '../../../../components/PriceWithChange/PriceWit
 import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink';
 import { Code, Link } from '@material-ui/icons';
 import { ReactComponent as DocsIcon } from '../../../../images/icons/navigation/docs.svg';
+import { memo, useEffect } from 'react';
 
 const useStyles = makeStyles(styles);
 
@@ -111,7 +112,7 @@ function TokenCardComponent({
   );
   // initialize addressbook
   const dispatch = useAppDispatch();
-  React.useEffect(() => {
+  useEffect(() => {
     if (shouldInitAddressBook) {
       dispatch(fetchAddressBookAction({ chainId: chainId }));
     }
@@ -127,4 +128,4 @@ function TokenCardComponent({
   return <TokenCardDisplay token={token} />;
 }
 
-export const TokenCard = React.memo(TokenCardComponent);
+export const TokenCard = memo(TokenCardComponent);

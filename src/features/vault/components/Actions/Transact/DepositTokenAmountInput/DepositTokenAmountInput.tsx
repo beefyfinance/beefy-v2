@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectTransactInputIndexAmount } from '../../../../../data/selectors/transact';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';

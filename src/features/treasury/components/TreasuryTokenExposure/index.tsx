@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAppSelector } from '../../../../store';
 import { selectTreasuryTokensExposure } from '../../../data/selectors/treasury';
 import { TreasuryExposureChart } from '../ExposureChart';

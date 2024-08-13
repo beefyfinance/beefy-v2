@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { VaultTransactions } from '../../VaultTransactions';
 import { TabletStats } from '../../TabletStats';

@@ -104,3 +104,16 @@ export function typedDefaultsDeep<T extends object>(
   }
   return defaultsDeep({}, input || {}, defaults) as T;
 }
+
+type DistributedOmit<TEntry, TKeys extends keyof TEntry> = {
+  [K in keyof TEntry as K extends TKeys ? never : K]: TEntry[K];
+};
+
+export function distributedOmit<
+  TEntry extends { [key: string]: unknown },
+  TKeys extends keyof TEntry
+>(entry: TEntry, ...keys: TKeys[]): DistributedOmit<TEntry, TKeys> {
+  return Object.fromEntries(
+    Object.entries(entry).filter(([key]) => !keys.includes(key as TKeys))
+  ) as DistributedOmit<TEntry, TKeys>;
+}

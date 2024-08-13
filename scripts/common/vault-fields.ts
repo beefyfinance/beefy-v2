@@ -42,6 +42,7 @@ const FIELD_ORDER = [
   'showWarning',
   'warning',
   'earningPoints',
+  'pointStructureIds',
   'network',
   'zaps',
 ].reduce((fields: {}, field, i) => {

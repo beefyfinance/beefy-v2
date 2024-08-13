@@ -3,6 +3,7 @@ import { miniSerializeError } from '@reduxjs/toolkit';
 import { DefaultFallback } from './DefaultFallback';
 import { DevDefaultFallback } from './DevDefaultFallback';
 import type { ErrorBoundaryHasErrorState, ErrorBoundaryProps, ErrorBoundaryState } from './types';
+import { isError } from '../../helpers/error';
 
 const DefaultFallbackComponent: FC<ErrorBoundaryHasErrorState> = import.meta.env.DEV
   ? DevDefaultFallback
@@ -35,7 +36,7 @@ export class ErrorBoundary extends PureComponent<ErrorBoundaryProps, ErrorBounda
     if (import.meta.env.DEV) {
       const error = miniSerializeError(e);
 
-      if (e instanceof Error && e.stack) {
+      if (isError(e) && e.stack) {
         error.stack = e.stack
           .split('\n')
           .filter(line => !line.includes('/node_modules/') && line.includes(window.location.origin))

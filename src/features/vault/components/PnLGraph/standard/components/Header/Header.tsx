@@ -3,7 +3,7 @@ import { HelpOutline } from '@material-ui/icons';
 import type BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tooltip } from '../../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../../components/Tooltip/BasicTooltipContent';

@@ -21,7 +21,7 @@ import { isNonEmptyArray, type NonEmptyArray } from '../../../../../../data/util
 import { selectChainById } from '../../../../../../data/selectors/chains';
 import { strictEntries } from '../../../../../../../helpers/object';
 import { selectMerklUserRewardsStatus } from '../../../../../../data/selectors/data-loader';
-import { fetchUserMerklRewardsAction } from '../../../../../../data/actions/user-rewards';
+import { fetchUserMerklRewardsAction } from '../../../../../../data/actions/user-rewards/merkl-user-rewards';
 import { AlertWarning } from '../../../../../../../components/Alerts';
 import { RefreshButton } from '../RefreshButton/RefreshButton';
 

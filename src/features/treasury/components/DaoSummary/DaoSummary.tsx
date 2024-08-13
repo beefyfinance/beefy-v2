@@ -1,5 +1,5 @@
 import { Container, makeStyles } from '@material-ui/core';
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SummaryStats } from '../../../../components/SummaryStats';
 import { formatLargeUsd } from '../../../../helpers/format';

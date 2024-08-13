@@ -6,8 +6,9 @@ import { selectVaultRawTvl } from './tvl';
 import { BIG_ZERO } from '../../../helpers/big-number';
 
 export const selectVaultActiveMerklCampaigns = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => state.biz.rewards.merkl.byVaultId[vaultId],
-  (state: BeefyState) => state.biz.rewards.merkl.byId,
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    state.biz.rewards.offchain.byProviderId.merkl[vaultId],
+  (state: BeefyState) => state.biz.rewards.offchain.byId,
   (vaultCampaigns, campaignById) => {
     if (!vaultCampaigns) {
       return undefined;
@@ -16,7 +17,7 @@ export const selectVaultActiveMerklCampaigns = createSelector(
     const now = getUnixTime(new Date());
     const activeCampaigns = vaultCampaigns
       .filter(v => v.apr > 0)
-      .map(v => ({ ...campaignById[v.campaignId], apr: v.apr }))
+      .map(v => ({ ...campaignById[v.id], apr: v.apr }))
       .filter(c => c.startTimestamp <= now && c.endTimestamp >= now);
 
     return activeCampaigns.length ? activeCampaigns : undefined;
@@ -25,6 +26,30 @@ export const selectVaultActiveMerklCampaigns = createSelector(
 
 export const selectVaultHasActiveMerklCampaigns = createSelector(
   selectVaultActiveMerklCampaigns,
+  campaigns => !!campaigns && campaigns.length > 0
+);
+
+export const selectVaultActiveStellaSwapCampaigns = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    state.biz.rewards.offchain.byProviderId.stellaswap[vaultId],
+  (state: BeefyState) => state.biz.rewards.offchain.byId,
+  (vaultCampaigns, campaignById) => {
+    if (!vaultCampaigns) {
+      return undefined;
+    }
+
+    const now = getUnixTime(new Date());
+    const activeCampaigns = vaultCampaigns
+      .filter(v => v.apr > 0)
+      .map(v => ({ ...campaignById[v.id], apr: v.apr }))
+      .filter(c => c.startTimestamp <= now && c.endTimestamp >= now);
+
+    return activeCampaigns.length ? activeCampaigns : undefined;
+  }
+);
+
+export const selectVaultHasActiveStellaSwapCampaigns = createSelector(
+  selectVaultActiveStellaSwapCampaigns,
   campaigns => !!campaigns && campaigns.length > 0
 );
 

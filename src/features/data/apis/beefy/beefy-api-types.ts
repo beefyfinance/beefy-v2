@@ -46,12 +46,14 @@ export interface ApyStandard {
   composablePoolApr?: number;
   liquidStakingApr?: number;
   rewardPoolApr?: number;
+  rewardPoolTradingApr?: number;
   totalApy: number;
 }
 
 export interface ApyCLM {
   clmApr: number;
   merklApr?: number;
+  stellaSwapApr?: number;
   totalApy: number;
 }
 
@@ -113,26 +115,65 @@ export type ZapAggregatorTokenSupportResponse = {
   };
 };
 
-export type BeefyApiMerklCampaignVault = {
-  id: string;
-  address: string;
-  apr: number;
-};
+export type BeefyOffChainRewardsProviderId = 'merkl' | 'stellaswap';
 
-export type BeefyApiMerklCampaignRewardToken = {
+export type BeefyOffChainRewardsRewardToken = {
   address: string;
   symbol: string;
   decimals: number;
   chainId: ChainId;
 };
 
-export type BeefyApiMerklCampaign = {
-  campaignId: string;
-  startTimestamp: number;
-  endTimestamp: number;
+export type BeefyOffChainRewardsVault = {
+  id: string;
+  address: string;
+  poolAddress: string;
+  type: 'standard' | 'gov' | 'cowcentrated';
+  chainId: ChainId;
+};
+
+export type BeefyOffChainRewardsCampaignVault = BeefyOffChainRewardsVault & {
+  apr: number;
+};
+
+export type BeefyOffChainRewardsBeefyCampaignType = 'test' | 'arb-ltipp' | 'op-gov-fund' | 'other';
+export type BeefyOffChainRewardsExternalCampaignType = 'external';
+export type BeefyOffChainRewardsCampaignType =
+  | BeefyOffChainRewardsBeefyCampaignType
+  | BeefyOffChainRewardsExternalCampaignType;
+
+type MakeCampaign<
+  TProvider extends BeefyOffChainRewardsProviderId,
+  TExtra extends Record<string, unknown>
+> = {
+  providerId: TProvider;
+  id: string;
   chainId: ChainId;
   poolAddress: string;
-  rewardToken: BeefyApiMerklCampaignRewardToken;
-  type: string;
-  vaults: BeefyApiMerklCampaignVault[];
-};
+  rewardToken: BeefyOffChainRewardsRewardToken;
+  vaults: BeefyOffChainRewardsCampaignVault[];
+  type: BeefyOffChainRewardsCampaignType;
+  startTimestamp: number;
+  endTimestamp: number;
+  active: boolean;
+} & TExtra;
+
+export type BeefyOffChainRewardsMerklCampaign = MakeCampaign<
+  'merkl',
+  {
+    campaignId: string;
+  }
+>;
+
+export type BeefyOffChainRewardsStellaSwapCampaign = MakeCampaign<
+  'stellaswap',
+  {
+    rewardId: number;
+    rewarderAddress: string;
+    isPaused: boolean;
+  }
+>;
+
+export type BeefyOffChainRewardsCampaign =
+  | BeefyOffChainRewardsMerklCampaign
+  | BeefyOffChainRewardsStellaSwapCampaign;

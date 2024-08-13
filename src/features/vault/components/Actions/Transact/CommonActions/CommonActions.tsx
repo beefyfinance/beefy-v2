@@ -1,5 +1,5 @@
 import type { ChainEntity } from '../../../../../data/entities/chain';
-import { memo, type ReactNode, useCallback } from 'react';
+import { type FC, memo, type ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectChainById } from '../../../../../data/selectors/chains';
@@ -65,7 +65,7 @@ export type ActionConnectSwitchProps = {
   className?: string;
   chainId?: ChainEntity['id'];
   children: ReactNode;
-  FeesComponent?: React.FC;
+  FeesComponent?: FC;
 };
 
 export const ActionConnectSwitch = memo<ActionConnectSwitchProps>(function ActionConnectSwitch({

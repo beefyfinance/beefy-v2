@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { Fragment, memo, useEffect, useState } from 'react';
+import { Fragment, memo, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useAppSelector, useAppStore } from '../../../../../../store';
 import { styles } from './styles';

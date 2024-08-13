@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import { App } from './App';
@@ -9,7 +8,7 @@ import { MinimalFallback } from './components/ErrorBoundary/MinimalFallback';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { I18nextProvider } from 'react-i18next';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+createRoot(document.getElementById('root') as HTMLElement).render(
   <ErrorBoundary fallback={MinimalFallback}>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { type Action, type ThunkAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyDataApi } from '../apis/instances';
 import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault';
@@ -11,8 +11,6 @@ import type {
 import { selectCowcentratedLikeVaultById, selectVaultById } from '../selectors/vaults';
 import { selectTokenByAddress } from '../selectors/tokens';
 import type { TokenEntity } from '../entities/token';
-import type { ThunkAction } from 'redux-thunk';
-import type { Action } from 'redux';
 import { featureFlag_simulateBeefyApiError } from '../utils/feature-flags';
 import { sleep } from '../utils/async-utils';
 import type { ChartStat } from '../../vault/components/HistoricGraph/types';

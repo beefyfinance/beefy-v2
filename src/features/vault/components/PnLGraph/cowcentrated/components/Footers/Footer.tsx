@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { BasicTabs } from '../../../../../../../components/Tabs/BasicTabs';
 import type { VaultEntity } from '../../../../../../data/entities/vault';
 import { styles } from './styles';

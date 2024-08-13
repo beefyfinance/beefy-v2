@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { makeStyles, type Theme, useMediaQuery } from '@material-ui/core';
 import { styles } from './styles';
 import { VaultTag, VaultTagWithTooltip } from './VaultTag';

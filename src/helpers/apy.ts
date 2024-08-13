@@ -18,6 +18,7 @@ const DISPLAY_ORDER = ((i = 0) =>
     rewardPool: i++,
     trading: i++,
     merkl: i++,
+    stellaSwap: i++,
     liquidStaking: i++,
     composablePool: i++,
     boost: i++,
@@ -28,11 +29,7 @@ const DISPLAY_ORDER = ((i = 0) =>
  */
 export const getApyComponents = createFactory(() => {
   const { allComponents: baseAll } = getApiApyDataComponents();
-  const components = [
-    ...baseAll,
-    'boost' as const,
-    'rewardPoolTrading' as const,
-  ] as const satisfies TotalApyComponent[];
+  const components = [...baseAll, 'boost' as const] as const satisfies TotalApyComponent[];
 
   components.sort((a, b) => DISPLAY_ORDER[a] - DISPLAY_ORDER[b]);
 
@@ -91,9 +88,11 @@ export const getApiApyDataComponents = createFactory(() => {
   const nonCompoundableComponents = [
     'trading',
     'merkl',
+    'stellaSwap',
     'liquidStaking',
     'composablePool',
     'rewardPool',
+    'rewardPoolTrading',
   ] as const satisfies Array<ApiApyDataAprComponents>;
   const allComponents = [...compoundableComponents, ...nonCompoundableComponents];
   const compoundableDaily = compoundableComponents.map(

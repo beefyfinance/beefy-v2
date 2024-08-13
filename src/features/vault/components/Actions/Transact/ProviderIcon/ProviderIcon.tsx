@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { getTransactProviderIcon } from '../../../../../../helpers/transactProviderSrc';
 import zapIconSrc from '../../../../../../images/icons/zap.svg';
 

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { type VaultEntity } from '../../features/data/entities/vault';
@@ -86,4 +86,4 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
     );
   }
 );
-export const VaultTvl = React.memo(_VaultTvl);
+export const VaultTvl = memo(_VaultTvl);

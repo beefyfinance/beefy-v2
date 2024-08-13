@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { selectFilterSearchText } from '../../../../../data/selectors/filtered-vaults';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';

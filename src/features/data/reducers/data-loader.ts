@@ -32,11 +32,13 @@ import { fetchPlatforms } from '../actions/platforms';
 import { fetchOnRampSupportedProviders } from '../actions/on-ramp';
 import { fetchFees } from '../actions/fees';
 import type {
-  ChainIdDataByAddressByChainEntity,
-  ChainIdDataEntity,
+  ByAddressByChainDataEntity,
+  ByAddressByVaultDataEntity,
+  ByChainDataEntity,
   DataLoaderState,
   LoaderAddressKey,
-  LoaderChainAddressKey,
+  LoaderAddressVaultKey,
+  LoaderAddressChainKey,
   LoaderChainKey,
   LoaderGlobalKey,
   LoaderState,
@@ -61,8 +63,10 @@ import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
 import type { Draft } from 'immer';
 import { cloneDeep } from 'lodash-es';
-import { fetchUserMerklRewardsAction } from '../actions/user-rewards';
-import { fetchMerklCampaignsAction } from '../actions/rewards';
+import { fetchUserMerklRewardsAction } from '../actions/user-rewards/merkl-user-rewards';
+import { fetchOffChainCampaignsAction } from '../actions/rewards';
+import type { VaultEntity } from '../entities/vault';
+import { fetchUserStellaSwapRewardsAction } from '../actions/user-rewards/stellaswap-user-rewards';
 
 const dataLoaderStateInit: LoaderStateIdle = {
   lastFulfilled: undefined,
@@ -72,13 +76,14 @@ const dataLoaderStateInit: LoaderStateIdle = {
   error: null,
 };
 
-const dataLoaderStateInitByChainId: ChainIdDataEntity = {
+const dataLoaderStateInitByChainId: ByChainDataEntity = {
   contractData: dataLoaderStateInit,
   addressBook: dataLoaderStateInit,
 };
 
 const dataLoaderStateInitByAddress: DataLoaderState['byAddress'][string] = {
   byChainId: {},
+  byVaultId: {},
   global: {
     timeline: dataLoaderStateInit,
     depositedVaults: dataLoaderStateInit,
@@ -88,10 +93,14 @@ const dataLoaderStateInitByAddress: DataLoaderState['byAddress'][string] = {
   },
 };
 
-const dataLoaderStateInitByAddressByChainId: ChainIdDataByAddressByChainEntity = {
+const dataLoaderStateInitByAddressByChainId: ByAddressByChainDataEntity = {
   balance: dataLoaderStateInit,
   allowance: dataLoaderStateInit,
   clmHarvests: dataLoaderStateInit,
+};
+
+const dataLoaderStateInitByAddressByVaultId: ByAddressByVaultDataEntity = {
+  stellaSwapRewards: dataLoaderStateInit,
 };
 
 export const initialDataLoaderState: DataLoaderState = {
@@ -133,6 +142,7 @@ export const initialDataLoaderState: DataLoaderState = {
     merklCampaigns: dataLoaderStateInit,
     currentCowcentratedRanges: dataLoaderStateInit,
     merklRewards: dataLoaderStateInit,
+    stellaSwapRewards: dataLoaderStateInit,
   },
   byChainId: {},
   byAddress: {},
@@ -218,7 +228,7 @@ function setGlobalFulfilled(sliceState: Draft<DataLoaderState>, stateKey: Loader
 }
 
 function getOrCreateChainState(sliceState: Draft<DataLoaderState>, chainId: string) {
-  let chainState: ChainIdDataEntity | undefined = sliceState.byChainId[chainId];
+  let chainState: ByChainDataEntity | undefined = sliceState.byChainId[chainId];
   if (!chainState) {
     chainState = cloneDeep(dataLoaderStateInitByChainId);
     sliceState.byChainId = {
@@ -251,7 +261,7 @@ function getOrCreateAddressChainState(
   const addressKey = address.toLowerCase();
   const addressState = getOrCreateAddressState(sliceState, addressKey);
 
-  let chainState: ChainIdDataByAddressByChainEntity | undefined = addressState.byChainId[chainId];
+  let chainState: ByAddressByChainDataEntity | undefined = addressState.byChainId[chainId];
   if (!chainState) {
     chainState = cloneDeep(dataLoaderStateInitByAddressByChainId);
     sliceState.byAddress[addressKey].byChainId = {
@@ -261,6 +271,26 @@ function getOrCreateAddressChainState(
   }
 
   return chainState;
+}
+
+function getOrCreateAddressVaultState(
+  sliceState: Draft<DataLoaderState>,
+  vaultId: string,
+  address: string
+) {
+  const addressKey = address.toLowerCase();
+  const addressState = getOrCreateAddressState(sliceState, addressKey);
+
+  let vaultState: ByAddressByVaultDataEntity | undefined = addressState.byVaultId[vaultId];
+  if (!vaultState) {
+    vaultState = cloneDeep(dataLoaderStateInitByAddressByVaultId);
+    sliceState.byAddress[addressKey].byVaultId = {
+      ...sliceState.byAddress[addressKey].byVaultId,
+      [vaultId]: vaultState,
+    };
+  }
+
+  return vaultState;
 }
 
 function addByChainAsyncThunkActions<ActionParams extends { chainId: ChainEntity['id'] }>(
@@ -304,7 +334,7 @@ function addByAddressByChainAsyncThunkActions<
 >(
   builder: ActionReducerMapBuilder<DataLoaderState>,
   action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
-  stateKeys: Array<LoaderChainAddressKey>
+  stateKeys: Array<LoaderAddressChainKey>
 ) {
   builder
     .addCase(action.pending, (sliceState, action) => {
@@ -342,6 +372,53 @@ function addByAddressByChainAsyncThunkActions<
 
       for (const stateKey of stateKeys) {
         chainState[stateKey] = makeFulfilledState(chainState[stateKey]);
+      }
+    });
+}
+
+function addByAddressByVaultAsyncThunkActions<
+  ActionParams extends { vaultId: VaultEntity['id']; walletAddress: string }
+>(
+  builder: ActionReducerMapBuilder<DataLoaderState>,
+  action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
+  stateKeys: Array<LoaderAddressVaultKey>
+) {
+  builder
+    .addCase(action.pending, (sliceState, action) => {
+      const vaultId = action.meta.arg.vaultId;
+      const vaultState = getOrCreateAddressVaultState(
+        sliceState,
+        vaultId,
+        action.meta.arg.walletAddress
+      );
+
+      for (const stateKey of stateKeys) {
+        vaultState[stateKey] = makePendingState(vaultState[stateKey]);
+      }
+    })
+    .addCase(action.rejected, (sliceState, action) => {
+      const vaultId = action.meta?.arg.vaultId;
+      const vaultState = getOrCreateAddressVaultState(
+        sliceState,
+        vaultId,
+        action.meta.arg.walletAddress
+      );
+      const error = errorToString(action.error);
+
+      for (const stateKey of stateKeys) {
+        vaultState[stateKey] = makeRejectedState(vaultState[stateKey], error);
+      }
+    })
+    .addCase(action.fulfilled, (sliceState, action) => {
+      const vaultId = action.meta?.arg.vaultId;
+      const vaultState = getOrCreateAddressVaultState(
+        sliceState,
+        vaultId,
+        action.meta.arg.walletAddress
+      );
+
+      for (const stateKey of stateKeys) {
+        vaultState[stateKey] = makeFulfilledState(vaultState[stateKey]);
       }
     });
 }
@@ -427,7 +504,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchTreasury, 'treasury', true);
     addGlobalAsyncThunkActions(builder, fetchActiveProposals, 'proposals', false);
     addGlobalAsyncThunkActions(builder, fetchLastArticle, 'articles', false);
-    addGlobalAsyncThunkActions(builder, fetchMerklCampaignsAction, 'merklCampaigns', false);
+    addGlobalAsyncThunkActions(builder, fetchOffChainCampaignsAction, 'merklCampaigns', false);
     addGlobalAsyncThunkActions(
       builder,
       fetchAllCurrentCowcentratedRanges,
@@ -446,6 +523,10 @@ export const dataLoaderSlice = createSlice({
       ['balance', 'allowance']
     );
     addByAddressByChainAsyncThunkActions(builder, fetchClmHarvestsForUserChain, ['clmHarvests']);
+
+    addByAddressByVaultAsyncThunkActions(builder, fetchUserStellaSwapRewardsAction, [
+      'stellaSwapRewards',
+    ]);
 
     addByAddressAsyncThunkActions(builder, fetchWalletTimeline, ['timeline']);
     addByAddressAsyncThunkActions(builder, recalculateDepositedVaultsAction, ['depositedVaults']);

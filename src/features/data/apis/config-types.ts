@@ -64,7 +64,7 @@ export interface VaultConfig {
   bridged?: Record<ChainEntity['id'], string>;
   /* Oracle can be ChainLink | Pyth, then the oracle address*/
   lendingOracle?: { provider: string; address?: string; loops?: number };
-  earningPoints?: boolean;
+  pointStructureIds?: string[];
   feeTier?: string;
   /** tmp: exclude from being loaded */
   hidden?: boolean;
