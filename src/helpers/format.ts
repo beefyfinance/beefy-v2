@@ -49,7 +49,7 @@ export function formatTokenDisplayCondensed(
 
   // Default/Clamp: all decimals
   if (digits === undefined || digits > decimals) {
-    digits = decimals;
+    digits = decimals + 1;
   }
 
   // Work out how many digits we have for whole and fraction
@@ -64,7 +64,13 @@ export function formatTokenDisplayCondensed(
     return formatGrouped(value, 0);
   }
 
-  return condenseDecimalZeros(formatGrouped(value, decimals), decimalDigits);
+  // Handle small numbers with leading decimal zeros using subscript notation
+  if (value.isLessThan(1) && decimalDigits > 0) {
+    return condenseDecimalZeros(formatGrouped(value, decimals), decimalDigits);
+  }
+
+  // For other cases, use the significant decimals calculated
+  return formatGrouped(value, decimalDigits);
 }
 
 /**
