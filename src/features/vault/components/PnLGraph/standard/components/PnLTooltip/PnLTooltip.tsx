@@ -9,10 +9,10 @@ import { formatLargeUsd, formatTokenDisplayCondensed } from '../../../../../../.
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
     ...theme.typography['body-lg'],
-    color: theme.palette.text.tooltips,
+    color: theme.palette.text.primary,
     padding: '12px 16px',
     minWidth: '250px',
-    background: '#fff',
+    background: '#1B1D32',
     borderRadius: '8px',
     textAlign: 'left' as const,
     display: 'flex',
