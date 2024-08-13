@@ -1,4 +1,4 @@
-import { sample } from 'lodash-es';
+import { sample } from 'lodash';
 import { ChainId } from 'blockchain-addressbook';
 import { config } from '../../src/config/config';
 import type {
