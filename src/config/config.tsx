@@ -410,7 +410,7 @@ export const config = {
   avax: {
     name: 'Avalanche',
     chainId: 43114,
-    rpc: ['https://avax-pokt.nodies.app/ext/bc/C/rpc'],
+    rpc: ['https://rpc.ankr.com/avalanche'],
     explorerUrl: 'https://cchain.explorer.avax.network',
     multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -424,7 +424,7 @@ export const config = {
         symbol: 'AVAX',
         decimals: 18,
       },
-      rpcUrls: ['https://avax-pokt.nodies.app/ext/bc/C/rpc'],
+      rpcUrls: ['https://rpc.ankr.com/avalanche'],
       blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
     },
     gas: {
@@ -615,7 +615,7 @@ export const config = {
   canto: {
     name: 'Canto',
     chainId: 7700,
-    rpc: ['https://mainnode.plexnode.org:8545'],
+    rpc: ['https://canto-rpc.ansybl.io'],
     explorerUrl: 'https://tuber.build',
     multicallAddress: '0xc34b9c9DBB39Be0Ef850170127A7b4283484f804',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -629,7 +629,7 @@ export const config = {
         symbol: 'CANTO',
         decimals: 18,
       },
-      rpcUrls: ['https://mainnode.plexnode.org:8545'],
+      rpcUrls: ['https://canto-rpc.ansybl.io'],
       blockExplorerUrls: ['https://tuber.build/'],
     },
     gas: {
