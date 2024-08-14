@@ -68,6 +68,7 @@ export interface VaultConfig {
   feeTier?: string;
   /** tmp: exclude from being loaded */
   hidden?: boolean;
+  poolTogether?: string;
 }
 
 export interface PartnersConfig {

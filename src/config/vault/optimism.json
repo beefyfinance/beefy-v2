@@ -3218,7 +3218,8 @@
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0xb4063d1f0b0b7caee88708895ec4e365bf44b984?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "velodrome-v2-usdv-op",
@@ -3521,7 +3522,8 @@
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0x9b53ef6f13077727d22cb4acad1119c79a97be17?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "velodrome-v2-usdc-weth",
@@ -3681,7 +3683,8 @@
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0x626f8282f712732be0c12d4a89a86be6e9ce8ac8?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "velodrome-v2-usdc-next",
@@ -3770,7 +3773,8 @@
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0x7889366a039d92dd6aa12ce8f6fb027c3b7e397c?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "velodrome-v2-usdc-wsteth",
@@ -4598,7 +4602,8 @@
           }
         ]
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0xb4911efd3d53352f658536afd37e7897cb7dd7f6?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "aura-op-ethereum-triplets",
@@ -4676,7 +4681,8 @@
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0x5eb32e6dEc24d58C14D21fd1b329d9f65DE58364?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "aura-op-reth-ankreth",
@@ -5112,7 +5118,8 @@
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0xe2778b7c04a44dc8480fee88edc3cef8ee11fce0?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "velodrome-v2-exa-weth",
@@ -6366,7 +6373,8 @@
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0x9b4c0de59628c64b02d7ce86f21db9a579539d5a?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "velodrome-v2-wsteth-op",

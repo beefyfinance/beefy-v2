@@ -4281,7 +4281,8 @@
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/8453/0x6428DDB6EF1818FA99552E10882D34c1db57BBcA?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "aerodrome-ezeth-weth",
@@ -6675,7 +6676,7 @@
   },
   {
     "id": "aerodrome-weth-well",
-    "name": "WELL-ETH vLP",
+    "name": "WELL.wh-ETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/WELL",
     "tokenAddress": "0xffA3F8737C39e36dec4300B162c2153c67c8352f",
