@@ -6980,7 +6980,7 @@
     "status": "active",
     "createdAt": 1719221816,
     "platformId": "magpie",
-    "assets": ["dUSDC"],
+    "assets": ["USDC"],
     "migrationIds": ["magpie"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
