@@ -1,5 +1,26 @@
 [
   {
+    "id": "convex-fraxtal-cvxfxs",
+    "name": "cvxFXS",
+    "token": "cvxFXS",
+    "tokenAddress": "0xEFb4B26FC242478c9008274F9e81db89Fa6adAB9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "convex",
+    "earnContractAddress": "0x215886A8DBF3eB528a95A21eF3bbeac18f2b2fE3",
+    "earnedToken": "mooConvexCvxFXS",
+    "earnedTokenAddress": "0x215886A8DBF3eB528a95A21eF3bbeac18f2b2fE3",
+    "oracle": "lps",
+    "oracleId": "convex-fraxtal-cvxfxs",
+    "status": "active",
+    "createdAt": 1723625222,
+    "platformId": "convex",
+    "assets": ["cvxFXS"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://frax.convexfinance.com/stake",
+    "network": "fraxtal"
+  },
+  {
     "id": "curve-fraxtal-frax-sdai",
     "name": "FRAX/sDAI",
     "token": "FRAXsDAI",
