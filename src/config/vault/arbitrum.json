@@ -1,5 +1,35 @@
 [
   {
+    "id": "aura-arb-wusdm-gyd",
+    "name": "wUSDM-GYD",
+    "type": "standard",
+    "token": "wUSDM-GYD Arb",
+    "tokenAddress": "0x315dd595e82bDc0c194f3A38A08fDE480D7E5d21",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAurawUSDM-GYD",
+    "earnedTokenAddress": "0x9C63A2C4D60249D98f7b8814d5AC8157ef148C42",
+    "earnContractAddress": "0x9C63A2C4D60249D98f7b8814d5AC8157ef148C42",
+    "oracle": "lps",
+    "oracleId": "aura-arb-wusdm-gyd",
+    "status": "active",
+    "createdAt": 1723751717,
+    "platformId": "aura",
+    "assets": ["wUSDM", "GYD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x315dd595e82bdc0c194f3a38a08fde480d7e5d2100020000000000000000056a/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x315dd595e82bdc0c194f3a38a08fde480d7e5d2100020000000000000000056a/remove-liquidity",
+    "network": "arbitrum"
+  },
+  {
     "id": "ramses-cl-rseth-ethx-vault",
     "name": "rsETH-ETHx",
     "type": "standard",

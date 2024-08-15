@@ -405,6 +405,7 @@ export const config = {
       'USDx',
       'gUSDC',
       'sUSDe',
+      'GYD',
     ],
   },
   avax: {
