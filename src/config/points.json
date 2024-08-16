@@ -16,10 +16,12 @@
         "name": "Arbitrum $ARB Airdrop"
       }
     ],
-    "eligibility": {
-      "type": "token-holding",
-      "tokens": ["uniETH"]
-    },
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["uniETH"]
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-lrt-subgraph",
@@ -47,10 +49,12 @@
         "name": "Renzo EZPoints"
       }
     ],
-    "eligibility": {
-      "type": "token-holding",
-      "tokens": ["ezETH"]
-    },
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["ezETH"]
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-lrt-subgraph",
@@ -82,9 +86,16 @@
         "name": "Eigenlayer Restaked Points"
       }
     ],
-    "eligibility": {
-      "type": "vault-whitelist"
-    },
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      },
+      {
+        "type": "token-by-provider",
+        "tokenProviderId": "pendle",
+        "tokens": ["weETH", "eETH", "weETHs"]
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-lrt-subgraph",
@@ -115,10 +126,12 @@
         "name": "Eigenlayer Restaked Points"
       }
     ],
-    "eligibility": {
-      "type": "token-holding",
-      "tokens": ["rsETH", "wrsETH", "rswETH"]
-    },
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["rsETH", "wrsETH", "rswETH"]
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-lrt-subgraph",
@@ -145,10 +158,12 @@
         "name": "LXP-L"
       }
     ],
-    "eligibility": {
-      "type": "on-chain-lp",
-      "chain": "linea"
-    },
+    "eligibility": [
+      {
+        "type": "on-chain-lp",
+        "chain": "linea"
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-balances-subgraph",
@@ -179,10 +194,12 @@
         "name": "Eigenlayer Restaked Points"
       }
     ],
-    "eligibility": {
-      "type": "token-holding",
-      "tokens": ["STONE"]
-    },
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["STONE"]
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-lrt-subgraph",
@@ -209,10 +226,12 @@
         "name": "Mode Volume Points"
       }
     ],
-    "eligibility": {
-      "type": "on-chain-lp",
-      "chain": "mode"
-    },
+    "eligibility": [
+      {
+        "type": "on-chain-lp",
+        "chain": "mode"
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-balances-subgraph",
@@ -239,10 +258,12 @@
         "name": "Ethena Sats"
       }
     ],
-    "eligibility": {
-      "type": "token-holding",
-      "tokens": ["USDe"]
-    },
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["USDe"]
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-lrt-subgraph",
@@ -269,9 +290,11 @@
         "name": "Dolomite Minerals"
       }
     ],
-    "eligibility": {
-      "type": "vault-whitelist"
-    },
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-lrt-subgraph",
@@ -299,9 +322,11 @@
         "name": "Anzen Z-Points"
       }
     ],
-    "eligibility": {
-      "type": "vault-whitelist"
-    },
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-lrt-subgraph",
@@ -328,9 +353,11 @@
         "name": "Nektar Drops"
       }
     ],
-    "eligibility": {
-      "type": "vault-whitelist"
-    },
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
     "accounting": [
       {
         "id": "nektar-drops",
@@ -347,9 +374,11 @@
         "name": "Karak XP"
       }
     ],
-    "eligibility": {
-      "type": "vault-whitelist"
-    },
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
     "accounting": [
       {
         "id": "karak-xp",
@@ -366,10 +395,12 @@
         "name": "vPoints"
       }
     ],
-    "eligibility": {
-      "type": "token-holding",
-      "tokens": ["vETH"]
-    },
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["vETH"]
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-lrt-subgraph",
@@ -401,9 +432,11 @@
         "name": "Eigenlayer Restaked Points"
       }
     ],
-    "eligibility": {
-      "type": "vault-whitelist"
-    },
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
     "accounting": [
       {
         "id": "mantle-powder",
@@ -421,9 +454,11 @@
         "name": "Mendi Loyalty Points"
       }
     ],
-    "eligibility": {
-      "type": "vault-whitelist"
-    },
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-lrt-subgraph",
@@ -450,9 +485,11 @@
         "name": "preKFI"
       }
     ],
-    "eligibility": {
-      "type": "vault-whitelist"
-    },
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-lrt-subgraph",
@@ -479,10 +516,12 @@
         "name": "Eigenlayer Restaked Points"
       }
     ],
-    "eligibility": {
-      "type": "token-holding",
-      "tokens": ["inETH", "ainETH"]
-    },
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["inETH", "ainETH"]
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-lrt-subgraph",
@@ -509,9 +548,11 @@
         "name": "Swell Points"
       }
     ],
-    "eligibility": {
-      "type": "vault-whitelist"
-    },
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-lrt-subgraph",
@@ -538,11 +579,13 @@
         "name": "YEI Points"
       }
     ],
-    "eligibility": {
-      "type": "token-on-platform",
-      "platform": "yei",
-      "tokens": ["SEI", "WSEI", "USDT", "USDC"]
-    },
+    "eligibility": [
+      {
+        "type": "token-on-platform",
+        "platformId": "yei",
+        "tokens": ["SEI", "WSEI", "USDT", "USDC"]
+      }
+    ],
     "accounting": [
       {
         "id": "beefy-lrt-subgraph",

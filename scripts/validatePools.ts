@@ -281,22 +281,66 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
 
     // check for the provider eligibility
     for (const pointProvider of pointProviders) {
-      const eligibility = pointProvider.eligibility;
-      const hasProvider = pool.pointStructureIds?.includes(pointProvider.id);
+      const hasProvider = pool.pointStructureIds?.includes(pointProvider.id) ?? false;
 
-      let shouldHaveProvider = false;
-      if (eligibility.type === 'token-on-platform') {
-        shouldHaveProvider =
-          (eligibility.platform === pool.platformId &&
-            pool.assets?.some(a => eligibility.tokens.includes(a))) ??
-          false;
-      } else if (eligibility.type === 'token-holding') {
-        shouldHaveProvider = pool.assets?.some(a => eligibility?.tokens?.includes(a)) ?? false;
-      } else if (eligibility.type === 'on-chain-lp') {
-        shouldHaveProvider = pool.network === eligibility.chain;
-      } else if (eligibility.type === 'vault-whitelist') {
-        continue;
+      const shouldHaveProviderArr: boolean[] = [];
+      for (const eligibility of pointProvider.eligibility) {
+        if (eligibility.type === 'token-by-provider') {
+          if (!('tokens' in eligibility)) {
+            throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
+          }
+          if (!('tokenProviderId' in eligibility)) {
+            throw new Error(`Error: ${pointProvider.id} : eligibility.tokenProviderId missing`);
+          }
+
+          shouldHaveProviderArr.push(
+            (pool.tokenProviderId === eligibility.tokenProviderId &&
+              pool.assets?.some(a => eligibility.tokens?.includes(a))) ??
+              false
+          );
+        } else if (eligibility.type === 'token-on-platform') {
+          if (!('tokens' in eligibility)) {
+            throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
+          }
+          if (!('platformId' in eligibility)) {
+            throw new Error(`Error: ${pointProvider.id} : eligibility.platformId missing`);
+          }
+
+          shouldHaveProviderArr.push(
+            (eligibility.platformId === pool.platformId &&
+              pool.assets?.some(a => eligibility.tokens.includes(a))) ??
+              false
+          );
+        } else if (eligibility.type === 'token-holding') {
+          if (!('tokens' in eligibility)) {
+            throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
+          }
+
+          shouldHaveProviderArr.push(
+            pool.assets?.some(a => eligibility?.tokens?.includes(a)) ?? false
+          );
+        } else if (eligibility.type === 'on-chain-lp') {
+          if (!('chain' in eligibility)) {
+            throw new Error(`Error: ${pointProvider.id} : eligibility.chain missing`);
+          }
+
+          shouldHaveProviderArr.push(pool.network === eligibility.chain);
+        } else if (eligibility.type === 'vault-whitelist') {
+          shouldHaveProviderArr.push(hasProvider);
+        }
       }
+
+      // if (pool.id === 'pendle-arb-eeth-26sep24') {
+      //   console.log({
+      //     pointProviderId: pointProvider.id,
+      //     eligibility: pointProvider.eligibility,
+      //     shouldHaveProviderArr,
+      //     hasProvider,
+      //   });
+      // }
+
+      // bool or
+      const shouldHaveProvider = shouldHaveProviderArr.some(Boolean);
 
       if (shouldHaveProvider && !hasProvider) {
         console.error(
