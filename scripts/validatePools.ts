@@ -330,15 +330,6 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
         }
       }
 
-      // if (pool.id === 'pendle-arb-eeth-26sep24') {
-      //   console.log({
-      //     pointProviderId: pointProvider.id,
-      //     eligibility: pointProvider.eligibility,
-      //     shouldHaveProviderArr,
-      //     hasProvider,
-      //   });
-      // }
-
       // bool or
       const shouldHaveProvider = shouldHaveProviderArr.some(Boolean);
 
