@@ -168,6 +168,7 @@
     "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-21/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-21/withdraw",
     "network": "fraxtal",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "curve",
