@@ -322,5 +322,6 @@ function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBas
     depositFee: config.depositFee || 0,
     migrationIds: config.migrationIds || [],
     hidden: false,
+    poolTogether: config.poolTogether,
   };
 }

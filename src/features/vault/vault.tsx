@@ -26,6 +26,7 @@ import { PnLGraphIfWallet } from './components/PnLGraph/PnLGraphIfWallet';
 import { Explainer } from './components/Explainer/Explainer';
 import { UnstakedClmBannerVault } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
 import { featureFlag_disableRedirect } from '../data/utils/feature-flags';
+import { GamingCards } from './components/GamingCards';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -93,6 +94,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
             <Hidden smDown>
               <InsuranceCards vaultId={vaultId} />
               <LeverageCards vaultId={vaultId} />
+              <GamingCards vaultId={vaultId} />
             </Hidden>
           </div>
           <div className={classes.columnInfo}>
@@ -106,6 +108,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
             <Hidden mdUp>
               <InsuranceCards vaultId={vaultId} />
               <LeverageCards vaultId={vaultId} />
+              <GamingCards vaultId={vaultId} />
             </Hidden>
           </div>
         </div>

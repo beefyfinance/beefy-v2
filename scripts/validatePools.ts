@@ -20,7 +20,7 @@ import platforms from '../src/config/platforms.json';
 import pointProviders from '../src/config/points.json';
 import type { VaultConfig } from '../src/features/data/apis/config-types';
 import partition from 'lodash/partition';
-import { AbiItem } from 'web3-utils';
+import type { AbiItem } from 'web3-utils';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
@@ -274,6 +274,73 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       if (invalidPointStructureIds.length > 0) {
         console.error(
           `Error: ${pool.id} : pointStructureId ${invalidPointStructureIds} not present in points.json`
+        );
+        exitCode = 1;
+      }
+    }
+
+    // check for the provider eligibility
+    for (const pointProvider of pointProviders) {
+      const hasProvider = pool.pointStructureIds?.includes(pointProvider.id) ?? false;
+
+      const shouldHaveProviderArr: boolean[] = [];
+      for (const eligibility of pointProvider.eligibility) {
+        if (eligibility.type === 'token-by-provider') {
+          if (!('tokens' in eligibility)) {
+            throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
+          }
+          if (!('tokenProviderId' in eligibility)) {
+            throw new Error(`Error: ${pointProvider.id} : eligibility.tokenProviderId missing`);
+          }
+
+          shouldHaveProviderArr.push(
+            (pool.tokenProviderId === eligibility.tokenProviderId &&
+              pool.assets?.some(a => eligibility.tokens?.includes(a))) ??
+              false
+          );
+        } else if (eligibility.type === 'token-on-platform') {
+          if (!('tokens' in eligibility)) {
+            throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
+          }
+          if (!('platformId' in eligibility)) {
+            throw new Error(`Error: ${pointProvider.id} : eligibility.platformId missing`);
+          }
+
+          shouldHaveProviderArr.push(
+            (eligibility.platformId === pool.platformId &&
+              pool.assets?.some(a => eligibility.tokens.includes(a))) ??
+              false
+          );
+        } else if (eligibility.type === 'token-holding') {
+          if (!('tokens' in eligibility)) {
+            throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
+          }
+
+          shouldHaveProviderArr.push(
+            pool.assets?.some(a => eligibility?.tokens?.includes(a)) ?? false
+          );
+        } else if (eligibility.type === 'on-chain-lp') {
+          if (!('chain' in eligibility)) {
+            throw new Error(`Error: ${pointProvider.id} : eligibility.chain missing`);
+          }
+
+          shouldHaveProviderArr.push(pool.network === eligibility.chain);
+        } else if (eligibility.type === 'vault-whitelist') {
+          shouldHaveProviderArr.push(hasProvider);
+        }
+      }
+
+      // bool or
+      const shouldHaveProvider = shouldHaveProviderArr.some(Boolean);
+
+      if (shouldHaveProvider && !hasProvider) {
+        console.error(
+          `Error: ${pool.id} : pointStructureId ${pointProvider.id} should be present in pointStructureIds`
+        );
+        exitCode = 1;
+      } else if (!shouldHaveProvider && hasProvider) {
+        console.error(
+          `Error: ${pool.id} : pointStructureId ${pointProvider.id} should NOT be present in pointStructureIds`
         );
         exitCode = 1;
       }

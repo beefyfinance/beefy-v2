@@ -51,6 +51,7 @@ import type { UserLpBreakdownBalance, UserLpBreakdownBalanceAsset } from './bala
 import { isUserClmPnl, type UserVaultPnl } from './analytics-types';
 import { selectPlatformById } from './platforms';
 import type { TokenAmount } from '../apis/transact/transact-types';
+import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (walletAddress) {
@@ -867,9 +868,10 @@ export const selectUserIsUnstakedForVaultId = createSelector(
       return false;
     }
 
+    const clmAddress = getCowcentratedAddressFromCowcentratedLikeVault(vault);
     return (
       userBalance.tokenAmount.byChainId[vault.chainId]?.byTokenAddress[
-        vault.depositTokenAddress.toLowerCase()
+        clmAddress.toLowerCase()
       ]?.balance.gt(BIG_ZERO) || false
     );
   }

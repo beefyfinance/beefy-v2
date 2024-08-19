@@ -79,6 +79,8 @@ export type VaultBase = {
   migrationIds: string[];
   /** whether vault should be hidden from user */
   hidden: boolean;
+  /**link to pooltogether game */
+  poolTogether?: string;
 };
 
 export type VaultActive = {

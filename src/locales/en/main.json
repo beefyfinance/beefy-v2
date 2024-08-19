@@ -779,5 +779,7 @@
   "Banner-UnstakedClm-this-standard": "Your {{token}} position is not deposited but held in your wallet. Deposit it in this CLM Vault to ensure you don't miss out on rewards, can see full performance data, and can withdraw it. This position won't be visible on the app until it is deposited in the Vault.",
   "Banner-UnstakedClm-this-standard-both": "Your {{token}} position is not deposited but held in your wallet. Deposit it in this CLM Vault or <GovLink>CLM Pool</GovLink> to ensure you don't miss out on rewards, can see full performance data, and can withdraw it. This position won't be visible on the app until it is deposited in either the Pool or Vault.",
   "Banner-ClmVault": "There is also a <VaultLink>CLM Vault</VaultLink> available for this CLM. Let Beefy auto-compound all rewards, saving you time and maximizing your returns.",
-  "Banner-ClmVault-Deposited": "There is a <VaultLink>CLM Vault</VaultLink> available for this position. Simply zap in and let Beefy auto-compound all rewards, saving you time and maximizing your returns."
+  "Banner-ClmVault-Deposited": "There is a <VaultLink>CLM Vault</VaultLink> available for this position. Simply zap in and let Beefy auto-compound all rewards, saving you time and maximizing your returns.",
+  "PoolTogether-Title": "PoolTogether",
+  "PoolTogether-Content": "PoolTogether is a prize savings protocol that gathers vault yield and randomly distributes it as prizes. Some PoolTogether prize vaults include bonus rewards on top of the yield, which funds prizes."
 }
