@@ -281,7 +281,7 @@ export const config = {
   fantom: {
     name: 'Fantom',
     chainId: 250,
-    rpc: ['https://rpc.ankr.com/fantom'],
+    rpc: ['https://fantom-mainnet.public.blastapi.io'],
     explorerUrl: 'https://ftmscan.com',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -295,7 +295,7 @@ export const config = {
         symbol: 'FTM',
         decimals: 18,
       },
-      rpcUrls: ['https://rpc.ankr.com/fantom'],
+      rpcUrls: ['https://fantom-mainnet.public.blastapi.io'],
       blockExplorerUrls: ['https://ftmscan.com/'],
     },
     gas: {
