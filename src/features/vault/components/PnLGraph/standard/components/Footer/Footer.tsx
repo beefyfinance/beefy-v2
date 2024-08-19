@@ -14,6 +14,7 @@ interface FooterProps {
   vaultId: VaultEntity['id'];
   labels: string[];
   tabsClassName?: string;
+  className?: string;
 }
 
 export const Footer = memo<FooterProps>(function Footer({
@@ -21,11 +22,12 @@ export const Footer = memo<FooterProps>(function Footer({
   handlePeriod,
   labels,
   tabsClassName,
+  className,
 }) {
   const classes = useStyles();
 
   return (
-    <div className={classes.footer}>
+    <div className={clsx(classes.footer, className)}>
       <div className={clsx(classes.tabsContainer, tabsClassName)}>
         <BasicTabs labels={labels} value={period} onChange={newValue => handlePeriod(newValue)} />
       </div>
