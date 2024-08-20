@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import image from '../../images/404image.svg';
 import { Button } from '../../components/Button';
-import { Container } from '@material-ui/core';
+import { Container } from '../../components/Container/Container';
 
 const useStyles = makeStyles(styles);
 

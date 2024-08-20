@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Container, Hidden, makeStyles, Toolbar, useMediaQuery } from '@material-ui/core';
+import { AppBar, Hidden, makeStyles, Toolbar, useMediaQuery } from '@material-ui/core';
 import clsx from 'clsx';
 import { styles } from './styles';
 import { NavItem } from './components/NavItem';
@@ -25,6 +25,7 @@ import { UnreadProposalDot, UnreadArticleDot } from './components/Badges/UnreadD
 import { fetchLastArticle } from '../../features/data/actions/articles';
 import headerLogoMobile from '../../images/bifi-logos/header-logo-notext.svg';
 import headerLogoDesktop from '../../images/bifi-logos/header-logo.svg';
+import { Container } from '../Container/Container';
 
 const useStyles = makeStyles(styles);
 export const Header = memo(function Header() {

@@ -1,4 +1,4 @@
-import { Container, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SummaryStats } from '../../../../components/SummaryStats';
@@ -10,6 +10,7 @@ import { ReactComponent as DailyIcon } from '../../../../images/icons/daily-yiel
 import { ReactComponent as BifiIcon } from '../../../../images/icons/bifi.svg';
 import { useAppSelector } from '../../../../store';
 import { selectTreasuryStats } from '../../../data/selectors/treasury';
+import { Container } from '../../../../components/Container/Container';
 
 const useStyles = makeStyles(styles);
 

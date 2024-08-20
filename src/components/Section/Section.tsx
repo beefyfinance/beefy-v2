@@ -1,7 +1,8 @@
-import { Container, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import type { ReactNode } from 'react';
 import { memo } from 'react';
 import { styles } from './styles';
+import { Container } from '../Container/Container';
 
 const useStyles = makeStyles(styles);
 
