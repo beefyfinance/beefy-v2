@@ -334,7 +334,7 @@
     "oracle": "lps",
     "oracleId": "aura-arb-ausdc-gho",
     "status": "active",
-    "createdAt": 1724160879,
+    "createdAt": 1724167746,
     "platformId": "aura",
     "assets": ["stataArbUSDCn", "GHO"],
     "risks": [
@@ -364,7 +364,7 @@
     "oracle": "lps",
     "oracleId": "aura-arb-ausdt-gyd",
     "status": "active",
-    "createdAt": 1724160879,
+    "createdAt": 1724167746,
     "platformId": "aura",
     "assets": ["stataArbUSDTn", "GYD"],
     "risks": [
@@ -394,7 +394,7 @@
     "oracle": "lps",
     "oracleId": "aura-arb-ausdc-gyd",
     "status": "active",
-    "createdAt": 1724160879,
+    "createdAt": 1724167746,
     "platformId": "aura",
     "assets": ["stataArbUSDCn", "GYD"],
     "risks": [
