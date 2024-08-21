@@ -182,6 +182,27 @@
     ]
   },
   {
+    "id": "fraxtal",
+    "docs": "https://docs.frax.com/fraxtal/fraxtal-incentives/fraxtal-point-system",
+    "points": [
+      {
+        "id": "fxtl-points",
+        "name": "FXTL Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "frax",
+        "role": "Distribution of rewards"
+      }
+    ]
+  },
+  {
     "id": "manta-stakestone",
     "docs": "https://renewparadigm.manta.network/about",
     "points": [
