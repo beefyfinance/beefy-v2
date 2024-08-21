@@ -100,14 +100,19 @@
     ],
     "accounting": [
       {
-        "id": "beefy-lrt-subgraph",
-        "role": "Raw indexing of blockchain data, computes time weighted balances",
-        "url": "https://github.com/beefyfinance/lrt-subgraph"
+        "id": "beefy-balances-subgraph",
+        "role": "Indexing of all balances of all beefy products",
+        "url": "https://github.com/beefyfinance/l2-lxp-liquidity-subgraph"
       },
       {
         "id": "beefy-lrt-api",
         "role": "API for the LRT subgraph. Provides stable API.",
         "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "submit-etherfi",
+        "role": "Submit the integration to EtherFi",
+        "url": "https://docs.google.com/forms/d/1UzzdQ6y7_LVFBig28FdVE99kp4WURr7P4yluiUl70Bs/edit?pli=1"
       },
       {
         "id": "etherfi",
@@ -244,18 +249,10 @@
     ],
     "accounting": [
       {
-        "id": "beefy-balances-subgraph",
-        "role": "Indexing of all balances of all beefy products",
-        "url": "https://github.com/beefyfinance/l2-lxp-liquidity-subgraph"
-      },
-      {
-        "id": "beefy-mode-adapter",
-        "role": "Dedicated adapter for mode points",
-        "url": "https://github.com/delta-hq/openblocklabs-mode-tvl-adapters/tree/main/adapters/tvl-snapshot-beefy"
-      },
-      {
         "id": "delta-hq",
-        "role": "Distribution of rewards"
+        "type": "claim-rewards",
+        "role": "Distribution of rewards",
+        "url": "https://www.mode.network/about-the-airdrop"
       }
     ]
   },
