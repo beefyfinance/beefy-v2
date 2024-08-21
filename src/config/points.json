@@ -36,6 +36,7 @@
       {
         "id": "bedrock",
         "role": "Distribution of rewards",
+        "type": "claim-rewards",
         "url": "https://app.bedrock.technology/unieth/ecosystem"
       }
     ]
@@ -69,7 +70,8 @@
       {
         "id": "Renzo",
         "role": "Distribution of rewards",
-        "url": "https://app.renzoprotocol.com/portfolio"
+        "type": "claim-rewards",
+        "url": "https://claim.renzoprotocol.com/"
       }
     ]
   },
@@ -98,9 +100,9 @@
     ],
     "accounting": [
       {
-        "id": "beefy-lrt-subgraph",
-        "role": "Raw indexing of blockchain data, computes time weighted balances",
-        "url": "https://github.com/beefyfinance/lrt-subgraph"
+        "id": "beefy-balances-subgraph",
+        "role": "Indexing of all balances of all beefy products",
+        "url": "https://github.com/beefyfinance/l2-lxp-liquidity-subgraph"
       },
       {
         "id": "beefy-lrt-api",
@@ -108,8 +110,15 @@
         "url": "https://github.com/beefyfinance/beefy-lrt-api"
       },
       {
+        "id": "submit-etherfi",
+        "role": "Submit the integration to EtherFi",
+        "url": "https://docs.google.com/forms/d/1UzzdQ6y7_LVFBig28FdVE99kp4WURr7P4yluiUl70Bs/edit?pli=1"
+      },
+      {
         "id": "etherfi",
-        "role": "Distribution of rewards"
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://claim.ether.fi"
       }
     ]
   },
@@ -124,6 +133,10 @@
       {
         "id": "eigenlayer",
         "name": "Eigenlayer Restaked Points"
+      },
+      {
+        "id": "kelp-kep",
+        "name": "Kelp $KEP token. 1 $KEP = 1 EL Point"
       }
     ],
     "eligibility": [
@@ -145,7 +158,9 @@
       },
       {
         "id": "kelp",
-        "role": "Distribution of rewards"
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://kelpdao.xyz/claim-kep"
       }
     ]
   },
@@ -255,18 +270,10 @@
     ],
     "accounting": [
       {
-        "id": "beefy-balances-subgraph",
-        "role": "Indexing of all balances of all beefy products",
-        "url": "https://github.com/beefyfinance/l2-lxp-liquidity-subgraph"
-      },
-      {
-        "id": "beefy-mode-adapter",
-        "role": "Dedicated adapter for mode points",
-        "url": "https://github.com/delta-hq/openblocklabs-mode-tvl-adapters/tree/main/adapters/tvl-snapshot-beefy"
-      },
-      {
         "id": "delta-hq",
-        "role": "Distribution of rewards"
+        "type": "claim-rewards",
+        "role": "Distribution of rewards",
+        "url": "https://www.mode.network/about-the-airdrop"
       }
     ]
   },
@@ -298,7 +305,9 @@
       },
       {
         "id": "ethena",
-        "role": "Distribution of rewards"
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://app.ethena.fi/join"
       }
     ]
   },
@@ -330,6 +339,7 @@
       {
         "id": "dolomite",
         "role": "Distribution of rewards",
+        "type": "claim-rewards",
         "url": "https://app.dolomite.io/minerals"
       }
     ]
@@ -361,7 +371,8 @@
       },
       {
         "id": "anzen",
-        "role": "Distribution of rewards"
+        "role": "Distribution of rewards",
+        "type": "airdrop"
       }
     ]
   },
@@ -436,6 +447,7 @@
       {
         "id": "vector-reserve",
         "role": "Distribution of rewards",
+        "type": "claim-rewards",
         "url": "https://www.vectorreserve.com/dapp/points"
       }
     ]
@@ -462,6 +474,7 @@
       {
         "id": "mantle-powder",
         "role": "Distribution of rewards",
+        "type": "claim-rewards",
         "url": "https://meth.mantle.xyz/campaigns/methamorphosis"
       }
     ]
@@ -493,7 +506,9 @@
       },
       {
         "id": "mendi-loyalty",
-        "role": "Distribution of rewards"
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://mendi.finance/points/"
       }
     ]
   },
@@ -524,7 +539,9 @@
       },
       {
         "id": "kinetix-prekfi",
-        "role": "Distribution of rewards"
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://perps.kinetix.finance/#/liquidity"
       }
     ]
   },
@@ -556,7 +573,9 @@
       },
       {
         "id": "inception",
-        "role": "Distribution of rewards"
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://www.inceptionlrt.com/app/portfolio"
       }
     ]
   },
@@ -587,7 +606,9 @@
       },
       {
         "id": "swell-points",
-        "role": "Distribution of rewards"
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://app.swellnetwork.io/earn/portfolio"
       }
     ]
   },
@@ -620,7 +641,9 @@
       },
       {
         "id": "yei-points",
-        "role": "Distribution of rewards"
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://app.yei.finance/points"
       }
     ]
   }
