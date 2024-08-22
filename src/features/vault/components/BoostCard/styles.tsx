@@ -30,20 +30,14 @@ export const styles = (theme: Theme) => ({
   },
   campaignTitle: {
     ...theme.typography['h3'],
-    margin: '0 0 16px 0',
   },
   campaignText: {
     color: theme.palette.text.middle,
   },
-  partners: {
-    marginTop: '24px',
-  },
+  partners: {},
   partnerSubCard: {
     borderRadius: '12px',
     backgroundColor: theme.palette.background.contentLight,
-    '& + $partnerSubCard': {
-      marginTop: '24px',
-    },
   },
   partnerHeader: {
     display: 'flex',
@@ -63,7 +57,7 @@ export const styles = (theme: Theme) => ({
     margin: 0,
   },
   partnerText: {},
-  rewardToken: {
-    marginTop: '24px',
+  content: {
+    rowGap: '16px',
   },
 });
