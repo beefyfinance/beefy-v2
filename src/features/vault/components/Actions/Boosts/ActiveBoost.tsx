@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { Trans, useTranslation } from 'react-i18next';
 import { styles } from './styles';

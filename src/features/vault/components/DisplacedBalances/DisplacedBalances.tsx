@@ -1,4 +1,4 @@
-import React, { type FC, memo, useMemo } from 'react';
+import { type FC, memo, useMemo } from 'react';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
 import type { VaultEntity } from '../../../data/entities/vault';

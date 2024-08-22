@@ -31,30 +31,6 @@ if (process.env.ANALYZE_BUNDLE) {
   );
 }
 
-function getChunkName(absolutePath: string): string | undefined {
-  const relativePath = path.relative(__dirname, absolutePath).replace(/\\/g, '/');
-  const parts = relativePath.split('/');
-  if (parts.length < 2) {
-    return;
-  }
-
-  if (parts[0] === 'node_modules') {
-    const packageParts = parts.slice(1);
-    let packageName = packageParts[0];
-    if (packageName.startsWith('@')) {
-      packageName = packageName.substring(1);
-      if (packageParts.length > 1) {
-        packageName += '-' + packageParts[1];
-      }
-    }
-    return packageName.toLowerCase();
-  }
-
-  if (parts[0] === 'src') {
-    return parts[parts.length - 2].toLowerCase();
-  }
-}
-
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
@@ -89,6 +65,9 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
+        entryFileNames: 'assets/js/entry-[name]-[hash].js',
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash][extname]',
         manualChunks: id => {
           if (id.includes('@material-ui')) {
             return 'material-ui';
@@ -97,29 +76,34 @@ export default defineConfig({
             return 'lodash';
           }
         },
-        entryFileNames: entryInfo => {
-          if (entryInfo.name === 'index') {
-            if (entryInfo.facadeModuleId) {
-              const chunkName = getChunkName(entryInfo.facadeModuleId);
-              if (chunkName) {
-                return `assets/entry-${chunkName}-[name]-[hash].js`;
-              }
-            }
-          }
-          return 'assets/entry-[name]-[hash].js';
-        },
-        chunkFileNames: chunkInfo => {
-          if (chunkInfo.name === 'index') {
-            if (chunkInfo.facadeModuleId) {
-              const chunkName = getChunkName(chunkInfo.facadeModuleId);
-              if (chunkName) {
-                return `assets/${chunkName}-[name]-[hash].js`;
-              }
-            } else {
-            }
-          }
-          return 'assets/[name]-[hash].js';
-        },
+      },
+      treeshake: {
+        manualPureFunctions: [
+          'memo',
+          'lazy',
+          'createTheme',
+          'makeStyles',
+          'createAsyncThunk',
+          'createSlice',
+          'createSelector',
+          'createCachedSelector',
+          'createFactory',
+          'createCachedFactory',
+          'createDependencyFactory',
+          'createDependencyInitializerFactory',
+          'createDependencyFactoryWithCacheByChain',
+          'configureStore',
+          'persistStore',
+          'createHasLoaderFulfilledRecentlyEvaluator',
+          'createHasLoaderDispatchedRecentlyEvaluator',
+          'createShouldLoaderLoadOnceEvaluator',
+          'createShouldLoaderLoadRecentEvaluator',
+          'createGlobalDataSelector',
+          'createChainDataSelector',
+          'createAddressDataSelector',
+          'createAddressChainDataSelector',
+          'createAddressVaultDataSelector',
+        ],
       },
       plugins: [RollupNodePolyFillPlugin()],
     },

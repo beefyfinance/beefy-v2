@@ -75,6 +75,7 @@ export const config = {
       'USD0++',
       'USDe',
       'sUSDe',
+      'GYD',
     ],
   },
   polygon: {
@@ -281,7 +282,7 @@ export const config = {
   fantom: {
     name: 'Fantom',
     chainId: 250,
-    rpc: ['https://rpc.ankr.com/fantom'],
+    rpc: ['https://fantom-mainnet.public.blastapi.io'],
     explorerUrl: 'https://ftmscan.com',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -295,7 +296,7 @@ export const config = {
         symbol: 'FTM',
         decimals: 18,
       },
-      rpcUrls: ['https://rpc.ankr.com/fantom'],
+      rpcUrls: ['https://fantom-mainnet.public.blastapi.io'],
       blockExplorerUrls: ['https://ftmscan.com/'],
     },
     gas: {
@@ -405,12 +406,14 @@ export const config = {
       'USDx',
       'gUSDC',
       'sUSDe',
+      'GYD',
+      'GHO',
     ],
   },
   avax: {
     name: 'Avalanche',
     chainId: 43114,
-    rpc: ['https://avax-pokt.nodies.app/ext/bc/C/rpc'],
+    rpc: ['https://rpc.ankr.com/avalanche'],
     explorerUrl: 'https://cchain.explorer.avax.network',
     multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -424,7 +427,7 @@ export const config = {
         symbol: 'AVAX',
         decimals: 18,
       },
-      rpcUrls: ['https://avax-pokt.nodies.app/ext/bc/C/rpc'],
+      rpcUrls: ['https://rpc.ankr.com/avalanche'],
       blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
     },
     gas: {
@@ -587,31 +590,6 @@ export const config = {
     },
     stableCoins: ['mUSDT', 'mUSDC', 'mDAI', 'USDT', 'USDC'],
   },
-  fuse: {
-    name: 'Fuse',
-    chainId: 122,
-    rpc: ['https://rpc.fuse.io'],
-    explorerUrl: 'https://explorer.fuse.io',
-    multicallAddress: '0x4f22BD7CE44b0e0B2681A28e300A7285319de3a0',
-    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x504A5F167BE8014b1d5CBDd993f3Bb34F95E70B2',
-    providerName: 'Fuse',
-    walletSettings: {
-      chainId: `0x${parseInt('122', 10).toString(16)}`,
-      chainName: 'Fuse',
-      nativeCurrency: {
-        name: 'FUSE',
-        symbol: 'FUSE',
-        decimals: 18,
-      },
-      rpcUrls: ['https://rpc.fuse.io'],
-      blockExplorerUrls: ['https://explorer.fuse.io/'],
-    },
-    gas: {
-      type: 'standard',
-    },
-    stableCoins: ['fUSD', 'BUSD', 'USDC', 'USDT'],
-  },
   kava: {
     name: 'Kava',
     chainId: 2222,
@@ -640,7 +618,7 @@ export const config = {
   canto: {
     name: 'Canto',
     chainId: 7700,
-    rpc: ['https://mainnode.plexnode.org:8545'],
+    rpc: ['https://canto-rpc.ansybl.io'],
     explorerUrl: 'https://tuber.build',
     multicallAddress: '0xc34b9c9DBB39Be0Ef850170127A7b4283484f804',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -654,7 +632,7 @@ export const config = {
         symbol: 'CANTO',
         decimals: 18,
       },
-      rpcUrls: ['https://mainnode.plexnode.org:8545'],
+      rpcUrls: ['https://canto-rpc.ansybl.io'],
       blockExplorerUrls: ['https://tuber.build/'],
     },
     gas: {
@@ -887,6 +865,9 @@ export const config = {
       'sDAI',
       'USDe',
       'sUSDe',
+      'FXB20251231',
+      'FXB20291231',
+      'FXB20551231',
       'FXB_20261231',
     ],
   },
@@ -1136,6 +1117,32 @@ export const config = {
       type: 'standard',
     },
     stableCoins: ['BUSD', 'bscBUSD', 'USDC', 'USDT', 'UST', 'DAI', 'FRAX'],
+  },
+  fuse: {
+    name: 'Fuse',
+    eol: 1722901359,
+    chainId: 122,
+    rpc: ['https://rpc.fuse.io'],
+    explorerUrl: 'https://explorer.fuse.io',
+    multicallAddress: '0x4f22BD7CE44b0e0B2681A28e300A7285319de3a0',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x504A5F167BE8014b1d5CBDd993f3Bb34F95E70B2',
+    providerName: 'Fuse',
+    walletSettings: {
+      chainId: `0x${parseInt('122', 10).toString(16)}`,
+      chainName: 'Fuse',
+      nativeCurrency: {
+        name: 'FUSE',
+        symbol: 'FUSE',
+        decimals: 18,
+      },
+      rpcUrls: ['https://rpc.fuse.io'],
+      blockExplorerUrls: ['https://explorer.fuse.io/'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['fUSD', 'BUSD', 'USDC', 'USDT'],
   },
 } satisfies Record<ChainConfig['id'], Omit<ChainConfig, 'id'>>;
 

@@ -6,10 +6,10 @@ import type {
   ApyFeeData,
   BeefyAPIApyBreakdownResponse,
   BeefyAPILpBreakdownResponse,
-  BeefyApiMerklCampaign,
   BeefyAPITokenPricesResponse,
   BeefyApiVaultLastHarvestResponse,
   BeefyLastArticleResponse,
+  BeefyOffChainRewardsCampaign,
   BeefySnapshotActiveResponse,
   ZapAggregatorTokenSupportResponse,
 } from './beefy-api-types';
@@ -174,9 +174,9 @@ export class BeefyAPI {
     });
   }
 
-  async getCowcentratedMerklCampaigns(): Promise<BeefyApiMerklCampaign[]> {
-    return await getJson<BeefyApiMerklCampaign[]>({
-      url: `${this.api}/cow-merkl-campaigns/all/recent`,
+  async getOffChainRewardCampaigns(): Promise<BeefyOffChainRewardsCampaign[]> {
+    return await getJson<BeefyOffChainRewardsCampaign[]>({
+      url: `${this.api}/offchain-rewards/active`,
       cacheBuster: 'short',
       timeout: this.timeout,
     });

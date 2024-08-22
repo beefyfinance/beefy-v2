@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import type { ReactNode } from 'react';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { useAppSelector } from '../../store';
 import { selectUserDepositedVaultIds } from '../data/selectors/balance';
 import { DepositSummary } from './components/DepositSummary';

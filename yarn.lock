@@ -2828,10 +2828,10 @@ blakejs@^1.1.0:
   resolved "https://registry.yarnpkg.com/blakejs/-/blakejs-1.2.1.tgz#5057e4206eadb4a97f7c0b6e197a505042fc3814"
   integrity sha512-QXUSXI3QVc/gJME0dBpXrag1kbzOqCjCX8/b54ntNyW6sjtoqxqRk3LTmXzaJoh71zMsDCjM+47jS7XiwN/+fQ==
 
-blockchain-addressbook@^0.46.221:
-  version "0.46.221"
-  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.46.221.tgz#4b2fb70705319e3f2752e3d4d5f6e2a66c99f5fa"
-  integrity sha512-wtAxDJEGi9zabmAEy2y4nqu+psoJxf/JoV6oQZIODeMmE8VSF5ywzFV9ZR6VAhuupuZfbft6EmrGueQ3wi+IIQ==
+blockchain-addressbook@^0.46.225:
+  version "0.46.225"
+  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.46.225.tgz#c1468e640f7032b54b9cfd5026424117806d008c"
+  integrity sha512-foOzn/2x3RHBPaiFWmkfV7PUhYAzbedm7SdOmYSiUW00URiDBvvFIawPITlh+tZMOvVR+MHhjo2F6rpUUZmDQA==
 
 bluebird@^3.5.0:
   version "3.7.2"
@@ -7683,7 +7683,7 @@ recharts-scale@^0.4.4:
   dependencies:
     decimal.js-light "^2.4.1"
 
-recharts@^2.4.3:
+recharts@^2.12.7:
   version "2.12.7"
   resolved "https://registry.yarnpkg.com/recharts/-/recharts-2.12.7.tgz#c7f42f473a257ff88b43d88a92530930b5f9e773"
   integrity sha512-hlLJMhPQfv4/3NBSAyq3gzGg4h2v69RJh6KU7b3pXYNNAELs9kEoXOjbkxdXpALqKBoVmVptGfLpxdaVYqjmXQ==

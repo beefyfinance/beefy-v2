@@ -3,7 +3,7 @@ import { HelpOutline } from '@material-ui/icons';
 import type BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tooltip } from '../../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../../components/Tooltip/BasicTooltipContent';
@@ -12,12 +12,14 @@ import {
   formatTokenDisplayCondensed,
   formatTokenDisplay,
   formatLargePercent,
+  formatPositiveOrNegative,
 } from '../../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../../store';
 import type { VaultEntity } from '../../../../../../data/entities/vault';
 import { selectStandardGovPnl } from '../../../../../../data/selectors/analytics';
 
 import { styles } from './styles';
+import { BIG_ZERO } from '../../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
@@ -31,10 +33,8 @@ export const Header = memo<HeaderProps>(function Header({ vaultId }) {
   const {
     usdBalanceAtDeposit,
     balanceAtDeposit,
-    oraclePriceAtDeposit,
     depositUsd,
     deposit,
-    oraclePrice,
     tokenDecimals,
     totalYieldUsd,
     totalYield,
@@ -50,38 +50,42 @@ export const Header = memo<HeaderProps>(function Header({ vaultId }) {
       <HeaderItem
         tooltipText={t('pnl-graph-tooltip-deposit')}
         label={t('At Deposit')}
-        border={false}
+        subValue={formatLargeUsd(usdBalanceAtDeposit)}
+      >
+        <SharesValue amount={balanceAtDeposit} decimals={tokenDecimals} />
+      </HeaderItem>
+      <HeaderItem
+        tooltipText={t('pnl-graph-tooltip-now-vault')}
+        label={t('Now')}
+        subValue={formatLargeUsd(depositUsd)}
+      >
+        <SharesValue amount={deposit} decimals={tokenDecimals} />
+      </HeaderItem>
+      <HeaderItem
+        tooltipText={t('pnl-graph-tooltip-yield')}
+        label={t('Yield')}
+        subValue={formatLargeUsd(totalYieldUsd)}
       >
         <SharesValue
-          amount={balanceAtDeposit}
-          price={oraclePriceAtDeposit}
-          decimals={tokenDecimals}
-          subValue={formatLargeUsd(usdBalanceAtDeposit)}
-          minShortPlaces={4}
-        />
-      </HeaderItem>
-      <HeaderItem tooltipText={t('pnl-graph-tooltip-now-vault')} label={t('Now')}>
-        <SharesValue
-          amount={deposit}
-          price={oraclePrice}
-          decimals={tokenDecimals}
-          subValue={formatLargeUsd(depositUsd)}
-          minShortPlaces={4}
-        />
-      </HeaderItem>
-      <HeaderItem tooltipText={t('pnl-graph-tooltip-yield')} label={t('Yield')}>
-        <SharesValue
           amount={totalYield}
-          price={oraclePrice}
           decimals={tokenDecimals}
           className={classes.greenValue}
           percentage={yieldPercentage}
-          subValue={formatLargeUsd(totalYieldUsd)}
-          minShortPlaces={4}
         />
       </HeaderItem>
-      <HeaderItem tooltipText={t('pnl-graph-tooltip-pnl')} label={t('PNL')}>
-        <UsdValue value={totalPnlUsd} percentage={pnlPercentage} />
+      <HeaderItem
+        tooltipText={t('pnl-graph-tooltip-pnl')}
+        label={t('PNL')}
+        subValue={formatLargePercent(pnlPercentage)}
+      >
+        <div
+          className={clsx(
+            classes.value,
+            totalPnlUsd.gt(BIG_ZERO) ? classes.greenValue : classes.redValue
+          )}
+        >
+          {formatPositiveOrNegative(totalPnlUsd, formatLargeUsd(totalPnlUsd))}{' '}
+        </div>
       </HeaderItem>
     </div>
   );
@@ -93,45 +97,28 @@ interface HeaderItemProps {
   className?: string;
   children: ReactNode;
   tooltipText: string;
+  subValue?: string;
 }
 
 const HeaderItem = memo<HeaderItemProps>(function HeaderItem({
   label,
-  border = true,
   className,
   tooltipText,
   children,
+  subValue,
 }) {
   const classes = useStyles();
 
   return (
     <div className={clsx(classes.itemContainer, className)}>
-      {border && <div className={classes.border} />}
-      <div className={classes.textContainer}>
-        <div className={classes.labelContainer}>
-          <div className={classes.label}>{label}</div>
-          <Tooltip triggerClass={classes.center} content={tooltipText}>
-            <HelpOutline />
-          </Tooltip>
-        </div>
-        {children}
+      <div className={classes.labelContainer}>
+        <div className={classes.label}>{label}</div>
+        <Tooltip triggerClass={classes.center} content={tooltipText}>
+          <HelpOutline />
+        </Tooltip>
       </div>
-    </div>
-  );
-});
-
-interface UsdValueProps {
-  value: BigNumber;
-  className?: string;
-  percentage?: BigNumber;
-}
-
-const UsdValue = memo<UsdValueProps>(function UsdValue({ value, className, percentage }) {
-  const classes = useStyles();
-  return (
-    <div className={clsx(classes.value, className)}>
-      <div>{formatLargeUsd(value)}</div>
-      {percentage && <span>({formatLargePercent(percentage)})</span>}
+      {children}
+      {subValue && <div className={classes.subValue}>{subValue}</div>}
     </div>
   );
 });
@@ -139,11 +126,8 @@ const UsdValue = memo<UsdValueProps>(function UsdValue({ value, className, perce
 interface SharesValueProps {
   className?: string;
   percentage?: BigNumber;
-  minShortPlaces?: number;
   amount: BigNumber;
   decimals: number;
-  price: BigNumber;
-  subValue?: string;
 }
 
 const SharesValue = memo<SharesValueProps>(function SharesValue({
@@ -151,7 +135,6 @@ const SharesValue = memo<SharesValueProps>(function SharesValue({
   percentage,
   amount,
   decimals,
-  subValue,
 }) {
   const classes = useStyles();
 
@@ -160,12 +143,9 @@ const SharesValue = memo<SharesValueProps>(function SharesValue({
 
   return (
     <Tooltip content={<BasicTooltipContent title={fullAmount} />}>
-      <div>
-        <div className={clsx(classes.value, className)}>
-          <div className={clsx(classes.withTooltip, classes.textOverflow)}>{shortAmount}</div>
-          {percentage && <span>({formatLargePercent(percentage)})</span>}
-        </div>
-        {subValue && <div className={classes.subValue}>{subValue}</div>}
+      <div className={clsx(classes.value, className)}>
+        <div className={clsx(classes.withTooltip, classes.textOverflow)}>{shortAmount}</div>
+        {percentage && <span>({formatLargePercent(percentage)})</span>}
       </div>
     </Tooltip>
   );

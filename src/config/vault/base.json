@@ -1044,6 +1044,7 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x04D5ddf5f3a8939889F11E97f8c4BB48317F1938&token1=0x4200000000000000000000000000000000000006&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
+    "pointStructureIds": ["anzen"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1100,6 +1101,7 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x04D5ddf5f3a8939889F11E97f8c4BB48317F1938&token1=0xe31eE12bDFDD0573D634124611e85338e2cBF0cF&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
+    "pointStructureIds": ["anzen"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1884,7 +1886,9 @@
     "earnContractAddress": "0xF6DF473587A902fe32ea4f64aB3Bbe1dE82370B6",
     "oracle": "lps",
     "oracleId": "aerodrome-bsdeth-eusd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1723649381,
+    "retireReason": "tvl",
     "createdAt": 1720089499,
     "platformId": "aerodrome",
     "assets": ["bsdETH", "eUSD"],
@@ -2792,7 +2796,7 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x04D5ddf5f3a8939889F11E97f8c4BB48317F1938&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "earningPoints": true,
+    "pointStructureIds": ["anzen"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2830,7 +2834,7 @@
     "addLiquidityUrl": "https://balancer.fi/pools/base/v2/0xab99a3e856deb448ed99713dfce62f937e2d4d74000000000000000000000118/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/base/v2/0xab99a3e856deb448ed99713dfce62f937e2d4d74000000000000000000000118/remove-liquidity",
     "network": "base",
-    "earningPoints": true
+    "pointStructureIds": ["etherfi"]
   },
   {
     "id": "aerodrome-weth-ghst",
@@ -2919,7 +2923,7 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A&token1=0x4200000000000000000000000000000000000006&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "earningPoints": true,
+    "pointStructureIds": ["etherfi"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -2992,7 +2996,7 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xEDfa23602D0EC14714057867A78d01e94176BEA0&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "earningPoints": true,
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3192,7 +3196,9 @@
     "earnContractAddress": "0x478162ae7199A59E76bB246Cb8649542DCDd33Bd",
     "oracle": "lps",
     "oracleId": "aerodrome-usd+-eusd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1724277455,
+    "retireReason": "tvl",
     "createdAt": 1713992031,
     "platformId": "aerodrome",
     "assets": ["USD+", "eUSD"],
@@ -4279,7 +4285,8 @@
         "strategyId": "solidly",
         "ammId": "base-aerodrome"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/8453/0x6428DDB6EF1818FA99552E10882D34c1db57BBcA?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "aerodrome-ezeth-weth",
@@ -4310,7 +4317,7 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x2416092f143378750bb29b79ed961ab195cceea5&token1=0x4200000000000000000000000000000000000006&stable=false",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "earningPoints": true,
+    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4347,7 +4354,7 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x2416092f143378750bb29b79ed961ab195cceea5&token1=0x4200000000000000000000000000000000000006&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "earningPoints": true,
+    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -4639,7 +4646,9 @@
     "earnContractAddress": "0xCcD171Ab4A292586F763e533C32E8b148FA0F2fF",
     "oracle": "lps",
     "oracleId": "aerodrome-aero-dog",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1723649381,
+    "retireReason": "tvl",
     "createdAt": 1710354602,
     "platformId": "aerodrome",
     "assets": ["DOG", "AERO"],
@@ -4735,7 +4744,7 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xCb327b99fF831bF8223cCEd12B1338FF3aA322Ff&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "earningPoints": true,
+    "pointStructureIds": ["nektar"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -6654,7 +6663,9 @@
     "earnContractAddress": "0x49a685870F7F0cF187abd3b6a8304a885c39d496",
     "oracle": "lps",
     "oracleId": "aerodrome-dola-mai",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1724277455,
+    "retireReason": "tvl",
     "createdAt": 1694018134,
     "platformId": "aerodrome",
     "assets": ["DOLA", "MAI"],
@@ -6673,7 +6684,7 @@
   },
   {
     "id": "aerodrome-weth-well",
-    "name": "WELL-ETH vLP",
+    "name": "WELL.wh-ETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/WELL",
     "tokenAddress": "0xffA3F8737C39e36dec4300B162c2153c67c8352f",
@@ -7176,7 +7187,9 @@
     "earnContractAddress": "0xF890d4D7AfcA27a454354155F8889457e08bdB68",
     "oracle": "lps",
     "oracleId": "aerodrome-dai-usdbc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1723649381,
+    "retireReason": "tvl",
     "createdAt": 1693409598,
     "platformId": "aerodrome",
     "assets": ["DAI", "USDbC"],

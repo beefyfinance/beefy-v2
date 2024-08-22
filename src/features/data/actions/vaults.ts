@@ -313,7 +313,8 @@ function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBas
     addLiquidityUrl: config.addLiquidityUrl || undefined,
     removeLiquidityUrl: config.removeLiquidityUrl || undefined,
     assetType: config.assets?.length === 1 ? 'single' : 'lps',
-    earningPoints: config.earningPoints || false,
+    earningPoints: (config.pointStructureIds || []).length > 0,
+    pointStructureIds: config.pointStructureIds || [],
     platformId: config.platformId,
     strategyTypeId: config.strategyTypeId,
     risks: config.risks || [],
@@ -321,5 +322,6 @@ function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBas
     depositFee: config.depositFee || 0,
     migrationIds: config.migrationIds || [],
     hidden: false,
+    poolTogether: config.poolTogether,
   };
 }

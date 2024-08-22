@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { useAppSelector } from '../../../../store';
 import { selectCanQuote, selectHaveQuote } from '../../../data/selectors/on-ramp';
 

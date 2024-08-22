@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import React, { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { Item } from './Item';

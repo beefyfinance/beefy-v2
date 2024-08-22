@@ -57,6 +57,8 @@ export type VaultBase = {
   excludedIds: VaultBase['id'][];
   /** whether users in the vault earn external points */
   earningPoints: boolean;
+  /** point structure ids for the vault */
+  pointStructureIds: string[];
   /** platform where the token is deposited to earn */
   platformId: PlatformEntity['id'];
   /** used to describe how the strategy works */
@@ -77,6 +79,8 @@ export type VaultBase = {
   migrationIds: string[];
   /** whether vault should be hidden from user */
   hidden: boolean;
+  /**link to pooltogether game */
+  poolTogether?: string;
 };
 
 export type VaultActive = {

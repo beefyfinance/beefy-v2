@@ -1,4 +1,4 @@
-import React, { memo, type ReactElement, type ReactNode } from 'react';
+import { memo, type ReactElement, type ReactNode } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { Card, CardContent, CardHeader } from '../../Card';
 import { styles } from './styles';

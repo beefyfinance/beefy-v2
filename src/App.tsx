@@ -1,4 +1,4 @@
-import React, { lazy, memo, type ReactNode, Suspense, useEffect } from 'react';
+import { lazy, memo, type ReactNode, Suspense, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -17,6 +17,7 @@ import { Layout } from './components/Layout';
 import { AddTokenToWallet } from './components/AddTokenToWallet';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { AppVersionCheck } from './components/AppVersionCheck';
+import { Tenderly } from './components/Tenderly/Tenderly';
 
 const Home = lazy(() => import(`./features/home`));
 const Vault = lazy(() => import(`./features/vault`));
@@ -97,6 +98,7 @@ export const App = () => {
         </Router>
       </HelmetProvider>
       <AppVersionCheck />
+      {import.meta.env.DEV ? <Tenderly /> : null}
     </ThemeProvider>
   );
 };

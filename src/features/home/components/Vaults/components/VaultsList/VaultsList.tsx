@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { selectFilteredVaults } from '../../../../../data/selectors/filtered-vaults';
 import { NoResults } from '../NoResults';

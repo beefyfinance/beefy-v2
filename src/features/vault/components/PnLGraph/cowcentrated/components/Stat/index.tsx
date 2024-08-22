@@ -1,6 +1,6 @@
 import { makeStyles, type Theme } from '@material-ui/core';
 import clsx from 'clsx';
-import React, { memo, type ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import { Tooltip } from '../../../../../../../components/Tooltip';
 import { HelpOutline } from '@material-ui/icons';
 

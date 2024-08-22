@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useAppSelector } from '../../../../../store';
 import { isStandardVault, type VaultEntity } from '../../../../data/entities/vault';
 import { selectHasDataToShowGraphByVaultId } from '../../../../data/selectors/analytics';
@@ -11,6 +11,9 @@ import { styles } from './styles';
 import { selectVaultById } from '../../../../data/selectors/vaults';
 import { selectWalletAddress } from '../../../../data/selectors/wallet';
 import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData';
+import { Card, CardContent, CardHeader, CardTitle } from '../../Card';
+import { useTranslation } from 'react-i18next';
+import { StatSwitcher } from '../../StatSwitcher';
 
 export const useStyles = makeStyles(styles);
 
@@ -46,23 +49,41 @@ export const StandardPnLGraph = memo<PnLGraphProps>(function StandardPnLGraph({
   vaultId,
   address,
 }) {
+  const { t } = useTranslation();
+  const [stat, setStat] = useState<'overview'>('overview');
   const classes = useStyles();
   const labels = useVaultPeriods(vaultId, address);
   const [period, setPeriod] = useState<number>(labels.length - 1);
   const canShowGraph = labels.length > 0;
 
+  const options = useMemo(() => {
+    return {
+      overview: t('Graph-Overview'),
+    };
+  }, [t]);
+
   return (
-    <div className={classes.pnlContainer}>
-      <Header vaultId={vaultId} />
-      {canShowGraph ? (
-        <>
-          <Graph address={address} period={period} vaultId={vaultId} />
+    <Card className={classes.card}>
+      <CardHeader className={classes.header}>
+        <CardTitle title={t('Graph-PositionPerformance')} />
+        {Object.keys(options).length > 1 ? (
+          <StatSwitcher stat={stat} options={options} onChange={setStat as (v: string) => void} />
+        ) : null}
+      </CardHeader>
+      <CardContent className={classes.content}>
+        <Header vaultId={vaultId} />
+        <div className={classes.graphContainer}>
+          {canShowGraph ? (
+            <Graph vaultId={vaultId} period={period} address={address} />
+          ) : (
+            <GraphNoData reason="wait-collect" />
+          )}
+        </div>
+        {canShowGraph ? (
           <Footer labels={labels} vaultId={vaultId} period={period} handlePeriod={setPeriod} />
-        </>
-      ) : (
-        <GraphNoData reason="wait-collect" />
-      )}
-    </div>
+        ) : null}
+      </CardContent>
+    </Card>
   );
 });
 

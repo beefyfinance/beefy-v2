@@ -2,7 +2,7 @@ import type { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import type { PropsWithChildren } from 'react';
-import React, { memo } from 'react';
+import { memo } from 'react';
 
 const useStyles = makeStyles((theme: Theme) => ({
   rowContainer: {

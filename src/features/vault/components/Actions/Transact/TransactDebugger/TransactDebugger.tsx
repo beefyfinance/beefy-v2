@@ -1,4 +1,4 @@
-import React, { lazy, memo } from 'react';
+import { lazy, memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { TransactState } from './TransactState';

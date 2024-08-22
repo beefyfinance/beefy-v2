@@ -1,5 +1,182 @@
 [
   {
+    "id": "thena-cow-btcb-wbnb-rp",
+    "name": "BTCB-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowThenaBTCB-WBNB",
+    "tokenAddress": "0xfEA50261819Dc00278F9C4b18B6Cf146a830bCEd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnContractAddress": "0xB74Bce6b35410058d2F35E544507e98CD93a1cD6",
+    "earnedToken": "rcowThenaBTCB-WBNB",
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "oracle": "lps",
+    "oracleId": "thena-cow-btcb-wbnb",
+    "status": "active",
+    "createdAt": 1724065008,
+    "platformId": "thena",
+    "assets": ["BTCB", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "thena-cow-btcb-wbnb",
+    "name": "BTCB-WBNB",
+    "type": "cowcentrated",
+    "token": "BTCB-WBNB Thena",
+    "tokenAddress": "0x6B67112aa7b45E8CdC0a93B8D66A6A36e68ae8e5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "depositTokenAddresses": [
+      "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnedToken": "cowThenaBTCB-WBNB",
+    "earnedTokenAddress": "0xfEA50261819Dc00278F9C4b18B6Cf146a830bCEd",
+    "earnContractAddress": "0xfEA50261819Dc00278F9C4b18B6Cf146a830bCEd",
+    "oracle": "lps",
+    "oracleId": "thena-cow-btcb-wbnb",
+    "status": "active",
+    "createdAt": 1724065008,
+    "platformId": "thena",
+    "assets": ["BTCB", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "thena-cow-eth-wbnb-rp",
+    "name": "ETH-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowThenaETH-WBNB",
+    "tokenAddress": "0xd5E1cB0Da9b44E4020557c49Bd084a0147Ac828b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnContractAddress": "0xD9371a7C96fC87Ba869c3f860096a9f98970c7e8",
+    "earnedToken": "rcowThenaETH-WBNB",
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "oracle": "lps",
+    "oracleId": "thena-cow-eth-wbnb",
+    "status": "active",
+    "createdAt": 1724065008,
+    "platformId": "thena",
+    "assets": ["ETH", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "thena-cow-eth-wbnb",
+    "name": "ETH-WBNB",
+    "type": "cowcentrated",
+    "token": "ETH-WBNB Thena",
+    "tokenAddress": "0x1123E75b71019962CD4d21b0F3018a6412eDb63C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "depositTokenAddresses": [
+      "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnedToken": "cowThenaETH-WBNB",
+    "earnedTokenAddress": "0xd5E1cB0Da9b44E4020557c49Bd084a0147Ac828b",
+    "earnContractAddress": "0xd5E1cB0Da9b44E4020557c49Bd084a0147Ac828b",
+    "oracle": "lps",
+    "oracleId": "thena-cow-eth-wbnb",
+    "status": "active",
+    "createdAt": 1724065008,
+    "platformId": "thena",
+    "assets": ["ETH", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "thena-cow-sol-wbnb-rp",
+    "name": "SOL-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowThenaSOL-WBNB",
+    "tokenAddress": "0x0baD27b4a100E660257BFF942D64eC8cA3018Cec",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnContractAddress": "0x5B59b701153b2d997870dA2Dc764Affc0dA7443A",
+    "earnedToken": "rcowThenaSOL-WBNB",
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "oracle": "lps",
+    "oracleId": "thena-cow-sol-wbnb",
+    "status": "active",
+    "createdAt": 1724065008,
+    "platformId": "thena",
+    "assets": ["SOL", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "thena-cow-sol-wbnb",
+    "name": "SOL-WBNB",
+    "type": "cowcentrated",
+    "token": "SOL-WBNB Thena",
+    "tokenAddress": "0x1B932598da273069e1878E4a1505b6f833462210",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "depositTokenAddresses": [
+      "0x570A5D26f7765Ecb712C0924E4De545B89fD43dF",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnedToken": "cowThenaSOL-WBNB",
+    "earnedTokenAddress": "0x0baD27b4a100E660257BFF942D64eC8cA3018Cec",
+    "earnContractAddress": "0x0baD27b4a100E660257BFF942D64eC8cA3018Cec",
+    "oracle": "lps",
+    "oracleId": "thena-cow-sol-wbnb",
+    "status": "active",
+    "createdAt": 1724065008,
+    "platformId": "thena",
+    "assets": ["SOL", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-bsc-wbnb-busd-vault",
     "name": "WBNB-BUSD",
     "type": "standard",
@@ -2070,7 +2247,7 @@
     "addLiquidityUrl": "https://thena.fi/pools/0xc0e1c9fec0d8888039095da014382d027f27069d",
     "removeLiquidityUrl": "https://www.thena.fi/liquidity",
     "network": "bsc",
-    "earningPoints": true,
+    "pointStructureIds": ["etherfi"],
     "zaps": [
       {
         "strategyId": "gamma",
@@ -2630,7 +2807,9 @@
     "earnContractAddress": "0x4a9945B75E5c860f511CD223E838b213828a0583",
     "oracle": "lps",
     "oracleId": "thena-gamma-bnbx-btcb-narrow",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1723649381,
+    "retireReason": "tvl",
     "createdAt": 1686756732,
     "platformId": "gamma",
     "assets": ["BNBx", "BTCB"],

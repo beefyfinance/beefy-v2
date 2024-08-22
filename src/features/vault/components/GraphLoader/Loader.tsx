@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo, type PropsWithChildren } from 'react';
+import { memo, type PropsWithChildren } from 'react';
 import techLoaderUrl from '../../../../images/tech-loader.gif';
 
 const useStyles = makeStyles(() => ({

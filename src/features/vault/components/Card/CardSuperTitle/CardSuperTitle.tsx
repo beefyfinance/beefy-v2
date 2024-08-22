@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 

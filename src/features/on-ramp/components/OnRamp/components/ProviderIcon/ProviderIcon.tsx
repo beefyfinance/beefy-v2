@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { getOnRampProviderIcon } from '../../../../../../helpers/onrampProviderSrc';
 
 export type ProviderIconProps = {

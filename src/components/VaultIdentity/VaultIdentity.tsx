@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault';
 import { useAppSelector } from '../../store';
 import { selectVaultById } from '../../features/data/selectors/vaults';

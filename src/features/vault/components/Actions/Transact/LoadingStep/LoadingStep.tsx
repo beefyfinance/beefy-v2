@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';

@@ -1,4 +1,4 @@
-import React, { lazy, memo } from 'react';
+import { lazy, memo } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault';
 import { Transact } from './Transact/Transact';
 import { Boosts } from './Boosts';

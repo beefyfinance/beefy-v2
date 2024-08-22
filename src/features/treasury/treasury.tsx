@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { memo, useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchTreasury } from '../data/actions/treasury';
 import { selectIsTreasuryLoaded, selectShouldInitTreasury } from '../data/selectors/treasury';

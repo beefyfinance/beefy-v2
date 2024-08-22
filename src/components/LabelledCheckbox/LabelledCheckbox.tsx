@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { MouseEventHandler, ReactNode } from 'react';
 import { memo, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';

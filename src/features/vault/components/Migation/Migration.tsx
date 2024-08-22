@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
 import { getSingleAssetSrc } from '../../../../helpers/singleAssetSrc';

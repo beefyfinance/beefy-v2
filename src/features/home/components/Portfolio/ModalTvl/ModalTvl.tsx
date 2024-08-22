@@ -1,5 +1,5 @@
 import { Box, IconButton, makeStyles } from '@material-ui/core';
-import React, { forwardRef, memo, useMemo } from 'react';
+import { forwardRef, memo, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../../vault/components/Card';
 import CloseIcon from '@material-ui/icons/Close';
 import { styles } from './styles';

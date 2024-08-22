@@ -113,6 +113,7 @@
     "strategyTypeId": "pool",
     "network": "optimism",
     "createdAt": 1722192821,
+    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -318,7 +319,7 @@
     "addLiquidityUrl": "https://op.beets.fi/pool/0x2bb4712247d5f451063b5e4f6948abdfb925d93d000000000000000000000136",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x2bb4712247d5f451063b5e4f6948abdfb925d93d000000000000000000000136",
     "network": "optimism",
-    "earningPoints": true
+    "pointStructureIds": ["etherfi"]
   },
   {
     "id": "sushi-cow-op-weth-wbtc-rp",
@@ -636,6 +637,7 @@
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.01",
+    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2570,6 +2572,7 @@
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.05",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2601,6 +2604,7 @@
     "network": "optimism",
     "type": "cowcentrated",
     "feeTier": "0.05",
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2660,7 +2664,7 @@
     "addLiquidityUrl": "https://op.beets.fi/pool/0x73a7fe27fe9545d53924e529acf11f3073841b9e000000000000000000000133",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x73a7fe27fe9545d53924e529acf11f3073841b9e000000000000000000000133",
     "network": "optimism",
-    "earningPoints": true
+    "pointStructureIds": ["kelp"]
   },
   {
     "id": "stargate-v2-op-weth",
@@ -2904,7 +2908,7 @@
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x87eEE96D50Fb761AD85B1c982d28A042169d61b1&type=-1&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xE48b4E392E4FC29aC2600c3C8EFe0404A15D60D9",
     "network": "optimism",
-    "earningPoints": true,
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -3218,7 +3222,8 @@
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0xb4063d1f0b0b7caee88708895ec4e365bf44b984?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "velodrome-v2-usdv-op",
@@ -3521,7 +3526,8 @@
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0x9b53ef6f13077727d22cb4acad1119c79a97be17?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "velodrome-v2-usdc-weth",
@@ -3681,7 +3687,8 @@
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0x626f8282f712732be0c12d4a89a86be6e9ce8ac8?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "velodrome-v2-usdc-next",
@@ -3725,7 +3732,9 @@
     "earnContractAddress": "0xb32AD6495826677EABAfd4Ee7b8E07594504Fc17",
     "oracle": "lps",
     "oracleId": "velodrome-v2-sonne-velo",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1724277455,
+    "retireReason": "tvl",
     "createdAt": 1709783438,
     "platformId": "velodrome",
     "assets": ["SONNE", "VELO"],
@@ -3770,7 +3779,8 @@
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0x7889366a039d92dd6aa12ce8f6fb027c3b7e397c?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "velodrome-v2-usdc-wsteth",
@@ -4598,7 +4608,8 @@
           }
         ]
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0xb4911efd3d53352f658536afd37e7897cb7dd7f6?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "aura-op-ethereum-triplets",
@@ -4676,7 +4687,8 @@
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0x5eb32e6dEc24d58C14D21fd1b329d9f65DE58364?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "aura-op-reth-ankreth",
@@ -5112,7 +5124,8 @@
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0xe2778b7c04a44dc8480fee88edc3cef8ee11fce0?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "velodrome-v2-exa-weth",
@@ -6366,7 +6379,8 @@
         "strategyId": "solidly",
         "ammId": "optimism-velodrome-v2"
       }
-    ]
+    ],
+    "poolTogether": "https://app.cabana.fi/vault/10/0x9b4c0de59628c64b02d7ce86f21db9a579539d5a?utm_source=Beefy&utm_medium=Vault+Button&utm_campaign=Main"
   },
   {
     "id": "velodrome-v2-wsteth-op",

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault';
 import clsx from 'clsx';
 import { VaultDepositStat } from './VaultDepositStat';

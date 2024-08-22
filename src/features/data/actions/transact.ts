@@ -1,5 +1,5 @@
-import { createAction, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
-import type { BeefyState, BeefyThunk } from '../../../redux-types';
+import { type ThunkAction, createAction, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
+import type { BeefyState, BeefyThunk, GetStateFn } from '../../../redux-types';
 import { isCowcentratedVault, type VaultEntity, type VaultGov } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
 import { getTransactApi } from '../apis/instances';
@@ -42,7 +42,6 @@ import type { Step } from '../reducers/wallet/stepper';
 import { stepperActions } from '../reducers/wallet/stepper';
 import { selectAllowanceByTokenAddress } from '../selectors/allowances';
 import { walletActions } from './wallet-actions';
-import type { ThunkAction } from 'redux-thunk';
 import { startStepperWithSteps } from './stepper';
 import { TransactMode, TransactStatus } from '../reducers/wallet/transact-types';
 import { selectTokenByAddress } from '../selectors/tokens';
@@ -299,6 +298,52 @@ export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state:
   }
 );
 
+export async function getTransactSteps(
+  quote: TransactQuote,
+  t: TFunction<Namespace>,
+  getState: GetStateFn
+): Promise<Step[]> {
+  const steps: Step[] = [];
+  const state = getState();
+  const api = await getTransactApi();
+
+  for (const allowanceTokenAmount of quote.allowances) {
+    if (isTokenErc20(allowanceTokenAmount.token)) {
+      const allowance = selectAllowanceByTokenAddress(
+        state,
+        allowanceTokenAmount.token.chainId,
+        allowanceTokenAmount.token.address,
+        allowanceTokenAmount.spenderAddress
+      );
+
+      if (allowance.lt(allowanceTokenAmount.amount)) {
+        steps.push({
+          step: 'approve',
+          message: t('Vault-ApproveMsg'),
+          action: walletActions.approval(
+            allowanceTokenAmount.token,
+            allowanceTokenAmount.spenderAddress
+          ),
+          pending: false,
+        });
+      }
+    }
+  }
+
+  let originalStep: Step;
+  if (isDepositQuote(quote)) {
+    originalStep = await api.fetchDepositStep(quote, getState, t);
+  } else if (isWithdrawQuote(quote)) {
+    originalStep = await api.fetchWithdrawStep(quote, getState, t);
+  } else {
+    throw new Error(`Invalid quote`);
+  }
+
+  steps.push(wrapStepConfirmQuote(originalStep, quote));
+
+  return steps;
+}
+
 /**
  * Steps to deposit into or withdraw from a vault
  * Builds allowance steps from quote data,
@@ -310,44 +355,7 @@ export function transactSteps(
   t: TFunction<Namespace>
 ): ThunkAction<void, BeefyState, void, Action> {
   return async function (dispatch, getState) {
-    const steps: Step[] = [];
-    const state = getState();
-    const api = await getTransactApi();
-
-    for (const allowanceTokenAmount of quote.allowances) {
-      if (isTokenErc20(allowanceTokenAmount.token)) {
-        const allowance = selectAllowanceByTokenAddress(
-          state,
-          allowanceTokenAmount.token.chainId,
-          allowanceTokenAmount.token.address,
-          allowanceTokenAmount.spenderAddress
-        );
-
-        if (allowance.lt(allowanceTokenAmount.amount)) {
-          steps.push({
-            step: 'approve',
-            message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(
-              allowanceTokenAmount.token,
-              allowanceTokenAmount.spenderAddress
-            ),
-            pending: false,
-          });
-        }
-      }
-    }
-
-    let originalStep: Step;
-    if (isDepositQuote(quote)) {
-      originalStep = await api.fetchDepositStep(quote, getState, t);
-    } else if (isWithdrawQuote(quote)) {
-      originalStep = await api.fetchWithdrawStep(quote, getState, t);
-    } else {
-      throw new Error(`Invalid quote`);
-    }
-
-    steps.push(wrapStepConfirmQuote(originalStep, quote));
-
+    const steps = await getTransactSteps(quote, t, getState);
     dispatch(startStepperWithSteps(steps, quote.inputs[0].token.chainId));
   };
 }

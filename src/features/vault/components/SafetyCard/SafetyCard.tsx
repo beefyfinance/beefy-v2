@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { Fragment } from 'react';
+import { Fragment, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Popover } from '../../../../components/Popover';
 import { RISKS } from '../../../../config/risk';
@@ -82,4 +82,4 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   );
 }
 
-export const SafetyCard = React.memo(SafetyCardComponent);
+export const SafetyCard = memo(SafetyCardComponent);

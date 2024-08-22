@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ToggleButtons } from '../../../../../components/ToggleButtons';
 import { makeStyles } from '@material-ui/core';

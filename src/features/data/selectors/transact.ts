@@ -14,10 +14,15 @@ import BigNumber from 'bignumber.js';
 import { TransactStatus } from '../reducers/wallet/transact-types';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { valueOrThrow } from '../utils/selector-utils';
-import { selectVaultHasActiveGovRewards, selectVaultHasActiveMerklCampaigns } from './rewards';
+import {
+  selectVaultHasActiveGovRewards,
+  selectVaultHasActiveMerklCampaigns,
+  selectVaultHasActiveStellaSwapCampaigns,
+} from './rewards';
 import {
   selectConnectedUserHasGovRewardsForVault,
   selectConnectedUserHasMerklRewardsForVault,
+  selectConnectedUserHasStellaSwapRewardsForVault,
 } from './user-rewards';
 import { selectVaultById } from './vaults';
 import { isSingleGovVault } from '../entities/vault';
@@ -295,20 +300,26 @@ export const selectTransactShouldShowClaims = createSelector(
   selectConnectedUserHasGovRewardsForVault,
   selectVaultHasActiveMerklCampaigns,
   selectConnectedUserHasMerklRewardsForVault,
+  selectVaultHasActiveStellaSwapCampaigns,
+  selectConnectedUserHasStellaSwapRewardsForVault,
   (
     vault,
     vaultHasActiveGovRewards,
     userHasUnclaimedGovRewards,
     vaultHasActiveMerklCampaigns,
-    userHasUnclaimedMerklRewards
+    userHasUnclaimedMerklRewards,
+    vaultHasActiveStellaSwapCampaigns,
+    userHasUnclaimedStellaSwapRewards
   ) => {
     // single gov vault do not have periodFinish/rewardRate data
     return (
       isSingleGovVault(vault) ||
       vaultHasActiveGovRewards ||
       vaultHasActiveMerklCampaigns ||
+      vaultHasActiveStellaSwapCampaigns ||
       userHasUnclaimedGovRewards ||
-      userHasUnclaimedMerklRewards
+      userHasUnclaimedMerklRewards ||
+      userHasUnclaimedStellaSwapRewards
     );
   }
 );
@@ -316,7 +327,12 @@ export const selectTransactShouldShowClaims = createSelector(
 export const selectTransactShouldShowClaimsNotification = createSelector(
   selectConnectedUserHasGovRewardsForVault,
   selectConnectedUserHasMerklRewardsForVault,
-  (userHasUnclaimedGovRewards, userHasUnclaimedMerklRewards) => {
-    return userHasUnclaimedGovRewards || userHasUnclaimedMerklRewards;
+  selectConnectedUserHasStellaSwapRewardsForVault,
+  (userHasUnclaimedGovRewards, userHasUnclaimedMerklRewards, userHasUnclaimedStellaSwapRewards) => {
+    return (
+      userHasUnclaimedGovRewards ||
+      userHasUnclaimedMerklRewards ||
+      userHasUnclaimedStellaSwapRewards
+    );
   }
 );
