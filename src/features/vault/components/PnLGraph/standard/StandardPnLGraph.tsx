@@ -105,6 +105,7 @@ export const DashboardPnLGraph = memo<PnLGraphProps>(function DashboardPnLGraph(
     <div className={classes.dashboardPnlContainer}>
       <Graph address={address} period={period} vaultId={vaultId} />
       <Footer
+        className={classes.footerDashboard}
         tabsClassName={classes.tabsDashboard}
         labels={labels}
         vaultId={vaultId}

@@ -45,4 +45,7 @@ export const styles = (theme: Theme) => ({
       ...theme.typography['subline-sm'],
     },
   },
+  footerDashboard: {
+    borderTop: `2px solid ${theme.palette.background.border}`,
+  },
 });
