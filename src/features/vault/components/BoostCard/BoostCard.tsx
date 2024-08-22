@@ -21,6 +21,8 @@ import { RewardTokenDetails } from '../RewardTokenDetails';
 import type { BoostEntity } from '../../../data/entities/boost';
 import type { TokenEntity } from '../../../data/entities/token';
 import { Link } from '@material-ui/icons';
+import { explorerAddressUrl } from '../../../../helpers/url';
+import { selectChainById } from '../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles);
 
@@ -51,6 +53,7 @@ const CampaignBoostCard = memo<InnerBoostCardProps>(function CampaignBoostCard({
   const { title, description, learn, social } = useAppSelector(state =>
     selectBoostCampaignById(state, boost.campaignId || '')
   );
+  const chain = useAppSelector(state => selectChainById(state, boost.chainId));
 
   return (
     <div>
@@ -64,10 +67,14 @@ const CampaignBoostCard = memo<InnerBoostCardProps>(function CampaignBoostCard({
           {social.twitter && <LinkIcon alt="twitter" logo={Twitter} href={social.twitter} />}
           {social.telegram && <LinkIcon alt="telegram" logo={Telegram} href={social.telegram} />}
           {social.discord && <LinkIcon alt="discord" logo={Discord} href={social.discord} />}
+          <LinkButton
+            href={explorerAddressUrl(chain, boost.contractAddress)}
+            text={t('Boost-Contract')}
+          />
         </div>
       </div>
-      <CardContent>
-        <h3 className={classes.campaignTitle}>{title}</h3>
+      <CardContent className={classes.content}>
+        <div className={classes.campaignTitle}>{title}</div>
         <div className={classes.campaignText}>{description}</div>
         {boost.partnerIds.length > 0 && (
           <div className={classes.partners}>
@@ -76,11 +83,7 @@ const CampaignBoostCard = memo<InnerBoostCardProps>(function CampaignBoostCard({
             ))}
           </div>
         )}
-        <RewardTokenDetails
-          token={rewardToken}
-          chainId={boost.chainId}
-          className={classes.rewardToken}
-        />
+        <RewardTokenDetails token={rewardToken} chainId={boost.chainId} />
       </CardContent>
     </div>
   );
@@ -122,6 +125,7 @@ const PartnerBoostCard = memo<InnerBoostCardProps>(function PartnerBoostCard({
   const { text, social, website } = useAppSelector(state =>
     selectBoostPartnerById(state, boost.partnerIds[0])
   );
+  const chain = useAppSelector(state => selectChainById(state, boost.chainId));
 
   return (
     <div>
@@ -135,15 +139,15 @@ const PartnerBoostCard = memo<InnerBoostCardProps>(function PartnerBoostCard({
           {social.twitter && <LinkIcon alt="twitter" logo={Twitter} href={social.twitter} />}
           {social.telegram && <LinkIcon alt="telegram" logo={Telegram} href={social.telegram} />}
           {social.discord && <LinkIcon alt="discord" logo={Discord} href={social.discord} />}
+          <LinkButton
+            href={explorerAddressUrl(chain, boost.contractAddress)}
+            text={t('Boost-Contract')}
+          />
         </div>
       </div>
-      <CardContent>
-        <div className={classes.text}>{text}</div>
-        <RewardTokenDetails
-          token={rewardToken}
-          chainId={boost.chainId}
-          className={classes.rewardToken}
-        />
+      <CardContent className={classes.content}>
+        <div>{text}</div>
+        <RewardTokenDetails token={rewardToken} chainId={boost.chainId} />
       </CardContent>
     </div>
   );
