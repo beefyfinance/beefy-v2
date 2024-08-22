@@ -910,37 +910,6 @@
     ]
   },
   {
-    "id": "moe-wmnt-wbtc",
-    "name": "WBTC-WMNT LP",
-    "type": "standard",
-    "token": "WBTC-WMNT LP",
-    "tokenAddress": "0xB1e695DC6cA41D0Dc5030d7e316c879a47FD492a",
-    "tokenDecimals": 18,
-    "tokenProviderId": "moe",
-    "earnedToken": "mooMoeWMNT-WBTC",
-    "earnedTokenAddress": "0x20a1CC2C194240B8C05f0354a66000C3B80d97F8",
-    "earnContractAddress": "0x20a1CC2C194240B8C05f0354a66000C3B80d97F8",
-    "oracle": "lps",
-    "oracleId": "moe-wmnt-wbtc",
-    "status": "eol",
-    "createdAt": 1708001964,
-    "retireReason": "rewards",
-    "retiredAt": 1720188099,
-    "platformId": "moe",
-    "assets": ["WBTC", "WMNT"],
-    "risks": ["COMPLEXITY_LOW", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0xCAbAE6f6Ea1ecaB08Ad02fE02ce9A44F09aebfA2",
-    "addLiquidityUrl": "https://merchantmoe.com/pool/v1/0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8/0xCAbAE6f6Ea1ecaB08Ad02fE02ce9A44F09aebfA2",
-    "network": "mantle",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "mantle-moe"
-      }
-    ]
-  },
-  {
     "id": "moe-usdt-moe",
     "name": "MOE-USDT LP",
     "type": "standard",

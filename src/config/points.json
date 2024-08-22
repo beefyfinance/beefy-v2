@@ -142,7 +142,7 @@
     "eligibility": [
       {
         "type": "token-holding",
-        "tokens": ["rsETH", "wrsETH", "rswETH"]
+        "tokens": ["rsETH", "wrsETH", "rswETH", "agETH"]
       }
     ],
     "accounting": [
