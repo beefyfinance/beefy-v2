@@ -7,9 +7,9 @@ import { featureFlag_debugGraph } from '../../../../../../data/utils/feature-fla
 import type {
   ClmInvestorFeesTimeSeriesPoint,
   ClmInvestorOverviewTimeSeriesPoint,
-} from '../../../../../../../helpers/timeserie';
-import type { RechartsTooltipProps } from '../../../../../../../helpers/graph';
+} from '../../../../../../../helpers/graph/timeseries';
 import type { TokenEntity } from '../../../../../../data/entities/token';
+import type { RechartsTooltipProps } from '../../../../../../../helpers/graph/types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   content: {
@@ -44,8 +44,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export type OverviewTooltipProps = RechartsTooltipProps<
-  'v',
-  't',
+  'underlyingUsd',
+  'timestamp',
   ClmInvestorOverviewTimeSeriesPoint
 >;
 
@@ -65,21 +65,27 @@ export const OverviewTooltip = memo<OverviewTooltipProps>(function OverviewToolt
     return null;
   }
 
-  const { t: timestamp, v, vHold, ...rest } = valueLine.payload;
+  const { timestamp, underlying, underlyingUsd, heldUsd, debug } = valueLine.payload;
 
   return (
     <div className={classes.content}>
       <div className={classes.timestamp}>{format(timestamp, 'MMM d, yyyy h:mm a')}</div>
       <div className={classes.itemContainer}>
-        <div className={classes.label}>{t('Graph-cowcentrated-overview-tooltip')}:</div>
-        <div className={classes.value}>{formatUsd(v)}</div>
+        <div className={classes.label}>{t('Graph-cowcentrated-overview-tooltip-position')}:</div>
+        <div className={classes.value}>{formatTokenDisplayCondensed(underlying, 18)}</div>
       </div>
       <div className={classes.itemContainer}>
-        <div className={classes.label}>{t('Graph-cowcentrated-overview-tooltip-hold')}:</div>
-        <div className={classes.value}>{formatUsd(vHold)}</div>
+        <div className={classes.label}>
+          {t('Graph-cowcentrated-overview-tooltip-position-value')}:
+        </div>
+        <div className={classes.value}>{formatUsd(underlyingUsd)}</div>
+      </div>
+      <div className={classes.itemContainer}>
+        <div className={classes.label}>{t('Graph-cowcentrated-overview-tooltip-hold-value')}:</div>
+        <div className={classes.value}>{formatUsd(heldUsd)}</div>
       </div>
       {featureFlag_debugGraph()
-        ? Object.entries(rest).map(([key, value]) => (
+        ? Object.entries(debug).map(([key, value]) => (
             <div className={classes.itemContainer} key={key}>
               <div className={classes.label}>{key}:</div>
               <div className={classes.value}>{value.toString(10)}</div>

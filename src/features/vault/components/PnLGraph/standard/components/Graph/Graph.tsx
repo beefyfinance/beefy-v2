@@ -13,20 +13,16 @@ import { PnLTooltip } from '../PnLTooltip';
 import type { Theme } from '@material-ui/core';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { GraphLoader } from '../../../../GraphLoader';
-import { max } from 'lodash-es';
 import {
-  domainOffSet,
-  formatDateTimeTick,
-  formatUnderlyingTick,
-  formatUsdTick,
-  getXInterval,
   GRAPH_TIME_BUCKETS,
-  mapRangeToTicks,
-} from '../../../../../../../helpers/graph';
+  makeUnderlyingTickFormatter,
+  makeUsdTickFormatter,
+} from '../../../../../../../helpers/graph/graph';
 import { Legend } from '../Legend';
 import { styles } from './styles';
 import { XAxisTick } from '../../../../../../../components/XAxisTick';
 import { GraphNoData } from '../../../../../../../components/GraphNoData/GraphNoData';
+import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks';
 
 const useStyles = makeStyles(styles);
 
@@ -38,6 +34,11 @@ interface GraphProps {
 
 export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address }) {
   const classes = useStyles();
+  const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+  const chartMargin = useMemo(() => {
+    const xMargin = xsDown ? 16 : 24;
+    return { top: 14, right: xMargin, bottom: 0, left: xMargin };
+  }, [xsDown]);
   const { chartData, isLoading, willRetry } = usePnLChartData(
     GRAPH_TIME_BUCKETS[period],
     vaultId,
@@ -45,55 +46,9 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
   );
   const { data, minUnderlying, maxUnderlying, minUsd, maxUsd } = chartData;
 
-  const underlyingDiff = useMemo(() => {
-    return domainOffSet(minUnderlying, maxUnderlying, 0.88);
-  }, [maxUnderlying, minUnderlying]);
-
-  const usdDiff = useMemo(() => {
-    return domainOffSet(minUsd, maxUsd, 0.88);
-  }, [maxUsd, minUsd]);
-
-  const startUnderlyingDomain = useMemo(() => {
-    return max([0, minUnderlying - underlyingDiff])!;
-  }, [minUnderlying, underlyingDiff]);
-
-  const startUsdDomain = useMemo(() => {
-    return max([0, minUsd - usdDiff])!;
-  }, [minUsd, usdDiff]);
-
-  const underlyingAxisDomain = useMemo<[number, number]>(() => {
-    return [startUnderlyingDomain, maxUnderlying + underlyingDiff];
-  }, [maxUnderlying, startUnderlyingDomain, underlyingDiff]);
-
-  const usdAxisDomain = useMemo<[number, number]>(() => {
-    return [startUsdDomain, maxUsd + usdDiff];
-  }, [maxUsd, startUsdDomain, usdDiff]);
-
-  const underlyingTicks = useMemo(() => {
-    return mapRangeToTicks(startUnderlyingDomain, maxUnderlying + underlyingDiff);
-  }, [maxUnderlying, startUnderlyingDomain, underlyingDiff]);
-
-  const usdTicks = useMemo(() => {
-    return mapRangeToTicks(startUsdDomain, maxUsd + usdDiff);
-  }, [maxUsd, startUsdDomain, usdDiff]);
-
-  const underlyingTickFormatter = useMemo(() => {
-    return (value: number) => formatUnderlyingTick(value, underlyingAxisDomain);
-  }, [underlyingAxisDomain]);
-
-  const dateTimeTickFormatter = useMemo(() => {
-    return (value: number) => formatDateTimeTick(value, GRAPH_TIME_BUCKETS[period]);
-  }, [period]);
-
-  const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
-
-  const xInterval = useMemo(() => {
-    return getXInterval(data.length, xsDown);
-  }, [data.length, xsDown]);
-
-  const xMargin = useMemo(() => {
-    return xsDown ? 16 : 24;
-  }, [xsDown]);
+  const usdAxis = useYAxis(minUsd, maxUsd, makeUsdTickFormatter);
+  const underlyingAxis = useYAxis(minUnderlying, maxUnderlying, makeUnderlyingTickFormatter);
+  const dateAxis = useXAxis(GRAPH_TIME_BUCKETS[period], data.length, xsDown);
 
   if (isLoading) {
     return <GraphLoader imgHeight={220} />;
@@ -111,21 +66,21 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
           width={450}
           height={200}
           data={data}
-          margin={{ top: 14, right: xMargin, bottom: 0, left: xMargin }}
+          margin={chartMargin}
           className={classes.graph}
         >
           <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />
           <XAxis
-            tickFormatter={dateTimeTickFormatter}
+            tickFormatter={dateAxis.formatter}
             dataKey="datetime"
             padding="no-gap"
             tickMargin={10}
             stroke="#363B63"
-            interval={xInterval}
+            interval={dateAxis.interval}
             tick={XAxisTick}
           />
           <Line
-            yAxisId="underliying"
+            yAxisId="underlying"
             strokeWidth={1.5}
             dataKey="underlyingBalance"
             stroke="#4DB258"
@@ -143,20 +98,20 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
           <YAxis
             stroke="#4DB258"
             strokeWidth={1.5}
-            tickFormatter={underlyingTickFormatter}
-            yAxisId="underliying"
-            domain={underlyingAxisDomain}
-            ticks={underlyingTicks}
+            tickFormatter={underlyingAxis.formatter}
+            yAxisId="underlying"
+            domain={underlyingAxis.domain}
+            ticks={underlyingAxis.ticks}
             mirror={true}
           />
           <YAxis
             stroke="#5C70D6"
             orientation="right"
             strokeWidth={1.5}
-            tickFormatter={formatUsdTick}
+            tickFormatter={usdAxis.formatter}
             yAxisId="usd"
-            domain={usdAxisDomain}
-            ticks={usdTicks}
+            domain={usdAxis.domain}
+            ticks={usdAxis.ticks}
             mirror={true}
           />
           <Tooltip wrapperStyle={{ outline: 'none' }} content={<PnLTooltip />} />

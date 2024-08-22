@@ -151,8 +151,10 @@ interface ClmPnlState {
   sharesFifo: {
     boughtShares: BigNumber;
     remainingShares: BigNumber;
+    underlyingToUsd: BigNumber;
     token0ToUsd: BigNumber;
     token1ToUsd: BigNumber;
+    underlyingAmount: BigNumber;
     token0Amount: BigNumber;
     token1Amount: BigNumber;
   }[];
@@ -161,8 +163,10 @@ interface ClmPnlState {
 
 interface ClmPnlTransaction {
   shares: BigNumber;
+  underlyingToUsd: BigNumber;
   token0ToUsd: BigNumber;
   token1ToUsd: BigNumber;
+  underlyingAmount: BigNumber;
   token0Amount: BigNumber;
   token1Amount: BigNumber;
 }
@@ -189,8 +193,10 @@ export class ClmPnl {
       this.state.sharesFifo.push({
         boughtShares: transaction.shares,
         remainingShares: transaction.shares,
+        underlyingToUsd: transaction.underlyingToUsd,
         token0ToUsd: transaction.token0ToUsd,
         token1ToUsd: transaction.token1ToUsd,
+        underlyingAmount: transaction.underlyingAmount,
         token0Amount: transaction.token0Amount,
         token1Amount: transaction.token1Amount,
       });
@@ -202,8 +208,14 @@ export class ClmPnl {
     let trxPnlUsd = BIG_ZERO;
     let idx = 0;
     for (; idx < this.state.sharesFifo.length; idx++) {
-      const { remainingShares, token0Amount, token1Amount, token0ToUsd, token1ToUsd } =
-        this.state.sharesFifo[idx];
+      const {
+        remainingShares,
+        underlyingAmount,
+        token0Amount,
+        token1Amount,
+        token0ToUsd,
+        token1ToUsd,
+      } = this.state.sharesFifo[idx];
       if (remainingShares.isZero()) {
         continue;
       }
@@ -214,6 +226,7 @@ export class ClmPnl {
       const entryPrice = token0AmountToUsd.plus(token1AmountToUsd);
 
       const sharesToSell = BigNumber.min(remainingSharesToSell, remainingShares);
+      const underlyingToSell = sharesToSell.times(underlyingAmount).dividedBy(remainingShares);
       const token0ToSell = sharesToSell.times(token0Amount).dividedBy(remainingShares);
       const token1ToSell = sharesToSell.times(token1Amount).dividedBy(remainingShares);
 
@@ -228,6 +241,7 @@ export class ClmPnl {
 
       remainingSharesToSell = remainingSharesToSell.minus(sharesToSell);
       this.state.sharesFifo[idx].remainingShares = remainingShares.minus(sharesToSell);
+      this.state.sharesFifo[idx].underlyingAmount = underlyingAmount.minus(underlyingToSell);
       this.state.sharesFifo[idx].token0Amount = token0Amount.minus(token0ToSell);
       this.state.sharesFifo[idx].token1Amount = token1Amount.minus(token1ToSell);
 
@@ -243,18 +257,21 @@ export class ClmPnl {
 
   getRemainingShares(): {
     remainingShares: BigNumber;
+    remainingUnderlying: BigNumber;
     remainingToken0: BigNumber;
     remainingToken1: BigNumber;
   } {
     let remainingShares = BIG_ZERO;
+    let remainingUnderlying = BIG_ZERO;
     let remainingToken0 = BIG_ZERO;
     let remainingToken1 = BIG_ZERO;
     for (const trx of this.state.sharesFifo) {
       remainingShares = remainingShares.plus(trx.remainingShares);
+      remainingUnderlying = remainingUnderlying.plus(trx.underlyingAmount);
       remainingToken0 = remainingToken0.plus(trx.token0Amount);
       remainingToken1 = remainingToken1.plus(trx.token1Amount);
     }
-    return { remainingShares, remainingToken0, remainingToken1 };
+    return { remainingShares, remainingUnderlying, remainingToken0, remainingToken1 };
   }
 
   getRemainingSharesAvgEntryPrice(): { token0EntryPrice: BigNumber; token1EntryPrice: BigNumber } {

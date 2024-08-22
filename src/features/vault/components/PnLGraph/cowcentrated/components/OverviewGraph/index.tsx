@@ -12,18 +12,16 @@ import { usePnLChartData } from './hooks';
 import type { Theme } from '@material-ui/core';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { GraphLoader } from '../../../../GraphLoader';
-import { max } from 'lodash-es';
 import {
-  domainOffSet,
-  formatDateTimeTick,
-  formatUsdTick,
-  getXInterval,
   GRAPH_TIME_BUCKETS,
-  mapRangeToTicks,
-} from '../../../../../../../helpers/graph';
+  makeUnderlyingTickFormatter,
+  makeUsdTickFormatter,
+} from '../../../../../../../helpers/graph/graph';
 import { styles } from './styles';
 import { XAxisTick } from '../../../../../../../components/XAxisTick';
 import { OverviewTooltip, type OverviewTooltipProps } from '../Tooltips';
+import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks';
+import { GraphNoData } from '../../../../../../../components/GraphNoData/GraphNoData';
 
 const useStyles = makeStyles(styles);
 
@@ -39,40 +37,21 @@ export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverview
   address,
 }) {
   const classes = useStyles();
-
-  const { chartData, isLoading } = usePnLChartData(GRAPH_TIME_BUCKETS[period], vaultId, address);
-
-  const { data, minUsd, maxUsd } = chartData;
-
-  const usdDiff = useMemo(() => {
-    return domainOffSet(minUsd, maxUsd, 0.88);
-  }, [maxUsd, minUsd]);
-
-  const startUsdDomain = useMemo(() => {
-    return max([0, minUsd - usdDiff])!;
-  }, [minUsd, usdDiff]);
-
-  const usdAxisDomain = useMemo<[number, number]>(() => {
-    return [startUsdDomain, maxUsd + usdDiff];
-  }, [maxUsd, startUsdDomain, usdDiff]);
-
-  const usdTicks = useMemo(() => {
-    return mapRangeToTicks(startUsdDomain, maxUsd + usdDiff);
-  }, [maxUsd, startUsdDomain, usdDiff]);
-
-  const dateTimeTickFormatter = useMemo(() => {
-    return (value: number) => formatDateTimeTick(value, GRAPH_TIME_BUCKETS[period]);
-  }, [period]);
-
   const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
-
-  const xInterval = useMemo(() => {
-    return getXInterval(data.length, xsDown);
-  }, [data.length, xsDown]);
-
-  const xMargin = useMemo(() => {
-    return xsDown ? 16 : 24;
+  const chartMargin = useMemo(() => {
+    const xMargin = xsDown ? 16 : 24;
+    return { top: 14, right: xMargin, bottom: 0, left: xMargin };
   }, [xsDown]);
+  const { chartData, isLoading, willRetry, type } = usePnLChartData(
+    GRAPH_TIME_BUCKETS[period],
+    vaultId,
+    address
+  );
+  const { data, minUsd, maxUsd, minUnderlying, maxUnderlying } = chartData;
+
+  const usdAxis = useYAxis(minUsd, maxUsd, makeUsdTickFormatter);
+  const underlyingAxis = useYAxis(minUnderlying, maxUnderlying, makeUnderlyingTickFormatter);
+  const dateAxis = useXAxis(GRAPH_TIME_BUCKETS[period], data.length, xsDown);
 
   const tooltipContentCreator = useCallback(
     (props: OverviewTooltipProps) => <OverviewTooltip {...props} />,
@@ -83,6 +62,10 @@ export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverview
     return <GraphLoader imgHeight={220} />;
   }
 
+  if (!data.length) {
+    return <GraphNoData reason={willRetry ? 'error-retry' : 'error'} />;
+  }
+
   return (
     <div className={classes.graphContainer}>
       <ResponsiveContainer width="100%" height={220}>
@@ -90,23 +73,33 @@ export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverview
           width={450}
           height={220}
           data={data}
-          margin={{ top: 14, right: xMargin, bottom: 0, left: xMargin }}
+          margin={chartMargin}
           className={classes.graph}
         >
           <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />
           <XAxis
-            tickFormatter={dateTimeTickFormatter}
-            dataKey="t"
+            tickFormatter={dateAxis.formatter}
+            dataKey="timestamp"
             padding="no-gap"
             tickMargin={10}
             stroke="#363B63"
-            interval={xInterval}
+            interval={dateAxis.interval}
             tick={XAxisTick}
           />
+          {type === 'vault' && (
+            <Line
+              yAxisId="underlying"
+              strokeWidth={1.5}
+              dataKey="underlying"
+              stroke="#4DB258"
+              dot={false}
+              type="linear"
+            />
+          )}
           <Line
             yAxisId="usd"
             strokeWidth={1.5}
-            dataKey="vHold"
+            dataKey="heldUsd"
             stroke="#999CB3"
             dot={false}
             type="linear"
@@ -114,18 +107,30 @@ export const CLMOverviewGraph = memo<CLMOverviewGraphProps>(function CLMOverview
           <Line
             yAxisId="usd"
             strokeWidth={1.5}
-            dataKey="v"
+            dataKey="underlyingUsd"
             stroke="#5C70D6"
             dot={false}
             type="linear"
           />
+          {type === 'vault' && (
+            <YAxis
+              stroke="#4DB258"
+              strokeWidth={1.5}
+              tickFormatter={underlyingAxis.formatter}
+              yAxisId="underlying"
+              domain={underlyingAxis.domain}
+              ticks={underlyingAxis.ticks}
+              mirror={true}
+            />
+          )}
           <YAxis
-            stroke="#363B63"
+            stroke="#5C70D6"
+            orientation="right"
             strokeWidth={1.5}
-            tickFormatter={formatUsdTick}
+            tickFormatter={usdAxis.formatter}
             yAxisId="usd"
-            domain={usdAxisDomain}
-            ticks={usdTicks}
+            domain={usdAxis.domain}
+            ticks={usdAxis.ticks}
             mirror={true}
           />
           <Tooltip wrapperStyle={{ outline: 'none' }} content={tooltipContentCreator} />

@@ -1,6 +1,7 @@
 import { BigNumber } from 'bignumber.js';
 import { isBigNumber } from './big-number';
 import { cloneDeepWith, defaults as defaultsShallow, defaultsDeep } from 'lodash-es';
+import type { KeysOfUnion } from '../features/data/utils/types-utils';
 
 export function cloneDeep<T>(input: T): T {
   return cloneDeepWith(input, value => {
@@ -116,4 +117,8 @@ export function distributedOmit<
   return Object.fromEntries(
     Object.entries(entry).filter(([key]) => !keys.includes(key as TKeys))
   ) as DistributedOmit<TEntry, TKeys>;
+}
+
+export function firstKey<T extends { [key: string]: unknown }>(obj: T): KeysOfUnion<T> | undefined {
+  return Object.keys(obj)[0] as KeysOfUnion<T> | undefined;
 }

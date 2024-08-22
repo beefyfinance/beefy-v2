@@ -2,11 +2,10 @@ import { createCachedSelector } from 're-reselect';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import { ClmPnl, PnL } from '../../../helpers/pnl';
 import type { BeefyState } from '../../../redux-types';
-import type { TimeBucketType } from '../apis/analytics/analytics-types';
+import type { DatabarnProductPriceRow } from '../apis/databarn/databarn-types';
 import {
-  isCowcentratedGovVault,
   isCowcentratedLikeVault,
-  isCowcentratedVault,
+  isCowcentratedStandardVault,
   isGovVault,
   isStandardVault,
   type VaultCowcentratedLike,
@@ -22,7 +21,7 @@ import {
   selectTokenPriceByAddress,
 } from './tokens';
 import {
-  selectCowcentratedOrCowcentratedPoolVaultById,
+  selectCowcentratedLikeVaultById,
   selectVaultById,
   selectVaultPricePerFullShare,
 } from './vaults';
@@ -34,11 +33,10 @@ import {
 } from './balance';
 import { selectWalletAddress } from './wallet';
 import { selectIsConfigAvailable, selectIsUserBalanceAvailable } from './data-loader';
-import type { AnalyticsBucketData, AnalyticsState } from '../reducers/analytics';
 import {
   type AnyTimelineEntity,
   type AnyTimelineEntry,
-  isTimelineEntityCowcentratedPool,
+  isTimelineEntityCowcentrated,
   isTimelineEntityStandard,
 } from '../entities/analytics';
 import { createSelector } from '@reduxjs/toolkit';
@@ -59,6 +57,13 @@ import {
   hasLoaderFulfilledOnce,
   isLoaderIdle,
 } from './data-loader-helpers';
+import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types';
+import type { AnalyticsIntervalData, AnalyticsState } from '../reducers/analytics-types';
+import type {
+  ClmPriceHistoryEntryClassic,
+  ClmPriceHistoryEntryClm,
+} from '../apis/clm/clm-api-types';
+import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils';
 
 export const selectUserAnalytics = createSelector(
   (state: BeefyState, address?: string) => address || selectWalletAddress(state),
@@ -174,9 +179,8 @@ export const selectStandardGovPnl = (
   walletAddress?: string
 ): UserStandardPnl | UserGovPnl => {
   const vault = selectVaultById(state, vaultId);
-  // TODO change when clm standard vault data comes from subgraph
-  if (isCowcentratedVault(vault) || isCowcentratedGovVault(vault)) {
-    throw new Error('This function should not be called for cowcentrated or cowcentrated pools');
+  if (isCowcentratedLikeVault(vault)) {
+    throw new Error('This function should not be called for cowcentrated vaults');
   }
 
   const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
@@ -239,15 +243,25 @@ export const selectClmPnl = (
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ): UserClmPnl => {
-  const vault = selectCowcentratedOrCowcentratedPoolVaultById(state, vaultId);
+  const vault = selectCowcentratedLikeVaultById(state, vaultId);
   const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
-  const depositTokenPrice = selectTokenPriceByAddress(
+  const sharesNow = selectUserVaultBalanceInShareTokenIncludingBoostsBridged(
+    state,
+    vaultId,
+    walletAddress
+  );
+  const underlyingToken = selectTokenByAddress(
+    state,
+    vault.chainId,
+    getCowcentratedAddressFromCowcentratedLikeVault(vault)
+  );
+  const underlyingNowPrice = selectTokenPriceByAddress(
     state,
     vault.chainId,
     vault.depositTokenAddress
   );
   const breakdown = selectLpBreakdownForVault(state, vault);
-  const { assets, userBalanceDecimal: sharesNowInDepositToken } = selectUserLpBreakdownBalance(
+  const { assets, userBalanceDecimal: underlyingNow } = selectUserLpBreakdownBalance(
     state,
     vault,
     breakdown,
@@ -259,12 +273,14 @@ export const selectClmPnl = (
 
   const pnl = new ClmPnl();
 
-  if (isTimelineEntityCowcentratedPool(sortedTimeline) && sortedTimeline.current.length > 0) {
+  if (isTimelineEntityCowcentrated(sortedTimeline) && sortedTimeline.current.length > 0) {
     for (const tx of sortedTimeline.current) {
       pnl.addTransaction({
         shares: tx.shareDiff,
+        underlyingToUsd: tx.underlyingToUsd,
         token0ToUsd: tx.token0ToUsd,
         token1ToUsd: tx.token1ToUsd,
+        underlyingAmount: tx.underlyingDiff,
         token0Amount: tx.underlying0Diff,
         token1Amount: tx.underlying1Diff,
       });
@@ -272,20 +288,21 @@ export const selectClmPnl = (
   }
 
   const {
+    remainingUnderlying: underlyingAtDeposit,
     remainingToken0: token0AtDeposit,
     remainingToken1: token1AtDeposit,
     remainingShares: sharesAtDeposit,
   } = pnl.getRemainingShares();
+
   const { token0EntryPrice: token0AtDepositPrice, token1EntryPrice: token1AtDepositPrice } =
     pnl.getRemainingSharesAvgEntryPrice();
 
-  const sharesAtDepositInUsd = token0AtDeposit
+  const underlyingAtDepositInUsd = token0AtDeposit
     .times(token0AtDepositPrice)
     .plus(token1AtDeposit.times(token1AtDepositPrice));
 
-  const sharesNow = sharesAtDeposit; // TODO for CLM vaults, shares increase at each harvest
-  const sharesNowInUsd = sharesNowInDepositToken.times(depositTokenPrice); // correct for CLM vaults too
-  const positionPnl = sharesNowInUsd.minus(sharesAtDepositInUsd);
+  const underlyingNowInUsd = underlyingNow.times(underlyingNowPrice);
+  const positionPnl = underlyingNowInUsd.minus(underlyingAtDepositInUsd);
   const hold = token0AtDeposit.times(token0.price).plus(token1AtDeposit.times(token1.price));
 
   const harvestTimeline = selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress);
@@ -308,7 +325,9 @@ export const selectClmPnl = (
   return {
     type: 'cowcentrated',
     sharesAtDeposit,
-    sharesAtDepositInUsd: sharesAtDepositInUsd,
+    underlyingToken,
+    underlyingAtDeposit,
+    underlyingAtDepositInUsd,
     token0AtDeposit,
     token1AtDeposit,
     token0AtDepositPrice: token0AtDepositPrice,
@@ -316,15 +335,19 @@ export const selectClmPnl = (
     token0AtDepositInUsd: token0AtDeposit.times(token0AtDepositPrice),
     token1AtDepositInUsd: token1AtDeposit.times(token1AtDepositPrice),
     sharesNow,
-    sharesNowInUsd,
+    underlyingNow,
+    underlyingNowPrice,
+    underlyingNowInUsd,
+    token0Now: token0.userAmount,
+    token1Now: token1.userAmount,
     token0,
     token1,
     token0Diff: token0.userAmount.minus(token0AtDeposit),
     token1Diff: token1.userAmount.minus(token1AtDeposit),
     pnl: positionPnl,
-    pnlPercentage: positionPnl.dividedBy(sharesAtDepositInUsd),
+    pnlPercentage: positionPnl.dividedBy(underlyingAtDepositInUsd),
     hold,
-    holdDiff: sharesNowInUsd.minus(hold),
+    holdDiff: underlyingNowInUsd.minus(hold),
     ...compoundedYield,
   };
 };
@@ -335,26 +358,49 @@ export const selectVaultPnl = (
   walletAddress?: string
 ): UserVaultPnl => {
   const vault = selectVaultById(state, vaultId);
-  // TODO change when clm standard vault data comes from subgraph
-  if (isCowcentratedVault(vault) || isCowcentratedGovVault(vault)) {
+  if (isCowcentratedLikeVault(vault)) {
     return selectClmPnl(state, vaultId, walletAddress);
   }
   return selectStandardGovPnl(state, vaultId, walletAddress);
 };
 
-const EMPTY_TIMEBUCKET: Readonly<AnalyticsBucketData> = {
+const EMPTY_INTERVAL_BUCKET: Readonly<AnalyticsIntervalData<unknown>> = {
   data: [],
   status: 'idle',
+  fulfilledSince: 0,
+  requestedSince: 0,
 };
 
-export const selectShareToUnderlyingTimebucketByVaultId = (
+export const selectShareToUnderlyingByVaultIdByInterval = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
-  timebucket: TimeBucketType
-): Readonly<AnalyticsBucketData> => {
+  intervalKey: ApiTimeBucketInterval
+): Readonly<AnalyticsIntervalData<DatabarnProductPriceRow>> => {
   return (
-    state.user.analytics.shareToUnderlying.byVaultId[vaultId]?.byTimebucket[timebucket] ||
-    EMPTY_TIMEBUCKET
+    state.user.analytics.interval.shareToUnderlying.byVaultId[vaultId]?.byInterval[intervalKey] ||
+    EMPTY_INTERVAL_BUCKET
+  );
+};
+
+export const selectClassicPriceHistoryByVaultIdByInterval = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  intervalKey: ApiTimeBucketInterval
+): Readonly<AnalyticsIntervalData<ClmPriceHistoryEntryClassic>> => {
+  return (
+    state.user.analytics.interval.classicPriceHistory.byVaultId[vaultId]?.byInterval[intervalKey] ||
+    EMPTY_INTERVAL_BUCKET
+  );
+};
+
+export const selectClmPriceHistoryByVaultIdByInterval = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  intervalKey: ApiTimeBucketInterval
+): Readonly<AnalyticsIntervalData<ClmPriceHistoryEntryClm>> => {
+  return (
+    state.user.analytics.interval.clmPriceHistory.byVaultId[vaultId]?.byInterval[intervalKey] ||
+    EMPTY_INTERVAL_BUCKET
   );
 };
 
@@ -546,6 +592,19 @@ function selectDashboardYieldCowcentratedData(
     vault.id,
     walletAddress
   );
+
+  if (isCowcentratedStandardVault(vault)) {
+    const underlyingYield = pnl.underlyingNow.minus(pnl.underlyingAtDeposit);
+    return {
+      type: 'standard' as const,
+      totalRewardsUsd,
+      hasRewards: rewards.length > 0,
+      totalYield: underlyingYield,
+      totalYieldUsd: underlyingYield.multipliedBy(pnl.underlyingNowPrice),
+      tokenDecimals: pnl.underlyingToken.decimals,
+    };
+  }
+
   const tokens = selectCowcentratedLikeVaultDepositTokens(state, vault.id);
   return {
     type: 'cowcentrated' as const,

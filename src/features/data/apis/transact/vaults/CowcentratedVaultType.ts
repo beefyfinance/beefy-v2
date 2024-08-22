@@ -1,6 +1,6 @@
 import type { BigNumber } from 'bignumber.js';
 import { BIG_ZERO, fromWei, tokenAmountToWei } from '../../../../../helpers/big-number';
-import type { GetStateFn } from '../../../../../redux-types';
+import type { BeefyStateFn } from '../../../../../redux-types';
 import {
   isTokenEqual,
   isTokenErc20,
@@ -54,9 +54,9 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
   public readonly vault: VaultCowcentrated;
   public readonly depositTokens: TokenEntity[];
   public readonly shareToken: TokenErc20;
-  protected readonly getState: GetStateFn;
+  protected readonly getState: BeefyStateFn;
 
-  constructor(vault: VaultCowcentrated, getState: GetStateFn) {
+  constructor(vault: VaultCowcentrated, getState: BeefyStateFn) {
     if (!isCowcentratedVault(vault)) {
       throw new Error('Vault is not a cowcentrated liquidity vault');
     }

@@ -1,6 +1,6 @@
-import { type Action, type ThunkAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { type Action, createAsyncThunk, type ThunkAction } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
-import { getBeefyDataApi } from '../apis/instances';
+import { getBeefyDataApi, getClmApi } from '../apis/instances';
 import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault';
 import type {
   ApiChartData,
@@ -15,6 +15,11 @@ import { featureFlag_simulateBeefyApiError } from '../utils/feature-flags';
 import { sleep } from '../utils/async-utils';
 import type { ChartStat } from '../../vault/components/HistoricGraph/types';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils';
+import { isMoreThanDurationAgoUnix } from '../../../helpers/date';
+import { getDataApiBucket } from '../apis/beefy/beefy-data-api-helpers';
+import { sub } from 'date-fns';
+import { isClmPriceHistoryEntriesClm } from '../apis/clm/clm-api-typeguards';
+import type { ClmPriceHistoryEntryClm } from '../apis/clm/clm-api-types';
 
 export interface HistoricalRangesPayload {
   vaultId: VaultEntity['id'];
@@ -114,6 +119,7 @@ export const fetchHistoricalPrices = createAsyncThunk<
 
 export interface HistoricalCowcentratedPayload {
   data: ApiCowcentratedChartData;
+  rawData: ClmPriceHistoryEntryClm[];
 }
 
 export interface HistoricalCowcentratedParams {
@@ -128,23 +134,42 @@ export const fetchHistoricalCowcentratedRanges = createAsyncThunk<
 >('historical/fetchHistoricalCowcentratedRanges', async ({ bucket, vaultId }, { getState }) => {
   const state = getState();
   const vault = selectCowcentratedLikeVaultById(state, vaultId);
-  const api = await getBeefyDataApi();
-  const bucketToUse =
-    Date.now() / 1000 - vault.createdAt >= 60 * 60 * 24 * 30 ? bucket : ('1h_1M' as ApiTimeBucket);
+  const api = await getClmApi();
+  const bucketToUse = isMoreThanDurationAgoUnix(vault.createdAt, { days: 30 })
+    ? bucket
+    : ('1h_1M' as const);
+  const { range, maPeriod } = getDataApiBucket(bucketToUse);
+  const clmPeriod = bucketToUse.split('_')[0] as typeof bucketToUse extends `${infer T}_${string}`
+    ? T
+    : never;
 
   const clmAddress = getCowcentratedAddressFromCowcentratedLikeVault(vault);
-  const rawData = await api.getCowcentratedRangesChartData(clmAddress, bucketToUse, vault.chainId);
+  const rawData = await api.getPriceHistoryForVaultSince(
+    vault.chainId,
+    clmAddress,
+    sub(sub(new Date(), range), maPeriod),
+    clmPeriod
+  );
 
-  const data = rawData.map(item => {
-    return {
-      ...item,
-      v: Number(item.v),
-      min: Number(item.min),
-      max: Number(item.max),
-    };
-  }) satisfies ApiCowcentratedChartData;
+  if (rawData.length === 0) {
+    return { data: [], rawData: [] };
+  }
 
-  return { data };
+  if (!isClmPriceHistoryEntriesClm(rawData)) {
+    throw new Error('Expected CLM price history entries');
+  }
+
+  return {
+    data: rawData.map(item => {
+      return {
+        t: item.timestamp,
+        v: Number(item.currentPrice),
+        min: Number(item.rangeMin),
+        max: Number(item.rangeMax),
+      };
+    }),
+    rawData,
+  };
 });
 
 export function fetchHistoricalStat(

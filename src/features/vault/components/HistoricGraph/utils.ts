@@ -48,11 +48,7 @@ export function getBucketParams(bucket: ApiTimeBucket) {
   const startEpoch = getUnixTime(startDate);
   const [intervalKeys, maPeriodKeys] = [interval, maPeriod].map(values => Object.keys(values));
 
-  if (
-    intervalKeys.length !== 1 ||
-    maPeriodKeys.length !== 1 ||
-    intervalKeys[0] !== maPeriodKeys[0]
-  ) {
+  if (intervalKeys.length !== 1 || maPeriodKeys.length !== 1) {
     throw new Error('Invalid bucket interval/maPeriod');
   }
 

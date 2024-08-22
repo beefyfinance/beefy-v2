@@ -350,7 +350,7 @@ export const selectPriceWithChange = createCachedSelector(
     const thisBucket = getDataApiBucket(requestedBucket);
     const possibleBuckets = [thisBucket].concat(getDataApiBucketsLongerThan(requestedBucket));
     const readyBucket = possibleBuckets.find(bucket => {
-      const state = oracle.byTimebucket[bucket.id];
+      const state = oracle.byTimeBucket[bucket.id];
       return state && state.alreadyFulfilled && state.data && state.data.length > 0;
     });
 
@@ -358,7 +358,7 @@ export const selectPriceWithChange = createCachedSelector(
     // (if this bucket doesn't contain the data we want, neither will any other)
     if (readyBucket) {
       const { range } = readyBucket;
-      const data = oracle.byTimebucket[readyBucket.id]!.data!; // we checked we have data already
+      const data = oracle.byTimeBucket[readyBucket.id]!.data!; // we checked we have data already
       const oneRangeAgo = Math.floor(sub(new Date(), range).getTime() / 1000);
       const oneDayAgoPricePoint = orderBy(data, 't', 'asc').find(point => point.t > oneRangeAgo);
 
@@ -378,7 +378,7 @@ export const selectPriceWithChange = createCachedSelector(
     }
 
     const pendingBucket = possibleBuckets.find(bucket => {
-      const state = oracle.byTimebucket[bucket.id];
+      const state = oracle.byTimeBucket[bucket.id];
       return state && state.status === 'pending';
     });
 

@@ -30,7 +30,7 @@ export type TimeBucketsState<T extends AnyChartData = AnyChartData> = {
   available: Record<ApiTimeBucket, boolean>;
   alreadyFulfilled: Record<ApiTimeBucket, boolean>;
   hasData: Record<ApiTimeBucket, boolean>;
-  byTimebucket: {
+  byTimeBucket: {
     [K in ApiTimeBucket]?: TimeBucketState<T>;
   };
 };
@@ -63,7 +63,7 @@ export interface HistoricalState {
   /** tvl by vault id */
   tvls: TimeBucketByVaultIdState<ApiChartData>;
   /** clm position/range by vault id */
-  clm: TimeBucketByVaultIdState<ApiCowcentratedChartData>;
+  clmPositions: TimeBucketByVaultIdState<ApiCowcentratedChartData>;
 }
 
 export type ExtractTimeBucketState<TExtract, TState extends HistoricalState = HistoricalState> = {
