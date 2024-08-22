@@ -27,7 +27,6 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.background.vaults.boost,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
   titleWhite: {
     color: '#fff',
@@ -42,14 +41,6 @@ export const styles = (theme: Theme) => ({
       fontSize: 'inherit',
       display: 'block',
     },
-  },
-  titleButton: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.middle,
-    display: 'flex',
-    alignItems: 'center',
-    columnGap: '8px',
-    cursor: 'pointer',
   },
   boostStats: {
     display: 'grid',
