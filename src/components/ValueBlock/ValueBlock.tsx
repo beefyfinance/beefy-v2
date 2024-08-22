@@ -1,5 +1,5 @@
 import { memo, type ReactNode } from 'react';
-import { Box, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import { styles } from './styles';
 import { ContentLoading } from '../ContentLoading';
@@ -55,9 +55,9 @@ export const ValueBlock = memo(function ValueBlock({
       ) : !loading ? (
         <>{blurred ? '....' : value}</>
       ) : (
-        <Box className={classes.noTextContentLoader}>
+        <div className={classes.noTextContentLoader}>
           <ContentLoading />
-        </Box>
+        </div>
       )}
 
       {usdValue && (

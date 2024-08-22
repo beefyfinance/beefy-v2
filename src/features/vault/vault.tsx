@@ -1,4 +1,4 @@
-import { Container, Hidden, makeStyles } from '@material-ui/core';
+import { Hidden, makeStyles } from '@material-ui/core';
 import type { PropsWithChildren } from 'react';
 import { lazy, memo } from 'react';
 import { Redirect, useParams } from 'react-router';
@@ -27,6 +27,7 @@ import { Explainer } from './components/Explainer/Explainer';
 import { UnstakedClmBannerVault } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
 import { featureFlag_disableRedirect } from '../data/utils/feature-flags';
 import { GamingCards } from './components/GamingCards';
+import { Container } from '../../components/Container/Container';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));

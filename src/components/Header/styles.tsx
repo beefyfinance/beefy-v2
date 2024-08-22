@@ -1,6 +1,9 @@
 import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
+  headerContainer: {
+    flexGrow: 1,
+  },
   navHeader: {
     background: 'transparent',
     boxShadow: 'none',

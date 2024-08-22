@@ -1,4 +1,4 @@
-import { Container, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatLargeUsd } from '../../../../helpers/format';
@@ -13,6 +13,7 @@ import { ReactComponent as MonthlyIcon } from '../../../../images/icons/monthly-
 import { selectUserTotalYieldUsd } from '../../../data/selectors/balance';
 import { AddressInput } from '../AddressInput';
 import { ShortAddress } from '../ShortAddress';
+import { Container } from '../../../../components/Container/Container';
 
 const useStyles = makeStyles(styles);
 

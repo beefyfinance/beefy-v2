@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Container, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { Filters } from './components/Filters';
 import { Portfolio } from './components/Portfolio';
 import { Loading } from './components/Loading';
@@ -9,6 +9,7 @@ import { Vaults } from './components/Vaults';
 import { useAppSelector } from '../../store';
 import { Banners } from './components/Banners';
 import { HomeMeta } from '../../components/Meta/HomeMeta';
+import { Container } from '../../components/Container/Container';
 
 const useStyles = makeStyles(styles);
 

@@ -1,8 +1,9 @@
 import { memo } from 'react';
 import { BusdBannerHome } from '../../../../components/Banners/BusdBanner';
-import { Container, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 // import { AnnouncementBanner } from '../../../../components/Banners/AnnouncementBanner';
 import { UnstakedClmBanner } from '../../../../components/Banners/UnstakedClmBanner/UnstakedClmBanner';
+import { Container } from '../../../../components/Container/Container';
 
 const useStyles = makeStyles(() => ({
   banners: {

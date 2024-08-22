@@ -1,14 +1,6 @@
 import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  AppBar,
-  Box,
-  Container,
-  Hidden,
-  makeStyles,
-  Toolbar,
-  useMediaQuery,
-} from '@material-ui/core';
+import { AppBar, Hidden, makeStyles, Toolbar, useMediaQuery } from '@material-ui/core';
 import clsx from 'clsx';
 import { styles } from './styles';
 import { NavItem } from './components/NavItem';
@@ -33,6 +25,7 @@ import { UnreadProposalDot, UnreadArticleDot } from './components/Badges/UnreadD
 import { fetchLastArticle } from '../../features/data/actions/articles';
 import headerLogoMobile from '../../images/bifi-logos/header-logo-notext.svg';
 import headerLogoDesktop from '../../images/bifi-logos/header-logo.svg';
+import { Container } from '../Container/Container';
 
 const useStyles = makeStyles(styles);
 export const Header = memo(function Header() {
@@ -55,7 +48,7 @@ export const Header = memo(function Header() {
   }, [dispatch, shoudLoadArticles]);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <div className={classes.headerContainer}>
       <AppBar className={clsx([classes.navHeader, classes.hasPortfolio])} position="static">
         <Container className={classes.container} maxWidth="lg">
           <Toolbar className={classes.content} disableGutters={true}>
@@ -99,6 +92,6 @@ export const Header = memo(function Header() {
           </Toolbar>
         </Container>
       </AppBar>
-    </Box>
+    </div>
   );
 });

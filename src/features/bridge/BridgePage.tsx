@@ -1,10 +1,11 @@
 import { memo } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Container, Hidden } from '@material-ui/core';
+import { Hidden } from '@material-ui/core';
 import { styles } from './styles';
 import Introduction from './components/Introduction';
 import Bridge from './components/Bridge';
 import PoweredBy from './components/PoweredBy';
+import { Container } from '../../components/Container/Container';
 
 const useStyles = makeStyles(styles);
 

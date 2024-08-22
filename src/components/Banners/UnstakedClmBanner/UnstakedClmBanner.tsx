@@ -17,10 +17,11 @@ import { ButtonLink, InternalLink } from '../Links/Links';
 import { filteredVaultsActions } from '../../../features/data/reducers/filtered-vaults';
 import { selectTokenByAddress } from '../../../features/data/selectors/tokens';
 import type { Theme } from '@material-ui/core';
-import { Container, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { selectVaultById } from '../../../features/data/selectors/vaults';
 import { ClmVaultBanner } from '../ClmVaultBanner/ClmVaultBanner';
 import { useHistory } from 'react-router-dom';
+import { Container } from '../../Container/Container';
 
 const variant: BannerProps['variant'] = 'warning';
 

@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Container } from '@material-ui/core';
 import { styles } from './styles';
 import Introduction from './components/Introduction';
 import OnRamp from './components/OnRamp';
+import { Container } from '../../components/Container/Container';
 
 const useStyles = makeStyles(styles);
 
