@@ -1,5 +1,6 @@
 import type { BigNumber } from 'bignumber.js';
 import type { UserLpBreakdownBalanceAsset } from './balance-types';
+import type { PnLBreakdown } from '../../../helpers/pnl';
 
 export type UserStandardPnl = {
   type: 'standard';
@@ -46,6 +47,15 @@ export type UserClmPnl = {
   total0CompoundedUsd: BigNumber;
   total1CompoundedUsd: BigNumber;
   totalCompoundedUsd: BigNumber;
+  realizedPnl: {
+    position: PnLBreakdown;
+    claims: {
+      totalUsd: BigNumber;
+      claimedTokens: {
+        [token: string]: BigNumber;
+      };
+    };
+  };
 };
 
 export type UserVaultPnl = UserStandardPnl | UserGovPnl | UserClmPnl;

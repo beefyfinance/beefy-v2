@@ -407,6 +407,7 @@ class ClmInvestorOverviewTimeSeriesGenerator {
         token1ToUsd: tx.token1ToUsd,
         token0Amount: tx.underlying0Diff,
         token1Amount: tx.underlying1Diff,
+        claims: [],
       });
 
       const { remainingToken0, remainingToken1, remainingShares } = pnl.getRemainingShares();

@@ -1,5 +1,5 @@
 import { createCachedSelector } from 're-reselect';
-import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
+import { BIG_ONE, BIG_ZERO, bigNumberToStringDeep } from '../../../helpers/big-number';
 import { ClmPnl, PnL } from '../../../helpers/pnl';
 import type { BeefyState } from '../../../redux-types';
 import type { TimeBucketType } from '../apis/analytics/analytics-types';
@@ -267,6 +267,7 @@ export const selectClmPnl = (
         token1ToUsd: tx.token1ToUsd,
         token0Amount: tx.underlying0Diff,
         token1Amount: tx.underlying1Diff,
+        claims: tx.rewardPoolClaimedDetails,
       });
     }
   }
@@ -305,6 +306,7 @@ export const selectClmPnl = (
         totalCompoundedUsd: BIG_ZERO,
       };
 
+  const realizedPnl = pnl.getRealizedPnl();
   return {
     type: 'cowcentrated',
     sharesAtDeposit,
@@ -326,6 +328,7 @@ export const selectClmPnl = (
     hold,
     holdDiff: sharesNowInUsd.minus(hold),
     ...compoundedYield,
+    realizedPnl,
   };
 };
 

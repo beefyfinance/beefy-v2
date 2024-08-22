@@ -73,6 +73,16 @@ export type TimelineConfigClm = TimelineConfigCommon & {
     reward_pool_diff: string;
   }> | null;
 
+  /** amounts claimed from reward pool */
+  reward_pool_claim_details: Array<{
+    reward_address: string;
+    reward_to_usd: string;
+    claimed_amount: string;
+  }>;
+
+  /** reward pool from where rewards were claimed */
+  claimed_reward_pool: string | undefined;
+
   actions: TimelineActionClm[];
 };
 

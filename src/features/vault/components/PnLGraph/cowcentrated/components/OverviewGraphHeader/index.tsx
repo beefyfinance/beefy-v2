@@ -43,7 +43,11 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
     pnl,
     hold,
     holdDiff,
+    realizedPnl,
   } = useAppSelector(state => selectClmPnl(state, vaultId));
+
+  const pnlWithRewards = pnl.plus(realizedPnl.claims.totalUsd);
+  const holdDiffWithRewards = pnlWithRewards.minus(holdDiff);
 
   return (
     <div className={classes.statsContainer}>
@@ -106,6 +110,21 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
                   <div className={classes.label}>{t('CLM VS HOLD')}</div>
                   <div className={classes.value}>
                     {formatPositiveOrNegative(holdDiff, formatLargeUsd(holdDiff))}
+                  </div>
+                </div>
+                <div className={classes.itemContainer}>
+                  <div className={classes.label}>{t('CLM+R VS HOLD')}</div>
+                  <div className={classes.value}>
+                    {formatPositiveOrNegative(
+                      holdDiffWithRewards,
+                      formatLargeUsd(holdDiffWithRewards)
+                    )}
+                  </div>
+                </div>
+                <div className={classes.itemContainer}>
+                  <div className={classes.label}>{t('PNL+R')}</div>
+                  <div className={classes.value}>
+                    {formatPositiveOrNegative(pnlWithRewards, formatLargeUsd(pnlWithRewards))}
                   </div>
                 </div>
               </div>

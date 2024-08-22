@@ -290,6 +290,7 @@ function handleCowcentratedPoolTimeline(
               underlying1PerShare,
               usdPerShare,
               vaultId: pool.id,
+              rewardPoolClaimedDetails: tx.rewardPoolClaimedDetails,
             };
           })
           .filter(isDefined);
@@ -361,6 +362,12 @@ export const fetchWalletTimeline = createAsyncThunk<
                 rewardPoolBalance: new BigNumber(row.reward_pool_total.reward_pool_balance || 0),
                 rewardPoolDiff: new BigNumber(row.reward_pool_total.reward_pool_diff || 0),
                 rewardPoolDetails,
+                rewardPoolClaimedDetails: row.reward_pool_claim_details.map(claim => ({
+                  address: claim.reward_address,
+                  rewardToUsd: new BigNumber(claim.reward_to_usd),
+                  claimedAmount: new BigNumber(claim.claimed_amount),
+                })),
+                claimedRewardPool: row.claimed_reward_pool,
               }
             : { hasRewardPool: false };
 
