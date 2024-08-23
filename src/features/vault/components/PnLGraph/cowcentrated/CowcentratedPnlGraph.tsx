@@ -1,5 +1,9 @@
 import { type FC, memo, useEffect, useMemo, useState } from 'react';
-import type { VaultEntity } from '../../../../data/entities/vault';
+import {
+  isCowcentratedGovVault,
+  isCowcentratedStandardVault,
+  type VaultEntity,
+} from '../../../../data/entities/vault';
 import { Card, CardContent, CardHeader, CardTitle } from '../../Card';
 import { useTranslation } from 'react-i18next';
 import { StatSwitcher } from '../../StatSwitcher';
@@ -77,6 +81,7 @@ export const OverviewGraph = memo<CowcentratedPnlGraphProps>(function OverviewGr
   address,
 }) {
   const classes = useStyles();
+  const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
   const labels = useVaultPeriodsOverviewGraph(vaultId, address);
   const [period, setPeriod] = useState<number>(labels.length - 1);
   const canShowGraph = labels.length > 0;
@@ -94,7 +99,12 @@ export const OverviewGraph = memo<CowcentratedPnlGraphProps>(function OverviewGr
         )}
       </div>
       {canShowGraph ? (
-        <OverviewFooter labels={labels} period={period} handlePeriod={setPeriod} />
+        <OverviewFooter
+          labels={labels}
+          period={period}
+          handlePeriod={setPeriod}
+          position={isCowcentratedStandardVault(vault)}
+        />
       ) : null}
     </CardContent>
   );
@@ -138,23 +148,22 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
   const [stat, setStat] = useState<ChartType>('overview');
   const { t } = useTranslation();
   const classes = useStyles();
-  const { strategyTypeId } = useAppSelector(state =>
-    selectCowcentratedLikeVaultById(state, vaultId)
-  );
+  const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
+  const compounds = vault.strategyTypeId === 'compounds' && isCowcentratedGovVault(vault); // TODO implement for CLM vaults || isCowcentratedStandardVault(vault);
 
   useEffect(() => {
-    if (strategyTypeId === 'compounds') {
+    if (compounds) {
       dispatch(fetchClmHarvestsForUserVault({ vaultId, walletAddress: address }));
     }
     dispatch(fetchClmPendingRewards({ vaultId }));
-  }, [dispatch, vaultId, address, strategyTypeId]);
+  }, [dispatch, vaultId, address, compounds]);
 
   const options = useMemo(() => {
     return {
       overview: t('Graph-Overview'),
-      ...(strategyTypeId === 'compounds' ? { fees: t('Graph-Fees') } : {}),
+      ...(compounds ? { fees: t('Graph-Fees') } : {}),
     };
-  }, [t, strategyTypeId]);
+  }, [t, compounds]);
 
   const GraphComponent = chartToComponent[stat];
 
@@ -176,6 +185,7 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
 export const DashboardOverviewGraph = memo<CowcentratedPnlGraphProps>(
   function DashboardOverviewGraph({ vaultId, address }) {
     const classes = useStyles();
+    const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
     const labels = useVaultPeriodsOverviewGraph(vaultId, address);
     const [period, setPeriod] = useState<number>(labels.length - 1);
     const canShowGraph = labels.length > 0;
@@ -191,6 +201,7 @@ export const DashboardOverviewGraph = memo<CowcentratedPnlGraphProps>(
               labels={labels}
               period={period}
               handlePeriod={setPeriod}
+              position={isCowcentratedStandardVault(vault)}
             />
           </>
         ) : (

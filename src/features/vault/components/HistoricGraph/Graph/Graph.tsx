@@ -17,7 +17,7 @@ import type { Theme } from '@material-ui/core';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { format, fromUnixTime } from 'date-fns';
 import { XAxisTick } from '../../../../../components/XAxisTick';
-import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../helpers/graph';
+import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../helpers/graph/graph';
 import {
   formatPercent,
   formatTokenDisplayCondensed,

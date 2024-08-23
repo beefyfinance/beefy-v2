@@ -2,8 +2,8 @@ import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../store';
 import { selectHasDataToShowGraphByVaultId } from '../../../../../data/selectors/analytics';
 import {
-  isCowcentratedGovVault,
-  isCowcentratedVault,
+  isCowcentratedLikeVault,
+  isCowcentratedStandardVault,
   type VaultEntity,
 } from '../../../../../data/entities/vault';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
@@ -24,8 +24,7 @@ export function useChartOptions(vaultId: VaultEntity['id'], address: string) {
   );
 
   return useMemo(() => {
-    const typeOfCharts =
-      isCowcentratedGovVault(vault) || isCowcentratedVault(vault) ? 'cowcentrated' : vault.type; // TODO fix when we move to subgraph analytics
+    const typeOfCharts = isCowcentratedLikeVault(vault) ? 'cowcentrated' : vault.type;
 
     const PositionGraph =
       typeOfCharts === 'cowcentrated' ? DashboardOverviewGraph : DashboardPnLGraph;
@@ -36,7 +35,8 @@ export function useChartOptions(vaultId: VaultEntity['id'], address: string) {
       availableCharts['positionChart'] = t('Dashboard-Chart');
       if (typeOfCharts === 'cowcentrated') {
         availableCharts['positionChart'] = t('Dashboard-PositionChart');
-        if (vault.strategyTypeId === 'compounds') {
+        if (vault.strategyTypeId === 'compounds' && !isCowcentratedStandardVault(vault)) {
+          // TODO implement for CLM vaults
           availableCharts['compoundsChart'] = t('Dashboard-CompoundsChart');
         }
       }

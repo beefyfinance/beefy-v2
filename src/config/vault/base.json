@@ -1,5 +1,353 @@
 [
   {
+    "id": "baseswap-cow-usdz-usdc-vault",
+    "name": "USDz-USDC",
+    "type": "standard",
+    "token": "USDz-USDC",
+    "tokenAddress": "0x4d5BA51e708F511204314E70fC60DE404faCeE55",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "earnedToken": "mooBeefyBaseSwapUSDz-USDC",
+    "earnedTokenAddress": "0xA9e9fF6d6cd31F76E85C685364bE77A33bb7a94e",
+    "earnContractAddress": "0xA9e9fF6d6cd31F76E85C685364bE77A33bb7a94e",
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-usdz-usdc",
+    "status": "active",
+    "platformId": "baseswap",
+    "assets": ["USDz", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1724409190,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-usdz-usdc-rp",
+    "name": "USDz-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowBaseSwapUSDz-USDC",
+    "tokenAddress": "0x4d5BA51e708F511204314E70fC60DE404faCeE55",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "earnContractAddress": "0x37797Cd3324A25aeea2619a5989Cdb9dc0973cf9",
+    "earnedToken": "rcowBaseSwapUSDz-USDC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-usdz-usdc",
+    "status": "active",
+    "createdAt": 1724409189,
+    "platformId": "baseswap",
+    "assets": ["USDz", "USDC"],
+    "risks": ["IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-usdz-usdc",
+    "name": "USDz-USDC",
+    "type": "cowcentrated",
+    "token": "USDz-USDC",
+    "tokenAddress": "0xf9A72fd5C30112aF583b86b190B2D776B6C3c056",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "depositTokenAddresses": [
+      "0x04D5ddf5f3a8939889F11E97f8c4BB48317F1938",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnedToken": "cowBaseSwapUSDz-USDC",
+    "earnedTokenAddress": "0x4d5BA51e708F511204314E70fC60DE404faCeE55",
+    "earnContractAddress": "0x4d5BA51e708F511204314E70fC60DE404faCeE55",
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-usdz-usdc",
+    "status": "active",
+    "createdAt": 1724409189,
+    "platformId": "baseswap",
+    "assets": ["USDz", "USDC"],
+    "risks": ["IL_LOW", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "feeTier": "0.008",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-usdc-usd+-vault",
+    "name": "USD+-USDC",
+    "type": "standard",
+    "token": "USD+-USDC",
+    "tokenAddress": "0x4B0BC467F1aFA6aeA39f1520478C512C98A667E5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "earnedToken": "mooBeefyBaseSwapUSDC-USD+",
+    "earnedTokenAddress": "0xfeDF12b4EadE16a700b9a30cA029068488E4d691",
+    "earnContractAddress": "0xfeDF12b4EadE16a700b9a30cA029068488E4d691",
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-usdc-usd+",
+    "status": "active",
+    "platformId": "baseswap",
+    "assets": ["USD+", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1724409190,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-usdc-usd+-rp",
+    "name": "USD+-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowBaseSwapUSDC-USD+",
+    "tokenAddress": "0x4B0BC467F1aFA6aeA39f1520478C512C98A667E5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "earnContractAddress": "0xAf6945adFcc2b8604503f60521BBC33d68cE905F",
+    "earnedToken": "rcowBaseSwapUSDC-USD+",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-usdc-usd+",
+    "status": "active",
+    "createdAt": 1724409189,
+    "platformId": "baseswap",
+    "assets": ["USD+", "USDC"],
+    "risks": ["IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-usdc-usd+",
+    "name": "USD+-USDC",
+    "type": "cowcentrated",
+    "token": "USD+-USDC",
+    "tokenAddress": "0x273FDFE6018230F188741D7F93d4Ab589bD26197",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376"
+    ],
+    "earnedToken": "cowBaseSwapUSDC-USD+",
+    "earnedTokenAddress": "0x4B0BC467F1aFA6aeA39f1520478C512C98A667E5",
+    "earnContractAddress": "0x4B0BC467F1aFA6aeA39f1520478C512C98A667E5",
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-usdc-usd+",
+    "status": "active",
+    "createdAt": 1724409189,
+    "platformId": "baseswap",
+    "assets": ["USD+", "USDC"],
+    "risks": ["IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "feeTier": "0.008",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-usd+-usdbc-vault",
+    "name": "USD+-USDbC",
+    "type": "standard",
+    "token": "USD+-USDbC",
+    "tokenAddress": "0x7ca389a2a4ea3074261Bb1f57421D0513CBA46cB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "earnedToken": "mooBeefyBaseSwapUSD+-USDbC",
+    "earnedTokenAddress": "0x334D9B1824698F62515671B611bBb864156a89f8",
+    "earnContractAddress": "0x334D9B1824698F62515671B611bBb864156a89f8",
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-usd+-usdbc",
+    "status": "active",
+    "platformId": "baseswap",
+    "assets": ["USD+", "USDbC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1724409190,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-usd+-usdbc-rp",
+    "name": "USD+-USDbC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowBaseSwapUSD+-USDbC",
+    "tokenAddress": "0x7ca389a2a4ea3074261Bb1f57421D0513CBA46cB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "earnContractAddress": "0xA3755d23C9A3AB9958E59899903CE1a9cf18A89b",
+    "earnedToken": "rcowBaseSwapUSD+-USDbC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-usd+-usdbc",
+    "status": "active",
+    "createdAt": 1724409189,
+    "platformId": "baseswap",
+    "assets": ["USD+", "USDbC"],
+    "risks": ["IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-usd+-usdbc",
+    "name": "USD+-USDbC",
+    "type": "cowcentrated",
+    "token": "USD+-USDbC",
+    "tokenAddress": "0x75A50f51d49045d7F00E660d0Ad7244CcfE4d372",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "depositTokenAddresses": [
+      "0xB79DD08EA68A908A97220C76d19A6aA9cBDE4376",
+      "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA"
+    ],
+    "earnedToken": "cowBaseSwapUSD+-USDbC",
+    "earnedTokenAddress": "0x7ca389a2a4ea3074261Bb1f57421D0513CBA46cB",
+    "earnContractAddress": "0x7ca389a2a4ea3074261Bb1f57421D0513CBA46cB",
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-usd+-usdbc",
+    "status": "active",
+    "createdAt": 1724409189,
+    "platformId": "baseswap",
+    "assets": ["USD+", "USDbC"],
+    "risks": ["IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "feeTier": "0.008",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-weth-usdc-vault",
+    "name": "WETH-USDC",
+    "type": "standard",
+    "token": "WETH-USDC",
+    "tokenAddress": "0x05f913352b84e5f83Ec33EB9D3a3Cb8fB1363F5C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "earnedToken": "mooBeefyBaseSwapWETH-USDC",
+    "earnedTokenAddress": "0x60fbbCea5c3C76D489Fc69c60f9E0a2F66E5d87f",
+    "earnContractAddress": "0x60fbbCea5c3C76D489Fc69c60f9E0a2F66E5d87f",
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-weth-usdc",
+    "status": "active",
+    "platformId": "baseswap",
+    "assets": ["WETH", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1724409190,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-weth-usdc-rp",
+    "name": "WETH-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowBaseSwapWETH-USDC",
+    "tokenAddress": "0x05f913352b84e5f83Ec33EB9D3a3Cb8fB1363F5C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "earnContractAddress": "0x46BcD65aaE38B9cc8acbFAd8A1C634a8c6087E62",
+    "earnedToken": "rcowBaseSwapWETH-USDC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-weth-usdc",
+    "status": "active",
+    "createdAt": 1724409189,
+    "platformId": "baseswap",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-weth-usdc",
+    "name": "WETH-USDC",
+    "type": "cowcentrated",
+    "token": "WETH-USDC",
+    "tokenAddress": "0x74cb6260Be6F31965C239Df6d6Ef2Ac2B5D4f020",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnedToken": "cowBaseSwapWETH-USDC",
+    "earnedTokenAddress": "0x05f913352b84e5f83Ec33EB9D3a3Cb8fB1363F5C",
+    "earnContractAddress": "0x05f913352b84e5f83Ec33EB9D3a3Cb8fB1363F5C",
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-weth-usdc",
+    "status": "active",
+    "createdAt": 1724409189,
+    "platformId": "baseswap",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "feeTier": "0.008",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-eurc-usdc",
     "name": "EURC-USDC vLP",
     "token": "vAMM-EURC/USDC",

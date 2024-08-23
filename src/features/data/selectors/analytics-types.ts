@@ -1,6 +1,7 @@
 import type { BigNumber } from 'bignumber.js';
 import type { UserLpBreakdownBalanceAsset } from './balance-types';
 import type { PnLBreakdown } from '../../../helpers/pnl';
+import type { TokenEntity } from '../entities/token';
 
 export type UserStandardPnl = {
   type: 'standard';
@@ -24,16 +25,22 @@ export type UserGovPnl = {
 
 export type UserClmPnl = {
   type: 'cowcentrated';
+  underlyingToken: TokenEntity;
   sharesAtDeposit: BigNumber;
+  underlyingAtDeposit: BigNumber;
+  underlyingAtDepositInUsd: BigNumber;
   token0AtDepositPrice: BigNumber;
   token1AtDepositPrice: BigNumber;
   token0AtDeposit: BigNumber;
   token1AtDeposit: BigNumber;
   token0AtDepositInUsd: BigNumber;
   token1AtDepositInUsd: BigNumber;
-  sharesAtDepositInUsd: BigNumber;
   sharesNow: BigNumber;
-  sharesNowInUsd: BigNumber;
+  underlyingNow: BigNumber;
+  underlyingNowPrice: BigNumber;
+  underlyingNowInUsd: BigNumber;
+  token0Now: BigNumber;
+  token1Now: BigNumber;
   token0: UserLpBreakdownBalanceAsset;
   token1: UserLpBreakdownBalanceAsset;
   token0Diff: BigNumber;
@@ -42,10 +49,12 @@ export type UserClmPnl = {
   pnlPercentage: BigNumber;
   hold: BigNumber;
   holdDiff: BigNumber;
+  totalUnderlyingCompounded: BigNumber;
   total0Compounded: BigNumber;
   total1Compounded: BigNumber;
   total0CompoundedUsd: BigNumber;
   total1CompoundedUsd: BigNumber;
+  totalUnderlyingCompoundedUsd: BigNumber;
   totalCompoundedUsd: BigNumber;
   realizedPnl: {
     position: PnLBreakdown;

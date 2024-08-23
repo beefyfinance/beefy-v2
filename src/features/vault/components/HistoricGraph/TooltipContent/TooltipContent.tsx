@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next';
 import { getBucketParams } from '../utils';
 import { styles } from './styles';
 import clsx from 'clsx';
-import type { RechartsTooltipProps } from '../../../../../helpers/graph';
 import type { ChartDataPoint, ChartStat } from '../types';
+import type { RechartsTooltipProps } from '../../../../../helpers/graph/types';
 
 const useStyles = makeStyles(styles);
 

@@ -13,9 +13,9 @@ import { fetchHistoricalPrices, fetchHistoricalStat } from '../actions/historica
 import { type VaultEntity } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
 import { selectTokenByAddress } from '../selectors/tokens';
-import type { GraphBucket } from '../../../helpers/graph';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import type { ChartStat } from '../../vault/components/HistoricGraph/types';
+import type { GraphBucket } from '../../../helpers/graph/types';
 
 export function useOracleIdToUsdPrices(oracleId: TokenEntity['oracleId'], bucket: GraphBucket) {
   const dispatch = useAppDispatch();

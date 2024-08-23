@@ -1,15 +1,14 @@
 import type { BeefyState } from '../../../redux-types';
 import {
   fetchClmHarvestsForUser,
-  fetchClmHarvestsForUserChain,
-  fetchClmHarvestsForUserVault,
+  fetchClmHarvestsForVaultsOfUserOnChain,
   fetchWalletTimeline,
-  recalculateClmHarvestsForUserVaultId,
+  recalculateClmPoolHarvestsForUserVaultId,
 } from '../actions/analytics';
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import {
-  selectIsConfigAvailable,
   selectIsAddressBookLoadedGlobal,
+  selectIsConfigAvailable,
   selectIsUserBalanceAvailable,
   selectIsWalletTimelineForUserPending,
   selectIsWalletTimelineForUserRecent,
@@ -96,20 +95,15 @@ analyticsListener.startListening({
  * Recalculate each vaults autocompounded amounts after fetching the CLM harvests for the user
  */
 analyticsListener.startListening({
-  actionCreator: fetchClmHarvestsForUserChain.fulfilled,
+  actionCreator: fetchClmHarvestsForVaultsOfUserOnChain.fulfilled,
   effect: async (action, { dispatch }) => {
     const walletAddress = action.meta.arg.walletAddress;
-    for (const { vaultId } of action.payload) {
-      dispatch(recalculateClmHarvestsForUserVaultId({ walletAddress, vaultId }));
+    for (const { vaultId, type } of action.payload) {
+      if (type === 'clm') {
+        dispatch(recalculateClmPoolHarvestsForUserVaultId({ walletAddress, vaultId }));
+      }
+      // TODO CLM Vaults aka classic
     }
-  },
-});
-
-analyticsListener.startListening({
-  actionCreator: fetchClmHarvestsForUserVault.fulfilled,
-  effect: async (action, { dispatch }) => {
-    const { vaultId, walletAddress } = action.meta.arg;
-    dispatch(recalculateClmHarvestsForUserVaultId({ walletAddress, vaultId }));
   },
 });
 

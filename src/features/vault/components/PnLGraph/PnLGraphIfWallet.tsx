@@ -35,12 +35,12 @@ type PnLGraphProps = {
 export const PnLGraph = memo<PnLGraphProps>(function PnLGraph({ vaultId, walletAddress }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
-  if (isStandardVault(vault)) {
-    return <StandardPnLGraphLoader vaultId={vaultId} address={walletAddress} />;
-  }
-
   if (isCowcentratedLikeVault(vault)) {
     return <CowcentratedPnlGraphLoader vaultId={vaultId} address={walletAddress} />;
+  }
+
+  if (isStandardVault(vault)) {
+    return <StandardPnLGraphLoader vaultId={vaultId} address={walletAddress} />;
   }
 
   return null;

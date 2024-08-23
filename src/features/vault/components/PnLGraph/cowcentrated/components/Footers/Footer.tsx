@@ -18,12 +18,17 @@ interface CommonFooterProps {
   tabsClassName?: string;
 }
 
-export const OverviewFooter = memo<CommonFooterProps>(function Footer({
+interface OverviewFooterProps extends CommonFooterProps {
+  position: boolean;
+}
+
+export const OverviewFooter = memo<OverviewFooterProps>(function OverviewFooter({
   period,
   handlePeriod,
   labels,
   className,
   tabsClassName,
+  position,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -31,6 +36,12 @@ export const OverviewFooter = memo<CommonFooterProps>(function Footer({
   return (
     <div className={clsx(classes.footer, className)}>
       <div className={classes.legendContainer}>
+        {position ? (
+          <>
+            <div className={classes.positionReferenceLine} />
+            {t('Position')}
+          </>
+        ) : null}
         <div className={classes.usdReferenceLine} />
         {t('Position Value')}
         <div className={classes.holdReferenceLine} />

@@ -29,9 +29,10 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
   const { t } = useTranslation();
 
   const {
-    sharesNow,
-    sharesAtDepositInUsd,
-    sharesNowInUsd,
+    underlyingAtDeposit,
+    underlyingAtDepositInUsd,
+    underlyingNow,
+    underlyingNowInUsd,
     token0AtDepositInUsd,
     token1AtDepositInUsd,
     token0AtDeposit,
@@ -60,10 +61,10 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
         value1={`${formatTokenDisplayCondensed(token1AtDeposit, token1.decimals, 6)} ${
           token1.symbol
         }`}
-        value2={formatTokenDisplayCondensed(sharesNow, 18, 6)}
+        value2={formatTokenDisplayCondensed(underlyingAtDeposit, 18, 6)}
         subValue0={formatLargeUsd(token0AtDepositInUsd)}
         subValue1={formatLargeUsd(token1AtDepositInUsd)}
-        subValue2={formatLargeUsd(sharesAtDepositInUsd)}
+        subValue2={formatLargeUsd(underlyingAtDepositInUsd)}
       />
       <Stat
         tooltipText={t('pnl-graph-tooltip-now-clm')}
@@ -74,10 +75,10 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
         value1={`${formatTokenDisplayCondensed(token1.userAmount, token1.decimals, 6)} ${
           token1.symbol
         }`}
-        value2={formatTokenDisplayCondensed(sharesNow, 18, 6)}
+        value2={formatTokenDisplayCondensed(underlyingNow, 18, 6)}
         subValue0={formatLargeUsd(token0.userValue)}
         subValue1={formatLargeUsd(token1.userValue)}
-        subValue2={formatLargeUsd(sharesNowInUsd)}
+        subValue2={formatLargeUsd(underlyingNowInUsd)}
       />
       <Stat
         tooltipText={t('pnl-graph-tooltip-change-clm')}

@@ -7,15 +7,16 @@ import {
 } from '../../../../../../data/selectors/analytics';
 import { selectWalletAddress } from '../../../../../../data/selectors/wallet';
 import { maxBy, minBy } from 'lodash-es';
-import { getClmInvestorFeesTimeSeries } from '../../../../../../../helpers/timeserie';
+import { getClmInvestorFeesTimeSeries } from '../../../../../../../helpers/graph/timeseries';
 import { differenceInHours } from 'date-fns';
-import type { GraphBucket } from '../../../../../../../helpers/graph';
+
+import type { GraphBucket } from '../../../../../../../helpers/graph/types';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], tokens: [], minUsd: 0, maxUsd: 0 };
 
 export const useFeesChartData = (
-  timebucket: GraphBucket,
+  timeBucket: GraphBucket,
   vaultId: VaultEntity['id'],
   address?: string
 ) => {
@@ -31,7 +32,7 @@ export const useFeesChartData = (
   const chartData = useMemo(() => {
     if (userHarvestTimeline) {
       const data = getClmInvestorFeesTimeSeries(
-        timebucket,
+        timeBucket,
         userHarvestTimeline,
         firstDepositDate || new Date()
       );
@@ -51,7 +52,7 @@ export const useFeesChartData = (
     // This save us from re-rendering when data is loading
     // We need to make sure this object is not modified elsewhere
     return NO_CHART_DATA;
-  }, [userHarvestTimeline, timebucket, firstDepositDate]);
+  }, [userHarvestTimeline, timeBucket, firstDepositDate]);
 
   return { chartData, isLoading };
 };

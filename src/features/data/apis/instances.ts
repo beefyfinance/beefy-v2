@@ -26,14 +26,14 @@ export const getConfigApi = createDependencyFactory(
   () => import('./config')
 );
 
-export const getAnalyticsApi = createDependencyFactory(
-  async ({ AnalyticsApi }) => new AnalyticsApi(),
-  () => import('./analytics/analytics')
+export const getDatabarnApi = createDependencyFactory(
+  async ({ DatabarnApi }) => new DatabarnApi(),
+  () => import('./databarn/databarn-api')
 );
 
 export const getClmApi = createDependencyFactory(
   async ({ ClmApi }) => new ClmApi(),
-  () => import('./clm-api/clm-api')
+  () => import('./clm/clm-api')
 );
 
 export const getBeefyDataApi = createDependencyFactory(

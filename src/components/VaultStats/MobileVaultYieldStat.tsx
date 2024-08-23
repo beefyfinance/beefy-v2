@@ -42,6 +42,7 @@ export const MobileVaultYieldStat = memo<MobileVaultYieldStatProps>(function Mob
     isGovVault(vault) &&
     (!isCowcentratedGovVault(vault) || vault.strategyTypeId !== 'compounds')
   ) {
+    // No compounded yield for gov vaults except compounding CLM Pools
     return null;
   }
 

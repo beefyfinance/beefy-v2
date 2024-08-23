@@ -1,103 +1,225 @@
 import { useMemo } from 'react';
 import { useAppSelector } from '../../../../../../../store';
-import { type VaultEntity } from '../../../../../../data/entities/vault';
+import {
+  isCowcentratedStandardVault,
+  type VaultEntity,
+} from '../../../../../../data/entities/vault';
 import {
   selectCowcentratedLikeVaultDepositTokensWithPrices,
   selectDepositTokenByVaultId,
   selectTokenPriceByTokenOracleId,
 } from '../../../../../../data/selectors/tokens';
 import { selectWalletAddress } from '../../../../../../data/selectors/wallet';
-import { maxBy, minBy } from 'lodash-es';
-import { getClmInvestorTimeSeries } from '../../../../../../../helpers/timeserie';
-import { isTimelineEntityCowcentratedPool } from '../../../../../../data/entities/analytics';
+import { getClmInvestorTimeSeries } from '../../../../../../../helpers/graph/timeseries';
+import { isTimelineEntityCowcentrated } from '../../../../../../data/entities/analytics';
 import { useOracleIdToUsdPrices } from '../../../../../../data/hooks/historical';
-import type { GraphBucket } from '../../../../../../../helpers/graph';
 import { useVaultPeriods } from '../../../standard/hooks';
-import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../../../../data/selectors/balance';
 import {
   selectClmPnl,
   selectUserDepositedTimelineByVaultId,
 } from '../../../../../../data/selectors/analytics';
+import { maxOf, minOf } from '../../../../../../../helpers/collection';
+import type { GraphBucket } from '../../../../../../../helpers/graph/types';
+import {
+  selectCowcentratedLikeVaultById,
+  selectStandardCowcentratedVaultById,
+  selectVaultPricePerFullShare,
+} from '../../../../../../data/selectors/vaults';
+import {
+  useVaultIdToClassicPriceHistory,
+  useVaultIdToClmPriceHistory,
+} from '../../../../../../data/hooks/analytics';
 
 // Same object reference for empty chart data
-export const NO_CHART_DATA = { data: [], minUsd: 0, maxUsd: 0 };
+export const NO_CHART_DATA = {
+  data: [],
+  minUsd: 0,
+  maxUsd: 0,
+  minUnderlying: 0,
+  maxUnderlying: 0,
+  type: 'pool',
+};
+
+function useCowcentratedData(
+  clmId: string,
+  depositTokenOracleId: string,
+  token0OracleId: string,
+  token1OracleId: string,
+  timeBucket: GraphBucket
+) {
+  const {
+    data: underlyingToUsd,
+    loading: underlyingToUsdLoading,
+    willRetry: underlyingToUsdWillRetry,
+  } = useOracleIdToUsdPrices(depositTokenOracleId, timeBucket);
+  const {
+    data: token0ToUsd,
+    loading: token0ToUsdLoading,
+    willRetry: token0ToUsdWillRetry,
+  } = useOracleIdToUsdPrices(token0OracleId, timeBucket);
+  const {
+    data: token1ToUsd,
+    loading: token1ToUsdLoading,
+    willRetry: token1ToUsdWillRetry,
+  } = useOracleIdToUsdPrices(token1OracleId, timeBucket);
+  const {
+    data: clmHistory,
+    loading: clmHistoryLoading,
+    willRetry: clmHistoryWillRetry,
+  } = useVaultIdToClmPriceHistory(clmId, timeBucket);
+  const isLoading =
+    underlyingToUsdLoading || token0ToUsdLoading || token1ToUsdLoading || clmHistoryLoading;
+  const willRetry =
+    underlyingToUsdWillRetry || token0ToUsdWillRetry || token1ToUsdWillRetry || clmHistoryWillRetry;
+
+  return useMemo(
+    () => ({
+      underlyingToUsd,
+      token0ToUsd,
+      token1ToUsd,
+      clmHistory,
+      vaultHistory: undefined,
+      isLoading,
+      willRetry,
+      type: 'pool',
+    }),
+    [underlyingToUsd, token0ToUsd, token1ToUsd, clmHistory, isLoading, willRetry]
+  );
+}
+
+function useCowcentratedPoolData(
+  clmId: string,
+  depositTokenOracleId: string,
+  token0OracleId: string,
+  token1OracleId: string,
+  timeBucket: GraphBucket
+) {
+  const _dummy1 = useMemo(() => clmId, [clmId]);
+  const _dummy2 = useMemo(() => clmId, [clmId]);
+  return useCowcentratedData(
+    clmId,
+    depositTokenOracleId,
+    token0OracleId,
+    token1OracleId,
+    timeBucket
+  );
+}
+
+function useCowcentratedVaultData(
+  vaultId: string,
+  depositTokenOracleId: string,
+  token0OracleId: string,
+  token1OracleId: string,
+  timeBucket: GraphBucket
+) {
+  const vault = useAppSelector(state => selectStandardCowcentratedVaultById(state, vaultId));
+  const clmData = useCowcentratedData(
+    vault.cowcentratedId,
+    depositTokenOracleId,
+    token0OracleId,
+    token1OracleId,
+    timeBucket
+  );
+  const {
+    data: vaultHistory,
+    loading: vaultHistoryLoading,
+    willRetry: vaultHistoryWillRetry,
+  } = useVaultIdToClassicPriceHistory(vaultId, timeBucket);
+
+  return useMemo(
+    () => ({
+      ...clmData,
+      vaultHistory,
+      isLoading: clmData.isLoading || vaultHistoryLoading,
+      willRetry: clmData.willRetry || vaultHistoryWillRetry,
+      type: 'vault',
+    }),
+    [clmData, vaultHistory, vaultHistoryLoading, vaultHistoryWillRetry]
+  );
+}
 
 export const usePnLChartData = (
-  timebucket: GraphBucket,
+  timeBucket: GraphBucket,
   vaultId: VaultEntity['id'],
   address?: string
 ) => {
+  const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
   const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
   const depositToken = useAppSelector(state => selectDepositTokenByVaultId(state, vaultId));
   const vaultTimeline = useAppSelector(state =>
     selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress)
   );
-  const currentSharePrice = useAppSelector(state =>
+  const nowPricePerFullShare = useAppSelector(state =>
+    selectVaultPricePerFullShare(state, vaultId)
+  );
+  const nowPriceUnderlying = useAppSelector(state =>
     selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
-  );
-  const currentShareBalance = useAppSelector(state =>
-    selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vaultId, walletAddress)
-  );
-  const { token0AtDeposit, token1AtDeposit } = useAppSelector(state =>
-    selectClmPnl(state, vaultId, address)
   );
   const { token0, token1 } = useAppSelector(state =>
     selectCowcentratedLikeVaultDepositTokensWithPrices(state, vaultId)
   );
-  const { data: sharesToUsd, loading: sharesToUsdLoading } = useOracleIdToUsdPrices(
-    depositToken.oracleId,
-    timebucket
-  );
-  const { data: token0ToUsd, loading: token0ToUsdLoading } = useOracleIdToUsdPrices(
-    token0.oracleId,
-    timebucket
-  );
-  const { data: token1ToUsd, loading: token1ToUsdLoading } = useOracleIdToUsdPrices(
-    token1.oracleId,
-    timebucket
-  );
-  const isLoading = sharesToUsdLoading || token0ToUsdLoading || token1ToUsdLoading;
+  const nowPriceToken0 = token0.price;
+  const nowPriceToken1 = token1.price;
+  const {
+    token0Now: nowBalanceToken0,
+    token1Now: nowBalanceToken1,
+    underlyingNow: nowBalanceUnderlying,
+    sharesNow: nowBalanceShares,
+  } = useAppSelector(state => selectClmPnl(state, vaultId, address));
+  const useData = useMemo(() => {
+    return isCowcentratedStandardVault(vault) ? useCowcentratedVaultData : useCowcentratedPoolData;
+  }, [vault]);
+  const {
+    underlyingToUsd,
+    token0ToUsd,
+    token1ToUsd,
+    clmHistory,
+    vaultHistory,
+    isLoading,
+    willRetry,
+    type,
+  } = useData(vault.id, depositToken.oracleId, token0.oracleId, token1.oracleId, timeBucket);
 
   const chartData = useMemo(() => {
     if (
       !isLoading &&
-      isTimelineEntityCowcentratedPool(vaultTimeline) &&
+      isTimelineEntityCowcentrated(vaultTimeline) &&
       vaultTimeline.current.length &&
-      sharesToUsd &&
+      underlyingToUsd &&
       token0ToUsd &&
       token1ToUsd &&
-      sharesToUsd.length > 0 &&
+      underlyingToUsd.length > 0 &&
       token0ToUsd.length > 0 &&
       token1ToUsd.length > 0
     ) {
       const vaultLastDeposit = vaultTimeline.current[0].datetime;
 
       const data = getClmInvestorTimeSeries(
-        timebucket,
+        timeBucket,
         vaultTimeline.current,
-        sharesToUsd,
+        underlyingToUsd,
         token0ToUsd,
         token1ToUsd,
         vaultLastDeposit,
-        currentSharePrice,
-        currentShareBalance,
-        token0AtDeposit,
-        token1AtDeposit,
-        token0.price,
-        token1.price
+        nowBalanceShares,
+        nowBalanceUnderlying,
+        nowBalanceToken0,
+        nowBalanceToken1,
+        nowPricePerFullShare,
+        nowPriceUnderlying,
+        nowPriceToken0,
+        nowPriceToken1,
+        clmHistory,
+        vaultHistory
       );
 
       if (data && data.length > 0) {
-        const minV0Usd = minBy(data, 'v')?.v || 0;
-        const minV1Usd = minBy(data, 'v')?.v || 0;
+        const minUsd = minOf(data, 'underlyingUsd', 'heldUsd');
+        const maxUsd = maxOf(data, 'underlyingUsd', 'heldUsd');
+        const minUnderlying = minOf(data, 'underlying');
+        const maxUnderlying = maxOf(data, 'underlying');
 
-        const maxV0Usd = maxBy(data, 'vHold')?.vHold || 0;
-        const maxV1Usd = maxBy(data, 'vHold')?.vHold || 0;
-
-        const minUsd = minV0Usd < minV1Usd ? minV0Usd : minV1Usd;
-        const maxUsd = maxV0Usd > maxV1Usd ? maxV0Usd : maxV1Usd;
-
-        return { data, minUsd, maxUsd };
+        return { data, minUsd, maxUsd, minUnderlying, maxUnderlying };
       }
     }
 
@@ -106,20 +228,24 @@ export const usePnLChartData = (
     return NO_CHART_DATA;
   }, [
     isLoading,
-    currentShareBalance,
-    currentSharePrice,
-    timebucket,
-    token0.price,
-    token0AtDeposit,
-    token1.price,
-    token1AtDeposit,
-    sharesToUsd,
+    timeBucket,
+    nowBalanceShares,
+    nowPriceUnderlying,
+    nowBalanceUnderlying,
+    nowPricePerFullShare,
+    nowPriceToken0,
+    nowBalanceToken0,
+    nowPriceToken1,
+    nowBalanceToken1,
+    underlyingToUsd,
     vaultTimeline,
     token0ToUsd,
     token1ToUsd,
+    clmHistory,
+    vaultHistory,
   ]);
 
-  return { chartData, isLoading };
+  return { chartData, isLoading, willRetry, type };
 };
 
 /**

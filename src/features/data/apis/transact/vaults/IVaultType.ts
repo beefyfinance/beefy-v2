@@ -4,7 +4,7 @@ import type {
   VaultStandard,
   VaultCowcentrated,
 } from '../../../entities/vault';
-import type { GetStateFn } from '../../../../../redux-types';
+import type { BeefyStateFn } from '../../../../../redux-types';
 import type {
   DepositOption,
   DepositQuote,
@@ -80,7 +80,7 @@ export type VaultTypeFromVault<T extends VaultEntity> = Extract<VaultType, { id:
 
 export type VaultTypeConstructor<T extends VaultEntity> = new (
   vault: T,
-  getState: GetStateFn
+  getState: BeefyStateFn
 ) => VaultTypeFromVault<T>;
 
 export function isStandardVaultType(vaultType: VaultType): vaultType is IStandardVaultType {

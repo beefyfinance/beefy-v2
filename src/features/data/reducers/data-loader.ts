@@ -51,7 +51,7 @@ import { errorToString } from '../../../helpers/format';
 import { fetchTreasury } from '../actions/treasury';
 import {
   fetchClmHarvestsForUser,
-  fetchClmHarvestsForUserChain,
+  fetchClmHarvestsForVaultsOfUserOnChain,
   fetchWalletTimeline,
   initDashboardByAddress,
 } from '../actions/analytics';
@@ -522,7 +522,9 @@ export const dataLoaderSlice = createSlice({
       reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
       ['balance', 'allowance']
     );
-    addByAddressByChainAsyncThunkActions(builder, fetchClmHarvestsForUserChain, ['clmHarvests']);
+    addByAddressByChainAsyncThunkActions(builder, fetchClmHarvestsForVaultsOfUserOnChain, [
+      'clmHarvests',
+    ]);
 
     addByAddressByVaultAsyncThunkActions(builder, fetchUserStellaSwapRewardsAction, [
       'stellaSwapRewards',

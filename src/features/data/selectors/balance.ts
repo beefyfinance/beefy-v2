@@ -916,13 +916,13 @@ const getDashboardLpBreakdownScalingFactor = (
   if (assetValueTotal.gt(userVaultTvl)) {
     if (assetValueTotal.gt(userVaultTvl.times(1.01))) {
       // If more than % out, warn in console, and let UI show over 100%
-      console.warn(
+      /*console.warn(
         `[${vaultId}] Total asset value (${assetValueTotal.toString(
           10
         )}) from user LP breakdown is >1% greater than user's total vault deposit (${userVaultTvl.toString(
           10
         )})`
-      );
+      );*/
     } else {
       // If less than % out, just scale user values down equally to not go over 100%
       scaleFactor = userVaultTvl.dividedBy(assetValueTotal);

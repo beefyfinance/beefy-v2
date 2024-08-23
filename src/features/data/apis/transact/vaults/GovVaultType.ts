@@ -1,5 +1,5 @@
 import { isGovVault, isGovVaultCowcentrated, type VaultGov } from '../../../entities/vault';
-import type { BeefyState, GetStateFn } from '../../../../../redux-types';
+import type { BeefyState, BeefyStateFn } from '../../../../../redux-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import type {
   IGovVaultType,
@@ -41,9 +41,9 @@ export class GovVaultType implements IGovVaultType {
   public readonly id = 'gov';
   public readonly vault: VaultGov;
   public readonly depositToken: TokenEntity;
-  protected readonly getState: GetStateFn;
+  protected readonly getState: BeefyStateFn;
 
-  constructor(vault: VaultGov, getState: GetStateFn) {
+  constructor(vault: VaultGov, getState: BeefyStateFn) {
     if (!isGovVault(vault)) {
       throw new Error('Vault is not a gov vault');
     }
