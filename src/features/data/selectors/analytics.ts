@@ -305,7 +305,10 @@ export const selectClmPnl = (
   const positionPnl = underlyingNowInUsd.minus(underlyingAtDepositInUsd);
   const hold = token0AtDeposit.times(token0.price).plus(token1AtDeposit.times(token1.price));
 
-  const totalUnderlyingCompounded = underlyingNow.minus(underlyingAtDeposit);
+  const totalUnderlyingCompounded =
+    underlyingNow.gt(BIG_ZERO) && underlyingAtDeposit.gt(BIG_ZERO)
+      ? underlyingNow.minus(underlyingAtDeposit)
+      : BIG_ZERO;
   const compoundedYield = {
     totalUnderlyingCompounded,
     total0Compounded: BIG_ZERO,
