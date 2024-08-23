@@ -1,80 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  type ClmUserHarvestsTimeline,
-  fetchClmHarvestsForUserChain,
-  fetchClmHarvestsForUserVault,
+  fetchClmHarvestsForVaultsOfUserOnChain,
   fetchClmPendingRewards,
+  fetchCowcentratedPriceHistoryClassic,
+  fetchCowcentratedPriceHistoryClm,
   fetchShareToUnderlying,
   fetchWalletTimeline,
-  recalculateClmHarvestsForUserVaultId,
+  recalculateClmPoolHarvestsForUserVaultId,
 } from '../actions/analytics';
-import type { ApiProductPriceRow, TimeBucketType } from '../apis/analytics/analytics-types';
-import type { AnyTimelineEntity } from '../entities/analytics';
 import type { VaultEntity } from '../entities/vault';
 import type { Draft } from 'immer';
 import { BigNumber } from 'bignumber.js';
-import type { ApiClmHarvestPriceRow } from '../apis/clm-api/clm-api-types';
+import type { ApiClassicHarvestRow, ApiClmHarvestRow } from '../apis/clm/clm-api-types';
 import { fromUnixTime } from 'date-fns';
 import { orderBy, uniqBy } from 'lodash-es';
-
-type StatusType = 'idle' | 'pending' | 'fulfilled' | 'rejected';
-
-export interface AnalyticsBucketData {
-  status: StatusType;
-  data: ApiProductPriceRow[];
-}
-
-export interface ClmHarvest {
-  timestamp: Date;
-  compoundedAmount0: BigNumber;
-  compoundedAmount1: BigNumber;
-  token0ToUsd: BigNumber;
-  token1ToUsd: BigNumber;
-  totalSupply: BigNumber;
-  transactionHash: string;
-}
-
-export interface ClmPendingRewards {
-  fees0: BigNumber;
-  fees1: BigNumber;
-  totalSupply: BigNumber;
-}
-
-export interface AnalyticsState {
-  byAddress: {
-    [address: string]: {
-      timeline: {
-        byVaultId: {
-          [vaultId: VaultEntity['id']]: AnyTimelineEntity;
-        };
-      };
-      clmHarvests: {
-        byVaultId: {
-          [vaultId: VaultEntity['id']]: ClmUserHarvestsTimeline;
-        };
-      };
-    };
-  };
-  shareToUnderlying: {
-    byVaultId: {
-      [vaultId: VaultEntity['id']]: {
-        byTimebucket: {
-          [K in TimeBucketType]?: AnalyticsBucketData;
-        };
-      };
-    };
-  };
-  clmHarvests: {
-    byVaultId: Record<VaultEntity['id'], ClmHarvest[]>;
-  };
-  clmPendingRewards: {
-    byVaultId: Record<VaultEntity['id'], ClmPendingRewards>;
-  };
-}
+import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types';
+import {
+  getDataApiBucket,
+  getDataApiBucketIntervalKey,
+} from '../apis/beefy/beefy-data-api-helpers';
+import type { AnalyticsState, ClassicHarvest, ClmHarvest } from './analytics-types';
+import type { AsyncThunk } from '@reduxjs/toolkit/src/createAsyncThunk';
+import type { GraphBucket } from '../../../helpers/graph/types';
+import type { BeefyMetaThunkConfig } from '../../../redux-types';
 
 const initialState: AnalyticsState = {
-  byAddress: {},
-  shareToUnderlying: {
+  classicHarvests: {
     byVaultId: {},
   },
   clmHarvests: {
@@ -83,6 +34,18 @@ const initialState: AnalyticsState = {
   clmPendingRewards: {
     byVaultId: {},
   },
+  interval: {
+    shareToUnderlying: {
+      byVaultId: {},
+    },
+    clmPriceHistory: {
+      byVaultId: {},
+    },
+    classicPriceHistory: {
+      byVaultId: {},
+    },
+  },
+  byAddress: {},
 };
 
 export const analyticsSlice = createSlice({
@@ -90,79 +53,125 @@ export const analyticsSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(fetchWalletTimeline.fulfilled, (sliceState, action) => {
-      const walletAddress = action.payload.walletAddress.toLowerCase();
-      const addressState = getOrCreateAnalyticsAddressState(sliceState, walletAddress);
-      addressState.timeline.byVaultId = action.payload.timelines;
-    });
+    function addIntervalCases<TKey extends keyof AnalyticsState['interval']>(
+      key: TKey,
+      thunk: AsyncThunk<
+        {
+          data: AnalyticsState['interval'][TKey]['byVaultId'][string]['byInterval']['1d']['data'];
+          vaultId: VaultEntity['id'];
+          timeBucket: GraphBucket;
+        },
+        {
+          vaultId: VaultEntity['id'];
+          timeBucket: GraphBucket;
+        },
+        BeefyMetaThunkConfig<{ since: number }>
+      >
+    ) {
+      builder
+        .addCase(thunk.fulfilled, (sliceState, action) => {
+          const { data, vaultId, timeBucket } = action.payload;
+          const intervalState = getOrCreateIntervalState(
+            sliceState,
+            key,
+            vaultId,
+            getDataApiBucketIntervalKey(timeBucket)
+          );
+          intervalState.status = 'fulfilled';
+          intervalState.data = data;
+          if (
+            intervalState.fulfilledSince === 0 ||
+            action.meta.since < intervalState.fulfilledSince
+          ) {
+            intervalState.fulfilledSince = action.meta.since;
+          }
+        })
+        .addCase(thunk.pending, (sliceState, action) => {
+          const { timeBucket, vaultId } = action.meta.arg;
+          const bucket = getDataApiBucket(timeBucket);
+          const intervalState = getOrCreateIntervalState(
+            sliceState,
+            key,
+            vaultId,
+            bucket.intervalKey
+          );
+          intervalState.status = 'pending';
+          if (
+            intervalState.requestedSince === 0 ||
+            action.meta.since < intervalState.requestedSince
+          ) {
+            intervalState.requestedSince = action.meta.since;
+          }
+        })
+        .addCase(thunk.rejected, (sliceState, action) => {
+          const { timeBucket, vaultId } = action.meta.arg;
+          const intervalState = getOrCreateIntervalState(
+            sliceState,
+            key,
+            vaultId,
+            getDataApiBucketIntervalKey(timeBucket)
+          );
+          intervalState.status = 'rejected';
+        });
+    }
 
-    builder.addCase(fetchShareToUnderlying.fulfilled, (sliceState, action) => {
-      const { data, vaultId, timebucket } = action.payload;
-      const bucketState = getOrCreateShareToUnderlyingBucketState(sliceState, vaultId, timebucket);
-      bucketState.status = 'fulfilled';
-      bucketState.data = data;
-    });
+    addIntervalCases('shareToUnderlying', fetchShareToUnderlying);
+    addIntervalCases('clmPriceHistory', fetchCowcentratedPriceHistoryClm);
+    addIntervalCases('classicPriceHistory', fetchCowcentratedPriceHistoryClassic);
 
-    builder.addCase(fetchShareToUnderlying.pending, (sliceState, action) => {
-      const { timebucket, vaultId } = action.meta.arg;
-      const bucketState = getOrCreateShareToUnderlyingBucketState(sliceState, vaultId, timebucket);
-      bucketState.status = 'pending';
-    });
+    builder
+      .addCase(fetchWalletTimeline.fulfilled, (sliceState, action) => {
+        const walletAddress = action.payload.walletAddress.toLowerCase();
+        const addressState = getOrCreateAnalyticsAddressState(sliceState, walletAddress);
+        addressState.timeline.byVaultId = action.payload.timelines;
+      })
+      .addCase(fetchClmHarvestsForVaultsOfUserOnChain.fulfilled, (sliceState, action) => {
+        for (const { harvests, vaultId, type } of action.payload) {
+          if (type === 'clm') {
+            addClmHarvestsToState(sliceState, vaultId, harvests);
+          } else if (type === 'classic') {
+            addClassicHarvestsToState(sliceState, vaultId, harvests);
+          }
+        }
+      })
+      .addCase(fetchClmPendingRewards.fulfilled, (sliceState, action) => {
+        const { data, vaultIds } = action.payload;
+        const { fees1, fees0, totalSupply } = data;
 
-    builder.addCase(fetchShareToUnderlying.rejected, (sliceState, action) => {
-      const { timebucket, vaultId } = action.meta.arg;
-      const bucketState = getOrCreateShareToUnderlyingBucketState(sliceState, vaultId, timebucket);
-      bucketState.status = 'rejected';
-    });
-
-    builder.addCase(fetchClmHarvestsForUserVault.fulfilled, (sliceState, action) => {
-      const { harvests, vaultId } = action.payload;
-      addClmHarvestsToState(sliceState, vaultId, harvests);
-    });
-
-    builder.addCase(fetchClmHarvestsForUserChain.fulfilled, (sliceState, action) => {
-      for (const { harvests, vaultId } of action.payload) {
-        addClmHarvestsToState(sliceState, vaultId, harvests);
-      }
-    });
-
-    builder.addCase(fetchClmPendingRewards.fulfilled, (sliceState, action) => {
-      const { data, vaultIds } = action.payload;
-      const { fees1, fees0, totalSupply } = data;
-
-      for (const vaultId of vaultIds) {
-        sliceState.clmPendingRewards.byVaultId[vaultId] = {
-          fees1,
-          fees0,
-          totalSupply,
-        };
-      }
-    });
-
-    builder.addCase(recalculateClmHarvestsForUserVaultId.fulfilled, (sliceState, action) => {
-      const { vaultId, timeline, walletAddress } = action.payload;
-      const addressState = getOrCreateAnalyticsAddressState(sliceState, walletAddress);
-      addressState.clmHarvests.byVaultId[vaultId] = timeline;
-    });
+        for (const vaultId of vaultIds) {
+          sliceState.clmPendingRewards.byVaultId[vaultId] = {
+            fees1,
+            fees0,
+            totalSupply,
+          };
+        }
+      })
+      .addCase(recalculateClmPoolHarvestsForUserVaultId.fulfilled, (sliceState, action) => {
+        const { vaultId, timeline, walletAddress } = action.payload;
+        const addressState = getOrCreateAnalyticsAddressState(sliceState, walletAddress);
+        addressState.clmHarvests.byVaultId[vaultId] = timeline;
+      });
   },
 });
 
-function getOrCreateShareToUnderlyingBucketState(
+function getOrCreateIntervalState(
   sliceState: Draft<AnalyticsState>,
+  key: keyof AnalyticsState['interval'],
   vaultId: VaultEntity['id'],
-  timebucket: TimeBucketType
+  intervalKey: ApiTimeBucketInterval
 ) {
-  let vaultState = sliceState.shareToUnderlying.byVaultId[vaultId];
+  let vaultState = sliceState.interval[key].byVaultId[vaultId];
+
   if (!vaultState) {
-    vaultState = sliceState.shareToUnderlying.byVaultId[vaultId] = { byTimebucket: {} };
+    vaultState = sliceState.interval[key].byVaultId[vaultId] = {
+      byInterval: {
+        '1h': { data: [], status: 'idle', requestedSince: 0, fulfilledSince: 0 },
+        '1d': { data: [], status: 'idle', requestedSince: 0, fulfilledSince: 0 },
+      },
+    };
   }
 
-  let bucketState = vaultState.byTimebucket[timebucket];
-  if (!bucketState) {
-    bucketState = vaultState.byTimebucket[timebucket] = { data: [], status: 'idle' };
-  }
-
-  return bucketState;
+  return vaultState.byInterval[intervalKey];
 }
 
 function getOrCreateAnalyticsAddressState(
@@ -185,31 +194,56 @@ function getOrCreateAnalyticsAddressState(
 function addClmHarvestsToState(
   state: Draft<AnalyticsState>,
   vaultId: VaultEntity['id'],
-  harvests: ApiClmHarvestPriceRow[]
+  harvests: ApiClmHarvestRow[]
 ) {
   const existing: ClmHarvest[] = (state.clmHarvests.byVaultId[vaultId] as ClmHarvest[]) ?? [];
   const toAdd: ClmHarvest[] = harvests
     .map(
       (row): ClmHarvest => ({
+        id: row.id,
+        type: 'clm',
         timestamp: fromUnixTime(Number(row.timestamp)),
         compoundedAmount0: new BigNumber(row.compoundedAmount0),
         compoundedAmount1: new BigNumber(row.compoundedAmount1),
         token0ToUsd: new BigNumber(row.token0ToUsd),
         token1ToUsd: new BigNumber(row.token1ToUsd),
+        totalAmount0: new BigNumber(row.totalAmount0),
+        totalAmount1: new BigNumber(row.totalAmount1),
         totalSupply: new BigNumber(row.totalSupply),
-        transactionHash: row.transactionHash,
       })
     )
     .filter(h => h.compoundedAmount0.gt(0) || h.compoundedAmount1.gt(0));
 
   state.clmHarvests.byVaultId[vaultId] = orderBy(
-    uniqBy(
-      existing.concat(toAdd),
-      h =>
-        `${h.transactionHash}-${h.compoundedAmount0.toString(10)}-${h.compoundedAmount1.toString(
-          10
-        )}`
-    ),
+    uniqBy(existing.concat(toAdd), h => h.id),
+    h => h.timestamp.getTime(),
+    'asc'
+  );
+}
+
+function addClassicHarvestsToState(
+  state: Draft<AnalyticsState>,
+  vaultId: VaultEntity['id'],
+  harvests: ApiClassicHarvestRow[]
+) {
+  const existing: ClassicHarvest[] =
+    (state.classicHarvests.byVaultId[vaultId] as ClassicHarvest[]) ?? [];
+  const toAdd: ClassicHarvest[] = harvests
+    .map(
+      (row): ClassicHarvest => ({
+        id: row.id,
+        type: 'classic',
+        timestamp: fromUnixTime(Number(row.timestamp)),
+        compoundedAmount: new BigNumber(row.compoundedAmount),
+        underlyingToUsd: new BigNumber(row.underlyingToUsd),
+        totalUnderlying: new BigNumber(row.totalUnderlying),
+        totalSupply: new BigNumber(row.totalSupply),
+      })
+    )
+    .filter(h => h.compoundedAmount.gt(0));
+
+  state.classicHarvests.byVaultId[vaultId] = orderBy(
+    uniqBy(existing.concat(toAdd), h => h.id),
     h => h.timestamp.getTime(),
     'asc'
   );

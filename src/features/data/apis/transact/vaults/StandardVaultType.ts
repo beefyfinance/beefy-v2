@@ -1,6 +1,6 @@
 import type { VaultStandard } from '../../../entities/vault';
 import { isStandardVault } from '../../../entities/vault';
-import type { BeefyState, GetStateFn } from '../../../../../redux-types';
+import type { BeefyState, BeefyStateFn } from '../../../../../redux-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import type {
   IStandardVaultType,
@@ -57,9 +57,9 @@ export class StandardVaultType implements IStandardVaultType {
   public readonly vault: VaultStandard;
   public readonly depositToken: TokenEntity;
   public readonly shareToken: TokenErc20;
-  protected readonly getState: GetStateFn;
+  protected readonly getState: BeefyStateFn;
 
-  constructor(vault: VaultStandard, getState: GetStateFn) {
+  constructor(vault: VaultStandard, getState: BeefyStateFn) {
     if (!isStandardVault(vault)) {
       throw new Error('Vault is not a standard vault');
     }

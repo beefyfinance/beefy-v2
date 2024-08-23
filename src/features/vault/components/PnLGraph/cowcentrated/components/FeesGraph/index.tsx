@@ -12,20 +12,14 @@ import { useFeesChartData } from './hooks';
 import type { Theme } from '@material-ui/core';
 import { makeStyles, useMediaQuery } from '@material-ui/core';
 import { GraphLoader } from '../../../../GraphLoader';
-import { max } from 'lodash-es';
-import {
-  domainOffSet,
-  formatDateTimeTick,
-  formatUsdTick,
-  getXInterval,
-  type GraphBucket,
-  mapRangeToTicks,
-} from '../../../../../../../helpers/graph';
+import { GRAPH_TIME_BUCKETS, makeUsdTickFormatter } from '../../../../../../../helpers/graph/graph';
 import { styles } from './styles';
 import { XAxisTick } from '../../../../../../../components/XAxisTick';
 import { FeesTooltip, type FeesTooltipProps } from '../Tooltips';
-import type { ClmInvestorFeesTimeSeriesPoint } from '../../../../../../../helpers/timeserie';
+import type { ClmInvestorFeesTimeSeriesPoint } from '../../../../../../../helpers/graph/timeseries';
 import { LINE_COLORS } from '../../../../../../../helpers/charts';
+import type { GraphBucket } from '../../../../../../../helpers/graph/types';
+import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks';
 
 const useStyles = makeStyles(styles);
 
@@ -43,40 +37,13 @@ export const CLMFeesGraph = memo<CLMFeesGraphProps>(function CLMFeesGraph({
   address,
 }) {
   const classes = useStyles();
-
+  const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+  const xMargin = xsDown ? 16 : 24;
   const { chartData, isLoading } = useFeesChartData(FEES_TIME_BUCKET[period], vaultId, address);
-
   const { data, tokens, minUsd, maxUsd } = chartData;
 
-  const usdDiff = useMemo(() => {
-    return domainOffSet(minUsd, maxUsd, 0.88);
-  }, [maxUsd, minUsd]);
-
-  const startUsdDomain = useMemo(() => {
-    return max([0, minUsd - usdDiff])!;
-  }, [minUsd, usdDiff]);
-
-  const usdAxisDomain = useMemo<[number, number]>(() => {
-    return [startUsdDomain, maxUsd + usdDiff];
-  }, [maxUsd, startUsdDomain, usdDiff]);
-
-  const usdTicks = useMemo(() => {
-    return mapRangeToTicks(startUsdDomain, maxUsd + usdDiff);
-  }, [maxUsd, startUsdDomain, usdDiff]);
-
-  const dateTimeTickFormatter = useMemo(() => {
-    return (value: number) => formatDateTimeTick(value, FEES_TIME_BUCKET[period]);
-  }, [period]);
-
-  const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
-
-  const xInterval = useMemo(() => {
-    return getXInterval(data.length, xsDown);
-  }, [data.length, xsDown]);
-
-  const xMargin = useMemo(() => {
-    return xsDown ? 16 : 24;
-  }, [xsDown]);
+  const usdAxis = useYAxis(minUsd, maxUsd, makeUsdTickFormatter);
+  const dateAxis = useXAxis(GRAPH_TIME_BUCKETS[period], data.length, xsDown);
 
   const tooltipContentCreator = useCallback(
     (props: Omit<FeesTooltipProps, 'tokens'>) => <FeesTooltip tokens={tokens} {...props} />,
@@ -107,12 +74,12 @@ export const CLMFeesGraph = memo<CLMFeesGraphProps>(function CLMFeesGraph({
         >
           <CartesianGrid strokeDasharray="2 2" stroke="#363B63" />
           <XAxis
-            tickFormatter={dateTimeTickFormatter}
+            tickFormatter={dateAxis.formatter}
             dataKey="t"
             padding="no-gap"
             tickMargin={10}
             stroke="#363B63"
-            interval={xInterval}
+            interval={dateAxis.interval}
             tick={XAxisTick}
           />
           {tokens.map((token, i) => (
@@ -129,10 +96,10 @@ export const CLMFeesGraph = memo<CLMFeesGraphProps>(function CLMFeesGraph({
           <YAxis
             stroke="#363B63"
             strokeWidth={1.5}
-            tickFormatter={formatUsdTick}
+            tickFormatter={usdAxis.formatter}
             yAxisId="usd"
-            domain={usdAxisDomain}
-            ticks={usdTicks}
+            domain={usdAxis.domain}
+            ticks={usdAxis.ticks}
             mirror={true}
           />
           <Tooltip wrapperStyle={{ outline: 'none' }} content={tooltipContentCreator} />

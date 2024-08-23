@@ -1,24 +1,29 @@
 import BigNumber from 'bignumber.js';
 import { fromUnixTime, getUnixTime, isAfter, isBefore, isEqual, max, subDays } from 'date-fns';
 import { pick, sortBy, sortedUniq } from 'lodash-es';
-import type { ApiProductPriceRow } from '../features/data/apis/analytics/analytics-types';
-import type {
-  TimelineEntryCowcentratedPool,
-  TimelineEntryStandard,
-} from '../features/data/entities/analytics';
-import { BIG_ZERO } from './big-number';
-import { roundDownMinutes } from './date';
-import { samplingPeriodMs } from './sampling-period';
-import { graphTimeBucketToSamplingPeriod } from './time-bucket';
+import type { DatabarnProductPriceRow } from '../../features/data/apis/databarn/databarn-types';
+import {
+  type TimelineEntryCowcentratedPool,
+  type TimelineEntryCowcentratedVault,
+  type TimelineEntryStandard,
+} from '../../features/data/entities/analytics';
+import { BIG_ONE, BIG_ZERO } from '../big-number';
+import { roundDownMinutes } from '../date';
+import { samplingPeriodMs } from '../sampling-period';
 import type {
   ClmUserHarvestsTimeline,
   ClmUserHarvestsTimelineHarvest,
-} from '../features/data/actions/analytics';
-import type { ApiPoint } from '../features/data/apis/beefy/beefy-data-api-types';
-import { ClmPnl } from './pnl';
-import type { GraphBucket } from './graph';
-import type { TokenEntity } from '../features/data/entities/token';
-import { getBigNumberInterpolator, type Interpolator } from './math';
+} from '../../features/data/actions/analytics';
+import type { ApiPoint } from '../../features/data/apis/beefy/beefy-data-api-types';
+import { ClmPnl } from '../pnl';
+import type { TokenEntity } from '../../features/data/entities/token';
+import { getBigNumberInterpolator, type Interpolator } from '../math';
+import type { GraphBucket } from './types';
+import { graphTimeBucketToSamplingPeriod } from './graph';
+import type {
+  ClmPriceHistoryEntryClassic,
+  ClmPriceHistoryEntryClm,
+} from '../../features/data/apis/clm/clm-api-types';
 
 // simulate a join between the 3 price series locally
 export interface PriceTsRow {
@@ -29,23 +34,23 @@ export interface PriceTsRow {
 }
 
 function sortAndFixPrices(
-  prices: ApiProductPriceRow[],
+  prices: DatabarnProductPriceRow[],
   currentPrice: BigNumber
-): ApiProductPriceRow[] {
+): DatabarnProductPriceRow[] {
   const oneDayAgo = subDays(new Date(), 1);
 
   return sortBy(prices, 'date').map(
-    ({ date, value }): ApiProductPriceRow => ({
+    ({ date, value }): DatabarnProductPriceRow => ({
       date,
       value: value ?? (isBefore(date, oneDayAgo) ? BIG_ZERO : currentPrice),
     })
   );
 }
 
-export function getInvestorTimeserie(
+export function getInvestorTimeseries(
   timeBucket: GraphBucket,
   timeline: TimelineEntryStandard[],
-  sharesToUnderlying: ApiProductPriceRow[],
+  sharesToUnderlying: DatabarnProductPriceRow[],
   underlyingToUsd: ApiPoint[],
   firstDate: Date,
   currentPpfs: BigNumber,
@@ -165,18 +170,31 @@ function advanceIndexIfNeeded<T extends string, U extends { [key in T]: Date | n
 }
 
 export type ClmInvestorOverviewTimeSeriesPoint = {
-  t: number;
-  v: number;
-  vHold: number;
-  remainingShares: BigNumber;
-  remainingToken0: BigNumber;
-  remainingToken1: BigNumber;
-  shareToUsd: BigNumber;
-  token0ToUsd: BigNumber;
-  token1ToUsd: BigNumber;
-  sharesUsd: BigNumber;
-  underlying0Usd: BigNumber;
-  underlying1Usd: BigNumber;
+  timestamp: number;
+  shares: number;
+  underlying: number;
+  underlyingUsd: number;
+  heldUsd: number;
+  debug: {
+    sharesToUnderlying: BigNumber;
+    underlyingToToken0: BigNumber;
+    underlyingToToken1: BigNumber;
+    underlyingToUsd: BigNumber;
+    token0ToUsd: BigNumber;
+    token1ToUsd: BigNumber;
+    sharesAtDeposit: BigNumber;
+    underlying: BigNumber;
+    token0: BigNumber;
+    token1: BigNumber;
+    underlyingUsd: BigNumber;
+    token0Usd: BigNumber;
+    token1Usd: BigNumber;
+    token0AtDeposit: BigNumber;
+    token1AtDeposit: BigNumber;
+    token0AtDepositUsd: BigNumber;
+    token1AtDepositUsd: BigNumber;
+    heldUsd: BigNumber;
+  };
 };
 
 type TimeValuePoint<TValue> = {
@@ -261,9 +279,9 @@ abstract class TimeValueInterpolator<TValue> {
         `TimeValueInterpolator requested timestamp is ${
           timestamp > after.t ? 'after the last value' : 'before all values'
         }`,
-        timestamp,
-        after.t,
-        after.v
+        fromUnixTime(timestamp),
+        fromUnixTime(after.t),
+        this.interpolator.toString(after.v)
       );
       return after.v;
     }
@@ -302,12 +320,16 @@ class ClmInvestorOverviewTimeSeriesGenerator {
   protected readonly bucketBeforeFirstUnix: number;
 
   constructor(
-    protected timeline: TimelineEntryCowcentratedPool[],
-    protected historicalShareToUsd: ApiPoint[],
+    protected timeline: Array<TimelineEntryCowcentratedPool | TimelineEntryCowcentratedVault>,
+    protected historicalClmData: ClmPriceHistoryEntryClm[],
+    protected historicalVaultData: ClmPriceHistoryEntryClassic[] | undefined,
+    protected historicalUnderlyingToUsd: ApiPoint[],
     protected historicalUnderlying0ToUsd: ApiPoint[],
     protected historicalUnderlying1ToUsd: ApiPoint[],
-    protected liveShareToUsd: BigNumber,
-    protected liveShareBalance: BigNumber,
+    protected liveSharesToUnderlying: BigNumber,
+    protected liveSharesBalance: BigNumber,
+    protected liveUnderlyingToUsd: BigNumber,
+    protected liveUnderlyingBalance: BigNumber,
     protected liveUnderlying0ToUsd: BigNumber,
     protected liveUnderlying0Balance: BigNumber,
     protected liveUnderlying1ToUsd: BigNumber,
@@ -321,24 +343,103 @@ class ClmInvestorOverviewTimeSeriesGenerator {
     this.lastUnix = Math.min(this.nowUnix, getUnixTime(lastDate));
     this.bucketSize = bucketSizeMs / 1000;
     this.bucketBeforeFirstUnix = Math.floor(this.firstUnix / this.bucketSize) * this.bucketSize;
+
+    if (this.timeline[0]?.type === 'cowcentrated-vault' && this.historicalVaultData === undefined) {
+      throw new Error('Historical vault data is required for cowcentrated-vault');
+    }
   }
 
-  protected getShareToUsd(): TimeBigNumberInterpolator {
+  protected getSharesToUnderlying(): TimeValueAfter<BigNumber> {
+    const points: TimeValuePoint<BigNumber>[] = [];
+
+    // only vaults have shares, use 1:1 mapping for clm pools
+    if (this.historicalVaultData === undefined) {
+      points.push({
+        t: Math.min(this.firstUnix, this.bucketBeforeFirstUnix),
+        v: BIG_ONE,
+      });
+    } else {
+      points.push({
+        t: this.nowUnix,
+        v: this.liveSharesToUnderlying,
+      });
+      points.push(
+        ...this.timeline.map(tx => ({
+          t: getUnixTime(tx.datetime),
+          v: tx.underlyingPerShare,
+        }))
+      );
+      points.push(
+        ...this.historicalVaultData.map(p => ({
+          t: p.timestamp,
+          v:
+            p.totalSupply === '0'
+              ? BIG_ONE
+              : new BigNumber(p.totalUnderlyingAmount).dividedBy(p.totalSupply),
+        }))
+      );
+    }
+
+    return new TimeValueAfter<BigNumber>(points, BIG_ONE);
+  }
+
+  // TODO add live data
+  protected getUnderlyingToToken(i: 0 | 1): TimeBigNumberInterpolator {
+    const points: TimeValuePoint<BigNumber>[] = [
+      {
+        t: this.nowUnix,
+        v: this[`liveUnderlying${i}ToUsd`].dividedBy(this.liveUnderlyingToUsd),
+      },
+    ]
+      .concat(
+        this.timeline.map(tx => ({
+          t: getUnixTime(tx.datetime),
+          v: tx[`underlying${i}PerUnderlying`],
+        }))
+      )
+      .concat(
+        this.historicalClmData.map(p => ({
+          t: p.timestamp,
+          v:
+            p.totalSupply === '0'
+              ? BIG_ZERO
+              : new BigNumber(p[`totalAmount${i}`]).dividedBy(p.totalSupply),
+        }))
+      );
+
+    if (this.historicalVaultData) {
+      points.push(
+        ...this.historicalVaultData.map(p => ({
+          t: p.timestamp,
+          v:
+            p.totalUnderlyingSupply === '0'
+              ? BIG_ZERO
+              : new BigNumber(p.totalUnderlyingBreakdown[i].amount).dividedBy(
+                  p.totalUnderlyingSupply
+                ),
+        }))
+      );
+    }
+
+    return new TimeBigNumberInterpolator(points);
+  }
+
+  protected getUnderlyingToUsd(): TimeBigNumberInterpolator {
     return new TimeBigNumberInterpolator(
       [
         {
           t: this.nowUnix,
-          v: this.liveShareToUsd,
+          v: this.liveUnderlyingToUsd,
         },
       ]
         .concat(
           this.timeline.map(tx => ({
             t: getUnixTime(tx.datetime),
-            v: tx.usdBalance.dividedBy(tx.shareBalance),
+            v: tx.underlyingToUsd,
           }))
         )
         .concat(
-          this.historicalShareToUsd.map(p => ({
+          this.historicalUnderlyingToUsd.map(p => ({
             t: p.t,
             v: new BigNumber(p.v),
           }))
@@ -346,45 +447,22 @@ class ClmInvestorOverviewTimeSeriesGenerator {
     );
   }
 
-  protected getUnderlying0ToUsd(): TimeBigNumberInterpolator {
+  protected getTokenToUsd(i: 0 | 1): TimeBigNumberInterpolator {
     return new TimeBigNumberInterpolator(
       [
         {
           t: this.nowUnix,
-          v: this.liveUnderlying0ToUsd,
+          v: this[`liveUnderlying${i}ToUsd`],
         },
       ]
         .concat(
           this.timeline.map(tx => ({
             t: getUnixTime(tx.datetime),
-            v: tx.token0ToUsd,
+            v: tx[`token${i}ToUsd`],
           }))
         )
         .concat(
-          this.historicalUnderlying0ToUsd.map(p => ({
-            t: p.t,
-            v: new BigNumber(p.v),
-          }))
-        )
-    );
-  }
-
-  protected getUnderlying1ToUsd(): TimeBigNumberInterpolator {
-    return new TimeBigNumberInterpolator(
-      [
-        {
-          t: this.nowUnix,
-          v: this.liveUnderlying1ToUsd,
-        },
-      ]
-        .concat(
-          this.timeline.map(tx => ({
-            t: getUnixTime(tx.datetime),
-            v: tx.token1ToUsd,
-          }))
-        )
-        .concat(
-          this.historicalUnderlying1ToUsd.map(p => ({
+          this[`historicalUnderlying${i}ToUsd`].map(p => ({
             t: p.t,
             v: new BigNumber(p.v),
           }))
@@ -394,8 +472,8 @@ class ClmInvestorOverviewTimeSeriesGenerator {
 
   protected getBalances() {
     const sharePoints: TimeValuePoint<BigNumber>[] = [];
-    const underlying0Points: TimeValuePoint<BigNumber>[] = [];
-    const underlying1Points: TimeValuePoint<BigNumber>[] = [];
+    const token0Points: TimeValuePoint<BigNumber>[] = [];
+    const token1Points: TimeValuePoint<BigNumber>[] = [];
     const balanceTimestamps: number[] = [];
     const pnl = new ClmPnl();
 
@@ -403,13 +481,15 @@ class ClmInvestorOverviewTimeSeriesGenerator {
     for (const tx of this.timeline) {
       pnl.addTransaction({
         shares: tx.shareDiff,
+        underlyingToUsd: tx.underlyingToUsd,
         token0ToUsd: tx.token0ToUsd,
         token1ToUsd: tx.token1ToUsd,
+        underlyingAmount: tx.underlyingDiff,
         token0Amount: tx.underlying0Diff,
         token1Amount: tx.underlying1Diff,
       });
 
-      const { remainingToken0, remainingToken1, remainingShares } = pnl.getRemainingShares();
+      const { remainingShares, remainingToken0, remainingToken1 } = pnl.getRemainingShares();
       hadFirstDeposit = hadFirstDeposit || remainingShares.gt(BIG_ZERO);
       if (!hadFirstDeposit) {
         continue;
@@ -425,21 +505,26 @@ class ClmInvestorOverviewTimeSeriesGenerator {
         v: remainingShares,
       });
 
-      underlying0Points.push({
+      token0Points.push({
         t: txUnix,
         v: remainingToken0,
       });
 
-      underlying1Points.push({
+      token1Points.push({
         t: txUnix,
         v: remainingToken1,
       });
     }
 
+    sharePoints.push({
+      t: this.nowUnix,
+      v: this.liveSharesBalance,
+    });
+
     return {
-      shareBalance: new TimeValueAfter(sharePoints, BIG_ZERO),
-      underlying0Balance: new TimeValueAfter(underlying0Points, BIG_ZERO),
-      underlying1Balance: new TimeValueAfter(underlying1Points, BIG_ZERO),
+      sharesAtDepositBalances: new TimeValueAfter(sharePoints, BIG_ZERO),
+      token0AtDepositBalances: new TimeValueAfter(token0Points, BIG_ZERO),
+      token1AtDepositBalances: new TimeValueAfter(token1Points, BIG_ZERO),
       balanceTimestamps,
     };
   }
@@ -459,39 +544,69 @@ class ClmInvestorOverviewTimeSeriesGenerator {
   }
 
   public generate(): ClmInvestorOverviewTimeSeriesPoint[] {
-    const shareToUsd = this.getShareToUsd();
-    const underlying0ToUsd = this.getUnderlying0ToUsd();
-    const underlying1ToUsd = this.getUnderlying1ToUsd();
-    const { shareBalance, underlying0Balance, underlying1Balance, balanceTimestamps } =
-      this.getBalances();
-    const timestamps = this.getTimestamps(balanceTimestamps, shareBalance.timestamps[0]);
+    const sharesToUnderlyingTVA = this.getSharesToUnderlying();
+    const underlyingToToken0Interpolator = this.getUnderlyingToToken(0);
+    const underlyingToToken1Interpolator = this.getUnderlyingToToken(1);
+    const underlyingToUsdInterpolator = this.getUnderlyingToUsd();
+    const token0ToUsdInterpolator = this.getTokenToUsd(0);
+    const token1ToUsdInterpolator = this.getTokenToUsd(1);
+    const {
+      sharesAtDepositBalances,
+      token0AtDepositBalances,
+      token1AtDepositBalances,
+      balanceTimestamps,
+    } = this.getBalances();
+    const timestamps = this.getTimestamps(balanceTimestamps, sharesAtDepositBalances.timestamps[0]);
 
     return timestamps.map(t => {
-      const shares = shareBalance.getValueAfter(t);
-      const underlying0 = underlying0Balance.getValueAfter(t);
-      const underlying1 = underlying1Balance.getValueAfter(t);
-      const sharePrice = shareToUsd.getValueAt(t);
-      const underlying0Price = underlying0ToUsd.getValueAt(t);
-      const underlying1Price = underlying1ToUsd.getValueAt(t);
+      const sharesAtDeposit = sharesAtDepositBalances.getValueAfter(t);
+      const token0AtDeposit = token0AtDepositBalances.getValueAfter(t);
+      const token1AtDeposit = token1AtDepositBalances.getValueAfter(t);
+      const sharesToUnderlying = sharesToUnderlyingTVA.getValueAfter(t);
+      const underlyingToToken0 = underlyingToToken0Interpolator.getValueAt(t);
+      const underlyingToToken1 = underlyingToToken1Interpolator.getValueAt(t);
 
-      const sharesUsd = shares.times(sharePrice);
-      const underlying0Usd = underlying0.times(underlying0Price);
-      const underlying1Usd = underlying1.times(underlying1Price);
-      const heldUsd = underlying0Usd.plus(underlying1Usd);
+      const underlyingToUsd = underlyingToUsdInterpolator.getValueAt(t);
+      const token0ToUsd = token0ToUsdInterpolator.getValueAt(t);
+      const token1ToUsd = token1ToUsdInterpolator.getValueAt(t);
+
+      const underlying = sharesAtDeposit.times(sharesToUnderlying);
+      const token0 = underlying.times(underlyingToToken0);
+      const token1 = underlying.times(underlyingToToken1);
+      const underlyingUsd = underlying.times(underlyingToUsd);
+      const token0Usd = token0.times(token0ToUsd);
+      const token1Usd = token1.times(token1ToUsd);
+
+      const token0AtDepositUsd = token0AtDeposit.times(token0ToUsd);
+      const token1AtDepositUsd = token1AtDeposit.times(token1ToUsd);
+      const heldUsd = token0AtDepositUsd.plus(token1AtDepositUsd);
 
       return {
-        t: t * 1000, // graph UI wants timestamp in milliseconds
-        v: sharesUsd.toNumber(),
-        vHold: heldUsd.toNumber(),
-        remainingShares: shares,
-        remainingToken0: underlying0,
-        remainingToken1: underlying1,
-        shareToUsd: sharePrice,
-        token0ToUsd: underlying0Price,
-        token1ToUsd: underlying1Price,
-        sharesUsd: sharesUsd,
-        underlying0Usd: underlying0Usd,
-        underlying1Usd: underlying1Usd,
+        timestamp: t * 1000, // graph UI wants timestamp in milliseconds
+        shares: sharesAtDeposit.toNumber(),
+        underlying: underlying.toNumber(),
+        underlyingUsd: underlyingUsd.toNumber(),
+        heldUsd: heldUsd.toNumber(),
+        debug: {
+          sharesToUnderlying,
+          underlyingToToken0,
+          underlyingToToken1,
+          underlyingToUsd,
+          token0ToUsd,
+          token1ToUsd,
+          sharesAtDeposit,
+          underlying,
+          token0,
+          token1,
+          underlyingUsd,
+          token0Usd,
+          token1Usd,
+          token0AtDeposit,
+          token1AtDeposit,
+          token0AtDepositUsd,
+          token1AtDepositUsd,
+          heldUsd,
+        },
       };
     });
   }
@@ -566,17 +681,21 @@ class ClmInvestorFeesTimeSeriesGenerator {
 
 export function getClmInvestorTimeSeries(
   timeBucket: GraphBucket,
-  timeline: TimelineEntryCowcentratedPool[],
-  shareToUsd: ApiPoint[],
+  timeline: TimelineEntryCowcentratedPool[] | TimelineEntryCowcentratedVault[],
+  underlyingToUsd: ApiPoint[],
   underlying0ToUsd: ApiPoint[],
   underlying1ToUsd: ApiPoint[],
   firstDepositDate: Date,
-  currentPrice: BigNumber,
-  currentShareBalance: BigNumber,
-  token0AtDeposit: BigNumber,
-  token1AtDeposit: BigNumber,
-  currentPriceToken0: BigNumber,
-  currentPriceToken1: BigNumber
+  nowBalanceShares: BigNumber,
+  nowBalanceUnderlying: BigNumber,
+  nowBalanceToken0: BigNumber,
+  nowBalanceToken1: BigNumber,
+  nowPricePerFullShare: BigNumber,
+  nowPriceUnderlying: BigNumber,
+  nowPriceToken0: BigNumber,
+  nowPriceToken1: BigNumber,
+  clmHistory: ClmPriceHistoryEntryClm[],
+  vaultHistory: ClmPriceHistoryEntryClassic[] | undefined
 ): ClmInvestorOverviewTimeSeriesPoint[] {
   // so, first we need to generate datetime keys for each row
   const { bucketSize: bucketSizeStr, timeRange: timeRangeStr } =
@@ -589,15 +708,19 @@ export function getClmInvestorTimeSeries(
 
   const generator = new ClmInvestorOverviewTimeSeriesGenerator(
     timeline,
-    shareToUsd,
+    clmHistory,
+    vaultHistory,
+    underlyingToUsd,
     underlying0ToUsd,
     underlying1ToUsd,
-    currentPrice,
-    currentShareBalance,
-    currentPriceToken0,
-    token0AtDeposit,
-    currentPriceToken1,
-    token1AtDeposit,
+    nowPricePerFullShare,
+    nowBalanceShares,
+    nowPriceUnderlying,
+    nowBalanceUnderlying,
+    nowPriceToken0,
+    nowBalanceToken0,
+    nowPriceToken1,
+    nowBalanceToken1,
     firstDate,
     lastDate,
     bucketSize

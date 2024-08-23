@@ -9,7 +9,7 @@ import {
 } from './transact-types';
 import { partition, uniq } from 'lodash-es';
 import { isCowcentratedLikeVault, type VaultEntity } from '../../entities/vault';
-import type { GetStateFn } from '../../../../redux-types';
+import type { BeefyStateFn } from '../../../../redux-types';
 import { selectVaultById, selectVaultUnderlyingVault } from '../../selectors/vaults';
 import {
   type AnyComposableStrategy,
@@ -77,7 +77,7 @@ export function isComposableStrategyConstructorWithOptions(
 export class TransactApi implements ITransactApi {
   protected async getHelpersForVault(
     vaultId: VaultEntity['id'],
-    getState: GetStateFn
+    getState: BeefyStateFn
   ): Promise<TransactHelpers> {
     const state = getState();
     const vault = selectVaultById(state, vaultId);
@@ -95,7 +95,7 @@ export class TransactApi implements ITransactApi {
 
   async fetchDepositOptionsFor(
     vaultId: VaultEntity['id'],
-    getState: GetStateFn
+    getState: BeefyStateFn
   ): Promise<DepositOption[]> {
     const helpers = await this.getHelpersForVault(vaultId, getState);
     const { vaultType } = helpers;
@@ -133,7 +133,7 @@ export class TransactApi implements ITransactApi {
   async fetchDepositQuotesFor(
     options: DepositOption[],
     amounts: InputTokenAmount[],
-    getState: GetStateFn
+    getState: BeefyStateFn
   ): Promise<DepositQuote[]> {
     const vaultId = options[0].vaultId;
     const helpers = await this.getHelpersForVault(vaultId, getState);
@@ -189,7 +189,7 @@ export class TransactApi implements ITransactApi {
 
   async fetchDepositStep(
     quote: TransactQuote,
-    getState: GetStateFn,
+    getState: BeefyStateFn,
     t: TFunction<Namespace>
   ): Promise<Step> {
     const helpers = await this.getHelpersForVault(quote.option.vaultId, getState);
@@ -205,7 +205,7 @@ export class TransactApi implements ITransactApi {
 
   async fetchWithdrawOptionsFor(
     vaultId: VaultEntity['id'],
-    getState: GetStateFn
+    getState: BeefyStateFn
   ): Promise<WithdrawOption[]> {
     const helpers = await this.getHelpersForVault(vaultId, getState);
     const { vaultType } = helpers;
@@ -243,7 +243,7 @@ export class TransactApi implements ITransactApi {
   async fetchWithdrawQuotesFor(
     options: WithdrawOption[],
     amounts: InputTokenAmount[],
-    getState: GetStateFn
+    getState: BeefyStateFn
   ): Promise<WithdrawQuote[]> {
     const vaultId = options[0].vaultId;
     const helpers = await this.getHelpersForVault(vaultId, getState);
@@ -295,7 +295,7 @@ export class TransactApi implements ITransactApi {
 
   private async getVaultTypeFor<T extends VaultEntity>(
     vault: T,
-    getState: GetStateFn
+    getState: BeefyStateFn
   ): Promise<VaultTypeFromVault<T>> {
     const builder = getVaultTypeBuilder(vault);
     if (!builder) {
@@ -314,7 +314,7 @@ export class TransactApi implements ITransactApi {
 
   async fetchWithdrawStep(
     quote: TransactQuote,
-    getState: GetStateFn,
+    getState: BeefyStateFn,
     t: TFunction<Namespace>
   ): Promise<Step> {
     const helpers = await this.getHelpersForVault(quote.option.vaultId, getState);
@@ -328,7 +328,7 @@ export class TransactApi implements ITransactApi {
     return await strategy.fetchWithdrawStep(quote, t);
   }
 
-  async fetchVaultHasZap(vaultId: VaultEntity['id'], getState: GetStateFn): Promise<boolean> {
+  async fetchVaultHasZap(vaultId: VaultEntity['id'], getState: BeefyStateFn): Promise<boolean> {
     const helpers = await this.getHelpersForVault(vaultId, getState);
 
     // No zap in config

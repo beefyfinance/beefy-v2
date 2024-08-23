@@ -1,5 +1,8 @@
 import { add, fromUnixTime, intervalToDuration, isAfter, isBefore, sub } from 'date-fns';
 import { zeroPad } from './format';
+import type { DurationSingle } from './date-types';
+import type { OptionalRecord } from '../features/data/utils/types-utils';
+import { firstKey } from './object';
 
 export function datesAreEqual(a: Date | undefined, b: Date | undefined): boolean {
   // both are the same Date object, or both are undefined
@@ -64,6 +67,62 @@ const durationUnits = [
 
 export function isDurationEqual(base: Duration, compareTo: Duration): boolean {
   return durationUnits.every(unit => base[unit] === compareTo[unit]);
+}
+
+const durationFieldToSeconds: Record<keyof Duration, number> = {
+  years: 60 * 60 * 24 * 365,
+  months: 60 * 60 * 24 * 30,
+  weeks: 60 * 60 * 24 * 7,
+  days: 60 * 60 * 24,
+  hours: 60 * 60,
+  minutes: 60,
+  seconds: 1,
+};
+
+const durationFieldToField: OptionalRecord<
+  keyof Duration,
+  OptionalRecord<keyof Duration, number>
+> = {
+  weeks: {
+    years: 1 / 52,
+  },
+  months: {
+    years: 1 / 12,
+  },
+  years: {
+    months: 12,
+    weeks: 52,
+  },
+};
+
+export function convertDurationField(
+  value: number,
+  from: keyof Duration,
+  to: keyof Duration
+): number {
+  if (from === to) {
+    return value;
+  }
+
+  const multiplier = durationFieldToField[from]?.[to];
+  if (multiplier !== undefined) {
+    return value * multiplier;
+  }
+
+  return (value * durationFieldToSeconds[from]) / durationFieldToSeconds[to];
+}
+
+export function convertDurationSingle(
+  duration: DurationSingle,
+  to: keyof Duration
+): DurationSingle {
+  const from = firstKey(duration);
+  if (!from) {
+    throw new Error('DurationSingle is empty');
+  }
+  return {
+    [to]: convertDurationField(duration[from], from, to),
+  } as DurationSingle;
 }
 
 export function isLonger(base: Duration, compareTo: Duration): boolean {

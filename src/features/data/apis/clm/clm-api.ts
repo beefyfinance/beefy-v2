@@ -1,5 +1,8 @@
 import type {
+  ClmInvestorTimelineResponse,
   ClmPendingRewardsResponse,
+  ClmPeriod,
+  ClmPriceHistoryEntry,
   ClmVaultHarvestsResponse,
   ClmVaultsHarvestsResponse,
   IClmApi,
@@ -13,6 +16,7 @@ import BigNumber from 'bignumber.js';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
 import { getUnixTime, roundToNearestMinutes } from 'date-fns';
 import { getJson } from '../../../../helpers/http';
+import { isFetchNotFoundError } from '../../../../helpers/http/errors';
 
 const ClmStrategyAbi = [
   {
@@ -50,13 +54,39 @@ const ClmStrategyAbi = [
   },
 ] as const satisfies Abi;
 
-const CLM_API = import.meta.env.VITE_CLM_URL || 'https://clm-api.beefy.finance';
-
 export class ClmApi implements IClmApi {
-  public api: string;
+  public clmBase: string;
 
   constructor() {
-    this.api = CLM_API;
+    this.clmBase = import.meta.env.VITE_CLM_URL || 'https://clm-api.beefy.finance';
+  }
+
+  public async getInvestorTimeline(address: string): Promise<ClmInvestorTimelineResponse> {
+    try {
+      return getJson<ClmInvestorTimelineResponse>({
+        url: `${this.clmBase}/api/v1/investor/${address}/timeline`,
+      });
+    } catch (err) {
+      if (isFetchNotFoundError(err)) {
+        return [];
+      }
+      throw err;
+    }
+  }
+
+  public async getPriceHistoryForVaultSince<T extends ClmPriceHistoryEntry>(
+    chainId: ChainEntity['id'],
+    vaultAddress: VaultEntity['contractAddress'],
+    since: Date,
+    period: ClmPeriod
+  ): Promise<T[]> {
+    const nearestMinute = roundToNearestMinutes(since);
+
+    return await getJson<T[]>({
+      url: `${this.clmBase}/api/v1/vault/${chainId}/${vaultAddress}/prices/${period}/${getUnixTime(
+        nearestMinute
+      )}`,
+    });
   }
 
   public async getHarvestsForVault(
@@ -64,7 +94,7 @@ export class ClmApi implements IClmApi {
     vaultAddress: VaultEntity['contractAddress']
   ): Promise<ClmVaultHarvestsResponse> {
     return await getJson<ClmVaultHarvestsResponse>({
-      url: `${this.api}/api/v1/vault/${chainId}/${vaultAddress.toLocaleLowerCase()}/harvests`,
+      url: `${this.clmBase}/api/v1/vault/${chainId}/${vaultAddress.toLocaleLowerCase()}/harvests`,
     });
   }
 
@@ -77,7 +107,7 @@ export class ClmApi implements IClmApi {
     const orderedAddresses = vaultAddresses.map(addr => addr.toLowerCase()).sort();
 
     return await getJson<ClmVaultsHarvestsResponse>({
-      url: `${this.api}/api/v1/vaults/${chainId}/harvests/${getUnixTime(nearestMinute)}`,
+      url: `${this.clmBase}/api/v1/vaults/${chainId}/harvests/${getUnixTime(nearestMinute)}`,
       params: orderedAddresses.map(addr => ['vaults', addr]),
     });
   }

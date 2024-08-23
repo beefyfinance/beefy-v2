@@ -43,7 +43,9 @@ export function selectHistoricalHasCowcentratedRanges(
   state: BeefyState,
   vaultId: VaultEntity['id']
 ) {
-  return Object.values(state.biz.historical.clm.byVaultId[vaultId]?.available || {}).some(v => v);
+  return Object.values(state.biz.historical.clmPositions.byVaultId[vaultId]?.available || {}).some(
+    v => v
+  );
 }
 
 export const selectHistoricalAvailableCharts = createSelector(
@@ -78,7 +80,7 @@ export function selectHistoricalApyBucketStatus(
   vaultId: VaultEntity['id'],
   bucket: ApiTimeBucket
 ) {
-  return state.biz.historical.apys.byVaultId[vaultId]?.byTimebucket[bucket]?.status || 'idle';
+  return state.biz.historical.apys.byVaultId[vaultId]?.byTimeBucket[bucket]?.status || 'idle';
 }
 
 export function selectHistoricalTvlBucketStatus(
@@ -86,7 +88,7 @@ export function selectHistoricalTvlBucketStatus(
   vaultId: VaultEntity['id'],
   bucket: ApiTimeBucket
 ) {
-  return state.biz.historical.tvls.byVaultId[vaultId]?.byTimebucket[bucket]?.status || 'idle';
+  return state.biz.historical.tvls.byVaultId[vaultId]?.byTimeBucket[bucket]?.status || 'idle';
 }
 
 export function selectHistoricalPriceBucketStatus(
@@ -94,7 +96,7 @@ export function selectHistoricalPriceBucketStatus(
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket
 ) {
-  return state.biz.historical.prices.byOracleId[oracleId]?.byTimebucket[bucket]?.status || 'idle';
+  return state.biz.historical.prices.byOracleId[oracleId]?.byTimeBucket[bucket]?.status || 'idle';
 }
 
 export function selectHistoricalCowcentratedRangesBucketStatus(
@@ -102,7 +104,9 @@ export function selectHistoricalCowcentratedRangesBucketStatus(
   vaultId: VaultEntity['id'],
   bucket: ApiTimeBucket
 ) {
-  return state.biz.historical.clm.byVaultId[vaultId]?.byTimebucket[bucket]?.status || 'idle';
+  return (
+    state.biz.historical.clmPositions.byVaultId[vaultId]?.byTimeBucket[bucket]?.status || 'idle'
+  );
 }
 
 export function selectHistoricalApyBucketData(
@@ -110,7 +114,7 @@ export function selectHistoricalApyBucketData(
   vaultId: VaultEntity['id'],
   bucket: ApiTimeBucket
 ) {
-  return state.biz.historical.apys.byVaultId[vaultId]?.byTimebucket[bucket]?.data || undefined;
+  return state.biz.historical.apys.byVaultId[vaultId]?.byTimeBucket[bucket]?.data || undefined;
 }
 
 export function selectHistoricalTvlBucketData(
@@ -118,7 +122,7 @@ export function selectHistoricalTvlBucketData(
   vaultId: VaultEntity['id'],
   bucket: ApiTimeBucket
 ) {
-  return state.biz.historical.tvls.byVaultId[vaultId]?.byTimebucket[bucket]?.data || undefined;
+  return state.biz.historical.tvls.byVaultId[vaultId]?.byTimeBucket[bucket]?.data || undefined;
 }
 
 export function selectHistoricalPriceBucketData(
@@ -126,7 +130,7 @@ export function selectHistoricalPriceBucketData(
   oracleId: TokenEntity['oracleId'],
   bucket: ApiTimeBucket
 ) {
-  return state.biz.historical.prices.byOracleId[oracleId]?.byTimebucket[bucket]?.data || undefined;
+  return state.biz.historical.prices.byOracleId[oracleId]?.byTimeBucket[bucket]?.data || undefined;
 }
 
 export function selectHistoricalCowcentratedRangesBucketData(
@@ -134,7 +138,9 @@ export function selectHistoricalCowcentratedRangesBucketData(
   vaultId: VaultEntity['id'],
   bucket: ApiTimeBucket
 ) {
-  return state.biz.historical.clm.byVaultId[vaultId]?.byTimebucket[bucket]?.data || undefined;
+  return (
+    state.biz.historical.clmPositions.byVaultId[vaultId]?.byTimeBucket[bucket]?.data || undefined
+  );
 }
 
 export function selectHistoricalPriceAvailableBuckets(
@@ -156,7 +162,7 @@ export function selectHistoricalCowcentratedRangesAvailableBuckets(
   state: BeefyState,
   vaultId: VaultEntity['id']
 ) {
-  return state.biz.historical.clm.byVaultId[vaultId]?.available || unavailableBuckets;
+  return state.biz.historical.clmPositions.byVaultId[vaultId]?.available || unavailableBuckets;
 }
 
 export function selectHistoricalPriceHasDataBuckets(
@@ -178,7 +184,7 @@ export function selectHistoricalCowcentratedRangesHasDataBuckets(
   state: BeefyState,
   vaultId: VaultEntity['id']
 ) {
-  return state.biz.historical.clm.byVaultId[vaultId]?.hasData || unavailableBuckets;
+  return state.biz.historical.clmPositions.byVaultId[vaultId]?.hasData || unavailableBuckets;
 }
 
 export function selectHistoricalPriceAlreadyFulfilledBuckets(
@@ -206,7 +212,9 @@ export function selectHistoricalCowcentratedRangesAlreadyFulfilledBuckets(
   state: BeefyState,
   vaultId: VaultEntity['id']
 ) {
-  return state.biz.historical.clm.byVaultId[vaultId]?.alreadyFulfilled || unavailableBuckets;
+  return (
+    state.biz.historical.clmPositions.byVaultId[vaultId]?.alreadyFulfilled || unavailableBuckets
+  );
 }
 
 export function selectHistoricalPriceBucketHasData(

@@ -5,7 +5,7 @@ import {
   selectUserDepositedTimelineByVaultId,
   selectUserFirstDepositDateByVaultId,
 } from '../../../../data/selectors/analytics';
-import { getInvestorTimeserie } from '../../../../../helpers/timeserie';
+import { getInvestorTimeseries } from '../../../../../helpers/graph/timeseries';
 import { differenceInHours, getUnixTime, isAfter } from 'date-fns';
 import { maxBy, minBy } from 'lodash-es';
 import { selectVaultById, selectVaultPricePerFullShare } from '../../../../data/selectors/vaults';
@@ -17,14 +17,14 @@ import { selectWalletAddress } from '../../../../data/selectors/wallet';
 import { isTimelineEntityStandard } from '../../../../data/entities/analytics';
 import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../../data/selectors/balance';
 import { useVaultIdToUnderlyingUsdPrices } from '../../../../data/hooks/historical';
-import type { GraphBucket } from '../../../../../helpers/graph';
 import { useVaultIdToShareToUnderlying } from '../../../../data/hooks/analytics';
+import type { GraphBucket } from '../../../../../helpers/graph/types';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], minUnderlying: 0, maxUnderlying: 0, minUsd: 0, maxUsd: 0 };
 
 export const usePnLChartData = (
-  timebucket: GraphBucket,
+  timeBucket: GraphBucket,
   vaultId: VaultEntity['id'],
   address?: string
 ) => {
@@ -47,12 +47,12 @@ export const usePnLChartData = (
     data: sharesToUnderlying,
     loading: sharesLoading,
     willRetry: sharesWillRetry,
-  } = useVaultIdToShareToUnderlying(vaultId, timebucket);
+  } = useVaultIdToShareToUnderlying(vaultId, timeBucket);
   const {
     data: underlyingToUsd,
     loading: underlyingLoading,
     willRetry: underlyingWillRetry,
-  } = useVaultIdToUnderlyingUsdPrices(vaultId, timebucket);
+  } = useVaultIdToUnderlyingUsdPrices(vaultId, timeBucket);
 
   const isLoading = underlyingLoading || sharesLoading;
   const willRetry = sharesWillRetry || underlyingWillRetry;
@@ -74,8 +74,8 @@ export const usePnLChartData = (
         price => price.t > vaultLastDepositUnix
       );
 
-      const data = getInvestorTimeserie(
-        timebucket,
+      const data = getInvestorTimeseries(
+        timeBucket,
         vaultTimeline.current,
         filteredSharesToUnderlying,
         filteredUnderlyingToUsd,
@@ -107,7 +107,7 @@ export const usePnLChartData = (
     currentOraclePrice,
     currentPpfs,
     vaultTimeline,
-    timebucket,
+    timeBucket,
   ]);
 
   return { chartData, isLoading, willRetry };

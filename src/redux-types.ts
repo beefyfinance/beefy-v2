@@ -4,6 +4,7 @@ import type {
   EnhancedStore,
   MiddlewareArray,
   ThunkAction,
+  ThunkDispatch,
   ThunkMiddleware,
 } from '@reduxjs/toolkit';
 import type { ApyState } from './features/data/reducers/apy';
@@ -31,7 +32,6 @@ import type { FeesState } from './features/data/reducers/fees';
 import type { StepperState } from './features/data/reducers/wallet/stepper';
 import type { TransactState } from './features/data/reducers/wallet/transact-types';
 import type { TreasuryState } from './features/data/reducers/treasury';
-import type { AnalyticsState } from './features/data/reducers/analytics';
 import type { ProposalsState } from './features/data/reducers/proposals';
 import type { HistoricalState } from './features/data/reducers/historical-types';
 import type { SavedVaultsState } from './features/data/reducers/saved-vaults';
@@ -44,8 +44,8 @@ import type { ArticlesState } from './features/data/reducers/articles';
 import type { UserRewardsState } from './features/data/reducers/wallet/user-rewards-types';
 import type { VersionState } from './features/data/reducers/ui-version';
 import type { RewardsState } from './features/data/reducers/rewards';
-
 import type { TenderlyState } from './features/data/reducers/tenderly-types';
+import type { AnalyticsState } from './features/data/reducers/analytics-types';
 
 export interface BeefyState {
   entities: {
@@ -110,4 +110,17 @@ export type BeefyThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
-export type GetStateFn = () => BeefyState;
+export type BeefyStateFn = () => BeefyState;
+
+export type BeefyDispatchFn = ThunkDispatch<BeefyState, unknown, AnyAction>;
+
+export type BeefyThunkConfig = {
+  state: BeefyState;
+  dispatch: BeefyDispatchFn;
+};
+
+export type BeefyMetaThunkConfig<T> = BeefyThunkConfig & {
+  pendingMeta: T;
+  fulfilledMeta: T;
+  rejectedMeta: T;
+};

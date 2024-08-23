@@ -37,7 +37,7 @@ const initialState: HistoricalState = {
   tvls: {
     byVaultId: {},
   },
-  clm: {
+  clmPositions: {
     byVaultId: {},
   },
 };
@@ -46,7 +46,7 @@ const initialTimeBucketsState = <T extends AnyChartData = AnyChartData>(): TimeB
   available: fromKeys(allDataApiBuckets, false),
   alreadyFulfilled: fromKeys(allDataApiBuckets, false),
   hasData: fromKeys(allDataApiBuckets, false),
-  byTimebucket: {},
+  byTimeBucket: {},
 });
 
 export const historicalSlice = createSlice({
@@ -85,57 +85,57 @@ export const historicalSlice = createSlice({
         sliceState.apys.byVaultId[vaultId].available = getBucketsFromRange(ranges.apys);
         sliceState.tvls.byVaultId[vaultId].available = getBucketsFromRange(ranges.tvls);
         if (isCowcentrated) {
-          sliceState.clm.byVaultId[vaultId].available = getBucketsFromRange(ranges.clm);
+          sliceState.clmPositions.byVaultId[vaultId].available = getBucketsFromRange(ranges.clm);
         }
         sliceState.prices.byOracleId[oracleId].available = getBucketsFromRange(ranges.prices);
       })
       .addCase(fetchHistoricalApys.pending, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
-        setTimebucketPending(getOrCreateTimeBucketFor('apys', vaultId, state), bucket);
+        setTimeBucketPending(getOrCreateTimeBucketFor('apys', vaultId, state), bucket);
       })
       .addCase(fetchHistoricalApys.rejected, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
-        setTimebucketRejected(state.apys.byVaultId[vaultId], bucket, action.error);
+        setTimeBucketRejected(state.apys.byVaultId[vaultId], bucket, action.error);
       })
       .addCase(fetchHistoricalApys.fulfilled, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
-        setTimebucketFulfilled(state.apys.byVaultId[vaultId], bucket, action.payload.data);
+        setTimeBucketFulfilled(state.apys.byVaultId[vaultId], bucket, action.payload.data);
       })
       .addCase(fetchHistoricalTvls.pending, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
-        setTimebucketPending(getOrCreateTimeBucketFor('tvls', vaultId, state), bucket);
+        setTimeBucketPending(getOrCreateTimeBucketFor('tvls', vaultId, state), bucket);
       })
       .addCase(fetchHistoricalTvls.rejected, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
-        setTimebucketRejected(state.tvls.byVaultId[vaultId], bucket, action.error);
+        setTimeBucketRejected(state.tvls.byVaultId[vaultId], bucket, action.error);
       })
       .addCase(fetchHistoricalTvls.fulfilled, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
-        setTimebucketFulfilled(state.tvls.byVaultId[vaultId], bucket, action.payload.data);
+        setTimeBucketFulfilled(state.tvls.byVaultId[vaultId], bucket, action.payload.data);
       })
       .addCase(fetchHistoricalPrices.pending, (state, action) => {
         const { oracleId, bucket } = action.meta.arg;
-        setTimebucketPending(getOrCreateTimeBucketFor('prices', oracleId, state), bucket);
+        setTimeBucketPending(getOrCreateTimeBucketFor('prices', oracleId, state), bucket);
       })
       .addCase(fetchHistoricalPrices.rejected, (state, action) => {
         const { oracleId, bucket } = action.meta.arg;
-        setTimebucketRejected(state.prices.byOracleId[oracleId], bucket, action.error);
+        setTimeBucketRejected(state.prices.byOracleId[oracleId], bucket, action.error);
       })
       .addCase(fetchHistoricalPrices.fulfilled, (state, action) => {
         const { oracleId, bucket } = action.meta.arg;
-        setTimebucketFulfilled(state.prices.byOracleId[oracleId], bucket, action.payload.data);
+        setTimeBucketFulfilled(state.prices.byOracleId[oracleId], bucket, action.payload.data);
       })
       .addCase(fetchHistoricalCowcentratedRanges.pending, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
-        setTimebucketPending(getOrCreateTimeBucketFor('clm', vaultId, state), bucket);
+        setTimeBucketPending(getOrCreateTimeBucketFor('clmPositions', vaultId, state), bucket);
       })
       .addCase(fetchHistoricalCowcentratedRanges.rejected, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
-        setTimebucketRejected(state.clm.byVaultId[vaultId], bucket, action.error);
+        setTimeBucketRejected(state.clmPositions.byVaultId[vaultId], bucket, action.error);
       })
       .addCase(fetchHistoricalCowcentratedRanges.fulfilled, (state, action) => {
         const { vaultId, bucket } = action.meta.arg;
-        setTimebucketFulfilled(state.clm.byVaultId[vaultId], bucket, action.payload.data);
+        setTimeBucketFulfilled(state.clmPositions.byVaultId[vaultId], bucket, action.payload.data);
       });
   },
 });
@@ -156,10 +156,10 @@ function getOrCreateTimeBucketBucket(
   state: Draft<TimeBucketsState>,
   bucket: ApiTimeBucket
 ): Draft<TimeBucketState> {
-  let bucketState = state.byTimebucket[bucket];
+  let bucketState = state.byTimeBucket[bucket];
 
   if (!bucketState) {
-    bucketState = state.byTimebucket[bucket] = {
+    bucketState = state.byTimeBucket[bucket] = {
       status: 'idle',
       alreadyFulfilled: false,
     };
@@ -168,12 +168,12 @@ function getOrCreateTimeBucketBucket(
   return bucketState;
 }
 
-function setTimebucketPending(state: Draft<TimeBucketsState>, bucketKey: ApiTimeBucket) {
+function setTimeBucketPending(state: Draft<TimeBucketsState>, bucketKey: ApiTimeBucket) {
   const bucketState = getOrCreateTimeBucketBucket(state, bucketKey);
   bucketState.status = 'pending';
 }
 
-function setTimebucketRejected(
+function setTimeBucketRejected(
   state: Draft<TimeBucketsState>,
   bucketKey: ApiTimeBucket,
   error: SerializedError
@@ -183,7 +183,7 @@ function setTimebucketRejected(
   bucketState.error = error;
 }
 
-function setTimebucketFulfilled(
+function setTimeBucketFulfilled(
   state: Draft<TimeBucketsState>,
   bucketKey: ApiTimeBucket,
   data: ApiChartData,
@@ -203,7 +203,7 @@ function setTimebucketFulfilled(
     const shorterBuckets = getDataApiBucketsShorterThan(bucketKey);
     for (const smallerBucket of shorterBuckets) {
       const startDate = getUnixTime(sub(sub(now, smallerBucket.range), smallerBucket.maPeriod));
-      setTimebucketFulfilled(
+      setTimeBucketFulfilled(
         state,
         smallerBucket.id,
         data.filter(p => p.t >= startDate),
@@ -226,8 +226,8 @@ function initAllTimeBuckets(state: Draft<HistoricalState>, oracleId: string, vau
     state.tvls.byVaultId[vaultId] = initialTimeBucketsState();
   }
 
-  if (!(vaultId in state.clm.byVaultId)) {
-    state.clm.byVaultId[vaultId] = initialTimeBucketsState();
+  if (!(vaultId in state.clmPositions.byVaultId)) {
+    state.clmPositions.byVaultId[vaultId] = initialTimeBucketsState();
   }
 }
 

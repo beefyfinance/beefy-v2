@@ -1,5 +1,5 @@
 import type { VaultEntity } from '../../entities/vault';
-import type { GetStateFn } from '../../../../redux-types';
+import type { BeefyStateFn } from '../../../../redux-types';
 import type BigNumber from 'bignumber.js';
 import type { ChainEntity } from '../../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../../entities/token';
@@ -697,37 +697,37 @@ export function quoteNeedsSlippage(quote: TransactQuote): boolean {
 export interface ITransactApi {
   fetchDepositOptionsFor(
     vaultId: VaultEntity['id'],
-    getState: GetStateFn
+    getState: BeefyStateFn
   ): Promise<DepositOption[]>;
 
   fetchDepositQuotesFor(
     options: DepositOption[],
     inputs: InputTokenAmount[],
-    getState: GetStateFn
+    getState: BeefyStateFn
   ): Promise<DepositQuote[]>;
 
   fetchDepositStep(
     quote: DepositQuote,
-    getState: GetStateFn,
+    getState: BeefyStateFn,
     t: TFunction<Namespace>
   ): Promise<Step>;
 
   fetchWithdrawOptionsFor(
     vaultId: VaultEntity['id'],
-    getState: GetStateFn
+    getState: BeefyStateFn
   ): Promise<WithdrawOption[]>;
 
   fetchWithdrawQuotesFor(
     options: WithdrawOption[],
     inputs: InputTokenAmount[],
-    getState: GetStateFn
+    getState: BeefyStateFn
   ): Promise<WithdrawQuote[]>;
 
   fetchWithdrawStep(
     quote: WithdrawQuote,
-    getState: GetStateFn,
+    getState: BeefyStateFn,
     t: TFunction<Namespace>
   ): Promise<Step>;
 
-  fetchVaultHasZap(vaultId: VaultEntity['id'], getState: GetStateFn): Promise<boolean>;
+  fetchVaultHasZap(vaultId: VaultEntity['id'], getState: BeefyStateFn): Promise<boolean>;
 }

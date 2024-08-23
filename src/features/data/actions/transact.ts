@@ -1,5 +1,5 @@
 import { type ThunkAction, createAction, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
-import type { BeefyState, BeefyThunk, GetStateFn } from '../../../redux-types';
+import type { BeefyState, BeefyThunk, BeefyStateFn } from '../../../redux-types';
 import { isCowcentratedVault, type VaultEntity, type VaultGov } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
 import { getTransactApi } from '../apis/instances';
@@ -301,7 +301,7 @@ export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state:
 export async function getTransactSteps(
   quote: TransactQuote,
   t: TFunction<Namespace>,
-  getState: GetStateFn
+  getState: BeefyStateFn
 ): Promise<Step[]> {
   const steps: Step[] = [];
   const state = getState();

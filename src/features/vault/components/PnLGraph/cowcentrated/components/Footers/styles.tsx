@@ -23,6 +23,12 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     gap: '8px',
   },
+  positionReferenceLine: {
+    height: '2px',
+    width: '12px',
+    backgroundColor: '#4DB258',
+    borderRadius: '4px',
+  },
   usdReferenceLine: {
     height: '2px',
     width: '12px',

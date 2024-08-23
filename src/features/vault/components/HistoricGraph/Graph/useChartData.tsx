@@ -11,24 +11,13 @@ import { useAppSelector } from '../../../../../store';
 import { selectHistoricalBucketData } from '../../../../data/selectors/historical';
 import { MovingAverage } from '../../../../../helpers/number';
 import type { AnyApiPoint, ChartData, ChartStat } from '../types';
+import { minMaxAverage } from '../../../../../helpers/collection';
 
 function isClmData(
   data: AnyApiPoint[] | undefined,
   stat: ChartStat
 ): data is ApiCowcentratedPoint[] {
   return !!data && data.length > 0 && 'max' in data[0] && stat === 'clm';
-}
-
-function minMaxAverage<K extends string, T extends Record<K, number>>(
-  values: T[],
-  avgKey: K,
-  minKeys: Array<K>,
-  maxKeys: Array<K>
-): { avg: number; min: number; max: number } {
-  const avg = values.reduce((a, b) => (a + b[avgKey]) as number, 0) / values.length;
-  const min = values.reduce((a, b) => Math.min(a, ...minKeys.map(k => b[k] as number)), Infinity);
-  const max = values.reduce((a, b) => Math.max(a, ...maxKeys.map(k => b[k] as number)), -Infinity);
-  return { avg, min, max };
 }
 
 export function useChartData<TStat extends ChartStat>(

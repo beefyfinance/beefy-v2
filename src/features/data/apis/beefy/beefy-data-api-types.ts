@@ -2,11 +2,15 @@ import type { VaultEntity } from '../../entities/vault';
 import type { TokenEntity } from '../../entities/token';
 import type { ChainEntity } from '../../entities/chain';
 
-export type ApiTimeBucket = '1h_1d' | '1h_1w' | '1d_1M' | '1d_1Y' | '1d_all';
+export type ApiTimeBucketInterval = '1h' | '1d';
+export type ApiTimeBucketRange = '1d' | '1w' | '1M' | '1Y' | 'all';
+export type ApiTimeBucket = '1h_1d' | '1h_1w' | '1h_1M' | '1d_1M' | '1d_1Y' | '1d_all';
 
-export type ApiTimeBucketData = {
-  id: ApiTimeBucket;
+export type ApiTimeBucketData<TId extends ApiTimeBucket = ApiTimeBucket> = {
+  id: TId;
+  intervalKey: ApiTimeBucketInterval;
   interval: Duration;
+  rangeKey: ApiTimeBucketRange;
   range: Duration;
   maPeriod: Duration;
   available: Duration;
