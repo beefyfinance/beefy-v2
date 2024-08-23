@@ -48,10 +48,12 @@ export type UserClmPnl = {
   pnlPercentage: BigNumber;
   hold: BigNumber;
   holdDiff: BigNumber;
+  totalUnderlyingCompounded: BigNumber;
   total0Compounded: BigNumber;
   total1Compounded: BigNumber;
   total0CompoundedUsd: BigNumber;
   total1CompoundedUsd: BigNumber;
+  totalUnderlyingCompoundedUsd: BigNumber;
   totalCompoundedUsd: BigNumber;
 };
 

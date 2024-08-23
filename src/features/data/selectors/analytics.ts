@@ -305,22 +305,28 @@ export const selectClmPnl = (
   const positionPnl = underlyingNowInUsd.minus(underlyingAtDepositInUsd);
   const hold = token0AtDeposit.times(token0.price).plus(token1AtDeposit.times(token1.price));
 
+  const totalUnderlyingCompounded = underlyingNow.minus(underlyingAtDeposit);
+  const compoundedYield = {
+    totalUnderlyingCompounded,
+    total0Compounded: BIG_ZERO,
+    total1Compounded: BIG_ZERO,
+    total0CompoundedUsd: BIG_ZERO,
+    total1CompoundedUsd: BIG_ZERO,
+    totalUnderlyingCompoundedUsd: totalUnderlyingCompounded.times(underlyingNowPrice),
+    totalCompoundedUsd: BIG_ZERO,
+  };
+
   const harvestTimeline = selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress);
-  const compoundedYield = harvestTimeline
-    ? {
-        total0Compounded: harvestTimeline.totals[0],
-        total1Compounded: harvestTimeline.totals[1],
-        total0CompoundedUsd: harvestTimeline.totalsUsd[0],
-        total1CompoundedUsd: harvestTimeline.totalsUsd[1],
-        totalCompoundedUsd: harvestTimeline.totalUsd,
-      }
-    : {
-        total0Compounded: BIG_ZERO,
-        total1Compounded: BIG_ZERO,
-        total0CompoundedUsd: BIG_ZERO,
-        total1CompoundedUsd: BIG_ZERO,
-        totalCompoundedUsd: BIG_ZERO,
-      };
+  if (harvestTimeline) {
+    compoundedYield.total0Compounded = harvestTimeline.totals[0];
+    compoundedYield.total1Compounded = harvestTimeline.totals[1];
+    compoundedYield.total0CompoundedUsd = harvestTimeline.totalsUsd[0];
+    compoundedYield.total1CompoundedUsd = harvestTimeline.totalsUsd[1];
+  }
+
+  compoundedYield.totalCompoundedUsd = compoundedYield.total0CompoundedUsd
+    .plus(compoundedYield.total1CompoundedUsd)
+    .plus(compoundedYield.totalUnderlyingCompoundedUsd);
 
   return {
     type: 'cowcentrated',
