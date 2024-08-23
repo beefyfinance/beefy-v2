@@ -1,5 +1,63 @@
 [
   {
+    "id": "uniswap-cow-base-weth-pepe-rp",
+    "name": "PEPE-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-PEPE",
+    "tokenAddress": "0x0Fa223a4469fe16D99cc0f48e537be7EB01dF0aa",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xC34289F462D819BEe97E711DFD0224B722b7F672",
+    "earnedToken": "rcowUniswapBaseWETH-PEPE",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-pepe",
+    "status": "active",
+    "createdAt": 1724426423,
+    "platformId": "uniswap",
+    "assets": ["PEPE", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-pepe",
+    "name": "PEPE-WETH",
+    "type": "cowcentrated",
+    "token": "PEPE-WETH",
+    "tokenAddress": "0x0FB597D6cFE5bE0d5258A7f017599C2A4Ece34c7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x52b492a33E447Cdb854c7FC19F1e57E8BfA1777D"
+    ],
+    "earnedToken": "cowUniswapBaseWETH-PEPE",
+    "earnedTokenAddress": "0x0Fa223a4469fe16D99cc0f48e537be7EB01dF0aa",
+    "earnContractAddress": "0x0Fa223a4469fe16D99cc0f48e537be7EB01dF0aa",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-pepe",
+    "status": "active",
+    "createdAt": 1724426423,
+    "platformId": "uniswap",
+    "assets": ["PEPE", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "baseswap-cow-usdz-usdc-vault",
     "name": "USDz-USDC",
     "type": "standard",
