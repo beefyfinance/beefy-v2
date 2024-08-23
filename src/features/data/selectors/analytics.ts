@@ -1,5 +1,5 @@
 import { createCachedSelector } from 're-reselect';
-import { BIG_ONE, BIG_ZERO, bigNumberToStringDeep } from '../../../helpers/big-number';
+import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import { ClmPnl, PnL } from '../../../helpers/pnl';
 import type { BeefyState } from '../../../redux-types';
 import type { TimeBucketType } from '../apis/analytics/analytics-types';
