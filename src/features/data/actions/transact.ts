@@ -322,7 +322,8 @@ export async function getTransactSteps(
           message: t('Vault-ApproveMsg'),
           action: walletActions.approval(
             allowanceTokenAmount.token,
-            allowanceTokenAmount.spenderAddress
+            allowanceTokenAmount.spenderAddress,
+            allowanceTokenAmount.amount
           ),
           pending: false,
         });
