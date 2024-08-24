@@ -162,7 +162,11 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           step: {
             step: 'approve',
             message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(mintedToken, minter.burnerAddress!),
+            action: walletActions.approval(
+              mintedToken,
+              minter.burnerAddress!,
+              formData.withdraw.amount
+            ),
             pending: false,
           },
         })

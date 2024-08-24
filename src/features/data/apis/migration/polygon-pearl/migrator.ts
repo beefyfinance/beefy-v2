@@ -104,7 +104,7 @@ export const executePearlAction = createAsyncThunk<
         steps.push({
           step: 'approve',
           message: t('Vault-ApproveMsg'),
-          action: walletActions.approval(depositToken, vault.contractAddress),
+          action: walletActions.approval(depositToken, vault.contractAddress, balance),
           pending: false,
         });
       }

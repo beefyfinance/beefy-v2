@@ -117,7 +117,7 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
             step: {
               step: 'approve',
               message: t('Vault-ApproveMsg'),
-              action: walletActions.approval(mooToken, spenderAddress),
+              action: walletActions.approval(mooToken, spenderAddress, formState.amount),
               pending: false,
             },
           })

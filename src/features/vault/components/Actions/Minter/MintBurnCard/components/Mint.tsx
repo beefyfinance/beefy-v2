@@ -157,7 +157,11 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           step: {
             step: 'approve',
             message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(depositToken, minter.minterAddress),
+            action: walletActions.approval(
+              depositToken,
+              minter.minterAddress,
+              formData.deposit.amount
+            ),
             pending: false,
           },
         })
