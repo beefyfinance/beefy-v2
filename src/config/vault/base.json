@@ -1,5 +1,33 @@
 [
   {
+    "id": "aerodrome-weth-eurc",
+    "name": "ETH-EURC vLP",
+    "token": "vAMM-WETH/EURC",
+    "tokenAddress": "0x9DFf4b5AE4fD673213502Ab8fbf6d36015efb3E1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroWETH-EURC",
+    "earnedTokenAddress": "0x4B32691b888C9c6295cBF2B37b8A0F2B2A6f371a",
+    "earnContractAddress": "0x4B32691b888C9c6295cBF2B37b8A0F2B2A6f371a",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-eurc",
+    "status": "active",
+    "createdAt": 1724617571,
+    "platformId": "aerodrome",
+    "assets": ["WETH", "EURC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-weth-pepe-rp",
     "name": "PEPE-WETH Reward Pool",
     "type": "gov",
