@@ -324,7 +324,11 @@ function handleCowcentratedPoolTimeline(
               usdDiff: rp.diff.multipliedBy(shareToUsd),
 
               vaultId: pool.id,
-              rewardPoolClaimedDetails: tx.rewardPoolClaimedDetails,
+
+              rewardPoolClaimedDetails:
+                tx.claimedRewardPool?.toLowerCase() === rp.address.toLowerCase()
+                  ? tx.rewardPoolClaimedDetails
+                  : [],
             };
           })
           .filter(isDefined);

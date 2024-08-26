@@ -211,7 +211,7 @@ export class ClmPnl {
       this.state.realizedPnl.claims.claimedTokens[claim.address] =
         this.state.realizedPnl.claims.claimedTokens[claim.address].plus(claim.claimedAmount);
       this.state.realizedPnl.claims.totalUsd = this.state.realizedPnl.claims.totalUsd.plus(
-        claim.rewardToUsd
+        claim.claimedAmount.multipliedBy(claim.rewardToUsd)
       );
     });
     if (transaction.shares.isZero()) {
@@ -280,7 +280,7 @@ export class ClmPnl {
     }
 
     this.state.realizedPnl.position.usd = this.state.realizedPnl.position.usd.plus(trxPnlUsd);
-    this.state.realizedPnl.position.shares = this.state.realizedPnl.position.usd.plus(trxPnl);
+    this.state.realizedPnl.position.shares = this.state.realizedPnl.position.shares.plus(trxPnl);
     return;
   }
 

@@ -48,7 +48,7 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
   } = useAppSelector(state => selectClmPnl(state, vaultId));
 
   const pnlWithRewards = pnl.plus(realizedPnl.claims.totalUsd);
-  const holdDiffWithRewards = pnlWithRewards.minus(holdDiff);
+  const holdDiffWithRewards = holdDiff.plus(realizedPnl.claims.totalUsd);
 
   return (
     <div className={classes.statsContainer}>
@@ -95,7 +95,7 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
         )}
         value2={
           <div className={pnl.gt(BIG_ZERO) ? classes.green : classes.red}>
-            {formatPositiveOrNegative(pnl, formatLargeUsd(pnl), 'PNL')}{' '}
+            {formatLargeUsd(pnl, { positivePrefix: '+$' })} PNL
           </div>
         }
         subValue2={
@@ -108,24 +108,39 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
             content={
               <div>
                 <div className={classes.itemContainer}>
+                  <div className={classes.label}>{t('CLM')}</div>
+                  <div className={classes.value}>{formatLargeUsd(underlyingNowInUsd)}</div>
+                </div>
+                <div className={classes.itemContainer}>
+                  <div className={classes.label}>{t('If Held')}</div>
+                  <div className={classes.value}>{formatLargeUsd(hold)}</div>
+                </div>
+                <div className={classes.itemContainer}>
                   <div className={classes.label}>{t('CLM VS HOLD')}</div>
                   <div className={classes.value}>
-                    {formatPositiveOrNegative(holdDiff, formatLargeUsd(holdDiff))}
+                    {formatLargeUsd(holdDiff, { positivePrefix: '+$' })}
                   </div>
                 </div>
                 <div className={classes.itemContainer}>
-                  <div className={classes.label}>{t('CLM+R VS HOLD')}</div>
+                  <div className={classes.label}>{t('Pool Claimed')}</div>
+                  <div className={classes.value}>{formatLargeUsd(realizedPnl.claims.totalUsd)}</div>
+                </div>
+                <div className={classes.itemContainer}>
+                  <div className={classes.label}>{t('CLM+Claimed')}</div>
                   <div className={classes.value}>
-                    {formatPositiveOrNegative(
-                      holdDiffWithRewards,
-                      formatLargeUsd(holdDiffWithRewards)
-                    )}
+                    {formatLargeUsd(underlyingNowInUsd.plus(realizedPnl.claims.totalUsd))}
                   </div>
                 </div>
                 <div className={classes.itemContainer}>
-                  <div className={classes.label}>{t('PNL+R')}</div>
+                  <div className={classes.label}>{t('CLM+Claimed VS HOLD')}</div>
                   <div className={classes.value}>
-                    {formatPositiveOrNegative(pnlWithRewards, formatLargeUsd(pnlWithRewards))}
+                    {formatLargeUsd(holdDiffWithRewards, { positivePrefix: '+$' })}
+                  </div>
+                </div>
+                <div className={classes.itemContainer}>
+                  <div className={classes.label}>{t('PNL+Claimed')}</div>
+                  <div className={classes.value}>
+                    {formatLargeUsd(pnlWithRewards, { positivePrefix: '+$' })}
                   </div>
                 </div>
               </div>

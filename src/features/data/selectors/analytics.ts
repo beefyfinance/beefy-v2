@@ -306,6 +306,7 @@ export const selectClmPnl = (
   const positionPnl = underlyingNowInUsd.minus(underlyingAtDepositInUsd);
   const hold = token0AtDeposit.times(token0.price).plus(token1AtDeposit.times(token1.price));
 
+  // CLM Vault: Additional CLM tokens via vault compounding
   const totalUnderlyingCompounded =
     underlyingNow.gt(BIG_ZERO) && underlyingAtDeposit.gt(BIG_ZERO)
       ? underlyingNow.minus(underlyingAtDeposit)
@@ -320,6 +321,7 @@ export const selectClmPnl = (
     totalCompoundedUsd: BIG_ZERO,
   };
 
+  // CLM Pool: Additional token0/token1 via fee compounding
   const harvestTimeline = selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress);
   if (harvestTimeline) {
     compoundedYield.total0Compounded = harvestTimeline.totals[0];

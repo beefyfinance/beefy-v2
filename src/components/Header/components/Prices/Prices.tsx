@@ -124,7 +124,7 @@ const NavToken = memo<NavTokenProps>(function NavToken({ token, className }) {
   return (
     <div className={clsx(classes.navToken, className)}>
       <img alt={symbol} src={icon} height={24} className={classes.navIcon} />
-      {formatLargeUsd(price, 2, 2, 100)}
+      {formatLargeUsd(price, { decimalsUnder: 2 })}
     </div>
   );
 });
@@ -153,7 +153,7 @@ const TooltipToken = memo<TooltipTokenProps>(function TooltipToken({ token }) {
     <>
       <img alt={symbol} src={icon} height={24} className={classes.icon} />
       <div className={classes.symbol}>{symbol}</div>
-      <div className={classes.price}>{formatLargeUsd(price, 2, 2, 100)}</div>
+      <div className={classes.price}>{formatLargeUsd(price, { decimalsUnder: 2 })}</div>
       <a
         href={explorer.url}
         target="_blank"

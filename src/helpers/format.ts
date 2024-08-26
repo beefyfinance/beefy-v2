@@ -146,27 +146,48 @@ export function formatUsd(input: BigNumberish, decimals: number = 2): string {
   return `${prefix}${formatGrouped(value.absoluteValue(), decimals)}`;
 }
 
+/** @see defaultFormatLargeUsdOptions */
+export type FormatLargeUsdOptions = {
+  decimals: number;
+  minOrder: number;
+  decimalsUnder: BigNumberish;
+  negativePrefix: string;
+  positivePrefix: string;
+};
+
+const defaultFormatLargeUsdOptions: FormatLargeUsdOptions = {
+  decimals: 2,
+  minOrder: 2,
+  decimalsUnder: 1000,
+  negativePrefix: '-$',
+  positivePrefix: '$',
+};
+
 /**
  * Formats: 123 -> $123, 1234 -> $1234, 1234567 -> $1.23M etc
  * @param input
- * @param decimals decimal places to display if formatted value <  decimalsUnder
- * @param minOrder order of magnitude to start showing units (1=k, 2=M, 3=B etc.)
- * @param decimalsUnder formatted value under which to show decimals
+ * @param options
  */
 export function formatLargeUsd(
   input: BigNumberish,
-  decimals: number = 2,
-  minOrder: number = 2,
-  decimalsUnder: BigNumberish = 1000
+  options?: Partial<FormatLargeUsdOptions>
 ): string {
+  const opts = options
+    ? { ...defaultFormatLargeUsdOptions, ...options }
+    : defaultFormatLargeUsdOptions;
   const value = toBigNumber(input);
 
   if (value.isZero()) {
     return '$0';
   }
 
-  const prefix = value.isNegative() ? '-$' : '$';
-  return `${prefix}${formatLargeNumber(value.absoluteValue(), decimals, minOrder, decimalsUnder)}`;
+  const prefix = value.isNegative() ? opts.negativePrefix : opts.positivePrefix;
+  return `${prefix}${formatLargeNumber(
+    value.absoluteValue(),
+    opts.decimals,
+    opts.minOrder,
+    opts.decimalsUnder
+  )}`;
 }
 
 export function formatTotalApy(
