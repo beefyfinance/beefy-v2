@@ -308,7 +308,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
           throw new Error('Invalid underlying deposit quote');
         }
         // We have the built userless zap-in request
-        const { zapRequest, expectedTokens, minBalances } =
+        const { zapRequest, minBalances } =
           await this.underlyingStrategy.fetchDepositUserlessZapBreakdown(underlyingQuote);
 
         // Stake
@@ -342,6 +342,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
           }))
         );
 
+        const expectedTokens = stakeZap.outputs.map(output => output.token);
         const walletAction = walletActions.zapExecuteOrder(
           this.vault.id,
           zapRequest,
