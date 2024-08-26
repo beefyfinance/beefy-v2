@@ -312,6 +312,11 @@
         "url": "https://github.com/beefyfinance/beefy-lrt-api"
       },
       {
+        "id": "beefy-ethena-adapter",
+        "role": "Dedicated adapter for the Ethena Sats points",
+        "url": "https://github.com/ethena-labs/ethena_sats_adapters"
+      },
+      {
         "id": "ethena",
         "role": "Distribution of rewards",
         "type": "claim-rewards",
