@@ -56,7 +56,7 @@ import { FriendlyError } from '../utils/error-utils';
 import type { MinterEntity } from '../entities/minter';
 import { reloadReserves } from './minters';
 import { selectChainById } from '../selectors/chains';
-import { BIG_ZERO, toWei, toWeiString } from '../../../helpers/big-number';
+import { BIG_ZERO, fromWei, toWei, toWeiString } from '../../../helpers/big-number';
 import { updateSteps } from './stepper';
 import { StepContent, stepperActions } from '../reducers/wallet/stepper';
 import type { PromiEvent } from 'web3-core';
@@ -85,6 +85,8 @@ import {
 } from './user-rewards/merkl-user-rewards';
 import { fetchUserStellaSwapRewardsAction } from './user-rewards/stellaswap-user-rewards';
 import { stellaswapRewarderAbi } from '../../../config/abi/StellaSwapRewarder';
+
+const MIN_APPROVAL_AMOUNT = new BigNumber('8000000000000000000000000000'); // wei
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -224,7 +226,7 @@ function txError(
   dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
 }
 
-const approval = (token: TokenErc20, spenderAddress: string) => {
+const approval = (token: TokenErc20, spenderAddress: string, amount: BigNumber) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -238,20 +240,20 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
     const native = selectChainNativeToken(state, token.chainId);
 
     const contract = new web3.eth.Contract(viemToWeb3Abi(ERC20Abi), token.address);
-    const maxAmount = web3.utils.toWei('8000000000', 'ether');
+    const amountWei = toWei(amount, token.decimals);
+    const approvalAmountWei = amountWei.gt(MIN_APPROVAL_AMOUNT) ? amountWei : MIN_APPROVAL_AMOUNT;
     const chain = selectChainById(state, token.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
     const transaction = contract.methods
-      .approve(spenderAddress, maxAmount)
+      .approve(spenderAddress, approvalAmountWei.toString(10))
       .send({ from: address, ...gasPrices });
 
-    const bigMaxAmount = new BigNumber(maxAmount).shiftedBy(-native.decimals);
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: spenderAddress, amount: bigMaxAmount, token: token },
+      { spender: spenderAddress, amount: fromWei(approvalAmountWei, token.decimals), token: token },
       {
         walletAddress: address,
         chainId: token.chainId,
@@ -1362,6 +1364,7 @@ export function captureWalletErrors(
           ? { message: errorToString(error.getInnerError()), friendlyMessage: error.message }
           : { message: errorToString(error) };
 
+      console.error('captureWalletErrors', error);
       dispatch(createWalletActionErrorAction(txError, undefined));
       dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
     }

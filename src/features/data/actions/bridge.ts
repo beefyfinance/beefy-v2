@@ -289,7 +289,11 @@ export const performBridge = createAsyncThunk<
       steps.push({
         step: 'approve',
         message: t('Vault-ApproveMsg'),
-        action: walletActions.approval(quote.allowance.token, quote.allowance.spenderAddress),
+        action: walletActions.approval(
+          quote.allowance.token,
+          quote.allowance.spenderAddress,
+          quote.allowance.amount
+        ),
         pending: false,
       });
     }

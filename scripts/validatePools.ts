@@ -326,6 +326,13 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
           }
 
           shouldHaveProviderArr.push(pool.network === eligibility.chain);
+        } else if (eligibility.type === 'earned-token-name-regex') {
+          if (!('regex' in eligibility)) {
+            throw new Error(`Error: ${pointProvider.id} : eligibility.regex missing`);
+          }
+          const earnedToken = pool.earnedToken;
+          const regex = new RegExp(eligibility.regex as string);
+          shouldHaveProviderArr.push(regex.test(earnedToken));
         } else if (eligibility.type === 'vault-whitelist') {
           shouldHaveProviderArr.push(hasProvider);
         }

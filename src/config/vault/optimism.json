@@ -1,5 +1,42 @@
 [
   {
+    "id": "velodrome-v2-pxeth-weth",
+    "name": "pxETH-ETH sLP V2",
+    "type": "standard",
+    "token": "sAMMV2-pxETH/WETH",
+    "tokenAddress": "0x112d7a717a617C25a91b1C261708CCe6831474B4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2pxETH-WETH",
+    "earnedTokenAddress": "0x7E3BF11Dc0D179E3Fd8f8D49A3F454b7987a35C6",
+    "earnContractAddress": "0x7E3BF11Dc0D179E3Fd8f8D49A3F454b7987a35C6",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-pxeth-weth",
+    "status": "active",
+    "createdAt": 1724617299,
+    "platformId": "velodrome",
+    "assets": ["pxETH", "WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x300d2c875C6fb8Ce4bf5480B4d34b7c9ea8a33A4&to=0x4200000000000000000000000000000000000006",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x300d2c875C6fb8Ce4bf5480B4d34b7c9ea8a33A4&token1=0x4200000000000000000000000000000000000006&type=0&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x112d7a717a617C25a91b1C261708CCe6831474B4",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "silo-op-eth-ezeth",
     "name": "WETH (ezETH Market)",
     "type": "standard",
