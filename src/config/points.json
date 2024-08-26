@@ -54,6 +54,10 @@
       {
         "type": "token-holding",
         "tokens": ["ezETH"]
+      },
+      {
+        "type": "earned-token-name-regex",
+        "regex": ".*ezETH.*Silo_.*"
       }
     ],
     "accounting": [
@@ -143,6 +147,10 @@
       {
         "type": "token-holding",
         "tokens": ["rsETH", "wrsETH", "rswETH", "agETH"]
+      },
+      {
+        "type": "earned-token-name-regex",
+        "regex": ".*rsETH.*Silo_.*"
       }
     ],
     "accounting": [
