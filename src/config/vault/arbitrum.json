@@ -1,5 +1,44 @@
 [
   {
+    "id": "curve-arb-dlcbtc",
+    "name": "dlcBTC/WBTC",
+    "token": "dlcBTCwBTC",
+    "tokenAddress": "0xe957cE03cCdd88f02ed8b05C9a3A28ABEf38514A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x7eD37e03D64e6d1c7e315F1faf295f1E3A4B29dF",
+    "earnedToken": "mooCurveDlcBTC-WBTC",
+    "earnedTokenAddress": "0x7eD37e03D64e6d1c7e315F1faf295f1E3A4B29dF",
+    "oracle": "lps",
+    "oracleId": "curve-arb-dlcbtc",
+    "status": "active",
+    "createdAt": 1724662732,
+    "platformId": "curve",
+    "assets": ["dlcBTC", "WBTC"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-49/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-49/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0xe957cE03cCdd88f02ed8b05C9a3A28ABEf38514A",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0xe957cE03cCdd88f02ed8b05C9a3A28ABEf38514A",
+            "coins": [
+              "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+              "0x050C24dBf1eEc17babE5fc585F06116A259CC77A"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-arb-usdc-usd+-vault",
     "name": "USD+-USDC",
     "type": "standard",
