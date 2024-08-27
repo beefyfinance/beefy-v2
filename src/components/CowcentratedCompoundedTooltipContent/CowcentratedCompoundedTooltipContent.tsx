@@ -3,44 +3,30 @@ import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import type { TokenEntity } from '../../features/data/entities/token';
-import type BigNumber from 'bignumber.js';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
+import type { UserClmPnl } from '../../features/data/selectors/analytics-types';
+import { BIG_ZERO } from '../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
 type CowcentratedCompoundedTooltipContentProps = {
-  token0: TokenEntity;
-  token1: TokenEntity;
-  total0Compounded: BigNumber;
-  total0CompoundedUsd: BigNumber;
-  total1Compounded: BigNumber;
-  total1CompoundedUsd: BigNumber;
+  yields: UserClmPnl['yields'];
+  tokens: readonly [TokenEntity, TokenEntity];
 };
 
 export const CowcentratedCompoundedTooltipContent = memo<CowcentratedCompoundedTooltipContentProps>(
-  function CowcentratedCompoundedTooltipContent({
-    total0Compounded,
-    total1Compounded,
-    total0CompoundedUsd,
-    total1CompoundedUsd,
-    token0,
-    token1,
-  }) {
+  function CowcentratedCompoundedTooltipContent({ yields, tokens }) {
     const { t } = useTranslation();
     const classes = useStyles();
-    const items = useMemo(() => {
-      return [
-        { amount: total0Compounded, amountUsd: total0CompoundedUsd, token: token0 },
-        { amount: total1Compounded, amountUsd: total1CompoundedUsd, token: token1 },
-      ];
-    }, [
-      total0Compounded,
-      total1Compounded,
-      total0CompoundedUsd,
-      total1CompoundedUsd,
-      token0,
-      token1,
-    ]);
+    const items = useMemo(
+      () =>
+        tokens.map(token => ({
+          token: token,
+          amount: yields.compounded.tokens[token.address]?.amount ?? BIG_ZERO,
+          amountUsd: yields.compounded.tokens[token.address]?.usd ?? BIG_ZERO,
+        })),
+      [tokens, yields]
+    );
 
     return (
       <div>

@@ -5,8 +5,8 @@ import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { RewardsTooltip } from '../RewardsTooltip/RewardsTooltip';
 import { useAppSelector } from '../../store';
-import { selectDashboardUserRewardsByVaultId } from '../../features/data/selectors/balance';
 import { BIG_ZERO } from '../../helpers/big-number';
+import { selectDashboardUserRewardsByVaultId } from '../../features/data/selectors/dashboard';
 
 export type MobileVaultRewardsStatProps = {
   vaultId: VaultEntity['id'];

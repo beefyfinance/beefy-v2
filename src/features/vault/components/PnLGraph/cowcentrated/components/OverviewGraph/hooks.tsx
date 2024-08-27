@@ -160,12 +160,11 @@ export const usePnLChartData = (
   );
   const nowPriceToken0 = token0.price;
   const nowPriceToken1 = token1.price;
-  const {
-    token0Now: nowBalanceToken0,
-    token1Now: nowBalanceToken1,
-    underlyingNow: nowBalanceUnderlying,
-    sharesNow: nowBalanceShares,
-  } = useAppSelector(state => selectClmPnl(state, vaultId, address));
+  const clmPnl = useAppSelector(state => selectClmPnl(state, vaultId, walletAddress));
+  const nowBalanceToken0 = clmPnl.tokens[0].now.amount;
+  const nowBalanceToken1 = clmPnl.tokens[1].now.amount;
+  const nowBalanceUnderlying = clmPnl.underlying.now.amount;
+  const nowBalanceShares = clmPnl.shares.now.amount;
   const useData = useMemo(() => {
     return isCowcentratedStandardVault(vault) ? useCowcentratedVaultData : useCowcentratedPoolData;
   }, [vault]);

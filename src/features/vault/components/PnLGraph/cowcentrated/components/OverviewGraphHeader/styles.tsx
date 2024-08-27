@@ -33,7 +33,7 @@ export const styles = (theme: Theme) => ({
   itemContainer: {
     display: 'flex',
     alignIterms: 'center',
-    gap: '8px',
+    gap: '8px 16px',
     justifyContent: 'space-between',
   },
   label: {
@@ -44,6 +44,19 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['subline-sm'],
     fontWeight: 700,
     color: theme.palette.text.primary,
+    textAlign: 'right' as const,
+  },
+  valueBreakdown: {
+    display: 'grid',
+    gridTemplateColumns: 'auto 1fr',
+    gap: '4px',
+    color: theme.palette.text.secondary,
+    lineHeight: '1',
+    paddingLeft: '8px',
+    '& $value, & $label': {
+      color: theme.palette.text.dark,
+      lineHeight: '1',
+    },
   },
   arrow: { color: theme.palette.background.contentDark },
   tooltip: {

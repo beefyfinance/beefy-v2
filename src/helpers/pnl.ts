@@ -82,7 +82,7 @@ export class PnL {
     }
 
     this.state.realizedPnl.usd = this.state.realizedPnl.usd.plus(trxPnlUsd);
-    this.state.realizedPnl.shares = this.state.realizedPnl.usd.plus(trxPnl);
+    this.state.realizedPnl.shares = this.state.realizedPnl.shares.plus(trxPnl);
     return;
   }
 
@@ -158,15 +158,16 @@ interface ClmPnlState {
     token0Amount: BigNumber;
     token1Amount: BigNumber;
   }[];
-  realizedPnl: {
-    position: PnLBreakdown;
-    claims: {
-      totalUsd: BigNumber;
-      claimedTokens: {
-        [token: string]: BigNumber;
+  claimed: {
+    totalUsd: BigNumber;
+    tokens: {
+      [address: string]: {
+        amount: BigNumber;
+        usd: BigNumber;
       };
     };
   };
+  realizedPnl: PnLBreakdown;
 }
 
 interface ClmPnlTransaction {
@@ -190,30 +191,31 @@ export class ClmPnl {
   constructor() {
     this.state = {
       sharesFifo: [],
+      claimed: {
+        totalUsd: BIG_ZERO,
+        tokens: {},
+      },
       realizedPnl: {
-        position: {
-          shares: BIG_ZERO,
-          usd: BIG_ZERO,
-        },
-        claims: {
-          totalUsd: BIG_ZERO,
-          claimedTokens: {},
-        },
+        shares: BIG_ZERO,
+        usd: BIG_ZERO,
       },
     };
   }
 
   addTransaction(transaction: ClmPnlTransaction) {
-    transaction.claims.forEach(claim => {
-      if (!this.state.realizedPnl.claims.claimedTokens[claim.address]) {
-        this.state.realizedPnl.claims.claimedTokens[claim.address] = BIG_ZERO;
+    for (const claim of transaction.claims) {
+      if (claim.claimedAmount.gt(BIG_ZERO)) {
+        this.state.claimed.tokens[claim.address] ??= { amount: BIG_ZERO, usd: BIG_ZERO };
+        this.state.claimed.tokens[claim.address].amount = this.state.claimed.tokens[
+          claim.address
+        ].amount.plus(claim.claimedAmount);
+        const claimedAmountUsd = claim.claimedAmount.multipliedBy(claim.rewardToUsd);
+        this.state.claimed.tokens[claim.address].usd =
+          this.state.claimed.tokens[claim.address].usd.plus(claimedAmountUsd);
+        this.state.claimed.totalUsd = this.state.claimed.totalUsd.plus(claimedAmountUsd);
       }
-      this.state.realizedPnl.claims.claimedTokens[claim.address] =
-        this.state.realizedPnl.claims.claimedTokens[claim.address].plus(claim.claimedAmount);
-      this.state.realizedPnl.claims.totalUsd = this.state.realizedPnl.claims.totalUsd.plus(
-        claim.claimedAmount.multipliedBy(claim.rewardToUsd)
-      );
-    });
+    }
+
     if (transaction.shares.isZero()) {
       return;
     }
@@ -279,8 +281,8 @@ export class ClmPnl {
       }
     }
 
-    this.state.realizedPnl.position.usd = this.state.realizedPnl.position.usd.plus(trxPnlUsd);
-    this.state.realizedPnl.position.shares = this.state.realizedPnl.position.shares.plus(trxPnl);
+    this.state.realizedPnl.usd = this.state.realizedPnl.usd.plus(trxPnlUsd);
+    this.state.realizedPnl.shares = this.state.realizedPnl.shares.plus(trxPnl);
     return;
   }
 
@@ -320,7 +322,11 @@ export class ClmPnl {
     };
   }
 
-  getRealizedPnl() {
+  getRealizedPnl(): PnLBreakdown {
     return this.state.realizedPnl;
+  }
+
+  getClaimed() {
+    return this.state.claimed;
   }
 }

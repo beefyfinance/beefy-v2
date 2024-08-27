@@ -6,11 +6,11 @@ import { Tooltip } from '../Tooltip';
 import { AssetsImage } from '../AssetsImage';
 import { useAppSelector } from '../../store';
 import { useTranslation } from 'react-i18next';
-import { selectDashboardUserRewardsByVaultId } from '../../features/data/selectors/balance';
 import type { TokenEntity } from '../../features/data/entities/token';
 import type BigNumber from 'bignumber.js';
 import { formatTokenDisplayCondensed, formatLargeUsd } from '../../helpers/format';
 import { selectVaultById } from '../../features/data/selectors/vaults';
+import { selectDashboardUserRewardsByVaultId } from '../../features/data/selectors/dashboard';
 
 const useStyles = makeStyles(styles);
 

@@ -51,9 +51,8 @@ function mapStateToProps(
 
   let value: string, subValue: string | null;
   if (isUserClmPnl(pnlData)) {
-    const { pnl, pnlPercentage } = pnlData;
-    value = formatLargeUsd(pnl);
-    subValue = formatLargePercent(pnlPercentage);
+    value = formatLargeUsd(pnlData.pnl.withClaimedPending.usd);
+    subValue = formatLargePercent(pnlData.pnl.withClaimedPending.percentage);
   } else {
     const { totalPnlUsd, pnlPercentage } = pnlData;
     value = formatLargeUsd(totalPnlUsd);

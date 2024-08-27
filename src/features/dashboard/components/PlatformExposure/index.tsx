@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import { useAppSelector } from '../../../../store';
-import { selectDashboardUserExposureByPlatform } from '../../../data/selectors/balance';
 import { selectIsUserBalanceAvailable } from '../../../data/selectors/data-loader';
 import { ExposureChart } from '../ExposureChart';
 import type { ExposureDashboardChartLoaderProps } from '../ExposureChart/types';
+import { selectDashboardUserExposureByPlatform } from '../../../data/selectors/dashboard';
 
 const PlatformExposure = memo<ExposureDashboardChartLoaderProps>(function PlatformExposure({
   title,

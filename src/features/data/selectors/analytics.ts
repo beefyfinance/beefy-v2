@@ -3,16 +3,7 @@ import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import { ClmPnl, PnL } from '../../../helpers/pnl';
 import type { BeefyState } from '../../../redux-types';
 import type { DatabarnProductPriceRow } from '../apis/databarn/databarn-types';
-import {
-  isCowcentratedLikeVault,
-  isCowcentratedStandardVault,
-  isGovVault,
-  isStandardVault,
-  type VaultCowcentratedLike,
-  type VaultEntity,
-  type VaultGov,
-  type VaultStandard,
-} from '../entities/vault';
+import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault';
 import {
   selectCowcentratedLikeVaultDepositTokens,
   selectCowcentratedLikeVaultDepositTokensWithPrices,
@@ -26,13 +17,13 @@ import {
   selectVaultPricePerFullShare,
 } from './vaults';
 import {
-  selectDashboardUserRewardsByVaultId,
+  selectGovVaultPendingRewardsWithPrice,
   selectUserDepositedVaultIds,
   selectUserLpBreakdownBalance,
   selectUserVaultBalanceInShareTokenIncludingBoostsBridged,
 } from './balance';
 import { selectWalletAddress } from './wallet';
-import { selectIsConfigAvailable, selectIsUserBalanceAvailable } from './data-loader';
+import { selectIsConfigAvailable } from './data-loader';
 import {
   type AnyTimelineEntity,
   type AnyTimelineEntry,
@@ -41,9 +32,11 @@ import {
 } from '../entities/analytics';
 import { createSelector } from '@reduxjs/toolkit';
 import {
-  isUserClmPnl,
-  isUserGovPnl,
-  isUserStandardPnl,
+  type AmountUsd,
+  type PnlYieldSource,
+  type PnlYieldTotal,
+  type TokenEntryNow,
+  type UsdChange,
   type UserClmPnl,
   type UserGovPnl,
   type UserStandardPnl,
@@ -51,7 +44,6 @@ import {
 } from './analytics-types';
 import { selectFeesByVaultId } from './fees';
 import BigNumber from 'bignumber.js';
-import { pick } from 'lodash-es';
 import {
   createAddressDataSelector,
   hasLoaderFulfilledOnce,
@@ -64,6 +56,10 @@ import type {
   ClmPriceHistoryEntryClm,
 } from '../apis/clm/clm-api-types';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils';
+// import {
+//   selectUserMerklRewardsForVault,
+//   selectUserStellaSwapRewardsForVault,
+// } from './user-rewards';
 
 export const selectUserAnalytics = createSelector(
   (state: BeefyState, address?: string) => address || selectWalletAddress(state),
@@ -238,13 +234,50 @@ export const selectStandardGovPnl = (
   };
 };
 
+function withDiff<T extends TokenEntryNow>(entry: T): T & { diff: AmountUsd } {
+  return {
+    ...entry,
+    diff: {
+      amount: entry.now.amount.minus(entry.entry.amount),
+      usd: entry.now.usd.minus(entry.entry.usd),
+    },
+  };
+}
+
+function totalYield(sources: Array<PnlYieldSource>): PnlYieldTotal {
+  return {
+    usd: sources.reduce((acc, { usd }) => acc.plus(usd), BIG_ZERO),
+    tokens: sources.reduce((acc, { token, amount, usd }) => {
+      acc[token.address] ??= { token, amount: BIG_ZERO, usd: BIG_ZERO };
+      acc[token.address].amount = acc[token.address].amount.plus(amount);
+      acc[token.address].usd = acc[token.address].usd.plus(usd);
+      return acc;
+    }, {}),
+    sources,
+  };
+}
+
+function makeUsdChange(before: BigNumber, after: BigNumber): UsdChange {
+  const diff = after.minus(before);
+  return {
+    usd: diff,
+    percentage: before.gt(BIG_ZERO) ? diff.dividedBy(before) : BIG_ZERO,
+  };
+}
+
 export const selectClmPnl = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ): UserClmPnl => {
+  walletAddress ??= selectWalletAddress(state);
+  if (!walletAddress) {
+    throw new Error('No wallet address provided');
+  }
+
   const vault = selectCowcentratedLikeVaultById(state, vaultId);
   const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
+  const shareToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
   const sharesNow = selectUserVaultBalanceInShareTokenIncludingBoostsBridged(
     state,
     vaultId,
@@ -260,6 +293,7 @@ export const selectClmPnl = (
     vault.chainId,
     vault.depositTokenAddress
   );
+  const { token0, token1 } = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
   const breakdown = selectLpBreakdownForVault(state, vault);
   const { assets, userBalanceDecimal: underlyingNow } = selectUserLpBreakdownBalance(
     state,
@@ -268,14 +302,14 @@ export const selectClmPnl = (
     walletAddress
   );
 
-  const token0 = assets[0];
-  const token1 = assets[1];
+  const token0breakdown = assets[0];
+  const token1breakdown = assets[1];
 
-  const pnl = new ClmPnl();
+  const clmPnl = new ClmPnl();
 
   if (isTimelineEntityCowcentrated(sortedTimeline) && sortedTimeline.current.length > 0) {
     for (const tx of sortedTimeline.current) {
-      pnl.addTransaction({
+      clmPnl.addTransaction({
         shares: tx.shareDiff,
         underlyingToUsd: tx.underlyingToUsd,
         token0ToUsd: tx.token0ToUsd,
@@ -293,76 +327,194 @@ export const selectClmPnl = (
     remainingToken0: token0AtDeposit,
     remainingToken1: token1AtDeposit,
     remainingShares: sharesAtDeposit,
-  } = pnl.getRemainingShares();
+  } = clmPnl.getRemainingShares();
 
   const { token0EntryPrice: token0AtDepositPrice, token1EntryPrice: token1AtDepositPrice } =
-    pnl.getRemainingSharesAvgEntryPrice();
+    clmPnl.getRemainingSharesAvgEntryPrice();
 
   const underlyingAtDepositInUsd = token0AtDeposit
     .times(token0AtDepositPrice)
     .plus(token1AtDeposit.times(token1AtDepositPrice));
-
+  const underlyingAtDepositPrice = underlyingAtDepositInUsd.dividedBy(underlyingAtDeposit);
   const underlyingNowInUsd = underlyingNow.times(underlyingNowPrice);
-  const positionPnl = underlyingNowInUsd.minus(underlyingAtDepositInUsd);
-  const hold = token0AtDeposit.times(token0.price).plus(token1AtDeposit.times(token1.price));
+  const hold = token0AtDeposit
+    .times(token0breakdown.price)
+    .plus(token1AtDeposit.times(token1breakdown.price));
+
+  const compounded: Array<PnlYieldSource> = [];
+  const claimed: Array<PnlYieldSource> = [];
+  const pending: Array<PnlYieldSource> = [];
 
   // CLM Vault: Additional CLM tokens via vault compounding
-  const totalUnderlyingCompounded =
-    underlyingNow.gt(BIG_ZERO) && underlyingAtDeposit.gt(BIG_ZERO)
-      ? underlyingNow.minus(underlyingAtDeposit)
-      : BIG_ZERO;
-  const compoundedYield = {
-    totalUnderlyingCompounded,
-    total0Compounded: BIG_ZERO,
-    total1Compounded: BIG_ZERO,
-    total0CompoundedUsd: BIG_ZERO,
-    total1CompoundedUsd: BIG_ZERO,
-    totalUnderlyingCompoundedUsd: totalUnderlyingCompounded.times(underlyingNowPrice),
-    totalCompoundedUsd: BIG_ZERO,
-  };
+  if (underlyingNow.gt(BIG_ZERO) && underlyingAtDeposit.gt(BIG_ZERO)) {
+    const underlyingCompounded = underlyingNow.minus(underlyingAtDeposit);
+    // TODO: fetch harvests and use usd price at time of harvest?
+    compounded.push({
+      token: underlyingToken,
+      amount: underlyingCompounded,
+      usd: underlyingCompounded.times(underlyingNowPrice),
+      source: 'vault',
+    });
+  }
 
   // CLM Pool: Additional token0/token1 via fee compounding
   const harvestTimeline = selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress);
   if (harvestTimeline) {
-    compoundedYield.total0Compounded = harvestTimeline.totals[0];
-    compoundedYield.total1Compounded = harvestTimeline.totals[1];
-    compoundedYield.total0CompoundedUsd = harvestTimeline.totalsUsd[0];
-    compoundedYield.total1CompoundedUsd = harvestTimeline.totalsUsd[1];
+    for (const [i, token] of [token0, token1].entries()) {
+      if (harvestTimeline.totals[i].gt(BIG_ZERO)) {
+        compounded.push({
+          token: token,
+          amount: harvestTimeline.totals[i],
+          usd: harvestTimeline.totalsUsd[i],
+          source: 'clm',
+        });
+      }
+    }
   }
 
-  compoundedYield.totalCompoundedUsd = compoundedYield.total0CompoundedUsd
-    .plus(compoundedYield.total1CompoundedUsd)
-    .plus(compoundedYield.totalUnderlyingCompoundedUsd);
+  // CLM Pool: Claimed rewards
+  for (const [tokenAddress, entry] of Object.entries(clmPnl.getClaimed().tokens)) {
+    const token = selectTokenByAddress(state, vault.chainId, tokenAddress);
+    claimed.push({ token, amount: entry.amount, usd: entry.usd, source: 'pool' });
+  }
 
-  const realizedPnl = pnl.getRealizedPnl();
+  // CLM Pool: Pending rewards
+  const pendingRewards = selectGovVaultPendingRewardsWithPrice(state, vaultId, walletAddress);
+  for (const reward of pendingRewards) {
+    pending.push({
+      token: reward.token,
+      amount: reward.amount,
+      usd: reward.amount.times(reward.price),
+      source: 'pool',
+    });
+  }
+
+  /* We need a way to fetch these en-masse (for dashboard page) before we can use them for PNL
+  // Merkl/StellaSwap: Claimed + Unclaimed rewards
+  // TODO: fetch merkl claims and use usd price at time of claim?
+  const merklRewards = selectUserMerklRewardsForVault(state, vaultId, walletAddress);
+  const stellaSwapRewards = selectUserStellaSwapRewardsForVault(state, vaultId, walletAddress);
+  const offChainRewards = [
+    ...(merklRewards ? merklRewards.map(r => ({ ...r, source: 'merkl' })) : []),
+    ...(stellaSwapRewards ? stellaSwapRewards.map(r => ({ ...r, source: 'stella' })) : []),
+  ];
+  for (const reward of offChainRewards) {
+    const claimedAmount = reward.accumulated.minus(reward.unclaimed);
+    const tokenPrice = selectTokenPriceByAddress(state, reward.token.chainId, reward.token.address);
+    if (claimedAmount.gt(BIG_ZERO)) {
+      claimed.push({
+        token: reward.token,
+        amount: claimedAmount,
+        usd: claimedAmount.times(tokenPrice),
+        source: reward.source,
+      });
+    }
+    if (reward.unclaimed.gt(BIG_ZERO)) {
+      pending.push({
+        token: reward.token,
+        amount: reward.unclaimed,
+        usd: reward.unclaimed.times(tokenPrice),
+        source: reward.source,
+      });
+    }
+  } */
+
+  const _shares = withDiff({
+    token: shareToken,
+    entry: {
+      amount: sharesAtDeposit,
+      price: underlyingAtDepositInUsd.dividedBy(sharesAtDeposit),
+      usd: underlyingAtDepositInUsd,
+    },
+    now: {
+      amount: sharesNow,
+      price: underlyingNowInUsd.dividedBy(sharesNow),
+      usd: underlyingNowInUsd,
+    },
+  });
+
+  const _underlying = withDiff({
+    token: underlyingToken,
+    entry: {
+      amount: underlyingAtDeposit,
+      price: underlyingAtDepositPrice,
+      usd: underlyingAtDepositInUsd,
+    },
+    now: {
+      amount: underlyingNow,
+      price: underlyingNowPrice,
+      usd: underlyingNowInUsd,
+    },
+  });
+
+  const _token0 = withDiff({
+    token: token0,
+    entry: {
+      amount: token0AtDeposit,
+      price: token0AtDepositPrice,
+      usd: token0AtDeposit.times(token0AtDepositPrice),
+    },
+    now: {
+      amount: token0breakdown.userAmount,
+      price: token0breakdown.price,
+      usd: token0breakdown.userValue,
+    },
+  });
+
+  const _token1 = withDiff({
+    token: token1,
+    entry: {
+      amount: token1AtDeposit,
+      price: token1AtDepositPrice,
+      usd: token1AtDeposit.times(token1AtDepositPrice),
+    },
+    now: {
+      amount: token1breakdown.userAmount,
+      price: token1breakdown.price,
+      usd: token1breakdown.userValue,
+    },
+  });
+
+  const yields = {
+    compounded: totalYield(compounded),
+    claimed: totalYield(claimed),
+    pending: totalYield(pending),
+    usd: BIG_ZERO,
+  };
+  yields.usd = yields.compounded.usd.plus(yields.claimed.usd).plus(yields.pending.usd);
+
+  const pnl = {
+    base: makeUsdChange(underlyingAtDepositInUsd, underlyingNowInUsd),
+    withClaimed: makeUsdChange(
+      underlyingAtDepositInUsd,
+      underlyingNowInUsd.plus(yields.claimed.usd)
+    ),
+    withClaimedPending: makeUsdChange(
+      underlyingAtDepositInUsd,
+      underlyingNowInUsd.plus(yields.claimed.usd).plus(yields.pending.usd)
+    ),
+  };
+
+  const _hold = {
+    usd: hold,
+    diff: {
+      compounded: underlyingNowInUsd.minus(hold),
+      withClaimed: underlyingNowInUsd.plus(yields.claimed.usd).minus(hold),
+      withClaimedPending: underlyingNowInUsd
+        .plus(yields.claimed.usd)
+        .plus(yields.pending.usd)
+        .minus(hold),
+    },
+  };
+
   return {
     type: 'cowcentrated',
-    sharesAtDeposit,
-    underlyingToken,
-    underlyingAtDeposit,
-    underlyingAtDepositInUsd,
-    token0AtDeposit,
-    token1AtDeposit,
-    token0AtDepositPrice: token0AtDepositPrice,
-    token1AtDepositPrice: token1AtDepositPrice,
-    token0AtDepositInUsd: token0AtDeposit.times(token0AtDepositPrice),
-    token1AtDepositInUsd: token1AtDeposit.times(token1AtDepositPrice),
-    sharesNow,
-    underlyingNow,
-    underlyingNowPrice,
-    underlyingNowInUsd,
-    token0Now: token0.userAmount,
-    token1Now: token1.userAmount,
-    token0,
-    token1,
-    token0Diff: token0.userAmount.minus(token0AtDeposit),
-    token1Diff: token1.userAmount.minus(token1AtDeposit),
-    pnl: positionPnl,
-    pnlPercentage: positionPnl.dividedBy(underlyingAtDepositInUsd),
-    hold,
-    holdDiff: underlyingNowInUsd.minus(hold),
-    ...compoundedYield,
-    realizedPnl,
+    shares: _shares,
+    underlying: _underlying,
+    tokens: [_token0, _token1],
+    hold: _hold,
+    yields,
+    pnl,
   };
 };
 
@@ -540,119 +692,3 @@ export const selectClmAutocompoundedPendingFeesByVaultId = (
     token1Decimals,
   };
 };
-
-export enum DashboardDataStatus {
-  Loading,
-  Missing,
-  Available,
-}
-
-function selectDashboardYieldGovData(
-  state: BeefyState,
-  walletAddress: string,
-  vault: VaultGov,
-  _pnl: UserGovPnl
-) {
-  const { totalRewardsUsd } = selectDashboardUserRewardsByVaultId(state, vault.id, walletAddress);
-  return { type: vault.type, totalRewardsUsd, hasRewards: totalRewardsUsd.gt(BIG_ZERO) };
-}
-
-function selectDashboardYieldStandardData(
-  state: BeefyState,
-  walletAddress: string,
-  vault: VaultStandard,
-  pnl: UserStandardPnl
-) {
-  if (!selectIsAnalyticsLoadedByAddress(state, walletAddress)) {
-    return DashboardDataStatus.Loading;
-  }
-
-  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vault.id, walletAddress);
-  if (!vaultTimeline) {
-    return DashboardDataStatus.Missing;
-  }
-
-  const { rewards, totalRewardsUsd } = selectDashboardUserRewardsByVaultId(
-    state,
-    vault.id,
-    walletAddress
-  );
-  const { totalYield, totalYieldUsd, tokenDecimals } = pnl;
-  return {
-    type: vault.type,
-    totalRewardsUsd,
-    hasRewards: rewards.length > 0,
-    totalYield,
-    totalYieldUsd,
-    tokenDecimals,
-  };
-}
-
-function selectDashboardYieldCowcentratedData(
-  state: BeefyState,
-  walletAddress: string,
-  vault: VaultCowcentratedLike,
-  pnl: UserClmPnl
-) {
-  if (
-    !selectIsAnalyticsLoadedByAddress(state, walletAddress) ||
-    !selectIsClmHarvestsLoadedByAddress(state, walletAddress)
-  ) {
-    return DashboardDataStatus.Loading;
-  }
-
-  const { rewards, totalRewardsUsd } = selectDashboardUserRewardsByVaultId(
-    state,
-    vault.id,
-    walletAddress
-  );
-
-  if (isCowcentratedStandardVault(vault)) {
-    const underlyingYield = pnl.underlyingNow.minus(pnl.underlyingAtDeposit);
-    return {
-      type: 'standard' as const,
-      totalRewardsUsd,
-      hasRewards: rewards.length > 0,
-      totalYield: underlyingYield,
-      totalYieldUsd: underlyingYield.multipliedBy(pnl.underlyingNowPrice),
-      tokenDecimals: pnl.underlyingToken.decimals,
-    };
-  }
-
-  const tokens = selectCowcentratedLikeVaultDepositTokens(state, vault.id);
-  return {
-    type: 'cowcentrated' as const,
-    ...tokens,
-    ...pick(pnl, [
-      'total0Compounded',
-      'total1Compounded',
-      'total0CompoundedUsd',
-      'total1CompoundedUsd',
-      'totalCompoundedUsd',
-    ]),
-    totalRewardsUsd,
-    hasRewards: rewards.length > 0,
-  };
-}
-
-export function selectDashboardYieldVaultData(
-  state: BeefyState,
-  walletAddress: string,
-  vault: VaultEntity,
-  pnl: UserVaultPnl
-) {
-  // Common load check
-  if (!selectIsUserBalanceAvailable(state, walletAddress)) {
-    return DashboardDataStatus.Loading;
-  }
-
-  if (isCowcentratedLikeVault(vault) && isUserClmPnl(pnl)) {
-    return selectDashboardYieldCowcentratedData(state, walletAddress, vault, pnl);
-  } else if (isGovVault(vault) && isUserGovPnl(pnl)) {
-    return selectDashboardYieldGovData(state, walletAddress, vault, pnl);
-  } else if (isStandardVault(vault) && isUserStandardPnl(pnl)) {
-    return selectDashboardYieldStandardData(state, walletAddress, vault, pnl);
-  }
-
-  throw new Error('Invalid vault/pnl type');
-}

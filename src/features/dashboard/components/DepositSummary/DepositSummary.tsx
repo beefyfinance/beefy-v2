@@ -10,10 +10,10 @@ import { ReactComponent as WalletIcon } from '../../../../images/icons/wallet.sv
 import { ReactComponent as VaultIcon } from '../../../../images/icons/vault.svg';
 import { ReactComponent as DailyIcon } from '../../../../images/icons/daily-yield.svg';
 import { ReactComponent as MonthlyIcon } from '../../../../images/icons/monthly-yield.svg';
-import { selectUserTotalYieldUsd } from '../../../data/selectors/balance';
 import { AddressInput } from '../AddressInput';
 import { ShortAddress } from '../ShortAddress';
 import { Container } from '../../../../components/Container/Container';
+import { selectUserTotalYieldUsd } from '../../../data/selectors/dashboard';
 
 const useStyles = makeStyles(styles);
 

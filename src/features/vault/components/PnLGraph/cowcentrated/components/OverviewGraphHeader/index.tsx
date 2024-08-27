@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { Fragment, memo } from 'react';
 import type { VaultEntity } from '../../../../../../data/entities/vault';
 import { makeStyles } from '@material-ui/core';
 import { Stat } from '../Stat';
@@ -28,119 +28,140 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
 
   const { t } = useTranslation();
 
-  const {
-    underlyingAtDeposit,
-    underlyingAtDepositInUsd,
-    underlyingNow,
-    underlyingNowInUsd,
-    token0AtDepositInUsd,
-    token1AtDepositInUsd,
-    token0AtDeposit,
-    token1AtDeposit,
-    token1,
-    token0,
-    token0Diff,
-    token1Diff,
-    pnl,
-    hold,
-    holdDiff,
-    realizedPnl,
-  } = useAppSelector(state => selectClmPnl(state, vaultId));
-
-  const pnlWithRewards = pnl.plus(realizedPnl.claims.totalUsd);
-  const holdDiffWithRewards = holdDiff.plus(realizedPnl.claims.totalUsd);
+  const { underlying, tokens, pnl, hold, yields } = useAppSelector(state =>
+    selectClmPnl(state, vaultId)
+  );
 
   return (
     <div className={classes.statsContainer}>
       <Stat
         tooltipText={t('pnl-graph-tooltip-deposit')}
         label={t('At Deposit')}
-        value0={`${formatTokenDisplayCondensed(token0AtDeposit, token0.decimals, 6)} ${
-          token0.symbol
-        }`}
-        value1={`${formatTokenDisplayCondensed(token1AtDeposit, token1.decimals, 6)} ${
-          token1.symbol
-        }`}
-        value2={formatTokenDisplayCondensed(underlyingAtDeposit, 18, 6)}
-        subValue0={formatLargeUsd(token0AtDepositInUsd)}
-        subValue1={formatLargeUsd(token1AtDepositInUsd)}
-        subValue2={formatLargeUsd(underlyingAtDepositInUsd)}
+        value0={`${formatTokenDisplayCondensed(
+          tokens[0].entry.amount,
+          tokens[0].token.decimals,
+          6
+        )} ${tokens[0].token.symbol}`}
+        value1={`${formatTokenDisplayCondensed(
+          tokens[1].entry.amount,
+          tokens[1].token.decimals,
+          6
+        )} ${tokens[1].token.symbol}`}
+        value2={formatTokenDisplayCondensed(underlying.entry.amount, 18, 6)}
+        subValue0={formatLargeUsd(tokens[0].entry.usd)}
+        subValue1={formatLargeUsd(tokens[1].entry.usd)}
+        subValue2={formatLargeUsd(underlying.entry.usd)}
       />
       <Stat
         tooltipText={t('pnl-graph-tooltip-now-clm')}
         label={t('Now')}
-        value0={`${formatTokenDisplayCondensed(token0.userAmount, token0.decimals, 6)} ${
-          token0.symbol
-        }`}
-        value1={`${formatTokenDisplayCondensed(token1.userAmount, token1.decimals, 6)} ${
-          token1.symbol
-        }`}
-        value2={formatTokenDisplayCondensed(underlyingNow, 18, 6)}
-        subValue0={formatLargeUsd(token0.userValue)}
-        subValue1={formatLargeUsd(token1.userValue)}
-        subValue2={formatLargeUsd(underlyingNowInUsd)}
+        value0={`${formatTokenDisplayCondensed(
+          tokens[0].now.amount,
+          tokens[0].token.decimals,
+          6
+        )} ${tokens[0].token.symbol}`}
+        value1={`${formatTokenDisplayCondensed(
+          tokens[1].now.amount,
+          tokens[1].token.decimals,
+          6
+        )} ${tokens[1].token.symbol}`}
+        value2={formatTokenDisplayCondensed(underlying.now.amount, 18, 6)}
+        subValue0={formatLargeUsd(tokens[0].now.usd)}
+        subValue1={formatLargeUsd(tokens[1].now.usd)}
+        subValue2={formatLargeUsd(underlying.now.usd)}
       />
       <Stat
         tooltipText={t('pnl-graph-tooltip-change-clm')}
         label={t('Change')}
         value0={formatPositiveOrNegative(
-          token0Diff,
-          formatTokenDisplayCondensed(token0Diff, token0.decimals, 6),
-          token0.symbol
+          tokens[0].diff.amount,
+          formatTokenDisplayCondensed(tokens[0].diff.amount, tokens[0].token.decimals, 6),
+          tokens[0].token.symbol
         )}
         value1={formatPositiveOrNegative(
-          token1Diff,
-          formatTokenDisplayCondensed(token1Diff, token1.decimals, 6),
-          token1.symbol
+          tokens[1].diff.amount,
+          formatTokenDisplayCondensed(tokens[1].diff.amount, tokens[1].token.decimals, 6),
+          tokens[1].token.symbol
         )}
         value2={
-          <div className={pnl.gt(BIG_ZERO) ? classes.green : classes.red}>
-            {formatLargeUsd(pnl, { positivePrefix: '+$' })} PNL
-          </div>
-        }
-        subValue2={
           <Tooltip
             children={
               <div className={classes.tooltip}>
-                {`${formatLargeUsd(hold)} HOLD`} <HelpOutline />
+                <span
+                  className={pnl.withClaimedPending.usd.gt(BIG_ZERO) ? classes.green : classes.red}
+                >
+                  {formatLargeUsd(pnl.withClaimedPending.usd, { positivePrefix: '+$' })}
+                  {' PNL'}
+                </span>
+                <HelpOutline />
               </div>
             }
             content={
               <div>
                 <div className={classes.itemContainer}>
-                  <div className={classes.label}>{t('CLM')}</div>
-                  <div className={classes.value}>{formatLargeUsd(underlyingNowInUsd)}</div>
+                  <div className={classes.label}>{t('Base PNL')}</div>
+                  <div className={classes.value}>{formatLargeUsd(pnl.base.usd)}</div>
                 </div>
+                {yields.claimed.sources.length ? (
+                  <>
+                    <div className={classes.itemContainer}>
+                      <div className={classes.label}>{t('Claimed')}</div>
+                      <div className={classes.value}>{formatLargeUsd(yields.claimed.usd)}</div>
+                    </div>
+                    <div className={classes.valueBreakdown}>
+                      {yields.claimed.sources.map(source => (
+                        <Fragment key={`${source.source}-${source.token.symbol}`}>
+                          <div className={classes.label}>
+                            {source.source} {source.token.symbol}
+                          </div>
+                          <div className={classes.value}>{formatLargeUsd(source.usd)}</div>
+                        </Fragment>
+                      ))}
+                    </div>
+                  </>
+                ) : null}
+                {yields.pending.sources.length ? (
+                  <>
+                    <div className={classes.itemContainer}>
+                      <div className={classes.label}>{t('Pending')}</div>
+                      <div className={classes.value}>{formatLargeUsd(yields.pending.usd)}</div>
+                    </div>
+
+                    <div className={classes.valueBreakdown}>
+                      {yields.pending.sources.map(source => (
+                        <Fragment key={`${source.source}-${source.token.symbol}`}>
+                          <div className={classes.label}>
+                            {source.source} {source.token.symbol}
+                          </div>
+                          <div className={classes.value}>{formatLargeUsd(source.usd)}</div>
+                        </Fragment>
+                      ))}
+                    </div>
+                  </>
+                ) : null}
                 <div className={classes.itemContainer}>
-                  <div className={classes.label}>{t('If Held')}</div>
-                  <div className={classes.value}>{formatLargeUsd(hold)}</div>
+                  <div className={classes.label}>{t('Total PNL')}</div>
+                  <div className={classes.value}>{formatLargeUsd(pnl.withClaimedPending.usd)}</div>
                 </div>
+              </div>
+            }
+            contentClass={classes.tooltipContent}
+            arrowClass={classes.arrow}
+          />
+        }
+        subValue2={
+          <Tooltip
+            children={
+              <div className={classes.tooltip}>
+                {`${formatLargeUsd(hold.usd)} HOLD`} <HelpOutline />
+              </div>
+            }
+            content={
+              <div>
                 <div className={classes.itemContainer}>
                   <div className={classes.label}>{t('CLM VS HOLD')}</div>
                   <div className={classes.value}>
-                    {formatLargeUsd(holdDiff, { positivePrefix: '+$' })}
-                  </div>
-                </div>
-                <div className={classes.itemContainer}>
-                  <div className={classes.label}>{t('Pool Claimed')}</div>
-                  <div className={classes.value}>{formatLargeUsd(realizedPnl.claims.totalUsd)}</div>
-                </div>
-                <div className={classes.itemContainer}>
-                  <div className={classes.label}>{t('CLM+Claimed')}</div>
-                  <div className={classes.value}>
-                    {formatLargeUsd(underlyingNowInUsd.plus(realizedPnl.claims.totalUsd))}
-                  </div>
-                </div>
-                <div className={classes.itemContainer}>
-                  <div className={classes.label}>{t('CLM+Claimed VS HOLD')}</div>
-                  <div className={classes.value}>
-                    {formatLargeUsd(holdDiffWithRewards, { positivePrefix: '+$' })}
-                  </div>
-                </div>
-                <div className={classes.itemContainer}>
-                  <div className={classes.label}>{t('PNL+Claimed')}</div>
-                  <div className={classes.value}>
-                    {formatLargeUsd(pnlWithRewards, { positivePrefix: '+$' })}
+                    {formatLargeUsd(hold.diff.withClaimedPending, { positivePrefix: '+$' })}
                   </div>
                 </div>
               </div>

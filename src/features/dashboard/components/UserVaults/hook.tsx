@@ -1,10 +1,10 @@
 import { orderBy } from 'lodash-es';
 import { useCallback, useMemo, useState } from 'react';
 import { useAppSelector } from '../../../../store';
-import { selectDashboardUserVaultsPnl } from '../../../data/selectors/balance';
 import { selectUserDashboardFilteredVaults } from '../../../data/selectors/filtered-vaults';
 import { isUserClmPnl } from '../../../data/selectors/analytics-types';
 import { isVaultActive } from '../../../data/entities/vault';
+import { selectDashboardUserVaultsPnl } from '../../../data/selectors/dashboard';
 
 export type SortedOptions = {
   sort: 'atDeposit' | 'now' | 'yield' | 'pnl' | 'apy' | 'dailyYield' | 'default';
@@ -44,25 +44,25 @@ export function useSortedDashboardVaults(address: string) {
             switch (sortedOptions.sort) {
               case 'atDeposit': {
                 if (isUserClmPnl(vaultPnl)) {
-                  return vaultPnl.underlyingAtDepositInUsd.toNumber();
+                  return vaultPnl.underlying.entry.usd.toNumber();
                 }
                 return vaultPnl.usdBalanceAtDeposit.toNumber();
               }
               case 'now': {
                 if (isUserClmPnl(vaultPnl)) {
-                  return vaultPnl.underlyingNowInUsd.toNumber();
+                  return vaultPnl.underlying.now.usd.toNumber();
                 }
                 return vaultPnl.depositUsd.toNumber();
               }
               case 'yield': {
                 if (isUserClmPnl(vaultPnl)) {
-                  return vaultPnl.totalCompoundedUsd.toNumber();
+                  return vaultPnl.yields.usd.toNumber();
                 }
                 return vaultPnl.totalYieldUsd.toNumber();
               }
               case 'pnl': {
                 if (isUserClmPnl(vaultPnl)) {
-                  return vaultPnl.pnl.toNumber();
+                  return vaultPnl.pnl.withClaimedPending.usd.toNumber();
                 }
                 return vaultPnl.totalPnlUsd.toNumber();
               }
@@ -85,7 +85,7 @@ export function useSortedDashboardVaults(address: string) {
                   return -1;
                 }
                 if (isUserClmPnl(vaultPnl)) {
-                  return vaultPnl.underlyingNowInUsd.times(apy.totalDaily).toNumber();
+                  return vaultPnl.underlying.now.usd.times(apy.totalDaily).toNumber();
                 }
                 return vaultPnl.deposit
                   .times(vaultPnl.oraclePrice)

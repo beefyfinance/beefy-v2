@@ -10,15 +10,15 @@ import {
   formatTokenDisplayCondensed,
 } from '../../helpers/format';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat';
-import {
-  DashboardDataStatus,
-  selectDashboardYieldVaultData,
-} from '../../features/data/selectors/analytics';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { useAppSelector } from '../../store';
 import { CowcentratedCompoundedTooltipContent } from '../CowcentratedCompoundedTooltipContent/CowcentratedCompoundedTooltipContent';
 import type { UserVaultPnl } from '../../features/data/selectors/analytics-types';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
+import {
+  DashboardDataStatus,
+  selectDashboardYieldVaultData,
+} from '../../features/data/selectors/dashboard';
 
 export type MobileVaultYieldStatProps = {
   vaultId: VaultEntity['id'];
@@ -69,12 +69,12 @@ export const MobileVaultYieldStat = memo<MobileVaultYieldStatProps>(function Mob
   }
 
   if (data.type === 'cowcentrated') {
-    const { type: _type, hasRewards: _hasRewards, totalCompoundedUsd, ...tooltipProps } = data;
+    const { type: _type, hasRewards: _hasRewards, ...tooltipProps } = data;
 
     return (
       <VaultValueStat
         label={label}
-        value={formatLargeUsd(totalCompoundedUsd)}
+        value={formatLargeUsd(tooltipProps.yields.usd)}
         tooltip={<CowcentratedCompoundedTooltipContent {...tooltipProps} />}
         loading={false}
         {...passthrough}

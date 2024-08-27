@@ -10,10 +10,6 @@ import {
   formatTokenDisplayCondensed,
 } from '../../helpers/format';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat';
-import {
-  DashboardDataStatus,
-  selectDashboardYieldVaultData,
-} from '../../features/data/selectors/analytics';
 import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
 import { type UserVaultPnl } from '../../features/data/selectors/analytics-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
@@ -24,6 +20,10 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { CowcentratedCompoundedTooltipContent } from '../CowcentratedCompoundedTooltipContent/CowcentratedCompoundedTooltipContent';
+import {
+  DashboardDataStatus,
+  selectDashboardYieldVaultData,
+} from '../../features/data/selectors/dashboard';
 
 const useStyles = makeStyles(styles);
 
@@ -96,7 +96,7 @@ export const VaultYieldRewardsStat = memo<VaultYieldRewardsStatProps>(
     }
 
     if (data.type === 'cowcentrated') {
-      const { hasRewards, totalCompoundedUsd, ...tooltipProps } = data;
+      const { hasRewards, ...tooltipProps } = data;
 
       // Only claimable -> show like a normal gov vault
       if (isCowcentratedLikeVault(vault) && vault.strategyTypeId !== 'compounds') {
@@ -123,7 +123,7 @@ export const VaultYieldRewardsStat = memo<VaultYieldRewardsStatProps>(
                   [classes.maxWidth60]: hasRewards,
                 })}
               >
-                {formatLargeUsd(totalCompoundedUsd)}
+                {formatLargeUsd(tooltipProps.yields.compounded.usd)}
               </Tooltip>
               {hasRewards && (
                 <>
