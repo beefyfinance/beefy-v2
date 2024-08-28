@@ -13426,37 +13426,6 @@
     }
   },
   {
-    "id": "sushi-gamma-magic-weth-narrow",
-    "name": "MAGIC-ETH LP",
-    "type": "standard",
-    "token": "MAGIC-ETH sgLP",
-    "tokenAddress": "0x79bB33f681bd70eb1bbe640000b130Bcb6d126d0",
-    "tokenDecimals": 18,
-    "tokenProviderId": "sushi",
-    "earnedToken": "mooSushiGammaMAGIC-ETH",
-    "earnedTokenAddress": "0x749F539045e932e49B4e7D68A9d7d46e420F72a2",
-    "earnContractAddress": "0x749F539045e932e49B4e7D68A9d7d46e420F72a2",
-    "oracle": "lps",
-    "oracleId": "sushi-gamma-magic-weth-narrow",
-    "status": "eol",
-    "createdAt": 1698588010,
-    "retireReason": "rewards",
-    "retiredAt": 1708113204,
-    "platformId": "gamma",
-    "assets": ["MAGIC", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/magic-weth-3000-narrow",
-    "removeLiquidityUrl": "https://app.gamma.xyz/vault/sushi/arbitrum/details/magic-weth-3000-narrow",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "arbitrum-gamma-sushi"
-      }
-    ]
-  },
-  {
     "id": "sushi-gamma-weth-arb-narrow",
     "name": "ARB-ETH LP",
     "type": "standard",
