@@ -244,16 +244,7 @@ export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEn
   state.entities.tokens.breakdown.byOracleId[oracleId];
 
 export const selectLpBreakdownForVault = (state: BeefyState, vault: VaultEntity) => {
-  return selectLpBreakdownByTokenAddress(state, vault.chainId, vault.depositTokenAddress);
-};
-
-export const selectLpBreakdownByTokenAddress = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  address: string
-) => {
-  const token = selectTokenByAddress(state, chainId, address);
-  return selectLpBreakdownByOracleId(state, token.oracleId);
+  return selectLpBreakdownByOracleId(state, vault.breakdownId);
 };
 
 export const selectHasBreakdownDataByTokenAddress = (
