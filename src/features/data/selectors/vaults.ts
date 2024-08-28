@@ -41,20 +41,14 @@ export const selectAllVisibleVaultIds = (state: BeefyState) => state.entities.va
 export const selectAllCowcentratedVaultIds = (state: BeefyState) =>
   state.entities.vaults.byType.cowcentrated.allIds;
 
-export const selectVaultById = createCachedSelector(
-  (state: BeefyState) => state.entities.vaults.byId,
-  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  (vaultsById, vaultId) => {
-    const vault = vaultsById[vaultId];
-    if (vault === undefined) {
-      throw new Error(`selectVaultById: Unknown vault id ${vaultId}`);
-    }
-    return vault;
-  }
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
-
 export const selectVaultByIdOrUndefined = (state: BeefyState, vaultId: VaultEntity['id']) =>
   state.entities.vaults.byId[vaultId] || undefined;
+
+export const selectVaultById = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  valueOrThrow(
+    selectVaultByIdOrUndefined(state, vaultId),
+    `selectVaultById: Unknown vault id ${vaultId}`
+  );
 
 export const selectVaultByAddressOrUndefined = (
   state: BeefyState,

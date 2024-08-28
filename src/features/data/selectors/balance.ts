@@ -21,7 +21,7 @@ import {
 } from './boosts';
 import { createCachedSelector } from 're-reselect';
 import {
-  selectHasBreakdownDataByTokenAddress,
+  selectHasBreakdownDataForVault,
   selectIsTokenStable,
   selectLpBreakdownForVault,
   selectTokenByAddress,
@@ -1046,11 +1046,7 @@ const selectDashboardUserVaultTokenExposure: DashboardUserExposureVaultFn<
     ];
   }
 
-  const haveBreakdownData = selectHasBreakdownDataByTokenAddress(
-    state,
-    vault.depositTokenAddress,
-    vault.chainId
-  );
+  const haveBreakdownData = selectHasBreakdownDataForVault(state, vault);
   if (haveBreakdownData) {
     const breakdown = selectLpBreakdownForVault(state, vault);
     const { assets } = selectUserLpBreakdownBalance(state, vault, breakdown, walletAddress);
@@ -1108,11 +1104,7 @@ const selectDashboardUserVaultStableExposure: DashboardUserExposureVaultFn = (
   }
 
   const vault = selectVaultById(state, vaultId);
-  const haveBreakdownData = selectHasBreakdownDataByTokenAddress(
-    state,
-    vault.depositTokenAddress,
-    vault.chainId
-  );
+  const haveBreakdownData = selectHasBreakdownDataForVault(state, vault);
   if (haveBreakdownData) {
     const breakdown = selectLpBreakdownForVault(state, vault);
     const { assets } = selectUserLpBreakdownBalance(state, vault, breakdown, walletAddress);
