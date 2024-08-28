@@ -52,12 +52,7 @@
     ],
     "eligibility": [
       {
-        "type": "token-holding",
-        "tokens": ["ezETH"]
-      },
-      {
-        "type": "earned-token-name-regex",
-        "regex": ".*ezETH.*Silo_.*"
+        "type": "vault-whitelist"
       }
     ],
     "accounting": [
@@ -296,8 +291,7 @@
     ],
     "eligibility": [
       {
-        "type": "token-holding",
-        "tokens": ["USDe"]
+        "type": "vault-whitelist"
       }
     ],
     "accounting": [
