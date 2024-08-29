@@ -54,6 +54,7 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
                         <div className={classes.risk}>{t(RISKS[risk].title, { ns: 'risks' })}</div>
                         <IconWithBasicTooltip
                           iconSize={16}
+                          iconClassName={classes.tooltipIcon}
                           title={t(RISKS[risk].title, { ns: 'risks' })}
                           content={t(RISKS[risk].explanation, { ns: 'risks' })}
                         />

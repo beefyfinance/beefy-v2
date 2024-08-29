@@ -53,6 +53,9 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
+  tooltipIcon: {
+    color: theme.palette.text.dark,
+  },
   safetyLabel: {
     ...theme.typography.h2,
     color: theme.palette.text.light,
