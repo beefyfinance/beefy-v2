@@ -13280,36 +13280,6 @@
     "network": "arbitrum"
   },
   {
-    "id": "gmx-arb-usdc-usdce",
-    "name": "USDC-USDC.e GM",
-    "type": "standard",
-    "token": "USDC-USDC.e GM",
-    "tokenAddress": "0x9C2433dFD71096C435Be9465220BB2B189375eA7",
-    "tokenDecimals": 18,
-    "tokenProviderId": "gmx",
-    "earnedToken": "mooGmxUSDC-USDCe",
-    "earnedTokenAddress": "0xAc8EE83FF7093dEaA4F62fDddD19242E1Fa14C32",
-    "earnContractAddress": "0xAc8EE83FF7093dEaA4F62fDddD19242E1Fa14C32",
-    "oracle": "lps",
-    "oracleId": "gmx-arb-usdc-usdce",
-    "status": "active",
-    "createdAt": 1700568258,
-    "platformId": "gmx",
-    "assets": ["USDC", "arbUSDCe"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "gmx-gm",
-    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "network": "arbitrum"
-  },
-  {
     "id": "gmx-arb-usdc-usdt",
     "name": "USDC-USDT GM",
     "type": "standard",

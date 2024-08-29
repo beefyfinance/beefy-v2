@@ -244,26 +244,11 @@ export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEn
   state.entities.tokens.breakdown.byOracleId[oracleId];
 
 export const selectLpBreakdownForVault = (state: BeefyState, vault: VaultEntity) => {
-  return selectLpBreakdownByTokenAddress(state, vault.chainId, vault.depositTokenAddress);
+  return selectLpBreakdownByOracleId(state, vault.breakdownId);
 };
 
-export const selectLpBreakdownByTokenAddress = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  address: string
-) => {
-  const token = selectTokenByAddress(state, chainId, address);
-  return selectLpBreakdownByOracleId(state, token.oracleId);
-};
-
-export const selectHasBreakdownDataByTokenAddress = (
-  state: BeefyState,
-  depositTokenAddress: VaultEntity['depositTokenAddress'],
-  chainId: ChainEntity['id']
-) => {
-  const token = selectTokenByAddressOrUndefined(state, chainId, depositTokenAddress);
-  if (!token) return false;
-  return selectHasBreakdownDataByOracleId(state, token.oracleId, chainId);
+export const selectLpBreakdownForVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  return selectLpBreakdownForVault(state, selectVaultById(state, vaultId));
 };
 
 export const selectHasBreakdownDataByOracleId = (
@@ -299,6 +284,24 @@ export const selectHasBreakdownDataByOracleId = (
   return (
     tokens.findIndex(token => !state.entities.tokens.prices.byOracleId[token!.oracleId]) === -1
   );
+};
+
+export const selectHasBreakdownDataByTokenAddress = (
+  state: BeefyState,
+  depositTokenAddress: VaultEntity['depositTokenAddress'],
+  chainId: ChainEntity['id']
+) => {
+  const token = selectTokenByAddressOrUndefined(state, chainId, depositTokenAddress);
+  if (!token) return false;
+  return selectHasBreakdownDataByOracleId(state, token.oracleId, chainId);
+};
+
+export const selectHasBreakdownDataForVault = (state: BeefyState, vault: VaultEntity) => {
+  return selectHasBreakdownDataByOracleId(state, vault.breakdownId, vault.chainId);
+};
+
+export const selectHasBreakdownDataForVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  return selectHasBreakdownDataForVault(state, selectVaultById(state, vaultId));
 };
 
 export const selectIsTokenLoadedOnChain = createCachedSelector(
