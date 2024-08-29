@@ -30,13 +30,7 @@
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818",
     "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818",
-    "network": "emerald",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "emerald-yuzuswap"
-      }
-    ]
+    "network": "emerald"
   },
   {
     "id": "yuzu-ceusdc-yuzu",
@@ -69,13 +63,7 @@
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c/0xf02b3e437304892105992512539F769423a515Cb",
     "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c/0xf02b3e437304892105992512539F769423a515Cb",
-    "network": "emerald",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "emerald-yuzuswap"
-      }
-    ]
+    "network": "emerald"
   },
   {
     "id": "yuzu-wrose-weth",
@@ -108,13 +96,7 @@
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x3223f17957Ba502cbe71401D55A0DB26E5F7c68F/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733",
     "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x3223f17957Ba502cbe71401D55A0DB26E5F7c68F/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733",
-    "network": "emerald",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "emerald-yuzuswap"
-      }
-    ]
+    "network": "emerald"
   },
   {
     "id": "yuzu-usdt-yuzu",
@@ -147,13 +129,7 @@
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0xdC19A122e268128B5eE20366299fc7b5b199C8e3/0xf02b3e437304892105992512539F769423a515Cb",
     "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0xdC19A122e268128B5eE20366299fc7b5b199C8e3/0xf02b3e437304892105992512539F769423a515Cb",
-    "network": "emerald",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "emerald-yuzuswap"
-      }
-    ]
+    "network": "emerald"
   },
   {
     "id": "yuzu-wrose-yuzu",
@@ -186,13 +162,7 @@
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xf02b3e437304892105992512539F769423a515Cb",
     "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xf02b3e437304892105992512539F769423a515Cb",
-    "network": "emerald",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "emerald-yuzuswap"
-      }
-    ]
+    "network": "emerald"
   },
   {
     "id": "yuzu-wrose-usdt",
@@ -225,13 +195,7 @@
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xdC19A122e268128B5eE20366299fc7b5b199C8e3",
     "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xdC19A122e268128B5eE20366299fc7b5b199C8e3",
-    "network": "emerald",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "emerald-yuzuswap"
-      }
-    ]
+    "network": "emerald"
   },
   {
     "id": "yuzu-ceusdc-usdt",
@@ -264,13 +228,7 @@
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c/0xdC19A122e268128B5eE20366299fc7b5b199C8e3",
     "removeLiquidityUrl": "https://app.yuzu-swap.com/#/remove/0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c/0xdC19A122e268128B5eE20366299fc7b5b199C8e3",
-    "network": "emerald",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "emerald-yuzuswap"
-      }
-    ]
+    "network": "emerald"
   },
   {
     "id": "valley-usdt-vs-pause",
