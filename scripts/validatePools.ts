@@ -2,7 +2,7 @@ import { MultiCall } from 'eth-multicall';
 import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 import BigNumber from 'bignumber.js';
-import { isEmpty, isValidChecksumAddress, maybeChecksumAddress } from './common/utils';
+import { isEmpty, isValidChecksumAddress, maybeChecksumAddress, sleep } from './common/utils';
 import { getVaultsIntegrity } from './common/exclude';
 import {
   addressBookToAppId,
@@ -703,7 +703,8 @@ type VaultConfigWithGovData = Omit<VaultConfig, 'type'> & {
 const populateGovData = async (
   chain,
   pools: VaultConfig[],
-  web3
+  web3,
+  retries = 5
 ): Promise<VaultConfigWithGovData[]> => {
   try {
     const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
@@ -718,15 +719,23 @@ const populateGovData = async (
       };
     });
 
-    const [results] = await multicall.all([calls]);
-
-    return pools.map((pool, i) => {
-      return {
-        ...pool,
-        type: pool.type || 'gov',
-        rewardPoolOwner: results[i].owner,
-      };
-    });
+    try {
+      const [results] = await multicall.all([calls]);
+      return pools.map((pool, i) => {
+        return {
+          ...pool,
+          type: pool.type || 'gov',
+          rewardPoolOwner: results[i].owner,
+        };
+      });
+    } catch (e) {
+      if (retries > 0) {
+        console.warn(`retrying populateGovData ${e.message}`);
+        await sleep(1_000);
+        return populateGovData(chain, pools, web3, retries - 1);
+      }
+      throw e;
+    }
   } catch (e) {
     throw new Error(`Failed to populate gov data for ${chain}`, { cause: e });
   }
@@ -743,7 +752,8 @@ type VaultConfigWithCowcentratedData = ClmVaultConfig & {
 const populateCowcentratedData = async (
   chain: keyof typeof addressBook,
   pools: VaultConfig[],
-  web3: Web3
+  web3: Web3,
+  retries = 5
 ): Promise<VaultConfigWithCowcentratedData[]> => {
   try {
     const clms = pools.filter((p): p is ClmVaultConfig => p.type === 'cowcentrated');
@@ -818,75 +828,84 @@ const populateCowcentratedData = async (
     );
     const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
-    const tokenResults = (
-      await multicall.all([
-        clms.map(clm => {
-          const vaultContract = new web3.eth.Contract(
-            [
-              {
-                inputs: [],
-                name: 'wants',
-                outputs: [
-                  {
-                    internalType: 'address',
-                    name: 'token0',
-                    type: 'address',
-                  },
-                  {
-                    internalType: 'address',
-                    name: 'token1',
-                    type: 'address',
-                  },
-                ],
-                stateMutability: 'view',
-                type: 'function',
-              },
-            ],
-            clm.earnContractAddress
-          );
-          return {
-            wants: vaultContract.methods.wants(),
-          };
-        }),
-      ])
-    )
-      .flat()
-      .map(result => ({
-        token0: result.wants[0],
-        token1: result.wants[1],
-      }));
+    try {
+      const tokenResults = (
+        await multicall.all([
+          clms.map(clm => {
+            const vaultContract = new web3.eth.Contract(
+              [
+                {
+                  inputs: [],
+                  name: 'wants',
+                  outputs: [
+                    {
+                      internalType: 'address',
+                      name: 'token0',
+                      type: 'address',
+                    },
+                    {
+                      internalType: 'address',
+                      name: 'token1',
+                      type: 'address',
+                    },
+                  ],
+                  stateMutability: 'view',
+                  type: 'function',
+                },
+              ],
+              clm.earnContractAddress
+            );
+            return {
+              wants: vaultContract.methods.wants(),
+            };
+          }),
+        ])
+      )
+        .flat()
+        .map(result => ({
+          token0: result.wants[0],
+          token1: result.wants[1],
+        }));
 
-    const oracleResults = (
-      await multicall.all([
-        tokenResults.map(result => ({
-          token0: beefyOracle.methods.subOracle(result.token0),
-          token1: beefyOracle.methods.subOracle(result.token1),
-          token0For0xZero: beefyOracle.methods.subOracle(ZERO_ADDRESS, result.token0),
-          token1For0xZero: beefyOracle.methods.subOracle(ZERO_ADDRESS, result.token1),
-        })),
-      ])
-    )
-      .flat()
-      .map(result => ({
-        oracleForToken0:
-          (result.token0 && result.token0[0] && result.token0[0] !== ZERO_ADDRESS) ||
-          (result.token0For0xZero &&
-            result.token0For0xZero[0] &&
-            result.token0For0xZero[0] !== ZERO_ADDRESS),
-        oracleForToken1:
-          (result.token1 && result.token1[0] && result.token1[0] !== ZERO_ADDRESS) ||
-          (result.token1For0xZero &&
-            result.token1For0xZero[0] &&
-            result.token1For0xZero[0] !== ZERO_ADDRESS),
-      }));
+      const oracleResults = (
+        await multicall.all([
+          tokenResults.map(result => ({
+            token0: beefyOracle.methods.subOracle(result.token0),
+            token1: beefyOracle.methods.subOracle(result.token1),
+            token0For0xZero: beefyOracle.methods.subOracle(ZERO_ADDRESS, result.token0),
+            token1For0xZero: beefyOracle.methods.subOracle(ZERO_ADDRESS, result.token1),
+          })),
+        ])
+      )
+        .flat()
+        .map(result => ({
+          oracleForToken0:
+            (result.token0 && result.token0[0] && result.token0[0] !== ZERO_ADDRESS) ||
+            (result.token0For0xZero &&
+              result.token0For0xZero[0] &&
+              result.token0For0xZero[0] !== ZERO_ADDRESS),
+          oracleForToken1:
+            (result.token1 && result.token1[0] && result.token1[0] !== ZERO_ADDRESS) ||
+            (result.token1For0xZero &&
+              result.token1For0xZero[0] &&
+              result.token1For0xZero[0] !== ZERO_ADDRESS),
+        }));
 
-    return clms.map((clm, i) => ({
-      ...clm,
-      token0: tokenResults[i].token0,
-      token1: tokenResults[i].token1,
-      oracleForToken0: oracleResults[i].oracleForToken0,
-      oracleForToken1: oracleResults[i].oracleForToken1,
-    }));
+      return clms.map((clm, i) => ({
+        ...clm,
+        token0: tokenResults[i].token0,
+        token1: tokenResults[i].token1,
+        oracleForToken0: oracleResults[i].oracleForToken0,
+        oracleForToken1: oracleResults[i].oracleForToken1,
+      }));
+    } catch (e) {
+      if (retries > 0) {
+        console.warn(`retrying populateCowcentratedData ${e.message}`);
+        await sleep(1_000);
+        return populateCowcentratedData(chain, pools, web3, retries - 1);
+      }
+      throw e;
+    }
   } catch (e) {
     throw new Error(`Failed to populate cowcentrated data for ${chain}`, { cause: e });
   }
@@ -901,7 +920,8 @@ type VaultConfigWithVaultData = Omit<VaultConfig, 'type'> & {
 const populateVaultsData = async (
   chain,
   pools: VaultConfig[],
-  web3
+  web3,
+  retries = 5
 ): Promise<VaultConfigWithVaultData[]> => {
   try {
     const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
@@ -918,17 +938,26 @@ const populateVaultsData = async (
       };
     });
 
-    const [results] = await multicall.all([calls]);
+    try {
+      const [results] = await multicall.all([calls]);
 
-    return pools.map((pool, i) => {
-      return {
-        ...pool,
-        type: pool.type || 'standard',
-        strategy: results[i].strategy,
-        vaultOwner: results[i].owner,
-        totalSupply: results[i].totalSupply,
-      };
-    });
+      return pools.map((pool, i) => {
+        return {
+          ...pool,
+          type: pool.type || 'standard',
+          strategy: results[i].strategy,
+          vaultOwner: results[i].owner,
+          totalSupply: results[i].totalSupply,
+        };
+      });
+    } catch (e) {
+      if (retries > 0) {
+        console.warn(`retrying populateVaultsData ${e.message}`);
+        await sleep(1_000);
+        return populateVaultsData(chain, pools, web3, retries - 1);
+      }
+      throw e;
+    }
   } catch (e) {
     throw new Error(`Failed to populate vault data for ${chain}`, { cause: e });
   }
@@ -944,7 +973,8 @@ type VaultConfigWithStrategyData = VaultConfigWithVaultData & {
 const populateStrategyData = async (
   chain,
   pools: VaultConfigWithVaultData[],
-  web3
+  web3,
+  retries = 5
 ): Promise<VaultConfigWithStrategyData[]> => {
   const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
 
@@ -959,18 +989,27 @@ const populateStrategyData = async (
     };
   });
 
-  const [results] = await multicall.all([calls]);
+  try {
+    const [results] = await multicall.all([calls]);
 
-  return pools.map((pool, i) => {
-    return {
-      ...pool,
-      keeper: results[i].keeper,
-      beefyFeeRecipient: results[i].beefyFeeRecipient,
-      beefyFeeConfig: results[i].beefyFeeConfig,
-      stratOwner: results[i].owner,
-      harvestOnDeposit: results[i].harvestOnDeposit,
-    };
-  });
+    return pools.map((pool, i) => {
+      return {
+        ...pool,
+        keeper: results[i].keeper,
+        beefyFeeRecipient: results[i].beefyFeeRecipient,
+        beefyFeeConfig: results[i].beefyFeeConfig,
+        stratOwner: results[i].owner,
+        harvestOnDeposit: results[i].harvestOnDeposit,
+      };
+    });
+  } catch (e) {
+    if (retries > 0) {
+      console.warn(`retrying populateStrategyData ${e.message}`);
+      await sleep(1_000);
+      return populateStrategyData(chain, pools, web3, retries - 1);
+    }
+    throw e;
+  }
 };
 
 const override = (pools: VaultConfigWithVaultData[]): VaultConfigWithVaultData[] => {

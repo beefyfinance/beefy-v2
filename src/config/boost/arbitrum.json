@@ -1,5 +1,26 @@
 [
   {
+    "id": "moo_sushi-cow-arb-usdc-usdt-vault",
+    "poolId": "sushi-cow-arb-usdc-usdt-vault",
+    "name": "Beefy",
+    "tagText": "Arb LTIPP",
+    "assets": ["USDC", "USDT"],
+    "tokenAddress": "0xf4ea976B260A498F26417B89f6dbdD555104a734",
+    "earnedToken": "ARB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+    "earnContractAddress": "0xC2fcA425DFc22Aa9da86157AeDF1B86645650f81",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "ARB",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "arb-ltipp",
+    "partners": [],
+    "pinned": false
+  },
+  {
     "id": "moo_uniswap-cow-arb-usdc-usd+-vault",
     "poolId": "uniswap-cow-arb-usdc-usd+-vault",
     "name": "Beefy",

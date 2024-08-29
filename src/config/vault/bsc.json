@@ -1,5 +1,509 @@
 [
   {
+    "id": "pancake-cow-bsc-usdc-wbnb-vault",
+    "name": "USDC-WBNB",
+    "type": "standard",
+    "token": "USDC-WBNB",
+    "tokenAddress": "0xd9CFc385bE8E942050cb59b119697ed659F090CA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooBeefyPancakeUSDC-WBNB",
+    "earnedTokenAddress": "0x9EA9A69035565052C0eF6f4b94f0Bd00Cb33f2DC",
+    "earnContractAddress": "0x9EA9A69035565052C0eF6f4b94f0Bd00Cb33f2DC",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdc-wbnb",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["USDC", "BNB"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "bsc",
+    "createdAt": 1724853599,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-usdc-wbnb-rp",
+    "name": "USDC-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeUSDC-WBNB",
+    "tokenAddress": "0xd9CFc385bE8E942050cb59b119697ed659F090CA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x5C41372AeebB5b072d96EeAe66Fe496F37fE87d8",
+    "earnedToken": "rcowPancakeUSDC-WBNB",
+    "earnedTokenAddresses": ["0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82"],
+    "earnedOracleIds": ["Cake"],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdc-wbnb",
+    "status": "active",
+    "createdAt": 1724853598,
+    "platformId": "pancakeswap",
+    "assets": ["USDC", "BNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-usdc-wbnb",
+    "name": "USDC-WBNB",
+    "type": "cowcentrated",
+    "token": "USDC-WBNB Cake",
+    "tokenAddress": "0x81A9b5F18179cE2bf8f001b8a634Db80771F1824",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnedToken": "cowPancakeUSDC-WBNB",
+    "earnedTokenAddress": "0xd9CFc385bE8E942050cb59b119697ed659F090CA",
+    "earnContractAddress": "0xd9CFc385bE8E942050cb59b119697ed659F090CA",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-usdc-wbnb",
+    "status": "active",
+    "createdAt": 1724853598,
+    "platformId": "pancakeswap",
+    "assets": ["USDC", "BNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-eth-btcb-rp",
+    "name": "BTCB-ETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBscETH-BTCB",
+    "tokenAddress": "0x375B9E0D598426277a20468B10b6475Ce96Bc8c4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x0A6c9d60A32d1C045cAb5CA3A5d1fdB31f5491e2",
+    "earnedToken": "rcowUniswapBscETH-BTCB",
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-eth-btcb",
+    "status": "active",
+    "createdAt": 1724853598,
+    "platformId": "uniswap",
+    "assets": ["BTCB", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-eth-btcb",
+    "name": "BTCB-ETH",
+    "type": "cowcentrated",
+    "token": "BTCB-ETH Uniswap",
+    "tokenAddress": "0x3Fb2623567E21F8C50F0Ae86f54EF4849b4eb47b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+      "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c"
+    ],
+    "earnedToken": "cowUniswapBscETH-BTCB",
+    "earnedTokenAddress": "0x375B9E0D598426277a20468B10b6475Ce96Bc8c4",
+    "earnContractAddress": "0x375B9E0D598426277a20468B10b6475Ce96Bc8c4",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-eth-btcb",
+    "status": "active",
+    "createdAt": 1724853598,
+    "platformId": "uniswap",
+    "assets": ["BTCB", "ETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-btcb-wbnb-rp",
+    "name": "BTCB-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBscBTCB-WBNB",
+    "tokenAddress": "0x7C18b30F1d1eF8A07AF166f57448C054b82658CF",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x85FE5822266572F148fB7fa2EfF8b0841DB669e1",
+    "earnedToken": "rcowUniswapBscBTCB-WBNB",
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-btcb-wbnb",
+    "status": "active",
+    "createdAt": 1724853598,
+    "platformId": "uniswap",
+    "assets": ["BTCB", "BNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-btcb-wbnb",
+    "name": "BTCB-WBNB",
+    "type": "cowcentrated",
+    "token": "BTCB-WBNB Uniswap",
+    "tokenAddress": "0x28dF0835942396B7a1b7aE1cd068728E6ddBbAfD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnedToken": "cowUniswapBscBTCB-WBNB",
+    "earnedTokenAddress": "0x7C18b30F1d1eF8A07AF166f57448C054b82658CF",
+    "earnContractAddress": "0x7C18b30F1d1eF8A07AF166f57448C054b82658CF",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-btcb-wbnb",
+    "status": "active",
+    "createdAt": 1724853598,
+    "platformId": "uniswap",
+    "assets": ["BTCB", "BNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-eth-wbnb-rp",
+    "name": "ETH-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBscETH-WBNB",
+    "tokenAddress": "0x9D7A030261efc848379A506Dd67Fb54199899c33",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x5231F8a7f162ca8bdD261556e821f9e2373988C4",
+    "earnedToken": "rcowUniswapBscETH-WBNB",
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-eth-wbnb",
+    "status": "active",
+    "createdAt": 1724687912,
+    "platformId": "uniswap",
+    "assets": ["ETH", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-eth-wbnb",
+    "name": "ETH-WBNB",
+    "type": "cowcentrated",
+    "token": "ETH-WBNB Uniswap",
+    "tokenAddress": "0x0f338Ec12d3f7C3D77A4B9fcC1f95F3FB6AD0EA6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnedToken": "cowUniswapBscETH-WBNB",
+    "earnedTokenAddress": "0x9D7A030261efc848379A506Dd67Fb54199899c33",
+    "earnContractAddress": "0x9D7A030261efc848379A506Dd67Fb54199899c33",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-eth-wbnb",
+    "status": "active",
+    "createdAt": 1724687912,
+    "platformId": "uniswap",
+    "assets": ["ETH", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-usdt-wbnb-rp",
+    "name": "USDT-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBscUSDT-WBNB",
+    "tokenAddress": "0xC02DFF4D789355C2343AdE5ac74589828cED37Ba",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x449aBd164D2907F973395CA71464e11d6Baf62f7",
+    "earnedToken": "rcowUniswapBscUSDT-WBNB",
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-wbnb",
+    "status": "active",
+    "createdAt": 1724687912,
+    "platformId": "uniswap",
+    "assets": ["USDT", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-usdt-wbnb",
+    "name": "USDT-WBNB",
+    "type": "cowcentrated",
+    "token": "USDT-WBNB Uniswap",
+    "tokenAddress": "0x6fe9E9de56356F7eDBfcBB29FAB7cd69471a4869",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x55d398326f99059fF775485246999027B3197955",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnedToken": "cowUniswapBscUSDT-WBNB",
+    "earnedTokenAddress": "0xC02DFF4D789355C2343AdE5ac74589828cED37Ba",
+    "earnContractAddress": "0xC02DFF4D789355C2343AdE5ac74589828cED37Ba",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-wbnb",
+    "status": "active",
+    "createdAt": 1724687912,
+    "platformId": "uniswap",
+    "assets": ["USDT", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-eth-usdt-rp",
+    "name": "ETH-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBscETH-USDT",
+    "tokenAddress": "0xD895f639abEE8723B370c6c5Be4be67e669fA7D6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xB49eC5aB25A42260514b107Ebf5BBA241E9B5F4e",
+    "earnedToken": "rcowUniswapBscETH-USDT",
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-eth-usdt",
+    "status": "active",
+    "createdAt": 1724687912,
+    "platformId": "uniswap",
+    "assets": ["ETH", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-eth-usdt",
+    "name": "ETH-USDT",
+    "type": "cowcentrated",
+    "token": "ETH-USDT Uniswap",
+    "tokenAddress": "0xF9878A5dD55EdC120Fde01893ea713a4f032229c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+      "0x55d398326f99059fF775485246999027B3197955"
+    ],
+    "earnedToken": "cowUniswapBscETH-USDT",
+    "earnedTokenAddress": "0xD895f639abEE8723B370c6c5Be4be67e669fA7D6",
+    "earnContractAddress": "0xD895f639abEE8723B370c6c5Be4be67e669fA7D6",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-eth-usdt",
+    "status": "active",
+    "createdAt": 1724687912,
+    "platformId": "uniswap",
+    "assets": ["ETH", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-usdt-usdc-rp",
+    "name": "USDT-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBscUSDT-USDC",
+    "tokenAddress": "0x4f28A510CE927d972675d5164c2ff665e91fECAf",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xB103a009F8216C409a985FBb57b18Aa28b89a5cE",
+    "earnedToken": "rcowUniswapBscUSDT-USDC",
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-usdc",
+    "status": "active",
+    "createdAt": 1724687912,
+    "platformId": "uniswap",
+    "assets": ["USDT", "USDC"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-usdt-usdc",
+    "name": "USDT-USDC",
+    "type": "cowcentrated",
+    "token": "USDT-USDC Uniswap",
+    "tokenAddress": "0x2C3c320D49019D4f9A92352e947c7e5AcFE47D68",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x55d398326f99059fF775485246999027B3197955",
+      "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d"
+    ],
+    "earnedToken": "cowUniswapBscUSDT-USDC",
+    "earnedTokenAddress": "0x4f28A510CE927d972675d5164c2ff665e91fECAf",
+    "earnContractAddress": "0x4f28A510CE927d972675d5164c2ff665e91fECAf",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-usdc",
+    "status": "active",
+    "createdAt": 1724687912,
+    "platformId": "uniswap",
+    "assets": ["USDT", "USDC"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-usdt-btcb-rp",
+    "name": "BTCB-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBscUSDT-BTCB",
+    "tokenAddress": "0xec016a6802CcA10193f63E3B02a03C83954f9688",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x61A2E833088317398501CF9Baca9f6269313fEeA",
+    "earnedToken": "rcowUniswapBscUSDT-BTCB",
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-btcb",
+    "status": "active",
+    "createdAt": 1724687912,
+    "platformId": "uniswap",
+    "assets": ["BTCB", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-bsc-usdt-btcb",
+    "name": "BTCB-USDT",
+    "type": "cowcentrated",
+    "token": "BTCB-USDT Uniswap",
+    "tokenAddress": "0x813c0decbB1097fFF46d0Ed6a39fB5f6a83043f4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x55d398326f99059fF775485246999027B3197955",
+      "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c"
+    ],
+    "earnedToken": "cowUniswapBscUSDT-BTCB",
+    "earnedTokenAddress": "0xec016a6802CcA10193f63E3B02a03C83954f9688",
+    "earnContractAddress": "0xec016a6802CcA10193f63E3B02a03C83954f9688",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-bsc-usdt-btcb",
+    "status": "active",
+    "createdAt": 1724687912,
+    "platformId": "uniswap",
+    "assets": ["BTCB", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "thena-cow-btcb-wbnb-rp",
     "name": "BTCB-WBNB Reward Pool",
     "type": "gov",
@@ -23825,7 +24329,9 @@
     "earnContractAddress": "0x0383E88A19E5c387FeBafbF51E5bA642d2ad8bE0",
     "oracle": "lps",
     "oracleId": "stargate-bsc-usdt",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1724851478,
+    "retireReason": "rewards",
     "createdAt": 1648675805,
     "platformId": "stargate",
     "assets": ["USDT"],

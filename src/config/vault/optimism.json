@@ -1,5 +1,295 @@
 [
   {
+    "id": "sushi-cow-op-usdc-usdt-vault",
+    "name": "USDC-USDT",
+    "type": "standard",
+    "token": "USDC-USDT",
+    "tokenAddress": "0x699156366A255d9e7aD9b64384b873C64D51fF4F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnedToken": "mooBeefySushiUSDC-USDT",
+    "earnedTokenAddress": "0x3FA949fbAccd00c76cDd6703227266D97dD42319",
+    "earnContractAddress": "0x3FA949fbAccd00c76cDd6703227266D97dD42319",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-op-usdc-usdt",
+    "status": "active",
+    "platformId": "sushi",
+    "assets": ["USDC", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "createdAt": 1724931180,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-op-usdc-usdt-rp",
+    "name": "USDC-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiOpUSDC-USDT",
+    "tokenAddress": "0x699156366A255d9e7aD9b64384b873C64D51fF4F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnContractAddress": "0xD68330DFA7c113A9A8440A1d3252447FB4B95A45",
+    "earnedToken": "rcowSushiOpUSDC-USDT",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "sushi-cow-op-usdc-usdt",
+    "status": "active",
+    "createdAt": 1724931179,
+    "platformId": "sushi",
+    "assets": ["USDC", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-op-usdc-usdt",
+    "name": "USDC-USDT",
+    "token": "USDC-USDT",
+    "tokenAddress": "0x962E23cd3F58f887a5238082A75d223f71890629",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+      "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58"
+    ],
+    "tokenProviderId": "sushi",
+    "earnedToken": "cowSushiOpUSDC-USDT",
+    "earnedTokenAddress": "0x699156366A255d9e7aD9b64384b873C64D51fF4F",
+    "earnContractAddress": "0x699156366A255d9e7aD9b64384b873C64D51fF4F",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-op-usdc-usdt",
+    "status": "active",
+    "createdAt": 1724931179,
+    "platformId": "beefy",
+    "assets": ["USDC", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-op-weth-op-vault",
+    "name": "OP-WETH",
+    "type": "standard",
+    "token": "OP-WETH",
+    "tokenAddress": "0x42f57Cb394c6186A972f441972163adA482efD8A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnedToken": "mooBeefySushiWETH-OP",
+    "earnedTokenAddress": "0x289b684EDaF901AE61b77BcFb0C7407424c92c30",
+    "earnContractAddress": "0x289b684EDaF901AE61b77BcFb0C7407424c92c30",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-op-weth-op",
+    "status": "active",
+    "platformId": "sushi",
+    "assets": ["OP", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "createdAt": 1724931180,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-op-weth-op-rp",
+    "name": "OP-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiOpWETH-OP",
+    "tokenAddress": "0x42f57Cb394c6186A972f441972163adA482efD8A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnContractAddress": "0x70A9723406fCaE809ceFE485cf9F79c8D7DC9641",
+    "earnedToken": "rcowSushiOpWETH-OP",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "sushi-cow-op-weth-op",
+    "status": "active",
+    "createdAt": 1724931179,
+    "platformId": "sushi",
+    "assets": ["OP", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-op-weth-op",
+    "name": "OP-WETH",
+    "token": "OP-WETH",
+    "tokenAddress": "0x58B2f113244DdC9332c46aF25BC223873E68ff3d",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x4200000000000000000000000000000000000042"
+    ],
+    "tokenProviderId": "sushi",
+    "earnedToken": "cowSushiOpWETH-OP",
+    "earnedTokenAddress": "0x42f57Cb394c6186A972f441972163adA482efD8A",
+    "earnContractAddress": "0x42f57Cb394c6186A972f441972163adA482efD8A",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-op-weth-op",
+    "status": "active",
+    "createdAt": 1724931179,
+    "platformId": "beefy",
+    "assets": ["OP", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-op-usdc-weth-vault",
+    "name": "USDC-WETH",
+    "type": "standard",
+    "token": "USDC-WETH",
+    "tokenAddress": "0x3938CA323F0A8A6Bfe085773824826243E51b87B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnedToken": "mooBeefySushiUSDC-WETH",
+    "earnedTokenAddress": "0x0909c5945A9e9eCD0051bD1504Ed7dE58AFdfEa6",
+    "earnContractAddress": "0x0909c5945A9e9eCD0051bD1504Ed7dE58AFdfEa6",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-op-usdc-weth",
+    "status": "active",
+    "platformId": "sushi",
+    "assets": ["USDC", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "createdAt": 1724931180,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-op-usdc-weth-rp",
+    "name": "USDC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiOpUSDC-WETH",
+    "tokenAddress": "0x3938CA323F0A8A6Bfe085773824826243E51b87B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnContractAddress": "0x4b48804474952bB66c381e693d546b14FefCA6Fd",
+    "earnedToken": "rcowSushiOpUSDC-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "sushi-cow-op-usdc-weth",
+    "status": "active",
+    "createdAt": 1724931179,
+    "platformId": "sushi",
+    "assets": ["USDC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-op-usdc-weth",
+    "name": "USDC-WETH",
+    "token": "USDC-WETH",
+    "tokenAddress": "0x146EDa2f1D35efb5eEf5703aCeC701c68E1503d8",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "tokenProviderId": "sushi",
+    "earnedToken": "cowSushiOpUSDC-WETH",
+    "earnedTokenAddress": "0x3938CA323F0A8A6Bfe085773824826243E51b87B",
+    "earnContractAddress": "0x3938CA323F0A8A6Bfe085773824826243E51b87B",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-op-usdc-weth",
+    "status": "active",
+    "createdAt": 1724931179,
+    "platformId": "beefy",
+    "assets": ["USDC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-op-weth-wbtc-vault",
+    "name": "WBTC-WETH",
+    "type": "standard",
+    "token": "WBTC-WETH",
+    "tokenAddress": "0x31f663096Ab1Ac630fAc855633c23d07E70F3024",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
+    "earnedToken": "mooBeefySushiWETH-WBTC",
+    "earnedTokenAddress": "0xb9aa4A19A37A2b6d189c1f51037dB82fD52d8568",
+    "earnContractAddress": "0xb9aa4A19A37A2b6d189c1f51037dB82fD52d8568",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-op-weth-wbtc",
+    "status": "active",
+    "platformId": "sushi",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "createdAt": 1724931180,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
     "id": "velodrome-v2-pxeth-weth",
     "name": "pxETH-ETH sLP V2",
     "type": "standard",
@@ -8105,7 +8395,9 @@
     "earnContractAddress": "0xC7Deff444145093f1B2054DBd3E68B2878D86552",
     "oracle": "lps",
     "oracleId": "stargate-op-dai",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1724851479,
+    "retireReason": "rewards",
     "createdAt": 1675440288,
     "platformId": "stargate",
     "assets": ["DAI"],
@@ -10582,7 +10874,9 @@
     "earnContractAddress": "0xe536F8141D8EB7B1f096934AF3329cB581bFe995",
     "oracle": "lps",
     "oracleId": "stargate-op-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1724851479,
+    "retireReason": "rewards",
     "createdAt": 1659634991,
     "platformId": "stargate",
     "assets": ["opUSDCe"],
@@ -10613,7 +10907,9 @@
     "earnContractAddress": "0x79149B500f0d796aA7f85e0170d16C7e79BAd3C5",
     "oracle": "lps",
     "oracleId": "stargate-op-eth",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1724851479,
+    "retireReason": "rewards",
     "createdAt": 1659634992,
     "platformId": "stargate",
     "assets": ["ETH"],

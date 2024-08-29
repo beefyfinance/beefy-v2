@@ -52,12 +52,7 @@
     ],
     "eligibility": [
       {
-        "type": "token-holding",
-        "tokens": ["ezETH"]
-      },
-      {
-        "type": "earned-token-name-regex",
-        "regex": ".*ezETH.*Silo_.*"
+        "type": "vault-whitelist"
       }
     ],
     "accounting": [
@@ -296,20 +291,24 @@
     ],
     "eligibility": [
       {
-        "type": "token-holding",
-        "tokens": ["USDe"]
+        "type": "vault-whitelist"
       }
     ],
     "accounting": [
       {
-        "id": "beefy-lrt-subgraph",
-        "role": "Raw indexing of blockchain data, computes time weighted balances",
-        "url": "https://github.com/beefyfinance/lrt-subgraph"
+        "id": "beefy-balances-subgraph",
+        "role": "Indexing of all balances of all beefy products",
+        "url": "https://github.com/beefyfinance/l2-lxp-liquidity-subgraph"
       },
       {
         "id": "beefy-lrt-api",
         "role": "API for the LRT subgraph. Provides stable API.",
         "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "beefy-ethena-adapter",
+        "role": "Dedicated adapter for the Ethena Sats points",
+        "url": "https://github.com/ethena-labs/ethena_sats_adapters"
       },
       {
         "id": "ethena",
