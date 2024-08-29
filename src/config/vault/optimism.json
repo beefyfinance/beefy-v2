@@ -1820,6 +1820,7 @@
     "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "optimism",
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "gov-composer"
