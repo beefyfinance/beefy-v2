@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core';
 import { OverviewGraphHeader } from './components/OverviewGraphHeader';
 import { useAppDispatch, useAppSelector } from '../../../../../store';
 import { selectCowcentratedLikeVaultById } from '../../../../data/selectors/vaults';
-import { selectHasBreakdownDataByTokenAddress } from '../../../../data/selectors/tokens';
+import { selectHasBreakdownDataForVaultId } from '../../../../data/selectors/tokens';
 import {
   selectIsAddressBookLoaded,
   selectIsContractDataLoadedOnChain,
@@ -45,7 +45,7 @@ export const CowcentratedPnlGraphLoader = memo<CowcentratedPnlGraphLoaderProps>(
     const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
 
     const haveBreakdownData = useAppSelector(state =>
-      selectHasBreakdownDataByTokenAddress(state, vault.depositTokenAddress, vault.chainId)
+      selectHasBreakdownDataForVaultId(state, vaultId)
     );
     const isContractDataLoaded = useAppSelector(state =>
       selectIsContractDataLoadedOnChain(state, vault.chainId)

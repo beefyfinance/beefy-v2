@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import type { BigNumber } from 'bignumber.js';
 import type { VaultEntity } from '../entities/vault';
 import type {
   ClmPriceHistoryEntryClassic,
