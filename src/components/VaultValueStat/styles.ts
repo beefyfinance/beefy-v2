@@ -4,6 +4,7 @@ export const styles = (theme: Theme) => ({
   value: {
     ...theme.typography['body-lg-med'],
     color: theme.palette.text.middle,
+    display: 'block' as const,
   },
   subValue: {
     ...theme.typography['body-sm'],

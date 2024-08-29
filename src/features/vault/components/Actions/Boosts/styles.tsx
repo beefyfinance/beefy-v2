@@ -33,14 +33,7 @@ export const styles = (theme: Theme) => ({
   },
   titleTooltipTrigger: {
     color: theme.palette.text.middle,
-    fontSize: '20px',
-    width: '20px',
-    height: '20px',
     marginLeft: '8px',
-    '& .MuiSvgIcon-root': {
-      fontSize: 'inherit',
-      display: 'block',
-    },
   },
   boostStats: {
     display: 'grid',

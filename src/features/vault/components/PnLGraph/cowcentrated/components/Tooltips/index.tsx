@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { formatTokenDisplayCondensed, formatUsd } from '../../../../../../../helpers/format';
 import { makeStyles, type Theme } from '@material-ui/core';
-import { featureFlag_debugGraph } from '../../../../../../data/utils/feature-flags';
+import { featureFlag_detailedTooltips } from '../../../../../../data/utils/feature-flags';
 import type {
   ClmInvestorFeesTimeSeriesPoint,
   ClmInvestorOverviewTimeSeriesPoint,
@@ -84,7 +84,7 @@ export const OverviewTooltip = memo<OverviewTooltipProps>(function OverviewToolt
         <div className={classes.label}>{t('Graph-cowcentrated-overview-tooltip-hold-value')}:</div>
         <div className={classes.value}>{formatUsd(heldUsd)}</div>
       </div>
-      {featureFlag_debugGraph()
+      {featureFlag_detailedTooltips()
         ? Object.entries(debug).map(([key, value]) => (
             <div className={classes.itemContainer} key={key}>
               <div className={classes.label}>{key}:</div>

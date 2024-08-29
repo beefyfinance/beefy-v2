@@ -25,7 +25,7 @@ export const styles = (theme: Theme) => ({
   },
   title: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.tooltips,
+    color: theme.palette.text.tooltip.title,
     textTransform: 'uppercase' as const,
     textOverflow: 'ellipsis',
     width: '90%',
@@ -38,11 +38,11 @@ export const styles = (theme: Theme) => ({
   },
   value: {
     ...theme.typography['body-sm'],
-    color: theme.palette.text.tooltipsValue,
+    color: theme.palette.text.tooltip.value,
   },
   label: {
     ...theme.typography['body-sm-med'],
-    color: theme.palette.text.tooltips,
+    color: theme.palette.text.tooltip.title,
   },
   triangle: {
     width: 0,

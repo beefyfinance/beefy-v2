@@ -20,11 +20,7 @@ export const styles = (theme: Theme) => ({
   },
   tooltipContent: {
     ...theme.typography['body-lg'],
-    color: theme.palette.text.primary,
-    padding: '8px',
     minWidth: '120px',
-    background: theme.palette.background.contentDark,
-    borderRadius: '4px',
     textAlign: 'left' as const,
     display: 'flex',
     flexDirection: 'column' as const,
@@ -58,7 +54,6 @@ export const styles = (theme: Theme) => ({
       lineHeight: '1',
     },
   },
-  arrow: { color: theme.palette.background.contentDark },
   tooltip: {
     display: 'flex',
     gap: '2px',

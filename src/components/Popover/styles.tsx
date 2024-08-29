@@ -11,12 +11,12 @@ export const styles = (theme: Theme) => ({
     maxWidth: '350px',
     minWidth: '250px',
     textAlign: 'left' as const,
-    color: theme.palette.text.tooltipsValue,
+    color: theme.palette.text.tooltip.value,
   },
   trigger: {
     display: 'flex',
     alignItems: 'center',
-    background: theme.palette.text.tooltips,
+    background: theme.palette.text.tooltip.title,
     color: '#fff',
     '&:hover': {
       cursor: 'pointer',
@@ -36,7 +36,7 @@ export const styles = (theme: Theme) => ({
   },
   title: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.tooltips,
+    color: theme.palette.text.tooltip.title,
     marginBottom: '8px',
   },
   size_sm: {

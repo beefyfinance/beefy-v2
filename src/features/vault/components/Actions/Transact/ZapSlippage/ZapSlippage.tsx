@@ -222,7 +222,7 @@ export const ZapSlippage = memo<ZapSlippageProps>(function ZapSlippage({ classNa
         <div className={classes.title}>
           {t('Transact-Slippage')}
           <IconWithTooltip
-            triggerClass={classes.tooltipTrigger}
+            iconSize={16}
             content={<BasicTooltipContent title={t('Transact-Slippage-Explainer')} />}
           />
         </div>
@@ -235,7 +235,7 @@ export const ZapSlippage = memo<ZapSlippageProps>(function ZapSlippage({ classNa
           >
             {slippage >= SLIPPAGE_WARNING ? (
               <IconWithBasicTooltip
-                triggerClass={classes.tooltipTrigger}
+                iconSize={16}
                 title={t(
                   `Transact-Slippage-Explainer-${
                     slippage >= SLIPPAGE_DANGER ? 'Danger' : 'Warning'

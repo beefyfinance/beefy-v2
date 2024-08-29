@@ -5,12 +5,16 @@ const arrowHeight = 8;
 
 export const styles = (theme: Theme) => ({
   trigger: {
-    display: 'inline-block',
+    '--tooltip-content-padding': '16px',
+    '--tooltip-content-vertical-gap': '8px',
+    '--tooltip-content-horizontal-gap': '24px',
+    '--tooltip-content-border-radius': '8px',
+    display: 'inline-flex',
   },
   arrow: {
     position: 'absolute' as const,
     zIndex: 15,
-    color: '#fff',
+    color: theme.palette.background.contentDark,
     '&::before': {
       content: '""',
       display: 'block',
@@ -21,15 +25,15 @@ export const styles = (theme: Theme) => ({
   },
   content: {
     ...theme.typography['body-lg'],
-    color: theme.palette.text.tooltips,
-    padding: '12px 16px',
-    background: '#fff',
-    borderRadius: '8px',
+    color: theme.palette.text.primary,
+    background: theme.palette.background.contentDark,
+    padding: 'var(--tooltip-content-padding, 16px)',
+    borderRadius: 'var(--tooltip-content-border-radius, 8px)',
     textAlign: 'left' as const,
   },
   tooltip: {
     minWidth: `${arrowWidth * 3}px`,
-    maxWidth: 'min(100%, 350px)',
+    maxWidth: 'min(calc(100% - 16px), 440px)',
     zIndex: 1301, // Modal is 1300
     '&[x-placement*="top"]': {
       marginBottom: `${arrowHeight}px`,
@@ -90,10 +94,29 @@ export const styles = (theme: Theme) => ({
   },
   basicTitle: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.tooltips,
+    color: theme.palette.text.tooltip.title,
+    '& + $basicContent': {
+      marginTop: 'var(--tooltip-content-vertical-gap, 8px)',
+    },
   },
   basicContent: {
     ...theme.typography['body-lg'],
-    color: theme.palette.text.tooltips,
+    color: theme.palette.text.tooltip.content,
+  },
+  icon: {
+    color: 'var(--tooltip-icon-color, inherit)',
+    fontSize: 'var(--tooltip-icon-size, 20px)',
+    width: 'var(--tooltip-icon-size, 20px)',
+    height: 'var(--tooltip-icon-size, 20px)',
+    '& .MuiSvgIcon-root': {
+      fontSize: 'inherit',
+      display: 'block',
+    },
+  },
+  compact: {
+    '--tooltip-content-padding': '8px',
+    '--tooltip-content-vertical-gap': '4px',
+    '--tooltip-content-horizontal-gap': '12px',
+    '--tooltip-content-border-radius': '4px',
   },
 });

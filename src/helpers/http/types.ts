@@ -38,3 +38,13 @@ export type FetchPostJsonRequest = FetchCommonJsonRequest & {
 export type FetchRequestInit = Omit<RequestInit, 'headers'> & {
   headers: Headers; // make headers required
 };
+
+export type HttpHelper = {
+  getJson<TResponse>(path: string, request?: Omit<FetchGetJsonRequest, 'url'>): Promise<TResponse>;
+  postJson<TResponse>(
+    path: string,
+    request?: Omit<FetchPostJsonRequest, 'url'>
+  ): Promise<TResponse>;
+  getText(path: string, request: Omit<FetchGetJsonRequest, 'url'>): Promise<string>;
+  postText(path: string, request: Omit<FetchPostJsonRequest, 'url'>): Promise<string>;
+};

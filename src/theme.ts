@@ -82,6 +82,15 @@ const fontStyles: Record<string, TypographyStyleOptions> = {
   },
 };
 
+const colors = {
+  text: {
+    lightest: '#FFF',
+    light: '#F5F5FF',
+    middle: '#D0D0DA',
+    dark: '#999CB3',
+  },
+};
+
 function withCustomBreakpoints(theme: ThemeOptions) {
   if (featureFlag_breakpoints()) {
     const params = new URLSearchParams(window.location.search);
@@ -165,11 +174,18 @@ const theme = createTheme(
         },
       },
       text: {
-        light: '#F5F5FF',
-        middle: '#D0D0DA',
-        dark: '#999CB3',
-        tooltips: '#1C1E32',
-        tooltipsValue: '#242842',
+        primary: colors.text.lightest, // default on body
+        secondary: colors.text.light, // was 70% opacity white
+        light: colors.text.light,
+        middle: colors.text.middle,
+        dark: colors.text.dark,
+        tooltip: {
+          title: colors.text.lightest,
+          content: colors.text.light,
+          value: colors.text.light,
+          label: colors.text.middle,
+          link: colors.text.lightest,
+        },
       },
     },
     typography: {

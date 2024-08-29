@@ -115,15 +115,4 @@ export const styles = (theme: Theme) => ({
     opacity: 0,
     pointerEvents: 'none' as const,
   },
-  tooltipTrigger: {
-    width: '16px',
-    height: '16px',
-    margin: 0,
-    display: 'block',
-    '& svg': {
-      width: '16px',
-      height: '16px',
-      display: 'block',
-    },
-  },
 });

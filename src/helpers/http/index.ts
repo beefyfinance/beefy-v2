@@ -3,6 +3,7 @@ import type {
   FetchGetJsonRequest,
   FetchPostJsonRequest,
   FetchRequestInit,
+  HttpHelper,
 } from './types';
 import {
   ABORT_REASON_TIMEOUT,
@@ -23,6 +24,7 @@ import {
   isFetchError,
 } from './errors';
 import { isError } from '../error';
+import PQueue from 'p-queue';
 
 /** response decoded as JSON */
 export async function getJson<TResponse>(request: FetchGetJsonRequest): Promise<TResponse> {
@@ -75,6 +77,62 @@ export async function postText(request: FetchPostJsonRequest): Promise<string> {
   }
 
   return fetchResponseBody<string>(url, { ...init, method: 'POST', body }, decodeText);
+}
+
+export function makeHttpHelper(baseUrl: string): HttpHelper {
+  return {
+    getJson<TResponse>(
+      path: string,
+      request: Omit<FetchGetJsonRequest, 'url'> = {}
+    ): Promise<TResponse> {
+      return getJson({
+        ...request,
+        url: `${baseUrl}${path}`,
+      });
+    },
+    postJson<TResponse>(
+      path: string,
+      request: Omit<FetchPostJsonRequest, 'url'>
+    ): Promise<TResponse> {
+      return postJson({
+        ...request,
+        url: `${baseUrl}${path}`,
+      });
+    },
+    getText(path: string, request: Omit<FetchGetJsonRequest, 'url'> = {}): Promise<string> {
+      return getText({
+        ...request,
+        url: `${baseUrl}${path}`,
+      });
+    },
+    postText(path: string, request: Omit<FetchPostJsonRequest, 'url'>): Promise<string> {
+      return postText({
+        ...request,
+        url: `${baseUrl}${path}`,
+      });
+    },
+  };
+}
+
+export function makeRateLimitedHttpHelper(
+  baseUrl: string,
+  requestsPerSecond: number,
+  concurrentRequests: number = 1
+): HttpHelper {
+  const queue = new PQueue({
+    intervalCap: requestsPerSecond >= 1 ? requestsPerSecond : 1,
+    interval: requestsPerSecond >= 1 ? 1000 : 1000 / requestsPerSecond,
+    concurrency: concurrentRequests,
+    carryoverConcurrencyCount: true,
+    autoStart: true,
+  });
+
+  const helper = makeHttpHelper(baseUrl);
+  for (const key of Object.keys(helper)) {
+    const original = helper[key];
+    helper[key] = (...args: unknown[]) => queue.add(() => original(...args));
+  }
+  return helper;
 }
 
 function getRequestUrlInit(request: FetchCommonJsonRequest): {

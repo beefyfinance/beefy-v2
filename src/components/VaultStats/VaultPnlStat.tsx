@@ -9,6 +9,8 @@ import {
   selectUserDepositedTimelineByVaultId,
 } from '../../features/data/selectors/analytics';
 import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types';
+import { ClmPnlTooltipContent } from '../PnlTooltip/ClmPnlTooltipContent';
+import { showClmPnlTooltip } from '../PnlTooltip/helpers';
 
 export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];
@@ -66,7 +68,7 @@ function mapStateToProps(
     blur: false,
     loading: !isLoaded,
     boosted: false,
-    tooltip: null,
+    tooltip: showClmPnlTooltip(pnlData) ? <ClmPnlTooltipContent userPnl={pnlData} /> : undefined,
     className: className ?? '',
   };
 }

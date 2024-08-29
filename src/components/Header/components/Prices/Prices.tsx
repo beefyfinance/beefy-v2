@@ -255,8 +255,6 @@ export const Prices = memo(function Prices() {
         content={<TooltipContent />}
         triggers={TRIGGERS.CLICK}
         triggerClass={classes.trigger}
-        contentClass={classes.tooltipContent}
-        arrowClass={classes.tooltipArrow}
         propagateTooltipClick={shouldPropagate}
       >
         {tokens.map((token, i) => (

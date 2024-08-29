@@ -64,8 +64,13 @@ declare module '@material-ui/core/styles/createPalette' {
     dark: string;
     middle: string;
     light: string;
-    tooltips: string;
-    tooltipsValue: string;
+    tooltip: {
+      title: string;
+      content: string;
+      label: string;
+      value: string;
+      link: string;
+    };
   }
 }
 

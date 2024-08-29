@@ -57,15 +57,6 @@ export const styles = (theme: Theme) => ({
     height: '24px',
     width: '24px',
   },
-  tooltipContent: {
-    background: theme.palette.background.contentPrimary,
-    color: theme.palette.text.light,
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    padding: '16px',
-  },
-  tooltipArrow: {
-    color: theme.palette.background.contentPrimary,
-  },
   grid: {},
   tooltipTokens: {
     display: 'grid',

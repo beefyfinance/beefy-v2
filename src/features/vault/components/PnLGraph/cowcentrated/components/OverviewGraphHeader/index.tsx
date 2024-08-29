@@ -1,4 +1,4 @@
-import { Fragment, memo } from 'react';
+import { memo } from 'react';
 import type { VaultEntity } from '../../../../../../data/entities/vault';
 import { makeStyles } from '@material-ui/core';
 import { Stat } from '../Stat';
@@ -14,6 +14,8 @@ import { BIG_ZERO } from '../../../../../../../helpers/big-number';
 import { Tooltip } from '../../../../../../../components/Tooltip';
 import { HelpOutline } from '@material-ui/icons';
 import { styles } from './styles';
+import { ClmPnlTooltipContent } from '../../../../../../../components/PnlTooltip/ClmPnlTooltipContent';
+import { showClmPnlTooltip } from '../../../../../../../components/PnlTooltip/helpers';
 
 interface OverviewGraphHeaderProps {
   vaultId: VaultEntity['id'];
@@ -25,12 +27,10 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
   vaultId,
 }) {
   const classes = useStyles();
-
   const { t } = useTranslation();
-
-  const { underlying, tokens, pnl, hold, yields } = useAppSelector(state =>
-    selectClmPnl(state, vaultId)
-  );
+  const userPnl = useAppSelector(state => selectClmPnl(state, vaultId));
+  const { underlying, tokens, pnl, hold } = userPnl;
+  const hasPnlTooltip = showClmPnlTooltip(userPnl);
 
   return (
     <div className={classes.statsContainer}>
@@ -84,70 +84,31 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
           tokens[1].token.symbol
         )}
         value2={
-          <Tooltip
-            children={
-              <div className={classes.tooltip}>
-                <span
-                  className={pnl.withClaimedPending.usd.gt(BIG_ZERO) ? classes.green : classes.red}
-                >
-                  {formatLargeUsd(pnl.withClaimedPending.usd, { positivePrefix: '+$' })}
-                  {' PNL'}
-                </span>
-                <HelpOutline />
-              </div>
-            }
-            content={
-              <div>
-                <div className={classes.itemContainer}>
-                  <div className={classes.label}>{t('Base PNL')}</div>
-                  <div className={classes.value}>{formatLargeUsd(pnl.base.usd)}</div>
+          hasPnlTooltip ? (
+            <Tooltip
+              children={
+                <div className={classes.tooltip}>
+                  <span
+                    className={
+                      pnl.withClaimedPending.usd.gt(BIG_ZERO) ? classes.green : classes.red
+                    }
+                  >
+                    {formatLargeUsd(pnl.withClaimedPending.usd, { positivePrefix: '+$' })}
+                    {' PNL'}
+                  </span>
+                  <HelpOutline />
                 </div>
-                {yields.claimed.sources.length ? (
-                  <>
-                    <div className={classes.itemContainer}>
-                      <div className={classes.label}>{t('Claimed')}</div>
-                      <div className={classes.value}>{formatLargeUsd(yields.claimed.usd)}</div>
-                    </div>
-                    <div className={classes.valueBreakdown}>
-                      {yields.claimed.sources.map(source => (
-                        <Fragment key={`${source.source}-${source.token.symbol}`}>
-                          <div className={classes.label}>
-                            {source.source} {source.token.symbol}
-                          </div>
-                          <div className={classes.value}>{formatLargeUsd(source.usd)}</div>
-                        </Fragment>
-                      ))}
-                    </div>
-                  </>
-                ) : null}
-                {yields.pending.sources.length ? (
-                  <>
-                    <div className={classes.itemContainer}>
-                      <div className={classes.label}>{t('Pending')}</div>
-                      <div className={classes.value}>{formatLargeUsd(yields.pending.usd)}</div>
-                    </div>
-
-                    <div className={classes.valueBreakdown}>
-                      {yields.pending.sources.map(source => (
-                        <Fragment key={`${source.source}-${source.token.symbol}`}>
-                          <div className={classes.label}>
-                            {source.source} {source.token.symbol}
-                          </div>
-                          <div className={classes.value}>{formatLargeUsd(source.usd)}</div>
-                        </Fragment>
-                      ))}
-                    </div>
-                  </>
-                ) : null}
-                <div className={classes.itemContainer}>
-                  <div className={classes.label}>{t('Total PNL')}</div>
-                  <div className={classes.value}>{formatLargeUsd(pnl.withClaimedPending.usd)}</div>
-                </div>
-              </div>
-            }
-            contentClass={classes.tooltipContent}
-            arrowClass={classes.arrow}
-          />
+              }
+              content={<ClmPnlTooltipContent userPnl={userPnl} />}
+              contentClass={classes.tooltipContent}
+              compact={true}
+            />
+          ) : (
+            <span className={pnl.withClaimedPending.usd.gt(BIG_ZERO) ? classes.green : classes.red}>
+              {formatLargeUsd(pnl.withClaimedPending.usd, { positivePrefix: '+$' })}
+              {' PNL'}
+            </span>
+          )
         }
         subValue2={
           <Tooltip
@@ -167,7 +128,7 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
               </div>
             }
             contentClass={classes.tooltipContent}
-            arrowClass={classes.arrow}
+            compact={true}
           />
         }
       />
