@@ -1308,6 +1308,7 @@
     "strategyTypeId": "compounds",
     "earningPoints": true,
     "network": "arbitrum",
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -2805,6 +2806,7 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -3196,6 +3198,7 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -3288,6 +3291,7 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -7060,6 +7064,7 @@
     "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "gov-composer"
