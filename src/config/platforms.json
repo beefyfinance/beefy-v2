@@ -994,6 +994,11 @@
     "filter": true
   },
   {
+    "id": "mim",
+    "name": "MIMSwap",
+    "filter": true
+  },
+  {
     "id": "oku",
     "name": "Uniswap (Oku)",
     "filter": true
