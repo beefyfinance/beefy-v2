@@ -1,5 +1,190 @@
 [
   {
+    "id": "pancake-cow-arb-usdt+-usd+-vault",
+    "name": "USDT+-USD+",
+    "type": "standard",
+    "token": "USDT+-USD+",
+    "tokenAddress": "0xC1f9d70164ee96730D4225927F9B32141a1219fE",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooBeefyPancakeUSDT+-USD+",
+    "earnedTokenAddress": "0xdf4f3d8a06f5c74B42Dc19E43F415120C9C3615c",
+    "earnContractAddress": "0xdf4f3d8a06f5c74B42Dc19E43F415120C9C3615c",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-arb-usdt+-usd+",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["USDT+", "USD+"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1725011788,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-arb-usdt+-usd+-rp",
+    "name": "USDT+-USD+ Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeUSDT+-USD+",
+    "tokenAddress": "0xC1f9d70164ee96730D4225927F9B32141a1219fE",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xA7E093AE7C7eDb3Fd39bBa45d9471c575F2Cf81a",
+    "earnedToken": "rcowPancakeUSDT+-USD+",
+    "earnedTokenAddresses": ["0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c"],
+    "earnedOracleIds": ["Cake"],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-arb-usdt+-usd+",
+    "status": "active",
+    "createdAt": 1725011787,
+    "platformId": "pancakeswap",
+    "assets": ["USDT+", "USD+"],
+    "risks": ["IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-arb-usdt+-usd+",
+    "name": "USDT+-USD+",
+    "type": "cowcentrated",
+    "token": "USDT+-USD+ Cake",
+    "tokenAddress": "0x8a06339Abd7499Af755DF585738ebf43D5D62B94",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0xb1084db8D3C05CEbd5FA9335dF95EE4b8a0edc30",
+      "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65"
+    ],
+    "earnedToken": "cowPancakeUSDT+-USD+",
+    "earnedTokenAddress": "0xC1f9d70164ee96730D4225927F9B32141a1219fE",
+    "earnContractAddress": "0xC1f9d70164ee96730D4225927F9B32141a1219fE",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-arb-usdt+-usd+",
+    "status": "active",
+    "createdAt": 1725011787,
+    "platformId": "pancakeswap",
+    "assets": ["USDT+", "USD+"],
+    "risks": ["IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-arb-usdc-mim-vault",
+    "name": "MIM-USDC",
+    "type": "standard",
+    "token": "MIM-USDC",
+    "tokenAddress": "0x9A4995eF8EF7D64F234e7d7C5bA10C0463132014",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooBeefyPancakeUSDC-MIM",
+    "earnedTokenAddress": "0xB154a006cf0a778f7274978d5Fecf2b13a121950",
+    "earnContractAddress": "0xB154a006cf0a778f7274978d5Fecf2b13a121950",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-arb-usdc-mim",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["MIM", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "arbitrum",
+    "createdAt": 1725011788,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-arb-usdc-mim-rp",
+    "name": "MIM-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeUSDC-MIM",
+    "tokenAddress": "0x9A4995eF8EF7D64F234e7d7C5bA10C0463132014",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x6d153EB7F1d7795BB8E0fa308442E40291304452",
+    "earnedToken": "rcowPancakeUSDC-MIM",
+    "earnedTokenAddresses": [
+      "0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c",
+      "0x912CE59144191C1204E64559FE8253a0e49E6548"
+    ],
+    "earnedOracleIds": ["Cake", "ARB"],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-arb-usdc-mim",
+    "status": "active",
+    "createdAt": 1725011787,
+    "platformId": "pancakeswap",
+    "assets": ["MIM", "USDC"],
+    "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-arb-usdc-mim",
+    "name": "MIM-USDC",
+    "type": "cowcentrated",
+    "token": "MIM-USDC Cake",
+    "tokenAddress": "0xB27fdE8d172bb146186Bac819Ceb12fE4FA9262A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      "0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A"
+    ],
+    "earnedToken": "cowPancakeUSDC-MIM",
+    "earnedTokenAddress": "0x9A4995eF8EF7D64F234e7d7C5bA10C0463132014",
+    "earnContractAddress": "0x9A4995eF8EF7D64F234e7d7C5bA10C0463132014",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-arb-usdc-mim",
+    "status": "active",
+    "createdAt": 1725011787,
+    "platformId": "pancakeswap",
+    "assets": ["MIM", "USDC"],
+    "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "mim-arb-usdc",
     "name": "MIM-USDC",
     "token": "MagicLP",
