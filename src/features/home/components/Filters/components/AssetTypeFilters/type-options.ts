@@ -10,5 +10,5 @@ type VaultAssetTypeWithouAll = Exclude<VaultAssetType, 'all'>;
 export const TYPE_OPTIONS: Record<VaultAssetTypeWithouAll, AssetCategory> = {
   single: { i18nKey: 'Filter-AsstSingle' },
   lps: { i18nKey: 'Filter-LP' },
-  clm: { i18nKey: 'Filter-CLM', highlight: 'new' },
+  clm: { i18nKey: 'Filter-CLM' },
 };
