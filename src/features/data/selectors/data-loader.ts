@@ -8,7 +8,6 @@ import { createCachedSelector } from 're-reselect';
 import {
   createAddressChainDataSelector,
   createAddressDataSelector,
-  createAddressVaultDataSelector,
   createChainDataSelector,
   createGlobalDataSelector,
   createHasLoaderDispatchedRecentlyEvaluator,
@@ -258,23 +257,23 @@ export const selectFetchStellaSwapRewardsLastDispatched = createGlobalDataSelect
   loader => loader?.lastDispatched || 0
 );
 
-export const selectStellaSwapRewardsForUserShouldLoad = createAddressVaultDataSelector(
+export const selectStellaSwapRewardsForUserShouldLoad = createAddressDataSelector(
   'stellaSwapRewards',
   createShouldLoaderLoadRecentEvaluator(30 * 60),
   5
 );
 
-export const selectStellaSwapRewardsForUserHasFulfilledOnce = createAddressVaultDataSelector(
+export const selectStellaSwapRewardsForUserHasFulfilledOnce = createAddressDataSelector(
   'stellaSwapRewards',
   hasLoaderFulfilledOnce
 );
 
-export const selectStellaSwapRewardsForUserIsRejected = createAddressVaultDataSelector(
+export const selectStellaSwapRewardsForUserIsRejected = createAddressDataSelector(
   'stellaSwapRewards',
   isLoaderRejected
 );
 
-export const selectStellaSwapRewardsForUserIsPending = createAddressVaultDataSelector(
+export const selectStellaSwapRewardsForUserIsPending = createAddressDataSelector(
   'stellaSwapRewards',
   isLoaderPending
 );

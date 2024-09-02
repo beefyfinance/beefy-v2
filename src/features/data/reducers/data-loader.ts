@@ -33,12 +33,10 @@ import { fetchOnRampSupportedProviders } from '../actions/on-ramp';
 import { fetchFees } from '../actions/fees';
 import type {
   ByAddressByChainDataEntity,
-  ByAddressByVaultDataEntity,
   ByChainDataEntity,
   DataLoaderState,
-  LoaderAddressKey,
-  LoaderAddressVaultKey,
   LoaderAddressChainKey,
+  LoaderAddressKey,
   LoaderChainKey,
   LoaderGlobalKey,
   LoaderState,
@@ -65,7 +63,6 @@ import type { Draft } from 'immer';
 import { cloneDeep } from 'lodash-es';
 import { fetchUserMerklRewardsAction } from '../actions/user-rewards/merkl-user-rewards';
 import { fetchOffChainCampaignsAction } from '../actions/rewards';
-import type { VaultEntity } from '../entities/vault';
 import { fetchUserStellaSwapRewardsAction } from '../actions/user-rewards/stellaswap-user-rewards';
 
 const dataLoaderStateInit: LoaderStateIdle = {
@@ -83,13 +80,14 @@ const dataLoaderStateInitByChainId: ByChainDataEntity = {
 
 const dataLoaderStateInitByAddress: DataLoaderState['byAddress'][string] = {
   byChainId: {},
-  byVaultId: {},
+  // byVaultId: {},
   global: {
     timeline: dataLoaderStateInit,
     depositedVaults: dataLoaderStateInit,
     dashboard: dataLoaderStateInit,
     clmHarvests: dataLoaderStateInit,
     merklRewards: dataLoaderStateInit,
+    stellaSwapRewards: dataLoaderStateInit,
   },
 };
 
@@ -99,9 +97,7 @@ const dataLoaderStateInitByAddressByChainId: ByAddressByChainDataEntity = {
   clmHarvests: dataLoaderStateInit,
 };
 
-const dataLoaderStateInitByAddressByVaultId: ByAddressByVaultDataEntity = {
-  stellaSwapRewards: dataLoaderStateInit,
-};
+// const dataLoaderStateInitByAddressByVaultId: ByAddressByVaultDataEntity = {};
 
 export const initialDataLoaderState: DataLoaderState = {
   instances: {
@@ -273,7 +269,7 @@ function getOrCreateAddressChainState(
   return chainState;
 }
 
-function getOrCreateAddressVaultState(
+/*function getOrCreateAddressVaultState(
   sliceState: Draft<DataLoaderState>,
   vaultId: string,
   address: string
@@ -291,7 +287,7 @@ function getOrCreateAddressVaultState(
   }
 
   return vaultState;
-}
+}*/
 
 function addByChainAsyncThunkActions<ActionParams extends { chainId: ChainEntity['id'] }>(
   builder: ActionReducerMapBuilder<DataLoaderState>,
@@ -376,7 +372,7 @@ function addByAddressByChainAsyncThunkActions<
     });
 }
 
-function addByAddressByVaultAsyncThunkActions<
+/*function addByAddressByVaultAsyncThunkActions<
   ActionParams extends { vaultId: VaultEntity['id']; walletAddress: string }
 >(
   builder: ActionReducerMapBuilder<DataLoaderState>,
@@ -421,7 +417,7 @@ function addByAddressByVaultAsyncThunkActions<
         vaultState[stateKey] = makeFulfilledState(vaultState[stateKey]);
       }
     });
-}
+}*/
 
 function addByAddressAsyncThunkActions<ActionParams extends { walletAddress: string }>(
   builder: ActionReducerMapBuilder<DataLoaderState>,
@@ -526,14 +522,16 @@ export const dataLoaderSlice = createSlice({
       'clmHarvests',
     ]);
 
-    addByAddressByVaultAsyncThunkActions(builder, fetchUserStellaSwapRewardsAction, [
-      'stellaSwapRewards',
-    ]);
-
     addByAddressAsyncThunkActions(builder, fetchWalletTimeline, ['timeline']);
     addByAddressAsyncThunkActions(builder, recalculateDepositedVaultsAction, ['depositedVaults']);
     addByAddressAsyncThunkActions(builder, initDashboardByAddress, ['dashboard']);
     addByAddressAsyncThunkActions(builder, fetchClmHarvestsForUser, ['clmHarvests']);
+    addByAddressAsyncThunkActions(
+      builder,
+      fetchUserStellaSwapRewardsAction,
+      ['stellaSwapRewards'],
+      ['stellaSwapRewards']
+    );
     addByAddressAsyncThunkActions(
       builder,
       fetchUserMerklRewardsAction,

@@ -56,10 +56,10 @@ import type {
   ClmPriceHistoryEntryClm,
 } from '../apis/clm/clm-api-types';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils';
-// import {
-//   selectUserMerklRewardsForVault,
-//   selectUserStellaSwapRewardsForVault,
-// } from './user-rewards';
+import {
+  selectUserMerklRewardsForVault,
+  selectUserStellaSwapRewardsForVault,
+} from './user-rewards';
 
 export const selectUserAnalytics = createSelector(
   (state: BeefyState, address?: string) => address || selectWalletAddress(state),
@@ -389,7 +389,6 @@ export const selectClmPnl = (
     });
   }
 
-  /* We need a way to fetch these en-masse (for dashboard page) before we can use them for PNL
   // Merkl/StellaSwap: Claimed + Unclaimed rewards
   // TODO: fetch merkl claims and use usd price at time of claim?
   const merklRewards = selectUserMerklRewardsForVault(state, vaultId, walletAddress);
@@ -417,7 +416,7 @@ export const selectClmPnl = (
         source: reward.source,
       });
     }
-  } */
+  }
 
   const _shares = withDiff({
     token: shareToken,

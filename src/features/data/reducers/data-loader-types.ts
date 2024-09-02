@@ -96,9 +96,9 @@ export interface DataLoaderState {
       byChainId: {
         [chainId in ChainEntity['id']]?: ByAddressByChainDataEntity;
       };
-      byVaultId: {
-        [vaultId: string]: ByAddressByVaultDataEntity;
-      };
+      // byVaultId: {
+      //   [vaultId: string]: ByAddressByVaultDataEntity;
+      // };
     };
   };
 }
@@ -114,9 +114,7 @@ export interface ByAddressByChainDataEntity {
   clmHarvests: LoaderState;
 }
 
-export interface ByAddressByVaultDataEntity {
-  stellaSwapRewards: LoaderState;
-}
+// export interface ByAddressByVaultDataEntity {}
 
 export interface ByAddressGlobalDataEntity {
   timeline: LoaderState;
@@ -124,10 +122,11 @@ export interface ByAddressGlobalDataEntity {
   dashboard: LoaderState;
   clmHarvests: LoaderState;
   merklRewards: LoaderState;
+  stellaSwapRewards: LoaderState;
 }
 
 export type LoaderGlobalKey = keyof DataLoaderState['global'];
 export type LoaderChainKey = keyof ByChainDataEntity;
 export type LoaderAddressKey = keyof ByAddressGlobalDataEntity;
 export type LoaderAddressChainKey = keyof ByAddressByChainDataEntity;
-export type LoaderAddressVaultKey = keyof ByAddressByVaultDataEntity;
+// export type LoaderAddressVaultKey = keyof ByAddressByVaultDataEntity;

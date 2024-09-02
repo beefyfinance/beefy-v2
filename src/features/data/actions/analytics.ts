@@ -85,6 +85,7 @@ import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils';
 import { isLessThanDurationAgoUnix } from '../../../helpers/date';
 import { isClmTimelineEntryClassic } from '../apis/clm/clm-api-typeguards';
+import { fetchUserOffChainRewardsForDepositedVaultsAction } from './user-rewards/user-rewards';
 
 export interface FetchWalletTimelineFulfilled {
   timelines: Record<VaultEntity['id'], AnyTimelineEntity>;
@@ -1111,6 +1112,7 @@ export const initDashboardByAddress = createAsyncThunk<
   }
 
   await awaiter.wait();
+  await dispatch(fetchUserOffChainRewardsForDepositedVaultsAction(walletAddress));
 
   return { walletAddress: lowerCaseAddress };
 });

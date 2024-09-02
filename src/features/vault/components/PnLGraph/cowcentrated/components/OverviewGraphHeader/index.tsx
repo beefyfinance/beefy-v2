@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import type { VaultEntity } from '../../../../../../data/entities/vault';
 import { makeStyles } from '@material-ui/core';
 import { Stat } from '../Stat';
@@ -16,6 +16,7 @@ import { HelpOutline } from '@material-ui/icons';
 import { styles } from './styles';
 import { ClmPnlTooltipContent } from '../../../../../../../components/PnlTooltip/ClmPnlTooltipContent';
 import { showClmPnlTooltip } from '../../../../../../../components/PnlTooltip/helpers';
+import { selectCowcentratedLikeVaultById } from '../../../../../../data/selectors/vaults';
 
 interface OverviewGraphHeaderProps {
   vaultId: VaultEntity['id'];
@@ -31,11 +32,17 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
   const userPnl = useAppSelector(state => selectClmPnl(state, vaultId));
   const { underlying, tokens, pnl, hold } = userPnl;
   const hasPnlTooltip = showClmPnlTooltip(userPnl);
+  const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
+  const tt = useMemo(() => {
+    const suffix = vault.type;
+    return (key: string, options?: Parameters<typeof t>[0]) =>
+      t([`${key}-${suffix}`, key], options);
+  }, [t, vault.type]);
 
   return (
     <div className={classes.statsContainer}>
       <Stat
-        tooltipText={t('pnl-graph-tooltip-deposit')}
+        tooltipText={tt('pnl-graph-tooltip-deposit')}
         label={t('At Deposit')}
         value0={`${formatTokenDisplayCondensed(
           tokens[0].entry.amount,
@@ -53,7 +60,7 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
         subValue2={formatLargeUsd(underlying.entry.usd)}
       />
       <Stat
-        tooltipText={t('pnl-graph-tooltip-now-clm')}
+        tooltipText={tt('pnl-graph-tooltip-now-clm')}
         label={t('Now')}
         value0={`${formatTokenDisplayCondensed(
           tokens[0].now.amount,
@@ -71,7 +78,7 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
         subValue2={formatLargeUsd(underlying.now.usd)}
       />
       <Stat
-        tooltipText={t('pnl-graph-tooltip-change-clm')}
+        tooltipText={tt('pnl-graph-tooltip-change-clm')}
         label={t('Change')}
         value0={formatPositiveOrNegative(
           tokens[0].diff.amount,

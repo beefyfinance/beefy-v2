@@ -2,7 +2,6 @@ import type { StellaSwapVaultReward } from '../../reducers/wallet/user-rewards-t
 
 export type FetchUserStellaSwapRewardsActionParams = {
   walletAddress: string;
-  vaultId: string;
   force?: boolean;
 };
 
