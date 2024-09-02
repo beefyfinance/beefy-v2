@@ -323,5 +323,6 @@ function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBas
     migrationIds: config.migrationIds || [],
     hidden: false,
     poolTogether: config.poolTogether,
+    breakdownId: config.oracle === 'tokens' ? config.id : config.oracleId, // use vault id when deposit token is not a LP
   };
 }

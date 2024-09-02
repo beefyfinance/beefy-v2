@@ -11,6 +11,7 @@ import { ReactComponent as AuditIcon } from '../../images/icons/navigation/audit
 import { ReactComponent as TreasuryIcon } from '../../images/icons/navigation/treasury.svg';
 import { ReactComponent as DaoIcon } from '../../images/icons/navigation/dao.svg';
 import { ReactComponent as PartnersIcon } from '../../images/icons/navigation/partners.svg';
+import { ReactComponent as AnalyticsIcon } from '../../images/icons/navigation/analytics.svg';
 import { ProposalsNavItem } from './components/NavItem/ProposalsNavItem';
 import type { NavConfig, NavItemConfig } from './components/DropNavItem/types';
 import { ProposalsMobileNavItem } from './components/NavItem/ProposalsMobileNavItem';
@@ -44,6 +45,7 @@ export const ResourcesNavItems: NavItemConfig[] = [
   { title: 'Header-MediaKit', Icon: MediaKitIcon, url: 'https://beefy.com/media-kit/' },
   { title: 'Header-Audit', Icon: AuditIcon, url: 'https://github.com/beefyfinance/beefy-audits' },
   { title: 'Header-Partners', Icon: PartnersIcon, url: 'https://beefy.com/partners' },
+  { title: 'Header-Analytics', Icon: AnalyticsIcon, url: 'https://analytics.beefy.finance/' },
 ];
 
 export const MobileList: NavConfig[] = [

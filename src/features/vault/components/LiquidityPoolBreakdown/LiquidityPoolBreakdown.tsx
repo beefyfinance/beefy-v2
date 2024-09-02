@@ -10,29 +10,26 @@ import { ChartWithLegend } from './components/ChartWithLegend';
 import { useCalculatedBreakdown } from './hooks';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
-import type { TokenLpBreakdown } from '../../../data/entities/token';
 import {
-  selectHasBreakdownDataByTokenAddress,
+  selectHasBreakdownDataForVault,
   selectLpBreakdownForVault,
 } from '../../../data/selectors/tokens';
 import { isCowcentratedLikeVault, type VaultEntity } from '../../../data/entities/vault';
-import {
-  selectIsAddressBookLoaded,
-  selectShouldInitAddressBook,
-} from '../../../data/selectors/data-loader';
+import { selectShouldInitAddressBook } from '../../../data/selectors/data-loader';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
 import { StatSwitcher } from '../StatSwitcher';
 
 const useStyles = makeStyles(styles);
 
 export type LiquidityPoolBreakdownProps = {
-  vault: VaultEntity;
-  breakdown: TokenLpBreakdown;
+  vaultId: VaultEntity['id'];
 };
 export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
-  function LiquidityPoolBreakdown({ vault, breakdown }) {
+  function LiquidityPoolBreakdown({ vaultId }) {
     const classes = useStyles();
     const { t } = useTranslation();
+    const vault = useAppSelector(state => selectVaultById(state, vaultId));
+    const breakdown = useAppSelector(state => selectLpBreakdownForVault(state, vault));
     const calculatedBreakdown = useCalculatedBreakdown(vault, breakdown);
     const { userBalance } = calculatedBreakdown;
     const [tab, setTab] = useState<BreakdownMode>(userBalance.gt(BIG_ZERO) ? 'user' : 'total');
@@ -92,25 +89,20 @@ export const LiquidityPoolBreakdownLoader = memo<LiquidityPoolBreakdownLoaderPro
     const dispatch = useAppDispatch();
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
     const chainId = vault.chainId;
-    const isAddressBookLoaded = useAppSelector(state => selectIsAddressBookLoaded(state, chainId));
-
+    const haveBreakdownData = useAppSelector(state => selectHasBreakdownDataForVault(state, vault));
     const shouldInitAddressBook = useAppSelector(state =>
       selectShouldInitAddressBook(state, chainId)
-    );
-    const breakdown = useAppSelector(state => selectLpBreakdownForVault(state, vault));
-    const haveBreakdownData = useAppSelector(state =>
-      selectHasBreakdownDataByTokenAddress(state, vault.depositTokenAddress, vault.chainId)
     );
 
     // Load address book if needed
     useEffect(() => {
-      if (!isAddressBookLoaded && shouldInitAddressBook) {
-        dispatch(fetchAddressBookAction({ chainId: chainId }));
+      if (shouldInitAddressBook) {
+        dispatch(fetchAddressBookAction({ chainId }));
       }
-    }, [dispatch, isAddressBookLoaded, shouldInitAddressBook, chainId]);
+    }, [dispatch, shouldInitAddressBook, chainId]);
 
     if (haveBreakdownData) {
-      return <LiquidityPoolBreakdown vault={vault} breakdown={breakdown} />;
+      return <LiquidityPoolBreakdown vaultId={vaultId} />;
     }
 
     return null;

@@ -90,6 +90,7 @@ const nonHarvestOnDepositPools = [
   'silo-eth-pendle-weeth',
   'silo-op-tbtc-tbtc',
   'sushi-cow-arb-wbtc-tbtc-vault',
+  'pancake-cow-arb-usdt+-usd+-vault',
 ];
 const excludedAbPools = [
   'gmx-arb-near-usdc',
@@ -268,92 +269,6 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       exitCode = 1;
     }
 
-    if (pool.pointStructureIds && pool.pointStructureIds.length > 0) {
-      const invalidPointStructureIds = pool.pointStructureIds!.filter(
-        p => !validPointProviderIds.includes(p)
-      );
-      if (invalidPointStructureIds.length > 0) {
-        console.error(
-          `Error: ${pool.id} : pointStructureId ${invalidPointStructureIds} not present in points.json`
-        );
-        exitCode = 1;
-      }
-    }
-
-    // check for the provider eligibility
-    for (const pointProvider of pointProviders) {
-      const hasProvider = pool.pointStructureIds?.includes(pointProvider.id) ?? false;
-
-      const shouldHaveProviderArr: boolean[] = [];
-      for (const eligibility of pointProvider.eligibility) {
-        if (eligibility.type === 'token-by-provider') {
-          if (!('tokens' in eligibility)) {
-            throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
-          }
-          if (!('tokenProviderId' in eligibility)) {
-            throw new Error(`Error: ${pointProvider.id} : eligibility.tokenProviderId missing`);
-          }
-
-          shouldHaveProviderArr.push(
-            (pool.tokenProviderId === eligibility.tokenProviderId &&
-              pool.assets?.some(a => eligibility.tokens?.includes(a))) ??
-              false
-          );
-        } else if (eligibility.type === 'token-on-platform') {
-          if (!('tokens' in eligibility)) {
-            throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
-          }
-          if (!('platformId' in eligibility)) {
-            throw new Error(`Error: ${pointProvider.id} : eligibility.platformId missing`);
-          }
-
-          shouldHaveProviderArr.push(
-            (eligibility.platformId === pool.platformId &&
-              pool.assets?.some(a => eligibility.tokens.includes(a))) ??
-              false
-          );
-        } else if (eligibility.type === 'token-holding') {
-          if (!('tokens' in eligibility)) {
-            throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
-          }
-
-          shouldHaveProviderArr.push(
-            pool.assets?.some(a => eligibility?.tokens?.includes(a)) ?? false
-          );
-        } else if (eligibility.type === 'on-chain-lp') {
-          if (!('chain' in eligibility)) {
-            throw new Error(`Error: ${pointProvider.id} : eligibility.chain missing`);
-          }
-
-          shouldHaveProviderArr.push(pool.network === eligibility.chain);
-        } else if (eligibility.type === 'earned-token-name-regex') {
-          if (!('regex' in eligibility)) {
-            throw new Error(`Error: ${pointProvider.id} : eligibility.regex missing`);
-          }
-          const earnedToken = pool.earnedToken;
-          const regex = new RegExp(eligibility.regex as string);
-          shouldHaveProviderArr.push(regex.test(earnedToken));
-        } else if (eligibility.type === 'vault-whitelist') {
-          shouldHaveProviderArr.push(hasProvider);
-        }
-      }
-
-      // bool or
-      const shouldHaveProvider = shouldHaveProviderArr.some(Boolean);
-
-      if (shouldHaveProvider && !hasProvider) {
-        console.error(
-          `Error: ${pool.id} : pointStructureId ${pointProvider.id} should be present in pointStructureIds`
-        );
-        exitCode = 1;
-      } else if (!shouldHaveProvider && hasProvider) {
-        console.error(
-          `Error: ${pool.id} : pointStructureId ${pointProvider.id} should NOT be present in pointStructureIds`
-        );
-        exitCode = 1;
-      }
-    }
-
     if (pool.oracle === 'lps') {
       if (!pool.tokenProviderId) {
         console.error(
@@ -478,6 +393,9 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
         console.warn(`${pool.id} : eol pool is empty`);
       }
     }
+    if (checkPointsStructureIds(pool) > 0) {
+      exitCode = 1;
+    }
 
     uniquePoolId.add(pool.id);
     uniqueEarnedToken.add(pool.earnedToken);
@@ -514,6 +432,11 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       );
       exitCode = 1;
     }
+
+    if (checkPointsStructureIds(pool) > 0) {
+      exitCode = 1;
+    }
+
     const { devMultisig } = addressBook[chainId].platforms.beefyfinance;
     updates = isRewardPoolOwnerCorrect(pool, chainId, devMultisig, updates);
   });
@@ -530,6 +453,10 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       console.error(
         `Error: ${clm.id} : Beefy oracle has no subOracle entry for token1 ${clm.token1}`
       );
+      exitCode = 1;
+    }
+
+    if (checkPointsStructureIds(clm) > 0) {
       exitCode = 1;
     }
   });
@@ -692,6 +619,98 @@ const isHarvestOnDepositCorrect = (pool, chain, updates) => {
   }
 
   return updates;
+};
+
+const checkPointsStructureIds = pool => {
+  let exitCode = 0;
+
+  if (pool.pointStructureIds && pool.pointStructureIds.length > 0) {
+    const invalidPointStructureIds = pool.pointStructureIds!.filter(
+      p => !validPointProviderIds.includes(p)
+    );
+    if (invalidPointStructureIds.length > 0) {
+      console.error(
+        `Error: ${pool.id} : pointStructureIds ${invalidPointStructureIds} not present in points.json`
+      );
+      exitCode = 1;
+    }
+  }
+
+  // check for the provider eligibility
+  for (const pointProvider of pointProviders) {
+    const hasProvider = pool.pointStructureIds?.includes(pointProvider.id) ?? false;
+
+    const shouldHaveProviderArr: boolean[] = [];
+    for (const eligibility of pointProvider.eligibility) {
+      if (eligibility.type === 'token-by-provider') {
+        if (!('tokens' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
+        }
+        if (!('tokenProviderId' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.tokenProviderId missing`);
+        }
+
+        shouldHaveProviderArr.push(
+          (pool.tokenProviderId === eligibility.tokenProviderId &&
+            pool.assets?.some(a => eligibility.tokens?.includes(a))) ??
+            false
+        );
+      } else if (eligibility.type === 'token-on-platform') {
+        if (!('tokens' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
+        }
+        if (!('platformId' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.platformId missing`);
+        }
+
+        shouldHaveProviderArr.push(
+          (eligibility.platformId === pool.platformId &&
+            pool.assets?.some(a => eligibility.tokens.includes(a))) ??
+            false
+        );
+      } else if (eligibility.type === 'token-holding') {
+        if (!('tokens' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
+        }
+
+        shouldHaveProviderArr.push(
+          pool.assets?.some(a => eligibility?.tokens?.includes(a)) ?? false
+        );
+      } else if (eligibility.type === 'on-chain-lp') {
+        if (!('chain' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.chain missing`);
+        }
+
+        shouldHaveProviderArr.push(pool.network === eligibility.chain);
+      } else if (eligibility.type === 'earned-token-name-regex') {
+        if (!('regex' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.regex missing`);
+        }
+        const earnedToken = pool.earnedToken;
+        const regex = new RegExp(eligibility.regex as string);
+        shouldHaveProviderArr.push(regex.test(earnedToken));
+      } else if (eligibility.type === 'vault-whitelist') {
+        shouldHaveProviderArr.push(hasProvider);
+      }
+    }
+
+    // bool or
+    const shouldHaveProvider = shouldHaveProviderArr.some(Boolean);
+
+    if (shouldHaveProvider && !hasProvider) {
+      console.error(
+        `Error: ${pool.id} : pointStructureId ${pointProvider.id} should be present in pointStructureIds`
+      );
+      exitCode = 1;
+    } else if (!shouldHaveProvider && hasProvider) {
+      console.error(
+        `Error: ${pool.id} : pointStructureId ${pointProvider.id} should NOT be present in pointStructureIds`
+      );
+      exitCode = 1;
+    }
+  }
+
+  return exitCode;
 };
 
 // Helpers to populate required addresses.

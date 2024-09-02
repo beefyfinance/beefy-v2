@@ -49,6 +49,7 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "manta",
+    "pointStructureIds": ["manta-stakestone"],
     "zaps": [
       {
         "strategyId": "gov-composer"

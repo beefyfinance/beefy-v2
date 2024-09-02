@@ -777,5 +777,3 @@ export const selectUserIsUnstakedForVaultId = createSelector(
     );
   }
 );
-
-// DASHBOARD SELECTORS
