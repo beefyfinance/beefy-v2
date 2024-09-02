@@ -1,5 +1,63 @@
 [
   {
+    "id": "uniswap-cow-base-weth-owo-rp",
+    "name": "OwO-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-OwO",
+    "tokenAddress": "0xac39D9d3C65a30561FEeDD8877D2Dbb103808D3d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xF4f656177164276567015f0e38F528667bfC7C69",
+    "earnedToken": "rcowUniswapBaseWETH-OwO",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-owo",
+    "status": "active",
+    "createdAt": 1725263439,
+    "platformId": "uniswap",
+    "assets": ["OwO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-owo",
+    "name": "OwO-WETH",
+    "type": "cowcentrated",
+    "token": "OwO-WETH",
+    "tokenAddress": "0x09C149C856e6FB6E40AA39209142411B554b1a41",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x5D559eA7bB2DAE4B694A079cb8328a2145Fd32f6"
+    ],
+    "earnedToken": "cowUniswapBaseWETH-OwO",
+    "earnedTokenAddress": "0xac39D9d3C65a30561FEeDD8877D2Dbb103808D3d",
+    "earnContractAddress": "0xac39D9d3C65a30561FEeDD8877D2Dbb103808D3d",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-owo",
+    "status": "active",
+    "createdAt": 1725263439,
+    "platformId": "uniswap",
+    "assets": ["OwO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-weth-keycat-rp",
     "name": "KEYCAT-WETH Reward Pool",
     "type": "gov",
