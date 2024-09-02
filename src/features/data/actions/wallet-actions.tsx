@@ -1254,7 +1254,7 @@ const claimStellaSwap = (chainId: ChainEntity['id'], vaultId: VaultEntity['id'])
     const chain = selectChainById(state, chainId);
     const native = selectChainNativeToken(state, chainId);
     const { byVaultId } = await dispatch(
-      fetchUserStellaSwapRewardsAction({ walletAddress: address, vaultId, force: true })
+      fetchUserStellaSwapRewardsAction({ walletAddress: address, force: true })
     ).unwrap();
     const vaultRewards = byVaultId[vaultId];
     if (!vaultRewards) {

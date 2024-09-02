@@ -20,14 +20,12 @@ import { RefreshButton } from '../RefreshButton/RefreshButton';
 import { fetchUserStellaSwapRewardsAction } from '../../../../../../data/actions/user-rewards/stellaswap-user-rewards';
 import { selectStellaSwapUserRewardsStatus } from '../../../../../../data/selectors/data-loader';
 
-function useUserRewardsLoader(walletAddress: string, vaultId: string, autoRefresh: boolean) {
+function useUserRewardsLoader(walletAddress: string, autoRefresh: boolean) {
   const dispatch = useAppDispatch();
-  const status = useAppSelector(state =>
-    selectStellaSwapUserRewardsStatus(state, vaultId, walletAddress)
-  );
+  const status = useAppSelector(state => selectStellaSwapUserRewardsStatus(state, walletAddress));
   const handleRefresh = useCallback(() => {
-    dispatch(fetchUserStellaSwapRewardsAction({ walletAddress, vaultId }));
-  }, [dispatch, walletAddress, vaultId]);
+    dispatch(fetchUserStellaSwapRewardsAction({ walletAddress }));
+  }, [dispatch, walletAddress]);
 
   useEffect(() => {
     if (autoRefresh && status && status.canLoad) {
@@ -70,9 +68,7 @@ export const StellaSwapRewards = memo<StellaSwapRewardsProps>(function StellaSwa
   );
 
   if (!isNonEmptyArray(vaultRewards)) {
-    return walletAddress ? (
-      <AutomaticUserRewardsRefresher walletAddress={walletAddress} vaultId={vaultId} />
-    ) : null;
+    return walletAddress ? <AutomaticUserRewardsRefresher walletAddress={walletAddress} /> : null;
   }
 
   return (
@@ -89,9 +85,7 @@ export const StellaSwapRewards = memo<StellaSwapRewardsProps>(function StellaSwa
           key={chainId}
           title={t('Transact-Claim-Rewards-stellaswap')}
           refresh={
-            walletAddress ? (
-              <UserRewardsRefreshButton walletAddress={walletAddress} vaultId={vaultId} />
-            ) : undefined
+            walletAddress ? <UserRewardsRefreshButton walletAddress={walletAddress} /> : undefined
           }
         >
           <RewardList rewards={vaultRewards} deposited={deposited} />
@@ -174,11 +168,7 @@ const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function Claimabl
           <Claim chainId={chainId} vaultId={vaultId} withChain={withChain} />
         ) : undefined
       }
-      refresh={
-        withRefresh ? (
-          <UserRewardsRefreshButton walletAddress={walletAddress} vaultId={vaultId} />
-        ) : undefined
-      }
+      refresh={withRefresh ? <UserRewardsRefreshButton walletAddress={walletAddress} /> : undefined}
     >
       <RewardList rewards={vaultRewards} deposited={deposited} />
     </Source>
@@ -187,12 +177,11 @@ const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function Claimabl
 
 type RewardsRefresherProps = {
   walletAddress: string;
-  vaultId: string;
 };
 
 const AutomaticUserRewardsRefresher = memo<RewardsRefresherProps>(
-  function AutomaticUserRewardsRefresher({ walletAddress, vaultId }) {
-    const status = useUserRewardsLoader(walletAddress, vaultId, true);
+  function AutomaticUserRewardsRefresher({ walletAddress }) {
+    const status = useUserRewardsLoader(walletAddress, true);
     if (status.isError) {
       return <AlertWarning>{'Failed to fetch user rewards from StellaSwap API.'}</AlertWarning>;
     }
@@ -203,10 +192,9 @@ const AutomaticUserRewardsRefresher = memo<RewardsRefresherProps>(
 
 const UserRewardsRefreshButton = memo<RewardsRefresherProps>(function UserRewardsRefreshButton({
   walletAddress,
-  vaultId,
 }) {
   const { t } = useTranslation();
-  const status = useUserRewardsLoader(walletAddress, vaultId, false);
+  const status = useUserRewardsLoader(walletAddress, false);
   const canRefresh = status.canLoad && !!status.handleLoad;
   if (status.isLoaded && !canRefresh) {
     return null;
