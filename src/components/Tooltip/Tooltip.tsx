@@ -47,6 +47,7 @@ export type TooltipProps = {
   group?: string;
   /** reduces padding/margins */
   compact?: boolean;
+  dark?: boolean;
 };
 
 export const Tooltip = memo(
@@ -67,6 +68,7 @@ export const Tooltip = memo(
       triggers = TRIGGERS.CLICK | TRIGGERS.HOVER,
       group = 'default',
       compact = false,
+      dark = false,
     },
     ref
   ) {
@@ -211,8 +213,9 @@ export const Tooltip = memo(
           open={isOpen}
           className={clsx(
             baseClasses.tooltip,
+            tooltipClass,
             compact ? baseClasses.compact : undefined,
-            tooltipClass
+            dark ? baseClasses.dark : undefined
           )}
           anchorEl={anchorEl}
           modifiers={modifiers}

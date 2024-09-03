@@ -5,34 +5,19 @@ const arrowHeight = 8;
 
 export const styles = (theme: Theme) => ({
   trigger: {
+    display: 'inline-flex',
+  },
+  tooltip: {
     '--tooltip-content-padding': '16px',
     '--tooltip-content-vertical-gap': '8px',
     '--tooltip-content-horizontal-gap': '24px',
     '--tooltip-content-border-radius': '8px',
-    display: 'inline-flex',
-  },
-  arrow: {
-    position: 'absolute' as const,
-    zIndex: 15,
-    color: theme.palette.background.contentDark,
-    '&::before': {
-      content: '""',
-      display: 'block',
-      width: 0,
-      height: 0,
-      borderStyle: 'solid',
-    },
-  },
-  content: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.primary,
-    background: theme.palette.background.contentDark,
-    padding: 'var(--tooltip-content-padding, 16px)',
-    borderRadius: 'var(--tooltip-content-border-radius, 8px)',
-    textAlign: 'left' as const,
-    boxShadow: '0px 4px 8px 8px rgba(0, 0, 0, 0.2)',
-  },
-  tooltip: {
+    '--tooltip-background-color': theme.palette.tooltip.light.background,
+    '--tooltip-title-color': theme.palette.tooltip.light.text.title,
+    '--tooltip-content-color': theme.palette.tooltip.light.text.content,
+    '--tooltip-value-color': theme.palette.tooltip.light.text.value,
+    '--tooltip-label-color': theme.palette.tooltip.light.text.label,
+    '--tooltip-link-color': theme.palette.tooltip.light.text.link,
     minWidth: `${arrowWidth * 3}px`,
     maxWidth: 'min(calc(100% - 16px), 440px)',
     zIndex: 1301, // Modal is 1300
@@ -93,16 +78,37 @@ export const styles = (theme: Theme) => ({
       },
     },
   },
+  arrow: {
+    position: 'absolute' as const,
+    zIndex: 15,
+    color: 'var(--tooltip-background-color, #fff)',
+    '&::before': {
+      content: '""',
+      display: 'block',
+      width: 0,
+      height: 0,
+      borderStyle: 'solid',
+    },
+  },
+  content: {
+    ...theme.typography['body-lg'],
+    color: 'var(--tooltip-title-color, #000)',
+    background: 'var(--tooltip-background-color, #fff)',
+    padding: 'var(--tooltip-content-padding, 16px)',
+    borderRadius: 'var(--tooltip-content-border-radius, 8px)',
+    textAlign: 'left' as const,
+    boxShadow: '0px 4px 8px 8px rgba(0, 0, 0, 0.2)',
+  },
   basicTitle: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.tooltip.title,
+    color: 'var(--tooltip-title-color, #000)',
     '& + $basicContent': {
       marginTop: 'var(--tooltip-content-vertical-gap, 8px)',
     },
   },
   basicContent: {
     ...theme.typography['body-lg'],
-    color: theme.palette.text.tooltip.content,
+    color: 'var(--tooltip-content-color, #000)',
   },
   icon: {
     color: 'var(--tooltip-icon-color, inherit)',
@@ -113,6 +119,14 @@ export const styles = (theme: Theme) => ({
       fontSize: 'inherit',
       display: 'block',
     },
+  },
+  dark: {
+    '--tooltip-background-color': theme.palette.tooltip.dark.background,
+    '--tooltip-title-color': theme.palette.tooltip.dark.text.title,
+    '--tooltip-content-color': theme.palette.tooltip.dark.text.content,
+    '--tooltip-value-color': theme.palette.tooltip.dark.text.value,
+    '--tooltip-label-color': theme.palette.tooltip.dark.text.label,
+    '--tooltip-link-color': theme.palette.tooltip.dark.text.link,
   },
   compact: {
     '--tooltip-content-padding': '8px',

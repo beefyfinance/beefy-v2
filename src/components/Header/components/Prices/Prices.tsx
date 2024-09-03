@@ -256,6 +256,7 @@ export const Prices = memo(function Prices() {
         triggers={TRIGGERS.CLICK}
         triggerClass={classes.trigger}
         propagateTooltipClick={shouldPropagate}
+        dark={true}
       >
         {tokens.map((token, i) => (
           <NavToken

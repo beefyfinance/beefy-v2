@@ -22,7 +22,7 @@ export const styles = (theme: Theme) => ({
   sourceTitle: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
-    color: theme.palette.text.tooltip.title,
+    color: 'var(--tooltip-title-color)',
   },
   rewards: {
     display: 'flex',
@@ -31,11 +31,11 @@ export const styles = (theme: Theme) => ({
   },
   rewardsText: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.tooltip.value,
+    color: 'var(--tooltip-value-color)',
   },
   usdPrice: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
-    color: theme.palette.text.tooltip.label,
+    color: 'var(--tooltip-label-color)',
   },
 });

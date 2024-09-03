@@ -109,6 +109,7 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
               content={<ClmPnlTooltipContent userPnl={userPnl} variant={'graph'} />}
               contentClass={classes.tooltipContent}
               compact={true}
+              dark={true}
             />
           ) : (
             <span className={pnl.withClaimedPending.usd.gt(BIG_ZERO) ? classes.green : classes.red}>
@@ -136,6 +137,7 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
             }
             contentClass={classes.tooltipContent}
             compact={true}
+            dark={true}
           />
         }
       />

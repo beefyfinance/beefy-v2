@@ -16,12 +16,12 @@ export const styles = (theme: Theme) => ({
   },
   label: {
     ...theme.typography['body-sm'],
-    color: theme.palette.text.tooltip.label,
+    color: 'var(--tooltip-label-color)',
   },
   value: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
-    color: theme.palette.text.tooltip.value,
+    color: 'var(--tooltip-value-color)',
     textAlign: 'right' as const,
   },
   valueBreakdown: {
@@ -29,20 +29,20 @@ export const styles = (theme: Theme) => ({
     gridTemplateColumns: 'auto 1fr',
     rowGap: 'var(--tooltip-content-vertical-gap, 8px)',
     columnGap: 'var(--tooltip-content-horizontal-gap, 16px)',
-    color: theme.palette.text.tooltip.value,
+    color: 'var(--tooltip-value-color)',
     paddingLeft: '8px',
     '& $value, & $label': {
-      color: theme.palette.text.tooltip.value,
+      color: 'var(--tooltip-value-color)',
     },
   },
   total: {
     '& $label': {
       fontWeight: theme.typography['body-sm-med'].fontWeight,
-      color: theme.palette.text.tooltip.title,
+      color: 'var(--tooltip-title-color)',
     },
     '& $value': {
       fontWeight: theme.typography['body-sm-med'].fontWeight,
-      color: theme.palette.text.tooltip.label,
+      color: 'var(--tooltip-label-color)',
     },
   },
   graph: {},

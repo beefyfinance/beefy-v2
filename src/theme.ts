@@ -176,15 +176,31 @@ const theme = createTheme(
       text: {
         primary: colors.text.lightest, // default on body
         secondary: colors.text.light, // was 70% opacity white
+        lightest: colors.text.lightest,
         light: colors.text.light,
         middle: colors.text.middle,
         dark: colors.text.dark,
-        tooltip: {
-          title: colors.text.lightest,
-          content: colors.text.light,
-          value: colors.text.middle,
-          label: colors.text.light,
-          link: colors.text.lightest,
+      },
+      tooltip: {
+        light: {
+          background: '#fff',
+          text: {
+            title: '#1C1E32',
+            content: '#1C1E32',
+            value: '#242842',
+            label: '#1C1E32',
+            link: '#1C1E32',
+          },
+        },
+        dark: {
+          background: '#1C1E32',
+          text: {
+            title: colors.text.lightest,
+            content: colors.text.light,
+            value: colors.text.middle,
+            label: colors.text.light,
+            link: colors.text.lightest,
+          },
         },
       },
     },
