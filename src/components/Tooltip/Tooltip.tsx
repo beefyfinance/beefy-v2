@@ -222,6 +222,8 @@ export const Tooltip = memo(
           placement={placement}
           onClick={handlePopperClick}
           ref={tooltipRef}
+          data-compact={compact ? 'true' : undefined}
+          data-dark={dark ? 'true' : undefined}
         >
           <div className={clsx(baseClasses.arrow, arrowClass)} ref={setArrowRef} />
           <div className={clsx(baseClasses.content, contentClass)}>{content}</div>

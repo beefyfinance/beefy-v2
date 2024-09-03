@@ -11,21 +11,18 @@ const useStyles = makeStyles(styles);
 
 export type ClmPnlTooltipContentProps = {
   userPnl: UserClmPnl;
-  variant: 'dashboard' | 'graph';
 };
 
 export const ClmPnlTooltipContent = memo<ClmPnlTooltipContentProps>(function ClmPnlTooltipContent({
   userPnl,
-  variant,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const { pnl, yields } = userPnl;
   const detailed = featureFlag_detailedTooltips();
-  const variantClass = classes[variant];
 
   return (
-    <div className={clsx(classes.container, variantClass)}>
+    <div className={classes.container}>
       <div className={classes.itemContainer}>
         <div className={classes.label}>{t('Base PNL')}</div>
         <div className={classes.value}>{formatLargeUsd(pnl.base.usd)}</div>

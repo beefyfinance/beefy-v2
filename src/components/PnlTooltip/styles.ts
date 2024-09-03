@@ -6,6 +6,7 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     rowGap: 'var(--tooltip-content-vertical-gap, 8px)',
     columnGap: 'var(--tooltip-content-horizontal-gap, 16px)',
+    ...theme.typography['body-lg'],
   },
   itemContainer: {
     display: 'flex',
@@ -15,14 +16,17 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'space-between',
   },
   label: {
-    ...theme.typography['body-sm'],
     color: 'var(--tooltip-label-color)',
+    '[data-compact] &': {
+      ...theme.typography['body-sm'],
+    },
   },
   value: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
     color: 'var(--tooltip-value-color)',
     textAlign: 'right' as const,
+    '[data-compact] &': {
+      ...theme.typography['subline-sm'],
+    },
   },
   valueBreakdown: {
     display: 'grid',
@@ -37,18 +41,12 @@ export const styles = (theme: Theme) => ({
   },
   total: {
     '& $label': {
-      fontWeight: theme.typography['body-sm-med'].fontWeight,
+      fontWeight: theme.typography['body-lg-med'].fontWeight,
       color: 'var(--tooltip-title-color)',
     },
     '& $value': {
-      fontWeight: theme.typography['body-sm-med'].fontWeight,
+      fontWeight: theme.typography['body-lg-med'].fontWeight,
       color: 'var(--tooltip-label-color)',
-    },
-  },
-  graph: {},
-  dashboard: {
-    '& $label, & $value': {
-      ...theme.typography['body-lg'],
     },
   },
 });

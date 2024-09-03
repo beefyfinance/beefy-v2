@@ -68,9 +68,7 @@ function mapStateToProps(
     blur: false,
     loading: !isLoaded,
     boosted: false,
-    tooltip: showClmPnlTooltip(pnlData) ? (
-      <ClmPnlTooltipContent userPnl={pnlData} variant={'dashboard'} />
-    ) : undefined,
+    tooltip: showClmPnlTooltip(pnlData) ? <ClmPnlTooltipContent userPnl={pnlData} /> : undefined,
     className: className ?? '',
   };
 }

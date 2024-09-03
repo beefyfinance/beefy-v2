@@ -39,7 +39,6 @@ export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({
         onTriggerClick={onClick}
         triggerClass={clsx(classes.withTooltip, className, { [classes.withOnClick]: onClick })}
         content={<BasicTooltipContent title={fullAmount} />}
-        compact={true}
       >
         {shortAmount}
       </Tooltip>

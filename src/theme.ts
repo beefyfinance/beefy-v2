@@ -119,6 +119,17 @@ function withCustomBreakpoints(theme: ThemeOptions) {
   return theme;
 }
 
+const tooltipLight = {
+  background: '#fff',
+  text: {
+    title: '#1C1E32',
+    content: '#1C1E32',
+    value: '#242842',
+    label: '#1C1E32',
+    link: '#1C1E32',
+  },
+} as const;
+
 const theme = createTheme(
   withCustomBreakpoints({
     palette: {
@@ -182,16 +193,7 @@ const theme = createTheme(
         dark: colors.text.dark,
       },
       tooltip: {
-        light: {
-          background: '#fff',
-          text: {
-            title: '#1C1E32',
-            content: '#1C1E32',
-            value: '#242842',
-            label: '#1C1E32',
-            link: '#1C1E32',
-          },
-        },
+        light: tooltipLight,
         dark: {
           background: '#1C1E32',
           text: {
@@ -279,6 +281,19 @@ const theme = createTheme(
             '--onboard-connect-sidebar-progress-color': '#68BE71',
             '--onboard-connect-sidebar-progress-background': '#4DB258',
             '--onboard-link-color': '#999CB3',
+            '--tooltip-content-vertical-padding': '12px',
+            '--tooltip-content-horizontal-padding': '16px',
+            '--tooltip-content-vertical-gap': '8px',
+            '--tooltip-content-horizontal-gap': '24px',
+            '--tooltip-content-border-radius': '8px',
+            '--tooltip-background-color': tooltipLight.background,
+            '--tooltip-title-color': tooltipLight.text.title,
+            '--tooltip-content-color': tooltipLight.text.content,
+            '--tooltip-value-color': tooltipLight.text.value,
+            '--tooltip-label-color': tooltipLight.text.label,
+            '--tooltip-link-color': tooltipLight.text.link,
+            '--tooltip-body-font-size': fontStyles['body-lg'].fontSize,
+            '--tooltip-subline-font-size': fontStyles['subline-lg'].fontSize,
           },
           body: {
             backgroundColor: '#121420',

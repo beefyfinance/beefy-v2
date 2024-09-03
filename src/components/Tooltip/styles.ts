@@ -8,16 +8,6 @@ export const styles = (theme: Theme) => ({
     display: 'inline-flex',
   },
   tooltip: {
-    '--tooltip-content-padding': '16px',
-    '--tooltip-content-vertical-gap': '8px',
-    '--tooltip-content-horizontal-gap': '24px',
-    '--tooltip-content-border-radius': '8px',
-    '--tooltip-background-color': theme.palette.tooltip.light.background,
-    '--tooltip-title-color': theme.palette.tooltip.light.text.title,
-    '--tooltip-content-color': theme.palette.tooltip.light.text.content,
-    '--tooltip-value-color': theme.palette.tooltip.light.text.value,
-    '--tooltip-label-color': theme.palette.tooltip.light.text.label,
-    '--tooltip-link-color': theme.palette.tooltip.light.text.link,
     minWidth: `${arrowWidth * 3}px`,
     maxWidth: 'min(calc(100% - 16px), 440px)',
     zIndex: 1301, // Modal is 1300
@@ -94,13 +84,15 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg'],
     color: 'var(--tooltip-title-color, #000)',
     background: 'var(--tooltip-background-color, #fff)',
-    padding: 'var(--tooltip-content-padding, 16px)',
+    padding:
+      'var(--tooltip-content-vertical-padding, 12px) var(--tooltip-content-horizontal-padding, 16px)',
     borderRadius: 'var(--tooltip-content-border-radius, 8px)',
     textAlign: 'left' as const,
     boxShadow: '0px 4px 8px 8px rgba(0, 0, 0, 0.2)',
   },
   basicTitle: {
     ...theme.typography['body-lg-med'],
+    fontSize: `var(--tooltip-body-font-size, ${theme.typography['body-lg-med'].fontSize})`,
     color: 'var(--tooltip-title-color, #000)',
     '& + $basicContent': {
       marginTop: 'var(--tooltip-content-vertical-gap, 8px)',
@@ -108,6 +100,7 @@ export const styles = (theme: Theme) => ({
   },
   basicContent: {
     ...theme.typography['body-lg'],
+    fontSize: `var(--tooltip-body-font-size, ${theme.typography['body-lg'].fontSize})`,
     color: 'var(--tooltip-content-color, #000)',
   },
   icon: {
@@ -129,9 +122,12 @@ export const styles = (theme: Theme) => ({
     '--tooltip-link-color': theme.palette.tooltip.dark.text.link,
   },
   compact: {
-    '--tooltip-content-padding': '8px',
+    '--tooltip-content-vertical-padding': '8px',
+    '--tooltip-content-horizontal-padding': '8px',
     '--tooltip-content-vertical-gap': '4px',
     '--tooltip-content-horizontal-gap': '12px',
     '--tooltip-content-border-radius': '4px',
+    '--tooltip-body-font-size': theme.typography['body-sm'].fontSize,
+    '--tooltip-subline-font-size': theme.typography['subline-sm'].fontSize,
   },
 });
