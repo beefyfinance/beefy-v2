@@ -94,7 +94,7 @@ export const StellaSwapRewards = memo<StellaSwapRewardsProps>(function StellaSwa
             ) : undefined
           }
         >
-          <RewardList rewards={vaultRewards} deposited={deposited} />
+          <RewardList chainId={chainId} rewards={vaultRewards} deposited={deposited} />
         </Source>
       )}
     </>
@@ -180,7 +180,7 @@ const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function Claimabl
         ) : undefined
       }
     >
-      <RewardList rewards={vaultRewards} deposited={deposited} />
+      <RewardList chainId={chainId} rewards={vaultRewards} deposited={deposited} />
     </Source>
   );
 });

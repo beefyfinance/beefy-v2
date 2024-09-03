@@ -13,12 +13,14 @@ import { TokenImageFromEntity } from '../../../../../../../components/TokenImage
 import { orderBy } from 'lodash-es';
 import { getNetworkSrc } from '../../../../../../../helpers/networkSrc';
 import { Tooltip } from '../../../../../../../components/Tooltip';
+import type { ChainEntity } from '../../../../../../data/entities/chain';
 
 const useStyles = makeStyles(styles);
 
 type Token = Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'chainId'>;
 
 type RewardListProps = {
+  chainId: ChainEntity['id'];
   className?: string;
   deposited: boolean;
   rewards: {
@@ -34,6 +36,7 @@ export const RewardList = memo<RewardListProps>(function RewardList({
   rewards,
   deposited,
   className,
+  chainId,
 }) {
   const classes = useStyles();
   const sortedRewards = useMemo(
@@ -54,20 +57,25 @@ export const RewardList = memo<RewardListProps>(function RewardList({
                 ? 'Earning'
                 : 'Earn'
               : formatTokenDisplayCondensed(r.amount, r.token.decimals)}
-            {` ${r.token.symbol}`} {''}
-            on{' '}
-            <Tooltip
-              content={`${r.token.symbol} rewards are claimable on ${
-                r.token.chainId.charAt(0).toUpperCase() + r.token.chainId.slice(1)
-              }`}
-            >
-              <img
-                src={getNetworkSrc(r.token.chainId)}
-                alt={r.token.chainId}
-                height={24}
-                width={24}
-              />
-            </Tooltip>
+            {` ${r.token.symbol}`}
+            {r.token.chainId !== chainId ? (
+              <>
+                {' '}
+                on{' '}
+                <Tooltip
+                  content={`${r.token.symbol} rewards are claimable on ${
+                    r.token.chainId.charAt(0).toUpperCase() + r.token.chainId.slice(1)
+                  }`}
+                >
+                  <img
+                    src={getNetworkSrc(r.token.chainId)}
+                    alt={r.token.chainId}
+                    height={24}
+                    width={24}
+                  />
+                </Tooltip>
+              </>
+            ) : null}
           </div>
           <div className={classes.value}>
             {r.active && r.amount.isZero() && r.apr

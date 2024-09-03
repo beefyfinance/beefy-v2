@@ -94,7 +94,7 @@ export const MerklRewards = memo<MerklRewardsProps>(function MerklRewards({
             walletAddress ? <UserRewardsRefreshButton walletAddress={walletAddress} /> : undefined
           }
         >
-          <RewardList rewards={vaultRewards} deposited={deposited} />
+          <RewardList chainId={chainId} rewards={vaultRewards} deposited={deposited} />
         </Source>
       )}
     </>
@@ -164,7 +164,7 @@ const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function Claimabl
       claim={hasClaimable ? <Claim chainId={chainId} withChain={withChain} /> : undefined}
       refresh={withRefresh ? <UserRewardsRefreshButton walletAddress={walletAddress} /> : undefined}
     >
-      <RewardList rewards={vaultRewards} deposited={deposited} />
+      <RewardList chainId={chainId} rewards={vaultRewards} deposited={deposited} />
       {hasClaimable ? (
         <OtherRewards chainId={chainId} vaultRewards={vaultRewards} walletAddress={walletAddress} />
       ) : undefined}
@@ -231,7 +231,12 @@ const OtherRewards = memo<OtherRewardsProps>(function OtherRewards({
         )}
       </button>
       {otherOpen ? (
-        <RewardList className={classes.otherRewardsList} rewards={otherRewards} deposited={false} />
+        <RewardList
+          chainId={chainId}
+          className={classes.otherRewardsList}
+          rewards={otherRewards}
+          deposited={false}
+        />
       ) : null}
     </div>
   );
