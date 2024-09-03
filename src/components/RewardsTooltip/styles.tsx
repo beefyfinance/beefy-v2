@@ -8,12 +8,23 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     color: theme.palette.text.middle,
   },
-  tooltipTitle: {
+  statuses: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '8px',
+  },
+  sources: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '8px',
+  },
+  source: {},
+  sourceTitle: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
     color: theme.palette.text.tooltip.title,
   },
-  rewardsContainer: {
+  rewards: {
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '4px',
@@ -25,6 +36,6 @@ export const styles = (theme: Theme) => ({
   usdPrice: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
-    color: theme.palette.text.tooltip.title,
+    color: theme.palette.text.tooltip.label,
   },
 });

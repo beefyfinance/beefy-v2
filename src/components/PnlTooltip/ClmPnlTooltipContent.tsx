@@ -5,21 +5,27 @@ import { type UserClmPnl } from '../../features/data/selectors/analytics-types';
 import { formatLargeUsd } from '../../helpers/format';
 import { featureFlag_detailedTooltips } from '../../features/data/utils/feature-flags';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
-export type ClmPnlTooltipContentProps = { userPnl: UserClmPnl };
+export type ClmPnlTooltipContentProps = {
+  userPnl: UserClmPnl;
+  variant: 'dashboard' | 'graph';
+};
 
-export const ClmPnlTooltipContent = memo<ClmPnlTooltipContentProps>(function PnlTooltipContent({
+export const ClmPnlTooltipContent = memo<ClmPnlTooltipContentProps>(function ClmPnlTooltipContent({
   userPnl,
+  variant,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const { pnl, yields } = userPnl;
   const detailed = featureFlag_detailedTooltips();
+  const variantClass = classes[variant];
 
   return (
-    <div className={classes.container}>
+    <div className={clsx(classes.container, variantClass)}>
       <div className={classes.itemContainer}>
         <div className={classes.label}>{t('Base PNL')}</div>
         <div className={classes.value}>{formatLargeUsd(pnl.base.usd)}</div>
@@ -64,7 +70,7 @@ export const ClmPnlTooltipContent = memo<ClmPnlTooltipContentProps>(function Pnl
           ) : null}
         </>
       ) : null}
-      <div className={classes.itemContainer}>
+      <div className={clsx(classes.itemContainer, classes.total)}>
         <div className={classes.label}>{t('Total PNL')}</div>
         <div className={classes.value}>{formatLargeUsd(pnl.withClaimedPending.usd)}</div>
       </div>

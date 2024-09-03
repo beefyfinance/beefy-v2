@@ -30,6 +30,7 @@ export const styles = (theme: Theme) => ({
     padding: 'var(--tooltip-content-padding, 16px)',
     borderRadius: 'var(--tooltip-content-border-radius, 8px)',
     textAlign: 'left' as const,
+    boxShadow: '0px 4px 8px 8px rgba(0, 0, 0, 0.2)',
   },
   tooltip: {
     minWidth: `${arrowWidth * 3}px`,

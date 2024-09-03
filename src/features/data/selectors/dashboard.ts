@@ -1,13 +1,9 @@
 import type { BeefyState } from '../../../redux-types';
 import {
   isCowcentratedLikeVault,
-  isCowcentratedStandardVault,
   isGovVault,
   isStandardVault,
-  type VaultCowcentratedLike,
   type VaultEntity,
-  type VaultGov,
-  type VaultStandard,
 } from '../entities/vault';
 import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
 import type { TokenEntity } from '../entities/token';
@@ -16,7 +12,6 @@ import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import { selectIsVaultStable, selectVaultById } from './vaults';
 import { selectAllVaultBoostIds } from './boosts';
 import {
-  selectCowcentratedLikeVaultDepositTokens,
   selectHasBreakdownDataForVault,
   selectIsTokenStable,
   selectLpBreakdownForVault,
@@ -26,22 +21,15 @@ import {
   selectVaultTokenSymbols,
   selectWrappedToNativeSymbolOrTokenSymbol,
 } from './tokens';
-import {
-  isUserClmPnl,
-  isUserGovPnl,
-  isUserStandardPnl,
-  type UserClmPnl,
-  type UserGovPnl,
-  type UserStandardPnl,
-  type UserVaultPnl,
-} from './analytics-types';
+import { isUserClmPnl, type PnlYieldSource, type UserVaultPnl } from './analytics-types';
 import { getTopNArray } from '../utils/array-utils';
-import { orderBy } from 'lodash-es';
+import { cloneDeep, orderBy } from 'lodash-es';
 import { selectPlatformById } from './platforms';
 import { selectChainById } from './chains';
 import {
+  selectClmPnl,
   selectIsAnalyticsLoadedByAddress,
-  selectIsClmHarvestsLoadedByAddress,
+  selectStandardGovPnl,
   selectUserDepositedTimelineByVaultId,
   selectVaultPnl,
 } from './analytics';
@@ -57,6 +45,12 @@ import {
 } from './balance';
 import { selectIsUserBalanceAvailable } from './data-loader';
 
+export enum DashboardDataStatus {
+  Loading,
+  Missing,
+  Available,
+}
+
 export const selectUserTotalYieldUsd = (state: BeefyState, walletAddress: string) => {
   const vaultPnls = selectDashboardUserVaultsPnl(state, walletAddress);
 
@@ -69,46 +63,99 @@ export const selectUserTotalYieldUsd = (state: BeefyState, walletAddress: string
 
   return totalYieldUsd;
 };
+
+export type UserRewardStatus = 'compounded' | 'pending' | 'claimed';
+export type UserRewardSource = PnlYieldSource['source'] | 'gov' | 'boost';
+
+export type UserReward = {
+  token: Pick<TokenEntity, 'symbol' | 'decimals' | 'address' | 'chainId'>;
+  amount: BigNumber;
+  usd: BigNumber;
+  status: UserRewardStatus;
+  source: UserRewardSource;
+};
+
+type UserRewardsStatusEntry = {
+  has: boolean;
+  usd: BigNumber;
+  rewards: UserReward[];
+};
+
+export type UserRewards = {
+  [status in UserRewardStatus]: UserRewardsStatusEntry;
+} & { all: UserRewardsStatusEntry };
+
+const emptyUserRewardsStatusEntry: UserRewardsStatusEntry = {
+  has: false,
+  usd: BIG_ZERO,
+  rewards: [],
+};
+const emptyUserRewards: UserRewards = {
+  pending: cloneDeep(emptyUserRewardsStatusEntry),
+  claimed: cloneDeep(emptyUserRewardsStatusEntry),
+  compounded: cloneDeep(emptyUserRewardsStatusEntry),
+  all: cloneDeep(emptyUserRewardsStatusEntry),
+};
+
+/**
+ * @dev requires analytics timeline / user pnl to be loaded
+ */
 export const selectDashboardUserRewardsByVaultId = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
-) => {
+): UserRewards => {
   walletAddress = walletAddress || selectWalletAddress(state);
-
-  const rewards: {
-    rewardToken: TokenEntity['symbol'];
-    rewardTokenDecimals: TokenEntity['decimals'];
-    rewards: BigNumber;
-    rewardsUsd: BigNumber;
-  }[] = [];
-  const rewardsTokens: string[] = [];
-  let totalRewardsUsd = BIG_ZERO;
-
   if (!walletAddress) {
-    return { rewards, rewardsTokens, totalRewardsUsd };
+    return emptyUserRewards;
   }
 
   const vault = selectVaultById(state, vaultId);
+  const rewards: UserReward[] = [];
 
-  if (isGovVault(vault)) {
+  if (isCowcentratedLikeVault(vault)) {
+    const pnl = selectClmPnl(state, vaultId, walletAddress);
+    for (const type of ['compounded', 'claimed', 'pending'] as const) {
+      for (const reward of pnl.yields[type].sources) {
+        if (reward.amount.gt(BIG_ZERO)) {
+          rewards.push({
+            token: reward.token,
+            amount: reward.amount,
+            usd: reward.usd,
+            source: reward.source,
+            status: type,
+          });
+        }
+      }
+    }
+  } else if (isGovVault(vault)) {
     const pendingRewards = selectGovVaultPendingRewardsWithPrice(state, vault.id, walletAddress);
     for (const pendingReward of pendingRewards) {
-      if (pendingReward.amount.isGreaterThan(BIG_ZERO)) {
+      if (pendingReward.amount.gt(BIG_ZERO)) {
         const tokenRewardsUsd = pendingReward.amount.times(pendingReward.price || BIG_ZERO);
-
-        totalRewardsUsd = totalRewardsUsd.plus(tokenRewardsUsd);
-        rewardsTokens.push(pendingReward.token.symbol);
-
         rewards.push({
-          rewardToken: pendingReward.token.symbol,
-          rewardTokenDecimals: pendingReward.token.decimals,
-          rewards: pendingReward.amount,
-          rewardsUsd: tokenRewardsUsd,
+          token: pendingReward.token,
+          amount: pendingReward.amount,
+          usd: tokenRewardsUsd,
+          source: 'gov',
+          status: 'pending',
         });
       }
     }
-  } else {
+  } else if (isStandardVault(vault)) {
+    const pnl = selectStandardGovPnl(state, vaultId, walletAddress);
+    if (pnl.totalYield.gt(BIG_ZERO)) {
+      rewards.push({
+        token: selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress),
+        amount: pnl.totalYield,
+        usd: pnl.totalYieldUsd,
+        source: 'vault',
+        status: 'compounded',
+      });
+    }
+  }
+
+  if (isStandardVault(vault)) {
     const boosts = selectAllVaultBoostIds(state, vaultId);
     for (const boostId of boosts) {
       const boostPendingRewards = selectBoostUserRewardsInToken(state, boostId, walletAddress);
@@ -117,21 +164,76 @@ export const selectDashboardUserRewardsByVaultId = (
         const oraclePrice = selectTokenPriceByTokenOracleId(state, rewardToken.oracleId);
         const tokenRewardsUsd = boostPendingRewards.times(oraclePrice);
 
-        rewardsTokens.push(rewardToken.symbol);
-        totalRewardsUsd = totalRewardsUsd.plus(tokenRewardsUsd);
-
         rewards.push({
-          rewardToken: rewardToken.symbol,
-          rewardTokenDecimals: rewardToken.decimals,
-          rewards: boostPendingRewards,
-          rewardsUsd: tokenRewardsUsd,
+          token: rewardToken,
+          amount: boostPendingRewards,
+          usd: tokenRewardsUsd,
+          source: 'boost',
+          status: 'pending',
         });
       }
     }
   }
 
-  return { rewards, rewardsTokens, totalRewardsUsd };
+  return rewards.reduce<UserRewards>((acc, reward) => {
+    for (const key of ['all', reward.status] as const) {
+      const status = acc[key];
+      status.has = true;
+      status.usd = status.usd.plus(reward.usd);
+      status.rewards.push(reward);
+    }
+    return acc;
+  }, cloneDeep(emptyUserRewards));
 };
+
+// TODO add more checks
+const selectDashboardYieldRewardDataAvailableByVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  maybeWalletAddress?: string
+): DashboardDataStatus => {
+  const walletAddress = maybeWalletAddress || selectWalletAddressIfKnown(state);
+  if (!walletAddress) {
+    return DashboardDataStatus.Missing;
+  }
+
+  if (!selectIsUserBalanceAvailable(state, walletAddress)) {
+    return DashboardDataStatus.Loading;
+  }
+
+  const vault = selectVaultById(state, vaultId);
+  if (isCowcentratedLikeVault(vault) || isStandardVault(vault)) {
+    if (!selectIsAnalyticsLoadedByAddress(state, walletAddress)) {
+      return DashboardDataStatus.Loading;
+    }
+
+    const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
+    if (!vaultTimeline) {
+      return DashboardDataStatus.Missing;
+    }
+
+    return DashboardDataStatus.Available;
+  }
+
+  if (isGovVault(vault)) {
+    return DashboardDataStatus.Available;
+  }
+
+  return DashboardDataStatus.Missing;
+};
+
+export const selectDashboardUserRewardsOrStatusByVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+): UserRewards | Exclude<DashboardDataStatus, DashboardDataStatus.Available> => {
+  const status = selectDashboardYieldRewardDataAvailableByVaultId(state, vaultId, walletAddress);
+  if (status === DashboardDataStatus.Available) {
+    return selectDashboardUserRewardsByVaultId(state, vaultId, walletAddress);
+  }
+  return status;
+};
+
 type DashboardUserExposureVaultEntry = { key: string; label: string; value: BigNumber };
 type DashboardUserExposureVaultFn<
   T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry
@@ -377,113 +479,3 @@ export const selectDashboardUserVaultsPnl = (state: BeefyState, walletAddress: s
   }
   return vaults;
 };
-
-export enum DashboardDataStatus {
-  Loading,
-  Missing,
-  Available,
-}
-
-function selectDashboardYieldGovData(
-  state: BeefyState,
-  walletAddress: string,
-  vault: VaultGov,
-  _pnl: UserGovPnl
-) {
-  const { totalRewardsUsd } = selectDashboardUserRewardsByVaultId(state, vault.id, walletAddress);
-  return { type: vault.type, totalRewardsUsd, hasRewards: totalRewardsUsd.gt(BIG_ZERO) };
-}
-
-function selectDashboardYieldStandardData(
-  state: BeefyState,
-  walletAddress: string,
-  vault: VaultStandard,
-  pnl: UserStandardPnl
-) {
-  if (!selectIsAnalyticsLoadedByAddress(state, walletAddress)) {
-    return DashboardDataStatus.Loading;
-  }
-
-  const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vault.id, walletAddress);
-  if (!vaultTimeline) {
-    return DashboardDataStatus.Missing;
-  }
-
-  const { rewards, totalRewardsUsd } = selectDashboardUserRewardsByVaultId(
-    state,
-    vault.id,
-    walletAddress
-  );
-  const { totalYield, totalYieldUsd, tokenDecimals } = pnl;
-  return {
-    type: vault.type,
-    totalRewardsUsd,
-    hasRewards: rewards.length > 0,
-    totalYield,
-    totalYieldUsd,
-    tokenDecimals,
-  };
-}
-
-function selectDashboardYieldCowcentratedData(
-  state: BeefyState,
-  walletAddress: string,
-  vault: VaultCowcentratedLike,
-  pnl: UserClmPnl
-) {
-  if (
-    !selectIsAnalyticsLoadedByAddress(state, walletAddress) ||
-    !selectIsClmHarvestsLoadedByAddress(state, walletAddress)
-  ) {
-    return DashboardDataStatus.Loading;
-  }
-
-  const { rewards, totalRewardsUsd } = selectDashboardUserRewardsByVaultId(
-    state,
-    vault.id,
-    walletAddress
-  );
-
-  if (isCowcentratedStandardVault(vault)) {
-    const underlyingYield = pnl.underlying.diff.amount;
-    return {
-      type: 'standard' as const,
-      totalRewardsUsd,
-      hasRewards: rewards.length > 0,
-      totalYield: underlyingYield,
-      totalYieldUsd: underlyingYield.multipliedBy(pnl.underlying.now.price),
-      tokenDecimals: pnl.underlying.token.decimals,
-    };
-  }
-
-  const tokens = selectCowcentratedLikeVaultDepositTokens(state, vault.id);
-  return {
-    type: 'cowcentrated' as const,
-    tokens: [tokens.token0, tokens.token1] as const,
-    yields: pnl.yields,
-    totalRewardsUsd,
-    hasRewards: rewards.length > 0,
-  };
-}
-
-export function selectDashboardYieldVaultData(
-  state: BeefyState,
-  walletAddress: string,
-  vault: VaultEntity,
-  pnl: UserVaultPnl
-) {
-  // Common load check
-  if (!selectIsUserBalanceAvailable(state, walletAddress)) {
-    return DashboardDataStatus.Loading;
-  }
-
-  if (isCowcentratedLikeVault(vault) && isUserClmPnl(pnl)) {
-    return selectDashboardYieldCowcentratedData(state, walletAddress, vault, pnl);
-  } else if (isGovVault(vault) && isUserGovPnl(pnl)) {
-    return selectDashboardYieldGovData(state, walletAddress, vault, pnl);
-  } else if (isStandardVault(vault) && isUserStandardPnl(pnl)) {
-    return selectDashboardYieldStandardData(state, walletAddress, vault, pnl);
-  }
-
-  throw new Error('Invalid vault/pnl type');
-}

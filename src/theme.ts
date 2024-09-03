@@ -182,8 +182,8 @@ const theme = createTheme(
         tooltip: {
           title: colors.text.lightest,
           content: colors.text.light,
-          value: colors.text.light,
-          label: colors.text.middle,
+          value: colors.text.middle,
+          label: colors.text.light,
           link: colors.text.lightest,
         },
       },

@@ -29,10 +29,26 @@ export const styles = (theme: Theme) => ({
     gridTemplateColumns: 'auto 1fr',
     rowGap: 'var(--tooltip-content-vertical-gap, 8px)',
     columnGap: 'var(--tooltip-content-horizontal-gap, 16px)',
-    color: theme.palette.text.tooltip.label,
+    color: theme.palette.text.tooltip.value,
     paddingLeft: '8px',
     '& $value, & $label': {
+      color: theme.palette.text.tooltip.value,
+    },
+  },
+  total: {
+    '& $label': {
+      fontWeight: theme.typography['body-sm-med'].fontWeight,
+      color: theme.palette.text.tooltip.title,
+    },
+    '& $value': {
+      fontWeight: theme.typography['body-sm-med'].fontWeight,
       color: theme.palette.text.tooltip.label,
+    },
+  },
+  graph: {},
+  dashboard: {
+    '& $label, & $value': {
+      ...theme.typography['body-lg'],
     },
   },
 });

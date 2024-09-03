@@ -247,7 +247,7 @@ function withDiff<T extends TokenEntryNow>(entry: T): T & { diff: AmountUsd } {
 function totalYield(sources: Array<PnlYieldSource>): PnlYieldTotal {
   return {
     usd: sources.reduce((acc, { usd }) => acc.plus(usd), BIG_ZERO),
-    tokens: sources.reduce((acc, { token, amount, usd }) => {
+    tokens: sources.reduce<PnlYieldTotal['tokens']>((acc, { token, amount, usd }) => {
       acc[token.address] ??= { token, amount: BIG_ZERO, usd: BIG_ZERO };
       acc[token.address].amount = acc[token.address].amount.plus(amount);
       acc[token.address].usd = acc[token.address].usd.plus(usd);
@@ -394,8 +394,10 @@ export const selectClmPnl = (
   const merklRewards = selectUserMerklRewardsForVault(state, vaultId, walletAddress);
   const stellaSwapRewards = selectUserStellaSwapRewardsForVault(state, vaultId, walletAddress);
   const offChainRewards = [
-    ...(merklRewards ? merklRewards.map(r => ({ ...r, source: 'merkl' })) : []),
-    ...(stellaSwapRewards ? stellaSwapRewards.map(r => ({ ...r, source: 'stella' })) : []),
+    ...(merklRewards ? merklRewards.map(r => ({ ...r, source: 'merkl' as const })) : []),
+    ...(stellaSwapRewards
+      ? stellaSwapRewards.map(r => ({ ...r, source: 'stellaswap' as const }))
+      : []),
   ];
   for (const reward of offChainRewards) {
     const claimedAmount = reward.accumulated.minus(reward.unclaimed);

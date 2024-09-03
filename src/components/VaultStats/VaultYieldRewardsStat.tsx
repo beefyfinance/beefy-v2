@@ -1,46 +1,60 @@
-import {
-  isCowcentratedLikeVault,
-  isGovVault,
-  type VaultEntity,
-} from '../../features/data/entities/vault';
-import { memo } from 'react';
-import {
-  formatLargeUsd,
-  formatTokenDisplay,
-  formatTokenDisplayCondensed,
-} from '../../helpers/format';
+import { isGovVault, type VaultEntity } from '../../features/data/entities/vault';
+import { memo, useMemo } from 'react';
+import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat';
-import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
-import { type UserVaultPnl } from '../../features/data/selectors/analytics-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
-import { RewardsTooltip } from '../RewardsTooltip/RewardsTooltip';
+import {
+  PendingRewardsIconWithTooltip,
+  RewardsTooltipContent,
+} from '../RewardsTooltip/RewardsTooltip';
 import { useAppSelector } from '../../store';
 import { Tooltip } from '../Tooltip';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { CowcentratedCompoundedTooltipContent } from '../CowcentratedCompoundedTooltipContent/CowcentratedCompoundedTooltipContent';
 import {
   DashboardDataStatus,
-  selectDashboardYieldVaultData,
+  selectDashboardUserRewardsOrStatusByVaultId,
 } from '../../features/data/selectors/dashboard';
+import { BIG_ZERO, bigNumberToStringDeep } from '../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
 export type VaultYieldRewardsStatProps = {
   vaultId: VaultEntity['id'];
-  pnlData: UserVaultPnl;
   walletAddress: string;
 } & Omit<VaultValueStatProps, 'label' | 'tooltip' | 'value' | 'subValue' | 'loading'>;
 
 export const VaultYieldRewardsStat = memo<VaultYieldRewardsStatProps>(
-  function VaultYieldRewardsStat({ vaultId, pnlData, walletAddress, ...passthrough }) {
+  function VaultYieldRewardsStat({ vaultId, walletAddress, ...passthrough }) {
     const classes = useStyles();
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
     const label = isGovVault(vault) ? 'VaultStat-Claimable-Rewards' : 'VaultStat-Yield';
     const data = useAppSelector(state =>
-      selectDashboardYieldVaultData(state, walletAddress, vault, pnlData)
+      selectDashboardUserRewardsOrStatusByVaultId(state, vaultId, walletAddress)
     );
+    const received = useMemo(() => {
+      if (typeof data === 'object' && (data.compounded.has || data.claimed.has)) {
+        const compoundedDepositRewards = data.compounded.rewards.filter(
+          r => r.token.chainId === vault.chainId && r.token.address === vault.depositTokenAddress
+        );
+        const depositToken =
+          !data.claimed.has &&
+          compoundedDepositRewards.length &&
+          compoundedDepositRewards.length === data.compounded.rewards.length
+            ? compoundedDepositRewards[0].token
+            : undefined;
+        const totalDepositYield = depositToken
+          ? compoundedDepositRewards.reduce((sum, r) => sum.plus(r.amount), BIG_ZERO)
+          : BIG_ZERO;
+
+        return {
+          depositToken,
+          totalDepositYield,
+          usd: data.compounded.usd.plus(data.claimed.usd),
+        };
+      }
+    }, [data, vault]);
 
     if (data === DashboardDataStatus.Loading) {
       return <VaultValueStat label={label} value="-" loading={true} {...passthrough} />;
@@ -50,88 +64,41 @@ export const VaultYieldRewardsStat = memo<VaultYieldRewardsStatProps>(
       return <VaultValueStat label={label} value="?" loading={false} {...passthrough} />;
     }
 
-    if (data.type === 'gov') {
-      const { totalRewardsUsd } = data;
-      return (
-        <VaultValueStat
-          label={label}
-          value={<RewardsTooltip size={20} vaultId={vaultId} walletAddress={walletAddress} />}
-          subValue={formatLargeUsd(totalRewardsUsd)}
-          loading={false}
-          {...passthrough}
-        />
-      );
+    if (!data.all.has) {
+      console.log(vaultId, bigNumberToStringDeep(data));
+      return <VaultValueStat label={label} value="-" loading={false} {...passthrough} />;
     }
 
-    if (data.type === 'standard') {
-      const { hasRewards, totalYield, totalYieldUsd, tokenDecimals } = data;
+    // compounded yield + claimed rewards (+ claimable rewards)
+    if (received) {
       return (
         <VaultValueStat
-          label={label}
+          label={'VaultStat-Yield'}
           value={
             <div className={classes.flexEnd}>
               <Tooltip
-                content={
-                  <BasicTooltipContent title={formatTokenDisplay(totalYield, tokenDecimals)} />
-                }
+                content={<RewardsTooltipContent compounded={true} claimed={true} rewards={data} />}
                 triggerClass={clsx(classes.textGreen, classes.textOverflow, classes.maxWidth80, {
-                  [classes.maxWidth60]: hasRewards,
+                  [classes.maxWidth60]: data.pending.has,
                 })}
               >
-                {formatTokenDisplayCondensed(totalYield, tokenDecimals)}
+                {received.depositToken
+                  ? formatTokenDisplayCondensed(
+                      received.totalDepositYield,
+                      received.depositToken.decimals
+                    )
+                  : formatLargeUsd(received.usd)}
               </Tooltip>
-              {hasRewards && (
+              {data.pending.has && (
                 <>
                   <div>+</div>
-                  <RewardsTooltip walletAddress={walletAddress} vaultId={vaultId} />
+                  <PendingRewardsIconWithTooltip size={20} rewards={data} />
                 </>
               )}
             </div>
           }
-          subValue={formatLargeUsd(totalYieldUsd)}
-          loading={false}
-          {...passthrough}
-        />
-      );
-    }
-
-    if (data.type === 'cowcentrated') {
-      const { hasRewards, ...tooltipProps } = data;
-
-      // Only claimable -> show like a normal gov vault
-      if (isCowcentratedLikeVault(vault) && vault.strategyTypeId !== 'compounds') {
-        return (
-          <VaultValueStat
-            label={label}
-            value={<RewardsTooltip size={20} vaultId={vaultId} walletAddress={walletAddress} />}
-            subValue={formatLargeUsd(tooltipProps.totalRewardsUsd)}
-            loading={false}
-            {...passthrough}
-          />
-        );
-      }
-
-      // Compounds and maybe claimable
-      return (
-        <VaultValueStat
-          label={label}
-          value={
-            <div className={classes.flexEnd}>
-              <Tooltip
-                content={<CowcentratedCompoundedTooltipContent {...tooltipProps} />}
-                triggerClass={clsx(classes.textGreen, classes.textOverflow, classes.maxWidth80, {
-                  [classes.maxWidth60]: hasRewards,
-                })}
-              >
-                {formatLargeUsd(tooltipProps.yields.compounded.usd)}
-              </Tooltip>
-              {hasRewards && (
-                <>
-                  <div>+</div>
-                  <RewardsTooltip walletAddress={walletAddress} vaultId={vaultId} />
-                </>
-              )}
-            </div>
+          subValue={
+            received.depositToken ? formatLargeUsd(received.usd) : formatLargeUsd(data.all.usd)
           }
           loading={false}
           {...passthrough}
@@ -139,6 +106,16 @@ export const VaultYieldRewardsStat = memo<VaultYieldRewardsStatProps>(
       );
     }
 
-    return <VaultValueStat label={label} value="?" loading={false} {...passthrough} />;
+    // Only claimable rewards
+    // TODO label will be wrong if pending includes pending yield (not claimable)
+    return (
+      <VaultValueStat
+        label={'VaultStat-Claimable-Rewards'}
+        value={<PendingRewardsIconWithTooltip size={20} rewards={data} />}
+        subValue={formatLargeUsd(data.pending.usd)}
+        loading={false}
+        {...passthrough}
+      />
+    );
   }
 );

@@ -8,6 +8,41 @@ import type { SerializedError } from '@reduxjs/toolkit';
 import { isString, padStart } from 'lodash-es';
 import { strictEntries } from './object';
 
+export enum Scale {
+  None = 0,
+  Thousand = 3,
+  Million = 6,
+  Billion = 9,
+  Trillion = 12,
+  Quadrillion = 15,
+  Quintillion = 18,
+  Sextillion = 21,
+  Septillion = 24,
+  Octillion = 27,
+  Nonillion = 30,
+}
+
+const maxScale = Scale.Nonillion;
+
+// Scale Suffixes (Short Scale, i.e. 1000 × 1000^n, for n = 1... from million+)
+const scaleSuffixes: Record<Scale, { short: string; long: string; e: number }> = {
+  [Scale.None]: { short: '', long: '', e: 0 },
+  [Scale.Thousand]: { short: 'k', long: 'thousand', e: 3 },
+  [Scale.Million]: { short: 'M', long: 'million', e: 6 },
+  [Scale.Billion]: { short: 'B', long: 'billion', e: 9 },
+  [Scale.Trillion]: { short: 'T', long: 'trillion', e: 12 },
+  [Scale.Quadrillion]: { short: 'Qa', long: 'quadrillion', e: 15 },
+  [Scale.Quintillion]: { short: 'Qi', long: 'quintillion', e: 18 },
+  [Scale.Sextillion]: { short: 'Sx', long: 'sextillion', e: 21 },
+  [Scale.Septillion]: { short: 'Sp', long: 'septillion', e: 24 },
+  [Scale.Octillion]: { short: 'O', long: 'octillion', e: 27 },
+  [Scale.Nonillion]: { short: 'N', long: 'nonillion', e: 30 },
+};
+
+function isScale(value: Scale): value is Scale {
+  return value in Scale;
+}
+
 /**
  * Format a (BigNumber|number) to a string of {decimals} decimal places
  * Example use: input fields
@@ -86,7 +121,6 @@ export function formatLargePercent<T = string>(
   missingPlaceholder: T | string = '?',
   veryLargePlaceholder: T | string = '🔥'
 ): T | string {
-  const minOrder = 2; // show units for 1m+
   const decimalsUnder = 1000; // show 2 decimal places values < 1000
   if (input === null || input === undefined) {
     return missingPlaceholder;
@@ -105,7 +139,7 @@ export function formatLargePercent<T = string>(
     return ratio.isPositive() ? veryLargePlaceholder : missingPlaceholder;
   }
 
-  const { value, unit } = toMagnitude(ratio.shiftedBy(2), minOrder);
+  const { value, unit } = toScale(ratio.shiftedBy(2), Scale.Million);
 
   if (unit === undefined) {
     return veryLargePlaceholder;
@@ -140,6 +174,52 @@ export function formatPercent(
       });
 }
 
+interface FormatLargeNumberOptions {
+  /** from what order of magnitude should we start formatting to scale */
+  minScale: Scale;
+  /** under what value should decimals be output */
+  decimalsUnder: BigNumberish;
+  /** maximum decimal places to output */
+  decimals: number;
+  /** minimum decimal places to output */
+  decimalsMin: number;
+  /** add minimum decimals even when value is 0 */
+  decimalsMinAppliesToZero: boolean;
+}
+
+const defaultFormatLargeNumberOptions: FormatLargeNumberOptions = {
+  minScale: Scale.Million,
+  decimals: 2,
+  decimalsUnder: 1000,
+  decimalsMin: 0,
+  decimalsMinAppliesToZero: false,
+};
+
+/**
+ * Defaults: 123 -> 123, 1234 -> 1,234, 1234567 -> 1.23M etc
+ */
+function formatLargeNumber(
+  input: BigNumberish,
+  options?: Partial<FormatLargeNumberOptions>
+): string {
+  const { minScale, decimalsUnder, decimals, decimalsMin, decimalsMinAppliesToZero } = options
+    ? { ...defaultFormatLargeNumberOptions, ...options }
+    : defaultFormatLargeNumberOptions;
+
+  const inputValue = toBigNumber(input);
+
+  if (inputValue.isZero()) {
+    return decimalsMinAppliesToZero && decimalsMin ? ensureMinDecimals('0', decimalsMin) : '0';
+  }
+
+  const { value, unit } = toScale(inputValue, minScale);
+  const valueFormatted = ensureMinDecimals(
+    formatGrouped(value, value.absoluteValue().lt(decimalsUnder) ? decimals : 0),
+    decimalsMin
+  );
+  return `${valueFormatted}${unit}`;
+}
+
 export function formatUsd(input: BigNumberish, decimals: number = 2): string {
   const value = toBigNumber(input);
   const prefix = value.isNegative() ? '-$' : '$';
@@ -147,18 +227,13 @@ export function formatUsd(input: BigNumberish, decimals: number = 2): string {
 }
 
 /** @see defaultFormatLargeUsdOptions */
-export type FormatLargeUsdOptions = {
-  decimals: number;
-  minOrder: number;
-  decimalsUnder: BigNumberish;
+export type FormatLargeUsdOptions = FormatLargeNumberOptions & {
   negativePrefix: string;
   positivePrefix: string;
 };
 
 const defaultFormatLargeUsdOptions: FormatLargeUsdOptions = {
-  decimals: 2,
-  minOrder: 2,
-  decimalsUnder: 1000,
+  ...defaultFormatLargeNumberOptions,
   negativePrefix: '-$',
   positivePrefix: '$',
 };
@@ -182,12 +257,12 @@ export function formatLargeUsd(
   }
 
   const prefix = value.isNegative() ? opts.negativePrefix : opts.positivePrefix;
-  return `${prefix}${formatLargeNumber(
-    value.absoluteValue(),
-    opts.decimals,
-    opts.minOrder,
-    opts.decimalsUnder
-  )}`;
+  return `${prefix}${formatLargeNumber(value.absoluteValue(), {
+    minScale: opts.minScale,
+    decimals: opts.decimals,
+    decimalsUnder: opts.decimalsUnder,
+    decimalsMin: 2,
+  })}`;
 }
 
 export function formatTotalApy(
@@ -282,43 +357,38 @@ export function errorToString(
     : `${error?.message || error?.name || error?.code || String(error) || fallbackMessage}`;
 }
 
-/**
- * Defaults: 123 -> 123, 1234 -> 1,234, 1234567 -> 1.23M etc
- */
-function formatLargeNumber(
-  input: BigNumberish,
-  decimals: number = 2,
-  minOrder: number = 2,
-  decimalsUnder: BigNumberish = 1000
-): string {
-  const inputValue = toBigNumber(input);
-
-  if (inputValue.isZero()) {
-    return '0';
+function ensureMinDecimals(value: string, decimals: number): string {
+  if (decimals === 0) {
+    return value;
+  }
+  const ptIndex = value.lastIndexOf('.');
+  if (ptIndex === -1) {
+    return `${value}.${'0'.repeat(decimals)}`;
+  }
+  if (ptIndex + decimals < value.length) {
+    return value;
   }
 
-  const { value, unit } = toMagnitude(inputValue, minOrder);
-
-  return `${formatGrouped(value, value.absoluteValue().lt(decimalsUnder) ? decimals : 0)}${unit}`;
+  return `${value.slice(0, ptIndex + 1)}${value.slice(ptIndex + 1).padEnd(decimals, '0')}`;
 }
 
 export function zeroPad(value: number | undefined, length: number): string {
   return padStart((value || 0).toString(), length, '0');
 }
 
-function toMagnitude(value: BigNumber, minOrder: number = 1) {
+function toScale(value: BigNumber, minScale: Scale = Scale.Thousand) {
   if (value.e === null) {
     return { value: value, unit: '' };
   }
 
-  const order = Math.floor(value.e / 3);
-  if (order < minOrder || order < 0) {
+  const scale = Math.trunc(value.e / 3) * 3;
+  if (scale < minScale || scale < 0 || !isScale(scale)) {
     return { value: value, unit: '' };
   }
 
-  const units = ['', 'k', 'M', 'B', 'T', 'Q', 'S'];
-  const newValue = value.shiftedBy(-order * 3);
-  return { value: newValue, unit: units[order] };
+  const suffix = scale > maxScale ? scaleSuffixes[maxScale] : scaleSuffixes[scale];
+  const newValue = value.shiftedBy(-suffix.e);
+  return { value: newValue, unit: suffix.short };
 }
 
 function toSubString(input: string) {

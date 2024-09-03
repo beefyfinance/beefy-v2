@@ -58,7 +58,7 @@ export type PnlYieldSource = {
   token: Pick<TokenEntity, 'decimals' | 'symbol' | 'address' | 'chainId'>;
   amount: BigNumber;
   usd: BigNumber;
-  source: string;
+  source: 'vault' | 'clm' | 'pool' | 'merkl' | 'stellaswap';
 };
 
 export type PnlYieldTotal = {

@@ -12,6 +12,7 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.tooltip.label,
     '&:nth-last-child(2)': {
       fontWeight: theme.typography['body-lg-med'].fontWeight,
+      color: theme.palette.text.tooltip.title,
     },
   },
   value: {
@@ -19,9 +20,7 @@ export const styles = (theme: Theme) => ({
     textAlign: 'right' as const,
     '&:last-child': {
       fontWeight: theme.typography['body-lg-med'].fontWeight,
+      color: theme.palette.text.tooltip.label,
     },
-  },
-  last: {
-    fontWeight: theme.typography['body-lg-med'].fontWeight,
   },
 });

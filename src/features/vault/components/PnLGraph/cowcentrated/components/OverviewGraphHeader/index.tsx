@@ -106,7 +106,7 @@ export const OverviewGraphHeader = memo<OverviewGraphHeaderProps>(function Overv
                   <HelpOutline />
                 </div>
               }
-              content={<ClmPnlTooltipContent userPnl={userPnl} />}
+              content={<ClmPnlTooltipContent userPnl={userPnl} variant={'graph'} />}
               contentClass={classes.tooltipContent}
               compact={true}
             />

@@ -45,7 +45,7 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
             vaultId={vaultId}
             walletAddress={address}
           />
-          <MobileVaultRewardsStat
+          <MobileVaultYieldStat
             className={classes.statMobile}
             contentClassName={classes.valueContainer}
             triggerClassName={classes.value}
@@ -53,8 +53,7 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
             vaultId={vaultId}
             walletAddress={address}
           />
-          <MobileVaultYieldStat
-            pnlData={pnlData}
+          <MobileVaultRewardsStat
             className={classes.statMobile}
             contentClassName={classes.valueContainer}
             triggerClassName={classes.value}
