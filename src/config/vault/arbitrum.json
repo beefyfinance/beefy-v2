@@ -1541,7 +1541,7 @@
     "oracle": "lps",
     "oracleId": "pendle-arb-usde-28nov24",
     "status": "paused",
-    "pausedAt": "1725392643",
+    "pausedAt": 1725392643,
     "createdAt": 1723797084,
     "platformId": "magpie",
     "assets": ["USDe"],
