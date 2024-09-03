@@ -4,7 +4,9 @@ export const styles = (theme: Theme) => ({
   value: {
     ...theme.typography['body-lg-med'],
     color: theme.palette.text.middle,
-    display: 'block' as const,
+    display: 'inline-flex' as const,
+    flexDirection: 'column' as const,
+    alignItems: 'flex-end',
   },
   subValue: {
     ...theme.typography['body-sm'],
