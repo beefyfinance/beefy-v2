@@ -11,6 +11,8 @@ import { styles } from './styles';
 import clsx from 'clsx';
 import { TokenImageFromEntity } from '../../../../../../../components/TokenImage/TokenImage';
 import { orderBy } from 'lodash-es';
+import { getNetworkSrc } from '../../../../../../../helpers/networkSrc';
+import { Tooltip } from '../../../../../../../components/Tooltip';
 
 const useStyles = makeStyles(styles);
 
@@ -52,7 +54,20 @@ export const RewardList = memo<RewardListProps>(function RewardList({
                 ? 'Earning'
                 : 'Earn'
               : formatTokenDisplayCondensed(r.amount, r.token.decimals)}
-            {` ${r.token.symbol}`}
+            {` ${r.token.symbol}`} {''}
+            on{' '}
+            <Tooltip
+              content={`${r.token.symbol} rewards are claimable on ${
+                r.token.chainId.charAt(0).toUpperCase() + r.token.chainId.slice(1)
+              }`}
+            >
+              <img
+                src={getNetworkSrc(r.token.chainId)}
+                alt={r.token.chainId}
+                height={24}
+                width={24}
+              />
+            </Tooltip>
           </div>
           <div className={classes.value}>
             {r.active && r.amount.isZero() && r.apr

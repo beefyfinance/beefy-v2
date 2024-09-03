@@ -13,6 +13,9 @@ export const styles = (theme: Theme) => ({
     width: '24px',
     height: '24px',
   },
-  amount: {},
+  amount: {
+    display: 'inline-flex',
+    gap: '4px',
+  },
   value: {},
 });
