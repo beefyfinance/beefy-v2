@@ -213,10 +213,9 @@ function formatLargeNumber(
   }
 
   const { value, unit } = toScale(inputValue, minScale);
-  const valueFormatted = ensureMinDecimals(
-    formatGrouped(value, value.absoluteValue().lt(decimalsUnder) ? decimals : 0),
-    decimalsMin
-  );
+  const withDecimals = value.absoluteValue().lt(decimalsUnder);
+  const valueGrouped = formatGrouped(value, withDecimals ? decimals : 0);
+  const valueFormatted = withDecimals ? ensureMinDecimals(valueGrouped, decimalsMin) : valueGrouped;
   return `${valueFormatted}${unit}`;
 }
 
@@ -228,12 +227,15 @@ export function formatUsd(input: BigNumberish, decimals: number = 2): string {
 
 /** @see defaultFormatLargeUsdOptions */
 export type FormatLargeUsdOptions = FormatLargeNumberOptions & {
+  zeroPrefix: string;
   negativePrefix: string;
   positivePrefix: string;
 };
 
 const defaultFormatLargeUsdOptions: FormatLargeUsdOptions = {
   ...defaultFormatLargeNumberOptions,
+  decimalsMin: 2,
+  zeroPrefix: '$',
   negativePrefix: '-$',
   positivePrefix: '$',
 };
@@ -247,22 +249,19 @@ export function formatLargeUsd(
   input: BigNumberish,
   options?: Partial<FormatLargeUsdOptions>
 ): string {
-  const opts = options
+  const { zeroPrefix, positivePrefix, negativePrefix, ...largeOptions } = options
     ? { ...defaultFormatLargeUsdOptions, ...options }
     : defaultFormatLargeUsdOptions;
   const value = toBigNumber(input);
 
   if (value.isZero()) {
-    return '$0';
+    return largeOptions.decimalsMin
+      ? `${zeroPrefix}${'0'.repeat(largeOptions.decimalsMin)}`
+      : `${zeroPrefix}0`;
   }
 
-  const prefix = value.isNegative() ? opts.negativePrefix : opts.positivePrefix;
-  return `${prefix}${formatLargeNumber(value.absoluteValue(), {
-    minScale: opts.minScale,
-    decimals: opts.decimals,
-    decimalsUnder: opts.decimalsUnder,
-    decimalsMin: 2,
-  })}`;
+  const prefix = value.isNegative() ? negativePrefix : positivePrefix;
+  return `${prefix}${formatLargeNumber(value.absoluteValue(), largeOptions)}`;
 }
 
 export function formatTotalApy(
