@@ -254,13 +254,7 @@ export function formatLargeUsd(
     : defaultFormatLargeUsdOptions;
   const value = toBigNumber(input);
 
-  if (value.isZero()) {
-    return largeOptions.decimalsMin
-      ? `${zeroPrefix}${'0'.repeat(largeOptions.decimalsMin)}`
-      : `${zeroPrefix}0`;
-  }
-
-  const prefix = value.isNegative() ? negativePrefix : positivePrefix;
+  const prefix = value.isZero() ? zeroPrefix : value.isNegative() ? negativePrefix : positivePrefix;
   return `${prefix}${formatLargeNumber(value.absoluteValue(), largeOptions)}`;
 }
 
