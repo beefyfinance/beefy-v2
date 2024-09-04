@@ -28,6 +28,7 @@ export const styles = (theme: Theme) => ({
     width: '18px',
   },
   dropdown: {
+    zIndex: 1,
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '12px',

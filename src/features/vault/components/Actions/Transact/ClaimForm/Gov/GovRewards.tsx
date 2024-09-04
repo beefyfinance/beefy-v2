@@ -18,6 +18,7 @@ type GovRewardsProps = {
 
 export const GovRewards = memo<GovRewardsProps>(function GovRewards({
   vaultId,
+  chainId,
   walletAddress,
   deposited,
 }) {
@@ -39,7 +40,7 @@ export const GovRewards = memo<GovRewardsProps>(function GovRewards({
       title={t('Transact-Claim-Rewards-gov')}
       claim={canClaim ? <Claim vaultId={vaultId} /> : undefined}
     >
-      <RewardList rewards={vaultRewards} deposited={deposited} />
+      <RewardList chainId={chainId} rewards={vaultRewards} deposited={deposited} />
     </Source>
   );
 });

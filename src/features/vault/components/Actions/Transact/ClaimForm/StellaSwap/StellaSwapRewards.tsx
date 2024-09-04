@@ -75,6 +75,7 @@ export const StellaSwapRewards = memo<StellaSwapRewardsProps>(function StellaSwa
     <>
       {hasClaimable && walletAddress ? (
         <ClaimableRewards
+          vaultChainId={chainId}
           vaultId={vaultId}
           vaultRewards={vaultRewards}
           walletAddress={walletAddress}
@@ -88,7 +89,7 @@ export const StellaSwapRewards = memo<StellaSwapRewardsProps>(function StellaSwa
             walletAddress ? <UserRewardsRefreshButton walletAddress={walletAddress} /> : undefined
           }
         >
-          <RewardList rewards={vaultRewards} deposited={deposited} />
+          <RewardList chainId={chainId} rewards={vaultRewards} deposited={deposited} />
         </Source>
       )}
     </>
@@ -96,6 +97,7 @@ export const StellaSwapRewards = memo<StellaSwapRewardsProps>(function StellaSwa
 });
 
 type ClaimableRewardsProps = {
+  vaultChainId: ChainId;
   vaultId: string;
   vaultRewards: NonEmptyArray<UnifiedReward>;
   walletAddress: string;
@@ -107,6 +109,7 @@ const ClaimableRewards = memo<ClaimableRewardsProps>(function ClaimableRewards({
   vaultRewards,
   walletAddress,
   deposited,
+  vaultChainId,
 }) {
   const byChain = useMemo(
     () =>
@@ -121,6 +124,7 @@ const ClaimableRewards = memo<ClaimableRewardsProps>(function ClaimableRewards({
     <ClaimableChainRewards
       key={chainId}
       chainId={chainId}
+      vaultChainId={vaultChainId}
       vaultId={vaultId}
       vaultRewards={rewards!}
       deposited={deposited}
@@ -133,6 +137,7 @@ const ClaimableRewards = memo<ClaimableRewardsProps>(function ClaimableRewards({
 
 type ClaimableChainRewardsProps = {
   chainId: ChainId;
+  vaultChainId: ChainId;
   vaultId: string;
   vaultRewards: NonEmptyArray<UnifiedReward>;
   walletAddress: string;
@@ -144,6 +149,7 @@ type ClaimableChainRewardsProps = {
 const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function ClaimableChainRewards({
   chainId,
   vaultId,
+  vaultChainId,
   vaultRewards,
   walletAddress,
   deposited,
@@ -170,7 +176,7 @@ const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function Claimabl
       }
       refresh={withRefresh ? <UserRewardsRefreshButton walletAddress={walletAddress} /> : undefined}
     >
-      <RewardList rewards={vaultRewards} deposited={deposited} />
+      <RewardList chainId={vaultChainId} rewards={vaultRewards} deposited={deposited} />
     </Source>
   );
 });

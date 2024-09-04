@@ -82,6 +82,7 @@ export const MerklRewards = memo<MerklRewardsProps>(function MerklRewards({
     <>
       {hasClaimable && walletAddress ? (
         <ClaimableRewards
+          vaultChainId={chainId}
           vaultRewards={vaultRewards}
           walletAddress={walletAddress}
           deposited={deposited}
@@ -94,7 +95,7 @@ export const MerklRewards = memo<MerklRewardsProps>(function MerklRewards({
             walletAddress ? <UserRewardsRefreshButton walletAddress={walletAddress} /> : undefined
           }
         >
-          <RewardList rewards={vaultRewards} deposited={deposited} />
+          <RewardList chainId={chainId} rewards={vaultRewards} deposited={deposited} />
         </Source>
       )}
     </>
@@ -102,6 +103,7 @@ export const MerklRewards = memo<MerklRewardsProps>(function MerklRewards({
 });
 
 type ClaimableRewardsProps = {
+  vaultChainId: ChainEntity['id'];
   vaultRewards: NonEmptyArray<UnifiedReward>;
   walletAddress: string;
   deposited: boolean;
@@ -111,6 +113,7 @@ const ClaimableRewards = memo<ClaimableRewardsProps>(function ClaimableRewards({
   vaultRewards,
   walletAddress,
   deposited,
+  vaultChainId,
 }) {
   const byChain = useMemo(
     () =>
@@ -125,6 +128,7 @@ const ClaimableRewards = memo<ClaimableRewardsProps>(function ClaimableRewards({
     <ClaimableChainRewards
       key={chainId}
       chainId={chainId}
+      vaultChainId={vaultChainId}
       vaultRewards={rewards!}
       deposited={deposited}
       walletAddress={walletAddress}
@@ -136,6 +140,7 @@ const ClaimableRewards = memo<ClaimableRewardsProps>(function ClaimableRewards({
 
 type ClaimableChainRewardsProps = {
   chainId: ChainId;
+  vaultChainId: ChainId;
   vaultRewards: NonEmptyArray<UnifiedReward>;
   walletAddress: string;
   deposited: boolean;
@@ -145,6 +150,7 @@ type ClaimableChainRewardsProps = {
 
 const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function ClaimableChainRewards({
   chainId,
+  vaultChainId,
   vaultRewards,
   walletAddress,
   deposited,
@@ -164,7 +170,7 @@ const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function Claimabl
       claim={hasClaimable ? <Claim chainId={chainId} withChain={withChain} /> : undefined}
       refresh={withRefresh ? <UserRewardsRefreshButton walletAddress={walletAddress} /> : undefined}
     >
-      <RewardList rewards={vaultRewards} deposited={deposited} />
+      <RewardList chainId={vaultChainId} rewards={vaultRewards} deposited={deposited} />
       {hasClaimable ? (
         <OtherRewards chainId={chainId} vaultRewards={vaultRewards} walletAddress={walletAddress} />
       ) : undefined}
@@ -231,7 +237,12 @@ const OtherRewards = memo<OtherRewardsProps>(function OtherRewards({
         )}
       </button>
       {otherOpen ? (
-        <RewardList className={classes.otherRewardsList} rewards={otherRewards} deposited={false} />
+        <RewardList
+          chainId={chainId}
+          className={classes.otherRewardsList}
+          rewards={otherRewards}
+          deposited={false}
+        />
       ) : null}
     </div>
   );
