@@ -1,50 +1,28 @@
-import {
-  isCowcentratedGovVault,
-  isGovVault,
-  type VaultEntity,
-} from '../../features/data/entities/vault';
+import { type VaultEntity } from '../../features/data/entities/vault';
 import { memo } from 'react';
-import {
-  formatLargeUsd,
-  formatTokenDisplay,
-  formatTokenDisplayCondensed,
-} from '../../helpers/format';
+import { formatLargeUsd } from '../../helpers/format';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat';
+import { useAppSelector } from '../../store';
 import {
   DashboardDataStatus,
-  selectDashboardYieldVaultData,
-} from '../../features/data/selectors/analytics';
-import { selectVaultById } from '../../features/data/selectors/vaults';
-import { useAppSelector } from '../../store';
-import { CowcentratedCompoundedTooltipContent } from '../CowcentratedCompoundedTooltipContent/CowcentratedCompoundedTooltipContent';
-import type { UserVaultPnl } from '../../features/data/selectors/analytics-types';
-import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
+  selectDashboardUserRewardsOrStatusByVaultId,
+} from '../../features/data/selectors/dashboard';
+import { RewardsTooltipContent } from '../RewardsTooltip/RewardsTooltip';
 
 export type MobileVaultYieldStatProps = {
   vaultId: VaultEntity['id'];
-  pnlData: UserVaultPnl;
   walletAddress: string;
 } & Omit<VaultValueStatProps, 'label' | 'tooltip' | 'value' | 'subValue' | 'loading'>;
 
 export const MobileVaultYieldStat = memo<MobileVaultYieldStatProps>(function MobileVaultYieldStat({
   vaultId,
-  pnlData,
   walletAddress,
   ...passthrough
 }) {
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const label = 'VaultStat-Yield';
   const data = useAppSelector(state =>
-    selectDashboardYieldVaultData(state, walletAddress, vault, pnlData)
+    selectDashboardUserRewardsOrStatusByVaultId(state, vaultId, walletAddress)
   );
-
-  if (
-    isGovVault(vault) &&
-    (!isCowcentratedGovVault(vault) || vault.strategyTypeId !== 'compounds')
-  ) {
-    // No compounded yield for gov vaults except compounding CLM Pools
-    return null;
-  }
 
   if (data === DashboardDataStatus.Loading) {
     return <VaultValueStat label={label} value="-" loading={true} {...passthrough} />;
@@ -54,33 +32,17 @@ export const MobileVaultYieldStat = memo<MobileVaultYieldStatProps>(function Mob
     return <VaultValueStat label={label} value="?" loading={false} {...passthrough} />;
   }
 
-  if (data.type === 'standard') {
-    const { totalYield, totalYieldUsd, tokenDecimals } = data;
-    return (
-      <VaultValueStat
-        label={label}
-        value={formatTokenDisplayCondensed(totalYield, tokenDecimals)}
-        subValue={formatLargeUsd(totalYieldUsd)}
-        tooltip={<BasicTooltipContent title={formatTokenDisplay(totalYield, tokenDecimals)} />}
-        loading={false}
-        {...passthrough}
-      />
-    );
+  if (!data.claimed.has && !data.compounded.has) {
+    return null;
   }
 
-  if (data.type === 'cowcentrated') {
-    const { type: _type, hasRewards: _hasRewards, totalCompoundedUsd, ...tooltipProps } = data;
-
-    return (
-      <VaultValueStat
-        label={label}
-        value={formatLargeUsd(totalCompoundedUsd)}
-        tooltip={<CowcentratedCompoundedTooltipContent {...tooltipProps} />}
-        loading={false}
-        {...passthrough}
-      />
-    );
-  }
-
-  return null;
+  return (
+    <VaultValueStat
+      label={label}
+      value={formatLargeUsd(data.compounded.usd.plus(data.claimed.usd))}
+      tooltip={<RewardsTooltipContent compounded={true} claimed={true} rewards={data} />}
+      loading={false}
+      {...passthrough}
+    />
+  );
 });

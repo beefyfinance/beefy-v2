@@ -1,5 +1,4 @@
 import type { BigNumber } from 'bignumber.js';
-import type { UserLpBreakdownBalanceAsset } from './balance-types';
 import type { TokenEntity } from '../entities/token';
 
 export type UserStandardPnl = {
@@ -22,39 +21,79 @@ export type UserGovPnl = {
   type: 'gov';
 } & Omit<UserStandardPnl, 'type'>;
 
+export type AmountUsd = {
+  amount: BigNumber;
+  usd: BigNumber;
+};
+
+export type AmountPriceUsd = AmountUsd & {
+  price: BigNumber;
+};
+
+export type TokenEntryNow = {
+  token: TokenEntity;
+  now: AmountPriceUsd;
+  entry: AmountPriceUsd;
+};
+
+export type TokenEntryNowDiff = TokenEntryNow & {
+  diff: AmountUsd;
+};
+
+export type HoldCompare = {
+  usd: BigNumber;
+  diff: {
+    compounded: BigNumber;
+    withClaimed: BigNumber;
+    withClaimedPending: BigNumber;
+  };
+};
+
+export type UsdChange = {
+  usd: BigNumber;
+  percentage: BigNumber;
+};
+
+export type PnlYieldSource = {
+  token: Pick<TokenEntity, 'decimals' | 'symbol' | 'address' | 'chainId'>;
+  amount: BigNumber;
+  usd: BigNumber;
+  source: 'vault' | 'clm' | 'pool' | 'merkl' | 'stellaswap';
+};
+
+export type PnlYieldTotal = {
+  usd: BigNumber;
+  tokens: {
+    [address: string]: {
+      token: Pick<TokenEntity, 'decimals' | 'symbol' | 'address' | 'chainId'>;
+      amount: BigNumber;
+      usd: BigNumber;
+    };
+  };
+  sources: Array<PnlYieldSource>;
+};
+
+export type PnlYields = {
+  usd: BigNumber;
+  compounded: PnlYieldTotal;
+  claimed: PnlYieldTotal;
+  pending: PnlYieldTotal;
+};
+
+export type PnlBreakdown = {
+  base: UsdChange;
+  withClaimed: UsdChange;
+  withClaimedPending: UsdChange;
+};
+
 export type UserClmPnl = {
   type: 'cowcentrated';
-  underlyingToken: TokenEntity;
-  sharesAtDeposit: BigNumber;
-  underlyingAtDeposit: BigNumber;
-  underlyingAtDepositInUsd: BigNumber;
-  token0AtDepositPrice: BigNumber;
-  token1AtDepositPrice: BigNumber;
-  token0AtDeposit: BigNumber;
-  token1AtDeposit: BigNumber;
-  token0AtDepositInUsd: BigNumber;
-  token1AtDepositInUsd: BigNumber;
-  sharesNow: BigNumber;
-  underlyingNow: BigNumber;
-  underlyingNowPrice: BigNumber;
-  underlyingNowInUsd: BigNumber;
-  token0Now: BigNumber;
-  token1Now: BigNumber;
-  token0: UserLpBreakdownBalanceAsset;
-  token1: UserLpBreakdownBalanceAsset;
-  token0Diff: BigNumber;
-  token1Diff: BigNumber;
-  pnl: BigNumber;
-  pnlPercentage: BigNumber;
-  hold: BigNumber;
-  holdDiff: BigNumber;
-  totalUnderlyingCompounded: BigNumber;
-  total0Compounded: BigNumber;
-  total1Compounded: BigNumber;
-  total0CompoundedUsd: BigNumber;
-  total1CompoundedUsd: BigNumber;
-  totalUnderlyingCompoundedUsd: BigNumber;
-  totalCompoundedUsd: BigNumber;
+  shares: TokenEntryNowDiff;
+  underlying: TokenEntryNowDiff;
+  tokens: [TokenEntryNowDiff, TokenEntryNowDiff];
+  hold: HoldCompare;
+  yields: PnlYields;
+  pnl: PnlBreakdown;
 };
 
 export type UserVaultPnl = UserStandardPnl | UserGovPnl | UserClmPnl;

@@ -60,13 +60,7 @@
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
     "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
-    "network": "aurora",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "aurora-trisolaris"
-      }
-    ]
+    "network": "aurora"
   },
   {
     "id": "trisolaris-near-wbtc",
@@ -99,13 +93,7 @@
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xF4eB217Ba2454613b15dBdea6e5f22276410e89e",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xF4eB217Ba2454613b15dBdea6e5f22276410e89e",
     "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xF4eB217Ba2454613b15dBdea6e5f22276410e89e",
-    "network": "aurora",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "aurora-trisolaris"
-      }
-    ]
+    "network": "aurora"
   },
   {
     "id": "trisolaris-usdt-usdc",
@@ -138,13 +126,7 @@
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0x4988a896b1227218e4A686fdE5EabdcAbd91571f/0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
     "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0x4988a896b1227218e4A686fdE5EabdcAbd91571f/0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
-    "network": "aurora",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "aurora-trisolaris"
-      }
-    ]
+    "network": "aurora"
   },
   {
     "id": "trisolaris-near-weth",
@@ -177,13 +159,7 @@
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB",
     "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB",
-    "network": "aurora",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "aurora-trisolaris"
-      }
-    ]
+    "network": "aurora"
   },
   {
     "id": "tri-aurora-tri",
@@ -216,13 +192,7 @@
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
     "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
-    "network": "aurora",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "aurora-trisolaris"
-      }
-    ]
+    "network": "aurora"
   },
   {
     "id": "tri-aurora-weth",
@@ -255,13 +225,7 @@
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB",
     "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB",
-    "network": "aurora",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "aurora-trisolaris"
-      }
-    ]
+    "network": "aurora"
   },
   {
     "id": "solace-solace",
@@ -291,12 +255,7 @@
     ],
     "strategyTypeId": "single",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40",
-    "network": "aurora",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
+    "network": "aurora"
   },
   {
     "id": "aurora-bifi-maxi",
@@ -359,13 +318,7 @@
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xea62791aa682d455614eaA2A12Ba3d9A2fD197af",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xea62791aa682d455614eaA2A12Ba3d9A2fD197af",
     "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xea62791aa682d455614eaA2A12Ba3d9A2fD197af",
-    "network": "aurora",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "aurora-trisolaris"
-      }
-    ]
+    "network": "aurora"
   },
   {
     "id": "tri-ausdo-usdt",
@@ -431,13 +384,7 @@
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xa33C3B53694419824722C10D99ad7cB16Ea62754",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xa33C3B53694419824722C10D99ad7cB16Ea62754",
     "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xa33C3B53694419824722C10D99ad7cB16Ea62754",
-    "network": "aurora",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "aurora-trisolaris"
-      }
-    ]
+    "network": "aurora"
   },
   {
     "id": "tri-avax-near-eol",
@@ -470,13 +417,7 @@
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844",
     "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844",
-    "network": "aurora",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "aurora-trisolaris"
-      }
-    ]
+    "network": "aurora"
   },
   {
     "id": "rose-mai-3pool",
@@ -674,13 +615,7 @@
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
     "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
-    "network": "aurora",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "aurora-trisolaris"
-      }
-    ]
+    "network": "aurora"
   },
   {
     "id": "tri-tri-usdt",
@@ -713,13 +648,7 @@
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xFa94348467f64D5A457F75F8bc40495D33c65aBB/0x4988a896b1227218e4A686fdE5EabdcAbd91571f",
     "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xFa94348467f64D5A457F75F8bc40495D33c65aBB/0x4988a896b1227218e4A686fdE5EabdcAbd91571f",
-    "network": "aurora",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "aurora-trisolaris"
-      }
-    ]
+    "network": "aurora"
   },
   {
     "id": "tri-solace-near-eol",
@@ -752,13 +681,7 @@
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40",
     "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40",
-    "network": "aurora",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "aurora-trisolaris"
-      }
-    ]
+    "network": "aurora"
   },
   {
     "id": "trisolaris-usdt-near-eol",
@@ -791,13 +714,7 @@
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x4988a896b1227218e4A686fdE5EabdcAbd91571f",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x4988a896b1227218e4A686fdE5EabdcAbd91571f",
     "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x4988a896b1227218e4A686fdE5EabdcAbd91571f",
-    "network": "aurora",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "aurora-trisolaris"
-      }
-    ]
+    "network": "aurora"
   },
   {
     "id": "trisolaris-usdc-near-eol",
@@ -830,13 +747,7 @@
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
     "addLiquidityUrl": "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
     "removeLiquidityUrl": "https://www.trisolaris.io/#/remove/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
-    "network": "aurora",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "aurora-trisolaris"
-      }
-    ]
+    "network": "aurora"
   },
   {
     "id": "tri-3pool",

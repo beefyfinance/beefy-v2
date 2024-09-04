@@ -36,3 +36,23 @@ export function minMaxAverage<
     max: maxOf(values, ...maxKeys),
   };
 }
+
+/**
+ * Like lodash's groupBy but returned a typed Map instead of a plain object
+ * @dev Array.from(Map, ([key, value]) => {}) is the way to map over the result
+ */
+export function groupByMap<TKey, TValue>(
+  collection: TValue[],
+  keyFn: (value: TValue) => TKey
+): Map<TKey, TValue[]> {
+  return collection.reduce((acc, value) => {
+    const key = keyFn(value);
+    const group = acc.get(key);
+    if (group) {
+      group.push(value);
+    } else {
+      acc.set(key, [value]);
+    }
+    return acc;
+  }, new Map<TKey, TValue[]>());
+}

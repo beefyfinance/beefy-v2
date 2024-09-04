@@ -1,8 +1,15 @@
 import type { IMerklRewardsApi, MerklRewardsRequest, MerklRewardsResponse } from './merkl-types';
 import { featureFlag_simulateMerklApiFailure } from '../../../utils/feature-flags';
-import { getJson } from '../../../../../helpers/http';
+import { makeRateLimitedHttpHelper } from '../../../../../helpers/http';
+import type { HttpHelper } from '../../../../../helpers/http/types';
 
 export class MerklRewardsApi implements IMerklRewardsApi {
+  private http: HttpHelper;
+
+  constructor() {
+    this.http = makeRateLimitedHttpHelper('https://api.merkl.xyz', 1 / 30);
+  }
+
   async fetchRewards(request: MerklRewardsRequest): Promise<MerklRewardsResponse> {
     const failureRate = featureFlag_simulateMerklApiFailure();
     if (failureRate !== false && Math.random() < failureRate) {
@@ -10,7 +17,8 @@ export class MerklRewardsApi implements IMerklRewardsApi {
       throw new Error('Simulated Merkl API failure');
     }
 
-    const url = `https://api.merkl.xyz/v3/rewards`;
-    return await getJson({ url, params: { user: request.user } });
+    return await this.http.getJson<MerklRewardsResponse>('/v3/rewards', {
+      params: { user: request.user },
+    });
   }
 }

@@ -3,8 +3,8 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatLargePercent } from '../../../../helpers/format';
 import { useAppSelector } from '../../../../store';
-import { selectDashboardUserStablecoinsExposure } from '../../../data/selectors/balance';
 import { styles } from './styles';
+import { selectDashboardUserStablecoinsExposure } from '../../../data/selectors/dashboard';
 
 const useStyles = makeStyles(styles);
 

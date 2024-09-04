@@ -3,7 +3,8 @@ import { useAppSelector } from '../../../../store';
 import { selectIsUserBalanceAvailable } from '../../../data/selectors/data-loader';
 import { ExposureChart } from '../ExposureChart';
 import type { ExposureDashboardChartLoaderProps } from '../ExposureChart/types';
-import { selectDashboardUserExposureByToken } from '../../../data/selectors/balance';
+
+import { selectDashboardUserExposureByToken } from '../../../data/selectors/dashboard';
 
 const TokenExposure = memo<ExposureDashboardChartLoaderProps>(function TokenExposure({
   title,

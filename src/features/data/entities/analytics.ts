@@ -78,6 +78,10 @@ export type UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart = {
   rewardPoolDiff: BigNumber;
   /** details of each reward pool */
   rewardPoolDetails: NonEmptyArray<{ address: string; balance: BigNumber; diff: BigNumber }>;
+  /** reward details */
+  rewardPoolClaimedDetails: { address: string; rewardToUsd: BigNumber; claimedAmount: BigNumber }[];
+  /** reward pool from which rewards were claimed */
+  claimedRewardPool: string | undefined;
 };
 
 export type UnprocessedTimelineEntryCowcentratedWithoutRewardPool =
@@ -125,6 +129,7 @@ export type TimelineEntryCowcentratedPool = {
   usdBalance: BigNumber;
   usdDiff: BigNumber;
   actions: TimelineActionClm[];
+  rewardPoolClaimedDetails: { address: string; rewardToUsd: BigNumber; claimedAmount: BigNumber }[];
 };
 
 type UnprocessedTimelineEntryCowcentratedVaultBasePart = {
@@ -213,6 +218,7 @@ export type TimelineEntryCowcentratedVault = {
   usdBalance: BigNumber;
   usdDiff: BigNumber;
   actions: TimelineActionClassic[];
+  rewardPoolClaimedDetails: { address: string; rewardToUsd: BigNumber; claimedAmount: BigNumber }[];
 };
 
 export type AnyTimelineEntry =

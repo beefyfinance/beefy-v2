@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import { useAppSelector } from '../../../../store';
-import { selectDashboardUserExposureByChain } from '../../../data/selectors/balance';
 import { selectIsUserBalanceAvailable } from '../../../data/selectors/data-loader';
 import { ExposureChart } from '../ExposureChart';
 import type { ExposureDashboardChartLoaderProps } from '../ExposureChart/types';
+import { selectDashboardUserExposureByChain } from '../../../data/selectors/dashboard';
 
 const ChainExposure = memo<ExposureDashboardChartLoaderProps>(function ChainExposure({
   title,

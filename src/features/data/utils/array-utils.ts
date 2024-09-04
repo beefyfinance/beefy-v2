@@ -82,3 +82,14 @@ export function isNonEmptyArray<T>(arr: T[] | undefined | null): arr is NonEmpty
 export function isDefined<T>(value: T): value is Exclude<T, undefined | null> {
   return value !== undefined && value !== null;
 }
+
+export function getMostCommon<T extends string>(arr: T[]): T {
+  if (!isNonEmptyArray(arr)) {
+    throw new Error('Array is empty');
+  }
+  const counts = arr.reduce(
+    (acc, val) => acc.set(val, (acc.get(val) || 0) + 1),
+    new Map<T, number>()
+  );
+  return [...counts.entries()].reduce((a, b) => (b[1] > a[1] ? b : a))[0];
+}

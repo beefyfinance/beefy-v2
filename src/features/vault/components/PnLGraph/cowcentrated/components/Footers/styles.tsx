@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   footer: {
     display: 'flex',
     flexWrap: 'nowrap' as const,
-    gap: '16px',
+    gap: '8px 16px',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '12px 24px',
@@ -12,6 +12,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.contentPrimary,
     [theme.breakpoints.down('sm')]: {
       padding: '8px 16px',
+      flexWrap: 'wrap' as const,
     },
   },
   legendContainer: {
@@ -20,6 +21,15 @@ export const styles = (theme: Theme) => ({
     letterSpacing: '0.5px',
     color: theme.palette.text.dark,
     display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    [theme.breakpoints.down('xs')]: {
+      flexWrap: 'wrap' as const,
+    },
+  },
+  legendItem: {
+    display: 'flex',
+    flexWrap: 'nowrap' as const,
     alignItems: 'center',
     gap: '8px',
   },

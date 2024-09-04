@@ -8,23 +8,34 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     color: theme.palette.text.middle,
   },
-  tooltipTitle: {
+  statuses: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '8px',
+  },
+  sources: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '8px',
+  },
+  source: {},
+  sourceTitle: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
-    color: theme.palette.text.tooltips,
+    color: 'var(--tooltip-title-color)',
   },
-  rewardsContainer: {
+  rewards: {
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '4px',
   },
   rewardsText: {
     ...theme.typography['body-lg-med'],
-    color: theme.palette.text.tooltipsValue,
+    color: 'var(--tooltip-value-color)',
   },
   usdPrice: {
     ...theme.typography['subline-sm'],
     fontWeight: 700,
-    color: theme.palette.text.tooltips,
+    color: 'var(--tooltip-label-color)',
   },
 });

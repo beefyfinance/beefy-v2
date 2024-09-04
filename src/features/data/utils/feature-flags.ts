@@ -249,9 +249,12 @@ export function featureFlag_disableKyber(): boolean {
   return params.has('__disable_kyber');
 }
 
-export function featureFlag_debugGraph(): boolean {
+export function featureFlag_detailedTooltips(): boolean {
+  if (import.meta.env.VITE_DETAILED_TOOLTIPS === 'true') {
+    return true;
+  }
   const params = getSearchParams();
-  return params.has('__debug_graph');
+  return params.has('__detailed_tooltips');
 }
 
 export function featureFlag_simUpdate(): boolean {

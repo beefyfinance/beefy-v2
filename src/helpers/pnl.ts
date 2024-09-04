@@ -82,7 +82,7 @@ export class PnL {
     }
 
     this.state.realizedPnl.usd = this.state.realizedPnl.usd.plus(trxPnlUsd);
-    this.state.realizedPnl.shares = this.state.realizedPnl.usd.plus(trxPnl);
+    this.state.realizedPnl.shares = this.state.realizedPnl.shares.plus(trxPnl);
     return;
   }
 
@@ -158,6 +158,15 @@ interface ClmPnlState {
     token0Amount: BigNumber;
     token1Amount: BigNumber;
   }[];
+  claimed: {
+    totalUsd: BigNumber;
+    tokens: {
+      [address: string]: {
+        amount: BigNumber;
+        usd: BigNumber;
+      };
+    };
+  };
   realizedPnl: PnLBreakdown;
 }
 
@@ -169,6 +178,11 @@ interface ClmPnlTransaction {
   underlyingAmount: BigNumber;
   token0Amount: BigNumber;
   token1Amount: BigNumber;
+  claims: {
+    address: string;
+    rewardToUsd: BigNumber;
+    claimedAmount: BigNumber;
+  }[];
 }
 
 export class ClmPnl {
@@ -177,6 +191,10 @@ export class ClmPnl {
   constructor() {
     this.state = {
       sharesFifo: [],
+      claimed: {
+        totalUsd: BIG_ZERO,
+        tokens: {},
+      },
       realizedPnl: {
         shares: BIG_ZERO,
         usd: BIG_ZERO,
@@ -185,6 +203,19 @@ export class ClmPnl {
   }
 
   addTransaction(transaction: ClmPnlTransaction) {
+    for (const claim of transaction.claims) {
+      if (claim.claimedAmount.gt(BIG_ZERO)) {
+        this.state.claimed.tokens[claim.address] ??= { amount: BIG_ZERO, usd: BIG_ZERO };
+        this.state.claimed.tokens[claim.address].amount = this.state.claimed.tokens[
+          claim.address
+        ].amount.plus(claim.claimedAmount);
+        const claimedAmountUsd = claim.claimedAmount.multipliedBy(claim.rewardToUsd);
+        this.state.claimed.tokens[claim.address].usd =
+          this.state.claimed.tokens[claim.address].usd.plus(claimedAmountUsd);
+        this.state.claimed.totalUsd = this.state.claimed.totalUsd.plus(claimedAmountUsd);
+      }
+    }
+
     if (transaction.shares.isZero()) {
       return;
     }
@@ -251,7 +282,7 @@ export class ClmPnl {
     }
 
     this.state.realizedPnl.usd = this.state.realizedPnl.usd.plus(trxPnlUsd);
-    this.state.realizedPnl.shares = this.state.realizedPnl.usd.plus(trxPnl);
+    this.state.realizedPnl.shares = this.state.realizedPnl.shares.plus(trxPnl);
     return;
   }
 
@@ -289,5 +320,13 @@ export class ClmPnl {
       token0EntryPrice: totalCostToken0.div(totalSharesToken0),
       token1EntryPrice: totalCostToken1.div(totalSharesToken1),
     };
+  }
+
+  getRealizedPnl(): PnLBreakdown {
+    return this.state.realizedPnl;
+  }
+
+  getClaimed() {
+    return this.state.claimed;
   }
 }

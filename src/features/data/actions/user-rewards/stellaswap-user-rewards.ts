@@ -2,15 +2,18 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../../redux-types';
 import { getStellaSwapRewardsApi } from '../../apis/instances';
 import type { StellaSwapVaultReward } from '../../reducers/wallet/user-rewards-types';
-import { selectCowcentratedLikeVaultById, selectVaultById } from '../../selectors/vaults';
+import {
+  selectAllCowcentratedVaults,
+  selectGovCowcentratedVaultById,
+} from '../../selectors/vaults';
 import { fromWeiString } from '../../../../helpers/big-number';
 import type {
   FetchUserStellaSwapRewardsActionParams,
   FetchUserStellaSwapRewardsFulfilledPayload,
 } from './stellaswap-user-rewards-types';
-import { isCowcentratedLikeVault } from '../../entities/vault';
 import { pushOrSet } from '../../../../helpers/object';
 import { selectStellaSwapRewardsForUserShouldLoad } from '../../selectors/data-loader';
+import { isDefined } from '../../utils/array-utils';
 
 export const fetchUserStellaSwapRewardsAction = createAsyncThunk<
   FetchUserStellaSwapRewardsFulfilledPayload,
@@ -18,14 +21,12 @@ export const fetchUserStellaSwapRewardsAction = createAsyncThunk<
   { state: BeefyState }
 >(
   'rewards/fetchUserStellaSwapRewardsAction',
-  async ({ walletAddress, vaultId }, { getState }) => {
+  async ({ walletAddress }, { getState }) => {
     const state = getState();
     const api = await getStellaSwapRewardsApi();
-    const vault = selectCowcentratedLikeVaultById(state, vaultId);
 
     const response = await api.fetchRewards({
       user: walletAddress,
-      pool: vault.poolAddress,
     });
 
     if (!response || response.status !== 'success' || !response.data) {
@@ -33,35 +34,54 @@ export const fetchUserStellaSwapRewardsAction = createAsyncThunk<
     }
 
     const byVaultId: Record<string, StellaSwapVaultReward[]> = {};
-    response.data.rewardTokens.forEach(rewardToken => {
-      if (rewardToken.amount === '0') {
-        return;
-      }
+    const poolAddressToClmPoolId: Record<string, string> = Object.fromEntries(
+      selectAllCowcentratedVaults(state)
+        .map(vault =>
+          vault.cowcentratedGovId
+            ? [vault.poolAddress.toLowerCase(), vault.cowcentratedGovId]
+            : undefined
+        )
+        .filter(isDefined)
+    );
 
-      const rewardInfo = response.data.rewardInfo.find(info => info.token === rewardToken.address);
-      if (!rewardInfo) {
-        console.error(`StellaSwap: Failed to find reward info for ${rewardToken.address}`);
-        return;
+    for (const poolData of response.data.pools) {
+      const vaultId = poolAddressToClmPoolId[poolData.pool.toLowerCase()];
+      if (!vaultId) {
+        console.error(`StellaSwap: Failed to find CLM Pool for ${poolData.pool}`);
+        continue;
       }
-      const rewardDecimals = parseInt(rewardInfo.decimals);
-      const reward = {
-        position: rewardToken.position,
-        proofs: rewardToken.proofs,
-        accumulated: fromWeiString(rewardToken.amount, rewardDecimals),
-        unclaimed: fromWeiString(rewardToken.pending, rewardDecimals),
-        isNative: rewardToken.isNative,
-        claimContractAddress: response.data.rewarder,
-        token: {
-          address: rewardToken.address,
-          chainId: vault.chainId,
-          decimals: rewardDecimals,
-          symbol: rewardInfo.symbol,
-        },
-      };
+      const vault = selectGovCowcentratedVaultById(state, vaultId);
 
-      // Add reward to the vault
-      pushOrSet(byVaultId, vaultId, reward);
-    });
+      for (const rewardToken of poolData.rewardTokens) {
+        if (rewardToken.amount === '0') {
+          continue;
+        }
+
+        const rewardInfo = poolData.rewardInfo.find(info => info.token === rewardToken.address);
+        if (!rewardInfo) {
+          console.error(`StellaSwap: Failed to find reward info for ${rewardToken.address}`);
+          continue;
+        }
+        const rewardDecimals = parseInt(rewardInfo.decimals);
+        const reward = {
+          position: rewardToken.position,
+          proofs: rewardToken.proofs,
+          accumulated: fromWeiString(rewardToken.amount, rewardDecimals),
+          unclaimed: fromWeiString(rewardToken.pending, rewardDecimals),
+          isNative: rewardToken.isNative,
+          claimContractAddress: poolData.rewarder,
+          token: {
+            address: rewardToken.address,
+            chainId: vault.chainId,
+            decimals: rewardDecimals,
+            symbol: rewardInfo.symbol,
+          },
+        };
+
+        // Add reward to the vault
+        pushOrSet(byVaultId, vaultId, reward);
+      }
+    }
 
     return {
       walletAddress,
@@ -69,21 +89,11 @@ export const fetchUserStellaSwapRewardsAction = createAsyncThunk<
     };
   },
   {
-    condition({ walletAddress, vaultId, force }, { getState }) {
-      const state = getState();
-      const vault = selectVaultById(state, vaultId);
-      if (
-        !isCowcentratedLikeVault(vault) ||
-        vault.chainId !== 'moonbeam' ||
-        vault.platformId !== 'stellaswap'
-      ) {
-        return false;
-      }
-
+    condition({ walletAddress, force }, { getState }) {
       if (force) {
         return true;
       }
-      return selectStellaSwapRewardsForUserShouldLoad(getState(), vaultId, walletAddress);
+      return selectStellaSwapRewardsForUserShouldLoad(getState(), walletAddress);
     },
   }
 );

@@ -37,15 +37,19 @@ export const OverviewFooter = memo<OverviewFooterProps>(function OverviewFooter(
     <div className={clsx(classes.footer, className)}>
       <div className={classes.legendContainer}>
         {position ? (
-          <>
+          <div className={classes.legendItem}>
             <div className={classes.positionReferenceLine} />
             {t('Position')}
-          </>
+          </div>
         ) : null}
-        <div className={classes.usdReferenceLine} />
-        {t('Position Value')}
-        <div className={classes.holdReferenceLine} />
-        {t('HOLD Value')}
+        <div className={classes.legendItem}>
+          <div className={classes.usdReferenceLine} />
+          {t('Position Value')}
+        </div>
+        <div className={classes.legendItem}>
+          <div className={classes.holdReferenceLine} />
+          {t('HOLD Value')}
+        </div>
       </div>
       <div className={clsx(classes.tabsContainer, tabsClassName)}>
         <BasicTabs
@@ -78,10 +82,14 @@ export const FeesFooter = memo<FooterProps>(function Footer({
   return (
     <div className={clsx(classes.footer, className)}>
       <div className={classes.legendContainer}>
-        <div className={classes.usdReferenceLine} />
-        {token0.symbol}
-        <div className={classes.token1ReferenceLine} />
-        {token1.symbol}
+        <div className={classes.legendItem}>
+          <div className={classes.usdReferenceLine} />
+          {token0.symbol}
+        </div>
+        <div className={classes.legendItem}>
+          <div className={classes.token1ReferenceLine} />
+          {token1.symbol}
+        </div>
       </div>
       <div className={clsx(classes.tabsContainer, tabsClassName)}>
         <BasicTabs

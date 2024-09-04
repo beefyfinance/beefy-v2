@@ -23,10 +23,9 @@ import {
   fetchZapSwapAggregatorsAction,
 } from '../actions/zap';
 import { transactInit, transactInitReady } from '../actions/transact';
-import { fetchUserMerklRewardsAction } from '../actions/user-rewards/merkl-user-rewards';
 import { fetchFees } from '../actions/fees';
 import { isCowcentratedLikeVault } from '../entities/vault';
-import { fetchUserStellaSwapRewardsAction } from '../actions/user-rewards/stellaswap-user-rewards';
+import { fetchUserOffChainRewardsForVaultAction } from '../actions/user-rewards/user-rewards';
 
 const transactListener = createListenerMiddleware<BeefyState>();
 
@@ -116,8 +115,7 @@ transactListener.startListening({
     const walletAddress = selectWalletAddress(getState());
     if (mayHaveOffchainRewards && walletAddress) {
       // dispatch but don't wait on it
-      dispatch(fetchUserMerklRewardsAction({ walletAddress }));
-      dispatch(fetchUserStellaSwapRewardsAction({ walletAddress, vaultId: vault.id }));
+      dispatch(fetchUserOffChainRewardsForVaultAction(vault.id, walletAddress));
     }
 
     // Wait for all loaders to finish

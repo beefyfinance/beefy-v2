@@ -119,6 +119,14 @@ const selectConnectedUserMerklRewardsForVault = createSelector(
   }
 );
 
+export const selectUserMerklRewardsForVault = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress: string
+) =>
+  state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byVaultId[vaultId] ||
+  undefined;
+
 export const selectConnectedUserHasMerklRewardsForVault = createSelector(
   selectConnectedUserMerklRewardsForVault,
   rewards => rewards?.some(r => r.unclaimed.gt(BIG_ZERO)) || false
@@ -176,6 +184,15 @@ const selectConnectedUserStellaSwapRewardsForVault = createSelector(
     );
   }
 );
+
+export const selectUserStellaSwapRewardsForVault = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress: string
+) =>
+  state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.stellaswap.byVaultId[
+    vaultId
+  ] || undefined;
 
 export const selectConnectedUserHasStellaSwapRewardsForVault = createSelector(
   selectConnectedUserStellaSwapRewardsForVault,

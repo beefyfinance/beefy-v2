@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import { Fragment, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Popover } from '../../../../components/Popover';
 import { RISKS } from '../../../../config/risk';
 import { Card } from '../Card';
 import { CardHeader } from '../Card/CardHeader';
@@ -15,6 +14,7 @@ import { useAppSelector } from '../../../../store';
 import { Collapsable } from '../../../../components/Collapsable';
 import clsx from 'clsx';
 import { NoSafuRisks } from '../NoSafuRisks';
+import { IconWithBasicTooltip } from '../../../../components/Tooltip/IconWithBasicTooltip';
 
 const useStyles = makeStyles(styles);
 
@@ -52,7 +52,9 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
                     <div>
                       <div className={classes.moreInfoContainer}>
                         <div className={classes.risk}>{t(RISKS[risk].title, { ns: 'risks' })}</div>
-                        <Popover
+                        <IconWithBasicTooltip
+                          iconSize={16}
+                          iconClassName={classes.tooltipIcon}
                           title={t(RISKS[risk].title, { ns: 'risks' })}
                           content={t(RISKS[risk].explanation, { ns: 'risks' })}
                         />

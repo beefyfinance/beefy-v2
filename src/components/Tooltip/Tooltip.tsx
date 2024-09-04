@@ -45,6 +45,9 @@ export type TooltipProps = {
   disabled?: boolean;
   triggers?: number;
   group?: string;
+  /** reduces padding/margins */
+  compact?: boolean;
+  dark?: boolean;
 };
 
 export const Tooltip = memo(
@@ -64,6 +67,8 @@ export const Tooltip = memo(
       propagateTooltipClick = false,
       triggers = TRIGGERS.CLICK | TRIGGERS.HOVER,
       group = 'default',
+      compact = false,
+      dark = false,
     },
     ref
   ) {
@@ -120,7 +125,7 @@ export const Tooltip = memo(
             onTriggerClick(e);
           }
 
-          if (triggers & TRIGGERS.CLICK) {
+          if (!e.defaultPrevented && triggers & TRIGGERS.CLICK) {
             toggleOpen();
           }
         }
@@ -206,12 +211,19 @@ export const Tooltip = memo(
         </div>
         <Popper
           open={isOpen}
-          className={clsx(baseClasses.tooltip, tooltipClass)}
+          className={clsx(
+            baseClasses.tooltip,
+            tooltipClass,
+            compact ? baseClasses.compact : undefined,
+            dark ? baseClasses.dark : undefined
+          )}
           anchorEl={anchorEl}
           modifiers={modifiers}
           placement={placement}
           onClick={handlePopperClick}
           ref={tooltipRef}
+          data-compact={compact ? 'true' : undefined}
+          data-dark={dark ? 'true' : undefined}
         >
           <div className={clsx(baseClasses.arrow, arrowClass)} ref={setArrowRef} />
           <div className={clsx(baseClasses.content, contentClass)}>{content}</div>

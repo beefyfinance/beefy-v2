@@ -85,6 +85,7 @@ import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils';
 import { isLessThanDurationAgoUnix } from '../../../helpers/date';
 import { isClmTimelineEntryClassic } from '../apis/clm/clm-api-typeguards';
+import { fetchUserOffChainRewardsForDepositedVaultsAction } from './user-rewards/user-rewards';
 
 export interface FetchWalletTimelineFulfilled {
   timelines: Record<VaultEntity['id'], AnyTimelineEntity>;
@@ -324,6 +325,11 @@ function handleCowcentratedPoolTimeline(
               usdDiff: rp.diff.multipliedBy(shareToUsd),
 
               vaultId: pool.id,
+
+              rewardPoolClaimedDetails:
+                tx.claimedRewardPool?.toLowerCase() === rp.address.toLowerCase()
+                  ? tx.rewardPoolClaimedDetails
+                  : [],
             };
           })
           .filter(isDefined);
@@ -404,6 +410,8 @@ function handleCowcentratedVaultTimeline(
             .multipliedBy(tx.shareToUnderlyingPrice)
             .multipliedBy(tx.underlyingBreakdown[1].underlyingToToken),
           underlying1PerUnderlying: tx.underlyingBreakdown[1].underlyingToToken,
+          //TODO: once we have rewardpool claims for vaults, add them here
+          rewardPoolClaimedDetails: [],
         };
       })
       .filter(isDefined),
@@ -485,6 +493,12 @@ export const fetchWalletTimeline = createAsyncThunk<
                 rewardPoolBalance: new BigNumber(row.reward_pool_total.reward_pool_balance || 0),
                 rewardPoolDiff: new BigNumber(row.reward_pool_total.reward_pool_diff || 0),
                 rewardPoolDetails,
+                rewardPoolClaimedDetails: row.reward_pool_claim_details.map(claim => ({
+                  address: claim.reward_address,
+                  rewardToUsd: new BigNumber(claim.reward_to_usd),
+                  claimedAmount: new BigNumber(claim.claimed_amount),
+                })),
+                claimedRewardPool: row.claimed_reward_pool,
               }
             : { hasRewardPool: false };
 
@@ -545,6 +559,8 @@ export const fetchWalletTimeline = createAsyncThunk<
                 rewardPoolBalance: new BigNumber(row.reward_pool_total.reward_pool_balance || 0),
                 rewardPoolDiff: new BigNumber(row.reward_pool_total.reward_pool_diff || 0),
                 rewardPoolDetails,
+                rewardPoolClaimedDetails: [],
+                claimedRewardPool: undefined,
               }
             : { hasRewardPool: false };
 
@@ -1096,6 +1112,7 @@ export const initDashboardByAddress = createAsyncThunk<
   }
 
   await awaiter.wait();
+  await dispatch(fetchUserOffChainRewardsForDepositedVaultsAction(walletAddress));
 
   return { walletAddress: lowerCaseAddress };
 });

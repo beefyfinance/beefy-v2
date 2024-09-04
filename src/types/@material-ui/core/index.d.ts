@@ -59,13 +59,40 @@ declare module '@material-ui/core/styles/createPalette' {
     };
   }
 
+  export interface TypeTooltipTheme {
+    background: string;
+    text: {
+      title: string;
+      content: string;
+      label: string;
+      value: string;
+      link: string;
+    };
+  }
+
+  export interface TypeTooltip {
+    dark: TypeTooltipTheme;
+    light: TypeTooltipTheme;
+  }
+
   export interface TypeText {
     hint: string;
     dark: string;
     middle: string;
     light: string;
-    tooltips: string;
-    tooltipsValue: string;
+    lightest: string;
+  }
+
+  export interface PaletteOptions {
+    background: TypeBackground;
+    text: TypeText;
+    tooltip: TypeTooltip;
+  }
+
+  export interface Palette {
+    background: TypeBackground;
+    text: TypeText;
+    tooltip: TypeTooltip;
   }
 }
 

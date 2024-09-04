@@ -10,7 +10,6 @@ import type {
   LoaderStateIdle,
   LoaderStatePending,
   LoaderStateRejected,
-  ByAddressByVaultDataEntity,
 } from '../reducers/data-loader-types';
 import type { BeefyState } from '../../../redux-types';
 import type { ChainEntity } from '../entities/chain';
@@ -219,15 +218,15 @@ export function createAddressChainDataSelector<T>(
   )((_, walletAddress) => walletAddress.toLowerCase());
 }
 
-export function createAddressVaultDataSelector<T>(
-  key: keyof ByAddressByVaultDataEntity,
-  evaluateFn: LoaderEvaluatorFn<T>,
-  invalidateCacheAfterSeconds?: number
-): AddressVaultDataSelectorFn<T> {
-  return createCachedSelector(
-    (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
-      state.ui.dataLoader.byAddress[walletAddress.toLowerCase()]?.byVaultId[vaultId]?.[key],
-    createTimeCacheInvalidator(invalidateCacheAfterSeconds),
-    evaluateFn
-  )((_, walletAddress) => walletAddress.toLowerCase());
-}
+// export function createAddressVaultDataSelector<T>(
+//   key: keyof ByAddressByVaultDataEntity,
+//   evaluateFn: LoaderEvaluatorFn<T>,
+//   invalidateCacheAfterSeconds?: number
+// ): AddressVaultDataSelectorFn<T> {
+//   return createCachedSelector(
+//     (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+//       state.ui.dataLoader.byAddress[walletAddress.toLowerCase()]?.byVaultId[vaultId]?.[key],
+//     createTimeCacheInvalidator(invalidateCacheAfterSeconds),
+//     evaluateFn
+//   )((_, walletAddress) => walletAddress.toLowerCase());
+// }

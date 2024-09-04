@@ -164,14 +164,10 @@ export const selectYieldStatsByVaultId = (
   let dailyTokens: BigNumber;
   let yearlyTokens: BigNumber;
   let yearlyUsd: BigNumber;
-  let monthlyTokens: BigNumber;
-  let monthlyUsd: BigNumber;
 
   if (isGovVault(vault)) {
     dailyUsd = vaultUsdBalance.times(apyData.totalDaily);
     dailyTokens = tokenBalance.times(apyData.totalDaily);
-    monthlyUsd = dailyUsd.times(30);
-    monthlyTokens = dailyTokens.times(30);
     yearlyTokens = tokenBalance.times(apyData.totalApy);
     yearlyUsd = vaultUsdBalance.times(apyData.totalApy);
   } else {
@@ -201,8 +197,8 @@ export const selectYieldStatsByVaultId = (
     }
   }
 
-  monthlyTokens = dailyTokens.times(30);
-  monthlyUsd = dailyUsd.times(30);
+  const monthlyTokens = dailyTokens.times(30);
+  const monthlyUsd = dailyUsd.times(30);
 
   return {
     dailyUsd,
