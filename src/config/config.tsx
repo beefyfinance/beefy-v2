@@ -203,7 +203,6 @@ export const config = {
       'BRZ',
       'BRZw',
       'USD+',
-      'HAY',
       'jCHF',
       'TOR',
       'ETSAlpha',
