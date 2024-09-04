@@ -76,6 +76,7 @@ export const config = {
       'USDe',
       'sUSDe',
       'GYD',
+      'sDOLA',
     ],
   },
   polygon: {
