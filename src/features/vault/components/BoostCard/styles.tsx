@@ -24,9 +24,14 @@ export const styles = (theme: Theme) => ({
   },
   socials: {
     display: 'flex',
-    columnGap: '8px',
-    rowGap: '8px',
+    alignItems: 'center',
     flexWrap: 'wrap' as const,
+    rowGap: '8px',
+    columnGap: '8px',
+    marginLeft: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: '0',
+    },
   },
   campaignTitle: {
     ...theme.typography['h3'],

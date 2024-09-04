@@ -960,7 +960,6 @@ export const config = {
   },
   sei: {
     name: 'Sei',
-    new: true,
     chainId: 1329,
     rpc: ['https://evm-rpc.sei-apis.com'],
     explorerUrl: 'https://seitrace.com/',

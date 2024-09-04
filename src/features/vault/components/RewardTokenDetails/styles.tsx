@@ -27,6 +27,7 @@ export const styles = (theme: Theme) => ({
   },
   button: {
     ...theme.typography['body-lg'],
+    lineHeight: 0,
     padding: '2px 8px',
     borderRadius: '4px',
     backgroundColor: theme.palette.background.buttons.button,
