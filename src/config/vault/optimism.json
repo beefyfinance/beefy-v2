@@ -6698,44 +6698,6 @@
     ]
   },
   {
-    "id": "velodrome-v2-lusd-dai",
-    "name": "LUSD-DAI sLP V2",
-    "type": "standard",
-    "token": "LUSD-DAI sLP V2",
-    "tokenAddress": "0x0D0F65C63E379263f7CE2713dd012180681D0dc5",
-    "tokenDecimals": 18,
-    "tokenProviderId": "velodrome",
-    "earnedToken": "mooVeloV2LUSD-DAI",
-    "earnedTokenAddress": "0x79A6D8D80578B4934a80Fc6ACcCB454805ce2028",
-    "earnContractAddress": "0x79A6D8D80578B4934a80Fc6ACcCB454805ce2028",
-    "oracle": "lps",
-    "oracleId": "velodrome-v2-lusd-dai",
-    "status": "eol",
-    "retireReason": "rewards",
-    "retiredAt": 1714130472,
-    "createdAt": 1688065628,
-    "platformId": "velodrome",
-    "assets": ["LUSD", "DAI"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_NONE",
-      "MCAP_MEDIUM",
-      "OVER_COLLAT_ALGO_STABLECOIN",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://velodrome.finance/swap?from=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&to=0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
-    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0xc40f949f8a4e094d1b49a23ea9241d289b7b2819&token1=0xda10009cbd5d07dd0cecc66161fc93d7c9000da1&type=0&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
-    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x0d0f65c63e379263f7ce2713dd012180681d0dc5",
-    "network": "optimism",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "optimism-velodrome-v2"
-      }
-    ]
-  },
-  {
     "id": "velodrome-v2-frax-alusd",
     "name": "alUSD-FRAX sLP V2",
     "type": "standard",
@@ -6801,45 +6763,6 @@
     "buyTokenUrl": "https://velodrome.finance/swap?from=0x3e29d3a9316dab217754d13b28646b76607c5f04&to=0x6806411765af15bddd26f8f544a34cc40cb9838b",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x3e29d3a9316dab217754d13b28646b76607c5f04&token1=0x6806411765af15bddd26f8f544a34cc40cb9838b&type=0&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x1ad06ca54de04dbe9e2817f4c13ecb406dcbeaf0",
-    "network": "optimism",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "optimism-velodrome-v2"
-      }
-    ]
-  },
-  {
-    "id": "velodrome-v2-frax-usd+",
-    "name": "USD+-FRAX sLP V2",
-    "type": "standard",
-    "token": "USD+-FRAX sLP V2",
-    "tokenAddress": "0xD330841EF9527E3Bd0abc28a230C7cA8dec9423B",
-    "tokenDecimals": 18,
-    "tokenProviderId": "velodrome",
-    "earnedToken": "mooVeloV2USD+-FRAX",
-    "earnedTokenAddress": "0xBE6D47EE7661Eda239Aa5d927fb84Da6Fac25eE4",
-    "earnContractAddress": "0xBE6D47EE7661Eda239Aa5d927fb84Da6Fac25eE4",
-    "oracle": "lps",
-    "oracleId": "velodrome-v2-frax-usd+",
-    "status": "eol",
-    "createdAt": 1688065628,
-    "retireReason": "rewards",
-    "retiredAt": 1716385467,
-    "platformId": "velodrome",
-    "assets": ["USD+", "FRAX"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_SMALL",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://velodrome.finance/swap?from=0x73cb180bf0521828d8849bc8cf2b920918e23032&to=0x2e3d870790dc77a83dd1d18184acc7439a53f475",
-    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x73cb180bf0521828d8849bc8cf2b920918e23032&token1=0x2e3d870790dc77a83dd1d18184acc7439a53f475&type=0&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
-    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xd330841ef9527e3bd0abc28a230c7ca8dec9423b",
     "network": "optimism",
     "zaps": [
       {
