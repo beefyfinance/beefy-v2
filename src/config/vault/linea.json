@@ -1,5 +1,34 @@
 [
   {
+    "id": "mendi-linea-wrseth",
+    "name": "wrsETH",
+    "type": "standard",
+    "token": "wrsETH",
+    "tokenAddress": "0xD2671165570f41BBB3B0097893300b6EB6101E6C",
+    "tokenDecimals": 18,
+    "earnedToken": "mooMendiwrsETH",
+    "earnedTokenAddress": "0xb4B9D861bf734b2c695acd0117a41a6c10F51305",
+    "earnContractAddress": "0xb4B9D861bf734b2c695acd0117a41a6c10F51305",
+    "oracle": "tokens",
+    "oracleId": "wrsETH",
+    "status": "active",
+    "createdAt": 1725602894,
+    "platformId": "mendi",
+    "assets": ["wrsETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "linea",
+    "pointStructureIds": ["linea-voyage", "kelp"],
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "pyth"
+    }
+  },
+  {
     "id": "nile-cl-weeth-weth-vault",
     "name": "weETH-WETH",
     "type": "standard",
