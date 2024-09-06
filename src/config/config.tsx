@@ -277,6 +277,7 @@ export const config = {
       'aOptUSDCn',
       'USDA',
       'HAI',
+      'msUSD',
     ],
   },
   fantom: {
@@ -746,6 +747,7 @@ export const config = {
       'sUSDz',
       'USDT',
       'EURC',
+      'msUSD',
     ],
   },
   gnosis: {
