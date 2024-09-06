@@ -1,5 +1,44 @@
 [
   {
+    "id": "yei-isei",
+    "name": "iSEI",
+    "type": "standard",
+    "token": "iSEI",
+    "tokenAddress": "0x5Cf6826140C1C56Ff49C808A1A75407Cd1DF9423",
+    "tokenDecimals": 18,
+    "tokenProviderId": "yei",
+    "earnedToken": "mooYeiiSEI",
+    "earnedTokenAddress": "0x65862C640CE6FbC3fb289cd93ee8F0dFFEBC2FFe",
+    "earnContractAddress": "0x65862C640CE6FbC3fb289cd93ee8F0dFFEBC2FFe",
+    "oracle": "tokens",
+    "oracleId": "iSEI",
+    "status": "active",
+    "createdAt": 1725602894,
+    "platformId": "yei",
+    "assets": ["iSEI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://oku.trade/app/sei/swap/0x3894085Ef7Ff0f0aeDf52E2A2704928d1Ec074F1/0x5Cf6826140C1C56Ff49C808A1A75407Cd1DF9423",
+    "network": "sei",
+    "pointStructureIds": ["yei"],
+    "lendingOracle": {
+      "provider": "redstone",
+      "address": "0xF708DB0C6352d012AA093d71d407Cec1250A4CB3"
+    },
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "yei-usdt",
     "name": "USDT",
     "type": "standard",
