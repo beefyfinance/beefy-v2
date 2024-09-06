@@ -632,7 +632,7 @@
       {
         "type": "token-on-platform",
         "platformId": "yei",
-        "tokens": ["SEI", "WSEI", "USDT", "USDC"]
+        "tokens": ["SEI", "WSEI", "USDT", "USDC", "iSEI"]
       }
     ],
     "accounting": [

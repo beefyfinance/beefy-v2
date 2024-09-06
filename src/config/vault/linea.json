@@ -18,7 +18,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
+    "pointStructureIds": ["linea-voyage", "kelp"],
     "zaps": [
       {
         "strategyId": "single"
