@@ -653,5 +653,26 @@
         "url": "https://app.yei.finance/points"
       }
     ]
+  },
+  {
+    "id": "pearl",
+    "docs": "https://www.re.al/rewards/airdrop/",
+    "points": [
+      {
+        "id": "pearl-points",
+        "name": "RWA Airdrop"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "pearl",
+        "role": "Distribution of rewards"
+      }
+    ]
   }
 ]

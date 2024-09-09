@@ -20,6 +20,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x35BA384F9D30D68028898849ddBf5bda09bbE7EA",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
+    "pointStructureIds": ["pearl"],
     "network": "real"
   },
   {
@@ -43,6 +44,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x182d3F8e154EB43d5f361a39A2234A84508244c9",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
+    "pointStructureIds": ["pearl"],
     "network": "real"
   },
   {
@@ -66,6 +68,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x22aC4821bBb8d1AC42eA7F0f32ed415F52577Ca1",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
+    "pointStructureIds": ["pearl"],
     "network": "real"
   },
   {
@@ -89,6 +92,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0xC6B3AaaAbf2f6eD6cF7fdFFfb0DaC45E10c4A5B3",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
+    "pointStructureIds": ["pearl"],
     "network": "real"
   },
   {
@@ -112,6 +116,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x6b1a34df762f1d3367e7e93AE5661c88CA848423",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
+    "pointStructureIds": ["pearl"],
     "network": "real"
   }
 ]
