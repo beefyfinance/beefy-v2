@@ -4523,7 +4523,7 @@
     "token": "auraBAL",
     "tokenAddress": "0x616e8BfA43F920657B3497DBf40D6b1A02D4608d",
     "tokenDecimals": 18,
-    "tokenProviderId": "balancer",
+    "tokenProviderId": "aura",
     "earnedToken": "mooAuraBAL",
     "earnedTokenAddress": "0x44B6A414e73fb7387Ca250F44D7e43cD7d6992c2",
     "earnContractAddress": "0x44B6A414e73fb7387Ca250F44D7e43cD7d6992c2",
