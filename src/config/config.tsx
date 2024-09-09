@@ -409,6 +409,7 @@ export const config = {
       'sUSDe',
       'GYD',
       'GHO',
+      'stataArbUSDCn',
     ],
   },
   avax: {
