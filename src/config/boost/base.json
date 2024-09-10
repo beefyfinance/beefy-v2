@@ -66,5 +66,42 @@
     "status": "active",
     "isMooStaked": true,
     "partners": ["alienbase"]
+  },
+  {
+    "id": "moo_alienbase-cbeth-weth-alienbase",
+    "poolId": "alienbase-cbeth-weth",
+    "name": "Alienbase",
+    "assets": ["cbETH", "ETH"],
+    "tokenAddress": "0xA6854c1F54198D351D6d4263806F5A876099839b",
+    "earnedToken": "ALB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
+    "earnContractAddress": "0x01e8881ed2Fb41E0B3dF29f382fAf707a0B26969",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "ALB",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["alienbase"]
+  },
+  {
+    "id": "aero-cow-weth-usdc-vault",
+    "poolId": "aero-cow-weth-usdc",
+    "name": "Beefy",
+    "assets": ["WETH", "USDC"],
+    "tokenAddress": "0xA20382dC7C06E7e2850f1154e7ED1D06Aeb47a0A",
+    "earnedToken": "USDC",
+    "earnedTokenDecimals": 6,
+    "earnedTokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "earnContractAddress": "0xB59b109f1e4197c0CA5252A34989FB48E999523B",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "USDC",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "profit-distribution",
+    "partners": [],
+    "pinned": false
   }
 ]
