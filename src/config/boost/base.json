@@ -68,23 +68,6 @@
     "partners": ["alienbase"]
   },
   {
-    "id": "moo_alienbase-cbeth-weth-alienbase",
-    "poolId": "alienbase-cbeth-weth",
-    "name": "Alienbase",
-    "assets": ["cbETH", "ETH"],
-    "tokenAddress": "0xA6854c1F54198D351D6d4263806F5A876099839b",
-    "earnedToken": "ALB",
-    "earnedTokenDecimals": 18,
-    "earnedTokenAddress": "0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
-    "earnContractAddress": "0x01e8881ed2Fb41E0B3dF29f382fAf707a0B26969",
-    "earnedOracle": "tokens",
-    "earnedOracleId": "ALB",
-    "partnership": true,
-    "status": "active",
-    "isMooStaked": true,
-    "partners": ["alienbase"]
-  },
-  {
     "id": "aero-cow-weth-usdc-vault",
     "poolId": "aero-cow-weth-usdc",
     "name": "Beefy",
