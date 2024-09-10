@@ -94,5 +94,11 @@
     "type": "gamma",
     "name": "Gamma Pancakeswap",
     "proxyAddress": "0x4fd87c7FA22D4E8aD933aC4C709C83cEFDCE8B00"
+  },
+  {
+    "id": "arbitrum-balancer",
+    "type": "balancer",
+    "name": "Balancer",
+    "vaultAddress": "0xBA12222222228d8Ba445958a75a0704d566BF2C8"
   }
 ]

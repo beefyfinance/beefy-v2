@@ -156,5 +156,11 @@
     "type": "gamma",
     "name": "Gamma Uniswap",
     "proxyAddress": "0x48975Ea6aA25914927241C3A9F493BfEEb8CA591"
+  },
+  {
+    "id": "polygon-balancer",
+    "type": "balancer",
+    "name": "Balancer",
+    "vaultAddress": "0xBA12222222228d8Ba445958a75a0704d566BF2C8"
   }
 ]

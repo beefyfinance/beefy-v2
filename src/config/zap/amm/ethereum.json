@@ -50,5 +50,11 @@
     "type": "gamma",
     "name": "Gamma Uniswap",
     "proxyAddress": "0x911BfbAca43f117E52197AE62D439d6A645C8886"
+  },
+  {
+    "id": "ethereum-balancer",
+    "type": "balancer",
+    "name": "Balancer",
+    "vaultAddress": "0xBA12222222228d8Ba445958a75a0704d566BF2C8"
   }
 ]

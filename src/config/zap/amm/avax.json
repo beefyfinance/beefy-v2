@@ -66,5 +66,11 @@
     "swapFeeNumerator": "3",
     "swapFeeDenominator": "1000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "avax-balancer",
+    "type": "balancer",
+    "name": "Balancer",
+    "vaultAddress": "0xBA12222222228d8Ba445958a75a0704d566BF2C8"
   }
 ]

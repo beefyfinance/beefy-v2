@@ -28,5 +28,11 @@
     "name": "Gamma Uniswap V3",
     "type": "gamma",
     "proxyAddress": "0x1E97925c365cd96D74Ec55A04569915c4D65e5e0"
+  },
+  {
+    "id": "optimism-beethovenx",
+    "type": "balancer",
+    "name": "Beethoven X",
+    "vaultAddress": "0xBA12222222228d8Ba445958a75a0704d566BF2C8"
   }
 ]

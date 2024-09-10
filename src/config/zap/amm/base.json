@@ -94,5 +94,11 @@
     "type": "gamma",
     "name": "Gamma Sushi",
     "proxyAddress": "0xc40F63879630dFF5b69dd6d287f7735E65e90702"
+  },
+  {
+    "id": "base-balancer",
+    "type": "balancer",
+    "name": "Balancer",
+    "vaultAddress": "0xBA12222222228d8Ba445958a75a0704d566BF2C8"
   }
 ]
