@@ -16,5 +16,14 @@
       "discord": "https://beefy.com/discord",
       "twitter": "https://twitter.com/beefyfinance"
     }
+  },
+  "profit-distribution": {
+    "title": "Beefy Profit Distribution",
+    "description": "Earn extra incentives awarded by the Beefy DAO from its recent quarterly profits. Beefy users earn addition tokens for using products boosted by the Beefy Profit Distribution program. Rewards accrue linearly over time depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your $OP rewards whenever you're ready.",
+    "learn": "https://snapshot.org/#/beefydao.eth/proposal/0xefe70f50c7743085e72f4c2421cc8e92c8b82fa14bfd479a26bd0a0c14c5f07e",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://twitter.com/beefyfinance"
+    }
   }
 }
