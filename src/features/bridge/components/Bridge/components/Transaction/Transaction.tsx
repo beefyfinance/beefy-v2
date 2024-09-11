@@ -15,6 +15,7 @@ export const Transaction = memo(function Transaction() {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const { step, status } = useAppSelector(selectBridgeTxState);
+
   const handleStartOver = useCallback(() => {
     dispatch(bridgeActions.restart());
   }, [dispatch]);

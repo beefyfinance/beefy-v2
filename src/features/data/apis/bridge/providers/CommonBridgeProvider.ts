@@ -40,6 +40,7 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
     from: ChainEntity,
     to: ChainEntity,
     input: InputTokenAmount<TokenErc20>,
+    receiver: string | undefined,
     state: BeefyState
   ): Promise<IBridgeQuote<T>> {
     const fromChain = config.chains[from.id];
@@ -79,6 +80,7 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
         from: fromLimit,
         to: toLimit,
       },
+      receiver,
     };
   }
 
