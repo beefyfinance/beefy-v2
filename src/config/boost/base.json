@@ -66,25 +66,5 @@
     "status": "active",
     "isMooStaked": true,
     "partners": ["alienbase"]
-  },
-  {
-    "id": "aero-cow-weth-usdc-vault",
-    "poolId": "aero-cow-weth-usdc",
-    "name": "Beefy",
-    "assets": ["WETH", "USDC"],
-    "tokenAddress": "0xA20382dC7C06E7e2850f1154e7ED1D06Aeb47a0A",
-    "earnedToken": "USDC",
-    "earnedTokenDecimals": 6,
-    "earnedTokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-    "earnContractAddress": "0xB59b109f1e4197c0CA5252A34989FB48E999523B",
-    "version": 2,
-    "earnedOracle": "tokens",
-    "earnedOracleId": "USDC",
-    "partnership": true,
-    "status": "active",
-    "isMooStaked": true,
-    "campaign": "profit-distribution",
-    "partners": [],
-    "pinned": false
   }
 ]
