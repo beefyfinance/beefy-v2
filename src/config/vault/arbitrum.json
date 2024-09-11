@@ -3544,9 +3544,9 @@
     "tokenAddress": "0x59743f1812bb85Db83e9e4EE061D124AAa642900",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xdB306FF22760C79faa69E3139760AF9151902ECE",
     "earnedToken": "mooAuraArbsUSDe-sFRAX",
     "earnedTokenAddress": "0xdB306FF22760C79faa69E3139760AF9151902ECE",
-    "earnContractAddress": "0xdB306FF22760C79faa69E3139760AF9151902ECE",
     "oracle": "lps",
     "oracleId": "aura-arb-susde-sfrax",
     "status": "active",
@@ -3564,7 +3564,20 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x59743f1812bb85db83e9e4ee061d124aaa64290000000000000000000000052b/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x59743f1812bb85db83e9e4ee061d124aaa64290000000000000000000000052b/remove-liquidity",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0x59743f1812bb85db83e9e4ee061d124aaa64290000000000000000000000052b",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+          "0x59743f1812bb85Db83e9e4EE061D124AAa642900",
+          "0xe3b3FE7bcA19cA77Ad877A5Bebab186bEcfAD906"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-arb-frax-sfrax",
@@ -3574,9 +3587,9 @@
     "tokenAddress": "0xdfa752ca3fF49d4B6dBE08E2d5a111f51773D395",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x2AE1581655664E9570Eb2c280A4fCF047957a25e",
     "earnedToken": "mooAuraArbFRAX-sFRAX",
     "earnedTokenAddress": "0x2AE1581655664E9570Eb2c280A4fCF047957a25e",
-    "earnContractAddress": "0x2AE1581655664E9570Eb2c280A4fCF047957a25e",
     "oracle": "lps",
     "oracleId": "aura-arb-frax-sfrax",
     "status": "active",
@@ -3594,7 +3607,20 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xdfa752ca3ff49d4b6dbe08e2d5a111f51773d3950000000000000000000004e8/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xdfa752ca3ff49d4b6dbe08e2d5a111f51773d3950000000000000000000004e8/remove-liquidity",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0xdfa752ca3ff49d4b6dbe08e2d5a111f51773d3950000000000000000000004e8",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
+          "0xdfa752ca3fF49d4B6dBE08E2d5a111f51773D395",
+          "0xe3b3FE7bcA19cA77Ad877A5Bebab186bEcfAD906"
+        ]
+      }
+    ]
   },
   {
     "id": "ramses-cl-rseth-weth-vault",
@@ -5676,9 +5702,9 @@
     "tokenAddress": "0xE8a6026365254f779b6927f00f8724EA1B8aE5E0",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x93a3c287A826a8307C6b3fE1A79D06cC8966d900",
     "earnedToken": "mooBalancerArbUSDC-gUSDC",
     "earnedTokenAddress": "0x93a3c287A826a8307C6b3fE1A79D06cC8966d900",
-    "earnContractAddress": "0x93a3c287A826a8307C6b3fE1A79D06cC8966d900",
     "oracle": "lps",
     "oracleId": "balancer-arb-usdc-gusdc",
     "status": "active",
@@ -5690,7 +5716,20 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xe8a6026365254f779b6927f00f8724ea1b8ae5e0000000000000000000000580/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xe8a6026365254f779b6927f00f8724ea1b8ae5e0000000000000000000000580/remove-liquidity",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0xe8a6026365254f779b6927f00f8724ea1b8ae5e0000000000000000000000580",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+          "0xd3443ee1e91aF28e5FB858Fbd0D72A63bA8046E0",
+          "0xE8a6026365254f779b6927f00f8724EA1B8aE5E0"
+        ]
+      }
+    ]
   },
   {
     "id": "curve-arb-eth+-eth-v2",
@@ -8302,9 +8341,9 @@
     "tokenAddress": "0x90e6CB5249f5e1572afBF8A96D8A1ca6aCFFd739",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x764e4e75e3738615CDBFAeaE0C8527b1616e1123",
     "earnedToken": "mooAuraArbrsETH-WETH",
     "earnedTokenAddress": "0x764e4e75e3738615CDBFAeaE0C8527b1616e1123",
-    "earnContractAddress": "0x764e4e75e3738615CDBFAeaE0C8527b1616e1123",
     "oracle": "lps",
     "oracleId": "aura-arb-rseth-weth",
     "status": "active",
@@ -8323,7 +8362,20 @@
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x90e6cb5249f5e1572afbf8a96d8a1ca6acffd73900000000000000000000055c/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x90e6cb5249f5e1572afbf8a96d8a1ca6acffd73900000000000000000000055c/remove-liquidity",
     "pointStructureIds": ["kelp"],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0x90e6cb5249f5e1572afbf8a96d8a1ca6acffd73900000000000000000000055c",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+          "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+          "0x90e6CB5249f5e1572afBF8A96D8A1ca6aCFFd739"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-arb-wsteth-ethx",
@@ -8333,9 +8385,9 @@
     "tokenAddress": "0x7B54C44fBe6Db6D97FD22b8756f89c0aF16202Cc",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x153b2b0dE2C5eB621cdA52af01514Ffde514Bd3c",
     "earnedToken": "mooAuraArbwstETH-ETHx",
     "earnedTokenAddress": "0x153b2b0dE2C5eB621cdA52af01514Ffde514Bd3c",
-    "earnContractAddress": "0x153b2b0dE2C5eB621cdA52af01514Ffde514Bd3c",
     "oracle": "lps",
     "oracleId": "aura-arb-wsteth-ethx",
     "status": "active",
@@ -8353,7 +8405,20 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x7b54c44fbe6db6d97fd22b8756f89c0af16202cc00000000000000000000053c/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x7b54c44fbe6db6d97fd22b8756f89c0af16202cc00000000000000000000053c/remove-liquidity",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0x7b54c44fbe6db6d97fd22b8756f89c0af16202cc00000000000000000000053c",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x5979D7b546E38E414F7E9822514be443A4800529",
+          "0x7B54C44fBe6Db6D97FD22b8756f89c0aF16202Cc",
+          "0xED65C5085a18Fa160Af0313E60dcc7905E944Dc7"
+        ]
+      }
+    ]
   },
   {
     "id": "curve-arb-tbtc-ng",
@@ -11612,9 +11677,9 @@
     "tokenAddress": "0xB61371Ab661B1ACec81C699854D2f911070C059E",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xEFAd727469e7e4e410376986AB0af8B6F9559fDc",
     "earnedToken": "mooAuraArbezETH-wstETH",
     "earnedTokenAddress": "0xEFAd727469e7e4e410376986AB0af8B6F9559fDc",
-    "earnContractAddress": "0xEFAd727469e7e4e410376986AB0af8B6F9559fDc",
     "oracle": "lps",
     "oracleId": "aura-arb-ezeth-wsteth",
     "status": "active",
@@ -11633,7 +11698,20 @@
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516/remove-liquidity",
     "pointStructureIds": ["renzo"],
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x2416092f143378750bb29b79eD961ab195CcEea5",
+          "0x5979D7b546E38E414F7E9822514be443A4800529",
+          "0xB61371Ab661B1ACec81C699854D2f911070C059E"
+        ]
+      }
+    ]
   },
   {
     "id": "curve-lend-arb-arb-crvusd",
@@ -12497,9 +12575,9 @@
     "tokenAddress": "0x2d6CeD12420a9AF5a83765a8c48Be2aFcD1A8FEb",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x415B62278E684E9BB878e1DFfa9e191BB3B82bb1",
     "earnedToken": "mooAuraArbcbETH/wstETH/rETHV2",
     "earnedTokenAddress": "0x415B62278E684E9BB878e1DFfa9e191BB3B82bb1",
-    "earnContractAddress": "0x415B62278E684E9BB878e1DFfa9e191BB3B82bb1",
     "oracle": "lps",
     "oracleId": "aura-arb-cbeth-wsteth-reth-v2",
     "status": "active",
@@ -12517,7 +12595,21 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x2d6ced12420a9af5a83765a8c48be2afcd1a8feb000000000000000000000500/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x2d6ced12420a9af5a83765a8c48be2afcd1a8feb000000000000000000000500/remove-liquidity",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0x2d6ced12420a9af5a83765a8c48be2afcd1a8feb000000000000000000000500",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x1DEBd73E752bEaF79865Fd6446b0c970EaE7732f",
+          "0x2d6CeD12420a9AF5a83765a8c48Be2aFcD1A8FEb",
+          "0x5979D7b546E38E414F7E9822514be443A4800529",
+          "0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-arb-wsteth-sfrxeth",
@@ -12527,9 +12619,9 @@
     "tokenAddress": "0xc2598280bFeA1Fe18dFcaBD21C7165c40c6859d3",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xC0F3f8B58E6b60619F9109f94c3E0ca2188DA726",
     "earnedToken": "mooAuraArbwstETH-sfrxETH",
     "earnedTokenAddress": "0xC0F3f8B58E6b60619F9109f94c3E0ca2188DA726",
-    "earnContractAddress": "0xC0F3f8B58E6b60619F9109f94c3E0ca2188DA726",
     "oracle": "lps",
     "oracleId": "aura-arb-wsteth-sfrxeth",
     "status": "active",
@@ -12547,7 +12639,20 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc2598280bfea1fe18dfcabd21c7165c40c6859d30000000000000000000004f3/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xc2598280bfea1fe18dfcabd21c7165c40c6859d30000000000000000000004f3/remove-liquidity",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0xc2598280bfea1fe18dfcabd21c7165c40c6859d30000000000000000000004f3",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x5979D7b546E38E414F7E9822514be443A4800529",
+          "0x95aB45875cFFdba1E5f451B950bC2E42c0053f39",
+          "0xc2598280bFeA1Fe18dFcaBD21C7165c40c6859d3"
+        ]
+      }
+    ]
   },
   {
     "id": "equilibria-arb-eeth-seth",
@@ -12620,9 +12725,9 @@
     "tokenAddress": "0xd0EC47c54cA5e20aaAe4616c25C825c7f48D4069",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x81FdC9a8a233519D00f8eDFa0f8bFB7618dBf26b",
     "earnedToken": "mooAuraArbrETH-ETHV2",
     "earnedTokenAddress": "0x81FdC9a8a233519D00f8eDFa0f8bFB7618dBf26b",
-    "earnContractAddress": "0x81FdC9a8a233519D00f8eDFa0f8bFB7618dBf26b",
     "oracle": "lps",
     "oracleId": "aura-arb-weth-reth-v2",
     "status": "active",
@@ -12640,7 +12745,20 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xd0ec47c54ca5e20aaae4616c25c825c7f48d40690000000000000000000004ef/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xd0ec47c54ca5e20aaae4616c25c825c7f48d40690000000000000000000004ef/remove-liquidity",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0xd0ec47c54ca5e20aaae4616c25c825c7f48d40690000000000000000000004ef",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+          "0xd0EC47c54cA5e20aaAe4616c25C825c7f48D4069",
+          "0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8"
+        ]
+      }
+    ]
   },
   {
     "id": "equilibria-arb-seth",
@@ -13229,9 +13347,9 @@
     "tokenAddress": "0x2CE4457aCac29dA4736aE6f5Cd9F583a6b335c27",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x503ebD3E15A19C43F76A27263466be0C7fB4b401",
     "earnedToken": "mooBalancersFRAX-4POOL",
     "earnedTokenAddress": "0x503ebD3E15A19C43F76A27263466be0C7fB4b401",
-    "earnContractAddress": "0x503ebD3E15A19C43F76A27263466be0C7fB4b401",
     "oracle": "lps",
     "oracleId": "balancer-sfrax-4pool",
     "status": "active",
@@ -13242,7 +13360,20 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x2ce4457acac29da4736ae6f5cd9f583a6b335c270000000000000000000004dc/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x2ce4457acac29da4736ae6f5cd9f583a6b335c270000000000000000000004dc/remove-liquidity",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0x2ce4457acac29da4736ae6f5cd9f583a6b335c270000000000000000000004dc",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x2CE4457aCac29dA4736aE6f5Cd9F583a6b335c27",
+          "0x423A1323c871aBC9d89EB06855bF5347048Fc4A5",
+          "0xe3b3FE7bcA19cA77Ad877A5Bebab186bEcfAD906"
+        ]
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-gns-usdc-narrow",
@@ -14579,9 +14710,9 @@
     "tokenAddress": "0x423A1323c871aBC9d89EB06855bF5347048Fc4A5",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xa0d758b81f8ed6635CDE1DA91C8fe1bD48C28A09",
     "earnedToken": "mooBalancerArb4POOL",
     "earnedTokenAddress": "0xa0d758b81f8ed6635CDE1DA91C8fe1bD48C28A09",
-    "earnContractAddress": "0xa0d758b81f8ed6635CDE1DA91C8fe1bD48C28A09",
     "oracle": "lps",
     "oracleId": "balancer-usdc-dai-usdt-usdce",
     "status": "active",
@@ -14600,7 +14731,22 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x423a1323c871abc9d89eb06855bf5347048fc4a5000000000000000000000496/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x423a1323c871abc9d89eb06855bf5347048fc4a5000000000000000000000496/remove-liquidity",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0x423a1323c871abc9d89eb06855bf5347048fc4a5000000000000000000000496",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x423A1323c871aBC9d89EB06855bF5347048Fc4A5",
+          "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+          "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+          "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+          "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"
+        ]
+      }
+    ]
   },
   {
     "id": "balancer-weth-reth",
@@ -14642,9 +14788,9 @@
     "tokenAddress": "0x9791d590788598535278552EEcD4b211bFc790CB",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x85B10228cd93A6e5E354Ff0f2c60875E8E62F65A",
     "earnedToken": "mooBalancerArbwstETH-ETHV3",
     "earnedTokenAddress": "0x85B10228cd93A6e5E354Ff0f2c60875E8E62F65A",
-    "earnContractAddress": "0x85B10228cd93A6e5E354Ff0f2c60875E8E62F65A",
     "oracle": "lps",
     "oracleId": "balancer-wsteth-weth-v3",
     "status": "active",
@@ -14663,7 +14809,20 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x9791d590788598535278552eecd4b211bfc790cb000000000000000000000498/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x9791d590788598535278552eecd4b211bfc790cb000000000000000000000498/remove-liquidity",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0x9791d590788598535278552eecd4b211bfc790cb000000000000000000000498",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x5979D7b546E38E414F7E9822514be443A4800529",
+          "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+          "0x9791d590788598535278552EEcD4b211bFc790CB"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-cbeth-wsteth-reth",
@@ -14705,9 +14864,9 @@
     "tokenAddress": "0x3FD4954a851eaD144c2FF72B1f5a38Ea5976Bd54",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x5892bA611fdC1598b72a30D087d28c989d429eF7",
     "earnedToken": "mooAuraArbwstETH-ankrETH",
     "earnedTokenAddress": "0x5892bA611fdC1598b72a30D087d28c989d429eF7",
-    "earnContractAddress": "0x5892bA611fdC1598b72a30D087d28c989d429eF7",
     "oracle": "lps",
     "oracleId": "aura-wsteth-ankreth",
     "status": "active",
@@ -14725,7 +14884,20 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x3fd4954a851ead144c2ff72b1f5a38ea5976bd54000000000000000000000480/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x3fd4954a851ead144c2ff72b1f5a38ea5976bd54000000000000000000000480/remove-liquidity",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0x3fd4954a851ead144c2ff72b1f5a38ea5976bd54000000000000000000000480",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x3FD4954a851eaD144c2FF72B1f5a38Ea5976Bd54",
+          "0x5979D7b546E38E414F7E9822514be443A4800529",
+          "0xe05A08226c49b636ACf99c40Da8DC6aF83CE5bB3"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-rdnt-weth",
@@ -14891,9 +15063,9 @@
     "tokenAddress": "0x8bc65Eed474D1A00555825c91FeAb6A8255C2107",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xd37025aC6227334C7762AeD5929Ce3272fbb6fdC",
     "earnedToken": "mooAuraArbDOLA-USDC",
     "earnedTokenAddress": "0xd37025aC6227334C7762AeD5929Ce3272fbb6fdC",
-    "earnContractAddress": "0xd37025aC6227334C7762AeD5929Ce3272fbb6fdC",
     "oracle": "lps",
     "oracleId": "aura-dola-usdc-v2",
     "status": "active",
@@ -14911,7 +15083,20 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x8bc65eed474d1a00555825c91feab6a8255c2107000000000000000000000453/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x8bc65eed474d1a00555825c91feab6a8255c2107000000000000000000000453/awithdraw/remove-liquidity",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0x8bc65eed474d1a00555825c91feab6a8255c2107000000000000000000000453",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x6A7661795C374c0bFC635934efAddFf3A7Ee23b6",
+          "0x8bc65Eed474D1A00555825c91FeAb6A8255C2107",
+          "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+        ]
+      }
+    ]
   },
   {
     "id": "joe-auto-weth-usdc.e",
@@ -15017,9 +15202,9 @@
     "tokenAddress": "0x542F16DA0efB162D20bF4358EfA095B70A100f9E",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xBDF4e730ED5152a7AC646BB7b514Ed624E1147C4",
     "earnedToken": "mooBalancertBTC-WBTC",
     "earnedTokenAddress": "0xBDF4e730ED5152a7AC646BB7b514Ed624E1147C4",
-    "earnContractAddress": "0xBDF4e730ED5152a7AC646BB7b514Ed624E1147C4",
     "oracle": "lps",
     "oracleId": "balancer-tbtc-wbtc",
     "status": "active",
@@ -15037,7 +15222,20 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x542f16da0efb162d20bf4358efa095b70a100f9e000000000000000000000436/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x542f16da0efb162d20bf4358efa095b70a100f9e000000000000000000000436/remove-liquidity",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0x542f16da0efb162d20bf4358efa095b70a100f9e000000000000000000000436",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+          "0x542F16DA0efB162D20bF4358EfA095B70A100f9E",
+          "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
+        ]
+      }
+    ]
   },
   {
     "id": "balancer-tbtc-weth",

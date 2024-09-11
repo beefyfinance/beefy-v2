@@ -1,5 +1,6 @@
 import type {
   AmmEntity,
+  AmmEntityBalancer,
   AmmEntityGamma,
   AmmEntitySolidly,
   AmmEntityUniswapV2,
@@ -35,6 +36,14 @@ export type CurveStrategyConfig = {
   poolAddress?: string | undefined;
   /** Methods to interact with pool, @see curve/types.ts */
   methods: CurveMethod[];
+} & OptionalStrategySwapConfig;
+
+export type BalancerStrategyConfig = {
+  strategyId: 'balancer';
+  ammId: AmmEntityBalancer['id'];
+  poolId: string;
+  poolType: 'composable-stable';
+  tokens: string[];
 } & OptionalStrategySwapConfig;
 
 export type GammaStrategyConfig = {
@@ -74,7 +83,8 @@ export type ZapStrategyConfig =
   | CowcentratedStrategyConfig
   | GovComposerStrategyConfig
   | VaultComposerStrategyConfig
-  | RewardPoolToVaultStrategyConfig;
+  | RewardPoolToVaultStrategyConfig
+  | BalancerStrategyConfig;
 
 export type ZapStrategyId = ZapStrategyConfig['strategyId'];
 

@@ -662,9 +662,9 @@
     "tokenAddress": "0x4B7586A4F49841447150D3d92d9E9e000f766c30",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xF4C44A0A7b48A016861eE5cAe3dE82126366cCC9",
     "earnedToken": "mooBalancerPolygonUSDC/DAI/USDT",
     "earnedTokenAddress": "0xF4C44A0A7b48A016861eE5cAe3dE82126366cCC9",
-    "earnContractAddress": "0xF4C44A0A7b48A016861eE5cAe3dE82126366cCC9",
     "oracle": "lps",
     "oracleId": "balancer-polygon-usdc-dai-usdt",
     "status": "active",
@@ -682,7 +682,21 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4b7586a4f49841447150d3d92d9e9e000f766c30000000000000000000000e8a/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4b7586a4f49841447150d3d92d9e9e000f766c30000000000000000000000e8a/remove-liquidity",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "polygon-balancer",
+        "poolId": "0x4b7586a4f49841447150d3d92d9e9e000f766c30000000000000000000000e8a",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+          "0x4B7586A4F49841447150D3d92d9E9e000f766c30",
+          "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+          "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-polygon-wmatic-maticx",
@@ -692,9 +706,9 @@
     "tokenAddress": "0xcd78A20c597E367A4e478a2411cEB790604D7c8F",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xF3B13e9D8133CeF4eb77Fc2134c5Af82d686bC17",
     "earnedToken": "mooAuraPolygonWMATIC-MaticX",
     "earnedTokenAddress": "0xF3B13e9D8133CeF4eb77Fc2134c5Af82d686bC17",
-    "earnContractAddress": "0xF3B13e9D8133CeF4eb77Fc2134c5Af82d686bC17",
     "oracle": "lps",
     "oracleId": "aura-polygon-wmatic-maticx",
     "status": "active",
@@ -705,7 +719,20 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xcd78a20c597e367a4e478a2411ceb790604d7c8f000000000000000000000c22/invest/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xcd78a20c597e367a4e478a2411ceb790604d7c8f000000000000000000000c22/remove-liquidity",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "polygon-balancer",
+        "poolId": "0xcd78a20c597e367a4e478a2411ceb790604d7c8f000000000000000000000c22",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+          "0xcd78A20c597E367A4e478a2411cEB790604D7c8F",
+          "0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6"
+        ]
+      }
+    ]
   },
   {
     "id": "uniswap-cow-poly-wbtc-usdc",
@@ -3764,9 +3791,9 @@
     "tokenAddress": "0x513CdEE00251F39DE280d9E5f771A6eaFebCc88E",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xB476B7A027da3D9fB5A5c9CB6078A34f7289B476",
     "earnedToken": "mooBalancerjEUR-PARv2",
     "earnedTokenAddress": "0xB476B7A027da3D9fB5A5c9CB6078A34f7289B476",
-    "earnContractAddress": "0xB476B7A027da3D9fB5A5c9CB6078A34f7289B476",
     "oracle": "lps",
     "oracleId": "balancer-jeur-par-v2",
     "status": "active",
@@ -3785,7 +3812,20 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b/invest/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b/remove-liquidity",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "polygon-balancer",
+        "poolId": "0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c",
+          "0x513CdEE00251F39DE280d9E5f771A6eaFebCc88E",
+          "0xE2Aa7db6dA1dAE97C5f5C6914d285fBfCC32A128"
+        ]
+      }
+    ]
   },
   {
     "id": "balancer-poly-eth-frxeth",

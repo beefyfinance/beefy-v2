@@ -151,3 +151,7 @@ export function isLessThanDurationAgo(date: Date, duration: Duration): boolean {
 export function isLessThanDurationAgoUnix(unixDate: number, duration: Duration): boolean {
   return isLessThanDurationAgo(fromUnixTime(unixDate), duration);
 }
+
+export function getUnixNow(): number {
+  return Math.trunc(Date.now() / 1000);
+}

@@ -15,6 +15,7 @@ import type {
 import type { PlatformEntity } from '../../entities/platform';
 import type { CurveTokenOption } from './strategies/curve/types';
 import type { ZapStrategyId } from './strategies/strategy-configs';
+import type { BalancerTokenOption } from './strategies/balancer/types';
 
 export type TokenAmount<T extends TokenEntity = TokenEntity> = {
   amount: BigNumber;
@@ -177,6 +178,20 @@ export type CurveWithdrawOption = ZapBaseWithdrawOption & {
     | { via: 'aggregator'; viaTokens: CurveTokenOption[] }
   );
 
+export type BalancerDepositOption = ZapBaseDepositOption & {
+  strategyId: 'balancer';
+} & (
+    | { via: 'direct'; viaToken: BalancerTokenOption }
+    | { via: 'aggregator'; viaTokens: BalancerTokenOption[] }
+  );
+
+export type BalancerWithdrawOption = ZapBaseWithdrawOption & {
+  strategyId: 'balancer';
+} & (
+    | { via: 'direct'; viaToken: BalancerTokenOption }
+    | { via: 'aggregator'; viaTokens: BalancerTokenOption[] }
+  );
+
 export type ConicDepositOption = ZapBaseDepositOption & {
   strategyId: 'conic';
 };
@@ -238,7 +253,8 @@ export type DepositOption =
   | ConicDepositOption
   | GovComposerDepositOption
   | VaultComposerDepositOption
-  | RewardPoolToVaultDepositOption;
+  | RewardPoolToVaultDepositOption
+  | BalancerDepositOption;
 
 export type WithdrawOption =
   | StandardVaultWithdrawOption
@@ -253,7 +269,8 @@ export type WithdrawOption =
   | ConicWithdrawOption
   | GovComposerWithdrawOption
   | VaultComposerWithdrawOption
-  | RewardPoolToVaultWithdrawOption;
+  | RewardPoolToVaultWithdrawOption
+  | BalancerWithdrawOption;
 
 export type TransactOption = DepositOption | WithdrawOption;
 
@@ -461,6 +478,11 @@ export type CurveDepositQuote = BaseZapQuote<CurveDepositOption> & {
   viaToken: CurveTokenOption;
 };
 
+export type BalancerDepositQuote = BaseZapQuote<BalancerDepositOption> & {
+  via: 'aggregator' | 'direct';
+  viaToken: BalancerTokenOption;
+};
+
 export type GammaDepositQuote = BaseZapQuote<GammaDepositOption> & {
   lpQuotes: (QuoteResponse | undefined)[];
 };
@@ -484,7 +506,8 @@ export type ZapDepositQuote =
   | CowcentratedZapDepositQuote
   | GovComposerZapDepositQuote
   | VaultComposerZapDepositQuote
-  | RewardPoolToVaultDepositQuote;
+  | RewardPoolToVaultDepositQuote
+  | BalancerDepositQuote;
 
 export type DepositQuote = VaultDepositQuote | ZapDepositQuote;
 
@@ -530,6 +553,11 @@ export type CurveWithdrawQuote = BaseZapQuote<CurveWithdrawOption> & {
   viaToken: CurveTokenOption;
 };
 
+export type BalancerWithdrawQuote = BaseZapQuote<BalancerWithdrawOption> & {
+  via: 'aggregator' | 'direct';
+  viaToken: BalancerTokenOption;
+};
+
 export type GammaBreakWithdrawQuote = BaseZapQuote<GammaWithdrawOption>;
 export type GammaAggregatorWithdrawQuote = BaseZapQuote<GammaWithdrawOption> & {
   lpQuotes: QuoteResponse[];
@@ -570,7 +598,8 @@ export type ZapWithdrawQuote =
   | ConicWithdrawQuote
   | CowcentratedZapWithdrawQuote
   | GovComposerZapWithdrawQuote
-  | VaultComposerZapWithdrawQuote;
+  | VaultComposerZapWithdrawQuote
+  | BalancerWithdrawQuote;
 
 export type WithdrawQuote = VaultWithdrawQuote | ZapWithdrawQuote;
 

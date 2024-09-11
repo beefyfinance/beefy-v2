@@ -7,6 +7,7 @@ import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectTokenByAddressOrUndefined } from '../../../../../data/selectors/tokens';
 
 const CurveZap = lazy(() => import(`./CurveZap`));
+const BalancerZap = lazy(() => import(`./BalancerZap`));
 
 const useStyles = makeStyles(styles);
 
@@ -24,6 +25,11 @@ const TransactDebugger = memo<TransactDebuggerProps>(function TransactDebugger({
   return (
     <div className={classes.container}>
       {depositToken && depositToken.providerId === 'curve' ? <CurveZap vaultId={vaultId} /> : null}
+      {depositToken &&
+      depositToken.providerId &&
+      ['balancer', 'beethovenx'].includes(depositToken.providerId) ? (
+        <BalancerZap vaultId={vaultId} />
+      ) : null}
       <TransactState />
     </div>
   );

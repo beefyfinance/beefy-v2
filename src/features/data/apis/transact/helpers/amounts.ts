@@ -11,6 +11,13 @@ export function slipBy(amount: BigNumber, slippage: number, decimals: number): B
   return amount.multipliedBy(1 - slippage).decimalPlaces(decimals, BigNumber.ROUND_FLOOR);
 }
 
+export function slipTokenAmountBy(tokenAmount: TokenAmount, slippage: number): TokenAmount {
+  return {
+    token: tokenAmount.token,
+    amount: slipBy(tokenAmount.amount, slippage, tokenAmount.token.decimals),
+  };
+}
+
 export function slipAllBy(inputs: TokenAmount[], slippage: number): TokenAmount[] {
   return inputs.map(({ token, amount }) => ({
     token,
