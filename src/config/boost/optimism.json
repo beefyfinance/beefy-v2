@@ -1040,7 +1040,7 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "campaign": "zap-v3",
+    "campaign": "op-zap-v3",
     "partners": ["optimism"],
     "pinned": false
   },
@@ -1062,7 +1062,7 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "campaign": "zap-v3",
+    "campaign": "op-zap-v3",
     "partners": ["optimism"],
     "pinned": false
   },
@@ -1084,7 +1084,7 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "campaign": "zap-v3",
+    "campaign": "op-zap-v3",
     "partners": ["optimism"],
     "pinned": false
   },
@@ -1106,7 +1106,7 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "campaign": "zap-v3",
+    "campaign": "op-zap-v3",
     "partners": ["optimism"],
     "pinned": false
   },
@@ -1128,7 +1128,7 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "campaign": "zap-v3",
+    "campaign": "op-zap-v3",
     "partners": ["optimism"],
     "pinned": false
   },
@@ -1150,7 +1150,7 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "campaign": "zap-v3",
+    "campaign": "op-zap-v3",
     "partners": ["optimism"],
     "pinned": false
   },
