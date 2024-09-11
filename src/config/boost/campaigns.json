@@ -1,7 +1,7 @@
 {
   "arb-ltipp": {
     "title": "Beefy × Arbitrum LTIPP",
-    "description": "Earn extra incentives awarded to Beefy CLM vaults through Arbitrum's Long Term Incentives Pilot Program ('LTIPP'). Beefy users earn additional $ARB tokens for trying out selected CLM products. Rewards accrue linearly over time depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your LTIPP rewards whenever you're ready.",
+    "description": "Earn extra incentives awarded to Beefy CLM vaults through Arbitrum's Long Term Incentives Pilot Program ('LTIPP'). Beefy users earn additional $ARB tokens for trying out selected CLM products. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your LTIPP rewards whenever you're ready.",
     "learn": "https://beefy.com/articles/ltipp/",
     "social": {
       "discord": "https://beefy.com/discord",
@@ -9,8 +9,8 @@
     }
   },
   "zap-v3": {
-    "title": "Zap V3 Launch",
-    "description": "Celebrate Zap V3 launch with Beefy's Optimism Governance Fund campaign. Users earn $OP tokens for utilizing Zap V3 on Optimism, with monthly rewards and partner launchpool boosts on select vaults.",
+    "title": "ZAP V3 Launch",
+    "description": "Celebrate the ZAP V3 launch with Beefy's Optimism Governance Fund grant. Beefy users earn additional $OP tokens for using ZAP V3-supported products on OP Mainnet. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your $OP rewards whenever you're ready.",
     "learn": "https://beefy.com/articles/zap-v3/",
     "social": {
       "discord": "https://beefy.com/discord",
@@ -19,7 +19,7 @@
   },
   "profit-distribution": {
     "title": "Beefy Profit Distribution",
-    "description": "Earn extra incentives awarded by the Beefy DAO from its recent quarterly profits. Beefy users earn addition tokens for using products boosted by the Beefy Profit Distribution program. Rewards accrue linearly over time depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your $OP rewards whenever you're ready.",
+    "description": "Earn extra incentives awarded by the Beefy DAO from its recent quarterly profits. Beefy users earn additional tokens for using products boosted by the Beefy Profit Distribution program. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your rewards whenever you're ready.",
     "learn": "https://snapshot.org/#/beefydao.eth/proposal/0xefe70f50c7743085e72f4c2421cc8e92c8b82fa14bfd479a26bd0a0c14c5f07e",
     "social": {
       "discord": "https://beefy.com/discord",
