@@ -1102,8 +1102,8 @@
     "pinned": false
   },
   {
-    "id": "velodrome-v2-hai-susd",
-    "poolId": "moo_velodrome-v2-hai-susd",
+    "id": "moo_velodrome-v2-hai-susd",
+    "poolId": "velodrome-v2-hai-susd",
     "name": "Beefy",
     "assets": ["HAI", "sUSD"],
     "tokenAddress": "0x28364aC61865E4b535a29928DE6E1a08328d462A",
