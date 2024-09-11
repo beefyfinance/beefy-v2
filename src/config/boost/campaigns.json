@@ -9,8 +9,8 @@
     }
   },
   "zap-v3": {
-    "title": "ZAP V3 Launch",
-    "description": "Celebrate the ZAP V3 launch with Beefy's Optimism Governance Fund grant. Beefy users earn additional $OP tokens for using ZAP V3-supported products on OP Mainnet. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your $OP rewards whenever you're ready.",
+    "title": "Beefy x Optimism Governance Fund",
+    "description": "Celebrate launch of ZAP V3 with Beefy's Optimism Governance Fund grant. Beefy users earn additional $OP tokens for using ZAP V3-supported products on the Superchain. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your $OP rewards whenever you're ready.",
     "learn": "https://beefy.com/articles/zap-v3/",
     "social": {
       "discord": "https://beefy.com/discord",
