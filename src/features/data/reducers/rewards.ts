@@ -11,7 +11,7 @@ import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import type { Draft } from 'immer';
 import { distributedOmit } from '../../../helpers/object';
 
-type MerklRewardsCampaign = Omit<BeefyOffChainRewardsMerklCampaign, 'vaults'>;
+export type MerklRewardsCampaign = Omit<BeefyOffChainRewardsMerklCampaign, 'vaults'>;
 type StellaSwapRewardsCampaign = Omit<BeefyOffChainRewardsStellaSwapCampaign, 'vaults'>;
 type VaultRewardApr = { id: string; apr: number };
 

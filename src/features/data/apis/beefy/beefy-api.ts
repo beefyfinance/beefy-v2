@@ -176,7 +176,7 @@ export class BeefyAPI {
 
   async getOffChainRewardCampaigns(): Promise<BeefyOffChainRewardsCampaign[]> {
     return await getJson<BeefyOffChainRewardsCampaign[]>({
-      url: `${this.api}/offchain-rewards/active`,
+      url: `http://localhost:3000/offchain-rewards/active`,
       cacheBuster: 'short',
       timeout: this.timeout,
     });

@@ -10,6 +10,7 @@ import type { TotalApy } from '../../features/data/reducers/apy';
 import { InterestTooltipContent } from '../InterestTooltipContent';
 import { getApyComponents, getApyLabelsForType, getApyLabelsTypeForVault } from '../../helpers/apy';
 import { useTranslation } from 'react-i18next';
+import { selectVaultHasActiveMerklBaseCampaigns } from '../../features/data/selectors/rewards';
 
 export type VaultApyStatProps = Omit<
   VaultValueStatProps,
@@ -26,6 +27,9 @@ export const VaultApyStat = memo<VaultApyStatProps>(function VaultApyStat({
 }) {
   const { t } = useTranslation();
   const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
+  const hasBaseActiveMerklCampaings = useAppSelector(state =>
+    selectVaultHasActiveMerklBaseCampaigns(state, vaultId)
+  );
   const label =
     type === 'daily' ? 'VaultStat-DAILY' : data.type === 'apr' ? 'VaultStat-APR' : 'VaultStat-APY';
   const formatted = useMemo(
@@ -34,6 +38,7 @@ export const VaultApyStat = memo<VaultApyStatProps>(function VaultApyStat({
   );
   const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';
   const boostedTotalKey = type === 'daily' ? 'boostedTotalDaily' : 'boostedTotalApy';
+  const merklBoostedTotalKey = type === 'daily' ? 'totalDaily' : 'totalApy';
 
   if (data.status == 'loading') {
     return <VaultValueStat label={label} value="-" blur={false} loading={true} {...rest} />;
@@ -51,7 +56,7 @@ export const VaultApyStat = memo<VaultApyStatProps>(function VaultApyStat({
     );
   }
 
-  const isBoosted = !!data.boosted;
+  const isBoosted = !!data.boosted || hasBaseActiveMerklCampaings;
 
   return (
     <VaultValueStat
@@ -61,9 +66,17 @@ export const VaultApyStat = memo<VaultApyStatProps>(function VaultApyStat({
           ? t('PRE-STAKE')
           : data.boosted === 'active'
           ? formatted[boostedTotalKey]
+          : hasBaseActiveMerklCampaings
+          ? formatted[merklBoostedTotalKey]
           : formatted[totalKey]
       }
-      subValue={isBoosted ? formatted[totalKey] : undefined}
+      subValue={
+        isBoosted
+          ? formatted[totalKey]
+          : hasBaseActiveMerklCampaings
+          ? formatted[`${type === 'daily' ? 'clmDaily' : 'clmApr'}`]
+          : undefined
+      }
       tooltip={
         <ApyTooltipContent vaultId={vaultId} type={type} isBoosted={isBoosted} rates={formatted} />
       }

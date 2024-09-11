@@ -136,7 +136,12 @@ export type BeefyOffChainRewardsCampaignVault = BeefyOffChainRewardsVault & {
   apr: number;
 };
 
-export type BeefyOffChainRewardsBeefyCampaignType = 'test' | 'arb-ltipp' | 'op-gov-fund' | 'other';
+export type BeefyOffChainRewardsBeefyCampaignType =
+  | 'test'
+  | 'arb-ltipp'
+  | 'op-gov-fund'
+  | 'zap-v3'
+  | 'other';
 export type BeefyOffChainRewardsExternalCampaignType = 'external';
 export type BeefyOffChainRewardsCampaignType =
   | BeefyOffChainRewardsBeefyCampaignType
