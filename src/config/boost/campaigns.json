@@ -17,6 +17,15 @@
       "twitter": "https://twitter.com/beefyfinance"
     }
   },
+  "zap-v3-merkl": {
+    "title": "Beefy x Optimism Governance Fund",
+    "description": "Celebrate launch of ZAP V3 with Beefy's Optimism Governance Fund grant. Beefy users earn additional $OP tokens for using ZAP V3-supported products on the Superchain. Rewards accrue linearly over time, depending on the user's TVL. Simply open the 'Claim' tab in the deposit module to see your accruing rewards, and then manually claim your $OP rewards whenever you're ready.",
+    "learn": "https://beefy.com/articles/zap-v3/",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://twitter.com/beefyfinance"
+    }
+  },
   "profit-distribution": {
     "title": "Beefy Profit Distribution",
     "description": "Earn extra incentives awarded by the Beefy DAO from its recent quarterly profits. Beefy users earn additional tokens for using products boosted by the Beefy Profit Distribution program. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your rewards whenever you're ready.",
