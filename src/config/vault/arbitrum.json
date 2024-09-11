@@ -871,6 +871,7 @@
     "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-49/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-49/withdraw",
     "network": "arbitrum",
+    "pointStructureIds": ["dlcbtc"],
     "zaps": [
       {
         "strategyId": "curve",

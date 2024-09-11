@@ -655,6 +655,39 @@
     ]
   },
   {
+    "id": "dlcbtc",
+    "docs": "https://www.dlcbtc.com/case-studies/earn-up-to-10-apy-with-beefys-auto-compounding-vault",
+    "points": [
+      {
+        "id": "dlcbtc-points",
+        "name": "DLC Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["dlcBTC"]
+      }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-lrt-subgraph",
+        "role": "Raw indexing of blockchain data, computes time weighted balances",
+        "url": "https://github.com/beefyfinance/lrt-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "dlcbtc",
+        "role": "Distribution of rewards",
+        "type": "airdrop"
+      }
+    ]
+  },
+  {
     "id": "pearl",
     "docs": "https://www.re.al/rewards/airdrop/",
     "points": [
