@@ -352,8 +352,6 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
     selectVaultHasActiveMerklBaseCampaigns(state, vaultId)
   );
 
-  console.log(hasBaseActiveMerklCampaings);
-
   // Tag 1: Platform
   // Tag 2: CLM -> CLM Pool -> none
   // Tag 3: Retired -> Paused -> Boosted > Pool -> none
