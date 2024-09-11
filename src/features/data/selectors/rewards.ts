@@ -29,7 +29,7 @@ export const selectVaultHasActiveMerklCampaigns = createSelector(
   campaigns => !!campaigns && campaigns.length > 0
 );
 
-export const selectVaultActiveMerklBaseCampaings = createSelector(
+export const selectVaultActiveMerklBaseZapV3Campaings = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     state.biz.rewards.offchain.byProviderId.merkl[vaultId],
   (state: BeefyState) => state.biz.rewards.offchain.byId,
@@ -41,13 +41,19 @@ export const selectVaultActiveMerklBaseCampaings = createSelector(
     const activeCampaigns = vaultCampaigns
       .filter(v => v.apr > 0)
       .map(v => ({ ...campaignById[v.id], apr: v.apr }))
-      .filter(c => c.startTimestamp <= now && c.endTimestamp >= now && c.chainId === 'base');
+      .filter(
+        c =>
+          c.startTimestamp <= now &&
+          c.endTimestamp >= now &&
+          c.chainId === 'base' &&
+          c.type === 'zap-v3'
+      );
     return activeCampaigns.length ? activeCampaigns : undefined;
   }
 );
 
 export const selectVaultHasActiveMerklBaseCampaigns = createSelector(
-  selectVaultActiveMerklBaseCampaings,
+  selectVaultActiveMerklBaseZapV3Campaings,
   campaigns => !!campaigns && campaigns.length > 0
 );
 

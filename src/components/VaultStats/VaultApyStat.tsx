@@ -56,7 +56,7 @@ export const VaultApyStat = memo<VaultApyStatProps>(function VaultApyStat({
     );
   }
 
-  const isBoosted = !!data.boosted || hasBaseActiveMerklCampaings;
+  const isBoosted = !!data.boosted;
 
   return (
     <VaultValueStat
@@ -82,7 +82,7 @@ export const VaultApyStat = memo<VaultApyStatProps>(function VaultApyStat({
       }
       blur={false}
       loading={false}
-      boosted={isBoosted}
+      boosted={isBoosted || hasBaseActiveMerklCampaings}
       {...rest}
     />
   );

@@ -41,7 +41,7 @@ import clsx from 'clsx';
 import { getIcon } from '../../../../helpers/iconSrc';
 import { selectPlatformById } from '../../../../features/data/selectors/platforms';
 import {
-  selectVaultActiveMerklBaseCampaings,
+  selectVaultActiveMerklBaseZapV3Campaings,
   selectVaultHasActiveMerklBaseCampaigns,
 } from '../../../../features/data/selectors/rewards';
 
@@ -80,8 +80,9 @@ export const VaultMerklBoostTag = memo(function VaultMerklBoostTag({ vaultId }) 
   const classes = useStyles();
   const { isOverflowing, ref } = useIsOverflowingHorizontally();
   const activeCampaings = useAppSelector(state =>
-    selectVaultActiveMerklBaseCampaings(state, vaultId)
+    selectVaultActiveMerklBaseZapV3Campaings(state, vaultId)
   );
+
   const campaing = useAppSelector(state =>
     selectBoostCampaignById(state, (activeCampaings && activeCampaings[0].type) || '')
   );
@@ -350,6 +351,8 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   const hasBaseActiveMerklCampaings = useAppSelector(state =>
     selectVaultHasActiveMerklBaseCampaigns(state, vaultId)
   );
+
+  console.log(hasBaseActiveMerklCampaings);
 
   // Tag 1: Platform
   // Tag 2: CLM -> CLM Pool -> none
