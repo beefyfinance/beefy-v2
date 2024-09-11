@@ -1,5 +1,27 @@
 [
   {
+    "id": "convex-staked-cvxFXN",
+    "name": "cvxFXN",
+    "token": "cvxFXN",
+    "tokenAddress": "0x183395DbD0B5e93323a7286D1973150697FFFCB3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "convex",
+    "earnContractAddress": "0x7A7978523DA75b469F4D745714FE55eCe6a4D5a9",
+    "earnedToken": "mooConvexCvxFXN",
+    "earnedTokenAddress": "0x7A7978523DA75b469F4D745714FE55eCe6a4D5a9",
+    "oracle": "lps",
+    "oracleId": "convex-staked-cvxFXN",
+    "status": "active",
+    "createdAt": 1726041766,
+    "platformId": "convex",
+    "assets": ["cvxFXN"],
+    "migrationIds": ["ethereum-convex"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single-lp",
+    "addLiquidityUrl": "https://fx.convexfinance.com/stake",
+    "network": "ethereum"
+  },
+  {
     "id": "pendle-ebtc-26dec24",
     "name": "eBTC 26Dec24",
     "token": "eBTC 26Dec24",
