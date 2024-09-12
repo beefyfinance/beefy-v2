@@ -9,6 +9,7 @@ import {
   selectBoostById,
   selectBoostCampaignById,
   selectBoostPartnerById,
+  selectOffchainBoostCampaignByType,
   selectPreStakeOrActiveBoostIds,
 } from '../../../data/selectors/boosts';
 import { useAppSelector } from '../../../../store';
@@ -23,6 +24,14 @@ import type { TokenEntity } from '../../../data/entities/token';
 import { Link } from '@material-ui/icons';
 import { explorerAddressUrl } from '../../../../helpers/url';
 import { selectChainById } from '../../../data/selectors/chains';
+import type { BoostSocials } from '../../../data/apis/config-types';
+import type { ChainEntity } from '../../../data/entities/chain';
+import {
+  selectVaultActiveMerklBaseZapV3Campaigns,
+  selectVaultHasActiveMerklBaseZapV3Campaigns,
+} from '../../../data/selectors/rewards';
+import { selectVaultById } from '../../../data/selectors/vaults';
+import { selectTokenByAddress } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
@@ -31,12 +40,128 @@ export type BoostCardProps = {
 };
 
 export const BoostCard = memo<BoostCardProps>(function BoostCard({ vaultId }) {
+  const hasBaseActiveMerklCampaigns = useAppSelector(state =>
+    selectVaultHasActiveMerklBaseZapV3Campaigns(state, vaultId)
+  );
+
+  return hasBaseActiveMerklCampaigns ? (
+    <MerklBoostCard vaultId={vaultId} />
+  ) : (
+    <NormalBoostCard vaultId={vaultId} />
+  );
+});
+
+export const MerklBoostCard = memo<BoostCardProps>(function MerklBoostCard({ vaultId }) {
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+
+  const activeCampaigns = useAppSelector(state =>
+    selectVaultActiveMerklBaseZapV3Campaigns(state, vaultId)
+  );
+
+  const campaign = useAppSelector(state =>
+    selectOffchainBoostCampaignByType(state, activeCampaigns?.[0]?.type)
+  );
+
+  const rewardToken = useAppSelector(
+    state =>
+      (activeCampaigns &&
+        selectTokenByAddress(
+          state,
+          activeCampaigns[0].rewardToken.chainId,
+          activeCampaigns[0].rewardToken.address
+        )) ||
+      undefined
+  );
+
+  if (activeCampaigns && rewardToken && campaign) {
+    const { title, description, social, learn } = campaign;
+    return (
+      <CampaignContent
+        name={'Beefy'}
+        title={title}
+        learn={learn}
+        description={description}
+        social={social}
+        rewardToken={rewardToken}
+        chainId={vault.chainId}
+        partnerIds={['optimism']}
+      />
+    );
+  }
+
+  return null;
+});
+
+export const NormalBoostCard = memo<BoostCardProps>(function BoostCard({ vaultId }) {
   const boostIds = useAppSelector(state => selectPreStakeOrActiveBoostIds(state, vaultId));
   const boost = useAppSelector(state => selectBoostById(state, boostIds[0]));
   const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
   const BoostComponent = boost.campaignId ? CampaignBoostCard : PartnerBoostCard;
 
   return <BoostComponent boost={boost} rewardToken={rewardToken} />;
+});
+
+interface CampaignContentProps {
+  name: string;
+  title: string;
+  description: string;
+  learn: string;
+  social: BoostSocials;
+  rewardToken: TokenEntity;
+  chainId: ChainEntity['id'];
+  contractAddress?: string;
+  partnerIds?: string[];
+}
+
+const CampaignContent = memo<CampaignContentProps>(function CampaignContent({
+  name,
+  title,
+  description,
+  learn,
+  social,
+  rewardToken,
+  chainId,
+  contractAddress,
+  partnerIds,
+}) {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const chain = useAppSelector(state => selectChainById(state, chainId));
+
+  return (
+    <div>
+      <div className={classes.header}>
+        <h2 className={classes.boostedBy}>
+          {t('Vault-BoostedBy')}
+          <span>{name}</span>
+        </h2>
+        <div className={classes.socials}>
+          {learn && <LinkButton href={learn} text={t('Boost-learn-more')} />}
+          {social.twitter && <LinkIcon alt="twitter" logo={Twitter} href={social.twitter} />}
+          {social.telegram && <LinkIcon alt="telegram" logo={Telegram} href={social.telegram} />}
+          {social.discord && <LinkIcon alt="discord" logo={Discord} href={social.discord} />}
+          {contractAddress && (
+            <LinkButton
+              href={explorerAddressUrl(chain, contractAddress)}
+              text={t('Boost-Contract')}
+            />
+          )}
+        </div>
+      </div>
+      <CardContent className={classes.content}>
+        <div className={classes.campaignTitle}>{title}</div>
+        <div className={classes.campaignText}>{description}</div>
+        {partnerIds && partnerIds.length > 0 && (
+          <div className={classes.partners}>
+            {partnerIds.map(partnerId => (
+              <PartnerSubCard key={partnerId} partnerId={partnerId} />
+            ))}
+          </div>
+        )}
+        <RewardTokenDetails token={rewardToken} chainId={rewardToken.chainId} />
+      </CardContent>
+    </div>
+  );
 });
 
 type InnerBoostCardProps = {
@@ -48,44 +173,22 @@ const CampaignBoostCard = memo<InnerBoostCardProps>(function CampaignBoostCard({
   boost,
   rewardToken,
 }) {
-  const classes = useStyles();
-  const { t } = useTranslation();
   const { title, description, learn, social } = useAppSelector(state =>
     selectBoostCampaignById(state, boost.campaignId || '')
   );
-  const chain = useAppSelector(state => selectChainById(state, boost.chainId));
 
   return (
-    <div>
-      <div className={classes.header}>
-        <h2 className={classes.boostedBy}>
-          {t('Vault-BoostedBy')}
-          <span>{boost.name}</span>
-        </h2>
-        <div className={classes.socials}>
-          {learn && <LinkButton href={learn} text={t('Boost-learn-more')} />}
-          {social.twitter && <LinkIcon alt="twitter" logo={Twitter} href={social.twitter} />}
-          {social.telegram && <LinkIcon alt="telegram" logo={Telegram} href={social.telegram} />}
-          {social.discord && <LinkIcon alt="discord" logo={Discord} href={social.discord} />}
-          <LinkButton
-            href={explorerAddressUrl(chain, boost.contractAddress)}
-            text={t('Boost-Contract')}
-          />
-        </div>
-      </div>
-      <CardContent className={classes.content}>
-        <div className={classes.campaignTitle}>{title}</div>
-        <div className={classes.campaignText}>{description}</div>
-        {boost.partnerIds.length > 0 && (
-          <div className={classes.partners}>
-            {boost.partnerIds.map(partnerId => (
-              <PartnerSubCard key={partnerId} partnerId={partnerId} />
-            ))}
-          </div>
-        )}
-        <RewardTokenDetails token={rewardToken} chainId={boost.chainId} />
-      </CardContent>
-    </div>
+    <CampaignContent
+      name={boost.name}
+      title={title}
+      description={description}
+      learn={learn}
+      social={social}
+      rewardToken={rewardToken}
+      chainId={boost.chainId}
+      contractAddress={boost.contractAddress}
+      partnerIds={boost.partnerIds}
+    />
   );
 });
 

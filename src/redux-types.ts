@@ -43,9 +43,9 @@ import type { AddToWalletState } from './features/data/reducers/add-to-wallet';
 import type { ArticlesState } from './features/data/reducers/articles';
 import type { UserRewardsState } from './features/data/reducers/wallet/user-rewards-types';
 import type { VersionState } from './features/data/reducers/ui-version';
-import type { RewardsState } from './features/data/reducers/rewards';
 import type { TenderlyState } from './features/data/reducers/tenderly-types';
 import type { AnalyticsState } from './features/data/reducers/analytics-types';
+import type { RewardsState } from './features/data/reducers/rewards-types';
 
 export interface BeefyState {
   entities: {

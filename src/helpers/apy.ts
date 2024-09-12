@@ -22,6 +22,7 @@ const DISPLAY_ORDER = ((i = 0) =>
     liquidStaking: i++,
     composablePool: i++,
     boost: i++,
+    merklBoost: i++,
   } satisfies Record<TotalApyComponent, number>))();
 
 /**
@@ -29,7 +30,11 @@ const DISPLAY_ORDER = ((i = 0) =>
  */
 export const getApyComponents = createFactory(() => {
   const { allComponents: baseAll } = getApiApyDataComponents();
-  const components = [...baseAll, 'boost' as const] as const satisfies TotalApyComponent[];
+  const components = [
+    ...baseAll,
+    'boost' as const,
+    'merklBoost' as const,
+  ] as const satisfies TotalApyComponent[];
 
   components.sort((a, b) => DISPLAY_ORDER[a] - DISPLAY_ORDER[b]);
 

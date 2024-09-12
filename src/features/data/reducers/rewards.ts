@@ -1,35 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchOffChainCampaignsAction } from '../actions/rewards';
-import type {
-  BeefyOffChainRewardsMerklCampaign,
-  BeefyOffChainRewardsStellaSwapCampaign,
-} from '../apis/beefy/beefy-api-types';
-import type { VaultEntity } from '../entities/vault';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import type { GovVaultMultiContractData } from '../apis/contract-data/contract-data-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import type { Draft } from 'immer';
 import { distributedOmit } from '../../../helpers/object';
-
-type MerklRewardsCampaign = Omit<BeefyOffChainRewardsMerklCampaign, 'vaults'>;
-type StellaSwapRewardsCampaign = Omit<BeefyOffChainRewardsStellaSwapCampaign, 'vaults'>;
-type VaultRewardApr = { id: string; apr: number };
-
-export type GovRewardsState = {
-  byVaultId: Record<VaultEntity['id'], GovVaultMultiContractData['rewards']>;
-};
-
-export type RewardsState = {
-  offchain: {
-    byId: Record<string, MerklRewardsCampaign | StellaSwapRewardsCampaign>;
-    byVaultId: Record<VaultEntity['id'], VaultRewardApr[]>;
-    byProviderId: {
-      merkl: Record<VaultEntity['id'], VaultRewardApr[]>;
-      stellaswap: Record<VaultEntity['id'], VaultRewardApr[]>;
-    };
-  };
-  gov: GovRewardsState;
-};
+import type { RewardsState } from './rewards-types';
 
 const initialState: RewardsState = {
   offchain: {
