@@ -3,7 +3,8 @@
     "id": "moo_velo-cow-op-wsteth-op-vault-beefyclm",
     "poolId": "velo-cow-op-wsteth-op-vault",
     "name": "Beefy",
-    "tagText": "",
+    "tagIcon": "zap",
+    "tagText": "Zap Boost",
     "assets": ["wstETH", "OP"],
     "tokenAddress": "0x0974f018a1704A7bab98f01137F71610B2dCE1c2",
     "earnedToken": "OP",
@@ -16,15 +17,16 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "campaign": "",
-    "partners": ["beefy-clm"],
-    "pinned": true
+    "campaign": "zap-v3",
+    "partners": [],
+    "pinned": false
   },
   {
     "id": "moo_velo-cow-op-weth-tbtc-vault-beefyclm",
     "poolId": "velo-cow-op-weth-tbtc-vault",
     "name": "Beefy",
-    "tagText": "",
+    "tagIcon": "zap",
+    "tagText": "Zap Boost",
     "assets": ["WETH", "tBTC"],
     "tokenAddress": "0xEBCA80DdFBAed6a4ef2885337c89fFE178C1D80a",
     "earnedToken": "OP",
@@ -37,15 +39,16 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "campaign": "",
-    "partners": ["beefy-clm"],
-    "pinned": true
+    "campaign": "zap-v3",
+    "partners": [],
+    "pinned": false
   },
   {
     "id": "moo_velo-cow-op-snx-usdc-vault-beefyclm",
     "poolId": "velo-cow-op-snx-usdc-vault",
     "name": "Beefy",
-    "tagText": "",
+    "tagIcon": "zap",
+    "tagText": "Zap Boost",
     "assets": ["SNX", "USDC"],
     "tokenAddress": "0xE5C9137E9Ae118F1148C6B4d730C662A9d654ef9",
     "earnedToken": "OP",
@@ -58,15 +61,16 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "campaign": "",
-    "partners": ["beefy-clm"],
-    "pinned": true
+    "campaign": "zap-v3",
+    "partners": [],
+    "pinned": false
   },
   {
     "id": "moo_velo-cow-op-wbtc-tbtc-vault-beefyclm",
     "poolId": "velo-cow-op-wbtc-tbtc-vault",
     "name": "Beefy",
-    "tagText": "",
+    "tagIcon": "zap",
+    "tagText": "Zap Boost",
     "assets": ["WBTC", "tBTC"],
     "tokenAddress": "0x1FCB20fc86bA1D054F8E6aF0384f5Cd128e26247",
     "earnedToken": "OP",
@@ -79,9 +83,9 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "campaign": "",
-    "partners": ["beefy-clm"],
-    "pinned": true
+    "campaign": "zap-v3",
+    "partners": [],
+    "pinned": false
   },
   {
     "id": "moo_velo-cow-op-op-usdc-vault-beefyclm",
