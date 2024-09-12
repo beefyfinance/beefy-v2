@@ -10,7 +10,7 @@ import type { TotalApy } from '../../features/data/reducers/apy';
 import { InterestTooltipContent } from '../InterestTooltipContent';
 import { getApyComponents, getApyLabelsForType, getApyLabelsTypeForVault } from '../../helpers/apy';
 import { useTranslation } from 'react-i18next';
-import { selectVaultHasActiveMerklBaseCampaigns } from '../../features/data/selectors/rewards';
+import { selectVaultHasActiveMerklBaseZapV3Campaigns } from '../../features/data/selectors/rewards';
 
 export type VaultApyStatProps = Omit<
   VaultValueStatProps,
@@ -27,8 +27,8 @@ export const VaultApyStat = memo<VaultApyStatProps>(function VaultApyStat({
 }) {
   const { t } = useTranslation();
   const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
-  const hasBaseActiveMerklCampaings = useAppSelector(state =>
-    selectVaultHasActiveMerklBaseCampaigns(state, vaultId)
+  const hasBaseActiveMerklCampaigns = useAppSelector(state =>
+    selectVaultHasActiveMerklBaseZapV3Campaigns(state, vaultId)
   );
   const label =
     type === 'daily' ? 'VaultStat-DAILY' : data.type === 'apr' ? 'VaultStat-APR' : 'VaultStat-APY';
@@ -66,14 +66,14 @@ export const VaultApyStat = memo<VaultApyStatProps>(function VaultApyStat({
           ? t('PRE-STAKE')
           : data.boosted === 'active'
           ? formatted[boostedTotalKey]
-          : hasBaseActiveMerklCampaings
+          : hasBaseActiveMerklCampaigns
           ? formatted[merklBoostedTotalKey]
           : formatted[totalKey]
       }
       subValue={
         isBoosted
           ? formatted[totalKey]
-          : hasBaseActiveMerklCampaings
+          : hasBaseActiveMerklCampaigns
           ? formatted[`${type === 'daily' ? 'clmDaily' : 'clmApr'}`]
           : undefined
       }
@@ -82,7 +82,7 @@ export const VaultApyStat = memo<VaultApyStatProps>(function VaultApyStat({
       }
       blur={false}
       loading={false}
-      boosted={isBoosted || hasBaseActiveMerklCampaings}
+      boosted={isBoosted || hasBaseActiveMerklCampaigns}
       {...rest}
     />
   );

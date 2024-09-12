@@ -29,7 +29,7 @@ export const selectVaultHasActiveMerklCampaigns = createSelector(
   campaigns => !!campaigns && campaigns.length > 0
 );
 
-export const selectVaultActiveMerklBaseZapV3Campaings = createSelector(
+export const selectVaultActiveMerklBaseZapV3Campaigns = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     state.biz.rewards.offchain.byProviderId.merkl[vaultId],
   (state: BeefyState) => state.biz.rewards.offchain.byId,
@@ -52,8 +52,8 @@ export const selectVaultActiveMerklBaseZapV3Campaings = createSelector(
   }
 );
 
-export const selectVaultHasActiveMerklBaseCampaigns = createSelector(
-  selectVaultActiveMerklBaseZapV3Campaings,
+export const selectVaultHasActiveMerklBaseZapV3Campaigns = createSelector(
+  selectVaultActiveMerklBaseZapV3Campaigns,
   campaigns => !!campaigns && campaigns.length > 0
 );
 

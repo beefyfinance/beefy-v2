@@ -41,8 +41,8 @@ import clsx from 'clsx';
 import { getIcon } from '../../../../helpers/iconSrc';
 import { selectPlatformById } from '../../../../features/data/selectors/platforms';
 import {
-  selectVaultActiveMerklBaseZapV3Campaings,
-  selectVaultHasActiveMerklBaseCampaigns,
+  selectVaultActiveMerklBaseZapV3Campaigns,
+  selectVaultHasActiveMerklBaseZapV3Campaigns,
 } from '../../../../features/data/selectors/rewards';
 
 const useStyles = makeStyles(styles);
@@ -79,16 +79,16 @@ const VaultBoostTag = memo<VaultBoostTagProps>(function VaultBoostTag({ boostId 
 export const VaultMerklBoostTag = memo(function VaultMerklBoostTag({ vaultId }) {
   const classes = useStyles();
   const { isOverflowing, ref } = useIsOverflowingHorizontally();
-  const activeCampaings = useAppSelector(state =>
-    selectVaultActiveMerklBaseZapV3Campaings(state, vaultId)
+  const activeCampaigns = useAppSelector(state =>
+    selectVaultActiveMerklBaseZapV3Campaigns(state, vaultId)
   );
 
-  const campaing = useAppSelector(state =>
-    selectBoostCampaignById(state, (activeCampaings && activeCampaings[0].type) || '')
+  const campaign = useAppSelector(state =>
+    selectBoostCampaignById(state, (activeCampaigns && activeCampaigns[0].type) || '')
   );
 
-  if (activeCampaings && campaing) {
-    const { tag, tagIcon } = campaing;
+  if (activeCampaigns && campaign) {
+    const { tag, tagIcon } = campaign;
 
     return (
       <VaultTagWithTooltip
@@ -348,8 +348,8 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
   const isGov = isGovVault(vault);
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
-  const hasBaseActiveMerklCampaings = useAppSelector(state =>
-    selectVaultHasActiveMerklBaseCampaigns(state, vaultId)
+  const hasBaseActiveMerklCampaigns = useAppSelector(state =>
+    selectVaultHasActiveMerklBaseZapV3Campaigns(state, vaultId)
   );
 
   // Tag 1: Platform
@@ -372,7 +372,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
         <VaultTag className={classes.vaultTagPaused}>{t('VaultTag-Paused')}</VaultTag>
       ) : boostId ? (
         <VaultBoostTag boostId={boostId} />
-      ) : hasBaseActiveMerklCampaings ? (
+      ) : hasBaseActiveMerklCampaigns ? (
         <VaultMerklBoostTag vaultId={vaultId} />
       ) : isGov && !isCowcentratedLike ? (
         <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO support multiple earned tokens [empty = ok, not used when clm-like]

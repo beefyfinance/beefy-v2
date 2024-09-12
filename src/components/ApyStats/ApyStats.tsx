@@ -7,15 +7,15 @@ import type { VaultEntity } from '../../features/data/entities/vault';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { useAppSelector } from '../../store';
 import { ApyTooltipContent } from '../VaultStats/VaultApyStat';
-import { selectVaultHasActiveMerklBaseCampaigns } from '../../features/data/selectors/rewards';
+import { selectVaultHasActiveMerklBaseZapV3Campaigns } from '../../features/data/selectors/rewards';
 
 type ApyStatsProps = { vaultId: VaultEntity['id']; type: 'yearly' | 'daily' };
 
 export const ApyStats = memo<ApyStatsProps>(function ApyStats({ vaultId, type }) {
   const { t } = useTranslation();
   const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
-  const hasBaseActiveMerklCampaings = useAppSelector(state =>
-    selectVaultHasActiveMerklBaseCampaigns(state, vaultId)
+  const hasBaseActiveMerklCampaigns = useAppSelector(state =>
+    selectVaultHasActiveMerklBaseZapV3Campaigns(state, vaultId)
   );
   const label = useMemo(
     () =>
@@ -58,13 +58,13 @@ export const ApyStats = memo<ApyStatsProps>(function ApyStats({ vaultId, type })
               ? t('PRE-STAKE')
               : data.boosted === 'active'
               ? formatted[boostedTotalKey]
-              : hasBaseActiveMerklCampaings
+              : hasBaseActiveMerklCampaigns
               ? formatted[`${type === 'daily' ? 'totalDaily' : 'totalApy'}`]
               : undefined
           }
           value={
             formatted[
-              hasBaseActiveMerklCampaings ? `${type === 'daily' ? 'clmDaily' : 'clmApr'}` : totalKey
+              hasBaseActiveMerklCampaigns ? `${type === 'daily' ? 'clmDaily' : 'clmApr'}` : totalKey
             ]
           }
         />

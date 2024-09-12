@@ -26,8 +26,8 @@ import { selectChainById } from '../../../data/selectors/chains';
 import type { BoostSocials } from '../../../data/apis/config-types';
 import type { ChainEntity } from '../../../data/entities/chain';
 import {
-  selectVaultActiveMerklBaseZapV3Campaings,
-  selectVaultHasActiveMerklBaseCampaigns,
+  selectVaultActiveMerklBaseZapV3Campaigns,
+  selectVaultHasActiveMerklBaseZapV3Campaigns,
 } from '../../../data/selectors/rewards';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
@@ -39,11 +39,11 @@ export type BoostCardProps = {
 };
 
 export const BoostCard = memo<BoostCardProps>(function BoostCard({ vaultId }) {
-  const hasBaseActiveMerklCampaings = useAppSelector(state =>
-    selectVaultHasActiveMerklBaseCampaigns(state, vaultId)
+  const hasBaseActiveMerklCampaigns = useAppSelector(state =>
+    selectVaultHasActiveMerklBaseZapV3Campaigns(state, vaultId)
   );
 
-  return hasBaseActiveMerklCampaings ? (
+  return hasBaseActiveMerklCampaigns ? (
     <MerklBoostCard vaultId={vaultId} />
   ) : (
     <NormalBoostCard vaultId={vaultId} />
@@ -53,29 +53,29 @@ export const BoostCard = memo<BoostCardProps>(function BoostCard({ vaultId }) {
 export const MerklBoostCard = memo<BoostCardProps>(function MerklBoostCard({ vaultId }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
-  const activeCampaings = useAppSelector(state =>
-    selectVaultActiveMerklBaseZapV3Campaings(state, vaultId)
+  const activeCampaigns = useAppSelector(state =>
+    selectVaultActiveMerklBaseZapV3Campaigns(state, vaultId)
   );
 
-  const campaing = useAppSelector(state =>
-    selectBoostCampaignById(state, (activeCampaings && activeCampaings[0].type) || '')
+  const campaign = useAppSelector(state =>
+    selectBoostCampaignById(state, (activeCampaigns && activeCampaigns[0].type) || '')
   );
 
   const rewardToken = useAppSelector(
     state =>
-      (activeCampaings &&
+      (activeCampaigns &&
         selectTokenByAddress(
           state,
-          activeCampaings[0].rewardToken.chainId,
-          activeCampaings[0].rewardToken.address
+          activeCampaigns[0].rewardToken.chainId,
+          activeCampaigns[0].rewardToken.address
         )) ||
       undefined
   );
 
-  if (activeCampaings && rewardToken && campaing) {
-    const { title, description, social, learn } = campaing;
+  if (activeCampaigns && rewardToken && campaign) {
+    const { title, description, social, learn } = campaign;
     return (
-      <CampaingContent
+      <CampaignContent
         name={'Beefy'}
         title={title}
         learn={learn}
@@ -100,7 +100,7 @@ export const NormalBoostCard = memo<BoostCardProps>(function BoostCard({ vaultId
   return <BoostComponent boost={boost} rewardToken={rewardToken} />;
 });
 
-interface CampaingContentProps {
+interface CampaignContentProps {
   name: string;
   title: string;
   description: string;
@@ -112,7 +112,7 @@ interface CampaingContentProps {
   partnerIds?: string[];
 }
 
-const CampaingContent = memo<CampaingContentProps>(function CampaingContent({
+const CampaignContent = memo<CampaignContentProps>(function CampaignContent({
   name,
   title,
   description,
@@ -177,7 +177,7 @@ const CampaignBoostCard = memo<InnerBoostCardProps>(function CampaignBoostCard({
   );
 
   return (
-    <CampaingContent
+    <CampaignContent
       name={boost.name}
       title={title}
       description={description}
