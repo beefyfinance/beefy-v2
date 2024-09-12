@@ -6,8 +6,7 @@ import { isTokenNative, type TokenEntity } from '../../../../entities/token';
 import type { VaultEntity } from '../../../../entities/vault';
 import { selectAllChainIds, selectChainById } from '../../../../selectors/chains';
 import { selectSupportedSwapTokensForChainAggregatorHavingPrice } from '../../../../selectors/tokens';
-import { selectWalletAddress } from '../../../../selectors/wallet';
-import { selectSwapAggregatorForChainType } from '../../../../selectors/zap';
+import { selectSwapAggregatorForChainType, selectZapByChainId } from '../../../../selectors/zap';
 import type { OdosSwapSwapConfig } from '../../../config-types';
 import { getOdosApi } from '../../../instances';
 import { slipBy } from '../../helpers/amounts';
@@ -41,8 +40,11 @@ export class OdosSwapProvider implements ISwapProvider {
     if (!config) {
       throw new Error(`No odos aggregator config found for chain ${chain.id}`);
     }
+    const zap = selectZapByChainId(state, chain.id);
+    if (!zap) {
+      throw new Error(`No zap found for chain ${chain.id}`);
+    }
 
-    const wallet = selectWalletAddress(state);
     const api = await getOdosApi(chain);
     const quote = await api.postQuote({
       inputTokens: [
@@ -58,7 +60,7 @@ export class OdosSwapProvider implements ISwapProvider {
         },
       ],
       chainId: chain.networkChainId,
-      ...(wallet && { userAddr: wallet }), // @chimp should we use the router address to preserve user annonimity?
+      userAddr: zap.router,
     });
 
     return {
@@ -104,11 +106,9 @@ export class OdosSwapProvider implements ISwapProvider {
     }
 
     const api = await getOdosApi(chain);
-    const wallet = selectWalletAddress(state);
 
-    // @chimp if we can't pass on slippage in here, should we set it on initial quote?
     const swap = await api.postSwap({
-      userAddr: wallet!,
+      userAddr: fromAddress,
       pathId: quote.extra as string,
       receiver: fromAddress,
     });
