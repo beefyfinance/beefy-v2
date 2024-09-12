@@ -25,6 +25,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { ErrorOutline, InfoOutlined } from '@material-ui/icons';
 import clsx from 'clsx';
+import { selectVaultHasActiveMerklBaseZapV3Campaigns } from '../../features/data/selectors/rewards';
 
 const useStyles = makeStyles(styles);
 
@@ -94,6 +95,9 @@ export const VaultDepositStat = memo<VaultDepositStatProps>(function VaultDeposi
   const data = useAppSelector(state => selectData(state, vaultId));
   const classes = useStyles();
 
+  const hasActiveMerklBaseZapV3Campaigns = useAppSelector(state =>
+    selectVaultHasActiveMerklBaseZapV3Campaigns(state, vaultId)
+  );
   if (data.loading) {
     return (
       <VaultValueStat label={label} value="-" blur={false} loading={true} className={className} />
@@ -106,8 +110,10 @@ export const VaultDepositStat = memo<VaultDepositStatProps>(function VaultDeposi
     );
   }
 
-  const hasDisplacedDeposit = data.vaultDeposit.lt(data.totalDeposit) || data.notEarning.gt(0);
-  const isNotEarning = data.notEarning.gt(0);
+  const hasDisplacedDeposit =
+    (data.vaultDeposit.lt(data.totalDeposit) || data.notEarning.gt(0)) &&
+    !hasActiveMerklBaseZapV3Campaigns;
+  const isNotEarning = data.notEarning.gt(0) && !hasActiveMerklBaseZapV3Campaigns;
   const depositFormatted = formatTokenDisplayCondensed(
     data.totalDeposit,
     data.depositToken.decimals,
