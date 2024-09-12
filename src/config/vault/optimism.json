@@ -5329,37 +5329,6 @@
     ]
   },
   {
-    "id": "uniswap-gamma-op-wsteth-eth",
-    "name": "wstETH-ETH LP",
-    "type": "standard",
-    "token": "wstETH-ETH gLP",
-    "tokenAddress": "0xEC77724d6AC1b0B8D8871bFcA714794BB4a8392c",
-    "tokenDecimals": 18,
-    "tokenProviderId": "uniswap",
-    "earnedToken": "mooUniswapGammawstETH-ETH",
-    "earnedTokenAddress": "0x7587A6a488d86Be08924135357F76aa17268Cd9A",
-    "earnContractAddress": "0x7587A6a488d86Be08924135357F76aa17268Cd9A",
-    "oracle": "lps",
-    "oracleId": "uniswap-gamma-op-wsteth-eth",
-    "status": "eol",
-    "retireReason": "tvl",
-    "retiredAt": 1708974810,
-    "createdAt": 1702484967,
-    "platformId": "gamma",
-    "assets": ["wstETH", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/wsteth-weth-100-pegged-price",
-    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/wsteth-weth-100-pegged-price",
-    "network": "optimism",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "optimism-gamma-uniswap-v3"
-      }
-    ]
-  },
-  {
     "id": "velodrome-v2-next-usdc",
     "name": "NEXT-USDC.e vLP V2",
     "type": "standard",
