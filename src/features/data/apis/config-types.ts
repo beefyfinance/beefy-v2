@@ -254,7 +254,10 @@ export interface AmmConfigGamma extends AmmConfigBase {
 
 export interface AmmConfigBalancer extends AmmConfigBase {
   readonly type: 'balancer';
+  /** address of Vault contract */
   vaultAddress: string;
+  /** address of BalancerQueries contract */
+  queryAddress: string;
 }
 
 export type AmmConfigUniswapV2Like = AmmConfigUniswapV2 | AmmConfigSolidly;
