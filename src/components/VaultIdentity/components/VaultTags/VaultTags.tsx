@@ -82,17 +82,16 @@ export const VaultMerklBoostTag = memo(function VaultMerklBoostTag({ vaultId }) 
   const activeCampaigns = useAppSelector(state =>
     selectVaultActiveMerklBaseZapV3Campaigns(state, vaultId)
   );
-
   const campaign = useAppSelector(state =>
-    selectBoostCampaignById(state, (activeCampaigns && activeCampaigns[0].type) || '')
+    selectBoostCampaignById(state, activeCampaigns?.[0]?.type || '')
   );
 
   if (activeCampaigns && campaign) {
-    const { tag, tagIcon } = campaign;
+    const { tagText, tagIcon, title } = campaign;
 
     return (
       <VaultTagWithTooltip
-        content={<BasicTooltipContent title={tag || ''} />}
+        content={<BasicTooltipContent title={tagText || title} />}
         placement="bottom"
         disabled={!isOverflowing}
         className={classes.vaultTagBoost}
@@ -109,7 +108,7 @@ export const VaultMerklBoostTag = memo(function VaultMerklBoostTag({ vaultId }) 
         ) : (
           <>{'\uD83D\uDD25 '}</>
         )}
-        {tag}
+        {tagText}
       </VaultTagWithTooltip>
     );
   }

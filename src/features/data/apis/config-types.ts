@@ -92,7 +92,7 @@ export interface BoostCampaignConfig {
   description: string;
   learn: string;
   social: BoostSocials;
-  tag?: string;
+  tagText?: string;
   tagIcon?: string;
 }
 

@@ -7,16 +7,12 @@ import type { VaultEntity } from '../../features/data/entities/vault';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import { useAppSelector } from '../../store';
 import { ApyTooltipContent } from '../VaultStats/VaultApyStat';
-import { selectVaultHasActiveMerklBaseZapV3Campaigns } from '../../features/data/selectors/rewards';
 
 type ApyStatsProps = { vaultId: VaultEntity['id']; type: 'yearly' | 'daily' };
 
 export const ApyStats = memo<ApyStatsProps>(function ApyStats({ vaultId, type }) {
   const { t } = useTranslation();
   const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
-  const hasBaseActiveMerklCampaigns = useAppSelector(state =>
-    selectVaultHasActiveMerklBaseZapV3Campaigns(state, vaultId)
-  );
   const label = useMemo(
     () =>
       t(
@@ -58,15 +54,9 @@ export const ApyStats = memo<ApyStatsProps>(function ApyStats({ vaultId, type })
               ? t('PRE-STAKE')
               : data.boosted === 'active'
               ? formatted[boostedTotalKey]
-              : hasBaseActiveMerklCampaigns
-              ? formatted[`${type === 'daily' ? 'totalDaily' : 'totalApy'}`]
               : undefined
           }
-          value={
-            formatted[
-              hasBaseActiveMerklCampaigns ? `${type === 'daily' ? 'clmDaily' : 'clmApr'}` : totalKey
-            ]
-          }
+          value={formatted[totalKey]}
         />
       }
       tooltip={
