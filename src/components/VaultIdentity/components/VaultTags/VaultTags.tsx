@@ -7,7 +7,7 @@ import type { BoostEntity } from '../../../../features/data/entities/boost';
 import { useAppSelector } from '../../../../store';
 import {
   selectBoostById,
-  selectBoostCampaignById,
+  selectOffchainBoostCampaignByType,
   selectPreStakeOrActiveBoostIds,
 } from '../../../../features/data/selectors/boosts';
 import { useIsOverflowingHorizontally } from '../../../../helpers/overflow';
@@ -83,7 +83,7 @@ export const VaultMerklBoostTag = memo(function VaultMerklBoostTag({ vaultId }) 
     selectVaultActiveMerklBaseZapV3Campaigns(state, vaultId)
   );
   const campaign = useAppSelector(state =>
-    selectBoostCampaignById(state, activeCampaigns?.[0]?.type || '')
+    selectOffchainBoostCampaignByType(state, activeCampaigns?.[0]?.type)
   );
 
   if (activeCampaigns && campaign) {

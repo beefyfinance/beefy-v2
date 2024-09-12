@@ -9,6 +9,7 @@ import {
   selectBoostById,
   selectBoostCampaignById,
   selectBoostPartnerById,
+  selectOffchainBoostCampaignByType,
   selectPreStakeOrActiveBoostIds,
 } from '../../../data/selectors/boosts';
 import { useAppSelector } from '../../../../store';
@@ -58,7 +59,7 @@ export const MerklBoostCard = memo<BoostCardProps>(function MerklBoostCard({ vau
   );
 
   const campaign = useAppSelector(state =>
-    selectBoostCampaignById(state, (activeCampaigns && activeCampaigns[0].type) || '')
+    selectOffchainBoostCampaignByType(state, activeCampaigns?.[0]?.type)
   );
 
   const rewardToken = useAppSelector(

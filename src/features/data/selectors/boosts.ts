@@ -7,6 +7,7 @@ import { selectBoostUserBalanceInToken, selectBoostUserRewardsInToken } from './
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectVaultActiveMerklBaseZapV3Campaigns } from './rewards';
+import type { BeefyOffChainRewardsCampaignType } from '../apis/beefy/beefy-api-types';
 
 export const selectBoostById = createCachedSelector(
   (state: BeefyState) => state.entities.boosts.byId,
@@ -230,4 +231,14 @@ export const selectBoostPartnerById = (state: BeefyState, partnerId: string) => 
 
 export const selectBoostCampaignById = (state: BeefyState, campaignId: string) => {
   return state.entities.boosts.campaigns.byId[campaignId];
+};
+
+export const selectOffchainBoostCampaignByType = (
+  state: BeefyState,
+  type: BeefyOffChainRewardsCampaignType | undefined
+) => {
+  if (type === undefined) {
+    return undefined;
+  }
+  return state.entities.boosts.campaigns.byId[`offchain-${type}`];
 };
