@@ -695,6 +695,7 @@
   "Transact-Fee-TotalFee": "Total Performance Fee",
   "Transact-SwapProvider-one-inch": "1inch",
   "Transact-SwapProvider-kyber": "KyberSwap",
+  "Transact-SwapProvider-odos": "Odos",
   "Transact-SwapProvider-wnative": "WNative",
   "Treasury-treasuryMultisig": "Multisig",
   "Treasury-treasury": "Treasury",

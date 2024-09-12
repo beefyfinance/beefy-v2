@@ -345,5 +345,16 @@
     "priorityTokens": ["MNT", "WMNT", "USDC", "USDT", "WETH", "mETH", "WBTC"],
     "blockedTokens": [],
     "blockedVaults": []
+  },
+  {
+    "id": "odos-arbitrum",
+    "type": "odos",
+    "chainId": "arbitrum",
+    "priorityTokens": ["ETH", "ARB", "WETH", "USDC", "USDT", "DAI", "MIM", "WBTC", "wstETH"],
+    "fee": {
+      "value": 0.0005
+    },
+    "blockedTokens": [],
+    "blockedVaults": []
   }
 ]

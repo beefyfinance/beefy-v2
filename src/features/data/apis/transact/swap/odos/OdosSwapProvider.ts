@@ -6,9 +6,11 @@ import { isTokenNative, type TokenEntity } from '../../../../entities/token';
 import type { VaultEntity } from '../../../../entities/vault';
 import { selectAllChainIds, selectChainById } from '../../../../selectors/chains';
 import { selectSupportedSwapTokensForChainAggregatorHavingPrice } from '../../../../selectors/tokens';
+import { selectWalletAddress } from '../../../../selectors/wallet';
 import { selectSwapAggregatorForChainType } from '../../../../selectors/zap';
 import type { OdosSwapSwapConfig } from '../../../config-types';
 import { getOdosApi } from '../../../instances';
+import { slipBy } from '../../helpers/amounts';
 import type {
   ISwapProvider,
   QuoteRequest,
@@ -37,15 +39,26 @@ export class OdosSwapProvider implements ISwapProvider {
     const chain = selectChainById(state, request.fromToken.chainId);
     const config = this.getConfigForChain(chain.id, state);
     if (!config) {
-      throw new Error(`No one-inch aggregator config found for chain ${chain.id}`);
+      throw new Error(`No odos aggregator config found for chain ${chain.id}`);
     }
 
+    const wallet = selectWalletAddress(state);
     const api = await getOdosApi(chain);
-    const quote = await api.getQuote({
-      src: this.getTokenAddress(request.fromToken),
-      dst: this.getTokenAddress(request.toToken),
-      amount: toWeiString(request.fromAmount, request.fromToken.decimals),
-      fee: (config.fee.value * 100).toString(10), // convert to % (0.0005 -> 0.05%)
+    const quote = await api.postQuote({
+      inputTokens: [
+        {
+          tokenAddress: this.getTokenAddress(request.fromToken),
+          amount: toWeiString(request.fromAmount, request.fromToken.decimals),
+        },
+      ],
+      outputTokens: [
+        {
+          tokenAddress: this.getTokenAddress(request.toToken),
+          proportion: 1,
+        },
+      ],
+      chainId: chain.networkChainId,
+      ...(wallet && { userAddr: wallet }), // @chimp should we use the router address to preserve user annonimity?
     });
 
     return {
@@ -53,8 +66,9 @@ export class OdosSwapProvider implements ISwapProvider {
       fromToken: request.fromToken,
       fromAmount: request.fromAmount,
       toToken: request.toToken,
-      toAmount: fromWeiString(quote.dstAmount, request.toToken.decimals),
+      toAmount: fromWeiString(quote.outAmounts[0], request.toToken.decimals),
       fee: config.fee,
+      extra: quote.pathId,
     };
   }
 
@@ -82,7 +96,43 @@ export class OdosSwapProvider implements ISwapProvider {
   }
 
   async fetchSwap(request: SwapRequest, state: BeefyState): Promise<SwapResponse> {
-    throw new Error('Method not implemented.');
+    const { quote, fromAddress, slippage } = request;
+    const chain = selectChainById(state, quote.fromToken.chainId);
+    const config = this.getConfigForChain(chain.id, state);
+    if (!config) {
+      throw new Error(`No odos aggregator config found for chain ${chain.id}`);
+    }
+
+    const api = await getOdosApi(chain);
+    const wallet = selectWalletAddress(state);
+
+    // @chimp if we can't pass on slippage in here, should we set it on initial quote?
+    const swap = await api.postSwap({
+      userAddr: wallet!,
+      pathId: quote.extra as string,
+      receiver: fromAddress,
+    });
+
+    return {
+      providerId: this.getId(),
+      fromToken: quote.fromToken,
+      fromAmount: quote.fromAmount,
+      toToken: quote.toToken,
+      toAmount: fromWeiString(swap.outputTokens[0].amount, quote.toToken.decimals),
+      toAmountMin: slipBy(
+        fromWeiString(swap.outputTokens[0].amount, quote.toToken.decimals),
+        slippage,
+        quote.toToken.decimals
+      ),
+      tx: {
+        fromAddress: swap.transaction.from,
+        toAddress: swap.transaction.to,
+        data: swap.transaction.data,
+        value: swap.transaction.value,
+        inputPosition: -1, // not supported
+      },
+      fee: config.fee,
+    };
   }
 
   async getSupportedChains(state: BeefyState): Promise<ChainEntity['id'][]> {

@@ -7,6 +7,7 @@ export type QuoteRequest = {
     tokenAddress: string;
     proportion: number;
   }>;
+  chainId: number;
   gasPrice?: string;
   userAddr?: string;
   slippageLimitPercent?: number;
@@ -35,9 +36,47 @@ export type QuoteResponse = {
   blockNumber: number;
 };
 
-export type SwapRequest = {};
+export type SwapRequest = {
+  userAddr: string;
+  pathId: string;
+  receiver?: string;
+  simulate?: boolean;
+};
 
-export type SwapResponse = {};
+export type SwapResponse = {
+  deprecated?: string;
+  blockNumber: number;
+  gasEstimate: number;
+  gasEstimateValue: number;
+  inputTokens: Array<{
+    tokenAddress: string;
+    amount: string;
+  }>;
+  outputTokens: Array<{
+    tokenAddress: string;
+    amount: string;
+  }>;
+  netOutValue: number;
+  transaction: {
+    gas: number;
+    gasPrice: number;
+    value: string;
+    to: string;
+    from: string;
+    data: string;
+    nonce: number;
+    chainId: number;
+  };
+  simulation: {
+    isSuccess: boolean;
+    amountsOut: Array<number>;
+    gasEstimate: number;
+    simulationError: {
+      type: string;
+      errorMessage: string;
+    };
+  };
+};
 
 export interface IOdosApi {
   postQuote(request: QuoteRequest): Promise<QuoteResponse>;

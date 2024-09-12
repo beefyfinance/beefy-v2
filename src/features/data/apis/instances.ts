@@ -181,7 +181,7 @@ export const getKyberSwapApi = createDependencyFactoryWithCacheByChain(
 );
 
 export const getOdosApi = createDependencyFactoryWithCacheByChain(
-  async (chain, { OdosSwapApi }) => new OdosSwapApi(chain),
+  async (chain, { OdosApi }) => new OdosApi(chain),
   () => import('./odos')
 );
 
