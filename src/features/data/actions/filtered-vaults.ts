@@ -42,7 +42,6 @@ import { orderBy, sortBy } from 'lodash-es';
 import type { TotalApy } from '../reducers/apy';
 import { selectVaultTotalApy } from '../selectors/apy';
 import { selectVaultTvl, selectVaultUnderlyingTvlUsd } from '../selectors/tvl';
-import { selectVaultHasActiveMerklBaseZapV3Campaigns } from '../selectors/rewards';
 
 export type RecalculateFilteredVaultsParams = {
   dataChanged?: boolean;
@@ -83,11 +82,6 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
        then cheap selectors, then expensive selectors last
       */
       filteredVaults = allVaults.filter(vault => {
-        // TODO temp
-        if (!selectVaultHasActiveMerklBaseZapV3Campaigns(state, vault.id)) {
-          return false;
-        }
-
         // Chains
         if (!visibleChains.has(vault.chainId)) {
           return false;
