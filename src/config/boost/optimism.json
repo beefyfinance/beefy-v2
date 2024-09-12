@@ -16,8 +16,8 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "campaign": "",
-    "partners": ["beefy-clm"],
+    "campaign": "zap-v3",
+    "partners": [],
     "pinned": true
   },
   {
@@ -37,8 +37,8 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "campaign": "",
-    "partners": ["beefy-clm"],
+    "campaign": "zap-v3",
+    "partners": [],
     "pinned": true
   },
   {
@@ -58,8 +58,8 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "campaign": "",
-    "partners": ["beefy-clm"],
+    "campaign": "zap-v3",
+    "partners": [],
     "pinned": true
   },
   {
@@ -79,8 +79,8 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "campaign": "",
-    "partners": ["beefy-clm"],
+    "campaign": "zap-v3",
+    "partners": [],
     "pinned": true
   },
   {
