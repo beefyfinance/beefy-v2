@@ -289,7 +289,17 @@ export interface KyberSwapSwapConfig {
   fee: ZapFee;
 }
 
-export type SwapAggregatorConfig = OneInchSwapConfig | KyberSwapSwapConfig;
+export interface OdosSwapSwapConfig {
+  id: string;
+  type: 'odos';
+  chainId: ChainEntity['id'];
+  priorityTokens: TokenEntity['id'][];
+  blockedTokens: TokenEntity['id'][];
+  blockedVaults: VaultEntity['id'][];
+  fee: ZapFee;
+}
+
+export type SwapAggregatorConfig = OneInchSwapConfig | KyberSwapSwapConfig | OdosSwapSwapConfig;
 
 export type SwapAggregatorConfigLoose = ChangeTypeOfKeys<
   SwapAggregatorConfig,

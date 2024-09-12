@@ -15,8 +15,10 @@ import type {
 } from './beefy-api-types';
 import { getJson } from '../../../../helpers/http';
 
-export const API_URL = import.meta.env.VITE_API_URL || 'https://api.beefy.finance';
-export const API_ZAP_URL = import.meta.env.VITE_API_ZAP_URL || `${API_URL}/zap`;
+// export const API_URL = import.meta.env.VITE_API_URL || 'https://api.beefy.finance';
+// export const API_ZAP_URL = import.meta.env.VITE_API_ZAP_URL || `${API_URL}/zap`;
+export const API_URL = 'http://localhost:3000';
+export const API_ZAP_URL = `${API_URL}/zap`;
 
 export class BeefyAPI {
   public api: string;

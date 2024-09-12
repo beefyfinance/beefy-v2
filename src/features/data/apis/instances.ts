@@ -8,6 +8,7 @@ import type { WalletConnectionOptions } from './wallet/wallet-connection-types';
 import type { ISwapProvider } from './transact/swap/ISwapProvider';
 import {
   featureFlag_disableKyber,
+  featureFlag_disableOdos,
   featureFlag_disableOneInch,
   featureFlag_getContractDataApiChunkSize,
 } from '../utils/feature-flags';
@@ -72,7 +73,13 @@ export const getStellaSwapRewardsApi = createDependencyFactory(
 );
 
 export const getSwapAggregator = createDependencyFactory(
-  async ({ SwapAggregator, WNativeSwapProvider, OneInchSwapProvider, KyberSwapProvider }) => {
+  async ({
+    SwapAggregator,
+    WNativeSwapProvider,
+    OneInchSwapProvider,
+    KyberSwapProvider,
+    OdosSwapProvider,
+  }) => {
     const providers: ISwapProvider[] = [new WNativeSwapProvider()];
 
     if (!featureFlag_disableOneInch()) {
@@ -81,6 +88,10 @@ export const getSwapAggregator = createDependencyFactory(
 
     if (!featureFlag_disableKyber()) {
       providers.push(new KyberSwapProvider());
+    }
+
+    if (!featureFlag_disableOdos()) {
+      providers.push(new OdosSwapProvider());
     }
 
     return new SwapAggregator(providers);
@@ -167,6 +178,11 @@ export const getOneInchApi = createDependencyFactoryWithCacheByChain(
 export const getKyberSwapApi = createDependencyFactoryWithCacheByChain(
   async (chain, { KyberSwapApi }) => new KyberSwapApi(chain),
   () => import('./kyber')
+);
+
+export const getOdosApi = createDependencyFactoryWithCacheByChain(
+  async (chain, { OdosSwapApi }) => new OdosSwapApi(chain),
+  () => import('./odos')
 );
 
 export const getNameServicesApi = createDependencyInitializerFactory(
