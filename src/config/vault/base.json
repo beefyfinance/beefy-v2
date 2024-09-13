@@ -1,5 +1,537 @@
 [
   {
+    "id": "aero-cow-weth-cbbtc-vault",
+    "name": "cbBTC-WETH",
+    "type": "standard",
+    "token": "cbBTC-WETH",
+    "tokenAddress": "0x4456949402A04848Ff33ba4BdaDEB6C4B0603435",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooCowAeroWETH-cbBTC",
+    "earnedTokenAddress": "0x62eb0ED97386DA1e601C53B4a095Fa509aA24785",
+    "earnContractAddress": "0x62eb0ED97386DA1e601C53B4a095Fa509aA24785",
+    "oracle": "lps",
+    "oracleId": "aero-cow-weth-cbbtc",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["cbBTC", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1726217642,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-weth-cbbtc-rp",
+    "name": "cbBTC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroWETH-cbBTC",
+    "tokenAddress": "0x4456949402A04848Ff33ba4BdaDEB6C4B0603435",
+    "tokenDecimals": 18,
+    "earnedTokens": ["AERO"],
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "earnedOracleIds": ["AERO"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowAeroWETH-cbBTC",
+    "earnContractAddress": "0x61AA0857c75E8E4C41a205D845109dB67c7Fb880",
+    "oracle": "lps",
+    "oracleId": "aero-cow-weth-cbbtc",
+    "status": "active",
+    "createdAt": 1726217641,
+    "platformId": "aerodrome",
+    "assets": ["cbBTC", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-weth-cbbtc",
+    "name": "cbBTC-WETH",
+    "token": "cbBTC-WETH aero",
+    "tokenAddress": "0x70aCDF2Ad0bf2402C957154f944c19Ef4e1cbAE1",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    ],
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "cowAeroWETH-cbBTC",
+    "earnedTokenAddress": "0x4456949402A04848Ff33ba4BdaDEB6C4B0603435",
+    "earnContractAddress": "0x4456949402A04848Ff33ba4BdaDEB6C4B0603435",
+    "oracle": "lps",
+    "oracleId": "aero-cow-weth-cbbtc",
+    "status": "active",
+    "createdAt": 1726217641,
+    "platformId": "beefy",
+    "assets": ["cbBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-usdc-cbbtc-vault",
+    "name": "cbBTC-USDC",
+    "type": "standard",
+    "token": "cbBTC-USDC",
+    "tokenAddress": "0xA07efB136a990E688B2DaB5F229B5459cA66F8B4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooCowAeroUSDC-cbBTC",
+    "earnedTokenAddress": "0x9b4A58FddC209C66ceF30F786c6FE3B8189C6c04",
+    "earnContractAddress": "0x9b4A58FddC209C66ceF30F786c6FE3B8189C6c04",
+    "oracle": "lps",
+    "oracleId": "aero-cow-usdc-cbbtc",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["cbBTC", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1726217642,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-usdc-cbbtc-rp",
+    "name": "cbBTC-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroUSDC-cbBTC",
+    "tokenAddress": "0xA07efB136a990E688B2DaB5F229B5459cA66F8B4",
+    "tokenDecimals": 18,
+    "earnedTokens": ["AERO"],
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "earnedOracleIds": ["AERO"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowAeroUSDC-cbBTC",
+    "earnContractAddress": "0x9575F722ec9d538D408f36B46aC6629A0E8e3ce9",
+    "oracle": "lps",
+    "oracleId": "aero-cow-usdc-cbbtc",
+    "status": "active",
+    "createdAt": 1726217641,
+    "platformId": "aerodrome",
+    "assets": ["cbBTC", "USDC"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-usdc-cbbtc",
+    "name": "cbBTC-USDC",
+    "token": "cbBTC-USDC aero",
+    "tokenAddress": "0x4e962BB3889Bf030368F56810A9c96B83CB3E778",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    ],
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "cowAeroUSDC-cbBTC",
+    "earnedTokenAddress": "0xA07efB136a990E688B2DaB5F229B5459cA66F8B4",
+    "earnContractAddress": "0xA07efB136a990E688B2DaB5F229B5459cA66F8B4",
+    "oracle": "lps",
+    "oracleId": "aero-cow-usdc-cbbtc",
+    "status": "active",
+    "createdAt": 1726217641,
+    "platformId": "beefy",
+    "assets": ["cbBTC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-cbbtc-vault",
+    "name": "cbBTC-WETH",
+    "type": "standard",
+    "token": "cbBTC-WETH",
+    "tokenAddress": "0x9EB3716f675633aA615a826a56f70e254a56b765",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedToken": "mooBeefyUniswapWETH-cbBTC",
+    "earnedTokenAddress": "0xde8C2Bf494ce5Bd8Ab7244Fa17d4e7C14eE17574",
+    "earnContractAddress": "0xde8C2Bf494ce5Bd8Ab7244Fa17d4e7C14eE17574",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-cbbtc",
+    "status": "active",
+    "platformId": "uniswap",
+    "assets": ["cbBTC", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1726217642,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-cbbtc-rp",
+    "name": "cbBTC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-cbBTC",
+    "tokenAddress": "0x9EB3716f675633aA615a826a56f70e254a56b765",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x63b58051bDB4Db1C376035348d9F83f7AdFa9537",
+    "earnedToken": "rcowUniswapBaseWETH-cbBTC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-cbbtc",
+    "status": "active",
+    "createdAt": 1726217641,
+    "platformId": "uniswap",
+    "assets": ["cbBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-cbbtc",
+    "name": "cbBTC-WETH",
+    "type": "cowcentrated",
+    "token": "cbBTC-WETH",
+    "tokenAddress": "0x8c7080564B5A792A33Ef2FD473fbA6364d5495e5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    ],
+    "earnedToken": "cowUniswapBaseWETH-cbBTC",
+    "earnedTokenAddress": "0x9EB3716f675633aA615a826a56f70e254a56b765",
+    "earnContractAddress": "0x9EB3716f675633aA615a826a56f70e254a56b765",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-cbbtc",
+    "status": "active",
+    "createdAt": 1726217641,
+    "platformId": "uniswap",
+    "assets": ["cbBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-cbeth-cbbtc-vault",
+    "name": "cbBTC-cbETH",
+    "type": "standard",
+    "token": "cbBTC-cbETH",
+    "tokenAddress": "0x39A568Ff824D6Cb2A3a861E69F85E381Fe45bC02",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "earnedToken": "mooBeefyBaseSwapcbETH-cbBTC",
+    "earnedTokenAddress": "0x10e361d2734FC82744f7c554b3F50A258E9a9E07",
+    "earnContractAddress": "0x10e361d2734FC82744f7c554b3F50A258E9a9E07",
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-cbeth-cbbtc",
+    "status": "active",
+    "platformId": "baseswap",
+    "assets": ["cbBTC", "cbETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1726217642,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-cbeth-cbbtc-rp",
+    "name": "cbBTC-cbETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowBaseSwapcbETH-cbBTC",
+    "tokenAddress": "0x39A568Ff824D6Cb2A3a861E69F85E381Fe45bC02",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "earnContractAddress": "0x0eC9C41feB6e6Be01D6950cBc19ADc0aDE2c1aF1",
+    "earnedToken": "rcowBaseSwapcbETH-cbBTC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-cbeth-cbbtc",
+    "status": "active",
+    "createdAt": 1726217641,
+    "platformId": "baseswap",
+    "assets": ["cbBTC", "cbETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-cbeth-cbbtc",
+    "name": "cbBTC-cbETH",
+    "type": "cowcentrated",
+    "token": "cbBTC-cbETH",
+    "tokenAddress": "0x4dcEC147060EE0337F1Fc22D43A3912aD979fce9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "depositTokenAddresses": [
+      "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    ],
+    "earnedToken": "cowBaseSwapcbETH-cbBTC",
+    "earnedTokenAddress": "0x39A568Ff824D6Cb2A3a861E69F85E381Fe45bC02",
+    "earnContractAddress": "0x39A568Ff824D6Cb2A3a861E69F85E381Fe45bC02",
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-cbeth-cbbtc",
+    "status": "active",
+    "createdAt": 1726217641,
+    "platformId": "baseswap",
+    "assets": ["cbBTC", "cbETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "feeTier": "0.035",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-weth-cbbtc-vault",
+    "name": "cbBTC-WETH",
+    "type": "standard",
+    "token": "cbBTC-WETH",
+    "tokenAddress": "0xdAEcC7E7631aE8E9EdF7664DE9703a02F4cdE502",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "earnedToken": "mooBeefyBaseSwapWETH-cbBTC",
+    "earnedTokenAddress": "0xC978f4E6fbA86ca3a25C864A48476F0dEcA908e1",
+    "earnContractAddress": "0xC978f4E6fbA86ca3a25C864A48476F0dEcA908e1",
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-weth-cbbtc",
+    "status": "active",
+    "platformId": "baseswap",
+    "assets": ["cbBTC", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1726217642,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-weth-cbbtc-rp",
+    "name": "cbBTC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowBaseSwapWETH-cbBTC",
+    "tokenAddress": "0xdAEcC7E7631aE8E9EdF7664DE9703a02F4cdE502",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "earnContractAddress": "0xe1577A9648dAF1f772c6BC18F31254893226564e",
+    "earnedToken": "rcowBaseSwapWETH-cbBTC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-weth-cbbtc",
+    "status": "active",
+    "createdAt": 1726217641,
+    "platformId": "baseswap",
+    "assets": ["cbBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-weth-cbbtc",
+    "name": "cbBTC-WETH",
+    "type": "cowcentrated",
+    "token": "cbBTC-WETH",
+    "tokenAddress": "0x26F859DA14329022DbA1b87DD1998F18e3b222fe",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    ],
+    "earnedToken": "cowBaseSwapWETH-cbBTC",
+    "earnedTokenAddress": "0xdAEcC7E7631aE8E9EdF7664DE9703a02F4cdE502",
+    "earnContractAddress": "0xdAEcC7E7631aE8E9EdF7664DE9703a02F4cdE502",
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-weth-cbbtc",
+    "status": "active",
+    "createdAt": 1726217641,
+    "platformId": "baseswap",
+    "assets": ["cbBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "feeTier": "0.035",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-usdc-cbbtc-vault",
+    "name": "cbBTC-USDC",
+    "type": "standard",
+    "token": "cbBTC-USDC",
+    "tokenAddress": "0x21Ac1c014628aFfB52bA19B0b4Af982fbd5130cc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "earnedToken": "mooBeefyBaseSwapUSDC-cbBTC",
+    "earnedTokenAddress": "0xd94AC131FDA127F6683914BBd9A0438aFb1cE405",
+    "earnContractAddress": "0xd94AC131FDA127F6683914BBd9A0438aFb1cE405",
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-usdc-cbbtc",
+    "status": "active",
+    "platformId": "baseswap",
+    "assets": ["cbBTC", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1726217642,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-usdc-cbbtc-rp",
+    "name": "cbBTC-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowBaseSwapUSDC-cbBTC",
+    "tokenAddress": "0x21Ac1c014628aFfB52bA19B0b4Af982fbd5130cc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "earnContractAddress": "0xC2dd8E582b30d7bA245D3746B9e7E6b8FC7c8752",
+    "earnedToken": "rcowBaseSwapUSDC-cbBTC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-usdc-cbbtc",
+    "status": "active",
+    "createdAt": 1726217641,
+    "platformId": "baseswap",
+    "assets": ["cbBTC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "baseswap-cow-usdc-cbbtc",
+    "name": "cbBTC-USDC",
+    "type": "cowcentrated",
+    "token": "cbBTC-USDC",
+    "tokenAddress": "0x3eFAEd538d2D68251EE3F466e7738C39Dc77483a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "baseswap",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    ],
+    "earnedToken": "cowBaseSwapUSDC-cbBTC",
+    "earnedTokenAddress": "0x21Ac1c014628aFfB52bA19B0b4Af982fbd5130cc",
+    "earnContractAddress": "0x21Ac1c014628aFfB52bA19B0b4Af982fbd5130cc",
+    "oracle": "lps",
+    "oracleId": "baseswap-cow-usdc-cbbtc",
+    "status": "active",
+    "createdAt": 1726217641,
+    "platformId": "baseswap",
+    "assets": ["cbBTC", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "feeTier": "0.035",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-weth-owo-rp",
     "name": "OwO-WETH Reward Pool",
     "type": "gov",
