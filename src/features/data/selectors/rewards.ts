@@ -33,26 +33,26 @@ export const selectVaultHasActiveMerklCampaigns = createSelector(
   campaigns => !!campaigns && campaigns.length > 0
 );
 
-export function isMerklBaseZapV3Campaign(campaign: MerklRewardsCampaignWithApr): boolean {
+export function isMerklBoostCampaign(campaign: MerklRewardsCampaignWithApr): boolean {
   return (
     campaign.providerId === 'merkl' && campaign.chainId === 'base' && campaign.type === 'zap-v3'
   );
 }
 
-export const selectVaultActiveMerklBaseZapV3Campaigns = createSelector(
+export const selectVaultActiveMerklBoostCampaigns = createSelector(
   selectVaultActiveMerklCampaigns,
   campaigns => {
     if (!campaigns) {
       return undefined;
     }
 
-    const filtered = campaigns.filter(isMerklBaseZapV3Campaign);
+    const filtered = campaigns.filter(isMerklBoostCampaign);
     return filtered.length ? filtered : undefined;
   }
 );
 
-export const selectVaultHasActiveMerklBaseZapV3Campaigns = createSelector(
-  selectVaultActiveMerklBaseZapV3Campaigns,
+export const selectVaultHasActiveMerklBoostCampaigns = createSelector(
+  selectVaultActiveMerklBoostCampaigns,
   campaigns => !!campaigns && campaigns.length > 0
 );
 

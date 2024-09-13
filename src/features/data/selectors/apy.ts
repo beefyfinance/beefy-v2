@@ -24,12 +24,6 @@ import type { TotalApy } from '../reducers/apy';
 import { isEmpty } from '../../../helpers/utils';
 import { selectWalletAddress } from './wallet';
 import { BigNumber } from 'bignumber.js';
-import {
-  isMerklBaseZapV3Campaign,
-  type MerklRewardsCampaignWithApr,
-  selectVaultActiveMerklCampaigns,
-} from './rewards';
-import { omit, partition } from 'lodash-es';
 
 const EMPTY_TOTAL_APY: TotalApy = {
   totalApy: 0,
@@ -227,45 +221,6 @@ type ApyVaultUIData =
       boosted: 'active' | 'prestake' | undefined;
     };
 
-function modifyApyForZapV3Campaigns(
-  original: TotalApy,
-  zapV3Campaigns: MerklRewardsCampaignWithApr[],
-  restCampaigns: MerklRewardsCampaignWithApr[]
-): TotalApy {
-  const newMerklApr = restCampaigns.reduce((acc, c) => acc + c.apr, 0);
-  const newMerklDaily = newMerklApr / 365;
-
-  const merklBoostApr = zapV3Campaigns.reduce((acc, c) => acc + c.apr, 0);
-  const merklBoostDaily = merklBoostApr / 365;
-
-  const originalMerklApr = original.merklApr || 0;
-  const originalMerklDaily = original.merklDaily || 0;
-
-  const modded: TotalApy = {
-    ...omit(original, ['merklApr', 'merklDaily']),
-    totalApy: original.totalApy - originalMerklApr + newMerklApr,
-    totalDaily: original.totalDaily - originalMerklDaily + newMerklDaily,
-  };
-
-  if (newMerklApr > 0) {
-    modded.merklApr = newMerklApr;
-    modded.merklDaily = newMerklDaily;
-  }
-
-  if (merklBoostApr > 0) {
-    modded.merklBoostApr = merklBoostApr;
-    modded.merklBoostDaily = merklBoostDaily;
-  }
-
-  if (modded.boostApr || modded.merklBoostApr) {
-    modded.boostedTotalApy = modded.totalApy + (modded.boostApr || 0) + (modded.merklBoostApr || 0);
-    modded.boostedTotalDaily =
-      modded.totalDaily + (modded.boostDaily || 0) + (modded.merklBoostDaily || 0);
-  }
-
-  return modded;
-}
-
 // TEMP: selector instead of connect/mapStateToProps
 export function selectApyVaultUIData(
   state: BeefyState,
@@ -293,19 +248,6 @@ export function selectApyVaultUIData(
   const boost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
   if (boost) {
     return { status: 'available', type, values, boosted: boost.status };
-  }
-
-  const merklCampaigns = selectVaultActiveMerklCampaigns(state, vaultId);
-  if (merklCampaigns && merklCampaigns.length > 0) {
-    const [zapV3Campaigns, restCampaigns] = partition(merklCampaigns, isMerklBaseZapV3Campaign);
-    if (zapV3Campaigns.length > 0) {
-      return {
-        status: 'available',
-        type,
-        values: modifyApyForZapV3Campaigns(values, zapV3Campaigns, restCampaigns),
-        boosted: 'active',
-      };
-    }
   }
 
   if (!isCowcentratedVault(vault) && !isCowcentratedGovVault(vault)) {

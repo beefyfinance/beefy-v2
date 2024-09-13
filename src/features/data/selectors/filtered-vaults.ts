@@ -18,6 +18,7 @@ import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string
 import escapeStringRegexp from 'escape-string-regexp';
 import type BigNumber from 'bignumber.js';
 import { selectVaultTotalApy } from './apy';
+import { selectVaultHasActiveMerklBoostCampaigns } from './rewards';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
@@ -215,6 +216,10 @@ export const selectTotalVaultCount = (state: BeefyState) => selectAllVisibleVaul
 /** standard boost, or anything with boostedTotalDaily entry */
 export const selectVaultIsBoostedForFilter = (state: BeefyState, vaultId: VaultEntity['id']) => {
   if (selectIsVaultPreStakedOrBoosted(state, vaultId)) {
+    return true;
+  }
+
+  if (selectVaultHasActiveMerklBoostCampaigns(state, vaultId)) {
     return true;
   }
 

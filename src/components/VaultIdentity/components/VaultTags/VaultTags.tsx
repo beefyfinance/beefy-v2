@@ -41,8 +41,8 @@ import clsx from 'clsx';
 import { getIcon } from '../../../../helpers/iconSrc';
 import { selectPlatformById } from '../../../../features/data/selectors/platforms';
 import {
-  selectVaultActiveMerklBaseZapV3Campaigns,
-  selectVaultHasActiveMerklBaseZapV3Campaigns,
+  selectVaultActiveMerklBoostCampaigns,
+  selectVaultHasActiveMerklBoostCampaigns,
 } from '../../../../features/data/selectors/rewards';
 
 const useStyles = makeStyles(styles);
@@ -80,7 +80,7 @@ export const VaultMerklBoostTag = memo(function VaultMerklBoostTag({ vaultId }) 
   const classes = useStyles();
   const { isOverflowing, ref } = useIsOverflowingHorizontally();
   const activeCampaigns = useAppSelector(state =>
-    selectVaultActiveMerklBaseZapV3Campaigns(state, vaultId)
+    selectVaultActiveMerklBoostCampaigns(state, vaultId)
   );
   const campaign = useAppSelector(state =>
     selectOffchainBoostCampaignByType(state, activeCampaigns?.[0]?.type)
@@ -348,7 +348,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   const isGov = isGovVault(vault);
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
   const hasBaseActiveMerklCampaigns = useAppSelector(state =>
-    selectVaultHasActiveMerklBaseZapV3Campaigns(state, vaultId)
+    selectVaultHasActiveMerklBoostCampaigns(state, vaultId)
   );
 
   // Tag 1: Platform
