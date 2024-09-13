@@ -213,7 +213,7 @@ export const selectFilteredVaultCount = createSelector(selectFilteredVaults, ids
 
 export const selectTotalVaultCount = (state: BeefyState) => selectAllVisibleVaultIds(state).length;
 
-/** standard boost, or anything with boostedTotalDaily entry */
+/** standard boost, off chain boost, or anything with boostedTotalDaily entry */
 export const selectVaultIsBoostedForFilter = (state: BeefyState, vaultId: VaultEntity['id']) => {
   if (selectIsVaultPreStakedOrBoosted(state, vaultId)) {
     return true;
