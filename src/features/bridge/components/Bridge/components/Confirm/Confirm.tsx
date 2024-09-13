@@ -141,6 +141,12 @@ const ConfirmReady = memo(function ConfirmReady() {
             />
             <div className={classes.networkName}> {toChain.name}</div>
           </div>
+          {quote.receiver ? (
+            <>
+              <div className={classes.via}>{t('Bridge-At')}</div>
+              <div className={classes.receiver}>{quote.receiver}</div>
+            </>
+          ) : null}
         </div>
       </div>
       <div className={classes.buttonsContainer}>

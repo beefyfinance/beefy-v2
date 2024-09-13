@@ -13,6 +13,7 @@ export interface IBridgeApi {
     from: ChainEntity,
     to: ChainEntity,
     input: InputTokenAmount<TokenErc20>,
+    receiver: string | undefined,
     state: BeefyState
   ): Promise<IBridgeQuote<BeefyAnyBridgeConfig>>;
 

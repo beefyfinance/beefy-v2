@@ -92,6 +92,11 @@ export const styles = (theme: Theme) => ({
     height: '16px',
     fill: theme.palette.text.light,
   },
+  receiver: {
+    ...theme.typography['subline-sm'],
+    textTransform: 'none' as const,
+    wordBreak: 'break-all' as const,
+  },
   buttonsContainer: {
     marginTop: 'auto',
   },

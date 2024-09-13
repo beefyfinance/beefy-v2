@@ -169,6 +169,8 @@ export function selectBridgeTxState(state: BeefyState) {
 
   const stepContent = selectStepperStepContent(state);
   if (stepContent === StepContent.StartTx) {
+    return { step: currentItem.step, status: 'building' };
+  } else if (stepContent === StepContent.WalletTx) {
     return { step: currentItem.step, status: 'pending' };
   } else if (stepContent === StepContent.WaitingTx) {
     return { step: currentItem.step, status: 'mining' };
