@@ -6,11 +6,11 @@ import clsx from 'clsx';
 import { VaultDailyUsdStat } from './VaultDailyUsdStat';
 import { VaultPnlStat } from './VaultPnlStat';
 import { VaultAtDepositStat } from './VaultAtDepositStat';
-import { VaultNowStat } from './VaultNowStat';
 import { VaultApyStat } from './VaultApyStat';
 import { useAppSelector } from '../../store';
 import { selectVaultPnl } from '../../features/data/selectors/analytics';
 import { VaultYieldRewardsStat } from './VaultYieldRewardsStat';
+import { VaultDepositStat } from './VaultDepositStat';
 
 const useStyles = makeStyles(styles);
 
@@ -27,19 +27,16 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
       <div className={clsx(classes.rowDashboard)}>
         <div className={clsx(classes.column, classes.hideSm)}>
           <VaultAtDepositStat
-            contentClassName={classes.contentContainer}
             pnlData={pnlData}
-            triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
+            triggerClassName={clsx(classes.textOverflow)}
             showLabel={false}
             vaultId={vaultId}
             walletAddress={address}
           />
         </div>
         <div className={clsx(classes.column, classes.hideSm)}>
-          <VaultNowStat
-            contentClassName={classes.contentContainer}
-            pnlData={pnlData}
-            triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
+          <VaultDepositStat
+            triggerClassName={clsx(classes.textOverflow)}
             showLabel={false}
             vaultId={vaultId}
             walletAddress={address}
@@ -61,7 +58,7 @@ export const VaultDashboardStats = memo<VaultStatsProps>(function VaultStats({ v
         </div>
         <div className={clsx(classes.column, classes.hideMd)}>
           <VaultDailyUsdStat
-            triggerClassName={clsx(classes.textOverflow, classes.maxWidth80)}
+            triggerClassName={clsx(classes.textOverflow)}
             showLabel={false}
             vaultId={vaultId}
             walletAddress={address}

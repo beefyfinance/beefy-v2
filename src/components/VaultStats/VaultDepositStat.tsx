@@ -10,7 +10,7 @@ import {
 } from '../../features/data/selectors/balance';
 import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
 import { selectIsBalanceHidden, selectWalletAddress } from '../../features/data/selectors/wallet';
-import { VaultValueStat } from '../VaultValueStat';
+import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat';
 import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip';
 import { selectTokenByAddress } from '../../features/data/selectors/tokens';
 import {
@@ -30,8 +30,9 @@ const useStyles = makeStyles(styles);
 
 export type VaultDepositStatProps = {
   vaultId: VaultEntity['id'];
-  className?: string;
-};
+  walletAddress?: string;
+  label?: string;
+} & Omit<VaultValueStatProps, 'label' | 'tooltip' | 'value' | 'subValue' | 'loading'>;
 
 type SelectDataReturn =
   | { loading: true }
@@ -50,9 +51,13 @@ type SelectDataReturn =
     };
 
 // TEMP: selector instead of connect/mapStateToProps
-function selectData(state: BeefyState, vaultId: VaultEntity['id']): SelectDataReturn {
+function selectData(
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  maybeWalletAddress?: string
+): SelectDataReturn {
   const vault = selectVaultById(state, vaultId);
-  const walletAddress = selectWalletAddress(state);
+  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
   if (!walletAddress) {
     return { loading: false, totalDeposit: BIG_ZERO };
   }
@@ -64,16 +69,28 @@ function selectData(state: BeefyState, vaultId: VaultEntity['id']): SelectDataRe
     return { loading: true };
   }
 
-  const totalDeposit = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(state, vault.id);
+  const totalDeposit = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(
+    state,
+    vault.id,
+    walletAddress
+  );
   if (!totalDeposit.gt(0)) {
     return { loading: false, totalDeposit: BIG_ZERO };
   }
 
   const hideBalance = selectIsBalanceHidden(state);
-  const notEarning = selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vault.id);
+  const notEarning = selectUserVaultBalanceNotInActiveBoostInDepositToken(
+    state,
+    vault.id,
+    walletAddress
+  );
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const totalDepositUsd = selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vaultId);
-  const vaultDeposit = selectUserVaultBalanceInDepositToken(state, vault.id);
+  const totalDepositUsd = selectUserVaultBalanceInUsdIncludingBoostsBridged(
+    state,
+    vaultId,
+    walletAddress
+  );
+  const vaultDeposit = selectUserVaultBalanceInDepositToken(state, vault.id, walletAddress);
 
   return {
     loading: false,
@@ -88,22 +105,19 @@ function selectData(state: BeefyState, vaultId: VaultEntity['id']): SelectDataRe
 
 export const VaultDepositStat = memo<VaultDepositStatProps>(function VaultDepositStat({
   vaultId,
-  className,
+  walletAddress,
+  label = 'VaultStat-DEPOSITED',
+  ...passthrough
 }) {
-  const label = 'VaultStat-DEPOSITED';
-  const data = useAppSelector(state => selectData(state, vaultId));
+  const data = useAppSelector(state => selectData(state, vaultId, walletAddress));
   const classes = useStyles();
 
   if (data.loading) {
-    return (
-      <VaultValueStat label={label} value="-" blur={false} loading={true} className={className} />
-    );
+    return <VaultValueStat label={label} value="-" blur={false} loading={true} {...passthrough} />;
   }
 
   if (!('vaultDeposit' in data) || data.totalDeposit.isZero()) {
-    return (
-      <VaultValueStat label={label} value="0" blur={false} loading={false} className={className} />
-    );
+    return <VaultValueStat label={label} value="0" blur={false} loading={false} {...passthrough} />;
   }
 
   const hasDisplacedDeposit = data.vaultDeposit.lt(data.totalDeposit) || data.notEarning.gt(0);
@@ -135,8 +149,12 @@ export const VaultDepositStat = memo<VaultDepositStatProps>(function VaultDeposi
       subValue={formatLargeUsd(data.totalDepositUsd)}
       blur={data.hideBalance}
       loading={false}
-      className={className}
-      tooltip={hasDisplacedDeposit ? <VaultDepositedTooltip vaultId={vaultId} /> : undefined}
+      tooltip={
+        hasDisplacedDeposit ? (
+          <VaultDepositedTooltip vaultId={vaultId} walletAddress={walletAddress} />
+        ) : undefined
+      }
+      {...passthrough}
     />
   );
 });
