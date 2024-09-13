@@ -16,7 +16,7 @@ import {
   DashboardDataStatus,
   selectDashboardUserRewardsOrStatusByVaultId,
 } from '../../features/data/selectors/dashboard';
-import { BIG_ZERO, bigNumberToStringDeep } from '../../helpers/big-number';
+import { BIG_ZERO } from '../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
