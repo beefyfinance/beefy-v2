@@ -149,7 +149,7 @@ export const selectYieldStatsByVaultId = (
       yearlyUsd: BIG_ZERO,
       yearlyTokens: BIG_ZERO,
       oraclePrice,
-      tokenDecimals: depositToken.decimals,
+      depositToken,
     };
   }
 
@@ -172,7 +172,7 @@ export const selectYieldStatsByVaultId = (
   if (apyData.boostApr !== undefined && apyData.boostDaily !== undefined) {
     const activeBoostId = first(selectActiveVaultBoostIds(state, vaultId));
     if (activeBoostId) {
-      const sharesInBoost = selectBoostUserBalanceInToken(state, activeBoostId);
+      const sharesInBoost = selectBoostUserBalanceInToken(state, activeBoostId, walletAddress);
       if (sharesInBoost.gt(BIG_ZERO)) {
         const tokensInBoost = sharesInBoost
           .multipliedBy(ppfs)
