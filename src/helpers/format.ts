@@ -374,12 +374,13 @@ function toScale(value: BigNumber, minScale: Scale = Scale.Thousand) {
     return { value: value, unit: '', overMax: false };
   }
 
-  const scale = Math.trunc(value.e / 3) * 3;
-  if (scale < minScale || scale < 0 || !isScale(scale)) {
+  const rawScale = Math.trunc(value.e / 3) * 3;
+  if (rawScale < minScale || rawScale < 0) {
     return { value: value, unit: '', overMax: false };
   }
 
-  const overMax = scale > maxScale;
+  const overMax = rawScale > maxScale;
+  const scale = overMax || !isScale(rawScale) ? maxScale : rawScale;
   const suffix = overMax ? scaleSuffixes[maxScale] : scaleSuffixes[scale];
   const newValue = value.shiftedBy(-suffix.e);
   return { value: newValue, unit: suffix.short, overMax };
