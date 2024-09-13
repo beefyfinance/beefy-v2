@@ -27,8 +27,8 @@ import { selectChainById } from '../../../data/selectors/chains';
 import type { BoostSocials } from '../../../data/apis/config-types';
 import type { ChainEntity } from '../../../data/entities/chain';
 import {
-  selectVaultActiveMerklBaseZapV3Campaigns,
-  selectVaultHasActiveMerklBaseZapV3Campaigns,
+  selectVaultActiveMerklBoostCampaigns,
+  selectVaultHasActiveMerklBoostCampaigns,
 } from '../../../data/selectors/rewards';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
@@ -41,7 +41,7 @@ export type BoostCardProps = {
 
 export const BoostCard = memo<BoostCardProps>(function BoostCard({ vaultId }) {
   const hasBaseActiveMerklCampaigns = useAppSelector(state =>
-    selectVaultHasActiveMerklBaseZapV3Campaigns(state, vaultId)
+    selectVaultHasActiveMerklBoostCampaigns(state, vaultId)
   );
 
   return hasBaseActiveMerklCampaigns ? (
@@ -55,7 +55,7 @@ export const MerklBoostCard = memo<BoostCardProps>(function MerklBoostCard({ vau
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   const activeCampaigns = useAppSelector(state =>
-    selectVaultActiveMerklBaseZapV3Campaigns(state, vaultId)
+    selectVaultActiveMerklBoostCampaigns(state, vaultId)
   );
 
   const campaign = useAppSelector(state =>

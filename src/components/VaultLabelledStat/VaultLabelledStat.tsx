@@ -58,17 +58,17 @@ export const VaultLabelledStat = memo<VaultLabelledStatProps>(function VaultLabe
             onTriggerClick={handleTooltipClick}
           >
             {children}
-            {subValue && (
-              <div
-                className={clsx(classes.subValue, {
-                  [classes.blurValue]: blur,
-                  [classes.lineThroughValue]: boosted,
-                })}
-              >
-                {subValue}
-              </div>
-            )}
           </Tooltip>
+          {subValue && (
+            <div
+              className={clsx(classes.subValue, {
+                [classes.blurValue]: blur,
+                [classes.lineThroughValue]: boosted,
+              })}
+            >
+              {subValue}
+            </div>
+          )}
         </div>
       ) : (
         <div className={contentClassName}>

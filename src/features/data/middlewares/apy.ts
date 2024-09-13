@@ -3,6 +3,7 @@ import { createListenerMiddleware, isFulfilled } from '@reduxjs/toolkit';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import { fetchApyAction, recalculateTotalApyAction } from '../actions/apy';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
+import { fetchOffChainCampaignsAction } from '../actions/rewards';
 
 const apyListener = createListenerMiddleware<BeefyState>();
 
@@ -10,7 +11,8 @@ apyListener.startListening({
   matcher: isFulfilled(
     fetchApyAction,
     fetchAllContractDataByChainAction,
-    reloadBalanceAndAllowanceAndGovRewardsAndBoostData
+    reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
+    fetchOffChainCampaignsAction
   ),
   effect: async (action, { dispatch, delay, cancelActiveListeners }) => {
     // Cancel other instances of this callback

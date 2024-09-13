@@ -2,11 +2,11 @@ import type { BeefyState } from '../../../redux-types';
 import {
   isCowcentratedGovVault,
   isCowcentratedVault,
-  isGovVault,
   isVaultActive,
   type VaultEntity,
 } from '../entities/vault';
 import {
+  selectBoostUserBalanceInToken,
   selectUserDepositedVaultIds,
   selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
   selectUserVaultBalanceInUsdIncludingBoostsBridged,
@@ -19,17 +19,12 @@ import {
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { selectUserActiveBoostBalanceInToken, selectVaultCurrentBoostIdWithStatus } from './boosts';
+import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from './boosts';
 import type { TotalApy } from '../reducers/apy';
 import { isEmpty } from '../../../helpers/utils';
 import { selectWalletAddress } from './wallet';
 import { BigNumber } from 'bignumber.js';
-import {
-  isMerklBaseZapV3Campaign,
-  type MerklRewardsCampaignWithApr,
-  selectVaultActiveMerklCampaigns,
-} from './rewards';
-import { omit, partition } from 'lodash-es';
+import { first } from 'lodash-es';
 
 const EMPTY_TOTAL_APY: TotalApy = {
   totalApy: 0,
@@ -163,48 +158,60 @@ export const selectYieldStatsByVaultId = (
     vault.id,
     walletAddress
   );
-  const vaultUsdBalance = tokenBalance.times(oraclePrice);
   const apyData = selectVaultTotalApy(state, vault.id);
+  const ppfs = selectVaultPricePerFullShare(state, vaultId);
+  const sources = [
+    // base total apy is applied to the whole of the user's balance
+    {
+      daily: apyData.totalDaily,
+      yearly: apyData.totalApy,
+      tokens: tokenBalance,
+    },
+  ];
 
-  let dailyUsd: BigNumber;
-  let dailyTokens: BigNumber;
-  let yearlyTokens: BigNumber;
-  let yearlyUsd: BigNumber;
-
-  if (isGovVault(vault)) {
-    dailyUsd = vaultUsdBalance.times(apyData.totalDaily);
-    dailyTokens = tokenBalance.times(apyData.totalDaily);
-    yearlyTokens = tokenBalance.times(apyData.totalApy);
-    yearlyUsd = vaultUsdBalance.times(apyData.totalApy);
-  } else {
-    const ppfs = selectVaultPricePerFullShare(state, vaultId);
-    const boostBalance = selectUserActiveBoostBalanceInToken(state, vaultId, walletAddress)
-      .multipliedBy(ppfs)
-      .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR);
-    const boostBalanceUsd = boostBalance.times(oraclePrice);
-
-    const nonBoostBalanceInTokens = tokenBalance.minus(boostBalance);
-    const nonBoostBalanceInUsd = nonBoostBalanceInTokens.times(oraclePrice);
-
-    dailyUsd = nonBoostBalanceInUsd.times(apyData.totalDaily);
-    dailyTokens = nonBoostBalanceInTokens.times(apyData.totalDaily);
-    yearlyTokens = nonBoostBalanceInTokens.times(apyData.totalApy);
-    yearlyUsd = nonBoostBalanceInUsd.times(apyData.totalApy);
-
-    if (
-      apyData.boostedTotalDaily !== undefined &&
-      apyData.boostedTotalApy &&
-      boostBalance.gt(BIG_ZERO)
-    ) {
-      dailyUsd = dailyUsd.plus(boostBalanceUsd.times(apyData.boostedTotalDaily));
-      dailyTokens = dailyTokens.plus(boostBalance.times(apyData.boostedTotalDaily));
-      yearlyTokens = yearlyTokens.plus(boostBalance.times(apyData.boostedTotalApy));
-      yearlyUsd = yearlyUsd.plus(boostBalanceUsd.times(apyData.boostedTotalApy));
+  if (apyData.boostApr !== undefined && apyData.boostDaily !== undefined) {
+    const activeBoostId = first(selectActiveVaultBoostIds(state, vaultId));
+    if (activeBoostId) {
+      const sharesInBoost = selectBoostUserBalanceInToken(state, activeBoostId);
+      if (sharesInBoost.gt(BIG_ZERO)) {
+        const tokensInBoost = sharesInBoost
+          .multipliedBy(ppfs)
+          .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR);
+        // boost apy is applied only to the user's balance in the boost
+        sources.push({
+          daily: apyData.boostDaily,
+          yearly: apyData.boostApr,
+          tokens: tokensInBoost,
+        });
+      }
     }
   }
 
+  if (apyData.merklBoostApr !== undefined && apyData.merklBoostDaily !== undefined) {
+    // merkl boost apy is applied to the whole of the user's balance
+    sources.push({
+      daily: apyData.merklBoostDaily,
+      yearly: apyData.merklBoostApr,
+      tokens: tokenBalance,
+    });
+  }
+
+  const total = sources.reduce(
+    (acc, source) => {
+      for (const key of ['daily', 'yearly']) {
+        acc[key] = acc[key].plus(source.tokens.multipliedBy(source[key]));
+      }
+      return acc;
+    },
+    { daily: BIG_ZERO, yearly: BIG_ZERO }
+  );
+
+  const dailyTokens = total.daily;
+  const dailyUsd = total.daily.times(oraclePrice);
   const monthlyTokens = dailyTokens.times(30);
   const monthlyUsd = dailyUsd.times(30);
+  const yearlyTokens = total.yearly;
+  const yearlyUsd = total.yearly.times(oraclePrice);
 
   return {
     dailyUsd,
@@ -214,7 +221,7 @@ export const selectYieldStatsByVaultId = (
     yearlyTokens,
     yearlyUsd,
     oraclePrice,
-    tokenDecimals: depositToken.decimals,
+    depositToken,
   };
 };
 
@@ -226,45 +233,6 @@ type ApyVaultUIData =
       values: TotalApy;
       boosted: 'active' | 'prestake' | undefined;
     };
-
-function modifyApyForZapV3Campaigns(
-  original: TotalApy,
-  zapV3Campaigns: MerklRewardsCampaignWithApr[],
-  restCampaigns: MerklRewardsCampaignWithApr[]
-): TotalApy {
-  const newMerklApr = restCampaigns.reduce((acc, c) => acc + c.apr, 0);
-  const newMerklDaily = newMerklApr / 365;
-
-  const merklBoostApr = zapV3Campaigns.reduce((acc, c) => acc + c.apr, 0);
-  const merklBoostDaily = merklBoostApr / 365;
-
-  const originalMerklApr = original.merklApr || 0;
-  const originalMerklDaily = original.merklDaily || 0;
-
-  const modded: TotalApy = {
-    ...omit(original, ['merklApr', 'merklDaily']),
-    totalApy: original.totalApy - originalMerklApr + newMerklApr,
-    totalDaily: original.totalDaily - originalMerklDaily + newMerklDaily,
-  };
-
-  if (newMerklApr > 0) {
-    modded.merklApr = newMerklApr;
-    modded.merklDaily = newMerklDaily;
-  }
-
-  if (merklBoostApr > 0) {
-    modded.merklBoostApr = merklBoostApr;
-    modded.merklBoostDaily = merklBoostDaily;
-  }
-
-  if (modded.boostApr || modded.merklBoostApr) {
-    modded.boostedTotalApy = modded.totalApy + (modded.boostApr || 0) + (modded.merklBoostApr || 0);
-    modded.boostedTotalDaily =
-      modded.totalDaily + (modded.boostDaily || 0) + (modded.merklBoostDaily || 0);
-  }
-
-  return modded;
-}
 
 // TEMP: selector instead of connect/mapStateToProps
 export function selectApyVaultUIData(
@@ -293,19 +261,6 @@ export function selectApyVaultUIData(
   const boost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
   if (boost) {
     return { status: 'available', type, values, boosted: boost.status };
-  }
-
-  const merklCampaigns = selectVaultActiveMerklCampaigns(state, vaultId);
-  if (merklCampaigns && merklCampaigns.length > 0) {
-    const [zapV3Campaigns, restCampaigns] = partition(merklCampaigns, isMerklBaseZapV3Campaign);
-    if (zapV3Campaigns.length > 0) {
-      return {
-        status: 'available',
-        type,
-        values: modifyApyForZapV3Campaigns(values, zapV3Campaigns, restCampaigns),
-        boosted: 'active',
-      };
-    }
   }
 
   if (!isCowcentratedVault(vault) && !isCowcentratedGovVault(vault)) {

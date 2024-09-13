@@ -6,7 +6,6 @@ import { getBoostStatusFromContractState } from '../reducers/boosts';
 import { selectBoostUserBalanceInToken, selectBoostUserRewardsInToken } from './balance';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { selectVaultActiveMerklBaseZapV3Campaigns } from './rewards';
 import type { BeefyOffChainRewardsCampaignType } from '../apis/beefy/beefy-api-types';
 
 export const selectBoostById = createCachedSelector(
@@ -45,12 +44,7 @@ export const selectIsVaultBoosted = createCachedSelector(
 export const selectIsVaultPreStakedOrBoosted = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
-  selectVaultActiveMerklBaseZapV3Campaigns,
-  (activeBoostIds, prestakeBoostIds, baseActiveMerklCampaigns) =>
-    activeBoostIds.length + prestakeBoostIds.length > 0 ||
-    (baseActiveMerklCampaigns &&
-      baseActiveMerklCampaigns.length > 0 &&
-      baseActiveMerklCampaigns.some(c => c.type === 'zap-v3'))
+  (activeBoostIds, prestakeBoostIds) => activeBoostIds.length + prestakeBoostIds.length > 0
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectVaultCurrentBoostId = createCachedSelector(

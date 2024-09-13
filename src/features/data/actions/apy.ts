@@ -5,11 +5,16 @@ import { isCowcentratedGovVault, isGovVault, type VaultEntity } from '../entitie
 import type { TotalApy } from '../reducers/apy';
 import { selectAllVaultIdsIncludingHidden, selectVaultById } from '../selectors/vaults';
 import { selectActiveVaultBoostIds } from '../selectors/boosts';
-import { first } from 'lodash-es';
+import { first, partition } from 'lodash-es';
 import { compoundInterest, yearlyToDaily } from '../../../helpers/number';
 import { isDefined } from '../utils/array-utils';
 import { getApiApyDataComponents } from '../../../helpers/apy';
 import type { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api-types';
+import {
+  isMerklBoostCampaign,
+  type MerklRewardsCampaignWithApr,
+  selectVaultActiveMerklCampaigns,
+} from '../selectors/rewards';
 
 export interface FetchAllApyFulfilledPayload {
   data: BeefyAPIApyBreakdownResponse;
@@ -124,8 +129,55 @@ export const recalculateTotalApyAction = createAsyncThunk<
       }
     }
 
+    // Mark CLM Pools as boosted if they have specific active merkl campaigns
+    const merklCampaigns = selectVaultActiveMerklCampaigns(state, vaultId);
+    if (merklCampaigns && merklCampaigns.length > 0) {
+      const [boostCampaigns, restCampaigns] = partition(merklCampaigns, isMerklBoostCampaign);
+      if (boostCampaigns.length > 0) {
+        modifyApyMerklBoostCampaigns(total, boostCampaigns, restCampaigns);
+      }
+    }
+
     totals[vaultId] = total;
   }
 
   return { totals };
 });
+
+/** mutates the total object */
+function modifyApyMerklBoostCampaigns(
+  total: TotalApy,
+  boostCampaigns: MerklRewardsCampaignWithApr[],
+  restCampaigns: MerklRewardsCampaignWithApr[]
+) {
+  const newMerklApr = restCampaigns.reduce((acc, c) => acc + c.apr, 0);
+  const newMerklDaily = newMerklApr / 365;
+
+  const merklBoostApr = boostCampaigns.reduce((acc, c) => acc + c.apr, 0);
+  const merklBoostDaily = merklBoostApr / 365;
+
+  const originalMerklApr = total.merklApr || 0;
+  const originalMerklDaily = total.merklDaily || 0;
+
+  delete total.merklApr;
+  delete total.merklDaily;
+
+  total.totalApy = total.totalApy - originalMerklApr + newMerklApr;
+  total.totalDaily = total.totalDaily - originalMerklDaily + newMerklDaily;
+
+  if (newMerklApr > 0) {
+    total.merklApr = newMerklApr;
+    total.merklDaily = newMerklDaily;
+  }
+
+  if (merklBoostApr > 0) {
+    total.merklBoostApr = merklBoostApr;
+    total.merklBoostDaily = merklBoostDaily;
+  }
+
+  if (total.boostApr || total.merklBoostApr) {
+    total.boostedTotalApy = total.totalApy + (total.boostApr || 0) + (total.merklBoostApr || 0);
+    total.boostedTotalDaily =
+      total.totalDaily + (total.boostDaily || 0) + (total.merklBoostDaily || 0);
+  }
+}

@@ -2,7 +2,6 @@ import { memo } from 'react';
 import type { VaultEntity } from '../../features/data/entities/vault';
 import { useAppSelector } from '../../store';
 import { selectVaultById } from '../../features/data/selectors/vaults';
-import { selectIsVaultPreStakedOrBoosted } from '../../features/data/selectors/boosts';
 import clsx from 'clsx';
 import type { ChainEntity } from '../../features/data/entities/chain';
 import { selectChainById } from '../../features/data/selectors/chains';
@@ -13,6 +12,7 @@ import { VaultTags } from './components/VaultTags';
 import { Link } from 'react-router-dom';
 import { punctuationWrap } from '../../helpers/string';
 import { getNetworkSrc } from '../../helpers/networkSrc';
+import { selectVaultIsBoostedForFilter } from '../../features/data/selectors/filtered-vaults';
 
 const useStyles = makeStyles(styles);
 
@@ -23,7 +23,7 @@ export type VaultNameProps = {
 export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, isLink }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const isBoosted = useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId));
+  const isBoosted = useAppSelector(state => selectVaultIsBoostedForFilter(state, vaultId));
 
   if (isLink) {
     return (
