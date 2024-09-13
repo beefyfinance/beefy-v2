@@ -44,6 +44,7 @@ import {
   selectUserVaultBalanceInUsdIncludingBoostsBridged,
 } from './balance';
 import { selectIsUserBalanceAvailable } from './data-loader';
+import { selectYieldStatsByVaultId } from './apy';
 
 export enum DashboardDataStatus {
   Loading,
@@ -476,6 +477,16 @@ export const selectDashboardUserVaultsPnl = (state: BeefyState, walletAddress: s
   const vaults: Record<string, UserVaultPnl> = {};
   for (const vaultId of userVaults) {
     vaults[vaultId] = selectVaultPnl(state, vaultId, walletAddress);
+  }
+  return vaults;
+};
+
+export const selectDashboardUserVaultsDailyYield = (state: BeefyState, walletAddress: string) => {
+  const userVaults = selectUserDepositedVaultIds(state, walletAddress);
+  const vaults: Record<string, BigNumber> = {};
+  for (const vaultId of userVaults) {
+    const { dailyUsd } = selectYieldStatsByVaultId(state, vaultId, walletAddress);
+    vaults[vaultId] = dailyUsd;
   }
   return vaults;
 };
