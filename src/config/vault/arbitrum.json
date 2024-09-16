@@ -18179,7 +18179,7 @@
     "oracle": "lps",
     "oracleId": "curve-arb-mim",
     "status": "eol",
-    "retiredAt": 1726494192,
+    "retiredAt": 1726494192, 
     "retireReason": "rewards",
     "createdAt": 1701769111,
     "platformId": "abracadabra",
