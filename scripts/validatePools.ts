@@ -91,6 +91,8 @@ const nonHarvestOnDepositPools = [
   'silo-op-tbtc-tbtc',
   'sushi-cow-arb-wbtc-tbtc-vault',
   'pancake-cow-arb-usdt+-usd+-vault',
+  'aero-cow-weth-cbbtc-vault',
+  'aero-cow-usdc-cbbtc-vault',
 ];
 const excludedAbPools = [
   'gmx-arb-near-usdc',
