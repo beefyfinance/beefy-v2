@@ -336,7 +336,7 @@ export const config = {
   arbitrum: {
     name: 'Arbitrum',
     chainId: 42161,
-    rpc: ['https://arb1.arbitrum.io/rpc'],
+    rpc: ['https://rpc.ankr.com/arbitrum'],
     explorerUrl: 'https://arbiscan.io',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -350,7 +350,7 @@ export const config = {
         symbol: 'ETH',
         decimals: 18,
       },
-      rpcUrls: ['https://arb1.arbitrum.io/rpc'],
+      rpcUrls: ['https://rpc.ankr.com/arbitrum'],
       blockExplorerUrls: ['https://arbiscan.io/'],
     },
     gas: {

@@ -189,7 +189,7 @@
     "network": "fantom",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "fantom-beethovenx",
         "poolId": "0xaac7b8d6d7009428d6ddad895bdf50c6fcbbe2c000000000000000000000080d",
         "poolType": "composable-stable",
@@ -361,7 +361,7 @@
     "network": "fantom",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "fantom-beethovenx",
         "poolId": "0x593000b762de3c465855336e95c8bb46080af064000000000000000000000760",
         "poolType": "composable-stable",

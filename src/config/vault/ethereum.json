@@ -48,7 +48,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "ethereum-balancer",
         "poolId": "0x264062ca46a1322c2e6464471764089e01f22f1900000000000000000000066b",
         "poolType": "composable-stable",
@@ -84,7 +84,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "ethereum-balancer",
         "poolId": "0x88794c65550deb6b4087b7552ecf295113794410000000000000000000000648",
         "poolType": "composable-stable",
@@ -121,7 +121,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "ethereum-balancer",
         "poolId": "0x58aadfb1afac0ad7fca1148f3cde6aedf5236b6d00000000000000000000067f",
         "poolType": "composable-stable",
@@ -157,7 +157,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "ethereum-balancer",
         "poolId": "0xb819feef8f0fcdc268afe14162983a69f6bf179e000000000000000000000689",
         "poolType": "composable-stable",
@@ -193,7 +193,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "ethereum-balancer",
         "poolId": "0xdb1f2e1655477d08fb0992f82eede0053b8cd3820000000000000000000006ae",
         "poolType": "composable-stable",
@@ -229,7 +229,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "ethereum-balancer",
         "poolId": "0xed0df9cd16d806e8a523805e53cf0c56e6db4d1d000000000000000000000687",
         "poolType": "composable-stable",
@@ -299,9 +299,9 @@
     "tokenAddress": "0xC2AA60465BfFa1A88f5bA471a59cA0435c3ec5c1",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x4D75a9342113c106F48117d81e2952A5828d1B5F",
     "earnedToken": "mooAuraGyroGYD-USDC",
     "earnedTokenAddress": "0x4D75a9342113c106F48117d81e2952A5828d1B5F",
-    "earnContractAddress": "0x4D75a9342113c106F48117d81e2952A5828d1B5F",
     "oracle": "lps",
     "oracleId": "aura-gyro-gyd-usdc",
     "status": "active",
@@ -312,7 +312,19 @@
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xc2aa60465bffa1a88f5ba471a59ca0435c3ec5c100020000000000000000062c/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xc2aa60465bffa1a88f5ba471a59ca0435c3ec5c100020000000000000000062c/remove-liquidity",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "balancer-pool",
+        "ammId": "ethereum-balancer",
+        "poolId": "0xc2aa60465bffa1a88f5ba471a59ca0435c3ec5c100020000000000000000062c",
+        "poolType": "gyroe",
+        "tokens": [
+          "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "0xe07F9D810a48ab5c3c914BA3cA53AF14E4491e8A"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-gyro-gyd-sdai",
@@ -322,9 +334,9 @@
     "tokenAddress": "0x1CCE5169bDe03f3d5aD0206f6BD057953539DAE6",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x858B326659D543CdF80199b95E9338fDc8C7B953",
     "earnedToken": "mooAuraGyroGYD-sDAI",
     "earnedTokenAddress": "0x858B326659D543CdF80199b95E9338fDc8C7B953",
-    "earnContractAddress": "0x858B326659D543CdF80199b95E9338fDc8C7B953",
     "oracle": "lps",
     "oracleId": "aura-gyro-gyd-sdai",
     "status": "active",
@@ -335,7 +347,19 @@
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x1cce5169bde03f3d5ad0206f6bd057953539dae600020000000000000000062b/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x1cce5169bde03f3d5ad0206f6bd057953539dae600020000000000000000062b/remove-liquidity",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "balancer-pool",
+        "ammId": "ethereum-balancer",
+        "poolId": "0x1cce5169bde03f3d5ad0206f6bd057953539dae600020000000000000000062b",
+        "poolType": "gyroe",
+        "tokens": [
+          "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+          "0xe07F9D810a48ab5c3c914BA3cA53AF14E4491e8A"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-gyro-gyd-gho",
@@ -345,9 +369,9 @@
     "tokenAddress": "0xaA7a70070E7495fe86c67225329DbD39BAa2F63b",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x5ad11ef89Cbe3D27F8876F06CDC26c50b633e561",
     "earnedToken": "mooAuraGyroGHO-GYD",
     "earnedTokenAddress": "0x5ad11ef89Cbe3D27F8876F06CDC26c50b633e561",
-    "earnContractAddress": "0x5ad11ef89Cbe3D27F8876F06CDC26c50b633e561",
     "oracle": "lps",
     "oracleId": "aura-gyro-gyd-gho",
     "status": "active",
@@ -358,7 +382,19 @@
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xaa7a70070e7495fe86c67225329dbd39baa2f63b000200000000000000000663/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xaa7a70070e7495fe86c67225329dbd39baa2f63b000200000000000000000663/remove-liquidity",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "balancer-pool",
+        "ammId": "ethereum-balancer",
+        "poolId": "0xaa7a70070e7495fe86c67225329dbd39baa2f63b000200000000000000000663",
+        "poolType": "gyroe",
+        "tokens": [
+          "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+          "0xe07F9D810a48ab5c3c914BA3cA53AF14E4491e8A"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-gyro-gho-usdc",
@@ -368,9 +404,9 @@
     "tokenAddress": "0x3932b187f440cE7703653b3908EDc5bB7676C283",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xFbdA1e15e4619001bA633f6b191646cE1D4D825C",
     "earnedToken": "mooAuraGyroGHO-USDC",
     "earnedTokenAddress": "0xFbdA1e15e4619001bA633f6b191646cE1D4D825C",
-    "earnContractAddress": "0xFbdA1e15e4619001bA633f6b191646cE1D4D825C",
     "oracle": "lps",
     "oracleId": "aura-gyro-gho-usdc",
     "status": "active",
@@ -381,7 +417,19 @@
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x3932b187f440ce7703653b3908edc5bb7676c283000200000000000000000664/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x3932b187f440ce7703653b3908edc5bb7676c283000200000000000000000664/remove-liquidity",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "balancer-pool",
+        "ammId": "ethereum-balancer",
+        "poolId": "0x3932b187f440ce7703653b3908edc5bb7676c283000200000000000000000664",
+        "poolType": "gyroe",
+        "tokens": [
+          "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+          "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+        ]
+      }
+    ]
   },
   {
     "id": "pendle-weeths-26dec24",
@@ -1711,7 +1759,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "ethereum-balancer",
         "poolId": "0x848a5564158d84b8a8fb68ab5d004fae11619a5400000000000000000000066a",
         "poolType": "composable-stable",
@@ -1864,7 +1912,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "ethereum-balancer",
         "poolId": "0x05ff47afada98a98982113758878f9a8b9fdda0a000000000000000000000645",
         "poolType": "composable-stable",
@@ -1908,7 +1956,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "ethereum-balancer",
         "poolId": "0x596192bb6e41802428ac943d2f1476c1af25cc0e000000000000000000000659",
         "poolType": "composable-stable",
@@ -2141,7 +2189,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "ethereum-balancer",
         "poolId": "0xdfe6e7e18f6cc65fa13c8d8966013d4fda74b6ba000000000000000000000558",
         "poolType": "composable-stable",
@@ -2177,7 +2225,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "ethereum-balancer",
         "poolId": "0x49cbd67651fbabce12d1df18499896ec87bef46f00000000000000000000064a",
         "poolType": "composable-stable",
@@ -2910,7 +2958,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "ethereum-balancer",
         "poolId": "0x8353157092ed8be69a9df8f95af097bbf33cb2af0000000000000000000005d9",
         "poolType": "composable-stable",
@@ -2931,9 +2979,9 @@
     "tokenAddress": "0xf01b0684C98CD7aDA480BFDF6e43876422fa1Fc1",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xc2f9C3F4e4cdE519D5DeA9880C1CA6614E4b3d61",
     "earnedToken": "mooAuraGyrowstETH-ETH",
     "earnedTokenAddress": "0xc2f9C3F4e4cdE519D5DeA9880C1CA6614E4b3d61",
-    "earnContractAddress": "0xc2f9C3F4e4cdE519D5DeA9880C1CA6614E4b3d61",
     "oracle": "lps",
     "oracleId": "aura-gyro-wsteth-eth",
     "status": "active",
@@ -2944,7 +2992,19 @@
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://app.gyro.finance/pools/ethereum/e-clp/0xf01b0684C98CD7aDA480BFDF6e43876422fa1Fc1/",
     "removeLiquidityUrl": "https://app.gyro.finance/pools/ethereum/e-clp/0xf01b0684C98CD7aDA480BFDF6e43876422fa1Fc1/",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "balancer-pool",
+        "ammId": "ethereum-balancer",
+        "poolId": "0xf01b0684c98cd7ada480bfdf6e43876422fa1fc10002000000000000000005de",
+        "poolType": "gyroe",
+        "tokens": [
+          "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+          "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-gyro-wsteth-cbeth",
@@ -2954,9 +3014,9 @@
     "tokenAddress": "0xF7A826D47c8E02835D94fb0Aa40F0cC9505cb134",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x4d7222Eee3c6b67F8e806D0f866B0D666D6182b3",
     "earnedToken": "mooAuraGyrowstETH-cbETH",
     "earnedTokenAddress": "0x4d7222Eee3c6b67F8e806D0f866B0D666D6182b3",
-    "earnContractAddress": "0x4d7222Eee3c6b67F8e806D0f866B0D666D6182b3",
     "oracle": "lps",
     "oracleId": "aura-gyro-wsteth-cbeth",
     "status": "active",
@@ -2967,7 +3027,19 @@
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://app.gyro.finance/pools/ethereum/e-clp/0xf7a826d47c8e02835d94fb0aa40f0cc9505cb134/",
     "removeLiquidityUrl": "https://app.gyro.finance/pools/ethereum/e-clp/0xf7a826d47c8e02835d94fb0aa40f0cc9505cb134/",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "balancer-pool",
+        "ammId": "ethereum-balancer",
+        "poolId": "0xf7a826d47c8e02835d94fb0aa40f0cc9505cb1340002000000000000000005e0",
+        "poolType": "gyroe",
+        "tokens": [
+          "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+          "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-r-bbsdai",
@@ -3092,7 +3164,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "ethereum-balancer",
         "poolId": "0x42ed016f826165c2e5976fe5bc3df540c5ad0af700000000000000000000058b",
         "poolType": "composable-stable",

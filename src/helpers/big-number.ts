@@ -10,6 +10,12 @@ export const BIG_ONE = new BigNumber(1);
 export const BIG_MAX_UINT256 = new BigNumber(
   '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
 );
+export const BIG_MAX_INT256 = new BigNumber(
+  '0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+);
+export const BIG_MIN_INT256 = new BigNumber(
+  '-0x8000000000000000000000000000000000000000000000000000000000000000'
+);
 export const Q192 = new BigNumber(2).pow(192);
 
 export function compound(
@@ -33,6 +39,31 @@ export function toBigNumber(input: BigNumberish): BigNumber {
 
 export function isBigNumber(value: unknown): value is BigNumber {
   return BigNumber.isBigNumber(value);
+}
+
+function bigNumberToString(value: BigNumber, typeName: string): string {
+  const dp = value.decimalPlaces();
+  if (dp === null || dp > 0) {
+    throw new Error(`${typeName} should be an integer`);
+  }
+  return value.toString(10);
+}
+
+export function bigNumberToUint256String(value: BigNumber): string {
+  if (value.isNegative()) {
+    throw new Error('uint256 should be positive');
+  }
+  if (value.isGreaterThan(BIG_MAX_UINT256)) {
+    throw new Error('uint256 should be less than 2^256');
+  }
+  return bigNumberToString(value, 'uint256');
+}
+
+export function bigNumberToInt256String(value: BigNumber): string {
+  if (value.isGreaterThan(BIG_MAX_INT256) || value.isLessThan(BIG_MIN_INT256)) {
+    throw new Error('int256 should be between -2^255 and 2^255-1');
+  }
+  return bigNumberToString(value, 'int256');
 }
 
 export function truncateBigNumber(value: BigNumber, places: number): BigNumber {

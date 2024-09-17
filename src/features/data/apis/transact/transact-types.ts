@@ -178,19 +178,29 @@ export type CurveWithdrawOption = ZapBaseWithdrawOption & {
     | { via: 'aggregator'; viaTokens: CurveTokenOption[] }
   );
 
-export type BalancerDepositOption = ZapBaseDepositOption & {
-  strategyId: 'balancer';
+export type BalancerSwapDepositOption = ZapBaseDepositOption & {
+  strategyId: 'balancer-swap';
 } & (
     | { via: 'direct'; viaToken: BalancerTokenOption }
     | { via: 'aggregator'; viaTokens: BalancerTokenOption[] }
   );
 
-export type BalancerWithdrawOption = ZapBaseWithdrawOption & {
-  strategyId: 'balancer';
+export type BalancerSwapWithdrawOption = ZapBaseWithdrawOption & {
+  strategyId: 'balancer-swap';
 } & (
     | { via: 'direct'; viaToken: BalancerTokenOption }
     | { via: 'aggregator'; viaTokens: BalancerTokenOption[] }
   );
+
+export type BalancerPoolDepositOption = ZapBaseDepositOption & {
+  strategyId: 'balancer-pool';
+  via: /*'pool' | */ 'aggregator';
+};
+
+export type BalancerPoolWithdrawOption = ZapBaseWithdrawOption & {
+  strategyId: 'balancer-pool';
+  via: 'break-only' | /*'pool' | */ 'aggregator';
+};
 
 export type ConicDepositOption = ZapBaseDepositOption & {
   strategyId: 'conic';
@@ -254,7 +264,8 @@ export type DepositOption =
   | GovComposerDepositOption
   | VaultComposerDepositOption
   | RewardPoolToVaultDepositOption
-  | BalancerDepositOption;
+  | BalancerSwapDepositOption
+  | BalancerPoolDepositOption;
 
 export type WithdrawOption =
   | StandardVaultWithdrawOption
@@ -270,7 +281,8 @@ export type WithdrawOption =
   | GovComposerWithdrawOption
   | VaultComposerWithdrawOption
   | RewardPoolToVaultWithdrawOption
-  | BalancerWithdrawOption;
+  | BalancerSwapWithdrawOption
+  | BalancerPoolWithdrawOption;
 
 export type TransactOption = DepositOption | WithdrawOption;
 
@@ -478,10 +490,12 @@ export type CurveDepositQuote = BaseZapQuote<CurveDepositOption> & {
   viaToken: CurveTokenOption;
 };
 
-export type BalancerDepositQuote = BaseZapQuote<BalancerDepositOption> & {
+export type BalancerSwapDepositQuote = BaseZapQuote<BalancerSwapDepositOption> & {
   via: 'aggregator' | 'direct';
   viaToken: BalancerTokenOption;
 };
+
+export type BalancerPoolDepositQuote = BaseZapQuote<BalancerPoolDepositOption>;
 
 export type GammaDepositQuote = BaseZapQuote<GammaDepositOption> & {
   lpQuotes: (QuoteResponse | undefined)[];
@@ -507,7 +521,8 @@ export type ZapDepositQuote =
   | GovComposerZapDepositQuote
   | VaultComposerZapDepositQuote
   | RewardPoolToVaultDepositQuote
-  | BalancerDepositQuote;
+  | BalancerSwapDepositQuote
+  | BalancerPoolDepositQuote;
 
 export type DepositQuote = VaultDepositQuote | ZapDepositQuote;
 
@@ -553,10 +568,12 @@ export type CurveWithdrawQuote = BaseZapQuote<CurveWithdrawOption> & {
   viaToken: CurveTokenOption;
 };
 
-export type BalancerWithdrawQuote = BaseZapQuote<BalancerWithdrawOption> & {
+export type BalancerSwapWithdrawQuote = BaseZapQuote<BalancerSwapWithdrawOption> & {
   via: 'aggregator' | 'direct';
   viaToken: BalancerTokenOption;
 };
+
+export type BalancerPoolWithdrawQuote = BaseZapQuote<BalancerPoolWithdrawOption>;
 
 export type GammaBreakWithdrawQuote = BaseZapQuote<GammaWithdrawOption>;
 export type GammaAggregatorWithdrawQuote = BaseZapQuote<GammaWithdrawOption> & {
@@ -599,7 +616,8 @@ export type ZapWithdrawQuote =
   | CowcentratedZapWithdrawQuote
   | GovComposerZapWithdrawQuote
   | VaultComposerZapWithdrawQuote
-  | BalancerWithdrawQuote;
+  | BalancerSwapWithdrawQuote
+  | BalancerPoolWithdrawQuote;
 
 export type WithdrawQuote = VaultWithdrawQuote | ZapWithdrawQuote;
 

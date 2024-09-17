@@ -7,9 +7,9 @@
     "tokenAddress": "0x71E1179C5e197FA551BEEC85ca2EF8693c61b85b",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x1DE0375e770EFb9C92d7958cbb5B53c9Fb8eB1Cb",
     "earnedToken": "mooAuraGnosisWETH-rETH",
     "earnedTokenAddress": "0x1DE0375e770EFb9C92d7958cbb5B53c9Fb8eB1Cb",
-    "earnContractAddress": "0x1DE0375e770EFb9C92d7958cbb5B53c9Fb8eB1Cb",
     "oracle": "lps",
     "oracleId": "aura-gyro-gnosis-weth-reth",
     "status": "active",
@@ -27,7 +27,19 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x71E1179C5e197FA551BEEC85ca2EF8693c61b85b/",
     "removeLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x71E1179C5e197FA551BEEC85ca2EF8693c61b85b/",
-    "network": "gnosis"
+    "network": "gnosis",
+    "zaps": [
+      {
+        "strategyId": "balancer-pool",
+        "ammId": "gnosis-balancer",
+        "poolId": "0x71e1179c5e197fa551beec85ca2ef8693c61b85b0002000000000000000000a0",
+        "poolType": "gyroe",
+        "tokens": [
+          "0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1",
+          "0xc791240D1F2dEf5938E2031364Ff4ed887133C3d"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-gyro-gnosis-weth-wsteth",
@@ -37,9 +49,9 @@
     "tokenAddress": "0x8DD4df4Ce580b9644437f3375e54f1ab09808228",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x50583F8DCE18D4180f074bE7332b4734968246EC",
     "earnedToken": "mooAuraGnosisWETH-wstETH",
     "earnedTokenAddress": "0x50583F8DCE18D4180f074bE7332b4734968246EC",
-    "earnContractAddress": "0x50583F8DCE18D4180f074bE7332b4734968246EC",
     "oracle": "lps",
     "oracleId": "aura-gyro-gnosis-weth-wsteth",
     "status": "active",
@@ -57,7 +69,19 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x8dd4df4ce580b9644437f3375e54f1ab09808228/",
     "removeLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x8dd4df4ce580b9644437f3375e54f1ab09808228/",
-    "network": "gnosis"
+    "network": "gnosis",
+    "zaps": [
+      {
+        "strategyId": "balancer-pool",
+        "ammId": "gnosis-balancer",
+        "poolId": "0x8dd4df4ce580b9644437f3375e54f1ab0980822800020000000000000000009c",
+        "poolType": "gyroe",
+        "tokens": [
+          "0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1",
+          "0x6C76971f98945AE98dD7d4DFcA8711ebea946eA6"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-gnosis-usdc.e-usdt-sdai",
@@ -90,7 +114,7 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "gnosis-balancer",
         "poolId": "0xfc095c811fe836ed12f247bcf042504342b73fb700000000000000000000009f",
         "poolType": "composable-stable",
@@ -134,7 +158,7 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "gnosis-balancer",
         "poolId": "0x06135a9ae830476d3a941bae9010b63732a055f4000000000000000000000065",
         "poolType": "composable-stable",
@@ -177,7 +201,7 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "gnosis-balancer",
         "poolId": "0xc9f00c3a713008ddf69b768d90d4978549bfdf9400000000000000000000006d",
         "poolType": "composable-stable",
@@ -280,7 +304,7 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "gnosis-balancer",
         "poolId": "0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066",
         "poolType": "composable-stable",
@@ -356,7 +380,7 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "gnosis-balancer",
         "poolId": "0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064",
         "poolType": "composable-stable",
@@ -459,7 +483,7 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "gnosis-balancer",
         "poolId": "0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034",
         "poolType": "composable-stable",

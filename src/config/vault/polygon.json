@@ -685,7 +685,7 @@
     "network": "polygon",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "polygon-balancer",
         "poolId": "0x4b7586a4f49841447150d3d92d9e9e000f766c30000000000000000000000e8a",
         "poolType": "composable-stable",
@@ -722,7 +722,7 @@
     "network": "polygon",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "polygon-balancer",
         "poolId": "0xcd78a20c597e367a4e478a2411ceb790604d7c8f000000000000000000000c22",
         "poolType": "composable-stable",
@@ -2306,9 +2306,9 @@
     "tokenAddress": "0xf0ad209e2e969EAAA8C882aac71f02D8a047d5c2",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x8D0663d2d738e6078Bb77589dE4231eD9fcFd014",
     "earnedToken": "mooAuraPolyGyrostMATIC-MATIC",
     "earnedTokenAddress": "0x8D0663d2d738e6078Bb77589dE4231eD9fcFd014",
-    "earnContractAddress": "0x8D0663d2d738e6078Bb77589dE4231eD9fcFd014",
     "oracle": "lps",
     "oracleId": "aura-polygon-gyro-matic-stmatic",
     "status": "active",
@@ -2319,7 +2319,19 @@
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://app.gyro.finance/pools/polygon/e-clp/0xf0ad209e2e969eaaa8c882aac71f02d8a047d5c2/",
     "removeLiquidityUrl": "https://app.gyro.finance/pools/polygon/e-clp/0xf0ad209e2e969eaaa8c882aac71f02d8a047d5c2/",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "balancer-pool",
+        "ammId": "polygon-balancer",
+        "poolId": "0xf0ad209e2e969eaaa8c882aac71f02d8a047d5c2000200000000000000000b49",
+        "poolType": "gyroe",
+        "tokens": [
+          "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+          "0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-polygon-gyro-matic-maticx",
@@ -3815,7 +3827,7 @@
     "network": "polygon",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "polygon-balancer",
         "poolId": "0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b",
         "poolType": "composable-stable",

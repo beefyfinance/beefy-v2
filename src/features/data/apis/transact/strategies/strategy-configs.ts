@@ -38,11 +38,19 @@ export type CurveStrategyConfig = {
   methods: CurveMethod[];
 } & OptionalStrategySwapConfig;
 
-export type BalancerStrategyConfig = {
-  strategyId: 'balancer';
+export type BalancerSwapStrategyConfig = {
+  strategyId: 'balancer-swap';
   ammId: AmmEntityBalancer['id'];
   poolId: string;
   poolType: 'composable-stable';
+  tokens: string[];
+} & OptionalStrategySwapConfig;
+
+export type BalancerPoolStrategyConfig = {
+  strategyId: 'balancer-pool';
+  ammId: AmmEntityBalancer['id'];
+  poolId: string;
+  poolType: 'gyroe';
   tokens: string[];
 } & OptionalStrategySwapConfig;
 
@@ -84,7 +92,8 @@ export type ZapStrategyConfig =
   | GovComposerStrategyConfig
   | VaultComposerStrategyConfig
   | RewardPoolToVaultStrategyConfig
-  | BalancerStrategyConfig;
+  | BalancerSwapStrategyConfig
+  | BalancerPoolStrategyConfig;
 
 export type ZapStrategyId = ZapStrategyConfig['strategyId'];
 

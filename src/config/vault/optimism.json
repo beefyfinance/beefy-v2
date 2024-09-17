@@ -855,7 +855,7 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "optimism-beethovenx",
         "poolId": "0x2bb4712247d5f451063b5e4f6948abdfb925d93d000000000000000000000136",
         "poolType": "composable-stable",
@@ -2081,9 +2081,9 @@
     "tokenAddress": "0xE906d4C4fC4c3Fe96560De86B4bf7eD89aF9A69a",
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
+    "earnContractAddress": "0x10BD7A983E2897c36b059ce0a8C57BcC17d6b847",
     "earnedToken": "mooAuraGyroOPFraxSymphony",
     "earnedTokenAddress": "0x10BD7A983E2897c36b059ce0a8C57BcC17d6b847",
-    "earnContractAddress": "0x10BD7A983E2897c36b059ce0a8C57BcC17d6b847",
     "oracle": "lps",
     "oracleId": "aura-gyro-op-frax-symphony",
     "status": "active",
@@ -2094,7 +2094,19 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0xe906d4c4fc4c3fe96560de86b4bf7ed89af9a69a000200000000000000000126",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0xe906d4c4fc4c3fe96560de86b4bf7ed89af9a69a000200000000000000000126",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "balancer-pool",
+        "ammId": "optimism-beethovenx",
+        "poolId": "0xe906d4c4fc4c3fe96560de86b4bf7ed89af9a69a000200000000000000000126",
+        "poolType": "gyroe",
+        "tokens": [
+          "0x2Dd1B4D4548aCCeA497050619965f91f78b3b532",
+          "0x2E3D870790dC77A83DD1d18184Acc7439A53f475"
+        ]
+      }
+    ]
   },
   {
     "id": "velo-cow-op-moobifi-usdc-rp",
@@ -3214,7 +3226,7 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "optimism-beethovenx",
         "poolId": "0x73a7fe27fe9545d53924e529acf11f3073841b9e000000000000000000000133",
         "poolType": "composable-stable",
@@ -4859,7 +4871,7 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "optimism-beethovenx",
         "poolId": "0xa71021492a3966eec735ed1b505afa097c7cfe6f00000000000000000000010d",
         "poolType": "composable-stable",
@@ -5310,7 +5322,7 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "optimism-beethovenx",
         "poolId": "0x5f8893506ddc4c271837187d14a9c87964a074dc000000000000000000000106",
         "poolType": "composable-stable",
@@ -5403,7 +5415,7 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "optimism-beethovenx",
         "poolId": "0x004700ba0a4f5f22e1e78a277fca55e36f47e09c000000000000000000000104",
         "poolType": "composable-stable",
@@ -5439,7 +5451,7 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "optimism-beethovenx",
         "poolId": "0x9da11ff60bfc5af527f58fd61679c3ac98d040d9000000000000000000000100",
         "poolType": "composable-stable",
@@ -5578,9 +5590,9 @@
     "tokenAddress": "0x7Ca75bdEa9dEde97F8B13C6641B768650CB83782",
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
+    "earnContractAddress": "0x3b4DdC7888F752a96290344a1A926E73b80423c0",
     "earnedToken": "mooAuraOPGryowstETH-ETH",
     "earnedTokenAddress": "0x3b4DdC7888F752a96290344a1A926E73b80423c0",
-    "earnContractAddress": "0x3b4DdC7888F752a96290344a1A926E73b80423c0",
     "oracle": "lps",
     "oracleId": "beets-eclp-wsteth-eth",
     "status": "active",
@@ -5591,7 +5603,19 @@
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x7ca75bdea9dede97f8b13c6641b768650cb837820002000000000000000000d5",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x7ca75bdea9dede97f8b13c6641b768650cb837820002000000000000000000d5",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "balancer-pool",
+        "ammId": "optimism-beethovenx",
+        "poolId": "0x7ca75bdea9dede97f8b13c6641b768650cb837820002000000000000000000d5",
+        "poolType": "gyroe",
+        "tokens": [
+          "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
+          "0x4200000000000000000000000000000000000006"
+        ]
+      }
+    ]
   },
   {
     "id": "uniswap-gamma-weth-op-narrow",

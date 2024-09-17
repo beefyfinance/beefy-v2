@@ -89,7 +89,7 @@
     "network": "avax",
     "zaps": [
       {
-        "strategyId": "balancer",
+        "strategyId": "balancer-swap",
         "ammId": "avax-balancer",
         "poolId": "0xfd2620c9cfcec7d152467633b3b0ca338d3d78cc00000000000000000000001c",
         "poolType": "composable-stable",

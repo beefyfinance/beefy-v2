@@ -9,10 +9,10 @@ import {
 } from '../../../../entities/token';
 import type { Step } from '../../../../reducers/wallet/stepper';
 import {
-  type BalancerDepositOption,
-  type BalancerDepositQuote,
-  type BalancerWithdrawOption,
-  type BalancerWithdrawQuote,
+  type BalancerSwapDepositOption,
+  type BalancerSwapDepositQuote,
+  type BalancerSwapWithdrawOption,
+  type BalancerSwapWithdrawQuote,
   type InputTokenAmount,
   isZapQuoteStepBuild,
   isZapQuoteStepSplit,
@@ -78,11 +78,12 @@ import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import { isFulfilledResult } from '../../../../../../helpers/promises';
 import { isDefined } from '../../../../utils/array-utils';
 import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
-import type { BalancerStrategyConfig } from '../strategy-configs';
-import { BalancerComposableStablePool } from '../../../amm/balancer/BalancerComposableStablePool';
+import type { BalancerSwapStrategyConfig } from '../strategy-configs';
+import { ComposableStablePool } from '../../../amm/balancer/composable-stable/ComposableStablePool';
 import { type AmmEntityBalancer, isBalancerAmm } from '../../../../entities/zap';
 import { selectAmmById } from '../../../../selectors/zap';
 import { createFactory } from '../../../../utils/factory-utils';
+import type { PoolConfig, VaultConfig } from '../../../amm/balancer/vault/types';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -107,10 +108,13 @@ type WithdrawLiquidity = DepositLiquidity & {
   split: TokenAmount;
 };
 
-const strategyId = 'balancer' as const;
+const strategyId = 'balancer-swap' as const;
 type StrategyId = typeof strategyId;
 
-class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
+/**
+ * Balancer: swap() to deposit/withdraw liquidity
+ */
+class BalancerSwapStrategyImpl implements IZapStrategy<StrategyId> {
   public static readonly id = strategyId;
   public readonly id = strategyId;
 
@@ -119,12 +123,15 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
   protected readonly possibleTokens: BalancerTokenOption[];
   protected readonly chain: ChainEntity;
   protected readonly depositToken: TokenEntity;
-  protected readonly poolAddress: string;
+  protected readonly poolTokens: TokenEntity[];
   protected readonly vault: VaultStandard;
   protected readonly vaultType: IStandardVaultType;
   protected readonly amm: AmmEntityBalancer;
 
-  constructor(protected options: BalancerStrategyConfig, protected helpers: ZapTransactHelpers) {
+  constructor(
+    protected options: BalancerSwapStrategyConfig,
+    protected helpers: ZapTransactHelpers
+  ) {
     const { vault, vaultType, getState } = this.helpers;
 
     if (!isStandardVault(vault)) {
@@ -156,34 +163,44 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     this.wnative = selectChainWrappedNativeToken(state, vault.chainId);
     this.depositToken = vaultType.depositToken;
     this.chain = selectChainById(state, vault.chainId);
-    this.possibleTokens = this.selectAvailableTokens(state, this.chain.id, this.options.tokens);
+    this.poolTokens = this.selectPoolTokens(state, this.chain.id, this.options.tokens);
+    this.possibleTokens = this.selectAvailableTokens(state, this.poolTokens);
 
-    if (!this.possibleTokens.length) {
-      throw new Error(
-        `Vault ${
-          vault.id
-        }: No tokens configured are available in addressbook, wanted one of ${this.options.tokens.join(
-          ', '
-        )}`
-      );
+    if (this.options.poolType === 'composable-stable') {
+      if (!this.possibleTokens.length) {
+        throw new Error(
+          `Vault ${vault.id}: At least one token must be in address book and priced for ${this.options.poolType}`
+        );
+      }
+    } else {
+      throw new Error(`Unsupported balancer pool type ${this.options.poolType}`);
     }
   }
 
-  /**
-   * Tokens are available so long as they are in the address book
-   */
-  protected selectAvailableTokens(
+  protected selectPoolTokens(
     state: BeefyState,
     chainId: ChainEntity['id'],
     tokenAddresses: string[]
-  ): BalancerTokenOption[] {
-    return tokenAddresses
-      .map((address, i) => {
-        const token = selectTokenByAddressOrUndefined(state, chainId, address);
-        if (!token) {
-          return undefined;
-        }
+  ): TokenEntity[] {
+    const tokens = tokenAddresses
+      .map(address => selectTokenByAddressOrUndefined(state, chainId, address))
+      .filter(isDefined);
+    if (tokens.length !== tokenAddresses.length) {
+      // We need decimals for each token
+      throw new Error('Not all tokens are in state');
+    }
+    return tokens;
+  }
 
+  /**
+   * Tokens are available so long as they are in the address book and have a price
+   */
+  protected selectAvailableTokens(
+    state: BeefyState,
+    poolTokens: TokenEntity[]
+  ): BalancerTokenOption[] {
+    return poolTokens
+      .map((token, i) => {
         const price = selectTokenPriceByTokenOracleId(state, token.oracleId);
         if (!price || price.lte(BIG_ZERO)) {
           return undefined;
@@ -199,10 +216,10 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
       .filter(t => !isTokenEqual(t.token, this.depositToken));
   }
 
-  public async fetchDepositOptions(): Promise<BalancerDepositOption[]> {
+  public async fetchDepositOptions(): Promise<BalancerSwapDepositOption[]> {
     const outputs = [this.vaultType.depositToken];
 
-    const baseOptions: BalancerDepositOption[] = this.possibleTokens.map(depositToken => {
+    const baseOptions: BalancerSwapDepositOption[] = this.possibleTokens.map(depositToken => {
       const inputs = [depositToken.token];
       const selectionId = createSelectionId(this.vault.chainId, inputs);
 
@@ -215,7 +232,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
         inputs,
         wantedOutputs: outputs,
         mode: TransactMode.Deposit,
-        strategyId: 'balancer',
+        strategyId,
         via: 'direct',
         viaToken: depositToken,
       };
@@ -224,7 +241,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     const { any: allAggregatorTokens, map: tokenToDepositTokens } =
       await this.aggregatorTokenSupport();
 
-    const aggregatorOptions: BalancerDepositOption[] = allAggregatorTokens
+    const aggregatorOptions: BalancerSwapDepositOption[] = allAggregatorTokens
       .filter(token => tokenToDepositTokens[token.address].length > 0)
       .map(token => {
         const inputs = [token];
@@ -245,7 +262,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
           inputs,
           wantedOutputs: outputs,
           mode: TransactMode.Deposit,
-          strategyId: 'balancer',
+          strategyId,
           via: 'aggregator',
           viaTokens: possible,
         };
@@ -255,15 +272,19 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
   }
 
   protected getPool = createFactory(() => {
+    const vault: VaultConfig = {
+      vaultAddress: this.amm.vaultAddress,
+      queryAddress: this.amm.queryAddress,
+    };
+    const pool: PoolConfig = {
+      poolAddress: this.depositToken.address,
+      poolId: this.options.poolId,
+      tokens: this.poolTokens,
+    };
+
     switch (this.options.poolType) {
       case 'composable-stable': {
-        return new BalancerComposableStablePool({
-          chain: this.chain,
-          vaultAddress: this.amm.vaultAddress,
-          poolAddress: this.depositToken.address,
-          poolId: this.options.poolId,
-          tokens: this.options.tokens,
-        });
+        return new ComposableStablePool(this.chain, vault, pool);
       }
       default: {
         throw new Error(`Unsupported balancer pool type ${this.options.poolType}`);
@@ -354,7 +375,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
   protected async getDepositLiquidity(
     state: BeefyState,
     input: InputTokenAmount,
-    option: BalancerDepositOption
+    option: BalancerSwapDepositOption
   ): Promise<DepositLiquidity> {
     if (option.via === 'direct') {
       return this.getDepositLiquidityDirect(input, option.viaToken);
@@ -364,8 +385,8 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
 
   public async fetchDepositQuote(
     inputs: InputTokenAmount[],
-    option: BalancerDepositOption
-  ): Promise<BalancerDepositQuote> {
+    option: BalancerSwapDepositOption
+  ): Promise<BalancerSwapDepositQuote> {
     const { zap, getState } = this.helpers;
     const state = getState();
     const input = onlyOneInput(inputs);
@@ -428,7 +449,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     // Build quote
     return {
       id: createQuoteId(option.id),
-      strategyId: 'balancer',
+      strategyId,
       priceImpact: calculatePriceImpact(inputs, outputs, returned, state), // includes the zap fee
       option,
       inputs,
@@ -508,7 +529,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
   }
 
   public async fetchDepositStep(
-    quote: BalancerDepositQuote,
+    quote: BalancerSwapDepositQuote,
     t: TFunction<Namespace<string>>
   ): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
@@ -573,7 +594,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
           },
         ],
       });
-      console.log('fetchDepositStep::vaultDeposit', vaultDeposit);
+      console.debug('fetchDepositStep::vaultDeposit', vaultDeposit);
       steps.push(vaultDeposit.zap);
 
       // Build order
@@ -647,10 +668,10 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     };
   }
 
-  async fetchWithdrawOptions(): Promise<BalancerWithdrawOption[]> {
+  async fetchWithdrawOptions(): Promise<BalancerSwapWithdrawOption[]> {
     const inputs = [this.vaultType.depositToken];
 
-    const baseOptions: BalancerWithdrawOption[] = this.possibleTokens.map(depositToken => {
+    const baseOptions: BalancerSwapWithdrawOption[] = this.possibleTokens.map(depositToken => {
       const outputs = [depositToken.token];
       const selectionId = createSelectionId(this.vault.chainId, outputs);
 
@@ -663,7 +684,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
         inputs,
         wantedOutputs: outputs,
         mode: TransactMode.Withdraw,
-        strategyId: 'balancer',
+        strategyId,
         via: 'direct',
         viaToken: depositToken,
       };
@@ -672,7 +693,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     const { any: allAggregatorTokens, map: tokenToDepositTokens } =
       await this.aggregatorTokenSupport();
 
-    const aggregatorOptions: BalancerWithdrawOption[] = allAggregatorTokens
+    const aggregatorOptions: BalancerSwapWithdrawOption[] = allAggregatorTokens
       .filter(token => tokenToDepositTokens[token.address].length > 0)
       .map(token => {
         const outputs = [token];
@@ -693,7 +714,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
           inputs,
           wantedOutputs: outputs,
           mode: TransactMode.Withdraw,
-          strategyId: 'balancer',
+          strategyId,
           via: 'aggregator',
           viaTokens: possible,
         };
@@ -721,7 +742,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
   ): Promise<WithdrawLiquidity> {
     if (!isTokenEqual(wanted, withdrawVia.token)) {
       throw new Error(
-        `Curve strategy: Direct withdraw called with wanted token ${input.token.symbol} but expected ${withdrawVia.token.symbol}`
+        `Balancer strategy: Direct withdraw called with wanted token ${input.token.symbol} but expected ${withdrawVia.token.symbol}`
       );
     }
 
@@ -788,7 +809,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     state: BeefyState,
     input: TokenAmount,
     wanted: TokenEntity,
-    option: BalancerWithdrawOption
+    option: BalancerSwapWithdrawOption
   ): Promise<WithdrawLiquidity> {
     if (option.via === 'direct') {
       return this.getWithdrawLiquidityDirect(input, wanted, option.viaToken);
@@ -798,8 +819,8 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
 
   public async fetchWithdrawQuote(
     inputs: InputTokenAmount[],
-    option: BalancerWithdrawOption
-  ): Promise<BalancerWithdrawQuote> {
+    option: BalancerSwapWithdrawOption
+  ): Promise<BalancerSwapWithdrawQuote> {
     const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
       throw new Error('Quote called with 0 input amount');
@@ -887,7 +908,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
 
     return {
       id: createQuoteId(option.id),
-      strategyId: 'balancer',
+      strategyId,
       priceImpact: calculatePriceImpact(inputs, outputs, returned, state),
       option,
       inputs,
@@ -932,7 +953,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
   }
 
   public async fetchWithdrawStep(
-    quote: BalancerWithdrawQuote,
+    quote: BalancerSwapWithdrawQuote,
     t: TFunction<Namespace<string>>
   ): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
@@ -1109,4 +1130,5 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
   }
 }
 
-export const BalancerStrategy = BalancerStrategyImpl satisfies IZapStrategyStatic<StrategyId>;
+export const BalancerSwapStrategy =
+  BalancerSwapStrategyImpl satisfies IZapStrategyStatic<StrategyId>;

@@ -21,7 +21,10 @@ import { createCachedFactory } from '../src/features/data/utils/factory-utils';
 import { addressBook } from 'blockchain-addressbook';
 import { sortBy } from 'lodash';
 import platforms from '../src/config/platforms.json';
-import { BalancerStrategyConfig } from '../src/features/data/apis/transact/strategies/strategy-configs';
+import {
+  BalancerSwapStrategyConfig,
+  BalancerPoolStrategyConfig,
+} from '../src/features/data/apis/transact/strategies/strategy-configs';
 import { sortVaultKeys } from './common/vault-fields';
 
 const cacheBasePath = path.join(__dirname, '.cache', 'balancer');
@@ -97,7 +100,7 @@ const supportedProtocolVersions = new Set<number>([2]);
 const supportedPoolTypes: OptionalRecord<BalancerPoolType, { min: number; max: number }> = {
   COMPOSABLE_STABLE: { min: 3, max: 6 },
   // 'WEIGHTED': { min: 1, max: 4 },
-  // 'GYROE': { min: 2, max: 2 },
+  GYROE: { min: 2, max: 2 },
   // 'GYRO': { min: 2, max: 2 },
   // 'META_STABLE': { min: 1, max: 1 },
 };
@@ -554,18 +557,40 @@ export async function discoverBalancerZap(args: RunArgs) {
     console.log('Vault:', amm.vaultAddress);
   }
 
-  const zap: BalancerStrategyConfig = {
-    strategyId: 'balancer',
-    ammId: amm.id,
-    poolId: apiPool.id,
-    poolType: apiPool.type.toLowerCase().replaceAll('_', '-') as BalancerStrategyConfig['poolType'], // TODO types
-    tokens: apiPool.poolTokens.map(t => t.address),
-  };
-
-  return zap;
+  switch (pool.type) {
+    case 'COMPOSABLE_STABLE': {
+      return {
+        strategyId: 'balancer-swap',
+        ammId: amm.id,
+        poolId: apiPool.id,
+        poolType: apiPool.type
+          .toLowerCase()
+          .replaceAll('_', '-') as BalancerSwapStrategyConfig['poolType'], // TODO types
+        tokens: apiPool.poolTokens.map(t => t.address),
+      } satisfies BalancerSwapStrategyConfig;
+    }
+    case 'GYROE': {
+      return {
+        strategyId: 'balancer-pool',
+        ammId: amm.id,
+        poolId: apiPool.id,
+        poolType: apiPool.type
+          .toLowerCase()
+          .replaceAll('_', '-') as BalancerPoolStrategyConfig['poolType'], // TODO types
+        tokens: apiPool.poolTokens.map(t => t.address),
+      } satisfies BalancerPoolStrategyConfig;
+    }
+    default: {
+      throw new Error(`Unsupported pool type ${pool.type}`);
+    }
+  }
 }
 
-async function saveZap(chainId: string, vaultId: string, zap: BalancerStrategyConfig) {
+async function saveZap(
+  chainId: string,
+  vaultId: string,
+  zap: BalancerSwapStrategyConfig | BalancerPoolStrategyConfig
+) {
   const path = `./src/config/vault/${addressBookToAppId(chainId)}.json`;
   const vaults = await loadJson<VaultConfig[]>(path);
   let found = false;
