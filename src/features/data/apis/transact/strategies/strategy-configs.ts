@@ -46,11 +46,11 @@ export type BalancerSwapStrategyConfig = {
   tokens: string[];
 } & OptionalStrategySwapConfig;
 
-export type BalancerPoolStrategyConfig = {
-  strategyId: 'balancer-pool';
+export type BalancerJoinStrategyConfig = {
+  strategyId: 'balancer-join';
   ammId: AmmEntityBalancer['id'];
   poolId: string;
-  poolType: 'gyroe';
+  poolType: 'gyroe' | 'weighted';
   tokens: string[];
 } & OptionalStrategySwapConfig;
 
@@ -93,7 +93,7 @@ export type ZapStrategyConfig =
   | VaultComposerStrategyConfig
   | RewardPoolToVaultStrategyConfig
   | BalancerSwapStrategyConfig
-  | BalancerPoolStrategyConfig;
+  | BalancerJoinStrategyConfig;
 
 export type ZapStrategyId = ZapStrategyConfig['strategyId'];
 

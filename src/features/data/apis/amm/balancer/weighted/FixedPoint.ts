@@ -1,7 +1,7 @@
 import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number';
 import BigNumber from 'bignumber.js';
 
-export class GyroFixedPoint {
+export class FixedPoint {
   public static readonly ONE = BIG_ONE.shiftedBy(18);
 
   private constructor() {
@@ -13,7 +13,7 @@ export class GyroFixedPoint {
     if (!(a.isZero() || product.dividedToIntegerBy(a).isEqualTo(b))) {
       throw new Error('Multiplication overflow');
     }
-    return product.dividedToIntegerBy(GyroFixedPoint.ONE);
+    return product.dividedToIntegerBy(FixedPoint.ONE);
   }
 
   static mulUp(a: BigNumber, b: BigNumber): BigNumber {
@@ -26,7 +26,7 @@ export class GyroFixedPoint {
       return product;
     }
 
-    return product.minus(1).dividedToIntegerBy(GyroFixedPoint.ONE).plus(1);
+    return product.minus(1).dividedToIntegerBy(FixedPoint.ONE).plus(1);
   }
 
   static divDown(a: BigNumber, b: BigNumber): BigNumber {
@@ -38,8 +38,8 @@ export class GyroFixedPoint {
       return BIG_ZERO;
     }
 
-    const aInflated = a.multipliedBy(GyroFixedPoint.ONE);
-    if (!aInflated.dividedToIntegerBy(a).isEqualTo(GyroFixedPoint.ONE)) {
+    const aInflated = a.multipliedBy(FixedPoint.ONE);
+    if (!aInflated.dividedToIntegerBy(a).isEqualTo(FixedPoint.ONE)) {
       throw new Error('Multiplication overflow');
     }
 
@@ -55,11 +55,27 @@ export class GyroFixedPoint {
       return BIG_ZERO;
     }
 
-    const aInflated = a.multipliedBy(GyroFixedPoint.ONE);
-    if (!aInflated.dividedToIntegerBy(a).isEqualTo(GyroFixedPoint.ONE)) {
+    const aInflated = a.multipliedBy(FixedPoint.ONE);
+    if (!aInflated.dividedToIntegerBy(a).isEqualTo(FixedPoint.ONE)) {
       throw new Error('Multiplication overflow');
     }
 
     return aInflated.minus(1).dividedToIntegerBy(b).plus(1);
+  }
+
+  static powDown(base: BigNumber, exponent: BigNumber): BigNumber {
+    if (exponent.isZero()) {
+      return FixedPoint.ONE;
+    }
+
+    if (base.isZero()) {
+      return BIG_ZERO;
+    }
+
+    const baseDecimal = base.shiftedBy(-18);
+    const exponentDecimal = exponent.shiftedBy(-18);
+    const resultDecimal = baseDecimal.exponentiatedBy(exponentDecimal);
+
+    return resultDecimal.shiftedBy(18).integerValue(BigNumber.ROUND_FLOOR);
   }
 }

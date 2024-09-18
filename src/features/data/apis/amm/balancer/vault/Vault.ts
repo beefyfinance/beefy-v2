@@ -39,7 +39,7 @@ import {
 import type { StepToken, ZapStep } from '../../../transact/zap/types';
 import { getInsertIndex } from '../../../transact/helpers/zap';
 import { getAddress } from 'viem';
-import { WeightedPoolExitKind } from '../weighted/types';
+import { WeightedPoolExitKind, WeightedPoolJoinKind } from '../weighted/types';
 
 const queryFunds: FundManagement = {
   sender: ZERO_ADDRESS,
@@ -178,27 +178,77 @@ export class Vault {
   }
 
   async getJoinPoolZap(request: JoinPoolZapRequest): Promise<ZapStep> {
-    /*
-     * 08 | length of request.assets
-     * 09+0 | request.assets[0]
-     * 09+n | request.assets[n]
-     * 09+request.assets.length | length of maxAmountsIn
-     * 09+request.assets.length+1 | maxAmountsIn[0]
-     * 09+request.assets.length+1+n | maxAmountsIn[n]
-     */
-    const maxAmountsInStartWord = 9 + request.join.request.assets.length + 1;
-
     return {
       target: this.config.vaultAddress,
       value: '0',
       data: this.encodeJoinPool(request.join),
-      tokens: request.insertBalance
-        ? request.join.request.assets.map((address, i) => ({
-            token: address,
-            index: getInsertIndex(maxAmountsInStartWord + i),
-          }))
-        : [],
+      tokens: this.getJoinPoolZapTokens(request),
     };
+  }
+
+  protected getJoinPoolZapTokens(request: JoinPoolZapRequest): StepToken[] {
+    if (!request.insertBalance) {
+      return [];
+    }
+
+    /* joinPool call data layout:
+     * 00 | poolId
+     * 01 | sender
+     * 02 | recipient
+     * 03 | offset to request
+     * 04 | offset to request.assets
+     * 05 | offset to request.maxAmountsIn
+     * 06 | offset to request.userData
+     * 07 | request.fromInternalBalance
+     * 08 | length of request.assets
+     * 09+0 | request.assets[0]
+     * 09+n | request.assets[n]
+     * 09+request.assets.length | length of maxAmountsIn
+     * 09+request.assets.length+1+0 | maxAmountsIn[0]
+     * 09+request.assets.length+1+n | maxAmountsIn[n]
+     * 09+request.assets.length+1+request.maxAmountsIn.length | length of userData
+     * 09+request.assets.length+1+request.maxAmountsIn.length+1+0 | word 0 of userData
+     */
+
+    // Always insert amounts into the maxAmountsIn array
+    const maxAmountsInStartWord = 9 + request.join.request.assets.length + 1;
+    const tokens: StepToken[] = request.join.request.assets.map((address, i) => ({
+      token: address,
+      index: getInsertIndex(maxAmountsInStartWord + i),
+    }));
+
+    // Maybe insert amounts into the userData bytes
+    const userDataWordStart =
+      9 + request.join.request.assets.length + 1 + request.join.request.maxAmountsIn.length + 1;
+    const joinKindString = abiCoder.decodeParameter(
+      'uint256',
+      request.join.request.userData
+    ) as unknown as string;
+    console.log('joinKindString', joinKindString);
+    const joinKind = new BigNumber(joinKindString).toNumber();
+
+    switch (joinKind) {
+      case WeightedPoolJoinKind.EXACT_TOKENS_IN_FOR_BPT_OUT: {
+        for (let i = 0; i < request.join.request.assets.length; i++) {
+          tokens.push({
+            token: request.join.request.assets[i],
+            index: getInsertIndex(userDataWordStart + 4 + i), // 0 = JoinKind, 1 = Offset to amountsIn, 2 = minBPTAmountOut, 3 = amountsIn.length, 4 = amountsIn[0], 4+n = amountsIn[n]
+          });
+        }
+        return tokens;
+      }
+      case WeightedPoolJoinKind.TOKEN_IN_FOR_EXACT_BPT_OUT: {
+        // 0 = JoinKind, 1 = bptAmountOut, 2 = enterTokenIndex
+        return tokens;
+      }
+      case WeightedPoolJoinKind.ALL_TOKENS_IN_FOR_EXACT_BPT_OUT: {
+        // 0 = JoinKind, 1 = bptAmountOut
+        return tokens;
+      }
+      default: {
+        throw new Error(`Unsupported join kind: ${joinKind}`);
+      }
+    }
   }
 
   async getExitPoolZap(request: ExitPoolZapRequest): Promise<ZapStep> {
@@ -215,7 +265,15 @@ export class Vault {
       return [];
     }
 
-    /*
+    /* exitPool call data layout:
+     * 00 | poolId
+     * 01 | sender
+     * 02 | recipient
+     * 03 | offset to request
+     * 04 | offset to request.assets
+     * 05 | offset to request.minAmountsOut
+     * 06 | offset to request.userData
+     * 07 | request.toInternal
      * 08 | length of request.assets
      * 09+0 | request.assets[0]
      * 09+n | request.assets[n]
@@ -225,6 +283,8 @@ export class Vault {
      * 09+request.assets.length+1+request.minAmountsOut.length | length of userData
      * 09+request.assets.length+1+request.minAmountsOut.length+1+0 | word 0 of userData
      */
+
+    // Insert the amount of bpt to burn into the userData bytes
     const userDataWordStart =
       9 + request.exit.request.assets.length + 1 + request.exit.request.minAmountsOut.length + 1;
     const exitKindString = abiCoder.decodeParameter(

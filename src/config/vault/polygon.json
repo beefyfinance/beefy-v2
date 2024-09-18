@@ -632,9 +632,9 @@
     "tokenAddress": "0x1DCeA0BfBBe6848F117640D534C9B60f41b9F2A8",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x2956333ca76D156A86533E6D1D8209E9B04D69a5",
     "earnedToken": "mooBalancerPolygonWBTC/USDC/ETH",
     "earnedTokenAddress": "0x2956333ca76D156A86533E6D1D8209E9B04D69a5",
-    "earnContractAddress": "0x2956333ca76D156A86533E6D1D8209E9B04D69a5",
     "oracle": "lps",
     "oracleId": "balancer-polygon-wbtc-usdc-eth",
     "status": "active",
@@ -652,7 +652,20 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x1dcea0bfbbe6848f117640d534c9b60f41b9f2a8000100000000000000000ea1/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x1dcea0bfbbe6848f117640d534c9b60f41b9f2a8000100000000000000000ea1/remove-liquidity",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "balancer-join",
+        "ammId": "polygon-balancer",
+        "poolId": "0x1dcea0bfbbe6848f117640d534c9b60f41b9f2a8000100000000000000000ea1",
+        "poolType": "weighted",
+        "tokens": [
+          "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+          "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+          "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+        ]
+      }
+    ]
   },
   {
     "id": "balancer-polygon-usdc-dai-usdt",
@@ -2322,7 +2335,7 @@
     "network": "polygon",
     "zaps": [
       {
-        "strategyId": "balancer-pool",
+        "strategyId": "balancer-join",
         "ammId": "polygon-balancer",
         "poolId": "0xf0ad209e2e969eaaa8c882aac71f02d8a047d5c2000200000000000000000b49",
         "poolType": "gyroe",

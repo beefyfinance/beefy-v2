@@ -99,7 +99,7 @@ const supportedProtocolVersions = new Set<number>([2]);
 
 const supportedPoolTypes: OptionalRecord<BalancerPoolType, { min: number; max: number }> = {
   COMPOSABLE_STABLE: { min: 3, max: 6 },
-  // 'WEIGHTED': { min: 1, max: 4 },
+  WEIGHTED: { min: 1, max: 4 },
   GYROE: { min: 2, max: 2 },
   // 'GYRO': { min: 2, max: 2 },
   // 'META_STABLE': { min: 1, max: 1 },
@@ -569,9 +569,10 @@ export async function discoverBalancerZap(args: RunArgs) {
         tokens: apiPool.poolTokens.map(t => t.address),
       } satisfies BalancerSwapStrategyConfig;
     }
-    case 'GYROE': {
+    case 'GYROE':
+    case 'WEIGHTED': {
       return {
-        strategyId: 'balancer-pool',
+        strategyId: 'balancer-join',
         ammId: amm.id,
         poolId: apiPool.id,
         poolType: apiPool.type

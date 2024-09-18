@@ -307,7 +307,7 @@ class BalancerSwapStrategyImpl implements IZapStrategy<StrategyId> {
   ): Promise<DepositLiquidity> {
     if (!isTokenEqual(input.token, depositVia.token)) {
       throw new Error(
-        `Balancer strategy: Direct deposit called with input token ${input.token.symbol} but expected ${depositVia.token.symbol}`
+        `BalancerSwapStrategy: Direct deposit called with input token ${input.token.symbol} but expected ${depositVia.token.symbol}`
       );
     }
 
@@ -391,7 +391,7 @@ class BalancerSwapStrategyImpl implements IZapStrategy<StrategyId> {
     const state = getState();
     const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
-      throw new Error('BalancerStrategy: Quote called with 0 input amount');
+      throw new Error('BalancerSwapStrategy: Quote called with 0 input amount');
     }
 
     // Token allowances
@@ -548,18 +548,18 @@ class BalancerSwapStrategyImpl implements IZapStrategy<StrategyId> {
       const buildQuote = quote.steps.find(isZapQuoteStepBuild);
 
       if (!buildQuote) {
-        throw new Error('BalancerStrategy: No build step in quote');
+        throw new Error('BalancerSwapStrategy: No build step in quote');
       }
 
       // wrap and asset swap, 2 max
       if (swapQuotes.length > 2) {
-        throw new Error('BalancerStrategy: Too many swaps');
+        throw new Error('BalancerSwapStrategy: Too many swaps');
       }
 
       // Swaps
       if (swapQuotes.length) {
         if (swapQuotes.length > 1) {
-          throw new Error('BalancerStrategy: Too many swaps in quote');
+          throw new Error('BalancerSwapStrategy: Too many swaps in quote');
         }
 
         const swapQuote = swapQuotes[0];

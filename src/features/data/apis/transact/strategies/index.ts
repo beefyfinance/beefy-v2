@@ -22,8 +22,8 @@ const strategyLoadersByIdUnchecked = {
     (await import('./RewardPoolToVaultStrategy')).RewardPoolToVaultStrategy,
   'balancer-swap': async () =>
     (await import('./balancer/BalancerSwapStrategy')).BalancerSwapStrategy,
-  'balancer-pool': async () =>
-    (await import('./balancer/BalancerPoolStrategy')).BalancerPoolStrategy,
+  'balancer-join': async () =>
+    (await import('./balancer/BalancerJoinStrategy')).BalancerJoinStrategy,
 } as const satisfies Record<ZapStrategyId, () => Promise<IAnyStrategyStatic>>;
 
 type StrategyIdToStaticPromise = typeof strategyLoadersByIdUnchecked;

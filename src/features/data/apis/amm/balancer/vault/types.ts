@@ -1,6 +1,5 @@
 import type BigNumber from 'bignumber.js';
 import type { TokenEntity } from '../../../../entities/token';
-import type { WeightedPoolExitKind } from '../weighted/types';
 
 export type VaultConfig = {
   /** address */
@@ -189,21 +188,6 @@ export type JoinPoolZapRequest = {
   join: JoinPoolArgs;
   insertBalance: boolean;
 };
-
-export type ExitPoolZapRequestKind =
-  | {
-      kind: WeightedPoolExitKind.EXACT_BPT_IN_FOR_TOKENS_OUT;
-      token: string;
-    }
-  | {
-      kind: WeightedPoolExitKind.EXACT_BPT_IN_FOR_ONE_TOKEN_OUT;
-      token: string;
-      tokenIndex: number;
-    }
-  | {
-      kind: WeightedPoolExitKind.BPT_IN_FOR_EXACT_TOKENS_OUT;
-      token: string;
-    };
 
 export type ExitPoolZapRequest = {
   exit: ExitPoolArgs;

@@ -32,7 +32,7 @@ const BalancerZap = memo<BalancerZapProps>(function BalancerZap({ vaultId }) {
   const zap = isStandardVault(vault)
     ? vault.zaps.find(
         (zap): zap is BalancerSwapStrategyConfig =>
-          zap.strategyId === 'balancer-swap' || zap.strategyId === 'balancer-pool'
+          zap.strategyId === 'balancer-swap' || zap.strategyId === 'balancer-join'
       )
     : undefined;
 

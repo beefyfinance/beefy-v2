@@ -75,25 +75,26 @@ import { isStandardVault, type VaultStandard } from '../../../../entities/vault'
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import { isDefined } from '../../../../utils/array-utils';
 import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
-import type { BalancerPoolStrategyConfig } from '../strategy-configs';
+import type { BalancerJoinStrategyConfig } from '../strategy-configs';
 import { type AmmEntityBalancer, isBalancerAmm } from '../../../../entities/zap';
 import { selectAmmById } from '../../../../selectors/zap';
 import { createFactory } from '../../../../utils/factory-utils';
 import type { PoolConfig, VaultConfig } from '../../../amm/balancer/vault/types';
 import { GyroEPool } from '../../../amm/balancer/gyroe/GyroEPool';
+import { WeightedPool } from '../../../amm/balancer/weighted/WeightedPool';
 
 type ZapHelpers = {
   slippage: number;
   state: BeefyState;
 };
 
-const strategyId = 'balancer-pool' as const;
+const strategyId = 'balancer-join' as const;
 type StrategyId = typeof strategyId;
 
 /**
  * Balancer: joinPool() to deposit / exitPool() to withdraw liquidity
  */
-class BalancerPoolStrategyImpl implements IZapStrategy<StrategyId> {
+class BalancerJoinStrategyImpl implements IZapStrategy<StrategyId> {
   public static readonly id = strategyId;
   public readonly id = strategyId;
 
@@ -107,7 +108,7 @@ class BalancerPoolStrategyImpl implements IZapStrategy<StrategyId> {
   protected readonly amm: AmmEntityBalancer;
 
   constructor(
-    protected options: BalancerPoolStrategyConfig,
+    protected options: BalancerJoinStrategyConfig,
     protected helpers: ZapTransactHelpers
   ) {
     const { vault, vaultType, getState } = this.helpers;
@@ -143,11 +144,19 @@ class BalancerPoolStrategyImpl implements IZapStrategy<StrategyId> {
     this.chain = selectChainById(state, vault.chainId);
     this.poolTokens = this.selectPoolTokens(state, this.chain.id, this.options.tokens);
 
-    if (this.options.poolType === 'gyroe') {
-      this.checkPoolTokensCount(2);
-      this.checkPoolTokensHavePrice(state);
-    } else {
-      throw new Error(`Unsupported balancer pool type ${this.options.poolType}`);
+    switch (this.options.poolType) {
+      case 'gyroe': {
+        this.checkPoolTokensCount(2);
+        this.checkPoolTokensHavePrice(state);
+        break;
+      }
+      case 'weighted': {
+        this.checkPoolTokensHavePrice(state);
+        break;
+      }
+      default: {
+        throw new Error(`Unsupported balancer pool type ${this.options.poolType}`);
+      }
     }
   }
 
@@ -235,6 +244,9 @@ class BalancerPoolStrategyImpl implements IZapStrategy<StrategyId> {
       case 'gyroe': {
         return new GyroEPool(this.chain, vault, pool);
       }
+      case 'weighted': {
+        return new WeightedPool(this.chain, vault, pool);
+      }
       default: {
         throw new Error(`Unsupported balancer pool type ${this.options.poolType}`);
       }
@@ -247,7 +259,7 @@ class BalancerPoolStrategyImpl implements IZapStrategy<StrategyId> {
   ): Promise<BalancerPoolDepositQuote> {
     const input = onlyOneInput(inputs);
     if (input.amount.lte(BIG_ZERO)) {
-      throw new Error('BalancerPoolStrategy: Quote called with 0 input amount');
+      throw new Error('BalancerJoinStrategy: Quote called with 0 input amount');
     }
 
     if (option.via === 'aggregator') {
@@ -262,12 +274,23 @@ class BalancerPoolStrategyImpl implements IZapStrategy<StrategyId> {
     input: TokenAmount
   ): Promise<Array<{ from: TokenAmount; to: TokenEntity }>> {
     const pool = this.getPool();
-    const ratio = await pool.getSwapRatio();
-    console.debug('ratio', ratio.toString());
+    const ratios = await pool.getSwapRatios();
+    console.debug('ratios', ratios.toString());
+    if (ratios.length !== this.poolTokens.length) {
+      throw new Error('BalancerJoinStrategy: Ratios length mismatch');
+    }
+
     const inputAmountWei = toWeiFromTokenAmount(input);
-    const amount0 = inputAmountWei.multipliedBy(ratio).decimalPlaces(0, BigNumber.ROUND_FLOOR);
-    const amount1 = inputAmountWei.minus(amount0);
-    const swapAmounts = [amount0, amount1];
+    const lastIndex = ratios.length - 1;
+    const swapAmounts = ratios.map((ratio, i) =>
+      i === lastIndex
+        ? BIG_ZERO
+        : inputAmountWei.multipliedBy(ratio).integerValue(BigNumber.ROUND_FLOOR)
+    );
+    swapAmounts[swapAmounts.length - 1] = swapAmounts.reduce(
+      (acc, amount) => acc.minus(amount),
+      inputAmountWei
+    );
 
     return this.poolTokens.map((token, i) => ({
       from: fromWeiToTokenAmount(swapAmounts[i], input.token),
@@ -470,20 +493,24 @@ class BalancerPoolStrategyImpl implements IZapStrategy<StrategyId> {
 
   protected async fetchZapBuild(
     quoteStep: ZapQuoteStepBuild,
-    minInputs: TokenAmount[]
+    minInputs: TokenAmount[],
+    zapHelpers: ZapHelpers
   ): Promise<ZapStepResponse> {
-    const quote = await this.quoteAddLiquidity(minInputs);
+    const { liquidity, usedInput, unusedInput } = await this.quoteAddLiquidity(minInputs);
     const pool = this.getPool();
+    const minLiquidity = pool.joinSupportsSlippage
+      ? slipTokenAmountBy(liquidity, zapHelpers.slippage)
+      : liquidity;
 
     return {
-      inputs: quote.usedInput,
-      outputs: [quote.liquidity],
-      minOutputs: [quote.liquidity], // TODO gyro can't slip, it just fails but maybe other pool types can
-      returned: quote.unusedInput,
+      inputs: usedInput,
+      outputs: [liquidity],
+      minOutputs: [minLiquidity],
+      returned: unusedInput,
       zaps: [
         await pool.getAddLiquidityZap(
-          quote.usedInput.map(input => toWeiFromTokenAmount(input)),
-          toWeiFromTokenAmount(quote.liquidity),
+          usedInput.map(input => toWeiFromTokenAmount(input)),
+          toWeiFromTokenAmount(minLiquidity),
           this.helpers.zap.router,
           true
         ),
@@ -508,18 +535,18 @@ class BalancerPoolStrategyImpl implements IZapStrategy<StrategyId> {
       const buildQuote = quote.steps.find(isZapQuoteStepBuild);
 
       if (!buildQuote) {
-        throw new Error('BalancerPoolStrategy: No build step in quote');
+        throw new Error('BalancerJoinStrategy: No build step in quote');
       }
 
       // since there are two tokens, there must be at least 1 swap
       if (swapQuotes.length < 1) {
-        throw new Error('BalancerPoolStrategy: Not enough swaps');
+        throw new Error('BalancerJoinStrategy: Not enough swaps');
       }
 
       // Swaps
       if (swapQuotes.length) {
-        if (swapQuotes.length > 2) {
-          throw new Error('BalancerPoolStrategy: Too many swaps');
+        if (swapQuotes.length > this.poolTokens.length) {
+          throw new Error('BalancerJoinStrategy: Too many swaps');
         }
 
         const insertBalance = allTokensAreDistinct(
@@ -545,7 +572,8 @@ class BalancerPoolStrategyImpl implements IZapStrategy<StrategyId> {
         buildQuote.inputs.map(({ token }) => ({
           token,
           amount: minBalances.get(token), // we have to pass min expected in case swaps slipped
-        }))
+        })),
+        zapHelpers
       );
       console.debug('fetchDepositStep::buildZap', bigNumberToStringDeep(buildZap));
       buildZap.zaps.forEach(step => steps.push(step));
@@ -1028,5 +1056,5 @@ class BalancerPoolStrategyImpl implements IZapStrategy<StrategyId> {
   }
 }
 
-export const BalancerPoolStrategy =
-  BalancerPoolStrategyImpl satisfies IZapStrategyStatic<StrategyId>;
+export const BalancerJoinStrategy =
+  BalancerJoinStrategyImpl satisfies IZapStrategyStatic<StrategyId>;

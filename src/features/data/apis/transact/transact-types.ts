@@ -193,12 +193,12 @@ export type BalancerSwapWithdrawOption = ZapBaseWithdrawOption & {
   );
 
 export type BalancerPoolDepositOption = ZapBaseDepositOption & {
-  strategyId: 'balancer-pool';
+  strategyId: 'balancer-join';
   via: /*'pool' | */ 'aggregator';
 };
 
 export type BalancerPoolWithdrawOption = ZapBaseWithdrawOption & {
-  strategyId: 'balancer-pool';
+  strategyId: 'balancer-join';
   via: 'break-only' | /*'pool' | */ 'aggregator';
 };
 

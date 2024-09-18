@@ -315,7 +315,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer-pool",
+        "strategyId": "balancer-join",
         "ammId": "ethereum-balancer",
         "poolId": "0xc2aa60465bffa1a88f5ba471a59ca0435c3ec5c100020000000000000000062c",
         "poolType": "gyroe",
@@ -350,7 +350,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer-pool",
+        "strategyId": "balancer-join",
         "ammId": "ethereum-balancer",
         "poolId": "0x1cce5169bde03f3d5ad0206f6bd057953539dae600020000000000000000062b",
         "poolType": "gyroe",
@@ -385,7 +385,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer-pool",
+        "strategyId": "balancer-join",
         "ammId": "ethereum-balancer",
         "poolId": "0xaa7a70070e7495fe86c67225329dbd39baa2f63b000200000000000000000663",
         "poolType": "gyroe",
@@ -420,7 +420,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer-pool",
+        "strategyId": "balancer-join",
         "ammId": "ethereum-balancer",
         "poolId": "0x3932b187f440ce7703653b3908edc5bb7676c283000200000000000000000664",
         "poolType": "gyroe",
@@ -2127,9 +2127,9 @@
     "tokenAddress": "0x9F9d900462492D4C21e9523ca95A7CD86142F298",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xAB28C317B34084f29d7623208b5F09C0Dd566a18",
     "earnedToken": "mooAuraRPL-rETH",
     "earnedTokenAddress": "0xAB28C317B34084f29d7623208b5F09C0Dd566a18",
-    "earnContractAddress": "0xAB28C317B34084f29d7623208b5F09C0Dd566a18",
     "oracle": "lps",
     "oracleId": "aura-reth-rpl",
     "status": "active",
@@ -2140,7 +2140,19 @@
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x9f9d900462492d4c21e9523ca95a7cd86142f298000200000000000000000462/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x9f9d900462492d4c21e9523ca95a7cd86142f298000200000000000000000462/remove-liquidity",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "balancer-join",
+        "ammId": "ethereum-balancer",
+        "poolId": "0x9f9d900462492d4c21e9523ca95a7cd86142f298000200000000000000000462",
+        "poolType": "weighted",
+        "tokens": [
+          "0xae78736Cd615f374D3085123A210448E74Fc6393",
+          "0xD33526068D116cE69F19A9ee46F0bd304F21A51f"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-alcx-eth",
@@ -2150,9 +2162,9 @@
     "tokenAddress": "0xf16aEe6a71aF1A9Bc8F56975A4c2705ca7A782Bc",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x9E90aD4810C9eaE0ADFc15801838Dc53cC6ed48a",
     "earnedToken": "mooAuraALCX-ETH",
     "earnedTokenAddress": "0x9E90aD4810C9eaE0ADFc15801838Dc53cC6ed48a",
-    "earnContractAddress": "0x9E90aD4810C9eaE0ADFc15801838Dc53cC6ed48a",
     "oracle": "lps",
     "oracleId": "aura-alcx-eth",
     "status": "active",
@@ -2163,7 +2175,19 @@
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xf16aee6a71af1a9bc8f56975a4c2705ca7a782bc0002000000000000000004bb/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xf16aee6a71af1a9bc8f56975a4c2705ca7a782bc0002000000000000000004bb/remove-liquidity",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "balancer-join",
+        "ammId": "ethereum-balancer",
+        "poolId": "0xf16aee6a71af1a9bc8f56975a4c2705ca7a782bc0002000000000000000004bb",
+        "poolType": "weighted",
+        "tokens": [
+          "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "0xdBdb4d16EdA451D0503b854CF79D55697F90c8DF"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-ankreth-wsteth",
@@ -2995,7 +3019,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer-pool",
+        "strategyId": "balancer-join",
         "ammId": "ethereum-balancer",
         "poolId": "0xf01b0684c98cd7ada480bfdf6e43876422fa1fc10002000000000000000005de",
         "poolType": "gyroe",
@@ -3030,7 +3054,7 @@
     "network": "ethereum",
     "zaps": [
       {
-        "strategyId": "balancer-pool",
+        "strategyId": "balancer-join",
         "ammId": "ethereum-balancer",
         "poolId": "0xf7a826d47c8e02835d94fb0aa40f0cc9505cb1340002000000000000000005e0",
         "poolType": "gyroe",

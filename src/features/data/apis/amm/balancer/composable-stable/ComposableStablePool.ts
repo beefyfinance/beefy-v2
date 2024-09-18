@@ -1,4 +1,4 @@
-import type { IBalancerPool } from '../types';
+import type { IBalancerSwapPool } from '../types';
 import type BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import type { ZapStep } from '../../../transact/zap/types';
@@ -15,8 +15,9 @@ import { getUnixNow } from '../../../../../../helpers/date';
 
 const THIRTY_MINUTES_IN_SECONDS = 30 * 60;
 
-export class ComposableStablePool implements IBalancerPool {
+export class ComposableStablePool implements IBalancerSwapPool {
   public readonly type = 'balancer';
+  public readonly subType = 'swap';
 
   constructor(
     protected readonly chain: ChainEntity,
