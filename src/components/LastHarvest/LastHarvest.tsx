@@ -34,7 +34,7 @@ export const LastHarvest = memo<LastHarvestProps>(function LastHarvest({ vaultId
 
 function formatLastHarvest(unixTime: number, strict?: boolean): string {
   if (unixTime === 0) {
-    return 'never';
+    return '-';
   } else {
     return (strict ? formatDistanceToNowStrict : formatDistanceToNow)(unixTime, {
       addSuffix: true,
@@ -72,11 +72,15 @@ export const LastHarvestCowcentrated = memo<LastHarvestCowcentratedProps>(
       [vaultLastHarvest, clmLastHarvest]
     );
 
+    if (!vaultLastHarvest && !clmLastHarvest) {
+      return <ValueBlock label={t('Vault-LastHarvest')} value="-" />;
+    }
+
     return (
       <ValueBlock
         label={t('Vault-LastHarvest')}
         value={formatted.vault}
-        usdValue={`CLM: ${formatted.clm}`}
+        usdValue={clmLastHarvest ? `CLM Pool: ${formatted.clm}` : undefined}
       />
     );
   }
