@@ -80,8 +80,9 @@ import { type AmmEntityBalancer, isBalancerAmm } from '../../../../entities/zap'
 import { selectAmmById } from '../../../../selectors/zap';
 import { createFactory } from '../../../../utils/factory-utils';
 import type { PoolConfig, VaultConfig } from '../../../amm/balancer/vault/types';
-import { GyroEPool } from '../../../amm/balancer/gyroe/GyroEPool';
+import { GyroPool } from '../../../amm/balancer/gyro/GyroPool';
 import { WeightedPool } from '../../../amm/balancer/weighted/WeightedPool';
+import { MetaStablePool } from '../../../amm/balancer/meta-stable/MetaStablePool';
 
 type ZapHelpers = {
   slippage: number;
@@ -145,12 +146,14 @@ class BalancerJoinStrategyImpl implements IZapStrategy<StrategyId> {
     this.poolTokens = this.selectPoolTokens(state, this.chain.id, this.options.tokens);
 
     switch (this.options.poolType) {
-      case 'gyroe': {
+      case 'gyroe':
+      case 'gyro': {
         this.checkPoolTokensCount(2);
         this.checkPoolTokensHavePrice(state);
         break;
       }
-      case 'weighted': {
+      case 'weighted':
+      case 'meta-stable': {
         this.checkPoolTokensHavePrice(state);
         break;
       }
@@ -241,11 +244,15 @@ class BalancerJoinStrategyImpl implements IZapStrategy<StrategyId> {
     };
 
     switch (this.options.poolType) {
+      case 'gyro':
       case 'gyroe': {
-        return new GyroEPool(this.chain, vault, pool);
+        return new GyroPool(this.chain, vault, pool);
       }
       case 'weighted': {
         return new WeightedPool(this.chain, vault, pool);
+      }
+      case 'meta-stable': {
+        return new MetaStablePool(this.chain, vault, pool);
       }
       default: {
         throw new Error(`Unsupported balancer pool type ${this.options.poolType}`);

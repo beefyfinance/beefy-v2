@@ -69,19 +69,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xdeeaf8b0a8cf26217261b813e085418c7dd8f1ee00020000000000000000058f/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xdeeaf8b0a8cf26217261b813e085418c7dd8f1ee00020000000000000000058f/remove-liquidity",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "balancer-join",
-        "ammId": "arbitrum-balancer",
-        "poolId": "0xdeeaf8b0a8cf26217261b813e085418c7dd8f1ee00020000000000000000058f",
-        "poolType": "gyroe",
-        "tokens": [
-          "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-          "0xCA5d8F8a8d49439357d3CF46Ca2e720702F132b8"
-        ]
-      }
-    ]
+    "network": "arbitrum"
   },
   {
     "id": "aura-arb-agho-gyd",
@@ -111,19 +99,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xff38cc0ce0de4476c5a3e78675b48420a851035b000200000000000000000593/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xff38cc0ce0de4476c5a3e78675b48420a851035b000200000000000000000593/remove-liquidity",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "balancer-join",
-        "ammId": "arbitrum-balancer",
-        "poolId": "0xff38cc0ce0de4476c5a3e78675b48420a851035b000200000000000000000593",
-        "poolType": "gyroe",
-        "tokens": [
-          "0xCA5d8F8a8d49439357d3CF46Ca2e720702F132b8",
-          "0xD9FBA68D89178e3538e708939332c79efC540179"
-        ]
-      }
-    ]
+    "network": "arbitrum"
   },
   {
     "id": "aura-arb-ausdc-wusdm",
@@ -1675,19 +1651,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x7272163a931dac5bbe1cb5fefaf959bb65f7346f000200000000000000000549/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x7272163a931dac5bbe1cb5fefaf959bb65f7346f000200000000000000000549/remove-liquidity",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "balancer-join",
-        "ammId": "arbitrum-balancer",
-        "poolId": "0x7272163a931dac5bbe1cb5fefaf959bb65f7346f000200000000000000000549",
-        "poolType": "gyroe",
-        "tokens": [
-          "0xb165a74407fE1e519d6bCbDeC1Ed3202B35a4140",
-          "0xCA5d8F8a8d49439357d3CF46Ca2e720702F132b8"
-        ]
-      }
-    ]
+    "network": "arbitrum"
   },
   {
     "id": "aura-arb-ausdc-gyd",
@@ -1717,19 +1681,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x6e822c64c00393b2078f2a5bb75c575ab505b55c000200000000000000000548/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x6e822c64c00393b2078f2a5bb75c575ab505b55c000200000000000000000548/remove-liquidity",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "balancer-join",
-        "ammId": "arbitrum-balancer",
-        "poolId": "0x6e822c64c00393b2078f2a5bb75c575ab505b55c000200000000000000000548",
-        "poolType": "gyroe",
-        "tokens": [
-          "0x7CFaDFD5645B50bE87d546f42699d863648251ad",
-          "0xCA5d8F8a8d49439357d3CF46Ca2e720702F132b8"
-        ]
-      }
-    ]
+    "network": "arbitrum"
   },
   {
     "id": "pendle-arb-usde-28nov24",
@@ -1784,19 +1736,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x315dd595e82bdc0c194f3a38a08fde480d7e5d2100020000000000000000056a/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x315dd595e82bdc0c194f3a38a08fde480d7e5d2100020000000000000000056a/remove-liquidity",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "balancer-join",
-        "ammId": "arbitrum-balancer",
-        "poolId": "0x315dd595e82bdc0c194f3a38a08fde480d7e5d2100020000000000000000056a",
-        "poolType": "gyroe",
-        "tokens": [
-          "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
-          "0xCA5d8F8a8d49439357d3CF46Ca2e720702F132b8"
-        ]
-      }
-    ]
+    "network": "arbitrum"
   },
   {
     "id": "ramses-cl-rseth-ethx-vault",
@@ -5680,9 +5620,9 @@
     "tokenAddress": "0x14ABD18d1FA335E9F630a658a2799B33208763Fa",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x9eEd71e0Cf1681Fb4554cFcC9C1eAAC6F6307EAC",
     "earnedToken": "mooAuraGyroaUSDT/USDT",
     "earnedTokenAddress": "0x9eEd71e0Cf1681Fb4554cFcC9C1eAAC6F6307EAC",
-    "earnContractAddress": "0x9eEd71e0Cf1681Fb4554cFcC9C1eAAC6F6307EAC",
     "oracle": "lps",
     "oracleId": "aura-arb-gyro-ausdt-usdt",
     "status": "active",
@@ -5700,7 +5640,19 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0x14ABD18d1FA335E9F630a658a2799B33208763Fa/join/",
     "removeLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0x14ABD18d1FA335E9F630a658a2799B33208763Fa/exit/",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer-join",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0x14abd18d1fa335e9f630a658a2799b33208763fa00020000000000000000051f",
+        "poolType": "gyro",
+        "tokens": [
+          "0xb165a74407fE1e519d6bCbDeC1Ed3202B35a4140",
+          "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-arb-gyro-ausdc-usdc",
@@ -5710,9 +5662,9 @@
     "tokenAddress": "0xcA8ECD05A289B1FBc2E0eAEC07360c4BFec07B61",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xb35EcE568Fad2559B4c1025B72A230315616C356",
     "earnedToken": "mooAuraGyroaUSDC/USDC",
     "earnedTokenAddress": "0xb35EcE568Fad2559B4c1025B72A230315616C356",
-    "earnContractAddress": "0xb35EcE568Fad2559B4c1025B72A230315616C356",
     "oracle": "lps",
     "oracleId": "aura-arb-gyro-ausdc-usdc",
     "status": "active",
@@ -5730,7 +5682,19 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0xcA8ECD05A289B1FBc2E0eAEC07360c4BFec07B61/join/",
     "removeLiquidityUrl": "https://app.gyro.finance/pools/arbitrum/e-clp/0xcA8ECD05A289B1FBc2E0eAEC07360c4BFec07B61/exit/",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer-join",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0xca8ecd05a289b1fbc2e0eaec07360c4bfec07b6100020000000000000000051d",
+        "poolType": "gyro",
+        "tokens": [
+          "0x7CFaDFD5645B50bE87d546f42699d863648251ad",
+          "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+        ]
+      }
+    ]
   },
   {
     "id": "camelot-ethfi-weth-rp",

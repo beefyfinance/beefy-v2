@@ -10377,9 +10377,9 @@
     "tokenAddress": "0x4Fd63966879300caFafBB35D157dC5229278Ed23",
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
+    "earnContractAddress": "0xdCC5DC90A803928Dc21556590D4620030966270F",
     "earnedToken": "mooBeetsRocketFuel",
     "earnedTokenAddress": "0xdCC5DC90A803928Dc21556590D4620030966270F",
-    "earnContractAddress": "0xdCC5DC90A803928Dc21556590D4620030966270F",
     "oracle": "lps",
     "oracleId": "beets-rocket-fuel",
     "status": "active",
@@ -10390,7 +10390,19 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x4fd63966879300cafafbb35d157dc5229278ed2300020000000000000000002b",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x4fd63966879300cafafbb35d157dc5229278ed2300020000000000000000002b",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "balancer-join",
+        "ammId": "optimism-beethovenx",
+        "poolId": "0x4fd63966879300cafafbb35d157dc5229278ed2300020000000000000000002b",
+        "poolType": "meta-stable",
+        "tokens": [
+          "0x4200000000000000000000000000000000000006",
+          "0x9Bcef72be871e61ED4fBbc7630889beE758eb81D"
+        ]
+      }
+    ]
   },
   {
     "id": "velodrome-susd-lusd",

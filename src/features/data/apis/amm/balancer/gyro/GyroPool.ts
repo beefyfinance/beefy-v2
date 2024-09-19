@@ -11,16 +11,18 @@ import {
   bigNumberToStringDeep,
   bigNumberToUint256String,
 } from '../../../../../../helpers/big-number';
-import { WeightedPoolEncoder } from '../weighted/WeightedPoolEncoder';
-import { FixedPoint } from '../weighted/FixedPoint';
+import { JoinExitEncoder } from '../join/JoinExitEncoder';
+import { FixedPoint } from '../join/FixedPoint';
 import type { ZapStep } from '../../../transact/zap/types';
 import { WeightedMath } from '../weighted/WeightedMath';
-import { WeightedPool } from '../weighted/WeightedPool';
 import type { ChainEntity } from '../../../../entities/chain';
 import { viemToWeb3Abi } from '../../../../../../helpers/web3';
 import { BalancerGyroEPoolAbi } from '../../../../../../config/abi/BalancerGyroEPoolAbi';
+import { JoinPool } from '../join/JoinPool';
+import type { IBalancerJoinPool } from '../types';
 
-export class GyroEPool extends WeightedPool {
+// Covers Gyro and GyroE
+export class GyroPool extends JoinPool implements IBalancerJoinPool {
   constructor(
     readonly chain: ChainEntity,
     readonly vaultConfig: VaultConfig,
@@ -28,16 +30,14 @@ export class GyroEPool extends WeightedPool {
   ) {
     super(chain, vaultConfig, config);
 
-    this.getUpscaledBalances = this.cacheMethod(this.getUpscaledBalances);
     this.getTokenRates = this.cacheMethod(this.getTokenRates);
-    this.getTotalSupply = this.cacheMethod(this.getTotalSupply);
   }
 
   get joinSupportsSlippage() {
     return false;
   }
 
-  // async getSwapRatioLikeStrategy(): Promise<BigNumber> {
+  // async getSwapRatios(): Promise<BigNumber> {
   //   const balances = await this.getBalances();
   //   const rates = await this.getTokenRates();
   //   const totalSupply = await this.getTotalSupply();
@@ -56,7 +56,9 @@ export class GyroEPool extends WeightedPool {
   //   return BIG_ONE.shiftedBy(18).dividedBy(ratio.plus(BIG_ONE.shiftedBy(18)));
   // }
 
-  /** assumption: all gyro pools have rateProviders */
+  /**
+   * The ratio of balances[n] * scaling factor[n] * token rate[n] over their sum
+   */
   async getSwapRatios(): Promise<BigNumber[]> {
     const upscaledBalances = await this.getUpscaledBalances();
     const token0Ratio = upscaledBalances[0].dividedBy(
@@ -84,7 +86,7 @@ export class GyroEPool extends WeightedPool {
         request: {
           assets: this.config.tokens.map(t => t.address),
           maxAmountsIn: maxAmountsIn,
-          userData: WeightedPoolEncoder.joinAllTokensInForExactBPTOut(
+          userData: JoinExitEncoder.joinAllTokensInForExactBPTOut(
             bigNumberToUint256String(liquidity)
           ),
           fromInternalBalance: false,
@@ -159,7 +161,7 @@ export class GyroEPool extends WeightedPool {
           request: {
             assets: this.config.tokens.map(t => t.address),
             maxAmountsIn: amountsIn,
-            userData: WeightedPoolEncoder.joinAllTokensInForExactBPTOut(
+            userData: JoinExitEncoder.joinAllTokensInForExactBPTOut(
               bigNumberToUint256String(estimatedLiquidity)
             ),
             fromInternalBalance: false,
@@ -189,26 +191,19 @@ export class GyroEPool extends WeightedPool {
     throw new Error('Failed to calculate liquidity');
   }
 
+  /**
+   * Internally gyro pools use a scaling factor that includes the token rate too
+   */
   protected async getScalingFactors() {
     const factors = await super.getScalingFactors();
     const rates = await this.getTokenRates();
     return factors.map((factor, i) => FixedPoint.mulDown(factor, rates[i]));
   }
 
-  protected async getUpscaledBalances() {
-    return await this.upscaleAmounts(await this.getBalances());
-  }
-
   protected async getTokenRates(): Promise<BigNumber[]> {
     const pool = await this.getPoolContract();
     const rates: RatesResult = await pool.methods.getTokenRates().call();
     return [rates.rate0, rates.rate1].map(rate => new BigNumber(rate));
-  }
-
-  protected async getTotalSupply(): Promise<BigNumber> {
-    const pool = await this.getPoolContract();
-    const totalSupply: string = await pool.methods.getActualSupply().call();
-    return new BigNumber(totalSupply);
   }
 
   protected async getPoolContract() {

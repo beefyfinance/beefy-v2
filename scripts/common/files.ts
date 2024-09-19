@@ -2,6 +2,9 @@ import { createWriteStream } from 'node:fs';
 import { access, constants, readFile, writeFile } from 'node:fs/promises';
 import * as prettier from 'prettier';
 
+type JsonReplacer = (key: string, value: any) => any;
+type JsonReviver = (key: string, value: any) => any;
+
 export async function fileAccess(path: string, mode: number): Promise<boolean> {
   try {
     await access(path, mode);
@@ -30,40 +33,81 @@ export async function saveString(path: string, data: string) {
 async function formatJson<DataType = any>(
   path: string,
   json: DataType,
-  pretty: boolean | 'prettier' = false
+  pretty: boolean | 'prettier' = false,
+  replacer?: JsonReplacer
 ): Promise<string> {
   switch (pretty) {
     case 'prettier':
       const config = await prettier.resolveConfig(path);
-      return prettier.format(JSON.stringify(json, null, 2), { ...config, filepath: path });
+      return prettier.format(JSON.stringify(json, replacer, 2), { ...config, filepath: path });
     case true:
-      return JSON.stringify(json, null, 2);
+      return JSON.stringify(json, replacer, 2);
     default:
-      return JSON.stringify(json);
+      return JSON.stringify(json, replacer);
   }
 }
 
 export async function saveJson<DataType = any>(
   path: string,
   json: DataType,
-  pretty: boolean | 'prettier' = false
+  pretty: boolean | 'prettier' = false,
+  replacer?: JsonReplacer
 ) {
-  return saveString(path, await formatJson(path, json, pretty));
+  return saveString(path, await formatJson(path, json, pretty, replacer));
 }
 
 export async function loadString(path: string): Promise<string> {
   return await readFile(path, 'utf-8');
 }
 
-export async function loadJson<ReturnType = any>(path: string): Promise<ReturnType> {
+export async function loadJson<ReturnType = any>(
+  path: string,
+  reviver?: JsonReviver
+): Promise<ReturnType> {
   const json = await readFile(path, 'utf-8');
-  return JSON.parse(json);
+  return JSON.parse(json, reviver);
 }
 
 function escapeCsvValue(input: string) {
   const stringValue = typeof input === 'object' ? JSON.stringify(input) : String(input);
   const escaped = stringValue.replace(/"/g, '""').replace(/\n/g, '\\n').replace(/\r/g, '\\r');
   return `"${escaped}"`;
+}
+
+export function stringifyBigInt(_key: string, value: any): any {
+  if (typeof value === 'bigint') {
+    return `${value.toString(10)}n`;
+  }
+
+  return value;
+}
+
+export function parseBigInt(_key: string, value: any): any {
+  if (typeof value === 'string' && value.length > 1 && value[value.length - 1] === 'n') {
+    if (value === '0n') {
+      return 0n;
+    }
+
+    if (value.match(/^[1-9][0-9]*n$/)) {
+      return BigInt(value.slice(0, -1));
+    }
+  }
+
+  return value;
+}
+
+export async function saveJsonSupportingBigInt<DataType = any>(
+  path: string,
+  json: DataType,
+  pretty: boolean | 'prettier' = false
+) {
+  return saveJson(path, json, pretty, stringifyBigInt);
+}
+
+export async function loadJsonSupportingBigInt<ReturnType = any>(
+  path: string
+): Promise<ReturnType> {
+  return loadJson(path, parseBigInt);
 }
 
 export async function saveCsv<T extends Record<string, any>>(

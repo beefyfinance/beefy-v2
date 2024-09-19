@@ -50,7 +50,7 @@ export type BalancerJoinStrategyConfig = {
   strategyId: 'balancer-join';
   ammId: AmmEntityBalancer['id'];
   poolId: string;
-  poolType: 'gyroe' | 'weighted';
+  poolType: 'gyro' | 'gyroe' | 'weighted' | 'meta-stable';
   tokens: string[];
 } & OptionalStrategySwapConfig;
 

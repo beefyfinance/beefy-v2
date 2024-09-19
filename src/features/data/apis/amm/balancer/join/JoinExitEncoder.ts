@@ -1,7 +1,7 @@
 import abiCoder from 'web3-eth-abi';
-import { WeightedPoolExitKind, WeightedPoolJoinKind } from './types';
+import { WeightedPoolExitKind, WeightedPoolJoinKind } from '../weighted/types';
 
-export class WeightedPoolEncoder {
+export class JoinExitEncoder {
   private constructor() {
     // static only
   }

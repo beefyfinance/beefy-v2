@@ -5335,9 +5335,9 @@
     "tokenAddress": "0x1E19CF2D73a72Ef1332C882F20534B6519Be0276",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xe17D6212eAa54D98187026A770dee96f7C264feC",
     "earnedToken": "mooAurarETH-ETH",
     "earnedTokenAddress": "0xe17D6212eAa54D98187026A770dee96f7C264feC",
-    "earnContractAddress": "0xe17D6212eAa54D98187026A770dee96f7C264feC",
     "oracle": "lps",
     "oracleId": "aura-reth-weth",
     "status": "active",
@@ -5348,7 +5348,19 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x1e19cf2d73a72ef1332c882f20534b6519be0276000200000000000000000112/invest/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x1e19cf2d73a72ef1332c882f20534b6519be0276000200000000000000000112/remove-liquidity",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "balancer-join",
+        "ammId": "ethereum-balancer",
+        "poolId": "0x1e19cf2d73a72ef1332c882f20534b6519be0276000200000000000000000112",
+        "poolType": "meta-stable",
+        "tokens": [
+          "0xae78736Cd615f374D3085123A210448E74Fc6393",
+          "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+        ]
+      }
+    ]
   },
   {
     "id": "aura-wsteth-eth",
