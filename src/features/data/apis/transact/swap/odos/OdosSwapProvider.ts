@@ -6,6 +6,7 @@ import { isTokenNative, type TokenEntity } from '../../../../entities/token';
 import type { VaultEntity } from '../../../../entities/vault';
 import { selectAllChainIds, selectChainById } from '../../../../selectors/chains';
 import { selectSupportedSwapTokensForChainAggregatorHavingPrice } from '../../../../selectors/tokens';
+import { selectTransactSlippage } from '../../../../selectors/transact';
 import { selectSwapAggregatorForChainType, selectZapByChainId } from '../../../../selectors/zap';
 import type { OdosSwapSwapConfig } from '../../../config-types';
 import { getOdosApi } from '../../../instances';
@@ -45,6 +46,7 @@ export class OdosSwapProvider implements ISwapProvider {
       throw new Error(`No zap found for chain ${chain.id}`);
     }
 
+    const slippage = selectTransactSlippage(state);
     const api = await getOdosApi(chain);
     const quote = await api.postQuote({
       inputTokens: [
@@ -61,6 +63,7 @@ export class OdosSwapProvider implements ISwapProvider {
       ],
       chainId: chain.networkChainId,
       userAddr: zap.router,
+      slippageLimitPercent: slippage * 100,
     });
 
     return {
