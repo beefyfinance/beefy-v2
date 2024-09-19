@@ -47,7 +47,6 @@ export class OneInchSwapProvider implements ISwapProvider {
       src: this.getTokenAddress(request.fromToken),
       dst: this.getTokenAddress(request.toToken),
       amount: toWeiString(request.fromAmount, request.fromToken.decimals),
-      fee: (config.fee.value * 100).toString(10), // convert to % (0.0005 -> 0.05%)
     });
 
     return {
