@@ -1,5 +1,25 @@
 [
   {
+    "id": "sky-usds",
+    "name": "USDS",
+    "token": "USDS",
+    "tokenAddress": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x8C645aE763a2341a336629B1E6165c9aD28d90f2",
+    "earnedToken": "mooSkyUSDS",
+    "earnedTokenAddress": "0x8C645aE763a2341a336629B1E6165c9aD28d90f2",
+    "oracle": "tokens",
+    "oracleId": "USDS",
+    "status": "active",
+    "createdAt": 1726733173,
+    "platformId": "sky",
+    "assets": ["USDS"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single-lp",
+    "network": "ethereum"
+  },
+  {
     "id": "convex-staked-cvx",
     "name": "CVX",
     "token": "CVX",

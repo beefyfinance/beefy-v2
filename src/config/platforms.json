@@ -999,6 +999,11 @@
     "filter": true
   },
   {
+    "id": "sky",
+    "name": "Sky",
+    "filter": true
+  },
+  {
     "id": "oku",
     "name": "Uniswap (Oku)",
     "filter": true
