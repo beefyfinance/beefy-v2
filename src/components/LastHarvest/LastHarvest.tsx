@@ -22,7 +22,7 @@ export const LastHarvest = memo<LastHarvestProps>(function LastHarvest({ vaultId
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   if (isCowcentratedStandardVault(vault)) {
-    return <LastHarvestCowcentrated vaultId={vault.id} clmId={vault.cowcentratedId} />;
+    return <LastHarvestCowcentrated vaultId={vault.id} clmId={vault.cowcentratedIds.clm} />;
   }
 
   if (isGovVault(vault) && !isGovVaultCowcentrated(vault)) {

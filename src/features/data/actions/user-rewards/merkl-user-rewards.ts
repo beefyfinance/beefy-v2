@@ -7,6 +7,7 @@ import { selectVaultByAddressOrUndefined } from '../../selectors/vaults';
 import { selectMerklRewardsForUserShouldLoad } from '../../selectors/data-loader';
 import { type Address, getAddress } from 'viem';
 import {
+  getCowcentratedPool,
   isCowcentratedLikeVault,
   isCowcentratedVault,
   type VaultEntity,
@@ -169,8 +170,9 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
           addRewardToVault(vault.id, reward);
 
           // For rewards on CLM, merge them into the CLM Pool since the CLM page is inaccessible
-          if (isCowcentratedVault(vault) && vault.cowcentratedGovId) {
-            addRewardToVault(vault.cowcentratedGovId, reward);
+          const poolId = getCowcentratedPool(vault);
+          if (isCowcentratedVault(vault) && poolId) {
+            addRewardToVault(poolId, reward);
           }
         }
       }

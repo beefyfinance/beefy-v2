@@ -128,11 +128,11 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
         vault.contractAddress
       );
 
-      if (!underlyingVault.cowcentratedGovId) {
+      if (!underlyingVault.cowcentratedIds.pool) {
         throw new Error('Underlying vault does not have a gov id');
       }
 
-      const rewardPool = selectGovVaultById(getState(), underlyingVault.cowcentratedGovId);
+      const rewardPool = selectGovVaultById(getState(), underlyingVault.cowcentratedIds.pool);
       if (!isCowcentratedGovVault(rewardPool)) {
         throw new Error('Reward pool is not a cowcentrated gov vault');
       }
@@ -154,11 +154,11 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
         vault.contractAddress
       );
 
-      if (!underlyingVault.cowcentratedStandardId) {
+      if (!underlyingVault.cowcentratedIds.vault) {
         throw new Error('Underlying vault does not have a standard vault id');
       }
 
-      const standardVault = selectVaultById(getState(), underlyingVault.cowcentratedStandardId);
+      const standardVault = selectVaultById(getState(), underlyingVault.cowcentratedIds.vault);
       if (!isCowcentratedStandardVault(standardVault)) {
         throw new Error('Standard vault is not a cowcentrated standard vault');
       }
