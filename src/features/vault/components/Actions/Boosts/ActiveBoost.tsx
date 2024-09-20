@@ -187,7 +187,7 @@ export function ActiveBoost({ boostId, title }: { boostId: BoostEntity['id']; ti
               <>
                 <BoostActionButton
                   boostId={boostId}
-                  type="stake"
+                  type="unstake"
                   open={collapseOpen.unstake}
                   handleCollapse={() => handleCollapse({ stakeUnstake: 'unstake' })}
                   balance={boostBalance}

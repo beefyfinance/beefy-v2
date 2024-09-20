@@ -1,8 +1,7 @@
 import { Collapse, IconButton, makeStyles } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
-import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
-import { memo, useCallback, useEffect, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../components/Button';
 import { formatTokenDisplayCondensed, formatTokenDisplay } from '../../../../../../helpers/format';
@@ -10,7 +9,6 @@ import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { startStepper } from '../../../../../data/actions/stepper';
 import { walletActions } from '../../../../../data/actions/wallet-actions';
 import type { BoostEntity } from '../../../../../data/entities/boost';
-import { boostActions } from '../../../../../data/reducers/wallet/boost';
 import { stepperActions } from '../../../../../data/reducers/wallet/stepper';
 import {
   selectBoostRewardsTokenEntity,
@@ -28,7 +26,9 @@ import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { isLoaderFulfilled } from '../../../../../data/selectors/data-loader-helpers';
 import { initiateBoostForm } from '../../../../../data/actions/boosts';
-import { AmountInput, type AmountInputProps } from '../../Transact/AmountInput';
+import { AmountInput } from '../../Transact/AmountInput';
+import { useInputForm } from './hooks';
+import type BigNumber from 'bignumber.js';
 
 const useStyles = makeStyles(styles);
 
@@ -52,10 +52,10 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
   const dispatch = useAppDispatch();
   const boost = useAppSelector(state => selectBoostById(state, boostId));
   const vault = useAppSelector(state => selectStandardVaultById(state, boost.vaultId));
-  const formState = useAppSelector(state => state.ui.boost);
+
   const spenderAddress = boost.contractAddress;
   const needsApproval = useAppSelector(state =>
-    selectIsApprovalNeededForBoostStaking(state, spenderAddress)
+    selectIsApprovalNeededForBoostStaking(state, spenderAddress, boost)
   );
   const mooToken = useAppSelector(state =>
     selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress)
@@ -77,9 +77,11 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
 
   const isStepping = useAppSelector(selectIsStepperStepping);
 
+  const { handleMax, handleChange, formData } = useInputForm(balance, mooToken.decimals);
+
   const isDisabled = useMemo(
-    () => !formReady || formState.amount.eq(0) || isStepping || balance.eq(0),
-    [balance, formReady, formState.amount, isStepping]
+    () => !formReady || formData.amount.eq(0) || isStepping || balance.eq(0),
+    [balance, formReady, formData.amount, isStepping]
   );
 
   const isDisabledMaxButton = useMemo(
@@ -95,22 +97,6 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
 
   const isStake = type === 'stake' ? true : false;
 
-  const handleChange = useCallback<AmountInputProps['onChange']>(
-    (value, isMax) => {
-      dispatch(
-        boostActions.setInput({
-          amount: value.decimalPlaces(mooToken.decimals, BigNumber.ROUND_FLOOR),
-          max: isMax,
-        })
-      );
-    },
-    [dispatch, mooToken.decimals]
-  );
-
-  const handleMax = useCallback(() => {
-    dispatch(boostActions.setMax({ balance }));
-  }, [dispatch, balance]);
-
   const handleAction = () => {
     if (isStake) {
       if (needsApproval) {
@@ -119,7 +105,7 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
             step: {
               step: 'approve',
               message: t('Vault-ApproveMsg'),
-              action: walletActions.approval(mooToken, spenderAddress, formState.amount),
+              action: walletActions.approval(mooToken, spenderAddress, formData.amount),
               pending: false,
             },
           })
@@ -130,14 +116,14 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
           step: {
             step: 'stake',
             message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
-            action: walletActions.stakeBoost(boost, formState.amount),
+            action: walletActions.stakeBoost(boost, formData.amount),
             pending: false,
           },
         })
       );
     } else {
       // If user is withdrawing all their assets, UI won't allow to claim individually later on, so claim as well
-      if (formState.max) {
+      if (formData.max) {
         dispatch(
           stepperActions.addStep({
             step: {
@@ -160,7 +146,7 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
             step: {
               step: 'unstake',
               message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
-              action: walletActions.unstakeBoost(boost, formState.amount),
+              action: walletActions.unstakeBoost(boost, formData.amount),
               pending: false,
             },
           })
@@ -201,7 +187,7 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
       <Collapse in={open} timeout="auto">
         <div className={classes.actions}>
           <AmountInput
-            value={formState.amount}
+            value={formData.amount}
             maxValue={balance}
             onChange={handleChange}
             tokenDecimals={mooToken.decimals}
