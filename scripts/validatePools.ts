@@ -416,11 +416,17 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   });
 
   // Boosts
+  const seenBoostIds = new Set();
   boosts.forEach(boost => {
+    if (seenBoostIds.has(boost.id)) {
+      console.error(`Error: Boost ${boost.id}: Boost id duplicated: ${boost.id}`);
+      exitCode = 1;
+    }
     if (!poolIds.has(boost.poolId)) {
       console.error(`Error: Boost ${boost.id}: Boost has non-existent pool id ${boost.poolId}.`);
       exitCode = 1;
     }
+    seenBoostIds.add(boost.id);
   });
 
   // Gov Pools
