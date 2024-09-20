@@ -5035,38 +5035,6 @@
     ]
   },
   {
-    "id": "thena-usdc-ftm",
-    "name": "USDC-FTM vLP",
-    "type": "standard",
-    "token": "USDC-FTM vLP",
-    "tokenAddress": "0x535AEEab656c0fBb07DA64fe4AA3A15Dfc6834C8",
-    "tokenDecimals": 18,
-    "tokenProviderId": "thena",
-    "earnedToken": "mooThenaFTM-USDC",
-    "earnedTokenAddress": "0xE03cB832EFba6Cee25292A0772b4fabf174a0005",
-    "earnContractAddress": "0xE03cB832EFba6Cee25292A0772b4fabf174a0005",
-    "oracle": "lps",
-    "oracleId": "thena-usdc-ftm",
-    "status": "eol",
-    "createdAt": 1675521404,
-    "retireReason": "tvl",
-    "retiredAt": 1682019887,
-    "platformId": "thena",
-    "assets": ["USDC", "FTM"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "bsc-thena"
-      }
-    ]
-  },
-  {
     "id": "thena-hay-busd",
     "name": "lisUSD-BUSD sLP",
     "type": "standard",
@@ -19138,7 +19106,9 @@
     "earnContractAddress": "0x6BE4741AB0aD233e4315a10bc783a7B923386b71",
     "oracle": "tokens",
     "oracleId": "BNB",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1726494192,
+    "retireReason": "rewards",
     "createdAt": 1608060201,
     "platformId": "venus",
     "assets": ["BNB"],
