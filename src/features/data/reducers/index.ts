@@ -47,6 +47,7 @@ import { userRewardsReducer } from './wallet/user-rewards';
 import { versionReducer } from './ui-version';
 import { rewardsReducer } from './rewards';
 import { tenderlyReducer } from './tenderly';
+import { minterSlice } from './wallet/minters';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -97,6 +98,7 @@ const uiReducer = combineReducers<BeefyState['ui']>({
   theme: persistReducer({ key: 'theme', storage }, uiThemeSlice.reducer),
   transact: transactReducer as Reducer<BeefyState['ui']['transact'], AnyAction>,
   boost: boostSlice.reducer as Reducer<BeefyState['ui']['boost'], AnyAction>,
+  minter: minterSlice.reducer as Reducer<BeefyState['ui']['minter'], AnyAction>,
   bridge: bridgeSlice.reducer as Reducer<BeefyState['ui']['bridge'], AnyAction>,
   savedVaults: persistReducer({ key: 'savedVaults', storage }, savedVaultsSlice.reducer),
   onRamp: onRamp.reducer,

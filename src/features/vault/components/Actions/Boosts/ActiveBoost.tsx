@@ -11,9 +11,9 @@ import { walletActions } from '../../../../data/actions/wallet-actions';
 import type { BoostEntity } from '../../../../data/entities/boost';
 import {
   selectBoostRewardsTokenEntity,
-  selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
   selectUserBalanceOfToken,
+  selectUserVaultBalanceInShareTokenInCurrentBoost,
 } from '../../../../data/selectors/balance';
 import { StakeCountdown } from './StakeCountdown';
 
@@ -37,7 +37,9 @@ export function ActiveBoost({ boostId, title }: { boostId: BoostEntity['id']; ti
   const mooTokenBalance = useAppSelector(state =>
     selectUserBalanceOfToken(state, boost.chainId, vault.contractAddress)
   );
-  const boostBalance = useAppSelector(state => selectBoostUserBalanceInToken(state, boost.id));
+  const boostBalance = useAppSelector(state =>
+    selectUserVaultBalanceInShareTokenInCurrentBoost(state, vault.id)
+  );
   const boostPendingRewards = useAppSelector(state =>
     selectBoostUserRewardsInToken(state, boost.id)
   );
@@ -185,7 +187,7 @@ export function ActiveBoost({ boostId, title }: { boostId: BoostEntity['id']; ti
               <>
                 <BoostActionButton
                   boostId={boostId}
-                  type="unstake"
+                  type="stake"
                   open={collapseOpen.unstake}
                   handleCollapse={() => handleCollapse({ stakeUnstake: 'unstake' })}
                   balance={boostBalance}

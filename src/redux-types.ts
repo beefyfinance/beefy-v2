@@ -46,6 +46,7 @@ import type { VersionState } from './features/data/reducers/ui-version';
 import type { TenderlyState } from './features/data/reducers/tenderly-types';
 import type { AnalyticsState } from './features/data/reducers/analytics-types';
 import type { RewardsState } from './features/data/reducers/rewards-types';
+import type { MinterState } from './features/data/reducers/wallet/minters';
 
 export interface BeefyState {
   entities: {
@@ -84,6 +85,7 @@ export interface BeefyState {
     theme: UIThemeState;
     transact: TransactState;
     boost: BoostState;
+    minter: MinterState;
     bridge: BridgeState;
     onRamp: OnRampTypes;
     stepperState: StepperState;
