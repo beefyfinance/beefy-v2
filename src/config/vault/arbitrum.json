@@ -1,5 +1,35 @@
 [
   {
+    "id": "aura-arb-gho-usdc-usdt",
+    "name": "GHO/USDC/USDT",
+    "type": "standard",
+    "token": "GHO/USDC/USDT Arb",
+    "tokenAddress": "0xF890360473c12d8015DA8DBf7Af11dA87337A065",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooAuraArbGHO/USDC/USDT",
+    "earnedTokenAddress": "0x6ed71003A45fFb97C27d60043E1235D3B237606a",
+    "earnContractAddress": "0x6ed71003A45fFb97C27d60043E1235D3B237606a",
+    "oracle": "lps",
+    "oracleId": "aura-arb-gho-usdc-usdt",
+    "status": "active",
+    "createdAt": 1727020967,
+    "platformId": "aura",
+    "assets": ["GHO", "USDC", "USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xf890360473c12d8015da8dbf7af11da87337a065000000000000000000000570/add-liquidity",
+    "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xf890360473c12d8015da8dbf7af11da87337a065000000000000000000000570/remove-liquidity",
+    "network": "arbitrum"
+  },
+  {
     "id": "aura-arb-ausdc-gusdc",
     "name": "Gyroscope AaveUSDC/gUSDC",
     "type": "standard",
