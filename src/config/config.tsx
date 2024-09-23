@@ -420,7 +420,7 @@ export const config = {
     explorerUrl: 'https://cchain.explorer.avax.network',
     multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x911E556Afd49468429072A3677f895B3cE0AcCcB',
+    appMulticallContractAddress: '0xe60D2cf5140b7D7703D26aD5f581F865a7b51BeF',
     providerName: 'avalanche',
     walletSettings: {
       chainId: `0x${parseInt('43114', 10).toString(16)}`,
