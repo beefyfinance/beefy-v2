@@ -1017,5 +1017,10 @@
     "id": "yei",
     "name": "Yei",
     "filter": true
+  },
+  {
+    "id": "pharaoh",
+    "name": "Pharaoh",
+    "filter": true
   }
 ]
