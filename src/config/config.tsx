@@ -960,7 +960,7 @@ export const config = {
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
-    stableCoins: ['MORE', 'USTB', 'arcUSD', 'UKRE', 'USDC', 'DAI', 'USDT', 'USDR'],
+    stableCoins: ['MORE', 'USTB', 'arcUSD', 'USDC', 'DAI', 'USDT', 'USDR'],
   },
   sei: {
     name: 'Sei',
