@@ -1,3 +1,4 @@
+import type BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../redux-types';
 import type { BoostEntity } from '../entities/boost';
 import { selectAllowanceByTokenAddress } from './allowances';
@@ -7,7 +8,8 @@ import { selectStandardVaultById } from './vaults';
 export const selectIsApprovalNeededForBoostStaking = (
   state: BeefyState,
   spenderAddress: string,
-  boost: BoostEntity
+  boost: BoostEntity,
+  mooAmount: BigNumber
 ) => {
   const vault = selectStandardVaultById(state, boost.vaultId);
 
@@ -18,7 +20,6 @@ export const selectIsApprovalNeededForBoostStaking = (
     mooToken.address,
     spenderAddress
   );
-  const mooAmount = state.ui.boost.amount;
 
   return allowance.isLessThan(mooAmount);
 };

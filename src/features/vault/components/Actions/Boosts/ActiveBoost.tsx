@@ -25,7 +25,6 @@ import { stepperActions } from '../../../../data/reducers/wallet/stepper';
 import { selectIsStepperStepping } from '../../../../data/selectors/stepper';
 import { startStepper } from '../../../../data/actions/stepper';
 import { BoostActionButton } from './BoostActionButton';
-import { boostActions } from '../../../../data/reducers/wallet/boost';
 
 const useStyles = makeStyles(styles);
 
@@ -64,7 +63,6 @@ export function ActiveBoost({ boostId, title }: { boostId: BoostEntity['id']; ti
   const handleCollapse = useCallback(
     ({ stakeUnstake }: { stakeUnstake: 'stake' | 'unstake' }) => {
       const diff = stakeUnstake === 'stake' ? 'unstake' : 'stake';
-      if (collapseOpen[stakeUnstake]) dispatch(boostActions.reset());
       if (collapseOpen[diff] && collapseOpen[stakeUnstake] === false)
         setCollapseOpen(prevStatus => {
           return { ...prevStatus, [diff]: !prevStatus[diff] };
@@ -74,7 +72,7 @@ export function ActiveBoost({ boostId, title }: { boostId: BoostEntity['id']; ti
         return { ...prevStatus, [stakeUnstake]: !prevStatus[stakeUnstake] };
       });
     },
-    [collapseOpen, dispatch]
+    [collapseOpen]
   );
 
   const handleExit = (boost: BoostEntity) => {

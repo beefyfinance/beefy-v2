@@ -27,7 +27,7 @@ import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicT
 import { isLoaderFulfilled } from '../../../../../data/selectors/data-loader-helpers';
 import { initiateBoostForm } from '../../../../../data/actions/boosts';
 import { AmountInput } from '../../Transact/AmountInput';
-import { useInputForm } from './hooks';
+import { useInputForm } from '../../../../../data/hooks/input';
 import type BigNumber from 'bignumber.js';
 
 const useStyles = makeStyles(styles);
@@ -50,16 +50,20 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
+
   const boost = useAppSelector(state => selectBoostById(state, boostId));
   const vault = useAppSelector(state => selectStandardVaultById(state, boost.vaultId));
 
   const spenderAddress = boost.contractAddress;
   const needsApproval = useAppSelector(state =>
-    selectIsApprovalNeededForBoostStaking(state, spenderAddress, boost)
+    selectIsApprovalNeededForBoostStaking(state, spenderAddress, boost, balance)
   );
   const mooToken = useAppSelector(state =>
     selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress)
   );
+
+  const { handleMax, handleChange, formData } = useInputForm(balance, mooToken.decimals);
+
   const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
 
   const boostPendingRewards = useAppSelector(state =>
@@ -76,8 +80,6 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function BoostActi
   );
 
   const isStepping = useAppSelector(selectIsStepperStepping);
-
-  const { handleMax, handleChange, formData } = useInputForm(balance, mooToken.decimals);
 
   const isDisabled = useMemo(
     () => !formReady || formData.amount.eq(0) || isStepping || balance.eq(0),
