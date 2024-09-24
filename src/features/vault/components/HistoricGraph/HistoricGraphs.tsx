@@ -37,6 +37,8 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
     );
   }, [availableStats, t, vault.type]);
 
+  const [inverted, setInverted] = useState(false);
+
   return (
     <Card className={classes.container}>
       <CardHeader className={classes.header}>
@@ -44,8 +46,14 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
         <StatSwitcher<ChartStat> stat={stat} options={options} onChange={setStat} />
       </CardHeader>
       <CardContent className={classes.content}>
-        {stat === 'clm' && <CurrentCowcentratedRangeIfAvailable vaultId={vaultId} />}
-        <GraphWithControls vaultId={vaultId} oracleId={oracleId} stat={stat} />
+        {stat === 'clm' && (
+          <CurrentCowcentratedRangeIfAvailable
+            inverted={inverted}
+            setInverted={setInverted}
+            vaultId={vaultId}
+          />
+        )}
+        <GraphWithControls inverted={inverted} vaultId={vaultId} oracleId={oracleId} stat={stat} />
       </CardContent>
     </Card>
   );
