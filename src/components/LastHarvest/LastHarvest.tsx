@@ -14,7 +14,7 @@ import {
   selectVaultById,
   selectVaultLastHarvestByVaultId,
 } from '../../features/data/selectors/vaults';
-import { formatDistanceToNow, formatDistanceToNowStrict } from 'date-fns';
+import { formatDistanceToNowStrict } from 'date-fns';
 
 type LastHarvestProps = { vaultId: VaultEntity['id'] };
 
@@ -32,11 +32,11 @@ export const LastHarvest = memo<LastHarvestProps>(function LastHarvest({ vaultId
   return <LastHarvestStandard vaultId={vaultId} />;
 });
 
-function formatLastHarvest(unixTime: number, strict?: boolean): string {
+function formatLastHarvest(unixTime: number): string {
   if (unixTime === 0) {
     return '-';
   } else {
-    return (strict ? formatDistanceToNowStrict : formatDistanceToNow)(unixTime, {
+    return formatDistanceToNowStrict(unixTime, {
       addSuffix: true,
     });
   }
@@ -67,7 +67,7 @@ export const LastHarvestCowcentrated = memo<LastHarvestCowcentratedProps>(
     const formatted = useMemo(
       () => ({
         vault: formatLastHarvest(vaultLastHarvest),
-        clm: formatLastHarvest(clmLastHarvest, true),
+        clm: formatLastHarvest(clmLastHarvest),
       }),
       [vaultLastHarvest, clmLastHarvest]
     );
