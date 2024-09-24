@@ -1,5 +1,5 @@
 import { formatTokenDisplayCondensed } from '../../../../../helpers/format';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useMediaQuery, type Theme } from '@material-ui/core';
 import { useAppSelector } from '../../../../../store';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -88,6 +88,8 @@ export const CurrentCowcentratedRange = memo<CurrentCowcentratedRangeProps>(
       return currentPrice.lte(priceRangeMax) && currentPrice.gte(priceRangeMin);
     }, [currentPrice, priceRangeMax, priceRangeMin]);
 
+    const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+
     const { minRange, currentRange, maxRange } = convertRanges(
       priceRangeMin,
       currentPrice,
@@ -102,6 +104,13 @@ export const CurrentCowcentratedRange = memo<CurrentCowcentratedRangeProps>(
           <div className={classes.value}>
             {formatTokenDisplayCondensed(minRange, 18)} <span>{priceString}</span>
           </div>
+          {isMobile && (
+            <div className={classes.inverted}>
+              <Button className={classes.invertButton} onClick={() => setInverted(!inverted)}>
+                <SwapIcon height={24} />
+              </Button>
+            </div>
+          )}
         </div>
         <div className={classes.cowcentratedStat}>
           <div className={classes.label}>
@@ -119,11 +128,13 @@ export const CurrentCowcentratedRange = memo<CurrentCowcentratedRangeProps>(
           <div className={classes.value}>
             {formatTokenDisplayCondensed(maxRange, 18)} <span>{priceString}</span>
           </div>
-          <div className={classes.inverted}>
-            <Button className={classes.invertButton} onClick={() => setInverted(!inverted)}>
-              <SwapIcon height={24} />
-            </Button>
-          </div>
+          {!isMobile && (
+            <div className={classes.inverted}>
+              <Button className={classes.invertButton} onClick={() => setInverted(!inverted)}>
+                <SwapIcon height={24} />
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     );
