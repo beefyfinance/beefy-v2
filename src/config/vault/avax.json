@@ -322,7 +322,7 @@
     "earnedOracleIds": ["PHAR", "ggAVAX", "sAVAX"],
     "earnedTokenDecimals": [18, 18, 18],
     "oracle": "lps",
-    "oracleId": "pharaoh-cow-wavax-usdc-usdc",
+    "oracleId": "pharaoh-cow-wavax-usdc",
     "status": "active",
     "createdAt": 1727102131,
     "platformId": "pharaoh",
