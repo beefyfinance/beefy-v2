@@ -1,6 +1,5 @@
 import type BigNumber from 'bignumber.js';
-import { FixedPoint } from '../join/FixedPoint';
-import { BIG_ZERO } from '../../../../../../helpers/big-number';
+import { FixedPoint } from '../common/FixedPoint';
 
 export class WeightedMath {
   private constructor() {

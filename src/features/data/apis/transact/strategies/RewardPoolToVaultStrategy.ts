@@ -28,6 +28,7 @@ import {
   isZapQuoteStepWithdraw,
   isZapQuoteStepStake,
   type TokenAmount,
+  SelectionOrder,
 } from '../transact-types';
 import {
   isStandardVaultType,
@@ -196,7 +197,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
           chainId: this.rewardPool.chainId,
           vaultId: this.rewardPool.id,
           selectionId,
-          selectionOrder: 0,
+          selectionOrder: SelectionOrder.VaultToVault,
           inputs,
           wantedOutputs: [this.rewardPoolType.depositToken],
           mode: TransactMode.Deposit,
@@ -216,7 +217,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
           chainId: this.vault.chainId,
           vaultId: this.vault.id,
           selectionId,
-          selectionOrder: 0,
+          selectionOrder: SelectionOrder.VaultToVault,
           inputs,
           wantedOutputs: [this.vaultType.depositToken],
           mode: TransactMode.Deposit,

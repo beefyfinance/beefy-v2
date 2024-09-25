@@ -24,14 +24,15 @@ import {
   onlyInputCount,
   onlyOneInput,
 } from '../helpers/options';
-import type {
-  InputTokenAmount,
-  StandardVaultDepositOption,
-  StandardVaultDepositQuote,
-  StandardVaultWithdrawOption,
-  StandardVaultWithdrawQuote,
-  TokenAmount,
-  TransactQuote,
+import {
+  type InputTokenAmount,
+  SelectionOrder,
+  type StandardVaultDepositOption,
+  type StandardVaultDepositQuote,
+  type StandardVaultWithdrawOption,
+  type StandardVaultWithdrawQuote,
+  type TokenAmount,
+  type TransactQuote,
 } from '../transact-types';
 import { TransactMode } from '../../../reducers/wallet/transact-types';
 import { first } from 'lodash-es';
@@ -230,7 +231,7 @@ export class StandardVaultType implements IStandardVaultType {
       vaultId: this.vault.id,
       chainId: this.vault.chainId,
       selectionId,
-      selectionOrder: 1,
+      selectionOrder: SelectionOrder.Want,
       inputs,
       wantedOutputs: inputs,
       strategyId: 'vault',
@@ -304,7 +305,7 @@ export class StandardVaultType implements IStandardVaultType {
       vaultId: this.vault.id,
       chainId: this.vault.chainId,
       selectionId,
-      selectionOrder: 1,
+      selectionOrder: SelectionOrder.Want,
       inputs,
       wantedOutputs: inputs,
       strategyId: 'vault',

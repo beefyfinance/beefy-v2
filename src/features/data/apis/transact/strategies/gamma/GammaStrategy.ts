@@ -10,6 +10,7 @@ import {
   isZapQuoteStepSwap,
   isZapQuoteStepSwapAggregator,
   isZapQuoteStepWithdraw,
+  SelectionOrder,
   type TokenAmount,
   type ZapFee,
   type ZapQuoteStep,
@@ -82,6 +83,7 @@ import { selectVaultStrategyAddress } from '../../../../selectors/vaults';
 import { QuoteChangedError } from '../error';
 import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
 import type { GammaStrategyConfig } from '../strategy-configs';
+import { tokenInList } from '../../../../../../helpers/tokens';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -170,7 +172,9 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: 3,
+        selectionOrder: tokenInList(token, this.lpTokens)
+          ? SelectionOrder.TokenOfPool
+          : SelectionOrder.Other,
         inputs,
         wantedOutputs: outputs,
         mode: TransactMode.Deposit,
@@ -618,7 +622,7 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
       vaultId: this.vault.id,
       chainId: this.vault.chainId,
       selectionId: breakSelectionId,
-      selectionOrder: 2,
+      selectionOrder: SelectionOrder.AllTokensInPool,
       inputs,
       wantedOutputs: this.lpTokens,
       mode: TransactMode.Withdraw,
@@ -637,7 +641,9 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
           vaultId: this.vault.id,
           chainId: this.vault.chainId,
           selectionId,
-          selectionOrder: 3,
+          selectionOrder: tokenInList(token, this.lpTokens)
+            ? SelectionOrder.TokenOfPool
+            : SelectionOrder.Other,
           inputs,
           wantedOutputs: outputs,
           mode: TransactMode.Withdraw,

@@ -30,7 +30,7 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x69d9bc07a19caad9ae4ca40af18d5a688839a29900020000000000000000058e",
         "poolType": "gyroe",
@@ -132,7 +132,7 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x71c64ac8ec1da03f8a05c3cfeb6493e6dad54a6f000200000000000000000592",
         "poolType": "gyroe",
@@ -1612,7 +1612,7 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x46472cba35e6800012aa9fcc7939ff07478c473e00020000000000000000056c",
         "poolType": "gyroe",
@@ -3603,15 +3603,16 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x59743f1812bb85db83e9e4ee061d124aaa64290000000000000000000000052b",
         "poolType": "composable-stable",
         "tokens": [
           "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-          "0x59743f1812bb85Db83e9e4EE061D124AAa642900",
           "0xe3b3FE7bcA19cA77Ad877A5Bebab186bEcfAD906"
-        ]
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
       }
     ]
   },
@@ -3646,15 +3647,16 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0xdfa752ca3ff49d4b6dbe08e2d5a111f51773d3950000000000000000000004e8",
         "poolType": "composable-stable",
         "tokens": [
           "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
-          "0xdfa752ca3fF49d4B6dBE08E2d5a111f51773D395",
           "0xe3b3FE7bcA19cA77Ad877A5Bebab186bEcfAD906"
-        ]
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
       }
     ]
   },
@@ -5643,7 +5645,7 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x14abd18d1fa335e9f630a658a2799b33208763fa00020000000000000000051f",
         "poolType": "gyro",
@@ -5685,7 +5687,7 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0xca8ecd05a289b1fbc2e0eaec07360c4bfec07b6100020000000000000000051d",
         "poolType": "gyro",
@@ -5779,15 +5781,16 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0xe8a6026365254f779b6927f00f8724ea1b8ae5e0000000000000000000000580",
         "poolType": "composable-stable",
         "tokens": [
           "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-          "0xd3443ee1e91aF28e5FB858Fbd0D72A63bA8046E0",
-          "0xE8a6026365254f779b6927f00f8724EA1B8aE5E0"
-        ]
+          "0xd3443ee1e91aF28e5FB858Fbd0D72A63bA8046E0"
+        ],
+        "bptIndex": 2,
+        "hasNestedPool": false
       }
     ]
   },
@@ -5927,7 +5930,7 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x7967fa58b9501600d96bd843173b9334983ee6e600020000000000000000056e",
         "poolType": "gyroe",
@@ -8376,7 +8379,7 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0xcdcef9765d369954a4a936064535710f7235110a000200000000000000000558",
         "poolType": "gyroe",
@@ -8418,7 +8421,7 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0xef0c116a2818a5b1a5d836a291856a321f43c2fb00020000000000000000053a",
         "poolType": "gyroe",
@@ -8461,15 +8464,16 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x90e6cb5249f5e1572afbf8a96d8a1ca6acffd73900000000000000000000055c",
         "poolType": "composable-stable",
         "tokens": [
           "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
-          "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
-          "0x90e6CB5249f5e1572afBF8A96D8A1ca6aCFFd739"
-        ]
+          "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+        ],
+        "bptIndex": 2,
+        "hasNestedPool": false
       }
     ]
   },
@@ -8504,15 +8508,16 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x7b54c44fbe6db6d97fd22b8756f89c0af16202cc00000000000000000000053c",
         "poolType": "composable-stable",
         "tokens": [
           "0x5979D7b546E38E414F7E9822514be443A4800529",
-          "0x7B54C44fBe6Db6D97FD22b8756f89c0aF16202Cc",
           "0xED65C5085a18Fa160Af0313E60dcc7905E944Dc7"
-        ]
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
       }
     ]
   },
@@ -11667,7 +11672,7 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x125bc5a031b2db6733bfa35d914ffa428095978b000200000000000000000514",
         "poolType": "gyroe",
@@ -11809,15 +11814,16 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0xb61371ab661b1acec81c699854d2f911070c059e000000000000000000000516",
         "poolType": "composable-stable",
         "tokens": [
           "0x2416092f143378750bb29b79eD961ab195CcEea5",
-          "0x5979D7b546E38E414F7E9822514be443A4800529",
-          "0xB61371Ab661B1ACec81C699854D2f911070C059E"
-        ]
+          "0x5979D7b546E38E414F7E9822514be443A4800529"
+        ],
+        "bptIndex": 2,
+        "hasNestedPool": false
       }
     ]
   },
@@ -12706,16 +12712,17 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x2d6ced12420a9af5a83765a8c48be2afcd1a8feb000000000000000000000500",
         "poolType": "composable-stable",
         "tokens": [
           "0x1DEBd73E752bEaF79865Fd6446b0c970EaE7732f",
-          "0x2d6CeD12420a9AF5a83765a8c48Be2aFcD1A8FEb",
           "0x5979D7b546E38E414F7E9822514be443A4800529",
           "0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8"
-        ]
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
       }
     ]
   },
@@ -12750,15 +12757,16 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0xc2598280bfea1fe18dfcabd21c7165c40c6859d30000000000000000000004f3",
         "poolType": "composable-stable",
         "tokens": [
           "0x5979D7b546E38E414F7E9822514be443A4800529",
-          "0x95aB45875cFFdba1E5f451B950bC2E42c0053f39",
-          "0xc2598280bFeA1Fe18dFcaBD21C7165c40c6859d3"
-        ]
+          "0x95aB45875cFFdba1E5f451B950bC2E42c0053f39"
+        ],
+        "bptIndex": 2,
+        "hasNestedPool": false
       }
     ]
   },
@@ -12856,15 +12864,16 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0xd0ec47c54ca5e20aaae4616c25c825c7f48d40690000000000000000000004ef",
         "poolType": "composable-stable",
         "tokens": [
           "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
-          "0xd0EC47c54cA5e20aaAe4616c25C825c7f48D4069",
           "0xEC70Dcb4A1EFa46b8F2D97C310C9c4790ba5ffA8"
-        ]
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
       }
     ]
   },
@@ -13471,15 +13480,16 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x2ce4457acac29da4736ae6f5cd9f583a6b335c270000000000000000000004dc",
         "poolType": "composable-stable",
         "tokens": [
-          "0x2CE4457aCac29dA4736aE6f5Cd9F583a6b335c27",
           "0x423A1323c871aBC9d89EB06855bF5347048Fc4A5",
           "0xe3b3FE7bcA19cA77Ad877A5Bebab186bEcfAD906"
-        ]
+        ],
+        "bptIndex": 0,
+        "hasNestedPool": true
       }
     ]
   },
@@ -14842,17 +14852,18 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x423a1323c871abc9d89eb06855bf5347048fc4a5000000000000000000000496",
         "poolType": "composable-stable",
         "tokens": [
-          "0x423A1323c871aBC9d89EB06855bF5347048Fc4A5",
           "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
           "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
           "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
           "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"
-        ]
+        ],
+        "bptIndex": 0,
+        "hasNestedPool": false
       }
     ]
   },
@@ -14920,15 +14931,16 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x9791d590788598535278552eecd4b211bfc790cb000000000000000000000498",
         "poolType": "composable-stable",
         "tokens": [
           "0x5979D7b546E38E414F7E9822514be443A4800529",
-          "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
-          "0x9791d590788598535278552EEcD4b211bFc790CB"
-        ]
+          "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+        ],
+        "bptIndex": 2,
+        "hasNestedPool": false
       }
     ]
   },
@@ -14995,15 +15007,16 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x3fd4954a851ead144c2ff72b1f5a38ea5976bd54000000000000000000000480",
         "poolType": "composable-stable",
         "tokens": [
-          "0x3FD4954a851eaD144c2FF72B1f5a38Ea5976Bd54",
           "0x5979D7b546E38E414F7E9822514be443A4800529",
           "0xe05A08226c49b636ACf99c40Da8DC6aF83CE5bB3"
-        ]
+        ],
+        "bptIndex": 0,
+        "hasNestedPool": false
       }
     ]
   },
@@ -15038,7 +15051,7 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x32df62dc3aed2cd6224193052ce665dc181658410002000000000000000003bd",
         "poolType": "weighted",
@@ -15176,7 +15189,7 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0xc7fa3a3527435720f0e2a4c1378335324dd4f9b3000200000000000000000459",
         "poolType": "weighted",
@@ -15218,15 +15231,16 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x8bc65eed474d1a00555825c91feab6a8255c2107000000000000000000000453",
         "poolType": "composable-stable",
         "tokens": [
           "0x6A7661795C374c0bFC635934efAddFf3A7Ee23b6",
-          "0x8bc65Eed474D1A00555825c91FeAb6A8255C2107",
           "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
-        ]
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
       }
     ]
   },
@@ -15357,15 +15371,16 @@
     "network": "arbitrum",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "arbitrum-balancer",
         "poolId": "0x542f16da0efb162d20bf4358efa095b70a100f9e000000000000000000000436",
         "poolType": "composable-stable",
         "tokens": [
           "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
-          "0x542F16DA0efB162D20bF4358EfA095B70A100f9E",
           "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
-        ]
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
       }
     ]
   },

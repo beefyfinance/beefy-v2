@@ -655,7 +655,7 @@
     "network": "polygon",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "polygon-balancer",
         "poolId": "0x1dcea0bfbbe6848f117640d534c9b60f41b9f2a8000100000000000000000ea1",
         "poolType": "weighted",
@@ -698,16 +698,17 @@
     "network": "polygon",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "polygon-balancer",
         "poolId": "0x4b7586a4f49841447150d3d92d9e9e000f766c30000000000000000000000e8a",
         "poolType": "composable-stable",
         "tokens": [
           "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
-          "0x4B7586A4F49841447150D3d92d9E9e000f766c30",
           "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
           "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
-        ]
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
       }
     ]
   },
@@ -735,15 +736,16 @@
     "network": "polygon",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "polygon-balancer",
         "poolId": "0xcd78a20c597e367a4e478a2411ceb790604d7c8f000000000000000000000c22",
         "poolType": "composable-stable",
         "tokens": [
           "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
-          "0xcd78A20c597E367A4e478a2411cEB790604D7c8F",
           "0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6"
-        ]
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
       }
     ]
   },
@@ -2335,7 +2337,7 @@
     "network": "polygon",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "polygon-balancer",
         "poolId": "0xf0ad209e2e969eaaa8c882aac71f02d8a047d5c2000200000000000000000b49",
         "poolType": "gyroe",
@@ -3840,15 +3842,16 @@
     "network": "polygon",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "polygon-balancer",
         "poolId": "0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b",
         "poolType": "composable-stable",
         "tokens": [
           "0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c",
-          "0x513CdEE00251F39DE280d9E5f771A6eaFebCc88E",
           "0xE2Aa7db6dA1dAE97C5f5C6914d285fBfCC32A128"
-        ]
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
       }
     ]
   },

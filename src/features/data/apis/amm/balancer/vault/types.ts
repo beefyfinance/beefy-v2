@@ -1,5 +1,7 @@
 import type BigNumber from 'bignumber.js';
 import type { TokenEntity } from '../../../../entities/token';
+import type { Hex } from 'viem/types/misc';
+import type { ExitPoolUserData, JoinPoolUserData } from '../common/types';
 
 export type VaultConfig = {
   /** address */
@@ -14,6 +16,7 @@ export type PoolConfig = {
   /** bytes32 */
   poolId: string;
   tokens: TokenEntity[];
+  bptIndex?: number;
 };
 
 export enum SwapKind {
@@ -97,18 +100,18 @@ export type BatchSwapArgs = {
   deadline: number;
 };
 
-export type JoinPoolRequest = {
+export type JoinPoolRequest<TUserData = Hex> = {
   /** address[] */
   assets: string[];
   /** uint256[] */
   maxAmountsIn: BigNumber[];
   /** bytes */
-  userData: string;
+  userData: TUserData;
   /** bool */
   fromInternalBalance: boolean;
 };
 
-export type JoinPoolArgs = {
+export type JoinPoolArgs<TUserData = Hex> = {
   /** bytes32 */
   poolId: string;
   /** address */
@@ -116,7 +119,7 @@ export type JoinPoolArgs = {
   /** address */
   recipient: string;
   /** tuple */
-  request: JoinPoolRequest;
+  request: JoinPoolRequest<TUserData>;
 };
 
 export type JoinPoolResult = {
@@ -124,18 +127,18 @@ export type JoinPoolResult = {
   amountsIn: string[];
 };
 
-export type ExitPoolRequest = {
+export type ExitPoolRequest<TUserData = Hex> = {
   /** address[] */
   assets: string[];
   /** uint256[] */
   minAmountsOut: BigNumber[];
   /** bytes */
-  userData: string;
+  userData: TUserData;
   /** bool */
   toInternalBalance: boolean;
 };
 
-export type ExitPoolArgs = {
+export type ExitPoolArgs<TUserData = Hex> = {
   /** bytes32 */
   poolId: string;
   /** address */
@@ -143,7 +146,7 @@ export type ExitPoolArgs = {
   /** address */
   recipient: string;
   /** tuple */
-  request: ExitPoolRequest;
+  request: ExitPoolRequest<TUserData>;
 };
 
 export type ExitPoolResult = {
@@ -158,14 +161,14 @@ export type AbiEncodeArgs = string | number | boolean | Array<AbiEncodeArgs>;
 export type QueryBatchSwapRequest = Omit<QueryBatchSwapArgs, 'funds'>;
 export type QueryBatchSwapResponse = BigNumber[];
 
-export type QueryJoinPoolRequest = Omit<JoinPoolArgs, 'sender' | 'recipient'>;
+export type QueryJoinPoolRequest = Omit<JoinPoolArgs<JoinPoolUserData>, 'sender' | 'recipient'>;
 export type QueryJoinPoolResponse = {
   liquidity: BigNumber;
   usedInput: BigNumber[];
   unusedInput: BigNumber[];
 };
 
-export type QueryExitPoolRequest = Omit<ExitPoolArgs, 'sender' | 'recipient'>;
+export type QueryExitPoolRequest = Omit<ExitPoolArgs<ExitPoolUserData>, 'sender' | 'recipient'>;
 export type QueryExitPoolResponse = {
   liquidity: BigNumber;
   outputs: BigNumber[];
@@ -185,12 +188,12 @@ export type PoolTokensResult = {
 export type PoolTokensResponse = Array<{ token: string; balance: BigNumber }>;
 
 export type JoinPoolZapRequest = {
-  join: JoinPoolArgs;
+  join: JoinPoolArgs<JoinPoolUserData>;
   insertBalance: boolean;
 };
 
 export type ExitPoolZapRequest = {
-  exit: ExitPoolArgs;
+  exit: ExitPoolArgs<ExitPoolUserData>;
   poolAddress: string;
   insertBalance: boolean;
 };

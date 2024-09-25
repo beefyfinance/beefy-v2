@@ -17,13 +17,14 @@ import {
   onlyInputCount,
   onlyOneInput,
 } from '../helpers/options';
-import type {
-  CowcentratedVaultDepositOption,
-  CowcentratedVaultDepositQuote,
-  CowcentratedVaultWithdrawOption,
-  CowcentratedVaultWithdrawQuote,
-  InputTokenAmount,
-  TokenAmount,
+import {
+  type CowcentratedVaultDepositOption,
+  type CowcentratedVaultDepositQuote,
+  type CowcentratedVaultWithdrawOption,
+  type CowcentratedVaultWithdrawQuote,
+  type InputTokenAmount,
+  SelectionOrder,
+  type TokenAmount,
 } from '../transact-types';
 import type {
   ICowcentratedVaultType,
@@ -84,7 +85,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       vaultId: this.vault.id,
       chainId: this.vault.chainId,
       selectionId,
-      selectionOrder: 1,
+      selectionOrder: SelectionOrder.AllTokensInPool,
       inputs,
       wantedOutputs: inputs,
       strategyId: 'vault',
@@ -202,7 +203,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       vaultId: this.vault.id,
       chainId: this.vault.chainId,
       selectionId,
-      selectionOrder: 1,
+      selectionOrder: SelectionOrder.AllTokensInPool,
       inputs: inputs,
       wantedOutputs: outputs,
       strategyId: 'vault',

@@ -18,7 +18,7 @@ import {
   selectIsAddressBookLoaded,
   selectIsZapLoaded,
 } from '../../../../../data/selectors/data-loader';
-import type { BalancerSwapStrategyConfig } from '../../../../../data/apis/transact/strategies/strategy-configs';
+import type { BalancerStrategyConfig } from '../../../../../data/apis/transact/strategies/strategy-configs';
 import { isDefined } from '../../../../../data/utils/array-utils';
 
 const useStyles = makeStyles(styles);
@@ -30,10 +30,7 @@ const BalancerZap = memo<BalancerZapProps>(function BalancerZap({ vaultId }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const zap = isStandardVault(vault)
-    ? vault.zaps.find(
-        (zap): zap is BalancerSwapStrategyConfig =>
-          zap.strategyId === 'balancer-swap' || zap.strategyId === 'balancer-join'
-      )
+    ? vault.zaps.find((zap): zap is BalancerStrategyConfig => zap.strategyId === 'balancer')
     : undefined;
 
   return (
@@ -50,13 +47,13 @@ const NoZap = memo(function NoZap() {
 
 type ZapLoaderProps = {
   vault: VaultStandard;
-  zap: BalancerSwapStrategyConfig;
+  zap: BalancerStrategyConfig;
 };
 
 type ZapProps = {
   aggregatorSupportedTokens: TokenEntity[];
   vault: VaultStandard;
-  zap: BalancerSwapStrategyConfig;
+  zap: BalancerStrategyConfig;
 };
 
 const ZapLoader = memo<ZapLoaderProps>(function ZapLoader({ vault, zap }) {

@@ -6,23 +6,27 @@ import type {
 } from '../vault/types';
 import type { RatesResult } from './types';
 import BigNumber from 'bignumber.js';
-import {
-  BIG_ONE,
-  bigNumberToStringDeep,
-  bigNumberToUint256String,
-} from '../../../../../../helpers/big-number';
-import { JoinExitEncoder } from '../join/JoinExitEncoder';
-import { FixedPoint } from '../join/FixedPoint';
+import { BIG_ONE, bigNumberToStringDeep } from '../../../../../../helpers/big-number';
+import { FixedPoint } from '../common/FixedPoint';
 import type { ZapStep } from '../../../transact/zap/types';
 import { WeightedMath } from '../weighted/WeightedMath';
 import type { ChainEntity } from '../../../../entities/chain';
 import { viemToWeb3Abi } from '../../../../../../helpers/web3';
 import { BalancerGyroEPoolAbi } from '../../../../../../config/abi/BalancerGyroEPoolAbi';
-import { JoinPool } from '../join/JoinPool';
-import type { IBalancerJoinPool } from '../types';
+import { AllPool } from '../common/AllPool';
+import { BalancerFeature, type IBalancerAllPool } from '../types';
+import { PoolExitKind, PoolJoinKind } from '../common/types';
+import { poolExitKindToGyroPoolExitKind, poolJoinKindToGyroPoolJoinKind } from './join-exit-kinds';
+
+const SUPPORTED_FEATURES = new Set<BalancerFeature>([
+  BalancerFeature.AddRemoveAll,
+  // BalancerFeature.AddRemoveSingle, // Gyro pools only support JoinKind.ALL_TOKENS_IN_FOR_EXACT_BPT_OUT / ExitKind.EXACT_BPT_IN_FOR_TOKENS_OUT
+  // BalancerFeature.AddSlippage,
+  BalancerFeature.RemoveSlippage,
+]);
 
 // Covers Gyro and GyroE
-export class GyroPool extends JoinPool implements IBalancerJoinPool {
+export class GyroPool extends AllPool implements IBalancerAllPool {
   constructor(
     readonly chain: ChainEntity,
     readonly vaultConfig: VaultConfig,
@@ -33,8 +37,24 @@ export class GyroPool extends JoinPool implements IBalancerJoinPool {
     this.getTokenRates = this.cacheMethod(this.getTokenRates);
   }
 
-  get joinSupportsSlippage() {
-    return false;
+  supportsFeature(feature: BalancerFeature): boolean {
+    return SUPPORTED_FEATURES.has(feature);
+  }
+
+  protected getJoinKindValue(kind: PoolJoinKind): number {
+    const value = poolJoinKindToGyroPoolJoinKind[kind];
+    if (value === undefined) {
+      throw new Error(`GyroPool does not support join kind ${PoolJoinKind[kind]}`);
+    }
+    return value;
+  }
+
+  protected getExitKindValue(kind: PoolExitKind): number {
+    const value = poolExitKindToGyroPoolExitKind[kind];
+    if (value === undefined) {
+      throw new Error(`GyroPool does not support join kind ${PoolExitKind[kind]}`);
+    }
+    return value;
   }
 
   // async getSwapRatios(): Promise<BigNumber> {
@@ -83,14 +103,16 @@ export class GyroPool extends JoinPool implements IBalancerJoinPool {
         poolId: this.config.poolId,
         sender: from,
         recipient: from,
-        request: {
+        request: this.customizeJoinPoolRequest({
           assets: this.config.tokens.map(t => t.address),
           maxAmountsIn: maxAmountsIn,
-          userData: JoinExitEncoder.joinAllTokensInForExactBPTOut(
-            bigNumberToUint256String(liquidity)
-          ),
+          userData: {
+            kind: PoolJoinKind.ALL_TOKENS_IN_FOR_EXACT_BPT_OUT,
+            kindValue: this.getJoinKindValue(PoolJoinKind.ALL_TOKENS_IN_FOR_EXACT_BPT_OUT),
+            bptAmountOut: liquidity,
+          },
           fromInternalBalance: false,
-        },
+        }),
       },
       insertBalance,
     });
@@ -158,14 +180,16 @@ export class GyroPool extends JoinPool implements IBalancerJoinPool {
         // double check via rpc call
         const queryRequest: QueryJoinPoolRequest = {
           poolId: this.config.poolId,
-          request: {
+          request: this.customizeJoinPoolRequest({
             assets: this.config.tokens.map(t => t.address),
             maxAmountsIn: amountsIn,
-            userData: JoinExitEncoder.joinAllTokensInForExactBPTOut(
-              bigNumberToUint256String(estimatedLiquidity)
-            ),
+            userData: {
+              kind: PoolJoinKind.ALL_TOKENS_IN_FOR_EXACT_BPT_OUT,
+              kindValue: this.getJoinKindValue(PoolJoinKind.ALL_TOKENS_IN_FOR_EXACT_BPT_OUT),
+              bptAmountOut: estimatedLiquidity,
+            },
             fromInternalBalance: false,
-          },
+          }),
         };
         const queryResult = await vault.queryJoinPool(queryRequest);
         console.debug(

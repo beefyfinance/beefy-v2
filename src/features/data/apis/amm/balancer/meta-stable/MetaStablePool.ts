@@ -4,11 +4,23 @@ import BigNumber from 'bignumber.js';
 import { viemToWeb3Abi } from '../../../../../../helpers/web3';
 import { BalancerMetaStablePoolAbi } from '../../../../../../config/abi/BalancerMetaStablePoolAbi';
 import { BIG_ZERO, fromWei } from '../../../../../../helpers/big-number';
-import { FixedPoint } from '../join/FixedPoint';
-import { JoinPool } from '../join/JoinPool';
-import type { IBalancerJoinPool } from '../types';
+import { FixedPoint } from '../common/FixedPoint';
+import { BalancerFeature, type IBalancerAllPool, type IBalancerSinglePool } from '../types';
+import { PoolExitKind, PoolJoinKind } from '../common/types';
+import {
+  poolExitKindToMetaStablePoolExitKind,
+  poolJoinKindToMetaStablePoolJoinKind,
+} from './join-exit-kinds';
+import { SingleAllPool } from '../common/SingleAllPool';
 
-export class MetaStablePool extends JoinPool implements IBalancerJoinPool {
+const SUPPORTED_FEATURES = new Set<BalancerFeature>([
+  BalancerFeature.AddRemoveAll,
+  BalancerFeature.AddRemoveSingle,
+  BalancerFeature.AddSlippage,
+  BalancerFeature.RemoveSlippage,
+]);
+
+export class MetaStablePool extends SingleAllPool implements IBalancerSinglePool, IBalancerAllPool {
   constructor(
     readonly chain: ChainEntity,
     readonly vaultConfig: VaultConfig,
@@ -20,8 +32,24 @@ export class MetaStablePool extends JoinPool implements IBalancerJoinPool {
     this.getPoolContract = this.cacheMethod(this.getPoolContract);
   }
 
-  get joinSupportsSlippage(): boolean {
-    return true;
+  supportsFeature(feature: BalancerFeature): boolean {
+    return SUPPORTED_FEATURES.has(feature);
+  }
+
+  protected getJoinKindValue(kind: PoolJoinKind): number {
+    const value = poolJoinKindToMetaStablePoolJoinKind[kind];
+    if (value === undefined) {
+      throw new Error(`MetaStablePool does not support join kind ${PoolJoinKind[kind]}`);
+    }
+    return value;
+  }
+
+  protected getExitKindValue(kind: PoolExitKind): number {
+    const value = poolExitKindToMetaStablePoolExitKind[kind];
+    if (value === undefined) {
+      throw new Error(`MetaStablePool does not support join kind ${PoolExitKind[kind]}`);
+    }
+    return value;
   }
 
   /**

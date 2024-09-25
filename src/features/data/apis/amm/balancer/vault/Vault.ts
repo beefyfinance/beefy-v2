@@ -39,7 +39,8 @@ import {
 import type { StepToken, ZapStep } from '../../../transact/zap/types';
 import { getInsertIndex } from '../../../transact/helpers/zap';
 import { getAddress } from 'viem';
-import { WeightedPoolExitKind, WeightedPoolJoinKind } from '../weighted/types';
+import { PoolExitKind, PoolJoinKind } from '../common/types';
+import { JoinExitEncoder } from '../common/JoinExitEncoder';
 
 const queryFunds: FundManagement = {
   sender: ZERO_ADDRESS,
@@ -75,9 +76,25 @@ export class Vault {
     const query = await this.getQueryContract();
     const args: JoinPoolArgs = {
       ...request,
+      request: {
+        ...request.request,
+        userData: JoinExitEncoder.encodeJoin(request.request.userData),
+      },
       sender: ZERO_ADDRESS,
       recipient: ZERO_ADDRESS,
     };
+
+    console.debug('queryJoinPool', {
+      poolId: args.poolId,
+      sender: args.sender,
+      recipient: args.recipient,
+      request: JSON.stringify({
+        assets: args.request.assets,
+        maxAmountsIn: args.request.maxAmountsIn.map(bigNumberToUint256String),
+        userData: args.request.userData,
+        fromInternalBalance: args.request.fromInternalBalance,
+      }),
+    });
 
     const result: JoinPoolResult = await query.methods
       .queryJoin(args.poolId, args.sender, args.recipient, [
@@ -111,6 +128,10 @@ export class Vault {
     const query = await this.getQueryContract();
     const args: ExitPoolArgs = {
       ...request,
+      request: {
+        ...request.request,
+        userData: JoinExitEncoder.encodeExit(request.request.userData),
+      },
       sender: ZERO_ADDRESS,
       recipient: ZERO_ADDRESS,
     };
@@ -178,10 +199,18 @@ export class Vault {
   }
 
   async getJoinPoolZap(request: JoinPoolZapRequest): Promise<ZapStep> {
+    const args: JoinPoolArgs = {
+      ...request.join,
+      request: {
+        ...request.join.request,
+        userData: JoinExitEncoder.encodeJoin(request.join.request.userData),
+      },
+    };
+
     return {
       target: this.config.vaultAddress,
       value: '0',
-      data: this.encodeJoinPool(request.join),
+      data: this.encodeJoinPool(args),
       tokens: this.getJoinPoolZapTokens(request),
     };
   }
@@ -217,45 +246,48 @@ export class Vault {
       index: getInsertIndex(maxAmountsInStartWord + i),
     }));
 
-    // Maybe insert amounts into the userData bytes
+    // Maybe insert amountsIn into the userData bytes
     const userDataWordStart =
       9 + request.join.request.assets.length + 1 + request.join.request.maxAmountsIn.length + 1;
-    const joinKindString = abiCoder.decodeParameter(
-      'uint256',
-      request.join.request.userData
-    ) as unknown as string;
-    console.log('joinKindString', joinKindString);
-    const joinKind = new BigNumber(joinKindString).toNumber();
 
-    switch (joinKind) {
-      case WeightedPoolJoinKind.EXACT_TOKENS_IN_FOR_BPT_OUT: {
-        for (let i = 0; i < request.join.request.assets.length; i++) {
+    const join = request.join.request.userData;
+    switch (join.kind) {
+      case PoolJoinKind.EXACT_TOKENS_IN_FOR_BPT_OUT: {
+        for (let i = 0; i < join.tokensIn.length; i++) {
           tokens.push({
-            token: request.join.request.assets[i],
+            token: join.tokensIn[i],
             index: getInsertIndex(userDataWordStart + 4 + i), // 0 = JoinKind, 1 = Offset to amountsIn, 2 = minBPTAmountOut, 3 = amountsIn.length, 4 = amountsIn[0], 4+n = amountsIn[n]
           });
         }
         return tokens;
       }
-      case WeightedPoolJoinKind.TOKEN_IN_FOR_EXACT_BPT_OUT: {
+      case PoolJoinKind.TOKEN_IN_FOR_EXACT_BPT_OUT: {
         // 0 = JoinKind, 1 = bptAmountOut, 2 = enterTokenIndex
         return tokens;
       }
-      case WeightedPoolJoinKind.ALL_TOKENS_IN_FOR_EXACT_BPT_OUT: {
+      case PoolJoinKind.ALL_TOKENS_IN_FOR_EXACT_BPT_OUT: {
         // 0 = JoinKind, 1 = bptAmountOut
         return tokens;
       }
       default: {
-        throw new Error(`Unsupported join kind: ${joinKind}`);
+        throw new Error(`Unsupported join kind: ${join.kind}`);
       }
     }
   }
 
   async getExitPoolZap(request: ExitPoolZapRequest): Promise<ZapStep> {
+    const args: ExitPoolArgs = {
+      ...request.exit,
+      request: {
+        ...request.exit.request,
+        userData: JoinExitEncoder.encodeExit(request.exit.request.userData),
+      },
+    };
+
     return {
       target: this.config.vaultAddress,
       value: '0',
-      data: this.encodeExitPool(request.exit),
+      data: this.encodeExitPool(args),
       tokens: this.getExitPoolZapTokens(request),
     };
   }
@@ -287,15 +319,10 @@ export class Vault {
     // Insert the amount of bpt to burn into the userData bytes
     const userDataWordStart =
       9 + request.exit.request.assets.length + 1 + request.exit.request.minAmountsOut.length + 1;
-    const exitKindString = abiCoder.decodeParameter(
-      'uint256',
-      request.exit.request.userData
-    ) as unknown as string;
-    console.log('exitKindString', exitKindString);
-    const exitKind = new BigNumber(exitKindString).toNumber();
 
-    switch (exitKind) {
-      case WeightedPoolExitKind.EXACT_BPT_IN_FOR_TOKENS_OUT: {
+    const exit = request.exit.request.userData;
+    switch (exit.kind) {
+      case PoolExitKind.EXACT_BPT_IN_FOR_TOKENS_OUT: {
         return [
           {
             token: request.poolAddress,
@@ -303,7 +330,7 @@ export class Vault {
           },
         ];
       }
-      case WeightedPoolExitKind.EXACT_BPT_IN_FOR_ONE_TOKEN_OUT: {
+      case PoolExitKind.EXACT_BPT_IN_FOR_ONE_TOKEN_OUT: {
         return [
           {
             token: request.poolAddress,
@@ -311,7 +338,7 @@ export class Vault {
           },
         ];
       }
-      case WeightedPoolExitKind.BPT_IN_FOR_EXACT_TOKENS_OUT: {
+      case PoolExitKind.BPT_IN_FOR_EXACT_TOKENS_OUT: {
         return [
           {
             token: request.poolAddress,
@@ -320,7 +347,8 @@ export class Vault {
         ];
       }
       default: {
-        throw new Error(`Unsupported exit kind: ${exitKind}`);
+        // @ts-expect-error - if all cases are handled
+        throw new Error(`Unsupported exit kind: ${exit.kind}`);
       }
     }
   }

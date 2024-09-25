@@ -30,7 +30,7 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "gnosis-balancer",
         "poolId": "0x71e1179c5e197fa551beec85ca2ef8693c61b85b0002000000000000000000a0",
         "poolType": "gyroe",
@@ -72,7 +72,7 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "gnosis-balancer",
         "poolId": "0x8dd4df4ce580b9644437f3375e54f1ab0980822800020000000000000000009c",
         "poolType": "gyroe",
@@ -114,16 +114,17 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "gnosis-balancer",
         "poolId": "0xfc095c811fe836ed12f247bcf042504342b73fb700000000000000000000009f",
         "poolType": "composable-stable",
         "tokens": [
           "0x2a22f9c3b484c3629090FeED35F17Ff8F88f76F0",
           "0x4ECaBa5870353805a9F068101A40E0f32ed605C6",
-          "0xaf204776c7245bF4147c2612BF6e5972Ee483701",
-          "0xfC095C811fE836Ed12f247BCf042504342B73FB7"
-        ]
+          "0xaf204776c7245bF4147c2612BF6e5972Ee483701"
+        ],
+        "bptIndex": 3,
+        "hasNestedPool": false
       }
     ]
   },
@@ -158,15 +159,16 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "gnosis-balancer",
         "poolId": "0x06135a9ae830476d3a941bae9010b63732a055f4000000000000000000000065",
         "poolType": "composable-stable",
         "tokens": [
           "0x004626A008B1aCdC4c74ab51644093b155e59A23",
-          "0x06135A9Ae830476d3a941baE9010B63732a055F4",
           "0xcB444e90D8198415266c6a2724b7900fb12FC56E"
-        ]
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
       }
     ]
   },
@@ -201,15 +203,16 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "gnosis-balancer",
         "poolId": "0xc9f00c3a713008ddf69b768d90d4978549bfdf9400000000000000000000006d",
         "poolType": "composable-stable",
         "tokens": [
           "0xaBEf652195F98A91E490f047A5006B71c85f058d",
-          "0xaf204776c7245bF4147c2612BF6e5972Ee483701",
-          "0xc9F00C3a713008DDf69b768d90d4978549bFDF94"
-        ]
+          "0xaf204776c7245bF4147c2612BF6e5972Ee483701"
+        ],
+        "bptIndex": 2,
+        "hasNestedPool": false
       }
     ]
   },
@@ -244,7 +247,7 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "gnosis-balancer",
         "poolId": "0x4cdabe9e07ca393943acfb9286bbbd0d0a310ff600020000000000000000005c",
         "poolType": "weighted",
@@ -286,7 +289,7 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "gnosis-balancer",
         "poolId": "0xbc2acf5e821c5c9f8667a36bb1131dad26ed64f9000200000000000000000063",
         "poolType": "weighted",
@@ -328,16 +331,17 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "gnosis-balancer",
         "poolId": "0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066",
         "poolType": "composable-stable",
         "tokens": [
           "0x4ECaBa5870353805a9F068101A40E0f32ed605C6",
-          "0x7644fA5D0eA14FcF3E813Fdf93ca9544f8567655",
           "0xaf204776c7245bF4147c2612BF6e5972Ee483701",
           "0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83"
-        ]
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
       }
     ]
   },
@@ -404,15 +408,16 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "gnosis-balancer",
         "poolId": "0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064",
         "poolType": "composable-stable",
         "tokens": [
           "0xaf204776c7245bF4147c2612BF6e5972Ee483701",
-          "0xcB444e90D8198415266c6a2724b7900fb12FC56E",
-          "0xDd439304A77f54B1F7854751Ac1169b279591Ef7"
-        ]
+          "0xcB444e90D8198415266c6a2724b7900fb12FC56E"
+        ],
+        "bptIndex": 2,
+        "hasNestedPool": false
       }
     ]
   },
@@ -447,7 +452,7 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "gnosis-balancer",
         "poolId": "0x00df7f58e1cf932ebe5f54de5970fb2bdf0ef06d00010000000000000000005b",
         "poolType": "weighted",
@@ -490,7 +495,7 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "gnosis-balancer",
         "poolId": "0x4683e340a8049261057d5ab1b29c8d840e75695e00020000000000000000005a",
         "poolType": "weighted",
@@ -532,15 +537,16 @@
     "network": "gnosis",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "gnosis-balancer",
         "poolId": "0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034",
         "poolType": "composable-stable",
         "tokens": [
           "0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1",
-          "0x6C76971f98945AE98dD7d4DFcA8711ebea946eA6",
-          "0xbAd20c15A773bf03ab973302F61FAbceA5101f0A"
-        ]
+          "0x6C76971f98945AE98dD7d4DFcA8711ebea946eA6"
+        ],
+        "bptIndex": 2,
+        "hasNestedPool": false
       }
     ]
   }

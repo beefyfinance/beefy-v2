@@ -1,4 +1,4 @@
-import type { IBalancerJoinPool } from '../types';
+import { BalancerFeature, type IBalancerAllPool, type IBalancerSinglePool } from '../types';
 import type { ChainEntity } from '../../../../entities/chain';
 import type { PoolConfig, VaultConfig } from '../vault/types';
 import { viemToWeb3Abi } from '../../../../../../helpers/web3';
@@ -6,9 +6,21 @@ import type { NormalizedWeightsResult } from './types';
 import BigNumber from 'bignumber.js';
 import { fromWei } from '../../../../../../helpers/big-number';
 import { BalancerWeightedPoolAbi } from '../../../../../../config/abi/BalancerWeightedPoolAbi';
-import { JoinPool } from '../join/JoinPool';
+import { PoolExitKind, PoolJoinKind } from '../common/types';
+import {
+  poolExitKindToWeightedPoolExitKind,
+  poolJoinKindToWeightedPoolJoinKind,
+} from './join-exit-kinds';
+import { SingleAllPool } from '../common/SingleAllPool';
 
-export class WeightedPool extends JoinPool implements IBalancerJoinPool {
+const SUPPORTED_FEATURES = new Set<BalancerFeature>([
+  BalancerFeature.AddRemoveAll,
+  BalancerFeature.AddRemoveSingle,
+  BalancerFeature.AddSlippage,
+  BalancerFeature.RemoveSlippage,
+]);
+
+export class WeightedPool extends SingleAllPool implements IBalancerSinglePool, IBalancerAllPool {
   constructor(
     readonly chain: ChainEntity,
     readonly vaultConfig: VaultConfig,
@@ -19,8 +31,24 @@ export class WeightedPool extends JoinPool implements IBalancerJoinPool {
     this.getNormalizedWeights = this.cacheMethod(this.getNormalizedWeights);
   }
 
-  get joinSupportsSlippage() {
-    return true;
+  supportsFeature(feature: BalancerFeature): boolean {
+    return SUPPORTED_FEATURES.has(feature);
+  }
+
+  protected getJoinKindValue(kind: PoolJoinKind): number {
+    const value = poolJoinKindToWeightedPoolJoinKind[kind];
+    if (value === undefined) {
+      throw new Error(`WeightedPool does not support join kind ${PoolJoinKind[kind]}`);
+    }
+    return value;
+  }
+
+  protected getExitKindValue(kind: PoolExitKind): number {
+    const value = poolExitKindToWeightedPoolExitKind[kind];
+    if (value === undefined) {
+      throw new Error(`WeightedPool does not support join kind ${PoolExitKind[kind]}`);
+    }
+    return value;
   }
 
   async getSwapRatios(): Promise<BigNumber[]> {

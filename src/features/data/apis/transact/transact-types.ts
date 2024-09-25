@@ -15,7 +15,6 @@ import type {
 import type { PlatformEntity } from '../../entities/platform';
 import type { CurveTokenOption } from './strategies/curve/types';
 import type { ZapStrategyId } from './strategies/strategy-configs';
-import type { BalancerTokenOption } from './strategies/balancer/types';
 
 export type TokenAmount<T extends TokenEntity = TokenEntity> = {
   amount: BigNumber;
@@ -56,6 +55,19 @@ export function isZapFeeNonZero(zapFee: ZapFee): boolean {
 // Options
 //
 
+export enum SelectionOrder {
+  /** The deposit token */
+  Want = 0,
+  /** CLM Vault-to-Vault Zap */
+  VaultToVault,
+  /** All tokens in the pool e.g. Break LP or CLM */
+  AllTokensInPool,
+  /** Any token in the LP */
+  TokenOfPool,
+  /** Any other token not in the LP */
+  Other,
+}
+
 type BaseOption = {
   /** should be unique over all strategies and token selections */
   id: string;
@@ -63,7 +75,7 @@ type BaseOption = {
   chainId: ChainEntity['id'];
   /** governs how selections are grouped in the UI, should be consistent for the same deposit input/withdraw output token(s) per chain */
   selectionId: string;
-  selectionOrder: number;
+  selectionOrder: SelectionOrder;
   inputs: TokenEntity[];
   wantedOutputs: TokenEntity[];
 };
@@ -178,29 +190,68 @@ export type CurveWithdrawOption = ZapBaseWithdrawOption & {
     | { via: 'aggregator'; viaTokens: CurveTokenOption[] }
   );
 
-export type BalancerSwapDepositOption = ZapBaseDepositOption & {
-  strategyId: 'balancer-swap';
-} & (
-    | { via: 'direct'; viaToken: BalancerTokenOption }
-    | { via: 'aggregator'; viaTokens: BalancerTokenOption[] }
-  );
-
-export type BalancerSwapWithdrawOption = ZapBaseWithdrawOption & {
-  strategyId: 'balancer-swap';
-} & (
-    | { via: 'direct'; viaToken: BalancerTokenOption }
-    | { via: 'aggregator'; viaTokens: BalancerTokenOption[] }
-  );
-
-export type BalancerPoolDepositOption = ZapBaseDepositOption & {
-  strategyId: 'balancer-join';
-  via: /*'pool' | */ 'aggregator';
+export type BalancerOptionSingleDirectPart = {
+  type: 'single';
+  via: 'direct';
+  viaToken: TokenEntity;
 };
 
-export type BalancerPoolWithdrawOption = ZapBaseWithdrawOption & {
-  strategyId: 'balancer-join';
-  via: 'break-only' | /*'pool' | */ 'aggregator';
+export type BalancerOptionSingleAggregatorPart = {
+  type: 'single';
+  via: 'aggregator';
+  viaTokens: TokenEntity[];
 };
+
+export type BalancerOptionAllAggregatorPart = {
+  type: 'all';
+  via: 'aggregator';
+  viaTokens: TokenEntity[];
+};
+
+type BalancerDepositionOptionBase = ZapBaseDepositOption & {
+  strategyId: 'balancer';
+};
+
+export type BalancerDepositOptionSingleDirect = BalancerDepositionOptionBase &
+  BalancerOptionSingleDirectPart;
+export type BalancerDepositOptionSingleAggregator = BalancerDepositionOptionBase &
+  BalancerOptionSingleAggregatorPart;
+export type BalancerDepositOptionAllAggregator = BalancerDepositionOptionBase &
+  BalancerOptionAllAggregatorPart;
+
+export type BalancerDepositOption = BalancerDepositionOptionBase &
+  (
+    | BalancerOptionSingleDirectPart
+    | BalancerOptionSingleAggregatorPart
+    | BalancerOptionAllAggregatorPart
+  );
+
+type BalancerWithdrawOptionBase = ZapBaseWithdrawOption & {
+  strategyId: 'balancer';
+};
+
+export type BalancerOptionAllBreakOnlyPart = {
+  type: 'all';
+  via: 'break-only';
+  viaTokens: TokenEntity[];
+};
+
+export type BalancerWithdrawOptionSingleDirect = BalancerWithdrawOptionBase &
+  BalancerOptionSingleDirectPart;
+export type BalancerWithdrawOptionSingleAggregator = BalancerWithdrawOptionBase &
+  BalancerOptionSingleAggregatorPart;
+export type BalancerWithdrawOptionAllAggregator = BalancerWithdrawOptionBase &
+  BalancerOptionAllAggregatorPart;
+export type BalancerWithdrawOptionAllBreakOnly = BalancerWithdrawOptionBase &
+  BalancerOptionAllBreakOnlyPart;
+
+export type BalancerWithdrawOption = BalancerWithdrawOptionBase &
+  (
+    | BalancerOptionSingleDirectPart
+    | BalancerOptionSingleAggregatorPart
+    | BalancerOptionAllAggregatorPart
+    | BalancerOptionAllBreakOnlyPart
+  );
 
 export type ConicDepositOption = ZapBaseDepositOption & {
   strategyId: 'conic';
@@ -264,8 +315,7 @@ export type DepositOption =
   | GovComposerDepositOption
   | VaultComposerDepositOption
   | RewardPoolToVaultDepositOption
-  | BalancerSwapDepositOption
-  | BalancerPoolDepositOption;
+  | BalancerDepositOption;
 
 export type WithdrawOption =
   | StandardVaultWithdrawOption
@@ -281,8 +331,7 @@ export type WithdrawOption =
   | GovComposerWithdrawOption
   | VaultComposerWithdrawOption
   | RewardPoolToVaultWithdrawOption
-  | BalancerSwapWithdrawOption
-  | BalancerPoolWithdrawOption;
+  | BalancerWithdrawOption;
 
 export type TransactOption = DepositOption | WithdrawOption;
 
@@ -490,12 +539,12 @@ export type CurveDepositQuote = BaseZapQuote<CurveDepositOption> & {
   viaToken: CurveTokenOption;
 };
 
-export type BalancerSwapDepositQuote = BaseZapQuote<BalancerSwapDepositOption> & {
-  via: 'aggregator' | 'direct';
-  viaToken: BalancerTokenOption;
-};
+// export type BalancerSwapDepositQuote = BaseZapQuote<BalancerSwapDepositOption> & {
+//   via: 'aggregator' | 'direct';
+//   viaToken: BalancerTokenOption;
+// };
 
-export type BalancerPoolDepositQuote = BaseZapQuote<BalancerPoolDepositOption>;
+export type BalancerDepositQuote = BaseZapQuote<BalancerDepositOption>;
 
 export type GammaDepositQuote = BaseZapQuote<GammaDepositOption> & {
   lpQuotes: (QuoteResponse | undefined)[];
@@ -521,8 +570,7 @@ export type ZapDepositQuote =
   | GovComposerZapDepositQuote
   | VaultComposerZapDepositQuote
   | RewardPoolToVaultDepositQuote
-  | BalancerSwapDepositQuote
-  | BalancerPoolDepositQuote;
+  | BalancerDepositQuote;
 
 export type DepositQuote = VaultDepositQuote | ZapDepositQuote;
 
@@ -568,12 +616,20 @@ export type CurveWithdrawQuote = BaseZapQuote<CurveWithdrawOption> & {
   viaToken: CurveTokenOption;
 };
 
-export type BalancerSwapWithdrawQuote = BaseZapQuote<BalancerSwapWithdrawOption> & {
-  via: 'aggregator' | 'direct';
-  viaToken: BalancerTokenOption;
+export type BalancerWithdrawQuoteSingle = BaseZapQuote<
+  BalancerWithdrawOptionSingleDirect | BalancerWithdrawOptionSingleAggregator
+> & {
+  type: 'single';
+  viaToken: TokenEntity;
 };
 
-export type BalancerPoolWithdrawQuote = BaseZapQuote<BalancerPoolWithdrawOption>;
+export type BalancerWithdrawQuoteAll = BaseZapQuote<
+  BalancerWithdrawOptionAllAggregator | BalancerWithdrawOptionAllBreakOnly
+> & {
+  type: 'all';
+};
+
+export type BalancerWithdrawQuote = BalancerWithdrawQuoteSingle | BalancerWithdrawQuoteAll;
 
 export type GammaBreakWithdrawQuote = BaseZapQuote<GammaWithdrawOption>;
 export type GammaAggregatorWithdrawQuote = BaseZapQuote<GammaWithdrawOption> & {
@@ -616,8 +672,7 @@ export type ZapWithdrawQuote =
   | CowcentratedZapWithdrawQuote
   | GovComposerZapWithdrawQuote
   | VaultComposerZapWithdrawQuote
-  | BalancerSwapWithdrawQuote
-  | BalancerPoolWithdrawQuote;
+  | BalancerWithdrawQuote;
 
 export type WithdrawQuote = VaultWithdrawQuote | ZapWithdrawQuote;
 

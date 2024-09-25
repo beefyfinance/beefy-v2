@@ -855,15 +855,16 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "optimism-beethovenx",
         "poolId": "0x2bb4712247d5f451063b5e4f6948abdfb925d93d000000000000000000000136",
         "poolType": "composable-stable",
         "tokens": [
           "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
-          "0x2Bb4712247D5F451063b5E4f6948abDfb925d93D",
           "0x5A7fACB970D094B6C7FF1df0eA68D99E6e73CBFF"
-        ]
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
       }
     ]
   },
@@ -2097,7 +2098,7 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "optimism-beethovenx",
         "poolId": "0xe906d4c4fc4c3fe96560de86b4bf7ed89af9a69a000200000000000000000126",
         "poolType": "gyroe",
@@ -3226,15 +3227,16 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "optimism-beethovenx",
         "poolId": "0x73a7fe27fe9545d53924e529acf11f3073841b9e000000000000000000000133",
         "poolType": "composable-stable",
         "tokens": [
           "0x4200000000000000000000000000000000000006",
-          "0x73A7fe27fe9545D53924E529Acf11F3073841b9e",
           "0x87eEE96D50Fb761AD85B1c982d28A042169d61b1"
-        ]
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
       }
     ]
   },
@@ -4793,7 +4795,7 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "optimism-beethovenx",
         "poolId": "0x2feb76966459d7841fa8a7ed0aa4bf574d6111bf00020000000000000000011d",
         "poolType": "weighted",
@@ -4883,15 +4885,16 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "optimism-beethovenx",
         "poolId": "0xa71021492a3966eec735ed1b505afa097c7cfe6f00000000000000000000010d",
         "poolType": "composable-stable",
         "tokens": [
           "0x484c2D6e3cDd945a8B2DF735e079178C1036578c",
-          "0x6806411765Af15Bddd26f8f544A34cC40cb9838B",
-          "0xA71021492a3966EeC735Ed1B505aFa097c7cFe6f"
-        ]
+          "0x6806411765Af15Bddd26f8f544A34cC40cb9838B"
+        ],
+        "bptIndex": 2,
+        "hasNestedPool": false
       }
     ]
   },
@@ -5334,16 +5337,17 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "optimism-beethovenx",
         "poolId": "0x5f8893506ddc4c271837187d14a9c87964a074dc000000000000000000000106",
         "poolType": "composable-stable",
         "tokens": [
           "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
           "0x484c2D6e3cDd945a8B2DF735e079178C1036578c",
-          "0x5F8893506Ddc4C271837187d14A9C87964a074Dc",
           "0x9Bcef72be871e61ED4fBbc7630889beE758eb81D"
-        ]
+        ],
+        "bptIndex": 2,
+        "hasNestedPool": false
       }
     ]
   },
@@ -5427,15 +5431,16 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "optimism-beethovenx",
         "poolId": "0x004700ba0a4f5f22e1e78a277fca55e36f47e09c000000000000000000000104",
         "poolType": "composable-stable",
         "tokens": [
-          "0x004700ba0a4f5f22e1E78a277fCA55e36F47E09C",
           "0x9Bcef72be871e61ED4fBbc7630889beE758eb81D",
           "0xe05A08226c49b636ACf99c40Da8DC6aF83CE5bB3"
-        ]
+        ],
+        "bptIndex": 0,
+        "hasNestedPool": false
       }
     ]
   },
@@ -5463,7 +5468,7 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "optimism-beethovenx",
         "poolId": "0x9da11ff60bfc5af527f58fd61679c3ac98d040d9000000000000000000000100",
         "poolType": "composable-stable",
@@ -5471,9 +5476,10 @@
           "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
           "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
           "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
-          "0x9Da11Ff60bfc5aF527f58fd61679c3AC98d040d9",
           "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
-        ]
+        ],
+        "bptIndex": 3,
+        "hasNestedPool": false
       }
     ]
   },
@@ -5618,7 +5624,7 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "optimism-beethovenx",
         "poolId": "0x7ca75bdea9dede97f8b13c6641b768650cb837820002000000000000000000d5",
         "poolType": "gyroe",
@@ -10393,7 +10399,7 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "optimism-beethovenx",
         "poolId": "0x4fd63966879300cafafbb35d157dc5229278ed2300020000000000000000002b",
         "poolType": "meta-stable",
@@ -11926,7 +11932,7 @@
     "network": "optimism",
     "zaps": [
       {
-        "strategyId": "balancer-join",
+        "strategyId": "balancer",
         "ammId": "optimism-beethovenx",
         "poolId": "0x39965c9dab5448482cf7e002f583c812ceb53046000100000000000000000003",
         "poolType": "weighted",

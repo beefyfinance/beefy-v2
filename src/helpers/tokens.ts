@@ -1,4 +1,4 @@
-import type { TokenEntity } from '../features/data/entities/token';
+import { isTokenEqual, type TokenEntity } from '../features/data/entities/token';
 import { uniqBy } from 'lodash-es';
 
 export function uniqueTokens<T extends TokenEntity>(tokens: T[]): T[] {
@@ -17,4 +17,8 @@ export function checkAddressOrder(addresses: string[]) {
       throw new Error('Addresses are not in order');
     }
   }
+}
+
+export function tokenInList<T extends TokenEntity>(token: T, list: T[]): boolean {
+  return list.some(t => isTokenEqual(t, token));
 }

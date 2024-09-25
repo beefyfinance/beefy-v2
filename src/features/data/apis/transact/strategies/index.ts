@@ -20,10 +20,7 @@ const strategyLoadersByIdUnchecked = {
     (await import('./cowcentrated/CowcentratedStrategy')).CowcentratedStrategy,
   'reward-pool-to-vault': async () =>
     (await import('./RewardPoolToVaultStrategy')).RewardPoolToVaultStrategy,
-  'balancer-swap': async () =>
-    (await import('./balancer/BalancerSwapStrategy')).BalancerSwapStrategy,
-  'balancer-join': async () =>
-    (await import('./balancer/BalancerJoinStrategy')).BalancerJoinStrategy,
+  balancer: async () => (await import('./balancer/BalancerStrategy')).BalancerStrategy,
 } as const satisfies Record<ZapStrategyId, () => Promise<IAnyStrategyStatic>>;
 
 type StrategyIdToStaticPromise = typeof strategyLoadersByIdUnchecked;

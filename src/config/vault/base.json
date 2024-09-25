@@ -3761,15 +3761,16 @@
     "network": "base",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "base-balancer",
         "poolId": "0xab99a3e856deb448ed99713dfce62f937e2d4d74000000000000000000000118",
         "poolType": "composable-stable",
         "tokens": [
           "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
-          "0x4200000000000000000000000000000000000006",
-          "0xaB99a3e856dEb448eD99713dfce62F937E2d4D74"
-        ]
+          "0x4200000000000000000000000000000000000006"
+        ],
+        "bptIndex": 2,
+        "hasNestedPool": false
       }
     ]
   },
@@ -7168,15 +7169,16 @@
     "network": "base",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "base-balancer",
         "poolId": "0xc771c1a5905420daec317b154eb13e4198ba97d0000000000000000000000023",
         "poolType": "composable-stable",
         "tokens": [
           "0x4200000000000000000000000000000000000006",
-          "0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c",
-          "0xC771c1a5905420DAEc317b154EB13e4198BA97D0"
-        ]
+          "0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c"
+        ],
+        "bptIndex": 2,
+        "hasNestedPool": false
       }
     ]
   },

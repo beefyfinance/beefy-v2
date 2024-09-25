@@ -18,6 +18,7 @@ import type {
 import { getVaultNames } from '../utils/vault-utils';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
 import { isDefined } from '../utils/array-utils';
+import type { BalancerStrategyConfig } from '../apis/transact/strategies/strategy-configs';
 
 export interface FulfilledAllVaultsPayload {
   byChainId: {
@@ -296,6 +297,15 @@ function getVaultStatus(apiVault: VaultConfig): VaultStatus {
 
 function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBase {
   const names = getVaultNames(config.name, config.type);
+
+  if (config.tokenProviderId === 'balancer' || config.tokenProviderId === 'beethovenx') {
+    const zap = config.zaps?.find((z): z is BalancerStrategyConfig => z.strategyId === 'balancer');
+    if (zap) {
+      for (const k of Object.keys(names)) {
+        names[k] = `${names[k]} [${zap.poolType}]`;
+      }
+    }
+  }
 
   return {
     id: config.id,

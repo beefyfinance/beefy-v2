@@ -27,10 +27,7 @@ import { createCachedFactory, createFactory } from '../src/features/data/utils/f
 import { addressBook, Token } from 'blockchain-addressbook';
 import { partition, sortBy } from 'lodash';
 import platforms from '../src/config/platforms.json';
-import {
-  BalancerJoinStrategyConfig,
-  BalancerSwapStrategyConfig,
-} from '../src/features/data/apis/transact/strategies/strategy-configs';
+import { BalancerStrategyConfig } from '../src/features/data/apis/transact/strategies/strategy-configs';
 import { sortVaultKeys } from './common/vault-fields';
 
 const cacheBasePath = path.join(__dirname, '.cache', 'balancer');
@@ -815,31 +812,30 @@ export async function discoverBalancerZap(args: RunArgs) {
     console.log('Vault:', amm.vaultAddress);
   }
 
-  switch (pool.type) {
+  const type = pool.type;
+  switch (type) {
     case 'COMPOSABLE_STABLE': {
       return {
-        strategyId: 'balancer-swap',
+        strategyId: 'balancer',
         ammId: amm.id,
         poolId: apiPool.id,
-        poolType: apiPool.type
-          .toLowerCase()
-          .replaceAll('_', '-') as BalancerSwapStrategyConfig['poolType'], // TODO types
-        tokens: apiPool.poolTokens.map(t => t.address),
-      } satisfies BalancerSwapStrategyConfig;
+        poolType: transformPoolType(type),
+        tokens: tokens.map(t => t.address),
+        bptIndex: tokensWithBpt.findIndex(t => t.isBPT),
+        hasNestedPool: tokens.some(t => t.hasNestedPool),
+      } satisfies BalancerStrategyConfig;
     }
     case 'GYRO':
     case 'GYROE':
     case 'META_STABLE':
     case 'WEIGHTED': {
       return {
-        strategyId: 'balancer-join',
+        strategyId: 'balancer',
         ammId: amm.id,
         poolId: apiPool.id,
-        poolType: apiPool.type
-          .toLowerCase()
-          .replaceAll('_', '-') as BalancerJoinStrategyConfig['poolType'], // TODO types
+        poolType: transformPoolType(type),
         tokens: apiPool.poolTokens.map(t => t.address),
-      } satisfies BalancerJoinStrategyConfig;
+      } satisfies BalancerStrategyConfig;
     }
     default: {
       throw new Error(`Unsupported pool type ${pool.type}`);
@@ -847,11 +843,15 @@ export async function discoverBalancerZap(args: RunArgs) {
   }
 }
 
-async function saveZap(
-  chainId: string,
-  vaultId: string,
-  zap: BalancerSwapStrategyConfig | BalancerJoinStrategyConfig
-) {
+type TransformPoolType<T extends string> = T extends `${infer Head}_${infer Tail}`
+  ? `${Lowercase<Head>}-${TransformPoolType<Tail>}`
+  : Lowercase<T>;
+
+function transformPoolType<T extends string>(input: T): TransformPoolType<T> {
+  return input.toLowerCase().replaceAll('_', '-') as TransformPoolType<T>;
+}
+
+async function saveZap(chainId: string, vaultId: string, zap: BalancerStrategyConfig) {
   const path = `./src/config/vault/${addressBookToAppId(chainId)}.json`;
   const vaults = await loadJson<VaultConfig[]>(path);
   let found = false;

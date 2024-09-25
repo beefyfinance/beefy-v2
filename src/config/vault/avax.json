@@ -89,15 +89,16 @@
     "network": "avax",
     "zaps": [
       {
-        "strategyId": "balancer-swap",
+        "strategyId": "balancer",
         "ammId": "avax-balancer",
         "poolId": "0xfd2620c9cfcec7d152467633b3b0ca338d3d78cc00000000000000000000001c",
         "poolType": "composable-stable",
         "tokens": [
           "0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE",
-          "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
-          "0xfD2620C9cfceC7D152467633B3B0Ca338D3d78cc"
-        ]
+          "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7"
+        ],
+        "bptIndex": 2,
+        "hasNestedPool": false
       }
     ]
   },

@@ -7,6 +7,7 @@ import {
   type InputTokenAmount,
   isZapQuoteStepSwap,
   isZapQuoteStepSwapAggregator,
+  SelectionOrder,
   type TokenAmount,
   type ZapQuoteStep,
 } from '../../transact-types';
@@ -53,7 +54,7 @@ import { getVaultWithdrawnFromState } from '../../helpers/vault';
 import ZapAbi from '../../../../../../config/abi/zap.json';
 import type { AbiItem } from 'web3-utils';
 import {
-  includeNativeAndWrapped,
+  includeWrappedAndNative,
   nativeAndWrappedAreSame,
   nativeToWNative,
   pickTokens,
@@ -113,7 +114,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
       '0x9aE380F0272E2162340a5bB646c354271c0F5cFC'
     );
     // Allow native and wrapped
-    this.tokens = includeNativeAndWrapped(
+    this.tokens = includeWrappedAndNative(
       vault.assetIds.map(id => selectTokenById(state, vault.chainId, id)),
       this.wnative,
       this.native
@@ -130,7 +131,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: 3,
+        selectionOrder: SelectionOrder.TokenOfPool,
         inputs,
         wantedOutputs: outputs,
         strategyId: 'conic',
@@ -308,7 +309,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: 3,
+        selectionOrder: SelectionOrder.TokenOfPool,
         inputs,
         wantedOutputs: outputs,
         strategyId: 'conic',
