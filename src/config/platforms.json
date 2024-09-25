@@ -1022,5 +1022,10 @@
     "id": "pharaoh",
     "name": "Pharaoh",
     "filter": true
+  },
+  {
+    "id": "dragon",
+    "name": "DragonSwap",
+    "filter": true
   }
 ]
