@@ -139,9 +139,9 @@ export function formatLargePercent<T = string>(
     return ratio.isPositive() ? veryLargePlaceholder : missingPlaceholder;
   }
 
-  const { value, unit } = toScale(ratio.shiftedBy(2), Scale.Million);
+  const { value, unit, overMax } = toScale(ratio.shiftedBy(2), Scale.Million);
 
-  if (unit === undefined) {
+  if (overMax) {
     return veryLargePlaceholder;
   }
 
@@ -371,17 +371,19 @@ export function zeroPad(value: number | undefined, length: number): string {
 
 function toScale(value: BigNumber, minScale: Scale = Scale.Thousand) {
   if (value.e === null) {
-    return { value: value, unit: '' };
+    return { value: value, unit: '', overMax: false };
   }
 
-  const scale = Math.trunc(value.e / 3) * 3;
-  if (scale < minScale || scale < 0 || !isScale(scale)) {
-    return { value: value, unit: '' };
+  const rawScale = Math.trunc(value.e / 3) * 3;
+  if (rawScale < minScale || rawScale < 0) {
+    return { value: value, unit: '', overMax: false };
   }
 
-  const suffix = scale > maxScale ? scaleSuffixes[maxScale] : scaleSuffixes[scale];
+  const overMax = rawScale > maxScale;
+  const scale = overMax || !isScale(rawScale) ? maxScale : rawScale;
+  const suffix = overMax ? scaleSuffixes[maxScale] : scaleSuffixes[scale];
   const newValue = value.shiftedBy(-suffix.e);
-  return { value: newValue, unit: suffix.short };
+  return { value: newValue, unit: suffix.short, overMax };
 }
 
 function toSubString(input: string) {

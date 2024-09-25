@@ -3,7 +3,6 @@ import { styles } from './styles';
 import { makeStyles } from '@material-ui/core';
 import { type VaultEntity } from '../../../../../../../../data/entities/vault';
 import { VaultAtDepositStat } from '../../../../../../../../../components/VaultStats/VaultAtDepositStat';
-import { VaultNowStat } from '../../../../../../../../../components/VaultStats/VaultNowStat';
 import { RowMobile } from '../../../../Row';
 import { VaultApyStat } from '../../../../../../../../../components/VaultStats/VaultApyStat';
 import { VaultDailyUsdStat } from '../../../../../../../../../components/VaultStats/VaultDailyUsdStat';
@@ -11,6 +10,7 @@ import { useAppSelector } from '../../../../../../../../../store';
 import { MobileVaultRewardsStat } from '../../../../../../../../../components/VaultStats/MobileVaultRewardsStat';
 import { selectVaultPnl } from '../../../../../../../../data/selectors/analytics';
 import { MobileVaultYieldStat } from '../../../../../../../../../components/VaultStats/MobileVaultYieldStat';
+import { VaultDepositStat } from '../../../../../../../../../components/VaultStats/VaultDepositStat';
 
 const useStyles = makeStyles(styles);
 
@@ -36,14 +36,14 @@ export const VaultDashboardMobileStats = memo<VaultDashboardMobileStatsProps>(
             vaultId={vaultId}
             walletAddress={address}
           />
-          <VaultNowStat
-            pnlData={pnlData}
+          <VaultDepositStat
             className={classes.statMobile}
             contentClassName={classes.valueContainer}
             triggerClassName={classes.value}
             labelClassName={classes.label}
             vaultId={vaultId}
             walletAddress={address}
+            label={'VaultStat-Now'}
           />
           <MobileVaultYieldStat
             className={classes.statMobile}

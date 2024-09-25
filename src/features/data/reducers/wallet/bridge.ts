@@ -32,6 +32,8 @@ export type BridgeFormState = {
   from: ChainEntity['id'];
   to: ChainEntity['id'];
   input: InputTokenAmount<TokenErc20>;
+  receiverIsDifferent: boolean;
+  receiverAddress: string | undefined;
 };
 
 export type BridgeValidateState = {
@@ -147,6 +149,8 @@ export const bridgeSlice = createSlice({
       sliceState.form.from = to;
       sliceState.form.input.amount = BIG_ZERO;
       sliceState.form.input.max = false;
+      sliceState.form.receiverIsDifferent = false;
+      sliceState.form.receiverAddress = undefined;
 
       resetQuotes(sliceState);
     },
@@ -157,6 +161,8 @@ export const bridgeSlice = createSlice({
       sliceState.form.from = action.payload.chainId;
       sliceState.form.input.amount = BIG_ZERO;
       sliceState.form.input.max = false;
+      sliceState.form.receiverIsDifferent = false;
+      sliceState.form.receiverAddress = undefined;
 
       if (sliceState.form.to === action.payload.chainId) {
         const otherChains = sliceState.destinations.allChains.filter(
@@ -176,6 +182,8 @@ export const bridgeSlice = createSlice({
       sliceState.form.to = action.payload.chainId;
       sliceState.form.input.amount = BIG_ZERO;
       sliceState.form.input.max = false;
+      sliceState.form.receiverIsDifferent = false;
+      sliceState.form.receiverAddress = undefined;
 
       if (sliceState.form.from === action.payload.chainId) {
         const otherChains = sliceState.destinations.allChains.filter(
@@ -192,14 +200,55 @@ export const bridgeSlice = createSlice({
       if (!sliceState.form) {
         throw new Error(`Bridge form not initialized.`);
       }
+
+      let changed = false;
+
       if (!sliceState.form.input.amount.isEqualTo(action.payload.amount)) {
         sliceState.form.input.amount = action.payload.amount;
+        changed = true;
       }
       if (sliceState.form.input.max !== action.payload.max) {
         sliceState.form.input.max = action.payload.max;
+        changed = true;
       }
       if (!isTokenEqual(sliceState.form.input.token, action.payload.token)) {
         sliceState.form.input.token = action.payload.token;
+        changed = true;
+      }
+
+      if (changed) {
+        resetQuotes(sliceState);
+      }
+    },
+    setReceiverIsDifferent(sliceState, action: PayloadAction<boolean>) {
+      if (!sliceState.form) {
+        throw new Error(`Bridge form not initialized.`);
+      }
+      let changed = false;
+
+      if (sliceState.form.receiverIsDifferent !== action.payload) {
+        sliceState.form.receiverIsDifferent = action.payload;
+        changed = true;
+      }
+
+      if (changed) {
+        resetQuotes(sliceState);
+      }
+    },
+    setReceiverAddress(sliceState, action: PayloadAction<string | undefined>) {
+      if (!sliceState.form) {
+        throw new Error(`Bridge form not initialized.`);
+      }
+
+      let changed = false;
+
+      if (sliceState.form.receiverAddress !== action.payload) {
+        changed = true;
+        sliceState.form.receiverAddress = action.payload;
+      }
+
+      if (changed) {
+        resetQuotes(sliceState);
       }
     },
     selectQuote(sliceState, action: PayloadAction<{ quoteId: string }>) {

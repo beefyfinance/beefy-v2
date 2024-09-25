@@ -999,6 +999,11 @@
     "filter": true
   },
   {
+    "id": "sky",
+    "name": "Sky",
+    "filter": true
+  },
+  {
     "id": "oku",
     "name": "Uniswap (Oku)",
     "filter": true
@@ -1011,6 +1016,16 @@
   {
     "id": "yei",
     "name": "Yei",
+    "filter": true
+  },
+  {
+    "id": "pharaoh",
+    "name": "Pharaoh",
+    "filter": true
+  },
+  {
+    "id": "dragon",
+    "name": "DragonSwap",
     "filter": true
   }
 ]

@@ -4,12 +4,16 @@ import { createSelector } from '@reduxjs/toolkit';
 import { getUnixTime, isAfter } from 'date-fns';
 import { selectVaultRawTvl } from './tvl';
 import { BIG_ZERO } from '../../../helpers/big-number';
+import type { MerklRewardsCampaign, StellaSwapRewardsCampaign } from '../reducers/rewards-types';
+
+export type MerklRewardsCampaignWithApr = MerklRewardsCampaign & { apr: number };
+export type StellaSwapRewardsCampaignWithApr = StellaSwapRewardsCampaign & { apr: number };
 
 export const selectVaultActiveMerklCampaigns = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     state.biz.rewards.offchain.byProviderId.merkl[vaultId],
   (state: BeefyState) => state.biz.rewards.offchain.byId,
-  (vaultCampaigns, campaignById) => {
+  (vaultCampaigns, campaignById): MerklRewardsCampaignWithApr[] | undefined => {
     if (!vaultCampaigns) {
       return undefined;
     }
@@ -17,7 +21,7 @@ export const selectVaultActiveMerklCampaigns = createSelector(
     const now = getUnixTime(new Date());
     const activeCampaigns = vaultCampaigns
       .filter(v => v.apr > 0)
-      .map(v => ({ ...campaignById[v.id], apr: v.apr }))
+      .map(v => ({ ...(campaignById[v.id] as MerklRewardsCampaign), apr: v.apr }))
       .filter(c => c.startTimestamp <= now && c.endTimestamp >= now);
 
     return activeCampaigns.length ? activeCampaigns : undefined;
@@ -29,11 +33,34 @@ export const selectVaultHasActiveMerklCampaigns = createSelector(
   campaigns => !!campaigns && campaigns.length > 0
 );
 
+export function isMerklBoostCampaign(campaign: MerklRewardsCampaignWithApr): boolean {
+  return (
+    campaign.providerId === 'merkl' && campaign.chainId === 'base' && campaign.type === 'zap-v3'
+  );
+}
+
+export const selectVaultActiveMerklBoostCampaigns = createSelector(
+  selectVaultActiveMerklCampaigns,
+  campaigns => {
+    if (!campaigns) {
+      return undefined;
+    }
+
+    const filtered = campaigns.filter(isMerklBoostCampaign);
+    return filtered.length ? filtered : undefined;
+  }
+);
+
+export const selectVaultHasActiveMerklBoostCampaigns = createSelector(
+  selectVaultActiveMerklBoostCampaigns,
+  campaigns => !!campaigns && campaigns.length > 0
+);
+
 export const selectVaultActiveStellaSwapCampaigns = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     state.biz.rewards.offchain.byProviderId.stellaswap[vaultId],
   (state: BeefyState) => state.biz.rewards.offchain.byId,
-  (vaultCampaigns, campaignById) => {
+  (vaultCampaigns, campaignById): StellaSwapRewardsCampaignWithApr[] | undefined => {
     if (!vaultCampaigns) {
       return undefined;
     }
@@ -41,7 +68,7 @@ export const selectVaultActiveStellaSwapCampaigns = createSelector(
     const now = getUnixTime(new Date());
     const activeCampaigns = vaultCampaigns
       .filter(v => v.apr > 0)
-      .map(v => ({ ...campaignById[v.id], apr: v.apr }))
+      .map(v => ({ ...(campaignById[v.id] as StellaSwapRewardsCampaign), apr: v.apr }))
       .filter(c => c.startTimestamp <= now && c.endTimestamp >= now);
 
     return activeCampaigns.length ? activeCampaigns : undefined;

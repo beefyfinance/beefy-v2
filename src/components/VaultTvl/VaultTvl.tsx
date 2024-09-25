@@ -26,7 +26,7 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
     return {
       label,
       vaultTvl: BIG_ZERO,
-      subValue: null,
+      underlyingTvl: null,
       loading: true,
       breakdown: null,
     };
@@ -37,7 +37,7 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
     return {
       label,
       vaultTvl: breakdown.vaultTvl,
-      subValue: null,
+      underlyingTvl: null,
       loading: false,
       breakdown: null,
     };

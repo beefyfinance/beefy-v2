@@ -91,6 +91,8 @@ const nonHarvestOnDepositPools = [
   'silo-op-tbtc-tbtc',
   'sushi-cow-arb-wbtc-tbtc-vault',
   'pancake-cow-arb-usdt+-usd+-vault',
+  'aero-cow-weth-cbbtc-vault',
+  'aero-cow-usdc-cbbtc-vault',
 ];
 const excludedAbPools = [
   'gmx-arb-near-usdc',
@@ -414,11 +416,17 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   });
 
   // Boosts
+  const seenBoostIds = new Set();
   boosts.forEach(boost => {
+    if (seenBoostIds.has(boost.id)) {
+      console.error(`Error: Boost ${boost.id}: Boost id duplicated: ${boost.id}`);
+      exitCode = 1;
+    }
     if (!poolIds.has(boost.poolId)) {
       console.error(`Error: Boost ${boost.id}: Boost has non-existent pool id ${boost.poolId}.`);
       exitCode = 1;
     }
+    seenBoostIds.add(boost.id);
   });
 
   // Gov Pools

@@ -120,7 +120,7 @@ async function main() {
       }
     }
 
-    return sortVaultKeys(oldVault);
+    return oldVault;
   });
 
   if (unmodified.size > 0) {

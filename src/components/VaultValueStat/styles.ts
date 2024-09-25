@@ -7,6 +7,7 @@ export const styles = (theme: Theme) => ({
     display: 'inline-flex' as const,
     flexDirection: 'column' as const,
     alignItems: 'flex-end',
+    maxWidth: '100%',
   },
   subValue: {
     ...theme.typography['body-sm'],

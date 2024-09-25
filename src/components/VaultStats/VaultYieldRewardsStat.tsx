@@ -16,7 +16,7 @@ import {
   DashboardDataStatus,
   selectDashboardUserRewardsOrStatusByVaultId,
 } from '../../features/data/selectors/dashboard';
-import { BIG_ZERO, bigNumberToStringDeep } from '../../helpers/big-number';
+import { BIG_ZERO } from '../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
@@ -65,7 +65,7 @@ export const VaultYieldRewardsStat = memo<VaultYieldRewardsStatProps>(
     }
 
     if (!data.all.has) {
-      console.log(vaultId, bigNumberToStringDeep(data));
+      // this probably means some tx is missing from timeline
       return <VaultValueStat label={label} value="-" loading={false} {...passthrough} />;
     }
 
@@ -74,13 +74,12 @@ export const VaultYieldRewardsStat = memo<VaultYieldRewardsStatProps>(
       return (
         <VaultValueStat
           label={'VaultStat-Yield'}
+          triggerClassName={classes.valueWithIcon}
           value={
-            <div className={classes.flexEnd}>
+            <>
               <Tooltip
                 content={<RewardsTooltipContent compounded={true} claimed={true} rewards={data} />}
-                triggerClass={clsx(classes.textGreen, classes.textOverflow, classes.maxWidth80, {
-                  [classes.maxWidth60]: data.pending.has,
-                })}
+                triggerClass={clsx(classes.tooltipTrigger, classes.textGreen, classes.textOverflow)}
               >
                 {received.depositToken
                   ? formatTokenDisplayCondensed(
@@ -95,7 +94,7 @@ export const VaultYieldRewardsStat = memo<VaultYieldRewardsStatProps>(
                   <PendingRewardsIconWithTooltip size={20} rewards={data} />
                 </>
               )}
-            </div>
+            </>
           }
           subValue={
             received.depositToken ? formatLargeUsd(received.usd) : formatLargeUsd(data.all.usd)

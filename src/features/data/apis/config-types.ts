@@ -91,12 +91,16 @@ export interface BoostCampaignConfig {
   title: string;
   description: string;
   learn: string;
-  social: {
-    telegram?: string;
-    twitter?: string;
-    discord?: string;
-  };
+  social: BoostSocials;
+  tagText?: string;
+  tagIcon?: string;
 }
+
+export type BoostSocials = {
+  telegram?: string;
+  twitter?: string;
+  discord?: string;
+};
 
 export interface BoostConfig {
   id: string;

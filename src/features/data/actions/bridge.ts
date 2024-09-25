@@ -8,13 +8,13 @@ import { fetchBalanceAction } from './balance';
 import {
   selectBridgeConfigById,
   selectBridgeConfirmQuote,
+  selectBridgeDepositTokenForChainId,
   selectBridgeFormState,
   selectBridgeIdsFromTo,
   selectBridgeQuoteById,
   selectBridgeQuoteSelectedId,
   selectBridgeSourceChainId,
   selectBridgeSupportedChainIds,
-  selectBridgeDepositTokenForChainId,
   selectShouldLoadBridgeConfig,
 } from '../selectors/bridge';
 import type { BridgeFormState } from '../reducers/wallet/bridge';
@@ -31,6 +31,7 @@ import { walletActions } from './wallet-actions';
 import type { Namespace, TFunction } from 'react-i18next';
 import { startStepperWithSteps } from './stepper';
 import BigNumber from 'bignumber.js';
+import { isAddress } from 'viem';
 
 function getLimits(quotes: IBridgeQuote<BeefyAnyBridgeConfig>[]) {
   const current = BigNumber.max(
@@ -117,6 +118,8 @@ export const initiateBridgeForm = createAsyncThunk<
         token: toToken,
         amount: BIG_ZERO,
       },
+      receiverIsDifferent: false,
+      receiverAddress: undefined,
     },
   };
 });
@@ -132,12 +135,21 @@ export const validateBridgeForm = createAsyncThunk<
 >('bridge/validateBridgeForm', async (_, { getState, dispatch }) => {
   const state = getState();
 
-  const { from, input } = selectBridgeFormState(state);
+  const { from, input, receiverIsDifferent, receiverAddress } = selectBridgeFormState(state);
   const fromToken = selectBridgeDepositTokenForChainId(state, from);
 
   const minAmount = fromWeiString('1000', fromToken.decimals);
   if (input.amount.lt(minAmount)) {
     throw new Error(`Minimum amount is ${minAmount} ${fromToken.symbol}`);
+  }
+
+  if (receiverIsDifferent) {
+    if (!receiverAddress) {
+      throw new Error('Receiver address is required');
+    }
+    if (!isAddress(receiverAddress, { strict: true })) {
+      throw new Error('Receiver address is invalid');
+    }
   }
 
   dispatch(quoteBridgeForm());
@@ -160,7 +172,7 @@ export const quoteBridgeForm = createAsyncThunk<
   }
 >('bridge/quoteBridgeForm', async (_, { getState, rejectWithValue }) => {
   const state = getState();
-  const { from, to, input } = selectBridgeFormState(state);
+  const { from, to, input, receiverIsDifferent, receiverAddress } = selectBridgeFormState(state);
   const bridgeIds = selectBridgeIdsFromTo(state, from, to);
   const api = await getBridgeApi();
   const fromChain = selectChainById(state, from);
@@ -174,6 +186,7 @@ export const quoteBridgeForm = createAsyncThunk<
           fromChain,
           toChain,
           input,
+          receiverIsDifferent ? receiverAddress : undefined,
           state
         )
     )
@@ -258,7 +271,14 @@ export const confirmBridgeForm = createAsyncThunk<
   const api = await getBridgeApi();
   const fromChain = selectChainById(state, quote.input.token.chainId);
   const toChain = selectChainById(state, quote.output.token.chainId);
-  const updatedQuote = await api.fetchQuote(quote.config, fromChain, toChain, quote.input, state);
+  const updatedQuote = await api.fetchQuote(
+    quote.config,
+    fromChain,
+    toChain,
+    quote.input,
+    quote.receiver,
+    state
+  );
 
   return {
     quote: updatedQuote,

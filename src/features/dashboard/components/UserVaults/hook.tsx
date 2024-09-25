@@ -4,7 +4,10 @@ import { useAppSelector } from '../../../../store';
 import { selectUserDashboardFilteredVaults } from '../../../data/selectors/filtered-vaults';
 import { isUserClmPnl } from '../../../data/selectors/analytics-types';
 import { isVaultActive } from '../../../data/entities/vault';
-import { selectDashboardUserVaultsPnl } from '../../../data/selectors/dashboard';
+import {
+  selectDashboardUserVaultsDailyYield,
+  selectDashboardUserVaultsPnl,
+} from '../../../data/selectors/dashboard';
 
 export type SortedOptions = {
   sort: 'atDeposit' | 'now' | 'yield' | 'pnl' | 'apy' | 'dailyYield' | 'default';
@@ -33,6 +36,10 @@ export function useSortedDashboardVaults(address: string) {
 
   const userVaultsPnl = useAppSelector(state => selectDashboardUserVaultsPnl(state, address));
 
+  const userVaultsDailyYield = useAppSelector(state =>
+    selectDashboardUserVaultsDailyYield(state, address)
+  );
+
   const sortedFilteredVaults = useMemo(() => {
     return sortedOptions.sort === 'default'
       ? filteredVaults
@@ -41,6 +48,8 @@ export function useSortedDashboardVaults(address: string) {
           vault => {
             const vaultPnl = userVaultsPnl[vault.id];
             const apy = apyByVaultId[vault.id];
+            const vaultDailyYield = userVaultsDailyYield[vault.id];
+
             switch (sortedOptions.sort) {
               case 'atDeposit': {
                 if (isUserClmPnl(vaultPnl)) {
@@ -81,16 +90,10 @@ export function useSortedDashboardVaults(address: string) {
                 }
               }
               case 'dailyYield': {
-                if (!isVaultActive(vault) || !apy) {
+                if (!isVaultActive(vault) || !vaultDailyYield) {
                   return -1;
                 }
-                if (isUserClmPnl(vaultPnl)) {
-                  return vaultPnl.underlying.now.usd.times(apy.totalDaily).toNumber();
-                }
-                return vaultPnl.deposit
-                  .times(vaultPnl.oraclePrice)
-                  .times(apy.totalDaily)
-                  .toNumber();
+                return vaultDailyYield.toNumber();
               }
             }
           },
@@ -102,6 +105,7 @@ export function useSortedDashboardVaults(address: string) {
     filteredVaults,
     userVaultsPnl,
     apyByVaultId,
+    userVaultsDailyYield,
   ]);
 
   const handleSort = useCallback(

@@ -27,12 +27,10 @@ export const styles = (theme: Theme) => ({
       textAlign: 'right' as const,
     },
   },
-  flexEnd: {
-    display: 'flex',
-    alignItems: 'center',
+  valueWithIcon: {
+    flexDirection: 'row' as const,
     columnGap: '4px',
-    justifyContent: 'flex-end',
-    width: '100%',
+    alignItems: 'center',
   },
   columnFlex: {
     display: 'flex',
@@ -74,23 +72,12 @@ export const styles = (theme: Theme) => ({
     },
   },
   textOverflow: {
-    marginLeft: 'auto',
     overflow: 'hidden',
     whiteSpace: 'nowrap' as const,
     textOverflow: 'ellipsis',
   },
-  maxWidth80: {
-    maxWidth: '80%',
-  },
-  maxWidth60: {
-    maxWidth: '80%',
-  },
-  displayBlock: {
-    display: 'block',
-  },
-  contentContainer: {
-    display: 'flex',
-    flexDirection: 'column' as const,
+  tooltipTrigger: {
+    display: 'inline',
   },
   depositWithIcon: {
     display: 'flex',
