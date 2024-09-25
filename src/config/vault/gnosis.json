@@ -27,19 +27,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x71E1179C5e197FA551BEEC85ca2EF8693c61b85b/",
     "removeLiquidityUrl": "https://app.gyro.finance/pools/gnosis/e-clp/0x71E1179C5e197FA551BEEC85ca2EF8693c61b85b/",
-    "network": "gnosis",
-    "zaps": [
-      {
-        "strategyId": "balancer",
-        "ammId": "gnosis-balancer",
-        "poolId": "0x71e1179c5e197fa551beec85ca2ef8693c61b85b0002000000000000000000a0",
-        "poolType": "gyroe",
-        "tokens": [
-          "0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1",
-          "0xc791240D1F2dEf5938E2031364Ff4ed887133C3d"
-        ]
-      }
-    ]
+    "network": "gnosis"
   },
   {
     "id": "aura-gyro-gnosis-weth-wsteth",

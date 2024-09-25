@@ -594,11 +594,16 @@ function checkWeightedPool(pool: Pool, tokens: PoolToken[], tokensWithBpt: PoolT
     throw new Error(`${pool.type}: Did not expect BPT token in pool`);
   }
 
-  // TODO we might be able to single sided join in future
-  if (tokens.some(t => !t.abToken || !t.price || !t.swapProviders.length)) {
+  if (tokens.every(t => !t.abToken || !t.price)) {
     logTokens(tokens);
     throw new Error(
-      `${pool.type}: All tokens must be in the address book, have a price, and have a zap swap provider`
+      `${pool.type}: At least one token must be in the address book and have a price`
+    );
+  }
+
+  if (tokens.every(t => !t.abToken || !t.price || !t.swapProviders.length)) {
+    console.warn(
+      `${pool.type}: No tokens are in the address book, have a price, and have a zap swap provider - only pool tokens will be available for deposit`
     );
   }
 
@@ -650,11 +655,16 @@ function checkMetaStablePool(pool: Pool, tokens: PoolToken[], tokensWithBpt: Poo
     throw new Error(`${pool.type}: Did not expect BPT token in pool`);
   }
 
-  // TODO we might be able to single sided join in future
-  if (tokens.some(t => !t.abToken || !t.price || !t.swapProviders.length)) {
+  if (tokens.every(t => !t.abToken || !t.price)) {
     logTokens(tokens);
     throw new Error(
-      `${pool.type}: All tokens must be in the address book, have a price, and have a zap swap provider`
+      `${pool.type}: At least one token must be in the address book and have a price`
+    );
+  }
+
+  if (tokens.every(t => !t.abToken || !t.price || !t.swapProviders.length)) {
+    console.warn(
+      `${pool.type}: No tokens are in the address book, have a price, and have a zap swap provider - only pool tokens will be available for deposit`
     );
   }
 

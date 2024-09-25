@@ -298,6 +298,7 @@ function getVaultStatus(apiVault: VaultConfig): VaultStatus {
 function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBase {
   const names = getVaultNames(config.name, config.type);
 
+  // TODO remove
   if (config.tokenProviderId === 'balancer' || config.tokenProviderId === 'beethovenx') {
     const zap = config.zaps?.find((z): z is BalancerStrategyConfig => z.strategyId === 'balancer');
     if (zap) {
