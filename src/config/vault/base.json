@@ -1,5 +1,63 @@
 [
   {
+    "id": "uniswap-cow-base-weth-ethfi-rp",
+    "name": "ETHFI-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-ETHFI",
+    "tokenAddress": "0xF768ca50Ce8654E7471934D87676A1E9EF59ae6E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x42A35Fc80c394C2aB0D7054f1781B3F15407E54E",
+    "earnedToken": "rcowUniswapBaseWETH-ETHFI",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-ethfi",
+    "status": "active",
+    "createdAt": 1727286023,
+    "platformId": "uniswap",
+    "assets": ["ETHFI", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-ethfi",
+    "name": "ETHFI-WETH",
+    "type": "cowcentrated",
+    "token": "ETHFI-WETH",
+    "tokenAddress": "0xb4bfb4a8D7d7513903FF4363FD6Af071e23505F1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x6C240DDA6b5c336DF09A4D011139beAAa1eA2Aa2"
+    ],
+    "earnedToken": "cowUniswapBaseWETH-ETHFI",
+    "earnedTokenAddress": "0xF768ca50Ce8654E7471934D87676A1E9EF59ae6E",
+    "earnContractAddress": "0xF768ca50Ce8654E7471934D87676A1E9EF59ae6E",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-ethfi",
+    "status": "active",
+    "createdAt": 1727286023,
+    "platformId": "uniswap",
+    "assets": ["ETHFI", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aero-cow-weth-cbbtc-vault",
     "name": "cbBTC-WETH",
     "type": "standard",
