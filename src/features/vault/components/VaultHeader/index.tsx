@@ -64,14 +64,12 @@ export const VaultHeader = memo<VaultHeaderProps>(function VaultHeader({ vaultId
             <VaultPlatform vaultId={vaultId} />
           </span>
         </div>
-        {vault.status === 'active' ? (
-          <>
-            <div className={classes.shareHolder}>
-              <SaveButton vaultId={vaultId} />
-              <ShareButton hideText={true} vaultId={vaultId} mobileAlternative={true} />
-            </div>
-          </>
-        ) : null}
+        <div className={classes.shareHolder}>
+          <SaveButton vaultId={vaultId} />
+          {vault.status === 'active' ? (
+            <ShareButton hideText={true} vaultId={vaultId} mobileAlternative={true} />
+          ) : null}
+        </div>
       </div>
     </div>
   );
