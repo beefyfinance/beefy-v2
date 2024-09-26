@@ -1,6 +1,8 @@
 import type { TFunction, Namespace } from 'react-i18next';
 import { isTokenEqual, type TokenErc20 } from '../../../entities/token';
 import {
+  getCowcentratedPool,
+  getCowcentratedVault,
   isCowcentratedGovVault,
   isCowcentratedStandardVault,
   isCowcentratedVault,
@@ -128,11 +130,12 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
         vault.contractAddress
       );
 
-      if (!underlyingVault.cowcentratedIds.pool) {
+      const poolId = getCowcentratedPool(underlyingVault);
+      if (!poolId) {
         throw new Error('Underlying vault does not have a gov id');
       }
 
-      const rewardPool = selectGovVaultById(getState(), underlyingVault.cowcentratedIds.pool);
+      const rewardPool = selectGovVaultById(getState(), poolId);
       if (!isCowcentratedGovVault(rewardPool)) {
         throw new Error('Reward pool is not a cowcentrated gov vault');
       }
@@ -154,11 +157,12 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
         vault.contractAddress
       );
 
-      if (!underlyingVault.cowcentratedIds.vault) {
+      const vaultId = getCowcentratedVault(underlyingVault);
+      if (!vaultId) {
         throw new Error('Underlying vault does not have a standard vault id');
       }
 
-      const standardVault = selectVaultById(getState(), underlyingVault.cowcentratedIds.vault);
+      const standardVault = selectVaultById(getState(), vaultId);
       if (!isCowcentratedStandardVault(standardVault)) {
         throw new Error('Standard vault is not a cowcentrated standard vault');
       }
