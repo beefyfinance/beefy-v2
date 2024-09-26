@@ -7,7 +7,7 @@ import { SafetyCard } from './components/SafetyCard';
 import { BoostCard } from './components/BoostCard';
 import { selectVaultByIdOrUndefined, selectVaultIdIgnoreCase } from '../data/selectors/vaults';
 import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
-import { isCowcentratedVault, type VaultEntity } from '../data/entities/vault';
+import { getCowcentratedPool, isCowcentratedVault, type VaultEntity } from '../data/entities/vault';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { TechLoader } from '../../components/TechLoader';
 import { useAppSelector } from '../../store';
@@ -45,12 +45,15 @@ export const Vault = memo(function Vault() {
   }
 
   // CLM -> CLM Pool
-  if (vault && vault.hidden && isCowcentratedVault(vault) && vault.cowcentratedGovId) {
-    return featureFlag_disableRedirect() ? (
-      <VaultContent vaultId={id} />
-    ) : (
-      <Redirect to={`/vault/${vault.cowcentratedGovId}`} />
-    );
+  if (vault && vault.hidden && isCowcentratedVault(vault)) {
+    const poolId = getCowcentratedPool(vault);
+    if (poolId) {
+      return featureFlag_disableRedirect() ? (
+        <VaultContent vaultId={id} />
+      ) : (
+        <Redirect to={`/vault/${poolId}`} />
+      );
+    }
   }
 
   if (!vault || vault.hidden) {

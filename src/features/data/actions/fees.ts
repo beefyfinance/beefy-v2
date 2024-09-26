@@ -19,14 +19,16 @@ export const fetchFees = createAsyncThunk<FetchFeesFulfilledPayload, void, { sta
       selectCowcentratedVaultById(state, vaultId)
     );
     for (const clm of allCowcentrated) {
-      if (!clm.cowcentratedGovId) {
+      if (!clm.cowcentratedIds.pools.length) {
         continue;
       }
 
       const clmFee = feesByVaultId[clm.id];
-      const clmPoolFee = feesByVaultId[clm.cowcentratedGovId];
-      if (!clmPoolFee && clmFee) {
-        feesByVaultId[clm.cowcentratedGovId] = clmFee;
+      for (const poolId of clm.cowcentratedIds.pools) {
+        const clmPoolFee = feesByVaultId[poolId];
+        if (!clmPoolFee && clmFee) {
+          feesByVaultId[poolId] = clmFee;
+        }
       }
     }
 

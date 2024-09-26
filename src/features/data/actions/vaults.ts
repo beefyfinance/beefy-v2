@@ -3,17 +3,17 @@ import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi, getConfigApi } from '../apis/instances';
 import type { ChainEntity, ChainId } from '../entities/chain';
 import type { VaultConfig } from '../apis/config-types';
-import { keyBy, mapValues } from 'lodash-es';
-import type {
-  VaultBase,
-  VaultCowcentrated,
-  VaultCowcentratedBaseOnly,
-  VaultEntity,
-  VaultGov,
-  VaultGovBaseOnly,
-  VaultStandard,
-  VaultStandardBaseOnly,
-  VaultStatus,
+import { first, keyBy, mapValues } from 'lodash-es';
+import {
+  type VaultBase,
+  type VaultCowcentrated,
+  type VaultCowcentratedBaseOnly,
+  type VaultEntity,
+  type VaultGov,
+  type VaultGovBaseOnly,
+  type VaultStandard,
+  type VaultStandardBaseOnly,
+  type VaultStatus,
 } from '../entities/vault';
 import { getVaultNames } from '../utils/vault-utils';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
@@ -145,7 +145,7 @@ function getGovVault(
         contractType: 'multi',
         receiptTokenAddress: config.earnContractAddress,
         assetType: 'clm',
-        excludedIds: [config.excluded, clmBase.cowcentratedStandardId].filter(isDefined),
+        excludedIds: [config.excluded, ...clmBase.cowcentratedIds.vaults].filter(isDefined),
         name: base.names.short,
         names: {
           short: base.names.short,
@@ -207,11 +207,11 @@ function getCowcentratedVault(
     depositTokenAddress: `${clmBase.poolAddress}-${config.id}`,
     excludedIds: [
       config.excluded,
-      clmBase.cowcentratedGovId,
-      clmBase.cowcentratedStandardId,
+      ...clmBase.cowcentratedIds.pools,
+      ...clmBase.cowcentratedIds.vaults,
     ].filter(isDefined),
     assetType: 'clm',
-    hidden: !!clmBase.cowcentratedGovId,
+    hidden: !!clmBase.cowcentratedIds.pools.length,
   };
 }
 
@@ -251,14 +251,18 @@ function getCowcentratedBases(configs: VaultConfig[]) {
       const standards = (depositFor[config.id] || [])
         .filter(c => !c.type || c.type === 'standard')
         .sort((a, b) => b.createdAt - a.createdAt);
-      const gov = govs[0];
-      const standard = standards[0];
+      const gov = first(govs.filter(c => c.status === 'active'));
+      const standard = first(standards.filter(c => c.status === 'active'));
 
       byId[config.id] = {
         subType: 'cowcentrated',
-        cowcentratedId: config.id,
-        cowcentratedGovId: gov?.id,
-        cowcentratedStandardId: standard?.id,
+        cowcentratedIds: {
+          clm: config.id,
+          pool: gov?.id,
+          vault: standard?.id,
+          pools: govs.map(v => v.id),
+          vaults: standards.map(v => v.id),
+        },
         depositTokenAddresses: config.depositTokenAddresses,
         feeTier: config.feeTier,
         poolAddress: config.tokenAddress,
