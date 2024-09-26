@@ -1,5 +1,434 @@
 [
   {
+    "id": "velodrome-v2-weth-owell",
+    "name": "WELL-ETH vLP V2",
+    "type": "standard",
+    "token": "vAMMV2-WETH/WELL",
+    "tokenAddress": "0x60c94FdF6C72FAd78C16a52C0C3fDc3C6504305D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2WETH-WELL",
+    "earnedTokenAddress": "0x38DB628c1b0facBa7B4614F8783819B8fbC37EFD",
+    "earnContractAddress": "0x38DB628c1b0facBa7B4614F8783819B8fbC37EFD",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-weth-owell",
+    "status": "active",
+    "createdAt": 1727179692,
+    "platformId": "velodrome",
+    "assets": ["WELL", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x4200000000000000000000000000000000000006&to=0xA88594D404727625A9437C3f886C7643872296AE",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xA88594D404727625A9437C3f886C7643872296AE&type=-1&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x60c94FdF6C72FAd78C16a52C0C3fDc3C6504305D",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-v2-msop-op",
+    "name": "msOP-OP sLP V2",
+    "type": "standard",
+    "token": "sAMMV2-msOP/OP",
+    "tokenAddress": "0xF6fFB55bFb4f149B725211E7eF1CC9F3A67c5b01",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2msOP-OP",
+    "earnedTokenAddress": "0xE99338253e23Fe01e5C66133b3021C5Cb0041b67",
+    "earnContractAddress": "0xE99338253e23Fe01e5C66133b3021C5Cb0041b67",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-msop-op",
+    "status": "active",
+    "createdAt": 1727179692,
+    "platformId": "velodrome",
+    "assets": ["msOP", "OP"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x33bCa143d9b41322479E8d26072a00a352404721&to=0x4200000000000000000000000000000000000042",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x33bCa143d9b41322479E8d26072a00a352404721&token1=0x4200000000000000000000000000000000000042&type=0&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xF6fFB55bFb4f149B725211E7eF1CC9F3A67c5b01",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+
+  {
+    "id": "velo-cow-op-wsteth-op-vault",
+    "name": "wstETH-OP",
+    "type": "standard",
+    "token": "wstETH-OP",
+    "tokenAddress": "0xada9092d89Bfef51E8f4172B7c16CF9FC374315B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooCowVelowstETH-OP",
+    "earnedTokenAddress": "0x0974f018a1704A7bab98f01137F71610B2dCE1c2",
+    "earnContractAddress": "0x0974f018a1704A7bab98f01137F71610B2dCE1c2",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-wsteth-op",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["wstETH", "OP"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "createdAt": 1726091643,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velo-cow-op-wsteth-op-rp",
+    "name": "wstETH-OP Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowVelowstETH-OP",
+    "tokenAddress": "0xada9092d89Bfef51E8f4172B7c16CF9FC374315B",
+    "tokenDecimals": 18,
+    "earnedTokens": ["VELO"],
+    "earnedTokenAddresses": ["0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db"],
+    "earnedOracleIds": ["VELOV2"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowVelowstETH-OP",
+    "earnContractAddress": "0x5b0BDbc8EaBb9586Eb0b0a855C920e13132b7Ad8",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-wsteth-op",
+    "status": "active",
+    "createdAt": 1726091642,
+    "platformId": "velodrome",
+    "assets": ["wstETH", "OP"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velo-cow-op-wsteth-op",
+    "name": "wstETH-OP",
+    "token": "wstETH-OP",
+    "tokenAddress": "0xe5cF854f63152067059AFd38e03FEFb6CBE25Df3",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
+      "0x4200000000000000000000000000000000000042"
+    ],
+    "tokenProviderId": "velodrome",
+    "earnedToken": "cowVelowstETH-OP",
+    "earnedTokenAddress": "0xada9092d89Bfef51E8f4172B7c16CF9FC374315B",
+    "earnContractAddress": "0xada9092d89Bfef51E8f4172B7c16CF9FC374315B",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-wsteth-op",
+    "status": "active",
+    "createdAt": 1726091642,
+    "platformId": "beefy",
+    "assets": ["wstETH", "OP"],
+    "risks": ["IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "velo-cow-op-weth-tbtc-vault",
+    "name": "tBTC-WETH",
+    "type": "standard",
+    "token": "tBTC-WETH",
+    "tokenAddress": "0x1fF623B3843E6bd0AF76300e8c1bfaDE742b28a4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooCowVelotBTC-WETH",
+    "earnedTokenAddress": "0xEBCA80DdFBAed6a4ef2885337c89fFE178C1D80a",
+    "earnContractAddress": "0xEBCA80DdFBAed6a4ef2885337c89fFE178C1D80a",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-weth-tbtc",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["tBTC", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "createdAt": 1726091643,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velo-cow-op-weth-tbtc-rp",
+    "name": "tBTC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowVelotBTC-WETH",
+    "tokenAddress": "0x1fF623B3843E6bd0AF76300e8c1bfaDE742b28a4",
+    "tokenDecimals": 18,
+    "earnedTokens": ["VELO"],
+    "earnedTokenAddresses": ["0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db"],
+    "earnedOracleIds": ["VELOV2"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowVelotBTC-WETH",
+    "earnContractAddress": "0x735C793E80750f04D5a4a6E8A580142884ee1c6e",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-weth-tbtc",
+    "status": "active",
+    "createdAt": 1726091642,
+    "platformId": "velodrome",
+    "assets": ["tBTC", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velo-cow-op-weth-tbtc",
+    "name": "tBTC-WETH",
+    "token": "tBTC-WETH",
+    "tokenAddress": "0xec3d9098BD40ec741676fc04D4bd26BCCF592aa3",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
+    ],
+    "tokenProviderId": "velodrome",
+    "earnedToken": "cowVelotBTC-WETH",
+    "earnedTokenAddress": "0x1fF623B3843E6bd0AF76300e8c1bfaDE742b28a4",
+    "earnContractAddress": "0x1fF623B3843E6bd0AF76300e8c1bfaDE742b28a4",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-weth-tbtc",
+    "status": "active",
+    "createdAt": 1726091642,
+    "platformId": "beefy",
+    "assets": ["tBTC", "WETH"],
+    "risks": ["IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "velo-cow-op-snx-usdc-vault",
+    "name": "SNX-USDC",
+    "type": "standard",
+    "token": "SNX-USDC",
+    "tokenAddress": "0x49bd86A36A4d2e3Ea0B614B0279224257cdfA0D6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooCowVeloSNX-USDC",
+    "earnedTokenAddress": "0xE5C9137E9Ae118F1148C6B4d730C662A9d654ef9",
+    "earnContractAddress": "0xE5C9137E9Ae118F1148C6B4d730C662A9d654ef9",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-snx-usdc",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["SNX", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "createdAt": 1726091643,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velo-cow-op-snx-usdc-rp",
+    "name": "SNX-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowVeloSNX-USDC",
+    "tokenAddress": "0x49bd86A36A4d2e3Ea0B614B0279224257cdfA0D6",
+    "tokenDecimals": 18,
+    "earnedTokens": ["VELOV2"],
+    "earnedTokenAddresses": ["0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db"],
+    "earnedOracleIds": ["VELOV2"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowVeloSNX-USDC",
+    "earnContractAddress": "0x49C977d9A4661f70Bde68b87b657052b29bB7C43",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-snx-usdc",
+    "status": "active",
+    "createdAt": 1726091642,
+    "platformId": "velodrome",
+    "assets": ["SNX", "USDC"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velo-cow-op-snx-usdc",
+    "name": "SNX-USDC",
+    "token": "SNX-USDC",
+    "tokenAddress": "0xF25bbc18a607bBe218c87BA1fF0E673d9B53dd58",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+      "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4"
+    ],
+    "tokenProviderId": "velodrome",
+    "earnedToken": "cowVeloSNX-USDC",
+    "earnedTokenAddress": "0x49bd86A36A4d2e3Ea0B614B0279224257cdfA0D6",
+    "earnContractAddress": "0x49bd86A36A4d2e3Ea0B614B0279224257cdfA0D6",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-snx-usdc",
+    "status": "active",
+    "createdAt": 1726091642,
+    "platformId": "beefy",
+    "assets": ["SNX", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "velo-cow-op-wbtc-tbtc-vault",
+    "name": "tBTC-WBTC",
+    "type": "standard",
+    "token": "tBTC-WBTC",
+    "tokenAddress": "0x827b986160501ACaA51856BD2CEDb03731fFfd5a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooCowVelotBTC-WBTC",
+    "earnedTokenAddress": "0x1FCB20fc86bA1D054F8E6aF0384f5Cd128e26247",
+    "earnContractAddress": "0x1FCB20fc86bA1D054F8E6aF0384f5Cd128e26247",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-wbtc-tbtc",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["tBTC", "WBTC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "createdAt": 1726091643,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velo-cow-op-wbtc-tbtc-rp",
+    "name": "tBTC-WBTC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowVelotBTC-WBTC",
+    "tokenAddress": "0x827b986160501ACaA51856BD2CEDb03731fFfd5a",
+    "tokenDecimals": 18,
+    "earnedTokens": ["VELOV2"],
+    "earnedTokenAddresses": ["0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db"],
+    "earnedOracleIds": ["VELOV2"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowVelotBTC-WBTC",
+    "earnContractAddress": "0xeAE1ADf2BAf5ee9efDF39D3E9c50459C82b698d3",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-wbtc-tbtc",
+    "status": "active",
+    "createdAt": 1726091642,
+    "platformId": "velodrome",
+    "assets": ["tBTC", "WBTC"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velo-cow-op-wbtc-tbtc",
+    "name": "tBTC-WBTC",
+    "token": "tBTC-WBTC",
+    "tokenAddress": "0x8949A8E02998d76D7a703cAC9eE7e0f529828011",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
+      "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40"
+    ],
+    "tokenProviderId": "velodrome",
+    "earnedToken": "cowVelotBTC-WBTC",
+    "earnedTokenAddress": "0x827b986160501ACaA51856BD2CEDb03731fFfd5a",
+    "earnContractAddress": "0x827b986160501ACaA51856BD2CEDb03731fFfd5a",
+    "oracle": "lps",
+    "oracleId": "velo-cow-op-wbtc-tbtc",
+    "status": "active",
+    "createdAt": 1726091642,
+    "platformId": "beefy",
+    "assets": ["tBTC", "WBTC"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-op-wsteth-ezeth-vault",
     "name": "wstETH-ezETH",
     "type": "standard",
@@ -1992,7 +2421,9 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "uniswap-cow-op-usde-wsteth",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727186611,
+    "retireReason": "tvl",
     "createdAt": 1718042017,
     "platformId": "uniswap",
     "assets": ["USDe", "wstETH"],
@@ -2019,7 +2450,9 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "uniswap-cow-op-rseth-wsteth",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727186611,
+    "retireReason": "tvl",
     "createdAt": 1718042017,
     "platformId": "uniswap",
     "assets": ["rsETH", "wstETH"],
@@ -3097,7 +3530,9 @@
     "earnContractAddress": "0x80D438EEdb918207c2F7F7eAC31f2F8012923F76",
     "oracle": "lps",
     "oracleId": "uniswap-cow-op-usde-wsteth",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727186611,
+    "retireReason": "tvl",
     "createdAt": 1718042016,
     "platformId": "beefy",
     "assets": ["USDe", "wstETH"],
@@ -3129,7 +3564,9 @@
     "earnContractAddress": "0x0F46A74B01708E78c27DEF7160A5C5222f9dD157",
     "oracle": "lps",
     "oracleId": "uniswap-cow-op-rseth-wsteth",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727186611,
+    "retireReason": "tvl",
     "createdAt": 1718042016,
     "platformId": "beefy",
     "assets": ["rsETH", "wstETH"],
@@ -4583,7 +5020,9 @@
     "earnContractAddress": "0x8cFF638fcbA43CE672b7C7Ef1735d991eA473dB3",
     "oracle": "lps",
     "oracleId": "curve-op-crvusd-susd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727106695,
+    "retireReason": "rewards",
     "createdAt": 1708082149,
     "platformId": "curve",
     "assets": ["crvUSD", "sUSD"],
@@ -4952,37 +5391,6 @@
     "strategyTypeId": "managed-conc-lp",
     "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/wsteth-usdc-500-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/wsteth-usdc-500-narrow",
-    "network": "optimism",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "optimism-gamma-uniswap-v3"
-      }
-    ]
-  },
-  {
-    "id": "uniswap-gamma-op-wsteth-eth",
-    "name": "wstETH-ETH LP",
-    "type": "standard",
-    "token": "wstETH-ETH gLP",
-    "tokenAddress": "0xEC77724d6AC1b0B8D8871bFcA714794BB4a8392c",
-    "tokenDecimals": 18,
-    "tokenProviderId": "uniswap",
-    "earnedToken": "mooUniswapGammawstETH-ETH",
-    "earnedTokenAddress": "0x7587A6a488d86Be08924135357F76aa17268Cd9A",
-    "earnContractAddress": "0x7587A6a488d86Be08924135357F76aa17268Cd9A",
-    "oracle": "lps",
-    "oracleId": "uniswap-gamma-op-wsteth-eth",
-    "status": "eol",
-    "retireReason": "tvl",
-    "retiredAt": 1708974810,
-    "createdAt": 1702484967,
-    "platformId": "gamma",
-    "assets": ["wstETH", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/wsteth-weth-100-pegged-price",
-    "removeLiquidityUrl": "https://app.gamma.xyz/vault/uni/op-mainnet/details/wsteth-weth-100-pegged-price",
     "network": "optimism",
     "zaps": [
       {

@@ -1045,8 +1045,8 @@ const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => 
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
-    const address = selectWalletAddress(state);
-    if (!address) {
+    const fromAddress = selectWalletAddress(state);
+    if (!fromAddress) {
       return;
     }
 
@@ -1063,6 +1063,7 @@ const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => 
     const gasToken = selectChainNativeToken(state, fromChainId);
     const inputWei = toWeiString(input.amount, input.token.decimals);
     const feeWei = toWeiString(fee.amount, fee.token.decimals);
+    const receiverAddress = quote.receiver || fromAddress;
 
     if (!isTokenEqual(gasToken, fee.token)) {
       console.debug(gasToken, fee.token);
@@ -1078,11 +1079,13 @@ const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => 
     const gasPrices = await getGasPriceOptions(fromChain);
 
     txWallet(dispatch);
-    const transaction = contract.methods.bridge(toChain.networkChainId, inputWei, address).send({
-      ...gasPrices,
-      from: address,
-      value: feeWei,
-    });
+    const transaction = contract.methods
+      .bridge(toChain.networkChainId, inputWei, receiverAddress)
+      .send({
+        ...gasPrices,
+        from: fromAddress,
+        value: feeWei,
+      });
 
     bindTransactionEvents(
       dispatch,
@@ -1094,7 +1097,7 @@ const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => 
         quote: quote,
       },
       {
-        walletAddress: address,
+        walletAddress: fromAddress,
         chainId: fromChainId,
         spenderAddress: viaBeefyBridgeAddress,
         tokens: uniqBy([gasToken, input.token], 'id'),

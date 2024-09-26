@@ -1,5 +1,605 @@
 [
   {
+    "id": "pharaoh-cow-usdt-usdc-vault",
+    "name": "USDt-USDC",
+    "type": "standard",
+    "token": "USDt-USDC",
+    "tokenAddress": "0xDB4D3830b1FbCADB10cb40AB406bFCf953FAC014",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pharaoh",
+    "earnedToken": "mooBeefyPharaohUSDt-USDC",
+    "earnedTokenAddress": "0x2578EBB3424c59207771Bce2dA044C483CF25657",
+    "earnContractAddress": "0x2578EBB3424c59207771Bce2dA044C483CF25657",
+    "oracle": "lps",
+    "oracleId": "pharaoh-cow-usdt-usdc",
+    "status": "active",
+    "platformId": "pharaoh",
+    "assets": ["USDT", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "avax",
+    "createdAt": 1727102132,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pharaoh-cow-usdt-usdc-rp",
+    "name": "USDt-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPharaohUSDt-USDC",
+    "tokenAddress": "0xDB4D3830b1FbCADB10cb40AB406bFCf953FAC014",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pharaoh",
+    "earnContractAddress": "0x86Fc9a6cDEb75Cc6461120a000e925672524C0d4",
+    "earnedToken": "rcowPharaohUSDt-USDC",
+    "earnedTokenAddresses": [
+      "0xAAAB9D12A30504559b0C5a9A5977fEE4A6081c6b",
+      "0xA25EaF2906FA1a3a13EdAc9B9657108Af7B703e3",
+      "0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE"
+    ],
+    "earnedOracleIds": ["PHAR", "ggAVAX", "sAVAX"],
+    "earnedTokenDecimals": [18, 18, 18],
+    "oracle": "lps",
+    "oracleId": "pharaoh-cow-usdt-usdc",
+    "status": "active",
+    "createdAt": 1727102131,
+    "platformId": "pharaoh",
+    "assets": ["USDT", "USDC"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pharaoh-cow-usdt-usdc",
+    "name": "USDt-USDC",
+    "token": "USDt-USDC",
+    "tokenAddress": "0x184B487c7e811f1d9734D49E78293e00b3768079",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+      "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+    ],
+    "tokenProviderId": "pharaoh",
+    "earnedToken": "cowPharaohUSDt-USDC",
+    "earnedTokenAddress": "0xDB4D3830b1FbCADB10cb40AB406bFCf953FAC014",
+    "earnContractAddress": "0xDB4D3830b1FbCADB10cb40AB406bFCf953FAC014",
+    "oracle": "lps",
+    "oracleId": "pharaoh-cow-usdt-usdc",
+    "status": "active",
+    "createdAt": 1727102131,
+    "platformId": "beefy",
+    "assets": ["USDT", "USDC"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "type": "cowcentrated",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pharaoh-cow-btc.b-wavax-vault",
+    "name": "BTC.b-WAVAX",
+    "type": "standard",
+    "token": "BTC.b-WAVAX",
+    "tokenAddress": "0x2f1C8dAb052CCcfaA131e303162b75Faede28E31",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pharaoh",
+    "earnedToken": "mooBeefyPharaohBTC.b-WAVAX",
+    "earnedTokenAddress": "0x1620AA830C30bBadb8a4D59054c3020fe84E3274",
+    "earnContractAddress": "0x1620AA830C30bBadb8a4D59054c3020fe84E3274",
+    "oracle": "lps",
+    "oracleId": "pharaoh-cow-btc.b-wavax",
+    "status": "active",
+    "platformId": "pharaoh",
+    "assets": ["BTCb", "WAVAX"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "avax",
+    "createdAt": 1727102132,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pharaoh-cow-btc.b-wavax-rp",
+    "name": "BTC.b-WAVAX Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPharaohBTC.b-WAVAX",
+    "tokenAddress": "0x2f1C8dAb052CCcfaA131e303162b75Faede28E31",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pharaoh",
+    "earnContractAddress": "0x051B9D5f40727A35038a9ba1F1c27cbddD5fb54c",
+    "earnedToken": "rcowPharaohBTC.b-WAVAX",
+    "earnedTokenAddresses": [
+      "0xAAAB9D12A30504559b0C5a9A5977fEE4A6081c6b",
+      "0xA25EaF2906FA1a3a13EdAc9B9657108Af7B703e3",
+      "0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE"
+    ],
+    "earnedOracleIds": ["PHAR", "ggAVAX", "sAVAX"],
+    "earnedTokenDecimals": [18, 18, 18],
+    "oracle": "lps",
+    "oracleId": "pharaoh-cow-btc.b-wavax",
+    "status": "active",
+    "createdAt": 1727102131,
+    "platformId": "pharaoh",
+    "assets": ["BTCb", "WAVAX"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pharaoh-cow-btc.b-wavax",
+    "name": "BTC.b-WAVAX",
+    "token": "BTC.b-WAVAX",
+    "tokenAddress": "0xA71bA3939cD6C50C674866E321bC6bBa1c977dD0",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x152b9d0FdC40C096757F570A51E494bd4b943E50",
+      "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7"
+    ],
+    "tokenProviderId": "pharaoh",
+    "earnedToken": "cowPharaohBTC.b-WAVAX",
+    "earnedTokenAddress": "0x2f1C8dAb052CCcfaA131e303162b75Faede28E31",
+    "earnContractAddress": "0x2f1C8dAb052CCcfaA131e303162b75Faede28E31",
+    "oracle": "lps",
+    "oracleId": "pharaoh-cow-btc.b-wavax",
+    "status": "active",
+    "createdAt": 1727102131,
+    "platformId": "beefy",
+    "assets": ["BTCb", "WAVAX"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "type": "cowcentrated",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pharaoh-cow-weth.e-wavax-vault",
+    "name": "WETH.e-WAVAX",
+    "type": "standard",
+    "token": "WETH.e-WAVAX",
+    "tokenAddress": "0x1d37E81C302F0D0A960242F85c763FB566564369",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pharaoh",
+    "earnedToken": "mooBeefyPharaohWETH.e-WAVAX",
+    "earnedTokenAddress": "0x1F074dAa9d328B8f9d32132c35A381bc1285a30D",
+    "earnContractAddress": "0x1F074dAa9d328B8f9d32132c35A381bc1285a30D",
+    "oracle": "lps",
+    "oracleId": "pharaoh-cow-weth.e-wavax",
+    "status": "active",
+    "platformId": "pharaoh",
+    "assets": ["WETHe", "WAVAX"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "avax",
+    "createdAt": 1727102132,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pharaoh-cow-weth.e-wavax-rp",
+    "name": "WETH.e-WAVAX Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPharaohWETH.e-WAVAX",
+    "tokenAddress": "0x1d37E81C302F0D0A960242F85c763FB566564369",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pharaoh",
+    "earnContractAddress": "0x4A132000670179d6497170e315c1311Aefc66E8E",
+    "earnedToken": "rcowPharaohWETH.e-WAVAX",
+    "earnedTokenAddresses": ["0xAAAB9D12A30504559b0C5a9A5977fEE4A6081c6b"],
+    "earnedOracleIds": ["PHAR"],
+    "earnedTokenDecimals": [18],
+    "oracle": "lps",
+    "oracleId": "pharaoh-cow-weth.e-wavax",
+    "status": "active",
+    "createdAt": 1727102131,
+    "platformId": "pharaoh",
+    "assets": ["WETHe", "WAVAX"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pharaoh-cow-weth.e-wavax",
+    "name": "WETH.e-WAVAX",
+    "token": "WETH.e-WAVAX",
+    "tokenAddress": "0x66A5dE11d1e1F20da825D974453f099C4Bb13647",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
+      "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7"
+    ],
+    "tokenProviderId": "pharaoh",
+    "earnedToken": "cowPharaohWETH.e-WAVAX",
+    "earnedTokenAddress": "0x1d37E81C302F0D0A960242F85c763FB566564369",
+    "earnContractAddress": "0x1d37E81C302F0D0A960242F85c763FB566564369",
+    "oracle": "lps",
+    "oracleId": "pharaoh-cow-weth.e-wavax",
+    "status": "active",
+    "createdAt": 1727102131,
+    "platformId": "beefy",
+    "assets": ["WETHe", "WAVAX"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "type": "cowcentrated",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pharaoh-cow-wavax-usdc-vault",
+    "name": "WAVAX-USDC",
+    "type": "standard",
+    "token": "WAVAX-USDC",
+    "tokenAddress": "0x837036A6856CE707C855EB4C5F4F3B86A5c9f0ff",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pharaoh",
+    "earnedToken": "mooBeefyPharaohWAVAX-USDC",
+    "earnedTokenAddress": "0xD4b02859D25D4a641258562045967f58B84fF352",
+    "earnContractAddress": "0xD4b02859D25D4a641258562045967f58B84fF352",
+    "oracle": "lps",
+    "oracleId": "pharaoh-cow-wavax-usdc",
+    "status": "active",
+    "platformId": "pharaoh",
+    "assets": ["WAVAX", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "avax",
+    "createdAt": 1727102132,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pharaoh-cow-wavax-usdc-rp",
+    "name": "WAVAX-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPharaohWAVAX-USDC",
+    "tokenAddress": "0x837036A6856CE707C855EB4C5F4F3B86A5c9f0ff",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pharaoh",
+    "earnContractAddress": "0x0faD7FA9d3d71EEa524f7989831c4Eb031488cC7",
+    "earnedToken": "rcowPharaohWAVAX-USDC",
+    "earnedTokenAddresses": [
+      "0xAAAB9D12A30504559b0C5a9A5977fEE4A6081c6b",
+      "0xA25EaF2906FA1a3a13EdAc9B9657108Af7B703e3",
+      "0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE"
+    ],
+    "earnedOracleIds": ["PHAR", "ggAVAX", "sAVAX"],
+    "earnedTokenDecimals": [18, 18, 18],
+    "oracle": "lps",
+    "oracleId": "pharaoh-cow-wavax-usdc",
+    "status": "active",
+    "createdAt": 1727102131,
+    "platformId": "pharaoh",
+    "assets": ["WAVAX", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pharaoh-cow-wavax-usdc",
+    "name": "WAVAX-USDC",
+    "token": "WAVAX-USDC",
+    "tokenAddress": "0xa20c959b19F114e9C2D81547734CdC1110bd773D",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
+      "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+    ],
+    "tokenProviderId": "pharaoh",
+    "earnedToken": "cowPharaohWAVAX-USDC",
+    "earnedTokenAddress": "0x837036A6856CE707C855EB4C5F4F3B86A5c9f0ff",
+    "earnContractAddress": "0x837036A6856CE707C855EB4C5F4F3B86A5c9f0ff",
+    "oracle": "lps",
+    "oracleId": "pharaoh-cow-wavax-usdc",
+    "status": "active",
+    "createdAt": 1727102131,
+    "platformId": "beefy",
+    "assets": ["WAVAX", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "type": "cowcentrated",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-avax-weth.e-wavax-rp",
+    "name": "WETH.e-WAVAX Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapAvalancheWETH.e-WAVAX",
+    "tokenAddress": "0x4409339D013A65FA029c2f587ee410dFEBcb1c6e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x03e73383C9a8eD221C6c134bCc08555FA93fE091",
+    "earnedToken": "rcowUniswapAvalancheWETH.e-WAVAX",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-avax-weth.e-wavax",
+    "status": "active",
+    "createdAt": 1727102130,
+    "platformId": "uniswap",
+    "assets": ["WETHe", "WAVAX"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-avax-weth.e-wavax",
+    "name": "WETH.e-WAVAX",
+    "token": "WETH.e-WAVAX",
+    "tokenAddress": "0x7b602f98D71715916E7c963f51bfEbC754aDE2d0",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
+      "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapAvalancheWETH.e-WAVAX",
+    "earnedTokenAddress": "0x4409339D013A65FA029c2f587ee410dFEBcb1c6e",
+    "earnContractAddress": "0x4409339D013A65FA029c2f587ee410dFEBcb1c6e",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-avax-weth.e-wavax",
+    "status": "active",
+    "createdAt": 1727102130,
+    "platformId": "beefy",
+    "assets": ["WETHe", "WAVAX"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-avax-wavax-usdc-rp",
+    "name": "WAVAX-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapAvalancheWAVAX-USDC",
+    "tokenAddress": "0xBB7F25Af55DA4347960c2ED67DFf00263469836F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xe87e3721A89D4a9A2782996aFBE86ADF07997567",
+    "earnedToken": "rcowUniswapAvalancheWAVAX-USDC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-avax-wavax-usdc",
+    "status": "active",
+    "createdAt": 1727102130,
+    "platformId": "uniswap",
+    "assets": ["WAVAX", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-avax-wavax-usdc",
+    "name": "WAVAX-USDC",
+    "token": "WAVAX-USDC",
+    "tokenAddress": "0xfAe3f424a0a47706811521E3ee268f00cFb5c45E",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
+      "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapAvalancheWAVAX-USDC",
+    "earnedTokenAddress": "0xBB7F25Af55DA4347960c2ED67DFf00263469836F",
+    "earnContractAddress": "0xBB7F25Af55DA4347960c2ED67DFf00263469836F",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-avax-wavax-usdc",
+    "status": "active",
+    "createdAt": 1727102130,
+    "platformId": "beefy",
+    "assets": ["WAVAX", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-avax-usdt-usdc-rp",
+    "name": "USDt-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapAvalancheUSDt-USDC",
+    "tokenAddress": "0x09e38dF01E8f362ed0B065EF1AD57ac7C0124Be5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x35C038032aE84B6Ea6dAB218914A60e0e9EF69a9",
+    "earnedToken": "rcowUniswapAvalancheUSDt-USDC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-avax-usdt-usdc",
+    "status": "active",
+    "createdAt": 1727102130,
+    "platformId": "uniswap",
+    "assets": ["USDT", "USDC"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-avax-usdt-usdc",
+    "name": "USDt-USDC",
+    "token": "USDt-USDC",
+    "tokenAddress": "0x804226cA4EDb38e7eF56D16d16E92dc3223347A0",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+      "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapAvalancheUSDt-USDC",
+    "earnedTokenAddress": "0x09e38dF01E8f362ed0B065EF1AD57ac7C0124Be5",
+    "earnContractAddress": "0x09e38dF01E8f362ed0B065EF1AD57ac7C0124Be5",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-avax-usdt-usdc",
+    "status": "active",
+    "createdAt": 1727102130,
+    "platformId": "beefy",
+    "assets": ["USDT", "USDC"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "type": "cowcentrated",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-avax-btc.b-usdc-rp",
+    "name": "BTC.b-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapAvalancheBTC.b-USDC",
+    "tokenAddress": "0x4EBE6BdeF299aa11eE811bD42646c44A52B23D46",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xBA245C7ed7a440466802f316c202a25570e4d424",
+    "earnedToken": "rcowUniswapAvalancheBTC.b-USDC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-avax-btc.b-usdc",
+    "status": "active",
+    "createdAt": 1727102130,
+    "platformId": "uniswap",
+    "assets": ["BTCb", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-avax-btc.b-usdc",
+    "name": "BTC.b-USDC",
+    "token": "BTC.b-USDC",
+    "tokenAddress": "0xD1356d360F37932059E5b89b7992692aA234EDA6",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x152b9d0FdC40C096757F570A51E494bd4b943E50",
+      "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapAvalancheBTC.b-USDC",
+    "earnedTokenAddress": "0x4EBE6BdeF299aa11eE811bD42646c44A52B23D46",
+    "earnContractAddress": "0x4EBE6BdeF299aa11eE811bD42646c44A52B23D46",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-avax-btc.b-usdc",
+    "status": "active",
+    "createdAt": 1727102130,
+    "platformId": "beefy",
+    "assets": ["BTCb", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "avax",
+    "type": "cowcentrated",
+    "feeTier": "0.30",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "stargate-v2-avax-usdc",
     "name": "USDC",
     "type": "standard",

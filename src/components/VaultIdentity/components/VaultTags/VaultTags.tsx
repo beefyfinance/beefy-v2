@@ -7,6 +7,7 @@ import type { BoostEntity } from '../../../../features/data/entities/boost';
 import { useAppSelector } from '../../../../store';
 import {
   selectBoostById,
+  selectOffchainBoostCampaignByType,
   selectPreStakeOrActiveBoostIds,
 } from '../../../../features/data/selectors/boosts';
 import { useIsOverflowingHorizontally } from '../../../../helpers/overflow';
@@ -39,6 +40,10 @@ import { getBoostIconSrc } from '../../../../helpers/boostIconSrc';
 import clsx from 'clsx';
 import { getIcon } from '../../../../helpers/iconSrc';
 import { selectPlatformById } from '../../../../features/data/selectors/platforms';
+import {
+  selectVaultActiveMerklBoostCampaigns,
+  selectVaultHasActiveMerklBoostCampaigns,
+} from '../../../../features/data/selectors/rewards';
 
 const useStyles = makeStyles(styles);
 
@@ -69,6 +74,45 @@ const VaultBoostTag = memo<VaultBoostTagProps>(function VaultBoostTag({ boostId 
       {tagText ? tagText : t('VaultTag-PartnerBoost', { partner: name })}
     </VaultTagWithTooltip>
   );
+});
+
+export const VaultMerklBoostTag = memo(function VaultMerklBoostTag({ vaultId }) {
+  const classes = useStyles();
+  const { isOverflowing, ref } = useIsOverflowingHorizontally();
+  const activeCampaigns = useAppSelector(state =>
+    selectVaultActiveMerklBoostCampaigns(state, vaultId)
+  );
+  const campaign = useAppSelector(state =>
+    selectOffchainBoostCampaignByType(state, activeCampaigns?.[0]?.type)
+  );
+
+  if (activeCampaigns && campaign) {
+    const { tagText, tagIcon, title } = campaign;
+
+    return (
+      <VaultTagWithTooltip
+        content={<BasicTooltipContent title={tagText || title} />}
+        placement="bottom"
+        disabled={!isOverflowing}
+        className={classes.vaultTagBoost}
+        ref={ref}
+      >
+        {tagIcon ? (
+          <img
+            src={getBoostIconSrc(tagIcon)}
+            alt=""
+            className={classes.vaultTagBoostIcon}
+            width={12}
+            height={12}
+          />
+        ) : (
+          <>{'\uD83D\uDD25 '}</>
+        )}
+        {tagText}
+      </VaultTagWithTooltip>
+    );
+  }
+  return null;
 });
 
 type VaultEarnTagProps = {
@@ -178,7 +222,7 @@ const VaultClmPoolOrVaultTag = memo(function VaultClmPoolTag({
   className?: string;
 }) {
   const cowcentratedVault = useAppSelector(state =>
-    selectCowcentratedVaultById(state, vault.cowcentratedId)
+    selectCowcentratedVaultById(state, vault.cowcentratedIds.clm)
   );
   const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, cowcentratedVault.chainId, cowcentratedVault.depositTokenAddress)
@@ -303,6 +347,9 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
   const isGov = isGovVault(vault);
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
+  const hasBaseActiveMerklCampaigns = useAppSelector(state =>
+    selectVaultHasActiveMerklBoostCampaigns(state, vaultId)
+  );
 
   // Tag 1: Platform
   // Tag 2: CLM -> CLM Pool -> none
@@ -324,6 +371,8 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
         <VaultTag className={classes.vaultTagPaused}>{t('VaultTag-Paused')}</VaultTag>
       ) : boostId ? (
         <VaultBoostTag boostId={boostId} />
+      ) : hasBaseActiveMerklCampaigns ? (
+        <VaultMerklBoostTag vaultId={vaultId} />
       ) : isGov && !isCowcentratedLike ? (
         <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO support multiple earned tokens [empty = ok, not used when clm-like]
       ) : null}

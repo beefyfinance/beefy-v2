@@ -29,13 +29,14 @@ export class BridgeApi implements IBridgeApi {
     from: ChainEntity,
     to: ChainEntity,
     input: InputTokenAmount<TokenErc20>,
+    receiver: string | undefined,
     state: BeefyState
   ): Promise<IBridgeQuote<T>> {
     if (!providers[config.id]) throw new Error(`Unknown bridge provider: ${config.id}`);
 
     // asserts the config->provider mapping is correct
     const provider = providers[config.id] as unknown as IBridgeProvider<T>;
-    return await provider.fetchQuote(config, from, to, input, state);
+    return await provider.fetchQuote(config, from, to, input, receiver, state);
   }
 
   async fetchBridgeStep<T extends BeefyAnyBridgeConfig>(

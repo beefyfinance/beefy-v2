@@ -130,21 +130,22 @@ const Entry = memo<EntryProps>(function Entry(props) {
 
 export type VaultDepositedTooltipProps = {
   vaultId: VaultEntity['id'];
+  walletAddress?: string;
 };
 
 export const VaultDepositedTooltip = memo<VaultDepositedTooltipProps>(
-  function VaultDepositedTooltip({ vaultId }) {
+  function VaultDepositedTooltip({ vaultId, walletAddress }) {
     const classes = useStyles();
     const { t } = useTranslation();
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
     const { depositToken, entries } = useAppSelector(state =>
-      selectVaultUserBalanceInDepositTokenBreakdown(state, vaultId)
+      selectVaultUserBalanceInDepositTokenBreakdown(state, vaultId, walletAddress)
     );
     const price = useAppSelector(state =>
       selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
     );
     const notEarning = useAppSelector(state =>
-      selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vaultId)
+      selectUserVaultBalanceNotInActiveBoostInDepositToken(state, vaultId, walletAddress)
     );
 
     return (

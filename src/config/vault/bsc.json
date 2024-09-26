@@ -1,5 +1,278 @@
 [
   {
+    "id": "pancake-cow-bsc-wsteth-wbnb-vault",
+    "name": "wstETH-WBNB",
+    "type": "standard",
+    "token": "wstETH-WBNB",
+    "tokenAddress": "0xFb023De5C9De886069554caccA6D08e2E7c1bD9e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooBeefyPancakewstETH-WBNB",
+    "earnedTokenAddress": "0xc2F183fAf921F4CA8Dd31B78e4563aD12537FA98",
+    "earnContractAddress": "0xc2F183fAf921F4CA8Dd31B78e4563aD12537FA98",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-wsteth-wbnb",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["wstETH", "WBNB"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "bsc",
+    "createdAt": 1726149785,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-wsteth-wbnb-rp",
+    "name": "wstETH-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakewstETH-WBNB",
+    "tokenAddress": "0xFb023De5C9De886069554caccA6D08e2E7c1bD9e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x9CCCB9E5a567AE08f346e929A8F98AB6C9506165",
+    "earnedToken": "rcowPancakewstETH-WBNB",
+    "earnedTokenAddresses": ["0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82"],
+    "earnedOracleIds": ["Cake"],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-wsteth-wbnb",
+    "status": "active",
+    "createdAt": 1726149784,
+    "platformId": "pancakeswap",
+    "assets": ["wstETH", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-wsteth-wbnb",
+    "name": "wstETH-WBNB",
+    "type": "cowcentrated",
+    "token": "wstETH-WBNB Cake",
+    "tokenAddress": "0xc9002d23CEBF00b40f7CDB5B1E63d96eebB50031",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x26c5e01524d2E6280A48F2c50fF6De7e52E9611C",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnedToken": "cowPancakewstETH-WBNB",
+    "earnedTokenAddress": "0xFb023De5C9De886069554caccA6D08e2E7c1bD9e",
+    "earnContractAddress": "0xFb023De5C9De886069554caccA6D08e2E7c1bD9e",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-wsteth-wbnb",
+    "status": "active",
+    "createdAt": 1726149784,
+    "platformId": "pancakeswap",
+    "assets": ["wstETH", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-wsteth-btcb-vault",
+    "name": "wstETH-BTCB",
+    "type": "standard",
+    "token": "wstETH-BTCB",
+    "tokenAddress": "0x2f2637ae8Ec1bF8D576AD2A1C14B7026832509Cb",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooBeefyPancakewstETH-BTCB",
+    "earnedTokenAddress": "0xc595CacE646eed6A764ef355DD03a21045ce0554",
+    "earnContractAddress": "0xc595CacE646eed6A764ef355DD03a21045ce0554",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-wsteth-btcb",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["wstETH", "BTCB"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "bsc",
+    "createdAt": 1726149785,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-wsteth-btcb-rp",
+    "name": "wstETH-BTCB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakewstETH-BTCB",
+    "tokenAddress": "0x2f2637ae8Ec1bF8D576AD2A1C14B7026832509Cb",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x0D3A431f2fE6Ee29e27f909448c64bd6D7F43118",
+    "earnedToken": "rcowPancakewstETH-BTCB",
+    "earnedTokenAddresses": ["0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82"],
+    "earnedOracleIds": ["Cake"],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-wsteth-btcb",
+    "status": "active",
+    "createdAt": 1726149784,
+    "platformId": "pancakeswap",
+    "assets": ["wstETH", "BTCB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-wsteth-btcb",
+    "name": "wstETH-BTCB",
+    "type": "cowcentrated",
+    "token": "wstETH-BTCB Cake",
+    "tokenAddress": "0xcC1c80529B483A663d869C137a1Fd0cBD9855dC8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x26c5e01524d2E6280A48F2c50fF6De7e52E9611C",
+      "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c"
+    ],
+    "earnedToken": "cowPancakewstETH-BTCB",
+    "earnedTokenAddress": "0x2f2637ae8Ec1bF8D576AD2A1C14B7026832509Cb",
+    "earnContractAddress": "0x2f2637ae8Ec1bF8D576AD2A1C14B7026832509Cb",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-wsteth-btcb",
+    "status": "active",
+    "createdAt": 1726149784,
+    "platformId": "pancakeswap",
+    "assets": ["wstETH", "BTCB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-eth-wsteth-vault",
+    "name": "wstETH-ETH",
+    "type": "standard",
+    "token": "wstETH-ETH",
+    "tokenAddress": "0x5F25f61055141997772d8496Fc55ADA1FF7a3A10",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooBeefyPancakeETH-wstETH",
+    "earnedTokenAddress": "0x63A3DbA21224227231B6867eB5192290B84B44bD",
+    "earnContractAddress": "0x63A3DbA21224227231B6867eB5192290B84B44bD",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-eth-wsteth",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["wstETH", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "bsc",
+    "createdAt": 1726149785,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-eth-wsteth-rp",
+    "name": "wstETH-ETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeETH-wstETH",
+    "tokenAddress": "0x5F25f61055141997772d8496Fc55ADA1FF7a3A10",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x4cf8272d50aB4b1cF1216c8e07b67A1f23245f56",
+    "earnedToken": "rcowPancakeETH-wstETH",
+    "earnedTokenAddresses": ["0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82"],
+    "earnedOracleIds": ["Cake"],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-eth-wsteth",
+    "status": "active",
+    "createdAt": 1726149784,
+    "platformId": "pancakeswap",
+    "assets": ["wstETH", "ETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-eth-wsteth",
+    "name": "wstETH-ETH",
+    "type": "cowcentrated",
+    "token": "wstETH-ETH Cake",
+    "tokenAddress": "0x6CB5392B9CA52d7a0E6940e82d29087361360eC3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+      "0x26c5e01524d2E6280A48F2c50fF6De7e52E9611C"
+    ],
+    "earnedToken": "cowPancakeETH-wstETH",
+    "earnedTokenAddress": "0x5F25f61055141997772d8496Fc55ADA1FF7a3A10",
+    "earnContractAddress": "0x5F25f61055141997772d8496Fc55ADA1FF7a3A10",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-eth-wsteth",
+    "status": "active",
+    "createdAt": 1726149784,
+    "platformId": "pancakeswap",
+    "assets": ["wstETH", "ETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-bsc-usdc-wbnb-vault",
     "name": "USDC-WBNB",
     "type": "standard",
@@ -4748,38 +5021,6 @@
     "retiredAt": 1691572603,
     "platformId": "thena",
     "assets": ["frxETH", "FRAX"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://thena.fi/swap",
-    "addLiquidityUrl": "https://thena.fi/liquidity",
-    "removeLiquidityUrl": "https://thena.fi/liquidity/manage",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "bsc-thena"
-      }
-    ]
-  },
-  {
-    "id": "thena-usdc-ftm",
-    "name": "USDC-FTM vLP",
-    "type": "standard",
-    "token": "USDC-FTM vLP",
-    "tokenAddress": "0x535AEEab656c0fBb07DA64fe4AA3A15Dfc6834C8",
-    "tokenDecimals": 18,
-    "tokenProviderId": "thena",
-    "earnedToken": "mooThenaFTM-USDC",
-    "earnedTokenAddress": "0xE03cB832EFba6Cee25292A0772b4fabf174a0005",
-    "earnContractAddress": "0xE03cB832EFba6Cee25292A0772b4fabf174a0005",
-    "oracle": "lps",
-    "oracleId": "thena-usdc-ftm",
-    "status": "eol",
-    "createdAt": 1675521404,
-    "retireReason": "tvl",
-    "retiredAt": 1682019887,
-    "platformId": "thena",
-    "assets": ["USDC", "FTM"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://thena.fi/swap",
@@ -18865,7 +19106,9 @@
     "earnContractAddress": "0x6BE4741AB0aD233e4315a10bc783a7B923386b71",
     "oracle": "tokens",
     "oracleId": "BNB",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1726494192,
+    "retireReason": "rewards",
     "createdAt": 1608060201,
     "platformId": "venus",
     "assets": ["BNB"],

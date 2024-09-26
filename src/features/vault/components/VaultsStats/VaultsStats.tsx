@@ -1,33 +1,21 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { isGovVault, isGovVaultCowcentrated, type VaultEntity } from '../../../data/entities/vault';
-import { selectVaultById, selectVaultLastHarvestByVaultId } from '../../../data/selectors/vaults';
+import { selectVaultById } from '../../../data/selectors/vaults';
 import { ApyStats } from '../../../../components/ApyStats';
-import { ValueBlock } from '../../../../components/ValueBlock/ValueBlock';
 import { VaultTvl } from '../../../../components/VaultTvl/VaultTvl';
 import { VaultDeposited } from '../../../../components/VaultDeposited/VaultDeposited';
 import { GovVaultRewards } from '../../../../components/GovVaultRewards/GovVaultRewards';
 import { useAppSelector } from '../../../../store';
-import { formatDistance } from 'date-fns';
 import clsx from 'clsx';
+import { LastHarvest } from '../../../../components/LastHarvest/LastHarvest';
 
 const useStyles = makeStyles(styles);
 
 function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();
-  const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const lastHarvest = useAppSelector(state => selectVaultLastHarvestByVaultId(state, vault.id));
-
-  const lastHarvestFormatted = useMemo(() => {
-    if (lastHarvest === 0) {
-      return 'never';
-    } else {
-      return formatDistance(lastHarvest, new Date(), { addSuffix: true });
-    }
-  }, [lastHarvest]);
 
   return (
     <div className={classes.boxes}>
@@ -50,11 +38,11 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
           <div className={classes.stat}>
             <GovVaultRewards vaultId={vaultId} />
           </div>
-        ) : lastHarvest ? (
+        ) : (
           <div className={classes.stat}>
-            <ValueBlock label={t('Vault-LastHarvest')} value={lastHarvestFormatted} />
+            <LastHarvest vaultId={vaultId} />
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );

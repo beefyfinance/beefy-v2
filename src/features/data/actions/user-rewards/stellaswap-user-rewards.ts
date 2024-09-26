@@ -14,6 +14,7 @@ import type {
 import { pushOrSet } from '../../../../helpers/object';
 import { selectStellaSwapRewardsForUserShouldLoad } from '../../selectors/data-loader';
 import { isDefined } from '../../utils/array-utils';
+import { getCowcentratedPool } from '../../entities/vault';
 
 export const fetchUserStellaSwapRewardsAction = createAsyncThunk<
   FetchUserStellaSwapRewardsFulfilledPayload,
@@ -36,11 +37,10 @@ export const fetchUserStellaSwapRewardsAction = createAsyncThunk<
     const byVaultId: Record<string, StellaSwapVaultReward[]> = {};
     const poolAddressToClmPoolId: Record<string, string> = Object.fromEntries(
       selectAllCowcentratedVaults(state)
-        .map(vault =>
-          vault.cowcentratedGovId
-            ? [vault.poolAddress.toLowerCase(), vault.cowcentratedGovId]
-            : undefined
-        )
+        .map(vault => {
+          const poolId = getCowcentratedPool(vault);
+          return poolId ? [vault.poolAddress.toLowerCase(), poolId] : undefined;
+        })
         .filter(isDefined)
     );
 

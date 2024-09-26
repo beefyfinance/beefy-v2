@@ -10,7 +10,8 @@ import { debounce } from 'lodash-es';
 
 export const FormValidator = memo(function FormValidator() {
   const dispatch = useAppDispatch();
-  const { from, to, input } = useAppSelector(selectBridgeFormState);
+  const { from, to, input, receiverIsDifferent, receiverAddress } =
+    useAppSelector(selectBridgeFormState);
   const fromToken = useAppSelector(state => selectBridgeDepositTokenForChainId(state, from));
   const toToken = useAppSelector(state => selectBridgeDepositTokenForChainId(state, to));
   const userBalance = useAppSelector(state =>
@@ -24,7 +25,7 @@ export const FormValidator = memo(function FormValidator() {
 
   useEffect(() => {
     debouncedValidate();
-  }, [debouncedValidate, fromToken, toToken, inputAmount, userBalance]);
+  }, [debouncedValidate, fromToken, toToken, inputAmount, userBalance, receiverIsDifferent, receiverAddress]);
 
   return null;
 });

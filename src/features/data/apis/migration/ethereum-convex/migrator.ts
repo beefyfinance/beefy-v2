@@ -44,6 +44,9 @@ async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, st
   const convexStaking = new web3.eth.Contract(ConvexAbi, stakingAddress);
 
   if (vault.assetIds.length === 1) {
+    if (vault.assetIds[0] == 'CVX') {
+      return convexStaking.methods.withdraw(amountInWei.toString(10), false);
+    }
     return convexStaking.methods.withdraw(amountInWei.toString(10));
   } else {
     return convexStaking.methods.withdrawAllAndUnwrap(true);
@@ -77,6 +80,16 @@ const ConvexStrategyAbi: AbiItem[] = [
 const ConvexAbi: AbiItem[] = [
   {
     inputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
+    name: 'withdraw',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'uint256', name: '_amount', type: 'uint256' },
+      { internalType: 'bool', name: 'claim', type: 'bool' },
+    ],
     name: 'withdraw',
     outputs: [],
     stateMutability: 'nonpayable',

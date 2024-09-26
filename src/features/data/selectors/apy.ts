@@ -2,11 +2,11 @@ import type { BeefyState } from '../../../redux-types';
 import {
   isCowcentratedGovVault,
   isCowcentratedVault,
-  isGovVault,
   isVaultActive,
   type VaultEntity,
 } from '../entities/vault';
 import {
+  selectBoostUserBalanceInToken,
   selectUserDepositedVaultIds,
   selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
   selectUserVaultBalanceInUsdIncludingBoostsBridged,
@@ -19,11 +19,12 @@ import {
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { selectUserActiveBoostBalanceInToken, selectVaultCurrentBoostIdWithStatus } from './boosts';
+import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from './boosts';
 import type { TotalApy } from '../reducers/apy';
 import { isEmpty } from '../../../helpers/utils';
 import { selectWalletAddress } from './wallet';
 import { BigNumber } from 'bignumber.js';
+import { first } from 'lodash-es';
 
 const EMPTY_TOTAL_APY: TotalApy = {
   totalApy: 0,
@@ -148,7 +149,7 @@ export const selectYieldStatsByVaultId = (
       yearlyUsd: BIG_ZERO,
       yearlyTokens: BIG_ZERO,
       oraclePrice,
-      tokenDecimals: depositToken.decimals,
+      depositToken,
     };
   }
 
@@ -157,48 +158,60 @@ export const selectYieldStatsByVaultId = (
     vault.id,
     walletAddress
   );
-  const vaultUsdBalance = tokenBalance.times(oraclePrice);
   const apyData = selectVaultTotalApy(state, vault.id);
+  const ppfs = selectVaultPricePerFullShare(state, vaultId);
+  const sources = [
+    // base total apy is applied to the whole of the user's balance
+    {
+      daily: apyData.totalDaily,
+      yearly: apyData.totalApy,
+      tokens: tokenBalance,
+    },
+  ];
 
-  let dailyUsd: BigNumber;
-  let dailyTokens: BigNumber;
-  let yearlyTokens: BigNumber;
-  let yearlyUsd: BigNumber;
-
-  if (isGovVault(vault)) {
-    dailyUsd = vaultUsdBalance.times(apyData.totalDaily);
-    dailyTokens = tokenBalance.times(apyData.totalDaily);
-    yearlyTokens = tokenBalance.times(apyData.totalApy);
-    yearlyUsd = vaultUsdBalance.times(apyData.totalApy);
-  } else {
-    const ppfs = selectVaultPricePerFullShare(state, vaultId);
-    const boostBalance = selectUserActiveBoostBalanceInToken(state, vaultId, walletAddress)
-      .multipliedBy(ppfs)
-      .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR);
-    const boostBalanceUsd = boostBalance.times(oraclePrice);
-
-    const nonBoostBalanceInTokens = tokenBalance.minus(boostBalance);
-    const nonBoostBalanceInUsd = nonBoostBalanceInTokens.times(oraclePrice);
-
-    dailyUsd = nonBoostBalanceInUsd.times(apyData.totalDaily);
-    dailyTokens = nonBoostBalanceInTokens.times(apyData.totalDaily);
-    yearlyTokens = nonBoostBalanceInTokens.times(apyData.totalApy);
-    yearlyUsd = nonBoostBalanceInUsd.times(apyData.totalApy);
-
-    if (
-      apyData.boostedTotalDaily !== undefined &&
-      apyData.boostedTotalApy &&
-      boostBalance.gt(BIG_ZERO)
-    ) {
-      dailyUsd = dailyUsd.plus(boostBalanceUsd.times(apyData.boostedTotalDaily));
-      dailyTokens = dailyTokens.plus(boostBalance.times(apyData.boostedTotalDaily));
-      yearlyTokens = yearlyTokens.plus(boostBalance.times(apyData.boostedTotalApy));
-      yearlyUsd = yearlyUsd.plus(boostBalanceUsd.times(apyData.boostedTotalApy));
+  if (apyData.boostApr !== undefined && apyData.boostDaily !== undefined) {
+    const activeBoostId = first(selectActiveVaultBoostIds(state, vaultId));
+    if (activeBoostId) {
+      const sharesInBoost = selectBoostUserBalanceInToken(state, activeBoostId, walletAddress);
+      if (sharesInBoost.gt(BIG_ZERO)) {
+        const tokensInBoost = sharesInBoost
+          .multipliedBy(ppfs)
+          .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR);
+        // boost apy is applied only to the user's balance in the boost
+        sources.push({
+          daily: apyData.boostDaily,
+          yearly: apyData.boostApr,
+          tokens: tokensInBoost,
+        });
+      }
     }
   }
 
+  if (apyData.merklBoostApr !== undefined && apyData.merklBoostDaily !== undefined) {
+    // merkl boost apy is applied to the whole of the user's balance
+    sources.push({
+      daily: apyData.merklBoostDaily,
+      yearly: apyData.merklBoostApr,
+      tokens: tokenBalance,
+    });
+  }
+
+  const total = sources.reduce(
+    (acc, source) => {
+      for (const key of ['daily', 'yearly']) {
+        acc[key] = acc[key].plus(source.tokens.multipliedBy(source[key]));
+      }
+      return acc;
+    },
+    { daily: BIG_ZERO, yearly: BIG_ZERO }
+  );
+
+  const dailyTokens = total.daily;
+  const dailyUsd = total.daily.times(oraclePrice);
   const monthlyTokens = dailyTokens.times(30);
   const monthlyUsd = dailyUsd.times(30);
+  const yearlyTokens = total.yearly;
+  const yearlyUsd = total.yearly.times(oraclePrice);
 
   return {
     dailyUsd,
@@ -208,7 +221,7 @@ export const selectYieldStatsByVaultId = (
     yearlyTokens,
     yearlyUsd,
     oraclePrice,
-    tokenDecimals: depositToken.decimals,
+    depositToken,
   };
 };
 

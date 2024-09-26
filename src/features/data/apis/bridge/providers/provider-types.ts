@@ -20,6 +20,7 @@ export interface IBridgeQuote<T extends BeefyAnyBridgeConfig> {
   output: TokenAmount<TokenErc20>;
   fee: TokenAmount<TokenNative>;
   allowance?: TokenAllowance;
+  receiver: string | undefined;
   gas: BigNumber;
   timeEstimate: number;
   withinLimits: boolean;
@@ -37,6 +38,7 @@ export interface IBridgeProvider<T extends BeefyAnyBridgeConfig> {
     from: ChainEntity,
     to: ChainEntity,
     input: InputTokenAmount<TokenErc20>,
+    receiver: string | undefined,
     state: BeefyState
   ): Promise<IBridgeQuote<T>>;
 

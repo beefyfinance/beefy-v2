@@ -21,6 +21,7 @@ import { FormValidator } from '../FormValidator';
 import { QuoteSelector } from '../QuoteSelector';
 import { confirmBridgeForm } from '../../../../../data/actions/bridge';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
+import { ReceiverSelector } from '../ReceiverSelector';
 
 const useStyles = makeStyles(styles);
 
@@ -59,6 +60,7 @@ function _Preview() {
       <div className={classes.inputs}>
         <ChainSelector />
         <AmountSelector />
+        <ReceiverSelector />
         <FormValidator />
         <QuoteSelector />
       </div>
