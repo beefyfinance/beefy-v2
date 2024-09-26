@@ -1,7 +1,7 @@
 import { formatTokenDisplayCondensed } from '../../../../../helpers/format';
 import { makeStyles, useMediaQuery, type Theme } from '@material-ui/core';
 import { useAppSelector } from '../../../../../store';
-import { memo, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   selectCurrentCowcentratedRangesByVaultId,
@@ -90,12 +90,13 @@ export const CurrentCowcentratedRange = memo<CurrentCowcentratedRangeProps>(
 
     const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
 
-    const { minRange, currentRange, maxRange } = convertRanges(
-      priceRangeMin,
-      currentPrice,
-      priceRangeMax,
-      inverted
-    );
+    const { minRange, currentRange, maxRange } = useMemo(() => {
+      return convertRanges(priceRangeMin, currentPrice, priceRangeMax, inverted);
+    }, [currentPrice, inverted, priceRangeMax, priceRangeMin]);
+
+    const toggleInverted = useCallback(() => {
+      setInverted(!inverted);
+    }, [inverted, setInverted]);
 
     return (
       <div className={classes.cowcentratedHeader}>
@@ -106,7 +107,7 @@ export const CurrentCowcentratedRange = memo<CurrentCowcentratedRangeProps>(
           </div>
           {isMobile && (
             <div className={classes.inverted}>
-              <Button className={classes.invertButton} onClick={() => setInverted(!inverted)}>
+              <Button className={classes.invertButton} onClick={toggleInverted}>
                 <SwapIcon height={24} />
               </Button>
             </div>
@@ -130,7 +131,7 @@ export const CurrentCowcentratedRange = memo<CurrentCowcentratedRangeProps>(
           </div>
           {!isMobile && (
             <div className={classes.inverted}>
-              <Button className={classes.invertButton} onClick={() => setInverted(!inverted)}>
+              <Button className={classes.invertButton} onClick={toggleInverted}>
                 <SwapIcon height={24} />
               </Button>
             </div>
