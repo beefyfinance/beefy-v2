@@ -1,4 +1,4 @@
-import { EEEE_ADDRESS } from '../../../../../../helpers/addresses';
+import { ZERO_ADDRESS } from '../../../../../../helpers/addresses';
 import { fromWeiString, toWeiString } from '../../../../../../helpers/big-number';
 import type { BeefyState } from '../../../../../../redux-types';
 import type { ChainEntity } from '../../../../entities/chain';
@@ -25,7 +25,7 @@ export class OdosSwapProvider implements ISwapProvider {
   }
 
   protected getTokenAddress(token: TokenEntity): string {
-    return isTokenNative(token) ? EEEE_ADDRESS : token.address;
+    return isTokenNative(token) ? ZERO_ADDRESS : token.address;
   }
 
   protected getConfigForChain(
