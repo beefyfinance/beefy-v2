@@ -1,5 +1,34 @@
 [
   {
+    "id": "aerodrome-tbtc-cbbtc",
+    "name": "tBTC-cbBTC sLP",
+    "type": "standard",
+    "token": "sAMM-tBTC/cbBTC",
+    "tokenAddress": "0x488d6ea6064eEE9352fdCDB7BC50d98A7fF3AD4E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerotBTC-cbBTC",
+    "earnedTokenAddress": "0x64AF54612646CcE0657374226e38B82B8001E674",
+    "earnContractAddress": "0x64AF54612646CcE0657374226e38B82B8001E674",
+    "oracle": "lps",
+    "oracleId": "aerodrome-tbtc-cbbtc",
+    "status": "active",
+    "createdAt": 1727353780,
+    "platformId": "aerodrome",
+    "assets": ["tBTC", "cbBTC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b&token1=0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf&type=0",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-weth-ethfi-rp",
     "name": "ETHFI-WETH Reward Pool",
     "type": "gov",
