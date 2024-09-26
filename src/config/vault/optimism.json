@@ -17,7 +17,7 @@
     "platformId": "velodrome",
     "assets": ["wstETH", "weETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
+    "strategyTypeId": "lp",
     "buyTokenUrl": "https://velodrome.finance/swap?from=0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb&to=0x5A7fACB970D094B6C7FF1df0eA68D99E6e73CBFF",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb&token1=0x5A7fACB970D094B6C7FF1df0eA68D99E6e73CBFF&type=-1&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
     "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xd0F92F5d756Bf223574DFa3ef284a35C3c046289",
