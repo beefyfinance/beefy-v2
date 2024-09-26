@@ -15,6 +15,7 @@ export type QuoteRequest = {
   sourceBlacklist?: Array<string>;
   poolBlacklist?: Array<string>;
   referralCode?: number;
+  simple?: boolean;
 };
 
 export type QuoteResponse = {

@@ -64,6 +64,7 @@ export class OdosSwapProvider implements ISwapProvider {
       chainId: chain.networkChainId,
       userAddr: zap.router,
       slippageLimitPercent: slippage * 100,
+      simple: true,
     });
 
     return {
