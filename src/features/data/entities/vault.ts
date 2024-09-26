@@ -144,12 +144,18 @@ type VaultGovMultiOnly = VaultGovBaseOnly & {
 export type VaultCowcentratedBaseOnly = {
   /** subtype */
   subType: 'cowcentrated';
-  /** the id of the cowcentrated vault */
-  cowcentratedId: string;
-  /** the id of the gov vault, if one exists */
-  cowcentratedGovId?: string | undefined;
-  /** the id of the standard vault, if one exists */
-  cowcentratedStandardId?: string | undefined;
+  cowcentratedIds: {
+    /** the id of the cowcentrated vault */
+    clm: string;
+    /** the id of the cowcentrated gov vault, if one exists and is active */
+    pool?: string;
+    /** the id of the cowcentrated standard vault, if one exists and is active */
+    vault?: string;
+    /** ids of cowcentrated gov vaults */
+    pools: string[];
+    /** ids of cowcentrated standard vaults */
+    vaults: string[];
+  };
   /** addresses of tokens required to deposit in this vault */
   depositTokenAddresses: string[];
   /** the trading fee of the underlying pool */
@@ -287,6 +293,28 @@ export function isVaultEarningPoints(vault: VaultEntity) {
 
 export function isVaultPausedOrRetired(vault: VaultEntity) {
   return vault.status === 'paused' || vault.status === 'eol';
+}
+
+/** The most recent active pool, or most recent pool if no active pools, or undefined if no pools */
+export function getCowcentratedPool(vault: VaultCowcentratedLike): string | undefined {
+  if (vault.cowcentratedIds.pool) {
+    return vault.cowcentratedIds.pool;
+  }
+  if (vault.cowcentratedIds.pools.length) {
+    return vault.cowcentratedIds.pools[0];
+  }
+  return undefined;
+}
+
+/** The most recent active vault, or most recent vault if no active vaults, or undefined if no vaults */
+export function getCowcentratedVault(vault: VaultCowcentratedLike): string | undefined {
+  if (vault.cowcentratedIds.vault) {
+    return vault.cowcentratedIds.vault;
+  }
+  if (vault.cowcentratedIds.vaults.length) {
+    return vault.cowcentratedIds.vaults[0];
+  }
+  return undefined;
 }
 
 export function shouldVaultShowInterest(vault: VaultEntity) {

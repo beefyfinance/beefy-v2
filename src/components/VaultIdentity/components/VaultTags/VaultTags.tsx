@@ -222,7 +222,7 @@ const VaultClmPoolOrVaultTag = memo(function VaultClmPoolTag({
   className?: string;
 }) {
   const cowcentratedVault = useAppSelector(state =>
-    selectCowcentratedVaultById(state, vault.cowcentratedId)
+    selectCowcentratedVaultById(state, vault.cowcentratedIds.clm)
   );
   const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, cowcentratedVault.chainId, cowcentratedVault.depositTokenAddress)

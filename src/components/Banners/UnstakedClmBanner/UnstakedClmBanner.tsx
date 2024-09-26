@@ -116,9 +116,9 @@ const UnstakedClmBannerVaultImpl = memo<UnstakedClmBannerVaultImplProps>(
       )
     );
     const availableTypes =
-      vault.cowcentratedGovId && vault.cowcentratedStandardId
+      vault.cowcentratedIds.pool && vault.cowcentratedIds.vault
         ? 'both'
-        : vault.cowcentratedGovId
+        : vault.cowcentratedIds.pool
         ? 'gov'
         : 'standard';
     const thisType = vault.type;
@@ -128,18 +128,18 @@ const UnstakedClmBannerVaultImpl = memo<UnstakedClmBannerVaultImplProps>(
 
     const components = useMemo(() => {
       return {
-        GovLink: vault.cowcentratedGovId ? (
-          <InternalLink to={`/vault/${vault.cowcentratedGovId}`} />
+        GovLink: vault.cowcentratedIds.pool ? (
+          <InternalLink to={`/vault/${vault.cowcentratedIds.pool}`} />
         ) : (
           <span />
         ),
-        VaultLink: vault.cowcentratedStandardId ? (
-          <InternalLink to={`/vault/${vault.cowcentratedStandardId}`} />
+        VaultLink: vault.cowcentratedIds.vault ? (
+          <InternalLink to={`/vault/${vault.cowcentratedIds.vault}`} />
         ) : (
           <span />
         ),
       };
-    }, [vault.cowcentratedGovId, vault.cowcentratedStandardId]);
+    }, [vault.cowcentratedIds.pool, vault.cowcentratedIds.vault]);
 
     return (
       <Banner
