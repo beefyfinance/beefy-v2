@@ -22,6 +22,7 @@ import type {
   DatabarnTimelineEntry,
 } from '../apis/databarn/databarn-types';
 import {
+  getCowcentratedPool,
   isCowcentratedLikeVault,
   isCowcentratedStandardVault,
   isStandardVault,
@@ -865,7 +866,7 @@ export const fetchClmHarvestsForVaultsOfUserOnChain = createAsyncThunk<
           selectUserFirstDepositDateByVaultId(state, vault.id, walletAddress) || oneHourAgo;
         const items = [
           {
-            id: vault.cowcentratedGovId || vault.cowcentratedId,
+            id: getCowcentratedPool(vault) || vault.cowcentratedIds.clm,
             address: getCowcentratedAddressFromCowcentratedLikeVault(vault),
             chainId: vault.chainId,
             since,
@@ -1075,7 +1076,10 @@ export const fetchClmPendingRewards = createAsyncThunk<
   const state = getState();
   const vault = selectCowcentratedLikeVaultById(state, vaultId);
   const { token0, token1 } = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
-  const clmStrategyAddress = selectVaultStrategyAddressOrUndefined(state, vault.cowcentratedId);
+  const clmStrategyAddress = selectVaultStrategyAddressOrUndefined(
+    state,
+    vault.cowcentratedIds.clm
+  );
   const chain = selectChainById(state, vault.chainId);
   const api = await getClmApi();
 
@@ -1091,7 +1095,9 @@ export const fetchClmPendingRewards = createAsyncThunk<
       fees1: fees1.shiftedBy(-token1.decimals),
       totalSupply: totalSupply.shiftedBy(-18),
     },
-    vaultIds: [vault.id, vault.cowcentratedGovId, vault.cowcentratedStandardId].filter(isDefined),
+    vaultIds: [vault.id, ...vault.cowcentratedIds.pools, ...vault.cowcentratedIds.vaults].filter(
+      isDefined
+    ),
   };
 });
 

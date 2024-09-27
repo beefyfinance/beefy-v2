@@ -1,5 +1,63 @@
 [
   {
+    "id": "aerodrome-usdz-dola",
+    "name": "USDz-DOLA sLP",
+    "token": "sAMM-USDz/DOLA",
+    "tokenAddress": "0xcEa8ef6ce6235F2C2CdD13C9E8a3ED470725a638",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xa98815c2E5741660786cF74da5f2A8d3A17B5474",
+    "earnedToken": "mooAeroUSDz-DOLA",
+    "earnedTokenAddress": "0xa98815c2E5741660786cF74da5f2A8d3A17B5474",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usdz-dola",
+    "status": "active",
+    "createdAt": 1727424146,
+    "platformId": "aerodrome",
+    "assets": ["USDz", "DOLA"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x04D5ddf5f3a8939889F11E97f8c4BB48317F1938&token1=0x4621b7A9c75199271F773Ebd9A499dbd165c3191&type=0",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-tbtc-cbbtc",
+    "name": "tBTC-cbBTC sLP",
+    "type": "standard",
+    "token": "sAMM-tBTC/cbBTC",
+    "tokenAddress": "0x488d6ea6064eEE9352fdCDB7BC50d98A7fF3AD4E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerotBTC-cbBTC",
+    "earnedTokenAddress": "0x64AF54612646CcE0657374226e38B82B8001E674",
+    "earnContractAddress": "0x64AF54612646CcE0657374226e38B82B8001E674",
+    "oracle": "lps",
+    "oracleId": "aerodrome-tbtc-cbbtc",
+    "status": "active",
+    "createdAt": 1727353780,
+    "platformId": "aerodrome",
+    "assets": ["tBTC", "cbBTC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b&token1=0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf&type=0",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-weth-ethfi-rp",
     "name": "ETHFI-WETH Reward Pool",
     "type": "gov",

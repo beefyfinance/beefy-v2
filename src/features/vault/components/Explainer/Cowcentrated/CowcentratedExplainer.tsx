@@ -33,7 +33,7 @@ export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
     const chain = useAppSelector(state => selectChainById(state, vault.chainId));
     const apys = useAppSelector(state => selectVaultTotalApy(state, vaultId));
     const strategyAddress = useAppSelector(state =>
-      selectVaultStrategyAddressOrUndefined(state, vault.cowcentratedId)
+      selectVaultStrategyAddressOrUndefined(state, vault.cowcentratedIds.clm)
     );
     const showApy = apys && apys.totalApy > 0 && shouldVaultShowInterest(vault);
 
