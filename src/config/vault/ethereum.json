@@ -4885,7 +4885,12 @@
     "strategyTypeId": "single",
     "addLiquidityUrl": "https://app.aura.finance/",
     "removeLiquidityUrl": "https://app.aura.finance/",
-    "network": "ethereum"
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
   },
   {
     "id": "convex-usdd",
