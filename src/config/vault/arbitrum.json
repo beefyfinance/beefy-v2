@@ -1,5 +1,28 @@
 [
   {
+    "id": "equilibria-arb-gdai-27mar25",
+    "name": "gDAI 27Mar25",
+    "token": "gDAI 27Mar25",
+    "tokenAddress": "0xA9104b8B6698979568852C30231871e28A482b3C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0xf219b440bf0219355Ef64814A08Ad980379E3C42",
+    "earnedToken": "mooEqb-gDAI-27MAR25",
+    "earnedTokenAddress": "0xf219b440bf0219355Ef64814A08Ad980379E3C42",
+    "oracle": "lps",
+    "oracleId": "equilibria-arb-gdai-27mar25",
+    "status": "active",
+    "createdAt": 1727423102,
+    "platformId": "equilibria",
+    "assets": ["gDAI"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xA9104b8B6698979568852C30231871e28A482b3C/zap/in?chain=arbitrum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xA9104b8B6698979568852C30231871e28A482b3C/zap/out?chain=arbitrum",
+    "network": "arbitrum"
+  },
+  {
     "id": "equilibria-arb-unieth-26dec24",
     "name": "uniETH 26Dec24",
     "token": "uniETH 26Dec24",
