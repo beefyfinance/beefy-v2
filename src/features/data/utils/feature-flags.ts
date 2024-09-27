@@ -239,6 +239,17 @@ export function featureFlag_kyberSwapSupport(): { chainId: string; tokenAddress:
   return [];
 }
 
+export function featureFlag_OdosSwapSupport(): { chainId: string; tokenAddress: string }[] {
+  const params = getSearchParams();
+  if (params.has('__odos_support')) {
+    return (params.get('__odos_support') || '').split(',').map(s => {
+      const [chainId, tokenAddress] = s.split(':');
+      return { chainId, tokenAddress };
+    });
+  }
+  return [];
+}
+
 export function featureFlag_disableOneInch(): boolean {
   const params = getSearchParams();
   return params.has('__disable_one_inch');
@@ -247,6 +258,11 @@ export function featureFlag_disableOneInch(): boolean {
 export function featureFlag_disableKyber(): boolean {
   const params = getSearchParams();
   return params.has('__disable_kyber');
+}
+
+export function featureFlag_disableOdos(): boolean {
+  const params = getSearchParams();
+  return params.has('__disable_odos');
 }
 
 export function featureFlag_detailedTooltips(): boolean {

@@ -7,7 +7,7 @@ import type {
 } from '../../../entities/zap';
 import type { CurveMethod } from './curve/types';
 
-export type SwapAggregatorId = 'one-inch' | 'kyber';
+export type SwapAggregatorId = 'one-inch' | 'kyber' | 'odos';
 
 export type StrategySwapConfig = {
   blockProviders: SwapAggregatorId[];

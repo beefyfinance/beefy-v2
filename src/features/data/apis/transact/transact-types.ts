@@ -36,7 +36,6 @@ export type AllowanceTokenAmount = {
 export type ZapFeeNormal = {
   /** 0.0005 = 0.05% */
   value: number;
-  recipient?: string;
 };
 export type ZapFeeDiscounted = ZapFeeNormal & {
   original: number;
