@@ -772,11 +772,6 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
         throw new Error('BalancerStrategy: No build step in quote');
       }
 
-      // since there are two tokens, there must be at least 1 swap
-      if (swapQuotes.length < 1) {
-        throw new Error('BalancerStrategy: Not enough swaps');
-      }
-
       // Swaps
       if (swapQuotes.length) {
         if (swapQuotes.length > this.poolTokens.length) {
