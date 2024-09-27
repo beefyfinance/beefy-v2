@@ -1,7 +1,7 @@
 import { formatTokenDisplayCondensed } from '../../../../../helpers/format';
 import { makeStyles, useMediaQuery, type Theme } from '@material-ui/core';
 import { useAppSelector } from '../../../../../store';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   selectCurrentCowcentratedRangesByVaultId,
@@ -20,11 +20,11 @@ const useStyles = makeStyles(styles);
 type CurrentCowcentratedRangeIfAvailableProps = {
   vaultId: VaultEntity['id'];
   inverted: boolean;
-  setInverted: (inverted: boolean) => void;
+  toggleInverted: () => void;
 };
 
 export const CurrentCowcentratedRangeIfAvailable = memo<CurrentCowcentratedRangeIfAvailableProps>(
-  function CowcentratedRangesIfAvailable({ vaultId, inverted, setInverted }) {
+  function CowcentratedRangesIfAvailable({ vaultId, inverted, toggleInverted }) {
     const range = useAppSelector(state => selectCurrentCowcentratedRangesByVaultId(state, vaultId));
     if (
       !range ||
@@ -38,7 +38,7 @@ export const CurrentCowcentratedRangeIfAvailable = memo<CurrentCowcentratedRange
     return (
       <CurrentCowcentratedRange
         inverted={inverted}
-        setInverted={setInverted}
+        toggleInverted={toggleInverted}
         vaultId={vaultId}
         range={range}
       />
@@ -74,11 +74,11 @@ type CurrentCowcentratedRangeProps = {
   vaultId: VaultEntity['id'];
   range: CurrentCowcentratedRangeData;
   inverted: boolean;
-  setInverted: (inverted: boolean) => void;
+  toggleInverted: () => void;
 };
 
 export const CurrentCowcentratedRange = memo<CurrentCowcentratedRangeProps>(
-  function CowcentratedRanges({ vaultId, range, inverted, setInverted }) {
+  function CowcentratedRanges({ vaultId, range, inverted, toggleInverted }) {
     const classes = useStyles();
     const { t } = useTranslation();
     const { currentPrice, priceRangeMin, priceRangeMax } = range;
@@ -93,10 +93,6 @@ export const CurrentCowcentratedRange = memo<CurrentCowcentratedRangeProps>(
     const { minRange, currentRange, maxRange } = useMemo(() => {
       return convertRanges(priceRangeMin, currentPrice, priceRangeMax, inverted);
     }, [currentPrice, inverted, priceRangeMax, priceRangeMin]);
-
-    const toggleInverted = useCallback(() => {
-      setInverted(!inverted);
-    }, [inverted, setInverted]);
 
     return (
       <div className={classes.cowcentratedHeader}>
