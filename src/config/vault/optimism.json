@@ -1,5 +1,35 @@
 [
   {
+    "id": "velodrome-v2-wsteth-wusdm",
+    "name": "wstETH-wUSDM vLP V2",
+    "type": "standard",
+    "token": "vAMMV2-wstETH/wUSDM",
+    "tokenAddress": "0x1Ab0b1A5A239B524702EcE9cCe77E096d4daE75B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2wstETH-wUSDM",
+    "earnedTokenAddress": "0x5CCe54d05FeBaB4104D9F4109DfFed66479Dd36a",
+    "earnContractAddress": "0x5CCe54d05FeBaB4104D9F4109DfFed66479Dd36a",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-wsteth-wusdm",
+    "status": "active",
+    "createdAt": 1727434984,
+    "platformId": "velodrome",
+    "assets": ["wstETH", "wUSDM"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb&to=0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb&token1=0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812&type=-1&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x1Ab0b1A5A239B524702EcE9cCe77E096d4daE75B",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "velodrome-v2-wsteth-weeth",
     "name": "wstETH-weETH vLP V2",
     "type": "standard",
