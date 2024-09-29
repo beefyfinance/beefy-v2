@@ -988,6 +988,31 @@ export const config = {
     },
     stableCoins: ['USDC', 'USDT'],
   },
+  rootstock: {
+    name: 'Rootstock',
+    chainId: 30,
+    rpc: ['https://public-node.rsk.co'],
+    explorerUrl: 'https://rootstock.blockscout.com/',
+    multicallAddress: '0x0000000000000000000000000000000000000000',
+    multicall3Address: '0x0000000000000000000000000000000000000000',
+    appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
+    providerName: 'Sei',
+    walletSettings: {
+      chainId: `0x${parseInt('30', 10).toString(16)}`,
+      chainName: 'Rootstock',
+      nativeCurrency: {
+        name: 'RBTC',
+        symbol: 'RBTC',
+        decimals: 18,
+      },
+      rpcUrls: ['https://public-node.rsk.co'],
+      blockExplorerUrls: ['https://rootstock.blockscout.com/'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: [],
+  },
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,

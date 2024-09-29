@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'row' as const,
     flexWrap: 'nowrap' as const,
-    columnGap: '16px',
+    columnGap: '8px',
     rowGap: '16px',
   },
   icon: {
