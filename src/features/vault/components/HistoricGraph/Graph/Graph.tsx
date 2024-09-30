@@ -40,6 +40,7 @@ export type ChartProp<TStat extends ChartStat> = {
   stat: TStat;
   bucket: ApiTimeBucket;
   toggles: LineTogglesState;
+  inverted: boolean;
 };
 
 export const Graph = memo(function Graph<TStat extends ChartStat>({
@@ -48,17 +49,20 @@ export const Graph = memo(function Graph<TStat extends ChartStat>({
   stat,
   bucket,
   toggles,
+  inverted,
 }: ChartProp<TStat>) {
   const classes = useStyles();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const vaultType = vault.type;
-  const chartData = useChartData(stat, vaultId, oracleId, bucket);
+  const chartData = useChartData(stat, vaultId, oracleId, bucket, inverted);
   if (!chartData) {
     throw new Error('No chart data found.');
   }
 
-  const { min, max, avg, data } = chartData;
+  const { min, max, avg, data } = useMemo(() => {
+    return chartData;
+  }, [chartData]);
 
   const chartMargin = useMemo(() => {
     return { top: 14, right: isMobile ? 16 : 24, bottom: 0, left: isMobile ? 16 : 24 };

@@ -24,12 +24,14 @@ export type HistoricGraphProp = {
   vaultId: VaultEntity['id'];
   oracleId: TokenEntity['oracleId'];
   stat: ChartStat;
+  inverted: boolean;
 };
 
 export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithControls({
   vaultId,
   oracleId,
   stat,
+  inverted,
 }) {
   const classes = useStyles();
   const availableBuckets = useAppSelector(state =>
@@ -55,6 +57,7 @@ export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithContr
               stat={stat}
               bucket={bucket}
               toggles={lineToggles}
+              inverted={inverted}
             />
           </ErrorBoundary>
         ) : loading ? (

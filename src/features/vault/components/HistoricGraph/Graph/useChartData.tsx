@@ -24,7 +24,8 @@ export function useChartData<TStat extends ChartStat>(
   stat: TStat,
   vaultId: VaultEntity['id'],
   oracleId: TokenEntity['oracleId'],
-  bucket: ApiTimeBucket
+  bucket: ApiTimeBucket,
+  inverted: boolean
 ): ChartData<TStat> | undefined {
   const { startEpoch, maPeriods } = useMemo(() => getBucketParams(bucket), [bucket]);
   const data = useAppSelector(state =>
@@ -40,8 +41,13 @@ export function useChartData<TStat extends ChartStat>(
         const dataWithMa = data
           .map(point => ({
             ...point,
-            ma: ma.next(point.v),
-            ranges: [point.min, point.max] as [number, number],
+            v: inverted ? 1 / point.v : point.v,
+            min: inverted ? 1 / point.max : point.min,
+            max: inverted ? 1 / point.min : point.max,
+            ma: inverted ? 1 / ma.next(point.v) : ma.next(point.v),
+            ranges: inverted
+              ? ([1 / point.max, 1 / point.min] as [number, number])
+              : ([point.min, point.max] as [number, number]),
           }))
           .filter(d => d.t >= startEpoch);
 
@@ -65,5 +71,5 @@ export function useChartData<TStat extends ChartStat>(
     }
 
     return undefined;
-  }, [data, maPeriods, stat, startEpoch]);
+  }, [data, maPeriods, stat, inverted, startEpoch]);
 }
