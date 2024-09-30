@@ -1,5 +1,5 @@
 import type { VaultEntity } from '../../../data/entities/vault';
-import { memo, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
@@ -37,6 +37,12 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
     );
   }, [availableStats, t, vault.type]);
 
+  const [inverted, setInverted] = useState(false);
+
+  const toggleInverted = useCallback(() => {
+    setInverted(value => !value);
+  }, []);
+
   return (
     <Card className={classes.container}>
       <CardHeader className={classes.header}>
@@ -44,8 +50,14 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
         <StatSwitcher<ChartStat> stat={stat} options={options} onChange={setStat} />
       </CardHeader>
       <CardContent className={classes.content}>
-        {stat === 'clm' && <CurrentCowcentratedRangeIfAvailable vaultId={vaultId} />}
-        <GraphWithControls vaultId={vaultId} oracleId={oracleId} stat={stat} />
+        {stat === 'clm' && (
+          <CurrentCowcentratedRangeIfAvailable
+            inverted={inverted}
+            toggleInverted={toggleInverted}
+            vaultId={vaultId}
+          />
+        )}
+        <GraphWithControls inverted={inverted} vaultId={vaultId} oracleId={oracleId} stat={stat} />
       </CardContent>
     </Card>
   );

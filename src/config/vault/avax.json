@@ -2749,37 +2749,6 @@
     "network": "avax"
   },
   {
-    "id": "png-eth-avax-eol",
-    "name": "ETH-AVAX LP",
-    "type": "standard",
-    "token": "ETH-AVAX LP",
-    "tokenAddress": "0x1aCf1583bEBdCA21C8025E172D8E8f2817343d65",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pangolin",
-    "earnedToken": "mooPangolinETH-AVAX",
-    "earnedTokenAddress": "0xDA875A511860f2752B891677489d08CaEDac00EA",
-    "earnContractAddress": "0xDA875A511860f2752B891677489d08CaEDac00EA",
-    "oracle": "lps",
-    "oracleId": "png-eth-avax",
-    "status": "eol",
-    "createdAt": 1615742564,
-    "retireReason": "rewards",
-    "retiredAt": 1630487344,
-    "platformId": "pangolin",
-    "assets": ["ETH", "AVAX"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15",
-    "addLiquidityUrl": "https://app.pangolin.exchange/#/add/AVAX/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15",
-    "removeLiquidityUrl": "https://app.pangolin.exchange/#/remove/AVAX/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15",
-    "network": "avax",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "avax-pangolin"
-      }
-    ]
-  },
-  {
     "id": "mai-qi-wavax",
     "name": "QI-AVAX LP",
     "type": "standard",
