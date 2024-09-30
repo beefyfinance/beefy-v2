@@ -990,6 +990,7 @@ export const config = {
   },
   rootstock: {
     name: 'Rootstock',
+    new: true,
     chainId: 30,
     rpc: ['https://public-node.rsk.co'],
     explorerUrl: 'https://rootstock.blockscout.com/',
