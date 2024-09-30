@@ -119,7 +119,6 @@
       }
     ]
   },
-
   {
     "id": "velo-cow-op-wsteth-op-vault",
     "name": "wstETH-OP",
@@ -7746,7 +7745,9 @@
     "earnContractAddress": "0xD9E277eA320C53dE06C535f0D922A76a68CB9A9C",
     "oracle": "lps",
     "oracleId": "velodrome-v2-wusdr-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727731775,
+    "retireReason": "tvl",
     "createdAt": 1688037724,
     "platformId": "velodrome",
     "assets": ["omultiwUSDR", "opUSDCe"],
