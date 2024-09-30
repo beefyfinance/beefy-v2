@@ -35,6 +35,10 @@ export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
     const strategyAddress = useAppSelector(state =>
       selectVaultStrategyAddressOrUndefined(state, vault.cowcentratedIds.clm)
     );
+    const clmVaultStrategyAddress = useAppSelector(state =>
+      selectVaultStrategyAddressOrUndefined(state, vaultId)
+    );
+
     const showApy = apys && apys.totalApy > 0 && shouldVaultShowInterest(vault);
 
     return (
@@ -42,12 +46,6 @@ export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
         title={<CardTitle title={t('Vault-Strategy')} />}
         actions={
           <>
-            {strategyAddress ? (
-              <LinkButton
-                href={explorerAddressUrl(chain, strategyAddress)}
-                text={t('Strat-Contract')}
-              />
-            ) : null}
             <LinkButton
               href={explorerAddressUrl(
                 chain,
@@ -55,6 +53,18 @@ export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
               )}
               text={t('Strat-CLMContract')}
             />
+            {strategyAddress ? (
+              <LinkButton
+                href={explorerAddressUrl(chain, strategyAddress)}
+                text={t('Strat-CLM-Strategy')}
+              />
+            ) : null}
+            {clmVaultStrategyAddress && isCowcentratedStandardVault(vault) ? (
+              <LinkButton
+                href={explorerAddressUrl(chain, clmVaultStrategyAddress)}
+                text={t('Strat-CLM-Strategy-Vault')}
+              />
+            ) : null}
             {isCowcentratedGovVault(vault) ? (
               <LinkButton
                 href={explorerAddressUrl(chain, vault.contractAddress)}
