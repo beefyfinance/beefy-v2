@@ -135,4 +135,7 @@ export const styles = (theme: Theme) => ({
   'headerMM-system9': {
     backgroundColor: 'rgba(243, 243, 200, 0.5)',
   },
+  'headerMM-rootstock': {
+    backgroundColor: 'rgba(28, 18, 44, 0.4)',
+  },
 });
