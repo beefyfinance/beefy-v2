@@ -33,7 +33,7 @@ export const styles = (theme: Theme) => ({
       display: 'block',
       position: 'absolute' as const,
       top: '50%',
-      left: '0',
+      left: '-1px',
       margin: `${20 / -2}px 0 0 0`,
       height: '20px',
       width: '1px',
