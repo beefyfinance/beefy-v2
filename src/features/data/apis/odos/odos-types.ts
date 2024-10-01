@@ -81,5 +81,5 @@ export type SwapResponse = {
 
 export interface IOdosApi {
   postQuote(request: QuoteRequest): Promise<QuoteResponse>;
-  postSwap(request: any): Promise<any>;
+  postSwap(request: SwapRequest): Promise<SwapResponse>;
 }
