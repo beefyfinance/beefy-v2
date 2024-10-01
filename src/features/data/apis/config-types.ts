@@ -189,6 +189,7 @@ type ChainId =
   | 'manta'
   | 'real'
   | 'sei'
+  | 'rootstock'
   | 'aurora'
   | 'emerald'
   | 'celo'

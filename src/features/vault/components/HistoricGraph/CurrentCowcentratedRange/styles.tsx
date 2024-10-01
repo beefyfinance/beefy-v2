@@ -12,6 +12,7 @@ export const styles = (theme: Theme) => ({
   cowcentratedStat: {
     backgroundColor: theme.palette.background.contentPrimary,
     padding: '16px 24px',
+    position: 'relative' as const,
   },
   label: {
     ...theme.typography['body-sm-med'],
@@ -39,5 +40,14 @@ export const styles = (theme: Theme) => ({
   fullWidth: {
     widht: '100%',
     marginBottom: '1px',
+  },
+  inverted: {
+    position: 'absolute' as const,
+    top: 8,
+    right: 8,
+  },
+  invertButton: {
+    color: theme.palette.text.primary,
+    padding: '0px 2px',
   },
 });

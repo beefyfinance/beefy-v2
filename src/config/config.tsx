@@ -988,6 +988,32 @@ export const config = {
     },
     stableCoins: ['USDC', 'USDT'],
   },
+  rootstock: {
+    name: 'Rootstock',
+    chainId: 30,
+    rpc: ['https://rootstock-mainnet.public.blastapi.io'],
+    explorerUrl: 'https://rootstock.blockscout.com/',
+    multicallAddress: '0x5Eb5CcF31F73ECBa126846fd264538576e01F89b',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x8EfD3599488542Ec1719567c698a97Fb4e3751a1',
+    providerName: 'Rootstock',
+    new: true,
+    walletSettings: {
+      chainId: `0x${parseInt('30', 10).toString(16)}`,
+      chainName: 'Rootstock',
+      nativeCurrency: {
+        name: 'RBTC',
+        symbol: 'RBTC',
+        decimals: 18,
+      },
+      rpcUrls: ['https://rootstock-mainnet.public.blastapi.io'],
+      blockExplorerUrls: ['https://rootstock.blockscout.com/'],
+    },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['rUSDT', 'DOC'],
+  },
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,

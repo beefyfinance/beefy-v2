@@ -1,5 +1,29 @@
 [
   {
+    "id": "equilibria-arb-rseth-26dec24",
+    "name": "rsETH 26Dec24",
+    "token": "rsETH 26Dec24",
+    "tokenAddress": "0xcB471665BF23B2Ac6196D84D947490fd5571215f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0x0da91e452BdbE890B3eba9Eb5C0778DA9AB28E51",
+    "earnedToken": "mooEqb-rsETH-26DEC24",
+    "earnedTokenAddress": "0x0da91e452BdbE890B3eba9Eb5C0778DA9AB28E51",
+    "oracle": "lps",
+    "oracleId": "equilibria-arb-rseth-26dec24",
+    "status": "active",
+    "createdAt": 1727692068,
+    "platformId": "equilibria",
+    "assets": ["rsETH"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xcB471665BF23B2Ac6196D84D947490fd5571215f/zap/in?chain=arbitrum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xcB471665BF23B2Ac6196D84D947490fd5571215f/zap/out?chain=arbitrum",
+    "network": "arbitrum",
+    "pointStructureIds": ["kelp"]
+  },
+  {
     "id": "equilibria-arb-gdai-27mar25",
     "name": "gDAI 27Mar25",
     "token": "gDAI 27Mar25",
@@ -230,7 +254,9 @@
     "earnedTokenAddress": "0xA74362f3A55a2793A45a28b5397d90584d653fE9",
     "oracle": "lps",
     "oracleId": "aura-arb-ausdc-wusdm",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727731774,
+    "retireReason": "tvl",
     "createdAt": 1725540995,
     "platformId": "aura",
     "assets": ["stataArbUSDCn", "wUSDM"],
@@ -17440,7 +17466,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x36bf227d6bac96e2ab1ebb5492ecec69c691943f000200000000000000000316/remove-liquidity",
     "network": "arbitrum"
   },
@@ -18418,7 +18444,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xfb5e6d0c1dfed2ba000fbc040ab8df3615ac329c000000000000000000000159/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xfb5e6d0c1dfed2ba000fbc040ab8df3615ac329c000000000000000000000159/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xfb5e6d0c1dfed2ba000fbc040ab8df3615ac329c000000000000000000000159/remove-liquidity",
     "network": "arbitrum"
   },
@@ -18450,7 +18476,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x178e029173417b1f9c8bc16dcec6f697bc323746000200000000000000000158/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x178e029173417b1f9c8bc16dcec6f697bc323746000200000000000000000158/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x178e029173417b1f9c8bc16dcec6f697bc323746000200000000000000000158/remove-liquidity",
     "network": "arbitrum"
   },
@@ -18482,7 +18508,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd40002000000000000000000ba/remove-liquidity",
     "network": "arbitrum"
   },
@@ -18698,7 +18724,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x64541216bafffeec8ea535bb71fbc927831d0595000100000000000000000002/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x64541216bafffeec8ea535bb71fbc927831d0595000100000000000000000002/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x64541216bafffeec8ea535bb71fbc927831d0595000100000000000000000002/remove-liquidity",
     "network": "arbitrum"
   },
