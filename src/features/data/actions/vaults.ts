@@ -18,7 +18,6 @@ import {
 import { getVaultNames } from '../utils/vault-utils';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
 import { isDefined } from '../utils/array-utils';
-import type { BalancerStrategyConfig } from '../apis/transact/strategies/strategy-configs';
 
 export interface FulfilledAllVaultsPayload {
   byChainId: {

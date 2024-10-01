@@ -227,19 +227,7 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xff38cc0ce0de4476c5a3e78675b48420a851035b000200000000000000000593/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xff38cc0ce0de4476c5a3e78675b48420a851035b000200000000000000000593/remove-liquidity",
-    "network": "arbitrum",
-    "zaps": [
-      {
-        "strategyId": "balancer",
-        "ammId": "arbitrum-balancer",
-        "poolId": "0xff38cc0ce0de4476c5a3e78675b48420a851035b000200000000000000000593",
-        "poolType": "gyroe",
-        "tokens": [
-          "0xCA5d8F8a8d49439357d3CF46Ca2e720702F132b8",
-          "0xD9FBA68D89178e3538e708939332c79efC540179"
-        ]
-      }
-    ]
+    "network": "arbitrum"
   },
   {
     "id": "aura-arb-ausdc-wusdm",
