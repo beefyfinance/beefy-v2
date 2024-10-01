@@ -56,13 +56,13 @@ export const styles = (theme: Theme) => ({
     display: 'block',
     height: '24px',
     width: '24px',
+    gridColumnStart: 1,
   },
   grid: {},
   tooltipTokens: {
     display: 'grid',
     gap: '8px',
-    gridTemplateColumns:
-      'min-content 1fr min-content min-content min-content min-content min-content',
+    gridTemplateColumns: 'min-content 1fr min-content min-content min-content min-content',
     alignItems: 'center' as const,
   },
   tooltipToken: {},
