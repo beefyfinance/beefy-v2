@@ -1,5 +1,13 @@
 import { makeStyles } from '@material-ui/core';
-import { memo, type MouseEvent, type ReactNode, useCallback, useEffect, useState } from 'react';
+import {
+  type CSSProperties,
+  memo,
+  type MouseEvent,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { formatLargeUsd } from '../../../../helpers/format';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import {
@@ -10,8 +18,8 @@ import { styles } from './styles';
 import bifiIcon from '../../../../images/single-assets/BIFI.png';
 import mooIcon from '../../../../images/single-assets/mooBIFI.png';
 import opIcon from '../../../../images/networks/optimism.svg';
+import baseIcon from '../../../../images/networks/base.svg';
 import ethIcon from '../../../../images/networks/ethereum.svg';
-import oneInchIcon from '../../../../images/icons/one-inch.svg';
 import llamaSwapIcon from '../../../../images/icons/llama-swap.png';
 import { Tooltip, TRIGGERS } from '../../../Tooltip';
 import clsx from 'clsx';
@@ -38,8 +46,7 @@ type Token = {
     url: string;
   };
   walletIconUrl: string;
-  oneInchUrl: string;
-  llamaSwapUrl: string;
+  llamaSwapUrl?: string;
 };
 
 const tokens: Token[] = [
@@ -55,7 +62,6 @@ const tokens: Token[] = [
       url: 'https://etherscan.io/token/0xB1F1ee126e9c96231Cc3d3fAD7C08b4cf873b1f1',
     },
     walletIconUrl: 'https://beefy.com/icons/128/BIFI.png',
-    oneInchUrl: 'https://app.1inch.io/#/1/simple/swap/ETH/BIFI',
     llamaSwapUrl:
       'https://swap.defillama.com/?chain=ethereum&from=0x0000000000000000000000000000000000000000&to=0xb1f1ee126e9c96231cc3d3fad7c08b4cf873b1f1',
   },
@@ -71,9 +77,21 @@ const tokens: Token[] = [
       url: 'https://optimistic.etherscan.io/token/0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
     },
     walletIconUrl: 'https://beefy.com/icons/128/mooBIFI.png',
-    oneInchUrl: 'https://app.1inch.io/#/10/simple/swap/ETH/mooBIFI',
     llamaSwapUrl:
       'https://swap.defillama.com/?chain=optimism&from=0x0000000000000000000000000000000000000000&to=0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
+  },
+  {
+    symbol: 'mooBIFI',
+    address: '0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
+    oracleId: 'mooBIFI',
+    chainId: 'base',
+    icon: mooIcon,
+    explorer: {
+      name: 'Etherscan',
+      icon: baseIcon,
+      url: 'https://basescan.org/token/0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
+    },
+    walletIconUrl: 'https://beefy.com/icons/128/mooBIFI.png',
   },
 ];
 
@@ -83,6 +101,7 @@ type AddToWalletProps = {
   customIconUrl: string;
   chainId: ChainEntity['id'];
   children: ReactNode;
+  style?: CSSProperties;
 };
 
 const AddToWallet = memo<AddToWalletProps>(function AddToWallet({
@@ -91,6 +110,7 @@ const AddToWallet = memo<AddToWalletProps>(function AddToWallet({
   title,
   chainId,
   children,
+  style,
 }) {
   const dispatch = useAppDispatch();
   const classes = useStyles();
@@ -105,7 +125,7 @@ const AddToWallet = memo<AddToWalletProps>(function AddToWallet({
   }, [dispatch, tokenAddress, chainId, customIconUrl]);
 
   return (
-    <button title={title} onClick={handleAddToken} className={classes.iconLink}>
+    <button title={title} onClick={handleAddToken} className={classes.iconLink} style={style}>
       {children}
     </button>
   );
@@ -135,17 +155,7 @@ type TooltipTokenProps = {
 };
 
 const TooltipToken = memo<TooltipTokenProps>(function TooltipToken({ token }) {
-  const {
-    symbol,
-    oracleId,
-    icon,
-    explorer,
-    llamaSwapUrl,
-    oneInchUrl,
-    address,
-    walletIconUrl,
-    chainId,
-  } = token;
+  const { symbol, oracleId, icon, explorer, llamaSwapUrl, address, walletIconUrl, chainId } = token;
   const classes = useStyles();
   const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, oracleId));
 
@@ -163,24 +173,17 @@ const TooltipToken = memo<TooltipTokenProps>(function TooltipToken({ token }) {
       >
         <img alt={explorer.name} src={explorer.icon} height={24} className={classes.icon} />
       </a>
-      <a
-        href={llamaSwapUrl}
-        target="_blank"
-        rel="noopener"
-        title={`Buy via LlamaSwap`}
-        className={classes.iconLink}
-      >
-        <img alt={'LlamaSwap'} src={llamaSwapIcon} height={24} className={classes.icon} />
-      </a>
-      <a
-        href={oneInchUrl}
-        target="_blank"
-        rel="noopener"
-        title={`Buy via 1inch`}
-        className={classes.iconLink}
-      >
-        <img alt={'1inch'} src={oneInchIcon} height={24} className={classes.icon} />
-      </a>
+      {llamaSwapUrl ? (
+        <a
+          href={llamaSwapUrl}
+          target="_blank"
+          rel="noopener"
+          title={`Buy via LlamaSwap`}
+          className={classes.iconLink}
+        >
+          <img alt={'LlamaSwap'} src={llamaSwapIcon} height={24} className={classes.icon} />
+        </a>
+      ) : null}
       <AddToWallet
         title={`Add to Wallet`}
         chainId={chainId}
