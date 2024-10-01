@@ -83,7 +83,7 @@ const oldValidRewardPoolOwners = {
   ],
 };
 
-const nonHarvestOnDepositChains = ['ethereum', 'avax'];
+const nonHarvestOnDepositChains = ['ethereum', 'avax', 'rootstock'];
 const nonHarvestOnDepositPools = [
   'venus-bnb',
   'equilibria-arb-silo-usdc.e',
