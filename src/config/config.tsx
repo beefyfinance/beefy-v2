@@ -14,11 +14,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('1', 10).toString(16)}`,
       chainName: 'ethereum',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
+      native: 'ETH',
       rpcUrls: ['https://rpc.ankr.com/eth'],
       blockExplorerUrls: ['https://etherscan.io/'],
     },
@@ -92,11 +88,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('137', 10).toString(16)}`,
       chainName: 'Polygon PoS',
-      nativeCurrency: {
-        name: 'MATIC',
-        symbol: 'MATIC',
-        decimals: 18,
-      },
+      native: 'POL',
       rpcUrls: ['https://polygon-bor-rpc.publicnode.com'],
       blockExplorerUrls: ['https://polygonscan.com/'],
     },
@@ -166,11 +158,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('56', 10).toString(16)}`,
       chainName: 'BSC Mainnet',
-      nativeCurrency: {
-        name: 'Binance Coin',
-        symbol: 'BNB',
-        decimals: 18,
-      },
+      native: 'BNB',
       rpcUrls: ['https://bsc-dataseed.binance.org'],
       blockExplorerUrls: ['https://bscscan.com/'],
     },
@@ -228,11 +216,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('10', 10).toString(16)}`,
       chainName: 'Optimism',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
+      native: 'ETH',
       rpcUrls: ['https://mainnet.optimism.io'],
       blockExplorerUrls: ['https://optimistic.etherscan.io/'],
     },
@@ -293,11 +277,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('250', 10).toString(16)}`,
       chainName: 'Fantom Opera',
-      nativeCurrency: {
-        name: 'FTM',
-        symbol: 'FTM',
-        decimals: 18,
-      },
+      native: 'FTM',
       rpcUrls: ['https://fantom-mainnet.public.blastapi.io'],
       blockExplorerUrls: ['https://ftmscan.com/'],
     },
@@ -346,11 +326,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('42161', 10).toString(16)}`,
       chainName: 'Arbitrum One',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
+      native: 'ETH',
       rpcUrls: ['https://arb1.arbitrum.io/rpc'],
       blockExplorerUrls: ['https://arbiscan.io/'],
     },
@@ -425,11 +401,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('43114', 10).toString(16)}`,
       chainName: 'Avalanche C-Chain',
-      nativeCurrency: {
-        name: 'AVAX',
-        symbol: 'AVAX',
-        decimals: 18,
-      },
+      native: 'AVAX',
       rpcUrls: ['https://rpc.ankr.com/avalanche'],
       blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
     },
@@ -478,11 +450,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('25', 10).toString(16)}`,
       chainName: 'Cronos',
-      nativeCurrency: {
-        name: 'CRO',
-        symbol: 'CRO',
-        decimals: 18,
-      },
+      native: 'CRO',
       rpcUrls: ['https://evm.cronos.org/'],
       blockExplorerUrls: ['https://cronoscan.com/'],
     },
@@ -506,11 +474,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('1284', 10).toString(16)}`,
       chainName: 'Moonbeam',
-      nativeCurrency: {
-        name: 'GLMR',
-        symbol: 'GLMR',
-        decimals: 18,
-      },
+      native: 'GLMR',
       rpcUrls: ['https://rpc.api.moonbeam.network'],
       blockExplorerUrls: ['https://moonscan.io/'],
     },
@@ -552,11 +516,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('1285', 10).toString(16)}`,
       chainName: 'Moonriver',
-      nativeCurrency: {
-        name: 'Moonriver',
-        symbol: 'MOVR',
-        decimals: 18,
-      },
+      native: 'MOVR',
       rpcUrls: ['https://rpc.api.moonriver.moonbeam.network/'],
       blockExplorerUrls: ['https://moonriver.moonscan.io/'],
     },
@@ -580,11 +540,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('1088', 10).toString(16)}`,
       chainName: 'Metis',
-      nativeCurrency: {
-        name: 'METIS',
-        symbol: 'METIS',
-        decimals: 18,
-      },
+      native: 'METIS',
       rpcUrls: ['https://andromeda.metis.io/?owner=1088'],
       blockExplorerUrls: ['https://andromeda-explorer.metis.io/'],
     },
@@ -605,11 +561,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('2222', 10).toString(16)}`,
       chainName: 'kava',
-      nativeCurrency: {
-        name: 'KAVA',
-        symbol: 'KAVA',
-        decimals: 18,
-      },
+      native: 'KAVA',
       rpcUrls: ['https://evm.kava.io'],
       blockExplorerUrls: ['https://explorer.kava.io/'],
     },
@@ -630,11 +582,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('7700', 10).toString(16)}`,
       chainName: 'canto',
-      nativeCurrency: {
-        name: 'CANTO',
-        symbol: 'CANTO',
-        decimals: 18,
-      },
+      native: 'CANTO',
       rpcUrls: ['https://canto-rpc.ansybl.io'],
       blockExplorerUrls: ['https://tuber.build/'],
     },
@@ -656,11 +604,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('324', 10).toString(16)}`,
       chainName: 'zksync',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
+      native: 'ETH',
       rpcUrls: ['https://mainnet.era.zksync.io'],
       blockExplorerUrls: ['https://explorer.zksync.io/'],
     },
@@ -681,11 +625,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('1101', 10).toString(16)}`,
       chainName: 'Polygon zkEVM',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
+      native: 'ETH',
       rpcUrls: ['https://rpc.ankr.com/polygon_zkevm'],
       blockExplorerUrls: ['https://zkevm.polygonscan.com/'],
     },
@@ -706,11 +646,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('8453', 10).toString(16)}`,
       chainName: 'Base',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
+      native: 'ETH',
       rpcUrls: ['https://rpc.ankr.com/base'],
       blockExplorerUrls: ['https://basescan.org/'],
     },
@@ -764,11 +700,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('100', 10).toString(16)}`,
       chainName: 'Gnosis',
-      nativeCurrency: {
-        name: 'XDAI',
-        symbol: 'XDAI',
-        decimals: 18,
-      },
+      native: 'XDAI',
       rpcUrls: ['https://gnosis.oat.farm'],
       blockExplorerUrls: ['https://gnosisscan.io/'],
     },
@@ -789,11 +721,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('59144', 10).toString(16)}`,
       chainName: 'Linea',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
+      native: 'ETH',
       rpcUrls: ['https://linea.blockpi.network/v1/rpc/public'],
       blockExplorerUrls: ['https://lineascan.build'],
     },
@@ -818,11 +746,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('5000', 10).toString(16)}`,
       chainName: 'Mantle',
-      nativeCurrency: {
-        name: 'Mantle',
-        symbol: 'MNT',
-        decimals: 18,
-      },
+      native: 'MNT',
       rpcUrls: ['https://rpc.mantle.xyz'],
       blockExplorerUrls: ['https://mantlescan.xyz'],
     },
@@ -843,11 +767,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('252', 10).toString(16)}`,
       chainName: 'Fraxtal',
-      nativeCurrency: {
-        name: 'Frax ETH',
-        symbol: 'frxETH',
-        decimals: 18,
-      },
+      native: 'frxETH',
       rpcUrls: ['https://rpc.frax.com'],
       blockExplorerUrls: ['https://fraxscan.com'],
     },
@@ -887,11 +807,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('34443', 10).toString(16)}`,
       chainName: 'Mode',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
+      native: 'ETH',
       rpcUrls: ['https://mainnet.mode.network'],
       blockExplorerUrls: ['https://explorer.mode.network/'],
     },
@@ -916,11 +832,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('169', 10).toString(16)}`,
       chainName: 'Manta Pacific',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
+      native: 'ETH',
       rpcUrls: ['https://pacific-rpc.manta.network/http'],
       blockExplorerUrls: ['https://pacific-explorer.manta.network/'],
     },
@@ -945,11 +857,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('111188', 10).toString(16)}`,
       chainName: 'Re.al',
-      nativeCurrency: {
-        name: 'reETH',
-        symbol: 'reETH',
-        decimals: 18,
-      },
+      native: 'reETH',
       rpcUrls: ['https://real.drpc.org'],
       blockExplorerUrls: ['https://explorer.re.al/'],
     },
@@ -974,11 +882,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('1329', 10).toString(16)}`,
       chainName: 'Sei',
-      nativeCurrency: {
-        name: 'SEI',
-        symbol: 'SEI',
-        decimals: 18,
-      },
+      native: 'SEI',
       rpcUrls: ['https://evm-rpc.sei-apis.com'],
       blockExplorerUrls: ['https://seitrace.com/'],
     },
@@ -1001,11 +905,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('30', 10).toString(16)}`,
       chainName: 'Rootstock',
-      nativeCurrency: {
-        name: 'RBTC',
-        symbol: 'RBTC',
-        decimals: 18,
-      },
+      native: 'RBTC',
       rpcUrls: ['https://rootstock-mainnet.public.blastapi.io'],
       blockExplorerUrls: ['https://rootstock.blockscout.com/'],
     },
@@ -1027,11 +927,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('1313161554', 10).toString(16)}`,
       chainName: 'Aurora Mainnet',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
+      native: 'ETH',
       rpcUrls: ['https://mainnet.aurora.dev'],
       blockExplorerUrls: ['https://aurorascan.dev/'],
     },
@@ -1053,11 +949,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('42262', 10).toString(16)}`,
       chainName: 'Oasis Emerald',
-      nativeCurrency: {
-        name: 'Oasis Protocol',
-        symbol: 'ROSE',
-        decimals: 18,
-      },
+      native: 'ROSE',
       rpcUrls: ['https://emerald.oasis.dev'],
       blockExplorerUrls: ['https://explorer.emerald.oasis.dev/'],
     },
@@ -1079,11 +971,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('42220', 10).toString(16)}`,
       chainName: 'Celo',
-      nativeCurrency: {
-        name: 'CELO',
-        symbol: 'CELO',
-        decimals: 18,
-      },
+      native: 'CELO',
       rpcUrls: ['https://forno.celo.org'],
       blockExplorerUrls: ['https://celoscan.io/'],
     },
@@ -1105,11 +993,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('128', 10).toString(16)}`,
       chainName: 'HECO Mainnet',
-      nativeCurrency: {
-        name: 'Huobi Token',
-        symbol: 'HT',
-        decimals: 18,
-      },
+      native: 'HT',
       rpcUrls: ['https://http-mainnet.hecochain.com'],
       blockExplorerUrls: ['https://scan.hecochain.com/'],
     },
@@ -1134,11 +1018,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('1666600000', 10).toString(16)}`,
       chainName: 'Harmony One',
-      nativeCurrency: {
-        name: 'HARMONY',
-        symbol: 'ONE',
-        decimals: 18,
-      },
+      native: 'ONE',
       rpcUrls: ['https://api.s0.t.hmny.io/'],
       blockExplorerUrls: ['https://explorer.harmony.one/'],
     },
@@ -1160,11 +1040,7 @@ export const config = {
     walletSettings: {
       chainId: `0x${parseInt('122', 10).toString(16)}`,
       chainName: 'Fuse',
-      nativeCurrency: {
-        name: 'FUSE',
-        symbol: 'FUSE',
-        decimals: 18,
-      },
+      native: 'FUSE',
       rpcUrls: ['https://rpc.fuse.io'],
       blockExplorerUrls: ['https://explorer.fuse.io/'],
     },

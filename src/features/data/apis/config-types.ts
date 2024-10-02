@@ -213,11 +213,7 @@ export type ChainConfig = {
   walletSettings: {
     chainId: string;
     chainName: string;
-    nativeCurrency: {
-      name: string;
-      symbol: string;
-      decimals: number;
-    };
+    native: string;
     rpcUrls: string[];
     blockExplorerUrls: string[];
   };

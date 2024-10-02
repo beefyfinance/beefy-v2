@@ -7,8 +7,8 @@ export function buildViemChain(chain: ChainEntity): Chain {
     name: chain.name,
     nativeCurrency: {
       decimals: 18,
-      name: chain.walletSettings.nativeCurrency.name,
-      symbol: chain.walletSettings.nativeCurrency.symbol,
+      name: chain.walletSettings.native,
+      symbol: chain.walletSettings.native,
     },
     rpcUrls: {
       public: { http: chain.rpc },
