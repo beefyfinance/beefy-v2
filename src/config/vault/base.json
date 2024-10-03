@@ -47,7 +47,7 @@
     "status": "active",
     "createdAt": 1727954430,
     "platformId": "aerodrome",
-    "assets": ["WIF", "WETH"],
+    "assets": ["WETH", "ZRO"],
     "risks": [],
     "strategyTypeId": "pool",
     "network": "base",
