@@ -114,7 +114,7 @@ function useCowcentratedVaultData(
 ) {
   const vault = useAppSelector(state => selectStandardCowcentratedVaultById(state, vaultId));
   const clmData = useCowcentratedData(
-    vault.cowcentratedId,
+    vault.cowcentratedIds.clm,
     depositTokenOracleId,
     token0OracleId,
     token1OracleId,

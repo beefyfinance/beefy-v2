@@ -118,5 +118,10 @@
     "chainId": "sei",
     "router": "0x0465375274301FFCDf3274e59544d535e03B3688",
     "manager": "0x7B9f2Da828b12fCF7B4154465979a89830C8F57d"
+  },
+  {
+    "chainId": "rootstock",
+    "router": "0x2E0A7064A5bA7B9b7499997D91885BaDd5FC45f6",
+    "manager": "0xC01cE221D1da322A5B8322fC195b407FEa32240E"
   }
 ]

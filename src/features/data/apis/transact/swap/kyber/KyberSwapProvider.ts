@@ -51,13 +51,6 @@ export class KyberSwapProvider implements ISwapProvider {
       saveGas: false,
     };
 
-    if (config.fee && config.fee.value > 0) {
-      quoteRequest.feeAmount = (config.fee.value * 10000).toString(10); // convert to bps (0.0005 -> 5bps aka 0.05%)
-      quoteRequest.isInBps = true;
-      quoteRequest.chargeFeeBy = 'currency_in';
-      quoteRequest.feeReceiver = config.fee.recipient;
-    }
-
     const quote = await api.getQuote(quoteRequest);
 
     return {

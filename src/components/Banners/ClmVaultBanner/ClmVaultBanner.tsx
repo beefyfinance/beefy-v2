@@ -28,11 +28,11 @@ export const ClmVaultBanner = memo<ClmVaultBannerProps>(function ClmVaultBanner(
     setHideBanner(true);
   }, [setHideBanner]);
 
-  if (!hideBanner && isCowcentratedGovVault(maybeClmPool) && maybeClmPool.cowcentratedStandardId) {
+  if (!hideBanner && isCowcentratedGovVault(maybeClmPool) && maybeClmPool.cowcentratedIds.vault) {
     return (
       <ClmVaultBannerImpl
         pool={maybeClmPool}
-        vaultId={maybeClmPool.cowcentratedStandardId}
+        vaultId={maybeClmPool.cowcentratedIds.vault}
         onClose={closeBanner}
       />
     );

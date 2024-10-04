@@ -193,7 +193,8 @@
     "earnContractAddress": "0x0258B57559e4EC229e3a710D2a55447eaea2312D",
     "oracle": "lps",
     "oracleId": "aura-shezeth-wsteth",
-    "status": "active",
+    "status": "paused",
+    "pausedAt": 1726869336,
     "createdAt": 1724600411,
     "platformId": "aura",
     "assets": ["ShezETH", "wstETH"],
@@ -216,7 +217,8 @@
     "earnContractAddress": "0xD7475b5941536ea4236e923997107BAaDa1Fb5E7",
     "oracle": "lps",
     "oracleId": "aura-shezusd-sdai",
-    "status": "active",
+    "status": "paused",
+    "pausedAt": 1726869336,
     "createdAt": 1724600411,
     "platformId": "aura",
     "assets": ["ShezUSD", "sDAI"],
@@ -645,7 +647,9 @@
     "earnedTokenAddress": "0xbacaDaFD16bc062aE0c9818722F04B868d7d5392",
     "oracle": "lps",
     "oracleId": "convex-usd3-eusd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727731740,
+    "retireReason": "rewards",
     "createdAt": 1721802504,
     "platformId": "convex",
     "assets": ["USD3", "eUSD"],
@@ -684,7 +688,8 @@
     "earnedTokenAddress": "0x46EA5993fdDC27E4f770eFfB6921F401101Cbd59",
     "oracle": "lps",
     "oracleId": "curve-shezeth-eth",
-    "status": "active",
+    "status": "paused",
+    "pausedAt": 1726863410,
     "createdAt": 1721301457,
     "platformId": "curve",
     "assets": ["ShezETH", "ETH"],
@@ -723,7 +728,8 @@
     "earnedTokenAddress": "0x93027914546190635C51647FC9270f0025dA8C53",
     "oracle": "lps",
     "oracleId": "curve-shezusd-usdc",
-    "status": "active",
+    "status": "paused",
+    "pausedAt": 1726863410,
     "createdAt": 1721301442,
     "platformId": "curve",
     "assets": ["ShezUSD", "USDC"],
@@ -1490,7 +1496,9 @@
     "earnContractAddress": "0x576D38f58cfcd6499e815095E589537088028cFB",
     "oracle": "lps",
     "oracleId": "curve-lend-crv-crvusd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727731740,
+    "retireReason": "rewards",
     "createdAt": 1712810154,
     "platformId": "curve-lend",
     "assets": ["crvUSD"],
@@ -2723,7 +2731,8 @@
     "strategyTypeId": "bifi-vault",
     "network": "ethereum",
     "bridged": {
-      "optimism": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434"
+      "optimism": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+      "base": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434"
     },
     "zaps": [
       {
@@ -2894,7 +2903,7 @@
     "assets": ["R", "bbsDAI"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xbf2ef8bdc2fc0f3203b3a01778e3ec5009aeef3300000000000000000000058d/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xbf2ef8bdc2fc0f3203b3a01778e3ec5009aeef3300000000000000000000058d/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xbf2ef8bdc2fc0f3203b3a01778e3ec5009aeef3300000000000000000000058d/remove-liquidity",
     "network": "ethereum"
   },
@@ -2919,7 +2928,7 @@
     "assets": ["GHO", "LUSD"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x3fa8c89704e5d07565444009e5d9e624b40be813000000000000000000000599/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x3fa8c89704e5d07565444009e5d9e624b40be813000000000000000000000599/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x3fa8c89704e5d07565444009e5d9e624b40be813000000000000000000000599/remove-liquidity",
     "network": "ethereum"
   },
@@ -2944,7 +2953,7 @@
     "assets": ["GHO", "bbaUSD"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xc2b021133d1b0cf07dba696fd5dd89338428225b000000000000000000000598/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xc2b021133d1b0cf07dba696fd5dd89338428225b000000000000000000000598/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xc2b021133d1b0cf07dba696fd5dd89338428225b000000000000000000000598/remove-liquidity",
     "network": "ethereum"
   },
@@ -2969,7 +2978,7 @@
     "assets": ["ETHx", "bbaETH"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x4cbde5c4b4b53ebe4af4adb85404725985406163000000000000000000000595/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x4cbde5c4b4b53ebe4af4adb85404725985406163000000000000000000000595/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x4cbde5c4b4b53ebe4af4adb85404725985406163000000000000000000000595/remove-liquidity",
     "network": "ethereum"
   },
@@ -2992,7 +3001,7 @@
     "assets": ["wstETH", "rETH", "sfrxETH"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x42ed016f826165c2e5976fe5bc3df540c5ad0af700000000000000000000058b/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x42ed016f826165c2e5976fe5bc3df540c5ad0af700000000000000000000058b/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x42ed016f826165c2e5976fe5bc3df540c5ad0af700000000000000000000058b/remove-liquidity",
     "network": "ethereum"
   },
@@ -3170,7 +3179,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x20a61b948e33879ce7f23e535cc7baa3bc66c5a9000000000000000000000555/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x20a61b948e33879ce7f23e535cc7baa3bc66c5a9000000000000000000000555/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x20a61b948e33879ce7f23e535cc7baa3bc66c5a9000000000000000000000555/remove-liquidity",
     "network": "ethereum"
   },
@@ -3195,7 +3204,7 @@
     "assets": ["wBETH", "wstETH"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x2e848426aec6dbf2260535a5bea048ed94d9ff3d000000000000000000000536/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x2e848426aec6dbf2260535a5bea048ed94d9ff3d000000000000000000000536/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x2e848426aec6dbf2260535a5bea048ed94d9ff3d000000000000000000000536/remove-liquidity",
     "network": "ethereum"
   },
@@ -3212,7 +3221,9 @@
     "earnContractAddress": "0x56d50Ca676f9AdC1E90f29F25e0d12DeC02746eE",
     "oracle": "lps",
     "oracleId": "convex-wbeth",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727731740,
+    "retireReason": "rewards",
     "createdAt": 1685011917,
     "platformId": "convex",
     "assets": ["wBETH", "ETH"],
@@ -3315,7 +3326,9 @@
     "earnContractAddress": "0x83BE6565c0758f746c09f95559B45Cfb9a0FFFc4",
     "oracle": "tokens",
     "oracleId": "cvxFPIS",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727731740,
+    "retireReason": "rewards",
     "createdAt": 1679559921,
     "platformId": "convex",
     "assets": ["cvxFPIS"],
@@ -3903,7 +3916,7 @@
     "assets": ["wstETH", "rETH", "sfrxETH"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x5aee1e99fe86960377de9f88689616916d5dcabe000000000000000000000467/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x5aee1e99fe86960377de9f88689616916d5dcabe000000000000000000000467/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x5aee1e99fe86960377de9f88689616916d5dcabe000000000000000000000467/remove-liquidity",
     "network": "ethereum"
   },
@@ -4519,7 +4532,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xff4ce5aaab5a627bf82f4a571ab1ce94aa365ea6000200000000000000000426/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xff4ce5aaab5a627bf82f4a571ab1ce94aa365ea6000200000000000000000426/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xff4ce5aaab5a627bf82f4a571ab1ce94aa365ea6000200000000000000000426/remove-liquidity",
     "network": "ethereum"
   },
@@ -4551,7 +4564,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x441b8a1980f2f2e43a9397099d15cc2fe6d3625000020000000000000000035f/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x441b8a1980f2f2e43a9397099d15cc2fe6d3625000020000000000000000035f/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x441b8a1980f2f2e43a9397099d15cc2fe6d3625000020000000000000000035f/remove-liquidity",
     "network": "ethereum"
   },
@@ -4575,7 +4588,7 @@
     "assets": ["wstETH", "rETH", "sfrxETH"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x8e85e97ed19c0fa13b2549309965291fbbc0048b0000000000000000000003ba/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x8e85e97ed19c0fa13b2549309965291fbbc0048b0000000000000000000003ba/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x8e85e97ed19c0fa13b2549309965291fbbc0048b0000000000000000000003ba/remove-liquidity",
     "network": "ethereum"
   },
@@ -4846,7 +4859,9 @@
     "earnContractAddress": "0xe50e2fe90745A8510491F89113959a1EF01AD400",
     "oracle": "lps",
     "oracleId": "convex-tricrypto2",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727731740,
+    "retireReason": "rewards",
     "createdAt": 1667906070,
     "platformId": "convex",
     "assets": ["USDT", "WBTC", "ETH"],
@@ -5141,7 +5156,7 @@
     "assets": ["rETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x1e19cf2d73a72ef1332c882f20534b6519be0276000200000000000000000112/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x1e19cf2d73a72ef1332c882f20534b6519be0276000200000000000000000112/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x1e19cf2d73a72ef1332c882f20534b6519be0276000200000000000000000112/remove-liquidity",
     "network": "ethereum"
   },
@@ -5166,7 +5181,7 @@
     "assets": ["wstETH", "ETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x32296969ef14eb0c6d29669c550d4a0449130230000200000000000000000080/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x32296969ef14eb0c6d29669c550d4a0449130230000200000000000000000080/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x32296969ef14eb0c6d29669c550d4a0449130230000200000000000000000080/remove-liquidity",
     "network": "ethereum"
   },
@@ -5191,7 +5206,7 @@
     "assets": ["bbaUSDT", "bbaUSDC", "bbaDAI"],
     "risks": ["COMPLEXITY_MID", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xa13a9247ea42d743238089903570127dda72fe4400000000000000000000035d/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xa13a9247ea42d743238089903570127dda72fe4400000000000000000000035d/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xa13a9247ea42d743238089903570127dda72fe4400000000000000000000035d/remove-liquidity",
     "network": "ethereum"
   },

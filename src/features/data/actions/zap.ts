@@ -6,7 +6,11 @@ import { ZERO_ADDRESS } from '../../../helpers/addresses';
 import { selectAllVisibleVaultIds, selectVaultById } from '../selectors/vaults';
 import { isFulfilledResult } from '../../../helpers/promises';
 import type { VaultEntity } from '../entities/vault';
-import { featureFlag_kyberSwapSupport, featureFlag_oneInchSupport } from '../utils/feature-flags';
+import {
+  featureFlag_OdosSwapSupport,
+  featureFlag_kyberSwapSupport,
+  featureFlag_oneInchSupport,
+} from '../utils/feature-flags';
 import type { ChainEntity } from '../entities/chain';
 import type { ZapAggregatorTokenSupportResponse } from '../apis/beefy/beefy-api-types';
 
@@ -83,6 +87,7 @@ export const fetchZapAggregatorTokenSupportAction = createAsyncThunk<
   const extraSupport = {
     'one-inch': featureFlag_oneInchSupport(),
     kyber: featureFlag_kyberSwapSupport(),
+    odos: featureFlag_OdosSwapSupport(),
   };
 
   for (const [key, support] of Object.entries(extraSupport)) {

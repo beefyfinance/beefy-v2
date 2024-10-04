@@ -4,8 +4,7 @@
     "type": "one-inch",
     "chainId": "ethereum",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0x0921E4fA2F85B6461fa83961d28DC7e1f9A32B40"
+      "value": 0.0005
     },
     "priorityTokens": ["ETH", "WETH", "BIFI", "USDC", "USDT", "DAI", "WBTC", "MIM", "wstETH"],
     "blockedTokens": [],
@@ -16,8 +15,7 @@
     "type": "one-inch",
     "chainId": "polygon",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0x8Af5c669620B5e525CE85DB00D0c159FF6BbE983"
+      "value": 0.0005
     },
     "priorityTokens": ["MATIC", "WMATIC", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
     "blockedTokens": [],
@@ -28,8 +26,7 @@
     "type": "one-inch",
     "chainId": "bsc",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0x234f7F81434e340910A84F45F8e89D07fa86611A"
+      "value": 0.0005
     },
     "priorityTokens": ["BNB", "WBNB", "BUSD", "USDC", "USDT", "DAI", "ETH", "BTCB"],
     "blockedTokens": [],
@@ -40,8 +37,7 @@
     "type": "one-inch",
     "chainId": "optimism",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0x852C903e5Bc93F526AB254BFEe0c1DFF23CF82aB"
+      "value": 0.0005
     },
     "priorityTokens": [
       "ETH",
@@ -65,8 +61,7 @@
     "type": "one-inch",
     "chainId": "fantom",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0xf2EeC1baC39306C0761c816d1D33cF7C9Ad6C0Fe"
+      "value": 0.0005
     },
     "priorityTokens": ["FTM", "WFTM", "USDC", "fUSDT", "DAI", "MIM", "MAI", "WETH", "WBTC"],
     "blockedTokens": [],
@@ -77,8 +72,7 @@
     "type": "one-inch",
     "chainId": "arbitrum",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0x8Ccf8606ccf0Aff9937B68e0297967e257eB148b"
+      "value": 0.0005
     },
     "priorityTokens": [
       "ETH",
@@ -100,8 +94,7 @@
     "type": "one-inch",
     "chainId": "avax",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0x2A9c05F5E7b96a93119c2234Af03E2315f02e8b4"
+      "value": 0.0005
     },
     "priorityTokens": [
       "AVAX",
@@ -124,8 +117,7 @@
     "type": "one-inch",
     "chainId": "zksync",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0x9F9FE15FDa14eAA2d878Ed667C805A7CC13c2560"
+      "value": 0.0005
     },
     "priorityTokens": ["ETH", "WETH", "USDC", "WBTC", "BUSD", "VC"],
     "blockedTokens": [],
@@ -136,8 +128,7 @@
     "type": "one-inch",
     "chainId": "base",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0x88D19A03C429029901d917510f8f582D2E5F803B"
+      "value": 0.0005
     },
     "priorityTokens": ["ETH", "WETH", "cbETH", "USDbC", "axlUSDC", "DAI", "MIM"],
     "blockedTokens": [],
@@ -148,8 +139,7 @@
     "type": "one-inch",
     "chainId": "gnosis",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0x37Ed06D71dFFB97b6E89469EBf29552DA46E52fA"
+      "value": 0.0005
     },
     "priorityTokens": [],
     "blockedTokens": [],
@@ -160,8 +150,7 @@
     "type": "one-inch",
     "chainId": "aurora",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0xb267d9A7ED4B9A42a852a944E6f42E787a4a1c49"
+      "value": 0.0005
     },
     "priorityTokens": ["ETH", "WETH", "USDC", "USDT", "WBTC"],
     "blockedTokens": [],
@@ -172,8 +161,7 @@
     "type": "kyber",
     "chainId": "ethereum",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0x0921E4fA2F85B6461fa83961d28DC7e1f9A32B40"
+      "value": 0.0005
     },
     "priorityTokens": ["ETH", "WETH", "BIFI", "USDC", "USDT", "DAI", "WBTC", "MIM", "wstETH"],
     "blockedTokens": [],
@@ -184,8 +172,7 @@
     "type": "kyber",
     "chainId": "polygon",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0x8Af5c669620B5e525CE85DB00D0c159FF6BbE983"
+      "value": 0.0005
     },
     "priorityTokens": ["MATIC", "WMATIC", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
     "blockedTokens": [],
@@ -196,8 +183,7 @@
     "type": "kyber",
     "chainId": "bsc",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0x234f7F81434e340910A84F45F8e89D07fa86611A"
+      "value": 0.0005
     },
     "priorityTokens": ["BNB", "WBNB", "BUSD", "USDC", "USDT", "DAI", "ETH", "BTCB"],
     "blockedTokens": [],
@@ -208,8 +194,7 @@
     "type": "kyber",
     "chainId": "optimism",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0x852C903e5Bc93F526AB254BFEe0c1DFF23CF82aB"
+      "value": 0.0005
     },
     "priorityTokens": ["MATIC", "WMATIC", "mooBIFI", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
     "blockedTokens": [],
@@ -220,8 +205,7 @@
     "type": "kyber",
     "chainId": "fantom",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0xf2EeC1baC39306C0761c816d1D33cF7C9Ad6C0Fe"
+      "value": 0.0005
     },
     "priorityTokens": ["FTM", "WFTM", "USDC", "fUSDT", "DAI", "MIM", "MAI", "WETH", "WBTC"],
     "blockedTokens": [],
@@ -232,8 +216,7 @@
     "type": "kyber",
     "chainId": "arbitrum",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0x8Ccf8606ccf0Aff9937B68e0297967e257eB148b"
+      "value": 0.0005
     },
     "priorityTokens": [
       "ETH",
@@ -255,8 +238,7 @@
     "type": "kyber",
     "chainId": "avax",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0x2A9c05F5E7b96a93119c2234Af03E2315f02e8b4"
+      "value": 0.0005
     },
     "priorityTokens": [
       "AVAX",
@@ -279,8 +261,7 @@
     "type": "kyber",
     "chainId": "cronos",
     "fee": {
-      "value": 0.0005,
-      "recipient": "0xa9721Ae5042482D7a884A2138f580459B680920f"
+      "value": 0.0005
     },
     "priorityTokens": [],
     "blockedTokens": [],
@@ -345,5 +326,162 @@
     "priorityTokens": ["MNT", "WMNT", "USDC", "USDT", "WETH", "mETH", "WBTC"],
     "blockedTokens": [],
     "blockedVaults": []
+  },
+  {
+    "id": "odos-ethereum",
+    "type": "odos",
+    "chainId": "ethereum",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": ["ETH", "WETH", "BIFI", "USDC", "USDT", "DAI", "WBTC", "MIM", "wstETH"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "odos-zksync",
+    "type": "odos",
+    "chainId": "zksync",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": ["ETH", "WETH", "USDC", "WBTC", "BUSD", "VC"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "odos-base",
+    "type": "odos",
+    "chainId": "base",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": ["ETH", "WETH", "cbETH", "USDbC", "axlUSDC", "DAI", "MIM"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "odos-mantle",
+    "type": "odos",
+    "chainId": "mantle",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": ["MNT", "WMNT", "USDC", "USDT", "WETH", "mETH", "WBTC"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "odos-polygon",
+    "type": "odos",
+    "chainId": "polygon",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": ["MATIC", "WMATIC", "USDC", "USDT", "DAI", "MAI", "ETH", "WBTC"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "odos-optimism",
+    "type": "odos",
+    "chainId": "optimism",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": [
+      "ETH",
+      "WETH",
+      "mooBIFI",
+      "OP",
+      "opUSDCe",
+      "USDT",
+      "DAI",
+      "MAI",
+      "sUSD",
+      "sETH",
+      "WBTC",
+      "wstETH"
+    ],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "odos-mode",
+    "type": "odos",
+    "chainId": "mode",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": ["ETH", "WETH", "USDT", "DAI", "MAI", "sUSD", "sETH", "WBTC", "MODE"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "odos-avax",
+    "type": "odos",
+    "chainId": "avax",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": [
+      "AVAX",
+      "WAVAX",
+      "USDC",
+      "USDCe",
+      "USDT",
+      "USDTe",
+      "DAIe",
+      "MIM",
+      "MAI",
+      "WETHe",
+      "WBTCe"
+    ],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "odos-linea",
+    "type": "odos",
+    "chainId": "linea",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": ["ETH", "WETH", "USDC", "USDT", "DAI", "WBTC", "wstETH"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "odos-arbitrum",
+    "type": "odos",
+    "chainId": "arbitrum",
+    "priorityTokens": ["ETH", "ARB", "WETH", "USDC", "USDT", "DAI", "MIM", "WBTC", "wstETH"],
+    "fee": {
+      "value": 0.0005
+    },
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "odos-bsc",
+    "type": "odos",
+    "chainId": "bsc",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": ["BNB", "WBNB", "BUSD", "USDC", "USDT", "DAI", "ETH", "BTCB"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
+    "id": "odos-fantom",
+    "type": "odos",
+    "chainId": "fantom",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": ["FTM", "WFTM", "USDC", "fUSDT", "DAI", "MIM", "MAI", "WETH", "WBTC"],
+    "blockedTokens": [],
+    "blockedVaults": ["geist-ftm"]
   }
 ]

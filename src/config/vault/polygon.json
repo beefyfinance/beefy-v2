@@ -13,7 +13,9 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "sushi-cow-poly-wmatic-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727186611,
+    "retireReason": "tvl",
     "createdAt": 1721752391,
     "platformId": "sushi",
     "assets": ["WMATIC", "USDC"],
@@ -42,7 +44,9 @@
     "earnContractAddress": "0x935cA8F3c323e67F2C90616AC61D53e05B4ed7B7",
     "oracle": "lps",
     "oracleId": "sushi-cow-poly-wmatic-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727186611,
+    "retireReason": "tvl",
     "createdAt": 1721752391,
     "platformId": "sushi",
     "assets": ["WMATIC", "USDC"],
@@ -637,7 +641,9 @@
     "earnContractAddress": "0x2956333ca76D156A86533E6D1D8209E9B04D69a5",
     "oracle": "lps",
     "oracleId": "balancer-polygon-wbtc-usdc-eth",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727106695,
+    "retireReason": "rewards",
     "createdAt": 1719920477,
     "platformId": "balancer",
     "assets": ["WBTC", "USDC", "ETH"],
@@ -667,7 +673,9 @@
     "earnContractAddress": "0xF4C44A0A7b48A016861eE5cAe3dE82126366cCC9",
     "oracle": "lps",
     "oracleId": "balancer-polygon-usdc-dai-usdt",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727106695,
+    "retireReason": "rewards",
     "createdAt": 1719920477,
     "platformId": "balancer",
     "assets": ["USDC", "DAI", "USDT"],
@@ -703,7 +711,7 @@
     "assets": ["MaticX", "MATIC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xcd78a20c597e367a4e478a2411ceb790604d7c8f000000000000000000000c22/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xcd78a20c597e367a4e478a2411ceb790604d7c8f000000000000000000000c22/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xcd78a20c597e367a4e478a2411ceb790604d7c8f000000000000000000000c22/remove-liquidity",
     "network": "polygon"
   },
@@ -1610,7 +1618,9 @@
     "earnContractAddress": "0x5d57B68f8BaF06A88AD88B751702ac7f2aCb357d",
     "oracle": "lps",
     "oracleId": "curve-poly-asdcrv",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727106695,
+    "retireReason": "rewards",
     "createdAt": 1716455129,
     "platformId": "convex",
     "assets": ["CRV", "asdCRV"],
@@ -1780,7 +1790,9 @@
     "earnContractAddress": "0xf2A28ED791B268A7CCCa16bB2e69093852cc3259",
     "oracle": "lps",
     "oracleId": "curve-poly-crvusd-usdt",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727731740,
+    "retireReason": "rewards",
     "createdAt": 1707298259,
     "platformId": "curve",
     "assets": ["crvUSD", "USDT"],
@@ -1820,7 +1832,9 @@
     "earnContractAddress": "0x7D9751c9dd4435dE4b1802b4c727d745d11110B8",
     "oracle": "lps",
     "oracleId": "curve-poly-crvusd-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727106695,
+    "retireReason": "rewards",
     "createdAt": 1707298248,
     "platformId": "curve",
     "assets": ["crvUSD", "USDC"],
@@ -2332,7 +2346,9 @@
     "earnContractAddress": "0xf552a67A82908E6C7F4382b812218d665e058C0B",
     "oracle": "lps",
     "oracleId": "retro-gamma-wbtc-weth",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727377667,
+    "retireReason": "rewards",
     "createdAt": 1693395784,
     "platformId": "gamma",
     "assets": ["WBTC", "ETH"],
@@ -2423,7 +2439,9 @@
     "earnContractAddress": "0xec74671f95F0942358016da627b912143100DAF2",
     "oracle": "lps",
     "oracleId": "retro-gamma-wmatic-maticx",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727377667,
+    "retireReason": "rewards",
     "createdAt": 1691499559,
     "platformId": "gamma",
     "assets": ["MaticX", "MATIC"],
@@ -2766,7 +2784,9 @@
     "earnContractAddress": "0xD97FA4474084350D2c96285E1Fca07A9D515c800",
     "oracle": "lps",
     "oracleId": "retro-gamma-wmatic-weth-narrow",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727377667,
+    "retireReason": "rewards",
     "createdAt": 1691364568,
     "platformId": "gamma",
     "assets": ["MATIC", "ETH"],
@@ -3783,7 +3803,7 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b/remove-liquidity",
     "network": "polygon"
   },
@@ -3815,7 +3835,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x5dee84ffa2dc27419ba7b3419d7146e53e4f7ded000200000000000000000a4e/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x5dee84ffa2dc27419ba7b3419d7146e53e4f7ded000200000000000000000a4e/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x5dee84ffa2dc27419ba7b3419d7146e53e4f7ded000200000000000000000a4e/remove-liquidity",
     "network": "polygon"
   },
@@ -3902,7 +3922,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x65fe9314be50890fb01457be076fafd05ff32b9a000000000000000000000a96/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x65fe9314be50890fb01457be076fafd05ff32b9a000000000000000000000a96/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x65fe9314be50890fb01457be076fafd05ff32b9a000000000000000000000a96/remove-liquidity",
     "network": "polygon"
   },
@@ -3935,7 +3955,7 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x34a81e8956bf20b7448b31990a2c06f96830a6e4000200000000000000000a14/remove-liquidity",
     "network": "polygon"
   },
@@ -3968,7 +3988,7 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x7d60a4cb5ca92e2da965637025122296ea6854f900000000000000000000085e/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x7d60a4cb5ca92e2da965637025122296ea6854f900000000000000000000085e/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x7d60a4cb5ca92e2da965637025122296ea6854f900000000000000000000085e/remove-liquidity",
     "network": "polygon"
   },
@@ -4745,7 +4765,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4a0b73f0d13ff6d43e304a174697e3d5cfd310a400020000000000000000091c/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4a0b73f0d13ff6d43e304a174697e3d5cfd310a400020000000000000000091c/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4a0b73f0d13ff6d43e304a174697e3d5cfd310a400020000000000000000091c/remove-liquidity",
     "network": "polygon"
   },
@@ -4778,7 +4798,7 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xe22483774bd8611be2ad2f4194078dac9159f4ba0000000000000000000008f0/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xe22483774bd8611be2ad2f4194078dac9159f4ba0000000000000000000008f0/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xe22483774bd8611be2ad2f4194078dac9159f4ba0000000000000000000008f0/remove-liquidity",
     "network": "polygon"
   },
@@ -4810,7 +4830,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x48e6b98ef6329f8f0a30ebb8c7c960330d64808500000000000000000000075b/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x48e6b98ef6329f8f0a30ebb8c7c960330d64808500000000000000000000075b/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x48e6b98ef6329f8f0a30ebb8c7c960330d64808500000000000000000000075b/remove-liquidity",
     "network": "polygon"
   },
@@ -4842,7 +4862,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x0297e37f1873d2dab4487aa67cd56b58e2f27875000100000000000000000002/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x0297e37f1873d2dab4487aa67cd56b58e2f27875000100000000000000000002/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x0297e37f1873d2dab4487aa67cd56b58e2f27875000100000000000000000002/remove-liquidity",
     "network": "polygon"
   },
@@ -4874,7 +4894,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x36128d5436d2d70cab39c9af9cce146c38554ff0000100000000000000000008/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x36128d5436d2d70cab39c9af9cce146c38554ff0000100000000000000000008/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x36128d5436d2d70cab39c9af9cce146c38554ff0000100000000000000000008/remove-liquidity",
     "network": "polygon"
   },
@@ -4906,7 +4926,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xce66904b68f1f070332cbc631de7ee98b650b499000100000000000000000009/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xce66904b68f1f070332cbc631de7ee98b650b499000100000000000000000009/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xce66904b68f1f070332cbc631de7ee98b650b499000100000000000000000009/remove-liquidity",
     "network": "polygon"
   },
@@ -4968,7 +4988,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4/remove-liquidity",
     "network": "polygon"
   },
@@ -5000,7 +5020,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xb20fc01d21a50d2c734c4a1262b4404d41fa7bf000000000000000000000075c/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xb20fc01d21a50d2c734c4a1262b4404d41fa7bf000000000000000000000075c/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xb20fc01d21a50d2c734c4a1262b4404d41fa7bf000000000000000000000075c/remove-liquidity",
     "network": "polygon"
   },
@@ -5032,7 +5052,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x8159462d255c1d24915cb51ec361f700174cd99400000000000000000000075d/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x8159462d255c1d24915cb51ec361f700174cd99400000000000000000000075d/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x8159462d255c1d24915cb51ec361f700174cd99400000000000000000000075d/remove-liquidity",
     "network": "polygon"
   },
@@ -5064,7 +5084,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366/remove-liquidity",
     "network": "polygon"
   },
@@ -14952,7 +14972,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a/invest/add-liquidity",
+    "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a/remove-liquidity",
     "network": "polygon"
   },
