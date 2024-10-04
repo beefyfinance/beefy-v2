@@ -30,7 +30,7 @@ export const getChainAddressBook = memoize(
       [tokenId: TokenEntity['id']]: AddressBookTokenConfig;
     };
     const wnative = addressBookTokens['WNATIVE'];
-    const nativeSymbol = chain.walletSettings.native;
+    const nativeSymbol = chain.native.symbol;
 
     const addrBookEntries = Object.entries(addressBookTokens);
     if (addrBookEntries.length <= 0) {

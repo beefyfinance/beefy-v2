@@ -210,13 +210,7 @@ export type ChainConfig = {
   multicall3Address: Address;
   appMulticallContractAddress: string;
   providerName: string;
-  walletSettings: {
-    chainId: string;
-    chainName: string;
-    native: string;
-    rpcUrls: string[];
-    blockExplorerUrls: string[];
-  };
+  native: { symbol: string; oracleId: string; decimals: number };
   gas: GasConfig;
   stableCoins: string[];
   new?: boolean;
