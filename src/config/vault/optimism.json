@@ -46,7 +46,7 @@
     "createdAt": 1727938000,
     "platformId": "velodrome",
     "assets": ["pxETH", "alETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "buyTokenUrl": "https://velodrome.finance/swap?from=0x300d2c875C6fb8Ce4bf5480B4d34b7c9ea8a33A4&to=0x3E29D3A9316dAB217754d13b28646B76607c5f04",
     "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x300d2c875C6fb8Ce4bf5480B4d34b7c9ea8a33A4&token1=0x3E29D3A9316dAB217754d13b28646B76607c5f04&type=0&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
