@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import type { AmountInputProps } from '../../vault/components/Actions/Transact/AmountInput';
 import BigNumber from 'bignumber.js';
@@ -25,5 +25,9 @@ export function useInputForm(balance: BigNumber, decimals: number) {
     setAmount(balance);
   }, [balance]);
 
-  return { formData: { amount, max }, handleChange, handleMax };
+  const formData = useMemo(() => {
+    return { amount, max };
+  }, [amount, max]);
+
+  return { formData, handleChange, handleMax };
 }
