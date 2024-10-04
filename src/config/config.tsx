@@ -757,7 +757,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x8EfD3599488542Ec1719567c698a97Fb4e3751a1',
     providerName: 'Rootstock',
-    native: { symbol: 'RBTC', oracleId: 'WRBTC', decimals: 18 },
+    native: { symbol: 'RBTC', oracleId: 'WBTC', decimals: 18 },
     new: true,
     gas: {
       type: 'standard',

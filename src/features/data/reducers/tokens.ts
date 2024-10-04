@@ -99,7 +99,7 @@ export const tokensSlice = createSlice({
       for (const chainConf of action.payload.chainConfigs) {
         const chainId = chainConf.id;
         const chainState = getOrCreateTokensChainState(sliceState, chainId);
-        const tokenId = chainConf.walletSettings.native;
+        const tokenId = chainConf.native.oracleId;
         const existingNative = chainState.byAddress['native'];
 
         const token: TokenNative = {
@@ -108,7 +108,7 @@ export const tokensSlice = createSlice({
           oracleId: tokenId,
           decimals: 18,
           address: 'native',
-          symbol: chainConf.walletSettings.native,
+          symbol: chainConf.native.symbol,
           type: 'native',
           buyUrl: existingNative?.buyUrl ?? undefined,
           website: existingNative?.website ?? undefined,
