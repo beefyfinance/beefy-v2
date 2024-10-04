@@ -1,5 +1,65 @@
 [
   {
+    "id": "velodrome-v2-hai-pxeth",
+    "name": "HAI-pxETH vLP V2",
+    "type": "standard",
+    "token": "vAMMV2-HAI/pxETH",
+    "tokenAddress": "0xD5fE49a4c0Fc482Ee757DF703A3a332DB209aC2e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2HAI-pxETH",
+    "earnedTokenAddress": "0x7F6D12dd1630E7C61D65810CdA6c170838b65e11",
+    "earnContractAddress": "0x7F6D12dd1630E7C61D65810CdA6c170838b65e11",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-hai-pxeth",
+    "status": "active",
+    "createdAt": 1728043532,
+    "platformId": "velodrome",
+    "assets": ["HAI", "pxETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x10398AbC267496E49106B07dd6BE13364D10dC71&to=0x300d2c875C6fb8Ce4bf5480B4d34b7c9ea8a33A4",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x10398AbC267496E49106B07dd6BE13364D10dC71&token1=0x300d2c875C6fb8Ce4bf5480B4d34b7c9ea8a33A4&type=-1&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xD5fE49a4c0Fc482Ee757DF703A3a332DB209aC2e",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-v2-pxeth-aleth",
+    "name": "pxETH-alETH sLP V2",
+    "type": "standard",
+    "token": "sAMMV2-pxETH/alETH",
+    "tokenAddress": "0x03799d6A59624AbDd50f8774D360A64f4FBfdCF5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2pxETH-alETH",
+    "earnedTokenAddress": "0x1a3354b0F52A40F262913078B8982441eBC6Fc28",
+    "earnContractAddress": "0x1a3354b0F52A40F262913078B8982441eBC6Fc28",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-pxeth-aleth",
+    "status": "active",
+    "createdAt": 1728043532,
+    "platformId": "velodrome",
+    "assets": ["pxETH", "alETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x300d2c875C6fb8Ce4bf5480B4d34b7c9ea8a33A4&to=0x3E29D3A9316dAB217754d13b28646B76607c5f04",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x300d2c875C6fb8Ce4bf5480B4d34b7c9ea8a33A4&token1=0x3E29D3A9316dAB217754d13b28646B76607c5f04&type=0&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x03799d6A59624AbDd50f8774D360A64f4FBfdCF5",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "velodrome-v2-wsteth-wusdm",
     "name": "wstETH-wUSDM vLP V2",
     "type": "standard",

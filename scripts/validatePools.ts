@@ -34,6 +34,7 @@ const overrides = {
   'gmx-arb-gmx': { harvestOnDeposit: undefined },
   'swapbased-usd+-usdbc': { harvestOnDeposit: undefined },
   'swapbased-dai+-usd+': { harvestOnDeposit: undefined },
+  'aero-cow-eurc-cbbtc-vault': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
