@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-cbbtc-susdz",
     "status": "active",
-    "createdAt": 1727938001,
+    "createdAt": 1728043532,
     "platformId": "aerodrome",
     "assets": ["cbBTC", "sUSDz"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
