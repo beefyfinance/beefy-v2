@@ -25,9 +25,7 @@ export function useInputForm(balance: BigNumber, decimals: number) {
     setAmount(balance);
   }, [balance]);
 
-  const formData = useMemo(() => {
-    return { amount, max };
-  }, [amount, max]);
-
-  return { formData, handleChange, handleMax };
+  return useMemo(() => {
+    return { formData: { amount, max }, handleChange, handleMax };
+  }, [amount, handleChange, handleMax, max]);
 }
