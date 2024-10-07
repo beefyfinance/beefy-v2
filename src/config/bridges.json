@@ -217,6 +217,18 @@
     "website": "https://app.sei.io/bridge"
   },
   {
+    "id": "rootstock-canonical",
+    "name": "Rootstock Bridge",
+    "tagName": "rootstock",
+    "website": "https://dapp.tokenbridge.rootstock.io/?_gl=1*1adw6q2*_gcl_au*ODQ3NTgwNDM3LjE3MjcyNjIwNDI."
+  },
+  {
+    "id": "sovryn",
+    "name": "Sovryn",
+    "tagName": "sovryn",
+    "website": "https://alpha.sovryn.app/cross-chain/deposit"
+  },
+  {
     "id": "ankr",
     "name": "Ankr Bridge",
     "tagName": "Ankr",

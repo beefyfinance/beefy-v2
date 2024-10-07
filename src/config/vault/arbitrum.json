@@ -1,5 +1,87 @@
 [
   {
+    "id": "camelot-eigen-weth-rp",
+    "name": "EIGEN-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowCamelotArbitrumEIGEN-WETH",
+    "tokenAddress": "0x6095f00C1eC3B7EFA9F94F13b3f75946FEd583a6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "earnContractAddress": "0x3b4052E6701A6c214C56Fae03c2DeF23DB5a0D17",
+    "earnedToken": "rcowCamelotEIGEN-WETH",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "camelot-eigen-weth",
+    "status": "active",
+    "createdAt": 1728302000,
+    "platformId": "camelot",
+    "assets": ["EIGEN", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "camelot-eigen-weth",
+    "name": "EIGEN-WETH",
+    "type": "cowcentrated",
+    "token": "EIGEN-WETH",
+    "tokenAddress": "0x9771cc4543134322aCc2dd31D36d0414A380D7cb",
+    "tokenDecimals": 18,
+    "tokenProviderId": "camelot",
+    "depositTokenAddresses": [
+      "0x606C3e5075e5555e79Aa15F1E9FACB776F96C248",
+      "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    ],
+    "earnedToken": "cowCamelotArbitrumEIGEN-WETH",
+    "earnedTokenAddress": "0x6095f00C1eC3B7EFA9F94F13b3f75946FEd583a6",
+    "earnContractAddress": "0x6095f00C1eC3B7EFA9F94F13b3f75946FEd583a6",
+    "oracle": "lps",
+    "oracleId": "camelot-eigen-weth",
+    "status": "active",
+    "createdAt": 1728302000,
+    "platformId": "camelot",
+    "assets": ["EIGEN", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "arbitrum",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "curve-arb-usde-usdx",
+    "name": "USDe/USDx",
+    "token": "USDeUSDx",
+    "tokenAddress": "0x096A8865367686290639bc50bF8D85C0110d9Fea",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xEbF2b5698be6e152747e6cCC378D4785116ed277",
+    "earnedToken": "mooCurveUSDe-USDx",
+    "earnedTokenAddress": "0xEbF2b5698be6e152747e6cCC378D4785116ed277",
+    "oracle": "lps",
+    "oracleId": "curve-arb-usde-usdx",
+    "status": "active",
+    "createdAt": 1728298259,
+    "platformId": "convex",
+    "assets": ["USDe", "USDx"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "pointStructureIds": ["ethena"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-85/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-stable-ng-85/withdraw",
+    "network": "arbitrum"
+  },
+  {
     "id": "equilibria-arb-rseth-26dec24",
     "name": "rsETH 26Dec24",
     "token": "rsETH 26Dec24",
@@ -203,7 +285,9 @@
     "earnContractAddress": "0xA74362f3A55a2793A45a28b5397d90584d653fE9",
     "oracle": "lps",
     "oracleId": "aura-arb-ausdc-wusdm",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1727731774,
+    "retireReason": "tvl",
     "createdAt": 1725540995,
     "platformId": "aura",
     "assets": ["stataArbUSDCn", "wUSDM"],
