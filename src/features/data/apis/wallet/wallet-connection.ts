@@ -242,7 +242,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       },
       chains: this.options.chains.map(chain => ({
         id: numberToHex(chain.networkChainId),
-        token: chain.walletSettings.nativeCurrency.symbol,
+        token: chain.native.symbol,
         label: chain.name,
         rpcUrl: sample(chain.rpc),
         blockExplorerUrl: chain.explorerUrl,
