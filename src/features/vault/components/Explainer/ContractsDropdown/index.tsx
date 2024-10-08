@@ -13,14 +13,13 @@ interface ContractsDropdownProps {
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
     ...theme.typography['body-lg'],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.middle,
     padding: '2px 8px',
     justifyContent: 'space-between',
-    gap: '8px',
-    width: '142px',
+    gap: '2px',
   },
   selectIcon: {
-    height: '16px',
+    height: '18px',
   },
   isOpen: {
     '& $selectIcon': {
@@ -30,7 +29,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   dropdown: {
     padding: '2px 8px',
     backgroundColor: theme.palette.background.buttons.button,
-    borderRadius: '8px',
+    borderRadius: '4px',
+    minWidth: '142px',
   },
   linkList: {
     display: 'flex',
@@ -77,6 +77,8 @@ export const ContractsDropdown = memo<ContractsDropdownProps>(function Contracts
         open={open}
         anchorEl={anchorEl as MutableRefObject<HTMLElement>}
         className={classes.dropdown}
+        autoWidth={false}
+        placement="bottom-end"
       >
         <div className={classes.linkList}>
           {links.map(({ label, link }) => (

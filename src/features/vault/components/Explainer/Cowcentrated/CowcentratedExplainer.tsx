@@ -85,8 +85,6 @@ export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
       return urls;
     }, [boost, chain, clmVaultStrategyAddress, strategyAddress, t, vault]);
 
-    console.log(links);
-
     return (
       <ExplainerCard
         title={<CardTitle title={t('Vault-Strategy')} />}

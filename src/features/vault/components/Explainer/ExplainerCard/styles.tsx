@@ -4,10 +4,8 @@ export const styles = (theme: Theme) => ({
   header: {
     display: 'flex',
     justifyContent: 'space-between',
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column' as const,
-      rowGap: '16px',
-    },
+    alignItems: 'center',
+    gap: '8px',
   },
   title: {},
   actions: {
