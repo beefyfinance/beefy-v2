@@ -2958,7 +2958,8 @@
     "strategyTypeId": "bifi-vault",
     "network": "ethereum",
     "bridged": {
-      "optimism": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434"
+      "optimism": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+      "base": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434"
     },
     "zaps": [
       {

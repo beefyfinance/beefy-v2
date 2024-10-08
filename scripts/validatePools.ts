@@ -34,6 +34,7 @@ const overrides = {
   'gmx-arb-gmx': { harvestOnDeposit: undefined },
   'swapbased-usd+-usdbc': { harvestOnDeposit: undefined },
   'swapbased-dai+-usd+': { harvestOnDeposit: undefined },
+  'aero-cow-eurc-cbbtc-vault': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
@@ -83,7 +84,7 @@ const oldValidRewardPoolOwners = {
   ],
 };
 
-const nonHarvestOnDepositChains = ['ethereum', 'avax'];
+const nonHarvestOnDepositChains = ['ethereum', 'avax', 'rootstock'];
 const nonHarvestOnDepositPools = [
   'venus-bnb',
   'equilibria-arb-silo-usdc.e',
@@ -93,6 +94,9 @@ const nonHarvestOnDepositPools = [
   'pancake-cow-arb-usdt+-usd+-vault',
   'aero-cow-weth-cbbtc-vault',
   'aero-cow-usdc-cbbtc-vault',
+  'compound-op-usdt',
+  'compound-op-usdc',
+  'compound-op-eth',
 ];
 const excludedAbPools = [
   'gmx-arb-near-usdc',
