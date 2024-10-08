@@ -11,17 +11,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x47bec05dC291e61cd4360322eA44882cA468dD54',
     providerName: 'Ethereum',
-    walletSettings: {
-      chainId: `0x${parseInt('1', 10).toString(16)}`,
-      chainName: 'ethereum',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://rpc.ankr.com/eth'],
-      blockExplorerUrls: ['https://etherscan.io/'],
-    },
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -89,17 +79,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x9C983dd514087674CA1d22A22B7432b614b4C835',
     providerName: 'polygon',
-    walletSettings: {
-      chainId: `0x${parseInt('137', 10).toString(16)}`,
-      chainName: 'Polygon PoS',
-      nativeCurrency: {
-        name: 'MATIC',
-        symbol: 'MATIC',
-        decimals: 18,
-      },
-      rpcUrls: ['https://polygon-bor-rpc.publicnode.com'],
-      blockExplorerUrls: ['https://polygonscan.com/'],
-    },
+    native: { symbol: 'POL', oracleId: 'WMATIC', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -163,17 +143,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x073d1752efe671AAE0E609a8f61663e3660673d3',
     providerName: 'binance',
-    walletSettings: {
-      chainId: `0x${parseInt('56', 10).toString(16)}`,
-      chainName: 'BSC Mainnet',
-      nativeCurrency: {
-        name: 'Binance Coin',
-        symbol: 'BNB',
-        decimals: 18,
-      },
-      rpcUrls: ['https://bsc-dataseed.binance.org'],
-      blockExplorerUrls: ['https://bscscan.com/'],
-    },
+    native: { symbol: 'BNB', oracleId: 'WBNB', decimals: 18 },
     gas: {
       type: 'standard',
       minimum: '3000000000',
@@ -225,17 +195,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x5e0388EFf1e18c13E5a2650879DdF1677893bDBc',
     providerName: 'Optimism',
-    walletSettings: {
-      chainId: `0x${parseInt('10', 10).toString(16)}`,
-      chainName: 'Optimism',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://mainnet.optimism.io'],
-      blockExplorerUrls: ['https://optimistic.etherscan.io/'],
-    },
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'standard',
       minimum: '1000000',
@@ -290,17 +250,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xdd54c53d169aCFC53cAf08F1778A492Ff5Aea258',
     providerName: 'fantom',
-    walletSettings: {
-      chainId: `0x${parseInt('250', 10).toString(16)}`,
-      chainName: 'Fantom Opera',
-      nativeCurrency: {
-        name: 'FTM',
-        symbol: 'FTM',
-        decimals: 18,
-      },
-      rpcUrls: ['https://fantom-mainnet.public.blastapi.io'],
-      blockExplorerUrls: ['https://ftmscan.com/'],
-    },
+    native: { symbol: 'FTM', oracleId: 'WFTM', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -343,17 +293,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x050b4081e41aB8474a24Dc8C5c50144c65F1b108',
     providerName: 'Arbitrum',
-    walletSettings: {
-      chainId: `0x${parseInt('42161', 10).toString(16)}`,
-      chainName: 'Arbitrum One',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://arb1.arbitrum.io/rpc'],
-      blockExplorerUrls: ['https://arbiscan.io/'],
-    },
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -422,17 +362,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xe60D2cf5140b7D7703D26aD5f581F865a7b51BeF',
     providerName: 'avalanche',
-    walletSettings: {
-      chainId: `0x${parseInt('43114', 10).toString(16)}`,
-      chainName: 'Avalanche C-Chain',
-      nativeCurrency: {
-        name: 'AVAX',
-        symbol: 'AVAX',
-        decimals: 18,
-      },
-      rpcUrls: ['https://rpc.ankr.com/avalanche'],
-      blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
-    },
+    native: { symbol: 'AVAX', oracleId: 'WAVAX', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -475,17 +405,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xc8872773ADcC8264eEBe5E40D97943434264e973',
     providerName: 'Cronos',
-    walletSettings: {
-      chainId: `0x${parseInt('25', 10).toString(16)}`,
-      chainName: 'Cronos',
-      nativeCurrency: {
-        name: 'CRO',
-        symbol: 'CRO',
-        decimals: 18,
-      },
-      rpcUrls: ['https://evm.cronos.org/'],
-      blockExplorerUrls: ['https://cronoscan.com/'],
-    },
+    native: { symbol: 'CRO', oracleId: 'WCRO', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -503,17 +423,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xED3772a9F1207CBa409D26DA7CF512F9b95Ad0FE',
     providerName: 'Moonbeam',
-    walletSettings: {
-      chainId: `0x${parseInt('1284', 10).toString(16)}`,
-      chainName: 'Moonbeam',
-      nativeCurrency: {
-        name: 'GLMR',
-        symbol: 'GLMR',
-        decimals: 18,
-      },
-      rpcUrls: ['https://rpc.api.moonbeam.network'],
-      blockExplorerUrls: ['https://moonscan.io/'],
-    },
+    native: { symbol: 'GLMR', oracleId: 'WGLMR', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -549,17 +459,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xe8EeDE3a063AdF991096E317e916d9AF56cb11B2',
     providerName: 'Moonriver',
-    walletSettings: {
-      chainId: `0x${parseInt('1285', 10).toString(16)}`,
-      chainName: 'Moonriver',
-      nativeCurrency: {
-        name: 'Moonriver',
-        symbol: 'MOVR',
-        decimals: 18,
-      },
-      rpcUrls: ['https://rpc.api.moonriver.moonbeam.network/'],
-      blockExplorerUrls: ['https://moonriver.moonscan.io/'],
-    },
+    native: { symbol: 'MOVR', oracleId: 'WMOVR', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -577,17 +477,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xDc34b7e0f1F1512f088D1854a54EAFfD4dCaC7Bd',
     providerName: 'Metis',
-    walletSettings: {
-      chainId: `0x${parseInt('1088', 10).toString(16)}`,
-      chainName: 'Metis',
-      nativeCurrency: {
-        name: 'METIS',
-        symbol: 'METIS',
-        decimals: 18,
-      },
-      rpcUrls: ['https://andromeda.metis.io/?owner=1088'],
-      blockExplorerUrls: ['https://andromeda-explorer.metis.io/'],
-    },
+    native: { symbol: 'METIS', oracleId: 'WMETIS', decimals: 18 },
     gas: {
       type: 'standard',
     },
@@ -602,17 +492,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x41D44B276904561Ac51855159516FD4cB2c90968',
     providerName: 'Kava',
-    walletSettings: {
-      chainId: `0x${parseInt('2222', 10).toString(16)}`,
-      chainName: 'kava',
-      nativeCurrency: {
-        name: 'KAVA',
-        symbol: 'KAVA',
-        decimals: 18,
-      },
-      rpcUrls: ['https://evm.kava.io'],
-      blockExplorerUrls: ['https://explorer.kava.io/'],
-    },
+    native: { symbol: 'KAVA', oracleId: 'WKAVA', decimals: 18 },
     gas: {
       type: 'standard',
     },
@@ -627,17 +507,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x7c7B7FbccA5699175003ecbe1B41E79F40385469',
     providerName: 'Canto',
-    walletSettings: {
-      chainId: `0x${parseInt('7700', 10).toString(16)}`,
-      chainName: 'canto',
-      nativeCurrency: {
-        name: 'CANTO',
-        symbol: 'CANTO',
-        decimals: 18,
-      },
-      rpcUrls: ['https://canto-rpc.ansybl.io'],
-      blockExplorerUrls: ['https://tuber.build/'],
-    },
+    native: { symbol: 'CANTO', oracleId: 'WCANTO', decimals: 18 },
     gas: {
       type: 'standard',
     },
@@ -653,17 +523,7 @@ export const config = {
     multicall3Address: '0x9A04a9e1d67151AB1E742E6D8965e0602410f91d',
     appMulticallContractAddress: '0x6bD7b74BD4707b1effeFC199920Bc3bC1Cb7b11f',
     providerName: 'zkSync',
-    walletSettings: {
-      chainId: `0x${parseInt('324', 10).toString(16)}`,
-      chainName: 'zksync',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://mainnet.era.zksync.io'],
-      blockExplorerUrls: ['https://explorer.zksync.io/'],
-    },
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'standard',
     },
@@ -678,17 +538,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x2ec5d5e9aaf3c3f56eBeF2fC46A5af9e42810b41',
     providerName: 'zkEVM',
-    walletSettings: {
-      chainId: `0x${parseInt('1101', 10).toString(16)}`,
-      chainName: 'Polygon zkEVM',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://rpc.ankr.com/polygon_zkevm'],
-      blockExplorerUrls: ['https://zkevm.polygonscan.com/'],
-    },
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'standard',
     },
@@ -703,17 +553,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x57B01298DfDdeA1c6CaB01793396af5fbFc213CE',
     providerName: 'Base',
-    walletSettings: {
-      chainId: `0x${parseInt('8453', 10).toString(16)}`,
-      chainName: 'Base',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://rpc.ankr.com/base'],
-      blockExplorerUrls: ['https://basescan.org/'],
-    },
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -761,17 +601,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x70Ed6174d8425332F7D9AD2d26C86902977307c0',
     providerName: 'Gnosis',
-    walletSettings: {
-      chainId: `0x${parseInt('100', 10).toString(16)}`,
-      chainName: 'Gnosis',
-      nativeCurrency: {
-        name: 'XDAI',
-        symbol: 'XDAI',
-        decimals: 18,
-      },
-      rpcUrls: ['https://gnosis.oat.farm'],
-      blockExplorerUrls: ['https://gnosisscan.io/'],
-    },
+    native: { symbol: 'XDAI', oracleId: 'WXDAI', decimals: 18 },
     gas: {
       type: 'standard',
     },
@@ -786,17 +616,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x74037AEe034D2bD5cD2eEc043FE5ad9cE2e90275',
     providerName: 'Linea',
-    walletSettings: {
-      chainId: `0x${parseInt('59144', 10).toString(16)}`,
-      chainName: 'Linea',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://linea.blockpi.network/v1/rpc/public'],
-      blockExplorerUrls: ['https://lineascan.build'],
-    },
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 5,
@@ -815,17 +635,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xEa13A590eFd8545a10134d08081d6fC2FA0417a7',
     providerName: 'Mantle',
-    walletSettings: {
-      chainId: `0x${parseInt('5000', 10).toString(16)}`,
-      chainName: 'Mantle',
-      nativeCurrency: {
-        name: 'Mantle',
-        symbol: 'MNT',
-        decimals: 18,
-      },
-      rpcUrls: ['https://rpc.mantle.xyz'],
-      blockExplorerUrls: ['https://mantlescan.xyz'],
-    },
+    native: { symbol: 'MNT', oracleId: 'WMNT', decimals: 18 },
     gas: {
       type: 'standard',
     },
@@ -840,17 +650,7 @@ export const config = {
     multicall3Address: '0x0955479C61B37074d689319fCaA84ffE1E9e8CF5',
     appMulticallContractAddress: '0x109B750b8B3771d1e4bCEe5CC82e32ab340Ffe2D',
     providerName: 'Frax',
-    walletSettings: {
-      chainId: `0x${parseInt('252', 10).toString(16)}`,
-      chainName: 'Fraxtal',
-      nativeCurrency: {
-        name: 'Frax ETH',
-        symbol: 'frxETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://rpc.frax.com'],
-      blockExplorerUrls: ['https://fraxscan.com'],
-    },
+    native: { symbol: 'frxETH', oracleId: 'wfrxETH', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -884,17 +684,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x7Cba02979594b0f535E0077E9748407a48641c89',
     providerName: 'Mode',
-    walletSettings: {
-      chainId: `0x${parseInt('34443', 10).toString(16)}`,
-      chainName: 'Mode',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://mainnet.mode.network'],
-      blockExplorerUrls: ['https://explorer.mode.network/'],
-    },
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -913,17 +703,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xED3772a9F1207CBa409D26DA7CF512F9b95Ad0FE',
     providerName: 'Manta',
-    walletSettings: {
-      chainId: `0x${parseInt('169', 10).toString(16)}`,
-      chainName: 'Manta Pacific',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://pacific-rpc.manta.network/http'],
-      blockExplorerUrls: ['https://pacific-explorer.manta.network/'],
-    },
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -942,17 +722,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xA43d8f6Db69610C8260B953658553cabF01D77c6',
     providerName: 'Re.al',
-    walletSettings: {
-      chainId: `0x${parseInt('111188', 10).toString(16)}`,
-      chainName: 'Re.al',
-      nativeCurrency: {
-        name: 'reETH',
-        symbol: 'reETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://real.drpc.org'],
-      blockExplorerUrls: ['https://explorer.re.al/'],
-    },
+    native: { symbol: 'reETH', oracleId: 'reETH', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -971,17 +741,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeC1253CC6AB22680B3A3C35EA696dD0A6FC4B0D9',
     providerName: 'Sei',
-    walletSettings: {
-      chainId: `0x${parseInt('1329', 10).toString(16)}`,
-      chainName: 'Sei',
-      nativeCurrency: {
-        name: 'SEI',
-        symbol: 'SEI',
-        decimals: 18,
-      },
-      rpcUrls: ['https://evm-rpc.sei-apis.com'],
-      blockExplorerUrls: ['https://seitrace.com/'],
-    },
+    native: { symbol: 'SEI', oracleId: 'WSEI', decimals: 18 },
     gas: {
       type: 'standard',
       minimum: '10000000', // 0.01 gwei
@@ -997,18 +757,8 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x8EfD3599488542Ec1719567c698a97Fb4e3751a1',
     providerName: 'Rootstock',
+    native: { symbol: 'RBTC', oracleId: 'WBTC', decimals: 18 },
     new: true,
-    walletSettings: {
-      chainId: `0x${parseInt('30', 10).toString(16)}`,
-      chainName: 'Rootstock',
-      nativeCurrency: {
-        name: 'RBTC',
-        symbol: 'RBTC',
-        decimals: 18,
-      },
-      rpcUrls: ['https://rootstock-mainnet.public.blastapi.io'],
-      blockExplorerUrls: ['https://rootstock.blockscout.com/'],
-    },
     gas: {
       type: 'standard',
     },
@@ -1024,17 +774,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x88D537a86e09B753361D70448d60D3dC2D75883d',
     providerName: 'Aurora',
-    walletSettings: {
-      chainId: `0x${parseInt('1313161554', 10).toString(16)}`,
-      chainName: 'Aurora Mainnet',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18,
-      },
-      rpcUrls: ['https://mainnet.aurora.dev'],
-      blockExplorerUrls: ['https://aurorascan.dev/'],
-    },
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {
       type: 'standard',
     },
@@ -1050,17 +790,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xd3C0A4AB6F68e3c12DEc753255b9f769E0bA615b',
     providerName: 'Oasis Emerald',
-    walletSettings: {
-      chainId: `0x${parseInt('42262', 10).toString(16)}`,
-      chainName: 'Oasis Emerald',
-      nativeCurrency: {
-        name: 'Oasis Protocol',
-        symbol: 'ROSE',
-        decimals: 18,
-      },
-      rpcUrls: ['https://emerald.oasis.dev'],
-      blockExplorerUrls: ['https://explorer.emerald.oasis.dev/'],
-    },
+    native: { symbol: 'ROSE', oracleId: 'WROSE', decimals: 18 },
     gas: {
       type: 'standard',
     },
@@ -1076,17 +806,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x0bF5F48d8F761efAe0f187eCce60784e5d3E87E6',
     providerName: 'Celo',
-    walletSettings: {
-      chainId: `0x${parseInt('42220', 10).toString(16)}`,
-      chainName: 'Celo',
-      nativeCurrency: {
-        name: 'CELO',
-        symbol: 'CELO',
-        decimals: 18,
-      },
-      rpcUrls: ['https://forno.celo.org'],
-      blockExplorerUrls: ['https://celoscan.io/'],
-    },
+    native: { symbol: 'CELO', oracleId: 'WCELO', decimals: 18 },
     gas: {
       type: 'celo',
     },
@@ -1102,17 +822,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xeCD68D935Fd331EbA27381929845737346577943',
     providerName: 'heco',
-    walletSettings: {
-      chainId: `0x${parseInt('128', 10).toString(16)}`,
-      chainName: 'HECO Mainnet',
-      nativeCurrency: {
-        name: 'Huobi Token',
-        symbol: 'HT',
-        decimals: 18,
-      },
-      rpcUrls: ['https://http-mainnet.hecochain.com'],
-      blockExplorerUrls: ['https://scan.hecochain.com/'],
-    },
+    native: { symbol: 'HT', oracleId: 'WHT', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -1131,17 +841,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xe8EeDE3a063AdF991096E317e916d9AF56cb11B2',
     providerName: 'harmony',
-    walletSettings: {
-      chainId: `0x${parseInt('1666600000', 10).toString(16)}`,
-      chainName: 'Harmony One',
-      nativeCurrency: {
-        name: 'HARMONY',
-        symbol: 'ONE',
-        decimals: 18,
-      },
-      rpcUrls: ['https://api.s0.t.hmny.io/'],
-      blockExplorerUrls: ['https://explorer.harmony.one/'],
-    },
+    native: { symbol: 'ONE', oracleId: 'WONE', decimals: 18 },
     gas: {
       type: 'standard',
     },
@@ -1157,17 +857,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x504A5F167BE8014b1d5CBDd993f3Bb34F95E70B2',
     providerName: 'Fuse',
-    walletSettings: {
-      chainId: `0x${parseInt('122', 10).toString(16)}`,
-      chainName: 'Fuse',
-      nativeCurrency: {
-        name: 'FUSE',
-        symbol: 'FUSE',
-        decimals: 18,
-      },
-      rpcUrls: ['https://rpc.fuse.io'],
-      blockExplorerUrls: ['https://explorer.fuse.io/'],
-    },
+    native: { symbol: 'FUSE', oracleId: 'WFUSE', decimals: 18 },
     gas: {
       type: 'standard',
     },
