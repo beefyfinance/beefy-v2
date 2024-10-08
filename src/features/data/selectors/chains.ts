@@ -8,7 +8,7 @@ function makeChainSelector(idsSelector: (state: BeefyState) => ChainEntity['id']
     idsSelector,
     (state: BeefyState) => state.entities.chains.byId,
     (allIds, byId) => allIds.map(id => byId[id]).filter((c): c is ChainEntity => !!c)
-  );
+  ) as (state: BeefyState) => ChainEntity[];
 }
 
 export const selectChainById = createCachedSelector(

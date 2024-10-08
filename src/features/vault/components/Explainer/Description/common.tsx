@@ -52,7 +52,7 @@ export function useCommonHelper(vaultId: VaultEntity['id']): CommonHelper {
       name: vault.names.single,
       chainId: chain.id,
       chainName: chain.name,
-      chainNative: chain.walletSettings.nativeCurrency.symbol,
+      chainNative: chain.native.symbol,
       platformName: platform.name,
       depositToken: depositToken.symbol,
       depositTokenProvider: depositTokenProvider?.name || '[UNKNOWN]',
