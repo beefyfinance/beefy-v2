@@ -153,7 +153,10 @@
         "tokens": [
           "0x7CFaDFD5645B50bE87d546f42699d863648251ad",
           "0xd3443ee1e91aF28e5FB858Fbd0D72A63bA8046E0"
-        ]
+        ],
+        "swap": {
+          "blockProviders": ["kyber", "one-inch"]
+        }
       }
     ]
   },
@@ -227,7 +230,22 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xff38cc0ce0de4476c5a3e78675b48420a851035b000200000000000000000593/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xff38cc0ce0de4476c5a3e78675b48420a851035b000200000000000000000593/remove-liquidity",
-    "network": "arbitrum"
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "arbitrum-balancer",
+        "poolId": "0xff38cc0ce0de4476c5a3e78675b48420a851035b000200000000000000000593",
+        "poolType": "gyroe",
+        "tokens": [
+          "0xCA5d8F8a8d49439357d3CF46Ca2e720702F132b8",
+          "0xD9FBA68D89178e3538e708939332c79efC540179"
+        ],
+        "swap": {
+          "blockProviders": ["kyber", "one-inch"]
+        }
+      }
+    ]
   },
   {
     "id": "aura-arb-ausdc-wusdm",
@@ -1750,7 +1768,10 @@
         "tokens": [
           "0x7CFaDFD5645B50bE87d546f42699d863648251ad",
           "0x7dfF72693f6A4149b17e7C6314655f6A9F7c8B33"
-        ]
+        ],
+        "swap": {
+          "blockProviders": ["kyber", "one-inch"]
+        }
       }
     ]
   },
@@ -1792,7 +1813,10 @@
         "tokens": [
           "0xb165a74407fE1e519d6bCbDeC1Ed3202B35a4140",
           "0xCA5d8F8a8d49439357d3CF46Ca2e720702F132b8"
-        ]
+        ],
+        "swap": {
+          "blockProviders": ["kyber", "one-inch"]
+        }
       }
     ]
   },
@@ -1834,7 +1858,10 @@
         "tokens": [
           "0x7CFaDFD5645B50bE87d546f42699d863648251ad",
           "0xCA5d8F8a8d49439357d3CF46Ca2e720702F132b8"
-        ]
+        ],
+        "swap": {
+          "blockProviders": ["kyber", "one-inch"]
+        }
       }
     ]
   },
@@ -5833,7 +5860,10 @@
         "tokens": [
           "0xb165a74407fE1e519d6bCbDeC1Ed3202B35a4140",
           "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
-        ]
+        ],
+        "swap": {
+          "blockProviders": ["kyber", "one-inch"]
+        }
       }
     ]
   },
@@ -5875,7 +5905,10 @@
         "tokens": [
           "0x7CFaDFD5645B50bE87d546f42699d863648251ad",
           "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
-        ]
+        ],
+        "swap": {
+          "blockProviders": ["kyber", "one-inch"]
+        }
       }
     ]
   },
@@ -11864,7 +11897,10 @@
         "tokens": [
           "0x7CFaDFD5645B50bE87d546f42699d863648251ad",
           "0xb165a74407fE1e519d6bCbDeC1Ed3202B35a4140"
-        ]
+        ],
+        "swap": {
+          "blockProviders": ["kyber", "one-inch"]
+        }
       }
     ]
   },

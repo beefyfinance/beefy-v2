@@ -25,9 +25,12 @@ import {
 import { mkdir } from 'node:fs/promises';
 import { createCachedFactory, createFactory } from '../src/features/data/utils/factory-utils';
 import { addressBook, Token } from 'blockchain-addressbook';
-import { partition, sortBy } from 'lodash';
+import { sortBy } from 'lodash';
 import platforms from '../src/config/platforms.json';
-import { BalancerStrategyConfig } from '../src/features/data/apis/transact/strategies/strategy-configs';
+import {
+  BalancerStrategyConfig,
+  OptionalStrategySwapConfig,
+} from '../src/features/data/apis/transact/strategies/strategy-configs';
 import { sortVaultKeys } from './common/vault-fields';
 
 const cacheBasePath = path.join(__dirname, '.cache', 'balancer');
@@ -89,6 +92,14 @@ type RpcPool = {
   tokenRates?: readonly [bigint, bigint];
   normalizedWeights?: readonly bigint[];
   scalingFactors?: readonly bigint[];
+};
+
+type RpcToken = {
+  tokenAddress: Address;
+  chainId: AppChainId;
+  metaDepositTypeHash?: Hex;
+  metaWithdrawTypeHash?: Hex;
+  assetAddress?: Address;
 };
 
 type Pool = RpcPool & BalancerApiPool;
@@ -171,10 +182,6 @@ const runArgsConfig: ArgumentConfig<RunArgs> = {
     optional: true,
   },
 };
-
-function isDefined<T>(value: T): value is Exclude<T, undefined | null> {
-  return value !== undefined && value !== null;
-}
 
 function getRunArgs() {
   return parse<RunArgs>(runArgsConfig, {
@@ -359,6 +366,37 @@ const fetchPoolRpcData = withFileCache(
     path.join(cacheRpcPath, chainId, `pool-${poolAddress}.json`)
 );
 
+const fetchTokenRpcData = withFileCache(
+  async (tokenAddress: Address, chainId: AppChainId): Promise<RpcToken> => {
+    const client = getViemClient(chainId);
+    const [metaDepositTypeHashRes, metaWithdrawTypeHashRes, assetRes] = await Promise.allSettled([
+      client.readContract({
+        address: tokenAddress,
+        abi: parseAbi(['function METADEPOSIT_TYPEHASH() public view returns (bytes32)']),
+        functionName: 'METADEPOSIT_TYPEHASH',
+      }),
+      client.readContract({
+        address: tokenAddress,
+        abi: parseAbi(['function METAWITHDRAWAL_TYPEHASH() public view returns (bytes32)']),
+        functionName: 'METAWITHDRAWAL_TYPEHASH',
+      }),
+      client.readContract({
+        address: tokenAddress,
+        abi: parseAbi(['function asset() public view returns (address)']),
+        functionName: 'asset',
+      }),
+    ]);
+
+    const metaDepositTypeHash = fulfilledOr(metaDepositTypeHashRes, undefined);
+    const metaWithdrawTypeHash = fulfilledOr(metaWithdrawTypeHashRes, undefined);
+    const assetAddress = fulfilledOr(assetRes, undefined);
+
+    return { tokenAddress, chainId, metaDepositTypeHash, metaWithdrawTypeHash, assetAddress };
+  },
+  (tokenAddress: Address, chainId: AppChainId) =>
+    path.join(cacheRpcPath, chainId, `token-${tokenAddress}.json`)
+);
+
 const balancerApiQueue = new PQueue({
   concurrency: 1,
   interval: 1000,
@@ -470,111 +508,48 @@ const getPoolRpcData = createCachedFactory(
   (_, poolAddress: Address, chainId: AppChainId) => `${chainId}:${poolAddress}`
 );
 
-function checkPoolTokensAgainstAddressBook(pool: Pool, allRequired: boolean): boolean {
-  const { tokenAddressMap } = addressBook[appToAddressBookId(pool.chainId)];
-  // Tokens in the pool that are not the pool token
-  const tokens = pool.poolTokens
-    .filter(t => t.address !== pool.address && !t.hasNestedPool)
-    .map(t => {
-      const abToken = tokenAddressMap[t.address];
-      if (abToken) {
-        return {
-          poolToken: t,
-          inAddressBook: true as const,
-          abToken,
-        };
-      }
-
-      return {
-        poolToken: t,
-        inAddressBook: false as const,
-      };
-    });
-
-  // Tokens in address book
-  const [zapTokens, missingTokens] = partition(
-    tokens,
-    (
-      t
-    ): t is Extract<
-      typeof t,
-      {
-        inAddressBook: true;
-      }
-    > => t.inAddressBook
-  );
-  if (!zapTokens.length) {
-    throw new Error(
-      `No tokens [${missingTokens.join(', ')}] found in ${pool.chainId} address book.`
-    );
-  }
-
-  const tokenErrors = zapTokens
-    .map(({ poolToken, abToken }) => {
-      if (abToken.decimals !== poolToken.decimals) {
-        return `Address book token decimals mismatch ${poolToken.symbol} (${poolToken.address}) ${poolToken.decimals} vs ${abToken.decimals}`;
-      }
-      return undefined;
-    })
-    .filter(isDefined);
-  if (tokenErrors.length) {
-    throw new Error(`${pool.type}: Token errors:\n${tokenErrors.join('\n')}`);
-  }
-
-  if (zapTokens.length !== tokens.length) {
-    const message = `${pool.type}: Some tokens not found in address book:\n${missingTokens
-      .map(({ poolToken }) => `  ${poolToken.symbol} (${poolToken.address})`)
-      .join('\n')}`;
-
-    if (allRequired) {
-      throw new Error(message);
-    } else {
-      console.warn(message);
-    }
-  }
-
-  return true;
-}
-
 type PoolToken = BalancerPoolToken<Address> & {
   abToken?: Token;
   price?: number;
   swapProviders: string[];
+  rpcToken: RpcToken;
   isBPT: boolean;
 };
 
-function getPoolTokens(pool: Pool, prices: TokenPrices, swaps: ZapSwaps) {
+async function getPoolTokens(
+  pool: Pool,
+  prices: TokenPrices,
+  swaps: ZapSwaps,
+  forceUpdate: boolean = false
+) {
   const { tokenAddressMap } = addressBook[appToAddressBookId(pool.chainId)];
-  const tokens: PoolToken[] = [];
-  const tokensWithBpt: PoolToken[] = [];
 
-  for (const poolToken of pool.poolTokens) {
-    const isBPT = poolToken.address === pool.address;
-    const abToken = tokenAddressMap[poolToken.address];
-    if (abToken && abToken.decimals !== poolToken.decimals) {
-      throw new Error(
-        `Address book token decimals mismatch ${poolToken.symbol} (${poolToken.address}) ${poolToken.decimals} vs ${abToken.decimals}`
-      );
-    }
-    const price = abToken ? prices[abToken.oracleId] : undefined;
-    const swapProviders = Object.entries(swaps[pool.chainId]?.[poolToken.address] || {})
-      .filter(([, v]) => v)
-      .map(([k]) => k);
-    const token = {
-      ...poolToken,
-      isBPT,
-      abToken,
-      price,
-      swapProviders,
-    };
+  const tokensWithBpt = await Promise.all(
+    pool.poolTokens.map(async poolToken => {
+      const isBPT = poolToken.address === pool.address;
+      const abToken = tokenAddressMap[poolToken.address];
+      if (abToken && abToken.decimals !== poolToken.decimals) {
+        throw new Error(
+          `Address book token decimals mismatch ${poolToken.symbol} (${poolToken.address}) ${poolToken.decimals} vs ${abToken.decimals}`
+        );
+      }
+      const rpcToken = await fetchTokenRpcData(forceUpdate, poolToken.address, pool.chainId);
+      const price = abToken ? prices[abToken.oracleId] : undefined;
+      const swapProviders = Object.entries(swaps[pool.chainId]?.[poolToken.address] || {})
+        .filter(([, v]) => v)
+        .map(([k]) => k);
+      return {
+        ...poolToken,
+        isBPT,
+        abToken,
+        price,
+        swapProviders,
+        rpcToken,
+      } satisfies PoolToken;
+    })
+  );
 
-    if (!isBPT) {
-      tokens.push(token);
-    }
-    tokensWithBpt.push(token);
-  }
-
-  return { tokens, tokensWithBpt };
+  return { tokensWithBpt, tokens: tokensWithBpt.filter(t => !t.isBPT) };
 }
 
 function logTokens(tokens: PoolToken[]) {
@@ -750,6 +725,16 @@ async function findAmmForPool(pool: Pool, tokenProviderId: string): Promise<AmmC
   return amm;
 }
 
+function isAaveToken(token: PoolToken) {
+  return (
+    token.rpcToken.assetAddress &&
+    token.rpcToken.metaDepositTypeHash ===
+      '0x2a83c73b9e01ec0a1b95ff05940d809179668cc004230412d7047ffac3846ce7' &&
+    token.rpcToken.metaWithdrawTypeHash ===
+      '0x406ef09971b1bfa50a48ce277d3302602d78c94d58a376e8953b590702de7b31'
+  );
+}
+
 export async function discoverBalancerZap(args: RunArgs) {
   const chainId = addressBookToAppId(args.chain);
   const chain = getChain(chainId);
@@ -805,7 +790,7 @@ export async function discoverBalancerZap(args: RunArgs) {
   }
 
   const [swaps, prices] = await Promise.all([getZapSwaps(), getTokenPrices()]);
-  const { tokens, tokensWithBpt } = getPoolTokens(pool, prices, swaps);
+  const { tokens, tokensWithBpt } = await getPoolTokens(pool, prices, swaps);
   const checker = poolTypeToChecker[pool.type];
   if (!checker) {
     throw new Error(`No checker found for pool type ${pool.type}`);
@@ -822,6 +807,14 @@ export async function discoverBalancerZap(args: RunArgs) {
     console.log('Vault:', amm.vaultAddress);
   }
 
+  const swapConfig: OptionalStrategySwapConfig = tokens.some(isAaveToken)
+    ? {
+        swap: {
+          blockProviders: ['kyber', 'one-inch'],
+        },
+      }
+    : {};
+
   const type = pool.type;
   switch (type) {
     case 'COMPOSABLE_STABLE': {
@@ -833,6 +826,7 @@ export async function discoverBalancerZap(args: RunArgs) {
         tokens: tokens.map(t => t.address),
         bptIndex: tokensWithBpt.findIndex(t => t.isBPT),
         hasNestedPool: tokens.some(t => t.hasNestedPool),
+        ...swapConfig,
       } satisfies BalancerStrategyConfig;
     }
     case 'GYRO':
@@ -845,6 +839,7 @@ export async function discoverBalancerZap(args: RunArgs) {
         poolId: apiPool.id,
         poolType: transformPoolType(type),
         tokens: apiPool.poolTokens.map(t => t.address),
+        ...swapConfig,
       } satisfies BalancerStrategyConfig;
     }
     default: {

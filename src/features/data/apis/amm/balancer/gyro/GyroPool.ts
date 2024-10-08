@@ -57,25 +57,6 @@ export class GyroPool extends AllPool implements IBalancerAllPool {
     return value;
   }
 
-  // async getSwapRatios(): Promise<BigNumber> {
-  //   const balances = await this.getBalances();
-  //   const rates = await this.getTokenRates();
-  //   const totalSupply = await this.getTotalSupply();
-  //   if (balances.length !== this.config.tokens.length || rates.length !== this.config.tokens.length) {
-  //     throw new Error('Invalid tokens / rates');
-  //   }
-  //
-  //   const amount0 = balances[0].shiftedBy(18).dividedToIntegerBy(totalSupply);
-  //   const amount1 = balances[1].shiftedBy(18).dividedToIntegerBy(totalSupply);
-  //   const ratio = rates[0]
-  //     .shiftedBy(18)
-  //     .dividedToIntegerBy(rates[1])
-  //     .multipliedBy(amount1)
-  //     .dividedToIntegerBy(amount0);
-  //
-  //   return BIG_ONE.shiftedBy(18).dividedBy(ratio.plus(BIG_ONE.shiftedBy(18)));
-  // }
-
   /**
    * The ratio of balances[n] * scaling factor[n] * token rate[n] over their sum
    */

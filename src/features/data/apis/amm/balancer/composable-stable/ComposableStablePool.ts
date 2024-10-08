@@ -116,109 +116,6 @@ export class ComposableStablePool
     return response;
   }
 
-  /*async quoteRemoveLiquidityOneToken(liquidityIn: BigNumber, tokenOut: string): Promise<BigNumber> {
-    this.checkAmount(liquidityIn, 'liquidityIn');
-    this.checkToken(tokenOut, 'tokenOut');
-
-    const request: QueryBatchSwapRequest = {
-      kind: SwapKind.GIVEN_IN,
-      swaps: [
-        {
-          poolId: this.config.poolId,
-          assetInIndex: 0,
-          assetOutIndex: 1,
-          amount: liquidityIn,
-          userData: '0x',
-        },
-      ],
-      assets: [this.config.poolAddress, tokenOut],
-    };
-
-    const vault = this.getVault();
-    const [vaultInputDelta, vaultOutputDelta] = await vault.queryBatchSwap(request);
-
-    if (!vaultInputDelta.eq(liquidityIn)) {
-      throw new Error('Not all input used');
-    }
-
-    if (vaultOutputDelta.gte(BIG_ZERO)) {
-      throw new Error('Output is negative');
-    }
-
-    return vaultOutputDelta.abs();
-  }*/
-
-  /*async getAddLiquidityOneTokenZap(
-    amountIn: BigNumber,
-    tokenIn: string,
-    liquidityOutMin: BigNumber,
-    from: string,
-    insertBalance: boolean
-  ): Promise<ZapStep> {
-    this.checkToken(tokenIn, 'tokenIn');
-    this.checkAmount(amountIn, 'amountIn');
-    this.checkAmount(liquidityOutMin, 'liquidityOutMin');
-
-    const vault = this.getVault();
-    return vault.getSwapZap({
-      swap: {
-        singleSwap: {
-          poolId: this.config.poolId,
-          kind: SwapKind.GIVEN_IN,
-          assetIn: tokenIn,
-          assetOut: this.config.poolAddress,
-          amount: amountIn,
-          userData: '0x',
-        },
-        funds: {
-          sender: from,
-          fromInternalBalance: false,
-          recipient: from,
-          toInternalBalance: false,
-        },
-        limit: liquidityOutMin,
-        deadline: getUnixNow() + THIRTY_MINUTES_IN_SECONDS,
-      },
-      insertBalance,
-    });
-  }*/
-
-  /*async getRemoveLiquidityOneTokenZap(
-    liquidityIn: BigNumber,
-    tokenOut: string,
-    amountOutMin: BigNumber,
-    from: string,
-    insertBalance: boolean,
-    deadlineSeconds: number = THIRTY_MINUTES_IN_SECONDS
-  ): Promise<ZapStep> {
-    this.checkToken(tokenOut, 'tokenOut');
-    this.checkAmount(liquidityIn, 'liquidityIn');
-    this.checkAmount(amountOutMin, 'amountOutMin');
-
-    const vault = this.getVault();
-    return vault.getSwapZap({
-      swap: {
-        singleSwap: {
-          poolId: this.config.poolId,
-          kind: SwapKind.GIVEN_IN,
-          assetIn: this.config.poolAddress,
-          assetOut: tokenOut,
-          amount: liquidityIn,
-          userData: '0x',
-        },
-        funds: {
-          sender: from,
-          fromInternalBalance: false,
-          recipient: from,
-          toInternalBalance: false,
-        },
-        limit: amountOutMin,
-        deadline: getUnixNow() + deadlineSeconds,
-      },
-      insertBalance,
-    });
-  }*/
-
   protected dropBptIndex<T>(amounts: T[]): T[] {
     return amounts.filter((_, i) => i !== this.config.bptIndex);
   }
@@ -228,24 +125,6 @@ export class ComposableStablePool
     result.splice(this.config.bptIndex!, 0, value);
     return result;
   }
-
-  /*  protected checkAmount(amount: BigNumber, label: string = 'amount') {
-      if (amount.lte(BIG_ZERO)) {
-        throw new Error(`${label} must be greater than 0`);
-      }
-  
-      if ((amount.decimalPlaces() || 0) > 0) {
-        throw new Error(`${label} must be in wei`);
-      }
-    }
-  
-    protected checkToken(tokenAddress: string, label: string = 'token'): number {
-      const index = this.config.tokens.findIndex(t => t.address === tokenAddress);
-      if (index === -1) {
-        throw new Error(`${label} must be a pool token`);
-      }
-      return index;
-    }*/
 
   /**
    * For composable stable pools, the scaling factors include the token rate too

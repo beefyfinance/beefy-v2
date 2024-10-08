@@ -10,8 +10,8 @@ import type { CurveMethod } from './curve/types';
 export type SwapAggregatorId = 'one-inch' | 'kyber' | 'odos';
 
 export type StrategySwapConfig = {
-  blockProviders: SwapAggregatorId[];
-  blockTokens: string[];
+  blockProviders?: SwapAggregatorId[];
+  blockTokens?: string[];
 };
 
 export type OptionalStrategySwapConfig = {
