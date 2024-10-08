@@ -14,9 +14,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   button: {
     ...theme.typography['body-lg'],
     color: theme.palette.text.secondary,
-    padding: '4px 8px',
+    padding: '2px 8px',
     justifyContent: 'space-between',
     gap: '8px',
+    width: '142px',
   },
   selectIcon: {
     height: '16px',
@@ -27,15 +28,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   dropdown: {
-    display: 'flex',
-    flexDirection: 'column',
-    columnGap: '2px',
-    padding: '4px 8px',
+    padding: '2px 8px',
     backgroundColor: theme.palette.background.buttons.button,
     borderRadius: '8px',
   },
+  linkList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
+  },
   link: {
-    ...theme.typography['body-sm-med'],
+    ...theme.typography['body-lg'],
     textDecoration: 'none',
     color: theme.palette.text.dark,
     display: 'flex',
@@ -75,12 +78,14 @@ export const ContractsDropdown = memo<ContractsDropdownProps>(function Contracts
         anchorEl={anchorEl as MutableRefObject<HTMLElement>}
         className={classes.dropdown}
       >
-        {links.map(({ label, link }) => (
-          <a className={classes.link} key={label} href={link} target="_blank" rel="noopener">
-            {label}
-            <OpenInNewRounded fontSize="inherit" />
-          </a>
-        ))}
+        <div className={classes.linkList}>
+          {links.map(({ label, link }) => (
+            <a className={classes.link} key={label} href={link} target="_blank" rel="noopener">
+              {label}
+              <OpenInNewRounded fontSize="inherit" />
+            </a>
+          ))}
+        </div>
       </Floating>
     </>
   );
