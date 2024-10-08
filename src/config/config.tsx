@@ -79,7 +79,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0x9C983dd514087674CA1d22A22B7432b614b4C835',
     providerName: 'polygon',
-    native: { oracleId: 'WMATIC', symbol: 'POL', decimals: 18 },
+    native: { symbol: 'POL', oracleId: 'WMATIC', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -722,7 +722,7 @@ export const config = {
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xA43d8f6Db69610C8260B953658553cabF01D77c6',
     providerName: 'Re.al',
-    native: { symbol: 'reETH', oracleId: 'WREETH', decimals: 18 },
+    native: { symbol: 'reETH', oracleId: 'reETH', decimals: 18 },
     gas: {
       type: 'eip1559',
       blocks: 100,
