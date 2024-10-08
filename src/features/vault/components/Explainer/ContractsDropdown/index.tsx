@@ -17,6 +17,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '2px 8px',
     justifyContent: 'space-between',
     gap: '2px',
+    borderRadius: '4px',
+    height: '28px',
   },
   selectIcon: {
     height: '18px',
