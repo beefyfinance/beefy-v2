@@ -358,6 +358,7 @@
   "Strat-VaultContract": "Vault",
   "Strat-CLMContract": "CLM",
   "Strat-PoolContract": "Pool",
+  "Strat-CLMPoolContract": "CLM Pool",
   "Boost-Contract": "Boost",
   "Asset-Detail": "Asset Details",
   "Token-Site": "Website",

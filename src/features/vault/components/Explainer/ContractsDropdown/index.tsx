@@ -32,17 +32,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '2px 8px',
     backgroundColor: theme.palette.background.buttons.button,
     borderRadius: '4px',
-    minWidth: '142px',
-  },
-  linkList: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '4px',
   },
   link: {
     ...theme.typography['body-lg'],
     textDecoration: 'none',
     color: theme.palette.text.dark,
+    minWidth: `${120 - 16}px`,
+    width: 'max-content',
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
@@ -79,18 +77,19 @@ export const ContractsDropdown = memo<ContractsDropdownProps>(function Contracts
         open={open}
         anchorEl={anchorEl as MutableRefObject<HTMLElement>}
         className={classes.dropdown}
-        autoWidth={false}
         placement="bottom-end"
+        display="flex"
+        autoWidth={false}
       >
         <ClickAwayListener onClickAway={() => setOpen(false)}>
-          <div className={classes.linkList}>
+          <>
             {links.map(({ label, link }) => (
               <a className={classes.link} key={label} href={link} target="_blank" rel="noopener">
                 {label}
                 <OpenInNewRounded fontSize="inherit" />
               </a>
             ))}
-          </div>
+          </>
         </ClickAwayListener>
       </Floating>
     </>
