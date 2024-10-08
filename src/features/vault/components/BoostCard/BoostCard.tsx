@@ -23,12 +23,10 @@ import type { BoostEntity } from '../../../data/entities/boost';
 import type { TokenEntity } from '../../../data/entities/token';
 import { Link } from '@material-ui/icons';
 import type { BoostSocials } from '../../../data/apis/config-types';
-import type { ChainEntity } from '../../../data/entities/chain';
 import {
   selectVaultActiveMerklBoostCampaigns,
   selectVaultHasActiveMerklBoostCampaigns,
 } from '../../../data/selectors/rewards';
-import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
@@ -50,8 +48,6 @@ export const BoostCard = memo<BoostCardProps>(function BoostCard({ vaultId }) {
 });
 
 export const MerklBoostCard = memo<BoostCardProps>(function MerklBoostCard({ vaultId }) {
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
   const activeCampaigns = useAppSelector(state =>
     selectVaultActiveMerklBoostCampaigns(state, vaultId)
   );
@@ -81,7 +77,6 @@ export const MerklBoostCard = memo<BoostCardProps>(function MerklBoostCard({ vau
         description={description}
         social={social}
         rewardToken={rewardToken}
-        chainId={vault.chainId}
         partnerIds={['optimism']}
       />
     );
@@ -106,8 +101,6 @@ interface CampaignContentProps {
   learn: string;
   social: BoostSocials;
   rewardToken: TokenEntity;
-  chainId: ChainEntity['id'];
-  contractAddress?: string;
   partnerIds?: string[];
 }
 
@@ -174,8 +167,6 @@ const CampaignBoostCard = memo<InnerBoostCardProps>(function CampaignBoostCard({
       learn={learn}
       social={social}
       rewardToken={rewardToken}
-      chainId={boost.chainId}
-      contractAddress={boost.contractAddress}
       partnerIds={boost.partnerIds}
     />
   );

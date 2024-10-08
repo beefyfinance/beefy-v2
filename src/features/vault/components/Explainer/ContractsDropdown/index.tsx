@@ -2,7 +2,7 @@ import { memo, useCallback, useRef, useState, type MutableRefObject, type RefObj
 import { Button } from '../../../../../components/Button';
 import { useTranslation } from 'react-i18next';
 import { ExpandMore, OpenInNewRounded } from '@material-ui/icons';
-import { makeStyles, type Theme } from '@material-ui/core';
+import { ClickAwayListener, makeStyles, type Theme } from '@material-ui/core';
 import { Floating } from '../../../../../components/Floating';
 import clsx from 'clsx';
 
@@ -80,14 +80,16 @@ export const ContractsDropdown = memo<ContractsDropdownProps>(function Contracts
         autoWidth={false}
         placement="bottom-end"
       >
-        <div className={classes.linkList}>
-          {links.map(({ label, link }) => (
-            <a className={classes.link} key={label} href={link} target="_blank" rel="noopener">
-              {label}
-              <OpenInNewRounded fontSize="inherit" />
-            </a>
-          ))}
-        </div>
+        <ClickAwayListener onClickAway={() => setOpen(false)}>
+          <div className={classes.linkList}>
+            {links.map(({ label, link }) => (
+              <a className={classes.link} key={label} href={link} target="_blank" rel="noopener">
+                {label}
+                <OpenInNewRounded fontSize="inherit" />
+              </a>
+            ))}
+          </div>
+        </ClickAwayListener>
       </Floating>
     </>
   );
