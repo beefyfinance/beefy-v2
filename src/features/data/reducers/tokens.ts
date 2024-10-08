@@ -99,13 +99,12 @@ export const tokensSlice = createSlice({
       for (const chainConf of action.payload.chainConfigs) {
         const chainId = chainConf.id;
         const chainState = getOrCreateTokensChainState(sliceState, chainId);
-        const tokenId = chainConf.native.oracleId;
         const existingNative = chainState.byAddress['native'];
 
         const token: TokenNative = {
-          id: tokenId,
+          id: chainConf.native.symbol,
           chainId: chainId,
-          oracleId: tokenId,
+          oracleId: chainConf.native.oracleId,
           decimals: 18,
           address: 'native',
           symbol: chainConf.native.symbol,
