@@ -15,8 +15,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     ...theme.typography['body-lg'],
     color: theme.palette.text.secondary,
     padding: '4px 8px',
+    justifyContent: 'space-between',
+    gap: '8px',
   },
-  selectIcon: {},
+  selectIcon: {
+    height: '16px',
+  },
   isOpen: {
     '& $selectIcon': {
       transform: 'rotate(180deg)',
@@ -31,12 +35,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     borderRadius: '8px',
   },
   link: {
-    ...theme.typography['body-sm'],
+    ...theme.typography['body-sm-med'],
     textDecoration: 'none',
     color: theme.palette.text.dark,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    gap: '4px',
     '&:hover': {
       cursor: 'pointer',
       color: theme.palette.text.primary,

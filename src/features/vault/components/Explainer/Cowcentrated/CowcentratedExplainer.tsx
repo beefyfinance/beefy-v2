@@ -49,10 +49,24 @@ export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
           label: t('Strat-CLMContract'),
         },
       ];
+
       if (strategyAddress) {
         urls.push({
           link: explorerAddressUrl(chain, strategyAddress),
           label: t('Strat-CLM-Strategy'),
+        });
+      }
+
+      if (isCowcentratedGovVault(vault)) {
+        urls.push({
+          link: explorerAddressUrl(chain, vault.contractAddress),
+          label: t('Strat-PoolContract'),
+        });
+      }
+      if (isCowcentratedStandardVault(vault)) {
+        urls.push({
+          link: explorerAddressUrl(chain, vault.contractAddress),
+          label: t('Strat-VaultContract'),
         });
       }
       if (clmVaultStrategyAddress && isCowcentratedStandardVault(vault)) {
@@ -61,19 +75,7 @@ export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
           label: t('Strat-CLM-Strategy-Vault'),
         });
       }
-      if (isCowcentratedGovVault(vault)) {
-        urls.push({
-          link: explorerAddressUrl(chain, vault.contractAddress),
-          label: t('Strat-PoolContract'),
-        });
-      }
 
-      if (isCowcentratedStandardVault(vault)) {
-        urls.push({
-          link: explorerAddressUrl(chain, vault.contractAddress),
-          label: t('Strat-VaultContract'),
-        });
-      }
       if (boost) {
         urls.push({
           link: explorerAddressUrl(chain, boost.contractAddress),
