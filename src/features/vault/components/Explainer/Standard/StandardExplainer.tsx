@@ -54,7 +54,7 @@ export const StandardExplainer = memo<StandardExplainerProps>(function StandardE
         label: t('Boost-Contract'),
       });
     }
-    return links;
+    return urls;
   }, [boost, chain, strategyAddress, t, vault.contractAddress]);
 
   return (
