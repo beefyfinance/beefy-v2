@@ -1,6 +1,5 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LinkButton } from '../../../../../components/LinkButton';
 import { CardTitle } from '../../Card';
 import { StandardDescription } from '../Description/StandardDescription';
 import { selectVaultTotalApyOrUndefined } from '../../../../data/selectors/apy';
@@ -16,6 +15,7 @@ import { ApyDetails } from '../ApyDetails/ApyDetails';
 import { LendingOracle } from '../LendingOracle/LendingOracle';
 import { ExplainerCard } from '../ExplainerCard/ExplainerCard';
 import { getApyLabelsTypeForVault } from '../../../../../helpers/apy';
+import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../data/selectors/boosts';
 
 type StandardExplainerProps = {
   vaultId: VaultEntity['id'];
@@ -27,6 +27,7 @@ export const StandardExplainer = memo<StandardExplainerProps>(function StandardE
 }) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectStandardVaultById(state, vaultId));
+  const boost = useAppSelector(state => selectCurrentBoostByVaultIdOrUndefined(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const apys = useAppSelector(state => selectVaultTotalApyOrUndefined(state, vaultId));
   const strategyAddress = useAppSelector(state =>
@@ -35,23 +36,31 @@ export const StandardExplainer = memo<StandardExplainerProps>(function StandardE
   const showApy = apys && shouldVaultShowInterest(vault);
   const showLendingOracle = !!vault.lendingOracle;
 
+  const links = useMemo(() => {
+    const urls: { link: string; label: string }[] = [];
+    if (strategyAddress) {
+      urls.push({
+        link: explorerAddressUrl(chain, strategyAddress),
+        label: t('Strat-Contract'),
+      });
+    }
+    urls.push({
+      link: explorerAddressUrl(chain, vault.contractAddress),
+      label: t('Strat-VaultContract'),
+    });
+    if (boost) {
+      urls.push({
+        link: explorerAddressUrl(chain, boost.contractAddress),
+        label: t('Boost-Contract'),
+      });
+    }
+    return links;
+  }, [boost, chain, strategyAddress, t, vault.contractAddress]);
+
   return (
     <ExplainerCard
       title={<CardTitle title={t('Vault-Strategy')} />}
-      actions={
-        <>
-          {strategyAddress ? (
-            <LinkButton
-              href={explorerAddressUrl(chain, strategyAddress)}
-              text={t('Strat-Contract')}
-            />
-          ) : null}
-          <LinkButton
-            href={explorerAddressUrl(chain, vault.contractAddress)}
-            text={t('Strat-VaultContract')}
-          />
-        </>
-      }
+      links={links}
       description={<StandardDescription vaultId={vaultId} />}
       details={
         <>

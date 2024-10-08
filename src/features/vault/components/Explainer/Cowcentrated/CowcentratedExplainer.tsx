@@ -1,6 +1,5 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LinkButton } from '../../../../../components/LinkButton';
 import { CardTitle } from '../../Card';
 import { selectVaultTotalApy } from '../../../../data/selectors/apy';
 import {
@@ -21,6 +20,7 @@ import { ExplainerCard } from '../ExplainerCard/ExplainerCard';
 import { CowcentratedLikeDescription } from '../Description/CowcentratedLikeDescription';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../../../../data/utils/vault-utils';
 import { getApyLabelsTypeForVault } from '../../../../../helpers/apy';
+import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../data/selectors/boosts';
 
 type CowcentratedExplainerProps = {
   vaultId: VaultCowcentratedLike['id'];
@@ -30,6 +30,7 @@ export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
   function CowcentratedExplainer({ vaultId }) {
     const { t } = useTranslation();
     const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
+    const boost = useAppSelector(state => selectCurrentBoostByVaultIdOrUndefined(state, vaultId));
     const chain = useAppSelector(state => selectChainById(state, vault.chainId));
     const apys = useAppSelector(state => selectVaultTotalApy(state, vaultId));
     const strategyAddress = useAppSelector(state =>
@@ -41,44 +42,53 @@ export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
 
     const showApy = apys && apys.totalApy > 0 && shouldVaultShowInterest(vault);
 
+    const links = useMemo(() => {
+      const urls = [
+        {
+          link: explorerAddressUrl(chain, getCowcentratedAddressFromCowcentratedLikeVault(vault)),
+          label: t('Strat-CLMContract'),
+        },
+      ];
+      if (strategyAddress) {
+        urls.push({
+          link: explorerAddressUrl(chain, strategyAddress),
+          label: t('Strat-CLM-Strategy'),
+        });
+      }
+      if (clmVaultStrategyAddress && isCowcentratedStandardVault(vault)) {
+        urls.push({
+          link: explorerAddressUrl(chain, clmVaultStrategyAddress),
+          label: t('Strat-CLM-Strategy-Vault'),
+        });
+      }
+      if (isCowcentratedGovVault(vault)) {
+        urls.push({
+          link: explorerAddressUrl(chain, vault.contractAddress),
+          label: t('Strat-PoolContract'),
+        });
+      }
+
+      if (isCowcentratedStandardVault(vault)) {
+        urls.push({
+          link: explorerAddressUrl(chain, vault.contractAddress),
+          label: t('Strat-VaultContract'),
+        });
+      }
+      if (boost) {
+        urls.push({
+          link: explorerAddressUrl(chain, boost.contractAddress),
+          label: t('Boost-Contract'),
+        });
+      }
+      return urls;
+    }, [boost, chain, clmVaultStrategyAddress, strategyAddress, t, vault]);
+
+    console.log(links);
+
     return (
       <ExplainerCard
         title={<CardTitle title={t('Vault-Strategy')} />}
-        actions={
-          <>
-            <LinkButton
-              href={explorerAddressUrl(
-                chain,
-                getCowcentratedAddressFromCowcentratedLikeVault(vault)
-              )}
-              text={t('Strat-CLMContract')}
-            />
-            {strategyAddress ? (
-              <LinkButton
-                href={explorerAddressUrl(chain, strategyAddress)}
-                text={t('Strat-CLM-Strategy')}
-              />
-            ) : null}
-            {clmVaultStrategyAddress && isCowcentratedStandardVault(vault) ? (
-              <LinkButton
-                href={explorerAddressUrl(chain, clmVaultStrategyAddress)}
-                text={t('Strat-CLM-Strategy-Vault')}
-              />
-            ) : null}
-            {isCowcentratedGovVault(vault) ? (
-              <LinkButton
-                href={explorerAddressUrl(chain, vault.contractAddress)}
-                text={t('Strat-PoolContract')}
-              />
-            ) : null}
-            {isCowcentratedStandardVault(vault) ? (
-              <LinkButton
-                href={explorerAddressUrl(chain, vault.contractAddress)}
-                text={t('Strat-VaultContract')}
-              />
-            ) : null}
-          </>
-        }
+        links={links}
         description={<CowcentratedLikeDescription vaultId={vaultId} />}
         details={
           showApy ? <ApyDetails type={getApyLabelsTypeForVault(vault)} values={apys} /> : undefined
