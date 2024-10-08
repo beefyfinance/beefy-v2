@@ -191,7 +191,7 @@ export class SwapAggregator implements ISwapAggregator {
         )
       )
     );
-    const providers = this.providers.filter((_, i) => providerSupported[i]);
+    const providers = allowedProviders.filter((_, i) => providerSupported[i]);
 
     if (providers.length === 0) {
       throw new Error(

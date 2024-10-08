@@ -309,7 +309,8 @@ export abstract class UniswapLikeStrategy<
           toToken: this.wnative,
           vaultId: this.vault.id,
         },
-        state
+        state,
+        this.options.swap
       );
       const wrapQuote = first(wrapQuotes);
       if (!wrapQuote) {
@@ -428,7 +429,7 @@ export abstract class UniswapLikeStrategy<
           return undefined;
         }
 
-        return await swapAggregator.fetchQuotes(quoteRequest, state);
+        return await swapAggregator.fetchQuotes(quoteRequest, state, this.options.swap);
       })
     );
 
@@ -1045,7 +1046,8 @@ export abstract class UniswapLikeStrategy<
           toToken: this.native,
           vaultId: this.vault.id,
         },
-        state
+        state,
+        this.options.swap
       );
       const unwrapQuote = first(unwrapQuotes);
       if (!unwrapQuote || unwrapQuote.toAmount.lt(outputAmount)) {
@@ -1099,7 +1101,8 @@ export abstract class UniswapLikeStrategy<
               toToken: wantedOutput,
               vaultId: option.vaultId,
             },
-            state
+            state,
+            this.options.swap
           );
 
           if (!quotes || !quotes.length) {

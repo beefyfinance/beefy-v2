@@ -603,7 +603,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
           return undefined;
         }
 
-        return await swapAggregator.fetchQuotes(quoteRequest, state);
+        return await swapAggregator.fetchQuotes(quoteRequest, state, this.options.swap);
       })
     );
     const quotePerLpToken = quotesPerLpToken.map((quotes, i) => {
@@ -743,7 +743,8 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
               toToken: wantedOutput,
               vaultId: option.vaultId,
             },
-            state
+            state,
+            this.options.swap
           );
 
           if (!quotes || !quotes.length) {

@@ -182,7 +182,8 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
         fromAmount: input.amount,
         toToken: this.vaultType.depositToken,
       },
-      state
+      state,
+      this.options.swap
     );
     const bestQuote = first(swapQuotes); // already sorted by toAmount
     if (!bestQuote) {
@@ -397,7 +398,8 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
           toToken: this.wnative,
           vaultId: this.vault.id,
         },
-        state
+        state,
+        this.options.swap
       );
       const wrapQuote = first(wrapQuotes);
       if (!wrapQuote || wrapQuote.toAmount.lt(withdrawnAmountAfterFee)) {
@@ -432,7 +434,8 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
           fromAmount: swapInputAmount,
           toToken: swapOutputToken,
         },
-        state
+        state,
+        this.options.swap
       );
       const bestQuote = first(swapQuotes); // already sorted by toAmount
       if (!bestQuote) {

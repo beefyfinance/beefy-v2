@@ -282,7 +282,8 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
             fromAmount: input.amount,
             toToken: depositVia.token,
           },
-          state
+          state,
+          this.options.swap
         );
         const bestQuote = first(quotes);
         if (!bestQuote) {
@@ -713,7 +714,8 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
             fromAmount: slipBy(split.amount, slippage, split.token.decimals), // we have to assume it will slip 100% since we can't modify the call data later
             toToken: wanted,
           },
-          state
+          state,
+          this.options.swap
         );
         const quote = first(quotes);
 

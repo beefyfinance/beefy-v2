@@ -393,7 +393,8 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
           toToken: desiredToken,
           vaultId: this.vault.id,
         },
-        state
+        state,
+        this.options.swap
       );
       const unwrapQuote = first(unwrapQuotes);
       if (!unwrapQuote || unwrapQuote.toAmount.lt(swapAmountOut)) {

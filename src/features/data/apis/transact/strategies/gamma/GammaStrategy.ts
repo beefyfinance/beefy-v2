@@ -299,7 +299,7 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
           return undefined;
         }
 
-        return await swapAggregator.fetchQuotes(quoteRequest, state);
+        return await swapAggregator.fetchQuotes(quoteRequest, state, this.options.swap);
       })
     );
 
@@ -784,7 +784,8 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
               toToken: wantedOutput,
               vaultId: option.vaultId,
             },
-            state
+            state,
+            this.options.swap
           );
 
           if (!quotes || !quotes.length) {

@@ -597,7 +597,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
           return undefined;
         }
 
-        return await swapAggregator.fetchQuotes(quoteRequest, state);
+        return await swapAggregator.fetchQuotes(quoteRequest, state, this.options.swap);
       })
     );
 
@@ -661,7 +661,8 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
             fromAmount: input.amount,
             toToken: depositVia,
           },
-          state
+          state,
+          this.options.swap
         );
         const bestQuote = first(quotes);
         if (!bestQuote) {
@@ -1150,7 +1151,8 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
                 fromAmount: minOutputAmount,
                 toToken: wantedOutput,
               },
-              state
+              state,
+              this.options.swap
             );
             const bestQuote = first(quotes);
             if (!bestQuote) {
