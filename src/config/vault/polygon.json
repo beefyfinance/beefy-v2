@@ -3660,7 +3660,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0x5ab5c56b9db92ba45a0b46a207286cd83c15c939",
+            "target": "0x5ab5C56B9db92Ba45a0B46a207286cD83C15C939",
             "coins": [
               "0xb5DFABd7fF7F83BAB83995E72A52B97ABb7bcf63",
               "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
@@ -3880,7 +3880,7 @@
           },
           {
             "type": "pool-fixed",
-            "target": "0x3d8eadb739d1ef95dd53d718e4810721837c69c1",
+            "target": "0x3d8EADb739D1Ef95dd53D718e4810721837c69c1",
             "coins": [
               "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
               "0x27F8D03b3a2196956ED754baDc28D73be8830A6e",
@@ -4058,7 +4058,7 @@
           },
           {
             "type": "pool-fixed",
-            "target": "0x3d8eadb739d1ef95dd53d718e4810721837c69c1",
+            "target": "0x3d8EADb739D1Ef95dd53D718e4810721837c69c1",
             "coins": [
               "0x172370d5Cd63279eFa6d502DAB29171933a610AF",
               "0x27F8D03b3a2196956ED754baDc28D73be8830A6e",
@@ -5096,7 +5096,7 @@
     "tokenAddress": "0xFbdd194376de19a88118e84E279b977f165d01b8",
     "tokenDecimals": 18,
     "earnedToken": "WMATIC",
-    "earnedTokenAddress": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+    "earnedTokenAddress": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
     "earnedTokenDecimals": 18,
     "earnContractAddress": "0xDeB0a777ba6f59C78c654B8c92F80238c8002DD2",
     "oracle": "tokens",
@@ -5170,7 +5170,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0x5ab5c56b9db92ba45a0b46a207286cd83c15c939",
+            "target": "0x5ab5C56B9db92Ba45a0B46a207286cD83C15C939",
             "coins": [
               "0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
               "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
@@ -5553,7 +5553,7 @@
           },
           {
             "type": "fixed-deposit-uint256",
-            "target": "0x1d8b86e3d88cdb2d34688e87e72f388cb541b7c8",
+            "target": "0x1d8b86e3D88cDb2d34688e87E72F388Cb541B7C8",
             "coins": [
               "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
               "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -6951,7 +6951,7 @@
           },
           {
             "type": "fixed-deposit-uint256",
-            "target": "0x3fcd5de6a9fc8a99995c406c77dda3ed7e406f81",
+            "target": "0x3FCD5De6A9fC8A99995c406c77DDa3eD7E406f81",
             "coins": [
               "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
               "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -10504,7 +10504,7 @@
           },
           {
             "type": "fixed",
-            "target": "0x225fb4176f0e20cdb66b4a3df70ca3063281e855",
+            "target": "0x225FB4176f0E20CDb66b4a3DF70CA3063281E855",
             "coins": [
               "0x7BDF330f423Ea880FF95fC41A280fD5eCFD3D09f",
               "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",

@@ -7,7 +7,7 @@
     "tokenAddress": "0x3b5C3f61B480bE169cCED9F44179340d97d4e961",
     "earnedToken": "LEND",
     "earnedTokenDecimals": 18,
-    "earnedTokenAddress": "0x25356aeca4210ef7553140edb9b8026089e49396",
+    "earnedTokenAddress": "0x25356aeca4210eF7553140edb9b8026089E49396",
     "earnContractAddress": "0x01e8881ed2Fb41E0B3dF29f382fAf707a0B26969",
     "earnedOracle": "tokens",
     "earnedOracleId": "LEND",

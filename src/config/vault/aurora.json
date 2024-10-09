@@ -7,7 +7,7 @@
     "tokenAddress": "0x218c3c3D49d0E7B37aff0D8bB079de36Ae61A4c0",
     "tokenDecimals": 18,
     "earnedToken": "WETH",
-    "earnedTokenAddress": "0xc9bdeed33cd01541e1eed10f90519d2c06fe3feb",
+    "earnedTokenAddress": "0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB",
     "earnedTokenDecimals": 18,
     "earnContractAddress": "0xE6ab45f5e93FA377D0c4cC097187Ab7256c2AEBf",
     "oracle": "tokens",

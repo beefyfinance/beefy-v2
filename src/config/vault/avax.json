@@ -2118,7 +2118,7 @@
           },
           {
             "type": "fixed-deposit-uint256",
-            "target": "0x58e57ca18b7a47112b877e31929798cd3d703b0f",
+            "target": "0x58e57cA18B7A47112b877E31929798Cd3D703b0f",
             "coins": [
               "0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
               "0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
@@ -3174,7 +3174,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0x001e3ba199b4ff4b5b6e97acd96dafc0e2e4156e",
+            "target": "0x001E3BA199B4FF4B5B6e97aCD96daFC0E2e4156e",
             "coins": [
               "0x5c49b268c9841AFF1Cc3B0a418ff5c3442eE3F3b",
               "0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",

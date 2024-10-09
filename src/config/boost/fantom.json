@@ -67,7 +67,7 @@
     "name": "Beefy",
     "earnedToken": "mooFantomoldBIFI",
     "earnedTokenDecimals": 18,
-    "earnedTokenAddress": "0xbf07093ccd6adfc3deb259c557b61e94c1f66945",
+    "earnedTokenAddress": "0xbF07093ccd6adFC3dEB259C557b61E94c1F66945",
     "earnContractAddress": "0xa8b86b9AF7e844DA90A2e72840Ad01CCBD11EdC3",
     "earnedOracle": "tokens",
     "earnedOracleId": "oldBIFI",
