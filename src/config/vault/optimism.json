@@ -1,5 +1,119 @@
 [
   {
+    "id": "compound-op-eth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0x4200000000000000000000000000000000000006",
+    "tokenDecimals": 18,
+    "earnedToken": "mooCompoundOptimismWETH",
+    "earnedTokenAddress": "0xdAFdaD30D21DEB0235F549C2E2D5e39486D088D0",
+    "earnContractAddress": "0xdAFdaD30D21DEB0235F549C2E2D5e39486D088D0",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1728297955,
+    "platformId": "compound",
+    "assets": ["WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=optimism&from=0x0000000000000000000000000000000000000000&to=0x4200000000000000000000000000000000000006",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x13e3Ee699D1909E989722E753853AE30b17e08c5"
+    }
+  },
+  {
+    "id": "compound-op-usdt",
+    "name": "USDT",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+    "tokenDecimals": 6,
+    "earnedToken": "mooCompoundOptimismUSDT",
+    "earnedTokenAddress": "0x2775323D3A1303424dfbf7aC03547E754A16b129",
+    "earnContractAddress": "0x2775323D3A1303424dfbf7aC03547E754A16b129",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1728297955,
+    "platformId": "compound",
+    "assets": ["USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=optimism&from=0x0000000000000000000000000000000000000000&to=0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xECef79E109e997bCA29c1c0897ec9d7b03647F5E"
+    }
+  },
+  {
+    "id": "compound-op-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+    "tokenDecimals": 6,
+    "earnedToken": "mooCompoundOptimismUSDC",
+    "earnedTokenAddress": "0x64ceF7ac6e206944fBF50d9E50Fe934cEd9FdF5F",
+    "earnContractAddress": "0x64ceF7ac6e206944fBF50d9E50Fe934cEd9FdF5F",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1728297955,
+    "platformId": "compound",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=optimism&from=0x0000000000000000000000000000000000000000&to=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x16a9FA2FDa030272Ce99B29CF780dFA30361E0f3"
+    }
+  },
+  {
     "id": "velodrome-v2-hai-pxeth",
     "name": "HAI-pxETH vLP V2",
     "type": "standard",
