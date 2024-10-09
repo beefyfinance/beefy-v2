@@ -9,7 +9,7 @@ import type { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import type { AsWeb3Result } from '../../utils/types-utils';
 import type { BoostEntity } from '../../entities/boost';
-import { chunk, pick } from 'lodash-es';
+import { chunk, partition, pick } from 'lodash-es';
 import type {
   BoostContractData,
   BoostContractDataResponse,
@@ -29,14 +29,15 @@ import { selectTokenByAddress, selectTokenByAddressOrUndefined } from '../../sel
 import { makeBatchRequest, viemToWeb3Abi, type Web3Call } from '../../../../helpers/web3';
 import { isFiniteNumber } from '../../../../helpers/number';
 import type Web3 from 'web3';
-import { BIG_ZERO } from '../../../../helpers/big-number';
+import { BIG_ONE, BIG_ZERO } from '../../../../helpers/big-number';
+import { ZERO_ADDRESS } from '../../../../helpers/addresses';
 
 export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi {
   constructor(protected web3: Web3, protected chain: T) {}
 
   public async fetchAllContractData(
     state: BeefyState,
-    standardVaults: VaultStandard[],
+    allStandardVaults: VaultStandard[],
     govVaults: VaultGov[],
     govVaultsMulti: VaultGovMulti[],
     cowVaults: VaultCowcentrated[],
@@ -50,6 +51,11 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
     // if we send too much in a single call, we get "execution reversed"
     const CHUNK_SIZE = featureFlag_getContractDataApiChunkSize(this.chain.id);
+
+    const [standardVaults, tmpExcludedVaults] = partition(
+      allStandardVaults,
+      vault => vault.platformId !== 'aave'
+    );
 
     const boostBatches = chunk(boosts, CHUNK_SIZE);
     const boostMultiBatches = chunk(boostsMulti, CHUNK_SIZE);
@@ -156,6 +162,16 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       res.cowVaults = res.cowVaults.concat(batchRes);
       resultsIdx++;
     }
+
+    tmpExcludedVaults.forEach(vault => {
+      res.standardVaults.push({
+        id: vault.id,
+        balance: BIG_ZERO,
+        pricePerFullShare: BIG_ONE,
+        strategy: ZERO_ADDRESS,
+        paused: false,
+      });
+    });
 
     return res;
   }
