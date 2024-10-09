@@ -377,9 +377,9 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
     selectVaultHasActiveMerklBoostCampaigns(state, vaultId)
   );
 
-  const isSmallDevice = useMediaQuery('(max-width: 400px)', { noSsr: true });
+  const isSmallDevice = useMediaQuery('(max-width: 420px)', { noSsr: true });
 
-  const isClmAndBoosted =
+  const isClmAndBoostedAndSmallDevice =
     isSmallDevice && isCowcentratedLike && (!!boostId || hasBaseActiveMerklCampaigns);
 
   // Tag 1: Platform
@@ -394,7 +394,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
           vault={vault}
           hideFee={isMobile || !isVaultActive(vault)}
           hideLabel={isMobile}
-          onlyIcon={isClmAndBoosted}
+          onlyIcon={isClmAndBoostedAndSmallDevice}
         />
       )}
       {isVaultRetired(vault) ? (
@@ -402,9 +402,9 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
       ) : isVaultPaused(vault) ? (
         <VaultTag className={classes.vaultTagPaused}>{t('VaultTag-Paused')}</VaultTag>
       ) : boostId ? (
-        <VaultBoostTag onlyIcon={isClmAndBoosted} boostId={boostId} />
+        <VaultBoostTag onlyIcon={isClmAndBoostedAndSmallDevice} boostId={boostId} />
       ) : hasBaseActiveMerklCampaigns ? (
-        <VaultMerklBoostTag onlyIcon={isClmAndBoosted} vaultId={vaultId} />
+        <VaultMerklBoostTag onlyIcon={isClmAndBoostedAndSmallDevice} vaultId={vaultId} />
       ) : isGov && !isCowcentratedLike ? (
         <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO support multiple earned tokens [empty = ok, not used when clm-like]
       ) : null}
