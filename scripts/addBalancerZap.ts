@@ -92,6 +92,8 @@ type RpcPool = {
   tokenRates?: readonly [bigint, bigint];
   normalizedWeights?: readonly bigint[];
   scalingFactors?: readonly bigint[];
+  actualSupply?: bigint;
+  totalSupply: bigint;
 };
 
 type RpcToken = {
@@ -256,8 +258,8 @@ function createViemClient(chainId: AppChainId, chain: ChainConfig) {
       name: chain.name,
       nativeCurrency: {
         decimals: 18,
-        name: chain.walletSettings.nativeCurrency.name,
-        symbol: chain.walletSettings.nativeCurrency.symbol,
+        name: chain.native.symbol,
+        symbol: chain.native.symbol,
       },
       rpcUrls: {
         public: { http: [chainRpcs[chainId]] },
@@ -318,40 +320,59 @@ function fulfilledOr<TResult, TDefault>(
 const fetchPoolRpcData = withFileCache(
   async (poolAddress: Address, chainId: AppChainId): Promise<RpcPool> => {
     const client = getViemClient(chainId);
-    const [poolIdRes, vaultAddressRes, tokenRatesRes, normalizedWeightsRes, scalingFactorsRes] =
-      await Promise.allSettled([
-        client.readContract({
-          address: poolAddress,
-          abi: parseAbi(['function getPoolId() public view returns (bytes32)']),
-          functionName: 'getPoolId',
-        }),
-        client.readContract({
-          address: poolAddress,
-          abi: parseAbi(['function getVault() public view returns (address)']),
-          functionName: 'getVault',
-        }),
-        client.readContract({
-          address: poolAddress,
-          abi: parseAbi(['function getTokenRates() public view returns (uint256,uint256)']),
-          functionName: 'getTokenRates',
-        }),
-        client.readContract({
-          address: poolAddress,
-          abi: parseAbi(['function getNormalizedWeights() public view returns (uint256[])']),
-          functionName: 'getNormalizedWeights',
-        }),
-        client.readContract({
-          address: poolAddress,
-          abi: parseAbi(['function getScalingFactors() public view returns (uint256[])']),
-          functionName: 'getScalingFactors',
-        }),
-      ]);
+    const [
+      poolIdRes,
+      vaultAddressRes,
+      tokenRatesRes,
+      normalizedWeightsRes,
+      scalingFactorsRes,
+      actualSupplyRes,
+      totalSupplyRes,
+    ] = await Promise.allSettled([
+      client.readContract({
+        address: poolAddress,
+        abi: parseAbi(['function getPoolId() public view returns (bytes32)']),
+        functionName: 'getPoolId',
+      }),
+      client.readContract({
+        address: poolAddress,
+        abi: parseAbi(['function getVault() public view returns (address)']),
+        functionName: 'getVault',
+      }),
+      client.readContract({
+        address: poolAddress,
+        abi: parseAbi(['function getTokenRates() public view returns (uint256,uint256)']),
+        functionName: 'getTokenRates',
+      }),
+      client.readContract({
+        address: poolAddress,
+        abi: parseAbi(['function getNormalizedWeights() public view returns (uint256[])']),
+        functionName: 'getNormalizedWeights',
+      }),
+      client.readContract({
+        address: poolAddress,
+        abi: parseAbi(['function getScalingFactors() public view returns (uint256[])']),
+        functionName: 'getScalingFactors',
+      }),
+      client.readContract({
+        address: poolAddress,
+        abi: parseAbi(['function getActualSupply() public view returns (uint256)']),
+        functionName: 'getActualSupply',
+      }),
+      client.readContract({
+        address: poolAddress,
+        abi: parseAbi(['function totalSupply() public view returns (uint256)']),
+        functionName: 'totalSupply',
+      }),
+    ]);
 
     const vaultAddress = fulfilledOr(vaultAddressRes, undefined);
     const poolId = fulfilledOr(poolIdRes, undefined);
     const tokenRates = fulfilledOr(tokenRatesRes, undefined);
     const normalizedWeights = fulfilledOr(normalizedWeightsRes, undefined);
     const scalingFactors = fulfilledOr(scalingFactorsRes, undefined);
+    const actualSupply = fulfilledOr(actualSupplyRes, undefined);
+    const totalSupply = fulfilledOr(totalSupplyRes, undefined);
 
     if (!vaultAddress || vaultAddress === ZERO_ADDRESS) {
       throw new Error(`No vault address found via vault.want().getVault()`);
@@ -359,8 +380,20 @@ const fetchPoolRpcData = withFileCache(
     if (!poolId || poolId === ZERO_BYTES32) {
       throw new Error(`No pool id found via vault.want().getPoolId()`);
     }
+    if (!totalSupply) {
+      throw new Error(`No total supply found via vault.want().totalSupply()`);
+    }
 
-    return { poolId, vaultAddress, chainId, tokenRates, normalizedWeights, scalingFactors };
+    return {
+      poolId,
+      vaultAddress,
+      chainId,
+      tokenRates,
+      normalizedWeights,
+      scalingFactors,
+      totalSupply,
+      actualSupply,
+    };
   },
   (poolAddress: Address, chainId: AppChainId) =>
     path.join(cacheRpcPath, chainId, `pool-${poolAddress}.json`)
@@ -622,6 +655,10 @@ function checkGyroPool(pool: Pool, tokens: PoolToken[], tokensWithBpt: PoolToken
     );
   }
 
+  if (!pool.actualSupply) {
+    throw new Error(`${pool.type}: Must have getActualSupply()`);
+  }
+
   return true;
 }
 
@@ -678,6 +715,10 @@ function checkComposableStablePool(
     console.warn(
       `${pool.type}: No tokens are in the address book, have a price, and have a zap swap provider - only pool tokens will be available for deposit`
     );
+  }
+
+  if (!pool.actualSupply) {
+    throw new Error(`${pool.type}: Must have getActualSupply()`);
   }
 
   return true;

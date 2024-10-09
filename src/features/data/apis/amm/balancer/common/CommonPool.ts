@@ -6,7 +6,7 @@ import { getWeb3Instance } from '../../../instances';
 import { Vault } from '../vault/Vault';
 import { checkAddressOrder } from '../../../../../../helpers/tokens';
 import type { Contract } from 'web3-eth-contract';
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { FixedPoint } from './FixedPoint';
 
 export abstract class CommonPool implements IBalancerPool {
@@ -23,7 +23,6 @@ export abstract class CommonPool implements IBalancerPool {
     this.getPoolTokens = this.cacheMethod(this.getPoolTokens);
     this.getBalances = this.cacheMethod(this.getBalances);
     this.getUpscaledBalances = this.cacheMethod(this.getUpscaledBalances);
-    this.getTotalSupply = this.cacheMethod(this.getTotalSupply);
     this.getWeb3 = this.cacheMethod(this.getWeb3);
     this.getPoolContract = this.cacheMethod(this.getPoolContract);
     this.getVault = this.cacheMethod(this.getVault);
@@ -73,12 +72,6 @@ export abstract class CommonPool implements IBalancerPool {
 
   protected async getUpscaledBalances() {
     return await this.upscaleAmounts(await this.getBalances());
-  }
-
-  protected async getTotalSupply(): Promise<BigNumber> {
-    const pool = await this.getPoolContract();
-    const totalSupply: string = await pool.methods.getActualSupply().call();
-    return new BigNumber(totalSupply);
   }
 
   protected async getWeb3() {

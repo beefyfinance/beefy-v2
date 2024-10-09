@@ -6262,19 +6262,7 @@
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://op.beets.fi/pool/0x7ca75bdea9dede97f8b13c6641b768650cb837820002000000000000000000d5",
     "removeLiquidityUrl": "https://op.beets.fi/pool/0x7ca75bdea9dede97f8b13c6641b768650cb837820002000000000000000000d5",
-    "network": "optimism",
-    "zaps": [
-      {
-        "strategyId": "balancer",
-        "ammId": "optimism-beethovenx",
-        "poolId": "0x7ca75bdea9dede97f8b13c6641b768650cb837820002000000000000000000d5",
-        "poolType": "gyroe",
-        "tokens": [
-          "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
-          "0x4200000000000000000000000000000000000006"
-        ]
-      }
-    ]
+    "network": "optimism"
   },
   {
     "id": "uniswap-gamma-weth-op-narrow",

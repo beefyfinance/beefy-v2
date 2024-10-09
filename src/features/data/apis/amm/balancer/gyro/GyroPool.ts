@@ -35,6 +35,7 @@ export class GyroPool extends AllPool implements IBalancerAllPool {
     super(chain, vaultConfig, config);
 
     this.getTokenRates = this.cacheMethod(this.getTokenRates);
+    this.getActualSupply = this.cacheMethod(this.getActualSupply);
   }
 
   supportsFeature(feature: BalancerFeature): boolean {
@@ -109,9 +110,10 @@ export class GyroPool extends AllPool implements IBalancerAllPool {
     }
 
     const vault = this.getVault();
-    const totalSupply = await this.getTotalSupply();
+    // We must call getActualSupply instead of totalSupply to get the real supply after fees have been collected
+    const totalSupply = await this.getActualSupply();
     if (totalSupply.isZero()) {
-      throw new Error('Total supply is zero');
+      throw new Error('Actual supply is zero');
     }
 
     // all on-chain calculations are done with upscaled balances in FixedPoint (18 decimals)
@@ -214,5 +216,11 @@ export class GyroPool extends AllPool implements IBalancerAllPool {
   protected async getPoolContract() {
     const web3 = await this.getWeb3();
     return new web3.eth.Contract(viemToWeb3Abi(BalancerGyroEPoolAbi), this.config.poolAddress);
+  }
+
+  protected async getActualSupply(): Promise<BigNumber> {
+    const pool = await this.getPoolContract();
+    const totalSupply: string = await pool.methods.getActualSupply().call();
+    return new BigNumber(totalSupply);
   }
 }
