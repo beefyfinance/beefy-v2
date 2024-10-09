@@ -82,7 +82,7 @@
     "name": "Equalizer",
     "type": "solidly",
     "routerAddress": "0xBb1adfc5089CB8989201b15a86e7822aE19C3CC1",
-    "factoryAddress": "0xed8db60acc29e14bc867a497d94ca6e3ceb5ec04",
+    "factoryAddress": "0xEd8db60aCc29e14bC867a497D94ca6e3CeB5eC04",
     "pairInitHash": "0x1557974237ae49ab431fe64093fa317c802f430134bdad22d995969df5c9e8eb",
     "minimumLiquidity": "1000",
     "swapFeeNumerator": "200000000000000",

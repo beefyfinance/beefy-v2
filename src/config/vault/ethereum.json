@@ -1661,7 +1661,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0x08780fb7e580e492c1935bee4fa5920b94aa95da",
+            "target": "0x08780fb7E580e492c1935bEe4fA5920b94AA95Da",
             "coins": [
               "0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9",
               "0x853d955aCEf822Db058eb8505911ED77F175b99e",
@@ -2279,7 +2279,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0x08780fb7e580e492c1935bee4fa5920b94aa95da",
+            "target": "0x08780fb7E580e492c1935bEe4fA5920b94AA95Da",
             "coins": [
               "0xA0d69E286B938e21CBf7E51D71F6A4c8918f482F",
               "0x853d955aCEf822Db058eb8505911ED77F175b99e",
@@ -2326,7 +2326,7 @@
     ],
     "lendingOracle": {
       "provider": "curve",
-      "address": "0x4dece678ceceb27446b35c672dc7d61f30bad69e"
+      "address": "0x4DEcE678ceceb27446b35C672dC7d61F30bAD69E"
     }
   },
   {
@@ -2454,7 +2454,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0x08780fb7e580e492c1935bee4fa5920b94aa95da",
+            "target": "0x08780fb7E580e492c1935bEe4fA5920b94AA95Da",
             "coins": [
               "0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28",
               "0x853d955aCEf822Db058eb8505911ED77F175b99e",
@@ -4369,7 +4369,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0xa2d40edbf76c6c0701ba8899e2d059798eba628e",
+            "target": "0xA2d40Edbf76C6C0701BA8899e2d059798eBa628e",
             "coins": [
               "0x66eFF5221ca926636224650Fd3B9c497FF828F7D",
               "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
@@ -4661,7 +4661,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0xa79828df1850e8a3a3064576f380d90aecdd3359",
+            "target": "0xA79828DF1850E8a3A3064576f380D90aECDD3359",
             "coins": [
               "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
               "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -4719,7 +4719,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0x08780fb7e580e492c1935bee4fa5920b94aa95da",
+            "target": "0x08780fb7E580e492c1935bEe4fA5920b94AA95Da",
             "coins": [
               "0x865377367054516e17014CcdED1e7d814EDC9ce4",
               "0x853d955aCEf822Db058eb8505911ED77F175b99e",
@@ -4777,7 +4777,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0x08780fb7e580e492c1935bee4fa5920b94aa95da",
+            "target": "0x08780fb7E580e492c1935bEe4fA5920b94AA95Da",
             "coins": [
               "0xfF709449528B6fB6b88f557F7d93dEce33bca78D",
               "0x853d955aCEf822Db058eb8505911ED77F175b99e",
@@ -4834,7 +4834,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0xa79828df1850e8a3a3064576f380d90aecdd3359",
+            "target": "0xA79828DF1850E8a3A3064576f380D90aECDD3359",
             "coins": [
               "0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3",
               "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -5026,7 +5026,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0xa79828df1850e8a3a3064576f380d90aecdd3359",
+            "target": "0xA79828DF1850E8a3A3064576f380D90aECDD3359",
             "coins": [
               "0x853d955aCEf822Db058eb8505911ED77F175b99e",
               "0x6B175474E89094C44Da98b954EedeAC495271d0F",

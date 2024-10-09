@@ -13378,7 +13378,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0x58ac91f5be7dc0c35b24b96b19bac55fbb8e705e",
+            "target": "0x58AC91f5BE7dC0c35b24B96B19BAc55FBB8E705e",
             "coins": [
               "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65",
               "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
@@ -17140,7 +17140,7 @@
     "tokenAddress": "0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
     "tokenDecimals": 18,
     "earnedToken": "WETH",
-    "earnedTokenAddress": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "earnedTokenAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
     "earnedTokenDecimals": 18,
     "earnContractAddress": "0x48F4634c8383aF01BF71AefBC125eb582eb3C74D",
     "oracle": "tokens",
@@ -18438,7 +18438,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0x7544fe3d184b6b55d6b36c3fca1157ee0ba30287",
+            "target": "0x7544Fe3d184b6B55D6B36c3FCA1157eE0Ba30287",
             "coins": [
               "0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A",
               "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",

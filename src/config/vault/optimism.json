@@ -8781,7 +8781,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0x167e42a1c7ab4be03764a2222aac57f5f6754411",
+            "target": "0x167e42a1C7ab4Be03764A2222aAC57F5f6754411",
             "coins": [
               "0xB153FB3d196A8eB25522705560ac152eeEc57901",
               "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
@@ -12340,7 +12340,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0x167e42a1c7ab4be03764a2222aac57f5f6754411",
+            "target": "0x167e42a1C7ab4Be03764A2222aAC57F5f6754411",
             "coins": [
               "0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9",
               "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
