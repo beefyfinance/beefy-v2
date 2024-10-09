@@ -1215,46 +1215,6 @@
     "network": "moonriver"
   },
   {
-    "id": "solarbeam-mim-wmovr-eol",
-    "name": "MIM-MOVR",
-    "type": "standard",
-    "token": "MIM-MOVR LP",
-    "tokenAddress": "0x9432B25fBD8a37e5A1300e36a96BD14E1E6f5c90",
-    "tokenDecimals": 18,
-    "tokenProviderId": "solarbeam",
-    "earnedToken": "mooSolarMIM-MOVR",
-    "earnedTokenAddress": "0x9af278BC0A7861F95d93913390945c2127eb80a6",
-    "earnContractAddress": "0x9af278BC0A7861F95d93913390945c2127eb80a6",
-    "oracle": "lps",
-    "oracleId": "solarbeam-mim-wmovr",
-    "status": "eol",
-    "createdAt": 1639473600,
-    "retireReason": "rewards",
-    "retiredAt": 1648830610,
-    "platformId": "solarbeam",
-    "assets": ["MIM", "MOVR"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0x98878B06940aE243284CA214f92Bb71a2b032B8A&outputCurrency=0x0caE51e1032e8461f4806e26332c030E34De3aDb",
-    "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x0caE51e1032e8461f4806e26332c030E34De3aDb",
-    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0x0caE51e1032e8461f4806e26332c030E34De3aDb",
-    "network": "moonriver",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "moonriver-solarbeam"
-      }
-    ]
-  },
-  {
     "id": "solarbeam-wmovr-mai-eol",
     "name": "MAI-MOVR",
     "type": "standard",
