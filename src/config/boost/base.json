@@ -1,5 +1,26 @@
 [
   {
+    "id": "moo_aero-cow-weth-moobifi-vault",
+    "poolId": "aero-cow-weth-moobifi-vault",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["WETH", "mooBIFI"],
+    "tokenAddress": "0xe5Aaa3eCA99a49DF11361aDc425B9FA3ea9Debf8",
+    "earnedToken": "mooBIFI",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+    "earnContractAddress": "0xc7036D7B4a3a1AD6193e74789e03046C0777Cf0a",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "mooBIFI",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": [],
+    "pinned": false
+  },
+  {
     "id": "moo_aerodrome-ovn-usd+",
     "poolId": "aerodrome-ovn-usd+",
     "name": "Beefy",
