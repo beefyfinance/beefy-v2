@@ -82,14 +82,14 @@ export const ContractsDropdown = memo<ContractsDropdownProps>(function Contracts
         autoWidth={false}
       >
         <ClickAwayListener onClickAway={() => setOpen(false)}>
-          <>
+          <div>
             {links.map(({ label, link }) => (
               <a className={classes.link} key={label} href={link} target="_blank" rel="noopener">
                 {label}
                 <OpenInNewRounded fontSize="inherit" />
               </a>
             ))}
-          </>
+          </div>
         </ClickAwayListener>
       </Floating>
     </>

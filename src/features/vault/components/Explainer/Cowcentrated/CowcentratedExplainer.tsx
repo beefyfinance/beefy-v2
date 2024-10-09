@@ -60,7 +60,7 @@ export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
       if (isCowcentratedGovVault(vault)) {
         urls.push({
           link: explorerAddressUrl(chain, vault.contractAddress),
-          label: t('Strat-PoolContract'),
+          label: t('Strat-CLMPoolContract'),
         });
       }
       if (isCowcentratedStandardVault(vault)) {
