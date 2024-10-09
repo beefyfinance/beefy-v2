@@ -48,8 +48,8 @@ export const excludeChains: Record<string, { count: number; hash: string }> = {
     hash: 'fe0549fd08678e577d17796df5b36ce28e4546bd9a1cc652196c6fa85bcaa482',
   },
   moonriver: {
-    count: 53,
-    hash: 'ec2f2d24ca15c98e4a69431ba5019fd82667f6edd5793dbd34dafa0a1755bdeb',
+    count: 52,
+    hash: '7de49da0d3a7e5ae3917c39888a0ce839639d7935938586702f10d8fdc36495c',
   },
   canto: {
     count: 36,
