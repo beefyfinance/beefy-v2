@@ -673,9 +673,9 @@
     "tokenAddress": "0xfD2620C9cfceC7D152467633B3B0Ca338D3d78cc",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x883b1899e6F8a896Ee22654A6deBA41Ef4BA47Cf",
     "earnedToken": "mooBalancerAvaxsAVAX-WAVAX",
     "earnedTokenAddress": "0x883b1899e6F8a896Ee22654A6deBA41Ef4BA47Cf",
-    "earnContractAddress": "0x883b1899e6F8a896Ee22654A6deBA41Ef4BA47Cf",
     "oracle": "lps",
     "oracleId": "balancer-avax-savax-avax",
     "status": "active",
@@ -686,7 +686,21 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/avalanche/v2/0xfd2620c9cfcec7d152467633b3b0ca338d3d78cc00000000000000000000001c/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/avalanche/v2/0xfd2620c9cfcec7d152467633b3b0ca338d3d78cc00000000000000000000001c/remove-liquidity",
-    "network": "avax"
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "avax-balancer",
+        "poolId": "0xfd2620c9cfcec7d152467633b3b0ca338d3d78cc00000000000000000000001c",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE",
+          "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7"
+        ],
+        "bptIndex": 2,
+        "hasNestedPool": false
+      }
+    ]
   },
   {
     "id": "png-weth.e-wavax",

@@ -247,8 +247,16 @@ export interface AmmConfigGamma extends AmmConfigBase {
   proxyAddress: string;
 }
 
+export interface AmmConfigBalancer extends AmmConfigBase {
+  readonly type: 'balancer';
+  /** address of Vault contract */
+  vaultAddress: string;
+  /** address of BalancerQueries contract */
+  queryAddress: string;
+}
+
 export type AmmConfigUniswapV2Like = AmmConfigUniswapV2 | AmmConfigSolidly;
-export type AmmConfig = AmmConfigUniswapV2Like | AmmConfigGamma;
+export type AmmConfig = AmmConfigUniswapV2Like | AmmConfigGamma | AmmConfigBalancer;
 
 export function isSolidlyAmmConfig(amm: AmmConfig): amm is AmmConfigSolidly {
   return amm.type === 'solidly';

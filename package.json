@@ -1,5 +1,5 @@
 {
-  "name": "beefy-pro",
+  "name": "beefy-v2",
   "homepage": "/",
   "version": "0.1.0",
   "private": true,
@@ -76,6 +76,7 @@
     "addClmRewardPools": "ts-node -r dotenv/config ./scripts/addClmRewardPools.ts",
     "updateRewardPoolRewards": "ts-node -r dotenv/config ./scripts/updateRewardPoolRewards.ts",
     "addCurveZap": "ts-node -r dotenv/config ./scripts/addCurveZap.ts",
+    "addBalancerZap": "ts-node -r dotenv/config ./scripts/addBalancerZap.ts",
     "checkVaultTokenDecimals": "ts-node -r dotenv/config ./scripts/checkVaultTokenDecimals.ts && prettier --write ./src/config/vault/*.json",
     "checkZapAddresses": "ts-node -r dotenv/config ./scripts/checkZapAddresses.ts",
     "makeExcludeConfig": "ts-node -r dotenv/config ./scripts/makeExcludeConfig.ts",

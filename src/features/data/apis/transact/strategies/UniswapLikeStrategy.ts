@@ -1,26 +1,25 @@
 import type { ZapTransactHelpers } from './IStrategy';
-import type {
-  InputTokenAmount,
-  TokenAmount,
-  UniswapLikeDepositOption,
-  UniswapLikeDepositQuote,
-  UniswapLikeWithdrawOption,
-  UniswapLikeWithdrawQuote,
-  ZapFee,
-  ZapQuoteStep,
-  ZapQuoteStepBuild,
-  ZapQuoteStepSplit,
-  ZapQuoteStepSwap,
-  ZapQuoteStepSwapAggregator,
-  ZapQuoteStepSwapPool,
-} from '../transact-types';
 import {
+  type InputTokenAmount,
   isZapQuoteStepBuild,
   isZapQuoteStepSplit,
   isZapQuoteStepSwap,
   isZapQuoteStepSwapAggregator,
   isZapQuoteStepSwapPool,
   isZapQuoteStepWithdraw,
+  SelectionOrder,
+  type TokenAmount,
+  type UniswapLikeDepositOption,
+  type UniswapLikeDepositQuote,
+  type UniswapLikeWithdrawOption,
+  type UniswapLikeWithdrawQuote,
+  type ZapFee,
+  type ZapQuoteStep,
+  type ZapQuoteStepBuild,
+  type ZapQuoteStepSplit,
+  type ZapQuoteStepSwap,
+  type ZapQuoteStepSwapAggregator,
+  type ZapQuoteStepSwapPool,
 } from '../transact-types';
 import {
   selectChainNativeToken,
@@ -32,7 +31,7 @@ import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/tok
 import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../entities/token';
 import {
   allTokensAreDistinct,
-  includeNativeAndWrapped,
+  includeWrappedAndNative,
   nativeAndWrappedAreSame,
   pickTokens,
   tokensToLp,
@@ -84,6 +83,7 @@ import { selectAmmById } from '../../../selectors/zap';
 import { type AmmEntityUniswapLike, isUniswapLikeAmm } from '../../../entities/zap';
 import { isStandardVaultType, type IStandardVaultType } from '../vaults/IVaultType';
 import type { UniswapLikeStrategyConfig } from './strategy-configs';
+import { tokenInList } from '../../../../../helpers/tokens';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -181,12 +181,11 @@ export abstract class UniswapLikeStrategy<
 
   async fetchDepositOptions(): Promise<UniswapLikeDepositOption<TAmm>[]> {
     // what tokens can we can zap via pool with
-    const poolTokens = includeNativeAndWrapped(this.tokens, this.wnative, this.native).map(
-      token => ({
-        token,
-        swap: 'pool' as const,
-      })
-    );
+    const tokensWithNativeWrapped = includeWrappedAndNative(this.tokens, this.wnative, this.native);
+    const poolTokens = tokensWithNativeWrapped.map(token => ({
+      token,
+      swap: 'pool' as const,
+    }));
 
     // what tokens we can zap via swap aggregator with
     const supportedAggregatorTokens = await this.aggregatorTokenSupport();
@@ -206,7 +205,9 @@ export abstract class UniswapLikeStrategy<
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: swap === 'pool' ? 2 : 3,
+        selectionOrder: tokenInList(token, tokensWithNativeWrapped)
+          ? SelectionOrder.TokenOfPool
+          : SelectionOrder.Other,
         inputs,
         wantedOutputs: outputs,
         mode: TransactMode.Deposit,
@@ -308,7 +309,8 @@ export abstract class UniswapLikeStrategy<
           toToken: this.wnative,
           vaultId: this.vault.id,
         },
-        state
+        state,
+        this.options.swap
       );
       const wrapQuote = first(wrapQuotes);
       if (!wrapQuote) {
@@ -427,7 +429,7 @@ export abstract class UniswapLikeStrategy<
           return undefined;
         }
 
-        return await swapAggregator.fetchQuotes(quoteRequest, state);
+        return await swapAggregator.fetchQuotes(quoteRequest, state, this.options.swap);
       })
     );
 
@@ -827,12 +829,11 @@ export abstract class UniswapLikeStrategy<
 
   async fetchWithdrawOptions(): Promise<UniswapLikeWithdrawOption<TAmm>[]> {
     // what tokens can we directly zap with
-    const poolTokens = includeNativeAndWrapped(this.tokens, this.wnative, this.native).map(
-      token => ({
-        token,
-        swap: 'pool' as const,
-      })
-    );
+    const tokensWithNativeWrapped = includeWrappedAndNative(this.tokens, this.wnative, this.native);
+    const poolTokens = tokensWithNativeWrapped.map(token => ({
+      token,
+      swap: 'pool' as const,
+    }));
 
     // what tokens we can zap via swap aggregator with
     const supportedAggregatorTokens = await this.aggregatorTokenSupport();
@@ -849,7 +850,7 @@ export abstract class UniswapLikeStrategy<
       vaultId: this.vault.id,
       chainId: this.vault.chainId,
       selectionId: breakSelectionId,
-      selectionOrder: 2,
+      selectionOrder: SelectionOrder.AllTokensInPool,
       inputs,
       wantedOutputs: this.lpTokens,
       mode: TransactMode.Withdraw,
@@ -868,7 +869,9 @@ export abstract class UniswapLikeStrategy<
           vaultId: this.vault.id,
           chainId: this.vault.chainId,
           selectionId,
-          selectionOrder: 3,
+          selectionOrder: tokenInList(token, tokensWithNativeWrapped)
+            ? SelectionOrder.TokenOfPool
+            : SelectionOrder.Other,
           inputs,
           wantedOutputs: outputs,
           mode: TransactMode.Withdraw,
@@ -1043,7 +1046,8 @@ export abstract class UniswapLikeStrategy<
           toToken: this.native,
           vaultId: this.vault.id,
         },
-        state
+        state,
+        this.options.swap
       );
       const unwrapQuote = first(unwrapQuotes);
       if (!unwrapQuote || unwrapQuote.toAmount.lt(outputAmount)) {
@@ -1097,7 +1101,8 @@ export abstract class UniswapLikeStrategy<
               toToken: wantedOutput,
               vaultId: option.vaultId,
             },
-            state
+            state,
+            this.options.swap
           );
 
           if (!quotes || !quotes.length) {

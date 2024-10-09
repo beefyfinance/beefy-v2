@@ -130,5 +130,12 @@
     "swapFeeNumerator": "3",
     "swapFeeDenominator": "10000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "fantom-beethovenx",
+    "type": "balancer",
+    "name": "Beethoven X",
+    "vaultAddress": "0x20dd72Ed959b6147912C2e529F0a0C651c33c9ce",
+    "queryAddress": "0x1B0A42663DF1edeA171cD8732d288a81EFfF6d23"
   }
 ]

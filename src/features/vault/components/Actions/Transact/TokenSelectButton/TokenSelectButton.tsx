@@ -18,6 +18,7 @@ import zapIcon from '../../../../../../images/icons/zap.svg';
 import { useTranslation } from 'react-i18next';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import type { TokenEntity } from '../../../../../data/entities/token';
+import { AssetsImage } from '../../../../../../components/AssetsImage';
 
 const useStyles = makeStyles(styles);
 
@@ -91,13 +92,20 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
 
 const BreakLp = memo(function BreakLp({ tokens }: { tokens: TokenEntity[] }) {
   const classes = useStyles();
-  const token0 = tokens[0];
-  const token1 = tokens[1];
+  if (tokens.length === 2) {
+    const [token0, token1] = tokens;
+    return (
+      <div className={classes.breakLp}>
+        <TokenImage tokenAddress={token0.address} chainId={token0.chainId} size={16} />
+        +
+        <TokenImage tokenAddress={token1.address} chainId={token1.chainId} size={16} />
+      </div>
+    );
+  }
+
   return (
     <div className={classes.breakLp}>
-      <TokenImage tokenAddress={token0.address} chainId={token0.chainId} size={16} />
-      +
-      <TokenImage tokenAddress={token1.address} chainId={token1.chainId} size={16} />
+      <AssetsImage assetSymbols={tokens.map(t => t.symbol)} chainId={tokens[0].chainId} size={16} />
     </div>
   );
 });

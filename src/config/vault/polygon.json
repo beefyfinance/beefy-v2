@@ -636,9 +636,9 @@
     "tokenAddress": "0x1DCeA0BfBBe6848F117640D534C9B60f41b9F2A8",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x2956333ca76D156A86533E6D1D8209E9B04D69a5",
     "earnedToken": "mooBalancerPolygonWBTC/USDC/ETH",
     "earnedTokenAddress": "0x2956333ca76D156A86533E6D1D8209E9B04D69a5",
-    "earnContractAddress": "0x2956333ca76D156A86533E6D1D8209E9B04D69a5",
     "oracle": "lps",
     "oracleId": "balancer-polygon-wbtc-usdc-eth",
     "status": "eol",
@@ -658,7 +658,20 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x1dcea0bfbbe6848f117640d534c9b60f41b9f2a8000100000000000000000ea1/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x1dcea0bfbbe6848f117640d534c9b60f41b9f2a8000100000000000000000ea1/remove-liquidity",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "polygon-balancer",
+        "poolId": "0x1dcea0bfbbe6848f117640d534c9b60f41b9f2a8000100000000000000000ea1",
+        "poolType": "weighted",
+        "tokens": [
+          "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+          "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+          "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+        ]
+      }
+    ]
   },
   {
     "id": "balancer-polygon-usdc-dai-usdt",
@@ -668,9 +681,9 @@
     "tokenAddress": "0x4B7586A4F49841447150D3d92d9E9e000f766c30",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xF4C44A0A7b48A016861eE5cAe3dE82126366cCC9",
     "earnedToken": "mooBalancerPolygonUSDC/DAI/USDT",
     "earnedTokenAddress": "0xF4C44A0A7b48A016861eE5cAe3dE82126366cCC9",
-    "earnContractAddress": "0xF4C44A0A7b48A016861eE5cAe3dE82126366cCC9",
     "oracle": "lps",
     "oracleId": "balancer-polygon-usdc-dai-usdt",
     "status": "eol",
@@ -690,7 +703,22 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4b7586a4f49841447150d3d92d9e9e000f766c30000000000000000000000e8a/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x4b7586a4f49841447150d3d92d9e9e000f766c30000000000000000000000e8a/remove-liquidity",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "polygon-balancer",
+        "poolId": "0x4b7586a4f49841447150d3d92d9e9e000f766c30000000000000000000000e8a",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+          "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+          "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
+      }
+    ]
   },
   {
     "id": "aura-polygon-wmatic-maticx",
@@ -700,9 +728,9 @@
     "tokenAddress": "0xcd78A20c597E367A4e478a2411cEB790604D7c8F",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xF3B13e9D8133CeF4eb77Fc2134c5Af82d686bC17",
     "earnedToken": "mooAuraPolygonWMATIC-MaticX",
     "earnedTokenAddress": "0xF3B13e9D8133CeF4eb77Fc2134c5Af82d686bC17",
-    "earnContractAddress": "0xF3B13e9D8133CeF4eb77Fc2134c5Af82d686bC17",
     "oracle": "lps",
     "oracleId": "aura-polygon-wmatic-maticx",
     "status": "active",
@@ -713,7 +741,21 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xcd78a20c597e367a4e478a2411ceb790604d7c8f000000000000000000000c22/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0xcd78a20c597e367a4e478a2411ceb790604d7c8f000000000000000000000c22/remove-liquidity",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "polygon-balancer",
+        "poolId": "0xcd78a20c597e367a4e478a2411ceb790604d7c8f000000000000000000000c22",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+          "0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6"
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
+      }
+    ]
   },
   {
     "id": "uniswap-cow-poly-wbtc-usdc",
@@ -2293,9 +2335,9 @@
     "tokenAddress": "0xf0ad209e2e969EAAA8C882aac71f02D8a047d5c2",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0x8D0663d2d738e6078Bb77589dE4231eD9fcFd014",
     "earnedToken": "mooAuraPolyGyrostMATIC-MATIC",
     "earnedTokenAddress": "0x8D0663d2d738e6078Bb77589dE4231eD9fcFd014",
-    "earnContractAddress": "0x8D0663d2d738e6078Bb77589dE4231eD9fcFd014",
     "oracle": "lps",
     "oracleId": "aura-polygon-gyro-matic-stmatic",
     "status": "active",
@@ -3784,9 +3826,9 @@
     "tokenAddress": "0x513CdEE00251F39DE280d9E5f771A6eaFebCc88E",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
+    "earnContractAddress": "0xB476B7A027da3D9fB5A5c9CB6078A34f7289B476",
     "earnedToken": "mooBalancerjEUR-PARv2",
     "earnedTokenAddress": "0xB476B7A027da3D9fB5A5c9CB6078A34f7289B476",
-    "earnContractAddress": "0xB476B7A027da3D9fB5A5c9CB6078A34f7289B476",
     "oracle": "lps",
     "oracleId": "balancer-jeur-par-v2",
     "status": "active",
@@ -3805,7 +3847,21 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/polygon/v2/0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b/remove-liquidity",
-    "network": "polygon"
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "polygon-balancer",
+        "poolId": "0x513cdee00251f39de280d9e5f771a6eafebcc88e000000000000000000000a6b",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c",
+          "0xE2Aa7db6dA1dAE97C5f5C6914d285fBfCC32A128"
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
+      }
+    ]
   },
   {
     "id": "balancer-poly-eth-frxeth",
