@@ -4,7 +4,7 @@ import { selectIsWalletKnown, selectWalletAddress } from '../selectors/wallet';
 import type { PollStop } from '../utils/async-utils';
 import { createFulfilledActionCapturer, poll } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
-import { fetchAllBoosts, initiateBoostForm } from './boosts';
+import { fetchAllBoosts } from './boosts';
 import { fetchChainConfigs } from './chains';
 import { fetchAllPricesAction } from './prices';
 import { fetchAllVaults, fetchVaultsLastHarvests } from './vaults';
@@ -16,13 +16,7 @@ import { chains as chainsConfig } from '../../../config/config';
 import { initWallet } from './wallet';
 import { recomputeBoostStatus } from '../reducers/boosts';
 import { fetchPartnersConfig } from './partners';
-import { fetchAddressBookAction, fetchAllAddressBookAction } from './tokens';
-import type { BoostEntity } from '../entities/boost';
-import { selectBoostById } from '../selectors/boosts';
-import { selectShouldInitAddressBook } from '../selectors/data-loader';
-import { initiateMinterForm } from './minters';
-import type { MinterEntity } from '../entities/minter';
-import { selectMinterById } from '../selectors/minters';
+import { fetchAllAddressBookAction } from './tokens';
 import { fetchPlatforms } from './platforms';
 import { selectAllChainIds } from '../selectors/chains';
 import { fetchBridges } from './bridges';
@@ -270,37 +264,4 @@ function preLoadPages() {
       console.debug('pre-loading vault page done');
     });
   }, 10_000);
-}
-
-export async function initBoostForm(
-  store: BeefyStore,
-  boostId: BoostEntity['id'],
-  mode: 'stake' | 'unstake',
-  walletAddress: string | undefined
-) {
-  const vault = selectBoostById(store.getState(), boostId);
-
-  // we need the addressbook
-  if (selectShouldInitAddressBook(store.getState(), vault.chainId)) {
-    await store.dispatch(fetchAddressBookAction({ chainId: vault.chainId }));
-  }
-
-  // then we can init the form
-  store.dispatch(initiateBoostForm({ boostId, mode, walletAddress }));
-}
-
-export async function initMinterForm(
-  store: BeefyStore,
-  minterId: MinterEntity['id'],
-  walletAddress: string | undefined
-) {
-  const minter = selectMinterById(store.getState(), minterId);
-
-  // we need the addressbook
-  if (selectShouldInitAddressBook(store.getState(), minter.chainId)) {
-    await store.dispatch(fetchAddressBookAction({ chainId: minter.chainId }));
-  }
-
-  // then we can init the form
-  store.dispatch(initiateMinterForm({ minterId, walletAddress }));
 }
