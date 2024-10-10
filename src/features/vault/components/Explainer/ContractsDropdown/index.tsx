@@ -80,6 +80,7 @@ export const ContractsDropdown = memo<ContractsDropdownProps>(function Contracts
         placement="bottom-end"
         display="flex"
         autoWidth={false}
+        autoHeight={false}
       >
         <ClickAwayListener onClickAway={() => setOpen(false)}>
           <div>
