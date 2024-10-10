@@ -1,5 +1,34 @@
 [
   {
+    "id": "aerodrome-jeur-eurc",
+    "name": "jEUR-EURC sLP",
+    "type": "standard",
+    "token": "sAMM-jEUR/EURC",
+    "tokenAddress": "0xC75799e0646470128a42D07335aB3BFa9E8Ee7C2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerojEUR-EURC",
+    "earnedTokenAddress": "0xD8491D0F4339adB074fb85948ce5f8bAF23F09A2",
+    "earnContractAddress": "0xD8491D0F4339adB074fb85948ce5f8bAF23F09A2",
+    "oracle": "lps",
+    "oracleId": "aerodrome-jEURC-EURC",
+    "status": "active",
+    "createdAt": 1728551894,
+    "platformId": "aerodrome",
+    "assets": ["jEUR", "EURC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4154550f4Db74Dc38d1FE98e1F3F28ed6daD627d&token1=0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42&type=0",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aero-cow-weth-ovn-vault",
     "name": "WETH-OVN",
     "type": "standard",
@@ -5547,10 +5576,9 @@
     "earnContractAddress": "0xa9Fa1c5eC681BCFdF7ff43250eCB314320Bfe9bF",
     "oracle": "lps",
     "oracleId": "aerodrome-crvusd-usdc",
-    "status": "eol",
-    "retireReason": "rewards",
-    "retiredAt": 1714505422,
+    "status": "active",
     "createdAt": 1713368619,
+    "updatedAt": 1728551770,
     "platformId": "aerodrome",
     "assets": ["crvUSD", "USDC"],
     "risks": [
@@ -5562,7 +5590,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x368181499736d0c0cc614dbb145e2ec1ac86b8c6&token1=0x833589fcd6edb6e08f4c7c32d4f71b54bda02913&type=0",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x417Ac0e078398C154EdFadD9Ef675d30Be60Af93&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
     "zaps": [
