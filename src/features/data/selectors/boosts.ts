@@ -20,6 +20,14 @@ export const selectBoostById = createCachedSelector(
   }
 )((state: BeefyState, boostId: BoostEntity['id']) => boostId);
 
+export const selectCurrentBoostByVaultIdOrUndefined = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultCurrentBoostId(state, vaultId),
+  (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.boosts.byId,
+  (boostId, boostsById) => {
+    return boostId ? boostsById[boostId] : undefined;
+  }
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
 export const selectIsBoostActive = (state: BeefyState, boostId: BoostEntity['id']) => {
   const status = getBoostStatusFromContractState(boostId, selectBoostContractState(state, boostId));
   return status === 'active';
