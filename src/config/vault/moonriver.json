@@ -849,45 +849,6 @@
     ]
   },
   {
-    "id": "solarbeam-frax-rome-eol",
-    "name": "ROME-FRAX",
-    "type": "standard",
-    "token": "ROME-FRAX LP",
-    "tokenAddress": "0x069C2065100b4D3D982383f7Ef3EcD1b95C05894",
-    "tokenDecimals": 18,
-    "tokenProviderId": "solarbeam",
-    "earnedToken": "mooSolarFRAX-ROME",
-    "earnedTokenAddress": "0x4A619d9DE52e669A09996C6e107409da53b794d1",
-    "earnContractAddress": "0x4A619d9DE52e669A09996C6e107409da53b794d1",
-    "oracle": "lps",
-    "oracleId": "solarbeam-frax-rome",
-    "status": "eol",
-    "createdAt": 1639145934,
-    "retireReason": "tvl",
-    "retiredAt": 1646429647,
-    "platformId": "solarbeam",
-    "assets": ["ROME", "FRAX"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0x1A93B23281CC1CDE4C4741353F3064709A16197d&outputCurrency=0x4a436073552044D5f2f49B176853ad3Ad473d9d6",
-    "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0x1A93B23281CC1CDE4C4741353F3064709A16197d/0x4a436073552044D5f2f49B176853ad3Ad473d9d6",
-    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/0x1A93B23281CC1CDE4C4741353F3064709A16197d/0x4a436073552044D5f2f49B176853ad3Ad473d9d6",
-    "network": "moonriver",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "moonriver-solarbeam"
-      }
-    ]
-  },
-  {
     "id": "finn-wan-wmovr-eol",
     "name": "WAN-MOVR",
     "type": "standard",
