@@ -11,7 +11,7 @@
     "earnedTokenAddress": "0xD8491D0F4339adB074fb85948ce5f8bAF23F09A2",
     "earnContractAddress": "0xD8491D0F4339adB074fb85948ce5f8bAF23F09A2",
     "oracle": "lps",
-    "oracleId": "aerodrome-jEURC-EURC",
+    "oracleId": "aerodrome-jeur-eurc",
     "status": "active",
     "createdAt": 1728551894,
     "platformId": "aerodrome",
