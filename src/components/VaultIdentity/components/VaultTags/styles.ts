@@ -8,6 +8,9 @@ export const styles = (theme: Theme) => ({
     flexWrap: 'nowrap' as const,
     columnGap: '8px',
     rowGap: '8px',
+    [theme.breakpoints.down(400)]: {
+      flexWrap: 'wrap' as const,
+    },
   },
   vaultTag: {
     ...theme.typography['subline-sm'],
@@ -81,5 +84,8 @@ export const styles = (theme: Theme) => ({
     width: '1px',
     borderRadius: '8px',
     backgroundColor: '#D9D9D94C',
+  },
+  flexWrap: {
+    flexWrap: 'wrap' as const,
   },
 });
