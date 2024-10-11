@@ -547,7 +547,7 @@ export const config = {
   base: {
     name: 'Base',
     chainId: 8453,
-    rpc: ['https://mainnet.base.org'],
+    rpc: ['https://base-mainnet.public.blastapi.io'],
     explorerUrl: 'https://basescan.org',
     multicallAddress: '0xbA790ec6F95D68123E772A43b314464585B311b4',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
