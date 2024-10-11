@@ -1,5 +1,34 @@
 [
   {
+    "id": "aerodrome-weth-spx",
+    "name": "SPX-ETH vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/SPX",
+    "tokenAddress": "0xe96a4E9EA3a2C6Db214174738a19Eb7Dbb8A3069",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroWETH-SPX",
+    "earnedTokenAddress": "0xe5133a7E6581f6FDcDF93135635BB1B385111284",
+    "earnContractAddress": "0xe5133a7E6581f6FDcDF93135635BB1B385111284",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-spx",
+    "status": "active",
+    "createdAt": 1728657349,
+    "platformId": "aerodrome",
+    "assets": ["SPX", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x50dA645f148798F68EF2d7dB7C1CB22A6819bb2C&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-jeur-eurc",
     "name": "jEUR-EURC sLP",
     "type": "standard",
