@@ -1,5 +1,51 @@
 [
   {
+    "id": "babylon",
+    "docs": "https://docs.babylonlabs.io/docs/introduction/overview",
+    "points": [
+      {
+        "id": "babylon",
+        "name": "Babylon Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ]
+  },
+  {
+    "id": "corn",
+    "docs": "https://docs.usecorn.com/the-kernel",
+    "points": [
+      {
+        "id": "corn",
+        "name": "Corn Kernels"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ]
+  },
+  {
+    "id": "pumpbtc",
+    "docs": "https://pumpbtc.gitbook.io/pumpbtc/points-and-referral-program/pumpbtc-points-explanation",
+    "points": [
+      {
+        "id": "pumpbtc",
+        "name": "PumpBTC Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["pumpBTC"]
+      }
+    ]
+  },
+  {
     "id": "bedrock",
     "docs": "https://docs.bedrock.technology/bedrock-lrt/restaking-rewards",
     "points": [
