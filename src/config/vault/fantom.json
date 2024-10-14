@@ -166,9 +166,9 @@
     "tokenAddress": "0xaAc7B8d6D7009428d6DdaD895bdf50C6FCBbe2C0",
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
+    "earnContractAddress": "0xEd6e49d62e960963D7376240A0b6aF869c0b5c04",
     "earnedToken": "mooBeetsTriooftheStables",
     "earnedTokenAddress": "0xEd6e49d62e960963D7376240A0b6aF869c0b5c04",
-    "earnContractAddress": "0xEd6e49d62e960963D7376240A0b6aF869c0b5c04",
     "oracle": "lps",
     "oracleId": "beets-trio-of-the-stables",
     "status": "active",
@@ -186,7 +186,22 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://beets.fi/pool/0xaac7b8d6d7009428d6ddad895bdf50c6fcbbe2c000000000000000000000080d",
     "removeLiquidityUrl": "https://beets.fi/pool/0xaac7b8d6d7009428d6ddad895bdf50c6fcbbe2c000000000000000000000080d",
-    "network": "fantom"
+    "network": "fantom",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "fantom-beethovenx",
+        "poolId": "0xaac7b8d6d7009428d6ddad895bdf50c6fcbbe2c000000000000000000000080d",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x1B6382DBDEa11d97f24495C9A90b7c88469134a4",
+          "0x28a92dde19D9989F39A49905d7C9C2FAc7799bDf",
+          "0x2F733095B80A04b38b0D10cC884524a3d09b836a"
+        ],
+        "bptIndex": 3,
+        "hasNestedPool": false
+      }
+    ]
   },
   {
     "id": "equalizer-ichi-wftm-lzusdc",
@@ -324,9 +339,9 @@
     "tokenAddress": "0x593000b762dE3c465855336E95c8BB46080AF064",
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
+    "earnContractAddress": "0xEEbCc5Bd9603424fc71Fa5aC48C574235a00aa49",
     "earnedToken": "mooBeetsFantomMenace",
     "earnedTokenAddress": "0xEEbCc5Bd9603424fc71Fa5aC48C574235a00aa49",
-    "earnContractAddress": "0xEEbCc5Bd9603424fc71Fa5aC48C574235a00aa49",
     "oracle": "lps",
     "oracleId": "beets-fantom-menace",
     "status": "active",
@@ -344,7 +359,21 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pool/0x593000b762de3c465855336e95c8bb46080af064000000000000000000000760",
     "removeLiquidityUrl": "https://beets.fi/pool/0x593000b762de3c465855336e95c8bb46080af064000000000000000000000760",
-    "network": "fantom"
+    "network": "fantom",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "fantom-beethovenx",
+        "poolId": "0x593000b762de3c465855336e95c8bb46080af064000000000000000000000760",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
+          "0xd7028092c830b5C8FcE061Af2E593413EbbC1fc1"
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
+      }
+    ]
   },
   {
     "id": "beets-love-thy-stables",
@@ -449,7 +478,7 @@
     "tokenAddress": "0xd6070ae98b8069de6B494332d1A1a81B6179D960",
     "tokenDecimals": 18,
     "earnedToken": "WFTM",
-    "earnedTokenAddress": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+    "earnedTokenAddress": "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
     "earnedTokenDecimals": 18,
     "earnContractAddress": "0x7fB900C14c9889A559C777D016a885995cE759Ee",
     "oracle": "tokens",
@@ -541,9 +570,9 @@
     "tokenAddress": "0x838229095fa83BCD993eF225d01a990E3Bc197A8",
     "tokenDecimals": 18,
     "tokenProviderId": "beethovenx",
+    "earnContractAddress": "0x3751792035dF0497b9CC7d053083EF0F1883eb10",
     "earnedToken": "mooBeetsFantomLayerOfTheOpera",
     "earnedTokenAddress": "0x3751792035dF0497b9CC7d053083EF0F1883eb10",
-    "earnContractAddress": "0x3751792035dF0497b9CC7d053083EF0F1883eb10",
     "oracle": "lps",
     "oracleId": "beets-fantom-layer-of-the-opera",
     "status": "eol",
@@ -563,7 +592,19 @@
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pool/0x838229095fa83bcd993ef225d01a990e3bc197a800020000000000000000075b",
     "removeLiquidityUrl": "https://beets.fi/pool/0x838229095fa83bcd993ef225d01a990e3bc197a800020000000000000000075b",
-    "network": "fantom"
+    "network": "fantom",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "fantom-beethovenx",
+        "poolId": "0x838229095fa83bcd993ef225d01a990e3bc197a800020000000000000000075b",
+        "poolType": "weighted",
+        "tokens": [
+          "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
+          "0x28a92dde19D9989F39A49905d7C9C2FAc7799bDf"
+        ]
+      }
+    ]
   },
   {
     "id": "beets-fantom-and-my-axelar",
@@ -10156,7 +10197,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0x247aeb220e87f24c40c9f86b65d6bd5d3c987b55",
+            "target": "0x247aEB220E87f24c40C9F86b65d6bd5d3c987B55",
             "coins": [
               "0x4A89338A2079A01eDBF5027330EAC10B615024E5",
               "0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
@@ -11138,7 +11179,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0x78d51eb71a62c081550efcc0a9f9ea94b2ef081c",
+            "target": "0x78D51EB71a62c081550EfcC0a9F9Ea94B2Ef081c",
             "coins": [
               "0x2126be94443334Fd71428dBa3c638fB722d1838e",
               "0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
@@ -11368,7 +11409,7 @@
           },
           {
             "type": "pool-fixed-deposit",
-            "target": "0x78d51eb71a62c081550efcc0a9f9ea94b2ef081c",
+            "target": "0x78D51EB71a62c081550EfcC0a9F9Ea94B2Ef081c",
             "coins": [
               "0x74E23dF9110Aa9eA0b6ff2fAEE01e740CA1c642e",
               "0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",

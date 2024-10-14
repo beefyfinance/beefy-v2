@@ -1,5 +1,6 @@
 import type {
   AmmEntity,
+  AmmEntityBalancer,
   AmmEntityGamma,
   AmmEntitySolidly,
   AmmEntityUniswapV2,
@@ -9,8 +10,8 @@ import type { CurveMethod } from './curve/types';
 export type SwapAggregatorId = 'one-inch' | 'kyber' | 'odos';
 
 export type StrategySwapConfig = {
-  blockProviders: SwapAggregatorId[];
-  blockTokens: string[];
+  blockProviders?: SwapAggregatorId[];
+  blockTokens?: string[];
 };
 
 export type OptionalStrategySwapConfig = {
@@ -36,6 +37,28 @@ export type CurveStrategyConfig = {
   /** Methods to interact with pool, @see curve/types.ts */
   methods: CurveMethod[];
 } & OptionalStrategySwapConfig;
+
+type BalancerStrategyConfigBase = {
+  strategyId: 'balancer';
+  ammId: AmmEntityBalancer['id'];
+  poolId: string;
+  /** excluding the BPT token */
+  tokens: string[];
+};
+
+type BalancerStrategyConfigComposableStable = {
+  poolType: 'composable-stable';
+  bptIndex: number;
+  hasNestedPool: boolean;
+};
+
+type BalancerStrategyConfigOther = {
+  poolType: 'gyro' | 'gyroe' | 'weighted' | 'meta-stable';
+};
+
+export type BalancerStrategyConfig = BalancerStrategyConfigBase &
+  OptionalStrategySwapConfig &
+  (BalancerStrategyConfigComposableStable | BalancerStrategyConfigOther);
 
 export type GammaStrategyConfig = {
   strategyId: 'gamma';
@@ -74,7 +97,8 @@ export type ZapStrategyConfig =
   | CowcentratedStrategyConfig
   | GovComposerStrategyConfig
   | VaultComposerStrategyConfig
-  | RewardPoolToVaultStrategyConfig;
+  | RewardPoolToVaultStrategyConfig
+  | BalancerStrategyConfig;
 
 export type ZapStrategyId = ZapStrategyConfig['strategyId'];
 

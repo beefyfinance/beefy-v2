@@ -46,7 +46,7 @@ export function tokensToLp(tokens: TokenEntity[], wnative: TokenErc20): TokenErc
  * Ensures WNATIVE and NATIVE is in list, if either one of them are already
  * Used in zaps so user can pick either native or wrapped when either is part of an LP
  */
-export function includeNativeAndWrapped(
+export function includeWrappedAndNative(
   tokens: TokenEntity[],
   wnative: TokenErc20,
   native: TokenNative

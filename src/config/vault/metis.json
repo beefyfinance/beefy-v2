@@ -12,10 +12,8 @@
     "earnedTokenAddress": "0x18c10E2c181999EEdf855d2F61eC3755aAB96f70",
     "oracle": "tokens",
     "oracleId": "METIS",
-    "status": "paused",
+    "status": "active",
     "createdAt": 1699441549,
-    "pauseReason": "upgrade",
-    "pausedAt": 1728404107,
     "platformId": "aave",
     "assets": ["METIS"],
     "risks": [

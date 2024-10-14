@@ -17,6 +17,8 @@ import { getStrategyIds } from './common/strategies';
 import strategyABI from '../src/config/abi/strategy.json';
 import { StandardVaultAbi } from '../src/config/abi/StandardVaultAbi';
 import platforms from '../src/config/platforms.json';
+import partners from '../src/config/boost/partners.json';
+import campaigns from '../src/config/boost/campaigns.json';
 import pointProviders from '../src/config/points.json';
 import type { VaultConfig } from '../src/features/data/apis/config-types';
 import partition from 'lodash/partition';
@@ -426,11 +428,92 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       console.error(`Error: Boost ${boost.id}: Boost id duplicated: ${boost.id}`);
       exitCode = 1;
     }
+    seenBoostIds.add(boost.id);
+
     if (!poolIds.has(boost.poolId)) {
       console.error(`Error: Boost ${boost.id}: Boost has non-existent pool id ${boost.poolId}.`);
       exitCode = 1;
+      return;
     }
-    seenBoostIds.add(boost.id);
+
+    if ((boost.partners || []).length === 0 && !boost.campaign) {
+      console.error(`Error: Boost ${boost.id}: Boost has no partners or campaign.`);
+      exitCode = 1;
+      return;
+    }
+
+    if (boost.partners && boost.partners.length) {
+      const invalidPartners = boost.partners.filter(partner => !(partner in partners));
+      if (invalidPartners.length) {
+        console.error(`Error: Boost ${boost.id}: Missing partners: ${invalidPartners.join(', ')}`);
+        exitCode = 1;
+        return;
+      }
+    }
+
+    if (boost.campaign && !(boost.campaign in campaigns)) {
+      console.error(`Error: Boost ${boost.id}: Missing campaign: ${boost.campaign}`);
+      exitCode = 1;
+      return;
+    }
+
+    if (boost.assets && boost.assets.length) {
+      for (const assetId of boost.assets) {
+        if (!assetId?.trim().length) {
+          console.error(`Error: Boost ${boost.id}: Asset id is empty`);
+          exitCode = 1;
+        }
+        // TODO need to tidy up old boosts before we can enable this
+        // if (!(assetId in addressBook[chainId].tokens)) {
+        //   console.error(`Error: Boost ${boost.id}: Asset "${assetId}" not in addressbook on ${chainId}`);
+        //   exitCode = 1;
+        // }
+      }
+    }
+
+    const earnedVault = pools.find(pool => pool.earnContractAddress === boost.earnedTokenAddress);
+    if (earnedVault) {
+      if (boost.earnedTokenDecimals !== 18) {
+        console.error(
+          `Error: Boost ${boost.id}: Earned token decimals mismatch ${boost.earnedTokenDecimals} != 18`
+        );
+        exitCode = 1;
+        return;
+      }
+      // TODO oracle etc
+    } else {
+      const earnedToken = addressBook[chainId].tokens[boost.earnedToken];
+      if (!earnedToken) {
+        // TODO need to tidy up old boosts before we can enable this
+        // console.error(`Error: Boost ${boost.id}: Earned token ${boost.earnedToken} not in addressbook`);
+        // exitCode = 1;
+        return;
+      }
+
+      if (earnedToken.address !== boost.earnedTokenAddress) {
+        console.error(
+          `Error: Boost ${boost.id}: Earned token address mismatch ${boost.earnedTokenAddress} != ${earnedToken.address}`
+        );
+        exitCode = 1;
+        return;
+      }
+
+      if (earnedToken.decimals !== boost.earnedTokenDecimals) {
+        console.error(
+          `Error: Boost ${boost.id}: Earned token decimals mismatch ${boost.earnedTokenDecimals} != ${earnedToken.decimals}`
+        );
+        exitCode = 1;
+        return;
+      }
+
+      if (earnedToken.oracleId !== boost.earnedOracleId) {
+        console.error(
+          `Error: Boost ${boost.id}: Earned token oracle id mismatch ${boost.earnedOracleId} != ${earnedToken.oracleId}`
+        );
+        exitCode = 1;
+        return;
+      }
+    }
   });
 
   // Gov Pools

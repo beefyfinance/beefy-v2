@@ -159,7 +159,7 @@
     "tokenProviderId": "oku",
     "depositTokenAddresses": [
       "0x0Dc808adcE2099A9F62AA87D9670745AbA741746",
-      "0xec901da9c68e90798bbbb74c11406a32a70652c3"
+      "0xEc901DA9c68E90798BbBb74c11406A32A70652C3"
     ],
     "earnedToken": "cowUniswapMantaWETH-STONE",
     "earnedTokenAddress": "0x906e60166A4B185016e53597fA12FBB1424e47d7",

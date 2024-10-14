@@ -1,4 +1,5 @@
 import type {
+  AmmConfigBalancer,
   AmmConfigGamma,
   AmmConfigSolidly,
   AmmConfigUniswapV2,
@@ -12,7 +13,8 @@ export type AmmEntityUniswapV2 = AmmConfigUniswapV2;
 export type AmmEntitySolidly = AmmConfigSolidly;
 export type AmmEntityUniswapLike = AmmEntityUniswapV2 | AmmEntitySolidly;
 export type AmmEntityGamma = AmmConfigGamma;
-export type AmmEntity = AmmEntityUniswapLike | AmmEntityGamma;
+export type AmmEntityBalancer = AmmConfigBalancer;
+export type AmmEntity = AmmEntityUniswapLike | AmmEntityGamma | AmmConfigBalancer;
 
 export function isSolidlyAmm(amm: AmmEntity): amm is AmmEntitySolidly {
   return amm.type === 'solidly';
@@ -28,4 +30,8 @@ export function isUniswapLikeAmm(amm: AmmEntity): amm is AmmEntityUniswapLike {
 
 export function isGammaAmm(amm: AmmEntity): amm is AmmEntityGamma {
   return amm.type === 'gamma';
+}
+
+export function isBalancerAmm(amm: AmmEntity): amm is AmmEntityBalancer {
+  return amm.type === 'balancer';
 }

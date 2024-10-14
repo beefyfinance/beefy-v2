@@ -14,6 +14,7 @@ import {
   isZapQuoteStepDeposit,
   isZapQuoteStepSwap,
   isZapQuoteStepSwapAggregator,
+  SelectionOrder,
   type TokenAmount,
   type ZapQuoteStep,
   type ZapQuoteStepDeposit,
@@ -117,7 +118,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: 3,
+        selectionOrder: SelectionOrder.Other,
         inputs,
         wantedOutputs: this.vaultType.depositTokens,
         mode: TransactMode.Deposit,
@@ -331,7 +332,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: 3,
+        selectionOrder: SelectionOrder.Other,
         inputs,
         wantedOutputs: outputs,
         mode: TransactMode.Withdraw,
@@ -602,7 +603,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
           return undefined;
         }
 
-        return await swapAggregator.fetchQuotes(quoteRequest, state);
+        return await swapAggregator.fetchQuotes(quoteRequest, state, this.options.swap);
       })
     );
     const quotePerLpToken = quotesPerLpToken.map((quotes, i) => {
@@ -742,7 +743,8 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
               toToken: wantedOutput,
               vaultId: option.vaultId,
             },
-            state
+            state,
+            this.options.swap
           );
 
           if (!quotes || !quotes.length) {

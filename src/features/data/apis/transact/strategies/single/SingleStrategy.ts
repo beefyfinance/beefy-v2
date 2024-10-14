@@ -10,6 +10,7 @@ import {
   isZapQuoteStepSwap,
   isZapQuoteStepSwapAggregator,
   isZapQuoteStepWithdraw,
+  SelectionOrder,
   type SingleDepositOption,
   type SingleDepositQuote,
   type SingleWithdrawOption,
@@ -140,7 +141,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: 3,
+        selectionOrder: SelectionOrder.Other,
         inputs,
         wantedOutputs: outputs,
         strategyId: 'single',
@@ -181,7 +182,8 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
         fromAmount: input.amount,
         toToken: this.vaultType.depositToken,
       },
-      state
+      state,
+      this.options.swap
     );
     const bestQuote = first(swapQuotes); // already sorted by toAmount
     if (!bestQuote) {
@@ -335,7 +337,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: 3,
+        selectionOrder: SelectionOrder.Other,
         inputs,
         wantedOutputs: outputs,
         strategyId: 'single',
@@ -396,7 +398,8 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
           toToken: this.wnative,
           vaultId: this.vault.id,
         },
-        state
+        state,
+        this.options.swap
       );
       const wrapQuote = first(wrapQuotes);
       if (!wrapQuote || wrapQuote.toAmount.lt(withdrawnAmountAfterFee)) {
@@ -431,7 +434,8 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
           fromAmount: swapInputAmount,
           toToken: swapOutputToken,
         },
-        state
+        state,
+        this.options.swap
       );
       const bestQuote = first(swapQuotes); // already sorted by toAmount
       if (!bestQuote) {

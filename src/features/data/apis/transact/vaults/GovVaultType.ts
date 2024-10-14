@@ -16,14 +16,15 @@ import {
   onlyOneInput,
 } from '../helpers/options';
 import { TransactMode } from '../../../reducers/wallet/transact-types';
-import type {
-  GovVaultDepositOption,
-  GovVaultDepositQuote,
-  GovVaultWithdrawOption,
-  GovVaultWithdrawQuote,
-  InputTokenAmount,
-  TokenAmount,
-  TransactQuote,
+import {
+  type GovVaultDepositOption,
+  type GovVaultDepositQuote,
+  type GovVaultWithdrawOption,
+  type GovVaultWithdrawQuote,
+  type InputTokenAmount,
+  SelectionOrder,
+  type TokenAmount,
+  type TransactQuote,
 } from '../transact-types';
 import type { TokenEntity } from '../../../entities/token';
 import { isTokenEqual, isTokenErc20 } from '../../../entities/token';
@@ -83,7 +84,7 @@ export class GovVaultType implements IGovVaultType {
       vaultId: this.vault.id,
       chainId: this.vault.chainId,
       selectionId,
-      selectionOrder: 1,
+      selectionOrder: SelectionOrder.Want,
       inputs,
       wantedOutputs: inputs,
       strategyId: 'vault',
@@ -158,7 +159,7 @@ export class GovVaultType implements IGovVaultType {
       vaultId: this.vault.id,
       chainId: this.vault.chainId,
       selectionId,
-      selectionOrder: 1,
+      selectionOrder: SelectionOrder.Want,
       inputs,
       wantedOutputs: inputs,
       strategyId: 'vault',

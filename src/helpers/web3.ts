@@ -4,7 +4,7 @@ import ContractConstructor from 'web3-eth-contract';
 import type { AbiItem } from 'web3-utils';
 import utils from 'web3-utils';
 import { formatters } from 'web3-core-helpers';
-import type { Transaction, provider } from 'web3-core';
+import type { provider, Transaction } from 'web3-core';
 import BigNumber from 'bignumber.js';
 import { maybeHexToNumber } from './format';
 import type { Method } from 'web3-core-method';
@@ -261,14 +261,31 @@ function rateLimitProvider(provider: PrivateProvider, queue: PQueue): PrivatePro
         return queue
           .add(
             () =>
-              new Promise<void>(resolve => {
-                originalMethod(payload, (err, data) => {
-                  callback(err, data);
-                  resolve();
-                });
+              new Promise<unknown>((resolve, reject) => {
+                try {
+                  originalMethod(payload, (err: unknown, data: unknown) => {
+                    if (err) {
+                      reject(err);
+                    } else {
+                      resolve(data);
+                    }
+                  });
+                } catch (err) {
+                  reject(err);
+                }
               })
           )
-          .catch(err => console.error('queue.add threw', method, err));
+          .then(
+            data => {
+              callback(null, data);
+            },
+            err => {
+              callback(err, null);
+            }
+          )
+          .catch(err => {
+            console.error('rateLimitProvider: unexpected throw', method, err);
+          });
       };
     }
   }

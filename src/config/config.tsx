@@ -457,7 +457,7 @@ export const config = {
     explorerUrl: 'https://moonriver.moonscan.io',
     multicallAddress: '0x7f6fE34C51d5352A0CF375C0Fbe03bD19eCD8460',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0xe8EeDE3a063AdF991096E317e916d9AF56cb11B2',
+    appMulticallContractAddress: '0x7b2b35206BaA4Bfc83D521BDa24A356f2E39cEcC',
     providerName: 'Moonriver',
     native: { symbol: 'MOVR', oracleId: 'WMOVR', decimals: 18 },
     gas: {
@@ -547,7 +547,7 @@ export const config = {
   base: {
     name: 'Base',
     chainId: 8453,
-    rpc: ['https://mainnet.base.org'],
+    rpc: ['https://base-mainnet.public.blastapi.io'],
     explorerUrl: 'https://basescan.org',
     multicallAddress: '0xbA790ec6F95D68123E772A43b314464585B311b4',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
