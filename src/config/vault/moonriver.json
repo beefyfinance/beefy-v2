@@ -9,7 +9,7 @@
     "earnedToken": "WMOVR",
     "earnedTokenAddress": "0x98878B06940aE243284CA214f92Bb71a2b032B8A",
     "earnedTokenDecimals": 18,
-    "earnContractAddress": "0x4aabd0d73181325dd1609ce696ef048702de7153",
+    "earnContractAddress": "0x4Aabd0d73181325DD1609Ce696eF048702DE7153",
     "oracle": "tokens",
     "oracleId": "oldBIFI",
     "status": "eol",
@@ -849,45 +849,6 @@
     ]
   },
   {
-    "id": "solarbeam-frax-rome-eol",
-    "name": "ROME-FRAX",
-    "type": "standard",
-    "token": "ROME-FRAX LP",
-    "tokenAddress": "0x069C2065100b4D3D982383f7Ef3EcD1b95C05894",
-    "tokenDecimals": 18,
-    "tokenProviderId": "solarbeam",
-    "earnedToken": "mooSolarFRAX-ROME",
-    "earnedTokenAddress": "0x4A619d9DE52e669A09996C6e107409da53b794d1",
-    "earnContractAddress": "0x4A619d9DE52e669A09996C6e107409da53b794d1",
-    "oracle": "lps",
-    "oracleId": "solarbeam-frax-rome",
-    "status": "eol",
-    "createdAt": 1639145934,
-    "retireReason": "tvl",
-    "retiredAt": 1646429647,
-    "platformId": "solarbeam",
-    "assets": ["ROME", "FRAX"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0x1A93B23281CC1CDE4C4741353F3064709A16197d&outputCurrency=0x4a436073552044D5f2f49B176853ad3Ad473d9d6",
-    "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0x1A93B23281CC1CDE4C4741353F3064709A16197d/0x4a436073552044D5f2f49B176853ad3Ad473d9d6",
-    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/0x1A93B23281CC1CDE4C4741353F3064709A16197d/0x4a436073552044D5f2f49B176853ad3Ad473d9d6",
-    "network": "moonriver",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "moonriver-solarbeam"
-      }
-    ]
-  },
-  {
     "id": "finn-wan-wmovr-eol",
     "name": "WAN-MOVR",
     "type": "standard",
@@ -1213,46 +1174,6 @@
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x15B9CA9659F5dfF2b7d35a98dd0790a3CBb3D445/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "removeLiquidityUrl": "https://www.huckleberry.finance/#/remove/0x15B9CA9659F5dfF2b7d35a98dd0790a3CBb3D445/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "network": "moonriver"
-  },
-  {
-    "id": "solarbeam-mim-wmovr-eol",
-    "name": "MIM-MOVR",
-    "type": "standard",
-    "token": "MIM-MOVR LP",
-    "tokenAddress": "0x9432B25fBD8a37e5A1300e36a96BD14E1E6f5c90",
-    "tokenDecimals": 18,
-    "tokenProviderId": "solarbeam",
-    "earnedToken": "mooSolarMIM-MOVR",
-    "earnedTokenAddress": "0x9af278BC0A7861F95d93913390945c2127eb80a6",
-    "earnContractAddress": "0x9af278BC0A7861F95d93913390945c2127eb80a6",
-    "oracle": "lps",
-    "oracleId": "solarbeam-mim-wmovr",
-    "status": "eol",
-    "createdAt": 1639473600,
-    "retireReason": "rewards",
-    "retiredAt": 1648830610,
-    "platformId": "solarbeam",
-    "assets": ["MIM", "MOVR"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0x98878B06940aE243284CA214f92Bb71a2b032B8A&outputCurrency=0x0caE51e1032e8461f4806e26332c030E34De3aDb",
-    "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x0caE51e1032e8461f4806e26332c030E34De3aDb",
-    "removeLiquidityUrl": "https://app.solarbeam.io/exchange/remove/ETH/0x0caE51e1032e8461f4806e26332c030E34De3aDb",
-    "network": "moonriver",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "moonriver-solarbeam"
-      }
-    ]
   },
   {
     "id": "solarbeam-wmovr-mai-eol",

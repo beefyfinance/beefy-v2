@@ -192,7 +192,7 @@ export const selectUserVaultBalanceInShareTokenInBridged = (
   return shares;
 };
 
-const selectVaultSharesToDepositTokenData = createCachedSelector(
+export const selectVaultSharesToDepositTokenData = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     state.entities.vaults.contractData.byVaultId[vaultId]?.pricePerFullShare,

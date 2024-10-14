@@ -29,7 +29,7 @@ export const excludeChains: Record<string, { count: number; hash: string }> = {
   },
   one: {
     count: 22,
-    hash: '104ab490f7be1037e0a8b5c545db505cd2ae644ba73fd958d33ab9435202e00a',
+    hash: 'a38575f5cdb9ef6ce6d31e93695aadb02baca9f070366f2acee79d260e5e2391',
   },
   fuse: {
     count: 28,
@@ -48,8 +48,8 @@ export const excludeChains: Record<string, { count: number; hash: string }> = {
     hash: 'fe0549fd08678e577d17796df5b36ce28e4546bd9a1cc652196c6fa85bcaa482',
   },
   moonriver: {
-    count: 53,
-    hash: '17e6fa948469e3d796f3709d39bb01cc4b0ded28cbd30bcbd252eb719a1c0e39',
+    count: 51,
+    hash: 'ac20aae49f323550c3dae1a74b15b4852f3e9e7dd76f4eec055948148257d4bd',
   },
   canto: {
     count: 36,

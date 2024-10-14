@@ -1,5 +1,5 @@
 import type { BigNumber } from 'bignumber.js';
-import { BIG_ZERO, fromWei, tokenAmountToWei } from '../../../../../helpers/big-number';
+import { BIG_ZERO, fromWei, toWeiFromTokenAmount } from '../../../../../helpers/big-number';
 import type { BeefyStateFn } from '../../../../../redux-types';
 import {
   isTokenEqual,
@@ -17,13 +17,14 @@ import {
   onlyInputCount,
   onlyOneInput,
 } from '../helpers/options';
-import type {
-  CowcentratedVaultDepositOption,
-  CowcentratedVaultDepositQuote,
-  CowcentratedVaultWithdrawOption,
-  CowcentratedVaultWithdrawQuote,
-  InputTokenAmount,
-  TokenAmount,
+import {
+  type CowcentratedVaultDepositOption,
+  type CowcentratedVaultDepositQuote,
+  type CowcentratedVaultWithdrawOption,
+  type CowcentratedVaultWithdrawQuote,
+  type InputTokenAmount,
+  SelectionOrder,
+  type TokenAmount,
 } from '../transact-types';
 import type {
   ICowcentratedVaultType,
@@ -84,7 +85,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       vaultId: this.vault.id,
       chainId: this.vault.chainId,
       selectionId,
-      selectionOrder: 1,
+      selectionOrder: SelectionOrder.AllTokensInPool,
       inputs,
       wantedOutputs: inputs,
       strategyId: 'vault',
@@ -202,7 +203,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       vaultId: this.vault.id,
       chainId: this.vault.chainId,
       selectionId,
-      selectionOrder: 1,
+      selectionOrder: SelectionOrder.AllTokensInPool,
       inputs: inputs,
       wantedOutputs: outputs,
       strategyId: 'vault',
@@ -309,9 +310,9 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       minOutputs,
       zap: this.buildZapDepositTx(
         this.shareToken.address,
-        tokenAmountToWei(request.inputs[0]),
-        tokenAmountToWei(request.inputs[1]),
-        tokenAmountToWei(minOutputs[0]),
+        toWeiFromTokenAmount(request.inputs[0]),
+        toWeiFromTokenAmount(request.inputs[1]),
+        toWeiFromTokenAmount(minOutputs[0]),
         request.inputs[0].token.address,
         request.inputs[1].token.address,
         true
@@ -355,9 +356,9 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       minOutputs,
       zap: this.buildZapWithdrawTx(
         this.shareToken.address,
-        tokenAmountToWei(input),
-        tokenAmountToWei(minOutputs[0]),
-        tokenAmountToWei(minOutputs[1]),
+        toWeiFromTokenAmount(input),
+        toWeiFromTokenAmount(minOutputs[0]),
+        toWeiFromTokenAmount(minOutputs[1]),
         input.max
       ),
     };

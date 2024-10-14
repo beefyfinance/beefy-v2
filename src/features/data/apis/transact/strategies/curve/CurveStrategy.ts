@@ -19,6 +19,7 @@ import {
   isZapQuoteStepSwap,
   isZapQuoteStepSwapAggregator,
   isZapQuoteStepWithdraw,
+  SelectionOrder,
   type TokenAmount,
   type ZapQuoteStep,
   type ZapQuoteStepBuild,
@@ -206,7 +207,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: 2,
+        selectionOrder: SelectionOrder.TokenOfPool,
         inputs,
         wantedOutputs: outputs,
         mode: TransactMode.Deposit,
@@ -236,7 +237,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
           vaultId: this.vault.id,
           chainId: this.vault.chainId,
           selectionId,
-          selectionOrder: 3,
+          selectionOrder: SelectionOrder.Other,
           inputs,
           wantedOutputs: outputs,
           mode: TransactMode.Deposit,
@@ -281,7 +282,8 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
             fromAmount: input.amount,
             toToken: depositVia.token,
           },
-          state
+          state,
+          this.options.swap
         );
         const bestQuote = first(quotes);
         if (!bestQuote) {
@@ -623,7 +625,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: 2,
+        selectionOrder: SelectionOrder.TokenOfPool,
         inputs,
         wantedOutputs: outputs,
         mode: TransactMode.Withdraw,
@@ -653,7 +655,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
           vaultId: this.vault.id,
           chainId: this.vault.chainId,
           selectionId,
-          selectionOrder: 3,
+          selectionOrder: SelectionOrder.Other,
           inputs,
           wantedOutputs: outputs,
           mode: TransactMode.Withdraw,
@@ -712,7 +714,8 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
             fromAmount: slipBy(split.amount, slippage, split.token.decimals), // we have to assume it will slip 100% since we can't modify the call data later
             toToken: wanted,
           },
-          state
+          state,
+          this.options.swap
         );
         const quote = first(quotes);
 

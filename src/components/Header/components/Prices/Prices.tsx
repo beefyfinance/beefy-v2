@@ -68,7 +68,7 @@ const tokens: Token[] = [
   {
     symbol: 'mooBIFI',
     address: '0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
-    oracleId: 'mooBIFI',
+    oracleId: 'opmooBIFI',
     chainId: 'optimism',
     icon: mooIcon,
     explorer: {
@@ -83,7 +83,7 @@ const tokens: Token[] = [
   {
     symbol: 'mooBIFI',
     address: '0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
-    oracleId: 'mooBIFI',
+    oracleId: 'basemooBIFI',
     chainId: 'base',
     icon: mooIcon,
     explorer: {
@@ -92,6 +92,8 @@ const tokens: Token[] = [
       url: 'https://basescan.org/token/0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
     },
     walletIconUrl: 'https://beefy.com/icons/128/mooBIFI.png',
+    llamaSwapUrl:
+      'https://swap.defillama.com/?chain=base&from=0x0000000000000000000000000000000000000000&to=0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
   },
 ];
 

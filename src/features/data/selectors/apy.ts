@@ -10,21 +10,22 @@ import {
   selectUserDepositedVaultIds,
   selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
   selectUserVaultBalanceInUsdIncludingBoostsBridged,
+  selectVaultSharesToDepositTokenData,
 } from './balance';
 import {
   selectIsUserBalanceAvailable,
   selectIsVaultApyAvailable,
   selectVaultShouldShowInterest,
 } from './data-loader';
-import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
-import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
+import { selectTokenPriceByAddress } from './tokens';
+import { selectVaultById } from './vaults';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from './boosts';
 import type { TotalApy } from '../reducers/apy';
 import { isEmpty } from '../../../helpers/utils';
 import { selectWalletAddress } from './wallet';
-import { BigNumber } from 'bignumber.js';
 import { first } from 'lodash-es';
+import { mooAmountToOracleAmount } from '../utils/ppfs';
 
 const EMPTY_TOTAL_APY: TotalApy = {
   totalApy: 0,
@@ -138,7 +139,7 @@ export const selectYieldStatsByVaultId = (
 ) => {
   const vault = selectVaultById(state, vaultId);
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const shareData = selectVaultSharesToDepositTokenData(state, vaultId, walletAddress);
 
   if (!isVaultActive(vault)) {
     return {
@@ -149,7 +150,7 @@ export const selectYieldStatsByVaultId = (
       yearlyUsd: BIG_ZERO,
       yearlyTokens: BIG_ZERO,
       oraclePrice,
-      depositToken,
+      depositToken: shareData.depositToken,
     };
   }
 
@@ -159,7 +160,6 @@ export const selectYieldStatsByVaultId = (
     walletAddress
   );
   const apyData = selectVaultTotalApy(state, vault.id);
-  const ppfs = selectVaultPricePerFullShare(state, vaultId);
   const sources = [
     // base total apy is applied to the whole of the user's balance
     {
@@ -174,9 +174,15 @@ export const selectYieldStatsByVaultId = (
     if (activeBoostId) {
       const sharesInBoost = selectBoostUserBalanceInToken(state, activeBoostId, walletAddress);
       if (sharesInBoost.gt(BIG_ZERO)) {
-        const tokensInBoost = sharesInBoost
-          .multipliedBy(ppfs)
-          .decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR);
+        const tokensInBoost = shareData.shareToken
+          ? mooAmountToOracleAmount(
+              shareData.shareToken,
+              shareData.depositToken,
+              shareData.ppfs,
+              sharesInBoost
+            )
+          : sharesInBoost;
+
         // boost apy is applied only to the user's balance in the boost
         sources.push({
           daily: apyData.boostDaily,
@@ -221,7 +227,7 @@ export const selectYieldStatsByVaultId = (
     yearlyTokens,
     yearlyUsd,
     oraclePrice,
-    depositToken,
+    depositToken: shareData.depositToken,
   };
 };
 
