@@ -92,6 +92,190 @@
     ]
   },
   {
+    "id": "aero-cow-bitcoin-weth-vault",
+    "name": "BITCOIN-WETH",
+    "type": "standard",
+    "token": "BITCOIN-WETH",
+    "tokenAddress": "0x578a315E367c2503B5B2aC2081E56C56dB426FBd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooCowAeroBITCOIN-WETH",
+    "earnedTokenAddress": "0xc58234F67377E8d4Ac1338f161Eec052C82dDD66",
+    "earnContractAddress": "0xc58234F67377E8d4Ac1338f161Eec052C82dDD66",
+    "oracle": "lps",
+    "oracleId": "aero-cow-bitcoin-weth",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["HarryPotterObamaSonic10Inu", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1729018776,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-bitcoin-weth-rp",
+    "name": "BITCOIN-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroBITCOIN-WETH",
+    "tokenAddress": "0x578a315E367c2503B5B2aC2081E56C56dB426FBd",
+    "tokenDecimals": 18,
+    "earnedTokens": ["AERO"],
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "earnedOracleIds": ["AERO"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowAeroBITCOIN-WETH",
+    "earnContractAddress": "0xc5Fe634266D9B84cF86438285D8078c2d43a8365",
+    "oracle": "lps",
+    "oracleId": "aero-cow-bitcoin-weth",
+    "status": "active",
+    "createdAt": 1729017803,
+    "platformId": "aerodrome",
+    "assets": ["HarryPotterObamaSonic10Inu", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-bitcoin-weth",
+    "name": "BITCOIN-WETH",
+    "token": "BITCOIN-WETH aero",
+    "tokenAddress": "0xfD22D75b2FB405EE185155D57B0277b9DB2F8E29",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x2a06A17CBC6d0032Cac2c6696DA90f29D39a1a29",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "cowAeroBITCOIN-WETH",
+    "earnedTokenAddress": "0x578a315E367c2503B5B2aC2081E56C56dB426FBd",
+    "earnContractAddress": "0x578a315E367c2503B5B2aC2081E56C56dB426FBd",
+    "oracle": "lps",
+    "oracleId": "aero-cow-bitcoin-weth",
+    "status": "active",
+    "createdAt": 1729017803,
+    "platformId": "beefy",
+    "assets": ["HarryPotterObamaSonic10Inu", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-weth-keycat-vault",
+    "name": "KEYCAT-WETH",
+    "type": "standard",
+    "token": "KEYCAT-WETH",
+    "tokenAddress": "0x5b65953661ff39819C58bE3BC25Fe983B59F0729",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooCowAeroWETH-KEYCAT",
+    "earnedTokenAddress": "0x707B254DD3D75825345dA4bc4E585918842D5A30",
+    "earnContractAddress": "0x707B254DD3D75825345dA4bc4E585918842D5A30",
+    "oracle": "lps",
+    "oracleId": "aero-cow-weth-keycat",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["KEYCAT", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1729018776,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-weth-keycat-rp",
+    "name": "KEYCAT-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroWETH-KEYCAT",
+    "tokenAddress": "0x5b65953661ff39819C58bE3BC25Fe983B59F0729",
+    "tokenDecimals": 18,
+    "earnedTokens": ["AERO"],
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "earnedOracleIds": ["AERO"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowAeroWETH-KEYCAT",
+    "earnContractAddress": "0xF2c37EB69a23630b7788752Aa472F757FdF981D9",
+    "oracle": "lps",
+    "oracleId": "aero-cow-weth-keycat",
+    "status": "active",
+    "createdAt": 1729017803,
+    "platformId": "aerodrome",
+    "assets": ["KEYCAT", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-weth-keycat",
+    "name": "KEYCAT-WETH",
+    "token": "KEYCAT-WETH aero",
+    "tokenAddress": "0xB211a9DDff3a10806c8fdb92Dbc4c34596A23F84",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x9a26F5433671751C3276a065f57e5a02D2817973"
+    ],
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "cowAeroWETH-KEYCAT",
+    "earnedTokenAddress": "0x5b65953661ff39819C58bE3BC25Fe983B59F0729",
+    "earnContractAddress": "0x5b65953661ff39819C58bE3BC25Fe983B59F0729",
+    "oracle": "lps",
+    "oracleId": "aero-cow-weth-keycat",
+    "status": "active",
+    "createdAt": 1729017803,
+    "platformId": "beefy",
+    "assets": ["KEYCAT", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-weth-degen-vault",
     "name": "WETH-DEGEN",
     "type": "standard",
