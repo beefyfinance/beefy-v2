@@ -1,5 +1,34 @@
 [
   {
+    "id": "aerodrome-weth-degen",
+    "name": "DEGEN-ETH vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/DEGEN",
+    "tokenAddress": "0x2C4909355b0C036840819484c3A882A95659aBf3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroWETH-DEGEN",
+    "earnedTokenAddress": "0x2dD25447f7870AEf9095b3422A8B793dC5e4031F",
+    "earnContractAddress": "0x2dD25447f7870AEf9095b3422A8B793dC5e4031F",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-degen",
+    "status": "active",
+    "createdAt": 1729028236,
+    "platformId": "aerodrome",
+    "assets": ["DEGEN", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aero-cow-weth-superoethb-vault",
     "name": "superOETHb-WETH",
     "type": "standard",
