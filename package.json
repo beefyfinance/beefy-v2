@@ -24,11 +24,7 @@
     "@web3-onboard/trust": "^2.1.1",
     "@web3-onboard/walletconnect": "^2.6.1",
     "bignumber.js": "^9.0.1",
-<<<<<<< HEAD
-    "blockchain-addressbook": "^0.47.34",
-=======
     "blockchain-addressbook": "^0.47.36",
->>>>>>> 9f9e2213e (Add Aerodrome CLMs)
     "clsx": "^1.1.1",
     "date-fns": "^2.29.3",
     "eip-712": "^1.0.0",

@@ -18,7 +18,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "base",
-    "createdAt": 1728997613,
+    "createdAt": 1729018776,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -29,7 +29,6 @@
     ]
   },
   {
-
     "id": "aero-cow-weth-superoethb-rp",
     "name": "superOETHb-WETH Reward Pool",
     "type": "gov",
