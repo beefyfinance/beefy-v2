@@ -176,7 +176,7 @@
     "strategyTypeId": "pool",
     "network": "base",
     "type": "cowcentrated",
-    "feeTier": "Dynamic",
+    "feeTier": "0.25",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -268,7 +268,7 @@
     "strategyTypeId": "pool",
     "network": "base",
     "type": "cowcentrated",
-    "feeTier": "Dynamic",
+    "feeTier": "0.27",
     "zaps": [
       {
         "strategyId": "cowcentrated"
