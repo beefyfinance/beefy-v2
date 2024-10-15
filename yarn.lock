@@ -2828,10 +2828,17 @@ blakejs@^1.1.0:
   resolved "https://registry.yarnpkg.com/blakejs/-/blakejs-1.2.1.tgz#5057e4206eadb4a97f7c0b6e197a505042fc3814"
   integrity sha512-QXUSXI3QVc/gJME0dBpXrag1kbzOqCjCX8/b54ntNyW6sjtoqxqRk3LTmXzaJoh71zMsDCjM+47jS7XiwN/+fQ==
 
+<<<<<<< HEAD
 blockchain-addressbook@^0.47.34:
   version "0.47.34"
   resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.47.34.tgz#e78ae5e81caf17eb3a0fa58dd6a8a2054b5964ff"
   integrity sha512-pBfvPIYdlRIqSOvWQil1r7MXXlQwv6C3l7fefrwkTSt5rd7Ebjgk0DWH1KXgKUQ0kqGqWonthQzFMUaQAtJeqg==
+=======
+blockchain-addressbook@^0.47.36:
+  version "0.47.36"
+  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.47.36.tgz#42fe2ad850feaeef4d54922fa445ee76782eaa94"
+  integrity sha512-vrRK3TdWQ1i+zYhHdoHj+/SIDFPv8fXodm3vGRUTfhlWAGaLk9MdFjrYv5r5pMqS0C4V2kjqJ+ewQnBX5f7sIQ==
+>>>>>>> 9f9e2213e (Add Aerodrome CLMs)
 
 bluebird@^3.5.0:
   version "3.7.2"
