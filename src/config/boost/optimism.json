@@ -85,7 +85,7 @@
     "isMooStaked": true,
     "campaign": "zap-v3",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_compound-op-usdt",
@@ -107,7 +107,7 @@
     "isMooStaked": true,
     "campaign": "zap-v3",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_compound-op-usdc",
@@ -129,7 +129,7 @@
     "isMooStaked": true,
     "campaign": "zap-v3",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_velodrome-v2-hai-pxeth",
