@@ -1,5 +1,131 @@
 [
   {
+    "id": "uniswap-cow-weth-degen-rp",
+    "name": "WETH-DEGEN Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-DEGEN",
+    "tokenAddress": "0x608E547833AB57a071d26E7E3aB38E167b035152",
+    "tokenDecimals": 18,
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowUniswapBaseWETH-DEGEN",
+    "earnContractAddress": "0x7641705515E810b518555c3C0EEdc083BF5a7Bbb",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-weth-degen",
+    "status": "active",
+    "createdAt": 1729086491,
+    "platformId": "uniswap",
+    "assets": ["WETH", "DEGEN"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-weth-degen",
+    "name": "WETH-DEGEN",
+    "token": "WETH-DEGEN uniswap",
+    "tokenAddress": "0xc9034c3E7F58003E6ae0C8438e7c8f4598d5ACAA",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBaseWETH-DEGEN",
+    "earnedTokenAddress": "0x608E547833AB57a071d26E7E3aB38E167b035152",
+    "earnContractAddress": "0x608E547833AB57a071d26E7E3aB38E167b035152",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-weth-degen",
+    "status": "active",
+    "createdAt": 1729086491,
+    "platformId": "beefy",
+    "assets": ["WETH", "DEGEN"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-weth-spx-rp",
+    "name": "WETH-SPX Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-SPX",
+    "tokenAddress": "0xcE69Ab6EcA8CBB631aB3D440CBa17Ecd12ef5129",
+    "tokenDecimals": 18,
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowUniswapBaseWETH-SPX",
+    "earnContractAddress": "0xac62f161BfED14339075174b2797fC0f7305Df1B",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-weth-spx",
+    "status": "active",
+    "createdAt": 1729086333,
+    "platformId": "uniswap",
+    "assets": ["WETH", "SPX"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-weth-spx",
+    "name": "WETH-SPX",
+    "token": "WETH-SPX uniswap",
+    "tokenAddress": "0xab57CacEa9CD5CC1FB21D026ECDE71e0d4f33861",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x50dA645f148798F68EF2d7dB7C1CB22A6819bb2C"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBaseWETH-SPX",
+    "earnedTokenAddress": "0xcE69Ab6EcA8CBB631aB3D440CBa17Ecd12ef5129",
+    "earnContractAddress": "0xcE69Ab6EcA8CBB631aB3D440CBa17Ecd12ef5129",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-weth-spx",
+    "status": "active",
+    "createdAt": 1729086333,
+    "platformId": "beefy",
+    "assets": ["WETH", "SPX"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-degen",
     "name": "DEGEN-ETH vLP",
     "type": "standard",

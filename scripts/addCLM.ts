@@ -188,7 +188,10 @@ async function generateVault() {
   };
 
   const vaults = JSON.parse(await fs.readFile(vaultsFile, 'utf8'));
-  const newVaults = [newVault, newRewardPool, newClm, ...vaults];
+  const newVaults =
+    vaultAddress !== '0x'
+      ? [newVault, newRewardPool, newClm, ...vaults]
+      : [newRewardPool, newClm, ...vaults];
   await fs.writeFile(vaultsFile, JSON.stringify(newVaults, null, 2));
   console.log(`Added ${id} to ${chain} vault config`);
 }
