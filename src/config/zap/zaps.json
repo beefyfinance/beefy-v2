@@ -123,5 +123,10 @@
     "chainId": "rootstock",
     "router": "0x2E0A7064A5bA7B9b7499997D91885BaDd5FC45f6",
     "manager": "0xC01cE221D1da322A5B8322fC195b407FEa32240E"
+  },
+  {
+    "chainId": "scroll",
+    "router": "0x75c9D65e7C0d6b40F356452f8A11aeD525B67197",
+    "manager": "0x3d38fa251b0C5dAC8B31Aef9dE7a54B4dE114342"
   }
 ]

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "oku-cow-scroll-usdc-weth-rp",
+    "name": "USDC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowOkuScrollUSDC-WETH",
+    "tokenAddress": "0x6089c1542C7dC09Ca27181491C37d9777ef9B1FA",
+    "tokenDecimals": 18,
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowOkuScrollUSDC-WETH",
+    "earnContractAddress": "0x755BB320350CE5C69A8EE4183614F72C2A97813a",
+    "oracle": "lps",
+    "oracleId": "oku-cow-scroll-usdc-weth",
+    "status": "active",
+    "createdAt": 1729110906,
+    "platformId": "oku",
+    "assets": ["USDC", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "oku-cow-scroll-usdc-weth",
+    "name": "USDC-WETH",
+    "token": "USDC-WETH oku",
+    "tokenAddress": "0x813Df550a32d4A9d42010D057386429ad2328ED9",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+      "0x5300000000000000000000000000000000000004"
+    ],
+    "tokenProviderId": "oku",
+    "earnedToken": "cowOkuScrollUSDC-WETH",
+    "earnedTokenAddress": "0x6089c1542C7dC09Ca27181491C37d9777ef9B1FA",
+    "earnContractAddress": "0x6089c1542C7dC09Ca27181491C37d9777ef9B1FA",
+    "oracle": "lps",
+    "oracleId": "oku-cow-scroll-usdc-weth",
+    "status": "active",
+    "createdAt": 1729110906,
+    "platformId": "beefy",
+    "assets": ["USDC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  }
+]

@@ -223,6 +223,12 @@
     "website": "https://dapp.tokenbridge.rootstock.io/?_gl=1*1adw6q2*_gcl_au*ODQ3NTgwNDM3LjE3MjcyNjIwNDI."
   },
   {
+    "id": "scroll-canonical",
+    "name": "Scroll Bridge",
+    "tagName": "scroll",
+    "website": "https://scroll.io/bridge"
+  },
+  {
     "id": "sovryn",
     "name": "Sovryn",
     "tagName": "sovryn",

@@ -758,11 +758,31 @@ export const config = {
     appMulticallContractAddress: '0x8EfD3599488542Ec1719567c698a97Fb4e3751a1',
     providerName: 'Rootstock',
     native: { symbol: 'RBTC', oracleId: 'WBTC', decimals: 18 },
-    new: true,
+    new: false,
     gas: {
       type: 'standard',
     },
     stableCoins: ['rUSDT', 'DOC'],
+  },
+  scroll: {
+    name: 'Scroll',
+    chainId: 534352,
+    rpc: ['https://scroll-mainnet.public.blastapi.io'],
+    explorerUrl: 'https://scrollscan.com/',
+    multicallAddress: '0xEEfe8171dC249960D730b19F3406E40c8C22C567',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0xB58AD63989237E962F3E618eEeb43c30574c6F72',
+    providerName: 'Scroll',
+    native: { symbol: 'ETH', oracleId: 'ETH', decimals: 18 },
+    new: true,
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.7,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '10000000', // 0.01 gwei
+    },
+    stableCoins: ['USDT', 'USDC'],
   },
   aurora: {
     name: 'Aurora',

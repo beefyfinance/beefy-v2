@@ -127,4 +127,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-rootstock': {
     backgroundColor: '#000',
   },
+  'vaultNetwork-scroll': {
+    backgroundColor: '#ffe6c8',
+  },
 });
