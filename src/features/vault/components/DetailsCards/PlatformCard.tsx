@@ -98,10 +98,16 @@ function PlatformCardComponent({
 export const PlatformCard = memo(PlatformCardComponent);
 
 const PlatformImage = memo(function PlatformImage({ platformId }: { platformId: string }) {
+  const classes = useStyles();
   return (
     <>
       {platformAssetExists(platformId) ? (
-        <img src={getPlatformSrc(platformId)} alt={platformId} height={24} />
+        <img
+          src={getPlatformSrc(platformId)}
+          alt={platformId}
+          height={24}
+          className={classes.assetIcon}
+        />
       ) : (
         <></>
       )}
