@@ -22,13 +22,17 @@
   {
     "id": "magpie",
     "name": "Magpie",
-    "risks": ["NO_TIMELOCK"]
+    "risks": ["NO_TIMELOCK"],
+    "website": "https://www.magpiexyz.io/",
+    "twitter": "https://x.com/magpiexyz_io",
+    "documentation": "https://docs.magpiexyz.io/",
+    "description": "The Magpie DAO is a suite of protocols that transcends conventional platforms with the goal of enhancing participation and user opportunities across DeFi."
   },
   {
     "id": "pendle",
     "name": "Pendle",
-    "twitter": "https://twitter.com/pendle_fi",
     "website": "https://pendle.finance/",
+    "twitter": "https://twitter.com/pendle_fi",
     "documentation": "https://docs.pendle.finance/home",
     "description": "Pendle is a permissionless yield-trading protocol where users can execute various yield-management strategies."
   },
