@@ -6,4 +6,8 @@ export interface PlatformEntity {
   id: string;
   name: string;
   risks: string[];
+  description: string;
+  twitter: string;
+  website: string;
+  documentation: string;
 }

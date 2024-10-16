@@ -346,6 +346,10 @@ export type PlatformConfig = {
   id: string;
   name: string;
   risks?: string[];
+  description?: string;
+  twitter?: string;
+  website?: string;
+  documentation?: string;
 };
 
 export interface TokenHoldingConfig {

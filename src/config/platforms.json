@@ -26,7 +26,11 @@
   },
   {
     "id": "pendle",
-    "name": "Pendle"
+    "name": "Pendle",
+    "twitter": "https://twitter.com/pendle_fi",
+    "website": "https://pendle.finance/",
+    "documentation": "https://docs.pendle.finance/home",
+    "description": "Pendle is a permissionless yield-trading protocol where users can execute various yield-management strategies."
   },
   {
     "id": "apeswap",
