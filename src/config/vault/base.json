@@ -1,5 +1,97 @@
 [
   {
+    "id": "aero-cow-tbtc-cbbtc-vault",
+    "name": "tBTC-cbBTC",
+    "type": "standard",
+    "token": "tBTC-cbBTC",
+    "tokenAddress": "0x4aC69240bf5F4BeCc939c1Ea56A64e95943865AF",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooCowAerotBTC-cbBTC",
+    "earnedTokenAddress": "0xcdaf1dBD0cedb5eB2D3daCd2528F75DE6970ad97",
+    "earnContractAddress": "0xcdaf1dBD0cedb5eB2D3daCd2528F75DE6970ad97",
+    "oracle": "lps",
+    "oracleId": "aero-cow-tbtc-cbbtc",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["tBTC", "cbBTC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1729165703,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-tbtc-cbbtc-rp",
+    "name": "tBTC-cbBTC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerotBTC-cbBTC",
+    "tokenAddress": "0x4aC69240bf5F4BeCc939c1Ea56A64e95943865AF",
+    "tokenDecimals": 18,
+    "earnedTokens": ["AERO"],
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "earnedOracleIds": ["AERO"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowAerotBTC-cbBTC",
+    "earnContractAddress": "0xE53803aBd9720BA5ea94bCDF077C4D418Ea37C8c",
+    "oracle": "lps",
+    "oracleId": "aero-cow-tbtc-cbbtc",
+    "status": "active",
+    "createdAt": 1729165702,
+    "platformId": "aerodrome",
+    "assets": ["tBTC", "cbBTC"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-tbtc-cbbtc",
+    "name": "tBTC-cbBTC",
+    "token": "tBTC-cbBTC aero",
+    "tokenAddress": "0x138aceE5573fA09e7F215965ff60898cc33c6330",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b",
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    ],
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "cowAerotBTC-cbBTC",
+    "earnedTokenAddress": "0x4aC69240bf5F4BeCc939c1Ea56A64e95943865AF",
+    "earnContractAddress": "0x4aC69240bf5F4BeCc939c1Ea56A64e95943865AF",
+    "oracle": "lps",
+    "oracleId": "aero-cow-tbtc-cbbtc",
+    "status": "active",
+    "createdAt": 1729165702,
+    "platformId": "beefy",
+    "assets": ["tBTC", "cbBTC"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-weth-degen-rp",
     "name": "WETH-DEGEN Reward Pool",
     "type": "gov",
