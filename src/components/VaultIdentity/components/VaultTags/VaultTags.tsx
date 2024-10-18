@@ -66,15 +66,15 @@ const VaultBoostTag = memo<VaultBoostTagProps>(function VaultBoostTag({ boostId,
       disabled={!isOverflowing && !onlyIcon}
       className={classes.vaultTagBoost}
       ref={ref}
-    >
-      {iconSrc ? (
-        <img src={iconSrc} alt="" className={classes.vaultTagBoostIcon} width={12} height={12} />
-      ) : (
-        <>{'\uD83D\uDD25 '}</>
-      )}
-
-      {!onlyIcon ? (tagText ? t('VaultTag-PartnerBoost', { partner: name }) : null) : null}
-    </VaultTagWithTooltip>
+      icon={
+        iconSrc ? (
+          <img src={iconSrc} alt="" className={classes.vaultTagBoostIcon} width={12} height={12} />
+        ) : (
+          <>{'\uD83D\uDD25'}</>
+        )
+      }
+      text={!onlyIcon ? (tagText ? t('VaultTag-PartnerBoost', { partner: name }) : null) : null}
+    />
   );
 });
 
@@ -104,20 +104,21 @@ export const VaultMerklBoostTag = memo(function VaultMerklBoostTag({
         disabled={!isOverflowing && !onlyIcon}
         className={classes.vaultTagBoost}
         ref={ref}
-      >
-        {tagIcon ? (
-          <img
-            src={getBoostIconSrc(tagIcon)}
-            alt=""
-            className={classes.vaultTagBoostIcon}
-            width={12}
-            height={12}
-          />
-        ) : (
-          <>{'\uD83D\uDD25 '}</>
-        )}
-        {!onlyIcon ? tagText : null}
-      </VaultTagWithTooltip>
+        icon={
+          tagIcon ? (
+            <img
+              src={getBoostIconSrc(tagIcon)}
+              alt=""
+              className={classes.vaultTagBoostIcon}
+              width={12}
+              height={12}
+            />
+          ) : (
+            <>{'\uD83D\uDD25'}</>
+          )
+        }
+        text={!onlyIcon ? tagText : undefined}
+      />
     );
   }
   return null;
@@ -138,9 +139,10 @@ const VaultEarnTag = memo<VaultEarnTagProps>(function VaultEarnTag({
   );
 
   return (
-    <VaultTag className={classes.vaultTagEarn}>
-      {t('VaultTag-EarnToken', { token: earnedToken.symbol })}
-    </VaultTag>
+    <VaultTag
+      className={classes.vaultTagEarn}
+      text={t('VaultTag-EarnToken', { token: earnedToken.symbol })}
+    />
   );
 });
 
@@ -159,9 +161,8 @@ const VaultPlatformTag = memo<VaultPlatformTagProps>(function VaultPlatformTag({
         [classes.platformTagGov]: isGov,
         [classes.platformTagClm]: isCowcentratedLike,
       })}
-    >
-      <VaultPlatform vaultId={vaultId} />
-    </VaultTag>
+      text={<VaultPlatform vaultId={vaultId} />}
+    />
   );
 });
 
@@ -199,22 +200,29 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
       className={clsx(classes.vaultTagClm, {
         [classes.vaultTagClmAutoHide]: hideFee === undefined && hideLabel === undefined,
       })}
-    >
-      <img
-        src={getIcon('clm')}
-        height={16}
-        width={16}
-        className={classes.vaultTagClmIcon}
-        alt={hideLabel ? label : undefined}
-      />
-      {!onlyIcon && !hideLabel && <div className={classes.vaultTagClmText}>{label}</div>}
-      {!onlyIcon && !hideFee && fee && (
-        <>
-          <div className={classes.divider} />
-          <span>{fee}</span>
-        </>
-      )}
-    </VaultTagWithTooltip>
+      icon={
+        <img
+          src={getIcon('clm')}
+          height={16}
+          width={16}
+          className={classes.vaultTagClmIcon}
+          alt={hideLabel ? label : undefined}
+        />
+      }
+      text={
+        !onlyIcon && (!hideLabel || (!hideFee && fee)) ? (
+          <>
+            {!hideLabel && <div className={classes.vaultTagClmText}>{label}</div>}
+            {!hideFee && fee && (
+              <>
+                <div className={classes.divider} />
+                <span>{fee}</span>
+              </>
+            )}
+          </>
+        ) : undefined
+      }
+    />
   );
 });
 
@@ -355,9 +363,8 @@ const PointsTag = memo(function PointsTag() {
       disabled={!isOverflowing}
       className={classes.vaultTagPoints}
       ref={ref}
-    >
-      {t('VaultTag-Points')}
-    </VaultTagWithTooltip>
+      text={t('VaultTag-Points')}
+    />
   );
 });
 
@@ -377,7 +384,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
     selectVaultHasActiveMerklBoostCampaigns(state, vaultId)
   );
 
-  const isSmallDevice = useMediaQuery('(max-width: 420px)', { noSsr: true });
+  const isSmallDevice = useMediaQuery('(max-width: 450px)', { noSsr: true });
 
   const isClmAndBoostedAndSmallDevice =
     isSmallDevice && isCowcentratedLike && (!!boostId || hasBaseActiveMerklCampaigns);
@@ -398,9 +405,9 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
         />
       )}
       {isVaultRetired(vault) ? (
-        <VaultTag className={classes.vaultTagRetired}>{t('VaultTag-Retired')}</VaultTag>
+        <VaultTag className={classes.vaultTagRetired} text={t('VaultTag-Retired')} />
       ) : isVaultPaused(vault) ? (
-        <VaultTag className={classes.vaultTagPaused}>{t('VaultTag-Paused')}</VaultTag>
+        <VaultTag className={classes.vaultTagPaused} text={t('VaultTag-Paused')} />
       ) : boostId ? (
         <VaultBoostTag onlyIcon={isClmAndBoostedAndSmallDevice} boostId={boostId} />
       ) : hasBaseActiveMerklCampaigns ? (
