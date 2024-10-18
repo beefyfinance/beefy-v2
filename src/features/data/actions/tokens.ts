@@ -14,7 +14,6 @@ import { isGovVaultMulti, isGovVaultSingle, type VaultGov } from '../entities/va
 import { selectBoostById } from '../selectors/boosts';
 import { selectAllChains, selectChainById } from '../selectors/chains';
 import { selectGovVaultById } from '../selectors/vaults';
-import { boostActions } from '../reducers/wallet/boost';
 
 interface ActionParams {
   chainId: ChainEntity['id'];
@@ -80,10 +79,7 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
   { state: BeefyState }
 >(
   'deposit/reloadBalanceAndAllowanceAndGovRewards',
-  async (
-    { chainId, tokens, spenderAddress, govVaultId, boostId, walletAddress },
-    { dispatch, getState }
-  ) => {
+  async ({ chainId, tokens, spenderAddress, govVaultId, boostId, walletAddress }, { getState }) => {
     const chain = selectChainById(getState(), chainId);
 
     const govVault = govVaultId ? selectGovVaultById(getState(), govVaultId) : null;
@@ -93,10 +89,6 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
     const boost = boostId ? selectBoostById(getState(), boostId) : null;
     const boostSingle = boost && boost.version === 1 ? boost : null;
     const boostMulti = boost && boost.version >= 2 ? boost : null;
-
-    if (boost) {
-      dispatch(boostActions.reset());
-    }
 
     const balanceApi = await getBalanceApi(chain);
     const balanceRes = await balanceApi.fetchAllBalances(

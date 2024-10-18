@@ -1,11 +1,11 @@
-import { memo, useMemo, useState } from 'react';
-import { Button, InputBase, makeStyles, Paper } from '@material-ui/core';
+import { memo, useMemo } from 'react';
+import { Button, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { CardContent } from '../../../../Card';
 import { AssetsImage } from '../../../../../../../components/AssetsImage';
 import { styles } from '../styles';
 import BigNumber from 'bignumber.js';
-import { formatTokenDisplayCondensed, formatTokenInput } from '../../../../../../../helpers/format';
+import { formatTokenDisplayCondensed } from '../../../../../../../helpers/format';
 import { selectVaultById } from '../../../../../../data/selectors/vaults';
 import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance';
 import {
@@ -16,7 +16,6 @@ import {
   selectErc20TokenByAddress,
   selectTokenByAddress,
 } from '../../../../../../data/selectors/tokens';
-import { isString } from 'lodash-es';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../../data/actions/wallet';
 import { walletActions } from '../../../../../../data/actions/wallet-actions';
 import type { MinterCardParams } from '../../MinterCard';
@@ -29,12 +28,14 @@ import { selectAllowanceByTokenAddress } from '../../../../../../data/selectors/
 import { selectChainById } from '../../../../../../data/selectors/chains';
 import { AlertWarning } from '../../../../../../../components/Alerts';
 import { useAppDispatch, useAppSelector } from '../../../../../../../store';
-import { BIG_ZERO, fromWei, toWei } from '../../../../../../../helpers/big-number';
+import { fromWei, toWei } from '../../../../../../../helpers/big-number';
 import { stepperActions } from '../../../../../../data/reducers/wallet/stepper';
 import { startStepper } from '../../../../../../data/actions/stepper';
 import { selectIsStepperStepping } from '../../../../../../data/selectors/stepper';
 import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
 import { isTokenErc20 } from '../../../../../../data/entities/token';
+import { useInputForm } from '../../../../../../data/hooks/input';
+import { AmountInput } from '../../../Transact/AmountInput';
 
 const useStyles = makeStyles(styles);
 export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) {
@@ -67,23 +68,14 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   const totalSupply = useAppSelector(state => selectMinterTotalSupply(state, minter.id));
   const isStepping = useAppSelector(selectIsStepperStepping);
 
-  const [formData, setFormData] = useState({
-    withdraw: {
-      input: '',
-      amount: BIG_ZERO,
-      max: false,
-      token: null,
-      isZap: false,
-      zapEstimate: {
-        isLoading: true,
-      },
-    },
-    slippageTolerance: 0.01,
-  });
+  const { handleMax, handleChange, formData } = useInputForm(
+    depositedTokenBalance,
+    depositToken.decimals
+  );
 
   const outputAmount = useMemo(() => {
     if (minter.canBurn === 'supply') {
-      const inputWei = toWei(formData.withdraw.amount, mintedToken.decimals);
+      const inputWei = toWei(formData.amount, mintedToken.decimals);
       const outputWei = inputWei
         .times(reserves)
         .div(totalSupply)
@@ -91,57 +83,8 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
       return fromWei(outputWei, depositToken.decimals);
     }
 
-    return formData.withdraw.amount;
-  }, [minter.canBurn, formData.withdraw.amount, reserves, totalSupply, depositToken, mintedToken]);
-
-  const handleMax = () => {
-    if (mintedTokenBalance > BIG_ZERO) {
-      setFormData({
-        ...formData,
-        withdraw: {
-          ...formData.withdraw,
-          input: isString(mintedTokenBalance)
-            ? mintedTokenBalance
-            : formatTokenInput(mintedTokenBalance, mintedToken.decimals),
-          amount: new BigNumber(mintedTokenBalance),
-          max: true,
-        },
-      });
-    }
-  };
-
-  const handleInput = val => {
-    const input = val.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
-
-    let max = false;
-    let value = new BigNumber(input).decimalPlaces(mintedToken.decimals, BigNumber.ROUND_FLOOR);
-
-    if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
-      value = BIG_ZERO;
-    }
-
-    if (value.isGreaterThanOrEqualTo(mintedTokenBalance)) {
-      value = new BigNumber(mintedTokenBalance);
-      max = true;
-    }
-
-    const formattedInput = (() => {
-      if (value.isEqualTo(input)) return input;
-      if (input === '') return '';
-      if (input === '.') return `0.`;
-      return formatTokenInput(value, mintedToken.decimals);
-    })();
-
-    setFormData({
-      ...formData,
-      withdraw: {
-        ...formData.withdraw,
-        input: formattedInput,
-        amount: value,
-        max: max,
-      },
-    });
-  };
+    return formData.amount;
+  }, [minter.canBurn, formData.amount, reserves, totalSupply, depositToken, mintedToken]);
 
   const handleWithdraw = () => {
     if (!isWalletConnected) {
@@ -155,18 +98,14 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     if (
       minter.burnerAddress !== mintedToken.address &&
       isTokenErc20(mintedToken) &&
-      mintedTokenAllowance.isLessThan(formData.withdraw.amount)
+      mintedTokenAllowance.isLessThan(formData.amount)
     ) {
       dispatch(
         stepperActions.addStep({
           step: {
             step: 'approve',
             message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(
-              mintedToken,
-              minter.burnerAddress!,
-              formData.withdraw.amount
-            ),
+            action: walletActions.approval(mintedToken, minter.burnerAddress!, formData.amount),
             pending: false,
           },
         })
@@ -182,8 +121,8 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
             minter.burnerAddress!,
             depositToken,
             mintedToken,
-            formData.withdraw.amount,
-            formData.withdraw.max,
+            formData.amount,
+            formData.max,
             minterId
           ),
           pending: false,
@@ -233,18 +172,21 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
             </span>
           </div>
         </div>
-        <Paper component="form">
-          <div className={classes.inputLogo}>
-            <AssetsImage assetSymbols={[minter.mintedToken.symbol]} size={20} chainId={chain.id} />
-          </div>
-          <InputBase
-            placeholder="0.00"
-            value={formData.withdraw.input}
-            onChange={e => handleInput(e.target.value)}
-            disabled={isStepping}
-          />
-          <Button onClick={handleMax}>{t('Transact-Max')}</Button>
-        </Paper>
+        <AmountInput
+          value={formData.amount}
+          maxValue={mintedTokenBalance}
+          onChange={handleChange}
+          endAdornment={<Button onClick={handleMax}>{t('Transact-Max')}</Button>}
+          startAdornment={
+            <div className={classes.inputLogo}>
+              <AssetsImage
+                assetSymbols={[minter.mintedToken.symbol]}
+                size={24}
+                chainId={chain.id}
+              />
+            </div>
+          }
+        />
       </div>
       <div className={classes.customDivider}>
         <div className={classes.line} />
@@ -264,12 +206,21 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
             </span>
           </div>
         </div>
-        <Paper component="form">
-          <div className={classes.inputLogo}>
-            <AssetsImage assetSymbols={[minter.depositToken.symbol]} size={20} chainId={chain.id} />
-          </div>
-          <InputBase disabled={true} placeholder="0.00" value={outputAmount} />
-        </Paper>
+        <AmountInput
+          value={outputAmount}
+          maxValue={depositedTokenBalance}
+          onChange={handleChange}
+          disabled={true}
+          startAdornment={
+            <div className={classes.inputLogo}>
+              <AssetsImage
+                assetSymbols={[minter.depositToken.symbol]}
+                size={24}
+                chainId={chain.id}
+              />
+            </div>
+          }
+        />
       </div>
       <>
         {isWalletConnected ? (
@@ -283,8 +234,8 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           ) : (
             <Button
               disabled={
-                formData.withdraw.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) ||
-                formData.withdraw.amount.isLessThanOrEqualTo(0) ||
+                formData.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) ||
+                formData.amount.isLessThanOrEqualTo(0) ||
                 isStepping
               }
               onClick={handleWithdraw}
@@ -299,7 +250,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           </Button>
         )}
       </>
-      {formData.withdraw.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) && (
+      {formData.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) && (
         <AlertWarning className={classes.noReserves}>
           {t('noreserves', { token: minter.depositToken.symbol })}
         </AlertWarning>
