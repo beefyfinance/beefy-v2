@@ -16,6 +16,7 @@ import { BIG_ONE } from '../../../helpers/big-number';
 import type { BigNumber } from 'bignumber.js';
 import { getBoostStatusFromContractState } from './boosts';
 import type { ApiApyData } from '../apis/beefy/beefy-api-types';
+import { isAfter } from 'date-fns';
 
 // boost is expressed as APR
 interface AprData {
@@ -122,6 +123,7 @@ function addContractDataToState(
 ) {
   // create a quick access map
   const vaultDataByVaultId = createIdMap(contractData.standardVaults);
+  const now = new Date();
 
   for (const boostContractData of contractData.boosts) {
     const boost = selectBoostById(state, boostContractData.id);
@@ -136,61 +138,65 @@ function addContractDataToState(
       continue;
     }
 
-    /**
-     * Some boosts can yield rewards in mooToken, be it from the same vault
-     * or for another vault (like binSPIRIT) and some boost yield rewards as another
-     * unrelated token (like PAE). When the boost is a mooToken, we don't have the
-     * token price in the api so we need to compute it.
-     **/
-    let earnedPrice: BigNumber;
-    const rewardTargetVaultId =
-      state.entities.vaults.byChainId[boost.chainId]?.byType.standard.byAddress[
-        boost.earnedTokenAddress.toLowerCase()
-      ];
-    if (rewardTargetVaultId) {
-      const rewardTargetVault = selectVaultById(state, rewardTargetVaultId);
-      const rewardVaultOraclePrice = selectTokenPriceByAddress(
-        state,
-        boost.chainId,
-        rewardTargetVault.depositTokenAddress
-      );
-      const depositToken = selectTokenByAddress(
-        state,
-        boost.chainId,
-        rewardTargetVault.depositTokenAddress
-      );
-      const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
-
-      // use the latest ppfs if any, otherwise fetch it in the previous state
-      const ppfs =
-        vaultDataByVaultId[rewardTargetVault.id]?.pricePerFullShare ||
-        selectVaultPricePerFullShare(state, rewardTargetVault.id);
-
-      // so the price rate is the oracle token price by the rate of the conversion to mooToken
-      const mooToOracleRate = mooAmountToOracleAmount(earnedToken, depositToken, ppfs, BIG_ONE);
-      earnedPrice = mooToOracleRate.times(rewardVaultOraclePrice);
-    } else {
-      // if we don't have a matching vault, it should be a yield from a token that has a price
-      earnedPrice = selectTokenPriceByAddress(state, boost.chainId, boost.earnedTokenAddress);
-    }
-
-    const stakedTokenPrice = selectTokenPriceByAddress(
-      state,
-      vault.chainId,
-      vault.depositTokenAddress
+    const activeRewards = boostContractData.rewards.filter(
+      r => r.periodFinish && isAfter(r.periodFinish, now) && r.rewardRate.gt(0)
     );
+    const totalApr = activeRewards.reduce((acc, reward) => {
+      /**
+       * Some boosts can yield rewards in mooToken, be it from the same vault
+       * or for another vault (like binSPIRIT) and some boost yield rewards as another
+       * unrelated token (like PAE). When the boost is a mooToken, we don't have the
+       * token price in the api so we need to compute it.
+       **/
+      let earnedPrice: BigNumber;
+      const rewardTargetVaultId =
+        state.entities.vaults.byChainId[boost.chainId]?.byType.standard.byAddress[
+          reward.token.address.toLowerCase()
+        ];
+      if (rewardTargetVaultId) {
+        const rewardTargetVault = selectVaultById(state, rewardTargetVaultId);
+        const rewardVaultOraclePrice = selectTokenPriceByAddress(
+          state,
+          boost.chainId,
+          rewardTargetVault.depositTokenAddress
+        );
+        const depositToken = selectTokenByAddress(
+          state,
+          boost.chainId,
+          rewardTargetVault.depositTokenAddress
+        );
+        const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
 
-    const ppfs =
-      vaultDataByVaultId[boost.vaultId]?.pricePerFullShare ||
-      selectVaultPricePerFullShare(state, boost.vaultId);
-    const totalStakedInUsd = boostContractData.totalSupply.times(stakedTokenPrice).times(ppfs);
-    const yearlyRewardsInUsd = boostContractData.rewardRate
-      .times(3600 * 24 * 365)
-      .times(earnedPrice);
+        // use the latest ppfs if any, otherwise fetch it in the previous state
+        const ppfs =
+          vaultDataByVaultId[rewardTargetVault.id]?.pricePerFullShare ||
+          selectVaultPricePerFullShare(state, rewardTargetVault.id);
 
-    const apr = yearlyRewardsInUsd.dividedBy(totalStakedInUsd).toNumber();
+        // so the price rate is the oracle token price by the rate of the conversion to mooToken
+        const mooToOracleRate = mooAmountToOracleAmount(earnedToken, depositToken, ppfs, BIG_ONE);
+        earnedPrice = mooToOracleRate.times(rewardVaultOraclePrice);
+      } else {
+        // if we don't have a matching vault, it should be a yield from a token that has a price
+        earnedPrice = selectTokenPriceByAddress(state, boost.chainId, boost.earnedTokenAddress);
+      }
+
+      const stakedTokenPrice = selectTokenPriceByAddress(
+        state,
+        vault.chainId,
+        vault.depositTokenAddress
+      );
+
+      const ppfs =
+        vaultDataByVaultId[boost.vaultId]?.pricePerFullShare ||
+        selectVaultPricePerFullShare(state, boost.vaultId);
+      const totalStakedInUsd = boostContractData.totalSupply.times(stakedTokenPrice).times(ppfs);
+      const yearlyRewardsInUsd = reward.rewardRate.times(3600 * 24 * 365).times(earnedPrice);
+      const apr = yearlyRewardsInUsd.dividedBy(totalStakedInUsd).toNumber();
+
+      return isNaN(apr) ? acc : acc + apr;
+    }, 0);
 
     // add data to state
-    sliceState.rawApy.byBoostId[boost.id] = { apr };
+    sliceState.rawApy.byBoostId[boost.id] = { apr: totalApr };
   }
 }

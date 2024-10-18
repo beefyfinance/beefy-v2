@@ -4,7 +4,10 @@ import { isEqual, mapValues } from 'lodash-es';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
+import type {
+  BoostRewardContractData,
+  FetchAllContractDataResult,
+} from '../apis/contract-data/contract-data-types';
 import type { BoostCampaignEntity, BoostEntity, BoostPartnerEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { VaultEntity } from '../entities/vault';
@@ -13,10 +16,8 @@ import type { BoostConfig } from '../apis/config-types';
 import { datesAreEqual } from '../../../helpers/date';
 import { entries } from '../../../helpers/object';
 
-export type BoostContractState = {
-  periodFinish: Date | undefined;
-  isPreStake: boolean;
-};
+export type BoostContractState = BoostRewardContractData;
+
 /**
  * State containing Vault infos
  */
@@ -120,15 +121,15 @@ function addContractDataToState(
 ) {
   for (const boostContractData of contractData.boosts) {
     const contractState = sliceState.contractState[boostContractData.id];
+    const rewardData = boostContractData.rewards[0];
     if (
       contractState === undefined ||
-      !datesAreEqual(boostContractData.periodFinish, contractState.periodFinish) ||
-      contractState.isPreStake !== boostContractData.isPreStake
+      contractState.isPreStake !== rewardData.isPreStake ||
+      contractState.index !== rewardData.index ||
+      contractState.token.address !== rewardData.token.address ||
+      !datesAreEqual(rewardData.periodFinish, contractState.periodFinish)
     ) {
-      sliceState.contractState[boostContractData.id] = {
-        periodFinish: boostContractData.periodFinish,
-        isPreStake: boostContractData.isPreStake,
-      };
+      sliceState.contractState[boostContractData.id] = { ...rewardData };
     }
   }
 
@@ -138,7 +139,7 @@ function addContractDataToState(
 
 export function getBoostStatusFromContractState(
   boostId: BoostEntity['id'],
-  contractState: BoostContractState,
+  contractState: Pick<BoostContractState, 'isPreStake' | 'periodFinish'>,
   now = new Date()
 ) {
   //Boost that got wrongly set to preStake after finished and won't be refilled

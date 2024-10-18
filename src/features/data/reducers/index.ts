@@ -51,7 +51,7 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
   vaults: vaultsSlice.reducer,
   tokens: tokensSlice.reducer,
-  boosts: boostsSlice.reducer,
+  boosts: boostsSlice.reducer as Reducer<BeefyState['entities']['boosts'], AnyAction>,
   fees: feesSlice.reducer,
   platforms: platformsSlice.reducer,
   zaps: zapsSlice.reducer,

@@ -1,6 +1,6 @@
-import type BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../redux-types';
 import type { BoostEntity } from '../../entities/boost';
+import type BigNumber from 'bignumber.js';
 import type {
   VaultCowcentrated,
   VaultGov,
@@ -29,8 +29,12 @@ export interface GovVaultContractData {
 export interface RewardContractData {
   token: Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'oracleId' | 'chainId'>;
   rewardRate: BigNumber;
-  periodFinish: Date;
+  periodFinish: Date | undefined;
   index: number;
+}
+
+export interface BoostRewardContractData extends RewardContractData {
+  isPreStake: boolean;
 }
 
 export interface GovVaultMultiContractDataResponse {
@@ -82,10 +86,10 @@ export interface BoostContractDataResponse {
 
 export interface BoostContractData {
   id: string;
+  periodFinish: Date | undefined;
   totalSupply: BigNumber;
-  rewardRate: BigNumber;
-  periodFinish: Date | undefined; // undefined means boost is in prestake
   isPreStake: boolean;
+  rewards: BoostRewardContractData[];
 }
 
 export interface FetchAllContractDataResult {

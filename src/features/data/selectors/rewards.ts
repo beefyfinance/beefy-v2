@@ -91,7 +91,7 @@ export const selectVaultActiveGovRewards = createSelector(
 
     const now = new Date();
     return rewards
-      .filter(r => isAfter(r.periodFinish, now) && r.rewardRate.gt(BIG_ZERO))
+      .filter(r => r.periodFinish && isAfter(r.periodFinish, now) && r.rewardRate.gt(BIG_ZERO))
       .map(r => {
         const price = priceByOracleId[r.token.oracleId] || BIG_ZERO;
         const yearlyUsd = price.times(r.rewardRate).times(365 * 24 * 60 * 60);
