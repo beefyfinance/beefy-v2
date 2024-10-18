@@ -32,13 +32,11 @@ export const fetchAllBoosts = createAsyncThunk<FulfilledAllBoostsPayload>(
 
 interface InitBoostFormParams {
   boostId: BoostEntity['id'];
-  mode: 'stake' | 'unstake';
   walletAddress: string | undefined;
 }
 
 interface InitBoostFormPayload {
   boostId: BoostEntity['id'];
-  mode: 'stake' | 'unstake';
 
   // really, this should be separated
   walletAddress: string | undefined;
@@ -53,7 +51,7 @@ export const initiateBoostForm = createAsyncThunk<
   InitBoostFormPayload,
   InitBoostFormParams,
   { state: BeefyState }
->('boosts/initBoostForm', async ({ boostId, mode, walletAddress }, { getState }) => {
+>('boosts/initBoostForm', async ({ boostId, walletAddress }, { getState }) => {
   const boost = selectBoostById(getState(), boostId);
   const vault = selectVaultById(getState(), boost.vaultId);
   if (isGovVault(vault)) {
@@ -89,7 +87,6 @@ export const initiateBoostForm = createAsyncThunk<
 
   return {
     boostId,
-    mode,
     walletAddress,
     allowance: allowanceRes,
     balance: balanceRes,

@@ -5,7 +5,6 @@ import { memo, type RefObject, useCallback } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import type { ChainEntity } from '../../features/data/entities/chain';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader';
-import { selectBoostById } from '../../features/data/selectors/boosts';
 import type { BeefyState } from '../../redux-types';
 import { styles } from './styles';
 import { Floating } from '../Floating';
@@ -209,11 +208,6 @@ const findChainIdMatching = (state: BeefyState, matcher: (loader: LoaderState) =
         }
       }
     }
-  }
-
-  if (matcher(state.ui.dataLoader.global.boostForm) && state.ui.boost.boostId) {
-    const boost = selectBoostById(state, state.ui.boost.boostId);
-    chainIds.push(boost.chainId);
   }
 
   return uniq(chainIds);
