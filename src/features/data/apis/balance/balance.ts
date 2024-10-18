@@ -28,7 +28,6 @@ import { featureFlag_getBalanceApiChunkSize } from '../../utils/feature-flags';
 import type { BeefyState } from '../../../../redux-types';
 import {
   selectBoostBalanceTokenEntity,
-  selectBoostRewardsTokenEntity,
   selectGovVaultBalanceTokenEntity,
   selectGovVaultRewardsTokenEntity,
 } from '../../selectors/balance';
@@ -241,7 +240,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     boost: BoostEntity
   ): BoostBalance {
     const balanceToken = selectBoostBalanceTokenEntity(state, boost.id);
-    const rewardsToken = selectBoostRewardsTokenEntity(state, boost.id);
+    const rewardsToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
     const rawBalance = new BigNumber(result.balance);
     const rawRewards = new BigNumber(result.rewards);
     return {

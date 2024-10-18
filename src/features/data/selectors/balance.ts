@@ -16,6 +16,7 @@ import {
 import {
   selectAllVaultBoostIds,
   selectBoostById,
+  selectBoostContractState,
   selectIsVaultPreStakedOrBoosted,
   selectVaultCurrentBoostId,
 } from './boosts';
@@ -610,8 +611,8 @@ export const selectBoostBalanceTokenEntity = (state: BeefyState, boostId: BoostE
  * for boosts, rewards is the amount of earnedToken of the boost
  */
 export const selectBoostRewardsTokenEntity = (state: BeefyState, boostId: BoostEntity['id']) => {
-  const boost = selectBoostById(state, boostId);
-  return selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
+  const contractData = selectBoostContractState(state, boostId);
+  return selectTokenByAddress(state, contractData.token.chainId, contractData.token.address);
 };
 
 /**
