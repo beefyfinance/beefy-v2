@@ -239,6 +239,7 @@ export const config = {
       'USDA',
       'HAI',
       'msUSD',
+      'wUSDM',
     ],
   },
   fantom: {
