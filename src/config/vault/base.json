@@ -1,5 +1,63 @@
 [
   {
+    "id": "aerodrome-usdc-cbbtc",
+    "name": "USDC-cbBTC vLP",
+    "type": "standard",
+    "token": "vAMM-USDC/cbBTC",
+    "tokenAddress": "0x9c38b55f9A9Aba91BbCEDEb12bf4428f47A6a0B8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroUSDC-cbBTC",
+    "earnedTokenAddress": "0x45E6a2b7B6c8F61B31784CB2da3C7ec3d62F39CD",
+    "earnContractAddress": "0x45E6a2b7B6c8F61B31784CB2da3C7ec3d62F39CD",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usdc-cbbtc",
+    "status": "active",
+    "createdAt": 1729510750,
+    "platformId": "aerodrome",
+    "assets": ["USDC", "cbBTC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "AUDIT", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&token1=0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-weth-cbbtc",
+    "name": "WETH-cbBTC vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/cbBTC",
+    "tokenAddress": "0x2578365B3dfA7FfE60108e181EFb79FeDdec2319",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroWETH-cbBTC",
+    "earnedTokenAddress": "0x6439e803d0007697715023A791F6A1bb4872e19F",
+    "earnContractAddress": "0x6439e803d0007697715023A791F6A1bb4872e19F",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-cbbtc",
+    "status": "active",
+    "createdAt": 1729510750,
+    "platformId": "aerodrome",
+    "assets": ["WETH", "cbBTC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "AUDIT", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-silo",
     "name": "SILO-ETH vLP",
     "type": "standard",
