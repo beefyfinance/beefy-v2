@@ -26,6 +26,7 @@ export type ListItemProps = {
   className?: string;
   index: number;
   vault: VaultEntity;
+  isWithdraw?: boolean;
 };
 export const ListItem = memo<ListItemProps>(function ListItem({
   selectionId,
@@ -36,6 +37,7 @@ export const ListItem = memo<ListItemProps>(function ListItem({
   onSelect,
   index,
   vault,
+  isWithdraw = false,
 }) {
   const classes = useStyles();
   const handleClick = useCallback(() => onSelect(selectionId), [onSelect, selectionId]);
@@ -50,7 +52,9 @@ export const ListItem = memo<ListItemProps>(function ListItem({
       <div className={classes.symbol}>
         <ListJoin items={tokenSymbols} />
         {isFirstIndexLp ? (
-          <div className={classes.lp}>{isCowcentratedLikeVault(vault) ? 'CLM' : 'LP'}</div>
+          isWithdraw && isCowcentratedLikeVault(vault) ? null : (
+            <div className={classes.lp}>{isCowcentratedLikeVault(vault) ? 'CLM' : 'LP'}</div>
+          )
         ) : null}
       </div>
       {balance ? (

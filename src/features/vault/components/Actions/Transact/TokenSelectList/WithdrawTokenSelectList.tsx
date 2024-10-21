@@ -82,6 +82,7 @@ export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
                   onSelect={handleTokenSelect}
                   index={index}
                   vault={vault}
+                  isWithdraw={true}
                 />
               ))
             ) : (
