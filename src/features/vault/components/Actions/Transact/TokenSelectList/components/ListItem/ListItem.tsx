@@ -9,6 +9,10 @@ import type BigNumber from 'bignumber.js';
 import { ChevronRight } from '@material-ui/icons';
 import { TokensImage } from '../../../../../../../../components/TokenImage/TokenImage';
 import { ListJoin } from '../../../../../../../../components/ListJoin';
+import {
+  isCowcentratedLikeVault,
+  type VaultEntity,
+} from '../../../../../../../data/entities/vault';
 
 const useStyles = makeStyles(styles);
 
@@ -20,6 +24,8 @@ export type ListItemProps = {
   chainId: ChainEntity['id'];
   onSelect: (id: string) => void;
   className?: string;
+  index: number;
+  vault: VaultEntity;
 };
 export const ListItem = memo<ListItemProps>(function ListItem({
   selectionId,
@@ -28,16 +34,24 @@ export const ListItem = memo<ListItemProps>(function ListItem({
   balance,
   className,
   onSelect,
+  index,
+  vault,
 }) {
   const classes = useStyles();
   const handleClick = useCallback(() => onSelect(selectionId), [onSelect, selectionId]);
   const tokenSymbols = useMemo(() => tokens.map(token => token.symbol), [tokens]);
+  const isFirstIndexLp = useMemo(() => {
+    return index === 0 && vault.assetIds.length > 1;
+  }, [index, vault.assetIds.length]);
 
   return (
     <button className={clsx(classes.item, className)} onClick={handleClick}>
       <TokensImage tokens={tokens} className={classes.icon} />
       <div className={classes.symbol}>
         <ListJoin items={tokenSymbols} />
+        {isFirstIndexLp ? (
+          <div className={classes.lp}>{isCowcentratedLikeVault(vault) ? 'CLM' : 'LP'}</div>
+        ) : null}
       </div>
       {balance ? (
         <div className={classes.balance}>{formatTokenDisplayCondensed(balance, decimals, 8)}</div>

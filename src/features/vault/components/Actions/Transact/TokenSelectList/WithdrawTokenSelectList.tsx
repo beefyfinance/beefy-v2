@@ -71,7 +71,7 @@ export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
         <Scrollable className={classes.listContainer}>
           <div className={classes.list}>
             {filteredOptionsForChain.length ? (
-              filteredOptionsForChain.map(option => (
+              filteredOptionsForChain.map((option, index) => (
                 <ListItem
                   key={option.id}
                   selectionId={option.id}
@@ -80,6 +80,8 @@ export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
                   decimals={option.decimals}
                   chainId={selectedChain}
                   onSelect={handleTokenSelect}
+                  index={index}
+                  vault={vault}
                 />
               ))
             ) : (

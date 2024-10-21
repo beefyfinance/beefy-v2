@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type ListJoinProps = {
-  items: ReactNode[];
+  items: string[];
 };
 export const ListJoin = memo<ListJoinProps>(function ListJoin({ items }) {
   const { t } = useTranslation();
@@ -15,7 +15,7 @@ export const ListJoin = memo<ListJoinProps>(function ListJoin({ items }) {
   }
 
   if (items.length === 1) {
-    return <>{items[0]}</>;
+    return <>{replaceClmOrLp(items[0])}</>;
   }
 
   if (items.length === 2) {
@@ -42,3 +42,15 @@ export const ListJoin = memo<ListJoinProps>(function ListJoin({ items }) {
 
   return <>{nodes}</>;
 });
+
+function replaceClmOrLp(item: string) {
+  if (item.endsWith('CLM')) {
+    return item.replace('CLM', '');
+  }
+
+  if (item.endsWith('LP')) {
+    return item.replace('LP', '');
+  }
+
+  return item;
+}
