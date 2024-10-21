@@ -1,5 +1,61 @@
 [
   {
+    "id": "nuri-usdc-loreusd",
+    "name": "loreUSD-USDC sLP",
+    "type": "standard",
+    "token": "loreUSD-USDC sLP",
+    "tokenAddress": "0x4775dFFd8762eE4C8DE49f4FD6D02A1f0d8f1698",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nuri",
+    "earnedToken": "mooNuriScrollloreUSD-USDC",
+    "earnedTokenAddress": "0xE7296b1FC3Df47B4E6d7AefaF5a289b405268D8E",
+    "earnContractAddress": "0xE7296b1FC3Df47B4E6d7AefaF5a289b405268D8E",
+    "oracle": "lps",
+    "oracleId": "nuri-usdc-loreusd",
+    "createdAt": 1729525802,
+    "status": "active",
+    "platformId": "nuri",
+    "assets": ["loreUSD", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://www.nuri.exchange/manage/v1/0x4775dFFd8762eE4C8DE49f4FD6D02A1f0d8f1698",
+    "network": "scroll",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "scroll-nuri"
+      }
+    ]
+  },
+  {
+    "id": "nuri-weth-nuri",
+    "name": "NURI-WETH vLP",
+    "type": "standard",
+    "token": "NURI-WETH vLP",
+    "tokenAddress": "0x8aE1C699C9c62fac468a1E253e15B571b69a7ffe",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nuri",
+    "earnedToken": "mooNuriScrollNURI-WETH",
+    "earnedTokenAddress": "0x01Fbf9B624a6133Ab04Fc4000ae513AC97e4d114",
+    "earnContractAddress": "0x01Fbf9B624a6133Ab04Fc4000ae513AC97e4d114",
+    "oracle": "lps",
+    "oracleId": "nuri-weth-nuri",
+    "createdAt": 1729525802,
+    "status": "active",
+    "platformId": "nuri",
+    "assets": ["NURI", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://www.nuri.exchange/manage/v1/0x8ae1c699c9c62fac468a1e253e15b571b69a7ffe",
+    "network": "scroll",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "scroll-nuri"
+      }
+    ]
+  },
+  {
     "id": "sushi-cow-scroll-usdc-weth-rp",
     "name": "USDC-WETH Reward Pool",
     "type": "gov",
