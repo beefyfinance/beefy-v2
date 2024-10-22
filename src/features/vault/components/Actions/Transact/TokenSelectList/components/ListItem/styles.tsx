@@ -39,7 +39,7 @@ export const styles = (theme: Theme) => ({
     height: '24px',
   },
   lp: {
-    ...theme.typography['subline-sm'],
+    ...theme.typography['body-sm-med'],
     color: theme.palette.text.middle,
     background: theme.palette.background.buttons.button,
     padding: '2px 8px',

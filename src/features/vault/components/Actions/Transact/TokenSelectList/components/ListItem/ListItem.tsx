@@ -42,18 +42,35 @@ export const ListItem = memo<ListItemProps>(function ListItem({
   const classes = useStyles();
   const handleClick = useCallback(() => onSelect(selectionId), [onSelect, selectionId]);
   const tokenSymbols = useMemo(() => tokens.map(token => token.symbol), [tokens]);
-  const isFirstIndexLp = useMemo(() => {
-    return index === 0 && vault.assetIds.length > 1;
-  }, [index, vault.assetIds.length]);
+  const isLp = useMemo(() => {
+    return vault.assetIds.length > 1
+      ? isCowcentratedLikeVault(vault)
+        ? index === 0
+          ? true
+          : //clm vaults accepts rCLM and we want to show it as LP
+          index === 1 && tokenSymbols.length === 1
+          ? true
+          : false
+        : index === 0
+        ? true
+        : false
+      : false;
+  }, [index, tokenSymbols.length, vault]);
 
   return (
     <button className={clsx(classes.item, className)} onClick={handleClick}>
       <TokensImage tokens={tokens} className={classes.icon} />
       <div className={classes.symbol}>
         <ListJoin items={tokenSymbols} />
-        {isFirstIndexLp ? (
+        {isLp ? (
           isWithdraw && isCowcentratedLikeVault(vault) ? null : (
-            <div className={classes.lp}>{isCowcentratedLikeVault(vault) ? 'CLM' : 'LP'}</div>
+            <div className={classes.lp}>
+              {isCowcentratedLikeVault(vault)
+                ? tokenSymbols[0].includes('rCLM')
+                  ? 'rCLM'
+                  : 'CLM'
+                : 'LP'}
+            </div>
           )
         ) : null}
       </div>

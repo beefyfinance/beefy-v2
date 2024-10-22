@@ -45,6 +45,10 @@ export const ListJoin = memo<ListJoinProps>(function ListJoin({ items }) {
 });
 
 function replaceClmOrLp(item: string) {
+  if (item.endsWith('rCLM')) {
+    return item.replace('rCLM', '');
+  }
+
   if (item.endsWith('CLM')) {
     return item.replace('CLM', '');
   }
