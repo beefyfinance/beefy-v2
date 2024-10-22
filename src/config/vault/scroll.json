@@ -1,5 +1,65 @@
 [
   {
+    "id": "sushi-cow-scroll-weth-scr-rp",
+    "name": "WETH-SCR Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiScrollWETH-SCR",
+    "tokenAddress": "0xb2158015044004366e6f72c8c82A0bd355e2ffb3",
+    "tokenDecimals": 18,
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowSushiScrollWETH-SCR",
+    "earnContractAddress": "0xc52eb8e790Ce2Ec4EDF08d6F0ABDbff9D1b944fA",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-scroll-weth-scr",
+    "status": "active",
+    "createdAt": 1729598042,
+    "platformId": "sushi",
+    "assets": ["WETH", "SCR"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-scroll-weth-scr",
+    "name": "WETH-SCR",
+    "token": "WETH-SCR sushi",
+    "tokenAddress": "0x8c4d4f5b72AC658145F3c91A305B7425E0c3304b",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x5300000000000000000000000000000000000004",
+      "0xd29687c813D741E2F938F4aC377128810E217b1b"
+    ],
+    "tokenProviderId": "sushi",
+    "earnedToken": "cowSushiScrollWETH-SCR",
+    "earnedTokenAddress": "0xb2158015044004366e6f72c8c82A0bd355e2ffb3",
+    "earnContractAddress": "0xb2158015044004366e6f72c8c82A0bd355e2ffb3",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-scroll-weth-scr",
+    "status": "active",
+    "createdAt": 1729598042,
+    "platformId": "beefy",
+    "assets": ["WETH", "SCR"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "nuri-usdc-loreusd",
     "name": "loreUSD-USDC sLP",
     "type": "standard",
