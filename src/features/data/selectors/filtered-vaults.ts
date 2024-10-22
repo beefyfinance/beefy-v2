@@ -1,11 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
-import { isCowcentratedGovVault, isGovVault, type VaultEntity } from '../entities/vault';
+import { type VaultEntity } from '../entities/vault';
 import { selectUserDepositedVaultIds } from './balance';
 import {
   selectBoostById,
   selectIsVaultPreStakedOrBoosted,
-  selectPreStakeOrActiveBoostIds,
   selectVaultCurrentBoostId,
 } from './boosts';
 import { selectAllVisibleVaultIds, selectVaultById } from './vaults';
@@ -134,30 +133,6 @@ export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, se
     // In vault assets
     if (vault.assetIds.some(assetId => assetId.match(token))) {
       return true;
-    }
-
-    // In gov earned token
-    if (
-      isGovVault(vault) &&
-      !isCowcentratedGovVault(vault) &&
-      vault.earnedTokenAddresses
-        .map(address => selectTokenByAddress(state, vault.chainId, address))
-        .some(earnedToken => earnedToken.id.match(token))
-    ) {
-      return true;
-    }
-
-    // Boosts earned token
-    if (selectIsVaultPreStakedOrBoosted(state, vault.id)) {
-      const boostAssets = selectPreStakeOrActiveBoostIds(state, vault.id)
-        .map(boostId => selectBoostById(state, boostId))
-        .map(boost => boost.earnedTokenAddress)
-        .map(address => selectTokenByAddress(state, vault.chainId, address))
-        .map(token => token.id);
-
-      if (boostAssets.some(assetId => assetId.match(token))) {
-        return true;
-      }
     }
 
     // Default: no match
