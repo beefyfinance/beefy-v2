@@ -1027,5 +1027,10 @@
     "id": "dragon",
     "name": "DragonSwap",
     "filter": true
+  },
+  {
+    "id": "nuri",
+    "name": "Nuri",
+    "filter": true
   }
 ]

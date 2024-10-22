@@ -12970,36 +12970,6 @@
     "network": "arbitrum"
   },
   {
-    "id": "gmx-arb-atom-usdc",
-    "name": "ATOM-USDC GM",
-    "type": "standard",
-    "token": "ATOM-USDC GM",
-    "tokenAddress": "0x248C35760068cE009a13076D573ed3497A47bCD4",
-    "tokenDecimals": 18,
-    "tokenProviderId": "gmx",
-    "earnedToken": "mooGmxATOM-USDC",
-    "earnedTokenAddress": "0x526A631910dACE04A33D10A09Ab7185A5C27d54e",
-    "earnContractAddress": "0x526A631910dACE04A33D10A09Ab7185A5C27d54e",
-    "oracle": "lps",
-    "oracleId": "gmx-arb-atom-usdc",
-    "status": "active",
-    "createdAt": 1710772701,
-    "platformId": "gmx",
-    "assets": ["ATOM", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "gmx-gm",
-    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "network": "arbitrum"
-  },
-  {
     "id": "gmx-arb-bnb-usdc",
     "name": "BNB-USDC GM",
     "type": "standard",

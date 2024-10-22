@@ -1,5 +1,241 @@
 [
   {
+    "id": "sushi-cow-scroll-weth-scr-rp",
+    "name": "WETH-SCR Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiScrollWETH-SCR",
+    "tokenAddress": "0xb2158015044004366e6f72c8c82A0bd355e2ffb3",
+    "tokenDecimals": 18,
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowSushiScrollWETH-SCR",
+    "earnContractAddress": "0xc52eb8e790Ce2Ec4EDF08d6F0ABDbff9D1b944fA",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-scroll-weth-scr",
+    "status": "active",
+    "createdAt": 1729598042,
+    "platformId": "sushi",
+    "assets": ["WETH", "SCR"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-scroll-weth-scr",
+    "name": "WETH-SCR",
+    "token": "WETH-SCR sushi",
+    "tokenAddress": "0x8c4d4f5b72AC658145F3c91A305B7425E0c3304b",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x5300000000000000000000000000000000000004",
+      "0xd29687c813D741E2F938F4aC377128810E217b1b"
+    ],
+    "tokenProviderId": "sushi",
+    "earnedToken": "cowSushiScrollWETH-SCR",
+    "earnedTokenAddress": "0xb2158015044004366e6f72c8c82A0bd355e2ffb3",
+    "earnContractAddress": "0xb2158015044004366e6f72c8c82A0bd355e2ffb3",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-scroll-weth-scr",
+    "status": "active",
+    "createdAt": 1729598042,
+    "platformId": "beefy",
+    "assets": ["WETH", "SCR"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "nuri-usdc-loreusd",
+    "name": "loreUSD-USDC sLP",
+    "type": "standard",
+    "token": "loreUSD-USDC sLP",
+    "tokenAddress": "0x4775dFFd8762eE4C8DE49f4FD6D02A1f0d8f1698",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nuri",
+    "earnedToken": "mooNuriScrollloreUSD-USDC",
+    "earnedTokenAddress": "0xE7296b1FC3Df47B4E6d7AefaF5a289b405268D8E",
+    "earnContractAddress": "0xE7296b1FC3Df47B4E6d7AefaF5a289b405268D8E",
+    "oracle": "lps",
+    "oracleId": "nuri-usdc-loreusd",
+    "createdAt": 1729525802,
+    "status": "active",
+    "platformId": "nuri",
+    "assets": ["loreUSD", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://www.nuri.exchange/manage/v1/0x4775dFFd8762eE4C8DE49f4FD6D02A1f0d8f1698",
+    "network": "scroll",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "scroll-nuri"
+      }
+    ]
+  },
+  {
+    "id": "nuri-weth-nuri",
+    "name": "NURI-WETH vLP",
+    "type": "standard",
+    "token": "NURI-WETH vLP",
+    "tokenAddress": "0x8aE1C699C9c62fac468a1E253e15B571b69a7ffe",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nuri",
+    "earnedToken": "mooNuriScrollNURI-WETH",
+    "earnedTokenAddress": "0x01Fbf9B624a6133Ab04Fc4000ae513AC97e4d114",
+    "earnContractAddress": "0x01Fbf9B624a6133Ab04Fc4000ae513AC97e4d114",
+    "oracle": "lps",
+    "oracleId": "nuri-weth-nuri",
+    "createdAt": 1729525802,
+    "status": "active",
+    "platformId": "nuri",
+    "assets": ["NURI", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://www.nuri.exchange/manage/v1/0x8ae1c699c9c62fac468a1e253e15b571b69a7ffe",
+    "network": "scroll",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "scroll-nuri"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-scroll-usdc-weth-rp",
+    "name": "USDC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiScrollUSDC-WETH",
+    "tokenAddress": "0x0feE8c0140752C62151Aa4F9eA9F564bd40E5B90",
+    "tokenDecimals": 18,
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowSushiScrollUSDC-WETH",
+    "earnContractAddress": "0xfcdCDb71FF7D0711F8F9A36032Aa3a77A659055D",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-scroll-usdc-weth",
+    "status": "active",
+    "createdAt": 1729525802,
+    "platformId": "sushi",
+    "assets": ["USDC", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-scroll-usdc-weth",
+    "name": "USDC-WETH",
+    "token": "USDC-WETH sushi",
+    "tokenAddress": "0x34b7806f913C9D41243736947216305B3866B300",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+      "0x5300000000000000000000000000000000000004"
+    ],
+    "tokenProviderId": "sushi",
+    "earnedToken": "cowSushiScrollUSDC-WETH",
+    "earnedTokenAddress": "0x0feE8c0140752C62151Aa4F9eA9F564bd40E5B90",
+    "earnContractAddress": "0x0feE8c0140752C62151Aa4F9eA9F564bd40E5B90",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-scroll-usdc-weth",
+    "status": "active",
+    "createdAt": 1729525802,
+    "platformId": "beefy",
+    "assets": ["USDC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-scroll-usdc-usdt-rp",
+    "name": "USDC-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowSushiScrollUSDC-USDT",
+    "tokenAddress": "0xa2C5f75Dd1DAb086d30850B0e62e420ED83Bedfa",
+    "tokenDecimals": 18,
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowSushiScrollUSDC-USDT",
+    "earnContractAddress": "0x70B212EBe2bde9812ad63BA1AedD5179B4B3082E",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-scroll-usdc-usdt",
+    "status": "active",
+    "createdAt": 1729525802,
+    "platformId": "sushi",
+    "assets": ["USDC", "USDT"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "sushi-cow-scroll-usdc-usdt",
+    "name": "USDC-USDT",
+    "token": "USDC-USDT sushi",
+    "tokenAddress": "0xAE5Aa896bB93F4c7C5660b7fC894b3892255D015",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+      "0xf55BEC9cafDbE8730f096Aa55dad6D22d44099Df"
+    ],
+    "tokenProviderId": "sushi",
+    "earnedToken": "cowSushiScrollUSDC-USDT",
+    "earnedTokenAddress": "0xa2C5f75Dd1DAb086d30850B0e62e420ED83Bedfa",
+    "earnContractAddress": "0xa2C5f75Dd1DAb086d30850B0e62e420ED83Bedfa",
+    "oracle": "lps",
+    "oracleId": "sushi-cow-scroll-usdc-usdt",
+    "status": "active",
+    "createdAt": 1729525802,
+    "platformId": "beefy",
+    "assets": ["USDC", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "type": "cowcentrated",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "oku-cow-scroll-usdc-weth-rp",
     "name": "USDC-WETH Reward Pool",
     "type": "gov",
@@ -16,7 +252,7 @@
     "oracle": "lps",
     "oracleId": "oku-cow-scroll-usdc-weth",
     "status": "active",
-    "createdAt": 1729110906,
+    "createdAt": 1729525802,
     "platformId": "oku",
     "assets": ["USDC", "WETH"],
     "risks": [],
@@ -45,7 +281,7 @@
     "oracle": "lps",
     "oracleId": "oku-cow-scroll-usdc-weth",
     "status": "active",
-    "createdAt": 1729110906,
+    "createdAt": 1729525802,
     "platformId": "beefy",
     "assets": ["USDC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
