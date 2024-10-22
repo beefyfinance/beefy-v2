@@ -1,7 +1,7 @@
 [
   {
     "id": "venus-arb-ls-weth",
-    "name": "WETH",
+    "name": "WETH (LST Market)",
     "type": "standard",
     "token": "WETH",
     "tokenAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
@@ -37,7 +37,7 @@
   },
   {
     "id": "venus-arb-ls-weeth",
-    "name": "weETH",
+    "name": "weETH (LST Market)",
     "type": "standard",
     "token": "weETH",
     "tokenAddress": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
@@ -73,7 +73,7 @@
   },
   {
     "id": "venus-arb-ls-wsteth",
-    "name": "wstETH",
+    "name": "wstETH (LST Market)",
     "type": "standard",
     "token": "wstETH",
     "tokenAddress": "0x5979D7b546E38E414F7E9822514be443A4800529",
