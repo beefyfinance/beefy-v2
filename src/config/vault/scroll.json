@@ -1,5 +1,373 @@
 [
   {
+    "id": "nuri-cow-scroll-wbtc-weth-vault",
+    "name": "WBTC-WETH",
+    "type": "standard",
+    "token": "WBTC-WETH",
+    "tokenAddress": "0x5963A36AB64e9Da637b1344e8ed514144a59dA3E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nuri",
+    "earnedToken": "mooCowNuriScrollWBTC-WETH",
+    "earnedTokenAddress": "0x65A360bb4E4C8Fc6134dcFE645B1bd5FB11D36CB",
+    "earnContractAddress": "0x65A360bb4E4C8Fc6134dcFE645B1bd5FB11D36CB",
+    "oracle": "lps",
+    "oracleId": "nuri-cow-scroll-wbtc-weth",
+    "status": "active",
+    "platformId": "nuri",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "createdAt": 1729681395,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nuri-cow-scroll-wbtc-weth-rp",
+    "name": "WBTC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowNuriScrollWBTC-WETH",
+    "tokenAddress": "0x5963A36AB64e9Da637b1344e8ed514144a59dA3E",
+    "tokenDecimals": 18,
+    "earnedTokens": ["NURI"],
+    "earnedTokenAddresses": ["0xAAAE8378809bb8815c08D3C59Eb0c7D1529aD769"],
+    "earnedOracleIds": ["NURI"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowNuriScrollWBTC-WETH",
+    "earnContractAddress": "0xf3791f31c6143837d9d4A3A78f3212771FdAA6c2",
+    "oracle": "lps",
+    "oracleId": "nuri-cow-scroll-wbtc-weth",
+    "status": "active",
+    "createdAt": 1729681394,
+    "platformId": "nuri",
+    "assets": ["WBTC", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nuri-cow-scroll-wbtc-weth",
+    "name": "WBTC-WETH",
+    "token": "WBTC-WETH nuri",
+    "tokenAddress": "0xC75319C4D0F69380249384C4CF7AD96b69dfc344",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x3C1BCa5a656e69edCD0D4E36BEbb3FcDAcA60Cf1",
+      "0x5300000000000000000000000000000000000004"
+    ],
+    "tokenProviderId": "nuri",
+    "earnedToken": "cowNuriScrollWBTC-WETH",
+    "earnedTokenAddress": "0x5963A36AB64e9Da637b1344e8ed514144a59dA3E",
+    "earnContractAddress": "0x5963A36AB64e9Da637b1344e8ed514144a59dA3E",
+    "oracle": "lps",
+    "oracleId": "nuri-cow-scroll-wbtc-weth",
+    "status": "active",
+    "createdAt": 1729681394,
+    "platformId": "beefy",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "nuri-cow-scroll-weth-wsteth-vault",
+    "name": "WETH-wstETH",
+    "type": "standard",
+    "token": "WETH-wstETH",
+    "tokenAddress": "0xE4b150c9235755771c5aBFb807a7483c44ab17a2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nuri",
+    "earnedToken": "mooCowNuriScrollWETH-wstETH",
+    "earnedTokenAddress": "0x215886A8DBF3eB528a95A21eF3bbeac18f2b2fE3",
+    "earnContractAddress": "0x215886A8DBF3eB528a95A21eF3bbeac18f2b2fE3",
+    "oracle": "lps",
+    "oracleId": "nuri-cow-scroll-weth-wsteth",
+    "status": "active",
+    "platformId": "nuri",
+    "assets": ["WETH", "wstETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "createdAt": 1729681395,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nuri-cow-scroll-weth-wsteth-rp",
+    "name": "WETH-wstETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowNuriScrollWETH-wstETH",
+    "tokenAddress": "0xE4b150c9235755771c5aBFb807a7483c44ab17a2",
+    "tokenDecimals": 18,
+    "earnedTokens": ["NURI"],
+    "earnedTokenAddresses": ["0xAAAE8378809bb8815c08D3C59Eb0c7D1529aD769"],
+    "earnedOracleIds": ["NURI"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowNuriScrollWETH-wstETH",
+    "earnContractAddress": "0x844fDc2AD949143Be35E65cA30BA25d36b9118a1",
+    "oracle": "lps",
+    "oracleId": "nuri-cow-scroll-weth-wsteth",
+    "status": "active",
+    "createdAt": 1729681394,
+    "platformId": "nuri",
+    "assets": ["WETH", "wstETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nuri-cow-scroll-weth-wsteth",
+    "name": "WETH-wstETH",
+    "token": "WETH-wstETH nuri",
+    "tokenAddress": "0x05dFf4A55473562DD26bDBE4f74410A7307175bf",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x5300000000000000000000000000000000000004",
+      "0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32"
+    ],
+    "tokenProviderId": "nuri",
+    "earnedToken": "cowNuriScrollWETH-wstETH",
+    "earnedTokenAddress": "0xE4b150c9235755771c5aBFb807a7483c44ab17a2",
+    "earnContractAddress": "0xE4b150c9235755771c5aBFb807a7483c44ab17a2",
+    "oracle": "lps",
+    "oracleId": "nuri-cow-scroll-weth-wsteth",
+    "status": "active",
+    "createdAt": 1729681394,
+    "platformId": "beefy",
+    "assets": ["WETH", "wstETH"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "nuri-cow-scroll-weth-usdt-vault",
+    "name": "WETH-USDT",
+    "type": "standard",
+    "token": "WETH-USDT",
+    "tokenAddress": "0x2790E03f36Ea15256005BEB7DAD34a32052fBc92",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nuri",
+    "earnedToken": "mooCowNuriScrollWETH-USDT",
+    "earnedTokenAddress": "0x50fF3200afefd39e2bd4ad45bfEbD74C6f1C4377",
+    "earnContractAddress": "0x50fF3200afefd39e2bd4ad45bfEbD74C6f1C4377",
+    "oracle": "lps",
+    "oracleId": "nuri-cow-scroll-weth-usdt",
+    "status": "active",
+    "platformId": "nuri",
+    "assets": ["WETH", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "createdAt": 1729681395,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nuri-cow-scroll-weth-usdt-rp",
+    "name": "WETH-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowNuriScrollWETH-USDT",
+    "tokenAddress": "0x2790E03f36Ea15256005BEB7DAD34a32052fBc92",
+    "tokenDecimals": 18,
+    "earnedTokens": ["NURI"],
+    "earnedTokenAddresses": ["0xAAAE8378809bb8815c08D3C59Eb0c7D1529aD769"],
+    "earnedOracleIds": ["NURI"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowNuriScrollWETH-USDT",
+    "earnContractAddress": "0x8A69092cA0097e61EF1fE3C87121cF683b16E5Ad",
+    "oracle": "lps",
+    "oracleId": "nuri-cow-scroll-weth-usdt",
+    "status": "active",
+    "createdAt": 1729681394,
+    "platformId": "nuri",
+    "assets": ["WETH", "USDT"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nuri-cow-scroll-weth-usdt",
+    "name": "WETH-USDT",
+    "token": "WETH-USDT nuri",
+    "tokenAddress": "0x6e13A2AE9fd9f40F8cC7D3B3944C57f3919C7Fe3",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x5300000000000000000000000000000000000004",
+      "0xf55BEC9cafDbE8730f096Aa55dad6D22d44099Df"
+    ],
+    "tokenProviderId": "nuri",
+    "earnedToken": "cowNuriScrollWETH-USDT",
+    "earnedTokenAddress": "0x2790E03f36Ea15256005BEB7DAD34a32052fBc92",
+    "earnContractAddress": "0x2790E03f36Ea15256005BEB7DAD34a32052fBc92",
+    "oracle": "lps",
+    "oracleId": "nuri-cow-scroll-weth-usdt",
+    "status": "active",
+    "createdAt": 1729681394,
+    "platformId": "beefy",
+    "assets": ["WETH", "USDT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "nuri-cow-scroll-usdc-weth-vault",
+    "name": "USDC-WETH",
+    "type": "standard",
+    "token": "USDC-WETH",
+    "tokenAddress": "0xB99813c691d8A1825b839BA3a26642e39B63Cc06",
+    "tokenDecimals": 18,
+    "tokenProviderId": "nuri",
+    "earnedToken": "mooCowNuriScrollUSDC-WETH",
+    "earnedTokenAddress": "0x2b88C84022415D5c03160D8c1E1a3D08b5Ceb292",
+    "earnContractAddress": "0x2b88C84022415D5c03160D8c1E1a3D08b5Ceb292",
+    "oracle": "lps",
+    "oracleId": "nuri-cow-scroll-usdc-weth",
+    "status": "active",
+    "platformId": "nuri",
+    "assets": ["USDC", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "createdAt": 1729681395,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nuri-cow-scroll-usdc-weth-rp",
+    "name": "USDC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowNuriScrollUSDC-WETH",
+    "tokenAddress": "0xB99813c691d8A1825b839BA3a26642e39B63Cc06",
+    "tokenDecimals": 18,
+    "earnedTokens": ["NURI"],
+    "earnedTokenAddresses": ["0xAAAE8378809bb8815c08D3C59Eb0c7D1529aD769"],
+    "earnedOracleIds": ["NURI"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowNuriScrollUSDC-WETH",
+    "earnContractAddress": "0xF977607D9762E3Bf4Bc592135Fc80B21B2DcCD0b",
+    "oracle": "lps",
+    "oracleId": "nuri-cow-scroll-usdc-weth",
+    "status": "active",
+    "createdAt": 1729681394,
+    "platformId": "nuri",
+    "assets": ["USDC", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "nuri-cow-scroll-usdc-weth",
+    "name": "USDC-WETH",
+    "token": "USDC-WETH nuri",
+    "tokenAddress": "0xE0DA810f07Da1EAcE7F044aFd081F8583DBe9CD3",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+      "0x5300000000000000000000000000000000000004"
+    ],
+    "tokenProviderId": "nuri",
+    "earnedToken": "cowNuriScrollUSDC-WETH",
+    "earnedTokenAddress": "0xB99813c691d8A1825b839BA3a26642e39B63Cc06",
+    "earnContractAddress": "0xB99813c691d8A1825b839BA3a26642e39B63Cc06",
+    "oracle": "lps",
+    "oracleId": "nuri-cow-scroll-usdc-weth",
+    "status": "active",
+    "createdAt": 1729681394,
+    "platformId": "beefy",
+    "assets": ["USDC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "scroll",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "oku-cow-scroll-usdc-scr-rp",
     "name": "SCR-USDC Reward Pool",
     "type": "gov",
