@@ -197,6 +197,7 @@ export const selectIsBeefyToken = (_: BeefyState, tokenId: TokenEntity['id']) =>
     'beVELO',
     'beOPX',
     'mooBIFI',
+    'besnARS',
   ].includes(tokenId);
 };
 

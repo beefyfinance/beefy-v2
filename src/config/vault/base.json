@@ -1,5 +1,26 @@
 [
   {
+    "id": "beefy-snars-pool",
+    "name": "snARS Pool",
+    "type": "gov",
+    "token": "besnARS",
+    "tokenAddress": "0xf95aFD81727ca7a98E4d56b2D699148BDC1ed7Bd",
+    "tokenDecimals": 18,
+    "earnedToken": "USDC",
+    "earnedTokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "earnedTokenDecimals": 6,
+    "earnContractAddress": "0xf375F32bc750C37BA091eD359791B014F7145825",
+    "oracle": "tokens",
+    "oracleId": "besnARS",
+    "status": "active",
+    "createdAt": 1729683577,
+    "platformId": "beefy",
+    "assets": ["besnARS"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "besnars",
+    "network": "base"
+  },
+  {
     "id": "uniswap-cow-virtual-weth-rp",
     "name": "VIRTUAL-WETH Reward Pool",
     "type": "gov",
