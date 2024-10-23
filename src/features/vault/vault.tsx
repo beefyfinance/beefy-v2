@@ -12,7 +12,6 @@ import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { TechLoader } from '../../components/TechLoader';
 import { useAppSelector } from '../../store';
 import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdown';
-import { AssetsCard } from './components/AssetsCard';
 import { InsuranceCards } from './components/InsuranceCards';
 import { LeverageCards } from './components/LeverageCards';
 import { Actions } from './components/Actions';
@@ -28,6 +27,7 @@ import { UnstakedClmBannerVault } from '../../components/Banners/UnstakedClmBann
 import { featureFlag_disableRedirect } from '../data/utils/feature-flags';
 import { GamingCards } from './components/GamingCards';
 import { Container } from '../../components/Container/Container';
+import { Details } from './components/Details';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -108,7 +108,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
             <LiquidityPoolBreakdownLoader vaultId={vaultId} />
             <SafetyCard vaultId={vaultId} />
             <Explainer vaultId={vaultId} />
-            <AssetsCard vaultId={vaultId} />
+            <Details vaultId={vaultId} />
             <Hidden mdUp>
               <InsuranceCards vaultId={vaultId} />
               <LeverageCards vaultId={vaultId} />
