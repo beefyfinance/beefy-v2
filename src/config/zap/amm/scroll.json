@@ -10,5 +10,17 @@
     "swapFeeNumerator": "1",
     "swapFeeDenominator": "10000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "scroll-tokan",
+    "name": "Tokan",
+    "type": "solidly",
+    "routerAddress": "0xA663c287b2f374878C07B7ac55C1BC927669425a",
+    "factoryAddress": "0x92aF10c685D2CF4CD845388C5f45aC5dc97C5024",
+    "pairInitHash": "0x25e915079583e1805c45d0de6e5eec17d42c9ae580d71459bdb0ffcd36bfe521",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "400000000000000",
+    "swapFeeDenominator": "1000000000000000000",
+    "getAmountOutMode": "getAmountOut"
   }
 ]
