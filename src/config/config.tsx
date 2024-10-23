@@ -49,6 +49,8 @@ export const config = {
       'sFRAX',
       'R',
       'USDS',
+      'sUSDS',
+      'syrupUSDC',
       'GHO',
       'fxUSD',
       'bbsDAI',
