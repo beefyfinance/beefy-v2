@@ -39,6 +39,15 @@
       "twitter": "https://twitter.com/beefyfinance"
     }
   },
+  "offchain-mode-grant": {
+    "title": "Beefy x Mode Governance Fund",
+    "tagText": "Mode Grant",
+    "description": "Earn $OP on Optimism network for participating in Beefy vaults on Mode. Beefy users earn additional $OP tokens for using products on the Superchain. Rewards accrue linearly over time depending on the user's TVL. Simply click the 'Claim' tab to find details of all onchain and offchain rewards, and then manually claim your rewards whenever you're ready.",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://twitter.com/beefyfinance"
+    }
+  },
   "dao-rewards": {
     "title": "Beefy DAO Distribution",
     "description": "Earn extra incentives awarded by the Beefy DAO from its recent quarterly earnings. Beefy users earn additional tokens for using products boosted by the Beefy DAO Distribution program. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your rewards whenever you're ready.",
