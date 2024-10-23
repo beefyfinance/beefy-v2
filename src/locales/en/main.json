@@ -621,6 +621,7 @@
   "Transact-Claim-Description-cowcentrated-compounds-stellaswap": "This CLM position receives extra rewards in addition to trading fees from StellaSwap. StellaSwap rewards are distributed several times per day and can be claimed manually below.",
   "Transact-Claim-Description-cowcentrated-pool-merkl": "Merkl rewards are distributed several times per day and are claimed along with all other available rewards from Merkl.",
   "Transact-Claim-Description-cowcentrated-pool-stellaswap": "StellaSwap rewards are distributed several times per day and can be claimed manually below.",
+  "Transact-Claim-Description-standard": "This vault earns extra Merkl rewards. These rewards are distributed several times per day and are claimed along with all other available rewards from Merkl.",
   "Transact-Claim-Rewards-gov": "Pool rewards",
   "Transact-Claim-Rewards-merkl": "Merkl rewards",
   "Transact-Claim-Rewards-merkl-chain": "Merkl {{chain}} rewards",

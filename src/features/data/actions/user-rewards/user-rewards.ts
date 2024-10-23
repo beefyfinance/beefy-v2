@@ -11,7 +11,7 @@ function maybeHasStellaSwapRewards(vault: VaultEntity): boolean {
 }
 
 function maybeHasMerklRewards(vault: VaultEntity): boolean {
-  return isCowcentratedLikeVault(vault);
+  return isCowcentratedLikeVault(vault) || vault.chainId === 'mode';
 }
 
 export function fetchUserOffChainRewardsForVaultAction(
