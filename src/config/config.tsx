@@ -49,6 +49,8 @@ export const config = {
       'sFRAX',
       'R',
       'USDS',
+      'sUSDS',
+      'syrupUSDC',
       'GHO',
       'fxUSD',
       'bbsDAI',
@@ -783,7 +785,7 @@ export const config = {
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
-    stableCoins: ['USDT', 'USDC'],
+    stableCoins: ['USDT', 'USDC', 'loreUSD'],
   },
   aurora: {
     name: 'Aurora',

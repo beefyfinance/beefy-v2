@@ -166,7 +166,8 @@
   },
   {
     "id": "venus",
-    "name": "Venus"
+    "name": "Venus",
+    "risks": ["NO_TIMELOCK"]
   },
   {
     "id": "yieldbay",
@@ -1026,6 +1027,11 @@
   {
     "id": "dragon",
     "name": "DragonSwap",
+    "filter": true
+  },
+  {
+    "id": "nuri",
+    "name": "Nuri",
     "filter": true
   }
 ]
