@@ -60,6 +60,8 @@ function parseReasonId(
       return { type: 'cowcentrated', address: getAddress(address) };
     case 'BeefyStaker':
       return { type: 'gov', address: getAddress(address) };
+    case 'ERC20':
+      return { type: 'standard', address: getAddress(address) };
     default:
       return undefined;
   }
@@ -133,17 +135,21 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
           const vaults = allChainIds
             .map(chainId => selectVaultByAddressOrUndefined(state, chainId, reason.address))
             .filter(isDefined)
-            .filter(isCowcentratedLikeVault)
-            .filter(
-              v =>
-                v.type === reason.type &&
-                reasonData.mainParameter.toLowerCase() === v.poolAddress.toLowerCase()
+            .filter(v =>
+              isCowcentratedLikeVault(v)
+                ? v.type === reason.type &&
+                  reasonData.mainParameter.toLowerCase() === v.poolAddress.toLowerCase()
+                : v.type === reason.type &&
+                  reasonData.mainParameter.toLowerCase() === v.contractAddress.toLowerCase()
             );
 
           if (vaults.length === 0) {
-            console.warn(
-              `Vault ${reason.address} with type ${reason.type} not found on any chain.`
-            );
+            if (reason.type !== 'standard') {
+              // reason can be standard for ERC20 campaigns that just don't belong to Beefy
+              console.warn(
+                `Vault ${reason.address} with type ${reason.type} not found on any chain.`
+              );
+            }
             continue;
           } else if (vaults.length > 1) {
             console.warn(
@@ -171,9 +177,11 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
           addRewardToVault(vault.id, reward);
 
           // For rewards on CLM, merge them into the CLM Pool since the CLM page is inaccessible
-          const poolId = getCowcentratedPool(vault);
-          if (isCowcentratedVault(vault) && poolId) {
-            addRewardToVault(poolId, reward);
+          if (isCowcentratedLikeVault(vault)) {
+            const poolId = getCowcentratedPool(vault);
+            if (isCowcentratedVault(vault) && poolId) {
+              addRewardToVault(poolId, reward);
+            }
           }
         }
       }
