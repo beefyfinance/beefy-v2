@@ -49,6 +49,8 @@ export const config = {
       'sFRAX',
       'R',
       'USDS',
+      'sUSDS',
+      'syrupUSDC',
       'GHO',
       'fxUSD',
       'bbsDAI',
@@ -530,21 +532,6 @@ export const config = {
     },
     stableCoins: ['USDC', 'BUSD', 'wTBT'],
   },
-  zkevm: {
-    name: 'Polygon zkEVM',
-    chainId: 1101,
-    rpc: ['https://rpc.ankr.com/polygon_zkevm'],
-    explorerUrl: 'https://zkevm.polygonscan.com/',
-    multicallAddress: '0xD19ab62F83380908D65E344567378cF104cE46c2',
-    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x2ec5d5e9aaf3c3f56eBeF2fC46A5af9e42810b41',
-    providerName: 'zkEVM',
-    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
-    gas: {
-      type: 'standard',
-    },
-    stableCoins: ['USDC', 'USDT', 'DAI', 'FRAX'],
-  },
   base: {
     name: 'Base',
     chainId: 8453,
@@ -883,6 +870,22 @@ export const config = {
       type: 'standard',
     },
     stableCoins: ['fUSD', 'BUSD', 'USDC', 'USDT'],
+  },
+  zkevm: {
+    name: 'Polygon zkEVM',
+    eol: 1729771090,
+    chainId: 1101,
+    rpc: ['https://rpc.ankr.com/polygon_zkevm'],
+    explorerUrl: 'https://zkevm.polygonscan.com/',
+    multicallAddress: '0xD19ab62F83380908D65E344567378cF104cE46c2',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x2ec5d5e9aaf3c3f56eBeF2fC46A5af9e42810b41',
+    providerName: 'zkEVM',
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['USDC', 'USDT', 'DAI', 'FRAX'],
   },
 } satisfies Record<ChainConfig['id'], Omit<ChainConfig, 'id'>>;
 
