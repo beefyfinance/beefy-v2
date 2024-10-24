@@ -35,7 +35,6 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
     const classes = useStyles();
     const vaultId = useAppSelector(selectTransactVaultId);
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
-    // const availableChains = useAppSelector(selectTransactTokenChains);
     const [dustHidden, setDustHidden] = useState(false);
     const [selectedChain] = useState(vault.chainId);
     const [search, setSearch] = useState('');
@@ -99,7 +98,7 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
         <Scrollable className={classes.listContainer}>
           <div className={classes.list}>
             {filteredOptionsForChain.length ? (
-              filteredOptionsForChain.map(option => (
+              filteredOptionsForChain.map((option, index) => (
                 <ListItem
                   key={option.id}
                   selectionId={option.id}
@@ -108,6 +107,8 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
                   decimals={option.decimals}
                   chainId={selectedChain}
                   onSelect={handleTokenSelect}
+                  index={index}
+                  vault={vault}
                 />
               ))
             ) : (
