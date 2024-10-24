@@ -8,7 +8,7 @@ import {
   selectVaultCurrentBoostId,
 } from './boosts';
 import { selectAllVisibleVaultIds, selectVaultById } from './vaults';
-import { selectTokenByAddress } from './tokens';
+import { selectTokenByAddress, selectVaultTokenSymbols } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import type { KeysOfType } from '../utils/types-utils';
 import type { FilteredVaultsState } from '../reducers/filtered-vaults';
@@ -110,6 +110,7 @@ function searchTextToFuzzyTokenMatchers(searchText: string) {
 }
 
 export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchText: string) {
+  const tokenSymbols = selectVaultTokenSymbols(state, vault.id);
   // Do not match on single characters
   if (searchText.length < 2) {
     return false;
@@ -131,7 +132,7 @@ export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, se
   // All tokens must match
   return fuzzySearchTokens.every(token => {
     // In vault assets
-    if (vault.assetIds.some(assetId => assetId.match(token))) {
+    if (tokenSymbols.some(symbol => symbol.match(token))) {
       return true;
     }
 
