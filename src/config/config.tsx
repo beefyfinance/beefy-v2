@@ -869,10 +869,9 @@ export const config = {
     },
     stableCoins: ['fUSD', 'BUSD', 'USDC', 'USDT'],
   },
-
   zkevm: {
     name: 'Polygon zkEVM',
-    eol: 1722901359,
+    eol: 1729771090,
     chainId: 1101,
     rpc: ['https://rpc.ankr.com/polygon_zkevm'],
     explorerUrl: 'https://zkevm.polygonscan.com/',
