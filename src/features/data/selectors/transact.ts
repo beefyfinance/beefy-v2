@@ -167,6 +167,7 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
     decimals: 0,
     balanceValue: BIG_ZERO,
     balance: undefined,
+    tag: undefined,
   }));
 
   if (!walletAddress) {
@@ -251,6 +252,7 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
         balance: undefined,
         decimals: 0,
         price: undefined,
+        tag: undefined,
       };
 
       if (tokens.length === 1) {
