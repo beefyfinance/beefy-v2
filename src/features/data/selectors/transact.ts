@@ -26,6 +26,7 @@ import {
 } from './user-rewards';
 import { selectVaultById } from './vaults';
 import { isSingleGovVault } from '../entities/vault';
+import { getTokenSymbolWithLpTag } from '../../../helpers/tokens';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
@@ -183,8 +184,12 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
           walletAddress
         );
 
+        const { symbol, tag } = getTokenSymbolWithLpTag(token);
+
         return {
           ...selection,
+          symbol,
+          tag,
           balance,
           decimals: token.decimals,
           price,
@@ -236,8 +241,11 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
       };
 
       if (tokens.length === 1) {
+        const { symbol, tag } = getTokenSymbolWithLpTag(tokens[0]);
         return {
           ...optionWithBalances,
+          symbol,
+          tag,
           balance: balances[0],
           decimals: tokens[0].decimals,
           price: prices[0],

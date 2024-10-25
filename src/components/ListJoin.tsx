@@ -1,10 +1,9 @@
-import { isString } from 'lodash-es';
 import type { ReactNode } from 'react';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type ListJoinProps = {
-  items: string[] | ReactNode[];
+  items: ReactNode[];
 };
 export const ListJoin = memo<ListJoinProps>(function ListJoin({ items }) {
   const { t } = useTranslation();
@@ -16,7 +15,7 @@ export const ListJoin = memo<ListJoinProps>(function ListJoin({ items }) {
   }
 
   if (items.length === 1) {
-    return <>{isString(items[0]) ? replaceClmOrLp(items[0]) : items[0]}</>;
+    return <>{items[0]}</>;
   }
 
   if (items.length === 2) {
@@ -43,19 +42,3 @@ export const ListJoin = memo<ListJoinProps>(function ListJoin({ items }) {
 
   return <>{nodes}</>;
 });
-
-function replaceClmOrLp(item: string) {
-  if (item.endsWith('rCLM')) {
-    return item.replace('rCLM', '');
-  }
-
-  if (item.endsWith('CLM')) {
-    return item.replace('CLM', '');
-  }
-
-  if (item.endsWith('LP')) {
-    return item.replace('LP', '');
-  }
-
-  return item;
-}
