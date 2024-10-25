@@ -23,30 +23,14 @@ export function tokenInList<T extends TokenEntity>(token: T, list: T[]): boolean
   return list.some(t => isTokenEqual(t, token));
 }
 
-export function getTokenSymbolWithLpTag(token: TokenEntity): {
-  symbol: string;
-  tag: string | undefined;
-} {
-  const symbol = token.symbol;
-  if (symbol.endsWith('rCLM')) {
-    return { symbol: symbol.replace('rCLM', ''), tag: 'rCLM' };
+export function symbolToLabelAndTag(symbol: string): { label: string; tag: string | undefined } {
+  const match = symbol.match(/ (?<tag>LP|sLP|vLP|CLM|rCLM|mooCLM)\b/);
+  const tag = match?.groups?.tag;
+  if (tag) {
+    return {
+      label: symbol.replace(` ${tag}`, '').replace(/ +/, ' ').trim(),
+      tag,
+    };
   }
-
-  if (symbol.endsWith('CLM')) {
-    return { symbol: symbol.replace('CLM', ''), tag: 'CLM' };
-  }
-
-  if (symbol.endsWith('LP')) {
-    return { symbol: symbol.replace('LP', ''), tag: 'LP' };
-  }
-
-  if (symbol.endsWith('sLP')) {
-    return { symbol: symbol.replace('sLP', ''), tag: 'sLP' };
-  }
-
-  if (symbol.endsWith('vLP')) {
-    return { symbol: symbol.replace('vLP', ''), tag: 'vLP' };
-  }
-
-  return { symbol, tag: undefined };
+  return { label: symbol, tag: undefined };
 }

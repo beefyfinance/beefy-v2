@@ -25,8 +25,8 @@ import {
   selectConnectedUserHasStellaSwapRewardsForVault,
 } from './user-rewards';
 import { selectVaultById } from './vaults';
-import { isSingleGovVault } from '../entities/vault';
-import { getTokenSymbolWithLpTag } from '../../../helpers/tokens';
+import { isSingleGovVault, type VaultEntity } from '../entities/vault';
+import { symbolToLabelAndTag } from '../../../helpers/tokens';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
@@ -155,6 +155,7 @@ export const selectTransactWithdrawSelectionsForChain = (
 export const selectTransactWithdrawSelectionsForChainWithBalances = (
   state: BeefyState,
   chainId: ChainEntity['id'],
+  vaultId: VaultEntity['id'],
   walletAddress?: string
 ) => {
   if (!walletAddress) {
@@ -172,6 +173,8 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
     return selections;
   }
 
+  const vault = selectVaultById(state, vaultId);
+
   return orderBy(
     selections.map(selection => {
       if (selection.tokens.length === 1) {
@@ -184,11 +187,19 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
           walletAddress
         );
 
-        const { symbol, tag } = getTokenSymbolWithLpTag(token);
+        const symbolAndTag = symbolToLabelAndTag(token.symbol);
+
+        const label = symbolAndTag.label;
+
+        let tag = symbolAndTag.tag;
+
+        if (vault.assetType !== 'single' && token.address === vault.depositTokenAddress && !tag) {
+          tag = 'LP';
+        }
 
         return {
           ...selection,
-          symbol,
+          tokens: [{ ...token, symbol: label }],
           tag,
           balance,
           decimals: token.decimals,
@@ -206,13 +217,15 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
 
 export const selectTransactDepositTokensForChainIdWithBalances = (
   state: BeefyState,
-  chainId: ChainEntity['id']
+  chainId: ChainEntity['id'],
+  vaultId: VaultEntity['id']
 ) => {
   const walletAddress = selectWalletAddressIfKnown(state);
   const selectionsForChain = state.ui.transact.selections.byChainId[chainId];
   if (!selectionsForChain) {
     return [];
   }
+  const vault = selectVaultById(state, vaultId);
   const options = selectionsForChain.map(
     selectionId => state.ui.transact.selections.bySelectionId[selectionId]
   );
@@ -241,10 +254,23 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
       };
 
       if (tokens.length === 1) {
-        const { symbol, tag } = getTokenSymbolWithLpTag(tokens[0]);
+        const symbolAndTag = symbolToLabelAndTag(tokens[0].symbol);
+
+        const label = symbolAndTag.label;
+
+        let tag = symbolAndTag.tag;
+
+        if (
+          vault.assetType !== 'single' &&
+          tokens[0].address === vault.depositTokenAddress &&
+          !tag
+        ) {
+          tag = 'LP';
+        }
+
         return {
           ...optionWithBalances,
-          symbol,
+          tokens: [{ ...tokens[0], symbol: label }],
           tag,
           balance: balances[0],
           decimals: tokens[0].decimals,

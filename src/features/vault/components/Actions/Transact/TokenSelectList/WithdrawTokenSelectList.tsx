@@ -32,7 +32,7 @@ export const WithdrawTokenSelectList = memo<WithdrawTokenSelectListProps>(
     const [selectedChain] = useState(vault.chainId);
     const [search, setSearch] = useState('');
     const optionsForChain = useAppSelector(state =>
-      selectTransactWithdrawSelectionsForChainWithBalances(state, selectedChain)
+      selectTransactWithdrawSelectionsForChainWithBalances(state, selectedChain, vaultId)
     );
     const filteredOptionsForChain = useMemo(() => {
       let options = optionsForChain;

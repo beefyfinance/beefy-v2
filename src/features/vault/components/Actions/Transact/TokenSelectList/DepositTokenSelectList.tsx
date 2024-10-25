@@ -39,7 +39,7 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
     const [selectedChain] = useState(vault.chainId);
     const [search, setSearch] = useState('');
     const optionsForChain = useAppSelector(state =>
-      selectTransactDepositTokensForChainIdWithBalances(state, selectedChain)
+      selectTransactDepositTokensForChainIdWithBalances(state, selectedChain, vaultId)
     );
     const filteredOptionsForChain = useMemo(() => {
       let options = optionsForChain;
