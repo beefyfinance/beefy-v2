@@ -1,5 +1,5 @@
 import type { BeefyState } from '../../../redux-types';
-import { type VaultEntity } from '../entities/vault';
+import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault';
 import type { ChainEntity } from '../entities/chain';
 import type { MerklVaultReward } from '../reducers/wallet/user-rewards-types';
 import type { BigNumber } from 'bignumber.js';
@@ -102,6 +102,10 @@ export function selectUserMerklUnifiedRewardsForChain(
   }
 
   return selectUnifiedMerklRewards(state, chainRewards);
+}
+
+export function selectMayHaveOffchainUserRewards(state: BeefyState, vault: VaultEntity) {
+  return isCowcentratedLikeVault(vault) || vault.chainId === 'mode';
 }
 
 const selectConnectedUserMerklRewardsForVault = createSelector(
