@@ -1,5 +1,52 @@
 [
   {
+    "id": "syrup",
+    "docs": "https://syrup.gitbook.io/syrup/about-syrup/drips-program",
+    "points": [
+      {
+        "id": "syrup",
+        "name": "Syrup Drips"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["syrupUSDC"]
+      }
+    ]
+  },
+  {
+    "id": "usual",
+    "docs": "https://docs.usual.money/pre-launch-rules/pills-campaign-rules",
+    "points": [
+      {
+        "id": "usual",
+        "name": "Usual Pills"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["USD0++", "USD0"]
+      }
+    ]
+  },
+  {
+    "id": "solv",
+    "docs": "https://app.solv.finance/points",
+    "points": [
+      {
+        "id": "solv",
+        "name": "Solv XP"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ]
+  },
+  {
     "id": "babylon",
     "docs": "https://docs.babylonlabs.io/docs/introduction/overview",
     "points": [

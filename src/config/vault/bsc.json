@@ -20,6 +20,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9dAA2878A8739E66e08e7ad35316C5143c0ea7C7/zap/in?chain=bnbchain",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9dAA2878A8739E66e08e7ad35316C5143c0ea7C7/zap/out?chain=bnbchain",
+    "pointStructureIds": ["solv", "babylon"],
     "network": "bsc"
   },
   {
@@ -43,6 +44,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9dAA2878A8739E66e08e7ad35316C5143c0ea7C7/zap/in?chain=bnbchain",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x9dAA2878A8739E66e08e7ad35316C5143c0ea7C7/zap/out?chain=bnbchain",
+    "pointStructureIds": ["solv", "babylon"],
     "network": "bsc"
   },
   {
