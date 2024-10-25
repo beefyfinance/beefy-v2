@@ -110,7 +110,6 @@ function searchTextToFuzzyTokenMatchers(searchText: string) {
 }
 
 export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchText: string) {
-  const tokenSymbols = selectVaultTokenSymbols(state, vault.id);
   // Do not match on single characters
   if (searchText.length < 2) {
     return false;
@@ -130,6 +129,7 @@ export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, se
   }
 
   // All tokens must match
+  const tokenSymbols = selectVaultTokenSymbols(state, vault.id);
   return fuzzySearchTokens.every(token => {
     // In vault assets
     if (tokenSymbols.some(symbol => symbol.match(token))) {
