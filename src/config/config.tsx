@@ -739,7 +739,7 @@ export const config = {
   rootstock: {
     name: 'Rootstock',
     chainId: 30,
-    rpc: ['https://rootstock-mainnet.public.blastapi.io'],
+    rpc: ['https://public-node.rsk.co'],
     explorerUrl: 'https://rootstock.blockscout.com/',
     multicallAddress: '0x5Eb5CcF31F73ECBa126846fd264538576e01F89b',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
