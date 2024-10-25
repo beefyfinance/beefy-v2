@@ -1038,5 +1038,10 @@
     "id": "tokan",
     "name": "Tokan",
     "filter": true
+  },
+  {
+    "id": "tokemak",
+    "name": "Tokemak",
+    "filter": true
   }
 ]
