@@ -23,6 +23,7 @@ import { EthereumSolidlyPool } from './solidly/EthereumSolidlyPool';
 import { VelodromeV2SolidlyPool } from './solidly/VelodromeV2SolidlyPool';
 import { BVMSolidlyPool } from './solidly/BVMSolidlyPool';
 import { VelodromeV2ModeSolidlyPool } from './solidly/VelodromeV2ModeSolidlyPool';
+import { TokanSolidlyPool } from './solidly/TokanSolidlyPool';
 
 const mapUniswapV2 = {
   'avax-swapsicle': SwapsicleUniswapV2Pool,
@@ -54,6 +55,8 @@ const mapSolidly = {
   'kava-equilibre': VelodromeSolidlyPool,
   'arbitrum-ramses': VelodromeSolidlyPool,
   'ethereum-solidly': EthereumSolidlyPool,
+  'scroll-nuri': VelodromeSolidlyPool,
+  'scroll-tokan': TokanSolidlyPool,
 } as const satisfies Record<string, typeof SolidlyPool>;
 
 export async function getUniswapLikePool(

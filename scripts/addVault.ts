@@ -47,7 +47,10 @@ async function vaultData(chain, vaultAddress, id) {
     ? 'thena'
     : id.substring(0, id.indexOf('-'));
   let platform = params.mooToken.startsWith('mooConvex') ? 'convex' : provider;
-  if (provider === 'pendle') platform = 'magpie';
+  if (provider === 'pendle') {
+    platform = 'magpie';
+    if (id.startsWith('pendle-eqb')) platform = 'equilibria';
+  }
   if (platform === 'equilibria') provider = 'pendle';
   const migrationIds =
     ['curve', 'curve-lend'].includes(provider) && chain === 'ethereum'
@@ -57,6 +60,12 @@ async function vaultData(chain, vaultAddress, id) {
       : ['pendle'].includes(provider)
       ? ['magpie']
       : [];
+
+  if (provider === 'pendle') {
+    token.token = params.mooToken.slice(params.mooToken.indexOf('-') + 1);
+  }
+  let oracleId = id;
+  if (id.startsWith('pendle-eqb')) oracleId = id.replace('pendle-eqb', 'pendle');
 
   let addLiquidityUrl =
     provider === 'pendle'
@@ -73,6 +82,7 @@ async function vaultData(chain, vaultAddress, id) {
     provider,
     platform,
     migrationIds,
+    oracleId,
     addLiquidityUrl,
     removeLiquidityUrl,
   };
@@ -97,7 +107,7 @@ async function generateVault() {
     earnedTokenAddress: vaultAddress,
     earnContractAddress: vaultAddress,
     oracle: 'lps',
-    oracleId: id,
+    oracleId: vault.oracleId,
     status: 'active',
     platformId: vault.platform,
     assets: [vault.token],

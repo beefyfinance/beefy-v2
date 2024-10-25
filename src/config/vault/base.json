@@ -1,5 +1,123 @@
 [
   {
+    "id": "uniswap-cow-virtual-weth-rp",
+    "name": "VIRTUAL-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseVIRTUAL-WETH",
+    "tokenAddress": "0xf180a45d6bF3FbEdA3E17Ed0a691B6FcBbE975E2",
+    "tokenDecimals": 18,
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowUniswapBaseVIRTUAL-WETH",
+    "earnContractAddress": "0xD0DB4ca6D1AaA6DA81f9923788E09C597360426C",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-virtual-weth",
+    "status": "active",
+    "createdAt": 1729615454,
+    "platformId": "uniswap",
+    "assets": ["VIRTUAL", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-virtual-weth",
+    "name": "VIRTUAL-WETH",
+    "token": "VIRTUAL-WETH uniswap",
+    "tokenAddress": "0x8e0A7d4018fb2674346d5742055174f899Fe1826",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBaseVIRTUAL-WETH",
+    "earnedTokenAddress": "0xf180a45d6bF3FbEdA3E17Ed0a691B6FcBbE975E2",
+    "earnContractAddress": "0xf180a45d6bF3FbEdA3E17Ed0a691B6FcBbE975E2",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-virtual-weth",
+    "status": "active",
+    "createdAt": 1729615454,
+    "platformId": "beefy",
+    "assets": ["VIRTUAL", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-virtual-cbbtc",
+    "name": "VIRTUAL-cbBTC vLP",
+    "type": "standard",
+    "token": "vAMM-VIRTUAL/cbBTC",
+    "tokenAddress": "0xb909F567c5c2Bb1A4271349708CC4637D7318b4A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroVIRTUAL-cbBTC",
+    "earnedTokenAddress": "0x6b3ad868f29230357419b2c31bA08Dd9B9622dca",
+    "earnContractAddress": "0x6b3ad868f29230357419b2c31bA08Dd9B9622dca",
+    "oracle": "lps",
+    "oracleId": "aerodrome-virtual-cbbtc",
+    "status": "active",
+    "createdAt": 1729615454,
+    "platformId": "aerodrome",
+    "assets": ["VIRTUAL", "cbBTC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b&token1=0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-virtual-weth",
+    "name": "VIRTUAL-WETH vLP",
+    "type": "standard",
+    "token": "vAMM-VIRTUAL/WETH",
+    "tokenAddress": "0x21594b992F68495dD28d605834b58889d0a727c7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroVIRTUAL-WETH",
+    "earnedTokenAddress": "0x56c47a9dB54f6A01c07bb4f668DbB6e8bb0644Ae",
+    "earnContractAddress": "0x56c47a9dB54f6A01c07bb4f668DbB6e8bb0644Ae",
+    "oracle": "lps",
+    "oracleId": "aerodrome-virtual-weth",
+    "status": "active",
+    "createdAt": 1729615454,
+    "platformId": "aerodrome",
+    "assets": ["VIRTUAL", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b&token1=0x4200000000000000000000000000000000000006&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-wblt-bmx",
     "name": "wBLT-BMX vLP",
     "type": "standard",
