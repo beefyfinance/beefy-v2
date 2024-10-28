@@ -5167,38 +5167,6 @@
     ]
   },
   {
-    "id": "velodrome-v2-sonne-velo",
-    "name": "SONNE-VELO vLP V2",
-    "type": "standard",
-    "token": "SONNE-VELO vLP V2",
-    "tokenAddress": "0xC4270d957C218d263e7FAE5a3bEEDC1E98B6012D",
-    "tokenDecimals": 18,
-    "tokenProviderId": "velodrome",
-    "earnedToken": "mooVeloV2SONNE-VELO",
-    "earnedTokenAddress": "0xb32AD6495826677EABAfd4Ee7b8E07594504Fc17",
-    "earnContractAddress": "0xb32AD6495826677EABAfd4Ee7b8E07594504Fc17",
-    "oracle": "lps",
-    "oracleId": "velodrome-v2-sonne-velo",
-    "status": "eol",
-    "retiredAt": 1724277455,
-    "retireReason": "tvl",
-    "createdAt": 1709783438,
-    "platformId": "velodrome",
-    "assets": ["SONNE", "VELO"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://velodrome.finance/swap?from=0x1DB2466d9F5e10D7090E7152B68d62703a2245F0&to=0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
-    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x1DB2466d9F5e10D7090E7152B68d62703a2245F0&token1=0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db&type=-1&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
-    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xC4270d957C218d263e7FAE5a3bEEDC1E98B6012D",
-    "network": "optimism",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "optimism-velodrome-v2"
-      }
-    ]
-  },
-  {
     "id": "velodrome-v2-usdc-op",
     "name": "USDC-OP vLP V2",
     "type": "standard",

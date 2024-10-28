@@ -14712,38 +14712,6 @@
     "network": "arbitrum"
   },
   {
-    "id": "gmx-arb-xrp-usdc",
-    "name": "XRP-USDC GM",
-    "type": "standard",
-    "token": "XRP-USDC GM",
-    "tokenAddress": "0x0CCB4fAa6f1F1B30911619f1184082aB4E25813c",
-    "tokenDecimals": 18,
-    "tokenProviderId": "gmx",
-    "earnedToken": "mooGmxXRP-USDC",
-    "earnedTokenAddress": "0xCBE8989dA57e1061f18825406d961714A03E36a6",
-    "earnContractAddress": "0xCBE8989dA57e1061f18825406d961714A03E36a6",
-    "oracle": "lps",
-    "oracleId": "gmx-arb-xrp-usdc",
-    "status": "eol",
-    "retiredAt": 1727377666,
-    "retireReason": "rewards",
-    "createdAt": 1700568258,
-    "platformId": "gmx",
-    "assets": ["XRP", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "gmx-gm",
-    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "network": "arbitrum"
-  },
-  {
     "id": "gmx-arb-doge-usdc",
     "name": "DOGE-USDC GM",
     "type": "standard",
