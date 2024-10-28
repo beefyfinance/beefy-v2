@@ -18,7 +18,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_aerodrome-weth-cbbtc",
@@ -39,7 +39,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_aerodrome-weth-silo",
@@ -60,7 +60,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aero-cow-tbtc-cbbtc-vault",
@@ -81,7 +81,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_aerodrome-cow-weth-eurc-vault",
@@ -102,7 +102,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_aerodrome-cow-usdz-weth-vault",
@@ -123,7 +123,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_aerodrome-weth-degen",
@@ -144,7 +144,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-cow-weth-degen-vault",
@@ -165,7 +165,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-cow-degen-usd+-vault",
@@ -186,7 +186,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-jeur-eurc",
