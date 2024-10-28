@@ -63,13 +63,21 @@ async function vaultData(chain, vaultAddress, id) {
   let platform = provider;
 
   let earnedToken =
-    provider === 'aerodrome' ? ['AERO'] : provider === 'velodrome' ? ['VELOV2'] : [];
+    provider === 'aerodrome'
+      ? ['AERO']
+      : provider === 'velodrome'
+      ? ['VELOV2']
+      : provider === 'nuri'
+      ? ['NURI']
+      : [];
 
   let earnedTokenAddress =
     provider === 'aerodrome'
       ? ['0x940181a94A35A4569E4529A3CDfB74e38FD98631']
       : provider === 'velodrome'
       ? ['0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db']
+      : provider === 'nuri'
+      ? ['0xAAAE8378809bb8815c08D3C59Eb0c7D1529aD769']
       : [];
 
   return {

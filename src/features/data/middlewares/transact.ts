@@ -24,8 +24,8 @@ import {
 } from '../actions/zap';
 import { transactInit, transactInitReady } from '../actions/transact';
 import { fetchFees } from '../actions/fees';
-import { isCowcentratedLikeVault } from '../entities/vault';
 import { fetchUserOffChainRewardsForVaultAction } from '../actions/user-rewards/user-rewards';
+import { selectMayHaveOffchainUserRewards } from '../selectors/user-rewards';
 
 const transactListener = createListenerMiddleware<BeefyState>();
 
@@ -111,7 +111,7 @@ transactListener.startListening({
     }
 
     // Claim: Init user off-chain rewards data loader
-    const mayHaveOffchainRewards = isCowcentratedLikeVault(vault);
+    const mayHaveOffchainRewards = selectMayHaveOffchainUserRewards(getState(), vault);
     const walletAddress = selectWalletAddress(getState());
     if (mayHaveOffchainRewards && walletAddress) {
       // dispatch but don't wait on it

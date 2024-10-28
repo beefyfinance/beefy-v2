@@ -14,7 +14,8 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "partners": ["lido-moonbeam"]
+    "partners": ["lido-moonbeam"],
+    "hidden": false
   },
   {
     "id": "moo_stellaswap-wstdot-xcdot-lido",

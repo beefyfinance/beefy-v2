@@ -1,5 +1,33 @@
 [
   {
+    "id": "stargate-v2-linea-weth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f",
+    "tokenDecimals": 18,
+    "earnedToken": "mooStargateV2WETH",
+    "earnedTokenAddress": "0x3289Cc896E661e3a252609efA4380875F0ce66Ec",
+    "earnContractAddress": "0x3289Cc896E661e3a252609efA4380875F0ce66Ec",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1729527237,
+    "platformId": "stargate",
+    "assets": ["WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single-lp",
+    "addLiquidityUrl": "https://stargate.finance/pool/linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075",
+    "removeLiquidityUrl": "https://stargate.finance/pool/linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075/remove",
+    "network": "linea",
+    "pointStructureIds": ["linea-voyage"],
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "mendi-linea-wrseth",
     "name": "wrsETH",
     "type": "standard",
