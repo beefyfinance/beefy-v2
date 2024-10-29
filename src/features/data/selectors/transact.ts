@@ -169,15 +169,18 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
     balance: undefined,
     tag: undefined,
   }));
-
-  if (!walletAddress) {
-    return selections;
-  }
-
   const vault = selectVaultById(state, vaultId);
 
+  const selectionsWithModifiedSymbols = selections.map(selection => {
+    return { ...selection, ...extractTagFromLpSymbol(selection.tokens, vault) };
+  });
+
+  if (!walletAddress) {
+    return selectionsWithModifiedSymbols;
+  }
+
   return orderBy(
-    selections.map(selection => {
+    selectionsWithModifiedSymbols.map(selection => {
       if (selection.tokens.length === 1) {
         const token = selection.tokens[0];
         const price = selectTokenPriceByAddress(state, token.chainId, token.address);
@@ -190,7 +193,6 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
 
         return {
           ...selection,
-          ...extractTagFromLpSymbol(selection.tokens, vault),
           balance,
           decimals: token.decimals,
           price,
