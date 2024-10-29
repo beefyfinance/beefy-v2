@@ -23,7 +23,6 @@ import { uiThemeSlice } from './ui-theme';
 import { partnersSlice } from './partners';
 import { zapsSlice } from './zaps';
 import { walletActionsReducer } from './wallet/wallet-action';
-import { boostSlice } from './wallet/boost';
 import { mintersSlice } from './minters';
 import { bridgeSlice } from './wallet/bridge';
 import { onRamp } from './on-ramp';
@@ -52,7 +51,7 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
   vaults: vaultsSlice.reducer,
   tokens: tokensSlice.reducer,
-  boosts: boostsSlice.reducer,
+  boosts: boostsSlice.reducer as Reducer<BeefyState['entities']['boosts'], AnyAction>,
   fees: feesSlice.reducer,
   platforms: platformsSlice.reducer,
   zaps: zapsSlice.reducer,
@@ -96,7 +95,6 @@ const uiReducer = combineReducers<BeefyState['ui']>({
   ),
   theme: persistReducer({ key: 'theme', storage }, uiThemeSlice.reducer),
   transact: transactReducer as Reducer<BeefyState['ui']['transact'], AnyAction>,
-  boost: boostSlice.reducer as Reducer<BeefyState['ui']['boost'], AnyAction>,
   bridge: bridgeSlice.reducer as Reducer<BeefyState['ui']['bridge'], AnyAction>,
   savedVaults: persistReducer({ key: 'savedVaults', storage }, savedVaultsSlice.reducer),
   onRamp: onRamp.reducer,

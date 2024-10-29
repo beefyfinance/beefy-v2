@@ -35,7 +35,9 @@ export const selectVaultHasActiveMerklCampaigns = createSelector(
 
 export function isMerklBoostCampaign(campaign: MerklRewardsCampaignWithApr): boolean {
   return (
-    campaign.providerId === 'merkl' && campaign.chainId === 'base' && campaign.type === 'zap-v3'
+    campaign.providerId === 'merkl' &&
+    ((campaign.chainId === 'base' && campaign.type === 'zap-v3') ||
+      (campaign.chainId === 'mode' && campaign.type === 'mode-grant'))
   );
 }
 
@@ -91,7 +93,7 @@ export const selectVaultActiveGovRewards = createSelector(
 
     const now = new Date();
     return rewards
-      .filter(r => isAfter(r.periodFinish, now) && r.rewardRate.gt(BIG_ZERO))
+      .filter(r => r.periodFinish && isAfter(r.periodFinish, now) && r.rewardRate.gt(BIG_ZERO))
       .map(r => {
         const price = priceByOracleId[r.token.oracleId] || BIG_ZERO;
         const yearlyUsd = price.times(r.rewardRate).times(365 * 24 * 60 * 60);

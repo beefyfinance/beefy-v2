@@ -141,6 +141,7 @@ export type BeefyOffChainRewardsBeefyCampaignType =
   | 'arb-ltipp'
   | 'op-gov-fund'
   | 'zap-v3'
+  | 'mode-grant'
   | 'other';
 export type BeefyOffChainRewardsExternalCampaignType = 'external';
 export type BeefyOffChainRewardsCampaignType =

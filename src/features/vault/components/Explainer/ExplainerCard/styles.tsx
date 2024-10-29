@@ -3,10 +3,9 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   header: {
     display: 'flex',
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column' as const,
-      rowGap: '16px',
-    },
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: '8px',
   },
   title: {},
   actions: {

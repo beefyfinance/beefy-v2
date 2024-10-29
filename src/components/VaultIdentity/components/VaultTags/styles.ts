@@ -8,6 +8,9 @@ export const styles = (theme: Theme) => ({
     flexWrap: 'nowrap' as const,
     columnGap: '8px',
     rowGap: '8px',
+    [theme.breakpoints.down(400)]: {
+      flexWrap: 'wrap' as const,
+    },
   },
   vaultTag: {
     ...theme.typography['subline-sm'],
@@ -17,13 +20,22 @@ export const styles = (theme: Theme) => ({
     borderRadius: '4px',
     textTransform: 'uppercase' as const,
     whiteSpace: 'nowrap' as const,
+    display: 'flex',
     flexShrink: 0,
     '&:not(:first-child)': {
       flexShrink: 1,
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
       minWidth: 0,
+      gap: '4px',
     },
+  },
+  vaultTagIcon: {
+    flex: '0 0 auto',
+  },
+  vaultTagText: {
+    flexShrink: 1,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    minWidth: 0,
   },
   vaultTagBoost: {
     backgroundColor: theme.palette.background.tags.boost,
@@ -81,5 +93,8 @@ export const styles = (theme: Theme) => ({
     width: '1px',
     borderRadius: '8px',
     backgroundColor: '#D9D9D94C',
+  },
+  flexWrap: {
+    flexWrap: 'wrap' as const,
   },
 });

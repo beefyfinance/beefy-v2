@@ -40,6 +40,7 @@ export type AmountInputProps = {
   allowInputAboveBalance?: boolean;
   fullWidth?: boolean;
   price?: BigNumber;
+  startAdornment?: ReactNode;
   endAdornment?: ReactNode;
   disabled?: boolean;
   errorClassName?: string;
@@ -57,6 +58,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   fullWidth = false,
   price,
   endAdornment,
+  startAdornment,
   disabled,
   errorClassName = '',
   warningClassName = '',
@@ -112,7 +114,6 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
         handleMax();
         return;
       }
-
       // Raise changed event
       setInput(rawInput);
       onChange(parsedNumber, !allowInputAboveBalance && parsedNumber.gte(maxValue));
@@ -156,6 +157,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
         [classes.warning]: warning,
       })}
     >
+      {startAdornment && <div className={classes.startAdornment}>{startAdornment}</div>}
       <div className={classes.inputContent}>
         <input
           className={clsx(classes.input, { [classes.inputWithPrice]: Boolean(price) })}

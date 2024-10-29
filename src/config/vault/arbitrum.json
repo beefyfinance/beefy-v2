@@ -1,5 +1,316 @@
 [
   {
+    "id": "venus-arb-ls-weth",
+    "name": "WETH (LST Market)",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "tokenDecimals": 18,
+    "earnedToken": "mooVenusLsWETH",
+    "earnedTokenAddress": "0xeA2Adb8BfEeE15BDd07E786BBE2352FaBD26164e",
+    "earnContractAddress": "0xeA2Adb8BfEeE15BDd07E786BBE2352FaBD26164e",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "createdAt": 1729610236,
+    "platformId": "venus",
+    "assets": ["WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612"
+    }
+  },
+  {
+    "id": "venus-arb-ls-weeth",
+    "name": "weETH (LST Market)",
+    "type": "standard",
+    "token": "weETH",
+    "tokenAddress": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
+    "tokenDecimals": 18,
+    "earnedToken": "mooVenusLsweETH",
+    "earnedTokenAddress": "0xAFf25f7e050db54A87d25eAd646f7f0C82c3fdf1",
+    "earnContractAddress": "0xAFf25f7e050db54A87d25eAd646f7f0C82c3fdf1",
+    "oracle": "tokens",
+    "oracleId": "weETH",
+    "status": "active",
+    "createdAt": 1729610236,
+    "platformId": "venus",
+    "assets": ["weETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xE141425bc1594b8039De6390db1cDaf4397EA22b"
+    }
+  },
+  {
+    "id": "venus-arb-ls-wsteth",
+    "name": "wstETH (LST Market)",
+    "type": "standard",
+    "token": "wstETH",
+    "tokenAddress": "0x5979D7b546E38E414F7E9822514be443A4800529",
+    "tokenDecimals": 18,
+    "earnedToken": "mooVenusLswstETH",
+    "earnedTokenAddress": "0x2db8DD98a3f283fa801B0e252f0cdFd400DE96Ae",
+    "earnContractAddress": "0x2db8DD98a3f283fa801B0e252f0cdFd400DE96Ae",
+    "oracle": "tokens",
+    "oracleId": "wstETH",
+    "status": "active",
+    "createdAt": 1729610236,
+    "platformId": "venus",
+    "assets": ["wstETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xb523AE262D20A936BC152e6023996e46FDC2A95D"
+    }
+  },
+  {
+    "id": "venus-arb-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    "tokenDecimals": 6,
+    "earnedToken": "mooVenusUSDC",
+    "earnedTokenAddress": "0x9968BF4b303F1C9B1B50a4cb43560A32EDCb6639",
+    "earnContractAddress": "0x9968BF4b303F1C9B1B50a4cb43560A32EDCb6639",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1729610236,
+    "platformId": "venus",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3"
+    }
+  },
+  {
+    "id": "venus-arb-usdt",
+    "name": "USDT",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+    "tokenDecimals": 6,
+    "earnedToken": "mooVenusUSDT",
+    "earnedTokenAddress": "0x84A5989104e66c2CF9B586673c3CD4a5Ab8A3Df5",
+    "earnContractAddress": "0x84A5989104e66c2CF9B586673c3CD4a5Ab8A3Df5",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1729610236,
+    "platformId": "venus",
+    "assets": ["USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x3f3f5dF88dC9F13eac63DF89EC16ef6e7E25DdE7"
+    }
+  },
+  {
+    "id": "venus-arb-weth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "tokenDecimals": 18,
+    "earnedToken": "mooVenusWETH",
+    "earnedTokenAddress": "0x9aaC1bC7B4556b883076eea3DdD0cDD46212eD80",
+    "earnContractAddress": "0x9aaC1bC7B4556b883076eea3DdD0cDD46212eD80",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "createdAt": 1729610236,
+    "platformId": "venus",
+    "assets": ["WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612"
+    }
+  },
+  {
+    "id": "venus-arb-arb",
+    "name": "ARB",
+    "type": "standard",
+    "token": "ARB",
+    "tokenAddress": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+    "tokenDecimals": 18,
+    "earnedToken": "mooVenusARB",
+    "earnedTokenAddress": "0x2cf94B503F5eCa53d8628f1aD76689bAf3f6e21f",
+    "earnContractAddress": "0x2cf94B503F5eCa53d8628f1aD76689bAf3f6e21f",
+    "oracle": "tokens",
+    "oracleId": "ARB",
+    "status": "active",
+    "createdAt": 1729610236,
+    "platformId": "venus",
+    "assets": ["ARB"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xb2A824043730FE05F3DA2efaFa1CBbe83fa548D6"
+    }
+  },
+  {
+    "id": "venus-arb-wbtc",
+    "name": "WBTC",
+    "type": "standard",
+    "token": "WBTC",
+    "tokenAddress": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+    "tokenDecimals": 8,
+    "earnedToken": "mooVenusWBTC",
+    "earnedTokenAddress": "0xdE928310D40b43b9b95DD454F4B83Ef966753950",
+    "earnContractAddress": "0xdE928310D40b43b9b95DD454F4B83Ef966753950",
+    "oracle": "tokens",
+    "oracleId": "WBTC",
+    "status": "active",
+    "createdAt": 1729610236,
+    "platformId": "venus",
+    "assets": ["WBTC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0xd0C7101eACbB49F3deCcCc166d238410D6D46d57"
+    }
+  },
+  {
+    "id": "pendle-arb-mpendle-26dec24",
+    "name": "mPENDLE 26Dec24",
+    "token": "mPENDLE 26Dec24",
+    "tokenAddress": "0xAcEEe1AE91bc2F9244d699aA11B8a591F88b3778",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0x551faF496cAAE983DA504Bf28832f4Ea13c722BD",
+    "earnedToken": "mooPenpie-mPENDLE-26DEC24",
+    "earnedTokenAddress": "0x551faF496cAAE983DA504Bf28832f4Ea13c722BD",
+    "oracle": "lps",
+    "oracleId": "pendle-arb-mpendle-26dec24",
+    "status": "active",
+    "createdAt": 1729153236,
+    "platformId": "magpie",
+    "assets": ["mPENDLE"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xAcEEe1AE91bc2F9244d699aA11B8a591F88b3778/zap/in?chain=arbitrum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xAcEEe1AE91bc2F9244d699aA11B8a591F88b3778/zap/out?chain=arbitrum",
+    "network": "arbitrum"
+  },
+  {
     "id": "camelot-order-weth-rp",
     "name": "ORDER-WETH Reward Pool",
     "type": "gov",
@@ -268,7 +579,9 @@
     "earnedTokenAddress": "0xe0C90990B4101166fA80247939e4907d96Fc6B6E",
     "oracle": "lps",
     "oracleId": "aura-arb-ausdc-gusdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1729892827,
+    "retireReason": "tvl",
     "createdAt": 1725540995,
     "platformId": "aura",
     "assets": ["stataArbUSDCn", "gUSDC"],
@@ -2042,7 +2355,9 @@
     "earnedTokenAddress": "0x9C63A2C4D60249D98f7b8814d5AC8157ef148C42",
     "oracle": "lps",
     "oracleId": "aura-arb-wusdm-gyd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1729892801,
+    "retireReason": "rewards",
     "createdAt": 1723751717,
     "platformId": "aura",
     "assets": ["wUSDM", "GYD"],
@@ -5169,7 +5484,9 @@
     "earnContractAddress": "0x63f20920Bd886D7FDB0c64Fcd4ddF28Ba45055cB",
     "oracle": "lps",
     "oracleId": "uniswap-cow-arb-eusd-knox",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1729892801,
+    "retireReason": "rewards",
     "platformId": "uniswap",
     "assets": ["KNOX", "eUSD"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -6122,7 +6439,9 @@
     "earnedTokenAddress": "0x93a3c287A826a8307C6b3fE1A79D06cC8966d900",
     "oracle": "lps",
     "oracleId": "balancer-arb-usdc-gusdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1729892801,
+    "retireReason": "rewards",
     "createdAt": 1720336438,
     "updatedAt": 1721759733,
     "platformId": "aura",
@@ -8087,7 +8406,9 @@
     "earnedOracleIds": ["ARB", "RSR"],
     "oracle": "lps",
     "oracleId": "uniswap-cow-arb-eusd-knox",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1729892801,
+    "retireReason": "rewards",
     "createdAt": 1718042017,
     "platformId": "uniswap",
     "assets": ["KNOX", "eUSD"],
@@ -8550,7 +8871,9 @@
     "earnContractAddress": "0xEd7a0396455404e47B3b407D9e50750A7336BC74",
     "oracle": "lps",
     "oracleId": "ramses-usdx-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1729892827,
+    "retireReason": "tvl",
     "createdAt": 1719666517,
     "platformId": "ramses",
     "assets": ["USDx", "USDC"],
@@ -9780,7 +10103,9 @@
     "earnContractAddress": "0x33eCa80Faa8D65611aA0DdA9c986d0dC5651aF42",
     "oracle": "lps",
     "oracleId": "curve-arb-trirsr",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1729892801,
+    "retireReason": "rewards",
     "createdAt": 1718870937,
     "platformId": "curve",
     "assets": ["ETH+", "eUSD", "RSR"],
@@ -11044,7 +11369,9 @@
     "earnContractAddress": "0xB13872c632ac188596DEceF852c15F3d884CA9C9",
     "oracle": "lps",
     "oracleId": "uniswap-cow-arb-eusd-knox",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1729892801,
+    "retireReason": "rewards",
     "createdAt": 1718042016,
     "platformId": "uniswap",
     "assets": ["KNOX", "eUSD"],
@@ -11616,7 +11943,9 @@
     "earnContractAddress": "0x6dB43DC0E5150586D80292C2c0888D5db43261DC",
     "oracle": "lps",
     "oracleId": "curve-arb-eusd-crvusd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1729892801,
+    "retireReason": "rewards",
     "createdAt": 1717141161,
     "platformId": "curve",
     "assets": ["eUSD", "crvUSD"],
@@ -12933,36 +13262,6 @@
     "createdAt": 1710772701,
     "platformId": "gmx",
     "assets": ["NEAR", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "gmx-gm",
-    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "network": "arbitrum"
-  },
-  {
-    "id": "gmx-arb-atom-usdc",
-    "name": "ATOM-USDC GM",
-    "type": "standard",
-    "token": "ATOM-USDC GM",
-    "tokenAddress": "0x248C35760068cE009a13076D573ed3497A47bCD4",
-    "tokenDecimals": 18,
-    "tokenProviderId": "gmx",
-    "earnedToken": "mooGmxATOM-USDC",
-    "earnedTokenAddress": "0x526A631910dACE04A33D10A09Ab7185A5C27d54e",
-    "earnContractAddress": "0x526A631910dACE04A33D10A09Ab7185A5C27d54e",
-    "oracle": "lps",
-    "oracleId": "gmx-arb-atom-usdc",
-    "status": "active",
-    "createdAt": 1710772701,
-    "platformId": "gmx",
-    "assets": ["ATOM", "USDC"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -14399,38 +14698,6 @@
     "createdAt": 1700568258,
     "platformId": "gmx",
     "assets": ["LTC", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "gmx-gm",
-    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "network": "arbitrum"
-  },
-  {
-    "id": "gmx-arb-xrp-usdc",
-    "name": "XRP-USDC GM",
-    "type": "standard",
-    "token": "XRP-USDC GM",
-    "tokenAddress": "0x0CCB4fAa6f1F1B30911619f1184082aB4E25813c",
-    "tokenDecimals": 18,
-    "tokenProviderId": "gmx",
-    "earnedToken": "mooGmxXRP-USDC",
-    "earnedTokenAddress": "0xCBE8989dA57e1061f18825406d961714A03E36a6",
-    "earnContractAddress": "0xCBE8989dA57e1061f18825406d961714A03E36a6",
-    "oracle": "lps",
-    "oracleId": "gmx-arb-xrp-usdc",
-    "status": "eol",
-    "retiredAt": 1727377666,
-    "retireReason": "rewards",
-    "createdAt": 1700568258,
-    "platformId": "gmx",
-    "assets": ["XRP", "USDC"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -17127,7 +17394,9 @@
     "earnContractAddress": "0xFCb0101503f399B4752E5160ccd5EcE3a71719bd",
     "oracle": "lps",
     "oracleId": "solidlizard-weth-arb",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1729892801,
+    "retireReason": "rewards",
     "createdAt": 1679594787,
     "platformId": "solidlizard",
     "assets": ["ARB", "ETH"],
@@ -17466,7 +17735,9 @@
     "earnContractAddress": "0x5b65FB9f2C095A2EC311c4e13ef478D4BE0EC492",
     "oracle": "lps",
     "oracleId": "solidlizard-sliz-weth",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1729892801,
+    "retireReason": "rewards",
     "createdAt": 1677686779,
     "platformId": "solidlizard",
     "assets": ["SLIZ", "WETH"],
@@ -17535,7 +17806,9 @@
     "earnContractAddress": "0xB2DefC5c3A69abe2B681C714b080A892825B2073",
     "oracle": "lps",
     "oracleId": "solidlizard-weth-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1729892801,
+    "retireReason": "rewards",
     "createdAt": 1677273152,
     "platformId": "solidlizard",
     "assets": ["WETH", "arbUSDCe"],

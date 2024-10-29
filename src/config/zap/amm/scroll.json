@@ -1,0 +1,26 @@
+[
+  {
+    "id": "scroll-nuri",
+    "name": "Nuri",
+    "type": "solidly",
+    "routerAddress": "0xAAA45c8F5ef92a000a121d102F4e89278a711Faa",
+    "factoryAddress": "0xAAA16c016BF556fcD620328f0759252E29b1AB57",
+    "pairInitHash": "0xcb7c02cbd29b030bd31d01ea3b178b1604616dff95e99022dca71f6869e61574",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "1",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "scroll-tokan",
+    "name": "Tokan",
+    "type": "solidly",
+    "routerAddress": "0xA663c287b2f374878C07B7ac55C1BC927669425a",
+    "factoryAddress": "0x92aF10c685D2CF4CD845388C5f45aC5dc97C5024",
+    "pairInitHash": "0x25e915079583e1805c45d0de6e5eec17d42c9ae580d71459bdb0ffcd36bfe521",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "400000000000000",
+    "swapFeeDenominator": "1000000000000000000",
+    "getAmountOutMode": "getAmountOut"
+  }
+]

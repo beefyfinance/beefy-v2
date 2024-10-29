@@ -17,7 +17,7 @@ async function vaultData(chain, vaultAddress, id) {
   const web3 = new Web3(chainRpcs[chain]);
   const abi = [...(BeefyCowcentratedLiquidityVaultAbi as unknown as AbiItem[]), ...stratABI];
   const vaultContract = new web3.eth.Contract(abi as AbiItem[], vaultAddress);
-  const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
+  const multicall = new MultiCall(web3, '0xEEfe8171dC249960D730b19F3406E40c8C22C567'); //addressBook[chain].platforms.beefyfinance.multicall);
   let calls: ShapeWithLabel[] = [
     {
       want: vaultContract.methods.want(),
@@ -63,13 +63,21 @@ async function vaultData(chain, vaultAddress, id) {
   let platform = provider;
 
   let earnedToken =
-    provider === 'aerodrome' ? ['AERO'] : provider === 'velodrome' ? ['VELOV2'] : [];
+    provider === 'aerodrome'
+      ? ['AERO']
+      : provider === 'velodrome'
+      ? ['VELOV2']
+      : provider === 'nuri'
+      ? ['NURI']
+      : [];
 
   let earnedTokenAddress =
     provider === 'aerodrome'
       ? ['0x940181a94A35A4569E4529A3CDfB74e38FD98631']
       : provider === 'velodrome'
       ? ['0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db']
+      : provider === 'nuri'
+      ? ['0xAAAE8378809bb8815c08D3C59Eb0c7D1529aD769']
       : [];
 
   return {
@@ -188,7 +196,10 @@ async function generateVault() {
   };
 
   const vaults = JSON.parse(await fs.readFile(vaultsFile, 'utf8'));
-  const newVaults = [newVault, newRewardPool, newClm, ...vaults];
+  const newVaults =
+    vaultAddress !== '0x'
+      ? [newVault, newRewardPool, newClm, ...vaults]
+      : [newRewardPool, newClm, ...vaults];
   await fs.writeFile(vaultsFile, JSON.stringify(newVaults, null, 2));
   console.log(`Added ${id} to ${chain} vault config`);
 }

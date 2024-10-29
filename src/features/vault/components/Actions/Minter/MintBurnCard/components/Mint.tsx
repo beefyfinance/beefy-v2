@@ -1,11 +1,10 @@
-import { memo, useMemo, useState } from 'react';
-import { Button, InputBase, makeStyles, Paper } from '@material-ui/core';
+import { memo, useMemo } from 'react';
+import { Button, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { CardContent } from '../../../../Card';
 import { AssetsImage } from '../../../../../../../components/AssetsImage';
 import { styles } from '../styles';
-import BigNumber from 'bignumber.js';
-import { formatTokenDisplayCondensed, formatTokenInput } from '../../../../../../../helpers/format';
+import { formatTokenDisplayCondensed } from '../../../../../../../helpers/format';
 import { selectVaultById } from '../../../../../../data/selectors/vaults';
 import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance';
 import {
@@ -16,20 +15,19 @@ import {
   selectErc20TokenByAddress,
   selectTokenByAddress,
 } from '../../../../../../data/selectors/tokens';
-import { isString } from 'lodash-es';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../../data/actions/wallet';
 import { walletActions } from '../../../../../../data/actions/wallet-actions';
-
 import type { MinterCardParams } from '../../MinterCard';
 import { selectMinterById, selectMinterVaultsType } from '../../../../../../data/selectors/minters';
 import { selectAllowanceByTokenAddress } from '../../../../../../data/selectors/allowances';
 import { selectChainById } from '../../../../../../data/selectors/chains';
 import { useAppDispatch, useAppSelector } from '../../../../../../../store';
-import { BIG_ZERO } from '../../../../../../../helpers/big-number';
 import { stepperActions } from '../../../../../../data/reducers/wallet/stepper';
 import { selectIsStepperStepping } from '../../../../../../data/selectors/stepper';
 import { startStepper } from '../../../../../../data/actions/stepper';
 import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
+import { AmountInput } from '../../../Transact/AmountInput';
+import { useInputForm } from '../../../../../../data/hooks/input';
 
 const useStyles = makeStyles(styles);
 
@@ -77,68 +75,10 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
 
   const isStepping = useAppSelector(selectIsStepperStepping);
 
-  const [formData, setFormData] = useState({
-    deposit: {
-      input: '',
-      amount: BIG_ZERO,
-      max: false,
-      token: null,
-      isZap: false,
-      zapEstimate: {
-        isLoading: true,
-      },
-    },
-    slippageTolerance: 0.01,
-  });
-
-  const handleMax = () => {
-    if (depositTokenBalance > BIG_ZERO) {
-      setFormData({
-        ...formData,
-        deposit: {
-          ...formData.deposit,
-          input: isString(depositTokenBalance)
-            ? depositTokenBalance
-            : formatTokenInput(depositTokenBalance, depositToken.decimals),
-          amount: new BigNumber(depositTokenBalance),
-          max: true,
-        },
-      });
-    }
-  };
-
-  const handleInput = val => {
-    const input = val.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
-
-    let max = false;
-    let value = new BigNumber(input).decimalPlaces(depositToken.decimals, BigNumber.ROUND_FLOOR);
-
-    if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
-      value = BIG_ZERO;
-    }
-
-    if (value.isGreaterThanOrEqualTo(depositTokenBalance)) {
-      value = new BigNumber(depositTokenBalance);
-      max = true;
-    }
-
-    const formattedInput = (() => {
-      if (value.isEqualTo(input)) return input;
-      if (input === '') return '';
-      if (input === '.') return `0.`;
-      return formatTokenInput(value, depositToken.decimals);
-    })();
-
-    setFormData({
-      ...formData,
-      deposit: {
-        ...formData.deposit,
-        input: formattedInput,
-        amount: value,
-        max: max,
-      },
-    });
-  };
+  const { handleMax, handleChange, formData } = useInputForm(
+    depositTokenBalance,
+    depositToken.decimals
+  );
 
   const handleDeposit = () => {
     if (!isWalletConnected) {
@@ -148,20 +88,13 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       return dispatch(askForNetworkChange({ chainId: vault.chainId }));
     }
 
-    if (
-      depositToken.type !== 'native' &&
-      depositTokenAllowance.isLessThan(formData.deposit.amount)
-    ) {
+    if (depositToken.type !== 'native' && depositTokenAllowance.isLessThan(formData.amount)) {
       dispatch(
         stepperActions.addStep({
           step: {
             step: 'approve',
             message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(
-              depositToken,
-              minter.minterAddress,
-              formData.deposit.amount
-            ),
+            action: walletActions.approval(depositToken, minter.minterAddress, formData.amount),
             pending: false,
           },
         })
@@ -177,8 +110,8 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
             minter,
             depositToken,
             mintedToken,
-            formData.deposit.amount,
-            formData.deposit.max
+            formData.amount,
+            formData.max
           ),
           pending: false,
         },
@@ -217,18 +150,21 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
             </span>
           </div>
         </div>
-        <Paper component="form">
-          <div className={classes.inputLogo}>
-            <AssetsImage assetSymbols={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
-          </div>
-          <InputBase
-            placeholder="0.00"
-            value={formData.deposit.input}
-            onChange={e => handleInput(e.target.value)}
-            disabled={isStepping}
-          />
-          <Button onClick={handleMax}>{t('Transact-Max')}</Button>
-        </Paper>
+        <AmountInput
+          value={formData.amount}
+          maxValue={depositTokenBalance}
+          onChange={handleChange}
+          endAdornment={<Button onClick={handleMax}>{t('Transact-Max')}</Button>}
+          startAdornment={
+            <div className={classes.inputLogo}>
+              <AssetsImage
+                assetSymbols={[minter.depositToken.symbol]}
+                size={24}
+                chainId={chain.id}
+              />
+            </div>
+          }
+        />
       </div>
       <div className={classes.customDivider}>
         <div className={classes.line} />
@@ -248,12 +184,21 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
             </span>
           </div>
         </div>
-        <Paper component="form">
-          <div className={classes.inputLogo}>
-            <AssetsImage assetSymbols={[minter.mintedToken.symbol]} size={20} chainId={chain.id} />
-          </div>
-          <InputBase disabled={true} placeholder="0.00" value={formData.deposit.input} />
-        </Paper>
+        <AmountInput
+          value={formData.amount}
+          maxValue={depositTokenBalance}
+          onChange={handleChange}
+          disabled={true}
+          startAdornment={
+            <div className={classes.inputLogo}>
+              <AssetsImage
+                assetSymbols={[minter.mintedToken.symbol]}
+                size={24}
+                chainId={chain.id}
+              />
+            </div>
+          }
+        />
       </div>
       <>
         {isWalletConnected ? (
@@ -266,7 +211,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
             </Button>
           ) : (
             <Button
-              disabled={formData.deposit.amount.isLessThanOrEqualTo(0) || isStepping}
+              disabled={formData.amount.isLessThanOrEqualTo(0) || isStepping}
               onClick={handleDeposit}
               className={classes.btn}
             >

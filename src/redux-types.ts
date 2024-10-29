@@ -22,7 +22,6 @@ import type { AllowanceState } from './features/data/reducers/wallet/allowance';
 import type { BalanceState } from './features/data/reducers/wallet/balance';
 import type { WalletActionsState } from './features/data/reducers/wallet/wallet-action';
 import type { ZapsState } from './features/data/reducers/zaps';
-import type { BoostState } from './features/data/reducers/wallet/boost';
 import type { MintersState } from './features/data/reducers/minters';
 import type { Action } from 'redux';
 import type { BridgeState } from './features/data/reducers/wallet/bridge';
@@ -83,7 +82,6 @@ export interface BeefyState {
     filteredVaults: FilteredVaultsState;
     theme: UIThemeState;
     transact: TransactState;
-    boost: BoostState;
     bridge: BridgeState;
     onRamp: OnRampTypes;
     stepperState: StepperState;

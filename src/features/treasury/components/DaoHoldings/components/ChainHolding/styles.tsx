@@ -135,6 +135,9 @@ export const styles = (theme: Theme) => ({
   'headerNetwork-rootstock': {
     backgroundColor: 'rgba(28, 18, 44, 0.4)',
   },
+  'headerNetwork-scroll': {
+    backgroundColor: 'rgb(201, 203, 206)',
+  },
   'headerMM-system9': {
     backgroundColor: 'rgba(243, 243, 200, 0.5)',
   },

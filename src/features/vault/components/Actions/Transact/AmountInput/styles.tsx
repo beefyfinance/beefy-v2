@@ -66,4 +66,8 @@ export const styles = (theme: Theme) => ({
     flexShrink: 0,
     flexBasis: 'auto',
   },
+  startAdornment: {
+    marginRight: '24px',
+    flexBasis: 'auto',
+  },
 });

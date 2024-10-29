@@ -18,7 +18,7 @@
     "isMooStaked": true,
     "campaign": "rootstock-grant",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_uniswap-cow-rootstock-wrbtc-rusdt-vault",
@@ -39,7 +39,7 @@
     "isMooStaked": true,
     "campaign": "rootstock-grant",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_uniswap-cow-rootstock-doc-rusdt-vault",
@@ -60,7 +60,7 @@
     "isMooStaked": true,
     "campaign": "rootstock-grant",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_sushi-cow-rootstock-eths-wrbtc-vault",
@@ -81,7 +81,7 @@
     "isMooStaked": true,
     "campaign": "rootstock-grant",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_sushi-cow-rootstock-wrbtc-rusdt-vault",
@@ -102,7 +102,7 @@
     "isMooStaked": true,
     "campaign": "rootstock-grant",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_sushi-cow-rootstock-doc-rusdt-vault",
@@ -123,6 +123,6 @@
     "isMooStaked": true,
     "campaign": "rootstock-grant",
     "partners": [],
-    "pinned": true
+    "pinned": false
   }
 ]
