@@ -26,7 +26,7 @@ import {
 } from './user-rewards';
 import { selectVaultById } from './vaults';
 import { isSingleGovVault, type VaultEntity } from '../entities/vault';
-import { symbolToLabelAndTag } from '../../../helpers/tokens';
+import { extractTagFromLpSymbol } from '../../../helpers/tokens';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
@@ -188,20 +188,9 @@ export const selectTransactWithdrawSelectionsForChainWithBalances = (
           walletAddress
         );
 
-        const symbolAndTag = symbolToLabelAndTag(token.symbol);
-
-        const label = symbolAndTag.label;
-
-        let tag = symbolAndTag.tag;
-
-        if (vault.assetType !== 'single' && token.address === vault.depositTokenAddress && !tag) {
-          tag = 'LP';
-        }
-
         return {
           ...selection,
-          tokens: [{ ...token, symbol: label }],
-          tag,
+          ...extractTagFromLpSymbol(selection.tokens, vault),
           balance,
           decimals: token.decimals,
           price,
@@ -256,24 +245,9 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
       };
 
       if (tokens.length === 1) {
-        const symbolAndTag = symbolToLabelAndTag(tokens[0].symbol);
-
-        const label = symbolAndTag.label;
-
-        let tag = symbolAndTag.tag;
-
-        if (
-          vault.assetType !== 'single' &&
-          tokens[0].address === vault.depositTokenAddress &&
-          !tag
-        ) {
-          tag = 'LP';
-        }
-
         return {
           ...optionWithBalances,
-          tokens: [{ ...tokens[0], symbol: label }],
-          tag,
+          ...extractTagFromLpSymbol(tokens, vault),
           balance: balances[0],
           decimals: tokens[0].decimals,
           price: prices[0],
