@@ -20,6 +20,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x64F5eFB0f0643B654C96f77855DaFfe4C2FE0252",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
+    "pointStructureIds": ["pearl"],
     "network": "real"
   },
   {
