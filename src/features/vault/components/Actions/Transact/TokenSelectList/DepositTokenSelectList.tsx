@@ -35,12 +35,11 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
     const classes = useStyles();
     const vaultId = useAppSelector(selectTransactVaultId);
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
-    // const availableChains = useAppSelector(selectTransactTokenChains);
     const [dustHidden, setDustHidden] = useState(false);
     const [selectedChain] = useState(vault.chainId);
     const [search, setSearch] = useState('');
     const optionsForChain = useAppSelector(state =>
-      selectTransactDepositTokensForChainIdWithBalances(state, selectedChain)
+      selectTransactDepositTokensForChainIdWithBalances(state, selectedChain, vaultId)
     );
     const filteredOptionsForChain = useMemo(() => {
       let options = optionsForChain;
@@ -106,6 +105,7 @@ export const DepositTokenSelectList = memo<DepositTokenSelectListProps>(
                   tokens={option.tokens}
                   balance={option.balance}
                   decimals={option.decimals}
+                  tag={option.tag}
                   chainId={selectedChain}
                   onSelect={handleTokenSelect}
                 />

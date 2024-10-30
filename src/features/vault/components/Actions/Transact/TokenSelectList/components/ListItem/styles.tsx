@@ -29,11 +29,20 @@ export const styles = (theme: Theme) => ({
   },
   symbol: {
     marginRight: 'auto',
+    display: 'flex',
+    gap: '4px',
   },
   balance: {},
   arrow: {
     marginLeft: '12px',
     color: theme.palette.text.middle,
     height: '24px',
+  },
+  lp: {
+    ...theme.typography['body-sm-med'],
+    color: theme.palette.text.middle,
+    background: theme.palette.background.buttons.button,
+    padding: '2px 8px',
+    borderRadius: '4px',
   },
 });

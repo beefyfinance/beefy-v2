@@ -20,6 +20,7 @@ export type ListItemProps = {
   chainId: ChainEntity['id'];
   onSelect: (id: string) => void;
   className?: string;
+  tag?: string;
 };
 export const ListItem = memo<ListItemProps>(function ListItem({
   selectionId,
@@ -28,6 +29,7 @@ export const ListItem = memo<ListItemProps>(function ListItem({
   balance,
   className,
   onSelect,
+  tag,
 }) {
   const classes = useStyles();
   const handleClick = useCallback(() => onSelect(selectionId), [onSelect, selectionId]);
@@ -38,6 +40,7 @@ export const ListItem = memo<ListItemProps>(function ListItem({
       <TokensImage tokens={tokens} className={classes.icon} />
       <div className={classes.symbol}>
         <ListJoin items={tokenSymbols} />
+        {tag ? <div className={classes.lp}>{tag}</div> : null}
       </div>
       {balance ? (
         <div className={classes.balance}>{formatTokenDisplayCondensed(balance, decimals, 8)}</div>
