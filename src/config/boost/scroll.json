@@ -102,7 +102,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_nuri-cow-scroll-weth-scr-vault",
@@ -123,7 +123,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_nuri-usdc-loreusd",
@@ -144,7 +144,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
     {
       "id": "moo_nuri-weth-nuri",
@@ -165,6 +165,6 @@
       "isMooStaked": true,
       "campaign": "dao-rewards",
       "partners": [],
-      "pinned": true
+      "pinned": false
     }
 ]
