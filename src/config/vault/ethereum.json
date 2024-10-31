@@ -1,5 +1,44 @@
 [
   {
+    "id": "curve-eth-heth",
+    "name": "hETH/ETH",
+    "token": "hETHWETH",
+    "tokenAddress": "0x1f7e9321CE32Af1F9EA1185fD10D31Fea31FFD95",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x112a9fCB37cEcbc0682CF76bb00B58651C9C2400",
+    "earnedToken": "mooCurveETH-hETH",
+    "earnedTokenAddress": "0x112a9fCB37cEcbc0682CF76bb00B58651C9C2400",
+    "oracle": "lps",
+    "oracleId": "curve-eth-heth",
+    "status": "active",
+    "createdAt": 1730366501,
+    "platformId": "convex",
+    "assets": ["hETH", "ETH"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-271/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/factory-stable-ng-271/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x1f7e9321CE32Af1F9EA1185fD10D31Fea31FFD95",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x1f7e9321CE32Af1F9EA1185fD10D31Fea31FFD95",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0x270B7748CdF8243bFe68FaCE7230ef0fCE695389"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "tokemak-autoeth",
     "name": "autoETH",
     "token": "autoETH",
