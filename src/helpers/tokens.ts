@@ -24,13 +24,17 @@ export function tokenInList<T extends TokenEntity>(token: T, list: T[]): boolean
   return list.some(t => isTokenEqual(t, token));
 }
 
+const tokenTagReplacements = {
+  rCLM: 'CLM Pool',
+  mooCLM: 'CLM Vault',
+};
 export function symbolToLabelAndTag(symbol: string): { label: string; tag: string | undefined } {
   const match = symbol.match(/ (?<tag>LP|sLP|vLP|CLM|rCLM|mooCLM)\b/);
   const tag = match?.groups?.tag;
   if (tag) {
     return {
       label: symbol.replace(` ${tag}`, '').replace(/ +/, ' ').trim(),
-      tag,
+      tag: tokenTagReplacements[tag] || tag,
     };
   }
   return { label: symbol, tag: undefined };

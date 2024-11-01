@@ -4454,6 +4454,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -4541,6 +4544,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -4628,6 +4634,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -5295,6 +5304,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -5382,6 +5394,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -5469,6 +5484,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -5556,6 +5574,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -7212,15 +7233,15 @@
     "token": "cowAerotBTC-WETH",
     "tokenAddress": "0x787427Ae4f24be661d107c4c61C629ccBaF3Cb6F",
     "tokenDecimals": 18,
+    "earnContractAddress": "0x95b8b4cc3a0ACf3AbA57c4787886Eb78E89E1407",
+    "earnedToken": "rCowAerotBTC-WETH",
+    "earnedTokenDecimals": [18, 6],
     "earnedTokens": ["AERO"],
     "earnedTokenAddresses": [
       "0x940181a94A35A4569E4529A3CDfB74e38FD98631",
       "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
     ],
     "earnedOracleIds": ["AERO", "USDC"],
-    "earnedTokenDecimals": [18, 6],
-    "earnedToken": "rCowAerotBTC-WETH",
-    "earnContractAddress": "0x95b8b4cc3a0ACf3AbA57c4787886Eb78E89E1407",
     "oracle": "lps",
     "oracleId": "aero-cow-tbtc-weth",
     "status": "active",
@@ -7233,6 +7254,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
