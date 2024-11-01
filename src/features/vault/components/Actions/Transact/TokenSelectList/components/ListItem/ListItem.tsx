@@ -6,9 +6,9 @@ import type { ChainEntity } from '../../../../../../../data/entities/chain';
 import clsx from 'clsx';
 import type { TokenEntity } from '../../../../../../../data/entities/token';
 import type BigNumber from 'bignumber.js';
-import { ChevronRight } from '@material-ui/icons';
 import { TokensImage } from '../../../../../../../../components/TokenImage/TokenImage';
 import { ListJoin } from '../../../../../../../../components/ListJoin';
+import { ReactComponent as ChevronRight } from '../../../../../../../../images/icons/chevron-right.svg';
 
 const useStyles = makeStyles(styles);
 
@@ -37,15 +37,19 @@ export const ListItem = memo<ListItemProps>(function ListItem({
 
   return (
     <button className={clsx(classes.item, className)} onClick={handleClick}>
-      <TokensImage tokens={tokens} className={classes.icon} />
-      <div className={classes.symbol}>
-        <ListJoin items={tokenSymbols} />
-        {tag ? <div className={classes.lp}>{tag}</div> : null}
+      <div className={clsx(classes.side)}>
+        <TokensImage tokens={tokens} className={classes.icon} />
+        <div className={classes.symbol}>
+          <ListJoin items={tokenSymbols} />
+        </div>
+        {tag ? <div className={classes.tag}>{tag}</div> : null}
       </div>
-      {balance ? (
-        <div className={classes.balance}>{formatTokenDisplayCondensed(balance, decimals, 8)}</div>
-      ) : null}
-      <ChevronRight className={classes.arrow} />
+      <div className={clsx(classes.side, classes.right)}>
+        {balance ? (
+          <div className={classes.balance}>{formatTokenDisplayCondensed(balance, decimals, 8)}</div>
+        ) : null}
+        <ChevronRight className={classes.arrow} />
+      </div>
     </button>
   );
 });

@@ -223,41 +223,43 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
   );
 
   return orderBy(
-    options.map(option => {
-      const tokens = option.tokens;
-      const balances = tokens.map(token =>
-        selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress)
-      );
-      const prices = tokens.map(token =>
-        selectTokenPriceByAddress(state, token.chainId, token.address)
-      );
-      const balanceValues = balances.map((balance, index) => balance.multipliedBy(prices[index]));
-      const balanceValueTotal = balanceValues.reduce((acc, value) => acc.plus(value), BIG_ZERO);
+    options
+      .map(option => {
+        const tokens = option.tokens;
+        const balances = tokens.map(token =>
+          selectUserBalanceOfToken(state, token.chainId, token.address, walletAddress)
+        );
+        const prices = tokens.map(token =>
+          selectTokenPriceByAddress(state, token.chainId, token.address)
+        );
+        const balanceValues = balances.map((balance, index) => balance.multipliedBy(prices[index]));
+        const balanceValueTotal = balanceValues.reduce((acc, value) => acc.plus(value), BIG_ZERO);
 
-      const optionWithBalances = {
-        ...option,
-        balances,
-        prices,
-        balanceValues,
-        balanceValue: balanceValueTotal,
-        balance: undefined,
-        decimals: 0,
-        price: undefined,
-        tag: undefined,
-      };
-
-      if (tokens.length === 1) {
-        return {
-          ...optionWithBalances,
-          ...extractTagFromLpSymbol(tokens, vault),
-          balance: balances[0],
-          decimals: tokens[0].decimals,
-          price: prices[0],
+        const optionWithBalances = {
+          ...option,
+          balances,
+          prices,
+          balanceValues,
+          balanceValue: balanceValueTotal,
+          balance: undefined,
+          decimals: 0,
+          price: undefined,
+          tag: undefined,
         };
-      }
 
-      return optionWithBalances;
-    }),
+        if (tokens.length === 1) {
+          return {
+            ...optionWithBalances,
+            ...extractTagFromLpSymbol(tokens, vault),
+            balance: balances[0],
+            decimals: tokens[0].decimals,
+            price: prices[0],
+          };
+        }
+
+        return optionWithBalances;
+      })
+      .filter(option => !option.hideIfZeroBalance || !option.balanceValue.isZero()),
     [o => o.order, o => o.balanceValue.toNumber()],
     ['asc', 'desc']
   );

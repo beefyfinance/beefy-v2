@@ -39,13 +39,13 @@
     "tokenProviderId": "pharaoh",
     "earnContractAddress": "0x86Fc9a6cDEb75Cc6461120a000e925672524C0d4",
     "earnedToken": "rcowPharaohUSDt-USDC",
+    "earnedTokenDecimals": [18, 18, 18],
     "earnedTokenAddresses": [
       "0xAAAB9D12A30504559b0C5a9A5977fEE4A6081c6b",
       "0xA25EaF2906FA1a3a13EdAc9B9657108Af7B703e3",
       "0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE"
     ],
     "earnedOracleIds": ["PHAR", "ggAVAX", "sAVAX"],
-    "earnedTokenDecimals": [18, 18, 18],
     "oracle": "lps",
     "oracleId": "pharaoh-cow-usdt-usdc",
     "status": "active",
@@ -58,6 +58,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -132,13 +135,13 @@
     "tokenProviderId": "pharaoh",
     "earnContractAddress": "0x051B9D5f40727A35038a9ba1F1c27cbddD5fb54c",
     "earnedToken": "rcowPharaohBTC.b-WAVAX",
+    "earnedTokenDecimals": [18, 18, 18],
     "earnedTokenAddresses": [
       "0xAAAB9D12A30504559b0C5a9A5977fEE4A6081c6b",
       "0xA25EaF2906FA1a3a13EdAc9B9657108Af7B703e3",
       "0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE"
     ],
     "earnedOracleIds": ["PHAR", "ggAVAX", "sAVAX"],
-    "earnedTokenDecimals": [18, 18, 18],
     "oracle": "lps",
     "oracleId": "pharaoh-cow-btc.b-wavax",
     "status": "active",
@@ -151,6 +154,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -225,9 +231,9 @@
     "tokenProviderId": "pharaoh",
     "earnContractAddress": "0x4A132000670179d6497170e315c1311Aefc66E8E",
     "earnedToken": "rcowPharaohWETH.e-WAVAX",
+    "earnedTokenDecimals": [18],
     "earnedTokenAddresses": ["0xAAAB9D12A30504559b0C5a9A5977fEE4A6081c6b"],
     "earnedOracleIds": ["PHAR"],
-    "earnedTokenDecimals": [18],
     "oracle": "lps",
     "oracleId": "pharaoh-cow-weth.e-wavax",
     "status": "active",
@@ -240,6 +246,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -314,13 +323,13 @@
     "tokenProviderId": "pharaoh",
     "earnContractAddress": "0x0faD7FA9d3d71EEa524f7989831c4Eb031488cC7",
     "earnedToken": "rcowPharaohWAVAX-USDC",
+    "earnedTokenDecimals": [18, 18, 18],
     "earnedTokenAddresses": [
       "0xAAAB9D12A30504559b0C5a9A5977fEE4A6081c6b",
       "0xA25EaF2906FA1a3a13EdAc9B9657108Af7B703e3",
       "0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE"
     ],
     "earnedOracleIds": ["PHAR", "ggAVAX", "sAVAX"],
-    "earnedTokenDecimals": [18, 18, 18],
     "oracle": "lps",
     "oracleId": "pharaoh-cow-wavax-usdc",
     "status": "active",
@@ -333,6 +342,9 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },

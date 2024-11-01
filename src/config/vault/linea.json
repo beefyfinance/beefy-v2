@@ -106,12 +106,15 @@
     "platformId": "nile",
     "assets": ["weETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["linea-voyage", "etherfi"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["linea-voyage", "etherfi"],
     "network": "linea",
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -197,12 +200,15 @@
     "platformId": "nile",
     "assets": ["wrsETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["linea-voyage", "kelp"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["linea-voyage", "kelp"],
     "network": "linea",
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -288,12 +294,15 @@
     "platformId": "nile",
     "assets": ["ezETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["linea-voyage", "renzo"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["linea-voyage", "renzo"],
     "network": "linea",
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -379,12 +388,15 @@
     "platformId": "nile",
     "assets": ["WBTC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["linea-voyage"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -470,12 +482,15 @@
     "platformId": "nile",
     "assets": ["WBTC", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["linea-voyage"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -561,12 +576,15 @@
     "platformId": "nile",
     "assets": ["USDC", "USDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["linea-voyage"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -652,12 +670,15 @@
     "platformId": "nile",
     "assets": ["USDC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["linea-voyage"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -743,12 +764,15 @@
     "platformId": "nile",
     "assets": ["USDT", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["linea-voyage"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
         "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
