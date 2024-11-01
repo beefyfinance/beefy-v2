@@ -60,5 +60,7 @@ export const styles = (theme: Theme) => ({
   arrow: {
     color: theme.palette.text.middle,
     height: '24px',
+    width: '8px',
+    flexShrink: 0,
   },
 });

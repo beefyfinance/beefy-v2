@@ -6,9 +6,9 @@ import type { ChainEntity } from '../../../../../../../data/entities/chain';
 import clsx from 'clsx';
 import type { TokenEntity } from '../../../../../../../data/entities/token';
 import type BigNumber from 'bignumber.js';
-import { ChevronRight } from '@material-ui/icons';
 import { TokensImage } from '../../../../../../../../components/TokenImage/TokenImage';
 import { ListJoin } from '../../../../../../../../components/ListJoin';
+import { ReactComponent as ChevronRight } from '../../../../../../../../images/icons/chevron-right.svg';
 
 const useStyles = makeStyles(styles);
 
