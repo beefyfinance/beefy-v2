@@ -93,6 +93,7 @@
     "addLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-27/deposit",
     "removeLiquidityUrl": "https://curve.fi/#/fraxtal/pools/factory-stable-ng-27/withdraw",
     "network": "fraxtal",
+    "pointStructureIds": ["fraxtal"],
     "zaps": [
       {
         "strategyId": "curve",
