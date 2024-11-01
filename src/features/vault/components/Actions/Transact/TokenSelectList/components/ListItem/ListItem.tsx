@@ -37,15 +37,19 @@ export const ListItem = memo<ListItemProps>(function ListItem({
 
   return (
     <button className={clsx(classes.item, className)} onClick={handleClick}>
-      <TokensImage tokens={tokens} className={classes.icon} />
-      <div className={classes.symbol}>
-        <ListJoin items={tokenSymbols} />
-        {tag ? <div className={classes.lp}>{tag}</div> : null}
+      <div className={clsx(classes.side)}>
+        <TokensImage tokens={tokens} className={classes.icon} />
+        <div className={classes.symbol}>
+          <ListJoin items={tokenSymbols} />
+        </div>
+        {tag ? <div className={classes.tag}>{tag}</div> : null}
       </div>
-      {balance ? (
-        <div className={classes.balance}>{formatTokenDisplayCondensed(balance, decimals, 8)}</div>
-      ) : null}
-      <ChevronRight className={classes.arrow} />
+      <div className={clsx(classes.side, classes.right)}>
+        {balance ? (
+          <div className={classes.balance}>{formatTokenDisplayCondensed(balance, decimals, 8)}</div>
+        ) : null}
+        <ChevronRight className={classes.arrow} />
+      </div>
     </button>
   );
 });
