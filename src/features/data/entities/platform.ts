@@ -1,3 +1,5 @@
+import type { PlatformConfig } from '../apis/config-types';
+
 /**
  * A platform is a project targeted by vaults
  * Like "curve", "pancakeswap", "etc"
@@ -10,4 +12,5 @@ export interface PlatformEntity {
   twitter: string;
   website: string;
   documentation: string;
+  platformType: PlatformConfig['platformType'];
 }

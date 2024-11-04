@@ -14,7 +14,7 @@ import { getPlatformSrc, platformAssetExists } from '../../../../helpers/platfor
 
 const useStyles = makeStyles(styles);
 
-function PlatformCardDisplay({ platform, isFarm }: { platform: PlatformEntity; isFarm: boolean }) {
+function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -52,23 +52,13 @@ function PlatformCardDisplay({ platform, isFarm }: { platform: PlatformEntity; i
           )}
         </div>
         <div className={classes.assetBridgePrice}>
-          {isFarm ? (
-            <TagWithTooltip
-              content={
-                <TagTooltip content={t('PlatformTag-Farm', { platformName: platform.name })} />
-              }
-            >
-              {t('Farm')}
-            </TagWithTooltip>
-          ) : (
-            <TagWithTooltip
-              content={
-                <TagTooltip content={t('PlatformTag-AMM', { platformName: platform.name })} />
-              }
-            >
-              {t('AMM')}
-            </TagWithTooltip>
-          )}
+          <TagWithTooltip
+            content={
+              <TagTooltip content={t(`Details-Platform-Description-${platform.platformType}`)} />
+            }
+          >
+            {t(`Details-Platform-${platform.platformType}`)}
+          </TagWithTooltip>
         </div>
       </div>
       <div className={classes.description}>{platform.description ?? t('Token-NoDescrip')}</div>
@@ -76,13 +66,7 @@ function PlatformCardDisplay({ platform, isFarm }: { platform: PlatformEntity; i
   );
 }
 
-function PlatformCardComponent({
-  platformId,
-  isFarm = false,
-}: {
-  platformId: PlatformEntity['id'];
-  isFarm?: boolean;
-}) {
+function PlatformCardComponent({ platformId }: { platformId: PlatformEntity['id'] }) {
   const platformsLoaded = useAppSelector(selectIsPlatformsAvailable);
   const platform = useAppSelector(state =>
     platformsLoaded ? selectPlatformById(state, platformId) : null
@@ -92,7 +76,7 @@ function PlatformCardComponent({
     return <></>;
   }
 
-  return <PlatformCardDisplay platform={platform} isFarm={isFarm} />;
+  return <PlatformCardDisplay platform={platform} />;
 }
 
 export const PlatformCard = memo(PlatformCardComponent);

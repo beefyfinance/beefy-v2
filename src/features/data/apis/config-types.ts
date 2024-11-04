@@ -351,6 +351,7 @@ export type PlatformConfig = {
   twitter?: string;
   website?: string;
   documentation?: string;
+  platformType: 'amm' | 'alm' | 'bridge' | 'money-maket' | 'perps' | 'yield-boost';
 };
 
 export interface TokenHoldingConfig {

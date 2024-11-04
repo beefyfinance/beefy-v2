@@ -25,7 +25,7 @@ export const PlatformsCard = memo<PlatformsCardProps>(function PlatformsCard({ v
       {provider && provider.id !== platform.id ? (
         <PlatformCard key={provider.id} platformId={provider.id} />
       ) : null}
-      <PlatformCard key={platform.id} platformId={platform.id} isFarm={true} />
+      <PlatformCard key={platform.id} platformId={platform.id} />
     </>
   );
 });
