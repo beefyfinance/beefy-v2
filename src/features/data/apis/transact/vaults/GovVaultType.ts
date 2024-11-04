@@ -85,6 +85,7 @@ export class GovVaultType implements IGovVaultType {
       chainId: this.vault.chainId,
       selectionId,
       selectionOrder: SelectionOrder.Want,
+      selectionHideIfZeroBalance: isGovVaultCowcentrated(this.vault),
       inputs,
       wantedOutputs: inputs,
       strategyId: 'vault',

@@ -1,4 +1,4 @@
-import type { VaultStandard } from '../../../entities/vault';
+import { isCowcentratedStandardVault, type VaultStandard } from '../../../entities/vault';
 import { isStandardVault } from '../../../entities/vault';
 import type { BeefyState, BeefyStateFn } from '../../../../../redux-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
@@ -232,6 +232,7 @@ export class StandardVaultType implements IStandardVaultType {
       chainId: this.vault.chainId,
       selectionId,
       selectionOrder: SelectionOrder.Want,
+      selectionHideIfZeroBalance: isCowcentratedStandardVault(this.vault),
       inputs,
       wantedOutputs: inputs,
       strategyId: 'vault',

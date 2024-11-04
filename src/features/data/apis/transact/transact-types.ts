@@ -75,6 +75,7 @@ type BaseOption = {
   /** governs how selections are grouped in the UI, should be consistent for the same deposit input/withdraw output token(s) per chain */
   selectionId: string;
   selectionOrder: SelectionOrder;
+  selectionHideIfZeroBalance?: boolean;
   inputs: TokenEntity[];
   wantedOutputs: TokenEntity[];
 };

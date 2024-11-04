@@ -346,14 +346,19 @@ function addOptionsToState(sliceState: Draft<TransactState>, options: TransactOp
     }
 
     // Add selectionId -> address[] mapping
-    if (!(option.selectionId in sliceState.selections.bySelectionId)) {
+    const existingSelection = sliceState.selections.bySelectionId[option.selectionId];
+    if (!existingSelection) {
       sliceState.selections.bySelectionId[option.selectionId] = {
         id: option.selectionId,
         tokens: option.mode === TransactMode.Deposit ? option.inputs : option.wantedOutputs,
         order: option.selectionOrder,
+        hideIfZeroBalance: !!option.selectionHideIfZeroBalance,
       };
 
       sliceState.selections.allSelectionIds.push(option.selectionId);
+    } else if (existingSelection.hideIfZeroBalance === true && !option.selectionHideIfZeroBalance) {
+      // Only hide if all options for this selection have it enabled
+      existingSelection.hideIfZeroBalance = false;
     }
 
     // Add chainId -> selectionId[] mapping

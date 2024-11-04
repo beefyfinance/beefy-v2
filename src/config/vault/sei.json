@@ -1,5 +1,64 @@
 [
   {
+    "id": "dragon-cow-isei-wsei-500-rp",
+    "name": "iSEI-WSEI Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowDragonSeiiSEI-WSEI-500",
+    "tokenAddress": "0x611B6a9c0461c26Aa3ab04355e7813291652b1ad",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dragon",
+    "earnContractAddress": "0xB80114171cA830e4575aD06A50aFDF392f7D67f2",
+    "earnedToken": "rcowDragoniSEI-WSEI-500",
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "oracle": "lps",
+    "oracleId": "dragon-cow-isei-wsei-500",
+    "status": "active",
+    "createdAt": 1730394194,
+    "platformId": "dragon",
+    "assets": ["iSEI", "WSEI"],
+    "risks": ["IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sei",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "dragon-cow-isei-wsei-500",
+    "name": "iSEI-WSEI",
+    "type": "cowcentrated",
+    "token": "iSEI-WSEI",
+    "tokenAddress": "0xD0553A0853C57267c1F2E212347002B052595558",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dragon",
+    "depositTokenAddresses": [
+      "0x5Cf6826140C1C56Ff49C808A1A75407Cd1DF9423",
+      "0xE30feDd158A2e3b13e9badaeABaFc5516e95e8C7"
+    ],
+    "earnedToken": "cowDragoniSEI-WSEI-500",
+    "earnedTokenAddress": "0x611B6a9c0461c26Aa3ab04355e7813291652b1ad",
+    "earnContractAddress": "0x611B6a9c0461c26Aa3ab04355e7813291652b1ad",
+    "oracle": "lps",
+    "oracleId": "dragon-cow-isei-wsei-500",
+    "status": "active",
+    "createdAt": 1730394194,
+    "platformId": "dragon",
+    "assets": ["iSEI", "WSEI"],
+    "risks": ["IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sei",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "dragon-cow-usdc-wsei-rp",
     "name": "USDC-WSEI Reward Pool",
     "type": "gov",

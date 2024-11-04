@@ -73,6 +73,7 @@ type ZapHelpers = {
 const strategyId = 'reward-pool-to-vault' as const;
 type StrategyId = typeof strategyId;
 
+/** @dev this handles vault to pool too */
 export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
   public static readonly id = strategyId;
   public readonly id = strategyId;
@@ -202,6 +203,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
           vaultId: this.rewardPool.id,
           selectionId,
           selectionOrder: SelectionOrder.VaultToVault,
+          selectionHideIfZeroBalance: true,
           inputs,
           wantedOutputs: [this.rewardPoolType.depositToken],
           mode: TransactMode.Deposit,
@@ -222,6 +224,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
           vaultId: this.vault.id,
           selectionId,
           selectionOrder: SelectionOrder.VaultToVault,
+          selectionHideIfZeroBalance: true,
           inputs,
           wantedOutputs: [this.vaultType.depositToken],
           mode: TransactMode.Deposit,

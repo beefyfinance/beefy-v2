@@ -33,6 +33,7 @@ export type TransactSelection = {
   id: string;
   tokens: TokenEntity[];
   order: number;
+  hideIfZeroBalance: boolean;
 };
 
 export type TransactSelections = {
