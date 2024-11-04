@@ -174,6 +174,42 @@
     ]
   },
   {
+    "id": "balancer-base-more-usdc",
+    "name": "MORE/USDC LP",
+    "type": "standard",
+    "token": "MORE/USDC LP",
+    "tokenAddress": "0x2AE2fd72448afC7B29955f48f63b96cD6Cd72C2D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerBaseMORE/USDC",
+    "earnedTokenAddress": "0x0b5d6f696BcbB66E61048a7c8C3d8f55e8f64329",
+    "earnContractAddress": "0x0b5d6f696BcbB66E61048a7c8C3d8f55e8f64329",
+    "oracle": "lps",
+    "oracleId": "balancer-base-more-usdc",
+    "createdAt": 1730739623,
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["MORE", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/base/v2/0x2ae2fd72448afc7b29955f48f63b96cd6cd72c2d00000000000000000000019d/add-liquidity",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "base-balancer",
+        "poolId": "0x2ae2fd72448afc7b29955f48f63b96cd6cd72c2d00000000000000000000019d",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x25ea98ac87A38142561eA70143fd44c4772A16b6",
+          "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
+      }
+    ]
+  },
+  {
     "id": "aero-cow-weth-luna-vault",
     "name": "LUNA-WETH",
     "type": "standard",
