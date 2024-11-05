@@ -1,5 +1,213 @@
 [
   {
+    "id": "aero-cow-weth-brett-vault",
+    "name": "BRETT-WETH",
+    "type": "standard",
+    "token": "BRETT-WETH",
+    "tokenAddress": "0x34b7eF665325E69c5f809668ed13f97732C0A053",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooCowAeroWETH-BRETT",
+    "earnedTokenAddress": "0xd3e85C104D603939597b5aDA337125bbDf73bA8E",
+    "earnContractAddress": "0xd3e85C104D603939597b5aDA337125bbDf73bA8E",
+    "oracle": "lps",
+    "oracleId": "aero-cow-weth-brett",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["BRETT", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1730785330,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-weth-brett-rp",
+    "name": "BRETT-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroWETH-BRETT",
+    "tokenAddress": "0x34b7eF665325E69c5f809668ed13f97732C0A053",
+    "tokenDecimals": 18,
+    "earnedTokens": ["AERO"],
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "earnedOracleIds": ["AERO"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowAeroWETH-BRETT",
+    "earnContractAddress": "0x68Af3F09041EaC82201d17A0f868d44F9F3aEb75",
+    "oracle": "lps",
+    "oracleId": "aero-cow-weth-brett",
+    "status": "active",
+    "createdAt": 1730785330,
+    "platformId": "aerodrome",
+    "assets": ["BRETT", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-weth-brett",
+    "name": "BRETT-WETH",
+    "token": "BRETT-WETH aero",
+    "tokenAddress": "0x4e829F8A5213c42535AB84AA40BD4aDCCE9cBa02",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x532f27101965dd16442E59d40670FaF5eBB142E4"
+    ],
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "cowAeroWETH-BRETT",
+    "earnedTokenAddress": "0x34b7eF665325E69c5f809668ed13f97732C0A053",
+    "earnContractAddress": "0x34b7eF665325E69c5f809668ed13f97732C0A053",
+    "oracle": "lps",
+    "oracleId": "aero-cow-weth-brett",
+    "status": "active",
+    "createdAt": 1730785330,
+    "platformId": "beefy",
+    "assets": ["BRETT", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "0.25",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-brett-rp",
+    "name": "BRETT-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-BRETT",
+    "tokenAddress": "0x2Ffb71dD9A1F11254802469392a8c390132c233d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xfFC1e12c997f7c7B648C42738e8BCE24F2e226B6",
+    "earnedToken": "rcowUniswapBaseWETH-BRETT",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-brett",
+    "status": "active",
+    "createdAt": 1730785330,
+    "platformId": "uniswap",
+    "assets": ["BRETT", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-brett",
+    "name": "BRETT-WETH",
+    "type": "cowcentrated",
+    "token": "BRETT-WETH",
+    "tokenAddress": "0xBA3F945812a83471d709BCe9C3CA699A19FB46f7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x532f27101965dd16442E59d40670FaF5eBB142E4"
+    ],
+    "earnedToken": "cowUniswapBaseWETH-BRETT",
+    "earnedTokenAddress": "0x2Ffb71dD9A1F11254802469392a8c390132c233d",
+    "earnContractAddress": "0x2Ffb71dD9A1F11254802469392a8c390132c233d",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-brett",
+    "status": "active",
+    "createdAt": 1730785330,
+    "platformId": "uniswap",
+    "assets": ["BRETT", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-bwell-rp",
+    "name": "WELL-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-WELL",
+    "tokenAddress": "0x8Ef0132d84Cbee6Ae1a975FCF1433EC66dd9427e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x9b2347FBEEB538eF7aBee9ea9DEf401517f2A786",
+    "earnedToken": "rcowUniswapBaseWETH-WELL",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-bwell",
+    "status": "active",
+    "createdAt": 1730785330,
+    "platformId": "uniswap",
+    "assets": ["bWELL", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-bwell",
+    "name": "WELL-WETH",
+    "type": "cowcentrated",
+    "token": "WELL-WETH",
+    "tokenAddress": "0x722BcF6c16dAdcC29914E4E64290C46aa1406DE8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xA88594D404727625A9437C3f886C7643872296AE"
+    ],
+    "earnedToken": "cowUniswapBaseWETH-WELL",
+    "earnedTokenAddress": "0x8Ef0132d84Cbee6Ae1a975FCF1433EC66dd9427e",
+    "earnContractAddress": "0x8Ef0132d84Cbee6Ae1a975FCF1433EC66dd9427e",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-bwell",
+    "status": "active",
+    "createdAt": 1730785330,
+    "platformId": "uniswap",
+    "assets": ["bWELL", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-alb-weth-rp",
     "name": "ALB-WETH Reward Pool",
     "type": "gov",
