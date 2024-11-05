@@ -20,9 +20,10 @@ import platforms from '../src/config/platforms.json';
 import partners from '../src/config/boost/partners.json';
 import campaigns from '../src/config/boost/campaigns.json';
 import pointProviders from '../src/config/points.json';
-import type { VaultConfig } from '../src/features/data/apis/config-types';
-import partition from 'lodash/partition';
+import type { PlatformType, VaultConfig } from '../src/features/data/apis/config-types';
+import partition from 'lodash-es/partition';
 import type { AbiItem } from 'web3-utils';
+import i18keys from '../src/locales/en/main.json';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
@@ -186,6 +187,8 @@ const validatePools = async () => {
       return exitCode;
     }
   }
+
+  validatePlatformTypes();
 
   let promises = chainIds.map(chainId => validateSingleChain(chainId, uniquePoolId));
   let results = await Promise.all(promises);
@@ -1128,6 +1131,38 @@ const populateStrategyData = async (
     throw e;
   }
 };
+
+async function validatePlatformTypes(): Promise<void> {
+  const validTypes: PlatformType[] = [
+    'amm',
+    'alm',
+    'bridge',
+    'money-market',
+    'perps',
+    'yield-boost',
+    'farm',
+  ];
+
+  //check if valid types have i18n keys
+  for (const type of validTypes) {
+    if (!i18keys[`Details-Platform-Description-${type}`] || !i18keys[`Details-Platform-${type}`]) {
+      throw new Error(`Missing i18n key for platform type: ${type}`);
+    }
+  }
+
+  platforms.forEach(async platform => {
+    if (platform.type) {
+      //check if the platform type is valid
+      if (!validTypes.includes(platform.type as PlatformType)) {
+        throw new Error(`Invalid platform type for ${platform.id}: ${platform.type}`);
+      }
+    }
+  });
+
+  // if (missingImages.length > 0) {
+  //   throw new Error(`Missing images for platforms: ${missingImages.join(', ')}`);
+  // }
+}
 
 const override = (pools: VaultConfigWithVaultData[]): VaultConfigWithVaultData[] => {
   Object.keys(overrides).forEach(id => {

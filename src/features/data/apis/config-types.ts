@@ -343,7 +343,14 @@ export interface MinterConfig {
   canZapInWithOneInch?: boolean;
 }
 
-export type PlatformType = 'amm' | 'alm' | 'bridge' | 'money-maket' | 'perps' | 'yield-boost';
+export type PlatformType =
+  | 'amm'
+  | 'alm'
+  | 'bridge'
+  | 'money-market'
+  | 'perps'
+  | 'yield-boost'
+  | 'farm';
 
 export type PlatformConfig = {
   readonly id: string;
