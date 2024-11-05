@@ -155,7 +155,7 @@ export const usePnLChartData = (
   const nowPriceUnderlying = useAppSelector(state =>
     selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
   );
-  const { token0, token1 } = useAppSelector(state =>
+  const [token0, token1] = useAppSelector(state =>
     selectCowcentratedLikeVaultDepositTokensWithPrices(state, vaultId)
   );
   const nowPriceToken0 = token0.price;

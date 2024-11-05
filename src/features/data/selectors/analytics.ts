@@ -293,7 +293,7 @@ export const selectClmPnl = (
     vault.chainId,
     vault.depositTokenAddress
   );
-  const { token0, token1 } = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
+  const [token0, token1] = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
   const breakdown = selectLpBreakdownForVault(state, vault);
   const { assets, userBalanceDecimal: underlyingNow } = selectUserLpBreakdownBalance(
     state,
@@ -628,7 +628,7 @@ export const selectClmAutocompoundedPendingFeesByVaultId = (
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ) => {
-  const { token0, token1 } = selectCowcentratedLikeVaultDepositTokensWithPrices(state, vaultId);
+  const [token0, token1] = selectCowcentratedLikeVaultDepositTokensWithPrices(state, vaultId);
   const { price: token0Price, symbol: token0Symbol, decimals: token0Decimals } = token0;
   const { price: token1Price, symbol: token1Symbol, decimals: token1Decimals } = token1;
 
