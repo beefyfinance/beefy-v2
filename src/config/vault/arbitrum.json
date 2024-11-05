@@ -1,5 +1,40 @@
 [
   {
+    "id": "silo-arb-silo",
+    "name": "SILO",
+    "type": "standard",
+    "token": "SILO",
+    "tokenAddress": "0x0341C0C0ec423328621788d4854119B97f44E391",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSiloSILO",
+    "earnedTokenAddress": "0x92261402689559D3cF1435ecB28B8B87832c2468",
+    "earnContractAddress": "0x92261402689559D3cF1435ecB28B8B87832c2468",
+    "oracle": "tokens",
+    "oracleId": "SILO",
+    "status": "active",
+    "createdAt": 1730787745,
+    "platformId": "silo",
+    "assets": ["SILO"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "dia"
+    }
+  },
+  {
     "id": "pendle-eqb-arb-ependle-26dec24",
     "name": "ePENDLE 26Dec24",
     "token": "ePENDLE 26Dec24",
