@@ -75,7 +75,7 @@ export const FeesFooter = memo<FooterProps>(function Footer({
   className,
 }) {
   const classes = useStyles();
-  const { token0, token1 } = useAppSelector(state =>
+  const [token0, token1] = useAppSelector(state =>
     selectCowcentratedLikeVaultDepositTokens(state, vaultId)
   );
 

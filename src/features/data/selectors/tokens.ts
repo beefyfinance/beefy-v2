@@ -19,6 +19,7 @@ import {
   getDataApiBucketsLongerThan,
 } from '../apis/beefy/beefy-data-api-helpers';
 import { createSelector } from '@reduxjs/toolkit';
+import { valueOrThrow } from '../utils/selector-utils';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -466,39 +467,26 @@ export const selectCurrentCowcentratedRangesByVaultId = (
   return selectCurrentCowcentratedRangesByOracleId(state, depositToken.oracleId);
 };
 
-export const selectCowcentratedLikeVaultDepositTokens = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-) => {
-  const vault = selectCowcentratedLikeVaultById(state, vaultId);
-  const token0 = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddresses[0]);
-  const token1 = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddresses[1]);
+export const selectCowcentratedLikeVaultDepositTokens = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectCowcentratedLikeVaultById(state, vaultId),
+  (state: BeefyState) => state.entities.tokens.byChainId,
+  (vault, tokensByChainId) =>
+    vault.depositTokenAddresses.map(address =>
+      valueOrThrow(
+        tokensByChainId[vault.chainId]?.byAddress[address.toLowerCase()],
+        `selectCowcentratedLikeVaultDepositTokens: Unknown token address "${address}"`
+      )
+    ) as [TokenEntity, TokenEntity]
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-  return {
-    token0,
-    token1,
-  };
-};
-
-export const selectCowcentratedLikeVaultDepositTokensWithPrices = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-) => {
-  const { token1, token0 } = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
-  const token0Price = selectTokenPriceByTokenOracleId(state, token0.oracleId);
-  const token1Price = selectTokenPriceByTokenOracleId(state, token1.oracleId);
-
-  return {
-    token0: {
-      ...token0,
-      price: token0Price,
-    },
-    token1: {
-      ...token1,
-      price: token1Price,
-    },
-  };
-};
+export const selectCowcentratedLikeVaultDepositTokensWithPrices = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectCowcentratedLikeVaultDepositTokens(state, vaultId),
+  (state: BeefyState) => state.entities.tokens.prices.byOracleId,
+  (tokens, pricesByOracleId) =>
+    tokens.map(token => ({ ...token, price: pricesByOracleId[token.oracleId] || BIG_ZERO }))
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectGovVaultEarnedTokens = createSelector(
   (state: BeefyState, _chainId: ChainEntity['id'], vaultId: VaultEntity['id']) =>

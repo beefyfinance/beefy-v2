@@ -100,8 +100,8 @@ export const fetchBalanceAction = createAsyncThunk<
           govVaults.push(vault);
         } else {
           if (isCowcentratedLikeVault(vault)) {
-            Object.values(selectCowcentratedLikeVaultDepositTokens(state, vault.id)).forEach(
-              token => tokens.push(token)
+            selectCowcentratedLikeVaultDepositTokens(state, vault.id).forEach(token =>
+              tokens.push(token)
             );
           }
           if (!isCowcentratedVault(vault)) {

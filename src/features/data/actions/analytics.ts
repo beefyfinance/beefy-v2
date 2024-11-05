@@ -970,7 +970,7 @@ export const recalculateClmPoolHarvestsForUserVaultId = createAsyncThunk<
   'analytics/recalculateClmPoolHarvestsForUserVaultId',
   async ({ walletAddress, vaultId }, { getState }) => {
     const state = getState();
-    const { token0, token1 } = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
+    const [token0, token1] = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
     const result: RecalculateClmHarvestsForUserVaultIdPayload = {
       vaultId,
       walletAddress,
@@ -1075,7 +1075,7 @@ export const fetchClmPendingRewards = createAsyncThunk<
 >('analytics/fetchClmPendingRewards', async ({ vaultId }, { getState }) => {
   const state = getState();
   const vault = selectCowcentratedLikeVaultById(state, vaultId);
-  const { token0, token1 } = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
+  const [token0, token1] = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
   const clmStrategyAddress = selectVaultStrategyAddressOrUndefined(
     state,
     vault.cowcentratedIds.clm

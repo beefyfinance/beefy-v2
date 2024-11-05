@@ -1,11 +1,11 @@
 import { formatTokenDisplayCondensed } from '../../../../../helpers/format';
-import { makeStyles, useMediaQuery, type Theme } from '@material-ui/core';
+import { makeStyles, type Theme, useMediaQuery } from '@material-ui/core';
 import { useAppSelector } from '../../../../../store';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  selectCowcentratedLikeVaultDepositTokens,
   selectCurrentCowcentratedRangesByVaultId,
-  selectVaultTokenSymbols,
 } from '../../../../data/selectors/tokens';
 import type { VaultEntity } from '../../../../data/entities/vault';
 import { styles } from './styles';
@@ -82,8 +82,13 @@ export const CurrentCowcentratedRange = memo<CurrentCowcentratedRangeProps>(
     const classes = useStyles();
     const { t } = useTranslation();
     const { currentPrice, priceRangeMin, priceRangeMax } = range;
-    const symbols = useAppSelector(state => selectVaultTokenSymbols(state, vaultId));
-    const priceString = `${symbols[inverted ? 0 : 1]}/${symbols[inverted ? 1 : 0]}`;
+    const tokens = useAppSelector(state =>
+      selectCowcentratedLikeVaultDepositTokens(state, vaultId)
+    );
+    const priceString = useMemo(() => {
+      const symbols = tokens.map(t => t.symbol);
+      return `${symbols[inverted ? 0 : 1]}/${symbols[inverted ? 1 : 0]}`;
+    }, [tokens, inverted]);
     const showInRange = useMemo(() => {
       return currentPrice.lte(priceRangeMax) && currentPrice.gte(priceRangeMin);
     }, [currentPrice, priceRangeMax, priceRangeMin]);
