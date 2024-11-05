@@ -21,7 +21,8 @@ import partners from '../src/config/boost/partners.json';
 import campaigns from '../src/config/boost/campaigns.json';
 import pointProviders from '../src/config/points.json';
 import type { PlatformType, VaultConfig } from '../src/features/data/apis/config-types';
-import partition from 'lodash-es/partition';
+// eslint-disable-next-line no-restricted-imports
+import partition from 'lodash/partition';
 import type { AbiItem } from 'web3-utils';
 import i18keys from '../src/locales/en/main.json';
 
