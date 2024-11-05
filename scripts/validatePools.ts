@@ -25,6 +25,7 @@ import type { PlatformType, VaultConfig } from '../src/features/data/apis/config
 import partition from 'lodash/partition';
 import type { AbiItem } from 'web3-utils';
 import i18keys from '../src/locales/en/main.json';
+import { fileExists } from './common/files';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
@@ -1143,6 +1144,7 @@ async function validatePlatformTypes(): Promise<void> {
     'yield-boost',
     'farm',
   ];
+  const missingImages: string[] = [];
 
   //check if valid types have i18n keys
   for (const type of validTypes) {
@@ -1153,6 +1155,12 @@ async function validatePlatformTypes(): Promise<void> {
 
   platforms.forEach(async platform => {
     if (platform.type) {
+      const png = await fileExists(`../src/images/platforms/${platform.id}.png`);
+      const svg = await fileExists(`../src/images/platforms/${platform.id}.svg`);
+
+      if (!png && !svg) {
+        missingImages.push(platform.id);
+      }
       //check if the platform type is valid
       if (!validTypes.includes(platform.type as PlatformType)) {
         throw new Error(`Invalid platform type for ${platform.id}: ${platform.type}`);
@@ -1160,9 +1168,9 @@ async function validatePlatformTypes(): Promise<void> {
     }
   });
 
-  // if (missingImages.length > 0) {
-  //   throw new Error(`Missing images for platforms: ${missingImages.join(', ')}`);
-  // }
+  if (missingImages.length > 0) {
+    throw new Error(`Missing images for platforms: ${missingImages.join(', ')}`);
+  }
 }
 
 const override = (pools: VaultConfigWithVaultData[]): VaultConfigWithVaultData[] => {

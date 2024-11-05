@@ -1,7 +1,7 @@
 import type { PlatformEntity } from '../features/data/entities/platform';
 import { createGlobLoader } from './globLoader';
 
-const pathToUrl = import.meta.glob('../images/platforms/*.(svg|webp|png)', {
+const pathToUrl = import.meta.glob('../images/platforms/*.(svg|png)', {
   as: 'url',
   eager: true,
 });
