@@ -44,6 +44,24 @@
       {
         "type": "vault-whitelist"
       }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-balances-subgraph",
+        "role": "Indexing of all balances of all beefy products",
+        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "solv",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://app.solv.finance/points"
+      }
     ]
   },
   {
@@ -194,7 +212,7 @@
       {
         "id": "beefy-balances-subgraph",
         "role": "Indexing of all balances of all beefy products",
-        "url": "https://github.com/beefyfinance/l2-lxp-liquidity-subgraph"
+        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
       },
       {
         "id": "beefy-lrt-api",
@@ -279,7 +297,7 @@
       {
         "id": "beefy-balances-subgraph",
         "role": "Indexing of all balances of all beefy products",
-        "url": "https://github.com/beefyfinance/l2-lxp-liquidity-subgraph"
+        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
       },
       {
         "id": "beefy-lxp-adapter",
@@ -391,7 +409,7 @@
       {
         "id": "beefy-balances-subgraph",
         "role": "Indexing of all balances of all beefy products",
-        "url": "https://github.com/beefyfinance/l2-lxp-liquidity-subgraph"
+        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
       },
       {
         "id": "beefy-lrt-api",

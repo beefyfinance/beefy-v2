@@ -128,7 +128,8 @@ export type BeefyOffChainRewardsVault = {
   id: string;
   address: string;
   poolAddress: string;
-  type: 'standard' | 'gov' | 'cowcentrated';
+  /** @dev this does not match VaultEntity */
+  type: 'standard' | 'gov' | 'cowcentrated' | 'cowcentrated-pool' | 'cowcentrated-vault';
   chainId: ChainId;
 };
 

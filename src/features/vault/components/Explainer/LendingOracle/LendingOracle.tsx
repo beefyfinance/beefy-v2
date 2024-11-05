@@ -15,6 +15,7 @@ const oraclesMapToText: Record<string, string> = {
   pyth: 'Pyth Network',
   curve: 'Curve',
   redstone: 'RedStone',
+  dia: 'DIA',
 };
 
 export type LendingOracleProps = {
