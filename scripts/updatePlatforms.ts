@@ -9,7 +9,7 @@ interface Platform {
   twitter?: string;
   documentation?: string;
   description?: string;
-  platformType?: string;
+  type?: string;
 }
 
 const platformsPath = path.resolve(__dirname, '../src/config/platforms.json');

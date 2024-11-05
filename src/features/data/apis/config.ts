@@ -11,6 +11,7 @@ import type {
   MinterConfig,
   PartnersConfig,
   PlatformConfig,
+  PlatformType,
   SwapAggregatorConfig,
   SwapAggregatorConfigLoose,
   VaultConfig,
@@ -129,7 +130,11 @@ export class ConfigAPI {
   }
 
   public async fetchPlatforms(): Promise<PlatformConfig[]> {
-    return (await import('../../../config/platforms.json')).default;
+    const platforms = (await import('../../../config/platforms.json')).default;
+    return platforms.map(platform => ({
+      ...platform,
+      type: platform.type as PlatformType | undefined,
+    }));
   }
 
   public async fetchBridges(): Promise<BridgeConfig[]> {

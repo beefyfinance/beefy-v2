@@ -37,9 +37,7 @@ export const styles = (theme: Theme) => ({
     gap: '8px',
     flexGrow: 1,
   },
-  assetIcon: {
-    borderRadius: '50%',
-  },
+  assetIcon: {},
   assetSymbol: {
     ...theme.typography['body-lg-med'],
     flexGrow: 1,

@@ -6,7 +6,7 @@
     "twitter": "beefyfinance",
     "documentation": "https://docs.beefy.com/",
     "description": "Beefy is a Decentralized, Multichain Yield Optimizer that allows its users to earn compound interest on their crypto holdings. Beefy earns you the highest APYs with safety and efficiency in mind.",
-    "platformType": "alm"
+    "type": "alm"
   },
   {
     "id": "babyswap",
@@ -23,7 +23,7 @@
     "twitter": "ConicFinance",
     "documentation": "https://docs.conic.finance/conic-finance/",
     "description": "Conic Finance is an easy-to-use platform built for liquidity providers to easily diversify their exposure to multiple Curve pools. Any user can provide liquidity into a Conic Omnipool which allocates funds across Curve in proportion to protocol controlled pool weights.",
-    "platformType": "alm"
+    "type": "alm"
   },
   {
     "id": "equilibria",
@@ -32,7 +32,7 @@
     "twitter": "Equilibriafi",
     "documentation": "https://docs.equilibria.fi/",
     "description": "Equilibria Finance leverages the veToken/boosted yield model adopted by Pendle Finance to provide a boosted yield for LPs and extra reward to PENDLE holders with a tokenized version of vePENDLE, ePENDLE.",
-    "platformType": "yield boost"
+    "type": "yield-boost"
   },
   {
     "id": "magpie",
@@ -42,7 +42,7 @@
     "twitter": "magpiexyz_io",
     "documentation": "https://docs.magpiexyz.io/",
     "description": "The Magpie DAO is a suite of protocols that transcends conventional platforms with the goal of enhancing participation and user opportunities across DeFi. Integrated with an array of structures and solutions, Magpie adapts itself to different frameworks with the goal of achieving continuous growth while supporting the core functionalities of the decentralized finance ecosystem.",
-    "platformType": "yield boost"
+    "type": "yield-boost"
   },
   {
     "id": "pendle",
@@ -51,7 +51,7 @@
     "twitter": "pendle_fi",
     "documentation": "https://docs.pendle.finance/home?utm_source=landing&utm_medium=landing",
     "description": "Pendle is a permissionless yield-trading protocol where users can execute various yield-management strategies.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "apeswap",
@@ -64,7 +64,7 @@
     "twitter": "AerodromeFi",
     "documentation": "https://aerodrome.finance/docs",
     "description": "Aerodrome Finance is a next-generation AMM designed to serve as Base's central liquidity hub, combining a powerful liquidity incentive engine, vote-lock governance model, and friendly user experience. Aerodrome inherits the latest features from Velodrome V2.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "nfty",
@@ -81,7 +81,7 @@
     "twitter": "pancakeswap",
     "documentation": "https://docs.pancakeswap.finance/",
     "description": "PancakeSwap is an automated market maker (AMM) — a decentralized finance (DeFi) application that allows users to exchange tokens, providing liquidity via farming and earning fees in return.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "wsg",
@@ -134,7 +134,7 @@
     "twitter": "OpenOceanGlobal",
     "documentation": "https://docs.openocean.finance/protocol/ooe-token",
     "description": "OpenOcean is the worlds first full aggregation protocol for crypto trading that source liquidity from DeFi and CeFi, and enable cross-chain swaps. Our intelligent routing algorithm find the best prices from DEXes and CEXes, and split the routes to provide traders the best prices with low slippage and fast settlement. The function is free to use, OpenOcean users only need to pay the normal blockchain gas fees and exchange fees for the trades, which are charged by the exchanges and not OpenOcean.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "merlin",
@@ -348,7 +348,7 @@
     "twitter": "ellipsisfi",
     "documentation": "https://docs.ellipsis.finance/",
     "description": "Ellipsis is an Automated Market Maker (AMM) or exchange that lets users and other decentralised protocols exchange tokens with low fees and low slippage.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "complus",
@@ -421,7 +421,7 @@
     "twitter": "StargateFinance",
     "documentation": "https://stargateprotocol.gitbook.io/stargate/v/user-docs/",
     "description": "Stargate is a community-driven organization building the first fully composable native asset bridge, and the first dApp built on LayerZero.",
-    "platformType": "bridge"
+    "type": "bridge"
   },
   {
     "id": "emp",
@@ -454,7 +454,7 @@
     "twitter": "dotdotdotfi",
     "documentation": "https://docs.dotdot.finance/",
     "description": "Dot Finance is a decentralized finance (DeFi) protocol designed to enhance yield optimization, voting power, and liquidity provisioning on the Ellipsis platform.",
-    "platformType": "yield boost"
+    "type": "yield-boost"
   },
   {
     "id": "pera",
@@ -482,12 +482,12 @@
   },
   {
     "id": "traderjoe",
-    "name": "Trader Joe",
+    "name": "LFJ",
     "website": "https://lfj.gg/",
     "twitter": "LFJ_gg",
     "documentation": "https://docs.lfj.gg/",
     "description": "Let's F***ing Joe (formerly Trader Joe) is your one-stop decentralized trading platform of which JOE is the governance token that rewards its holders with a share of exchange revenues.\n",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "curve",
@@ -496,7 +496,7 @@
     "twitter": "curvefinance",
     "documentation": "https://docs.curve.fi/",
     "description": "Curve is an exchange liquidity pool on Ethereum. Curve is designed for extremely efficient stablecoin trading and low risk, supplemental fee income for liquidity providers, without an opportunity cost.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "curve-lend",
@@ -505,7 +505,7 @@
     "twitter": "curvefinance",
     "documentation": "https://lend.curve.fi/",
     "description": "Curve lending allows the creation of permissionless lending/borrowing markets to borrow crvUSD against any token, or to borrow any token against crvUSD in an isolated mode, powered by LLAMMA for soft-liquidations.",
-    "platformType": "money market"
+    "type": "money-market"
   },
   {
     "id": "oliveswap",
@@ -546,7 +546,7 @@
     "twitter": "aave",
     "documentation": "https://docs.aave.com/",
     "description": "Aave is a decentralized non-custodial liquidity protocol where users can participate as depositors or borrowers. Depositors provide liquidity to the market to earn a passive income, while borrowers are able to borrow in an overcollateralized (perpetually) or undercollateralized (one-block liquidity) fashion.",
-    "platformType": "money market"
+    "type": "money-market"
   },
   {
     "id": "quickswap",
@@ -555,7 +555,7 @@
     "twitter": "QuickswapDEX",
     "documentation": "https://docs.quickswap.exchange/",
     "description": "At QuickSwap users can swap, LP, farm, stake, and trade perpetual swaps at fast speeds with extremely low transaction fees. Home to the DragonFi ecosystem, QuickSwap aims to provide a comprehensive suite of products and services that extend beyond just DeFi, including a decentralised Perpetual Exchange, Gaming Hub, and more.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "polywise",
@@ -652,7 +652,7 @@
     "twitter": "beethoven_x",
     "documentation": "https://docs.beets.fi/",
     "description": "Beethoven X is a next generation decentralized investment platform built for the future of finance. Leveraging the most advanced technology in the industry, we provide innovative, capital-efficient, and sustainable solutions for all DeFi users. Built around the core concept of programmable liquidity, Beethoven X is more than just a Decentralized Exchange. Versatile and adaptable, our product is future oriented and primed to meet the needs of an evolving industry.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "scream",
@@ -673,7 +673,7 @@
     "twitter": "spookyswap",
     "documentation": "https://docs.spooky.fi/v/master/",
     "description": "SpookySwap is an automated market-making (AMM) decentralized exchange (DEX) for the Fantom Opera network. Different from other DEXs, we're invested in building a strong foundation with our BOO token as a governance token, diverse farms, grants to encourage a healthy ecology of other Fantom projects, and user-centered service.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "tomb",
@@ -694,7 +694,7 @@
     "twitter": "sushiswap",
     "documentation": "https://dev.sushi.com/",
     "description": "Sushi is the home of DeFi. Their community is building a comprehensive, decentralized trading platform for the future of finance. Swap, earn, stack yields, lend, borrow, leverage all on one decentralized, community driven platform.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "0xdao",
@@ -719,7 +719,7 @@
     "twitter": "wigoswap",
     "documentation": "https://docs.wigoswap.io/wigo-ecosystem/wigo-token",
     "description": "WigoSwap is a DeFi hub with lifetime farming earnings powered by Gamified Burning Mechanism (GBM).",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "based",
@@ -756,7 +756,7 @@
     "twitter": "VVS_finance",
     "documentation": "https://docs.vvs.finance/",
     "description": "VVS is designed to be the simplest DeFi platform for users to swap tokens, earn high yields, and most importantly have fun!",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "cronaswap",
@@ -785,7 +785,7 @@
     "twitter": "netswapofficial",
     "documentation": "",
     "description": "Netswap is a decentralized exchange (DEX) which runs on Metis Andromeda (Layer2), uses the same automated market-making (AMM) model as Uniswap, features a native governance token called NETT that is fully community distributed and is capable of trading all tokens issued on Ethereum and Metis Andromeda. In a crowded marketplace with multiple contenders, Netswap offers four critically important benefits: fast and cheap trades, built-in leverage swap function, community-driven development, and a fair and open token distribution.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "tethys",
@@ -810,7 +810,7 @@
     "twitter": "StellaSwap",
     "documentation": "https://docs.stellaswap.com/",
     "description": "Stellaswap is a decentralized exchange, providing liquidity and enabling peer-to-peer transactions on the Moonbeam Network.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "beamswap",
@@ -835,7 +835,7 @@
     "twitter": "Balancer",
     "documentation": "https://docs.balancer.fi/",
     "description": "Balancer turns the concept of an index fund on its head: instead of a paying fees to portfolio managers to rebalance your portfolio, you collect fees from traders, who rebalance your portfolio by following arbitrage opportunities.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "velodrome",
@@ -844,7 +844,7 @@
     "twitter": "VelodromeFi",
     "documentation": "https://velodrome.finance/docs",
     "description": "Velodrome Finance, at its core, is a solution for protocols on Optimism to properly incentivize liquidity for their own use cases. Building on top of the groundwork laid out by Solidly, our team has addressed that first iteration's core issues to realize its full potential.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "swapsicle",
@@ -877,7 +877,7 @@
     "twitter": "GMX_IO",
     "documentation": "https://docs.gmx.io/",
     "description": "GMX is a decentralized spot and perpetual exchange that supports low swap fees and low price impact trades.",
-    "platformType": "perps"
+    "type": "perps"
   },
   {
     "id": "ferro",
@@ -886,7 +886,7 @@
     "twitter": "FerroProtocol",
     "documentation": "https://docs.ferroprotocol.com/",
     "description": "Ferro Protocol is a StableSwap AMM protocol that allows users to exchange with low slippage and minimum fee and farm tokens by creating more efficient pools consisting of highly correlated assets, as well as allowing better composability between protocols in the Cronos ecosystem.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "aura",
@@ -895,7 +895,7 @@
     "twitter": "aurafinance",
     "documentation": "https://docs.aura.finance/",
     "description": "Aura Finance is a protocol built on top of the Balancer system to provide maximum incentives to Balancer liquidity providers and BAL stakers (into veBAL) through social aggregation of BAL deposits and Aura’s native token. For BAL stakers, Aura provides a seamless onboarding process to veBAL, by creating a tokenised wrapper token called auraBAL that represents the 80/20 BPT locked up for the maximum time in VotingEscrow (read more about what this means). This can be staked to receive existing rewards (BAL and bbaUSD) from Balancer, in addition to a share of any BAL earned by Aura (read more about the fees), and additional AURA. This minting process is irreversible however users can trade their auraBAL back to BAL through an incentivised liquidity pool.",
-    "platformType": "yield boost"
+    "type": "yield-boost"
   },
   {
     "id": "hop",
@@ -904,7 +904,7 @@
     "twitter": "HopProtocol",
     "documentation": "https://docs.hop.exchange/",
     "description": "Hop Protocol is a blockchain bridge protocol that allows users to move tokens from one chain to another without having to wait for a challenge period",
-    "platformType": "bridge"
+    "type": "bridge"
   },
   {
     "id": "convex",
@@ -913,7 +913,7 @@
     "twitter": "ConvexFinance",
     "documentation": "https://docs.convexfinance.com/",
     "description": "Convex allows Curve.fi liquidity providers to earn trading fees and claim boosted CRV without locking CRV themselves. Liquidity providers can receive boosted CRV and liquidity mining rewards with minimal effort.",
-    "platformType": "yield boost"
+    "type": "yield-boost"
   },
   {
     "id": "swapfish",
@@ -930,7 +930,7 @@
     "twitter": "Equalizer0x",
     "documentation": "https://docs.equalizer.exchange/",
     "description": "Equalizer was derived from the initial concept of Andre Cronje. The mechanism that was used to create a perpetual decentralized exchange was unique and ingenious. The launch of this platform is to take the concept and apply it to a more natural style DEX. Equalizer will become the trading mechanism for the Fantom network, utilizing the Solidly perpetual model with some tweaks to fee structures and emissions.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "mvx",
@@ -943,7 +943,7 @@
     "twitter": "ThenaFi_",
     "documentation": "https://docs.thena.fi/thena",
     "description": "We envision THENA as being the native liquidity layer of BNB Chain, enabling value creation by opening the gates for new protocols that wish to solve the cold start liquidity problem, as well as for established protocols looking for a long-term solution to reduce costs to incentivize their liquidity. THENA is a public good owned by protocols and users, with both parties contributing to THENAs status as the leading AMM. We believe that in a decentralized and open-source economy, a collaborative strategy is essential to outrun the competition and establish your product as a market leader.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "monolith",
@@ -956,7 +956,7 @@
     "twitter": "GainsNetwork_io",
     "documentation": "https://gains-network.gitbook.io/docs-home/",
     "description": "Decentralized leverage trading platform on Polygon and Arbitrum.",
-    "platformType": "perps"
+    "type": "perps"
   },
   {
     "id": "kyber",
@@ -973,7 +973,7 @@
     "twitter": "MoonwellDeFi",
     "documentation": "https://docs.moonwell.fi/moonwell/discover/about-moonwell",
     "description": "Moonwell is an open and decentralized lending and borrowing protocol built on Base, Optimism, Moonbeam, and Moonriver. The app's intuitive design ensures a streamlined user experience, enabling everyone to do more with their digital assets.",
-    "platformType": "money market"
+    "type": "money-market"
   },
   {
     "id": "cantoDex",
@@ -982,7 +982,7 @@
     "twitter": "CantoPublic",
     "documentation": "https://docs.canto.io/",
     "description": "Canto is a permissionless general-purpose blockchain running the Ethereum Virtual Machine (EVM). It was built to deliver on the promise of DeFi – that through a post-traditional financial movement, new systems will be made accessible, transparent, decentralized, and free.",
-    "platformType": "amm"
+    "type": "amm"
   },
   {
     "id": "solidlizard",
@@ -1006,26 +1006,26 @@
     "website": "https://apecoin.com/",
     "twitter": "apecoin",
     "documentation": "https://apecoin.com/about",
-    "description": "",
-    "platformType": ""
+    "description": "ApeCoin is the APE Ecosystems governance token, allowing token holders to participate in ApeCoin DAO and giving its participants a shared and open currency that can be used without centralized intermediaries.",
+    "type": "farm"
   },
   {
     "id": "ramses",
     "name": "Ramses",
     "website": "https://app.ramses.exchange/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "RamsesExchange",
+    "documentation": "https://docs.ramses.exchange/",
+    "description": "Ramses is a decentralized exchange built on Arbitrum that offers low-cost token exchanges and reduced swap fees, using a governance model called the ve(3,3) system, which was developed by Andre Cronje and introduced in Solidly.",
+    "type": "amm"
   },
   {
     "id": "mummy",
     "name": "Mummy",
     "website": "https://app.mummy.finance/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "mummyftmfi",
+    "documentation": "https://docs.mummy.finance/",
+    "description": "A SuperDEX that has implemented cutting-edge technology to provide traders with an unparalleled experience and reshape the concept of trading on Fantom Opera.",
+    "type": "perps"
   },
   {
     "id": "arbidex",
@@ -1047,10 +1047,10 @@
     "id": "pearl",
     "name": "Pearl",
     "website": "https://www.pearl.exchange/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "PearlFi_",
+    "documentation": "https://docs.pearl.exchange/",
+    "description": "Pearl is the native liquidity layer for RWAs on re.al blockchain. Pearl provides a liquidity solution for both new and existing RWA protocols, solving initial liquidity challenges while also serving as an efficient solution to long-term liquidity incentivization.",
+    "type": "amm"
   },
   {
     "id": "chronos",
@@ -1060,19 +1060,19 @@
     "id": "gamma",
     "name": "Gamma",
     "website": "https://app.gamma.xyz/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "GammaStrategies",
+    "documentation": "https://docs.gamma.xyz/gamma",
+    "description": "Gamma is a protocol designed for non-custodial, automated, and active management of concentrated liquidity.",
+    "type": "alm"
   },
   {
     "id": "vesync",
     "name": "veSync",
     "website": "https://vesync.finance/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "veSyncL2",
+    "documentation": "https://docs.vesync.finance/",
+    "description": "veSync is a community-driven, ve(3,3) Decentralized Exchange (DEX) built on the zkSync network, providing a powerful and efficient platform for DeFi liquidity.",
+    "type": "amm"
   },
   {
     "id": "betswirl",
@@ -1082,10 +1082,10 @@
     "id": "baseswap",
     "name": "BaseSwap",
     "website": "https://baseswap.fi/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "BaseSwapDex",
+    "documentation": "https://docs.baseswap.fi/baseswap",
+    "description": "BaseSwap: The premier DEX on Base Chain. Crafted by a Based team, for a Based community. From simple to sophisticated, BaseSwap offers it all.",
+    "type": "amm"
   },
   {
     "id": "retro",
@@ -1095,10 +1095,10 @@
     "id": "uniswap",
     "name": "Uniswap",
     "website": "https://app.uniswap.org/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "Uniswap",
+    "documentation": "https://docs.uniswap.org/concepts/governance/overview",
+    "description": "The Uniswap protocol is a peer-to-peer system designed for exchanging cryptocurrencies (ERC-20 Tokens) on the Ethereum blockchain. The protocol is implemented as a set of persistent, non-upgradable smart contracts; designed to prioritize censorship resistance, security, self-custody, and to function without any trusted intermediaries who may selectively restrict access.",
+    "type": "amm"
   },
   {
     "id": "dracula",
@@ -1111,7 +1111,7 @@
     "twitter": "",
     "documentation": "",
     "description": "",
-    "platformType": ""
+    "type": ""
   },
   {
     "id": "bvm",
@@ -1120,16 +1120,16 @@
     "twitter": "",
     "documentation": "",
     "description": "",
-    "platformType": ""
+    "type": ""
   },
   {
     "id": "alienbase",
     "name": "AlienBase",
     "website": "https://app.alienbase.xyz/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "alienbasedex",
+    "documentation": "https://docs.alienbase.xyz/",
+    "description": "Alien Base revolutionises DeFi by offering fast, secure swaps and easy token launches.",
+    "type": "amm"
   },
   {
     "id": "swapbased",
@@ -1149,27 +1149,27 @@
     "twitter": "",
     "documentation": "",
     "description": "",
-    "platformType": ""
+    "type": ""
   },
   {
     "id": "compound",
     "name": "Compound",
     "filter": true,
     "website": "https://app.compound.finance/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "compoundfinance",
+    "documentation": "https://docs.compound.finance/",
+    "description": "Compound III is an EVM compatible protocol that enables supplying of crypto assets as collateral in order to borrow the base asset. Accounts can also earn interest by supplying the base asset to the protocol.",
+    "type": "money-market"
   },
   {
     "id": "ichi",
     "name": "Ichi",
     "filter": true,
     "website": "https://app.ichi.org/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "ichifoundation",
+    "documentation": "https://docs.ichi.org/home",
+    "description": "ICHI is a non-custodial, automated protocol designed to optimize the use of capital in decentralized finance (DeFi). It leverages single-sided concentrated liquidity pools to simplify the liquidity provision process across various automated market makers (AMMs).",
+    "type": "alm"
   },
   {
     "id": "bril",
@@ -1181,10 +1181,10 @@
     "name": "Silo",
     "filter": true,
     "website": "https://app.silo.finance/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "SiloFinance",
+    "documentation": "https://silopedia.silo.finance/",
+    "description": "Silo is a risk-isolated lending market that allow users to deposit tokens to earn interest or as collateral to borrow other tokens.",
+    "type": "money-market"
   },
   {
     "id": "sonne",
@@ -1201,20 +1201,20 @@
     "name": "Mendi",
     "filter": true,
     "website": "https://mendi.finance/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "MendiFinance",
+    "documentation": "https://docs.mendi.finance/",
+    "description": "Mendi Finance is an EVM compatible lending/borrowing protocol on Linea. Mendi Finance provides peer-to-peer lending solutions that are fully decentralized, transparent and non-custodial. Similar to (and based on) existing lending platforms like Compound Finance and AAVE users will be able to lend any supported assets on our platform, and use their capital to borrow supported assets.",
+    "type": "money-market"
   },
   {
     "id": "lendle",
     "name": "Lendle",
     "filter": true,
     "website": "https://app.lendle.xyz/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "lendlexyz",
+    "documentation": "https://docs.lendle.xyz/",
+    "description": "Mantle's native permissionless money-market that redistributes revenue to its users, paid in blue chip assets.",
+    "type": "money-market"
   },
   {
     "id": "moe",
@@ -1222,10 +1222,10 @@
     "filter": true,
     "risks": ["NO_TIMELOCK"],
     "website": "https://merchantmoe.com/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "merchantmoe_xyz",
+    "documentation": "https://docs.merchantmoe.com/merchant-moe/",
+    "description": "Merchant Moe is a traders oasis in the bustling world of Decentralized Finance (DeFi) on Mantle Network, offering a comprehensive and user-friendly Decentralized Exchange (DEX) experience.",
+    "type": "amm"
   },
   {
     "id": "fx",
@@ -1233,20 +1233,20 @@
     "filter": true,
     "risks": ["NO_TIMELOCK"],
     "website": "https://fx.aladdin.club/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "protocol_fx",
+    "documentation": "https://docs.aladdin.club/f-x-protocol",
+    "description": "f(x) Protocol creates two new ETH derivative assets, one with stablecoin-like low volatility and the second a leveraged long ETH perpetual token. These tokens are created by separating ETH collateral into a lower-volatility component (β < 1) called fractional ETH (fETH) and a higher-volatility (β > 1) one called leveraged ETH (xETH).",
+    "type": "yield-boost"
   },
   {
     "id": "lynex",
     "name": "Lynex",
     "filter": true,
     "website": "https://app.lynex.fi/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "LynexFi",
+    "documentation": "https://lynex.gitbook.io/lynex-docs/protocol-overview/about-lynex",
+    "description": "Lynex democratizes sophisticated liquidity strategies, seamlessly connecting everyday traders with expert-level capabilities. Our platform features a competitive ecosystem of Automated Liquidity Managers (ALMs) and strategists, all striving to optimize returns, minimize risks like impermanent loss, and boost overall efficiency for every user.",
+    "type": "amm"
   },
   {
     "id": "mshards",
@@ -1259,10 +1259,10 @@
     "filter": true,
     "risks": ["NO_TIMELOCK"],
     "website": "https://www.ra.exchange/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "exchange_RA",
+    "documentation": "https://docs.ra.exchange/",
+    "description": "RA is The Next Generation of Concentrated Liquidity. Only on Fraxtal. RA takes concentrated liquidity to the next level, optimizing for high frequency LPs and Layer 2 cost structures. The result is a hyper-efficient liquidity layer designed to attract the most effective liquidity providers, while delivering a clean and simple UX for traders.",
+    "type": "amm"
   },
   {
     "id": "stakedao",
@@ -1274,80 +1274,80 @@
     "name": "Nile",
     "filter": true,
     "website": "https://www.nile.build/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "nileexchange",
+    "documentation": "https://docs.nile.build/",
+    "description": "NILE is The Next Generation of Concentrated Liquidity. NILE takes concentrated liquidity to the next level, optimizing for high frequency LPs and Layer 2 cost structures. The result is a hyper-efficient liquidity layer designed to attract the most effective liquidity providers, while delivering a clean and simple UX for traders.",
+    "type": "amm"
   },
   {
     "id": "mim",
     "name": "MIMSwap",
     "filter": true,
     "website": "https://app.abracadabra.money/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "MIM_Spell",
+    "documentation": "https://docs.abracadabra.money/learn/",
+    "description": "Abracadabra.money is a Omnichain DeFi lending platform that works its magic by utilizing interest-bearing tokens as collateral to mint Magic Internet Money, a USD-Denominated stablecoin.",
+    "type": "farm"
   },
   {
     "id": "sky",
     "name": "Sky",
     "filter": true,
     "website": "https://sky.money/",
-    "twitter": "",
-    "documentation": "",
+    "twitter": "SkyEcosystem",
+    "documentation": "https://docs.sky.money/",
     "description": "",
-    "platformType": ""
+    "type": ""
   },
   {
     "id": "oku",
     "name": "Uniswap (Oku)",
     "filter": true,
     "website": "https://oku.trade/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "okutrade",
+    "documentation": "https://docs.oku.trade/",
+    "description": "Oku is a non-custodial DeFi meta-aggregator offering the best swap and bridge rates across any EVM chain. Make market and limit orders, manage Uniswap v3 liquidity positions, and on/off ramp directly to any EU or US bank with zero fees.",
+    "type": "amm"
   },
   {
     "id": "camelot",
     "name": "Camelot",
     "filter": true,
     "website": "https://app.camelot.exchange/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "camelotdex",
+    "documentation": "https://docs.camelot.exchange/",
+    "description": "Camelot is a decentralized and permissionless exchange that supports the Arbitrum ecosystem with highly efficient liquidity infrastructure. ",
+    "type": "amm"
   },
   {
     "id": "yei",
     "name": "Yei",
     "filter": true,
     "website": "https://app.yei.finance/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "YeiFinance",
+    "documentation": "https://docs.yei.finance/",
+    "description": "A pioneering decentralized, non-custodial money-market protocol on the Sei network, crafted to offer flexible and innovative financial solutions. ",
+    "type": "money-market"
   },
   {
     "id": "pharaoh",
     "name": "Pharaoh",
     "filter": true,
     "website": "https://pharaoh.exchange/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "PharaohExchange",
+    "documentation": "https://docs.pharaoh.exchange/",
+    "description": "PHARAOH is The Next Generation of Concentrated Liquidity. PHARAOH takes concentrated liquidity to the next level, optimizing for high frequency LPs and performance. The result is a hyper-efficient liquidity layer designed to attract the most effective liquidity providers, while delivering a clean and simple UX for traders. As a fork of RAMSES, PHARAOH inherits the proven proprietary Concentrated Liquidity ve(3,3) implementation-- bringing unparalleled efficiency to the Avalanche liquidity scene.",
+    "type": "amm"
   },
   {
     "id": "dragon",
     "name": "DragonSwap",
     "filter": true,
     "website": "https://dragonswap.app/",
-    "twitter": "",
-    "documentation": "",
-    "description": "",
-    "platformType": ""
+    "twitter": "dragonswap_dex",
+    "documentation": "https://docs.dragonswap.app/dragonswap",
+    "description": "https://docs.dragonswap.app/dragonswap",
+    "type": "amm"
   },
   {
     "id": "nuri",

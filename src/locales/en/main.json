@@ -823,5 +823,6 @@
   "Details-Platform-Description-yield-boost": "A 'Yield Boost Protocol' is a DeFi platform that aims to boost the yields available through other DeFi protocols by aggregating voting power to direct incentives and efforts towards the products it builds on top of.",
   "Platform-NoDescription": "No platform description available.",
   "PlatformTag-Farm": "The LP tokens of this pool are staked into {{platformName}} to earn emissions",
-  "PlatformTag-Twitter": "Twitter"
+  "PlatformTag-Twitter": "Twitter",
+  "Platform-NoDescrip": "Pending Platform Description"
 }

@@ -63,7 +63,7 @@ function addPlatformToState(sliceState: Draft<PlatformsState>, platformConfig: P
       website: platformConfig.website || '',
       documentation: platformConfig.documentation || '',
       description: platformConfig.description || '',
-      platformType: platformConfig.platformType,
+      type: platformConfig.type || undefined,
     };
     sliceState.byId[platform.id] = platform;
     sliceState.allIds.push(platform.id);

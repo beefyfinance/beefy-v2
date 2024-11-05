@@ -8,9 +8,9 @@ export interface PlatformEntity {
   id: string;
   name: string;
   risks: string[];
-  description: string;
+  description?: string;
   twitter: string;
   website: string;
   documentation: string;
-  platformType: PlatformConfig['platformType'];
+  type?: PlatformConfig['type'];
 }

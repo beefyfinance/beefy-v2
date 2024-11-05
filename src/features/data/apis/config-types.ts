@@ -343,15 +343,17 @@ export interface MinterConfig {
   canZapInWithOneInch?: boolean;
 }
 
+export type PlatformType = 'amm' | 'alm' | 'bridge' | 'money-maket' | 'perps' | 'yield-boost';
+
 export type PlatformConfig = {
-  id: string;
-  name: string;
-  risks?: string[];
-  description?: string;
-  twitter?: string;
-  website?: string;
-  documentation?: string;
-  platformType: 'amm' | 'alm' | 'bridge' | 'money-maket' | 'perps' | 'yield-boost';
+  readonly id: string;
+  readonly name: string;
+  readonly risks?: string[];
+  readonly description?: string;
+  readonly twitter?: string;
+  readonly website?: string;
+  readonly documentation?: string;
+  readonly type?: PlatformType;
 };
 
 export interface TokenHoldingConfig {

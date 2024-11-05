@@ -52,16 +52,18 @@ function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
           )}
         </div>
         <div className={classes.assetBridgePrice}>
-          <TagWithTooltip
-            content={
-              <TagTooltip content={t(`Details-Platform-Description-${platform.platformType}`)} />
-            }
-          >
-            {t(`Details-Platform-${platform.platformType}`)}
-          </TagWithTooltip>
+          {platform.type ? (
+            <TagWithTooltip
+              content={<TagTooltip content={t(`Details-Platform-Description-${platform.type}`)} />}
+            >
+              {t(`Details-Platform-${platform.type}`)}
+            </TagWithTooltip>
+          ) : null}
         </div>
       </div>
-      <div className={classes.description}>{platform.description ?? t('Token-NoDescrip')}</div>
+      <div className={classes.description}>
+        {platform.description ? platform.description : t('Platform-NoDescrip')}
+      </div>
     </div>
   );
 }
