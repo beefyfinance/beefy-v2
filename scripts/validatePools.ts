@@ -21,7 +21,6 @@ import partners from '../src/config/boost/partners.json';
 import campaigns from '../src/config/boost/campaigns.json';
 import pointProviders from '../src/config/points.json';
 import type { PlatformType, VaultConfig } from '../src/features/data/apis/config-types';
-// eslint-disable-next-line no-restricted-imports
 import partition from 'lodash/partition';
 import type { AbiItem } from 'web3-utils';
 import i18keys from '../src/locales/en/main.json';
@@ -190,7 +189,10 @@ const validatePools = async () => {
     }
   }
 
-  validatePlatformTypes();
+  const platformExitCode = await validatePlatformTypes();
+  if (platformExitCode !== 0) {
+    exitCode = platformExitCode;
+  }
 
   let promises = chainIds.map(chainId => validateSingleChain(chainId, uniquePoolId));
   let results = await Promise.all(promises);
@@ -1134,43 +1136,70 @@ const populateStrategyData = async (
   }
 };
 
-async function validatePlatformTypes(): Promise<void> {
-  const validTypes: PlatformType[] = [
-    'amm',
-    'alm',
-    'bridge',
-    'money-market',
-    'perps',
-    'yield-boost',
-    'farm',
-  ];
-  const missingImages: string[] = [];
+async function validatePlatformTypes(): Promise<number> {
+  let exitCode = 0;
+  // hack to make sure all the platform types in PlatformType are present in the set
+  const validTypes = new Set<string>(
+    Object.keys({
+      amm: true,
+      alm: true,
+      bridge: true,
+      'money-market': true,
+      perps: true,
+      'yield-boost': true,
+      farm: true,
+    } satisfies Record<PlatformType, unknown>)
+  );
 
-  //check if valid types have i18n keys
-  for (const type of validTypes) {
-    if (!i18keys[`Details-Platform-Description-${type}`] || !i18keys[`Details-Platform-${type}`]) {
-      throw new Error(`Missing i18n key for platform type: ${type}`);
+  // Check if valid types have i18n keys
+  for (const type of validTypes.keys()) {
+    const requiredKeys = [`Details-Platform-Description-${type}`, `Details-Platform-${type}`];
+    for (const key of requiredKeys) {
+      if (!i18keys[key]) {
+        console.error(`Missing i18n key "${key}" for platform type "${type}"`);
+        exitCode = 1;
+      }
     }
   }
 
-  platforms.forEach(async platform => {
-    if (platform.type) {
-      const png = await fileExists(`../src/images/platforms/${platform.id}.png`);
-      const svg = await fileExists(`../src/images/platforms/${platform.id}.svg`);
-
-      if (!png && !svg) {
-        missingImages.push(platform.id);
+  const platformsWithType = platforms.filter(
+    (
+      platform
+    ): platform is Extract<
+      (typeof platforms)[number],
+      {
+        type: string;
       }
-      //check if the platform type is valid
-      if (!validTypes.includes(platform.type as PlatformType)) {
-        throw new Error(`Invalid platform type for ${platform.id}: ${platform.type}`);
+    > => !!platform.type
+  );
+  await Promise.all(
+    platformsWithType.map(async platform => {
+      // Check type is valid
+      if (!validTypes.has(platform.type)) {
+        console.error(`Platform ${platform.id}: Invalid type "${platform.type}"`);
+        exitCode = 1;
       }
-    }
-  });
 
-  if (missingImages.length > 0) {
-    throw new Error(`Missing images for platforms: ${missingImages.join(', ')}`);
-  }
+      // Platform image must exist if platform has a type
+      const possiblePaths = [
+        `./src/images/platforms/${platform.id}.svg`,
+        `./src/images/platforms/${platform.id}.png`,
+      ];
+      let found = false;
+      for (const path of possiblePaths) {
+        if (await fileExists(path)) {
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        console.error(`Platform ${platform.id}: Missing image: "${possiblePaths[0]}"`);
+        exitCode = 1;
+      }
+    })
+  );
+
+  return exitCode;
 }
 
 const override = (pools: VaultConfigWithVaultData[]): VaultConfigWithVaultData[] => {
