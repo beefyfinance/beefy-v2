@@ -36,7 +36,6 @@ import {
 import type { ChainEntity } from '../entities/chain';
 import type { UserLpBreakdownBalanceAsset } from './balance-types';
 import {
-  selectBoostRewardsTokenEntity,
   selectBoostUserRewardsInToken,
   selectGovVaultPendingRewardsWithPrice,
   selectUserDepositedVaultIds,
@@ -159,19 +158,25 @@ export const selectDashboardUserRewardsByVaultId = (
   if (isStandardVault(vault)) {
     const boosts = selectAllVaultBoostIds(state, vaultId);
     for (const boostId of boosts) {
-      const boostPendingRewards = selectBoostUserRewardsInToken(state, boostId, walletAddress);
-      if (boostPendingRewards.isGreaterThan(BIG_ZERO)) {
-        const rewardToken = selectBoostRewardsTokenEntity(state, boostId);
-        const oraclePrice = selectTokenPriceByTokenOracleId(state, rewardToken.oracleId);
-        const tokenRewardsUsd = boostPendingRewards.times(oraclePrice);
+      const boostRewards = selectBoostUserRewardsInToken(state, boostId, walletAddress) || [];
+      for (const boostReward of boostRewards) {
+        if (boostReward.amount.isGreaterThan(BIG_ZERO)) {
+          const rewardToken = selectTokenByAddress(
+            state,
+            boostReward.token.chainId,
+            boostReward.token.address
+          );
+          const oraclePrice = selectTokenPriceByTokenOracleId(state, rewardToken.oracleId);
+          const tokenRewardsUsd = boostReward.amount.times(oraclePrice);
 
-        rewards.push({
-          token: rewardToken,
-          amount: boostPendingRewards,
-          usd: tokenRewardsUsd,
-          source: 'boost',
-          status: 'pending',
-        });
+          rewards.push({
+            token: rewardToken,
+            amount: boostReward.amount,
+            usd: tokenRewardsUsd,
+            source: 'boost',
+            status: 'pending',
+          });
+        }
       }
     }
   }

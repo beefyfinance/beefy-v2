@@ -17,6 +17,11 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.contentPrimary,
     borderRadius: '12px',
   },
+  containerExpiredBoosts: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '16px',
+  },
   boostImg: {
     width: 30,
     height: 30,
@@ -40,6 +45,7 @@ export const styles = (theme: Theme) => ({
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
     columnGap: '16px',
     backgroundColor: theme.palette.background.contentLight,
+    color: theme.palette.text.middle,
     padding: '12px',
     borderRadius: '8px',
   },
@@ -54,6 +60,14 @@ export const styles = (theme: Theme) => ({
   },
   boostStatValue: {
     ...theme.typography['body-lg-med'],
+    display: 'flex',
+    gap: '4px',
+    alignItems: 'center',
+  },
+  boostStatsFadeInactive: {
+    color: theme.palette.text.dark,
+  },
+  boostStatValueActive: {
     color: theme.palette.text.middle,
   },
   button: {

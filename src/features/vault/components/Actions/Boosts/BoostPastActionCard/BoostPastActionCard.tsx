@@ -1,91 +1,76 @@
 import { makeStyles } from '@material-ui/core';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AssetsImage } from '../../../../../../components/AssetsImage';
-import { Button } from '../../../../../../components/Button';
-import { formatTokenDisplayCondensed } from '../../../../../../helpers/format';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { startStepper } from '../../../../../data/actions/stepper';
-import { walletActions } from '../../../../../data/actions/wallet-actions';
+import { useAppSelector } from '../../../../../../store';
 import type { BoostEntity } from '../../../../../data/entities/boost';
-import { stepperActions } from '../../../../../data/reducers/wallet/stepper';
 import {
-  selectBoostRewardsTokenEntity,
   selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
 } from '../../../../../data/selectors/balance';
-import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 import { styles } from './styles';
 import { selectStandardVaultById } from '../../../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
+import { selectBoostById } from '../../../../../data/selectors/boosts';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
+import { type Reward, Rewards } from '../Rewards';
+import { Claim } from '../ActionButton/Claim';
+import { TokenAmount } from '../../../../../../components/TokenAmount';
+import { Unstake } from '../ActionButton/Unstake';
 
 const useStyles = makeStyles(styles);
 
 interface BoostPastCardActionCardProps {
-  boost: BoostEntity;
+  boostId: BoostEntity['id'];
 }
 
-export const BoostPastActionCard = memo<BoostPastCardActionCardProps>(function BoostPastActionCard({
-  boost,
-}) {
+export const BoostPastActionCard = memo(function BoostPastActionCard({
+  boostId,
+}: BoostPastCardActionCardProps) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const dispatch = useAppDispatch();
+  const boost = useAppSelector(state => selectBoostById(state, boostId));
   const vault = useAppSelector(state => selectStandardVaultById(state, boost.vaultId));
+  const userRewards = useAppSelector(state => selectBoostUserRewardsInToken(state, boost.id));
+  const [rewards, canClaim] = useMemo(() => {
+    let hasPendingRewards = false;
+    const rewards: Reward[] = userRewards.map(userReward => {
+      hasPendingRewards = hasPendingRewards || !userReward.amount.isZero();
+      return {
+        token: userReward.token,
+        index: userReward.index,
+        pending: userReward.amount,
+        isPreStake: false,
+        periodFinish: undefined,
+        rewardRate: BIG_ZERO,
+        active: false,
+      };
+    });
+    return [rewards, hasPendingRewards];
+  }, [userRewards]);
   const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const boostBalance = useAppSelector(state => selectBoostUserBalanceInToken(state, boost.id));
-  const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
-  const boostPendingRewards = useAppSelector(state =>
-    selectBoostUserRewardsInToken(state, boost.id)
-  );
-
-  const isStepping = useAppSelector(selectIsStepperStepping);
-
-  const handleExit = (boost: BoostEntity) => {
-    dispatch(
-      stepperActions.addStep({
-        step: {
-          step: 'claim-unstake',
-          message: t('Vault-TxnConfirm', { type: t('Claim-Unstake-noun') }),
-          action: walletActions.exitBoost(boost),
-          pending: false,
-        },
-      })
-    );
-
-    dispatch(startStepper(boost.chainId));
-  };
+  const canUnstake = boostBalance.gt(0);
 
   return (
-    <div className={classes.expiredBoostContainer} key={boost.id}>
+    <div className={classes.expiredBoostContainer}>
       <div className={classes.title}>
-        <AssetsImage size={24} chainId={boost.chainId} assetSymbols={[rewardToken.symbol]} />
         <div className={classes.expiredBoostName}>{t('Boost-NameBoost', { name: boost.name })}</div>
       </div>
-      <div className={classes.balances}>
-        <div className={classes.balance}>
-          {t('Staked')}{' '}
-          <span>{formatTokenDisplayCondensed(boostBalance, depositToken.decimals)}</span>
-        </div>
-        <div className={classes.balance}>
-          {t('Earned')}{' '}
-          <span>
-            {formatTokenDisplayCondensed(boostPendingRewards, rewardToken.decimals)}{' '}
-            {rewardToken.symbol}
-          </span>
+      <div>
+        <div className={classes.label}>{t('Staked')}</div>
+        <div className={classes.value}>
+          <TokenAmount amount={boostBalance} decimals={depositToken.decimals} />
+          {depositToken.symbol}
         </div>
       </div>
-      <Button
-        onClick={() => handleExit(boost)}
-        disabled={isStepping}
-        fullWidth={true}
-        borderless={true}
-        variant="boost"
-      >
-        {t('Boost-Button-Claim-Unstake')}
-      </Button>
+      {canClaim && <Rewards isInBoost={true} rewards={rewards} className={classes.pastRewards} />}
+      {canUnstake ? (
+        <Unstake boostId={boostId} chainId={boost.chainId} canClaim={canClaim} />
+      ) : canClaim ? (
+        <Claim boostId={boostId} chainId={boost.chainId} />
+      ) : null}
     </div>
   );
 });

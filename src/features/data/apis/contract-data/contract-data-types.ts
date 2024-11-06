@@ -37,10 +37,9 @@ export interface BoostRewardContractData extends RewardContractData {
   isPreStake: boolean;
 }
 
-export interface GovVaultMultiContractDataResponse {
-  id: string;
-  totalSupply: BigNumber;
-  rewards: string[][]; // [tokenAddress, rewardRate, periodFinish]
+export interface GovVaultMultiRawContractData {
+  totalSupply: string;
+  rewards: [string, string, string][]; // [tokenAddress, rewardRate, periodFinish]
 }
 
 export interface GovVaultMultiContractData {
@@ -48,6 +47,7 @@ export interface GovVaultMultiContractData {
   totalSupply: BigNumber;
   rewards: RewardContractData[];
 }
+
 export interface StandardVaultContractData {
   id: string;
 
@@ -76,7 +76,7 @@ export interface CowVaultContractData {
   paused: boolean;
 }
 
-export interface BoostContractDataResponse {
+export interface BoostRawContractData {
   id: string;
   totalSupply: string;
   rewardRate: string;

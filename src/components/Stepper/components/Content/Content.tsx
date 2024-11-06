@@ -6,6 +6,8 @@ import { Trans, useTranslation } from 'react-i18next';
 import type { Step } from '../../../../features/data/reducers/wallet/stepper';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
 import {
+  selectBoostAdditionalData,
+  selectBoostClaimed,
   selectBridgeSuccess,
   selectMintResult,
   selectStepperCurrentStep,
@@ -232,16 +234,68 @@ const BridgeSuccessContent = memo<SuccessContentProps>(function BridgeSuccessCon
   );
 });
 
+const BoostStakeSuccessContent = memo<SuccessContentProps>(function BoostStakeSuccessContent({
+  step,
+}) {
+  const { t } = useTranslation();
+  const data = useAppSelector(selectBoostAdditionalData);
+  const token = data?.token.symbol || 'UNKNOWN';
+  const amount = data?.amount || BIG_ZERO;
+
+  return (
+    <SuccessContentDisplay
+      title={t(`Stepper-${step.step}-Success-Title`)}
+      message={t(`Stepper-${step.step}-Success-Content`, { amount, token })}
+      rememberTitle={t('Remember')}
+      rememberMessage={t('Remember-Msg-Boost')}
+    />
+  );
+});
+
+const BoostUnstakeSuccessContent = memo<SuccessContentProps>(function BoostUnstakeSuccessContent({
+  step,
+}) {
+  const { t } = useTranslation();
+  const data = useAppSelector(selectBoostAdditionalData);
+  const token = data?.token.symbol || 'UNKNOWN';
+  const amount = data?.amount || BIG_ZERO;
+  const claimedTokenAmounts = useAppSelector(selectBoostClaimed);
+  const claimed = useMemo(() => {
+    if (claimedTokenAmounts.length) {
+      return (
+        <ListJoin
+          items={claimedTokenAmounts.map(
+            item =>
+              `${formatTokenDisplayCondensed(item.amount, item.token.decimals)} ${
+                item.token.symbol
+              }`
+          )}
+        />
+      );
+    }
+    return undefined;
+  }, [claimedTokenAmounts]);
+
+  return (
+    <SuccessContentDisplay
+      title={t(`Stepper-${step.step}-Success-Title`)}
+      message={t(`Stepper-${step.step}-Success-Content`, { amount, token })}
+      messageHighlight={
+        claimed ? (
+          <Trans t={t} i18nKey={`Stepper-boost-claim-Rewards`} components={{ claimed }} />
+        ) : undefined
+      }
+    />
+  );
+});
+
 const FallbackSuccessContent = memo<SuccessContentProps>(function FallbackSuccessContent({ step }) {
   const { t } = useTranslation();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
-  const hasRememberMsg = step.step === 'deposit' || step.step === 'stake';
+  const hasRememberMsg = step.step === 'deposit';
   const rememberMsg = useMemo(() => {
     if (step.step === 'deposit') {
       return 'Remember-Msg';
-    }
-    if (step.step === 'stake') {
-      return 'Remember-Msg-Bst';
     }
     return '';
   }, [step.step]);
@@ -339,6 +393,10 @@ const stepToSuccessContent: StepToSuccessContent = {
   'zap-out': ZapSuccessContent,
   mint: MintSuccessContent,
   bridge: BridgeSuccessContent,
+  'boost-stake': BoostStakeSuccessContent,
+  'boost-unstake': BoostUnstakeSuccessContent,
+  'boost-claim-unstake': BoostUnstakeSuccessContent,
+  'boost-claim': BoostUnstakeSuccessContent,
 };
 
 export const SuccessContent = memo(function SuccessContent() {

@@ -12,13 +12,13 @@ import type { BoostEntity } from '../../entities/boost';
 import { chunk, pick, sortBy } from 'lodash-es';
 import type {
   BoostContractData,
-  BoostContractDataResponse,
+  BoostRawContractData,
   BoostRewardContractData,
   CowVaultContractData,
   FetchAllContractDataResult,
   GovVaultContractData,
   GovVaultMultiContractData,
-  GovVaultMultiContractDataResponse,
+  GovVaultMultiRawContractData,
   IContractDataApi,
   RewardContractData,
   StandardVaultContractData,
@@ -114,16 +114,16 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
     let resultsIdx = 0;
     for (const boostBatch of boostBatches) {
-      const batchRes = (results[resultsIdx] as BoostContractDataResponse[]).map(
-        (boostRes, elemidx) => this.boostFormatter(state, boostRes, boostBatch[elemidx])
+      const batchRes = (results[resultsIdx] as BoostRawContractData[]).map((boostRes, elemidx) =>
+        this.boostFormatter(state, boostRes, boostBatch[elemidx])
       );
       res.boosts = res.boosts.concat(batchRes);
       resultsIdx++;
     }
     for (const boostBatch of boostMultiBatches) {
-      const batchRes = (
-        results[resultsIdx] as AsWeb3Result<GovVaultMultiContractDataResponse>[]
-      ).map((boostRes, elemidx) => this.boostFormatterMulti(state, boostRes, boostBatch[elemidx]));
+      const batchRes = (results[resultsIdx] as GovVaultMultiRawContractData[]).map(
+        (boostRes, elemidx) => this.boostFormatterMulti(state, boostRes, boostBatch[elemidx])
+      );
       res.boosts = res.boosts.concat(batchRes);
       resultsIdx++;
     }
@@ -142,10 +142,8 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       resultsIdx++;
     }
     for (const vaultBatch of govVaultMultiBatches) {
-      const batchRes = (
-        results[resultsIdx] as AsWeb3Result<GovVaultMultiContractDataResponse>[]
-      ).map((vaultRes, elemidx) =>
-        this.govVaultMultiFormatter(state, vaultRes, vaultBatch[elemidx])
+      const batchRes = (results[resultsIdx] as AsWeb3Result<GovVaultMultiRawContractData>[]).map(
+        (vaultRes, elemidx) => this.govVaultMultiFormatter(state, vaultRes, vaultBatch[elemidx])
       );
       res.govVaultsMulti = res.govVaultsMulti.concat(batchRes);
       resultsIdx++;
@@ -194,7 +192,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
   protected govVaultMultiFormatter(
     state: BeefyState,
-    result: AsWeb3Result<GovVaultMultiContractDataResponse>,
+    result: AsWeb3Result<GovVaultMultiRawContractData>,
     govVault: VaultGovMulti
   ): GovVaultMultiContractData {
     const token = selectTokenByAddress(state, govVault.chainId, govVault.receiptTokenAddress);
@@ -255,11 +253,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     } satisfies CowVaultContractData;
   }
 
-  protected boostFormatter(
-    state: BeefyState,
-    result: BoostContractDataResponse,
-    boost: BoostEntity
-  ) {
+  protected boostFormatter(state: BeefyState, result: BoostRawContractData, boost: BoostEntity) {
     const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
     const vault = selectVaultById(state, boost.vaultId);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
@@ -283,9 +277,9 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
   protected boostFormatterMulti(
     state: BeefyState,
-    result: AsWeb3Result<GovVaultMultiContractDataResponse>,
+    result: GovVaultMultiRawContractData,
     boost: BoostEntity
-  ) {
+  ): BoostContractData {
     const rewards: BoostRewardContractData[] = [];
     const now = new Date();
     let index = -1;
@@ -329,7 +323,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
         rewardRate: BIG_ZERO,
         periodFinish: undefined,
         isPreStake: false,
-        index: 0,
+        index: -1,
       });
     }
 

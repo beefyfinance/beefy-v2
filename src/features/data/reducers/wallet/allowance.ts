@@ -6,10 +6,8 @@ import type { Draft } from 'immer';
 import type { ChainEntity } from '../../entities/chain';
 import type { TokenEntity } from '../../entities/token';
 import { accountHasChanged, walletHasDisconnected } from './wallet';
-import { selectVaultById } from '../../selectors/vaults';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
 import { initiateBoostForm } from '../../actions/boosts';
-import { selectBoostById } from '../../selectors/boosts';
 import { initiateMinterForm } from '../../actions/minters';
 import { selectMinterById } from '../../selectors/minters';
 
@@ -31,6 +29,7 @@ export interface AllowanceState {
     };
   };
 }
+
 export const initialAllowanceState: AllowanceState = { byChainId: {} };
 
 export const allowanceSlice = createSlice({
@@ -57,9 +56,7 @@ export const allowanceSlice = createSlice({
       addAllowancesToState(sliceState, action.payload.chainId, action.payload.data);
     });
     builder.addCase(initiateBoostForm.fulfilled, (sliceState, action) => {
-      const boost = selectBoostById(action.payload.state, action.payload.boostId);
-      const vault = selectVaultById(action.payload.state, boost.vaultId);
-      addAllowancesToState(sliceState, vault.chainId, action.payload.allowance);
+      addAllowancesToState(sliceState, action.payload.boost.chainId, action.payload.allowance);
     });
     builder.addCase(initiateMinterForm.fulfilled, (sliceState, action) => {
       const minter = selectMinterById(action.payload.state, action.payload.minterId);
