@@ -7,18 +7,16 @@ import { selectStandardVaultById } from './vaults';
 
 export const selectIsApprovalNeededForBoostStaking = (
   state: BeefyState,
-  spenderAddress: string,
   boost: BoostEntity,
   mooAmount: BigNumber
 ) => {
   const vault = selectStandardVaultById(state, boost.vaultId);
-
   const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
   const allowance = selectAllowanceByTokenAddress(
     state,
     vault.chainId,
     mooToken.address,
-    spenderAddress
+    boost.contractAddress
   );
 
   return allowance.isLessThan(mooAmount);

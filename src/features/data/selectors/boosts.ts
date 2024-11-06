@@ -7,6 +7,10 @@ import { selectBoostUserBalanceInToken, selectBoostUserRewardsInToken } from './
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import type { BeefyOffChainRewardsCampaignType } from '../apis/beefy/beefy-api-types';
+import { isAfter } from 'date-fns';
+import { orderBy } from 'lodash-es';
+import { valueOrThrow } from '../utils/selector-utils';
+import type { BoostRewardContractData } from '../apis/contract-data/contract-data-types';
 
 export const selectBoostById = createCachedSelector(
   (state: BeefyState) => state.entities.boosts.byId,
@@ -130,7 +134,7 @@ export const selectPastBoostIdsWithUserBalance = (
       continue;
     }
     const userRewards = selectBoostUserRewardsInToken(state, eolBoostId);
-    if (userRewards.gt(0)) {
+    if (userRewards?.some(r => r.amount.gt(0))) {
       boostIds.push(eolBoostId);
     }
   }
@@ -244,3 +248,43 @@ export const selectOffchainBoostCampaignByType = (
   }
   return state.entities.boosts.campaigns.byId[`offchain-${type}`];
 };
+
+const NO_REWARDS: BoostRewardContractData[] = [];
+export const selectBoostRewards = createCachedSelector(
+  (state: BeefyState, boostId: BoostEntity['id']) => selectBoostContractState(state, boostId),
+  contractData => {
+    if (!contractData) {
+      // tokens from config
+    }
+    return contractData.rewards || NO_REWARDS;
+  }
+)((_state: BeefyState, boostId: BoostEntity['id']) => boostId);
+
+export const selectBoostActiveRewards = createCachedSelector(
+  (state: BeefyState, boostId: BoostEntity['id']) => selectBoostRewards(state, boostId),
+  () => Math.trunc(Date.now() / 60_0000), // invalidate every 60s
+  rewards => {
+    const now = new Date();
+    return orderBy(
+      rewards.filter(
+        reward =>
+          reward.rewardRate.gt(BIG_ZERO) &&
+          (reward.isPreStake || (reward.periodFinish && isAfter(reward.periodFinish, now)))
+      ),
+      r => r.periodFinish?.getTime() || Number.MAX_SAFE_INTEGER,
+      'desc'
+    );
+  }
+)((_state: BeefyState, boostId: BoostEntity['id']) => boostId);
+
+export const selectBoostActiveRewardTokens = createCachedSelector(
+  (state: BeefyState, boostId: BoostEntity['id']) => selectBoostActiveRewards(state, boostId),
+  (state: BeefyState) => state.entities.tokens.byChainId,
+  (rewards, tokensByChainId) =>
+    rewards.map(reward =>
+      valueOrThrow(
+        tokensByChainId[reward.token.chainId]?.byAddress[reward.token.address.toLowerCase()],
+        `selectBoostActiveRewardTokens: Token ${reward.token.address} not found`
+      )
+    )
+)((_state: BeefyState, boostId: BoostEntity['id']) => boostId);

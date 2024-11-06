@@ -67,7 +67,7 @@ interface ReloadBalanceAllowanceRewardsFulfilledPayload {
   balance: FetchAllBalancesResult;
   allowance: TokenAllowance[];
   contractData: FetchAllContractDataResult;
-  state: BeefyState;
+  state: BeefyState; // TODO refactor to not include state
 }
 
 export type AllCurrentCowcentratedRangesPayload = Record<string, CurrentCowcentratedRangeData>;

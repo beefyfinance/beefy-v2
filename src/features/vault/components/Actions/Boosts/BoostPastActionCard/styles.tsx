@@ -2,34 +2,33 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   title: {
-    marginBottom: '12px',
+    marginBottom: '0',
     display: 'flex',
   },
   expiredBoostName: {
     ...theme.typography['body-lg-med'],
     color: theme.palette.text.light,
-    marginLeft: '8px',
   },
   expiredBoostContainer: {
     background: theme.palette.background.contentLight,
     borderRadius: '8px',
     padding: '12px',
-  },
-  balances: {
     display: 'flex',
-    columnGap: '8px',
-    marginBottom: '12px',
+    gap: '12px',
+    flexDirection: 'column' as const,
   },
-  balance: {
-    ...theme.typography['body-sm'],
+  pastRewards: {
+    padding: 0,
+  },
+  label: {
+    ...theme.typography['subline-sm'],
     color: theme.palette.text.dark,
-    '& span': {
-      color: theme.palette.text.middle,
-    },
   },
-  button: {
-    '&:disabled': {
-      borderColor: 'transparent' as const,
-    },
+  value: {
+    ...theme.typography['body-lg-med'],
+    color: theme.palette.text.middle,
+    display: 'flex',
+    gap: '4px',
+    alignItems: 'center',
   },
 });
