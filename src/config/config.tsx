@@ -670,7 +670,7 @@ export const config = {
     explorerUrl: 'https://explorer.mode.network/',
     multicallAddress: '0xAb35d11199216c7F7368080Cf41beD8f3AbBc4E4',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x7Cba02979594b0f535E0077E9748407a48641c89',
+    appMulticallContractAddress: '0x70Ed6174d8425332F7D9AD2d26C86902977307c0',
     providerName: 'Mode',
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
     gas: {

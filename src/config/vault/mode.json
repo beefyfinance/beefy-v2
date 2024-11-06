@@ -1,5 +1,245 @@
 [
   {
+    "id": "kim-cow-mode-weth-usdc-rp",
+    "name": "WETH-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowKimModeWETH-USDC",
+    "tokenAddress": "0x41337492ca4139320f1BAA6E9647b69a35af8F00",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kim",
+    "earnContractAddress": "0x42A074525fe49a73a91c40dceb1C32428D068a57",
+    "earnedToken": "rcowKimModeWETH-USDC",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "kim-cow-mode-weth-usdc",
+    "status": "active",
+    "createdAt": 1730876855,
+    "platformId": "kim",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "mode",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ],
+    "pointStructureIds": ["mode-volume"]
+  },
+  {
+    "id": "kim-cow-mode-weth-usdc",
+    "name": "WETH-USDC",
+    "type": "cowcentrated",
+    "token": "WETH-USDC",
+    "tokenAddress": "0x468cC91dF6F669CaE6cdCE766995Bd7874052FBc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kim",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xd988097fb8612cc24eeC14542bC03424c656005f"
+    ],
+    "earnedToken": "cowKimModeWETH-USDC",
+    "earnedTokenAddress": "0x41337492ca4139320f1BAA6E9647b69a35af8F00",
+    "earnContractAddress": "0x41337492ca4139320f1BAA6E9647b69a35af8F00",
+    "oracle": "lps",
+    "oracleId": "kim-cow-mode-weth-usdc",
+    "status": "active",
+    "createdAt": 1730876855,
+    "platformId": "kim",
+    "assets": ["WETH", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "mode",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ],
+    "pointStructureIds": ["mode-volume"]
+  },
+  {
+    "id": "kim-cow-mode-weth-mode-rp",
+    "name": "MODE-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowKimModeWETH-MODE",
+    "tokenAddress": "0xdd97504448cC51b4De4944157838c4800C773C5A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kim",
+    "earnContractAddress": "0xBBD68F14F61bfcbB833618d83779e4Aa1Af5670e",
+    "earnedToken": "rcowKimModeWETH-MODE",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "kim-cow-mode-weth-mode",
+    "status": "active",
+    "createdAt": 1730876855,
+    "platformId": "kim",
+    "assets": ["MODE", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "mode",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ],
+    "pointStructureIds": ["mode-volume"]
+  },
+  {
+    "id": "kim-cow-mode-weth-mode",
+    "name": "MODE-WETH",
+    "type": "cowcentrated",
+    "token": "MODE-WETH",
+    "tokenAddress": "0x8cfE2A02dfBAbC56aE7e573170E35f88A38BeA55",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kim",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xDfc7C877a950e49D2610114102175A06C2e3167a"
+    ],
+    "earnedToken": "cowKimModeWETH-MODE",
+    "earnedTokenAddress": "0xdd97504448cC51b4De4944157838c4800C773C5A",
+    "earnContractAddress": "0xdd97504448cC51b4De4944157838c4800C773C5A",
+    "oracle": "lps",
+    "oracleId": "kim-cow-mode-weth-mode",
+    "status": "active",
+    "createdAt": 1730876855,
+    "platformId": "kim",
+    "assets": ["MODE", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "mode",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ],
+    "pointStructureIds": ["mode-volume"]
+  },
+  {
+    "id": "kim-cow-mode-weth-kim-rp",
+    "name": "KIM-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowKimModeWETH-KIM",
+    "tokenAddress": "0x7c207cb731ebc0BA5dF699d7B36348302FD8480c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kim",
+    "earnContractAddress": "0x3da7476152f7EFF205cBf56f67aBaB17CF9d37eE",
+    "earnedToken": "rcowKimModeWETH-KIM",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "kim-cow-mode-weth-kim",
+    "status": "active",
+    "createdAt": 1730876855,
+    "platformId": "kim",
+    "assets": ["KIM", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "mode",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ],
+    "pointStructureIds": ["mode-volume"]
+  },
+  {
+    "id": "kim-cow-mode-weth-kim",
+    "name": "KIM-WETH",
+    "type": "cowcentrated",
+    "token": "KIM-WETH",
+    "tokenAddress": "0x3C3a173984e3152FEd868345904eC0C9325FA516",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kim",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x6863fb62Ed27A9DdF458105B507C15b5d741d62e"
+    ],
+    "earnedToken": "cowKimModeWETH-KIM",
+    "earnedTokenAddress": "0x7c207cb731ebc0BA5dF699d7B36348302FD8480c",
+    "earnContractAddress": "0x7c207cb731ebc0BA5dF699d7B36348302FD8480c",
+    "oracle": "lps",
+    "oracleId": "kim-cow-mode-weth-kim",
+    "status": "active",
+    "createdAt": 1730876855,
+    "platformId": "kim",
+    "assets": ["KIM", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "mode",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ],
+    "pointStructureIds": ["mode-volume"]
+  },
+  {
+    "id": "kim-cow-mode-kim-mode-rp",
+    "name": "KIM-MODE Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowKimModeKIM-MODE",
+    "tokenAddress": "0x86166d85cd222F40E7d1De750bD58A946129Ec7A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kim",
+    "earnContractAddress": "0x3D7357554978F0B64E5Ea9C4ED52F5e23474cA47",
+    "earnedToken": "rcowKimModeKIM-MODE",
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "kim-cow-mode-kim-mode",
+    "status": "active",
+    "createdAt": 1730876855,
+    "platformId": "kim",
+    "assets": ["KIM", "MODE"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "mode",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ],
+    "pointStructureIds": ["mode-volume"]
+  },
+  {
+    "id": "kim-cow-mode-kim-mode",
+    "name": "KIM-MODE",
+    "type": "cowcentrated",
+    "token": "KIM-MODE",
+    "tokenAddress": "0x86D9d9dd7A2c3146c6FAd51646F210Cb2E5FC12F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kim",
+    "depositTokenAddresses": [
+      "0x6863fb62Ed27A9DdF458105B507C15b5d741d62e",
+      "0xDfc7C877a950e49D2610114102175A06C2e3167a"
+    ],
+    "earnedToken": "cowKimModeKIM-MODE",
+    "earnedTokenAddress": "0x86166d85cd222F40E7d1De750bD58A946129Ec7A",
+    "earnContractAddress": "0x86166d85cd222F40E7d1De750bD58A946129Ec7A",
+    "oracle": "lps",
+    "oracleId": "kim-cow-mode-kim-mode",
+    "status": "active",
+    "createdAt": 1730876855,
+    "platformId": "kim",
+    "assets": ["KIM", "MODE"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "mode",
+    "feeTier": "Dynamic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ],
+    "pointStructureIds": ["mode-volume"]
+  },
+  {
     "id": "velodrome-mode-dola-usdc",
     "name": "DOLA-USDC sLP",
     "type": "standard",

@@ -1043,5 +1043,11 @@
     "id": "tokemak",
     "name": "Tokemak",
     "filter": true
+  },
+  {
+    "id": "kim",
+    "name": "Kim",
+    "filter": true,
+    "risks": ["NO_TIMELOCK"]
   }
 ]
