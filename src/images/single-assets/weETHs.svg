@@ -1,13 +1,1 @@
-<svg width="37" height="37" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="18.5" cy="18.5" r="18.5" fill="#0E0B31"/>
-<path d="M18.5 5L10 10M18.5 5L14 12.1471M18.5 5L27 10M18.5 5L23 12.1471M10 18.5L18.0321 22.7523C18.3248 22.9072 18.6752 22.9072 18.9679 22.7523L27 18.5M10 18.5V10M10 18.5L14 12.1471M10 21L18.0321 25.2523C18.3248 25.4072 18.6752 25.4072 18.9679 25.2523L27 21M10 21V27M10 21L13.261 25.2201M10 27L18.5 32M10 27L13.261 25.2201M18.5 32L13.261 25.2201M18.5 32L27 27M18.5 32L23.739 25.2201M10 10L14 12.1471M27 18.5V10M27 18.5L23 12.1471M27 21V27M27 21L23.739 25.2201M27 27L23.739 25.2201M27 10L23 12.1471" stroke="#ACE730" stroke-width="0.7" stroke-linejoin="round"/>
-<circle cx="18.5" cy="18.5" r="17.15" stroke="url(#paint0_linear_4455_3184)" stroke-width="0.7"/>
-<path d="M28.784 20.7837H28.7837C24.3655 20.7837 20.7838 24.3653 20.7838 28.7836V28.7838C20.7838 33.202 24.3655 36.7837 28.7837 36.7837H28.784C33.2022 36.7837 36.7838 33.202 36.7838 28.7838V28.7836C36.7838 24.3653 33.2022 20.7837 28.784 20.7837Z" fill="#C0FC5C"/>
-<path d="M33.7567 24.9224H25.2252V27.6409M33.2651 30.4173H25.2252V27.6409M33.2651 30.4173V33.1358H24.6757M33.2651 30.4173V27.6409H25.2252" stroke="black" stroke-width="1.09898"/>
-<defs>
-<linearGradient id="paint0_linear_4455_3184" x1="18.5" y1="1" x2="18.5" y2="36" gradientUnits="userSpaceOnUse">
-<stop stop-color="#B45AFA"/>
-<stop offset="1" stop-color="#29BCFA"/>
-</linearGradient>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" fill="none"><circle cx="18.5" cy="18.5" r="18.5" fill="#0E0B31"/><path stroke="#ACE730" stroke-linejoin="round" stroke-width=".7" d="M18.5 5 10 10m8.5-5L14 12.147M18.5 5l8.5 5m-8.5-5 4.5 7.147M10 18.5l8.032 4.252a1 1 0 0 0 .936 0L27 18.5m-17 0V10m0 8.5 4-6.353M10 21l8.032 4.252a1 1 0 0 0 .936 0L27 21m-17 0v6m0-6 3.261 4.22M10 27l8.5 5M10 27l3.261-1.78M18.5 32l-5.239-6.78M18.5 32l8.5-5m-8.5 5 5.239-6.78M10 10l4 2.147M27 18.5V10m0 8.5-4-6.353M27 21v6m0-6-3.261 4.22M27 27l-3.261-1.78M27 10l-4 2.147"/><circle cx="18.5" cy="18.5" r="17.15" stroke="url(#a)" stroke-width=".7"/><path fill="#C0FC5C" d="M28.784 20.784a8 8 0 0 0 0 16 8 8 0 1 0 0-16"/><path stroke="#000" stroke-width="1.099" d="M33.757 24.922h-8.532v2.719m8.04 2.776h-8.04v-2.776m8.04 2.776v2.719h-8.59m8.59-2.719v-2.776h-8.04"/><defs><linearGradient id="a" x1="18.5" x2="18.5" y1="1" y2="36" gradientUnits="userSpaceOnUse"><stop stop-color="#B45AFA"/><stop offset="1" stop-color="#29BCFA"/></linearGradient></defs></svg>
