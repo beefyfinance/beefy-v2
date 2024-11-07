@@ -20,19 +20,19 @@ export type Step = {
     | 'deposit'
     | 'deposit-gov'
     | 'withdraw'
-    | 'claim-withdraw'
-    | 'claim-unstake'
-    | 'claim-gov'
-    | 'claim-boost'
-    | 'stake'
-    | 'unstake'
+    | 'claim-withdraw' // gov
+    | 'claim-gov' // gov
     | 'mint'
     | 'burn'
     | 'bridge'
     | 'zap-in'
     | 'zap-out'
     | 'migration'
-    | 'claim-rewards';
+    | 'claim-rewards' // off-chain
+    | 'boost-stake'
+    | 'boost-unstake'
+    | 'boost-claim'
+    | 'boost-claim-unstake';
   message: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   action: ThunkAction<any, any, any, any>;

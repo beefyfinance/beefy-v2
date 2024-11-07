@@ -1,230 +1,144 @@
-import { useCallback, useState } from 'react';
+import { Fragment, memo, useMemo, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { Trans, useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import { formatTokenDisplayCondensed } from '../../../../../helpers/format';
-import { askForNetworkChange, askForWalletConnection } from '../../../../data/actions/wallet';
 import { selectVaultById } from '../../../../data/selectors/vaults';
-import { selectCurrentChainId, selectIsWalletConnected } from '../../../../data/selectors/wallet';
-import { selectBoostById, selectBoostContractState } from '../../../../data/selectors/boosts';
-import { walletActions } from '../../../../data/actions/wallet-actions';
+import {
+  selectBoostActiveRewards,
+  selectBoostById,
+  selectBoostContractState,
+} from '../../../../data/selectors/boosts';
 import type { BoostEntity } from '../../../../data/entities/boost';
 import {
-  selectBoostRewardsTokenEntity,
+  selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
   selectUserBalanceOfToken,
-  selectUserVaultBalanceInShareTokenInCurrentBoost,
 } from '../../../../data/selectors/balance';
-import { StakeCountdown } from './StakeCountdown';
-
-import { selectChainById } from '../../../../data/selectors/chains';
-import { useAppDispatch, useAppSelector } from '../../../../../store';
+import { useAppSelector } from '../../../../../store';
 import { IconWithBasicTooltip } from '../../../../../components/Tooltip/IconWithBasicTooltip';
-import { Button } from '../../../../../components/Button';
-import { stepperActions } from '../../../../data/reducers/wallet/stepper';
-import { selectIsStepperStepping } from '../../../../data/selectors/stepper';
-import { startStepper } from '../../../../data/actions/stepper';
-import { BoostActionButton } from './BoostActionButton';
+import { BIG_ZERO } from '../../../../../helpers/big-number';
+import { ActionConnectSwitch } from './ActionConnectSwitch';
+import { type Reward, Rewards } from './Rewards';
+import { Claim } from './ActionButton/Claim';
+import { Unstake } from './ActionButton/Unstake';
+import { StakeInput } from './ActionInputButton/StakeInput';
+import { UnstakeInput } from './ActionInputButton/UnstakeInput';
 
 const useStyles = makeStyles(styles);
 
-export function ActiveBoost({ boostId, title }: { boostId: BoostEntity['id']; title: string }) {
+export function ActiveBoost({ boostId }: { boostId: BoostEntity['id'] }) {
   const boost = useAppSelector(state => selectBoostById(state, boostId));
   const vault = useAppSelector(state => selectVaultById(state, boost.vaultId));
-  const chain = useAppSelector(state => selectChainById(state, boost.chainId));
-  const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
-  const mooTokenBalance = useAppSelector(state =>
+  const data = useAppSelector(state => selectBoostContractState(state, boost.id));
+  const activeRewards = useAppSelector(state => selectBoostActiveRewards(state, boost.id));
+  const userRewards = useAppSelector(state => selectBoostUserRewardsInToken(state, boost.id));
+  const [rewards, canClaim] = useMemo(() => {
+    let hasPendingRewards = false;
+    const allRewards: Reward[] = activeRewards.map(reward => {
+      const userReward = userRewards.find(r => r.token.address === reward.token.address);
+      return {
+        ...reward,
+        active: true,
+        pending: userReward?.amount || BIG_ZERO,
+      };
+    });
+    for (const userReward of userRewards) {
+      if (!userReward.amount.isZero()) {
+        hasPendingRewards = true;
+        if (!allRewards.find(r => r.token.address === userReward.token.address)) {
+          allRewards.push({
+            token: userReward.token,
+            index: userReward.index,
+            pending: userReward.amount,
+            isPreStake: false,
+            periodFinish: undefined,
+            rewardRate: BIG_ZERO,
+            active: false,
+          } satisfies Reward);
+        }
+      }
+    }
+
+    return [allRewards, hasPendingRewards];
+  }, [activeRewards, userRewards]);
+  const balanceInWallet = useAppSelector(state =>
     selectUserBalanceOfToken(state, boost.chainId, vault.contractAddress)
   );
-  const boostBalance = useAppSelector(state =>
-    selectUserVaultBalanceInShareTokenInCurrentBoost(state, vault.id)
-  );
-  const boostPendingRewards = useAppSelector(state =>
-    selectBoostUserRewardsInToken(state, boost.id)
-  );
-  const { periodFinish, isPreStake } = useAppSelector(state =>
-    selectBoostContractState(state, boost.id)
-  );
+  const canStake = balanceInWallet.gt(BIG_ZERO);
+  const balanceInBoost = useAppSelector(state => selectBoostUserBalanceInToken(state, boost.id));
+  const canUnstake = balanceInBoost.gt(BIG_ZERO);
   const classes = useStyles();
-  const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-  const isWalletConnected = useAppSelector(selectIsWalletConnected);
-  const isWalletOnVaultChain = useAppSelector(
-    state => selectCurrentChainId(state) === boost.chainId
-  );
-
-  const isStepping = useAppSelector(selectIsStepperStepping);
-
-  const [collapseOpen, setCollapseOpen] = useState({
-    stake: false,
-    unstake: false,
-  });
-
-  const handleCollapse = useCallback(
-    ({ stakeUnstake }: { stakeUnstake: 'stake' | 'unstake' }) => {
-      const diff = stakeUnstake === 'stake' ? 'unstake' : 'stake';
-      if (collapseOpen[diff] && !collapseOpen[stakeUnstake])
-        setCollapseOpen(prevStatus => {
-          return { ...prevStatus, [diff]: !prevStatus[diff] };
-        });
-
-      setCollapseOpen(prevStatus => {
-        return { ...prevStatus, [stakeUnstake]: !prevStatus[stakeUnstake] };
-      });
-    },
-    [collapseOpen]
-  );
-
-  const handleExit = (boost: BoostEntity) => {
-    if (!isWalletConnected) {
-      return dispatch(askForWalletConnection());
-    }
-    if (!isWalletOnVaultChain) {
-      return dispatch(askForNetworkChange({ chainId: vault.chainId }));
-    }
-
-    dispatch(
-      stepperActions.addStep({
-        step: {
-          step: 'claim-unstake',
-          message: t('Vault-TxnConfirm', { type: t('Claim-Unstake-noun') }),
-          action: walletActions.exitBoost(boost),
-          pending: false,
-          extraInfo: {
-            rewards: {
-              token: rewardToken,
-              amount: boostPendingRewards,
-            },
-          },
-        },
-      })
-    );
-
-    dispatch(startStepper(chain.id));
-  };
-
-  const handleClaim = () => {
-    if (!isWalletConnected) {
-      return dispatch(askForWalletConnection());
-    }
-    if (!isWalletOnVaultChain) {
-      return dispatch(askForNetworkChange({ chainId: vault.chainId }));
-    }
-
-    dispatch(
-      stepperActions.addStep({
-        step: {
-          step: 'claim-boost',
-          message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
-          action: walletActions.claimBoost(boost),
-          pending: false,
-        },
-      })
-    );
-
-    dispatch(startStepper(chain.id));
-  };
+  const [open, toggleOpen] = useAccordion<'stake' | 'unstake'>();
 
   return (
     <div className={classes.containerBoost}>
-      <div className={classes.title}>
-        <span>
-          <Trans
-            t={t}
-            i18nKey="Boost-Title"
-            values={{ title }}
-            components={{ white: <span className={classes.titleWhite} /> }}
+      <Title upcoming={data.isPreStake} />
+      <Rewards isInBoost={canUnstake} rewards={rewards} />
+      <ActionConnectSwitch chainId={boost.chainId}>
+        {canStake && (
+          <StakeInput
+            boostId={boostId}
+            open={open}
+            toggleOpen={toggleOpen}
+            balance={balanceInWallet}
           />
-        </span>
-        <IconWithBasicTooltip
-          title={t('Boost-WhatIs')}
-          content={t('Boost-Explain')}
-          triggerClass={classes.titleTooltipTrigger}
-        />
-      </div>
-      <div className={classes.boostStats}>
-        <div className={classes.boostStat}>
-          <div className={classes.boostStatLabel}>{t('Boost-Rewards')}</div>
-          <div className={classes.boostStatValue}>
-            {formatTokenDisplayCondensed(boostPendingRewards, rewardToken.decimals)}{' '}
-            {rewardToken.symbol}
-          </div>
-        </div>
-        {!isPreStake ? (
-          <div className={classes.boostStat}>
-            <div className={classes.boostStatLabel}>{t('Boost-Ends')}</div>
-            <div className={classes.boostStatValue}>
-              <StakeCountdown periodFinish={periodFinish} />
-            </div>
-          </div>
-        ) : (
-          <></>
         )}
-      </div>
-      {isWalletConnected ? (
-        !isWalletOnVaultChain ? (
-          <Button
-            onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
-            className={classes.button}
-            fullWidth={true}
-            borderless={true}
-            disabled={isStepping}
-          >
-            {t('Network-Change', { network: chain.name })}
-          </Button>
-        ) : (
+        {canUnstake && (
+          <UnstakeInput
+            boostId={boostId}
+            open={open}
+            toggleOpen={toggleOpen}
+            balance={balanceInBoost}
+          />
+        )}
+        {(canClaim || canUnstake) && (
           <>
-            <BoostActionButton
-              boostId={boostId}
-              type="stake"
-              open={collapseOpen.stake}
-              handleCollapse={() => handleCollapse({ stakeUnstake: 'stake' })}
-              balance={mooTokenBalance}
+            <Claim boostId={boost.id} chainId={boost.chainId} disabled={!canClaim} />
+            <Unstake
+              boostId={boost.id}
+              chainId={boost.chainId}
+              canClaim={canClaim}
+              disabled={!canUnstake || !canClaim}
             />
-            {boostBalance.gt(0) && (
-              <>
-                <BoostActionButton
-                  boostId={boostId}
-                  type="unstake"
-                  open={collapseOpen.unstake}
-                  handleCollapse={() => handleCollapse({ stakeUnstake: 'unstake' })}
-                  balance={boostBalance}
-                />
-                <Button
-                  disabled={isStepping || boostPendingRewards.isZero()}
-                  className={classes.button}
-                  onClick={handleClaim}
-                  fullWidth={true}
-                  borderless={true}
-                  variant="boost"
-                >
-                  {t('Boost-Button-Withdraw')}
-                </Button>
-                <Button
-                  disabled={isStepping || (boostBalance.isZero() && boostPendingRewards.isZero())}
-                  onClick={() => handleExit(boost)}
-                  fullWidth={true}
-                  borderless={true}
-                  variant="boost"
-                >
-                  {t('Boost-Button-Claim-Unstake')}
-                </Button>
-              </>
-            )}
           </>
-        )
-      ) : (
-        <Button
-          className={classes.button}
-          fullWidth={true}
-          borderless={true}
-          variant="success"
-          onClick={() => dispatch(askForWalletConnection())}
-          disabled={isStepping}
-        >
-          {t('Network-ConnectWallet')}
-        </Button>
-      )}
+        )}
+      </ActionConnectSwitch>
     </div>
   );
+}
+
+type TitleProps = {
+  upcoming?: boolean;
+};
+
+const Title = memo(function Title({ upcoming }: TitleProps) {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  return (
+    <div className={classes.title}>
+      <span>
+        <Trans
+          t={t}
+          i18nKey="Boost-Title"
+          values={{ title: t(upcoming ? 'Boost-Upcoming' : 'Boost-Active') }}
+          components={{ white: <span className={classes.titleWhite} /> }}
+        />
+      </span>
+      <IconWithBasicTooltip
+        title={t('Boost-WhatIs')}
+        content={t('Boost-Explain')}
+        triggerClass={classes.titleTooltipTrigger}
+      />
+    </div>
+  );
+});
+
+function useAccordion<T extends string>(initialState: T | undefined = undefined) {
+  const [open, setOpen] = useState<T | undefined>(initialState);
+  return useMemo(() => {
+    const handleToggle = (value: T) => {
+      setOpen(prev => (prev === value ? undefined : value));
+    };
+    return [open, handleToggle] as const;
+  }, [open, setOpen]);
 }

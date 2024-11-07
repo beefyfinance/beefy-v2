@@ -9,16 +9,16 @@ import {
 } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
-import type { AsWeb3Result } from '../../utils/types-utils';
 import type { BoostEntity } from '../../entities/boost';
-import { chunk, partition } from 'lodash-es';
+import { chunk, partition, pick } from 'lodash-es';
 
 import type {
   BoostBalance,
+  BoostBalanceContractData,
   FetchAllBalancesResult,
   GovVaultBalance,
-  GovVaultV2Balance,
-  GovVaultV2BalanceResult,
+  GovVaultMultiBalanceContractData,
+  GovVaultSingleBalanceContractData,
   IBalanceApi,
   TokenBalance,
 } from './balance-types';
@@ -136,7 +136,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
             res.boosts.push(
               this.boostFormatter(
                 state,
-                boostOrGovVaultRes as AsWeb3Result<BoostBalance>,
+                boostOrGovVaultRes as BoostBalanceContractData,
                 boostsV1[boostIndex]
               )
             );
@@ -144,7 +144,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
             res.govVaults.push(
               this.govVaultFormatter(
                 state,
-                boostOrGovVaultRes as AsWeb3Result<GovVaultBalance>,
+                boostOrGovVaultRes as GovVaultSingleBalanceContractData,
                 govVaultsV1[boostIndex - boostsV1.length]
               )
             );
@@ -158,7 +158,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     {
       let boostIndex = 0;
       for (let j = 0; j < boostAndGovVaultsV2Batches.length; j++) {
-        const batchResults = results[resultsIdx] as AsWeb3Result<GovVaultV2BalanceResult>[];
+        const batchResults = results[resultsIdx] as GovVaultMultiBalanceContractData[];
         for (let i = 0; i < batchResults.length; i++) {
           const boostOrGovVaultRes = batchResults[i];
           if (boostIndex < boostsV2.length) {
@@ -213,9 +213,9 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
   protected govVaultFormatter(
     state: BeefyState,
-    result: AsWeb3Result<GovVaultBalance>,
+    result: GovVaultSingleBalanceContractData,
     govVault: VaultGovSingle
-  ): GovVaultV2Balance {
+  ): GovVaultBalance {
     const balanceToken = selectGovVaultBalanceTokenEntity(state, govVault.id);
     const rewardsToken = selectGovVaultRewardsTokenEntity(state, govVault.id);
     const balance = fromWeiString(result.balance, balanceToken.decimals);
@@ -225,8 +225,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       balance: balance,
       rewards: [
         {
-          tokenAddress: rewardsToken.address,
-          chainId: rewardsToken.chainId,
+          token: pick(rewardsToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
           amount: rewards,
           index: 0,
         },
@@ -236,25 +235,30 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
   protected boostFormatter(
     state: BeefyState,
-    result: AsWeb3Result<BoostBalance>,
+    result: BoostBalanceContractData,
     boost: BoostEntity
   ): BoostBalance {
     const balanceToken = selectBoostBalanceTokenEntity(state, boost.id);
-    const rewardsToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
-    const rawBalance = new BigNumber(result.balance);
-    const rawRewards = new BigNumber(result.rewards);
+    const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
+    const balance = fromWeiString(result.balance, balanceToken.decimals);
+    const reward = {
+      token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+      amount: fromWeiString(result.rewards, earnedToken.decimals),
+      index: 0,
+    };
+
     return {
       boostId: boost.id,
-      balance: rawBalance.shiftedBy(-balanceToken.decimals),
-      rewards: rawRewards.shiftedBy(-rewardsToken.decimals),
+      balance,
+      rewards: [reward],
     };
   }
 
   protected govVaultV2Formatter(
     state: BeefyState,
-    result: AsWeb3Result<GovVaultV2BalanceResult>,
+    result: GovVaultMultiBalanceContractData,
     govVault: VaultGovMulti | VaultGovCowcentrated
-  ): GovVaultV2Balance {
+  ): GovVaultBalance {
     if (result.rewards.length !== result.rewardTokens.length) {
       throw new Error(`Invalid rewards and rewardTokens length`);
     }
@@ -274,8 +278,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
         const amount = fromWeiString(result.rewards[index] || '0', rewardToken.decimals);
 
         return {
-          tokenAddress: rewardToken.address,
-          chainId: rewardToken.chainId,
+          token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
           amount: isFiniteBigNumber(amount) ? amount : BIG_ZERO,
           index,
         };
@@ -291,7 +294,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
   protected boostV2Formatter(
     state: BeefyState,
-    result: AsWeb3Result<GovVaultV2BalanceResult>,
+    result: GovVaultMultiBalanceContractData,
     boost: BoostEntity
   ): BoostBalance {
     if (result.rewards.length !== result.rewardTokens.length) {
@@ -310,8 +313,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
         const amount = fromWeiString(result.rewards[index] || '0', rewardToken.decimals);
 
         return {
-          tokenAddress: rewardToken.address,
-          chainId: rewardToken.chainId,
+          token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
           amount: isFiniteBigNumber(amount) ? amount : BIG_ZERO,
           index,
         };
@@ -319,20 +321,18 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       .filter(isDefined);
 
     if (rewards.length === 0) {
+      const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
       rewards.push({
-        tokenAddress: boost.earnedTokenAddress,
-        chainId: boost.chainId,
+        token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
         amount: BIG_ZERO,
         index: 0,
       });
     }
 
-    // TODO support multiple rewards
-    const reward = rewards.find(r => r.tokenAddress === boost.earnedTokenAddress);
     return {
       boostId: boost.id,
       balance: fromWeiString(result.balance, balanceToken.decimals),
-      rewards: reward?.amount || BIG_ZERO,
+      rewards,
     };
   }
 }

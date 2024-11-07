@@ -1,5 +1,89 @@
 [
   {
+    "id": "moo_aerodrome-virtual-weth",
+    "poolId": "aerodrome-virtual-weth",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["VIRTUAL", "WETH"],
+    "tokenAddress": "0x56c47a9dB54f6A01c07bb4f668DbB6e8bb0644Ae",
+    "earnedToken": "mooBIFI",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+    "earnContractAddress": "0x834f2E3e8C4F25e80375A0Ff6CB9A61398ecC749",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "basemooBIFI",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": [],
+    "pinned": true
+  },
+  {
+    "id": "moo_aerodrome-virtual-cbbtc",
+    "poolId": "aerodrome-virtual-cbbtc",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["VIRTUAL", "cbBTC"],
+    "tokenAddress": "0x6b3ad868f29230357419b2c31bA08Dd9B9622dca",
+    "earnedToken": "mooBIFI",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+    "earnContractAddress": "0x04C524b5312f6D72689BC58b74828C054CbaE051",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "basemooBIFI",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": [],
+    "pinned": true
+  },
+  {
+    "id": "moo_aero-cow-weth-luna-vault",
+    "poolId": "aero-cow-weth-luna-vault",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["LUNA", "WETH"],
+    "tokenAddress": "0x5407D715d43A6988775290D3587ADe4C54C5a5Ae",
+    "earnedToken": "mooBIFI",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+    "earnContractAddress": "0x21e73363e26c054317CA3eBd4B3aD1d8891a9F90",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "basemooBIFI",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": [],
+    "pinned": true
+  },
+  {
+    "id": "moo_aerodrome-usdc-mai",
+    "poolId": "aerodrome-usdc-mai",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["USDC", "MAI"],
+    "tokenAddress": "0x22F8ff24861a7F7e2ec9b19C5668b43bB69202E3",
+    "earnedToken": "mooBIFI",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+    "earnContractAddress": "0x8C14bd2E49f58D7C8314E748B603493e378Bed01",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "basemooBIFI",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": [],
+    "pinned": false
+  },
+  {
     "id": "moo_aerodrome-usdc-cbbtc",
     "poolId": "aerodrome-usdc-cbbtc",
     "name": "Beefy",
@@ -18,7 +102,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-weth-cbbtc",
@@ -39,7 +123,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-weth-silo",
@@ -81,7 +165,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-cow-weth-eurc-vault",
@@ -102,7 +186,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-cow-usdz-weth-vault",
@@ -123,7 +207,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-weth-degen",

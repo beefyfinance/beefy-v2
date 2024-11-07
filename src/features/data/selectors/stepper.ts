@@ -11,11 +11,19 @@ import { ZERO_ADDRESS } from '../../../helpers/addresses';
 import {
   type BridgeAdditionalData,
   isBaseAdditionalData,
+  isBoostAdditionalData,
   isWalletActionBridgeSuccess,
   isWalletActionSuccess,
   isZapAdditionalData,
+  type TrxReceipt,
   type WalletActionsSuccessState,
 } from '../reducers/wallet/wallet-action';
+import { decodeEventLog, getAddress } from 'viem';
+import { uniqBy } from 'lodash-es';
+import { ERC20Abi } from '../../../config/abi/ERC20Abi';
+import type { Hex } from 'viem/types/misc';
+import { selectBoostById } from './boosts';
+import { isDefined } from '../utils/array-utils';
 
 export const selectStepperState = (state: BeefyState) => {
   return state.ui.stepperState;
@@ -112,6 +120,84 @@ export function selectBridgeSuccess(
   }
 
   throw new Error('Not bridge success');
+}
+
+export function selectBoostAdditionalData(state: BeefyState) {
+  if (isBoostAdditionalData(state.user.walletActions.additional)) {
+    return state.user.walletActions.additional;
+  }
+  return undefined;
+}
+
+export function selectBoostClaimed(state: BeefyState) {
+  if (!isWalletActionSuccess(state.user.walletActions)) {
+    return [];
+  }
+  if (!isBoostAdditionalData(state.user.walletActions.additional)) {
+    return [];
+  }
+
+  const { receipt } = state.user.walletActions.data;
+  const { boostId, token, walletAddress } = state.user.walletActions.additional;
+
+  if (!boostId || !receipt || !receipt.events) {
+    return [];
+  }
+
+  const boost = selectBoostById(state, boostId);
+
+  // Tokens sent from boost to the user, excluding the vault token
+  const from = getAddress(boost.contractAddress);
+  const to = getAddress(walletAddress);
+  const contract = getAddress(token.address);
+  const transferEvents = getTransferEvents(receipt.events).filter(
+    e => e.args.from === from && e.args.to === to && e.contract !== contract
+  );
+
+  return transferEvents
+    .map(e => {
+      const token = selectTokenByAddressOrUndefined(state, boost.chainId, e.contract);
+      if (!token) {
+        return undefined;
+      }
+      const amount = fromWeiString(e.args.value.toString(), token.decimals);
+      if (amount.lte(BIG_ZERO)) {
+        return undefined;
+      }
+      return {
+        token,
+        amount,
+      };
+    })
+    .filter(isDefined);
+}
+
+const TransferEventTopic = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
+
+/** Takes events from web3 receipt and decodes the Transfer events using viem */
+function getTransferEvents(events: TrxReceipt['events']) {
+  if (events === undefined) {
+    return [];
+  }
+
+  const transferLogs = uniqBy(
+    Object.values(events).flatMap(eventOrEvents => {
+      const events = Array.isArray(eventOrEvents) ? eventOrEvents : [eventOrEvents];
+      return events.filter(event => event.raw?.topics[0] === TransferEventTopic);
+    }),
+    e => `${e.transactionHash}-${e.logIndex}`
+  );
+
+  return transferLogs.map(log => {
+    const event = decodeEventLog({
+      abi: ERC20Abi,
+      data: log.raw?.data as Hex | undefined,
+      eventName: 'Transfer',
+      strict: true,
+      topics: log.raw?.topics as [Hex, ...Hex[]],
+    });
+    return { ...event, contract: getAddress(log.address) };
+  });
 }
 
 export const selectStepperProgress = (state: BeefyState) => {

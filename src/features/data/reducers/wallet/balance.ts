@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type BigNumber from 'bignumber.js';
 import type { Draft } from 'immer';
-import type { BeefyState } from '../../../../redux-types';
 import {
   fetchAllBalanceAction,
   type FetchAllBalanceFulfilledPayload,
@@ -12,16 +11,15 @@ import { initiateBoostForm } from '../../actions/boosts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
 import type {
   BoostBalance,
+  BoostReward,
+  GovVaultBalance,
   GovVaultReward,
-  GovVaultV2Balance,
   TokenBalance,
 } from '../../apis/balance/balance-types';
 import type { BoostEntity } from '../../entities/boost';
 import type { ChainEntity } from '../../entities/chain';
 import type { TokenEntity } from '../../entities/token';
 import type { VaultEntity } from '../../entities/vault';
-import { selectBoostById } from '../../selectors/boosts';
-import { selectVaultById } from '../../selectors/vaults';
 import { initiateMinterForm } from '../../actions/minters';
 import { selectMinterById } from '../../selectors/minters';
 import { BIG_ZERO } from '../../../../helpers/big-number';
@@ -63,7 +61,7 @@ export interface BalanceState {
         byBoostId: {
           [boostId: BoostEntity['id']]: {
             balance: BigNumber;
-            rewards: BigNumber;
+            rewards: BoostReward[];
           };
         };
 
@@ -101,20 +99,18 @@ export const balanceSlice = createSlice({
     });
 
     builder.addCase(initiateBoostForm.fulfilled, (sliceState, action) => {
-      const state = action.payload.state;
       if (!action.payload.walletAddress) {
         return;
       }
-      const boost = selectBoostById(action.payload.state, action.payload.boostId);
-      const vault = selectVaultById(action.payload.state, boost.vaultId);
+      const boost = action.payload.boost;
       const walletAddress = action.payload.walletAddress.toLowerCase();
 
       const walletState = getWalletState(sliceState, walletAddress);
       const balance = action.payload.balance;
 
-      addTokenBalanceToState(walletState, vault.chainId, balance.tokens);
+      addTokenBalanceToState(walletState, boost.chainId, balance.tokens);
       addGovVaultBalanceToState(walletState, balance.govVaults);
-      addBoostBalanceToState(state, walletState, balance.boosts);
+      addBoostBalanceToState(walletState, balance.boosts);
     });
 
     builder.addCase(initiateMinterForm.fulfilled, (sliceState, action) => {
@@ -133,7 +129,6 @@ export const balanceSlice = createSlice({
     builder.addCase(
       reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
       (sliceState, action) => {
-        const state = action.payload.state;
         const chainId = action.payload.chainId;
         const walletAddress = action.payload.walletAddress.toLowerCase();
 
@@ -142,7 +137,7 @@ export const balanceSlice = createSlice({
 
         addTokenBalanceToState(walletState, chainId, balance.tokens);
         addGovVaultBalanceToState(walletState, balance.govVaults);
-        addBoostBalanceToState(state, walletState, balance.boosts);
+        addBoostBalanceToState(walletState, balance.boosts);
       }
     );
 
@@ -178,14 +173,13 @@ function addBalancesToState(
   sliceState: Draft<BalanceState>,
   payload: FetchAllBalanceFulfilledPayload
 ) {
-  const state = payload.state;
   const chainId = payload.chainId;
   const walletAddress = payload.walletAddress.toLowerCase();
   const walletState = getWalletState(sliceState, walletAddress);
   const balance = payload.data;
 
   addTokenBalanceToState(walletState, chainId, balance.tokens);
-  addBoostBalanceToState(state, walletState, balance.boosts);
+  addBoostBalanceToState(walletState, balance.boosts);
   addGovVaultBalanceToState(walletState, balance.govVaults);
 }
 
@@ -220,7 +214,7 @@ function addTokenBalanceToState(
 
 function addGovVaultBalanceToState(
   walletState: Draft<BalanceState['byAddress']['0xABC']>,
-  govVaultBalance: GovVaultV2Balance[]
+  govVaultBalance: GovVaultBalance[]
 ) {
   for (const vaultBalance of govVaultBalance) {
     const vaultId = vaultBalance.vaultId;
@@ -240,7 +234,7 @@ function addGovVaultBalanceToState(
       stateForVault.rewards.some(
         (reward, i) =>
           !reward.amount.isEqualTo(vaultBalance.rewards[i].amount) ||
-          reward.tokenAddress !== vaultBalance.rewards[i].tokenAddress
+          reward.token.address !== vaultBalance.rewards[i].token.address
       )
     ) {
       walletState.tokenAmount.byGovVaultId[vaultId] = {
@@ -252,21 +246,28 @@ function addGovVaultBalanceToState(
 }
 
 function addBoostBalanceToState(
-  state: BeefyState,
   walletState: Draft<BalanceState['byAddress']['0xABC']>,
   boostBalances: BoostBalance[]
 ) {
   for (const boostBalance of boostBalances) {
+    const boostId = boostBalance.boostId;
+
     // only update data if necessary
-    const stateForBoost = walletState.tokenAmount.byBoostId[boostBalance.boostId];
+    const stateForBoost = walletState.tokenAmount.byBoostId[boostId];
     if (
+      // state isn't already there and if it's there, only if amount differ
       stateForBoost === undefined ||
       !stateForBoost.balance.isEqualTo(boostBalance.balance) ||
-      !stateForBoost.rewards.isEqualTo(boostBalance.rewards)
+      stateForBoost.rewards.length !== boostBalance.rewards.length ||
+      stateForBoost.rewards.some(
+        (reward, i) =>
+          !reward.amount.isEqualTo(boostBalance.rewards[i].amount) ||
+          reward.token.address !== boostBalance.rewards[i].token.address
+      )
     ) {
-      walletState.tokenAmount.byBoostId[boostBalance.boostId] = {
-        balance: boostBalance.balance,
+      walletState.tokenAmount.byBoostId[boostId] = {
         rewards: boostBalance.rewards,
+        balance: boostBalance.balance,
       };
     }
   }

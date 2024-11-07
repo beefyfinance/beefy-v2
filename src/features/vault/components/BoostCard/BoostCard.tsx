@@ -6,6 +6,7 @@ import { CardContent } from '../Card';
 import { styles } from './styles';
 import type { VaultEntity } from '../../../data/entities/vault';
 import {
+  selectBoostActiveRewardTokens,
   selectBoostById,
   selectBoostCampaignById,
   selectBoostPartnerById,
@@ -17,7 +18,6 @@ import { LinkIcon } from '../../../../components/LinkIcon';
 import Twitter from '../../../../images/icons/twitter.svg';
 import Telegram from '../../../../images/icons/telegram.svg';
 import Discord from '../../../../images/icons/discord.svg';
-import { selectBoostRewardsTokenEntity } from '../../../data/selectors/balance';
 import { RewardTokenDetails } from '../RewardTokenDetails';
 import type { BoostEntity } from '../../../data/entities/boost';
 import type { TokenEntity } from '../../../data/entities/token';
@@ -76,7 +76,7 @@ export const MerklBoostCard = memo<BoostCardProps>(function MerklBoostCard({ vau
         learn={learn}
         description={description}
         social={social}
-        rewardToken={rewardToken}
+        rewardTokens={[rewardToken]}
         partnerIds={['optimism']}
       />
     );
@@ -88,10 +88,10 @@ export const MerklBoostCard = memo<BoostCardProps>(function MerklBoostCard({ vau
 export const NormalBoostCard = memo<BoostCardProps>(function BoostCard({ vaultId }) {
   const boostIds = useAppSelector(state => selectPreStakeOrActiveBoostIds(state, vaultId));
   const boost = useAppSelector(state => selectBoostById(state, boostIds[0]));
-  const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
+  const rewardTokens = useAppSelector(state => selectBoostActiveRewardTokens(state, boost.id));
   const BoostComponent = boost.campaignId ? CampaignBoostCard : PartnerBoostCard;
 
-  return <BoostComponent boost={boost} rewardToken={rewardToken} />;
+  return <BoostComponent boost={boost} rewardTokens={rewardTokens} />;
 });
 
 interface CampaignContentProps {
@@ -100,7 +100,7 @@ interface CampaignContentProps {
   description: string;
   learn: string;
   social: BoostSocials;
-  rewardToken: TokenEntity;
+  rewardTokens: TokenEntity[];
   partnerIds?: string[];
 }
 
@@ -110,7 +110,7 @@ const CampaignContent = memo<CampaignContentProps>(function CampaignContent({
   description,
   learn,
   social,
-  rewardToken,
+  rewardTokens,
   partnerIds,
 }) {
   const classes = useStyles();
@@ -140,7 +140,13 @@ const CampaignContent = memo<CampaignContentProps>(function CampaignContent({
             ))}
           </div>
         )}
-        <RewardTokenDetails token={rewardToken} chainId={rewardToken.chainId} />
+        {rewardTokens.map(rewardToken => (
+          <RewardTokenDetails
+            key={rewardToken.address}
+            token={rewardToken}
+            chainId={rewardToken.chainId}
+          />
+        ))}
       </CardContent>
     </div>
   );
@@ -148,12 +154,12 @@ const CampaignContent = memo<CampaignContentProps>(function CampaignContent({
 
 type InnerBoostCardProps = {
   boost: BoostEntity;
-  rewardToken: TokenEntity;
+  rewardTokens: TokenEntity[];
 };
 
 const CampaignBoostCard = memo<InnerBoostCardProps>(function CampaignBoostCard({
   boost,
-  rewardToken,
+  rewardTokens,
 }) {
   const { title, description, learn, social } = useAppSelector(state =>
     selectBoostCampaignById(state, boost.campaignId || '')
@@ -166,7 +172,7 @@ const CampaignBoostCard = memo<InnerBoostCardProps>(function CampaignBoostCard({
       description={description}
       learn={learn}
       social={social}
-      rewardToken={rewardToken}
+      rewardTokens={rewardTokens}
       partnerIds={boost.partnerIds}
     />
   );
@@ -201,7 +207,7 @@ const PartnerSubCard = memo<PartnerSubCardProps>(function PartnerSubCard({ partn
 
 const PartnerBoostCard = memo<InnerBoostCardProps>(function PartnerBoostCard({
   boost,
-  rewardToken,
+  rewardTokens,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -225,7 +231,13 @@ const PartnerBoostCard = memo<InnerBoostCardProps>(function PartnerBoostCard({
       </div>
       <CardContent className={classes.content}>
         <div>{text}</div>
-        <RewardTokenDetails token={rewardToken} chainId={boost.chainId} />
+        {rewardTokens.map(rewardToken => (
+          <RewardTokenDetails
+            key={rewardToken.address}
+            token={rewardToken}
+            chainId={rewardToken.chainId}
+          />
+        ))}
       </CardContent>
     </div>
   );

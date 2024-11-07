@@ -33,7 +33,6 @@ import {
 } from '../reducers/wallet/wallet-action';
 import {
   selectBoostUserBalanceInToken,
-  selectBoostUserRewardsInToken,
   selectGovVaultPendingRewards,
   selectGovVaultUserStakedBalanceInDepositToken,
 } from '../selectors/balance';
@@ -46,7 +45,7 @@ import {
   selectTokenByAddressOrUndefined,
   selectTokenByIdOrUndefined,
 } from '../selectors/tokens';
-import { selectVaultById } from '../selectors/vaults';
+import { selectStandardVaultById, selectVaultById } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
 import { getGasPriceOptions } from '../utils/gas-utils';
@@ -57,8 +56,8 @@ import type { MinterEntity } from '../entities/minter';
 import { reloadReserves } from './minters';
 import { selectChainById } from '../selectors/chains';
 import { BIG_ZERO, fromWei, toWei, toWeiString } from '../../../helpers/big-number';
-import { updateSteps } from './stepper';
-import { StepContent, stepperActions } from '../reducers/wallet/stepper';
+import { startStepperWithSteps, updateSteps } from './stepper';
+import { type Step, StepContent, stepperActions } from '../reducers/wallet/stepper';
 import type { PromiEvent } from 'web3-core';
 import type { ThunkDispatch } from '@reduxjs/toolkit';
 import { selectOneInchSwapAggregatorForChain, selectZapByChainId } from '../selectors/zap';
@@ -85,6 +84,9 @@ import {
 } from './user-rewards/merkl-user-rewards';
 import { fetchUserStellaSwapRewardsAction } from './user-rewards/stellaswap-user-rewards';
 import { stellaswapRewarderAbi } from '../../../config/abi/StellaSwapRewarder';
+import { selectBoostById } from '../selectors/boosts';
+import { selectIsApprovalNeededForBoostStaking } from '../selectors/wallet-actions';
+import type { TFunction } from 'react-i18next';
 
 const MIN_APPROVAL_AMOUNT = new BigNumber('8000000000000000000000000000'); // wei
 
@@ -716,7 +718,7 @@ const exitGovVault = (vault: VaultGov) => {
   });
 };
 
-const claimBoost = (boost: BoostEntity) => {
+const claimBoost = (boostId: BoostEntity['id']) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -724,9 +726,9 @@ const claimBoost = (boost: BoostEntity) => {
     if (!address) {
       return;
     }
-    const amount = selectBoostUserRewardsInToken(state, boost.id);
-    const token = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
-    const vault = selectVaultById(state, boost.vaultId);
+    const boost = selectBoostById(state, boostId);
+    const vault = selectStandardVaultById(state, boost.vaultId);
+    const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
@@ -742,7 +744,13 @@ const claimBoost = (boost: BoostEntity) => {
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount, token },
+      {
+        type: 'boost',
+        boostId: boost.id,
+        amount: BIG_ZERO,
+        token: mooToken,
+        walletAddress: address,
+      },
       {
         walletAddress: address,
         chainId: vault.chainId,
@@ -754,7 +762,7 @@ const claimBoost = (boost: BoostEntity) => {
   });
 };
 
-const exitBoost = (boost: BoostEntity) => {
+const exitBoost = (boostId: BoostEntity['id']) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -763,9 +771,10 @@ const exitBoost = (boost: BoostEntity) => {
       return;
     }
 
+    const boost = selectBoostById(state, boostId);
     const boostAmount = selectBoostUserBalanceInToken(state, boost.id);
     const vault = selectVaultById(state, boost.vaultId);
-    const token = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
+    const mooToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
@@ -788,7 +797,13 @@ const exitBoost = (boost: BoostEntity) => {
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount: boostAmount, token },
+      {
+        type: 'boost',
+        boostId: boost.id,
+        amount: boostAmount,
+        token: mooToken,
+        walletAddress: address,
+      },
       {
         walletAddress: address,
         chainId: boost.chainId,
@@ -800,7 +815,40 @@ const exitBoost = (boost: BoostEntity) => {
   });
 };
 
-const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
+export const startStakeBoostSteps = (
+  boostId: BoostEntity['id'],
+  t: TFunction,
+  amount: BigNumber
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    const state = getState();
+    const boost = selectBoostById(state, boostId);
+    const vault = selectStandardVaultById(state, boost.vaultId);
+    const needsApproval = selectIsApprovalNeededForBoostStaking(state, boost, amount);
+    const receiptToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
+    const steps: Step[] = [];
+
+    if (needsApproval) {
+      steps.push({
+        step: 'approve',
+        message: t('Vault-ApproveMsg'),
+        action: walletActions.approval(receiptToken, boost.contractAddress, amount),
+        pending: false,
+      } satisfies Step);
+    }
+
+    steps.push({
+      step: 'boost-stake',
+      message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
+      action: walletActions.stakeBoost(boostId, amount),
+      pending: false,
+    });
+
+    dispatch(startStepperWithSteps(steps, boost.chainId));
+  });
+};
+
+const stakeBoost = (boostId: BoostEntity['id'], amount: BigNumber) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -812,12 +860,13 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
 
-    const vault = selectVaultById(state, boost.vaultId);
-    const inputToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
+    const boost = selectBoostById(state, boostId);
+    const vault = selectStandardVaultById(state, boost.vaultId);
+    const mooToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     const contractAddr = boost.contractAddress;
     const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
-    const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
+    const rawAmount = amount.shiftedBy(mooToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
@@ -829,7 +878,7 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount, token: inputToken },
+      { type: 'boost', boostId: boost.id, amount, token: mooToken, walletAddress: address },
       {
         walletAddress: address,
         chainId: vault.chainId,
@@ -841,7 +890,39 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
   });
 };
 
-const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
+export const startUnstakeBoostSteps = (
+  boostId: BoostEntity['id'],
+  t: TFunction,
+  amount: BigNumber,
+  max: boolean
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    const state = getState();
+    const boost = selectBoostById(state, boostId);
+    const steps: Step[] = [];
+
+    // If user is withdrawing all their assets, UI won't allow to claim individually later on, so claim as well
+    if (max) {
+      steps.push({
+        step: 'boost-claim-unstake',
+        message: t('Vault-TxnConfirm', { type: t('Claim-Unstake-noun') }),
+        action: walletActions.exitBoost(boost.id),
+        pending: false,
+      });
+    } else {
+      steps.push({
+        step: 'boost-unstake',
+        message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+        action: walletActions.unstakeBoost(boost.id, amount),
+        pending: false,
+      });
+    }
+
+    dispatch(startStepperWithSteps(steps, boost.chainId));
+  });
+};
+
+const unstakeBoost = (boostId: BoostEntity['id'], amount: BigNumber) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -852,13 +933,13 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
-
+    const boost = selectBoostById(state, boostId);
     const vault = selectVaultById(state, boost.vaultId);
-    const inputToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
+    const mooToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
 
     const contractAddr = boost.contractAddress;
     const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
-    const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
+    const rawAmount = amount.shiftedBy(mooToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
@@ -870,7 +951,7 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount, token: inputToken },
+      { type: 'boost', boostId: boost.id, amount, token: mooToken, walletAddress: address },
       {
         walletAddress: address,
         chainId: vault.chainId,

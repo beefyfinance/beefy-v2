@@ -17,6 +17,11 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.contentPrimary,
     borderRadius: '12px',
   },
+  containerExpiredBoosts: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '16px',
+  },
   boostImg: {
     width: 30,
     height: 30,
@@ -35,26 +40,43 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.middle,
     marginLeft: '8px',
   },
-  boostStats: {
+  rewards: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+    gridTemplateColumns: '1fr auto',
     columnGap: '16px',
     backgroundColor: theme.palette.background.contentLight,
+    color: theme.palette.text.middle,
     padding: '12px',
     borderRadius: '8px',
   },
-  boostStat: {
-    '& :last-child': {
-      marginBottom: 0,
-    },
-  },
-  boostStatLabel: {
+  rewardLabel: {
     ...theme.typography['subline-sm'],
     color: theme.palette.text.dark,
+    whiteSpace: 'nowrap' as const,
   },
-  boostStatValue: {
+  rewardValue: {
     ...theme.typography['body-lg-med'],
+    display: 'flex',
+    gap: '4px',
+    alignItems: 'center',
+    whiteSpace: 'nowrap' as const,
+  },
+  rewardsFadeInactive: {
+    color: theme.palette.text.dark,
+  },
+  rewardValueActive: {
     color: theme.palette.text.middle,
+  },
+  rewardValueAmount: {
+    minWidth: 0,
+  },
+  rewardEllipsis: {
+    whiteSpace: 'nowrap' as const,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+  rewardSymbol: {
+    marginLeft: '4px',
   },
   button: {
     borderRadius: '8px',

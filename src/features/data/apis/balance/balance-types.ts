@@ -1,7 +1,7 @@
 import type BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../redux-types';
 import type { BoostEntity } from '../../entities/boost';
-import type { TokenEntity, TokenErc20 } from '../../entities/token';
+import type { TokenEntity } from '../../entities/token';
 import type { VaultEntity, VaultGov } from '../../entities/vault';
 
 export interface IBalanceApi {
@@ -19,39 +19,48 @@ export interface TokenBalance {
   amount: BigNumber;
 }
 
-export interface GovVaultBalance {
-  vaultId: VaultEntity['id'];
-  balance: BigNumber;
-  rewards: BigNumber;
+export interface GovVaultSingleBalanceContractData {
+  balance: string;
+  rewards: string;
+}
+
+export interface GovVaultMultiBalanceContractData {
+  balance: string;
+  rewardTokens: string[];
+  rewards: string[];
 }
 
 export interface GovVaultReward {
-  tokenAddress: TokenErc20['address'];
-  chainId: TokenErc20['chainId'];
+  token: Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'oracleId' | 'chainId'>;
   amount: BigNumber;
   index: number;
 }
 
-export interface GovVaultV2BalanceResult {
-  balance: BigNumber;
-  rewardTokens: string[];
-  rewards: BigNumber[];
-}
-
-export interface GovVaultV2Balance {
+export interface GovVaultBalance {
   vaultId: VaultEntity['id'];
   balance: BigNumber;
   rewards: GovVaultReward[];
 }
 
+export interface BoostBalanceContractData {
+  balance: string;
+  rewards: string;
+}
+
+export interface BoostReward {
+  token: Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'oracleId' | 'chainId'>;
+  amount: BigNumber;
+  index: number;
+}
+
 export interface BoostBalance {
   boostId: BoostEntity['id'];
   balance: BigNumber;
-  rewards: BigNumber;
+  rewards: BoostReward[];
 }
 
 export interface FetchAllBalancesResult {
   tokens: TokenBalance[];
-  govVaults: GovVaultV2Balance[];
+  govVaults: GovVaultBalance[];
   boosts: BoostBalance[];
 }

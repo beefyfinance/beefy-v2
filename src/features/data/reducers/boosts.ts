@@ -5,7 +5,7 @@ import { fetchAllBoosts } from '../actions/boosts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import type {
-  BoostRewardContractData,
+  BoostContractData,
   FetchAllContractDataResult,
 } from '../apis/contract-data/contract-data-types';
 import type { BoostCampaignEntity, BoostEntity, BoostPartnerEntity } from '../entities/boost';
@@ -16,7 +16,7 @@ import type { BoostConfig } from '../apis/config-types';
 import { datesAreEqual } from '../../../helpers/date';
 import { entries } from '../../../helpers/object';
 
-export type BoostContractState = BoostRewardContractData;
+export type BoostContractState = BoostContractData;
 
 /**
  * State containing Vault infos
@@ -121,15 +121,26 @@ function addContractDataToState(
 ) {
   for (const boostContractData of contractData.boosts) {
     const contractState = sliceState.contractState[boostContractData.id];
-    const rewardData = boostContractData.rewards[0];
     if (
       contractState === undefined ||
-      contractState.isPreStake !== rewardData.isPreStake ||
-      contractState.index !== rewardData.index ||
-      contractState.token.address !== rewardData.token.address ||
-      !datesAreEqual(rewardData.periodFinish, contractState.periodFinish)
+      contractState.isPreStake !== boostContractData.isPreStake ||
+      contractState.rewards.length !== boostContractData.rewards.length ||
+      !contractState.totalSupply.eq(boostContractData.totalSupply) ||
+      !datesAreEqual(contractState.periodFinish, boostContractData.periodFinish) ||
+      boostContractData.rewards.some((rewardContract, i) => {
+        const rewardState = contractState.rewards[i];
+        return (
+          rewardState === undefined ||
+          rewardState.isPreStake !== rewardContract.isPreStake ||
+          rewardState.index !== rewardContract.index ||
+          !rewardState.rewardRate.eq(rewardContract.rewardRate) ||
+          rewardState.token.address !== rewardContract.token.address ||
+          rewardState.token.chainId !== rewardContract.token.chainId ||
+          !datesAreEqual(rewardState.periodFinish, rewardContract.periodFinish)
+        );
+      })
     ) {
-      sliceState.contractState[boostContractData.id] = { ...rewardData };
+      sliceState.contractState[boostContractData.id] = { ...boostContractData };
     }
   }
 
