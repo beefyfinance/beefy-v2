@@ -74,7 +74,11 @@ async function vaultData(chain, vaultAddress, id) {
   let removeLiquidityUrl =
     provider === 'pendle'
       ? `https://app.pendle.finance/trade/pools/${params.want}/zap/out?chain=${chain}`
+      : provider === 'pearl'
+      ? 'https://www.pearl.exchange/dashboard/my-pools'
       : 'XXX';
+
+  const points = provider === 'pearl' ? ['pearl'] : [];
 
   return {
     ...params,
@@ -85,6 +89,7 @@ async function vaultData(chain, vaultAddress, id) {
     oracleId,
     addLiquidityUrl,
     removeLiquidityUrl,
+    points,
   };
 }
 
@@ -94,32 +99,34 @@ async function generateVault() {
   const id = process.argv[4];
   vaultsFile = vaultsFile.replace('$chain', chain);
 
-  const vault = await vaultData(chain, vaultAddress, id);
-
-  const newVault = sortVaultKeys({
+  const data = await vaultData(chain, vaultAddress, id);
+  const vault: any = {
     id: id,
-    name: vault.token,
-    token: vault.token,
-    tokenAddress: vault.want,
-    tokenDecimals: Number(vault.tokenDecimals),
-    tokenProviderId: vault.provider,
-    earnedToken: vault.mooToken,
+    name: data.token,
+    token: data.token,
+    tokenAddress: data.want,
+    tokenDecimals: Number(data.tokenDecimals),
+    tokenProviderId: data.provider,
+    earnedToken: data.mooToken,
     earnedTokenAddress: vaultAddress,
     earnContractAddress: vaultAddress,
     oracle: 'lps',
-    oracleId: vault.oracleId,
+    oracleId: data.oracleId,
     status: 'active',
-    platformId: vault.platform,
-    assets: [vault.token],
-    migrationIds: vault.migrationIds,
+    platformId: data.platform,
+    assets: [data.token],
     strategyTypeId: 'multi-lp',
     risks: ['COMPLEXITY_LOW', 'IL_NONE', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
-    addLiquidityUrl: vault.addLiquidityUrl,
-    removeLiquidityUrl: vault.removeLiquidityUrl,
+    addLiquidityUrl: data.addLiquidityUrl,
+    removeLiquidityUrl: data.removeLiquidityUrl,
     network: chain,
     createdAt: Math.floor(Date.now() / 1000),
-  });
+  };
 
+  if (data.migrationIds?.length > 0) vault.migrationIds = data.migrationIds;
+  if (data.points?.length > 0) vault.pointStructureIds = data.points;
+
+  const newVault = sortVaultKeys(vault);
   const vaults = JSON.parse(await fs.readFile(vaultsFile, 'utf8'));
   const newBoosts = [newVault, ...vaults];
   await fs.writeFile(vaultsFile, JSON.stringify(newBoosts, null, 2));
