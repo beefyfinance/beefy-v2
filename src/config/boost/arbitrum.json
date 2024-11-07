@@ -1,5 +1,26 @@
 [
   {
+    "id": "moo_silo-arb-silo",
+    "poolId": "silo-arb-silo",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["SILO"],
+    "tokenAddress": "0x92261402689559D3cF1435ecB28B8B87832c2468",
+    "earnedToken": "USDC.e",
+    "earnedTokenDecimals": 6,
+    "earnedTokenAddress": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "earnContractAddress": "0x39Cb8CF3Fd0e0Ed4468ba9F93493BB61189E7a0e",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "USDC.e",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": [],
+    "pinned": true
+  },
+  {
     "id": "moo_sushi-cow-arb-usdc-usdt-vault",
     "poolId": "sushi-cow-arb-usdc-usdt-vault",
     "name": "Beefy",

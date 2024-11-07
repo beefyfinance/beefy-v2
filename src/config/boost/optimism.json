@@ -1,5 +1,26 @@
 [
   {
+    "id": "moo_velodrome-v2-hai-lusd",
+    "poolId": "velodrome-v2-hai-lusd",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["HAI", "LUSD"],
+    "tokenAddress": "0x2a92920A08115a6A88C550eC7dF67eAEf0c1Edb0",
+    "earnedToken": "mooBIFI",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+    "earnContractAddress": "0xa26783dEcd88b50A5a7B280DfCc8cC56189fDBAA",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "opmooBIFI",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": [],
+    "pinned": false
+  },
+  {
     "id": "moo_sushi-cow-op-weth-wbtc-vault",
     "poolId": "sushi-cow-op-weth-wbtc-vault",
     "name": "Beefy",
