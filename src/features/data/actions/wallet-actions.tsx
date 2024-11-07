@@ -773,8 +773,8 @@ const exitBoost = (boostId: BoostEntity['id']) => {
 
     const boost = selectBoostById(state, boostId);
     const boostAmount = selectBoostUserBalanceInToken(state, boost.id);
-    const vault = selectVaultById(state, boost.vaultId);
-    const mooToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
+    const vault = selectStandardVaultById(state, boost.vaultId);
+    const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
@@ -862,7 +862,7 @@ const stakeBoost = (boostId: BoostEntity['id'], amount: BigNumber) => {
 
     const boost = selectBoostById(state, boostId);
     const vault = selectStandardVaultById(state, boost.vaultId);
-    const mooToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
     const contractAddr = boost.contractAddress;
     const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
@@ -934,8 +934,8 @@ const unstakeBoost = (boostId: BoostEntity['id'], amount: BigNumber) => {
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const boost = selectBoostById(state, boostId);
-    const vault = selectVaultById(state, boost.vaultId);
-    const mooToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
+    const vault = selectStandardVaultById(state, boost.vaultId);
+    const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
     const contractAddr = boost.contractAddress;
     const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
