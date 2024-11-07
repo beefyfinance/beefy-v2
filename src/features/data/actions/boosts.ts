@@ -36,15 +36,10 @@ interface InitBoostFormParams {
 }
 
 interface InitBoostFormPayload {
-  boostId: BoostEntity['id'];
-
-  // really, this should be separated
   walletAddress: string | undefined;
   balance: FetchAllBalancesResult;
   allowance: TokenAllowance[];
-
-  // reducers below need to access the state
-  state: BeefyState;
+  boost: BoostEntity;
 }
 
 export const initiateBoostForm = createAsyncThunk<
@@ -86,10 +81,9 @@ export const initiateBoostForm = createAsyncThunk<
       : [];
 
   return {
-    boostId,
     walletAddress,
     allowance: allowanceRes,
     balance: balanceRes,
-    state: getState(),
+    boost,
   };
 });

@@ -16,7 +16,6 @@ import {
 import {
   selectAllVaultBoostIds,
   selectBoostById,
-  selectBoostContractState,
   selectIsVaultPreStakedOrBoosted,
   selectVaultCurrentBoostId,
 } from './boosts';
@@ -31,6 +30,7 @@ import { entries } from '../../../helpers/object';
 import type { UserLpBreakdownBalance } from './balance-types';
 import type { TokenAmount } from '../apis/transact/transact-types';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils';
+import type { BoostReward } from '../apis/balance/balance-types';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (walletAddress) {
@@ -511,13 +511,14 @@ export const selectBoostUserBalanceInToken = (
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.balance || BIG_ZERO;
 };
 
+const NO_REWARDS: BoostReward[] = [];
 export const selectBoostUserRewardsInToken = (
   state: BeefyState,
   boostId: BoostEntity['id'],
   walletAddress?: string
 ) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
-  return walletBalance?.tokenAmount?.byBoostId[boostId]?.rewards || BIG_ZERO;
+  return walletBalance?.tokenAmount?.byBoostId[boostId]?.rewards || NO_REWARDS;
 };
 
 /**
@@ -574,9 +575,12 @@ export const selectGovVaultPendingRewards = createSelector(
     }
 
     return rewards.map(reward => {
-      const token = tokenByChainId[reward.chainId]?.byAddress?.[reward.tokenAddress.toLowerCase()];
+      const token =
+        tokenByChainId[reward.token.chainId]?.byAddress?.[reward.token.address.toLowerCase()];
       if (!token) {
-        throw new Error(`selectGovVaultEarnedTokens: Unknown token address ${reward.tokenAddress}`);
+        throw new Error(
+          `selectGovVaultEarnedTokens: Unknown token address ${reward.token.address}`
+        );
       }
       return { token, amount: reward.amount };
     });
@@ -604,15 +608,6 @@ export const selectBoostBalanceTokenEntity = (state: BeefyState, boostId: BoostE
   const boost = selectBoostById(state, boostId);
   const boostedVault = selectVaultById(state, boost.vaultId);
   return selectTokenByAddress(state, boostedVault.chainId, boostedVault.contractAddress);
-};
-
-/**
- * Get the token for which the boost rewards are expressed in
- * for boosts, rewards is the amount of earnedToken of the boost
- */
-export const selectBoostRewardsTokenEntity = (state: BeefyState, boostId: BoostEntity['id']) => {
-  const contractData = selectBoostContractState(state, boostId);
-  return selectTokenByAddress(state, contractData.token.chainId, contractData.token.address);
 };
 
 /**

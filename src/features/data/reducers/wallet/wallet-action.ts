@@ -5,6 +5,7 @@ import type { EventLog } from 'web3-core';
 import type { VaultEntity } from '../../entities/vault';
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types';
 import type { BeefyAnyBridgeConfig } from '../../apis/config-types';
+import type { BoostEntity } from '../../entities/boost';
 
 export type TrxHash = string;
 export type TrxReceipt = {
@@ -45,11 +46,18 @@ export type BridgeAdditionalData = BaseAdditionalData & {
   quote: IBridgeQuote<BeefyAnyBridgeConfig>;
 };
 
+export type BoostAdditionalData = BaseAdditionalData & {
+  type: 'boost';
+  boostId: BoostEntity['id'];
+  walletAddress: string;
+};
+
 export type TxAdditionalData =
   | VaultAdditionalData
   | ZapAdditionalData
   | MigrateAdditionalData
-  | BridgeAdditionalData;
+  | BridgeAdditionalData
+  | BoostAdditionalData;
 
 export function isZapAdditionalData(data: TxAdditionalData | undefined): data is ZapAdditionalData {
   return !!data && 'type' in data && data.type === 'zap';
@@ -59,6 +67,12 @@ export function isBridgeAdditionalData(
   data: TxAdditionalData | undefined
 ): data is BridgeAdditionalData {
   return !!data && 'type' in data && data.type === 'bridge';
+}
+
+export function isBoostAdditionalData(
+  data: TxAdditionalData | undefined
+): data is BoostAdditionalData {
+  return !!data && 'type' in data && data.type === 'boost';
 }
 
 export function isBaseAdditionalData(

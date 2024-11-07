@@ -1,5 +1,27 @@
 [
   {
+    "id": "moo_velodrome-v2-pool-weth",
+    "poolId": "velodrome-v2-pool-weth",
+    "name": "Beefy",
+    "tagIcon": "zap",
+    "tagText": "Zap Boost",
+    "assets": ["POOL", "WETH"],
+    "tokenAddress": "0x63289886Ad4Eb9364669741650cde780C9f2E7D2",
+    "earnedToken": "OP",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000042",
+    "earnContractAddress": "0x2410F41608cCd4bC26578D0DA576f2546bc93Ed6",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "OP",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "zap-v3",
+    "partners": [],
+    "pinned": false
+  },
+  {
     "id": "moo_velodrome-v2-wbtc-tbtc",
     "poolId": "velodrome-v2-wbtc-tbtc",
     "name": "Beefy",
