@@ -7,15 +7,12 @@ import {
   selectPastBoostIdsWithUserBalance,
 } from '../../../../data/selectors/boosts';
 import type { BoostEntity } from '../../../../data/entities/boost';
-import { selectVaultById } from '../../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../../store';
 import { BoostPastActionCard } from './BoostPastActionCard';
-import { ActionConnectSwitch } from './ActionConnectSwitch';
 
 const useStyles = makeStyles(styles);
 
 export function PastBoosts({ vaultId }: { vaultId: BoostEntity['id'] }) {
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
   const classes = useStyles({ isBoosted });
   const { t } = useTranslation();
@@ -40,11 +37,9 @@ export function PastBoosts({ vaultId }: { vaultId: BoostEntity['id'] }) {
         </span>
       </div>
       <AnimateHeight duration={500} height="auto" contentClassName={classes.containerExpiredBoosts}>
-        <ActionConnectSwitch chainId={vault.chainId}>
-          {pastBoostsWithUserBalance.map(boostId => (
-            <BoostPastActionCard boostId={boostId} key={boostId} />
-          ))}
-        </ActionConnectSwitch>
+        {pastBoostsWithUserBalance.map(boostId => (
+          <BoostPastActionCard boostId={boostId} key={boostId} />
+        ))}
       </AnimateHeight>
     </div>
   );

@@ -33,27 +33,27 @@ export const Rewards = memo(function Rewards({
   const { t } = useTranslation();
 
   return (
-    <div
-      className={clsx(
-        classes.boostStats,
-        fadeInactive && classes.boostStatsFadeInactive,
-        className
-      )}
-    >
-      <div className={classes.boostStatLabel}>{t('Boost-Rewards')}</div>
-      <div className={classes.boostStatLabel}>{t('Boost-Ends')}</div>
+    <div className={clsx(classes.rewards, fadeInactive && classes.rewardsFadeInactive, className)}>
+      <div className={classes.rewardLabel}>{t('Boost-Rewards')}</div>
+      <div className={classes.rewardLabel}>{t('Boost-Ends')}</div>
       {rewards.map(reward => (
         <Fragment key={reward.token.address}>
           <div
-            className={clsx(classes.boostStatValue, reward.active && classes.boostStatValueActive)}
+            className={clsx(
+              classes.rewardValue,
+              reward.active && classes.rewardValueActive,
+              classes.rewardValueAmount
+            )}
           >
             <TokenImageFromEntity token={reward.token} size={16} />
-            {isInBoost && <TokenAmount amount={reward.pending} decimals={reward.token.decimals} />}
-            {reward.token.symbol}
+            <div className={classes.rewardEllipsis}>
+              {isInBoost && (
+                <TokenAmount amount={reward.pending} decimals={reward.token.decimals} />
+              )}
+              <span className={classes.rewardSymbol}>{reward.token.symbol}</span>
+            </div>
           </div>
-          <div
-            className={clsx(classes.boostStatValue, reward.active && classes.boostStatValueActive)}
-          >
+          <div className={clsx(classes.rewardValue, reward.active && classes.rewardValueActive)}>
             {!reward.active ? (
               t('ENDED')
             ) : reward.isPreStake ? (

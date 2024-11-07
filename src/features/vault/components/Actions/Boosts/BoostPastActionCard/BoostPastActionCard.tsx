@@ -16,6 +16,7 @@ import { type Reward, Rewards } from '../Rewards';
 import { Claim } from '../ActionButton/Claim';
 import { TokenAmount } from '../../../../../../components/TokenAmount';
 import { Unstake } from '../ActionButton/Unstake';
+import { ActionConnectSwitch } from '../ActionConnectSwitch';
 
 const useStyles = makeStyles(styles);
 
@@ -65,11 +66,22 @@ export const BoostPastActionCard = memo(function BoostPastActionCard({
           {depositToken.symbol}
         </div>
       </div>
-      {canClaim && <Rewards isInBoost={true} rewards={rewards} className={classes.pastRewards} />}
-      {canUnstake ? (
-        <Unstake boostId={boostId} chainId={boost.chainId} canClaim={canClaim} />
-      ) : canClaim ? (
-        <Claim boostId={boostId} chainId={boost.chainId} />
+      {canClaim && (
+        <Rewards
+          isInBoost={true}
+          rewards={rewards}
+          className={classes.pastRewards}
+          fadeInactive={false}
+        />
+      )}
+      {canClaim || canUnstake ? (
+        <ActionConnectSwitch chainId={vault.chainId}>
+          {canUnstake ? (
+            <Unstake boostId={boostId} chainId={boost.chainId} canClaim={canClaim} />
+          ) : canClaim ? (
+            <Claim boostId={boostId} chainId={boost.chainId} />
+          ) : null}
+        </ActionConnectSwitch>
       ) : null}
     </div>
   );
