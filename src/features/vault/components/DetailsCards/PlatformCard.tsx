@@ -45,7 +45,7 @@ function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
           {platform.twitter && (
             <IconButtonLink
               Icon={Twitter}
-              href={platform.twitter}
+              href={`https://x.com/${platform.twitter}`}
               text={t('PlatformTag-Twitter')}
               textClassName={classes.assetLinkText}
             />
