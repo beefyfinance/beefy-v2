@@ -59,6 +59,11 @@ function addPlatformToState(sliceState: Draft<PlatformsState>, platformConfig: P
       id: platformConfig.id,
       name: platformConfig.name,
       risks: tempFilterRisks(platformConfig.risks || []), // FIXME remove once we support multiple risks types
+      twitter: platformConfig.twitter || '',
+      website: platformConfig.website || '',
+      documentation: platformConfig.documentation || '',
+      description: platformConfig.description || '',
+      type: platformConfig.type || undefined,
     };
     sliceState.byId[platform.id] = platform;
     sliceState.allIds.push(platform.id);

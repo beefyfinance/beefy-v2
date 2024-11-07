@@ -20,9 +20,11 @@ import platforms from '../src/config/platforms.json';
 import partners from '../src/config/boost/partners.json';
 import campaigns from '../src/config/boost/campaigns.json';
 import pointProviders from '../src/config/points.json';
-import type { VaultConfig } from '../src/features/data/apis/config-types';
+import type { PlatformType, VaultConfig } from '../src/features/data/apis/config-types';
 import partition from 'lodash/partition';
 import type { AbiItem } from 'web3-utils';
+import i18keys from '../src/locales/en/main.json';
+import { fileExists } from './common/files';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
@@ -186,6 +188,11 @@ const validatePools = async () => {
       console.error('If you removed a vault, update excludeChains in scripts/common/config.ts');
       return exitCode;
     }
+  }
+
+  const platformExitCode = await validatePlatformTypes();
+  if (platformExitCode !== 0) {
+    exitCode = platformExitCode;
   }
 
   let promises = chainIds.map(chainId => validateSingleChain(chainId, uniquePoolId));
@@ -1129,6 +1136,75 @@ const populateStrategyData = async (
     throw e;
   }
 };
+
+async function validatePlatformTypes(): Promise<number> {
+  let exitCode = 0;
+  // hack to make sure all the platform types in PlatformType are present in the set
+  const validTypes = new Set<string>(
+    Object.keys({
+      amm: true,
+      alm: true,
+      bridge: true,
+      'money-market': true,
+      perps: true,
+      'yield-boost': true,
+      farm: true,
+    } satisfies Record<PlatformType, unknown>)
+  );
+
+  // Check if valid types have i18n keys
+  for (const type of validTypes.keys()) {
+    const requiredKeys = [
+      `Details-Platform-Type-Description-${type}`,
+      `Details-Platform-Type-${type}`,
+    ];
+    for (const key of requiredKeys) {
+      if (!i18keys[key]) {
+        console.error(`Missing i18n key "${key}" for platform type "${type}"`);
+        exitCode = 1;
+      }
+    }
+  }
+
+  const platformsWithType = platforms.filter(
+    (
+      platform
+    ): platform is Extract<
+      (typeof platforms)[number],
+      {
+        type: string;
+      }
+    > => !!platform.type
+  );
+  await Promise.all(
+    platformsWithType.map(async platform => {
+      // Check type is valid
+      if (!validTypes.has(platform.type)) {
+        console.error(`Platform ${platform.id}: Invalid type "${platform.type}"`);
+        exitCode = 1;
+      }
+
+      // Platform image must exist if platform has a type
+      const possiblePaths = [
+        `./src/images/platforms/${platform.id}.svg`,
+        `./src/images/platforms/${platform.id}.png`,
+      ];
+      let found = false;
+      for (const path of possiblePaths) {
+        if (await fileExists(path)) {
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        console.error(`Platform ${platform.id}: Missing image: "${possiblePaths[0]}"`);
+        exitCode = 1;
+      }
+    })
+  );
+
+  return exitCode;
+}
 
 const override = (pools: VaultConfigWithVaultData[]): VaultConfigWithVaultData[] => {
   Object.keys(overrides).forEach(id => {

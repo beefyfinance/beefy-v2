@@ -96,7 +96,7 @@ const BridgeTooltip = memo<BridgeTooltipProps>(function BridgeTooltip({ bridge, 
 export type TagTooltipProps = {
   content: ReactNode;
 };
-const TagTooltip = memo<TagTooltipProps>(function BridgeTooltip({ content }) {
+export const TagTooltip = memo<TagTooltipProps>(function BridgeTooltip({ content }) {
   const classes = useStyles();
   return <div className={classes.tooltip}>{content}</div>;
 });
@@ -106,7 +106,7 @@ type TagWithTooltipProps = {
   children: ReactNode;
 } & TooltipProps;
 
-const TagWithTooltip = memo(
+export const TagWithTooltip = memo(
   forwardRef<HTMLDivElement, TagWithTooltipProps>(function TagWithTooltip(
     { children, className, triggerClass, ...rest },
     ref
