@@ -10,6 +10,7 @@ const migrators: MigrationConfig['id'][] = [
   'ethereum-prisma',
   'polygon-pearl',
   'magpie',
+  'real-pearl',
 ];
 
 export class MigrationApi implements IMigrationApi {

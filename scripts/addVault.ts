@@ -59,6 +59,8 @@ async function vaultData(chain, vaultAddress, id) {
       ? ['l2-convex', 'l2-curve']
       : ['pendle'].includes(provider)
       ? ['magpie']
+      : provider === 'pearl'
+      ? ['real-pearl']
       : [];
 
   if (provider === 'pendle') {
@@ -115,6 +117,7 @@ async function generateVault() {
     status: 'active',
     platformId: data.platform,
     assets: [data.token],
+    migrationIds: data.migrationIds,
     strategyTypeId: 'multi-lp',
     risks: ['COMPLEXITY_LOW', 'IL_NONE', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
     addLiquidityUrl: data.addLiquidityUrl,
@@ -123,7 +126,6 @@ async function generateVault() {
     createdAt: Math.floor(Date.now() / 1000),
   };
 
-  if (data.migrationIds?.length > 0) vault.migrationIds = data.migrationIds;
   if (data.points?.length > 0) vault.pointStructureIds = data.points;
 
   const newVault = sortVaultKeys(vault);
