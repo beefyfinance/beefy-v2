@@ -68,4 +68,7 @@ export const styles = (theme: Theme) => ({
     marginTop: '16px',
     whiteSpace: 'pre-line' as const,
   },
+  descriptionPending: {
+    fontStyle: 'italic',
+  },
 });

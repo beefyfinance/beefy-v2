@@ -11,6 +11,7 @@ import type { PlatformEntity } from '../../../data/entities/platform';
 import { selectPlatformById } from '../../../data/selectors/platforms';
 import { TagTooltip, TagWithTooltip } from '../BridgeTag';
 import { getPlatformSrc, platformAssetExists } from '../../../../helpers/platformsSrc';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -46,7 +47,7 @@ function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
             <IconButtonLink
               Icon={Twitter}
               href={`https://x.com/${platform.twitter}`}
-              text={t('PlatformTag-Twitter')}
+              text={t('Details-Platform-Link-Twitter')}
               textClassName={classes.assetLinkText}
             />
           )}
@@ -54,15 +55,19 @@ function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
         <div className={classes.assetBridgePrice}>
           {platform.type ? (
             <TagWithTooltip
-              content={<TagTooltip content={t(`Details-Platform-Description-${platform.type}`)} />}
+              content={
+                <TagTooltip content={t(`Details-Platform-Type-Description-${platform.type}`)} />
+              }
             >
-              {t(`Details-Platform-${platform.type}`)}
+              {t(`Details-Platform-Type-${platform.type}`)}
             </TagWithTooltip>
           ) : null}
         </div>
       </div>
-      <div className={classes.description}>
-        {platform.description ? platform.description : t('Platform-NoDescrip')}
+      <div
+        className={clsx(classes.description, !platform.description && classes.descriptionPending)}
+      >
+        {platform.description ? platform.description : t('Details-Platform-Description-pending')}
       </div>
     </div>
   );

@@ -1153,7 +1153,10 @@ async function validatePlatformTypes(): Promise<number> {
 
   // Check if valid types have i18n keys
   for (const type of validTypes.keys()) {
-    const requiredKeys = [`Details-Platform-Description-${type}`, `Details-Platform-${type}`];
+    const requiredKeys = [
+      `Details-Platform-Type-Description-${type}`,
+      `Details-Platform-Type-${type}`,
+    ];
     for (const key of requiredKeys) {
       if (!i18keys[key]) {
         console.error(`Missing i18n key "${key}" for platform type "${type}"`);
