@@ -1352,7 +1352,12 @@
   {
     "id": "nuri",
     "name": "Nuri",
-    "filter": true
+    "filter": true,
+    "website": "https://www.nuri.exchange/",
+    "twitter": "NuriExchange",
+    "documentation": "https://docs.nuri.exchange/",
+    "description": "NURI is The Next Generation of Concentrated Liquidity. Only on Scroll. NURI takes concentrated liquidity to the next level, optimizing for high frequency LPs and Layer 2 cost structures. The result is a hyper-efficient liquidity layer designed to attract the most effective liquidity providers, while delivering a clean and simple UX for traders.",
+    "type": "amm"
   },
   {
     "id": "tokan",
@@ -1362,12 +1367,22 @@
   {
     "id": "tokemak",
     "name": "Tokemak",
-    "filter": true
+    "filter": true,
+    "website": "https://app.tokemak.xyz/",
+    "twitter": "tokemakxyz",
+    "documentation": "https://docs.tokemak.xyz/",
+    "description": "Tokemak is a decentralized liquidity aggregator designed to optimize liquidity across DeFi markets. It allows users to provide single-sided liquidity and earn protocol incentives by staking various crypto assets. The platform uses its native TOKE token to facilitate liquidity provisioning, staking, and yield farming.",
+    "type": "amm"
   },
   {
     "id": "kim",
     "name": "Kim",
     "filter": true,
+    "website": "https://www.kim.exchange/",
+    "twitter": "kimprotocol",
+    "documentation": "https://docs.kim.exchange/",
+    "description": "Kim is an ecosystem-focused, community-driven DEX built on Mode. Kim has been built as a highly efficient and customizable protocol, allowing both builders and users to leverage our custom infrastructure for deep, sustainable, and adaptable liquidity. Kim moves beyond the traditional design of DEXs to focus on offering a custom approach that prioritizes the community and ecosystem. By leveraging Mode's unique approach to sequencer fee sharing, Kim is able to provide projects with greater incentives.",
+    "type": "amm",
     "risks": ["NO_TIMELOCK"]
   }
 ]
