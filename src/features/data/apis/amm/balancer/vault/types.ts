@@ -1,4 +1,4 @@
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import type { TokenEntity } from '../../../../entities/token';
 import type { Hex } from 'viem/types/misc';
 import type { ExitPoolUserData, JoinPoolUserData } from '../common/types';

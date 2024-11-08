@@ -5,7 +5,7 @@ import { formatTokenDisplayCondensed } from '../../../../../../../../helpers/for
 import type { ChainEntity } from '../../../../../../../data/entities/chain';
 import clsx from 'clsx';
 import type { TokenEntity } from '../../../../../../../data/entities/token';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { TokensImage } from '../../../../../../../../components/TokenImage/TokenImage';
 import { ListJoin } from '../../../../../../../../components/ListJoin';
 import { ReactComponent as ChevronRight } from '../../../../../../../../images/icons/chevron-right.svg';

@@ -7,7 +7,7 @@ import {
 } from '../entities/vault';
 import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
 import type { TokenEntity } from '../entities/token';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import { selectIsVaultStable, selectVaultById } from './vaults';
 import { selectAllVaultBoostIds } from './boosts';

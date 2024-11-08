@@ -1,6 +1,6 @@
 import type { Migrator } from '../migration-types';
 import type { VaultEntity } from '../../../entities/vault';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi';

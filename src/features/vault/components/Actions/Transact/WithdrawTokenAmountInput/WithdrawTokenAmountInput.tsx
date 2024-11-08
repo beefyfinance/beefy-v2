@@ -8,7 +8,7 @@ import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../da
 import type { AmountInputProps } from '../AmountInput';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
 import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { AmountInputWithSlider } from '../AmountInputWithSlider';
 import { TokenSelectButton } from '../TokenSelectButton';
 

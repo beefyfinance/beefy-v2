@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { CardContent } from '../../../../Card';
 import { AssetsImage } from '../../../../../../../components/AssetsImage';
 import { styles } from '../styles';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { formatTokenDisplayCondensed } from '../../../../../../../helpers/format';
 import { selectVaultById } from '../../../../../../data/selectors/vaults';
 import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance';

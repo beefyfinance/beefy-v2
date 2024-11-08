@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { Fragment, memo, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useAppSelector, useAppStore } from '../../../../../../store';
@@ -26,7 +25,7 @@ const useStyles = makeStyles(styles);
 type CurveZapProps = {
   vaultId: string;
 };
-const CurveZap = memo<CurveZapProps>(function CurveZap({ vaultId }) {
+export const CurveZap = memo<CurveZapProps>(function CurveZap({ vaultId }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const zap = isStandardVault(vault)
@@ -96,6 +95,7 @@ const ZapLoader = memo<ZapLoaderProps>(function ZapLoader({ vault, zap }) {
     } else {
       setTokensSupported(undefined);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- this is dev only component
   }, [setTokensSupported, vault.id, swapLoaded]);
 
   if (swapLoaded && tokensSupported) {
@@ -150,6 +150,3 @@ const Zap = memo<ZapProps>(function Zap({ aggregatorSupportedTokens, vault, zap 
     </div>
   );
 });
-
-// eslint-disable-next-line no-restricted-syntax
-export default CurveZap;

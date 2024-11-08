@@ -29,7 +29,7 @@ import {
 } from '../../../../../../../data/selectors/tokens';
 import { TokenImage } from '../../../../../../../../components/TokenImage/TokenImage';
 import type { TokenEntity } from '../../../../../../../data/entities/token';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 
 const useStyles = makeStyles(styles);
 

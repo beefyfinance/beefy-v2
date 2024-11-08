@@ -5,7 +5,7 @@ import { getWeb3Instance } from '../instances';
 import { createContract, viemToWeb3Abi } from '../../../../helpers/web3';
 import { BeefyCowcentratedLiquidityStrategyAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityStrategyAbi';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { isTokenEqual, type TokenEntity } from '../../entities/token';
 import type { InputTokenAmount, TokenAmount } from '../transact/transact-types';
 import { BIG_ONE, BIG_ZERO, toWei } from '../../../../helpers/big-number';

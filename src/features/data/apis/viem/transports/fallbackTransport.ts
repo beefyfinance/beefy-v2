@@ -61,7 +61,6 @@ export function customFallback(
 ): CustomFallbackTransport {
   const { key = 'fallback', name = 'Fallback', retryCount, retryDelay } = config;
   return ({ chain, timeout }) => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     let onResponse: OnResponseFn = () => {};
 
     return createTransport(

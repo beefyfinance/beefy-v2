@@ -4,7 +4,7 @@ import { MultiCall, type ShapeWithLabel } from 'eth-multicall';
 import type { ChainEntity } from '../../../entities/chain';
 import { getWeb3Instance } from '../../instances';
 import type { AmmConfigGamma } from '../../config-types';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { createContract, viemToWeb3Abi } from '../../../../../helpers/web3';
 import { GammaHypervisorAbi } from '../../../../../config/abi/GammaHypervisorAbi';
 import { GammaProxyAbi } from '../../../../../config/abi/GammaProxyAbi';

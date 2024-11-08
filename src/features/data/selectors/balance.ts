@@ -24,7 +24,7 @@ import { selectTokenByAddress, selectTokenPriceByAddress, selectTokensByChainId 
 import { selectAllCowcentratedVaults, selectGovVaultById, selectVaultById } from './vaults';
 import { selectWalletAddress } from './wallet';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { createSelector } from '@reduxjs/toolkit';
 import { entries } from '../../../helpers/object';
 import type { UserLpBreakdownBalance } from './balance-types';

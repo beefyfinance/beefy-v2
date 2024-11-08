@@ -1,6 +1,6 @@
 import type { ShapeWithLabel } from 'eth-multicall';
 import { createContract, viemToWeb3Abi } from '../../../../../helpers/web3';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type { SwapFeeParams } from '../types';
 import type { PairData, PairDataResponse } from './SolidlyPool';
 import { MetadataKeys, SolidlyPool } from './SolidlyPool';

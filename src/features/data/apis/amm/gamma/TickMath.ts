@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 
 /**
  * Math library for computing sqrt prices from ticks

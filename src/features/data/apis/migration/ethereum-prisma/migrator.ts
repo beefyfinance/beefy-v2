@@ -1,6 +1,6 @@
 import type { Migrator } from '../migration-types';
 import type { VaultEntity } from '../../../entities/vault';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults';
 import { selectTokenByAddress } from '../../../selectors/tokens';

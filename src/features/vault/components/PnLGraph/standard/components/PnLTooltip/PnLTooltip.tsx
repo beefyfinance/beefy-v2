@@ -1,6 +1,6 @@
 import type { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { format } from 'date-fns';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';

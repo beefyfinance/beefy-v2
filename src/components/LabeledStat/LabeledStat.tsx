@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
-const _LabeledStat = ({ value, boosted }: { value: ReactNode; boosted?: ReactNode }) => {
+const LabeledStatImpl = ({ value, boosted }: { value: ReactNode; boosted?: ReactNode }) => {
   const classes = useStyles();
 
   return (
@@ -16,4 +16,4 @@ const _LabeledStat = ({ value, boosted }: { value: ReactNode; boosted?: ReactNod
   );
 };
 
-export const LabeledStat = memo(_LabeledStat);
+export const LabeledStat = memo(LabeledStatImpl);

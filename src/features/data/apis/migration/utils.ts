@@ -14,7 +14,7 @@ import { startStepperWithSteps } from '../../actions/stepper';
 import { isTokenErc20 } from '../../entities/token';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances';
 import type { VaultEntity } from '../../entities/vault';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type Web3 from 'web3';
 import { selectChainById } from '../../selectors/chains';
 import { getWalletConnectionApi, getWeb3Instance } from '../instances';

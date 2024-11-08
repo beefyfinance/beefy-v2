@@ -10,7 +10,7 @@ import { selectChainById } from '../selectors/chains';
 import { selectTokenByAddress } from '../selectors/tokens';
 import type { MinterEntity } from '../entities/minter';
 import { isTokenErc20 } from '../entities/token';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import type { FetchMinterReservesResult } from '../apis/minter/minter-types';
 
 export interface FulfilledAllMintersPayload {

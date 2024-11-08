@@ -1,6 +1,6 @@
 import type { Migrator } from '../migration-types';
 import type { VaultEntity } from '../../../entities/vault';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults';
 import { selectTokenByAddress } from '../../../selectors/tokens';
@@ -25,14 +25,14 @@ async function getStakingAddress(
   let gauge = ZERO_ADDRESS;
   try {
     gauge = await strategy.methods.gauge().call();
-  } catch (e) {
+  } catch {
     // old convex-only strat, get gauge by pid from booster
     try {
       const pid = await strategy.methods.pid().call();
       const res = await new web3.eth.Contract(ABI, convexBooster).methods.poolInfo(pid).call();
       gauge = res.gauge;
-    } catch (e) {
-      console.error(id, vault.name, 'migrator cant find gauge');
+    } catch (err) {
+      console.error(id, vault.name, 'migrator cant find gauge', err);
     }
   }
   return gauge;

@@ -25,7 +25,7 @@ import { featureFlag_walletConnectChainId } from '../../utils/feature-flags';
 import type { WalletHelpers } from '@web3-onboard/common/dist/types';
 import type { WalletConnectOptions } from '@web3-onboard/walletconnect/dist/types';
 import { isDefined } from '../../utils/array-utils';
-import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url'; // eslint-disable-line import/no-unresolved
+import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url';
 
 const walletConnectImages: Record<string, string> = {
   '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489': fireblocksLogo,

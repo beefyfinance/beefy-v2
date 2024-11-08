@@ -55,7 +55,7 @@ import {
   toWeiString,
 } from '../../../../../../helpers/big-number';
 import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
 import type { CurveMethod, CurveTokenOption } from './types';
 import type { QuoteResponse } from '../../swap/ISwapProvider';

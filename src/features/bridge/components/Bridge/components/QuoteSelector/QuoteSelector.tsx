@@ -25,7 +25,7 @@ import { AlertError } from '../../../../../../components/Alerts';
 import { useTranslation } from 'react-i18next';
 import { formatMinutesDuration } from '../../../../../../helpers/date';
 import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 
 const useStyles = makeStyles(styles);
 

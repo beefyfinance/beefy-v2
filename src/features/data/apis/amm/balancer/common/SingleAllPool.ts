@@ -7,7 +7,7 @@ import {
   type QueryJoinPoolResponse,
   type VaultConfig,
 } from '../vault/types';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { type ExitPoolUserData, PoolExitKind } from './types';
 import type { ZapStep } from '../../../transact/zap/types';

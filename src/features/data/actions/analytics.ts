@@ -15,7 +15,7 @@ import {
   type UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart,
   type UnprocessedTimelineEntryStandard,
 } from '../entities/analytics';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type {
   DatabarnProductPriceRow,
   DatabarnTimeBucket,

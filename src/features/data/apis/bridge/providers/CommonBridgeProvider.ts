@@ -20,7 +20,7 @@ import type { TokenErc20, TokenNative } from '../../../entities/token';
 import type { Step } from '../../../reducers/wallet/stepper';
 import type { TFunction } from 'react-i18next';
 import { walletActions } from '../../../actions/wallet-actions';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { selectWalletAddress } from '../../../selectors/wallet';
 import { isFiniteNumber } from '../../../../../helpers/number';
 import { MultiCall } from 'eth-multicall';

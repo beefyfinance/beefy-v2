@@ -4,7 +4,7 @@ import { selectTransactInputIndexAmount } from '../../../../../data/selectors/tr
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import { type AmountInputProps } from '../AmountInput';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens';
 import { AmountInputWithSlider } from '../AmountInputWithSlider';
 import { TokenSelectButton } from '../TokenSelectButton';

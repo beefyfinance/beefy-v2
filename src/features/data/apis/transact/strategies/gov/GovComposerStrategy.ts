@@ -54,7 +54,7 @@ import type {
   ZapStepRequest,
   ZapStepResponse,
 } from '../../zap/types';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import abiCoder from 'web3-eth-abi';
 import { getInsertIndex, NO_RELAY } from '../../helpers/zap';
 import { toWei, toWeiString } from '../../../../../../helpers/big-number';

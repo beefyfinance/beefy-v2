@@ -43,7 +43,7 @@ import {
   type UserVaultPnl,
 } from './analytics-types';
 import { selectFeesByVaultId } from './fees';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import {
   createAddressDataSelector,
   hasLoaderFulfilledOnce,

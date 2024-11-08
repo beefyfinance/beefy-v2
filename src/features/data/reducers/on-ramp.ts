@@ -101,7 +101,6 @@ export const onRamp = createSlice({
         clearQuote(sliceState);
         sliceState.input.value = action.payload.amount;
       }
-      ``;
     },
     toggleInputMode(sliceState) {
       clearQuote(sliceState);

@@ -50,7 +50,7 @@ import {
   toWeiString,
 } from '../../../../../../helpers/big-number';
 import { selectChainById } from '../../../../selectors/chains';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
 import type { QuoteRequest } from '../../swap/ISwapProvider';
 import {

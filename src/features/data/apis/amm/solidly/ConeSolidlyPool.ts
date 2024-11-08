@@ -4,7 +4,7 @@ import type {
 } from './SolidlyPool';
 import { SolidlyPool } from './SolidlyPool';
 import type { SwapFeeParams } from '../types';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type { ShapeWithLabel } from 'eth-multicall';
 import { createContract } from '../../../../../helpers/web3';
 import type { AbiItem } from 'web3-utils';

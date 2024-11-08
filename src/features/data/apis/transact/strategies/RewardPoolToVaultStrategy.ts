@@ -59,7 +59,7 @@ import type {
   ZapStepRequest,
   ZapStepResponse,
 } from '../zap/types';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { selectTransactSlippage } from '../../../selectors/transact';
 import { uniqBy } from 'lodash-es';
 import { slipBy } from '../helpers/amounts';

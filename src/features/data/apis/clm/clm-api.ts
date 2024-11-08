@@ -12,7 +12,7 @@ import type { ChainEntity } from '../../entities/chain';
 import type { Abi } from 'viem';
 import { getWeb3Instance } from '../instances';
 import { makeBatchRequest, viemToWeb3Abi, type Web3Call } from '../../../../helpers/web3';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
 import { getUnixTime, roundToNearestMinutes } from 'date-fns';
 import { getJson } from '../../../../helpers/http';

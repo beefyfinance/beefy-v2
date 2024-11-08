@@ -13,7 +13,7 @@ import type {
 import { BIG_ONE, BIG_ZERO, bigNumberToStringDeep } from '../../../../../../helpers/big-number';
 import type { ZapStep } from '../../../transact/zap/types';
 import type { Contract } from 'web3-eth-contract';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { CommonPool } from './CommonPool';
 import { type ExitPoolUserData, type JoinPoolUserData, PoolExitKind, PoolJoinKind } from './types';
 

@@ -62,7 +62,7 @@ import {
   highestFeeOrZero,
   totalValueOfTokenAmounts,
 } from '../../helpers/quotes';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
 import type { QuoteRequest, QuoteResponse } from '../../swap/ISwapProvider';
 import type {

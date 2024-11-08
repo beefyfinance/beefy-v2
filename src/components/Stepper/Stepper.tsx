@@ -28,7 +28,7 @@ const stepToComponent: Record<StepContent, FC> = {
 
 const useStyles = makeStyles(styles);
 
-const _Stepper = () => {
+const StepperImpl = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const currentStepData = useAppSelector(selectStepperCurrentStepData);
@@ -61,4 +61,4 @@ const _Stepper = () => {
   );
 };
 
-export const Stepper = memo(_Stepper);
+export const Stepper = memo(StepperImpl);

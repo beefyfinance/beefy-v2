@@ -24,7 +24,7 @@ import {
   type VaultConfig,
 } from './types';
 import { ZERO_ADDRESS } from '../../../../../../helpers/addresses';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { getWeb3Instance } from '../../../instances';
 import { viemToWeb3Abi } from '../../../../../../helpers/web3';
 import { BalancerVaultAbi } from '../../../../../../config/abi/BalancerVaultAbi';

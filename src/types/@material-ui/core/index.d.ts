@@ -97,7 +97,7 @@ declare module '@material-ui/core/styles/createPalette' {
 }
 
 declare module '@material-ui/core/styles' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   export interface ThemeOptions {}
 }
 
@@ -113,7 +113,7 @@ declare module '@material-ui/core/styles/createTypography' {
     | 'subline-lg'
     | 'subline-sm';
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   export interface TypographyOptions
     extends Partial<Record<CustomVariant, TypographyStyleOptions> & FontStyleOptions> {}
 

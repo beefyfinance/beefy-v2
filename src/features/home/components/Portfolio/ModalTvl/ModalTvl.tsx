@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { selectActiveChainIds, selectChainById } from '../../../../data/selectors/chains';
 import type { ChainEntity } from '../../../../data/entities/chain';
 import { selectTvlByChain } from '../../../../data/selectors/tvl';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { formatLargeUsd } from '../../../../../helpers/format';
 import { ContentLoading } from '../../../../../components/ContentLoading';
 import { Button } from '../../../../../components/Button';

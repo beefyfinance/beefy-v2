@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO, isFiniteBigNumber } from '../../../helpers/big-number';
 import type { BeefyState } from '../../../redux-types';
