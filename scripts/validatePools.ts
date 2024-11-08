@@ -39,6 +39,8 @@ const overrides = {
   'swapbased-usd+-usdbc': { harvestOnDeposit: undefined },
   'swapbased-dai+-usd+': { harvestOnDeposit: undefined },
   'aero-cow-eurc-cbbtc-vault': { harvestOnDeposit: undefined },
+  'pendle-eqb-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
+  'pendle-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
 };
 
 const oldValidOwners = [
