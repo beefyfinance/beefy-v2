@@ -2,6 +2,7 @@
   {
     "id": "pearl-ss-strwa-rwa",
     "name": "stRWA-RWA SS",
+    "type": "standard",
     "token": "sAMM-stRWA/RWA",
     "tokenAddress": "0xb28d015563c81dd66Ab781853c03B7B66aa46C1b",
     "tokenDecimals": 18,
@@ -26,6 +27,7 @@
   {
     "id": "pearl-cp-usdc-pearl",
     "name": "PEARL-USDC CP",
+    "type": "standard",
     "token": "vAMM-USDC/PEARL",
     "tokenAddress": "0xAFb84DFe257cBA43d2f44B4367aDAc5a82775275",
     "tokenDecimals": 18,
@@ -50,6 +52,7 @@
   {
     "id": "pearl-cp-arcusd-pearl",
     "name": "PEARL-arcUSD CP",
+    "type": "standard",
     "token": "vAMM-arcUSD/PEARL",
     "tokenAddress": "0xd3Ae2AF8f1Fb00af2e363fe6592C19ABF9105FA9",
     "tokenDecimals": 18,
@@ -74,6 +77,7 @@
   {
     "id": "pearl-ss-more-usdc",
     "name": "MORE-USDC SS",
+    "type": "standard",
     "token": "sAMM-MORE/USDC",
     "tokenAddress": "0x1733720f30EF013539Fa2EcEE00671A60B66243D",
     "tokenDecimals": 18,
@@ -98,6 +102,7 @@
   {
     "id": "pearl-trident-reeth-usdc",
     "name": "reETH-USDC",
+    "type": "standard",
     "token": "TDT-reETH-USDC",
     "tokenAddress": "0xEC341aF1dFDb0743bC83080574e9DceF05B4AdC1",
     "tokenDecimals": 18,
@@ -122,6 +127,7 @@
   {
     "id": "pearl-trident-dai-usdc",
     "name": "DAI-USDC",
+    "type": "standard",
     "token": "TDT-DAI-USDC",
     "tokenAddress": "0x7ebddc38c949291904976530ceF99e7AA1475761",
     "tokenDecimals": 18,
@@ -146,6 +152,7 @@
   {
     "id": "pearl-trident-usdc-pearl",
     "name": "PEARL-USDC",
+    "type": "standard",
     "token": "TDT-USDC-PEARL",
     "tokenAddress": "0xa235F603188754B6CD1deb3A7980E37CCeF779aC",
     "tokenDecimals": 18,
@@ -170,6 +177,7 @@
   {
     "id": "pearl-trident-more-usdc",
     "name": "MORE-USDC",
+    "type": "standard",
     "token": "TDT-MORE-USDC",
     "tokenAddress": "0xf1B4f9337aa2426baeEbEB473b8933e56d8D8204",
     "tokenDecimals": 18,
@@ -194,6 +202,7 @@
   {
     "id": "pearl-trident-ukre-arcusd",
     "name": "UKRE-arcUSD",
+    "type": "standard",
     "token": "TDT-UKRE-arcUSD",
     "tokenAddress": "0xA7DF3FCaA03d21b35f18Ac13B2c1164BFd1472B8",
     "tokenDecimals": 18,
@@ -218,6 +227,7 @@
   {
     "id": "pearl-trident-ustb-pearl",
     "name": "USTB-PEARL",
+    "type": "standard",
     "token": "TDT-USTB-PEARL",
     "tokenAddress": "0xa77cb64Ee2ecF17D735a3b1b9820131E41758b50",
     "tokenDecimals": 18,
@@ -242,6 +252,7 @@
   {
     "id": "pearl-trident-rwa-reeth",
     "name": "RWA-reETH",
+    "type": "standard",
     "token": "TDT-RWA-WREETH",
     "tokenAddress": "0xA7dFf276F939B9129A92B4262D952964c4BDf95F",
     "tokenDecimals": 18,
@@ -266,6 +277,7 @@
   {
     "id": "pearl-trident-arcusd-usdc",
     "name": "arcUSD-USDC",
+    "type": "standard",
     "token": "TDT-arcUSD-USDC",
     "tokenAddress": "0x4BefDf76A284AF3Ca567Bd7c0f6aa6B574d47723",
     "tokenDecimals": 18,
@@ -290,6 +302,7 @@
   {
     "id": "pearl-trident-ustb-arcusd",
     "name": "USTB-arcUSD",
+    "type": "standard",
     "token": "TDT-USTB-arcUSD",
     "tokenAddress": "0x1A86E3c934BFb2Df3b2e3734fBf7e620Ce5B1878",
     "tokenDecimals": 18,
@@ -314,6 +327,7 @@
   {
     "id": "pearl-trident-more-ustb",
     "name": "MORE-USTB",
+    "type": "standard",
     "token": "TDT-MORE-USTB",
     "tokenAddress": "0x76fd8777b0E34fAfeC162F01bC183566b2cf1EFa",
     "tokenDecimals": 18,

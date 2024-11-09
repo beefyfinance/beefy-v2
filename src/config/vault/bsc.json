@@ -2,6 +2,7 @@
   {
     "id": "pendle-eqb-bsc-solvbtc.bbn-27mar25",
     "name": "SolvBTC.BBN 27Mar25",
+    "type": "standard",
     "token": "SolvBTC.BBN 27Mar25",
     "tokenAddress": "0x9dAA2878A8739E66e08e7ad35316C5143c0ea7C7",
     "tokenDecimals": 18,
@@ -26,6 +27,7 @@
   {
     "id": "pendle-bsc-solvbtc.bbn-27mar25",
     "name": "SolvBTC.BBN 27Mar25",
+    "type": "standard",
     "token": "SolvBTC.BBN 27Mar25",
     "tokenAddress": "0x9dAA2878A8739E66e08e7ad35316C5143c0ea7C7",
     "tokenDecimals": 18,

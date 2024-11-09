@@ -11,8 +11,7 @@ import type { ZapStrategyConfig } from './transact/strategies/strategy-configs';
 export interface VaultConfig {
   id: string;
   name: string;
-  /** defaults to standard */
-  type?: 'standard' | 'gov' | 'cowcentrated';
+  type: 'standard' | 'gov' | 'cowcentrated';
   /** version of vault type defaults to 1 */
   version?: number;
   token: string;
