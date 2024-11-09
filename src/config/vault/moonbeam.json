@@ -281,19 +281,19 @@
       "0xFFfffffF7D2B0B761Af01Ca8e25242976ac0aD7D",
       "0xFFFFFFfFea09FB06d082fd1275CD48b191cbCD1d"
     ],
+    "earnContractAddress": "0x58873a92A2eF097CdedeA11e72C30f4E85C10a29",
     "earnedToken": "cowUniswapMoonbeamxcUSDC-xcUSDT",
     "earnedTokenAddress": "0x58873a92A2eF097CdedeA11e72C30f4E85C10a29",
-    "earnContractAddress": "0x58873a92A2eF097CdedeA11e72C30f4E85C10a29",
     "oracle": "lps",
     "oracleId": "uniswap-cow-moonbeam-xcusdc-xcusdt",
     "status": "active",
     "createdAt": 1719407184,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.01",
     "assets": ["xcUSDC", "xcUSDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "0.01",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -312,19 +312,19 @@
       "0xab3f0245B83feB11d15AAffeFD7AD465a59817eD",
       "0xAcc15dC74880C9944775448304B263D191c6077F"
     ],
+    "earnContractAddress": "0x03F8A2977664480Bed8877C407D81c3475a4962b",
     "earnedToken": "cowUniswapMoonbeamWETH.wh-WGLMR",
     "earnedTokenAddress": "0x03F8A2977664480Bed8877C407D81c3475a4962b",
-    "earnContractAddress": "0x03F8A2977664480Bed8877C407D81c3475a4962b",
     "oracle": "lps",
     "oracleId": "uniswap-cow-moonbeam-weth.wh-wglmr",
     "status": "active",
     "createdAt": 1719321885,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["WETHwh", "WGLMR"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -343,19 +343,19 @@
       "0xAcc15dC74880C9944775448304B263D191c6077F",
       "0xFFfffffF7D2B0B761Af01Ca8e25242976ac0aD7D"
     ],
+    "earnContractAddress": "0x7dA0c5b76f353aE3A995B4a1Ca5f43cd37192dc6",
     "earnedToken": "cowUniswapMoonbeamWGLMR-xcUSDC",
     "earnedTokenAddress": "0x7dA0c5b76f353aE3A995B4a1Ca5f43cd37192dc6",
-    "earnContractAddress": "0x7dA0c5b76f353aE3A995B4a1Ca5f43cd37192dc6",
     "oracle": "lps",
     "oracleId": "uniswap-cow-moonbeam-wglmr-xcusdc",
     "status": "active",
     "createdAt": 1719321885,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["xcUSDC", "WGLMR"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -374,19 +374,19 @@
       "0xab3f0245B83feB11d15AAffeFD7AD465a59817eD",
       "0xFFfffffF7D2B0B761Af01Ca8e25242976ac0aD7D"
     ],
+    "earnContractAddress": "0x68596dE36f2dF98fAa44C6F9E4f59b94d14876FB",
     "earnedToken": "cowUniswapMoonbeamWETH.wh-xcUSDC",
     "earnedTokenAddress": "0x68596dE36f2dF98fAa44C6F9E4f59b94d14876FB",
-    "earnContractAddress": "0x68596dE36f2dF98fAa44C6F9E4f59b94d14876FB",
     "oracle": "lps",
     "oracleId": "uniswap-cow-moonbeam-weth.wh-xcusdc",
     "status": "active",
     "createdAt": 1719321885,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WETHwh", "xcUSDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -405,19 +405,19 @@
       "0xab3f0245B83feB11d15AAffeFD7AD465a59817eD",
       "0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080"
     ],
+    "earnContractAddress": "0x44A70a8349dAa323815fA00b548223114b7DDbD9",
     "earnedToken": "cowUniswapMoonbeamWETH.wh-xcDOT",
     "earnedTokenAddress": "0x44A70a8349dAa323815fA00b548223114b7DDbD9",
-    "earnContractAddress": "0x44A70a8349dAa323815fA00b548223114b7DDbD9",
     "oracle": "lps",
     "oracleId": "uniswap-cow-moonbeam-weth.wh-xcdot",
     "status": "active",
     "createdAt": 1719321885,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["xcDOT", "WETHwh"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -436,19 +436,19 @@
       "0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
       "0xFFFFFFfFea09FB06d082fd1275CD48b191cbCD1d"
     ],
+    "earnContractAddress": "0x4C70eaa0103A873B01D731Ab607af6D4abF18240",
     "earnedToken": "cowStellaxcDOT-xcUSDT",
     "earnedTokenAddress": "0x4C70eaa0103A873B01D731Ab607af6D4abF18240",
-    "earnContractAddress": "0x4C70eaa0103A873B01D731Ab607af6D4abF18240",
     "oracle": "lps",
     "oracleId": "stella-cow-xcdot-xcusdt",
     "status": "active",
     "createdAt": 1718370661,
-    "platformId": "stellaswap",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["xcDOT", "USDTxc"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -467,19 +467,19 @@
       "0xCa01a1D0993565291051daFF390892518ACfAD3A",
       "0xFFfffffF7D2B0B761Af01Ca8e25242976ac0aD7D"
     ],
+    "earnContractAddress": "0x72834475CA1Fd656Ed3dE57986478b26517B5ada",
     "earnedToken": "cowStellaaxlUSDC-xcUSDC",
     "earnedTokenAddress": "0x72834475CA1Fd656Ed3dE57986478b26517B5ada",
-    "earnContractAddress": "0x72834475CA1Fd656Ed3dE57986478b26517B5ada",
     "oracle": "lps",
     "oracleId": "stella-cow-axlusdc-xcusdc",
     "status": "active",
     "createdAt": 1718370661,
-    "platformId": "stellaswap",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["axlUSDC", "xcUSDC"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -498,19 +498,19 @@
       "0xFFfffffF7D2B0B761Af01Ca8e25242976ac0aD7D",
       "0xFFFFFFfFea09FB06d082fd1275CD48b191cbCD1d"
     ],
+    "earnContractAddress": "0x662CE620f9106aC47A441Bc79861B9e846d02324",
     "earnedToken": "cowStellaxcUSDC-xcUSDT",
     "earnedTokenAddress": "0x662CE620f9106aC47A441Bc79861B9e846d02324",
-    "earnContractAddress": "0x662CE620f9106aC47A441Bc79861B9e846d02324",
     "oracle": "lps",
     "oracleId": "stella-cow-xcusdc-xcusdt",
     "status": "active",
     "createdAt": 1718370661,
-    "platformId": "stellaswap",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["xcUSDC", "USDTxc"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -529,19 +529,19 @@
       "0xAcc15dC74880C9944775448304B263D191c6077F",
       "0xFFfffffF7D2B0B761Af01Ca8e25242976ac0aD7D"
     ],
+    "earnContractAddress": "0xB6D5aae6F867a7afdc4eA51F97664D3B9fE7a255",
     "earnedToken": "cowStellaxcUSDC-GLMR",
     "earnedTokenAddress": "0xB6D5aae6F867a7afdc4eA51F97664D3B9fE7a255",
-    "earnContractAddress": "0xB6D5aae6F867a7afdc4eA51F97664D3B9fE7a255",
     "oracle": "lps",
     "oracleId": "stella-cow-xcusdc-glmr",
     "status": "active",
     "createdAt": 1718370661,
-    "platformId": "stellaswap",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["xcUSDC", "WGLMR"],
     "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -560,19 +560,19 @@
       "0xAcc15dC74880C9944775448304B263D191c6077F",
       "0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080"
     ],
+    "earnContractAddress": "0xB4ffA6d9017bfc0e1F2C80E4b5C168516455383b",
     "earnedToken": "cowStellaxcDOT-GLMR",
     "earnedTokenAddress": "0xB4ffA6d9017bfc0e1F2C80E4b5C168516455383b",
-    "earnContractAddress": "0xB4ffA6d9017bfc0e1F2C80E4b5C168516455383b",
     "oracle": "lps",
     "oracleId": "stella-cow-xcdot-glmr",
     "status": "active",
     "createdAt": 1718370661,
-    "platformId": "stellaswap",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["xcDOT", "WGLMR"],
     "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "moonbeam",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"

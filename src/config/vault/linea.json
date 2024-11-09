@@ -130,20 +130,20 @@
       "0x1Bf74C010E6320bab11e2e5A532b5AC15e0b8aA6",
       "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
     ],
+    "earnContractAddress": "0x4d13b56f48A6aDD1e59d03735BE79D10e89Cd824",
     "earnedToken": "cowNileweETH-WETH",
     "earnedTokenAddress": "0x4d13b56f48A6aDD1e59d03735BE79D10e89Cd824",
-    "earnContractAddress": "0x4d13b56f48A6aDD1e59d03735BE79D10e89Cd824",
     "oracle": "lps",
     "oracleId": "nile-cl-weeth-weth",
     "status": "active",
     "createdAt": 1722886922,
-    "platformId": "nile",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["weETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "network": "linea",
     "pointStructureIds": ["linea-voyage", "etherfi"],
-    "feeTier": "Dynamic",
+    "network": "linea",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -224,20 +224,20 @@
       "0xD2671165570f41BBB3B0097893300b6EB6101E6C",
       "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
     ],
+    "earnContractAddress": "0x7c82356b425DaF36D447D24BAa6906eE15EBcf9A",
     "earnedToken": "cowNilersETH-WETH",
     "earnedTokenAddress": "0x7c82356b425DaF36D447D24BAa6906eE15EBcf9A",
-    "earnContractAddress": "0x7c82356b425DaF36D447D24BAa6906eE15EBcf9A",
     "oracle": "lps",
     "oracleId": "nile-cl-rseth-weth",
     "status": "active",
     "createdAt": 1722886922,
-    "platformId": "nile",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["wrsETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "network": "linea",
     "pointStructureIds": ["linea-voyage", "kelp"],
-    "feeTier": "Dynamic",
+    "network": "linea",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -318,20 +318,20 @@
       "0x2416092f143378750bb29b79eD961ab195CcEea5",
       "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
     ],
+    "earnContractAddress": "0xD4CC44a7fBc0323d3d74565B558228feCc88A329",
     "earnedToken": "cowNileezETH-WETH",
     "earnedTokenAddress": "0xD4CC44a7fBc0323d3d74565B558228feCc88A329",
-    "earnContractAddress": "0xD4CC44a7fBc0323d3d74565B558228feCc88A329",
     "oracle": "lps",
     "oracleId": "nile-cl-ezeth-weth",
     "status": "active",
     "createdAt": 1722886922,
-    "platformId": "nile",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["ezETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "network": "linea",
     "pointStructureIds": ["linea-voyage", "renzo"],
-    "feeTier": "Dynamic",
+    "network": "linea",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -412,20 +412,20 @@
       "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
       "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
     ],
+    "earnContractAddress": "0xC1b75C175efcd75057b4325B8133FAd9453843d2",
     "earnedToken": "cowNileWBTC-WETH",
     "earnedTokenAddress": "0xC1b75C175efcd75057b4325B8133FAd9453843d2",
-    "earnContractAddress": "0xC1b75C175efcd75057b4325B8133FAd9453843d2",
     "oracle": "lps",
     "oracleId": "nile-cl-wbtc-weth",
     "status": "active",
     "createdAt": 1722886922,
-    "platformId": "nile",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["WBTC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "network": "linea",
     "pointStructureIds": ["linea-voyage"],
-    "feeTier": "Dynamic",
+    "network": "linea",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -506,20 +506,20 @@
       "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
       "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4"
     ],
+    "earnContractAddress": "0x7E817c545c8532A14AF0eB0a406c5139E6a71Fa0",
     "earnedToken": "cowNileUSDC-WBTC",
     "earnedTokenAddress": "0x7E817c545c8532A14AF0eB0a406c5139E6a71Fa0",
-    "earnContractAddress": "0x7E817c545c8532A14AF0eB0a406c5139E6a71Fa0",
     "oracle": "lps",
     "oracleId": "nile-cl-usdc-wbtc",
     "status": "active",
     "createdAt": 1722886922,
-    "platformId": "nile",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["WBTC", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "network": "linea",
     "pointStructureIds": ["linea-voyage"],
-    "feeTier": "Dynamic",
+    "network": "linea",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -600,20 +600,20 @@
       "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
       "0xA219439258ca9da29E9Cc4cE5596924745e12B93"
     ],
+    "earnContractAddress": "0x46e9e39fAA114f46Fe59adFC556A079752a6E9C8",
     "earnedToken": "cowNileUSDC-USDT",
     "earnedTokenAddress": "0x46e9e39fAA114f46Fe59adFC556A079752a6E9C8",
-    "earnContractAddress": "0x46e9e39fAA114f46Fe59adFC556A079752a6E9C8",
     "oracle": "lps",
     "oracleId": "nile-cl-usdc-usdt",
     "status": "active",
     "createdAt": 1722886922,
-    "platformId": "nile",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["USDC", "USDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "network": "linea",
     "pointStructureIds": ["linea-voyage"],
-    "feeTier": "Dynamic",
+    "network": "linea",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -694,20 +694,20 @@
       "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
       "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
     ],
+    "earnContractAddress": "0x8d8A719433bC5221201f52E0277590db88D84080",
     "earnedToken": "cowNileUSDC-WETH",
     "earnedTokenAddress": "0x8d8A719433bC5221201f52E0277590db88D84080",
-    "earnContractAddress": "0x8d8A719433bC5221201f52E0277590db88D84080",
     "oracle": "lps",
     "oracleId": "nile-cl-usdc-weth",
     "status": "active",
     "createdAt": 1722886922,
-    "platformId": "nile",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["USDC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "network": "linea",
     "pointStructureIds": ["linea-voyage"],
-    "feeTier": "Dynamic",
+    "network": "linea",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -788,20 +788,20 @@
       "0xA219439258ca9da29E9Cc4cE5596924745e12B93",
       "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"
     ],
+    "earnContractAddress": "0xec3391fD3c18f61a00Be52Eeb264a35Db0D705dd",
     "earnedToken": "cowNileUSDT-WETH",
     "earnedTokenAddress": "0xec3391fD3c18f61a00Be52Eeb264a35Db0D705dd",
-    "earnContractAddress": "0xec3391fD3c18f61a00Be52Eeb264a35Db0D705dd",
     "oracle": "lps",
     "oracleId": "nile-cl-usdt-weth",
     "status": "active",
     "createdAt": 1722886922,
-    "platformId": "nile",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["USDT", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "network": "linea",
     "pointStructureIds": ["linea-voyage"],
-    "feeTier": "Dynamic",
+    "network": "linea",
     "zaps": [
       {
         "strategyId": "cowcentrated"

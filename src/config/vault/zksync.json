@@ -146,19 +146,19 @@
       "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
       "0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91"
     ],
+    "earnContractAddress": "0x0386c81eB83E6BbD8782A47180a1501CC003A232",
     "earnedToken": "cowUniswapzkSyncZK-WETH",
     "earnedTokenAddress": "0x0386c81eB83E6BbD8782A47180a1501CC003A232",
-    "earnContractAddress": "0x0386c81eB83E6BbD8782A47180a1501CC003A232",
     "oracle": "lps",
     "oracleId": "uniswap-cow-zksync-zk-weth",
     "status": "active",
     "createdAt": 1719318645,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["ZK", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "zksync",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -177,19 +177,19 @@
       "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
       "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
     ],
+    "earnContractAddress": "0x2b98E0f95aAAe12Bb29f54d29130dDB3C7bB3fd8",
     "earnedToken": "cowUniswapzkSyncUSDC.e-ZK",
     "earnedTokenAddress": "0x2b98E0f95aAAe12Bb29f54d29130dDB3C7bB3fd8",
-    "earnContractAddress": "0x2b98E0f95aAAe12Bb29f54d29130dDB3C7bB3fd8",
     "oracle": "lps",
     "oracleId": "uniswap-cow-zksync-usdc.e-zk",
     "status": "active",
     "createdAt": 1719318645,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["ZK", "USDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "zksync",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -208,19 +208,19 @@
       "0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91",
       "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011"
     ],
+    "earnContractAddress": "0x88e2510D116169ea559b4Cf458DF34BD3CaCa903",
     "earnedToken": "cowUniswapzkSyncWETH-WBTC",
     "earnedTokenAddress": "0x88e2510D116169ea559b4Cf458DF34BD3CaCa903",
-    "earnContractAddress": "0x88e2510D116169ea559b4Cf458DF34BD3CaCa903",
     "oracle": "lps",
     "oracleId": "uniswap-cow-zksync-weth-wbtc",
     "status": "active",
     "createdAt": 1719318645,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WBTC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "zksync",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -239,19 +239,19 @@
       "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
       "0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91"
     ],
+    "earnContractAddress": "0x741CF7B1bB7bf4a4e8C402901d59fbD7fa3E681d",
     "earnedToken": "cowUniswapzkSyncUSDC.e-WETH",
     "earnedTokenAddress": "0x741CF7B1bB7bf4a4e8C402901d59fbD7fa3E681d",
-    "earnContractAddress": "0x741CF7B1bB7bf4a4e8C402901d59fbD7fa3E681d",
     "oracle": "lps",
     "oracleId": "uniswap-cow-zksync-usdc.e-weth",
     "status": "active",
     "createdAt": 1719318645,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WETH", "USDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "zksync",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -270,19 +270,19 @@
       "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
       "0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91"
     ],
+    "earnContractAddress": "0x7c4CC830da7d972E58F32814DB00074c29dda546",
     "earnedToken": "cowUniswapzkSyncUSDT-WETH",
     "earnedTokenAddress": "0x7c4CC830da7d972E58F32814DB00074c29dda546",
-    "earnContractAddress": "0x7c4CC830da7d972E58F32814DB00074c29dda546",
     "oracle": "lps",
     "oracleId": "uniswap-cow-zksync-usdt-weth",
     "status": "active",
     "createdAt": 1719318645,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WETH", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "zksync",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"

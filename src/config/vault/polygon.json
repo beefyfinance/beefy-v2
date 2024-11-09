@@ -31,30 +31,30 @@
   {
     "id": "sushi-cow-poly-wmatic-usdc",
     "name": "WPOL-USDC",
+    "type": "cowcentrated",
     "token": "WMATIC-USDC",
     "tokenAddress": "0x562A0460FE6cfc2E610AE5596c5b4ACe94d97C56",
     "tokenDecimals": 18,
+    "tokenProviderId": "sushi",
     "depositTokenAddresses": [
       "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
       "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"
     ],
-    "tokenProviderId": "sushi",
+    "earnContractAddress": "0x935cA8F3c323e67F2C90616AC61D53e05B4ed7B7",
     "earnedToken": "cowSushiPolyWMATIC-USDC",
     "earnedTokenAddress": "0x935cA8F3c323e67F2C90616AC61D53e05B4ed7B7",
-    "earnContractAddress": "0x935cA8F3c323e67F2C90616AC61D53e05B4ed7B7",
     "oracle": "lps",
     "oracleId": "sushi-cow-poly-wmatic-usdc",
     "status": "eol",
-    "retiredAt": 1727186611,
-    "retireReason": "tvl",
     "createdAt": 1721752391,
-    "platformId": "sushi",
+    "retireReason": "tvl",
+    "retiredAt": 1727186611,
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["WPOL", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -760,28 +760,28 @@
   {
     "id": "uniswap-cow-poly-wbtc-usdc",
     "name": "WBTC-USDC",
+    "type": "cowcentrated",
     "token": "WBTC-USDC",
     "tokenAddress": "0x32FAE204835e08b9374493d6B4628FD1F87DD045",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
       "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xF93402fddbC5F94fe81998aB2ef2fC6E12E26b1e",
     "earnedToken": "cowUniswapPolyWBTC-USDC",
     "earnedTokenAddress": "0xF93402fddbC5F94fe81998aB2ef2fC6E12E26b1e",
-    "earnContractAddress": "0xF93402fddbC5F94fe81998aB2ef2fC6E12E26b1e",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-wbtc-usdc",
     "status": "active",
     "createdAt": 1719408542,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WBTC", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -791,28 +791,28 @@
   {
     "id": "uniswap-cow-poly-wmatic-wbtc",
     "name": "WBTC-WPOL",
+    "type": "cowcentrated",
     "token": "WBTC-WMATIC",
     "tokenAddress": "0x6b75F2189F0E11C52e814E09e280eb1a9A8A094a",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
       "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xc96153bdA547d4a6066B8a08AE239EF757BF35aE",
     "earnedToken": "cowUniswapPolyWMATIC-WBTC",
     "earnedTokenAddress": "0xc96153bdA547d4a6066B8a08AE239EF757BF35aE",
-    "earnContractAddress": "0xc96153bdA547d4a6066B8a08AE239EF757BF35aE",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-wmatic-wbtc",
     "status": "active",
     "createdAt": 1719408542,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WBTC", "WPOL"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -822,28 +822,28 @@
   {
     "id": "uniswap-cow-poly-usdt-lcd",
     "name": "LCD-USDT",
+    "type": "cowcentrated",
     "token": "LCD-USDT",
     "tokenAddress": "0xc7cfD91eE811E1Fc981A07Cf6890eA3db1b4e542",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
       "0xc2A45FE7d40bCAc8369371B08419DDAFd3131b4a"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x1f41a97Ccb116C7F86d7120669Bd659A303DE718",
     "earnedToken": "cowUniswapPolyUSDT-LCD",
     "earnedTokenAddress": "0x1f41a97Ccb116C7F86d7120669Bd659A303DE718",
-    "earnContractAddress": "0x1f41a97Ccb116C7F86d7120669Bd659A303DE718",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-usdt-lcd",
     "status": "active",
     "createdAt": 1719408542,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["LCD", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -853,28 +853,28 @@
   {
     "id": "uniswap-cow-poly-usdc-link",
     "name": "LINK-USDC",
+    "type": "cowcentrated",
     "token": "LINK-USDC",
     "tokenAddress": "0x79E4240E33C121402dfc9009dE266356c91f241d",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
       "0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x195247799ac0B36CF6b9AC5Eb84ceE3bc17fe2dB",
     "earnedToken": "cowUniswapPolyUSDC-LINK",
     "earnedTokenAddress": "0x195247799ac0B36CF6b9AC5Eb84ceE3bc17fe2dB",
-    "earnContractAddress": "0x195247799ac0B36CF6b9AC5Eb84ceE3bc17fe2dB",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-usdc-link",
     "status": "active",
     "createdAt": 1719408542,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["oldLINK", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -884,28 +884,28 @@
   {
     "id": "uniswap-cow-poly-wmatic-link",
     "name": "LINK-WPOL",
+    "type": "cowcentrated",
     "token": "LINK-WMATIC",
     "tokenAddress": "0x0A28C2F5E0E8463E047C203F00F649812aE67E4f",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
       "0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xBC82E4724f143eebA9C5b6B7f35361380A88995c",
     "earnedToken": "cowUniswapPolyWMATIC-LINK",
     "earnedTokenAddress": "0xBC82E4724f143eebA9C5b6B7f35361380A88995c",
-    "earnContractAddress": "0xBC82E4724f143eebA9C5b6B7f35361380A88995c",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-wmatic-link",
     "status": "active",
     "createdAt": 1719408542,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["oldLINK", "WPOL"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -915,28 +915,28 @@
   {
     "id": "uniswap-cow-poly-weth-aave",
     "name": "AAVE-WETH",
+    "type": "cowcentrated",
     "token": "AAVE-WETH",
     "tokenAddress": "0x2aCeda63B5e958c45bd27d916ba701BC1DC08F7a",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
       "0xD6DF932A45C0f255f85145f286eA0b292B21C90B"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x69c3F6c3cc1b277BB4370E1A63EfEE19fccE0e74",
     "earnedToken": "cowUniswapPolyWETH-AAVE",
     "earnedTokenAddress": "0x69c3F6c3cc1b277BB4370E1A63EfEE19fccE0e74",
-    "earnContractAddress": "0x69c3F6c3cc1b277BB4370E1A63EfEE19fccE0e74",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-weth-aave",
     "status": "active",
     "createdAt": 1719408542,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["AAVE", "ETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -946,28 +946,28 @@
   {
     "id": "uniswap-cow-poly-wmatic-aave",
     "name": "AAVE-WPOL",
+    "type": "cowcentrated",
     "token": "AAVE-WMATIC",
     "tokenAddress": "0xa9077cDB3D13F45B8B9d87C43E11bCe0e73d8631",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
       "0xD6DF932A45C0f255f85145f286eA0b292B21C90B"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xEefe81030D5Fb355b627a047F48b48480D5b7F09",
     "earnedToken": "cowUniswapPolyWMATIC-AAVE",
     "earnedTokenAddress": "0xEefe81030D5Fb355b627a047F48b48480D5b7F09",
-    "earnContractAddress": "0xEefe81030D5Fb355b627a047F48b48480D5b7F09",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-wmatic-aave",
     "status": "active",
     "createdAt": 1719408542,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["AAVE", "WPOL"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -977,28 +977,28 @@
   {
     "id": "uniswap-cow-poly-usdc.e-weth",
     "name": "WETH-USDC.e",
+    "type": "cowcentrated",
     "token": "WETH-USDC.e",
     "tokenAddress": "0x45dDa9cb7c25131DF268515131f647d726f50608",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
       "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xa55eEB0b0ef32Bf25425C2107350b07E1e8e1346",
     "earnedToken": "cowUniswapPolyUSDC.e-WETH",
     "earnedTokenAddress": "0xa55eEB0b0ef32Bf25425C2107350b07E1e8e1346",
-    "earnContractAddress": "0xa55eEB0b0ef32Bf25425C2107350b07E1e8e1346",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-usdc.e-weth",
     "status": "active",
     "createdAt": 1718739941,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["ETH", "pUSDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1008,28 +1008,28 @@
   {
     "id": "uniswap-cow-poly-usdc-weth",
     "name": "WETH-USDC",
+    "type": "cowcentrated",
     "token": "WETH-USDC",
     "tokenAddress": "0xA4D8c89f0c20efbe54cBa9e7e7a7E509056228D9",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
       "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xc6985d660B9A6560Ffc249655f044a9ee44e61d5",
     "earnedToken": "cowUniswapPolyUSDC-WETH",
     "earnedTokenAddress": "0xc6985d660B9A6560Ffc249655f044a9ee44e61d5",
-    "earnContractAddress": "0xc6985d660B9A6560Ffc249655f044a9ee44e61d5",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-usdc-weth",
     "status": "active",
     "createdAt": 1718739941,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["ETH", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1039,28 +1039,28 @@
   {
     "id": "uniswap-cow-poly-weth-usdt",
     "name": "WETH-USDT",
+    "type": "cowcentrated",
     "token": "WETH-USDT",
     "tokenAddress": "0x4CcD010148379ea531D6C587CfDd60180196F9b1",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
       "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x22720E26712584a8234C5545B8DfE6a8FB48F453",
     "earnedToken": "cowUniswapPolyWETH-USDT",
     "earnedTokenAddress": "0x22720E26712584a8234C5545B8DfE6a8FB48F453",
-    "earnContractAddress": "0x22720E26712584a8234C5545B8DfE6a8FB48F453",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-weth-usdt",
     "status": "active",
     "createdAt": 1718739941,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["ETH", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1070,28 +1070,28 @@
   {
     "id": "uniswap-cow-poly-wbtc-usdc.e",
     "name": "WBTC-USDC.e",
+    "type": "cowcentrated",
     "token": "WBTC-USDC.e",
     "tokenAddress": "0xeEF1A9507B3D505f0062f2be9453981255b503c8",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
       "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x71d38eEC002E65ec38343C44B2AaED707eD56027",
     "earnedToken": "cowUniswapPolyWBTC-USDC.e",
     "earnedTokenAddress": "0x71d38eEC002E65ec38343C44B2AaED707eD56027",
-    "earnContractAddress": "0x71d38eEC002E65ec38343C44B2AaED707eD56027",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-wbtc-usdc.e",
     "status": "active",
     "createdAt": 1718739941,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WBTC", "pUSDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1101,28 +1101,28 @@
   {
     "id": "uniswap-cow-poly-wbtc-weth",
     "name": "WBTC-WETH",
+    "type": "cowcentrated",
     "token": "WBTC-WETH",
     "tokenAddress": "0x50eaEDB835021E4A108B7290636d62E9765cc6d7",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
       "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x081901d477A296CDDE2084697c25Cfd52805BA31",
     "earnedToken": "cowUniswapPolyWBTC-WETH",
     "earnedTokenAddress": "0x081901d477A296CDDE2084697c25Cfd52805BA31",
-    "earnContractAddress": "0x081901d477A296CDDE2084697c25Cfd52805BA31",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-wbtc-weth",
     "status": "active",
     "createdAt": 1718739941,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WBTC", "ETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1132,28 +1132,28 @@
   {
     "id": "uniswap-cow-poly-wmatic-weth",
     "name": "WPOL-WETH",
+    "type": "cowcentrated",
     "token": "WMATIC-WETH",
     "tokenAddress": "0x86f1d8390222A3691C28938eC7404A1661E618e0",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
       "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x064e2dDf54ca08bbe44De8e46bF475F510dcb503",
     "earnedToken": "cowUniswapPolyWMATIC-WETH",
     "earnedTokenAddress": "0x064e2dDf54ca08bbe44De8e46bF475F510dcb503",
-    "earnContractAddress": "0x064e2dDf54ca08bbe44De8e46bF475F510dcb503",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-wmatic-weth",
     "status": "active",
     "createdAt": 1718739941,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WPOL", "ETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1163,28 +1163,28 @@
   {
     "id": "uniswap-cow-poly-wmatic-usdt",
     "name": "WPOL-USDT",
+    "type": "cowcentrated",
     "token": "WMATIC-USDT",
     "tokenAddress": "0x9B08288C3Be4F62bbf8d1C20Ac9C5e6f9467d8B7",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
       "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xa37378E6e42F8b1586E6B272A56AC285EbF44E1B",
     "earnedToken": "cowUniswapPolyWMATIC-USDT",
     "earnedTokenAddress": "0xa37378E6e42F8b1586E6B272A56AC285EbF44E1B",
-    "earnContractAddress": "0xa37378E6e42F8b1586E6B272A56AC285EbF44E1B",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-wmatic-usdt",
     "status": "active",
     "createdAt": 1718739941,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WPOL", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1194,28 +1194,28 @@
   {
     "id": "uniswap-cow-poly-wmatic-usdc.e",
     "name": "WPOL-USDC.e",
+    "type": "cowcentrated",
     "token": "WMATIC-USDC.e",
     "tokenAddress": "0xA374094527e1673A86dE625aa59517c5dE346d32",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
       "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xd8B28ebdE520DEE6248dFb4998d0a2ee791D8940",
     "earnedToken": "cowUniswapPolyWMATIC-USDC.e",
     "earnedTokenAddress": "0xd8B28ebdE520DEE6248dFb4998d0a2ee791D8940",
-    "earnContractAddress": "0xd8B28ebdE520DEE6248dFb4998d0a2ee791D8940",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-wmatic-usdc.e",
     "status": "active",
     "createdAt": 1718739941,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WPOL", "pUSDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1225,28 +1225,28 @@
   {
     "id": "uniswap-cow-poly-wmatic-usdc",
     "name": "WPOL-USDC",
+    "type": "cowcentrated",
     "token": "WMATIC-USDC",
     "tokenAddress": "0xB6e57ed85c4c9dbfEF2a68711e9d6f36c56e0FcB",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
       "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xD27914D1fFc272d37d3B6dD8A2adeb8bf88251C8",
     "earnedToken": "cowUniswapPolyWMATIC-USDC",
     "earnedTokenAddress": "0xD27914D1fFc272d37d3B6dD8A2adeb8bf88251C8",
-    "earnContractAddress": "0xD27914D1fFc272d37d3B6dD8A2adeb8bf88251C8",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-wmatic-usdc",
     "status": "active",
     "createdAt": 1718739941,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WPOL", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1256,28 +1256,28 @@
   {
     "id": "uniswap-cow-poly-wmatic-ldo",
     "name": "LDO-WMATIC",
+    "type": "cowcentrated",
     "token": "LDO-WMATIC",
     "tokenAddress": "0xD866faC7dB79994D08C0CA2221fee08935595B4B",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
       "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x7f14AAEb965028Ea56c10a1B758fB61BC90Cd770",
     "earnedToken": "cowUniswapPolyWMATIC-LDO",
     "earnedTokenAddress": "0x7f14AAEb965028Ea56c10a1B758fB61BC90Cd770",
-    "earnContractAddress": "0x7f14AAEb965028Ea56c10a1B758fB61BC90Cd770",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-wmatic-ldo",
     "status": "active",
     "createdAt": 1718739941,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["LDO", "WPOL"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1287,28 +1287,28 @@
   {
     "id": "uniswap-cow-poly-weth-ldo",
     "name": "LDO-WETH",
+    "type": "cowcentrated",
     "token": "LDO-WETH",
     "tokenAddress": "0xda908C0bf14AD0B61Ea5eBe671aC59B2cE091cBf",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
       "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x1bFac0A539C9A28c9d59cD39C3cC1AB4247A13E2",
     "earnedToken": "cowUniswapPolyWETH-LDO",
     "earnedTokenAddress": "0x1bFac0A539C9A28c9d59cD39C3cC1AB4247A13E2",
-    "earnContractAddress": "0x1bFac0A539C9A28c9d59cD39C3cC1AB4247A13E2",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-weth-ldo",
     "status": "active",
     "createdAt": 1718739941,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["LDO", "ETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1318,28 +1318,28 @@
   {
     "id": "uniswap-cow-poly-usdc.e-link",
     "name": "LINK-USDC.e",
+    "type": "cowcentrated",
     "token": "LINK-USDC.e",
     "tokenAddress": "0x94Ab9E4553fFb839431E37CC79ba8905f45BfBeA",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
       "0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xcc8f331385963894E33195961BA5D2A26194aACC",
     "earnedToken": "cowUniswapPolyUSDC.e-LINK",
     "earnedTokenAddress": "0xcc8f331385963894E33195961BA5D2A26194aACC",
-    "earnContractAddress": "0xcc8f331385963894E33195961BA5D2A26194aACC",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-usdc.e-link",
     "status": "active",
     "createdAt": 1718739941,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["oldLINK", "pUSDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1349,28 +1349,28 @@
   {
     "id": "uniswap-cow-poly-link-weth",
     "name": "LINK-WETH",
+    "type": "cowcentrated",
     "token": "LINK-WETH",
     "tokenAddress": "0x3e31AB7f37c048FC6574189135D108df80F0ea26",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39",
       "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x5F35d9840A66C7D97d61faFAA969744783D58F37",
     "earnedToken": "cowUniswapPolyLINK-WETH",
     "earnedTokenAddress": "0x5F35d9840A66C7D97d61faFAA969744783D58F37",
-    "earnContractAddress": "0x5F35d9840A66C7D97d61faFAA969744783D58F37",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-link-weth",
     "status": "active",
     "createdAt": 1718739941,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["oldLINK", "ETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1380,28 +1380,28 @@
   {
     "id": "uniswap-cow-poly-weth-uni",
     "name": "UNI-WETH",
+    "type": "cowcentrated",
     "token": "UNI-WETH",
     "tokenAddress": "0x357faF5843c7FD7fb4E34FBEabDAc16eabE8a5bc",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
       "0xb33EaAd8d922B1083446DC23f610c2567fB5180f"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x9b6ed34a879fc5f4a6945978d12a3c41eC500B93",
     "earnedToken": "cowUniswapPolyWETH-UNI",
     "earnedTokenAddress": "0x9b6ed34a879fc5f4a6945978d12a3c41eC500B93",
-    "earnContractAddress": "0x9b6ed34a879fc5f4a6945978d12a3c41eC500B93",
     "oracle": "lps",
     "oracleId": "uniswap-cow-poly-weth-uni",
     "status": "active",
     "createdAt": 1718739941,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["UNI", "ETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "polygon",
-    "type": "cowcentrated",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"

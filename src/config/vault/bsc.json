@@ -121,19 +121,19 @@
       "0x26c5e01524d2E6280A48F2c50fF6De7e52E9611C",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0xFb023De5C9De886069554caccA6D08e2E7c1bD9e",
     "earnedToken": "cowPancakewstETH-WBNB",
     "earnedTokenAddress": "0xFb023De5C9De886069554caccA6D08e2E7c1bD9e",
-    "earnContractAddress": "0xFb023De5C9De886069554caccA6D08e2E7c1bD9e",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-wsteth-wbnb",
     "status": "active",
     "createdAt": 1726149784,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["wstETH", "WBNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -212,19 +212,19 @@
       "0x26c5e01524d2E6280A48F2c50fF6De7e52E9611C",
       "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c"
     ],
+    "earnContractAddress": "0x2f2637ae8Ec1bF8D576AD2A1C14B7026832509Cb",
     "earnedToken": "cowPancakewstETH-BTCB",
     "earnedTokenAddress": "0x2f2637ae8Ec1bF8D576AD2A1C14B7026832509Cb",
-    "earnContractAddress": "0x2f2637ae8Ec1bF8D576AD2A1C14B7026832509Cb",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-wsteth-btcb",
     "status": "active",
     "createdAt": 1726149784,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["wstETH", "BTCB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -303,19 +303,19 @@
       "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
       "0x26c5e01524d2E6280A48F2c50fF6De7e52E9611C"
     ],
+    "earnContractAddress": "0x5F25f61055141997772d8496Fc55ADA1FF7a3A10",
     "earnedToken": "cowPancakeETH-wstETH",
     "earnedTokenAddress": "0x5F25f61055141997772d8496Fc55ADA1FF7a3A10",
-    "earnContractAddress": "0x5F25f61055141997772d8496Fc55ADA1FF7a3A10",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-eth-wsteth",
     "status": "active",
     "createdAt": 1726149784,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.01",
     "assets": ["wstETH", "ETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.01",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -394,19 +394,19 @@
       "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0xd9CFc385bE8E942050cb59b119697ed659F090CA",
     "earnedToken": "cowPancakeUSDC-WBNB",
     "earnedTokenAddress": "0xd9CFc385bE8E942050cb59b119697ed659F090CA",
-    "earnContractAddress": "0xd9CFc385bE8E942050cb59b119697ed659F090CA",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-usdc-wbnb",
     "status": "active",
     "createdAt": 1724853598,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["USDC", "BNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -453,19 +453,19 @@
       "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
       "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c"
     ],
+    "earnContractAddress": "0x375B9E0D598426277a20468B10b6475Ce96Bc8c4",
     "earnedToken": "cowUniswapBscETH-BTCB",
     "earnedTokenAddress": "0x375B9E0D598426277a20468B10b6475Ce96Bc8c4",
-    "earnContractAddress": "0x375B9E0D598426277a20468B10b6475Ce96Bc8c4",
     "oracle": "lps",
     "oracleId": "uniswap-cow-bsc-eth-btcb",
     "status": "active",
     "createdAt": 1724853598,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["BTCB", "ETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -512,19 +512,19 @@
       "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0x7C18b30F1d1eF8A07AF166f57448C054b82658CF",
     "earnedToken": "cowUniswapBscBTCB-WBNB",
     "earnedTokenAddress": "0x7C18b30F1d1eF8A07AF166f57448C054b82658CF",
-    "earnContractAddress": "0x7C18b30F1d1eF8A07AF166f57448C054b82658CF",
     "oracle": "lps",
     "oracleId": "uniswap-cow-bsc-btcb-wbnb",
     "status": "active",
     "createdAt": 1724853598,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["BTCB", "BNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -571,19 +571,19 @@
       "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0x9D7A030261efc848379A506Dd67Fb54199899c33",
     "earnedToken": "cowUniswapBscETH-WBNB",
     "earnedTokenAddress": "0x9D7A030261efc848379A506Dd67Fb54199899c33",
-    "earnContractAddress": "0x9D7A030261efc848379A506Dd67Fb54199899c33",
     "oracle": "lps",
     "oracleId": "uniswap-cow-bsc-eth-wbnb",
     "status": "active",
     "createdAt": 1724687912,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["ETH", "WBNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -630,19 +630,19 @@
       "0x55d398326f99059fF775485246999027B3197955",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0xC02DFF4D789355C2343AdE5ac74589828cED37Ba",
     "earnedToken": "cowUniswapBscUSDT-WBNB",
     "earnedTokenAddress": "0xC02DFF4D789355C2343AdE5ac74589828cED37Ba",
-    "earnContractAddress": "0xC02DFF4D789355C2343AdE5ac74589828cED37Ba",
     "oracle": "lps",
     "oracleId": "uniswap-cow-bsc-usdt-wbnb",
     "status": "active",
     "createdAt": 1724687912,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["USDT", "WBNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -689,19 +689,19 @@
       "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
       "0x55d398326f99059fF775485246999027B3197955"
     ],
+    "earnContractAddress": "0xD895f639abEE8723B370c6c5Be4be67e669fA7D6",
     "earnedToken": "cowUniswapBscETH-USDT",
     "earnedTokenAddress": "0xD895f639abEE8723B370c6c5Be4be67e669fA7D6",
-    "earnContractAddress": "0xD895f639abEE8723B370c6c5Be4be67e669fA7D6",
     "oracle": "lps",
     "oracleId": "uniswap-cow-bsc-eth-usdt",
     "status": "active",
     "createdAt": 1724687912,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["ETH", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -748,19 +748,19 @@
       "0x55d398326f99059fF775485246999027B3197955",
       "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d"
     ],
+    "earnContractAddress": "0x4f28A510CE927d972675d5164c2ff665e91fECAf",
     "earnedToken": "cowUniswapBscUSDT-USDC",
     "earnedTokenAddress": "0x4f28A510CE927d972675d5164c2ff665e91fECAf",
-    "earnContractAddress": "0x4f28A510CE927d972675d5164c2ff665e91fECAf",
     "oracle": "lps",
     "oracleId": "uniswap-cow-bsc-usdt-usdc",
     "status": "active",
     "createdAt": 1724687912,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.01",
     "assets": ["USDT", "USDC"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.01",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -807,19 +807,19 @@
       "0x55d398326f99059fF775485246999027B3197955",
       "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c"
     ],
+    "earnContractAddress": "0xec016a6802CcA10193f63E3B02a03C83954f9688",
     "earnedToken": "cowUniswapBscUSDT-BTCB",
     "earnedTokenAddress": "0xec016a6802CcA10193f63E3B02a03C83954f9688",
-    "earnContractAddress": "0xec016a6802CcA10193f63E3B02a03C83954f9688",
     "oracle": "lps",
     "oracleId": "uniswap-cow-bsc-usdt-btcb",
     "status": "active",
     "createdAt": 1724687912,
-    "platformId": "uniswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["BTCB", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -866,19 +866,19 @@
       "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0xfEA50261819Dc00278F9C4b18B6Cf146a830bCEd",
     "earnedToken": "cowThenaBTCB-WBNB",
     "earnedTokenAddress": "0xfEA50261819Dc00278F9C4b18B6Cf146a830bCEd",
-    "earnContractAddress": "0xfEA50261819Dc00278F9C4b18B6Cf146a830bCEd",
     "oracle": "lps",
     "oracleId": "thena-cow-btcb-wbnb",
     "status": "active",
     "createdAt": 1724065008,
-    "platformId": "thena",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["BTCB", "WBNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -925,19 +925,19 @@
       "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0xd5E1cB0Da9b44E4020557c49Bd084a0147Ac828b",
     "earnedToken": "cowThenaETH-WBNB",
     "earnedTokenAddress": "0xd5E1cB0Da9b44E4020557c49Bd084a0147Ac828b",
-    "earnContractAddress": "0xd5E1cB0Da9b44E4020557c49Bd084a0147Ac828b",
     "oracle": "lps",
     "oracleId": "thena-cow-eth-wbnb",
     "status": "active",
     "createdAt": 1724065008,
-    "platformId": "thena",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["ETH", "WBNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -984,19 +984,19 @@
       "0x570A5D26f7765Ecb712C0924E4De545B89fD43dF",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0x0baD27b4a100E660257BFF942D64eC8cA3018Cec",
     "earnedToken": "cowThenaSOL-WBNB",
     "earnedTokenAddress": "0x0baD27b4a100E660257BFF942D64eC8cA3018Cec",
-    "earnContractAddress": "0x0baD27b4a100E660257BFF942D64eC8cA3018Cec",
     "oracle": "lps",
     "oracleId": "thena-cow-sol-wbnb",
     "status": "active",
     "createdAt": 1724065008,
-    "platformId": "thena",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["SOL", "WBNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1075,19 +1075,19 @@
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
       "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56"
     ],
+    "earnContractAddress": "0x6A776b745745E39f55E996fCD1aa30ba99552BE0",
     "earnedToken": "cowPancakeWBNB-BUSD",
     "earnedTokenAddress": "0x6A776b745745E39f55E996fCD1aa30ba99552BE0",
-    "earnContractAddress": "0x6A776b745745E39f55E996fCD1aa30ba99552BE0",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-wbnb-busd",
     "status": "active",
     "createdAt": 1723067551,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["BNB", "BUSD"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1166,19 +1166,19 @@
       "0x4268B8F0B87b6Eae5d897996E6b845ddbD99Adf3",
       "0x55d398326f99059fF775485246999027B3197955"
     ],
+    "earnContractAddress": "0x1400E7A2b7AA779a324a750CcF4cE00349bBdbA6",
     "earnedToken": "cowPancakeaxlUSDC-USDT",
     "earnedTokenAddress": "0x1400E7A2b7AA779a324a750CcF4cE00349bBdbA6",
-    "earnContractAddress": "0x1400E7A2b7AA779a324a750CcF4cE00349bBdbA6",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-axlusdc-usdt",
     "status": "active",
     "createdAt": 1723067551,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.01",
     "assets": ["axlUSDC", "USDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.01",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1264,19 +1264,19 @@
       "0x323665443CEf804A3b5206103304BD4872EA4253",
       "0x55d398326f99059fF775485246999027B3197955"
     ],
+    "earnContractAddress": "0xE571c8463779495F4125cA258D52d200c07C67cb",
     "earnedToken": "cowPancakeUSDV-USDT",
     "earnedTokenAddress": "0xE571c8463779495F4125cA258D52d200c07C67cb",
-    "earnContractAddress": "0xE571c8463779495F4125cA258D52d200c07C67cb",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-usdv-usdt",
     "status": "active",
     "createdAt": 1723067551,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.01",
     "assets": ["USDV", "USDT"],
     "risks": ["IL_NONE", "MCAP_SMALL", "OVER_COLLAT_ALGO_STABLECOIN", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.01",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1355,19 +1355,19 @@
       "0x6985884C4392D348587B19cb9eAAf157F13271cd",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0x9F3b3C46175B1321760aB3a6C0E9B13Ef834FE6d",
     "earnedToken": "cowPancakeZRO-WBNB",
     "earnedTokenAddress": "0x9F3b3C46175B1321760aB3a6C0E9B13Ef834FE6d",
-    "earnContractAddress": "0x9F3b3C46175B1321760aB3a6C0E9B13Ef834FE6d",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-zro-wbnb",
     "status": "active",
     "createdAt": 1723067551,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "1",
     "assets": ["ZRO", "BNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "1",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1446,19 +1446,19 @@
       "0x25d887Ce7a35172C62FeBFD67a1856F20FaEbB00",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0x3e5067c68EA8B3661d65B6d817e669898A711B9B",
     "earnedToken": "cowPancakePEPE-WBNB",
     "earnedTokenAddress": "0x3e5067c68EA8B3661d65B6d817e669898A711B9B",
-    "earnContractAddress": "0x3e5067c68EA8B3661d65B6d817e669898A711B9B",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-pepe-wbnb",
     "status": "active",
     "createdAt": 1723067551,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "1",
     "assets": ["PEPE", "BNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "1",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1537,19 +1537,19 @@
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
       "0xcF6BB5389c92Bdda8a3747Ddb454cB7a64626C63"
     ],
+    "earnContractAddress": "0xE0d0F7738814FE9a87D95Af6c50B2Ac99e53D845",
     "earnedToken": "cowPancakeWBNB-XVS",
     "earnedTokenAddress": "0xE0d0F7738814FE9a87D95Af6c50B2Ac99e53D845",
-    "earnContractAddress": "0xE0d0F7738814FE9a87D95Af6c50B2Ac99e53D845",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-wbnb-xvs",
     "status": "active",
     "createdAt": 1723067551,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.25",
     "assets": ["XVS", "BNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.25",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1628,19 +1628,19 @@
       "0x55d398326f99059fF775485246999027B3197955",
       "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56"
     ],
+    "earnContractAddress": "0x2C9f3E728F82b72b8EC7b6B6D4cCFb50454F3DCa",
     "earnedToken": "cowPancakeUSDT-BUSD",
     "earnedTokenAddress": "0x2C9f3E728F82b72b8EC7b6B6D4cCFb50454F3DCa",
-    "earnContractAddress": "0x2C9f3E728F82b72b8EC7b6B6D4cCFb50454F3DCa",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-usdt-busd",
     "status": "active",
     "createdAt": 1723051090,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.01",
     "assets": ["USDT", "BUSD"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.01",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1719,19 +1719,19 @@
       "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
       "0x55d398326f99059fF775485246999027B3197955"
     ],
+    "earnContractAddress": "0x574818b97c7c925C542d74ad8463c8dA83392939",
     "earnedToken": "cowPancakeETH-USDT",
     "earnedTokenAddress": "0x574818b97c7c925C542d74ad8463c8dA83392939",
-    "earnContractAddress": "0x574818b97c7c925C542d74ad8463c8dA83392939",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-eth-usdt",
     "status": "active",
     "createdAt": 1723051090,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["ETH", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1810,19 +1810,19 @@
       "0xbA2aE424d960c26247Dd6c32edC70B295c744C43",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0x364aaFb34D8d98D9ea87aCAFc884bbd52f262cb4",
     "earnedToken": "cowPancakeDOGE-WBNB",
     "earnedTokenAddress": "0x364aaFb34D8d98D9ea87aCAFc884bbd52f262cb4",
-    "earnContractAddress": "0x364aaFb34D8d98D9ea87aCAFc884bbd52f262cb4",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-doge-wbnb",
     "status": "active",
     "createdAt": 1723051090,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.25",
     "assets": ["DOGE", "BNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.25",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1901,19 +1901,19 @@
       "0x570A5D26f7765Ecb712C0924E4De545B89fD43dF",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0x06DFa5747f0B6F4f1332267A5376aD3f4eeeff55",
     "earnedToken": "cowPancakeSOL-WBNB",
     "earnedTokenAddress": "0x06DFa5747f0B6F4f1332267A5376aD3f4eeeff55",
-    "earnContractAddress": "0x06DFa5747f0B6F4f1332267A5376aD3f4eeeff55",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-sol-wbnb",
     "status": "active",
     "createdAt": 1723051090,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.25",
     "assets": ["SOL", "BNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.25",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1992,19 +1992,19 @@
       "0x55d398326f99059fF775485246999027B3197955",
       "0x570A5D26f7765Ecb712C0924E4De545B89fD43dF"
     ],
+    "earnContractAddress": "0x61E9a8dD14D6cF17E04D2AC61b995bcC7bDA50Fa",
     "earnedToken": "cowPancakeUSDT-SOL",
     "earnedTokenAddress": "0x61E9a8dD14D6cF17E04D2AC61b995bcC7bDA50Fa",
-    "earnContractAddress": "0x61E9a8dD14D6cF17E04D2AC61b995bcC7bDA50Fa",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-usdt-sol",
     "status": "active",
     "createdAt": 1723051090,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.25",
     "assets": ["SOL", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.25",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2083,19 +2083,19 @@
       "0xB0b84D294e0C75A6abe60171b70edEb2EFd14A1B",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0xa3A973Cf870Ff14053c28097de269ABA444533a2",
     "earnedToken": "cowPancakeslisBNB-WBNB",
     "earnedTokenAddress": "0xa3A973Cf870Ff14053c28097de269ABA444533a2",
-    "earnContractAddress": "0xa3A973Cf870Ff14053c28097de269ABA444533a2",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-slisbnb-wbnb",
     "status": "active",
     "createdAt": 1723051090,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["slisBNB", "BNB"],
     "risks": ["IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2181,19 +2181,19 @@
       "0x0782b6d8c4551B9760e74c0545a9bCD90bdc41E5",
       "0x55d398326f99059fF775485246999027B3197955"
     ],
+    "earnContractAddress": "0x1FDf7ABD9dACd1946E76b6c76a6daEE8872076A7",
     "earnedToken": "cowPancakelisUSD-USDT",
     "earnedTokenAddress": "0x1FDf7ABD9dACd1946E76b6c76a6daEE8872076A7",
-    "earnContractAddress": "0x1FDf7ABD9dACd1946E76b6c76a6daEE8872076A7",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-lisusd-usdt",
     "status": "active",
     "createdAt": 1723051090,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["lisUSD", "USDT"],
     "risks": ["IL_NONE", "MCAP_MICRO", "OVER_COLLAT_ALGO_STABLECOIN", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2272,19 +2272,19 @@
       "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
       "0x300d2c875C6fb8Ce4bf5480B4d34b7c9ea8a33A4"
     ],
+    "earnContractAddress": "0xB9D8c235010829BbDaB6666e2c3d96f2c34B6DF7",
     "earnedToken": "cowPancakeETH-pxETH",
     "earnedTokenAddress": "0xB9D8c235010829BbDaB6666e2c3d96f2c34B6DF7",
-    "earnContractAddress": "0xB9D8c235010829BbDaB6666e2c3d96f2c34B6DF7",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-eth-pxeth",
     "status": "active",
     "createdAt": 1723051090,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["pxETH", "ETH"],
     "risks": ["IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2363,19 +2363,19 @@
       "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0xB40e61BbC7b188fe658a8687DCb30619610Be39b",
     "earnedToken": "cowPancakeCAKE-WBNB",
     "earnedTokenAddress": "0xB40e61BbC7b188fe658a8687DCb30619610Be39b",
-    "earnContractAddress": "0xB40e61BbC7b188fe658a8687DCb30619610Be39b",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-cake-wbnb",
     "status": "active",
     "createdAt": 1722967709,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.25",
     "assets": ["CAKE", "BNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.25",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2454,19 +2454,19 @@
       "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
       "0x55d398326f99059fF775485246999027B3197955"
     ],
+    "earnContractAddress": "0x07F015C14C536B3fFaA1b14ea06E224E9cCF5630",
     "earnedToken": "cowPancakeCAKE-USDT",
     "earnedTokenAddress": "0x07F015C14C536B3fFaA1b14ea06E224E9cCF5630",
-    "earnContractAddress": "0x07F015C14C536B3fFaA1b14ea06E224E9cCF5630",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-cake-usdt",
     "status": "active",
     "createdAt": 1722967709,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.25",
     "assets": ["CAKE", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.25",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2545,19 +2545,19 @@
       "0x55d398326f99059fF775485246999027B3197955",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0x39D16B4B83C43207668De708E55ecc721cC27990",
     "earnedToken": "cowPancakeUSDT-WBNB",
     "earnedTokenAddress": "0x39D16B4B83C43207668De708E55ecc721cC27990",
-    "earnContractAddress": "0x39D16B4B83C43207668De708E55ecc721cC27990",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-usdt-wbnb",
     "status": "active",
     "createdAt": 1722967709,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["BNB", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2636,19 +2636,19 @@
       "0x55d398326f99059fF775485246999027B3197955",
       "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d"
     ],
+    "earnContractAddress": "0xEE800276e4c9AAc5bC7d7e196Df86AbE3f49c520",
     "earnedToken": "cowPancakeUSDT-USDC",
     "earnedTokenAddress": "0xEE800276e4c9AAc5bC7d7e196Df86AbE3f49c520",
-    "earnContractAddress": "0xEE800276e4c9AAc5bC7d7e196Df86AbE3f49c520",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-usdt-usdc",
     "status": "active",
     "createdAt": 1722967709,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.01",
     "assets": ["USDT", "USDC"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.01",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2727,19 +2727,19 @@
       "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0xa0fb8EDB90F4D0527F08f41D7a2c93105f9f581E",
     "earnedToken": "cowPancakeBTCB-WBNB",
     "earnedTokenAddress": "0xa0fb8EDB90F4D0527F08f41D7a2c93105f9f581E",
-    "earnContractAddress": "0xa0fb8EDB90F4D0527F08f41D7a2c93105f9f581E",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-btcb-wbnb",
     "status": "active",
     "createdAt": 1722967709,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["BTCB", "BNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2818,19 +2818,19 @@
       "0x55d398326f99059fF775485246999027B3197955",
       "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c"
     ],
+    "earnContractAddress": "0xE5654eB3f76F6758a89EDcc9843D11eF89bDDf3D",
     "earnedToken": "cowPancakeUSDT-BTCB",
     "earnedTokenAddress": "0xE5654eB3f76F6758a89EDcc9843D11eF89bDDf3D",
-    "earnContractAddress": "0xE5654eB3f76F6758a89EDcc9843D11eF89bDDf3D",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-usdt-btcb",
     "status": "active",
     "createdAt": 1722967709,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["BTCB", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2909,19 +2909,19 @@
       "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
       "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
     ],
+    "earnContractAddress": "0xcE033c748aBd4B5e9aE16efFdb0b0c91fB0c99F1",
     "earnedToken": "cowPancakeETH-WBNB",
     "earnedTokenAddress": "0xcE033c748aBd4B5e9aE16efFdb0b0c91fB0c99F1",
-    "earnContractAddress": "0xcE033c748aBd4B5e9aE16efFdb0b0c91fB0c99F1",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-eth-wbnb",
     "status": "active",
     "createdAt": 1722967709,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["ETH", "BNB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -3000,19 +3000,19 @@
       "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
       "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c"
     ],
+    "earnContractAddress": "0xC0885E2B72E2Ff70E6a947387a70435c6E59a477",
     "earnedToken": "cowPancakeETH-BTCB",
     "earnedTokenAddress": "0xC0885E2B72E2Ff70E6a947387a70435c6E59a477",
-    "earnContractAddress": "0xC0885E2B72E2Ff70E6a947387a70435c6E59a477",
     "oracle": "lps",
     "oracleId": "pancake-cow-bsc-eth-btcb",
     "status": "active",
     "createdAt": 1722967709,
-    "platformId": "pancakeswap",
+    "platformId": "beefy",
+    "feeTier": "0.25",
     "assets": ["ETH", "BTCB"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "bsc",
-    "feeTier": "0.25",
     "zaps": [
       {
         "strategyId": "cowcentrated"

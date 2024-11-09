@@ -71,19 +71,19 @@
       "0x1D931Bf8656d795E50eF6D639562C5bD8Ac2B78f",
       "0x542fDA317318eBF1d3DEAf76E0b632741A7e677d"
     ],
+    "earnContractAddress": "0x7AB03a37822014f4aba762F0a622bF0cc8A32F47",
     "earnedToken": "cowUniswapRootstockETHs-WRBTC",
     "earnedTokenAddress": "0x7AB03a37822014f4aba762F0a622bF0cc8A32F47",
-    "earnContractAddress": "0x7AB03a37822014f4aba762F0a622bF0cc8A32F47",
     "oracle": "lps",
     "oracleId": "uniswap-cow-rootstock-eths-wrbtc",
     "status": "active",
     "createdAt": 1722523990,
-    "platformId": "oku",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["ETHs", "WRBTC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "rootstock",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -162,19 +162,19 @@
       "0x542fDA317318eBF1d3DEAf76E0b632741A7e677d",
       "0xef213441A85dF4d7ACbDaE0Cf78004e1E486bB96"
     ],
+    "earnContractAddress": "0xc35Ce6b18Eb792F97991e5ee3439A965FF99396A",
     "earnedToken": "cowUniswapRootstockWRBTC-rUSDT",
     "earnedTokenAddress": "0xc35Ce6b18Eb792F97991e5ee3439A965FF99396A",
-    "earnContractAddress": "0xc35Ce6b18Eb792F97991e5ee3439A965FF99396A",
     "oracle": "lps",
     "oracleId": "uniswap-cow-rootstock-wrbtc-rusdt",
     "status": "active",
     "createdAt": 1722523990,
-    "platformId": "oku",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WRBTC", "rUSDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "rootstock",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -253,19 +253,19 @@
       "0xe700691dA7b9851F2F35f8b8182c69c53CcaD9Db",
       "0xef213441A85dF4d7ACbDaE0Cf78004e1E486bB96"
     ],
+    "earnContractAddress": "0xc517fcde06661b001af97273a3599D5454703732",
     "earnedToken": "cowUniswapRootstockDOC-rUSDT",
     "earnedTokenAddress": "0xc517fcde06661b001af97273a3599D5454703732",
-    "earnContractAddress": "0xc517fcde06661b001af97273a3599D5454703732",
     "oracle": "lps",
     "oracleId": "uniswap-cow-rootstock-doc-rusdt",
     "status": "active",
     "createdAt": 1722523990,
-    "platformId": "oku",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["DOC", "rUSDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "rootstock",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -312,19 +312,19 @@
       "0x2AcC95758f8b5F583470ba265EB685a8F45fC9D5",
       "0xef213441A85dF4d7ACbDaE0Cf78004e1E486bB96"
     ],
+    "earnContractAddress": "0x411564724f8FE3fc0308A52c462847e0807c56A4",
     "earnedToken": "cowUniswapRootstockRIF-rUSDT",
     "earnedTokenAddress": "0x411564724f8FE3fc0308A52c462847e0807c56A4",
-    "earnContractAddress": "0x411564724f8FE3fc0308A52c462847e0807c56A4",
     "oracle": "lps",
     "oracleId": "uniswap-cow-rootstock-rif-rusdt",
     "status": "active",
     "createdAt": 1722523990,
-    "platformId": "oku",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["RIF", "rUSDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "rootstock",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -403,19 +403,19 @@
       "0xe700691dA7b9851F2F35f8b8182c69c53CcaD9Db",
       "0xef213441A85dF4d7ACbDaE0Cf78004e1E486bB96"
     ],
+    "earnContractAddress": "0x5e273560B9DBde75d90EA9340a61f8798C57dCD4",
     "earnedToken": "cowSushiRootstockDOC-rUSDT",
     "earnedTokenAddress": "0x5e273560B9DBde75d90EA9340a61f8798C57dCD4",
-    "earnContractAddress": "0x5e273560B9DBde75d90EA9340a61f8798C57dCD4",
     "oracle": "lps",
     "oracleId": "sushi-cow-rootstock-doc-rusdt",
     "status": "active",
     "createdAt": 1722523990,
-    "platformId": "sushi",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["DOC", "rUSDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "rootstock",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -494,19 +494,19 @@
       "0x542fDA317318eBF1d3DEAf76E0b632741A7e677d",
       "0xef213441A85dF4d7ACbDaE0Cf78004e1E486bB96"
     ],
+    "earnContractAddress": "0xB77db1F96578b04d963a5bA063CfF17CEf55fB1B",
     "earnedToken": "cowSushiRootstockWRBTC-rUSDT",
     "earnedTokenAddress": "0xB77db1F96578b04d963a5bA063CfF17CEf55fB1B",
-    "earnContractAddress": "0xB77db1F96578b04d963a5bA063CfF17CEf55fB1B",
     "oracle": "lps",
     "oracleId": "sushi-cow-rootstock-wrbtc-rusdt",
     "status": "active",
     "createdAt": 1722523990,
-    "platformId": "sushi",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WRBTC", "rUSDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "rootstock",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -585,19 +585,19 @@
       "0x1D931Bf8656d795E50eF6D639562C5bD8Ac2B78f",
       "0x542fDA317318eBF1d3DEAf76E0b632741A7e677d"
     ],
+    "earnContractAddress": "0x2ca732484427FC2dB0eAd8EeDEb97869A422845d",
     "earnedToken": "cowSushiRootstockETHs-WRBTC",
     "earnedTokenAddress": "0x2ca732484427FC2dB0eAd8EeDEb97869A422845d",
-    "earnContractAddress": "0x2ca732484427FC2dB0eAd8EeDEb97869A422845d",
     "oracle": "lps",
     "oracleId": "sushi-cow-rootstock-eths-wrbtc",
     "status": "active",
     "createdAt": 1722523990,
-    "platformId": "sushi",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["ETHs", "WRBTC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "rootstock",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
