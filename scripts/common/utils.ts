@@ -1,5 +1,6 @@
 import { Address, getAddress } from 'viem';
 
+export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const trimReg = /(^\s*)|(\s*$)/g;
 
 export function isValidChecksumAddress(address: unknown): address is Address {
@@ -114,4 +115,36 @@ export async function mapValuesAsync<T, U>(
     }
   }
   return result;
+}
+
+export type RetryOptions = {
+  retries: number;
+  delay: number;
+  onRetry?: (error: Error, attempt: number) => void;
+};
+
+const defaultRetryOptions: RetryOptions = {
+  retries: 5,
+  delay: 1000,
+};
+
+export async function withRetries<T>(
+  fn: () => Promise<T>,
+  options: RetryOptions = defaultRetryOptions
+): Promise<T> {
+  for (let i = 0; i < options.retries; i++) {
+    try {
+      return await fn();
+    } catch (e) {
+      if (options.onRetry) {
+        options.onRetry(e, i);
+      }
+      await sleep(options.delay);
+    }
+  }
+  return fn();
+}
+
+export function isDefined<T>(value: T | undefined | null): value is Exclude<T, undefined | null> {
+  return value !== undefined && value !== null;
 }
