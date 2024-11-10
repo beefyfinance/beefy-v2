@@ -40,10 +40,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const Details = memo<DetailsProps>(function Details({ vaultId }) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const [tab, setTab] = useState<TabType>('platform');
+  const [tab, setTab] = useState<TabType>('assets');
 
   const tabs = useMemo(() => {
-    return { platform: t('Details-Platform'), assets: t('Details-Assets') };
+    return { assets: t('Details-Assets'), platform: t('Details-Platform') };
   }, [t]);
 
   const onTabChange = useCallback(
