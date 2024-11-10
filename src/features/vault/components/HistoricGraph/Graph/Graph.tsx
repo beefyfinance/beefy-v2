@@ -19,7 +19,7 @@ import { format, fromUnixTime } from 'date-fns';
 import { XAxisTick } from '../../../../../components/XAxisTick';
 import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../helpers/graph/graph';
 import {
-  formatPercent,
+  formatLargePercent,
   formatTokenDisplayCondensed,
   formatUsd,
 } from '../../../../../helpers/format';
@@ -78,7 +78,7 @@ export const Graph = memo(function Graph<TStat extends ChartStat>({
 
   const yTickFormatter = useMemo(() => {
     return stat === 'apy'
-      ? (value: number) => formatPercent(value)
+      ? (value: number) => formatLargePercent(value)
       : stat === 'clm'
       ? (value: number) => formatTokenDisplayCondensed(value, 18)
       : (value: number) => formatUsd(value);
