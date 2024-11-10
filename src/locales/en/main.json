@@ -155,6 +155,8 @@
   "Vault-platform": "Platform",
   "Vault-deposited": "Your Deposit",
   "Vault-LastHarvest": "Last harvest",
+  "Vault-LastHarvest-Label-clm-vault": "CLM Vault",
+  "Vault-LastHarvest-Label-clm-pool": "CLM Pool",
   "Vault-Breakdown-Tvl-Vault": "Beefy TVL",
   "Vault-Breakdown-Tvl-Vault-cowcentrated": "CLM TVL",
   "Vault-Breakdown-Tvl-Vault-cowcentrated-gov": "CLM Pool TVL",

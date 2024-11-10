@@ -185,6 +185,8 @@ interface FormatLargeNumberOptions {
   decimalsMin: number;
   /** add minimum decimals even when value is 0 */
   decimalsMinAppliesToZero: boolean;
+  /** show if number is so large we run out of scales */
+  veryLargePlaceholder?: string;
 }
 
 const defaultFormatLargeNumberOptions: FormatLargeNumberOptions = {
@@ -193,6 +195,7 @@ const defaultFormatLargeNumberOptions: FormatLargeNumberOptions = {
   decimalsUnder: 1000,
   decimalsMin: 0,
   decimalsMinAppliesToZero: false,
+  veryLargePlaceholder: '🔥',
 };
 
 /**
@@ -212,7 +215,15 @@ function formatLargeNumber(
     return decimalsMinAppliesToZero && decimalsMin ? ensureMinDecimals('0', decimalsMin) : '0';
   }
 
-  const { value, unit } = toScale(inputValue, minScale);
+  if (!inputValue.isFinite() && options?.veryLargePlaceholder) {
+    return options.veryLargePlaceholder;
+  }
+
+  const { value, unit, overMax } = toScale(inputValue, minScale);
+  if (overMax && options?.veryLargePlaceholder) {
+    return options.veryLargePlaceholder;
+  }
+
   const withDecimals = value.absoluteValue().lt(decimalsUnder);
   const valueGrouped = formatGrouped(value, withDecimals ? decimals : 0);
   const valueFormatted = withDecimals ? ensureMinDecimals(valueGrouped, decimalsMin) : valueGrouped;
