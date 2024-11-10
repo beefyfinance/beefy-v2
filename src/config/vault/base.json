@@ -7,18 +7,18 @@
     "tokenAddress": "0x94b004565617D63ED479a5609F143D27f9b07239",
     "tokenDecimals": 18,
     "tokenProviderId": "baseswap",
+    "earnContractAddress": "0xdf8f9d2243b4011034620Ed734CB0875bBa0f664",
     "earnedToken": "mooBeefyBaseSwapEURC-USDC",
     "earnedTokenAddress": "0xdf8f9d2243b4011034620Ed734CB0875bBa0f664",
-    "earnContractAddress": "0xdf8f9d2243b4011034620Ed734CB0875bBa0f664",
     "oracle": "lps",
     "oracleId": "baseswap-cow-eurc-usdc",
     "status": "active",
+    "createdAt": 1730972241,
     "platformId": "baseswap",
     "assets": ["EURC", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
-    "createdAt": 1730972241,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -809,7 +809,7 @@
     "platformId": "uniswap",
     "assets": ["LUNA", "WETH"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
@@ -820,28 +820,28 @@
   {
     "id": "uniswap-cow-weth-luna",
     "name": "LUNA-WETH",
+    "type": "cowcentrated",
     "token": "LUNA-WETH uniswap",
     "tokenAddress": "0x3A3dc4A26d1ACEAE12fD1026a5856F12d20658EA",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x4200000000000000000000000000000000000006",
       "0x55cD6469F597452B5A7536e2CD98fDE4c1247ee4"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x6FE9Ef95b73EF39c4543f6Ce4850A31fA68422C5",
     "earnedToken": "cowUniswapBaseWETH-LUNA",
     "earnedTokenAddress": "0x6FE9Ef95b73EF39c4543f6Ce4850A31fA68422C5",
-    "earnContractAddress": "0x6FE9Ef95b73EF39c4543f6Ce4850A31fA68422C5",
     "oracle": "lps",
     "oracleId": "uniswap-cow-weth-luna",
     "status": "active",
     "createdAt": 1730140106,
     "platformId": "beefy",
+    "feeTier": "1",
     "assets": ["LUNA", "WETH"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
-    "type": "cowcentrated",
-    "feeTier": "1",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -870,7 +870,7 @@
     "platformId": "uniswap",
     "assets": ["SPEC", "WETH"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
@@ -881,28 +881,28 @@
   {
     "id": "uniswap-cow-weth-spec",
     "name": "SPEC-WETH",
+    "type": "cowcentrated",
     "token": "SPEC-WETH uniswap",
     "tokenAddress": "0x8055e6de251e414e8393b20AdAb096AfB3cF8399",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x4200000000000000000000000000000000000006",
       "0x96419929d7949D6A801A6909c145C8EEf6A40431"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xc6c0984D29a87dB5D15dE91236B024C5B9FeF192",
     "earnedToken": "cowUniswapBaseWETH-SPEC",
     "earnedTokenAddress": "0xc6c0984D29a87dB5D15dE91236B024C5B9FeF192",
-    "earnContractAddress": "0xc6c0984D29a87dB5D15dE91236B024C5B9FeF192",
     "oracle": "lps",
     "oracleId": "uniswap-cow-weth-spec",
     "status": "active",
     "createdAt": 1730140106,
     "platformId": "beefy",
+    "feeTier": "1",
     "assets": ["SPEC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
-    "type": "cowcentrated",
-    "feeTier": "1",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1131,7 +1131,7 @@
     "platformId": "uniswap",
     "assets": ["VIRTUAL", "WETH"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
@@ -1142,28 +1142,28 @@
   {
     "id": "uniswap-cow-virtual-weth",
     "name": "VIRTUAL-WETH",
+    "type": "cowcentrated",
     "token": "VIRTUAL-WETH uniswap",
     "tokenAddress": "0x8e0A7d4018fb2674346d5742055174f899Fe1826",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b",
       "0x4200000000000000000000000000000000000006"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xf180a45d6bF3FbEdA3E17Ed0a691B6FcBbE975E2",
     "earnedToken": "cowUniswapBaseVIRTUAL-WETH",
     "earnedTokenAddress": "0xf180a45d6bF3FbEdA3E17Ed0a691B6FcBbE975E2",
-    "earnContractAddress": "0xf180a45d6bF3FbEdA3E17Ed0a691B6FcBbE975E2",
     "oracle": "lps",
     "oracleId": "uniswap-cow-virtual-weth",
     "status": "active",
     "createdAt": 1729615454,
     "platformId": "beefy",
+    "feeTier": "1",
     "assets": ["VIRTUAL", "WETH"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
-    "type": "cowcentrated",
-    "feeTier": "1",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2329,7 +2329,7 @@
     "platformId": "uniswap",
     "assets": ["CHAD", "WETH"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
@@ -2340,28 +2340,28 @@
   {
     "id": "uniswap-cow-weth-chad",
     "name": "CHAD-WETH",
+    "type": "cowcentrated",
     "token": "CHAD-WETH uniswap",
     "tokenAddress": "0xAe8d5B91Fca627410A3bef77f55fcfE208409a40",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x4200000000000000000000000000000000000006",
       "0xecaF81Eb42cd30014EB44130b89Bcd6d4Ad98B92"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xa2E552590B794D2D70D78650bC6858D1f15d117a",
     "earnedToken": "cowUniswapBaseWETH-CHAD",
     "earnedTokenAddress": "0xa2E552590B794D2D70D78650bC6858D1f15d117a",
-    "earnContractAddress": "0xa2E552590B794D2D70D78650bC6858D1f15d117a",
     "oracle": "lps",
     "oracleId": "uniswap-cow-weth-chad",
     "status": "active",
     "createdAt": 1729244039,
     "platformId": "beefy",
+    "feeTier": "1",
     "assets": ["CHAD", "WETH"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
-    "type": "cowcentrated",
-    "feeTier": "1",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2483,7 +2483,7 @@
     "platformId": "uniswap",
     "assets": ["WETH", "DEGEN"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
@@ -2494,28 +2494,28 @@
   {
     "id": "uniswap-cow-weth-degen",
     "name": "WETH-DEGEN",
+    "type": "cowcentrated",
     "token": "WETH-DEGEN uniswap",
     "tokenAddress": "0xc9034c3E7F58003E6ae0C8438e7c8f4598d5ACAA",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x4200000000000000000000000000000000000006",
       "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x608E547833AB57a071d26E7E3aB38E167b035152",
     "earnedToken": "cowUniswapBaseWETH-DEGEN",
     "earnedTokenAddress": "0x608E547833AB57a071d26E7E3aB38E167b035152",
-    "earnContractAddress": "0x608E547833AB57a071d26E7E3aB38E167b035152",
     "oracle": "lps",
     "oracleId": "uniswap-cow-weth-degen",
     "status": "active",
     "createdAt": 1729086491,
     "platformId": "beefy",
+    "feeTier": "1",
     "assets": ["WETH", "DEGEN"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
-    "type": "cowcentrated",
-    "feeTier": "1",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -2544,7 +2544,7 @@
     "platformId": "uniswap",
     "assets": ["WETH", "SPX"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
@@ -2555,28 +2555,28 @@
   {
     "id": "uniswap-cow-weth-spx",
     "name": "WETH-SPX",
+    "type": "cowcentrated",
     "token": "WETH-SPX uniswap",
     "tokenAddress": "0xab57CacEa9CD5CC1FB21D026ECDE71e0d4f33861",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x4200000000000000000000000000000000000006",
       "0x50dA645f148798F68EF2d7dB7C1CB22A6819bb2C"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xcE69Ab6EcA8CBB631aB3D440CBa17Ecd12ef5129",
     "earnedToken": "cowUniswapBaseWETH-SPX",
     "earnedTokenAddress": "0xcE69Ab6EcA8CBB631aB3D440CBa17Ecd12ef5129",
-    "earnContractAddress": "0xcE69Ab6EcA8CBB631aB3D440CBa17Ecd12ef5129",
     "oracle": "lps",
     "oracleId": "uniswap-cow-weth-spx",
     "status": "active",
     "createdAt": 1729086333,
     "platformId": "beefy",
+    "feeTier": "1",
     "assets": ["WETH", "SPX"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
-    "type": "cowcentrated",
-    "feeTier": "1",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -4784,20 +4784,20 @@
     "tokenAddress": "0x9EB3716f675633aA615a826a56f70e254a56b765",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xde8C2Bf494ce5Bd8Ab7244Fa17d4e7C14eE17574",
     "earnedToken": "mooBeefyUniswapWETH-cbBTC",
     "earnedTokenAddress": "0xde8C2Bf494ce5Bd8Ab7244Fa17d4e7C14eE17574",
-    "earnContractAddress": "0xde8C2Bf494ce5Bd8Ab7244Fa17d4e7C14eE17574",
     "oracle": "lps",
     "oracleId": "uniswap-cow-base-weth-cbbtc",
     "status": "eol",
-    "retiredAt": 1726623191,
+    "createdAt": 1726217642,
     "retireReason": "rewards",
+    "retiredAt": 1726623191,
     "platformId": "uniswap",
     "assets": ["cbBTC", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
-    "createdAt": 1726217642,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -4873,18 +4873,18 @@
     "tokenAddress": "0x39A568Ff824D6Cb2A3a861E69F85E381Fe45bC02",
     "tokenDecimals": 18,
     "tokenProviderId": "baseswap",
+    "earnContractAddress": "0x10e361d2734FC82744f7c554b3F50A258E9a9E07",
     "earnedToken": "mooBeefyBaseSwapcbETH-cbBTC",
     "earnedTokenAddress": "0x10e361d2734FC82744f7c554b3F50A258E9a9E07",
-    "earnContractAddress": "0x10e361d2734FC82744f7c554b3F50A258E9a9E07",
     "oracle": "lps",
     "oracleId": "baseswap-cow-cbeth-cbbtc",
     "status": "active",
+    "createdAt": 1726217642,
     "platformId": "baseswap",
     "assets": ["cbBTC", "cbETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
-    "createdAt": 1726217642,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -4963,18 +4963,18 @@
     "tokenAddress": "0xdAEcC7E7631aE8E9EdF7664DE9703a02F4cdE502",
     "tokenDecimals": 18,
     "tokenProviderId": "baseswap",
+    "earnContractAddress": "0xC978f4E6fbA86ca3a25C864A48476F0dEcA908e1",
     "earnedToken": "mooBeefyBaseSwapWETH-cbBTC",
     "earnedTokenAddress": "0xC978f4E6fbA86ca3a25C864A48476F0dEcA908e1",
-    "earnContractAddress": "0xC978f4E6fbA86ca3a25C864A48476F0dEcA908e1",
     "oracle": "lps",
     "oracleId": "baseswap-cow-weth-cbbtc",
     "status": "active",
+    "createdAt": 1726217642,
     "platformId": "baseswap",
     "assets": ["cbBTC", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
-    "createdAt": 1726217642,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -5053,18 +5053,18 @@
     "tokenAddress": "0x21Ac1c014628aFfB52bA19B0b4Af982fbd5130cc",
     "tokenDecimals": 18,
     "tokenProviderId": "baseswap",
+    "earnContractAddress": "0xd94AC131FDA127F6683914BBd9A0438aFb1cE405",
     "earnedToken": "mooBeefyBaseSwapUSDC-cbBTC",
     "earnedTokenAddress": "0xd94AC131FDA127F6683914BBd9A0438aFb1cE405",
-    "earnContractAddress": "0xd94AC131FDA127F6683914BBd9A0438aFb1cE405",
     "oracle": "lps",
     "oracleId": "baseswap-cow-usdc-cbbtc",
     "status": "active",
+    "createdAt": 1726217642,
     "platformId": "baseswap",
     "assets": ["cbBTC", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
-    "createdAt": 1726217642,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -5729,18 +5729,18 @@
     "tokenAddress": "0x4d5BA51e708F511204314E70fC60DE404faCeE55",
     "tokenDecimals": 18,
     "tokenProviderId": "baseswap",
+    "earnContractAddress": "0xA9e9fF6d6cd31F76E85C685364bE77A33bb7a94e",
     "earnedToken": "mooBeefyBaseSwapUSDz-USDC",
     "earnedTokenAddress": "0xA9e9fF6d6cd31F76E85C685364bE77A33bb7a94e",
-    "earnContractAddress": "0xA9e9fF6d6cd31F76E85C685364bE77A33bb7a94e",
     "oracle": "lps",
     "oracleId": "baseswap-cow-usdz-usdc",
     "status": "active",
+    "createdAt": 1724409190,
     "platformId": "baseswap",
     "assets": ["USDz", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
-    "createdAt": 1724409190,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -5819,18 +5819,18 @@
     "tokenAddress": "0x4B0BC467F1aFA6aeA39f1520478C512C98A667E5",
     "tokenDecimals": 18,
     "tokenProviderId": "baseswap",
+    "earnContractAddress": "0xfeDF12b4EadE16a700b9a30cA029068488E4d691",
     "earnedToken": "mooBeefyBaseSwapUSDC-USD+",
     "earnedTokenAddress": "0xfeDF12b4EadE16a700b9a30cA029068488E4d691",
-    "earnContractAddress": "0xfeDF12b4EadE16a700b9a30cA029068488E4d691",
     "oracle": "lps",
     "oracleId": "baseswap-cow-usdc-usd+",
     "status": "active",
+    "createdAt": 1724409190,
     "platformId": "baseswap",
     "assets": ["USD+", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
-    "createdAt": 1724409190,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -5909,18 +5909,18 @@
     "tokenAddress": "0x7ca389a2a4ea3074261Bb1f57421D0513CBA46cB",
     "tokenDecimals": 18,
     "tokenProviderId": "baseswap",
+    "earnContractAddress": "0x334D9B1824698F62515671B611bBb864156a89f8",
     "earnedToken": "mooBeefyBaseSwapUSD+-USDbC",
     "earnedTokenAddress": "0x334D9B1824698F62515671B611bBb864156a89f8",
-    "earnContractAddress": "0x334D9B1824698F62515671B611bBb864156a89f8",
     "oracle": "lps",
     "oracleId": "baseswap-cow-usd+-usdbc",
     "status": "active",
+    "createdAt": 1724409190,
     "platformId": "baseswap",
     "assets": ["USD+", "USDbC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
-    "createdAt": 1724409190,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -5999,18 +5999,18 @@
     "tokenAddress": "0x05f913352b84e5f83Ec33EB9D3a3Cb8fB1363F5C",
     "tokenDecimals": 18,
     "tokenProviderId": "baseswap",
+    "earnContractAddress": "0x60fbbCea5c3C76D489Fc69c60f9E0a2F66E5d87f",
     "earnedToken": "mooBeefyBaseSwapWETH-USDC",
     "earnedTokenAddress": "0x60fbbCea5c3C76D489Fc69c60f9E0a2F66E5d87f",
-    "earnContractAddress": "0x60fbbCea5c3C76D489Fc69c60f9E0a2F66E5d87f",
     "oracle": "lps",
     "oracleId": "baseswap-cow-weth-usdc",
     "status": "active",
+    "createdAt": 1724409190,
     "platformId": "baseswap",
     "assets": ["WETH", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
-    "createdAt": 1724409190,
     "zaps": [
       {
         "strategyId": "vault-composer"
