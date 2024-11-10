@@ -1704,7 +1704,7 @@
     "earnContractAddress": "0xaF8E862E654035eFb2c11146Ae76599e198C5B72",
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-nativeusdc-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1715336299,
     "platformId": "gamma",
     "assets": ["USDC", "POL"],
@@ -1719,7 +1719,8 @@
         "ammId": "polygon-gamma-quickswap-a42d",
         "tokenHolder": "0xcA1ff0cd9c244198bEDE277F56CE6EAF47ADfd66"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "quick-gamma-wmatic-usdt-narrow",
@@ -1734,7 +1735,7 @@
     "earnContractAddress": "0xC2a4c0682f32734cC75eB3eCC02ba6C9A546E836",
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-usdt-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1715336299,
     "platformId": "gamma",
     "assets": ["USDT", "POL"],
@@ -1749,7 +1750,8 @@
         "ammId": "polygon-gamma-quickswap-a42d",
         "tokenHolder": "0xa9B0eA1938116C46C37EcD5D7a58a43d8D263DBe"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "quick-gamma-nativeusdc-weth-narrow",
@@ -1764,7 +1766,7 @@
     "earnContractAddress": "0x0514335D86463544220CBa8ca83B675AbD624525",
     "oracle": "lps",
     "oracleId": "quick-gamma-nativeusdc-weth-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1713733611,
     "updatedAt": 1714127710,
     "platformId": "gamma",
@@ -1780,7 +1782,8 @@
         "ammId": "polygon-gamma-quickswap-a42d",
         "tokenHolder": "0xc1ecAD1D0Db5A997478f22492FAa2A209DD4F461"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "curve-poly-crvusd-usdc.e",
@@ -1997,7 +2000,7 @@
     "earnContractAddress": "0x44227C548272E2Dce4537746bcA4c8F036177B9e",
     "oracle": "lps",
     "oracleId": "quick-gamma-wbtc-weth-wide",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1700229087,
     "updatedAt": 1714127710,
     "platformId": "gamma",
@@ -2013,7 +2016,8 @@
         "ammId": "polygon-gamma-quickswap-a42d",
         "tokenHolder": "0x09D8CAb9DE699De01E47FCDaB50364F455dC712b"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "compound-polygon-usdc",
@@ -2066,7 +2070,7 @@
     "earnContractAddress": "0x8CaA1a3809b3C67C61Eaf5524e1cB784ED6bA8B3",
     "oracle": "lps",
     "oracleId": "quick-gamma-weth-usdt",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1698862190,
     "updatedAt": 1714127710,
     "platformId": "gamma",
@@ -2082,7 +2086,8 @@
         "ammId": "polygon-gamma-quickswap-a42d",
         "tokenHolder": "0xEF8909ceD1fFA213e56B783C1a1A463dD1FF8048"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "quick-gamma-wmatic-quick",
@@ -2097,7 +2102,7 @@
     "earnContractAddress": "0xc5d366eDF862F18d62831fb8333D335d625a4C00",
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-quick",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1698862190,
     "updatedAt": 1714127710,
     "platformId": "gamma",
@@ -2113,7 +2118,8 @@
         "ammId": "polygon-gamma-quickswap-a42d",
         "tokenHolder": "0x479C32cbf558bB1a54e6C5e6e874a67d0F2DDdca"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "quick-gamma-link-weth",
@@ -2128,7 +2134,7 @@
     "earnContractAddress": "0xE7d054F4d4089F5F2A192B14A13714f2e96b491e",
     "oracle": "lps",
     "oracleId": "quick-gamma-link-weth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1698862190,
     "updatedAt": 1716216604,
     "platformId": "gamma",
@@ -2144,7 +2150,8 @@
         "ammId": "polygon-gamma-quickswap-a42d",
         "tokenHolder": "0x558BDe303ae5C36536B0FB60D9311B2354B4411F"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "quick-gamma-weth-aave",
@@ -2159,7 +2166,7 @@
     "earnContractAddress": "0xd6E01db636054DEF591C744285318560Bf33CBab",
     "oracle": "lps",
     "oracleId": "quick-gamma-weth-aave",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1698862190,
     "updatedAt": 1716216604,
     "platformId": "gamma",
@@ -2175,7 +2182,8 @@
         "ammId": "polygon-gamma-quickswap-a42d",
         "tokenHolder": "0xCc8F6eE92BA32B926fBDa053333F4dE45842A4A6"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "quick-gamma-bob-usdc-stable",
@@ -3079,7 +3087,7 @@
     "earnContractAddress": "0x4ec61a96738564CaD591841df0c8B5b6eA785E4C",
     "oracle": "lps",
     "oracleId": "quick-gamma-wbtc-usdc-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1686917465,
     "updatedAt": 1716216604,
     "platformId": "gamma",
@@ -3095,7 +3103,8 @@
         "ammId": "polygon-gamma-quickswap-a42d",
         "tokenHolder": "0xD4a88FDBdd57c465E125c0021b40f58eb86aA13E"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "quick-gamma-wbtc-weth-narrow",
@@ -3110,7 +3119,7 @@
     "earnContractAddress": "0x06b73b12421C667A07877B0740bA299e1de73B15",
     "oracle": "lps",
     "oracleId": "quick-gamma-wbtc-weth-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1686917465,
     "updatedAt": 1716216604,
     "platformId": "gamma",
@@ -3126,7 +3135,8 @@
         "ammId": "polygon-gamma-quickswap-a42d",
         "tokenHolder": "0xf68A6697831FBA78f25CdFb1394b858fEd6F3659"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "quick-gamma-usdc-weth-wide",
@@ -3173,7 +3183,7 @@
     "earnContractAddress": "0x4BDA6C4d2f53B2Cd7F7FAc9287902a9928002e7B",
     "oracle": "lps",
     "oracleId": "quick-gamma-usdc-weth-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1686917465,
     "updatedAt": 1716216604,
     "platformId": "gamma",
@@ -3189,7 +3199,8 @@
         "ammId": "polygon-gamma-quickswap-a42d",
         "tokenHolder": "0x63E495D7e87CF451d986D6E03015cD78b0CaEeda"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "quick-gamma-mimatic-usdt-narrow",
@@ -3236,7 +3247,7 @@
     "earnContractAddress": "0x3A1F8B9b4aB6ba1a845931eD527B6B4768Ca07B1",
     "oracle": "lps",
     "oracleId": "quick-gamma-usdc-dai-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1686917464,
     "updatedAt": 1714127710,
     "platformId": "gamma",
@@ -3252,7 +3263,8 @@
         "ammId": "polygon-gamma-quickswap-a42d",
         "tokenHolder": "0x14e845491fB2dad506DD628d49741F28dc601e14"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "quick-gamma-usdc-usdt-narrow",
@@ -3299,7 +3311,7 @@
     "earnContractAddress": "0x1d34Db65C4fe0f6A73194DBDC4a44ae05B46e6c5",
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-usdc-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1686917464,
     "updatedAt": 1716216604,
     "platformId": "gamma",
@@ -3315,7 +3327,8 @@
         "ammId": "polygon-gamma-quickswap-a42d",
         "tokenHolder": "0x24E4538ED0AC083a870828236DAa2c0F95ae6b30"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "pearl-matic-usdr",
@@ -3426,7 +3439,7 @@
     "earnContractAddress": "0x6F79CA179FE1cD131574a08B96e92744B6649128",
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-weth-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1686878623,
     "updatedAt": 1716216604,
     "platformId": "gamma",
@@ -3442,7 +3455,8 @@
         "ammId": "polygon-gamma-quickswap-a42d",
         "tokenHolder": "0x14bcD2bC6e516fa296636a55d1cc24fa89Cbc5B1"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "quick-gamma-wmatic-weth-wide",
@@ -3457,7 +3471,7 @@
     "earnContractAddress": "0x346c16e7a76D224b9955c0F67e93b413Fc63ba3E",
     "oracle": "lps",
     "oracleId": "quick-gamma-wmatic-weth-wide",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1686878623,
     "updatedAt": 1714127710,
     "platformId": "gamma",
@@ -3473,7 +3487,8 @@
         "ammId": "polygon-gamma-quickswap-a42d",
         "tokenHolder": "0x6Ed9f18397ACd914CBCde1323F0Dd696E0ac79B7"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "pearl-dai-usdr",
