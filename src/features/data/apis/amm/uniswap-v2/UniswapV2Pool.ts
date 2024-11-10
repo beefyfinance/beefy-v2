@@ -1,5 +1,5 @@
 import type Web3 from 'web3';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type { ShapeWithLabel } from 'eth-multicall';
 import { MultiCall } from 'eth-multicall';
 import { UniswapV2FactoryAbi } from '../../../../../config/abi/UniswapV2FactoryAbi';

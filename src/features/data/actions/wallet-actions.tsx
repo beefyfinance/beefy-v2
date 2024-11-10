@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { first, groupBy, uniqBy } from 'lodash-es';
 import type { Action } from 'redux';
 import boostAbi from '../../../config/abi/boost.json';

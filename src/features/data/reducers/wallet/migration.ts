@@ -1,6 +1,6 @@
 import { type AnyAction, type Draft, createSlice } from '@reduxjs/toolkit';
 import type { VaultEntity } from '../../entities/vault';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { fetchAllMigrators } from '../../actions/migrator';
 import type {
   ConicMigrationConfig,

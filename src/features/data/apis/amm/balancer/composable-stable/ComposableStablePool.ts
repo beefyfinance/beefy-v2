@@ -1,5 +1,5 @@
 import { BalancerFeature, type IBalancerAllPool, type IBalancerSinglePool } from '../types';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { BIG_ZERO, fromWei } from '../../../../../../helpers/big-number';
 import type { ChainEntity } from '../../../../entities/chain';
 import {

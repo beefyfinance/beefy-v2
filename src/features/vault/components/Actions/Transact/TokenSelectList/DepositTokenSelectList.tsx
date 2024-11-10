@@ -13,7 +13,7 @@ import { Scrollable } from '../../../../../../components/Scrollable';
 import type { ListItemProps } from './components/ListItem';
 import { ListItem } from './components/ListItem';
 import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type { ToggleProps } from '../../../../../../components/Toggle';
 import { Toggle } from '../../../../../../components/Toggle';
 import clsx from 'clsx';

@@ -1,6 +1,6 @@
 import { isArray, isPlainObject, mapValues, orderBy } from 'lodash-es';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import type { KeysOfType } from './types-utils';
 
 // https://github.com/lodash/lodash/issues/1244#issuecomment-356676695

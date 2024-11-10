@@ -1,5 +1,5 @@
 import type { BoostRewardContractData } from '../../../../data/apis/contract-data/contract-data-types';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { Fragment, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';

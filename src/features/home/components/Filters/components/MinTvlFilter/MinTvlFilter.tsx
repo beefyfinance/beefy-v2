@@ -8,7 +8,7 @@ import {
 import { AmountInputWithSlider } from '../../../../../vault/components/Actions/Transact/AmountInputWithSlider';
 import { selectMaximumUnderlyingVaultTvl } from '../../../../../data/selectors/vaults';
 import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { formatLargeUsd } from '../../../../../../helpers/format';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox';
 import { styles } from './styles';

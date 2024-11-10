@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { fromUnixTime, getUnixTime, isAfter, isBefore, isEqual, max, subDays } from 'date-fns';
 import { pick, sortBy, sortedUniq } from 'lodash-es';
 import type { DatabarnProductPriceRow } from '../../features/data/apis/databarn/databarn-types';

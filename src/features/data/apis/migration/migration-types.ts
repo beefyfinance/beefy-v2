@@ -1,4 +1,4 @@
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import type { AsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import type { VaultEntity } from '../../entities/vault';
 import type { Namespace, TFunction } from 'react-i18next';

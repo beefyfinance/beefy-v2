@@ -2,7 +2,7 @@ import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMultica
 import type Web3 from 'web3';
 import type { VaultGov, VaultStandard } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type { AllValuesAsString } from '../../utils/types-utils';
 import type { BoostEntity } from '../../entities/boost';
 import { chunk } from 'lodash-es';

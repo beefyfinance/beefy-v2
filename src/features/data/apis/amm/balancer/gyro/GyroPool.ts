@@ -5,7 +5,7 @@ import type {
   VaultConfig,
 } from '../vault/types';
 import type { RatesResult } from './types';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { BIG_ONE, bigNumberToStringDeep } from '../../../../../../helpers/big-number';
 import { FixedPoint } from '../common/FixedPoint';
 import type { ZapStep } from '../../../transact/zap/types';

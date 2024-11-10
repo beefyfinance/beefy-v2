@@ -16,7 +16,7 @@ import { isValidUserCategory } from './filtered-vaults-types';
 import type { VaultEntity } from '../entities/vault';
 import { fetchAllVaults } from '../actions/vaults';
 import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { BIG_ZERO } from '../../../helpers/big-number';
 
 /**

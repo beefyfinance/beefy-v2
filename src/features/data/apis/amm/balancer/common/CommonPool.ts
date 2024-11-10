@@ -6,7 +6,7 @@ import { getWeb3Instance } from '../../../instances';
 import { Vault } from '../vault/Vault';
 import { checkAddressOrder } from '../../../../../../helpers/tokens';
 import type { Contract } from 'web3-eth-contract';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { FixedPoint } from './FixedPoint';
 
 export abstract class CommonPool implements IBalancerPool {

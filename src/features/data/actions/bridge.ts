@@ -30,7 +30,7 @@ import type { Step } from '../reducers/wallet/stepper';
 import { walletActions } from './wallet-actions';
 import type { Namespace, TFunction } from 'react-i18next';
 import { startStepperWithSteps } from './stepper';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { isAddress } from 'viem';
 
 function getLimits(quotes: IBridgeQuote<BeefyAnyBridgeConfig>[]) {

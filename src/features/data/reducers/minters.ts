@@ -6,7 +6,7 @@ import type { NormalizedEntity } from '../utils/normalized-entity';
 import type { MinterEntity } from '../entities/minter';
 import { fetchAllMinters, initiateMinterForm, reloadReserves } from '../actions/minters';
 import type { MinterConfig } from '../apis/config-types';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { entries } from '../../../helpers/object';
 
 export type MintersState = NormalizedEntity<MinterEntity> & {

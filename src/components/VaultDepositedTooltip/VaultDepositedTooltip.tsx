@@ -13,7 +13,7 @@ import {
 } from '../../features/data/selectors/balance';
 import { selectTokenPriceByTokenOracleId } from '../../features/data/selectors/tokens';
 import type { TokenEntity } from '../../features/data/entities/token';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { TokenAmount } from '../TokenAmount';
 import { formatLargeUsd } from '../../helpers/format';
 import { useTranslation } from 'react-i18next';

@@ -6,8 +6,10 @@ import { useAppSelector } from '../../../../../../store';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectTokenByAddressOrUndefined } from '../../../../../data/selectors/tokens';
 
-const CurveZap = lazy(() => import(`./CurveZap`));
-const BalancerZap = lazy(() => import(`./BalancerZap`));
+const CurveZap = lazy(() => import(`./CurveZap`).then(module => ({ default: module.CurveZap })));
+const BalancerZap = lazy(() =>
+  import(`./BalancerZap`).then(module => ({ default: module.BalancerZap }))
+);
 
 const useStyles = makeStyles(styles);
 
@@ -15,7 +17,7 @@ type TransactDebuggerProps = {
   vaultId: string;
 };
 
-const TransactDebugger = memo<TransactDebuggerProps>(function TransactDebugger({ vaultId }) {
+export const TransactDebugger = memo<TransactDebuggerProps>(function TransactDebugger({ vaultId }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const depositToken = useAppSelector(state =>
@@ -34,6 +36,3 @@ const TransactDebugger = memo<TransactDebuggerProps>(function TransactDebugger({
     </div>
   );
 });
-
-// eslint-disable-next-line no-restricted-syntax
-export default TransactDebugger;

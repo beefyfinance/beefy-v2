@@ -51,7 +51,7 @@ async function tryGetErrorMessageFromResponse(response: Response): Promise<strin
     return json && typeof json === 'object' && 'message' in json && typeof json.message === 'string'
       ? json.message
       : undefined;
-  } catch (e) {
+  } catch {
     return undefined;
   }
 }

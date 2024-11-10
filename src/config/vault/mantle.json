@@ -38,19 +38,19 @@
       "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
       "0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8"
     ],
+    "earnContractAddress": "0x263CaB9eBf82d74b70DD681Bb6adb6D400Ae91E2",
     "earnedToken": "cowUniswapMantleUSDT-WMNT",
     "earnedTokenAddress": "0x263CaB9eBf82d74b70DD681Bb6adb6D400Ae91E2",
-    "earnContractAddress": "0x263CaB9eBf82d74b70DD681Bb6adb6D400Ae91E2",
     "oracle": "lps",
     "oracleId": "uniswap-cow-mantle-usdt-wmnt",
     "status": "active",
     "createdAt": 1721233266,
-    "platformId": "oku",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WMNT", "USDT"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "mantle",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -96,19 +96,19 @@
       "0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8",
       "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111"
     ],
+    "earnContractAddress": "0x526B33c9b824661b2072Ea12b9Ae40B06cd2bb1A",
     "earnedToken": "cowUniswapMantleWMNT-WETH",
     "earnedTokenAddress": "0x526B33c9b824661b2072Ea12b9Ae40B06cd2bb1A",
-    "earnContractAddress": "0x526B33c9b824661b2072Ea12b9Ae40B06cd2bb1A",
     "oracle": "lps",
     "oracleId": "uniswap-cow-mantle-wmnt-weth",
     "status": "active",
     "createdAt": 1721233266,
-    "platformId": "oku",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WMNT", "WETH"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "mantle",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -154,19 +154,19 @@
       "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
       "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111"
     ],
+    "earnContractAddress": "0xe0c2aED9398857531F0dE6ad868cfB4B7e0e375b",
     "earnedToken": "cowUniswapMantleUSDT-WETH",
     "earnedTokenAddress": "0xe0c2aED9398857531F0dE6ad868cfB4B7e0e375b",
-    "earnContractAddress": "0xe0c2aED9398857531F0dE6ad868cfB4B7e0e375b",
     "oracle": "lps",
     "oracleId": "uniswap-cow-mantle-usdt-weth",
     "status": "active",
     "createdAt": 1721233266,
-    "platformId": "oku",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["USDT", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "mantle",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -212,19 +212,19 @@
       "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
       "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE"
     ],
+    "earnContractAddress": "0x0dc153D09D3fa31bBd43912e6b9A2b88AB3277Cf",
     "earnedToken": "cowUniswapMantleUSDC-USDT",
     "earnedTokenAddress": "0x0dc153D09D3fa31bBd43912e6b9A2b88AB3277Cf",
-    "earnContractAddress": "0x0dc153D09D3fa31bBd43912e6b9A2b88AB3277Cf",
     "oracle": "lps",
     "oracleId": "uniswap-cow-mantle-usdc-usdt",
     "status": "active",
     "createdAt": 1721233266,
-    "platformId": "oku",
+    "platformId": "beefy",
+    "feeTier": "0.01",
     "assets": ["USDC", "USDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "mantle",
-    "feeTier": "0.01",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -271,19 +271,19 @@
       "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
       "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111"
     ],
+    "earnContractAddress": "0xEBDC36506adCFF3c64E7da11215D7Bf1d4700Ee3",
     "earnedToken": "cowUniswapMantlemETH-WETH",
     "earnedTokenAddress": "0xEBDC36506adCFF3c64E7da11215D7Bf1d4700Ee3",
-    "earnContractAddress": "0xEBDC36506adCFF3c64E7da11215D7Bf1d4700Ee3",
     "oracle": "lps",
     "oracleId": "uniswap-cow-mantle-meth-weth",
     "status": "active",
     "createdAt": 1721233266,
-    "platformId": "oku",
+    "platformId": "beefy",
+    "feeTier": "0.01",
     "assets": ["mETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "mantle",
-    "feeTier": "0.01",
     "zaps": [
       {
         "strategyId": "cowcentrated"

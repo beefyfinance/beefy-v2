@@ -6,7 +6,7 @@ import type {
   MigratorUpdateProps,
 } from '../migration-types';
 import type { VaultEntity } from '../../../entities/vault';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { selectVaultById } from '../../../selectors/vaults';
 import { selectChainById } from '../../../selectors/chains';

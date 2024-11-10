@@ -19,7 +19,7 @@ import {
 } from '../../features/data/selectors/data-loader';
 import { BIG_ZERO } from '../../helpers/big-number';
 import { useAppSelector } from '../../store';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import type { TokenEntity } from '../../features/data/entities/token';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';

@@ -3,7 +3,7 @@ import type { ChainEntity } from '../../../../entities/chain';
 import type { PoolConfig, VaultConfig } from '../vault/types';
 import { viemToWeb3Abi } from '../../../../../../helpers/web3';
 import type { NormalizedWeightsResult } from './types';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { fromWei } from '../../../../../../helpers/big-number';
 import { BalancerWeightedPoolAbi } from '../../../../../../config/abi/BalancerWeightedPoolAbi';
 import { PoolExitKind, PoolJoinKind } from '../common/types';

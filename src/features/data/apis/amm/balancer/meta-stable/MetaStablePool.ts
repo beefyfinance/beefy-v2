@@ -1,6 +1,6 @@
 import type { ChainEntity } from '../../../../entities/chain';
 import type { PoolConfig, VaultConfig } from '../vault/types';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { viemToWeb3Abi } from '../../../../../../helpers/web3';
 import { BalancerMetaStablePoolAbi } from '../../../../../../config/abi/BalancerMetaStablePoolAbi';
 import { BIG_ZERO, fromWei } from '../../../../../../helpers/big-number';

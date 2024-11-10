@@ -1,5 +1,5 @@
 import type { BoostEntity } from '../../../../../data/entities/boost';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../../../../../store';

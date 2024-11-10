@@ -1,4 +1,4 @@
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../redux-types';
 import type { BoostEntity } from '../entities/boost';
 import { selectAllowanceByTokenAddress } from './allowances';

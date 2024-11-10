@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import { HelpOutline } from '@material-ui/icons';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import { memo } from 'react';

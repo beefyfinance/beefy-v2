@@ -1,4 +1,4 @@
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import type { MinterEntity } from '../../entities/minter';
 import type { MinterConfig } from '../config-types';
 

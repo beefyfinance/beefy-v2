@@ -1,4 +1,4 @@
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import type { DatabarnTimelineEntry } from '../apis/databarn/databarn-types';
 import type { Prettify, Rest, SnakeToCamelCase } from '../utils/types-utils';
 import type { ChainEntity } from './chain';

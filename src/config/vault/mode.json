@@ -39,25 +39,25 @@
       "0x4200000000000000000000000000000000000006",
       "0xd988097fb8612cc24eeC14542bC03424c656005f"
     ],
+    "earnContractAddress": "0x41337492ca4139320f1BAA6E9647b69a35af8F00",
     "earnedToken": "cowKimModeWETH-USDC",
     "earnedTokenAddress": "0x41337492ca4139320f1BAA6E9647b69a35af8F00",
-    "earnContractAddress": "0x41337492ca4139320f1BAA6E9647b69a35af8F00",
     "oracle": "lps",
     "oracleId": "kim-cow-mode-weth-usdc",
     "status": "active",
     "createdAt": 1730876855,
-    "platformId": "kim",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["WETH", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["mode-volume"],
     "network": "mode",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "kim-cow-mode-weth-mode-rp",
@@ -99,25 +99,25 @@
       "0x4200000000000000000000000000000000000006",
       "0xDfc7C877a950e49D2610114102175A06C2e3167a"
     ],
+    "earnContractAddress": "0xdd97504448cC51b4De4944157838c4800C773C5A",
     "earnedToken": "cowKimModeWETH-MODE",
     "earnedTokenAddress": "0xdd97504448cC51b4De4944157838c4800C773C5A",
-    "earnContractAddress": "0xdd97504448cC51b4De4944157838c4800C773C5A",
     "oracle": "lps",
     "oracleId": "kim-cow-mode-weth-mode",
     "status": "active",
     "createdAt": 1730876855,
-    "platformId": "kim",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["MODE", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["mode-volume"],
     "network": "mode",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "kim-cow-mode-weth-kim-rp",
@@ -159,25 +159,25 @@
       "0x4200000000000000000000000000000000000006",
       "0x6863fb62Ed27A9DdF458105B507C15b5d741d62e"
     ],
+    "earnContractAddress": "0x7c207cb731ebc0BA5dF699d7B36348302FD8480c",
     "earnedToken": "cowKimModeWETH-KIM",
     "earnedTokenAddress": "0x7c207cb731ebc0BA5dF699d7B36348302FD8480c",
-    "earnContractAddress": "0x7c207cb731ebc0BA5dF699d7B36348302FD8480c",
     "oracle": "lps",
     "oracleId": "kim-cow-mode-weth-kim",
     "status": "active",
     "createdAt": 1730876855,
-    "platformId": "kim",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["KIM", "WETH"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["mode-volume"],
     "network": "mode",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "kim-cow-mode-kim-mode-rp",
@@ -219,25 +219,25 @@
       "0x6863fb62Ed27A9DdF458105B507C15b5d741d62e",
       "0xDfc7C877a950e49D2610114102175A06C2e3167a"
     ],
+    "earnContractAddress": "0x86166d85cd222F40E7d1De750bD58A946129Ec7A",
     "earnedToken": "cowKimModeKIM-MODE",
     "earnedTokenAddress": "0x86166d85cd222F40E7d1De750bD58A946129Ec7A",
-    "earnContractAddress": "0x86166d85cd222F40E7d1De750bD58A946129Ec7A",
     "oracle": "lps",
     "oracleId": "kim-cow-mode-kim-mode",
     "status": "active",
     "createdAt": 1730876855,
-    "platformId": "kim",
+    "platformId": "beefy",
+    "feeTier": "Dynamic",
     "assets": ["KIM", "MODE"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["mode-volume"],
     "network": "mode",
-    "feeTier": "Dynamic",
     "zaps": [
       {
         "strategyId": "cowcentrated"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "velodrome-mode-dola-usdc",

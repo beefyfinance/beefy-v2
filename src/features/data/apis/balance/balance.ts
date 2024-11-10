@@ -8,7 +8,7 @@ import {
   type VaultGovSingle,
 } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type { BoostEntity } from '../../entities/boost';
 import { chunk, partition, pick } from 'lodash-es';
 

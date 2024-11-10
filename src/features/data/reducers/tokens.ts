@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type { Draft } from 'immer';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';

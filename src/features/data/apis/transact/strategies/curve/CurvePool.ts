@@ -1,7 +1,7 @@
 import { type CurveTokenOption, getMethodSignaturesForType } from './types';
 import { getInsertIndex, getTokenAddress } from '../../helpers/zap';
 import type { AbiItem } from 'web3-utils';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import type { TokenAmount } from '../../transact-types';
 import { getWeb3Instance } from '../../../instances';
 import { fromWeiString, toWeiString } from '../../../../../../helpers/big-number';

@@ -14,7 +14,7 @@ import {
   type AmountInputProps,
 } from '../../../../../vault/components/Actions/Transact/AmountInput';
 import { formatTokenDisplayCondensed } from '../../../../../../helpers/format';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';

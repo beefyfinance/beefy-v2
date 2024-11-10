@@ -17,7 +17,7 @@ export type GraphLoaderProps = PropsWithChildren<{
   imgHeight?: number;
 }>;
 
-export const GraphLoader = memo<GraphLoaderProps>(function _GraphLoader({
+export const GraphLoader = memo<GraphLoaderProps>(function GraphLoader({
   imgHeight = 200,
   children,
 }) {

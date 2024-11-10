@@ -58,7 +58,7 @@ import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap';
 import abiCoder from 'web3-eth-abi';
 import { mergeTokenAmounts, slipAllBy, slipBy } from '../../helpers/amounts';
 import { walletActions } from '../../../../actions/wallet-actions';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { isCowcentratedVault, type VaultCowcentrated } from '../../../../entities/vault';
 import { type ICowcentratedVaultType, isCowcentratedVaultType } from '../../vaults/IVaultType';
 import type { CowcentratedStrategyConfig } from '../strategy-configs';

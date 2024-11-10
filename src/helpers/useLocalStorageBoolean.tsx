@@ -18,7 +18,7 @@ export function useLocalStorageBoolean(
       setValue(value);
       try {
         localStorage.setItem(key, value.toString());
-      } catch (error) {
+      } catch {
         // swallow error
       }
     },

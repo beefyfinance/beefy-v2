@@ -32,7 +32,7 @@ import { QuoteTitleRefresh } from '../QuoteTitleRefresh';
 import { AlertError } from '../../../../../../components/Alerts';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
 import { ZapSlippage } from '../ZapSlippage';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { debounce } from 'lodash-es';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { isCowcentratedLikeVault } from '../../../../../data/entities/vault';

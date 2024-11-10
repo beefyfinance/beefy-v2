@@ -1,4 +1,4 @@
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { WALLET_ACTION, WALLET_ACTION_RESET } from '../../actions/wallet-actions';
 import type { TokenEntity } from '../../entities/token';
 import type { EventLog } from 'web3-core';

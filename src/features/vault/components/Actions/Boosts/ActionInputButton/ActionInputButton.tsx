@@ -15,7 +15,7 @@ import { isLoaderFulfilled } from '../../../../../data/selectors/data-loader-hel
 import { initiateBoostForm } from '../../../../../data/actions/boosts';
 import { AmountInput } from '../../Transact/AmountInput';
 import { useInputForm } from '../../../../../data/hooks/input';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { TokenAmount } from '../../../../../../components/TokenAmount';
 import { ActionButton } from '../ActionButton/ActionButton';
 

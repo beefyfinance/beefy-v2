@@ -12,7 +12,7 @@ import { formatLargeUsd } from '../../helpers/format';
 import type { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 import type { TokenEntity } from '../../features/data/entities/token';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { TokenAmountFromEntity } from '../TokenAmount';
 import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip';
 import {

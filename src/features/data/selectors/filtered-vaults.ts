@@ -15,7 +15,7 @@ import type { FilteredVaultsState } from '../reducers/filtered-vaults';
 import type { PlatformEntity } from '../entities/platform';
 import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string';
 import escapeStringRegexp from 'escape-string-regexp';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { selectVaultTotalApy } from './apy';
 import { selectVaultHasActiveMerklBoostCampaigns } from './rewards';
 

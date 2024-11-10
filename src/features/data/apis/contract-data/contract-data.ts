@@ -6,7 +6,7 @@ import type {
   VaultStandard,
 } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type { AsWeb3Result } from '../../utils/types-utils';
 import type { BoostEntity } from '../../entities/boost';
 import { chunk, pick, sortBy } from 'lodash-es';

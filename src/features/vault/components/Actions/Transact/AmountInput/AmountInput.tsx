@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
 import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { formatTokenInput, formatLargeUsd } from '../../../../../../helpers/format';
 

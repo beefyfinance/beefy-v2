@@ -1,7 +1,7 @@
 import type { ChainEntity } from '../../../entities/chain';
 import type { BeefyState } from '../../../../../redux-types';
 import type { TokenEntity } from '../../../entities/token';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import type { ZapFee } from '../transact-types';
 import type { VaultEntity } from '../../../entities/vault';
 

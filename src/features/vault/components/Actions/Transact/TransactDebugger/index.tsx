@@ -1,1 +1,1 @@
-export * from './TransactDebugger';
+export { TransactDebugger } from './TransactDebugger';

@@ -2,7 +2,7 @@ import { memo, useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { selectPriceWithChange } from '../../features/data/selectors/tokens';
 import { formatLargePercent, formatLargeUsd, formatUsd } from '../../helpers/format';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { fetchHistoricalPrices } from '../../features/data/actions/historical';
 import { BIG_ZERO } from '../../helpers/big-number';
 import { makeStyles } from '@material-ui/core';

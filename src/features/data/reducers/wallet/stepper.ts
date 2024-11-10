@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction, ThunkAction } from '@reduxjs/toolkit';
-import type BigNumber from 'bignumber.js';
+import { type BigNumber } from 'bignumber.js';
 import { startStepper } from '../../actions/stepper';
 import type { ChainEntity } from '../../entities/chain';
 import type { TokenEntity } from '../../entities/token';

@@ -5,7 +5,7 @@ import type { AbiItem } from 'web3-utils';
 import utils from 'web3-utils';
 import { formatters } from 'web3-core-helpers';
 import type { provider, Transaction } from 'web3-core';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { maybeHexToNumber } from './format';
 import type { Method } from 'web3-core-method';
 import type PQueue from 'p-queue';

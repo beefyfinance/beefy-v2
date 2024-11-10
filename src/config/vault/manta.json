@@ -128,21 +128,21 @@
       "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
       "0xb73603C5d87fA094B7314C74ACE2e64D165016fb"
     ],
+    "earnContractAddress": "0x9E6B9518978bb7caf2ad70778E9AEED9eDb3DB78",
     "earnedToken": "cowUniswapMantaMANTA-USDC",
     "earnedTokenAddress": "0x9E6B9518978bb7caf2ad70778E9AEED9eDb3DB78",
-    "earnContractAddress": "0x9E6B9518978bb7caf2ad70778E9AEED9eDb3DB78",
     "oracle": "lps",
     "oracleId": "uniswap-cow-manta-manta-usdc",
     "status": "eol",
-    "retiredAt": 1727186611,
-    "retireReason": "tvl",
     "createdAt": 1719840192,
-    "platformId": "oku",
+    "retireReason": "tvl",
+    "retiredAt": 1727186611,
+    "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["MANTA", "USDC"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "manta",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -161,20 +161,20 @@
       "0x0Dc808adcE2099A9F62AA87D9670745AbA741746",
       "0xEc901DA9c68E90798BbBb74c11406A32A70652C3"
     ],
+    "earnContractAddress": "0x906e60166A4B185016e53597fA12FBB1424e47d7",
     "earnedToken": "cowUniswapMantaWETH-STONE",
     "earnedTokenAddress": "0x906e60166A4B185016e53597fA12FBB1424e47d7",
-    "earnContractAddress": "0x906e60166A4B185016e53597fA12FBB1424e47d7",
     "oracle": "lps",
     "oracleId": "uniswap-cow-manta-weth-stone",
     "status": "active",
     "createdAt": 1719489893,
-    "platformId": "oku",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["STONE", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "network": "manta",
-    "feeTier": "0.05",
     "pointStructureIds": ["manta-stakestone"],
+    "network": "manta",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -193,19 +193,19 @@
       "0x0Dc808adcE2099A9F62AA87D9670745AbA741746",
       "0xb73603C5d87fA094B7314C74ACE2e64D165016fb"
     ],
+    "earnContractAddress": "0x756bd7f54675112b6c689DFFBDa8505566d20C6c",
     "earnedToken": "cowUniswapMantaWETH-USDC",
     "earnedTokenAddress": "0x756bd7f54675112b6c689DFFBDa8505566d20C6c",
-    "earnContractAddress": "0x756bd7f54675112b6c689DFFBDa8505566d20C6c",
     "oracle": "lps",
     "oracleId": "uniswap-cow-manta-weth-usdc",
     "status": "active",
     "createdAt": 1719489893,
-    "platformId": "oku",
+    "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["WETH", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "manta",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -224,21 +224,21 @@
       "0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
       "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f"
     ],
+    "earnContractAddress": "0x01Fbf9B624a6133Ab04Fc4000ae513AC97e4d114",
     "earnedToken": "cowUniswapMantaUSDC-USDT",
     "earnedTokenAddress": "0x01Fbf9B624a6133Ab04Fc4000ae513AC97e4d114",
-    "earnContractAddress": "0x01Fbf9B624a6133Ab04Fc4000ae513AC97e4d114",
     "oracle": "lps",
     "oracleId": "uniswap-cow-manta-usdc-usdt",
     "status": "eol",
-    "retiredAt": 1727186611,
-    "retireReason": "tvl",
     "createdAt": 1719489893,
-    "platformId": "oku",
+    "retireReason": "tvl",
+    "retiredAt": 1727186611,
+    "platformId": "beefy",
+    "feeTier": "0.01",
     "assets": ["USDC", "USDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "manta",
-    "feeTier": "0.01",
     "zaps": [
       {
         "strategyId": "cowcentrated"

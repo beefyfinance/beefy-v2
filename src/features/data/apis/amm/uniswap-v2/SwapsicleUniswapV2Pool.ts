@@ -9,7 +9,7 @@ import { createContract } from '../../../../../helpers/web3';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
 import { BIG_ZERO } from '../../../../../helpers/big-number';
 import type { AbiItem } from 'web3-utils';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 
 export type FactoryDataResponse = BaseFactoryDataResponse & {
   feeToStake: string;

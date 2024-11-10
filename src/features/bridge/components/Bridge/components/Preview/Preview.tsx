@@ -25,7 +25,7 @@ import { ReceiverSelector } from '../ReceiverSelector';
 
 const useStyles = makeStyles(styles);
 
-function _Preview() {
+function PreviewImpl() {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
@@ -101,4 +101,4 @@ function _Preview() {
   );
 }
 
-export const Preview = memo(_Preview);
+export const Preview = memo(PreviewImpl);

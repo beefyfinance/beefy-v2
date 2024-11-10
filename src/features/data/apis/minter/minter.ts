@@ -2,7 +2,7 @@ import type Web3 from 'web3';
 import type { ChainEntity } from '../../entities/chain';
 import type { FetchMinterReservesResult, IMinterApi } from './minter-types';
 import { MinterAbi } from '../../../../config/abi/MinterAbi';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import type { MinterEntity } from '../../entities/minter';
 import { viemToWeb3Abi } from '../../../../helpers/web3';
 import { MultiCall, type ShapeWithLabel } from 'eth-multicall';
