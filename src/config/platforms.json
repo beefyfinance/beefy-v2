@@ -1133,18 +1133,15 @@
   },
   {
     "id": "swapbased",
-    "name": "SwapBased",
-    "filter": true
+    "name": "SwapBased"
   },
   {
     "id": "baso",
-    "name": "Baso",
-    "filter": true
+    "name": "Baso"
   },
   {
     "id": "kinetix",
     "name": "Kinetix",
-    "filter": true,
     "website": "https://dex.kinetix.finance/",
     "twitter": "",
     "documentation": "",
@@ -1154,7 +1151,6 @@
   {
     "id": "compound",
     "name": "Compound",
-    "filter": true,
     "website": "https://app.compound.finance/",
     "twitter": "compoundfinance",
     "documentation": "https://docs.compound.finance/",
@@ -1164,7 +1160,6 @@
   {
     "id": "ichi",
     "name": "Ichi",
-    "filter": true,
     "website": "https://app.ichi.org/",
     "twitter": "ichifoundation",
     "documentation": "https://docs.ichi.org/home",
@@ -1173,13 +1168,11 @@
   },
   {
     "id": "bril",
-    "name": "Bril",
-    "filter": true
+    "name": "Bril"
   },
   {
     "id": "silo",
     "name": "Silo",
-    "filter": true,
     "website": "https://app.silo.finance/",
     "twitter": "SiloFinance",
     "documentation": "https://silopedia.silo.finance/",
@@ -1188,18 +1181,15 @@
   },
   {
     "id": "sonne",
-    "name": "Sonne",
-    "filter": true
+    "name": "Sonne"
   },
   {
     "id": "seamless",
-    "name": "Seamless",
-    "filter": true
+    "name": "Seamless"
   },
   {
     "id": "mendi",
     "name": "Mendi",
-    "filter": true,
     "website": "https://mendi.finance/",
     "twitter": "MendiFinance",
     "documentation": "https://docs.mendi.finance/",
@@ -1209,7 +1199,6 @@
   {
     "id": "lendle",
     "name": "Lendle",
-    "filter": true,
     "website": "https://app.lendle.xyz/",
     "twitter": "lendlexyz",
     "documentation": "https://docs.lendle.xyz/",
@@ -1219,7 +1208,6 @@
   {
     "id": "moe",
     "name": "Merchant Moe",
-    "filter": true,
     "risks": ["NO_TIMELOCK"],
     "website": "https://merchantmoe.com/",
     "twitter": "merchantmoe_xyz",
@@ -1230,7 +1218,6 @@
   {
     "id": "fx",
     "name": "f(x) Protocol",
-    "filter": true,
     "risks": ["NO_TIMELOCK"],
     "website": "https://fx.aladdin.club/",
     "twitter": "protocol_fx",
@@ -1241,7 +1228,6 @@
   {
     "id": "lynex",
     "name": "Lynex",
-    "filter": true,
     "website": "https://app.lynex.fi/",
     "twitter": "LynexFi",
     "documentation": "https://lynex.gitbook.io/lynex-docs/protocol-overview/about-lynex",
@@ -1250,13 +1236,11 @@
   },
   {
     "id": "mshards",
-    "name": "mShards",
-    "filter": true
+    "name": "mShards"
   },
   {
     "id": "ra",
     "name": "Ra",
-    "filter": true,
     "risks": ["NO_TIMELOCK"],
     "website": "https://www.ra.exchange/",
     "twitter": "exchange_RA",
@@ -1272,7 +1256,6 @@
   {
     "id": "nile",
     "name": "Nile",
-    "filter": true,
     "website": "https://www.nile.build/",
     "twitter": "nileexchange",
     "documentation": "https://docs.nile.build/",
@@ -1282,7 +1265,6 @@
   {
     "id": "mim",
     "name": "MIMSwap",
-    "filter": true,
     "website": "https://app.abracadabra.money/",
     "twitter": "MIM_Spell",
     "documentation": "https://docs.abracadabra.money/learn/",
@@ -1292,7 +1274,6 @@
   {
     "id": "sky",
     "name": "Sky",
-    "filter": true,
     "website": "https://sky.money/",
     "twitter": "SkyEcosystem",
     "documentation": "https://docs.sky.money/",
@@ -1302,7 +1283,6 @@
   {
     "id": "oku",
     "name": "Uniswap (Oku)",
-    "filter": true,
     "website": "https://oku.trade/",
     "twitter": "okutrade",
     "documentation": "https://docs.oku.trade/",
@@ -1312,7 +1292,6 @@
   {
     "id": "camelot",
     "name": "Camelot",
-    "filter": true,
     "website": "https://app.camelot.exchange/",
     "twitter": "camelotdex",
     "documentation": "https://docs.camelot.exchange/",
@@ -1322,7 +1301,6 @@
   {
     "id": "yei",
     "name": "Yei",
-    "filter": true,
     "website": "https://app.yei.finance/",
     "twitter": "YeiFinance",
     "documentation": "https://docs.yei.finance/",
@@ -1332,7 +1310,6 @@
   {
     "id": "pharaoh",
     "name": "Pharaoh",
-    "filter": true,
     "website": "https://pharaoh.exchange/",
     "twitter": "PharaohExchange",
     "documentation": "https://docs.pharaoh.exchange/",
@@ -1342,7 +1319,6 @@
   {
     "id": "dragon",
     "name": "DragonSwap",
-    "filter": true,
     "website": "https://dragonswap.app/",
     "twitter": "dragonswap_dex",
     "documentation": "https://docs.dragonswap.app/dragonswap",
@@ -1352,7 +1328,6 @@
   {
     "id": "nuri",
     "name": "Nuri",
-    "filter": true,
     "website": "https://www.nuri.exchange/",
     "twitter": "NuriExchange",
     "documentation": "https://docs.nuri.exchange/",
@@ -1361,13 +1336,11 @@
   },
   {
     "id": "tokan",
-    "name": "Tokan",
-    "filter": true
+    "name": "Tokan"
   },
   {
     "id": "tokemak",
     "name": "Tokemak",
-    "filter": true,
     "website": "https://app.tokemak.xyz/",
     "twitter": "tokemakxyz",
     "documentation": "https://docs.tokemak.xyz/",
@@ -1377,7 +1350,6 @@
   {
     "id": "kim",
     "name": "Kim",
-    "filter": true,
     "website": "https://www.kim.exchange/",
     "twitter": "kimprotocol",
     "documentation": "https://docs.kim.exchange/",
