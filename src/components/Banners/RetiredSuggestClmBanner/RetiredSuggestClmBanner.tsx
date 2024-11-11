@@ -69,6 +69,7 @@ function selectClmIdsMatchingGamma(state: BeefyState, vaultId: VaultEntity['id']
     clm =>
       clm.id !== vault.id &&
       clm.chainId === vault.chainId &&
+      clm.status === 'active' &&
       selectAreAssetIdsAreEqual(state, vault.chainId, clm.assetIds, vault.assetIds)
   );
   if (!sameAssets.length) {
