@@ -26,6 +26,26 @@ i18n
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
+    react: {
+      bindI18n: 'languageChanged hmr',
+    },
   });
+
+if (import.meta.hot) {
+  import.meta.hot.accept(
+    ['./locales/en/main.json', './locales/en/risks.json'],
+    ([newMain, newRisks]) => {
+      if (newMain) {
+        i18n.addResourceBundle('en', 'main', newMain.default, false, true);
+      }
+      if (newRisks) {
+        i18n.addResourceBundle('en', 'risks', newRisks.default, false, true);
+      }
+      if (newMain || newRisks) {
+        i18n.emit('hmr');
+      }
+    }
+  );
+}
 
 export { i18n };
