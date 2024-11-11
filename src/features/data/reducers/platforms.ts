@@ -11,11 +11,14 @@ import type { PlatformConfig, VaultConfig } from '../apis/config-types';
  */
 export type PlatformsState = NormalizedEntity<PlatformEntity> & {
   activeIds: PlatformEntity['id'][];
+  byType: Partial<Record<NonNullable<PlatformEntity['type']>, PlatformEntity['id'][]>>;
 };
+
 export const initialPlatformsState: PlatformsState = {
   byId: {},
   allIds: [],
   activeIds: [],
+  byType: {},
 };
 
 export const platformsSlice = createSlice({
@@ -67,6 +70,9 @@ function addPlatformToState(sliceState: Draft<PlatformsState>, platformConfig: P
     };
     sliceState.byId[platform.id] = platform;
     sliceState.allIds.push(platform.id);
+    if (platform.type) {
+      (sliceState.byType[platform.type] ??= []).push(platform.id);
+    }
   }
 }
 

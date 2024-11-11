@@ -42,3 +42,9 @@ export const selectFilterPlatforms = createSelector(
   (state: BeefyState) => state.entities.platforms.byId,
   (allIds, activeIds, byId) => activeIds.filter(id => allIds.includes(id)).map(id => byId[id]!)
 );
+
+/** All platforms with `type: 'alm'` exception conic which manages curve not CL */
+export const selectConcentratedLiquidityManagerPlatforms = createSelector(
+  (state: BeefyState) => state.entities.platforms.byType.alm,
+  ids => ids?.filter(id => id !== 'conic') || []
+);

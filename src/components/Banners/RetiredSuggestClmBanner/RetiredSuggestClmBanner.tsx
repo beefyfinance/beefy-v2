@@ -1,5 +1,5 @@
 import { memo, useMemo } from 'react';
-import type { VaultEntity } from '../../../features/data/entities/vault';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../../features/data/entities/vault';
 import {
   selectAllCowcentratedVaultsByChainId,
   selectVaultById,
@@ -16,7 +16,10 @@ import {
   selectChainWrappedNativeToken,
   selectTokenByIdOrUndefined,
 } from '../../../features/data/selectors/tokens';
-import { selectPlatformById } from '../../../features/data/selectors/platforms';
+import {
+  selectConcentratedLiquidityManagerPlatforms,
+  selectPlatformById,
+} from '../../../features/data/selectors/platforms';
 import { orderBy } from 'lodash-es';
 import { selectVaultTvl } from '../../../features/data/selectors/tvl';
 import { DismissibleBanner } from '../Banner/DismissibleBanner';
@@ -60,7 +63,12 @@ function selectAreAssetIdsAreEqual(
 
 function selectClmIdsMatchingGamma(state: BeefyState, vaultId: VaultEntity['id']) {
   const vault = selectVaultById(state, vaultId);
-  if (vault.platformId !== 'gamma' || vault.status !== 'eol') {
+  const clmPlatforms = selectConcentratedLiquidityManagerPlatforms(state);
+
+  if (
+    vault.status !== 'eol' ||
+    (!isCowcentratedLikeVault(vault) && !clmPlatforms.includes(vault.platformId))
+  ) {
     return undefined;
   }
 
