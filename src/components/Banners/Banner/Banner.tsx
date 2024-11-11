@@ -13,12 +13,15 @@ export type BannerProps = {
   onClose?: () => void;
   className?: string;
   variant?: 'info' | 'warning' | 'error';
+  children?: ReactNode;
 };
+
 export const Banner = memo<BannerProps>(function Banner({
   icon,
   text,
   onClose,
   variant = 'info',
+  children,
   className,
 }) {
   const classes = useStyles();
@@ -32,6 +35,7 @@ export const Banner = memo<BannerProps>(function Banner({
         </div>
         {onClose ? <Clear onClick={onClose} className={classes.cross} /> : null}
       </div>
+      {children}
     </div>
   );
 });
