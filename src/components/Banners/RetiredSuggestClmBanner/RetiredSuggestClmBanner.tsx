@@ -26,7 +26,7 @@ import { DismissibleBanner } from '../Banner/DismissibleBanner';
 import { selectVaultTotalApy } from '../../../features/data/selectors/apy';
 import { formatLargePercent } from '../../../helpers/format';
 
-type GammaBannerProps = {
+type RetiredSuggestClmBannerProps = {
   vaultId: VaultEntity['id'];
 };
 
@@ -47,51 +47,56 @@ function selectNormalizeAssets(state: BeefyState, chainId: ChainEntity['id'], as
   return assetIds.map(id => selectNormalizeAsset(state, chainId, id)).sort();
 }
 
-function selectAreAssetIdsAreEqual(
+function selectAreAssetsEqual(
   state: BeefyState,
-  chainId: ChainEntity['id'],
-  a: string[],
-  b: string[]
+  vaultSymbols: string[],
+  otherChainId: ChainEntity['id'],
+  otherAssetIds: string[]
 ) {
-  if (a.length !== b.length) {
+  if (vaultSymbols.length !== otherAssetIds.length) {
     return false;
   }
-  const an = selectNormalizeAssets(state, chainId, a);
-  const bn = selectNormalizeAssets(state, chainId, b);
-  return an.every((id, i) => id === bn[i]);
+  const otherSymbols = selectNormalizeAssets(state, otherChainId, otherAssetIds);
+  return otherSymbols.every((id, i) => id === vaultSymbols[i]);
 }
 
-function selectClmIdsMatchingGamma(state: BeefyState, vaultId: VaultEntity['id']) {
+function selectClmsWithAssetsMatchingVault(state: BeefyState, vaultId: VaultEntity['id']) {
   const vault = selectVaultById(state, vaultId);
   const clmPlatforms = selectConcentratedLiquidityManagerPlatforms(state);
 
   if (
     vault.status !== 'eol' ||
+    vault.assetIds?.length !== 2 ||
     (!isCowcentratedLikeVault(vault) && !clmPlatforms.includes(vault.platformId))
   ) {
     return undefined;
   }
 
   const clms = selectAllCowcentratedVaultsByChainId(state, vault.chainId);
-  const sameAssets = clms.filter(
+  if (clms.length === 0) {
+    return undefined;
+  }
+
+  const vaultSymbols = selectNormalizeAssets(state, vault.chainId, vault.assetIds);
+  const withSameAssets = clms.filter(
     clm =>
       clm.id !== vault.id &&
       clm.chainId === vault.chainId &&
       clm.status === 'active' &&
-      selectAreAssetIdsAreEqual(state, vault.chainId, clm.assetIds, vault.assetIds)
+      selectAreAssetsEqual(state, vaultSymbols, clm.chainId, clm.assetIds)
   );
-  if (!sameAssets.length) {
+  if (!withSameAssets.length) {
     return undefined;
   }
 
   // only vaults if there is any
   let type: 'vault' | 'pool' = 'vault';
-  let ids = sameAssets.map(clm => clm.cowcentratedIds.vault).filter(isDefined);
+  let ids = withSameAssets.map(clm => clm.cowcentratedIds.vault).filter(isDefined);
 
   // otherwise pools
   if (!ids.length) {
     type = 'pool';
-    ids = sameAssets.map(clm => clm.cowcentratedIds.pool).filter(isDefined);
+    ids = withSameAssets.map(clm => clm.cowcentratedIds.pool).filter(isDefined);
   }
 
   if (!ids.length) {
@@ -127,9 +132,11 @@ const VaultLink = memo(function VaultLink({ vaultId }: { vaultId: VaultEntity['i
   );
 });
 
-export const RetiredSuggestClmBanner = memo(function GammaBanner({ vaultId }: GammaBannerProps) {
+export const RetiredSuggestClmBanner = memo(function RetiredSuggestClmBanner({
+  vaultId,
+}: RetiredSuggestClmBannerProps) {
   const { t } = useTranslation();
-  const matching = useAppSelector(state => selectClmIdsMatchingGamma(state, vaultId));
+  const matching = useAppSelector(state => selectClmsWithAssetsMatchingVault(state, vaultId));
   const components = useMemo(
     () =>
       matching && {
