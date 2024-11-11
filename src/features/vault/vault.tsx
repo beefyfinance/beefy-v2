@@ -28,6 +28,7 @@ import { featureFlag_disableRedirect } from '../data/utils/feature-flags';
 import { GamingCards } from './components/GamingCards';
 import { Container } from '../../components/Container/Container';
 import { Details } from './components/Details';
+import { RetiredSuggestClmBanner } from '../../components/Banners/RetiredSuggestClmBanner';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -89,6 +90,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
       <VaultMeta vaultId={vaultId} />
       <BusdBannerVault vaultId={vaultId} />
       <UnstakedClmBannerVault vaultId={vaultId} fromVault={true} />
+      <RetiredSuggestClmBanner vaultId={vaultId} />
       <VaultHeader vaultId={vaultId} />
       <VaultsStats vaultId={vaultId} />
       <div className={classes.contentContainer}>
