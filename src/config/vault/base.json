@@ -1,5 +1,92 @@
 [
   {
+    "id": "aerodrome-weth-lrds",
+    "name": "LRDS-WETH vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/LRDS",
+    "tokenAddress": "0x14f7Ce67e16c435C876AFF4092eb547584121312",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroWETH-LRDS",
+    "earnedTokenAddress": "0xbFBeD22fCDdcF27323FfCEb2206feA08248b9472",
+    "earnContractAddress": "0xbFBeD22fCDdcF27323FfCEb2206feA08248b9472",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-lrds",
+    "status": "active",
+    "createdAt": 1731325644,
+    "platformId": "aerodrome",
+    "assets": ["LRDS", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xB676f87A6E701f0DE8De5Ab91B56b66109766DB1&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-hbr-usdbc",
+    "name": "HBR-USDbC vLP",
+    "type": "standard",
+    "token": "vAMM-HBR/USDbC",
+    "tokenAddress": "0xf03794773236E3A4d2E773d6CE84F5a10E2E957c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroHBR-USDbC",
+    "earnedTokenAddress": "0x0ecF2686444e5294246ff8D1E5243b288d26c9Fc",
+    "earnContractAddress": "0x0ecF2686444e5294246ff8D1E5243b288d26c9Fc",
+    "oracle": "lps",
+    "oracleId": "aerodrome-hbr-usdbc",
+    "status": "active",
+    "createdAt": 1731325644,
+    "platformId": "aerodrome",
+    "assets": ["HBR", "USDbC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x416bd43Bc76D496ff49923c20eCaf86b52Ab078d&token1=0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-yfi-wsteth",
+    "name": "YFI-wstETH vLP",
+    "type": "standard",
+    "token": "vAMM-YFI/wstETH",
+    "tokenAddress": "0x1524a14C55f097bb54F0b24383f3ae3e3743804A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAeroYFI-wstETH",
+    "earnedTokenAddress": "0xae55a14f469c421907d54D65F318c6E8793863D8",
+    "earnContractAddress": "0xae55a14f469c421907d54D65F318c6E8793863D8",
+    "oracle": "lps",
+    "oracleId": "aerodrome-yfi-wsteth",
+    "status": "active",
+    "createdAt": 1731325644,
+    "platformId": "aerodrome",
+    "assets": ["YFI", "wstETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x9EaF8C1E34F05a589EDa6BAfdF391Cf6Ad3CB239&token1=0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "baseswap-cow-eurc-usdc-vault",
     "name": "EURC-USDC",
     "type": "standard",
