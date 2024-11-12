@@ -73,7 +73,7 @@ const VaultBoostTag = memo<VaultBoostTagProps>(function VaultBoostTag({ boostId,
           <>{'\uD83D\uDD25'}</>
         )
       }
-      text={!onlyIcon ? (tagText ? t('VaultTag-PartnerBoost', { partner: name }) : null) : null}
+      text={!onlyIcon ? tagText ?? t('VaultTag-PartnerBoost', { partner: name }) : null}
     />
   );
 });
