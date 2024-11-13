@@ -20,6 +20,7 @@ import type {
 import { mapValues } from 'lodash-es';
 import type { MigrationConfig } from '../reducers/wallet/migration';
 import { entries, keys } from '../../../helpers/object';
+import { getMigratorConfigSrc, getMinterConfigSrc } from '../../../helpers/getConfigSrc';
 
 /**
  * A class to access beefy configuration
@@ -108,13 +109,8 @@ export class ConfigAPI {
   public async fetchAllMinters(): Promise<{ [chainId in ChainEntity['id']]?: MinterConfig[] }> {
     const entries = await Promise.all(
       keys(chainConfigs).map(async chainId => {
-        try {
-          const minter = await import(`../../../config/minters/${chainId}.tsx`);
-          return [chainId, minter.minters];
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (_e) {
-          return [chainId, undefined];
-        }
+        const minter = getMinterConfigSrc(chainId);
+        return [chainId, minter?.minters || []];
       })
     );
 
@@ -125,14 +121,9 @@ export class ConfigAPI {
     [chainId in ChainEntity['id']]?: MigrationConfig[];
   }> {
     const entries = await Promise.all(
-      keys(chainConfigs).map(async chainId => {
-        try {
-          const migrator = await import(`../../../config/migrators/${chainId}.tsx`);
-          return [chainId, migrator.migrators];
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (_e) {
-          return [chainId, undefined];
-        }
+      keys(chainConfigs).map(chainId => {
+        const migrator = getMigratorConfigSrc(chainId);
+        return [chainId, migrator?.migrators || []];
       })
     );
 
