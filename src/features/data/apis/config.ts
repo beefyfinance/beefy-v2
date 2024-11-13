@@ -20,7 +20,7 @@ import type {
 import { mapValues } from 'lodash-es';
 import type { MigrationConfig } from '../reducers/wallet/migration';
 import { entries, keys } from '../../../helpers/object';
-import { getMigratorConfigSrc, getMinterConfigSrc } from '../../../helpers/getConfigSrc';
+import { getMigratorConfig, getMinterConfig } from '../../../helpers/getConfig';
 
 /**
  * A class to access beefy configuration
@@ -109,7 +109,7 @@ export class ConfigAPI {
   public async fetchAllMinters(): Promise<{ [chainId in ChainEntity['id']]?: MinterConfig[] }> {
     const entries = await Promise.all(
       keys(chainConfigs).map(async chainId => {
-        const minters = await getMinterConfigSrc(chainId);
+        const minters = await getMinterConfig(chainId);
         return [chainId, minters || []];
       })
     );
@@ -122,7 +122,7 @@ export class ConfigAPI {
   }> {
     const entries = await Promise.all(
       keys(chainConfigs).map(async chainId => {
-        const migrators = await getMigratorConfigSrc(chainId);
+        const migrators = await getMigratorConfig(chainId);
         return [chainId, migrators || []];
       })
     );

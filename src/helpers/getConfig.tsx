@@ -6,7 +6,7 @@ const mintersPathToImportFn = import.meta.glob<MinterConfig[]>('../config/minter
   import: 'minters',
 });
 
-export async function getMinterConfigSrc(chainId: ChainEntity['id']) {
+export async function getMinterConfig(chainId: ChainEntity['id']) {
   const importFn = mintersPathToImportFn[`../config/minters/${chainId}.tsx`];
   return importFn ? await importFn() : [];
 }
@@ -15,7 +15,7 @@ const migratorsPathToImportFn = import.meta.glob<MigrationConfig[]>('../config/m
   import: 'migrators',
 });
 
-export async function getMigratorConfigSrc(chainId: ChainEntity['id']) {
+export async function getMigratorConfig(chainId: ChainEntity['id']) {
   const importFn = migratorsPathToImportFn[`../config/migrators/${chainId}.tsx`];
   return importFn ? await importFn() : [];
 }
