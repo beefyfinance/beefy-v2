@@ -130,4 +130,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-scroll': {
     backgroundColor: '#ffe6c8',
   },
+  'vaultNetwork-unichain': {
+    backgroundColor: '#F50FB4',
+  },
 });

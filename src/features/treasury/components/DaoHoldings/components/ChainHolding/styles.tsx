@@ -138,6 +138,9 @@ export const styles = (theme: Theme) => ({
   'headerNetwork-scroll': {
     backgroundColor: 'rgb(201, 203, 206)',
   },
+  'headerNetwork-unichain': {
+    backgroundColor: 'rgb(245, 15, 180,0.4)',
+  },
   'headerMM-system9': {
     backgroundColor: 'rgba(243, 243, 200, 0.5)',
   },
