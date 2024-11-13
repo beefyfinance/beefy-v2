@@ -105,28 +105,38 @@ export class ConfigAPI {
     return { boostsByChainId, partnersById, campaignsById };
   }
 
-  public async fetchAllMinters(): Promise<{ [chainId in ChainEntity['id']]: MinterConfig[] }> {
-    return Object.fromEntries(
-      await Promise.all(
-        keys(chainConfigs).map(async chainId => [
-          chainId,
-          (await import(`../../../config/minters/${chainId}.tsx`)).minters,
-        ])
-      )
+  public async fetchAllMinters(): Promise<{ [chainId in ChainEntity['id']]?: MinterConfig[] }> {
+    const entries = await Promise.all(
+      keys(chainConfigs).map(async chainId => {
+        try {
+          const minter = await import(`../../../config/minters/${chainId}.tsx`);
+          return [chainId, minter.minters];
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (_e) {
+          return [chainId, undefined];
+        }
+      })
     );
+
+    return Object.fromEntries(entries.filter(entry => entry !== undefined));
   }
 
   public async fetchAllMigrators(): Promise<{
     [chainId in ChainEntity['id']]?: MigrationConfig[];
   }> {
-    return Object.fromEntries(
-      await Promise.all(
-        Object.keys(chainConfigs).map(async chainId => [
-          chainId,
-          (await import(`../../../config/migrators/${chainId}.tsx`)).migrators,
-        ])
-      )
+    const entries = await Promise.all(
+      keys(chainConfigs).map(async chainId => {
+        try {
+          const migrator = await import(`../../../config/migrators/${chainId}.tsx`);
+          return [chainId, migrator.migrators];
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (_e) {
+          return [chainId, undefined];
+        }
+      })
     );
+
+    return Object.fromEntries(entries.filter(entry => entry !== undefined));
   }
 
   public async fetchPlatforms(): Promise<PlatformConfig[]> {
