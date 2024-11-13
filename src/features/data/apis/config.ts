@@ -109,8 +109,8 @@ export class ConfigAPI {
   public async fetchAllMinters(): Promise<{ [chainId in ChainEntity['id']]?: MinterConfig[] }> {
     const entries = await Promise.all(
       keys(chainConfigs).map(async chainId => {
-        const minter = getMinterConfigSrc(chainId);
-        return [chainId, minter?.minters || []];
+        const minters = await getMinterConfigSrc(chainId);
+        return [chainId, minters || []];
       })
     );
 
@@ -121,9 +121,9 @@ export class ConfigAPI {
     [chainId in ChainEntity['id']]?: MigrationConfig[];
   }> {
     const entries = await Promise.all(
-      keys(chainConfigs).map(chainId => {
-        const migrator = getMigratorConfigSrc(chainId);
-        return [chainId, migrator?.migrators || []];
+      keys(chainConfigs).map(async chainId => {
+        const migrators = await getMigratorConfigSrc(chainId);
+        return [chainId, migrators || []];
       })
     );
 
