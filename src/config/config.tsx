@@ -530,7 +530,7 @@ export const config = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['USDC', 'BUSD', 'wTBT'],
+    stableCoins: ['USDC', 'BUSD', 'wTBT', 'USDCe', 'USDT'],
   },
   base: {
     name: 'Base',

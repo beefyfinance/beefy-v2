@@ -1,5 +1,150 @@
 [
   {
+    "id": "venus-zksync-usdc.e",
+    "name": "USDC.e",
+    "type": "standard",
+    "token": "USDC.e",
+    "tokenAddress": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
+    "tokenDecimals": 6,
+    "earnedToken": "mooVenusUSDC.e",
+    "earnedTokenAddress": "0xf3C2B394c2015E5394a5f97ab18B73a97976a650",
+    "earnContractAddress": "0xf3C2B394c2015E5394a5f97ab18B73a97976a650",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1731558859,
+    "platformId": "venus",
+    "assets": ["USDCe"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "zksync",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x4FC29E1d3fFFbDfbf822F09d20A5BE97e59F66E5"
+    }
+  },
+  {
+    "id": "venus-zksync-usdt",
+    "name": "USDT",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
+    "tokenDecimals": 6,
+    "earnedToken": "mooVenusUSDT",
+    "earnedTokenAddress": "0x4dbC00B2534ea20a82b239b543c253c2F2ac609C",
+    "earnContractAddress": "0x4dbC00B2534ea20a82b239b543c253c2F2ac609C",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1731558859,
+    "platformId": "venus",
+    "assets": ["USDT"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "zksync",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x4FC29E1d3fFFbDfbf822F09d20A5BE97e59F66E5"
+    }
+  },
+  {
+    "id": "venus-zksync-wbtc",
+    "name": "WBTC",
+    "type": "standard",
+    "token": "WBTC",
+    "tokenAddress": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
+    "tokenDecimals": 8,
+    "earnedToken": "mooVenusWBTC",
+    "earnedTokenAddress": "0x5E9A02C0b587D8966D17ef73753204f457fB36AC",
+    "earnContractAddress": "0x5E9A02C0b587D8966D17ef73753204f457fB36AC",
+    "oracle": "tokens",
+    "oracleId": "WBTC",
+    "status": "active",
+    "createdAt": 1731558859,
+    "platformId": "venus",
+    "assets": ["WBTC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "zksync",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x4FC29E1d3fFFbDfbf822F09d20A5BE97e59F66E5"
+    }
+  },
+  {
+    "id": "venus-zksync-weth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91",
+    "tokenDecimals": 18,
+    "earnedToken": "mooVenusWETH",
+    "earnedTokenAddress": "0x7b9643658d5A1516B5E22995819dF4d54b059D54",
+    "earnContractAddress": "0x7b9643658d5A1516B5E22995819dF4d54b059D54",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1731558859,
+    "platformId": "venus",
+    "assets": ["WETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "zksync",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x4FC29E1d3fFFbDfbf822F09d20A5BE97e59F66E5"
+    }
+  },
+  {
+    "id": "venus-zksync-zk",
+    "name": "ZK",
+    "type": "standard",
+    "token": "ZK",
+    "tokenAddress": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+    "tokenDecimals": 18,
+    "earnedToken": "mooVenusZK",
+    "earnedTokenAddress": "0x6a839d7269734251C0C5EA73b6CCc0EE4E541B75",
+    "earnContractAddress": "0x6a839d7269734251C0C5EA73b6CCc0EE4E541B75",
+    "oracle": "tokens",
+    "oracleId": "ZK",
+    "status": "active",
+    "createdAt": 1731558859,
+    "platformId": "venus",
+    "assets": ["ZK"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "zksync",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x4FC29E1d3fFFbDfbf822F09d20A5BE97e59F66E5"
+    }
+  },
+  {
     "id": "uniswap-cow-zksync-zk-weth-rp",
     "name": "ZK-WETH Reward Pool",
     "type": "gov",
