@@ -1,5 +1,63 @@
 [
   {
+    "id": "aerodrome-ion-weth",
+    "name": "ION-WETH vLP",
+    "token": "vAMM-ION/WETH",
+    "tokenAddress": "0x0FAc819628a7F612AbAc1CaD939768058cc0170c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xD30fED45AaD6b625111765017f80c618f7E6F274",
+    "earnedToken": "mooAeroION-WETH",
+    "earnedTokenAddress": "0xD30fED45AaD6b625111765017f80c618f7E6F274",
+    "oracle": "lps",
+    "oracleId": "aerodrome-ion-weth",
+    "status": "active",
+    "createdAt": 1731575334,
+    "platformId": "aerodrome",
+    "assets": ["ION", "WETH"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x3eE5e23eEE121094f1cFc0Ccc79d6C809Ebd22e5&token1=0x4200000000000000000000000000000000000006&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-weth-ox",
+    "name": "WETH-OX vLP",
+    "token": "vAMM-WETH/OX",
+    "tokenAddress": "0xe140c5930889c4064A3d11b17Bb04fE7224a5CDC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xcc7017A2CCeB8f95c6e74B6D99Bc0238299C24f2",
+    "earnedToken": "mooAeroWETH-OX",
+    "earnedTokenAddress": "0xcc7017A2CCeB8f95c6e74B6D99Bc0238299C24f2",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-ox",
+    "status": "active",
+    "createdAt": 1731575219,
+    "platformId": "aerodrome",
+    "assets": ["OX", "WETH"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xba0Dda8762C24dA9487f5FA026a9B64b695A07Ea&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-lrds",
     "name": "LRDS-WETH vLP",
     "type": "standard",
