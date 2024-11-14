@@ -1,5 +1,35 @@
 [
   {
+    "id": "velodrome-v2-usdc-alcx",
+    "name": "ALCX-USDC vLP V2",
+    "type": "standard",
+    "token": "vAMMV2-USDC/ALCX",
+    "tokenAddress": "0x4B322314d6F7239F094f40d93e7d9C4A3081c625",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2USDC-ALCX",
+    "earnedTokenAddress": "0x305aFC012538beBD12b162192e58d911D8Ab1B31",
+    "earnContractAddress": "0x305aFC012538beBD12b162192e58d911D8Ab1B31",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-usdc-alcx",
+    "status": "active",
+    "createdAt": 1731324599,
+    "platformId": "velodrome",
+    "assets": ["ALCX", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x0b2c639c533813f4aa9d7837caf62653d097ff85&to=0xe974b9b31dbff4369b94a1bab5e228f35ed44125&chain0=10&chain1=10",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&token1=0xE974B9b31dBFf4369b94a1bAB5e228f35ed44125&type=-1&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a&chain=10",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x4B322314d6F7239F094f40d93e7d9C4A3081c625",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "velo-cow-op-usdc-wusdm-vault",
     "name": "wUSDM-USDC",
     "type": "standard",
