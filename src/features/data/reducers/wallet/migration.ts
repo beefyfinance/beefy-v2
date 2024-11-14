@@ -1,17 +1,17 @@
-import { type AnyAction, type Draft, createSlice } from '@reduxjs/toolkit';
+import { type AnyAction, createSlice, type Draft } from '@reduxjs/toolkit';
 import type { VaultEntity } from '../../entities/vault';
 import { type BigNumber } from 'bignumber.js';
 import { fetchAllMigrators } from '../../actions/migrator';
-import type {
-  ConicMigrationConfig,
-  ConicMigrationData,
-} from '../../apis/migration/ethereum-conic/types';
 import type { CommonMigrationUpdateFulfilledAction } from '../../apis/migration/migration-types';
+import type { BaseMigrationConfig } from '../../apis/config-types';
 
-export type MigrationConfig = ConicMigrationConfig;
+export type MigrationConfig = BaseMigrationConfig;
 
 type UserMigrationData = {
-  ['ethereum-conic']?: ConicMigrationData;
+  [migrationId: string]: {
+    initialized: boolean;
+    balance: BigNumber;
+  };
 };
 
 export interface MigrationState {
@@ -65,16 +65,18 @@ function addUserBalanceToMigrate(
   vaultId: VaultEntity['id'],
   migrationId: MigrationConfig['id']
 ) {
-  if (state.byUserAddress[walletAddress] === undefined) {
-    state.byUserAddress[walletAddress] = {
+  const walletKey = walletAddress.toLowerCase();
+
+  if (state.byUserAddress[walletKey] === undefined) {
+    state.byUserAddress[walletKey] = {
       byVaultId: {},
     };
   }
 
-  if (state.byUserAddress[walletAddress].byVaultId[vaultId] === undefined) {
-    state.byUserAddress[walletAddress].byVaultId[vaultId] = { byMigrationId: {} };
+  if (state.byUserAddress[walletKey].byVaultId[vaultId] === undefined) {
+    state.byUserAddress[walletKey].byVaultId[vaultId] = { byMigrationId: {} };
   }
-  state.byUserAddress[walletAddress].byVaultId[vaultId].byMigrationId[migrationId] = {
+  state.byUserAddress[walletKey].byVaultId[vaultId].byMigrationId[migrationId] = {
     initialized: true,
     balance,
   };

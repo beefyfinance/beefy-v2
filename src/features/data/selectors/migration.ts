@@ -12,17 +12,17 @@ export const selectShouldInitMigration = (state: BeefyState) =>
 
 export const selectUserBalanceToMigrateByVaultId = createSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], _migrationId: MigrationConfig['id']) =>
-    state.user.migration,
+    state.user.migration.byUserAddress,
   (state: BeefyState, _vaultId: VaultEntity['id'], _migrationId: MigrationConfig['id']) =>
     selectWalletAddress(state),
   (state: BeefyState, vaultId: VaultEntity['id'], _migrationId: MigrationConfig['id']) => vaultId,
   (state: BeefyState, _vaultId: VaultEntity['id'], migrationId: MigrationConfig['id']) =>
     migrationId,
-  (migrationState, walletAddress, vaultId, migrationId) => {
+  (byUserAddress, walletAddress, vaultId, migrationId) => {
     if (!walletAddress) return { balance: BIG_ZERO, initialized: false };
 
     return (
-      migrationState.byUserAddress[walletAddress.toLowerCase()]?.byVaultId[vaultId]?.byMigrationId[
+      byUserAddress[walletAddress.toLowerCase()]?.byVaultId[vaultId]?.byMigrationId[
         migrationId
       ] || { balance: BIG_ZERO, initialized: false }
     );

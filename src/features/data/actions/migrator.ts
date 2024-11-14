@@ -34,7 +34,7 @@ export const migratorUpdate = createAsyncThunk<
 });
 
 export const migratorExecute = createAsyncThunk<void, MigratorExecuteProps, { state: BeefyState }>(
-  'migration/update',
+  'migration/execute',
   async ({ vaultId, t, migrationId }, { dispatch }) => {
     const migrationApi = await getMigrationApi();
     const migrator = await migrationApi.getMigrator(migrationId);
