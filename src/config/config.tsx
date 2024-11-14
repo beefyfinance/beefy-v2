@@ -774,7 +774,8 @@ export const config = {
   },
   unichain: {
     name: 'Unichain',
-    chainId: 1313161554,
+    new: true,
+    chainId: 1301,
     rpc: ['https://mainnet.unichain.org/'],
     explorerUrl: 'https://mainnet.uniscan.xyz/',
     multicallAddress: '0x0000000000000000000000000000000000000000',
