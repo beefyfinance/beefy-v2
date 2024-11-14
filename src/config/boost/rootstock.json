@@ -18,7 +18,7 @@
     "isMooStaked": true,
     "campaign": "rootstock-grant",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_uniswap-cow-rootstock-wrbtc-rusdt-vault",
@@ -81,7 +81,7 @@
     "isMooStaked": true,
     "campaign": "rootstock-grant",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_sushi-cow-rootstock-wrbtc-rusdt-vault",

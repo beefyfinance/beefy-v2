@@ -1,5 +1,47 @@
 [
   {
+    "id": "moo_aerodrome-usd+-mai",
+    "poolId": "aerodrome-usd+-mai",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["USD+", "MAI"],
+    "tokenAddress": "0x36687C7b4A84a718eaC32A62722E01A5eE43abC1",
+    "earnedToken": "mooBIFI",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+    "earnContractAddress": "0xff22e826825e59161560Da5545883e0cB332FCe7",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "basemooBIFI",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": [],
+    "pinned": true
+  },
+  {
+    "id": "moo_aerodrome-weth-qi",
+    "poolId": "aerodrome-weth-qi",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["baseQI", "WETH"],
+    "tokenAddress": "0x8d2795767E17C3d0944101d1DCDF79b625601cd6",
+    "earnedToken": "mooBIFI",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+    "earnContractAddress": "0x50B4728983475F6f30d8E8bfcf63bBFA8433eed9",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "basemooBIFI",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": [],
+    "pinned": true
+  },
+  {
     "id": "moo_aerodrome-virtual-weth",
     "poolId": "aerodrome-virtual-weth",
     "name": "Beefy",
@@ -18,7 +60,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-virtual-cbbtc",
@@ -39,7 +81,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aero-cow-weth-luna-vault",
@@ -60,7 +102,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-usdc-mai",
@@ -81,7 +123,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_aerodrome-usdc-cbbtc",
@@ -417,7 +459,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_aerodrome-ovn-usd+",
