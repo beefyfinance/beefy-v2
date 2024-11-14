@@ -1,6 +1,5 @@
 import type { BeefyState } from '../../../redux-types';
 import type { MinterEntity } from '../entities/minter';
-import type { ChainEntity } from '../entities/chain';
 import { isGovVault, isStandardVault, type VaultEntity } from '../entities/vault';
 import { selectVaultById } from './vaults';
 import { createGlobalDataSelector, shouldLoaderLoadOnce } from './data-loader-helpers';
@@ -12,10 +11,6 @@ export const selectMinterById = (state: BeefyState, minterId: MinterEntity['id']
     throw new Error(`selectMinterById: Unknown minter id ${minterId}`);
   }
   return minter;
-};
-
-export const selectMintersByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
-  return state.entities.minters.byChainId[chainId] || [];
 };
 
 export const selectMintersByVaultId = (

@@ -14,9 +14,7 @@ import { type BigNumber } from 'bignumber.js';
 import type { FetchMinterReservesResult } from '../apis/minter/minter-types';
 
 export interface FulfilledAllMintersPayload {
-  byChainId: {
-    [chainId in ChainEntity['id']]?: MinterConfig[];
-  };
+  byChainId: { [chainId in ChainEntity['id']]?: MinterConfig[] };
   state: BeefyState;
 }
 

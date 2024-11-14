@@ -20,6 +20,7 @@ import type {
 import { mapValues } from 'lodash-es';
 import type { MigrationConfig } from '../reducers/wallet/migration';
 import { entries, keys } from '../../../helpers/object';
+import { getMigratorConfig, getMinterConfig } from '../../../helpers/getConfig';
 
 /**
  * A class to access beefy configuration
@@ -105,28 +106,28 @@ export class ConfigAPI {
     return { boostsByChainId, partnersById, campaignsById };
   }
 
-  public async fetchAllMinters(): Promise<{ [chainId in ChainEntity['id']]: MinterConfig[] }> {
-    return Object.fromEntries(
-      await Promise.all(
-        keys(chainConfigs).map(async chainId => [
-          chainId,
-          (await import(`../../../config/minters/${chainId}.tsx`)).minters,
-        ])
-      )
+  public async fetchAllMinters(): Promise<{ [chainId in ChainEntity['id']]?: MinterConfig[] }> {
+    const entries = await Promise.all(
+      keys(chainConfigs).map(async chainId => {
+        const minters = await getMinterConfig(chainId);
+        return [chainId, minters || []];
+      })
     );
+
+    return Object.fromEntries(entries.filter(entry => entry !== undefined));
   }
 
   public async fetchAllMigrators(): Promise<{
     [chainId in ChainEntity['id']]?: MigrationConfig[];
   }> {
-    return Object.fromEntries(
-      await Promise.all(
-        Object.keys(chainConfigs).map(async chainId => [
-          chainId,
-          (await import(`../../../config/migrators/${chainId}.tsx`)).migrators,
-        ])
-      )
+    const entries = await Promise.all(
+      keys(chainConfigs).map(async chainId => {
+        const migrators = await getMigratorConfig(chainId);
+        return [chainId, migrators || []];
+      })
     );
+
+    return Object.fromEntries(entries.filter(entry => entry !== undefined));
   }
 
   public async fetchPlatforms(): Promise<PlatformConfig[]> {
