@@ -58,7 +58,8 @@ function mapStateToProps(
   if (isUserClmPnl(pnlData)) {
     value = formatTokenDisplayCondensed(
       pnlData.underlying.entry.amount,
-      pnlData.underlying.token.decimals
+      pnlData.underlying.token.decimals,
+      6
     );
     subValue = formatLargeUsd(pnlData.underlying.entry.usd);
     tooltip = (
@@ -71,7 +72,7 @@ function mapStateToProps(
     );
   } else {
     const { balanceAtDeposit, usdBalanceAtDeposit, tokenDecimals } = pnlData;
-    value = formatTokenDisplayCondensed(balanceAtDeposit, tokenDecimals);
+    value = formatTokenDisplayCondensed(balanceAtDeposit, tokenDecimals, 6);
     subValue = formatLargeUsd(usdBalanceAtDeposit);
     tooltip = <BasicTooltipContent title={formatTokenDisplay(balanceAtDeposit, tokenDecimals)} />;
   }
