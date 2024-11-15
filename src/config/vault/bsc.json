@@ -3065,7 +3065,7 @@
     "earnContractAddress": "0xcCcDB0F6eCcd5f231d4737A00C554322167d814B",
     "oracle": "lps",
     "oracleId": "thena-gamma-weeth-eth-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1714848944,
     "platformId": "gamma",
     "assets": ["weETH", "ETH"],
@@ -3081,7 +3081,8 @@
         "ammId": "bsc-gamma-thena-f75c",
         "tokenHolder": "0x98C6F030F1B58edD1037b32348307E4667559a40"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "thena-gamma-eth-usdt-narrow",
@@ -3096,7 +3097,7 @@
     "earnContractAddress": "0x45070826065cF98C4A843fe3D811dBFc0e4bF107",
     "oracle": "lps",
     "oracleId": "thena-gamma-eth-usdt-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1714848944,
     "platformId": "gamma",
     "assets": ["ETH", "USDT"],
@@ -3111,7 +3112,8 @@
         "ammId": "bsc-gamma-thena-f75c",
         "tokenHolder": "0x8A07590FfC632cB258Fe627B25D304CC7Cc3998B"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "thena-gamma-ankrbnb-btcb-narrow",
@@ -3126,7 +3128,7 @@
     "earnContractAddress": "0x56429A5A436936c596F0bd6baaae13a0c9984B86",
     "oracle": "lps",
     "oracleId": "thena-gamma-ankrbnb-btcb-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1714848944,
     "platformId": "gamma",
     "assets": ["ankrBNB", "BTCB"],
@@ -3141,7 +3143,8 @@
         "ammId": "bsc-gamma-thena-f75c",
         "tokenHolder": "0xBe4D4fA65fc80593B0B06a2b155fFe93F1419358"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "thena-gamma-ankrbnb-ankr-narrow",
@@ -3188,7 +3191,7 @@
     "earnContractAddress": "0x2A1b2B05A3c54C86F3f3AB837cA423ad60CF35d1",
     "oracle": "lps",
     "oracleId": "thena-gamma-fil-wbnb-narrow",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1710331580,
     "platformId": "gamma",
     "assets": ["FIL", "BNB"],
@@ -3203,7 +3206,8 @@
         "ammId": "bsc-gamma-thena-f75c",
         "tokenHolder": "0x786958E9DA2627510D0c8De0bF59bE994653f26a"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "thena-gamma-wbnb-the-wide",
@@ -3218,7 +3222,7 @@
     "earnContractAddress": "0xA5d3c08E0afb5F4d2428630e10d31DC53a14e2E5",
     "oracle": "lps",
     "oracleId": "thena-gamma-wbnb-the-wide",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1710331580,
     "platformId": "gamma",
     "assets": ["THE", "BNB"],
@@ -3233,7 +3237,8 @@
         "ammId": "bsc-gamma-thena-f75c",
         "tokenHolder": "0xFBfda960853C7002bb3f4614392503Bbd92fbA74"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "thena-usdv-usdt",
@@ -3835,7 +3840,7 @@
     "earnContractAddress": "0x72fC82b9955f04b20166b0Da7e1af4f893F6316a",
     "oracle": "lps",
     "oracleId": "thena-gamma-eth-ankreth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1684141140,
     "platformId": "gamma",
     "assets": ["ankrETH", "ETH"],
@@ -3850,7 +3855,8 @@
         "ammId": "bsc-gamma-thena-f75c",
         "tokenHolder": "0x5F8a5C3C094C6eb31d6b99B921dbB34a5151b352"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "thena-gamma-usdt-usdc",
@@ -3865,7 +3871,7 @@
     "earnContractAddress": "0x2E65aB174847B5b20a7DAd4fc077e49E6aD38400",
     "oracle": "lps",
     "oracleId": "thena-gamma-usdt-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1683627870,
     "platformId": "gamma",
     "assets": ["USDT", "USDC"],
@@ -3880,7 +3886,8 @@
         "ammId": "bsc-gamma-thena-f75c",
         "tokenHolder": "0x1011530830c914970CAa96a52B9DA1C709Ea48fb"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "thena-gamma-usdt-bnb",
@@ -3895,7 +3902,7 @@
     "earnContractAddress": "0x836C6BffB0B08aCa20b9380330D2532A51aA0eAD",
     "oracle": "lps",
     "oracleId": "thena-gamma-usdt-bnb",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1683627865,
     "platformId": "gamma",
     "assets": ["USDT", "BNB"],
@@ -3910,7 +3917,8 @@
         "ammId": "bsc-gamma-thena-f75c",
         "tokenHolder": "0x56996C3686E131A73E512d35308f348f987Bc0D5"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "thena-gamma-eth-bnb",
@@ -3925,7 +3933,7 @@
     "earnContractAddress": "0xbCFcE18C5c33463316f93A067b1f50d75b00dc09",
     "oracle": "lps",
     "oracleId": "thena-gamma-eth-bnb",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1683627862,
     "platformId": "gamma",
     "assets": ["ETH", "BNB"],
@@ -3940,7 +3948,8 @@
         "ammId": "bsc-gamma-thena-f75c",
         "tokenHolder": "0xD777E84b0D29128351A35045D7AE728780dEf54D"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "thena-gamma-btcb-bnb",
@@ -3955,7 +3964,7 @@
     "earnContractAddress": "0x960eE6caC56912D94cE5c83D7Fb0CD873b5c5099",
     "oracle": "lps",
     "oracleId": "thena-gamma-btcb-bnb",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1683627858,
     "platformId": "gamma",
     "assets": ["BTCB", "BNB"],
@@ -3970,7 +3979,8 @@
         "ammId": "bsc-gamma-thena-f75c",
         "tokenHolder": "0x65E40E779560199F5e68126Bc95bdc03083e5AA4"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "thena-gamma-ankrbnb-bnb",
@@ -3985,7 +3995,7 @@
     "earnContractAddress": "0x93DB73f79D4fdc5be42C0bd2812e94A271aDC7e2",
     "oracle": "lps",
     "oracleId": "thena-gamma-ankrbnb-bnb",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1683627855,
     "platformId": "gamma",
     "assets": ["ankrBNB", "BNB"],
@@ -4000,7 +4010,8 @@
         "ammId": "bsc-gamma-thena-f75c",
         "tokenHolder": "0x8782fA8e2C973f7Cc19ce28DDf549fD9114F69dA"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "thena-gamma-bnb-stkbnb",
@@ -4047,7 +4058,7 @@
     "earnContractAddress": "0x77c9a64C88Ad5e5467B53E20E66AD2F8800BBf3d",
     "oracle": "lps",
     "oracleId": "thena-gamma-bnbx-bnb",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1683532902,
     "platformId": "gamma",
     "assets": ["BNBx", "BNB"],
@@ -4062,7 +4073,8 @@
         "ammId": "bsc-gamma-thena-f75c",
         "tokenHolder": "0xf50Af14BC4953Dcf9d27EbCA8BB3625855F5B42d"
       }
-    ]
+    ],
+    "retiredAt": 1731274075
   },
   {
     "id": "thena-gamma-wusdr-usdc",
