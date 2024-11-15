@@ -8,7 +8,11 @@ import {
   selectUserVaultBalanceInUsdIncludingBoostsBridged,
   selectUserVaultBalanceNotInActiveBoostInDepositToken,
 } from '../../features/data/selectors/balance';
-import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
+import {
+  formatLargeUsd,
+  formatTokenDisplay,
+  formatTokenDisplayCondensed,
+} from '../../helpers/format';
 import { selectIsBalanceHidden, selectWalletAddress } from '../../features/data/selectors/wallet';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat';
 import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip';
@@ -25,6 +29,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { ErrorOutline, InfoOutlined } from '@material-ui/icons';
 import clsx from 'clsx';
+import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
 
 const useStyles = makeStyles(styles);
 
@@ -122,11 +127,12 @@ export const VaultDepositStat = memo<VaultDepositStatProps>(function VaultDeposi
 
   const hasDisplacedDeposit = data.vaultDeposit.lt(data.totalDeposit) || data.notEarning.gt(0);
   const isNotEarning = data.notEarning.gt(0);
-  const depositFormatted = formatTokenDisplayCondensed(
+  const depositFormattedCondensed = formatTokenDisplayCondensed(
     data.totalDeposit,
     data.depositToken.decimals,
     6
   );
+  const depositFormattedFull = formatTokenDisplay(data.totalDeposit, data.depositToken.decimals);
   const IconComponent = isNotEarning ? ErrorOutline : InfoOutlined;
 
   return (
@@ -140,10 +146,10 @@ export const VaultDepositStat = memo<VaultDepositStatProps>(function VaultDeposi
                 [classes.depositIconNotEarning]: isNotEarning,
               })}
             />
-            {depositFormatted}
+            {depositFormattedCondensed}
           </div>
         ) : (
-          depositFormatted
+          depositFormattedCondensed
         )
       }
       subValue={formatLargeUsd(data.totalDepositUsd)}
@@ -152,7 +158,9 @@ export const VaultDepositStat = memo<VaultDepositStatProps>(function VaultDeposi
       tooltip={
         hasDisplacedDeposit ? (
           <VaultDepositedTooltip vaultId={vaultId} walletAddress={walletAddress} />
-        ) : undefined
+        ) : (
+          <BasicTooltipContent title={depositFormattedFull} />
+        )
       }
       {...passthrough}
     />

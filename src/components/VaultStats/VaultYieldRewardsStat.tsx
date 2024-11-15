@@ -84,7 +84,8 @@ export const VaultYieldRewardsStat = memo<VaultYieldRewardsStatProps>(
                 {received.depositToken
                   ? formatTokenDisplayCondensed(
                       received.totalDepositYield,
-                      received.depositToken.decimals
+                      received.depositToken.decimals,
+                      6
                     )
                   : formatLargeUsd(received.usd)}
               </Tooltip>
