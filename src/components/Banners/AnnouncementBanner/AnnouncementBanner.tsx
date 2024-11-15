@@ -1,22 +1,12 @@
-import { memo, useCallback } from 'react';
-import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
-import { Banner } from '../Banner';
+import { memo } from 'react';
 import clm from '../../../images/icons/clm.svg';
 import { ExternalLink } from '../Links/Links';
+import { DismissibleBanner } from '../Banner/DismissibleBanner';
 
 export const AnnouncementBanner = memo(function AnnouncementBanner() {
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideClmbannerprod', false);
-
-  const closeBanner = useCallback(() => {
-    setHideBanner(true);
-  }, [setHideBanner]);
-
-  if (hideBanner) {
-    return null;
-  }
-
   return (
-    <Banner
+    <DismissibleBanner
+      id="clm-launch"
       icon={<img alt="snapshot" src={clm} width={24} height={24} />}
       text={
         <>
@@ -24,7 +14,6 @@ export const AnnouncementBanner = memo(function AnnouncementBanner() {
           {`The full functionality of Beefy’s app arrives for CLM across the chains. ZAP, Yield Module, Dashboard, and 12 weeks of ARB incentives kick off to turbocharge CLM yields for users. Cowcentrate your liquidity today!`}
         </>
       }
-      onClose={closeBanner}
     />
   );
 });

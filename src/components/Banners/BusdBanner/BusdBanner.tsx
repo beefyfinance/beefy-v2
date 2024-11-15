@@ -1,27 +1,17 @@
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 
 import { selectUserDepositedVaultIdsForAsset } from '../../../features/data/selectors/balance';
 import { useAppSelector } from '../../../store';
 import { AssetsImage } from '../../AssetsImage';
 import { selectVaultById } from '../../../features/data/selectors/vaults';
 import type { VaultEntity } from '../../../features/data/entities/vault';
-import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
-import { Banner } from '../Banner';
 import { ExternalLink } from '../Links/Links';
+import { DismissibleBanner } from '../Banner/DismissibleBanner';
 
 const BusdBanner = memo(function BusdBanner() {
-  const [hideBanner, setHideBanner] = useLocalStorageBoolean('hideBusdBanner', false);
-
-  const closeBanner = useCallback(() => {
-    setHideBanner(true);
-  }, [setHideBanner]);
-
-  if (hideBanner) {
-    return null;
-  }
-
   return (
-    <Banner
+    <DismissibleBanner
+      id={'busd-eol'}
       icon={<AssetsImage chainId={'bsc'} assetSymbols={['BUSD']} size={24} />}
       text={
         <>
@@ -34,7 +24,6 @@ const BusdBanner = memo(function BusdBanner() {
           </ExternalLink>
         </>
       }
-      onClose={closeBanner}
     />
   );
 });

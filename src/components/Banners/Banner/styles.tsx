@@ -3,10 +3,10 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   banner: {
     ...theme.typography['body-lg-med'],
-  },
-  box: {
     backgroundColor: 'rgba(140, 147, 191, 0.1)',
     borderRadius: '8px',
+  },
+  box: {
     padding: '16px',
     display: 'flex',
     justifyContent: 'center',
