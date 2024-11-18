@@ -704,6 +704,7 @@ export const config = {
   real: {
     name: 'Re.al',
     chainId: 111188,
+    eol: 1731964599,
     rpc: ['https://rpc.realforreal.gelato.digital'],
     explorerUrl: 'https://explorer.re.al/',
     multicallAddress: '0x3B60F7f25b09E71356cdFFC6475c222A466a2AC9',

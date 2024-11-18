@@ -12,7 +12,7 @@
     "earnedTokenAddress": "0x9cDcfD900E08bb4580EA79B0A8CdE4F69D0Dec3d",
     "oracle": "lps",
     "oracleId": "pearl-ss-strwa-rwa",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1731060017,
     "platformId": "pearl",
     "assets": ["stRWA", "RWA"],
@@ -22,7 +22,8 @@
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v2/0xb28d015563c81dd66Ab781853c03B7B66aa46C1b",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real"
+    "network": "real",
+    "retiredAt": 1731964514
   },
   {
     "id": "pearl-cp-usdc-pearl",
@@ -37,7 +38,7 @@
     "earnedTokenAddress": "0x65862C640CE6FbC3fb289cd93ee8F0dFFEBC2FFe",
     "oracle": "lps",
     "oracleId": "pearl-cp-usdc-pearl",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1730965566,
     "platformId": "pearl",
     "assets": ["PEARL", "USDC"],
@@ -47,7 +48,8 @@
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v2/0xAFb84DFe257cBA43d2f44B4367aDAc5a82775275",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real"
+    "network": "real",
+    "retiredAt": 1731964514
   },
   {
     "id": "pearl-cp-arcusd-pearl",
@@ -62,7 +64,7 @@
     "earnedTokenAddress": "0x6be04b8265030D5F80cFD4e0ee1903A99672f5b7",
     "oracle": "lps",
     "oracleId": "pearl-cp-arcusd-pearl",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1730965555,
     "platformId": "pearl",
     "assets": ["PEARL", "arcUSD"],
@@ -72,7 +74,8 @@
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v2/0xd3Ae2AF8f1Fb00af2e363fe6592C19ABF9105FA9",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real"
+    "network": "real",
+    "retiredAt": 1731964514
   },
   {
     "id": "pearl-ss-more-usdc",
@@ -87,7 +90,7 @@
     "earnedTokenAddress": "0x00D7813501216d8B54cC86caA427f6fCf444854d",
     "oracle": "lps",
     "oracleId": "pearl-ss-more-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1730451268,
     "platformId": "pearl",
     "assets": ["MORE", "USDC"],
@@ -97,7 +100,8 @@
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v2/0x1733720f30EF013539Fa2EcEE00671A60B66243D",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real"
+    "network": "real",
+    "retiredAt": 1731964514
   },
   {
     "id": "pearl-trident-reeth-usdc",
@@ -112,7 +116,7 @@
     "earnedTokenAddress": "0x8368E179cb01a6E76fC7e689a65AAbd933B99260",
     "oracle": "lps",
     "oracleId": "pearl-trident-reeth-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1730191341,
     "platformId": "pearl",
     "assets": ["reETH", "USDC"],
@@ -122,7 +126,8 @@
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x64F5eFB0f0643B654C96f77855DaFfe4C2FE0252",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real"
+    "network": "real",
+    "retiredAt": 1731964514
   },
   {
     "id": "pearl-trident-dai-usdc",
@@ -137,7 +142,7 @@
     "earnedTokenAddress": "0xd07844349eDB8C59Ee601DCC21E6EE387D083353",
     "oracle": "lps",
     "oracleId": "pearl-trident-dai-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1730191329,
     "platformId": "pearl",
     "assets": ["DAI", "USDC"],
@@ -147,7 +152,8 @@
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x4f5c568F72369ff4Ce4e53d797985DFFBdA6FC71",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real"
+    "network": "real",
+    "retiredAt": 1731964514
   },
   {
     "id": "pearl-trident-usdc-pearl",
@@ -162,7 +168,7 @@
     "earnedTokenAddress": "0xbA5412D21AE8bd03c2901EFf0fae308acFabB85c",
     "oracle": "lps",
     "oracleId": "pearl-trident-usdc-pearl",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1729580887,
     "platformId": "pearl",
     "assets": ["PEARL", "USDC"],
@@ -172,7 +178,8 @@
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x374a765309B6D5a123f32971dcA1E6CeF9fa0066",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real"
+    "network": "real",
+    "retiredAt": 1731964514
   },
   {
     "id": "pearl-trident-more-usdc",
@@ -187,7 +194,7 @@
     "earnedTokenAddress": "0x14ddBE02DF312a7419D0dA521D24EC918f21A746",
     "oracle": "lps",
     "oracleId": "pearl-trident-more-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1729580434,
     "platformId": "pearl",
     "assets": ["MORE", "USDC"],
@@ -197,7 +204,8 @@
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x701655595037dfe1e59E69446De009236F012405",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real"
+    "network": "real",
+    "retiredAt": 1731964514
   },
   {
     "id": "pearl-trident-ukre-arcusd",
@@ -212,7 +220,7 @@
     "earnedTokenAddress": "0xE7296b1FC3Df47B4E6d7AefaF5a289b405268D8E",
     "oracle": "lps",
     "oracleId": "pearl-trident-ukre-arcusd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1727083629,
     "platformId": "pearl",
     "assets": ["UKRE", "arcUSD"],
@@ -222,7 +230,8 @@
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x72c20EBBffaE1fe4E9C759b326D97763E218F9F6",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real"
+    "network": "real",
+    "retiredAt": 1731964514
   },
   {
     "id": "pearl-trident-ustb-pearl",
@@ -237,7 +246,7 @@
     "earnedTokenAddress": "0x9E6B9518978bb7caf2ad70778E9AEED9eDb3DB78",
     "oracle": "lps",
     "oracleId": "pearl-trident-ustb-pearl",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1721897463,
     "platformId": "pearl",
     "assets": ["USTB", "PEARL"],
@@ -247,7 +256,8 @@
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x35BA384F9D30D68028898849ddBf5bda09bbE7EA",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real"
+    "network": "real",
+    "retiredAt": 1731964514
   },
   {
     "id": "pearl-trident-rwa-reeth",
@@ -262,7 +272,7 @@
     "earnedTokenAddress": "0x01Fbf9B624a6133Ab04Fc4000ae513AC97e4d114",
     "oracle": "lps",
     "oracleId": "pearl-trident-rwa-reeth",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1721897372,
     "platformId": "pearl",
     "assets": ["RWA", "reETH"],
@@ -272,7 +282,8 @@
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x182d3F8e154EB43d5f361a39A2234A84508244c9",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real"
+    "network": "real",
+    "retiredAt": 1731964514
   },
   {
     "id": "pearl-trident-arcusd-usdc",
@@ -287,7 +298,7 @@
     "earnedTokenAddress": "0x906e60166A4B185016e53597fA12FBB1424e47d7",
     "oracle": "lps",
     "oracleId": "pearl-trident-arcusd-usdc",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1721897233,
     "platformId": "pearl",
     "assets": ["arcUSD", "USDC"],
@@ -297,7 +308,8 @@
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x22aC4821bBb8d1AC42eA7F0f32ed415F52577Ca1",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real"
+    "network": "real",
+    "retiredAt": 1731964514
   },
   {
     "id": "pearl-trident-ustb-arcusd",
@@ -312,7 +324,7 @@
     "earnedTokenAddress": "0x756bd7f54675112b6c689DFFBDa8505566d20C6c",
     "oracle": "lps",
     "oracleId": "pearl-trident-ustb-arcusd",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1721897034,
     "platformId": "pearl",
     "assets": ["USTB", "arcUSD"],
@@ -322,7 +334,8 @@
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0xC6B3AaaAbf2f6eD6cF7fdFFfb0DaC45E10c4A5B3",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real"
+    "network": "real",
+    "retiredAt": 1731964514
   },
   {
     "id": "pearl-trident-more-ustb",
@@ -337,7 +350,7 @@
     "earnedTokenAddress": "0xcb25214EC41Ea480068638897FcBd6F1206F5521",
     "oracle": "lps",
     "oracleId": "pearl-trident-more-ustb",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1721894292,
     "platformId": "pearl",
     "assets": ["MORE", "USTB"],
@@ -347,6 +360,7 @@
     "addLiquidityUrl": "https://www.pearl.exchange/supply-liquidity/v3/0x6b1a34df762f1d3367e7e93AE5661c88CA848423",
     "removeLiquidityUrl": "https://www.pearl.exchange/dashboard/my-pools",
     "pointStructureIds": ["pearl"],
-    "network": "real"
+    "network": "real",
+    "retiredAt": 1731964514
   }
 ]
