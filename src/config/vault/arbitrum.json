@@ -1,5 +1,81 @@
 [
   {
+    "id": "compound-arbitrum-eth",
+    "name": "WETH",
+    "type": "standard",
+    "token": "WETH",
+    "tokenAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "tokenDecimals": 18,
+    "earnedToken": "mooCompoundArbWETH",
+    "earnedTokenAddress": "0x79717B36190B229d06CC0d31304c66aB18E1F3ab",
+    "earnContractAddress": "0x79717B36190B229d06CC0d31304c66aB18E1F3ab",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1732036612,
+    "platformId": "compound",
+    "assets": ["WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612"
+    }
+  },
+  {
+    "id": "compound-arbitrum-usdt",
+    "name": "USDT",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+    "tokenDecimals": 6,
+    "earnedToken": "mooCompoundArbUSDT",
+    "earnedTokenAddress": "0x9aB0cA1CC39A951176Eb623F39a4FD99a49051e5",
+    "earnContractAddress": "0x9aB0cA1CC39A951176Eb623F39a4FD99a49051e5",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1732036612,
+    "platformId": "compound",
+    "assets": ["USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=arbitrum&from=0x0000000000000000000000000000000000000000&to=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x3f3f5dF88dC9F13eac63DF89EC16ef6e7E25DdE7"
+    }
+  },
+  {
     "id": "pendle-arb-rseth-26jun25",
     "name": "rsETH 26Jun25",
     "token": "rsETH-26JUN25",

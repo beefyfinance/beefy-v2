@@ -17,7 +17,7 @@ async function vaultData(chain, vaultAddress, id) {
   const web3 = new Web3(chainRpcs[chain]);
   const abi = [...(BeefyCowcentratedLiquidityVaultAbi as unknown as AbiItem[]), ...stratABI];
   const vaultContract = new web3.eth.Contract(abi as AbiItem[], vaultAddress);
-  const multicall = new MultiCall(web3, '0xEEfe8171dC249960D730b19F3406E40c8C22C567'); //addressBook[chain].platforms.beefyfinance.multicall);
+  const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
   let calls: ShapeWithLabel[] = [
     {
       want: vaultContract.methods.want(),

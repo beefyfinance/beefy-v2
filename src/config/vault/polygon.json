@@ -1,5 +1,43 @@
 [
   {
+    "id": "compound-polygon-usdt",
+    "name": "USDT",
+    "type": "standard",
+    "token": "USDT",
+    "tokenAddress": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+    "tokenDecimals": 6,
+    "earnedToken": "mooCompoundPolyUSDT",
+    "earnedTokenAddress": "0xC2b2bc1e726a387aCdbaF4ff80265fb805dA7C42",
+    "earnContractAddress": "0xC2b2bc1e726a387aCdbaF4ff80265fb805dA7C42",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1732036612,
+    "platformId": "compound",
+    "assets": ["USDT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=polygon&from=0x0000000000000000000000000000000000000000&to=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x0A6513e40db6EB1b165753AD52E80663aeA50545"
+    }
+  },
+  {
     "id": "sushi-cow-poly-wmatic-usdc-rp",
     "name": "WPOL-USDC Reward Pool",
     "type": "gov",

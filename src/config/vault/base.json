@@ -1,5 +1,43 @@
 [
   {
+    "id": "compound-base-aero",
+    "name": "AERO",
+    "type": "standard",
+    "token": "AERO",
+    "tokenAddress": "0x940181a94A35A4569E4529A3CDfB74e38FD98631",
+    "tokenDecimals": 18,
+    "earnedToken": "mooCompoundBaseAERO",
+    "earnedTokenAddress": "0x7E8b48068c61f4775Ba74F518e9016a4dFE0f004",
+    "earnContractAddress": "0x7E8b48068c61f4775Ba74F518e9016a4dFE0f004",
+    "oracle": "tokens",
+    "oracleId": "AERO",
+    "status": "active",
+    "createdAt": 1732037064,
+    "platformId": "compound",
+    "assets": ["AERO"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=base&from=0x0000000000000000000000000000000000000000&to=0x940181a94A35A4569E4529A3CDfB74e38FD98631",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x4EC5970fC728C5f65ba413992CD5fF6FD70fcfF0"
+    }
+  },
+  {
     "id": "uniswap-cow-base-lum-weth-rp",
     "name": "LUM-WETH Reward Pool",
     "type": "gov",
