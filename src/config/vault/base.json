@@ -1,7 +1,7 @@
 [
   {
     "id": "aerodrome-weth-jarvis-v2",
-    "name": "WETH-JARVIS vLP",
+    "name": "JARVIS-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/JARVIS",
     "tokenAddress": "0xeff0891e5a1bd47a8F1e77ABebfEE4145974D088",
@@ -15,7 +15,7 @@
     "status": "active",
     "createdAt": 1732138010,
     "platformId": "aerodrome",
-    "assets": ["WETH", "JARVIS"],
+    "assets": ["JARVIS", "WETH"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
