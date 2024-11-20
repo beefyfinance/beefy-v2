@@ -1,5 +1,98 @@
 [
   {
+    "id": "aero-cow-eigen-weth-vault",
+    "name": "EIGEN-WETH",
+    "type": "standard",
+    "token": "EIGEN-WETH",
+    "tokenAddress": "0xecCA1349A9915C8C08e5Be10B56858Bc4Cab7e2E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooCowAeroEIGEN-WETH",
+    "earnedTokenAddress": "0x4ACc0cba7c51128542EeE9E0EffC8Ec667A8878a",
+    "earnContractAddress": "0x4ACc0cba7c51128542EeE9E0EffC8Ec667A8878a",
+    "oracle": "lps",
+    "oracleId": "aero-cow-eigen-weth",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["EIGEN", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1732037064,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-eigen-weth-rp",
+    "name": "EIGEN-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAeroEIGEN-WETH",
+    "tokenAddress": "0xecCA1349A9915C8C08e5Be10B56858Bc4Cab7e2E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0xd63b9ffC09C9C415D3E7aaDE984B75f399Fe490C",
+    "earnedToken": "rCowAeroEIGEN-WETH",
+    "earnedTokenDecimals": [18],
+    "earnedTokens": ["AERO"],
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "earnedOracleIds": ["AERO"],
+    "oracle": "lps",
+    "oracleId": "aero-cow-eigen-weth",
+    "status": "active",
+    "createdAt": 1732037064,
+    "platformId": "aerodrome",
+    "assets": ["EIGEN", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aero-cow-eigen-weth",
+    "name": "EIGEN-WETH",
+    "token": "EIGEN-WETH aero",
+    "tokenAddress": "0x3c5428b3D6e07f6de38b0c7F84ea9d30b3b27231",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x2081Ab0D9EC9e4303234Ab26D86b20B3367946ee",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "cowAeroEIGEN-WETH",
+    "earnedTokenAddress": "0xecCA1349A9915C8C08e5Be10B56858Bc4Cab7e2E",
+    "earnContractAddress": "0xecCA1349A9915C8C08e5Be10B56858Bc4Cab7e2E",
+    "oracle": "lps",
+    "oracleId": "aero-cow-eigen-weth",
+    "status": "active",
+    "createdAt": 1732037064,
+    "platformId": "beefy",
+    "assets": ["EIGEN", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "0.25",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "compound-base-aero",
     "name": "AERO",
     "type": "standard",
