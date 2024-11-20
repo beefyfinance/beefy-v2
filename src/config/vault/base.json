@@ -1,5 +1,41 @@
 [
   {
+    "id": "aerodrome-weth-jarvis-v2",
+    "name": "WETH-JARVIS vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/JARVIS",
+    "tokenAddress": "0xeff0891e5a1bd47a8F1e77ABebfEE4145974D088",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseWETH-JARVIS",
+    "earnedTokenAddress": "0xFa1565421d0e7e8B183b3cdce414B15B6109880B",
+    "earnContractAddress": "0xFa1565421d0e7e8B183b3cdce414B15B6109880B",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-jarvis-v2",
+    "status": "active",
+    "createdAt": 1732138010,
+    "platformId": "aerodrome",
+    "assets": ["WETH", "JARVIS"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x777b2839832982B35213063d850848369390EE16&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aero-cow-eigen-weth-vault",
     "name": "EIGEN-WETH",
     "type": "standard",
