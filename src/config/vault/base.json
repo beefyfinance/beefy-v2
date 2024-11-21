@@ -36,6 +36,195 @@
     ]
   },
   {
+    "id": "uniswap-cow-base-weth-morpho-rp",
+    "name": "WETH-MORPHO Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-MORPHO",
+    "tokenAddress": "0x132C19de547030c6be4C829493E6CfB65251aCBe",
+    "tokenDecimals": 18,
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowUniswapBaseWETH-MORPHO",
+    "earnContractAddress": "0x41454FdAA9B3fA9457c86b203fEDacD60AF7E81a",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-morpho",
+    "status": "active",
+    "createdAt": 1732199436,
+    "platformId": "uniswap",
+    "assets": ["WETH", "MORPHO"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-morpho",
+    "name": "WETH-MORPHO",
+    "token": "WETH-MORPHO uniswap",
+    "tokenAddress": "0x3444bF60B93BD30f701601356Ac136aD6a9b7A79",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xBAa5CC21fd487B8Fcc2F632f3F4E8D37262a0842"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBaseWETH-MORPHO",
+    "earnedTokenAddress": "0x132C19de547030c6be4C829493E6CfB65251aCBe",
+    "earnContractAddress": "0x132C19de547030c6be4C829493E6CfB65251aCBe",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-morpho",
+    "status": "active",
+    "createdAt": 1732199436,
+    "platformId": "beefy",
+    "assets": ["WETH", "MORPHO"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-usdc-morpho-rp",
+    "name": "USDC-MORPHO Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseUSDC-MORPHO",
+    "tokenAddress": "0xa34a580aAaD37bec8dC1cF95e600809b159cef52",
+    "tokenDecimals": 18,
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowUniswapBaseUSDC-MORPHO",
+    "earnContractAddress": "0xD3994f3C04c7da1DfbF6f29C7a548B51Efc3E42C",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-morpho",
+    "status": "active",
+    "createdAt": 1732199403,
+    "platformId": "uniswap",
+    "assets": ["USDC", "MORPHO"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-usdc-morpho",
+    "name": "USDC-MORPHO",
+    "token": "USDC-MORPHO uniswap",
+    "tokenAddress": "0x2043B296fFC6b2d3bf4A3F3167d2Afb3B0FBdbEE",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xBAa5CC21fd487B8Fcc2F632f3F4E8D37262a0842"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBaseUSDC-MORPHO",
+    "earnedTokenAddress": "0xa34a580aAaD37bec8dC1cF95e600809b159cef52",
+    "earnContractAddress": "0xa34a580aAaD37bec8dC1cF95e600809b159cef52",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-morpho",
+    "status": "active",
+    "createdAt": 1732199403,
+    "platformId": "beefy",
+    "assets": ["USDC", "MORPHO"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-morpho-0.3-rp",
+    "name": "WETH-MORPHO Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-MORPHO (0.3%)",
+    "tokenAddress": "0xba522D7da7fAF2F5F9d1c25743C4D6B297dB241B",
+    "tokenDecimals": 18,
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowUniswapBaseWETH-MORPHO (0.3%)",
+    "earnContractAddress": "0x7B4FB8681D07d14258fA57E21917FA0a228FC80A",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-morpho-0.3",
+    "status": "active",
+    "createdAt": 1732199362,
+    "platformId": "uniswap",
+    "assets": ["WETH", "MORPHO"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-morpho-0.3",
+    "name": "WETH-MORPHO",
+    "token": "WETH-MORPHO uniswap",
+    "tokenAddress": "0x2F42Df4aF5312B492E9d7F7b2110D9c7bf2D9e4F",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xBAa5CC21fd487B8Fcc2F632f3F4E8D37262a0842"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBaseWETH-MORPHO (0.3%)",
+    "earnedTokenAddress": "0xba522D7da7fAF2F5F9d1c25743C4D6B297dB241B",
+    "earnContractAddress": "0xba522D7da7fAF2F5F9d1c25743C4D6B297dB241B",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-morpho-0.3",
+    "status": "active",
+    "createdAt": 1732199362,
+    "platformId": "beefy",
+    "assets": ["WETH", "MORPHO"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "0.3",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-anon-weth-rp",
     "name": "ANON-WETH Reward Pool",
     "type": "gov",
@@ -87,7 +276,7 @@
     "createdAt": 1732194114,
     "platformId": "beefy",
     "assets": ["ANON", "WETH"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "base",
     "type": "cowcentrated",
