@@ -1,5 +1,26 @@
 [
   {
+    "id": "moo_aerodrome-msusd-usdc",
+    "poolId": "aerodrome-msusd-usdc",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["msUSD", "USDC"],
+    "tokenAddress": "0x753Ff04FF5DD67e756405b2eDD9bba41aa63C5e9",
+    "earnedToken": "mooBIFI",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+    "earnContractAddress": "0xa47b30E65359A838F87e9e71d34B07f219d34fE8",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "basemooBIFI",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": [],
+    "pinned": true
+  },
+  {
     "id": "moo_aerodrome-usd+-mai",
     "poolId": "aerodrome-usd+-mai",
     "name": "Beefy",
