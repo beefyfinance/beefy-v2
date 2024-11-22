@@ -1,9 +1,9 @@
 [
   {
     "id": "aerodrome-cow-base-weth-well-vault",
-    "name": "WETH-WELL",
+    "name": "WELL-WETH",
     "type": "standard",
-    "token": "WETH-WELL",
+    "token": "WELL-WETH",
     "tokenAddress": "0xAC643bd7674ad6993067E54E73F6BED6f3868E74",
     "tokenDecimals": 18,
     "tokenProviderId": "aerodrome",
@@ -15,8 +15,8 @@
     "status": "active",
     "platformId": "aerodrome",
     "assets": [
-      "WETH",
-      "bWELL"
+      "bWELL",
+      "WETH"
     ],
     "risks": [
       "COMPLEXITY_LOW",
@@ -40,7 +40,7 @@
   },
   {
     "id": "aerodrome-cow-base-weth-well-rp",
-    "name": "WETH-WELL Reward Pool",
+    "name": "WELL-WETH Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowAerodromeWETH-WELL",
@@ -66,8 +66,8 @@
     "createdAt": 1732271815,
     "platformId": "aerodrome",
     "assets": [
-      "WETH",
-      "bWELL"
+      "bWELL",
+      "WETH"
     ],
     "risks": [],
     "strategyTypeId": "pool",
@@ -83,8 +83,8 @@
   },
   {
     "id": "aerodrome-cow-base-weth-well",
-    "name": "WETH-WELL",
-    "token": "WETH-WELL aerodrome",
+    "name": "WELL-WETH",
+    "token": "WELL-WETH aerodrome",
     "tokenAddress": "0x3Ba9ce0f19cF3CcB631b973c83712C7E6E9585ae",
     "tokenDecimals": 18,
     "depositTokenAddresses": [
@@ -101,8 +101,8 @@
     "createdAt": 1732271815,
     "platformId": "beefy",
     "assets": [
-      "WETH",
-      "bWELL"
+      "bWELL",
+      "WETH"
     ],
     "risks": [
       "COMPLEXITY_LOW",
