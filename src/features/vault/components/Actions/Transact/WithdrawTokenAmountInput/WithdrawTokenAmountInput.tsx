@@ -29,7 +29,7 @@ export const WithdrawTokenAmountInput = memo<WithdrawTokenAmountInputProps>(
       selectTokenPriceByTokenOracleId(state, depositToken.oracleId)
     );
 
-    const handleChange = useCallback<AmountInputProps['onChange']>(
+    const handleChange = useCallback<NonNullable<AmountInputProps['onChange']>>(
       (value, isMax) => {
         dispatch(
           transactActions.setInputAmount({

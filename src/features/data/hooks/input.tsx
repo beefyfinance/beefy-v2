@@ -7,7 +7,7 @@ export function useInputForm(balance: BigNumber, decimals: number) {
   const [amount, setAmount] = useState(BIG_ZERO);
   const [max, setMax] = useState(false);
 
-  const handleChange = useCallback<AmountInputProps['onChange']>(
+  const handleChange = useCallback<NonNullable<AmountInputProps['onChange']>>(
     (value, isMax) => {
       if (!amount.isEqualTo(value)) {
         setAmount(value.decimalPlaces(decimals, BigNumber.ROUND_FLOOR));

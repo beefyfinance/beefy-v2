@@ -25,7 +25,7 @@ export const DepositTokenAmountInput = memo<DepositTokenAmountInputProps>(
     const value = useAppSelector(state => selectTransactInputIndexAmount(state, index));
     const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, token.oracleId));
 
-    const handleChange = useCallback<AmountInputProps['onChange']>(
+    const handleChange = useCallback<NonNullable<AmountInputProps['onChange']>>(
       (value, isMax) => {
         dispatch(
           transactActions.setInputAmount({
