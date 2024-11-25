@@ -49,8 +49,10 @@ export const AmountInputWithSlider = memo<AmountInputWithSliderProps>(
 
     const handlePercentChange = useCallback<(v: number) => void>(
       value => {
-        const isMax = value === 100;
-        onChange(isMax ? maxValue : maxValue.multipliedBy(value / 100), isMax);
+        if (onChange) {
+          const isMax = value === 100;
+          onChange(isMax ? maxValue : maxValue.multipliedBy(value / 100), isMax);
+        }
       },
       [maxValue, onChange]
     );
