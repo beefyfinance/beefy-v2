@@ -33,7 +33,7 @@ export type AmountInputProps = {
   value: BigNumber;
   maxValue: BigNumber;
   tokenDecimals?: number;
-  onChange: (value: BigNumber, isMax: boolean) => void;
+  onChange?: (value: BigNumber, isMax: boolean) => void;
   error?: boolean;
   warning?: boolean;
   className?: string;
@@ -72,10 +72,19 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
     return price ? price.times(value) : BIG_ZERO;
   }, [price, value]);
 
+  const setValue = useCallback(
+    (newValue: BigNumber, isMax: boolean) => {
+      if (onChange) {
+        onChange(newValue, isMax);
+      }
+    },
+    [onChange]
+  );
+
   const handleMax = useCallback(() => {
     setInput(numberToString(maxValue, tokenDecimals));
-    onChange(maxValue, true);
-  }, [maxValue, onChange, tokenDecimals, setInput]);
+    setValue(maxValue, true);
+  }, [maxValue, setValue, tokenDecimals, setInput]);
 
   const handleChange = useCallback<Exclude<InputBaseProps['onChange'], undefined>>(
     e => {
@@ -84,13 +93,13 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
       // empty
       if (rawInput.length === 0) {
         setInput('');
-        onChange(BIG_ZERO, false);
+        setValue(BIG_ZERO, false);
         return;
       }
 
       if (rawInput === '.') {
         setInput('0.');
-        onChange(BIG_ZERO, false);
+        setValue(BIG_ZERO, false);
         return;
       }
 
@@ -105,7 +114,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
       // Check valid number
       if (parsedNumber.isNaN() || !parsedNumber.isFinite() || parsedNumber.isNegative()) {
         setInput('');
-        onChange(BIG_ZERO, false);
+        setValue(BIG_ZERO, false);
         return;
       }
 
@@ -116,9 +125,9 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
       }
       // Raise changed event
       setInput(rawInput);
-      onChange(parsedNumber, !allowInputAboveBalance && parsedNumber.gte(maxValue));
+      setValue(parsedNumber, !allowInputAboveBalance && parsedNumber.gte(maxValue));
     },
-    [allowInputAboveBalance, handleMax, maxValue, onChange]
+    [allowInputAboveBalance, handleMax, maxValue, setValue]
   );
 
   const handleBlur = useCallback<Exclude<InputBaseProps['onBlur'], undefined>>(
@@ -141,11 +150,11 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   useEffect(() => {
     if (!allowInputAboveBalance && maxValue && value.gt(maxValue)) {
       setInput(numberToString(maxValue, tokenDecimals));
-      onChange(maxValue, true);
+      setValue(maxValue, true);
     }
 
     setInput(numberToString(value, tokenDecimals));
-  }, [value, maxValue, onChange, allowInputAboveBalance, tokenDecimals]);
+  }, [value, maxValue, setValue, allowInputAboveBalance, tokenDecimals]);
 
   return (
     <div
