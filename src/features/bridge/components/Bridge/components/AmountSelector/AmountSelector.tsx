@@ -46,7 +46,7 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
     );
   }, [dispatch, fromToken, userBalance]);
 
-  const handleChange = useCallback<AmountInputProps['onChange']>(
+  const handleChange = useCallback<NonNullable<AmountInputProps['onChange']>>(
     (value, isMax) => {
       dispatch(
         bridgeActions.setInputAmount({
