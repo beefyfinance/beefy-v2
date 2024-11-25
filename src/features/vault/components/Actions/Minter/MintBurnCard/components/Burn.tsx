@@ -69,8 +69,8 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   const isStepping = useAppSelector(selectIsStepperStepping);
 
   const { handleMax, handleChange, formData } = useInputForm(
-    depositedTokenBalance,
-    depositToken.decimals
+    mintedTokenBalance,
+    mintedToken.decimals
   );
 
   const outputAmount = useMemo(() => {
@@ -208,8 +208,8 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         </div>
         <AmountInput
           value={outputAmount}
-          maxValue={depositedTokenBalance}
-          onChange={handleChange}
+          maxValue={outputAmount}
+          allowInputAboveBalance={true}
           disabled={true}
           startAdornment={
             <div className={classes.inputLogo}>
