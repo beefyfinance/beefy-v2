@@ -1972,7 +1972,7 @@
   },
   {
     "id": "curve-arb-dlcbtc",
-    "name": "dlcBTC/WBTC",
+    "name": "iBTC/WBTC",
     "type": "standard",
     "token": "dlcBTCwBTC",
     "tokenAddress": "0xe957cE03cCdd88f02ed8b05C9a3A28ABEf38514A",
