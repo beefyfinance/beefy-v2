@@ -1,5 +1,26 @@
 [
   {
+    "id": "moo_curve-op-tbtc",
+    "poolId": "curve-op-tbtc",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["tBTC", "WBTC"],
+    "tokenAddress": "0x611bB2B496c9381CdcD07458b3cfC734583429f9",
+    "earnedToken": "mooBIFI",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+    "earnContractAddress": "0xBCdFA337B024Bf5778c866a9cbcd0f5Bd5b3e7F5",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "opmooBIFI",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": [],
+    "pinned": true
+  },
+  {
     "id": "moo_velodrome-v2-wbtc-tbtc",
     "poolId": "velodrome-v2-wbtc-tbtc",
     "name": "Beefy",
@@ -18,7 +39,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_velodrome-v2-hai-lusd",
