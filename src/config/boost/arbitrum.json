@@ -1,5 +1,26 @@
 [
   {
+    "id": "moo_compound-arbitrum-usdc",
+    "poolId": "compound-arbitrum-usdc",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["USDC"],
+    "tokenAddress": "0xb9A27ba529634017b12e3cbbbFFb6dB7908a8C8B",
+    "earnedToken": "arbUSDCe",
+    "earnedTokenDecimals": 6,
+    "earnedTokenAddress": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "earnContractAddress": "0x4Bd7605259Dc577B3765Ed573E8188d5435bBB8C",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "arbUSDCe",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": [],
+    "pinned": true
+  },
+  {
     "id": "moo_silo-arb-silo",
     "poolId": "silo-arb-silo",
     "name": "Beefy",
@@ -18,7 +39,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_sushi-cow-arb-usdc-usdt-vault",
@@ -700,7 +721,7 @@
     "status": "active",
     "isMooStaked": true,
     "partners": ["mountain"],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_uniswap-cow-arb-rseth-wsteth-vault",
