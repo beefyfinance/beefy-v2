@@ -773,6 +773,22 @@ export const config = {
     },
     stableCoins: ['USDT', 'USDC', 'loreUSD'],
   },
+  unichain: {
+    name: 'Unichain',
+    new: true,
+    chainId: 1301,
+    rpc: ['https://mainnet.unichain.org/'],
+    explorerUrl: 'https://mainnet.uniscan.xyz/',
+    multicallAddress: '0x0000000000000000000000000000000000000000',
+    multicall3Address: '0x0000000000000000000000000000000000000000',
+    appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
+    providerName: 'Unichain',
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: [],
+  },
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,
