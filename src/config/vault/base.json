@@ -14056,37 +14056,6 @@
     ]
   },
   {
-    "id": "aerodrome-weth-unidx",
-    "name": "UNIDX-ETH vLP",
-    "type": "standard",
-    "token": "vAMM-WETH/UNIDX",
-    "tokenAddress": "0xA819Af1CC8AbE618eA8abaDeb464960F7451CEAB",
-    "tokenDecimals": 18,
-    "tokenProviderId": "aerodrome",
-    "earnedToken": "mooAeroUNIDX-ETH",
-    "earnedTokenAddress": "0xd4796D6f32F6904bd6C822455924efB2573F7b8D",
-    "earnContractAddress": "0xd4796D6f32F6904bd6C822455924efB2573F7b8D",
-    "oracle": "lps",
-    "oracleId": "aerodrome-weth-unidx",
-    "status": "eol",
-    "retireReason": "rewards",
-    "retiredAt": 1713202188,
-    "createdAt": 1693493753,
-    "platformId": "aerodrome",
-    "assets": ["UNIDX", "ETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x6B4712AE9797C199edd44F897cA09BC57628a1CF&type=-1",
-    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
-    "network": "base",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "base-aerodrome"
-      }
-    ]
-  },
-  {
     "id": "aerodrome-weth-thales",
     "name": "THALES-ETH vLP",
     "type": "standard",
