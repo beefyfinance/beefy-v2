@@ -7,6 +7,7 @@
     "token": "cowUniswapBasePARADOX-WETH",
     "tokenAddress": "0xC603C4a517CB742Af8565F07a1A62284A396D11f",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
@@ -20,14 +21,11 @@
     "platformId": "uniswap",
     "assets": ["PARADOX", "WETH"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -52,7 +50,7 @@
     "platformId": "beefy",
     "assets": ["PARADOX", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "type": "cowcentrated",
     "feeTier": "1",
@@ -70,6 +68,7 @@
     "token": "cowUniswapBaseFCAST-WETH",
     "tokenAddress": "0xC0AcD5767cF8c8FA6E186B487E52742B5fa6fC18",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
@@ -83,14 +82,11 @@
     "platformId": "uniswap",
     "assets": ["FCAST", "WETH"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -115,7 +111,7 @@
     "platformId": "beefy",
     "assets": ["FCAST", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "type": "cowcentrated",
     "feeTier": "1",
@@ -169,6 +165,7 @@
     "token": "cowAerodromeWETH-WELL",
     "tokenAddress": "0xAC643bd7674ad6993067E54E73F6BED6f3868E74",
     "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
     "earnedTokens": ["AERO"],
     "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
     "earnedOracleIds": ["AERO"],
@@ -304,6 +301,7 @@
     "token": "cowUniswapBaseWETH-MORPHO",
     "tokenAddress": "0x132C19de547030c6be4C829493E6CfB65251aCBe",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
@@ -317,14 +315,11 @@
     "platformId": "uniswap",
     "assets": ["WETH", "MORPHO"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -349,7 +344,7 @@
     "platformId": "beefy",
     "assets": ["WETH", "MORPHO"],
     "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "type": "cowcentrated",
     "feeTier": "1",
@@ -367,6 +362,7 @@
     "token": "cowUniswapBaseUSDC-MORPHO",
     "tokenAddress": "0xa34a580aAaD37bec8dC1cF95e600809b159cef52",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
@@ -380,14 +376,11 @@
     "platformId": "uniswap",
     "assets": ["USDC", "MORPHO"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -412,7 +405,7 @@
     "platformId": "beefy",
     "assets": ["USDC", "MORPHO"],
     "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "type": "cowcentrated",
     "feeTier": "1",
@@ -430,6 +423,7 @@
     "token": "cowUniswapBaseWETH-MORPHO (0.3%)",
     "tokenAddress": "0xba522D7da7fAF2F5F9d1c25743C4D6B297dB241B",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
@@ -443,14 +437,11 @@
     "platformId": "uniswap",
     "assets": ["WETH", "MORPHO"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -475,7 +466,7 @@
     "platformId": "beefy",
     "assets": ["WETH", "MORPHO"],
     "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "type": "cowcentrated",
     "feeTier": "0.3",
@@ -493,6 +484,7 @@
     "token": "cowUniswapBaseANON-WETH",
     "tokenAddress": "0x94071335BFc7De1E126D5A913B57B24040c93C2F",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
@@ -506,14 +498,11 @@
     "platformId": "uniswap",
     "assets": ["ANON", "WETH"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -538,7 +527,7 @@
     "platformId": "beefy",
     "assets": ["ANON", "WETH"],
     "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "type": "cowcentrated",
     "feeTier": "1",
