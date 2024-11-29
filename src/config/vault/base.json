@@ -1,5 +1,97 @@
 [
   {
+    "id": "aerodrome-cow-base-weth-talent-vault",
+    "name": "TALENT-WETH",
+    "type": "standard",
+    "token": "TALENT-WETH",
+    "tokenAddress": "0x48145EBbabEcB70909F78b5FCF4320c80BBBF68E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooCowAerodromeWETH-TALENT",
+    "earnedTokenAddress": "0x9C8b97C5cE4CC26082B50A4AE706f0a5b4B83062",
+    "earnContractAddress": "0x9C8b97C5cE4CC26082B50A4AE706f0a5b4B83062",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-talent",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["TALENT", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1732885347,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-talent-rp",
+    "name": "TALENT-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeWETH-TALENT",
+    "tokenAddress": "0x48145EBbabEcB70909F78b5FCF4320c80BBBF68E",
+    "tokenDecimals": 18,
+    "earnedTokens": ["AERO"],
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "earnedOracleIds": ["AERO"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowAerodromeWETH-TALENT",
+    "earnContractAddress": "0x43EC5Cb24eA7Db84044f2CBA31aeDc04284712c8",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-talent",
+    "status": "active",
+    "createdAt": 1732885346,
+    "platformId": "aerodrome",
+    "assets": ["TALENT", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-weth-talent",
+    "name": "WETH-TALENT",
+    "token": "WETH-TALENT aerodrome",
+    "tokenAddress": "0x346eDb1aAa704dF6dDbfc604724AAFcdC12b2fed",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x9a33406165f562E16C3abD82fd1185482E01b49a"
+    ],
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "cowAerodromeWETH-TALENT",
+    "earnedTokenAddress": "0x48145EBbabEcB70909F78b5FCF4320c80BBBF68E",
+    "earnContractAddress": "0x48145EBbabEcB70909F78b5FCF4320c80BBBF68E",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-weth-talent",
+    "status": "active",
+    "createdAt": 1732885346,
+    "platformId": "beefy",
+    "assets": ["WETH", "TALENT"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "0.7",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-paradox-weth-rp",
     "name": "PARADOX-WETH Reward Pool",
     "type": "gov",
@@ -49,7 +141,7 @@
     "createdAt": 1732711261,
     "platformId": "beefy",
     "assets": ["PARADOX", "WETH"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "base",
     "type": "cowcentrated",
@@ -110,7 +202,7 @@
     "createdAt": 1732711220,
     "platformId": "beefy",
     "assets": ["FCAST", "WETH"],
-    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "base",
     "type": "cowcentrated",
