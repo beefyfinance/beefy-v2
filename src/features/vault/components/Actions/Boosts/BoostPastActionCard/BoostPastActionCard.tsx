@@ -53,6 +53,7 @@ export const BoostPastActionCard = memo(function BoostPastActionCard({
   );
   const boostBalance = useAppSelector(state => selectBoostUserBalanceInToken(state, boost.id));
   const canUnstake = boostBalance.gt(0);
+  const canClaimOnly = canClaim && (!canUnstake || boost.version >= 2);
 
   return (
     <div className={classes.expiredBoostContainer}>
@@ -76,11 +77,8 @@ export const BoostPastActionCard = memo(function BoostPastActionCard({
       )}
       {canClaim || canUnstake ? (
         <ActionConnectSwitch chainId={vault.chainId}>
-          {canUnstake ? (
-            <Unstake boostId={boostId} chainId={boost.chainId} canClaim={canClaim} />
-          ) : canClaim ? (
-            <Claim boostId={boostId} chainId={boost.chainId} />
-          ) : null}
+          {canClaimOnly && <Claim boostId={boostId} chainId={boost.chainId} />}
+          {canUnstake && <Unstake boostId={boostId} chainId={boost.chainId} canClaim={canClaim} />}
         </ActionConnectSwitch>
       ) : null}
     </div>
