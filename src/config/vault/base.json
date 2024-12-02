@@ -1,5 +1,81 @@
 [
   {
+    "id": "uniswap-cow-base-usdc-cbbtc-rp",
+    "name": "cbBTC-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBasecbBTC-USDC",
+    "tokenAddress": "0x9cDE59Eb5B67c3B6a6E629066f4F806933905539",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [
+      18
+    ],
+    "earnedToken": "rCowUniswapBasecbBTC-USDC",
+    "earnContractAddress": "0xE6B2919d7779089162aD59EE55987b1781964D33",
+    "oracle": "lps",
+    "status": "active",
+    "createdAt": 1732788738,
+    "platformId": "uniswap",
+    "assets": [
+      "cbBTC",
+      "USDC"
+    ],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-usdc-cbbtc",
+    "name": "cbBTC-USDC",
+    "token": "cbBTC-USDC uniswap",
+    "tokenAddress": "0xfBB6Eed8e7aa03B138556eeDaF5D271A5E1e43ef",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBasecbBTC-USDC",
+    "earnedTokenAddress": "0x9cDE59Eb5B67c3B6a6E629066f4F806933905539",
+    "earnContractAddress": "0x9cDE59Eb5B67c3B6a6E629066f4F806933905539",
+    "oracle": "lps",
+    "status": "active",
+    "createdAt": 1732788738,
+    "platformId": "beefy",
+    "assets": [
+      "cbBTC",
+      "USDC"
+    ],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-weth-aifun-rp",
     "name": "AIFUN-WETH Reward Pool",
     "type": "gov",
