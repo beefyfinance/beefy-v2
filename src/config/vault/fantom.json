@@ -998,38 +998,6 @@
     ]
   },
   {
-    "id": "equalizer-wftm-lzusdt",
-    "name": "lzUSDT-FTM vLP",
-    "type": "standard",
-    "token": "lzUSDT-FTM vLP",
-    "tokenAddress": "0x853d0B5e504Ae6f6CeE8b5D89E9c1853C330E6E9",
-    "tokenDecimals": 18,
-    "tokenProviderId": "equalizer",
-    "earnedToken": "mooEqualizerFTM-lzUSDT",
-    "earnedTokenAddress": "0xdcFDd668Fa44F1b12E0a36fB24869d331165aeCA",
-    "earnContractAddress": "0xdcFDd668Fa44F1b12E0a36fB24869d331165aeCA",
-    "oracle": "lps",
-    "oracleId": "equalizer-wftm-lzusdt",
-    "status": "eol",
-    "createdAt": 1689260326,
-    "retireReason": "tvl",
-    "retiredAt": 1691572603,
-    "platformId": "equalizer",
-    "assets": ["lzUSDT", "FTM"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://equalizer.exchange/swap",
-    "addLiquidityUrl": "https://equalizer.exchange/liquidity/0x853d0B5e504Ae6f6CeE8b5D89E9c1853C330E6E9",
-    "removeLiquidityUrl": "https://equalizer.exchange/liquidity/0x853d0B5e504Ae6f6CeE8b5D89E9c1853C330E6E9",
-    "network": "fantom",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "fantom-equalizer"
-      }
-    ]
-  },
-  {
     "id": "boo-wftm-lzusdc",
     "name": "lzUSDC-FTM LP",
     "type": "standard",
