@@ -1,5 +1,67 @@
 [
   {
+    "id": "uniswap-cow-base-hyUSD-USDC-rp",
+    "name": "hyUSD-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBasehyUSD-USDC",
+    "tokenAddress": "0xD937c1b7761f053FDDA541C731fdf255FC3222Ea",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rcowUniswapBasehyUSD-USDC",
+    "earnContractAddress": "0x81E4675C6A312e502eF10aA038e6159B921132C6",
+    "oracle": "lps",
+    "status": "active",
+    "createdAt": 1733196023,
+    "platformId": "uniswap",
+    "assets": ["hyUSD", "USDC"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-hyUSD-USDC",
+    "name": "hyUSD-USDC",
+    "token": "hyUSD-USDC uniswap",
+    "tokenAddress": "0xA3eaa52B505Cf61aAdCfE21424d43a6847DD6331",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xCc7FF230365bD730eE4B352cC2492CEdAC49383e"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBasehyUSD-USDC",
+    "earnedTokenAddress": "0xD937c1b7761f053FDDA541C731fdf255FC3222Ea",
+    "earnContractAddress": "0xD937c1b7761f053FDDA541C731fdf255FC3222Ea",
+    "oracle": "lps",
+    "status": "active",
+    "createdAt": 1733196023,
+    "platformId": "beefy",
+    "assets": ["hyUSD", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-bsdETH-WETH-rp",
     "name": "bsdETH-WETH Reward Pool",
     "type": "gov",
