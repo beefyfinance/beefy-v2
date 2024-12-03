@@ -1,5 +1,68 @@
 [
   {
+    "id": "uniswap-cow-base-chaos-weth-rp",
+    "name": "CHAOS-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseCHAOS-WETH",
+    "tokenAddress": "0xd0483354ef972B52f992DC1c4dF67C55a15a417d",
+    "tokenDecimals": 18,
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowUniswapBaseCHAOS-WETH",
+    "earnContractAddress": "0xcC2E49eBcA7b9264F63604C607d95f696fDBdBb1",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-chaos-weth",
+    "status": "active",
+    "createdAt": 1733228124,
+    "platformId": "uniswap",
+    "assets": ["CHAOS", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-chaos-weth",
+    "name": "CHAOS-WETH",
+    "token": "CHAOS-WETH uniswap",
+    "tokenAddress": "0x01A1f5758c3a53057B6C819Ec7331e39c167794A",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x20d704099B62aDa091028bcFc44445041eD16f09",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBaseCHAOS-WETH",
+    "earnedTokenAddress": "0xd0483354ef972B52f992DC1c4dF67C55a15a417d",
+    "earnContractAddress": "0xd0483354ef972B52f992DC1c4dF67C55a15a417d",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-chaos-weth",
+    "status": "active",
+    "createdAt": 1733228124,
+    "platformId": "beefy",
+    "assets": ["CHAOS", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "alienbase-alb-usdc-wide",
     "name": "ALB-USDC V3-Wide",
     "token": "ALB-USDC V3-Wide",
