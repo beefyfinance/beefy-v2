@@ -11,19 +11,14 @@
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
-    "earnedTokenDecimals": [
-      18
-    ],
+    "earnedTokenDecimals": [18],
     "earnedToken": "rcowUniswapBasebsdETH-WETH",
     "earnContractAddress": "0xd3CC4ba1eEf11cb11BfD44c8F2F48EF5A7d9020e",
     "oracle": "lps",
     "status": "active",
     "createdAt": 1733192171,
     "platformId": "uniswap",
-    "assets": [
-      "bsdETH",
-      "WETH"
-    ],
+    "assets": ["bsdETH", "WETH"],
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "base",
@@ -54,17 +49,8 @@
     "status": "active",
     "createdAt": 1733192171,
     "platformId": "beefy",
-    "assets": [
-      "bsdETH",
-      "WETH"
-    ],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_NONE",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "assets": ["bsdETH", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "base",
     "type": "cowcentrated",
@@ -87,19 +73,14 @@
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
-    "earnedTokenDecimals": [
-      18
-    ],
+    "earnedTokenDecimals": [18],
     "earnedToken": "rCowUniswapBasecbBTC-USDC",
     "earnContractAddress": "0xE6B2919d7779089162aD59EE55987b1781964D33",
     "oracle": "lps",
     "status": "active",
     "createdAt": 1732788738,
     "platformId": "uniswap",
-    "assets": [
-      "cbBTC",
-      "USDC"
-    ],
+    "assets": ["cbBTC", "USDC"],
     "risks": [],
     "strategyTypeId": "compounds",
     "network": "base",
@@ -130,17 +111,8 @@
     "status": "active",
     "createdAt": 1732788738,
     "platformId": "beefy",
-    "assets": [
-      "cbBTC",
-      "USDC"
-    ],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "assets": ["cbBTC", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "base",
     "type": "cowcentrated",
@@ -3272,14 +3244,7 @@
     "createdAt": 1729264245,
     "platformId": "silo",
     "assets": ["bsdETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "PLATFORM_ESTABLISHED", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "base",
     "zaps": [
@@ -3308,14 +3273,7 @@
     "createdAt": 1729264245,
     "platformId": "silo",
     "assets": ["WETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "PLATFORM_ESTABLISHED", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "base",
     "zaps": [
@@ -3347,7 +3305,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
-      "MCAP_LARGE",
+      "MCAP_MEDIUM",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -8002,7 +7960,7 @@
     "status": "active",
     "platformId": "aerodrome",
     "assets": ["bsdETH", "WETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "base",
     "createdAt": 1722192822,
@@ -9171,7 +9129,7 @@
     "createdAt": 1720291024,
     "platformId": "beefy",
     "assets": ["bsdETH", "WETH"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "base",
     "type": "cowcentrated",
