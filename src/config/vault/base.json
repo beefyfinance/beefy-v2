@@ -1,5 +1,81 @@
 [
   {
+    "id": "uniswap-cow-base-bsdETH-WETH-rp",
+    "name": "bsdETH-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBasebsdETH-WETH",
+    "tokenAddress": "0x3c83ff3398166b0d1bc2B04292aC7de194e089a0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [
+      18
+    ],
+    "earnedToken": "rcowUniswapBasebsdETH-WETH",
+    "earnContractAddress": "0xd3CC4ba1eEf11cb11BfD44c8F2F48EF5A7d9020e",
+    "oracle": "lps",
+    "status": "active",
+    "createdAt": 1733192171,
+    "platformId": "uniswap",
+    "assets": [
+      "bsdETH",
+      "WETH"
+    ],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-bsdETH-WETH",
+    "name": "bsdETH-WETH",
+    "token": "bsdETH-WETH uniswap",
+    "tokenAddress": "0xaFBb6fCc92dDb091dBc13E9073c3360C7D9600CC",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xCb327b99fF831bF8223cCEd12B1338FF3aA322Ff"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBasebsdETH-WETH",
+    "earnedTokenAddress": "0x3c83ff3398166b0d1bc2B04292aC7de194e089a0",
+    "earnContractAddress": "0x3c83ff3398166b0d1bc2B04292aC7de194e089a0",
+    "oracle": "lps",
+    "status": "active",
+    "createdAt": 1733192171,
+    "platformId": "beefy",
+    "assets": [
+      "bsdETH",
+      "WETH"
+    ],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-usdc-cbbtc-rp",
     "name": "cbBTC-USDC Reward Pool",
     "type": "gov",
