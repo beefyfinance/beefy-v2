@@ -12239,7 +12239,6 @@
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xCb327b99fF831bF8223cCEd12B1338FF3aA322Ff&type=-1",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
     "network": "base",
-    "pointStructureIds": ["nektar"],
     "zaps": [
       {
         "strategyId": "solidly",
