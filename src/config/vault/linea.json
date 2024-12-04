@@ -20,7 +20,6 @@
     "addLiquidityUrl": "https://stargate.finance/pool/linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075",
     "removeLiquidityUrl": "https://stargate.finance/pool/linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075/remove",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "single"
@@ -46,7 +45,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "kelp"],
+    "pointStructureIds": ["kelp"],
     "zaps": [
       {
         "strategyId": "single"
@@ -75,7 +74,6 @@
     "assets": ["weETH", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -107,7 +105,7 @@
     "assets": ["weETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage", "etherfi"],
+    "pointStructureIds": ["etherfi"],
     "network": "linea",
     "zaps": [
       {
@@ -142,7 +140,7 @@
     "assets": ["weETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage", "etherfi"],
+    "pointStructureIds": ["etherfi"],
     "network": "linea",
     "zaps": [
       {
@@ -169,7 +167,7 @@
     "assets": ["wrsETH", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage", "kelp"],
+    "pointStructureIds": ["kelp"],
     "network": "linea",
     "zaps": [
       {
@@ -201,7 +199,7 @@
     "assets": ["wrsETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage", "kelp"],
+    "pointStructureIds": ["kelp"],
     "network": "linea",
     "zaps": [
       {
@@ -236,7 +234,7 @@
     "assets": ["wrsETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage", "kelp"],
+    "pointStructureIds": ["kelp"],
     "network": "linea",
     "zaps": [
       {
@@ -263,7 +261,7 @@
     "assets": ["ezETH", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage", "renzo"],
+    "pointStructureIds": ["renzo"],
     "network": "linea",
     "zaps": [
       {
@@ -295,7 +293,7 @@
     "assets": ["ezETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage", "renzo"],
+    "pointStructureIds": ["renzo"],
     "network": "linea",
     "zaps": [
       {
@@ -330,7 +328,7 @@
     "assets": ["ezETH", "WETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage", "renzo"],
+    "pointStructureIds": ["renzo"],
     "network": "linea",
     "zaps": [
       {
@@ -357,7 +355,6 @@
     "assets": ["WBTC", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -389,7 +386,6 @@
     "assets": ["WBTC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -424,7 +420,6 @@
     "assets": ["WBTC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -451,7 +446,6 @@
     "assets": ["WBTC", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -483,7 +477,6 @@
     "assets": ["WBTC", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -518,7 +511,6 @@
     "assets": ["WBTC", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -545,7 +537,6 @@
     "assets": ["USDC", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -577,7 +568,6 @@
     "assets": ["USDC", "USDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -612,7 +602,6 @@
     "assets": ["USDC", "USDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -639,7 +628,6 @@
     "assets": ["USDC", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -671,7 +659,6 @@
     "assets": ["USDC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -706,7 +693,6 @@
     "assets": ["USDC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -733,7 +719,6 @@
     "assets": ["USDT", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -765,7 +750,6 @@
     "assets": ["USDT", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -800,7 +784,6 @@
     "assets": ["USDT", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["linea-voyage"],
     "network": "linea",
     "zaps": [
       {
@@ -837,7 +820,6 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x7088A31d53Fc1fA300Ceb5F9103343137A62b545",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x7088A31d53Fc1fA300Ceb5F9103343137A62b545",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -864,7 +846,6 @@
     "platformId": "sushi",
     "assets": ["WETH", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["linea-voyage"],
     "strategyTypeId": "compounds",
     "network": "linea",
     "zaps": [
@@ -897,7 +878,6 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "feeTier": "0.05",
     "zaps": [
       {
@@ -924,7 +904,6 @@
     "platformId": "oku",
     "assets": ["USDC", "USDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["linea-voyage"],
     "strategyTypeId": "compounds",
     "network": "linea",
     "zaps": [
@@ -952,7 +931,6 @@
     "platformId": "oku",
     "assets": ["WBTC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["linea-voyage"],
     "strategyTypeId": "compounds",
     "network": "linea",
     "zaps": [
@@ -980,7 +958,6 @@
     "platformId": "oku",
     "assets": ["WETH", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "pointStructureIds": ["linea-voyage"],
     "strategyTypeId": "compounds",
     "network": "linea",
     "zaps": [
@@ -1013,7 +990,6 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "feeTier": "0.01",
     "zaps": [
       {
@@ -1045,7 +1021,6 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "feeTier": "0.05",
     "zaps": [
       {
@@ -1077,7 +1052,6 @@
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "feeTier": "0.05",
     "zaps": [
       {
@@ -1107,7 +1081,7 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ineth-wsteth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ineth-wsteth-pegged-price",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "inception"],
+    "pointStructureIds": ["inception"],
     "zaps": [
       {
         "strategyId": "gamma",
@@ -1146,7 +1120,6 @@
     "addLiquidityUrl": "https://www.thenile.exchange/manage/v1/0x641d5eAa27e516E1CF1F5C84B5EC25C45b7e3f0D",
     "removeLiquidityUrl": "https://www.thenile.exchange/manage/v1/0x641d5eAa27e516E1CF1F5C84B5EC25C45b7e3f0D",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1176,7 +1149,7 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/weeth-weth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/weeth-weth-pegged-price",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "etherfi"],
+    "pointStructureIds": ["etherfi"],
     "zaps": [
       {
         "strategyId": "gamma",
@@ -1208,7 +1181,7 @@
     "addLiquidityUrl": "https://www.thenile.exchange/manage/v1/0xa9a1fb9f6664a0b6bfb1f52724fd7b23842248c5",
     "removeLiquidityUrl": "https://www.thenile.exchange/manage/v1/0xa9a1fb9f6664a0b6bfb1f52724fd7b23842248c5",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "renzo"],
+    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1262,7 +1235,7 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0x93f4d0ab6a8b4271f4a28db399b5e30612d21116&strategy=Yield%20IQ%20(STONE)",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/fusion?currency0=0x1a51b19ce03dbe0cb44c1528e34a7edd7771e9af&currency1=0x93f4d0ab6a8b4271f4a28db399b5e30612d21116&strategy=Yield%20IQ%20(STONE)",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "manta-stakestone"]
+    "pointStructureIds": ["manta-stakestone"]
   },
   {
     "id": "lynex-gamma-wsteth-weth",
@@ -1286,7 +1259,6 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/wsteth-weth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/wsteth-weth-pegged-price",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "gamma",
@@ -1318,7 +1290,7 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ezeth-weth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/ezeth-weth-pegged-price",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "renzo"],
+    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "gamma",
@@ -1350,7 +1322,7 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/stone-weth-pegged-price",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/stone-weth-pegged-price",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "manta-stakestone"],
+    "pointStructureIds": ["manta-stakestone"],
     "zaps": [
       {
         "strategyId": "gamma",
@@ -1384,7 +1356,7 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x8f3e0a2378b0b5838e0e0d99fcecc167d47bc9a7",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x8f3e0a2378b0b5838e0e0d99fcecc167d47bc9a7",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "manta-stakestone"],
+    "pointStructureIds": ["manta-stakestone"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1421,7 +1393,6 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x58aacbccaec30938cb2bb11653cad726e5c4194a",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0x58aacbccaec30938cb2bb11653cad726e5c4194a",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1460,7 +1431,6 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xc5f4c5c2077bbbac5a8381cf30ecdf18fde42a91",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xc5f4c5c2077bbbac5a8381cf30ecdf18fde42a91",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1490,7 +1460,6 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xe5e19bbf39c76a8c980b48f2ec89d0de877bf567",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xe5e19bbf39c76a8c980b48f2ec89d0de877bf567",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1589,7 +1558,7 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "mendi-loyalty"],
+    "pointStructureIds": ["mendi-loyalty"],
     "zaps": [
       {
         "strategyId": "single"
@@ -1619,7 +1588,7 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "mendi-loyalty"],
+    "pointStructureIds": ["mendi-loyalty"],
     "zaps": [
       {
         "strategyId": "single"
@@ -1648,7 +1617,7 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "mendi-loyalty"],
+    "pointStructureIds": ["mendi-loyalty"],
     "zaps": [
       {
         "strategyId": "single"
@@ -1677,7 +1646,7 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "mendi-loyalty"],
+    "pointStructureIds": ["mendi-loyalty"],
     "zaps": [
       {
         "strategyId": "single"
@@ -1706,7 +1675,7 @@
     "risks": ["COMPLEXITY_HIGH", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lending",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "mendi-loyalty"],
+    "pointStructureIds": ["mendi-loyalty"],
     "zaps": [
       {
         "strategyId": "single"
@@ -1736,7 +1705,7 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://www.thenile.exchange/swap",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage", "renzo"],
+    "pointStructureIds": ["renzo"],
     "zaps": [
       {
         "strategyId": "single"
@@ -1768,7 +1737,6 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xE9E146f5bceBD71Fb8C526EA036dE6bbFB1B0Ad7",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xE9E146f5bceBD71Fb8C526EA036dE6bbFB1B0Ad7",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1798,7 +1766,6 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xa4477d98e519D4c1d66aEf4EfDF7cBEb84f4f778",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xa4477d98e519D4c1d66aEf4EfDF7cBEb84f4f778",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1828,7 +1795,6 @@
     "addLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xa8e4b5401f98cf20f7e4e9323b02c40f10661f06",
     "removeLiquidityUrl": "https://app.lynex.fi/liquidity/manage/0xa8e4b5401f98cf20f7e4e9323b02c40f10661f06",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "solidly",
@@ -1858,7 +1824,6 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdc-lynx-wide",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdc-lynx-wide",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "gamma",
@@ -1890,7 +1855,6 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/wbtc-weth-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/wbtc-weth-narrow",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "gamma",
@@ -1922,7 +1886,6 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdt-weth-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdt-weth-narrow",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "gamma",
@@ -1954,7 +1917,6 @@
     "addLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdc-weth-narrow",
     "removeLiquidityUrl": "https://app.gamma.xyz/vault/lynx/linea/details/usdc-weth-narrow",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "gamma",
@@ -1983,7 +1945,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "single"
@@ -2013,7 +1974,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "single"
@@ -2042,7 +2002,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "single"
@@ -2071,7 +2030,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "single"
@@ -2102,7 +2060,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "single"
@@ -2131,7 +2088,6 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "linea",
-    "pointStructureIds": ["linea-voyage"],
     "zaps": [
       {
         "strategyId": "single"
