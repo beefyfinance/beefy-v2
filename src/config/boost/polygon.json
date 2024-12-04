@@ -1,5 +1,26 @@
 [
   {
+    "id": "moo_curve-poly-mai-usdc.e",
+    "poolId": "curve-poly-mai-usdc.e",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["MAI", "pUSDCe"],
+    "tokenAddress": "0x378FcE425239B0c6B43eF79E773794dd2e9979AD",
+    "earnedToken": "pUSDCe",
+    "earnedTokenDecimals": 6,
+    "earnedTokenAddress": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+    "earnContractAddress": "0x914C8140bEB3c668E0144CF6bC75e936A53d545D",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "pUSDCe",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": [],
+    "pinned": true
+  },
+  {
     "id": "moo_retro-gamma-usdc-cash-retro",
     "poolId": "retro-gamma-usdc-cash",
     "name": "Retro",
