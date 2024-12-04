@@ -1,5 +1,26 @@
 [
   {
+    "id": "moo_stargate-v2-arb-weth",
+    "poolId": "stargate-v2-arb-weth",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["ETH"],
+    "tokenAddress": "0xe6EFe71fc3442343037B72776e02daFA2ee9aF1A",
+    "earnedToken": "arbUSDCe",
+    "earnedTokenDecimals": 6,
+    "earnedTokenAddress": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+    "earnContractAddress": "0x38C21401B42eC072d1C74bF550fc7370AC8Ec9E5",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "arbUSDCe",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": [],
+    "pinned": true
+  },
+  {
     "id": "moo_compound-arbitrum-usdc",
     "poolId": "compound-arbitrum-usdc",
     "name": "Beefy",
