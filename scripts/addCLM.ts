@@ -120,7 +120,7 @@ async function generateVault() {
     platformId: vault.provider,
     assets: [token0, token1],
     risks: ['COMPLEXITY_LOW', 'IL_HIGH', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
-    strategyTypeId: 'pool',
+    strategyTypeId: 'compounds',
     network: chain,
     createdAt: Math.floor(Date.now() / 1000) + 1,
     zaps: [
@@ -141,6 +141,7 @@ async function generateVault() {
     token: vault.mooToken,
     tokenAddress: clmAddress,
     tokenDecimals: 18,
+    tokenProviderId: vault.provider,
     earnedTokens: vault.earnedToken,
     earnedTokenAddresses: vault.earnedTokenAddress,
     earnedOracleIds: vault.earnedToken,
@@ -154,7 +155,7 @@ async function generateVault() {
     platformId: vault.provider,
     assets: [token0, token1],
     risks: [],
-    strategyTypeId: 'pool',
+    strategyTypeId: 'compounds',
     network: chain,
     zaps: [
       {
@@ -184,7 +185,7 @@ async function generateVault() {
     platformId: 'beefy',
     assets: [token0, token1],
     risks: ['IL_HIGH', 'MCAP_LARGE', 'CONTRACTS_VERIFIED'],
-    strategyTypeId: 'pool',
+    strategyTypeId: 'compounds',
     network: chain,
     type: 'cowcentrated',
     feeTier: '1',
