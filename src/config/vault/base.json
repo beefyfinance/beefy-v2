@@ -7,6 +7,7 @@
     "token": "cowUniswapBaseCHAOS-WETH",
     "tokenAddress": "0xd0483354ef972B52f992DC1c4dF67C55a15a417d",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
@@ -20,7 +21,7 @@
     "platformId": "uniswap",
     "assets": ["CHAOS", "WETH"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
@@ -52,7 +53,7 @@
     "platformId": "beefy",
     "assets": ["CHAOS", "WETH"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "type": "cowcentrated",
     "feeTier": "1",
@@ -162,6 +163,7 @@
     "token": "cowUniswapBaseAIFUN-WETH",
     "tokenAddress": "0xb37b4FaC09aF8d900E15Ac942a4Ee1E498Fa0989",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
@@ -175,7 +177,7 @@
     "platformId": "uniswap",
     "assets": ["AIFUN", "WETH"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "zaps": [
       {
@@ -207,7 +209,7 @@
     "platformId": "beefy",
     "assets": ["AIFUN", "WETH"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "base",
     "type": "cowcentrated",
     "feeTier": "1",
