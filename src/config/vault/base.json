@@ -119,7 +119,7 @@
     "strategyTypeId": "compounds",
     "network": "base",
     "type": "cowcentrated",
-    "feeTier": "1",
+    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -183,7 +183,7 @@
     "strategyTypeId": "compounds",
     "network": "base",
     "type": "cowcentrated",
-    "feeTier": "1",
+    "feeTier": "0.01",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -247,7 +247,7 @@
     "strategyTypeId": "compounds",
     "network": "base",
     "type": "cowcentrated",
-    "feeTier": "1",
+    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
