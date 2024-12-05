@@ -622,6 +622,19 @@ export const StandardVaultAbi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'want',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     constant: true,
     inputs: [],
     name: 'rewardRate',

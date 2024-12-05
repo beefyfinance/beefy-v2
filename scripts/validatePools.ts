@@ -1,152 +1,394 @@
-import { MultiCall } from 'eth-multicall';
 import { addressBook } from 'blockchain-addressbook';
-import Web3 from 'web3';
-import BigNumber from 'bignumber.js';
-import { isEmpty, isValidChecksumAddress, maybeChecksumAddress, sleep } from './common/utils';
 import { getVaultsIntegrity } from './common/exclude';
 import {
-  addressBookToAppId,
+  AddressBookChainId,
   chainIds,
-  chainRpcs,
   excludeChains,
   excludedChainIds,
   getBoostsForChain,
-  getVaultsForChain,
 } from './common/config';
-import { getStrategyIds } from './common/strategies';
-import strategyABI from '../src/config/abi/strategy.json';
-import { StandardVaultAbi } from '../src/config/abi/StandardVaultAbi';
-import platforms from '../src/config/platforms.json';
 import partners from '../src/config/boost/partners.json';
 import campaigns from '../src/config/boost/campaigns.json';
-import pointProviders from '../src/config/points.json';
-import type { PlatformType, VaultConfig } from '../src/features/data/apis/config-types';
-import partition from 'lodash/partition';
-import type { AbiItem } from 'web3-utils';
-import i18keys from '../src/locales/en/main.json';
-import { fileExists } from './common/files';
+import { fetchVaults } from './validate/vault/data';
+import { GlobalValidateContext, VaultValidateContext } from './validate/required-updates-types';
+import { ChainValidateResult } from './validate/chain-types';
+import { RequiredUpdates } from './validate/required-updates';
+import { ValidationOptions } from './validate/options-types';
+import { vaultValidators } from './validate/vault/validators';
+import { VaultValidatorsCheck } from './validate/vault/validators-types';
+import { VaultGroups } from './validate/vault/data-types';
+import { buildOptions } from './validate/options';
+import { isPlatformConfigValid } from './validate/platform/validators';
+import { pconsole } from './common/pconsole';
 
-const overrides = {
-  'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
-  'bifi-maxi': { stratOwner: undefined }, // harvester 0xDe30
-  'beltv2-4belt': { vaultOwner: undefined }, // moonpot deployer
-  'baseswap-axlwbtc-usdbc': { harvestOnDeposit: undefined },
-  'kinetix-klp': { harvestOnDeposit: undefined },
-  'bifi-vault': { beefyFeeRecipient: undefined }, // TODO: remove
-  'png-wbtc.e-usdc': { harvestOnDeposit: undefined },
-  'gmx-arb-glp': { harvestOnDeposit: undefined },
-  'gmx-arb-gmx': { harvestOnDeposit: undefined },
-  'swapbased-usd+-usdbc': { harvestOnDeposit: undefined },
-  'swapbased-dai+-usd+': { harvestOnDeposit: undefined },
-  'aero-cow-eurc-cbbtc-vault': { harvestOnDeposit: undefined },
-  'pendle-eqb-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
-  'pendle-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
+/**
+ * Everything should be configurable from this object
+ * It is a bit more verbose as we:
+ *  - don't skip on `undefined` values
+ *  - nor, allow owners on one exceptional contract to be valid for all contracts on the same chain
+ *  - and, add reasons for exceptions (please maintain these)
+ * The list of validators run for each vault type is specified in vault/validators.ts
+ * @see vaultValidators
+ */
+const options: ValidationOptions = buildOptions({
+  vaults: {
+    // Additional owners valid for all vaults on a chain
+    additionalVaultOwners: {
+      fantom: ['devMultisig'],
+      polygon: ['devMultisig'],
+      arbitrum: ['devMultisig'],
+    },
+    // Can skip validators for specific chains/groups
+    skip: {
+      allStandard: {
+        isHarvestOnDepositCorrect: {
+          chains: new Set(['ethereum', 'avax', 'rootstock']),
+        },
+      },
+    },
+    // Custom expected results for specific vaults / validators
+    exceptions: {
+      isHarvestOnDepositCorrect: {
+        'bifi-vault': { value: false, reason: 'Please add a reason' },
+        'swapbased-usd+-usdbc': { value: false, reason: 'Please add a reason' },
+        'swapbased-dai+-usd+': { value: false, reason: 'Please add a reason' },
+        'equilibria-arb-silo-usdc.e': { value: false, reason: 'Please add a reason' },
+        'silo-eth-pendle-weeth': { value: false, reason: 'Please add a reason' },
+        'pancake-cow-arb-usdt+-usd+-vault': { value: false, reason: 'Please add a reason' },
+        'compound-op-eth': { value: false, reason: 'Please add a reason' },
+        'nuri-cow-scroll-usdc-scr-vault': { value: false, reason: 'Please add a reason' },
+        'aero-cow-eurc-usdc-vault': { value: false, reason: 'Please add a reason' },
+        'venus-bnb': { value: false, reason: 'Please add a reason' },
+        'aero-cow-eurc-cbbtc-vault': { value: false, reason: 'BTC decimals' },
+        'pendle-eqb-arb-dwbtc-26jun25': { value: false, reason: 'BTC decimals' },
+        'pendle-arb-dwbtc-26jun25': { value: false, reason: 'BTC decimals' },
+        'tokan-wbtc-weth': { value: false, reason: 'BTC decimals' },
+        'aero-cow-usdz-cbbtc-vault': { value: false, reason: 'BTC decimals' },
+        'aero-cow-weth-cbbtc-vault': { value: false, reason: 'BTC decimals' },
+        'aero-cow-usdc-cbbtc-vault': { value: false, reason: 'BTC decimals' },
+        'silo-op-tbtc-tbtc': { value: false, reason: 'BTC decimals' },
+        'sushi-cow-arb-wbtc-tbtc-vault': { value: false, reason: 'BTC decimals' },
+        'png-wbtc.e-usdc': { value: false, reason: 'BTC decimals' },
+      },
+      isStrategyOwnerCorrect: {
+        'bifi-maxi-eol': {
+          value: '0x77BA75A9a95b5aB756749fF5519aC40Ed4AAb486',
+          reason: 'Please add a reason',
+        },
+        'bunny-bunny-eol': {
+          value: '0x0000000000000000000000000000000000000000',
+          reason: 'BSC no owner',
+        },
+        'cake-syrup-twt': {
+          value: undefined,
+          reason: 'BSC old strategy with no privileged methods',
+        },
+        'fortube-btcb': { value: undefined, reason: 'BSC old strategy with no privileged methods' },
+        'fortube-busd': { value: undefined, reason: 'BSC old strategy with no privileged methods' },
+        'fortube-dot': { value: undefined, reason: 'BSC old strategy with no privileged methods' },
+        'fortube-fil': { value: undefined, reason: 'BSC old strategy with no privileged methods' },
+        'fortube-usdt': { value: undefined, reason: 'BSC old strategy with no privileged methods' },
+        'fry-burger-v1': {
+          value: undefined,
+          reason: 'BSC old strategy with no privileged methods',
+        },
+        'fry-burger-v2': {
+          value: undefined,
+          reason: 'BSC old strategy with no privileged methods',
+        },
+      },
+      isVaultOwnerCorrect: {
+        'cake-busd-bnb': { value: undefined, reason: 'BSC old vault with no privileged methods' },
+        'cake-cake-bnb-eol': {
+          value: undefined,
+          reason: 'BSC old vault with no privileged methods',
+        },
+        'cake-cake-eol': { value: undefined, reason: 'BSC old vault with no privileged methods' },
+        'cake-hard': { value: undefined, reason: 'BSC old vault with no privileged methods' },
+        'cake-syrup-twt': { value: undefined, reason: 'BSC old vault with no privileged methods' },
+        'cake-twt': { value: undefined, reason: 'BSC old vault with no privileged methods' },
+        'cake-usdt-busd': { value: undefined, reason: 'BSC old vault with no privileged methods' },
+        'fortube-btcb': { value: undefined, reason: 'BSC old vault with no privileged methods' },
+        'fortube-busd': { value: undefined, reason: 'BSC old vault with no privileged methods' },
+        'fortube-dot': { value: undefined, reason: 'BSC old vault with no privileged methods' },
+        'fortube-fil': { value: undefined, reason: 'BSC old vault with no privileged methods' },
+        'fortube-usdt': { value: undefined, reason: 'BSC old vault with no privileged methods' },
+        'fry-burger-v1': { value: undefined, reason: 'BSC old vault with no privileged methods' },
+        'fry-burger-v2': { value: undefined, reason: 'BSC old vault with no privileged methods' },
+        'beltv2-4belt': {
+          value: '0x654AC60246c9B7E35f0F51f116D67EbC0a956d09',
+          reason: 'BSC Moonpot deployer',
+        },
+      },
+      isRewardPoolOwnerCorrect: {
+        'cronos-bifi-gov': {
+          value: '0xF9eBb381dC153D0966B2BaEe776de2F400405755',
+          reason: 'Cronos BeefyFeeBatchV3',
+        },
+        'fantom-bifi-gov': {
+          value: '0x35F43b181957824f2b5C0EF9856F85c90fECb3c8',
+          reason: 'Fantom BeefyFeeBatchV3',
+        },
+        'metis-bifi-gov': {
+          value: '0x2cC364255206A7e14bF59ADB1fc5770DbA48CB3f',
+          reason: 'Metis BeefyFeeBatchV3',
+        },
+        'avax-bifi-gov': {
+          value: '0x48beD04cBC52B5676C04fa94be5786Cdc9f266f5',
+          reason: 'Avax BeefyFeeBatchV3',
+        },
+        'beefy-beJoe-earnings': {
+          value: '0xc1464638B11b9BAac9525cf7bF2B4A52Ccbde885',
+          reason: 'Avax JoeBatch',
+        },
+        'moonbeam-bifi-gov': {
+          value: '0x00AeC34489A7ADE91A0507B6b9dBb0a50938B7c0',
+          reason: 'Moonbeam BeefyFeeBatchV3',
+        },
+        'beefy-beqi-earnings': {
+          value: '0x97bfa4b212A153E15dCafb799e733bc7d1b70E72',
+          reason: 'Polygon BeefyQI',
+        },
+        'polygon-bifi-gov': {
+          value: '0x7313533ed72D2678bFD9393480D0A30f9AC45c1f',
+          reason: 'Polygon BeefyFeeBatchV3',
+        },
+        'arbi-bifi-gov': {
+          value: '0xFEd99885fE647dD44bEA2B375Bd8A81490bF6E0f',
+          reason: 'Arbitrum BeefyFeeBatchV3',
+        },
+        'bifi-pool': {
+          value: addressBook.ethereum.platforms.beefyfinance.strategyOwner,
+          reason: 'Ethereum strategyOwner',
+        },
+        'ethereum-bifi-gov': {
+          value: '0x8237f3992526036787E8178Def36291Ab94638CD',
+          reason: 'Ethereum BeefyFeeBatchV3UniV3',
+        },
+        'bifi-gov': {
+          value: '0xAb4e8665E7b0E6D83B65b8FF6521E347ca93E4F8',
+          reason: 'BSC BeefyFeeBatchV3',
+        },
+        'bifi-gov-eol': {
+          value: '0x0000000000000000000000000000000000000000',
+          reason: 'BSC no owner',
+        },
+        'beefy-beopx-earnings': {
+          value: '0xEDFBeC807304951785b581dB401fDf76b4bAd1b0',
+          reason: 'Optimism BeefyOPX',
+        },
+        'optimism-bifi-gov': {
+          value: '0x3Cd5Ae887Ddf78c58c9C1a063EB343F942DbbcE8',
+          reason: 'Optimism BeefyFeeBatchV3SolidlyRouter',
+        },
+        'kava-bifi-gov': {
+          value: '0xF0d26842c3935A618e6980C53fDa3A2D10A02eb7',
+          reason: 'Kava ???',
+        },
+      },
+      isFeeConfigCorrect: {
+        'boo-boo-ftm': { value: undefined, reason: 'Fantom strategy predates feeConfig' },
+        'boo-mim-ftm': { value: undefined, reason: 'Fantom strategy predates feeConfig' },
+        'boo-wftm-beets': { value: undefined, reason: 'Fantom strategy predates feeConfig' },
+        'boo-wftm-brush': { value: undefined, reason: 'Fantom strategy predates feeConfig' },
+        'boo-wftm-spell': { value: undefined, reason: 'Fantom strategy predates feeConfig' },
+        'wigo-wigo': { value: undefined, reason: 'Fantom strategy predates feeConfig' },
+        'wigo-wigo-ftm': { value: undefined, reason: 'Fantom strategy predates feeConfig' },
+        'netswap-m.usdt-m.usdc': { value: undefined, reason: 'Metis strategy predates feeConfig' },
+        'netswap-metis-m.usdc': { value: undefined, reason: 'Metis strategy predates feeConfig' },
+        'netswap-nett-metis': { value: undefined, reason: 'Metis strategy predates feeConfig' },
+        'netswap-weth-metis': { value: undefined, reason: 'Metis strategy predates feeConfig' },
+        'vvs-cro-atom': { value: undefined, reason: 'Cronos strategy predates feeConfig' },
+        'vvs-cro-btc': { value: undefined, reason: 'Cronos strategy predates feeConfig' },
+        'vvs-cro-doge': { value: undefined, reason: 'Cronos strategy predates feeConfig' },
+        'vvs-cro-eth': { value: undefined, reason: 'Cronos strategy predates feeConfig' },
+        'vvs-cro-shib': { value: undefined, reason: 'Cronos strategy predates feeConfig' },
+        'vvs-cro-usdc': { value: undefined, reason: 'Cronos strategy predates feeConfig' },
+        'vvs-cro-usdt': { value: undefined, reason: 'Cronos strategy predates feeConfig' },
+        'vvs-tonic-cro': { value: undefined, reason: 'Cronos strategy predates feeConfig' },
+        'vvs-usdt-usdc': { value: undefined, reason: 'Cronos strategy predates feeConfig' },
+        'vvs-vvs': { value: undefined, reason: 'Cronos strategy predates feeConfig' },
+        'vvs-vvs-cro': { value: undefined, reason: 'Cronos strategy predates feeConfig' },
+        'vvs-vvs-usdc': { value: undefined, reason: 'Cronos strategy predates feeConfig' },
+        'vvs-vvs-usdt': { value: undefined, reason: 'Cronos strategy predates feeConfig' },
+        'joe-joe': { value: undefined, reason: 'Avax strategy predates feeConfig' },
+        'stellaswap-well-wglmr': {
+          value: undefined,
+          reason: 'Moonbeam strategy predates feeConfig',
+        },
+        'curve-op-f-susd': { value: undefined, reason: 'Optimism strategy predates feeConfig' },
+        'velodrome-usdc-dola': { value: undefined, reason: 'Optimism strategy predates feeConfig' },
+        'velodrome-velo-op': { value: undefined, reason: 'Optimism strategy predates feeConfig' },
+      },
+      isFeeRecipientCorrect: {
+        'ethereum-vault': {
+          value: '0x8237f3992526036787E8178Def36291Ab94638CD',
+          reason: 'Ethereum BeefyFeeBatchV3UniV3',
+        },
+        'bifi-vault': {
+          value: '0x8237f3992526036787E8178Def36291Ab94638CD',
+          reason: 'Ethereum BeefyFeeBatchV3UniV3',
+        },
+      },
+    },
+    assets: {
+      missingAllowedForEolCreatedBefore: 1675694667, // 2023-06-02T14:44:27+00:00
+      syntheticsNotInAddressBook: {
+        arbitrum: new Set(['NEAR', 'ATOM', 'BNB', 'LTC', 'XRP', 'DOGE']),
+      },
+    },
+    fields: {
+      required: {
+        // Ensure CLM strategies are correct; additional check ensure that CLM Pool/Vault match the base CLM
+        strategyTypeId: [
+          {
+            value: 'compounds',
+            matching: {
+              type: ['cowcentrated'],
+              tokenProviderId: [
+                'uniswap',
+                'sushi',
+                'thena',
+                'camelot',
+                'stellaswap',
+                'baseswap',
+                'oku',
+                'kim',
+                'dragon',
+                'ramses', // compounds and also sends to reward pool
+                'pharaoh', // compounds and also sends to reward pool
+                'nile', // compounds and also sends to reward pool
+                'pancakeswap', // compounds and also sends to reward pool
+                'nuri', // compounds and also sends to reward pool
+              ],
+            },
+          },
+          {
+            value: 'pool',
+            matching: {
+              type: ['cowcentrated'],
+              tokenProviderId: ['velodrome', 'aerodrome'],
+            },
+          },
+        ],
+      },
+      legacy: {
+        tokenDescription: 'Use addressbook',
+        tokenDescriptionUrl: 'Use addressbook',
+        pricePerFullShare: 'Not required',
+        tvl: 'Not required',
+        oraclePrice: 'Not required',
+        platform: 'Use platformId',
+        stratType: 'Use strategyTypeId',
+        logo: 'Not required',
+        depositsPaused: 'Use status: paused',
+        withdrawalFee: 'Not required (use api)',
+        updatedFees: 'Not required',
+        mintTokenUrl: 'Use minters config',
+        callFee: 'Not required (use api)',
+        tokenAmmId: 'Use zap: VaultZapConfig if needed',
+        isGovVault: 'Use type: gov',
+      },
+      checksum: [
+        'tokenAddress',
+        'earnedTokenAddress',
+        'earnContractAddress',
+        'depositTokenAddresses',
+      ],
+    },
+  },
+});
+
+type CliOptions = {
+  verbose: boolean;
+  noColor: boolean;
 };
 
-const oldValidOwners = [
-  addressBook.fantom.platforms.beefyfinance.devMultisig,
-  addressBook.polygon.platforms.beefyfinance.devMultisig,
-  addressBook.arbitrum.platforms.beefyfinance.devMultisig,
-];
+async function validateEverything({
+  verbose = false,
+  noColor = false,
+}: CliOptions): Promise<number> {
+  const globalContext: GlobalValidateContext = {
+    options,
+    seenVaultIds: new Set<string>(),
+    requiredUpdates: new RequiredUpdates(),
+    verbose,
+  };
 
-const oldValidFeeRecipients = {
-  canto: '0xF09d213EE8a8B159C884b276b86E08E26B3bfF75',
-  kava: '0x07F29FE11FbC17876D9376E3CD6F2112e81feA6F',
-  moonriver: '0x617f12E04097F16e73934e84f35175a1B8196551',
-  moonbeam: [
-    '0x00aec34489a7ade91a0507b6b9dbb0a50938b7c0',
-    '0x3E7F60B442CEAE0FE5e48e07EB85Cfb1Ed60e81A',
-  ],
-};
+  if (noColor) {
+    pconsole.disableColor();
+  }
 
-const oldValidRewardPoolOwners = {
-  polygon: [
-    '0x7313533ed72D2678bFD9393480D0A30f9AC45c1f',
-    '0x97bfa4b212A153E15dCafb799e733bc7d1b70E72',
-  ],
-  kava: '0xF0d26842c3935A618e6980C53fDa3A2D10A02eb7',
-  metis: '0x2cC364255206A7e14bF59ADB1fc5770DbA48CB3f',
-  cronos: '0xF9eBb381dC153D0966B2BaEe776de2F400405755',
-  celo: '0x32C82EE8Fca98ce5114D2060c5715AEc714152FB',
-  canto: '0xeD7b88EDd899d578581DCcfce80F43D1F395b93f',
-  moonriver: '0xD5e8D34dE3B1A6fd54e87B5d4a857CBB762d0C8A',
-  moonbeam: '0x00AeC34489A7ADE91A0507B6b9dBb0a50938B7c0',
-  aurora: '0x9dA9f3C6c45F1160b53D395b0A982aEEE1D212fE',
-  ethereum: [
-    '0x1c9270ac5C42E51611d7b97b1004313D52c80293',
-    '0x8237f3992526036787E8178Def36291Ab94638CD',
-  ],
-  avax: [
-    '0x48beD04cBC52B5676C04fa94be5786Cdc9f266f5',
-    '0xc1464638B11b9BAac9525cf7bF2B4A52Ccbde885',
-  ],
-  arbitrum: '0xFEd99885fE647dD44bEA2B375Bd8A81490bF6E0f',
-  bsc: ['0xAb4e8665E7b0E6D83B65b8FF6521E347ca93E4F8', '0x0000000000000000000000000000000000000000'],
-  fantom: '0x35F43b181957824f2b5C0EF9856F85c90fECb3c8',
-  optimism: [
-    '0xEDFBeC807304951785b581dB401fDf76b4bAd1b0',
-    '0x3Cd5Ae887Ddf78c58c9C1a063EB343F942DbbcE8',
-    addressBook.optimism.platforms.beefyfinance.strategyOwner,
-  ],
-};
+  let exitCode = (
+    await Promise.all([
+      // Vaults + Boosts
+      validatePools(globalContext),
+      // Platform config
+      validatePlatformConfig(globalContext),
+    ])
+  ).reduce((prev, curr) => Math.max(prev, curr), 0);
 
-const nonHarvestOnDepositChains = ['ethereum', 'avax', 'rootstock'];
-const nonHarvestOnDepositPools = [
-  'venus-bnb',
-  'equilibria-arb-silo-usdc.e',
-  'silo-eth-pendle-weeth',
-  'silo-op-tbtc-tbtc',
-  'sushi-cow-arb-wbtc-tbtc-vault',
-  'pancake-cow-arb-usdt+-usd+-vault',
-  'aero-cow-weth-cbbtc-vault',
-  'aero-cow-usdc-cbbtc-vault',
-  'compound-op-usdt',
-  'compound-op-usdc',
-  'compound-op-eth',
-  'nuri-cow-scroll-usdc-scr-vault',
-  'tokan-wbtc-weth',
-  'aero-cow-usdz-cbbtc-vault',
-  'aero-cow-eurc-usdc-vault',
-];
-const excludedAbPools = [
-  'gmx-arb-near-usdc',
-  'gmx-arb-atom-usdc',
-  'gmx-arb-bnb-usdc',
-  'gmx-arb-ltc-usdc',
-  'gmx-arb-xrp-usdc',
-  'gmx-arb-doge-usdc',
-];
-const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddress'];
+  if (globalContext.requiredUpdates.hasAny()) {
+    exitCode = exitCode === 0 ? 1 : exitCode;
+    globalContext.requiredUpdates.prettyPrint();
+  }
 
-const validPlatformIds = platforms.map(platform => platform.id);
-const validStrategyIds = getStrategyIds();
-const validPointProviderIds = pointProviders.map(pointProvider => pointProvider.id);
+  return exitCode;
+}
 
-const oldFields = {
-  tokenDescription: 'Use addressbook',
-  tokenDescriptionUrl: 'Use addressbook',
-  pricePerFullShare: 'Not required',
-  tvl: 'Not required',
-  oraclePrice: 'Not required',
-  platform: 'Use platformId',
-  stratType: 'Use strategyTypeId',
-  logo: 'Not required',
-  depositsPaused: 'Use status: paused',
-  withdrawalFee: 'Not required (use api)',
-  updatedFees: 'Not required',
-  mintTokenUrl: 'Use minters config',
-  callFee: 'Not required (use api)',
-  tokenAmmId: 'Use zap: VaultZapConfig if needed',
-  isGovVault: 'Use type: gov',
-};
+// Vaults + Boosts
+async function validatePools(globalContext: GlobalValidateContext): Promise<number> {
+  let exitCode: number = 0;
 
-const validatePools = async () => {
-  let exitCode = 0;
-  let updates = {};
-  const uniquePoolId = new Set();
+  if (!(await areExcludedChainsUnchanged())) {
+    return 1;
+  }
+
+  const chainResults = await Promise.allSettled(
+    chainIds.map(chainId => validateChainPools(chainId, globalContext))
+  );
+  let invalidChains = 0;
+  for (let i = 0; i < chainResults.length; ++i) {
+    const chainResult = chainResults[i];
+    const chainId = chainIds[i];
+
+    if (chainResult.status === 'rejected') {
+      invalidChains++;
+      pconsole.error(`Error: ${chainId} threw while attempting to validate:`, chainResult.reason);
+      exitCode = 1;
+      continue;
+    }
+
+    const result = chainResult.value;
+    if (!result.success) {
+      invalidChains++;
+      pconsole.error(`Error: ${chainId} failed to validate.`);
+      exitCode = 1;
+    }
+  }
+
+  if (invalidChains > 0) {
+    pconsole.error(`${invalidChains}/${chainIds.length} chains failed validation.`);
+  }
 
   if (excludedChainIds.length > 0) {
-    console.warn(`*** Excluded chains: ${excludedChainIds.join(', ')} ***`);
+    pconsole.log(`*** Excluded chains: ${excludedChainIds.join(', ')} ***`);
+  }
+
+  if (exitCode === 0) {
+    pconsole.success('Validated successfully.');
+  } else {
+    pconsole.error('Validation failed.');
+  }
+
+  return exitCode;
+}
+
+async function areExcludedChainsUnchanged() {
+  let isUnchanged = true;
+
+  if (excludedChainIds.length > 0) {
+    pconsole.log(`*** Excluded chains: ${excludedChainIds.join(', ')} ***`);
     const integrities = await Promise.all(
       excludedChainIds.map(chainId => getVaultsIntegrity(chainId))
     );
@@ -155,342 +397,188 @@ const validatePools = async () => {
       const integrityThen = excludeChains[chainId];
 
       if (!integrityThen) {
-        console.error(`Missing integrity data for excluded chain ${chainId}`);
-        exitCode = 1;
+        pconsole.error(`Missing integrity data for excluded chain ${chainId}`);
+        isUnchanged = false;
         return;
       }
 
       if (!integrityNow) {
-        console.error(`Failed to perform integrity check for excluded chain ${chainId}`);
-        exitCode = 1;
+        pconsole.error(`Failed to perform integrity check for excluded chain ${chainId}`);
+        isUnchanged = false;
         return;
       }
 
       if (integrityNow.count !== integrityThen.count) {
-        console.error(
+        pconsole.error(
           `Vault count changed for excluded chain ${chainId}: ${integrityThen.count} -> ${integrityNow.count}`
         );
-        exitCode = 1;
+        isUnchanged = false;
         return;
       }
 
       if (integrityNow.hash !== integrityThen.hash) {
-        console.error(
+        pconsole.error(
           `Vault hash changed for excluded chain ${chainId}: ${integrityThen.hash} -> ${integrityNow.hash}`
         );
-        exitCode = 1;
+        isUnchanged = false;
         return;
       }
 
-      console.log(`Excluded chain ${chainId} integrity check passed`);
+      pconsole.success(`Excluded chain ${chainId} integrity check passed`);
     });
 
-    if (exitCode != 0) {
-      console.error('*** Excluded chain integrity check failed ***');
-      console.error('If you removed a vault, update excludeChains in scripts/common/config.ts');
-      return exitCode;
+    if (!isUnchanged) {
+      pconsole.error('*** Excluded chain integrity check failed ***');
+      pconsole.error('If you removed a vault, update excludeChains in scripts/common/config.ts');
+      return isUnchanged;
     }
   }
 
-  const platformExitCode = await validatePlatformTypes();
-  if (platformExitCode !== 0) {
-    exitCode = platformExitCode;
-  }
+  return isUnchanged;
+}
 
-  let promises = chainIds.map(chainId => validateSingleChain(chainId, uniquePoolId));
-  let results = await Promise.all(promises);
+async function validateChainPools(
+  chainId: AddressBookChainId,
+  globalContext: GlobalValidateContext
+): Promise<ChainValidateResult> {
+  let success = true;
+  const [vaults, boostConfigs] = await Promise.all([
+    fetchVaults(chainId),
+    getBoostsForChain(chainId),
+  ]);
 
-  exitCode = results.reduce((acum, cur) => (acum + cur.exitCode > 0 ? 1 : 0), exitCode);
-  results.forEach(res => {
-    if (!isEmpty(res.updates)) {
-      updates[res.chainId] = res.updates;
+  //
+  // Vaults
+  //
+  const { vaultIds, summary } = vaults.all.reduce(
+    (prev, vault) => {
+      prev.vaultIds.add(vault.id);
+      prev.summary.all.total += 1;
+      prev.summary[vault.type].total += 1;
+      prev.summary.all[vault.status] += 1;
+      prev.summary[vault.type][vault.status] += 1;
+
+      return prev;
+    },
+    {
+      vaultIds: new Set<string>(),
+      summary: {
+        standard: { active: 0, eol: 0, paused: 0, total: 0 },
+        gov: { active: 0, eol: 0, paused: 0, total: 0 },
+        cowcentrated: { active: 0, eol: 0, paused: 0, total: 0 },
+        all: { active: 0, eol: 0, paused: 0, total: 0 },
+      },
     }
-  });
-  // Helpful data structures to correct addresses.
-  console.log('Required updates.', JSON.stringify(updates));
-
-  if (excludedChainIds.length > 0) {
-    console.warn(`*** Excluded chains: ${excludedChainIds.join(', ')} ***`);
-  }
-
-  return exitCode;
-};
-
-const validateSingleChain = async (chainId, uniquePoolId) => {
-  let [pools, boosts] = await Promise.all([getVaultsForChain(chainId), getBoostsForChain(chainId)]);
-
-  console.log(`Validating ${pools.length} pools in ${chainId}...`);
-
-  let updates: Record<string, Record<string, any>> = {};
-  let exitCode = 0;
-
-  //Governance pools should be separately verified
-  const [govPools, vaultPools] = partition(pools, pool => pool.type === 'gov');
-  pools = vaultPools;
-
-  const poolIds = new Set(pools.map(pool => pool.id));
-  const uniqueEarnedToken = new Set();
-  const uniqueEarnedTokenAddress = new Set();
-  const uniqueOracleId = new Set();
-  const govPoolsByDepositAddress = new Map(govPools.map(pool => [pool.tokenAddress, pool]));
-  let activePools = 0;
-
-  // Populate some extra data.
-  const web3 = new Web3(chainRpcs[chainId]);
-  const poolsWithGovData = await populateGovData(chainId, govPools, web3);
-  const poolsWithVaultData = await populateVaultsData(chainId, pools, web3);
-  const poolsWithStrategyData = override(
-    await populateStrategyData(chainId, poolsWithVaultData, web3)
   );
-  const clmsWithData = await populateCowcentratedData(chainId, pools, web3);
 
-  poolsWithStrategyData.forEach(pool => {
-    // Errors, should not proceed with build
-    if (uniquePoolId.has(pool.id)) {
-      console.error(`Error: ${pool.id} : Pool id duplicated: ${pool.id}`);
-      exitCode = 1;
+  const { beefyFeeRecipient, beefyFeeConfig } = addressBook[chainId].platforms.beefyfinance;
+
+  const context: VaultValidateContext = {
+    globalContext: globalContext,
+    seenEarnedTokens: new Set(),
+    seenEarnedTokenAddresses: new Set(),
+    addRequiredUpdate: globalContext.requiredUpdates.makeChainAddFunction(chainId),
+    chainId,
+    vaults,
+    vaultOwners: globalContext.options.vaults.vaultOwners[chainId],
+    rewardPoolOwners: globalContext.options.vaults.rewardPoolOwners[chainId],
+    strategyOwners: globalContext.options.vaults.strategyOwners[chainId],
+    strategyKeepers: globalContext.options.vaults.strategyKeepers[chainId],
+    feeRecipient: beefyFeeRecipient,
+    feeConfig: beefyFeeConfig,
+  };
+
+  const genericVaultValidators = vaultValidators as VaultValidatorsCheck;
+  for (const group of Object.keys(genericVaultValidators)) {
+    const validateFunctions = genericVaultValidators[group as keyof VaultValidatorsCheck];
+    if (!validateFunctions) {
+      continue;
+    }
+    const vaultsToValidate = vaults[group as keyof VaultGroups];
+    if (!vaultsToValidate.length) {
+      continue;
     }
 
-    if (uniqueEarnedToken.has(pool.earnedToken)) {
-      console.error(`Error: ${pool.id} : Pool earnedToken duplicated: ${pool.earnedToken}`);
-      exitCode = 1;
-    }
-
-    if (uniqueEarnedTokenAddress.has(pool.earnedTokenAddress)) {
-      console.error(
-        `Error: ${pool.id} : Pool earnedTokenAddress duplicated: ${pool.earnedTokenAddress}`
-      );
-      exitCode = 1;
-    }
-
-    if (pool.earnedTokenAddress !== pool.earnContractAddress) {
-      console.error(
-        `Error: ${pool.id} : Pool earnedTokenAddress not same as earnContractAddress: ${pool.earnedTokenAddress} != ${pool.earnContractAddress}`
-      );
-      exitCode = 1;
-    }
-
-    if (!pool.strategyTypeId) {
-      console.error(`Error: ${pool.id} : strategyTypeId missing vault strategy type`);
-      exitCode = 1;
-    } else if (!validStrategyIds[pool.type].has(pool.strategyTypeId)) {
-      console.error(
-        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription-${pool.type}-${pool.strategyTypeId}" not present in locales/en/risks.json`
-      );
-      exitCode = 1;
-    }
-
-    if (!pool.platformId) {
-      console.error(`Error: ${pool.id} : platformId missing vault platform; see platforms.json`);
-      exitCode = 1;
-    } else if (!validPlatformIds.includes(pool.platformId)) {
-      console.error(
-        `Error: ${pool.id} : platformId ${pool.platformId} not present in platforms.json`
-      );
-      exitCode = 1;
-    }
-
-    if (pool.oracle === 'lps') {
-      if (!pool.tokenProviderId) {
-        console.error(
-          `Error: ${pool.id} : tokenProviderId missing LP provider platform; see platforms.json`
-        );
-        exitCode = 1;
-      } else if (!validPlatformIds.includes(pool.tokenProviderId)) {
-        console.error(
-          `Error: ${pool.id} : tokenProviderId ${pool.tokenProviderId} not present in platforms.json`
-        );
-        exitCode = 1;
+    for (const [validateName, validateFn] of Object.entries(validateFunctions)) {
+      if (globalContext.options.vaults.skip?.[group]?.[validateName]?.chains?.has(chainId)) {
+        pconsole.info(`Skipping validator ${validateName} for ${group} on ${chainId}`);
+        continue;
       }
-    }
 
-    if (!pool.createdAt) {
-      console.error(
-        `Error: ${pool.id} : Pool createdAt timestamp missing - required for UI: vault sorting`
-      );
-      exitCode = 1;
-    } else if (isNaN(pool.createdAt)) {
-      console.error(`Error: ${pool.id} : Pool createdAt timestamp wrong type, should be a number`);
-      exitCode = 1;
-    }
-
-    if (pool.status === 'eol') {
-      if (!pool.retiredAt) {
-        console.error(`Error: ${pool.id} : Pool retiredAt timestamp missing`);
-        exitCode = 1;
-      } else if (
-        typeof pool.retiredAt !== 'number' ||
-        isNaN(pool.retiredAt) ||
-        !isFinite(pool.retiredAt)
-      ) {
-        console.error(
-          `Error: ${pool.id} : Pool retiredAt timestamp wrong type, should be a number`
-        );
-        exitCode = 1;
-      }
-    }
-
-    if (pool.status === 'paused') {
-      if (!pool.pausedAt) {
-        console.error(`Error: ${pool.id} : Pool pausedAt timestamp missing`);
-        exitCode = 1;
-      } else if (
-        typeof pool.pausedAt !== 'number' ||
-        isNaN(pool.pausedAt) ||
-        !isFinite(pool.pausedAt)
-      ) {
-        console.error(`Error: ${pool.id} : Pool pausedAt timestamp wrong type, should be a number`);
-        exitCode = 1;
-      }
-    }
-
-    if (!pool.network) {
-      console.error(`Error: ${pool.id} : Missing network`);
-      exitCode = 1;
-    } else if (pool.network !== addressBookToAppId(chainId)) {
-      console.error(
-        `Error: ${pool.id} : Network mismatch ${pool.network} != ${addressBookToAppId(chainId)}`
-      );
-      exitCode = 1;
-    }
-
-    // Assets
-    if (!pool.assets || !Array.isArray(pool.assets) || !pool.assets.length) {
-      console.error(`Error: ${pool.id} : Missing assets array`);
-      exitCode = 1;
-    } else if (pool.status !== 'eol') {
-      for (const assetId of pool.assets) {
-        if (!(assetId in addressBook[chainId].tokens)) {
-          if (excludedAbPools.includes(pool.id)) continue;
-          // just warn for now
-          console.warn(`Warning: ${pool.id} : Asset ${assetId} not in addressbook on ${chainId}`);
-          // exitCode = 1;
+      for (const vault of vaultsToValidate) {
+        const isValid = validateFn(vault, context);
+        if (!isValid) {
+          success = false;
+        }
+        if (globalContext.verbose) {
+          pconsole.dim(`${chainId} ${group} ${vault.id} ${validateName}: ${isValid ? '✔️' : '❌'}`);
         }
       }
     }
+  }
 
-    // Cowcentrated should have RP
-    if (pool.type === 'cowcentrated' && pool.status !== 'eol') {
-      const govPool = govPoolsByDepositAddress.get(pool.earnContractAddress);
-      if (!govPool) {
-        console.error(`Error: ${pool.id} : CLM missing CLM pool`);
-        exitCode = 1;
-      }
-    }
-
-    // Old fields we no longer need
-    const fieldsToDelete = Object.keys(oldFields).filter(field => field in pool);
-    if (fieldsToDelete.length) {
-      console.error(
-        `Error: ${pool.id} : These fields are no longer needed: ${fieldsToDelete.join(', ')}`
-      );
-      fieldsToDelete.forEach(field => console.log(`\t${field}: '${oldFields[field]}',`));
-      exitCode = 1;
-    }
-
-    addressFields.forEach(field => {
-      if (pool.hasOwnProperty(field) && !isValidChecksumAddress(pool[field])) {
-        const maybeValid = maybeChecksumAddress(pool[field]);
-        console.error(
-          `Error: ${pool.id} : ${field} requires checksum - ${
-            maybeValid ? `\n\t${field}: '${maybeValid}',` : 'it is invalid'
-          }`
-        );
-        exitCode = 1;
-      }
-    });
-
-    if (pool.status === 'active') {
-      activePools++;
-    }
-
-    if (new BigNumber(pool.totalSupply || '0').isZero()) {
-      if (pool.status !== 'eol') {
-        console.error(`Error: ${pool.id} : Pool is empty`);
-        exitCode = 1;
-        if (!('emptyVault' in updates)) updates['emptyVault'] = {};
-        updates.emptyVault[pool.id] = pool.earnContractAddress;
-      } else {
-        console.warn(`${pool.id} : eol pool is empty`);
-      }
-    }
-    if (checkPointsStructureIds(pool) > 0) {
-      exitCode = 1;
-    }
-
-    uniquePoolId.add(pool.id);
-    uniqueEarnedToken.add(pool.earnedToken);
-    uniqueEarnedTokenAddress.add(pool.earnedTokenAddress);
-    uniqueOracleId.add(pool.oracleId);
-
-    const { keeper, strategyOwner, vaultOwner, beefyFeeRecipient, beefyFeeConfig } =
-      addressBook[chainId].platforms.beefyfinance;
-
-    updates = isKeeperCorrect(pool, chainId, keeper, updates);
-    updates = isStratOwnerCorrect(pool, chainId, strategyOwner, updates);
-    updates = isVaultOwnerCorrect(pool, chainId, vaultOwner, updates);
-    updates = isBeefyFeeRecipientCorrect(pool, chainId, beefyFeeRecipient, updates);
-    updates = isBeefyFeeConfigCorrect(pool, chainId, beefyFeeConfig, updates);
-    updates = isHarvestOnDepositCorrect(pool, chainId, updates);
-  });
-
+  //
   // Boosts
+  // TODO refactor similar to vaults
+  //
   const seenBoostIds = new Set();
-  boosts.forEach(boost => {
+  boostConfigs.forEach(boost => {
     if (seenBoostIds.has(boost.id)) {
-      console.error(`Error: Boost ${boost.id}: Boost id duplicated: ${boost.id}`);
-      exitCode = 1;
+      pconsole.error(`Error: Boost ${boost.id}: Boost id duplicated: ${boost.id}`);
+      success = false;
     }
     seenBoostIds.add(boost.id);
 
-    if (!poolIds.has(boost.poolId)) {
-      console.error(`Error: Boost ${boost.id}: Boost has non-existent pool id ${boost.poolId}.`);
-      exitCode = 1;
+    if (!vaultIds.has(boost.poolId)) {
+      pconsole.error(`Error: Boost ${boost.id}: Boost has non-existent pool id ${boost.poolId}.`);
+      success = false;
       return;
     }
 
     if ((boost.partners || []).length === 0 && !boost.campaign) {
-      console.error(`Error: Boost ${boost.id}: Boost has no partners or campaign.`);
-      exitCode = 1;
+      pconsole.error(`Error: Boost ${boost.id}: Boost has no partners or campaign.`);
+      success = false;
       return;
     }
 
     if (boost.partners && boost.partners.length) {
       const invalidPartners = boost.partners.filter(partner => !(partner in partners));
       if (invalidPartners.length) {
-        console.error(`Error: Boost ${boost.id}: Missing partners: ${invalidPartners.join(', ')}`);
-        exitCode = 1;
+        pconsole.error(`Error: Boost ${boost.id}: Missing partners: ${invalidPartners.join(', ')}`);
+        success = false;
         return;
       }
     }
 
     if (boost.campaign && !(boost.campaign in campaigns)) {
-      console.error(`Error: Boost ${boost.id}: Missing campaign: ${boost.campaign}`);
-      exitCode = 1;
+      pconsole.error(`Error: Boost ${boost.id}: Missing campaign: ${boost.campaign}`);
+      success = false;
       return;
     }
 
     if (boost.assets && boost.assets.length) {
       for (const assetId of boost.assets) {
         if (!assetId?.trim().length) {
-          console.error(`Error: Boost ${boost.id}: Asset id is empty`);
-          exitCode = 1;
+          pconsole.error(`Error: Boost ${boost.id}: Asset id is empty`);
+          success = false;
         }
         // TODO need to tidy up old boosts before we can enable this
         // if (!(assetId in addressBook[chainId].tokens)) {
-        //   console.error(`Error: Boost ${boost.id}: Asset "${assetId}" not in addressbook on ${chainId}`);
-        //   exitCode = 1;
+        //   pconsole.error(`Error: Boost ${boost.id}: Asset "${assetId}" not in addressbook on ${chainId}`);
+        //   success = false;
         // }
       }
     }
 
-    const earnedVault = pools.find(pool => pool.earnContractAddress === boost.earnedTokenAddress);
+    const earnedVault = vaults.all.find(
+      pool => pool.earnContractAddress === boost.earnedTokenAddress
+    );
     if (earnedVault) {
       if (boost.earnedTokenDecimals !== 18) {
-        console.error(
+        pconsole.error(
           `Error: Boost ${boost.id}: Earned token decimals mismatch ${boost.earnedTokenDecimals} != 18`
         );
-        exitCode = 1;
+        success = false;
         return;
       }
       // TODO oracle etc
@@ -498,733 +586,61 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       const earnedToken = addressBook[chainId].tokens[boost.earnedToken];
       if (!earnedToken) {
         // TODO need to tidy up old boosts before we can enable this
-        // console.error(`Error: Boost ${boost.id}: Earned token ${boost.earnedToken} not in addressbook`);
-        // exitCode = 1;
+        // pconsole.error(`Error: Boost ${boost.id}: Earned token ${boost.earnedToken} not in addressbook`);
+        // success = false;
         return;
       }
 
       if (earnedToken.address !== boost.earnedTokenAddress) {
-        console.error(
+        pconsole.error(
           `Error: Boost ${boost.id}: Earned token address mismatch ${boost.earnedTokenAddress} != ${earnedToken.address}`
         );
-        exitCode = 1;
+        success = false;
         return;
       }
 
       if (earnedToken.decimals !== boost.earnedTokenDecimals) {
-        console.error(
+        pconsole.error(
           `Error: Boost ${boost.id}: Earned token decimals mismatch ${boost.earnedTokenDecimals} != ${earnedToken.decimals}`
         );
-        exitCode = 1;
+        success = false;
         return;
       }
 
       if (earnedToken.oracleId !== boost.earnedOracleId) {
-        console.error(
+        pconsole.error(
           `Error: Boost ${boost.id}: Earned token oracle id mismatch ${boost.earnedOracleId} != ${earnedToken.oracleId}`
         );
-        exitCode = 1;
+        success = false;
         return;
       }
     }
   });
 
-  // Gov Pools
-  poolsWithGovData.forEach(pool => {
-    if (!pool.strategyTypeId) {
-      console.error(`Error: ${pool.id} : strategyTypeId missing gov strategy type`);
-      exitCode = 1;
-    } else if (!validStrategyIds.gov.has(pool.strategyTypeId)) {
-      console.error(
-        `Error: ${pool.id} : strategyTypeId invalid, "StrategyDescription-${pool.type}-${pool.strategyTypeId}" not present in locales/en/risks.json`
-      );
-      exitCode = 1;
-    }
-
-    if (checkPointsStructureIds(pool) > 0) {
-      exitCode = 1;
-    }
-
-    const { devMultisig } = addressBook[chainId].platforms.beefyfinance;
-    updates = isRewardPoolOwnerCorrect(pool, chainId, devMultisig, updates);
-  });
-
-  // CLMs
-  clmsWithData.forEach(clm => {
-    if (!clm.oracleForToken0) {
-      console.error(
-        `Error: ${clm.id} : Beefy oracle has no subOracle entry for token0 ${clm.token0}`
-      );
-      exitCode = 1;
-    }
-    if (!clm.oracleForToken1) {
-      console.error(
-        `Error: ${clm.id} : Beefy oracle has no subOracle entry for token1 ${clm.token1}`
-      );
-      exitCode = 1;
-    }
-
-    if (checkPointsStructureIds(clm) > 0) {
-      exitCode = 1;
-    }
-  });
-
-  if (!isEmpty(updates)) {
-    exitCode = 1;
+  if (globalContext.requiredUpdates.hasChain(chainId)) {
+    success = false;
   }
 
-  console.log(`${chainId} active pools: ${activePools}/${pools.length}\n`);
+  pconsole.dim(`${chainId} active pools: ${summary.all.active}/${vaults.all.length}`);
 
-  return { chainId, exitCode, updates };
-};
-
-// Validation helpers. These only log for now, could throw error if desired.
-const isKeeperCorrect = (pool, chain, chainKeeper, updates) => {
-  if (pool.status !== 'eol' && pool.keeper !== undefined && pool.keeper !== chainKeeper) {
-    console.log(`Pool ${pool.id} should update keeper. From: ${pool.keeper} To: ${chainKeeper}`);
-
-    if (!('keeper' in updates)) updates['keeper'] = {};
-    if (!(chain in updates.keeper)) updates.keeper[chain] = {};
-
-    if (pool.keeper in updates.keeper[chain]) {
-      updates.keeper[chain][pool.keeper].push(pool.strategy);
-    } else {
-      updates.keeper[chain][pool.keeper] = [pool.strategy];
-    }
-  }
-
-  return updates;
-};
-
-const isStratOwnerCorrect = (pool, chain, owner, updates) => {
-  const validOwners = [...oldValidOwners, owner];
-  if (pool.stratOwner !== undefined && !validOwners.includes(pool.stratOwner)) {
-    console.log(`Pool ${pool.id} should update strat owner. From: ${pool.stratOwner} To: ${owner}`);
-
-    if (!('stratOwner' in updates)) updates['stratOwner'] = {};
-    if (!(chain in updates.stratOwner)) updates.stratOwner[chain] = {};
-
-    if (pool.stratOwner in updates.stratOwner[chain]) {
-      updates.stratOwner[chain][pool.stratOwner].push(pool.strategy);
-    } else {
-      updates.stratOwner[chain][pool.stratOwner] = [pool.strategy];
-    }
-  }
-
-  return updates;
-};
-
-const isVaultOwnerCorrect = (pool, chain, owner, updates) => {
-  const validOwners = [...oldValidOwners, owner];
-  if (pool.vaultOwner !== undefined && !validOwners.includes(pool.vaultOwner)) {
-    console.log(`Pool ${pool.id} should update vault owner. From: ${pool.vaultOwner} To: ${owner}`);
-
-    if (!('vaultOwner' in updates)) updates['vaultOwner'] = {};
-    if (!(chain in updates.vaultOwner)) updates.vaultOwner[chain] = {};
-
-    if (pool.vaultOwner in updates.vaultOwner[chain]) {
-      updates.vaultOwner[chain][pool.vaultOwner].push(pool.earnContractAddress);
-    } else {
-      updates.vaultOwner[chain][pool.vaultOwner] = [pool.earnContractAddress];
-    }
-  }
-
-  return updates;
-};
-
-const isRewardPoolOwnerCorrect = (pool, chain, owner, updates) => {
-  const validOwners: string[] = oldValidRewardPoolOwners[chain] || [];
-  if (
-    pool.rewardPoolOwner !== undefined &&
-    pool.rewardPoolOwner !== owner &&
-    !validOwners.includes(pool.rewardPoolOwner)
-  ) {
-    console.log(
-      `Reward Pool ${pool.id} should update owner. From: ${pool.rewardPoolOwner} To: ${owner}`
-    );
-
-    if (!('rewardPoolOwner' in updates)) updates['rewardPoolOwner'] = {};
-    if (!(chain in updates.rewardPoolOwner)) updates.rewardPoolOwner[chain] = {};
-
-    if (pool.rewardPoolOwner in updates.rewardPoolOwner[chain]) {
-      updates.rewardPoolOwner[chain][pool.rewardPoolOwner].push(pool.earnContractAddress);
-    } else {
-      updates.rewardPoolOwner[chain][pool.rewardPoolOwner] = [pool.earnContractAddress];
-    }
-  }
-
-  return updates;
-};
-
-const isBeefyFeeRecipientCorrect = (pool, chain, recipient, updates) => {
-  const validRecipients = oldValidFeeRecipients[chain] || [];
-  if (
-    pool.status === 'active' &&
-    pool.beefyFeeRecipient !== undefined &&
-    pool.beefyFeeRecipient !== recipient &&
-    !validRecipients.includes(pool.beefyFeeRecipient)
-  ) {
-    console.log(
-      `Pool ${pool.id} should update beefy fee recipient. From: ${pool.beefyFeeRecipient} To: ${recipient}`
-    );
-
-    if (!('beefyFeeRecipient' in updates)) updates['beefyFeeRecipient'] = {};
-    if (!(chain in updates.beefyFeeRecipient)) updates.beefyFeeRecipient[chain] = {};
-
-    if (pool.stratOwner in updates.beefyFeeRecipient[chain]) {
-      updates.beefyFeeRecipient[chain][pool.stratOwner].push(pool.strategy);
-    } else {
-      updates.beefyFeeRecipient[chain][pool.stratOwner] = [pool.strategy];
-    }
-  }
-
-  return updates;
-};
-
-const isBeefyFeeConfigCorrect = (pool, chain, feeConfig, updates) => {
-  if (
-    pool.status === 'active' &&
-    pool.beefyFeeConfig !== undefined &&
-    pool.beefyFeeConfig !== feeConfig
-  ) {
-    console.log(
-      `Pool ${pool.id} should update beefy fee config. From: ${pool.beefyFeeConfig} To: ${feeConfig}`
-    );
-
-    if (!('beefyFeeConfig' in updates)) updates['beefyFeeConfig'] = {};
-    if (!(chain in updates.beefyFeeConfig)) updates.beefyFeeConfig[chain] = {};
-
-    if (pool.stratOwner in updates.beefyFeeConfig[chain]) {
-      updates.beefyFeeConfig[chain][pool.stratOwner].push(pool.strategy);
-    } else {
-      updates.beefyFeeConfig[chain][pool.stratOwner] = [pool.strategy];
-    }
-  }
-
-  return updates;
-};
-
-const isHarvestOnDepositCorrect = (pool, chain, updates) => {
-  if (
-    pool.status === 'active' &&
-    pool.harvestOnDeposit !== undefined &&
-    !nonHarvestOnDepositChains.includes(chain) &&
-    !nonHarvestOnDepositPools.includes(pool.id) &&
-    pool.harvestOnDeposit !== true
-  ) {
-    console.log(
-      `Pool ${pool.id} should update to harvest on deposit. From: ${pool.harvestOnDeposit} To: true`
-    );
-
-    if (!('harvestOnDeposit' in updates)) updates['harvestOnDeposit'] = {};
-    if (!(chain in updates.harvestOnDeposit)) updates.harvestOnDeposit[chain] = {};
-
-    if (pool.harvestOnDeposit in updates.harvestOnDeposit[chain]) {
-      updates.harvestOnDeposit[chain][pool.harvestOnDeposit].push(pool.harvestOnDeposit);
-    } else {
-      updates.harvestOnDeposit[chain][pool.harvestOnDeposit] = [pool.harvestOnDeposit];
-    }
-  }
-
-  return updates;
-};
-
-const checkPointsStructureIds = pool => {
-  let exitCode = 0;
-
-  if (pool.pointStructureIds && pool.pointStructureIds.length > 0) {
-    const invalidPointStructureIds = pool.pointStructureIds!.filter(
-      p => !validPointProviderIds.includes(p)
-    );
-    if (invalidPointStructureIds.length > 0) {
-      console.error(
-        `Error: ${pool.id} : pointStructureIds ${invalidPointStructureIds} not present in points.json`
-      );
-      exitCode = 1;
-    }
-  }
-
-  // check for the provider eligibility
-  for (const pointProvider of pointProviders) {
-    const hasProvider = pool.pointStructureIds?.includes(pointProvider.id) ?? false;
-
-    const shouldHaveProviderArr: boolean[] = [];
-    for (const eligibility of pointProvider.eligibility) {
-      if (eligibility.type === 'token-by-provider') {
-        if (!('tokens' in eligibility)) {
-          throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
-        }
-        if (!('tokenProviderId' in eligibility)) {
-          throw new Error(`Error: ${pointProvider.id} : eligibility.tokenProviderId missing`);
-        }
-
-        shouldHaveProviderArr.push(
-          (pool.tokenProviderId === eligibility.tokenProviderId &&
-            pool.assets?.some(a => eligibility.tokens?.includes(a))) ??
-            false
-        );
-      } else if (eligibility.type === 'token-on-platform') {
-        if (!('tokens' in eligibility)) {
-          throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
-        }
-        if (!('platformId' in eligibility)) {
-          throw new Error(`Error: ${pointProvider.id} : eligibility.platformId missing`);
-        }
-
-        shouldHaveProviderArr.push(
-          (eligibility.platformId === pool.platformId &&
-            pool.assets?.some(a => eligibility.tokens.includes(a))) ??
-            false
-        );
-      } else if (eligibility.type === 'token-holding') {
-        if (!('tokens' in eligibility)) {
-          throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
-        }
-
-        shouldHaveProviderArr.push(
-          pool.assets?.some(a => eligibility?.tokens?.includes(a)) ?? false
-        );
-      } else if (eligibility.type === 'on-chain-lp') {
-        if (!('chain' in eligibility)) {
-          throw new Error(`Error: ${pointProvider.id} : eligibility.chain missing`);
-        }
-
-        shouldHaveProviderArr.push(pool.network === eligibility.chain);
-      } else if (eligibility.type === 'earned-token-name-regex') {
-        if (!('regex' in eligibility)) {
-          throw new Error(`Error: ${pointProvider.id} : eligibility.regex missing`);
-        }
-        const earnedToken = pool.earnedToken;
-        const regex = new RegExp(eligibility.regex as string);
-        shouldHaveProviderArr.push(regex.test(earnedToken));
-      } else if (eligibility.type === 'vault-whitelist') {
-        shouldHaveProviderArr.push(hasProvider);
-      }
-    }
-
-    // bool or
-    const shouldHaveProvider = shouldHaveProviderArr.some(Boolean);
-
-    if (shouldHaveProvider && !hasProvider) {
-      console.error(
-        `Error: ${pool.id} : pointStructureId ${pointProvider.id} should be present in pointStructureIds`
-      );
-      exitCode = 1;
-    } else if (!shouldHaveProvider && hasProvider) {
-      console.error(
-        `Error: ${pool.id} : pointStructureId ${pointProvider.id} should NOT be present in pointStructureIds`
-      );
-      exitCode = 1;
-    }
-  }
-
-  return exitCode;
-};
-
-// Helpers to populate required addresses.
-
-type VaultConfigWithGovData = Omit<VaultConfig, 'type'> & {
-  type: NonNullable<VaultConfig['type']>;
-  rewardPoolOwner: string | undefined;
-};
-const populateGovData = async (
-  chain,
-  pools: VaultConfig[],
-  web3,
-  retries = 5
-): Promise<VaultConfigWithGovData[]> => {
-  try {
-    const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
-
-    const calls = pools.map(pool => {
-      const vaultContract = new web3.eth.Contract(
-        StandardVaultAbi as unknown as AbiItem[],
-        pool.earnContractAddress
-      );
-      return {
-        owner: vaultContract.methods.owner(),
-      };
-    });
-
-    try {
-      const [results] = await multicall.all([calls]);
-      return pools.map((pool, i) => {
-        return {
-          ...pool,
-          type: pool.type || 'gov',
-          rewardPoolOwner: results[i].owner,
-        };
-      });
-    } catch (e) {
-      if (retries > 0) {
-        console.warn(`retrying populateGovData ${e.message}`);
-        await sleep(1_000);
-        return populateGovData(chain, pools, web3, retries - 1);
-      }
-      throw e;
-    }
-  } catch (e) {
-    throw new Error(`Failed to populate gov data for ${chain}`, { cause: e });
-  }
-};
-
-type ClmVaultConfig = Omit<VaultConfig, 'type'> & { type: 'cowcentrated' };
-type VaultConfigWithCowcentratedData = ClmVaultConfig & {
-  token0: string;
-  token1: string;
-  oracleForToken0: boolean;
-  oracleForToken1: boolean;
-};
-
-const populateCowcentratedData = async (
-  chain: keyof typeof addressBook,
-  pools: VaultConfig[],
-  web3: Web3,
-  retries = 5
-): Promise<VaultConfigWithCowcentratedData[]> => {
-  try {
-    const clms = pools.filter((p): p is ClmVaultConfig => p.type === 'cowcentrated');
-    if (clms.length === 0) {
-      return [];
-    }
-
-    const { multicall: multicallAddress, beefyOracle: beefyOracleAddress } =
-      addressBook[chain].platforms.beefyfinance;
-    if (!multicallAddress || !beefyOracleAddress) {
-      throw new Error('Missing multicall or beefyOracle address');
-    }
-
-    const multicall = new MultiCall(web3, multicallAddress);
-    const beefyOracle = new web3.eth.Contract(
-      [
-        {
-          inputs: [
-            {
-              internalType: 'address',
-              name: '',
-              type: 'address',
-            },
-          ],
-          name: 'subOracle',
-          outputs: [
-            {
-              internalType: 'address',
-              name: 'oracle',
-              type: 'address',
-            },
-            {
-              internalType: 'bytes',
-              name: 'data',
-              type: 'bytes',
-            },
-          ],
-          stateMutability: 'view',
-          type: 'function',
-        },
-        {
-          inputs: [
-            {
-              internalType: 'address',
-              name: '',
-              type: 'address',
-            },
-            {
-              internalType: 'address',
-              name: '',
-              type: 'address',
-            },
-          ],
-          name: 'subOracle',
-          outputs: [
-            {
-              internalType: 'address',
-              name: 'oracle',
-              type: 'address',
-            },
-            {
-              internalType: 'bytes',
-              name: 'data',
-              type: 'bytes',
-            },
-          ],
-          stateMutability: 'view',
-          type: 'function',
-        },
-      ],
-      beefyOracleAddress
-    );
-    const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
-
-    try {
-      const tokenResults = (
-        await multicall.all([
-          clms.map(clm => {
-            const vaultContract = new web3.eth.Contract(
-              [
-                {
-                  inputs: [],
-                  name: 'wants',
-                  outputs: [
-                    {
-                      internalType: 'address',
-                      name: 'token0',
-                      type: 'address',
-                    },
-                    {
-                      internalType: 'address',
-                      name: 'token1',
-                      type: 'address',
-                    },
-                  ],
-                  stateMutability: 'view',
-                  type: 'function',
-                },
-              ],
-              clm.earnContractAddress
-            );
-            return {
-              wants: vaultContract.methods.wants(),
-            };
-          }),
-        ])
-      )
-        .flat()
-        .map(result => ({
-          token0: result.wants[0],
-          token1: result.wants[1],
-        }));
-
-      const oracleResults = (
-        await multicall.all([
-          tokenResults.map(result => ({
-            token0: beefyOracle.methods.subOracle(result.token0),
-            token1: beefyOracle.methods.subOracle(result.token1),
-            token0For0xZero: beefyOracle.methods.subOracle(ZERO_ADDRESS, result.token0),
-            token1For0xZero: beefyOracle.methods.subOracle(ZERO_ADDRESS, result.token1),
-          })),
-        ])
-      )
-        .flat()
-        .map(result => ({
-          oracleForToken0:
-            (result.token0 && result.token0[0] && result.token0[0] !== ZERO_ADDRESS) ||
-            (result.token0For0xZero &&
-              result.token0For0xZero[0] &&
-              result.token0For0xZero[0] !== ZERO_ADDRESS),
-          oracleForToken1:
-            (result.token1 && result.token1[0] && result.token1[0] !== ZERO_ADDRESS) ||
-            (result.token1For0xZero &&
-              result.token1For0xZero[0] &&
-              result.token1For0xZero[0] !== ZERO_ADDRESS),
-        }));
-
-      return clms.map((clm, i) => ({
-        ...clm,
-        token0: tokenResults[i].token0,
-        token1: tokenResults[i].token1,
-        oracleForToken0: oracleResults[i].oracleForToken0,
-        oracleForToken1: oracleResults[i].oracleForToken1,
-      }));
-    } catch (e) {
-      if (retries > 0) {
-        console.warn(`retrying populateCowcentratedData ${e.message}`);
-        await sleep(1_000);
-        return populateCowcentratedData(chain, pools, web3, retries - 1);
-      }
-      throw e;
-    }
-  } catch (e) {
-    throw new Error(`Failed to populate cowcentrated data for ${chain}`, { cause: e });
-  }
-};
-
-type VaultConfigWithVaultData = Omit<VaultConfig, 'type'> & {
-  type: NonNullable<VaultConfig['type']>;
-  strategy: string | undefined;
-  vaultOwner: string | undefined;
-  totalSupply: string | undefined;
-};
-const populateVaultsData = async (
-  chain,
-  pools: VaultConfig[],
-  web3,
-  retries = 5
-): Promise<VaultConfigWithVaultData[]> => {
-  try {
-    const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
-
-    const calls = pools.map(pool => {
-      const vaultContract = new web3.eth.Contract(
-        StandardVaultAbi as unknown as AbiItem[],
-        pool.earnContractAddress
-      );
-      return {
-        strategy: vaultContract.methods.strategy(),
-        owner: vaultContract.methods.owner(),
-        totalSupply: vaultContract.methods.totalSupply(),
-      };
-    });
-
-    try {
-      const [results] = await multicall.all([calls]);
-
-      return pools.map((pool, i) => {
-        return {
-          ...pool,
-          type: pool.type || 'standard',
-          strategy: results[i].strategy,
-          vaultOwner: results[i].owner,
-          totalSupply: results[i].totalSupply,
-        };
-      });
-    } catch (e) {
-      if (retries > 0) {
-        console.warn(`retrying populateVaultsData ${e.message}`);
-        await sleep(1_000);
-        return populateVaultsData(chain, pools, web3, retries - 1);
-      }
-      throw e;
-    }
-  } catch (e) {
-    throw new Error(`Failed to populate vault data for ${chain}`, { cause: e });
-  }
-};
-
-type VaultConfigWithStrategyData = VaultConfigWithVaultData & {
-  keeper: string | undefined;
-  beefyFeeRecipient: string | undefined;
-  beefyFeeConfig: string | undefined;
-  stratOwner: string | undefined;
-  harvestOnDeposit: boolean | undefined;
-};
-const populateStrategyData = async (
-  chain,
-  pools: VaultConfigWithVaultData[],
-  web3,
-  retries = 5
-): Promise<VaultConfigWithStrategyData[]> => {
-  const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
-
-  const calls = pools.map(pool => {
-    const stratContract = new web3.eth.Contract(strategyABI, pool.strategy);
-    return {
-      keeper: stratContract.methods.keeper(),
-      beefyFeeRecipient: stratContract.methods.beefyFeeRecipient(),
-      beefyFeeConfig: stratContract.methods.beefyFeeConfig(),
-      owner: stratContract.methods.owner(),
-      harvestOnDeposit: stratContract.methods.harvestOnDeposit(),
-    };
-  });
-
-  try {
-    const [results] = await multicall.all([calls]);
-
-    return pools.map((pool, i) => {
-      return {
-        ...pool,
-        keeper: results[i].keeper,
-        beefyFeeRecipient: results[i].beefyFeeRecipient,
-        beefyFeeConfig: results[i].beefyFeeConfig,
-        stratOwner: results[i].owner,
-        harvestOnDeposit: results[i].harvestOnDeposit,
-      };
-    });
-  } catch (e) {
-    if (retries > 0) {
-      console.warn(`retrying populateStrategyData ${e.message}`);
-      await sleep(1_000);
-      return populateStrategyData(chain, pools, web3, retries - 1);
-    }
-    throw e;
-  }
-};
-
-async function validatePlatformTypes(): Promise<number> {
-  let exitCode = 0;
-  // hack to make sure all the platform types in PlatformType are present in the set
-  const validTypes = new Set<string>(
-    Object.keys({
-      amm: true,
-      alm: true,
-      bridge: true,
-      'money-market': true,
-      perps: true,
-      'yield-boost': true,
-      farm: true,
-    } satisfies Record<PlatformType, unknown>)
-  );
-
-  // Check if valid types have i18n keys
-  for (const type of validTypes.keys()) {
-    const requiredKeys = [
-      `Details-Platform-Type-Description-${type}`,
-      `Details-Platform-Type-${type}`,
-    ];
-    for (const key of requiredKeys) {
-      if (!i18keys[key]) {
-        console.error(`Missing i18n key "${key}" for platform type "${type}"`);
-        exitCode = 1;
-      }
-    }
-  }
-
-  const platformsWithType = platforms.filter(
-    (
-      platform
-    ): platform is Extract<
-      (typeof platforms)[number],
-      {
-        type: string;
-      }
-    > => !!platform.type
-  );
-  await Promise.all(
-    platformsWithType.map(async platform => {
-      // Check type is valid
-      if (!validTypes.has(platform.type)) {
-        console.error(`Platform ${platform.id}: Invalid type "${platform.type}"`);
-        exitCode = 1;
-      }
-
-      // Platform image must exist if platform has a type
-      const possiblePaths = [
-        `./src/images/platforms/${platform.id}.svg`,
-        `./src/images/platforms/${platform.id}.png`,
-      ];
-      let found = false;
-      for (const path of possiblePaths) {
-        if (await fileExists(path)) {
-          found = true;
-          break;
-        }
-      }
-      if (!found) {
-        console.error(`Platform ${platform.id}: Missing image: "${possiblePaths[0]}"`);
-        exitCode = 1;
-      }
-    })
-  );
-
-  return exitCode;
+  return { success, summary };
 }
 
-const override = (pools: VaultConfigWithVaultData[]): VaultConfigWithVaultData[] => {
-  Object.keys(overrides).forEach(id => {
-    pools
-      .filter(p => p.id.includes(id))
-      .forEach(pool => {
-        const override = overrides[id];
-        Object.keys(override).forEach(key => {
-          pool[key] = override[key];
-        });
-      });
-  });
-  return pools;
-};
+// Platform config
+async function validatePlatformConfig(_globalContext: GlobalValidateContext): Promise<number> {
+  if (!(await isPlatformConfigValid())) {
+    return 1;
+  }
 
-validatePools()
+  return 0;
+}
+
+validateEverything({
+  verbose: process.argv.includes('--verbose'),
+  noColor: process.argv.includes('--no-color'),
+})
   .then(exitCode => process.exit(exitCode))
   .catch(err => {
-    console.error(err);
+    pconsole.error(err);
     process.exit(-1);
   });

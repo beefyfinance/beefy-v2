@@ -22,7 +22,7 @@ export type ChainConfig = (typeof chainConfigs)[keyof typeof chainConfigs];
  * Use `yarn makeExcludeConfig chain` to generate the hash
  * Key must be the addressbook/api chain id, not app chain id (i.e. use one over harmony)
  * */
-export const excludeChains: Record<string, { count: number; hash: string }> = {
+export const excludeChains: Partial<Record<AddressBookChainId, { count: number; hash: string }>> = {
   heco: {
     count: 35,
     hash: 'ccab3fea9945e6474f803946d72001a04245fb2556f340ebee7a65af61be4773',
@@ -57,9 +57,9 @@ export const excludeChains: Record<string, { count: number; hash: string }> = {
   },
 };
 
-export const excludedChainIds = Object.keys(excludeChains);
-export const allChainIds: string[] = Object.keys(chainConfigs);
-export const chainIds: string[] = allChainIds.filter(chainId => !(chainId in excludeChains));
+export const excludedChainIds = Object.keys(excludeChains) as AddressBookChainId[];
+export const allChainIds = Object.keys(chainConfigs) as AddressBookChainId[];
+export const chainIds = allChainIds.filter(chainId => !(chainId in excludeChains));
 export const chainRpcs: Record<string, string> = Object.fromEntries(
   allChainIds.map(chainId => [
     chainId,
