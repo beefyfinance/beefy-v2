@@ -377,8 +377,7 @@
     ],
     "eligibility": [
       {
-        "type": "on-chain-lp",
-        "chain": "mode"
+        "type": "vault-whitelist"
       }
     ],
     "accounting": [
