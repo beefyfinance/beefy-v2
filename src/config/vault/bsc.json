@@ -1,5 +1,92 @@
 [
   {
+    "id": "thena-qthe-quo",
+    "name": "qTHE/QUO vLP",
+    "token": "vAMM-qTHE/QUO",
+    "tokenAddress": "0x0C7671978669a5fceA2875373C9402976071eFE1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnContractAddress": "0xC9248Ac601F8F38C3a47AE39FF5d59cE5759Fb93",
+    "earnedToken": "mooThena-qTHE-QUO",
+    "earnedTokenAddress": "0xC9248Ac601F8F38C3a47AE39FF5d59cE5759Fb93",
+    "oracle": "lps",
+    "oracleId": "thena-qthe-quo",
+    "status": "active",
+    "createdAt": 1733387508,
+    "platformId": "thena",
+    "assets": ["qTHE", "QUO"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://thena.fi/pools/0x0C7671978669a5fceA2875373C9402976071eFE1",
+    "removeLiquidityUrl": "https://thena.fi/pools/0x0C7671978669a5fceA2875373C9402976071eFE1",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "bsc-thena"
+      }
+    ]
+  },
+  {
+    "id": "thena-qthe-the",
+    "name": "qTHE/THE sLP",
+    "token": "sAMM-qTHE/THE",
+    "tokenAddress": "0x0d075Baccb0614EE93Ebe761A9803D7Ded662ffA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnContractAddress": "0x3A199F4719a96644286CA020c1AE8AB5F67930df",
+    "earnedToken": "mooThena-qTHE-THE",
+    "earnedTokenAddress": "0x3A199F4719a96644286CA020c1AE8AB5F67930df",
+    "oracle": "lps",
+    "oracleId": "thena-qthe-the",
+    "status": "active",
+    "createdAt": 1733387499,
+    "platformId": "thena",
+    "assets": ["qTHE", "THE"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://thena.fi/pools/0x0d075Baccb0614EE93Ebe761A9803D7Ded662ffA",
+    "removeLiquidityUrl": "https://thena.fi/pools/0x0d075Baccb0614EE93Ebe761A9803D7Ded662ffA",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "bsc-thena"
+      }
+    ]
+  },
+  {
+    "id": "thena-livethe-the",
+    "name": "liveTHE/THE sLP",
+    "token": "sAMM-liveThe/THE",
+    "tokenAddress": "0x3765476BfFE43Cf4c0656bF3A7529c54ae247056",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnContractAddress": "0x47402B3B246C538941280e36fe5156789d0eb011",
+    "earnedToken": "mooThena-liveTHE-THE",
+    "earnedTokenAddress": "0x47402B3B246C538941280e36fe5156789d0eb011",
+    "oracle": "lps",
+    "oracleId": "thena-livethe-the",
+    "status": "active",
+    "createdAt": 1733387006,
+    "platformId": "thena",
+    "assets": ["liveTHE", "THE"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://thena.fi/pools/0x3765476BfFE43Cf4c0656bF3A7529c54ae247056",
+    "removeLiquidityUrl": "https://thena.fi/pools/0x3765476BfFE43Cf4c0656bF3A7529c54ae247056",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "bsc-thena"
+      }
+    ]
+  },
+  {
     "id": "thena-usdt-tarot",
     "name": "TAROT-USDT vLP",
     "token": "vAMM-USDT/TAROT",
