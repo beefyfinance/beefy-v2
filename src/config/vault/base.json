@@ -1,6 +1,5 @@
 [
   {
-<<<<<<< HEAD
     "id": "uniswap-cow-base-chaos-weth-rp",
     "name": "CHAOS-WETH Reward Pool",
     "type": "gov",
@@ -64,10 +63,7 @@
     ]
   },
   {
-    "id": "uniswap-cow-base-hyUSD-USDC-rp",
-=======
     "id": "uniswap-cow-base-hyusd-usdc-rp",
->>>>>>> d48294c52 (Update IDs to Lower Case)
     "name": "hyUSD-USDC Reward Pool",
     "type": "gov",
     "version": 2,
