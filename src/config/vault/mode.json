@@ -19,7 +19,6 @@
     "strategyTypeId": "pool",
     "network": "mode",
     "createdAt": 1732130045,
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -53,7 +52,6 @@
     "risks": [],
     "strategyTypeId": "pool",
     "network": "mode",
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -88,7 +86,6 @@
     "network": "mode",
     "type": "cowcentrated",
     "feeTier": ".01",
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -115,7 +112,6 @@
     "strategyTypeId": "pool",
     "network": "mode",
     "createdAt": 1732130045,
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -149,7 +145,6 @@
     "risks": [],
     "strategyTypeId": "pool",
     "network": "mode",
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -184,7 +179,6 @@
     "network": "mode",
     "type": "cowcentrated",
     "feeTier": "1",
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -211,7 +205,6 @@
     "strategyTypeId": "pool",
     "network": "mode",
     "createdAt": 1732130045,
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -245,7 +238,6 @@
     "risks": [],
     "strategyTypeId": "pool",
     "network": "mode",
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -339,7 +331,6 @@
     "assets": ["WETH", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["mode-volume"],
     "network": "mode",
     "zaps": [
       {
@@ -399,7 +390,6 @@
     "assets": ["MODE", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["mode-volume"],
     "network": "mode",
     "zaps": [
       {
@@ -459,7 +449,6 @@
     "assets": ["KIM", "WETH"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["mode-volume"],
     "network": "mode",
     "zaps": [
       {
@@ -519,7 +508,6 @@
     "assets": ["KIM", "MODE"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["mode-volume"],
     "network": "mode",
     "zaps": [
       {
