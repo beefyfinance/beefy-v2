@@ -1,5 +1,6 @@
 [
   {
+<<<<<<< HEAD
     "id": "uniswap-cow-base-chaos-weth-rp",
     "name": "CHAOS-WETH Reward Pool",
     "type": "gov",
@@ -64,6 +65,9 @@
   },
   {
     "id": "uniswap-cow-base-hyUSD-USDC-rp",
+=======
+    "id": "uniswap-cow-base-hyusd-usdc-rp",
+>>>>>>> d48294c52 (Update IDs to Lower Case)
     "name": "hyUSD-USDC Reward Pool",
     "type": "gov",
     "version": 2,
@@ -95,7 +99,7 @@
     ]
   },
   {
-    "id": "uniswap-cow-base-hyUSD-USDC",
+    "id": "uniswap-cow-base-hyusd-usdc",
     "name": "hyUSD-USDC",
     "token": "hyUSD-USDC uniswap",
     "tokenAddress": "0xA3eaa52B505Cf61aAdCfE21424d43a6847DD6331",
@@ -125,7 +129,7 @@
     ]
   },
   {
-    "id": "uniswap-cow-base-bsdETH-WETH-rp",
+    "id": "uniswap-cow-base-bsdeth-weth-rp",
     "name": "bsdETH-WETH Reward Pool",
     "type": "gov",
     "version": 2,
@@ -157,7 +161,7 @@
     ]
   },
   {
-    "id": "uniswap-cow-base-bsdETH-WETH",
+    "id": "uniswap-cow-base-bsdeth-weth",
     "name": "bsdETH-WETH",
     "token": "bsdETH-WETH uniswap",
     "tokenAddress": "0xaFBb6fCc92dDb091dBc13E9073c3360C7D9600CC",
