@@ -64,6 +64,198 @@
     ]
   },
   {
+    "id": "uniswap-cow-base-hyusd-usdc-rp",
+    "name": "hyUSD-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBasehyUSD-USDC",
+    "tokenAddress": "0xD937c1b7761f053FDDA541C731fdf255FC3222Ea",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rcowUniswapBasehyUSD-USDC",
+    "earnContractAddress": "0x81E4675C6A312e502eF10aA038e6159B921132C6",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-hyusd-usdc",
+    "status": "active",
+    "createdAt": 1733420000,
+    "platformId": "uniswap",
+    "assets": ["hyUSD", "USDC"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-hyusd-usdc",
+    "name": "hyUSD-USDC",
+    "token": "hyUSD-USDC uniswap",
+    "tokenAddress": "0xA3eaa52B505Cf61aAdCfE21424d43a6847DD6331",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xCc7FF230365bD730eE4B352cC2492CEdAC49383e"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBasehyUSD-USDC",
+    "earnedTokenAddress": "0xD937c1b7761f053FDDA541C731fdf255FC3222Ea",
+    "earnContractAddress": "0xD937c1b7761f053FDDA541C731fdf255FC3222Ea",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-hyusd-usdc",
+    "status": "active",
+    "createdAt": 1733420000,
+    "platformId": "beefy",
+    "assets": ["hyUSD", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-bsdeth-weth-rp",
+    "name": "bsdETH-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBasebsdETH-WETH",
+    "tokenAddress": "0x3c83ff3398166b0d1bc2B04292aC7de194e089a0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rcowUniswapBasebsdETH-WETH",
+    "earnContractAddress": "0xd3CC4ba1eEf11cb11BfD44c8F2F48EF5A7d9020e",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-bsdeth-weth",
+    "status": "active",
+    "createdAt": 1733420000,
+    "platformId": "uniswap",
+    "assets": ["bsdETH", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-bsdeth-weth",
+    "name": "bsdETH-WETH",
+    "token": "bsdETH-WETH uniswap",
+    "tokenAddress": "0xaFBb6fCc92dDb091dBc13E9073c3360C7D9600CC",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xCb327b99fF831bF8223cCEd12B1338FF3aA322Ff"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBasebsdETH-WETH",
+    "earnedTokenAddress": "0x3c83ff3398166b0d1bc2B04292aC7de194e089a0",
+    "earnContractAddress": "0x3c83ff3398166b0d1bc2B04292aC7de194e089a0",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-bsdeth-weth",
+    "status": "active",
+    "createdAt": 1733420000,
+    "platformId": "beefy",
+    "assets": ["bsdETH", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-usdc-cbbtc-rp",
+    "name": "cbBTC-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBasecbBTC-USDC",
+    "tokenAddress": "0x9cDE59Eb5B67c3B6a6E629066f4F806933905539",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowUniswapBasecbBTC-USDC",
+    "earnContractAddress": "0xE6B2919d7779089162aD59EE55987b1781964D33",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-cbbtc",
+    "status": "active",
+    "createdAt": 1733420000,
+    "platformId": "uniswap",
+    "assets": ["cbBTC", "USDC"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-usdc-cbbtc",
+    "name": "cbBTC-USDC",
+    "token": "cbBTC-USDC uniswap",
+    "tokenAddress": "0xfBB6Eed8e7aa03B138556eeDaF5D271A5E1e43ef",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapBasecbBTC-USDC",
+    "earnedTokenAddress": "0x9cDE59Eb5B67c3B6a6E629066f4F806933905539",
+    "earnContractAddress": "0x9cDE59Eb5B67c3B6a6E629066f4F806933905539",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-cbbtc",
+    "status": "active",
+    "createdAt": 1733420000,
+    "platformId": "beefy",
+    "assets": ["cbBTC", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "alienbase-alb-usdc-wide",
     "name": "ALB-USDC V3-Wide",
     "token": "ALB-USDC V3-Wide",
@@ -3277,14 +3469,7 @@
     "createdAt": 1729264245,
     "platformId": "silo",
     "assets": ["bsdETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "PLATFORM_ESTABLISHED", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "base",
     "zaps": [
@@ -3313,14 +3498,7 @@
     "createdAt": 1729264245,
     "platformId": "silo",
     "assets": ["WETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "PLATFORM_ESTABLISHED", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "base",
     "zaps": [
@@ -3352,7 +3530,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
-      "MCAP_LARGE",
+      "MCAP_MEDIUM",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -8007,7 +8185,7 @@
     "status": "active",
     "platformId": "aerodrome",
     "assets": ["bsdETH", "WETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "base",
     "createdAt": 1722192822,
@@ -9176,7 +9354,7 @@
     "createdAt": 1720291024,
     "platformId": "beefy",
     "assets": ["bsdETH", "WETH"],
-    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": ["IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "base",
     "type": "cowcentrated",
