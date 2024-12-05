@@ -276,8 +276,7 @@
       {
         "strategyId": "cowcentrated"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "kim-cow-mode-weth-usdc-rp",
@@ -304,8 +303,7 @@
       {
         "strategyId": "gov-composer"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "kim-cow-mode-weth-usdc",
@@ -363,8 +361,7 @@
       {
         "strategyId": "gov-composer"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "kim-cow-mode-weth-mode",
@@ -422,8 +419,7 @@
       {
         "strategyId": "gov-composer"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "kim-cow-mode-weth-kim",
@@ -481,8 +477,7 @@
       {
         "strategyId": "gov-composer"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "kim-cow-mode-kim-mode",
@@ -552,8 +547,7 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "velodrome-mode-weeth-eth",
@@ -666,8 +660,7 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "velodrome-mode-weth-usdc",
@@ -704,8 +697,7 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "velodrome-mode-weth-mode",
@@ -742,8 +734,7 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "velodrome-mode-usdc-mode",
@@ -780,7 +771,6 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   }
 ]
