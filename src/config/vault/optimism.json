@@ -1741,7 +1741,7 @@
   },
   {
     "id": "velodrome-v2-weth-tlx",
-    "name": "TLX-ETH vLP V2",
+    "name": "TLX-WETH vLP V2",
     "type": "standard",
     "token": "vAMMV2-WETH/TLX",
     "tokenAddress": "0x6eA20Dbc05f58ED607c374e545BFb402d5796770",
@@ -6628,7 +6628,7 @@
   },
   {
     "id": "velodrome-v2-weth-tbtc",
-    "name": "tBTC-ETH vLP V2",
+    "name": "tBTC-WETH vLP V2",
     "type": "standard",
     "token": "tBTC-ETH vLP V2",
     "tokenAddress": "0xadBB23Bcc3C1B9810491897cb0690Cf645B858b1",
@@ -7553,7 +7553,7 @@
   },
   {
     "id": "velodrome-v2-weth-op",
-    "name": "OP-ETH vLP V2",
+    "name": "OP-WETH vLP V2",
     "type": "standard",
     "token": "OP-ETH vLP V2",
     "tokenAddress": "0xd25711EdfBf747efCE181442Cc1D8F5F8fc8a0D3",

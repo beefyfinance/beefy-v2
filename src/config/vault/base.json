@@ -110,7 +110,7 @@
   },
   {
     "id": "alienbase-cbeth-eth-narrow",
-    "name": "cbWETH-WETH V3-Narrow",
+    "name": "cbETH-WETH V3-Narrow",
     "token": "cbETH-ETH V3-Narrow",
     "tokenAddress": "0x9a85cA2ea6473CBedc27DF10C126711bEACe089e",
     "tokenDecimals": 18,
@@ -10266,7 +10266,7 @@
   },
   {
     "id": "aura-base-weeth-weth",
-    "name": "weWETH-WETH",
+    "name": "weETH-WETH",
     "type": "standard",
     "token": "weETH-ETH Base",
     "tokenAddress": "0xaB99a3e856dEb448eD99713dfce62F937E2d4D74",
@@ -10372,7 +10372,7 @@
   },
   {
     "id": "aerodrome-weeth-weth",
-    "name": "weWETH-WETH vLP",
+    "name": "weETH-WETH vLP",
     "type": "standard",
     "token": "vAMM-weETH/WETH",
     "tokenAddress": "0x91F0f34916Ca4E2cCe120116774b0e4fA0cdcaA8",
@@ -10447,7 +10447,7 @@
   },
   {
     "id": "aerodrome-weth-wrseth",
-    "name": "wrsWETH-WETH vLP",
+    "name": "wrsETH-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/wrsETH",
     "tokenAddress": "0xA24382874A6FD59de45BbccFa160488647514c28",
@@ -14654,7 +14654,7 @@
   },
   {
     "id": "aerodrome-cbeth-weth",
-    "name": "cbWETH-ETH vLP",
+    "name": "cbETH-ETH vLP",
     "type": "standard",
     "token": "vAMM-cbETH/WETH",
     "tokenAddress": "0x44Ecc644449fC3a9858d2007CaA8CFAa4C561f91",
@@ -15436,7 +15436,7 @@
   },
   {
     "id": "alienbase-cbeth-weth",
-    "name": "cbWETH-WETH V3-Narrow",
+    "name": "cbETH-WETH V3-Narrow",
     "type": "standard",
     "token": "cbETH-ETH LP",
     "tokenAddress": "0x9BB646BF0F4Da44bfaF3d899e774DE065731EDFe",
@@ -15670,7 +15670,7 @@
   },
   {
     "id": "baseswap-cbeth-weth",
-    "name": "cbWETH-WETH LP",
+    "name": "cbETH-WETH LP",
     "type": "standard",
     "token": "cbETH-ETH LP",
     "tokenAddress": "0x07CFA5Df24fB17486AF0CBf6C910F24253a674D3",
