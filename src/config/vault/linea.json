@@ -1161,7 +1161,7 @@
   },
   {
     "id": "nile-ezeth-weth",
-    "name": "ezETH-ETH Correlated LP",
+    "name": "ezETH-WETH Correlated LP",
     "type": "standard",
     "token": "cAMM-ezETH/WETH",
     "tokenAddress": "0xA9A1Fb9F6664A0B6BFB1F52724fd7b23842248C5",
@@ -1835,7 +1835,7 @@
   },
   {
     "id": "lynex-gamma-wbtc-weth",
-    "name": "ETH-WBTC LP",
+    "name": "WETH-WBTC LP",
     "type": "standard",
     "token": "ETH-WBTC LP",
     "tokenAddress": "0x8a9570ec97534277Ade6e46d100939FbCE4968f0",
@@ -1866,7 +1866,7 @@
   },
   {
     "id": "lynex-gamma-usdt-weth",
-    "name": "ETH-USDT LP",
+    "name": "WETHUSDT LP",
     "type": "standard",
     "token": "ETH-USDT LP",
     "tokenAddress": "0xF3B1125C8505f038503E002e61a78253610D4F60",
@@ -1897,7 +1897,7 @@
   },
   {
     "id": "lynex-gamma-usdc-weth",
-    "name": "ETH-USDC LP",
+    "name": "WETHUSDC LP",
     "type": "standard",
     "token": "ETH-USDC LP",
     "tokenAddress": "0x0B15A5E3cA0D4b492C3b476d0f807535F9B72079",

@@ -468,7 +468,7 @@
   },
   {
     "id": "dracula-usdc-weth",
-    "name": "ETH-USDC.e vLP",
+    "name": "WETH-USDC.e vLP",
     "type": "standard",
     "token": "ETH-USDC.e vLP",
     "tokenAddress": "0xB51E60f61c48d8329843F86d861AbF50E4DC918d",
@@ -564,7 +564,7 @@
   },
   {
     "id": "vesync-usdc-weth",
-    "name": "ETH-USDC.e vLP",
+    "name": "WETH-USDC.e vLP",
     "type": "standard",
     "token": "ETH-USDC.e vLP",
     "tokenAddress": "0x19dB1D963e2Ac810C48C8565bB2Fd2866745AA8A",
@@ -665,7 +665,7 @@
   },
   {
     "id": "velocore-usdc-weth",
-    "name": "ETH-USDC.e vLP",
+    "name": "WETHUSDC.e vLP",
     "type": "standard",
     "token": "ETH-USDC.e vLP",
     "tokenAddress": "0xcD52cbc975fbB802F82A1F92112b1250b5a997Df",

@@ -569,7 +569,7 @@
   },
   {
     "id": "velodrome-mode-weeth-eth",
-    "name": "weETH.mode-ETH sLP",
+    "name": "weETH.mode-WETH sLP",
     "type": "standard",
     "token": "sAMMMode-weETH/WETH",
     "tokenAddress": "0x53E85d00F2C6578a1205b842255AB9DF9D053744",
@@ -607,7 +607,7 @@
   },
   {
     "id": "velodrome-mode-ezeth-eth",
-    "name": "ezETH-ETH sLP",
+    "name": "ezETH-WETH sLP",
     "type": "standard",
     "token": "sAMMMode-ezETH/WETH",
     "tokenAddress": "0x44C6ccEA1f549Dc28bAceC12Edec580F8E1B64cd",
@@ -683,7 +683,7 @@
   },
   {
     "id": "velodrome-mode-weth-usdc",
-    "name": "ETH-USDC vLP",
+    "name": "WETH-USDC vLP",
     "type": "standard",
     "token": "vAMMMode-WETH/USDC",
     "tokenAddress": "0xCc16Bfda354353B2E03214d2715F514706Be044C",
@@ -721,7 +721,7 @@
   },
   {
     "id": "velodrome-mode-weth-mode",
-    "name": "ETH-MODE vLP",
+    "name": "WETH-MODE vLP",
     "type": "standard",
     "token": "vAMMV2-WETH/MODE",
     "tokenAddress": "0x0fba984c97539B3fb49ACDA6973288D0EFA903DB",

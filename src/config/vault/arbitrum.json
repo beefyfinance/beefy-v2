@@ -7015,7 +7015,7 @@
   },
   {
     "id": "curve-arb-eth+-eth-v2",
-    "name": "ETH+/ETH",
+    "name": "ETH+/WETH",
     "type": "standard",
     "token": "ETH+WETH",
     "tokenAddress": "0x1Fb84Fa6D252762e8367eA607A6586E09dceBe3D",
@@ -7055,7 +7055,7 @@
   },
   {
     "id": "equilibria-arb-seth-ezeth-26sep24",
-    "name": "ETH (ezETHSilo) 26Sep24",
+    "name": "WETH (ezETHSilo) 26Sep24",
     "type": "standard",
     "token": "ETH (ezETHSilo) 26Sep24",
     "tokenAddress": "0xb4781463a1261F60fca37732EFa510c22DEc5ADa",
@@ -7109,7 +7109,7 @@
   },
   {
     "id": "balancer-gyro-arb-wsteth-weth",
-    "name": "Gyroscope wstETH-ETH",
+    "name": "Gyroscope wstETH-WETH",
     "type": "standard",
     "token": "wstETH-ETH Arb",
     "tokenAddress": "0x7967FA58B9501600D96bD843173b9334983EE6E6",
@@ -9671,7 +9671,7 @@
   },
   {
     "id": "aura-arb-gyro-weth-woeth",
-    "name": "Gyroscope WOETH-ETH",
+    "name": "Gyroscope WOETH-WETH",
     "type": "standard",
     "token": "WOETH-ETH Arb",
     "tokenAddress": "0xef0c116A2818A5b1A5D836A291856A321f43C2Fb",
@@ -9713,7 +9713,7 @@
   },
   {
     "id": "aura-arb-rseth-weth",
-    "name": "rsETH-ETH",
+    "name": "rsETH-WETH",
     "type": "standard",
     "token": "rsETH-ETH Arb",
     "tokenAddress": "0x90e6CB5249f5e1572afBF8A96D8A1ca6aCFFd739",
@@ -12895,7 +12895,7 @@
   },
   {
     "id": "curve-arb-fethxeth",
-    "name": "fETH/xETH/ETH",
+    "name": "fETH/xETH/WETH",
     "type": "standard",
     "token": "fxETH",
     "tokenAddress": "0xF7Fed8Ae0c5B78c19Aadd68b700696933B0Cefd9",
@@ -13087,7 +13087,7 @@
   },
   {
     "id": "uniswap-cow-arb-eth-usdc.e",
-    "name": "ETH-USDC.e Beta",
+    "name": "WETH-USDC.e Beta",
     "type": "cowcentrated",
     "token": "ETH-USDC.e",
     "tokenAddress": "0xC31E54c7a869B9FcBEcc14363CF510d1c41fa443",
@@ -14594,7 +14594,7 @@
   },
   {
     "id": "curve-arb-tricrypto-crvusd",
-    "name": "crvUSD/WBTC/ETH",
+    "name": "crvUSD/WBTC/WETH",
     "type": "standard",
     "token": "3c-crvUSD",
     "tokenAddress": "0x82670f35306253222F8a165869B28c64739ac62e",
@@ -15635,7 +15635,7 @@
   },
   {
     "id": "joe-auto-weth-usdc",
-    "name": "ETH-USDC APT",
+    "name": "WETH-USDC APT",
     "type": "standard",
     "token": "ETH-USDC APT",
     "tokenAddress": "0x5FB31318E9A82EfCaA2cfEFBaCF63e85f4dFF2F1",
@@ -16139,7 +16139,7 @@
   },
   {
     "id": "balancer-wsteth-weth-v3",
-    "name": "wstETH-ETH V3",
+    "name": "wstETH-WETH V3",
     "type": "standard",
     "token": "wstETH-ETH V3 Arb",
     "tokenAddress": "0x9791d590788598535278552EEcD4b211bFc790CB",
@@ -16484,7 +16484,7 @@
   },
   {
     "id": "joe-auto-weth-usdc.e",
-    "name": "ETH-USDC.e APT",
+    "name": "WETH-USDC.e APT",
     "type": "standard",
     "token": "ETH-USDC.e APT",
     "tokenAddress": "0xFd421D60905d2f7caBd49e6A5703A3499367B8F4",
@@ -16721,7 +16721,7 @@
   },
   {
     "id": "chronos-weth-usdc",
-    "name": "ETH-USDC.e vLP",
+    "name": "WETH-USDC.e vLP",
     "type": "standard",
     "token": "vAMM-WETH/USDC.e",
     "tokenAddress": "0xA2F1C1B52E1b7223825552343297Dc68a29ABecC",
@@ -16752,7 +16752,7 @@
   },
   {
     "id": "chronos-weth-arb",
-    "name": "ETH-ARB vLP",
+    "name": "WETHARB vLP",
     "type": "standard",
     "token": "vAMM-WETH/ARB",
     "tokenAddress": "0xafE909b1A5ed90d36f9eE1490fCB855645C00EB3",
@@ -16970,7 +16970,7 @@
   },
   {
     "id": "hop-arb-eth",
-    "name": "ETH LP",
+    "name": "WETH LP",
     "type": "standard",
     "token": "ETH-hETH LP",
     "tokenAddress": "0x59745774Ed5EfF903e615F5A2282Cae03484985a",
@@ -17378,7 +17378,7 @@
   },
   {
     "id": "ramses-eth-usdt",
-    "name": "ETH-USDT vLP",
+    "name": "WETH-USDT vLP",
     "type": "standard",
     "token": "ETH-USDT vLP",
     "tokenAddress": "0x7E0A6013B8f15209491e021e394271b9D3Ee5B68",
@@ -18401,7 +18401,7 @@
   },
   {
     "id": "solidlizard-weth-usdc",
-    "name": "ETH-USDC.e vLP",
+    "name": "WETH-USDC.e vLP",
     "type": "standard",
     "token": "ETH-USDC.e vLP",
     "tokenAddress": "0xe20F93279fF3538b1ad70D11bA160755625e3400",
@@ -19030,7 +19030,7 @@
   },
   {
     "id": "swapfish-weth-usdc",
-    "name": "ETH-USDC.e LP",
+    "name": "WETH-USDC.e LP",
     "type": "standard",
     "token": "ETH-USDC.e LP",
     "tokenAddress": "0x8Bc2Cd9DAB840231A0Dab5B747b8A6085c4eA459",

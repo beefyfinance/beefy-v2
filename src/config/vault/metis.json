@@ -198,7 +198,7 @@
   },
   {
     "id": "hermes-metis-m.usdc",
-    "name": "METIS-m.USDC vLP",
+    "name": "WMETISm.USDC vLP",
     "type": "standard",
     "token": "METIS-m.USDC vLP",
     "tokenAddress": "0x5ab390084812E145b619ECAA8671d39174a1a6d1",
@@ -402,7 +402,7 @@
   },
   {
     "id": "netswap-nett-metis",
-    "name": "METIS-NETT LP",
+    "name": "WMETIS-NETT LP",
     "type": "standard",
     "token": "METIS-NETT LP",
     "tokenAddress": "0x60312d4EbBF3617d3D33841906b5868A86931Cbd",
@@ -517,7 +517,7 @@
   },
   {
     "id": "netswap-weth-metis",
-    "name": "WETH-METIS LP",
+    "name": "WETH-WMETIS LP",
     "type": "standard",
     "token": "WETH-METIS LP",
     "tokenAddress": "0x59051B5F5172b69E66869048Dc69D35dB0B3610d",
@@ -554,7 +554,7 @@
   },
   {
     "id": "netswap-metis-m.usdc",
-    "name": "m.USDC-METIS LP",
+    "name": "m.USDC-WMETIS LP",
     "type": "standard",
     "token": "m.USDC-METIS LP",
     "tokenAddress": "0x5Ae3ee7fBB3Cb28C17e7ADc3a6Ae605ae2465091",

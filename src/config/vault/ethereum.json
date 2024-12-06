@@ -1,7 +1,7 @@
 [
   {
     "id": "curve-eth-heth",
-    "name": "hETH/ETH",
+    "name": "hETH/WETH",
     "type": "standard",
     "token": "hETHWETH",
     "tokenAddress": "0x1f7e9321CE32Af1F9EA1185fD10D31Fea31FFD95",
@@ -1099,7 +1099,7 @@
   },
   {
     "id": "curve-shezeth-eth",
-    "name": "ShezETH/ETH",
+    "name": "ShezETH/WETH",
     "type": "standard",
     "token": "shezETHETH",
     "tokenAddress": "0x637213593e31Bc25F49D37C74B43a89eb1743D73",
@@ -1906,7 +1906,7 @@
   },
   {
     "id": "fx-fxn-eth",
-    "name": "FXN/ETH",
+    "name": "FXN/WETH",
     "type": "standard",
     "token": "FXNETH-f",
     "tokenAddress": "0xE06A65e09Ae18096B99770A809BA175FA05960e2",
@@ -2318,7 +2318,7 @@
   },
   {
     "id": "conic-eth",
-    "name": "ETH LP",
+    "name": "WETH LP",
     "type": "standard",
     "token": "cncETH",
     "tokenAddress": "0x58649Ec8adD732ea710731b5Cb37c99529A394d3",
@@ -2617,7 +2617,7 @@
   },
   {
     "id": "convex-eth+",
-    "name": "ETH+/ETH",
+    "name": "ETH+/WETH",
     "type": "standard",
     "token": "ETH+ETH-f",
     "tokenAddress": "0xe8a5677171c87fCB65b76957f2852515B404C7b1",
@@ -3838,7 +3838,7 @@
   },
   {
     "id": "convex-t",
-    "name": "T/ETH",
+    "name": "T/WETH",
     "type": "standard",
     "token": "crvTETH",
     "tokenAddress": "0xCb08717451aaE9EF950a2524E33B6DCaBA60147B",
@@ -4003,7 +4003,7 @@
   },
   {
     "id": "convex-cnc",
-    "name": "CNC/ETH",
+    "name": "CNC/WETH",
     "type": "standard",
     "token": "CNCETH-f",
     "tokenAddress": "0xF9835375f6b268743Ea0a54d742Aa156947f8C06",
@@ -4087,7 +4087,7 @@
   },
   {
     "id": "verse-weth-usdt",
-    "name": "ETH-USDT LP",
+    "name": "WETH-USDT LP",
     "type": "standard",
     "token": "ETH-USDT LP",
     "tokenAddress": "0x362DdD14F69924ebBF9066dDD2AE7C171cF6d098",
@@ -4310,7 +4310,7 @@
   },
   {
     "id": "convex-clev",
-    "name": "CLEV/ETH",
+    "name": "CLEV/WETH",
     "type": "standard",
     "token": "CLEVETH-f",
     "tokenAddress": "0x6C280dB098dB673d30d5B34eC04B6387185D3620",
@@ -4766,7 +4766,7 @@
   },
   {
     "id": "sushi-mainnet-usdc-weth",
-    "name": "ETH-USDC LP",
+    "name": "WETH-USDC LP",
     "type": "standard",
     "token": "ETH-USDC LP",
     "tokenAddress": "0x397FF1542f962076d0BFE58eA045FfA2d347ACa0",
@@ -4953,7 +4953,7 @@
   },
   {
     "id": "convex-cvxeth",
-    "name": "CVX-ETH",
+    "name": "CVX-WETH",
     "type": "standard",
     "token": "crvCVXETH",
     "tokenAddress": "0x3A283D9c08E8b55966afb64C515f5143cf907611",
@@ -4994,7 +4994,7 @@
   },
   {
     "id": "convex-geareth",
-    "name": "GEAR-ETH",
+    "name": "GEAR-WETH",
     "type": "standard",
     "token": "crvGEARETH",
     "tokenAddress": "0x5Be6C45e2d074fAa20700C49aDA3E88a1cc0025d",
@@ -5715,7 +5715,7 @@
   },
   {
     "id": "aura-reth-weth",
-    "name": "rETH-ETH",
+    "name": "rETH-WETH",
     "type": "standard",
     "token": "rETH-ETH",
     "tokenAddress": "0x1E19CF2D73a72Ef1332C882F20534B6519Be0276",
