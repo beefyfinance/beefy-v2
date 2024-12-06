@@ -39,13 +39,9 @@ export const styles = (theme: Theme) => ({
   },
   info: {},
   warning: {
-    '& $box': {
-      backgroundColor: 'rgba(209, 152, 71, 0.15)',
-    },
+    backgroundColor: 'rgba(209, 152, 71, 0.15)',
   },
   error: {
-    '& $box': {
-      backgroundColor: 'rgba(209, 83, 71, 0.15)',
-    },
+    backgroundColor: 'rgba(209, 83, 71, 0.15)',
   },
 });
