@@ -11783,7 +11783,7 @@
   },
   {
     "id": "aerodrome-ezeth-weth",
-    "name": "ezWETH-ETH vLP",
+    "name": "ezETH-ETH vLP",
     "type": "standard",
     "token": "vAMM-ezETH/WETH",
     "tokenAddress": "0x0C8bF3cb3E1f951B284EF14aa95444be86a33E2f",
@@ -11820,7 +11820,7 @@
   },
   {
     "id": "aerodrome-ezeth-weth-s",
-    "name": "ezWETH-WETH sLP",
+    "name": "ezETH-WETH sLP",
     "type": "standard",
     "token": "sAMM-ezETH/WETH",
     "tokenAddress": "0x497139e8435E01555AC1e3740fccab7AFf149e02",
@@ -12248,7 +12248,7 @@
   },
   {
     "id": "aerodrome-weth-usd+",
-    "name": "WETHUSD+ vLP",
+    "name": "WETH-USD+ vLP",
     "type": "standard",
     "token": "vAMM-WETH/USD+",
     "tokenAddress": "0x08B935148AB10d3699Cb8d944519e8213abE6f1D",
@@ -12388,7 +12388,7 @@
   },
   {
     "id": "aerodrome-weth-mseth",
-    "name": "msWETH-WETH sLP",
+    "name": "msETH-WETH sLP",
     "type": "standard",
     "token": "sAMM-WETH/msETH",
     "tokenAddress": "0xDE4FB30cCC2f1210FcE2c8aD66410C586C8D1f9A",
