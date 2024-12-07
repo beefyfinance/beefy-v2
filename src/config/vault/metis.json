@@ -198,7 +198,7 @@
   },
   {
     "id": "hermes-metis-m.usdc",
-    "name": "WMETISm.USDC vLP",
+    "name": "METIS-m.USDC vLP",
     "type": "standard",
     "token": "METIS-m.USDC vLP",
     "tokenAddress": "0x5ab390084812E145b619ECAA8671d39174a1a6d1",

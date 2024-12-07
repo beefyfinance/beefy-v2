@@ -1866,7 +1866,7 @@
   },
   {
     "id": "lynex-gamma-usdt-weth",
-    "name": "WETHUSDT LP",
+    "name": "WETH-USDT LP",
     "type": "standard",
     "token": "ETH-USDT LP",
     "tokenAddress": "0xF3B1125C8505f038503E002e61a78253610D4F60",

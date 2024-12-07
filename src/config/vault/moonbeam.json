@@ -2540,7 +2540,7 @@
   },
   {
     "id": "stellaswap-wglmr-ftm",
-    "name": "WGLMRFTM LP",
+    "name": "WGLMR-FTM LP",
     "type": "standard",
     "token": "GLMR-FTM LP",
     "tokenAddress": "0x2Afab635EA2DC4B498EF1C00E63b7a7dBa9c93C6",

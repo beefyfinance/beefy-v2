@@ -1526,7 +1526,7 @@
   },
   {
     "id": "wigo-wftm-sftmx",
-    "name": "sWFTMx-WFTM LP",
+    "name": "sFTMx-WFTM LP",
     "type": "standard",
     "token": "sFTMx-FTM LP",
     "tokenAddress": "0x43E1059c05D3153B5D74303DD6474a43BC87E73e",

@@ -13702,7 +13702,7 @@
   },
   {
     "id": "balancer-base-weth-reth",
-    "name": "rWETH-WETH",
+    "name": "rETH-WETH",
     "type": "standard",
     "token": "rETH-ETH Base",
     "tokenAddress": "0xC771c1a5905420DAEc317b154EB13e4198BA97D0",
@@ -14770,7 +14770,7 @@
   },
   {
     "id": "baso-weth-usdbc",
-    "name": "WETHUSDbC LP",
+    "name": "WETH-USDbC LP",
     "type": "standard",
     "token": "ETH-USDbC LP",
     "tokenAddress": "0xE1ADA5ACb1759b3159c9d2D0ff9d6a3BbFE775D7",
@@ -15436,7 +15436,7 @@
   },
   {
     "id": "alienbase-cbeth-weth",
-    "name": "cbETH-WETH V3-Narrow",
+    "name": "cbETH-WETH LP",
     "type": "standard",
     "token": "cbETH-ETH LP",
     "tokenAddress": "0x9BB646BF0F4Da44bfaF3d899e774DE065731EDFe",

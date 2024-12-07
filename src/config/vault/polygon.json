@@ -3470,7 +3470,7 @@
   },
   {
     "id": "quick-gamma-wmatic-weth-narrow",
-    "name": "WMATICETH Narrow LP",
+    "name": "WPOL-ETH Narrow LP",
     "type": "standard",
     "token": "aMATIC-WETH",
     "tokenAddress": "0x02203f2351E7aC6aB5051205172D3f772db7D814",
