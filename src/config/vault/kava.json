@@ -713,7 +713,7 @@
   },
   {
     "id": "equilibre-wkava-usdc",
-    "name": "KAVA-USDC vLP",
+    "name": "WKAVA-USDC vLP",
     "type": "standard",
     "token": "KAVA-USDC vLP",
     "tokenAddress": "0x5C27a0D0e6d045b5113D728081268642060f7499",
