@@ -190,6 +190,7 @@ type ChainId =
   | 'sei'
   | 'rootstock'
   | 'scroll'
+  | 'sonic'
   | 'aurora'
   | 'emerald'
   | 'celo'

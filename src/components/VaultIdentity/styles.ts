@@ -130,4 +130,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-scroll': {
     backgroundColor: '#ffe6c8',
   },
+  'vaultNetwork-sonic': {
+    backgroundColor: '#EC5409',
+  },
 });
