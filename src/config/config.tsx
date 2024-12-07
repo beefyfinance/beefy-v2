@@ -763,7 +763,6 @@ export const config = {
     appMulticallContractAddress: '0xB58AD63989237E962F3E618eEeb43c30574c6F72',
     providerName: 'Scroll',
     native: { symbol: 'ETH', oracleId: 'ETH', decimals: 18 },
-    new: true,
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -772,6 +771,26 @@ export const config = {
       priorityMinimum: '10000000', // 0.01 gwei
     },
     stableCoins: ['USDT', 'USDC', 'loreUSD'],
+  },
+  sonic: {
+    name: 'Sonic',
+    chainId: 146,
+    rpc: ['https://rpc.soniclabs.com'],
+    explorerUrl: 'https://explorer.soniclabs.com/',
+    multicallAddress: '0x0000000000000000000000000000000000000000',
+    multicall3Address: '0x0000000000000000000000000000000000000000',
+    appMulticallContractAddress: '0x0000000000000000000000000000000000000000',
+    providerName: 'Sonic',
+    native: { symbol: 'S', oracleId: 'WS', decimals: 18 },
+    new: true,
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.7,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '10000000', // 0.01 gwei
+    },
+    stableCoins: [],
   },
   aurora: {
     name: 'Aurora',

@@ -138,7 +138,10 @@ export const styles = (theme: Theme) => ({
   'headerNetwork-scroll': {
     backgroundColor: 'rgb(201, 203, 206)',
   },
+  'headerNetwork-sonic': {
+    backgroundColor: 'rgb(201, 203, 206)',
+  },
   'headerMM-system9': {
-    backgroundColor: 'rgba(243, 243, 200, 0.5)',
+    backgroundColor: 'rgba(236, 84, 9, 0.5)',
   },
 });
