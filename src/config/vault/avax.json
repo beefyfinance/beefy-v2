@@ -679,7 +679,7 @@
   },
   {
     "id": "balancer-avax-savax-avax",
-    "name": "sAVAX-AVAX",
+    "name": "sAVAX-WAVAX",
     "type": "standard",
     "token": "sAVAX-AVAX Avax",
     "tokenAddress": "0xfD2620C9cfceC7D152467633B3B0Ca338D3d78cc",
@@ -964,7 +964,7 @@
   },
   {
     "id": "joe-auto-wavax-usdc",
-    "name": "AVAX-USDC APT",
+    "name": "WAVAX-USDC APT",
     "type": "standard",
     "token": "AVAX-USDC APT",
     "tokenAddress": "0x32833a12ed3Fd5120429FB01564c98ce3C60FC1d",
@@ -1092,7 +1092,7 @@
   },
   {
     "id": "solisnek-wavax-usdc",
-    "name": "AVAX-USDC vLP",
+    "name": "WAVAX-USDC vLP",
     "type": "standard",
     "token": "AVAX-USDC vLP",
     "tokenAddress": "0xDF214f497BeCA7f550a74CEB89240FB185CE19b4",

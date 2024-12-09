@@ -146,7 +146,7 @@
   },
   {
     "id": "thena-wbnb-the",
-    "name": "THE-BNB vLP",
+    "name": "THE-WBNB vLP",
     "token": "vAMM-WBNB/THE",
     "tokenAddress": "0x63Db6ba9E512186C2FAaDaCEF342FB4A40dc577c",
     "tokenDecimals": 18,
@@ -3630,7 +3630,7 @@
   },
   {
     "id": "ooev2-ooe-bnb",
-    "name": "OOE-BNB LP",
+    "name": "OOE-WBNB LP",
     "type": "standard",
     "token": "OOE-BNB LP V2",
     "tokenAddress": "0xC6394f580157D7e8ae16f5fa1F8640d292EEDdB2",
@@ -4189,7 +4189,7 @@
   },
   {
     "id": "thena-gamma-bnb-stkbnb",
-    "name": "BNB-stkBNB LP",
+    "name": "WBNB-stkBNB LP",
     "type": "standard",
     "token": "aWBNB-STKBNB",
     "tokenAddress": "0x86b481fCe116DCd01fBeBb963f1358bcc466668C",
@@ -23426,7 +23426,7 @@
   },
   {
     "id": "mdex-bsc-bnb-usdt-eol",
-    "name": "BNB-USDT LP",
+    "name": "WBNB-USDT LP",
     "type": "standard",
     "token": "BNB-USDT LP",
     "tokenAddress": "0x09CB618bf5eF305FadfD2C8fc0C26EeCf8c6D5fd",
@@ -26682,7 +26682,7 @@
   },
   {
     "id": "ellipsis-bnb-bnbx-crypto",
-    "name": "BNBx/BNB",
+    "name": "BNBx/WBNB",
     "type": "standard",
     "token": "epsBNBx-BNB",
     "tokenAddress": "0x5c73804FeDd39f3388E03F4aa1fE06a1C0e60c8e",
@@ -26896,7 +26896,7 @@
   },
   {
     "id": "baby-bnb-usdt",
-    "name": "BNB-USDT LP",
+    "name": "WBNB-USDT LP",
     "type": "standard",
     "token": "BNB-USDT LP",
     "tokenAddress": "0x04580ce6dEE076354e96fED53cb839DE9eFb5f3f",

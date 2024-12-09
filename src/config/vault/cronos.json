@@ -135,7 +135,7 @@
   },
   {
     "id": "vvs-vvs-cro",
-    "name": "VVS-CRO",
+    "name": "VVS-WCRO",
     "type": "standard",
     "token": "VVS-CRO LP",
     "tokenAddress": "0xbf62c67eA509E86F07c8c69d0286C0636C50270b",
@@ -172,7 +172,7 @@
   },
   {
     "id": "vvs-cro-eth",
-    "name": "CRO-ETH",
+    "name": "WCRO-ETH",
     "type": "standard",
     "token": "CRO-ETH LP",
     "tokenAddress": "0xA111C17f8B8303280d3EB01BBcd61000AA7F39F9",
@@ -209,7 +209,7 @@
   },
   {
     "id": "vvs-cro-btc",
-    "name": "CRO-BTC",
+    "name": "WCRO-BTC",
     "type": "standard",
     "token": "CRO-BTC LP",
     "tokenAddress": "0x8F09fFf247B8fDB80461E5Cf5E82dD1aE2EBd6d7",
@@ -246,7 +246,7 @@
   },
   {
     "id": "vvs-cro-shib",
-    "name": "SHIB-CRO",
+    "name": "SHIB-WCRO",
     "type": "standard",
     "token": "SHIB-CRO LP",
     "tokenAddress": "0xc9eA98736dbC94FAA91AbF9F4aD1eb41e7fb40f4",
@@ -606,7 +606,7 @@
   },
   {
     "id": "vvs-cro-usdt",
-    "name": "CRO-USDT",
+    "name": "WCRO-USDT",
     "type": "standard",
     "token": "CRO-USDT LP",
     "tokenAddress": "0x3d2180DB9E1B909f35C398BC39EF36108C0FC8c3",
@@ -643,7 +643,7 @@
   },
   {
     "id": "vvs-cro-usdc",
-    "name": "CRO-USDC",
+    "name": "WCRO-USDC",
     "type": "standard",
     "token": "CRO-USDC LP",
     "tokenAddress": "0xe61Db569E231B3f5530168Aa2C9D50246525b6d6",
@@ -798,7 +798,7 @@
   },
   {
     "id": "vvs-cro-dai",
-    "name": "CRO-DAI",
+    "name": "WCRO-DAI",
     "type": "standard",
     "token": "CRO-DAI LP",
     "tokenAddress": "0x3Eb9FF92e19b73235A393000C176c8bb150F1B20",
@@ -838,7 +838,7 @@
   },
   {
     "id": "vvs-cro-doge",
-    "name": "DOGE-CRO",
+    "name": "DOGE-WCRO",
     "type": "standard",
     "token": "DOGE-CRO LP",
     "tokenAddress": "0x2A560f2312CB56327AD5D65a03F1bfEC10b62075",
@@ -992,7 +992,7 @@
   },
   {
     "id": "vvs-cro-atom",
-    "name": "ATOM-CRO",
+    "name": "ATOM-WCRO",
     "type": "standard",
     "token": "ATOM-CRO LP",
     "tokenAddress": "0x9e5bd780dff875Dd85848a65549791445AE25De0",
@@ -1108,7 +1108,7 @@
   },
   {
     "id": "vvs-tonic-cro",
-    "name": "TONIC-CRO",
+    "name": "TONIC-WCRO",
     "type": "standard",
     "token": "TONIC-CRO LP",
     "tokenAddress": "0x4B377121d968Bf7a62D51B96523d59506e7c2BF0",

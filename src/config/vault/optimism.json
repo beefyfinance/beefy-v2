@@ -367,7 +367,7 @@
   },
   {
     "id": "velodrome-v2-weth-owell",
-    "name": "WELL-ETH vLP V2",
+    "name": "WELL-WETH vLP V2",
     "type": "standard",
     "token": "vAMMV2-WETH/WELL",
     "tokenAddress": "0x60c94FdF6C72FAd78C16a52C0C3fDc3C6504305D",
@@ -1307,7 +1307,7 @@
   },
   {
     "id": "velodrome-v2-pxeth-weth",
-    "name": "pxETH-ETH sLP V2",
+    "name": "pxETH-WETH sLP V2",
     "type": "standard",
     "token": "sAMMV2-pxETH/WETH",
     "tokenAddress": "0x112d7a717a617C25a91b1C261708CCe6831474B4",
@@ -1743,7 +1743,7 @@
   },
   {
     "id": "velodrome-v2-weth-tlx",
-    "name": "TLX-ETH vLP V2",
+    "name": "TLX-WETH vLP V2",
     "type": "standard",
     "token": "vAMMV2-WETH/TLX",
     "tokenAddress": "0x6eA20Dbc05f58ED607c374e545BFb402d5796770",
@@ -3133,7 +3133,7 @@
   },
   {
     "id": "velodrome-v2-weth-weeth",
-    "name": "weETH-ETH vLP V2",
+    "name": "weETH-WETH vLP V2",
     "type": "standard",
     "token": "vAMMV2-WETH/weETH",
     "tokenAddress": "0xd0F92F5d756Bf223574DFa3ef284a35C3c046289",
@@ -4063,7 +4063,7 @@
   },
   {
     "id": "aura-op-weth-wrseth",
-    "name": "wrsETH-ETH",
+    "name": "wrsETH-WETH",
     "type": "standard",
     "token": "wrsETH-ETH OP",
     "tokenAddress": "0x73A7fe27fe9545D53924E529Acf11F3073841b9e",
@@ -4313,7 +4313,7 @@
   },
   {
     "id": "velodrome-v2-weth-wrseth",
-    "name": "wrsETH-ETH vLP V2",
+    "name": "wrsETH-WETH vLP V2",
     "type": "standard",
     "token": "vAMMV2-WETH/wrsETH",
     "tokenAddress": "0xE48b4E392E4FC29aC2600c3C8EFe0404A15D60D9",
@@ -4997,7 +4997,7 @@
   },
   {
     "id": "velodrome-v2-mseth-weth",
-    "name": "msETH-ETH sLP V2",
+    "name": "msETH-WETH sLP V2",
     "type": "standard",
     "token": "sAMMV2-msETH/WETH",
     "tokenAddress": "0x917AA69D539D6518440dd0BEA2eaAc142a8d5610",
@@ -5737,7 +5737,7 @@
   },
   {
     "id": "velodrome-v2-kuji-weth",
-    "name": "KUJI-ETH vLP V2",
+    "name": "KUJI-WETH vLP V2",
     "type": "standard",
     "token": "vAMM-KUJI-ETH",
     "tokenAddress": "0x763C9dC392B6BEFe79Fa227056dD9279bAbb4E14",
@@ -6184,7 +6184,7 @@
   },
   {
     "id": "velodrome-v2-weth-moobifi",
-    "name": "mooBIFI-ETH vLP V2",
+    "name": "mooBIFI-WETH vLP V2",
     "type": "standard",
     "token": "mooBIFI-ETH vLP V2",
     "tokenAddress": "0x6Ed6Df1C23C51cb7Cc67a348cC8d9E6108EA3BFE",
@@ -6408,7 +6408,7 @@
   },
   {
     "id": "beets-eclp-wsteth-eth",
-    "name": "Gyroscope wstETH-ETH",
+    "name": "Gyroscope wstETH-WETH",
     "type": "standard",
     "token": "Gyroscope wstETH-ETH",
     "tokenAddress": "0x7Ca75bdEa9dEde97F8B13C6641B768650CB83782",
@@ -6431,7 +6431,7 @@
   },
   {
     "id": "uniswap-gamma-weth-op-narrow",
-    "name": "ETH-OP Narrow LP",
+    "name": "WETH-OP Narrow LP",
     "type": "standard",
     "token": "ETH-OP Narrow LP",
     "tokenAddress": "0xbcFa4cfA97f74a6AbF80b9901569BBc8654F4315",
@@ -6464,7 +6464,7 @@
   },
   {
     "id": "uniswap-gamma-weth-op-wide",
-    "name": "ETH-OP Wide LP",
+    "name": "WETH-OP Wide LP",
     "type": "standard",
     "token": "ETH-OP Wide LP",
     "tokenAddress": "0x8480199E5D711399ABB4D51bDa329E064c89ad77",
@@ -6497,7 +6497,7 @@
   },
   {
     "id": "velodrome-v2-weth-hop",
-    "name": "HOP-ETH vLP V2",
+    "name": "HOP-WETH vLP V2",
     "type": "standard",
     "token": "HOP-ETH vLP V2",
     "tokenAddress": "0x0e88a5bfF34d39DA66bdD32B82dC89a32D7Bb6c9",
@@ -6651,7 +6651,7 @@
   },
   {
     "id": "velodrome-v2-weth-tbtc",
-    "name": "tBTC-ETH vLP V2",
+    "name": "tBTC-WETH vLP V2",
     "type": "standard",
     "token": "tBTC-ETH vLP V2",
     "tokenAddress": "0xadBB23Bcc3C1B9810491897cb0690Cf645B858b1",
@@ -6866,7 +6866,7 @@
   },
   {
     "id": "velodrome-v2-weth-velo",
-    "name": "VELO-ETH vLP V2",
+    "name": "VELO-WETH vLP V2",
     "type": "standard",
     "token": "VELO-ETH vLP V2",
     "tokenAddress": "0x58e6433A6903886E440Ddf519eCC573c4046a6b2",
@@ -6935,7 +6935,7 @@
   },
   {
     "id": "velodrome-v2-thales-weth",
-    "name": "THALES-ETH vLP V2",
+    "name": "THALES-WETH vLP V2",
     "type": "standard",
     "token": "THALES-ETH vLP V2",
     "tokenAddress": "0xDFF90E4A6c229565f25337B1DB9fA12f6d8cB118",
@@ -7414,7 +7414,7 @@
   },
   {
     "id": "velodrome-v2-weth-lusd",
-    "name": "LUSD-ETH vLP V2",
+    "name": "LUSD-WETH vLP V2",
     "type": "standard",
     "token": "LUSD-ETH vLP V2",
     "tokenAddress": "0x6387765fFA609aB9A1dA1B16C455548Bfed7CbEA",
@@ -7474,7 +7474,7 @@
   },
   {
     "id": "velodrome-v2-weth-seth",
-    "name": "sETH-ETH sLP V2",
+    "name": "sETH-WETH sLP V2",
     "type": "standard",
     "token": "sETH-ETH sLP V2",
     "tokenAddress": "0x5e5A37445FadeB71f23514Ae7d675Ffc644e5E5A",
@@ -7576,7 +7576,7 @@
   },
   {
     "id": "velodrome-v2-weth-op",
-    "name": "OP-ETH vLP V2",
+    "name": "OP-WETH vLP V2",
     "type": "standard",
     "token": "OP-ETH vLP V2",
     "tokenAddress": "0xd25711EdfBf747efCE181442Cc1D8F5F8fc8a0D3",
@@ -7792,7 +7792,7 @@
   },
   {
     "id": "velodrome-v2-weth-reth",
-    "name": "rETH-ETH vLP V2",
+    "name": "rETH-WETH vLP V2",
     "type": "standard",
     "token": "rETH-ETH vLP V2",
     "tokenAddress": "0x7e0F65FAB1524dA9E2E5711D160541cf1199912E",
@@ -7822,7 +7822,7 @@
   },
   {
     "id": "velodrome-v2-wsteth-weth",
-    "name": "wstETH-ETH vLP V2",
+    "name": "wstETH-WETH vLP V2",
     "type": "standard",
     "token": "wstETH-ETH vLP V2",
     "tokenAddress": "0x6dA98Bde0068d10DDD11b468b197eA97D96F96Bc",
@@ -8013,7 +8013,7 @@
   },
   {
     "id": "velodrome-v2-aleth-weth",
-    "name": "alETH-ETH sLP V2",
+    "name": "alETH-WETH sLP V2",
     "type": "standard",
     "token": "alETH-ETH sLP V2",
     "tokenAddress": "0xa1055762336F92b4B8d2eDC032A0Ce45ead6280a",
@@ -8090,7 +8090,7 @@
   },
   {
     "id": "velodrome-v2-weth-kwenta",
-    "name": "KWENTA-ETH vLP V2",
+    "name": "KWENTA-WETH vLP V2",
     "type": "standard",
     "token": "KWENTA-ETH vLP V2",
     "tokenAddress": "0x8F47041aDbeF5BF321c9F63A0660326614ab6B60",
@@ -8404,7 +8404,7 @@
   },
   {
     "id": "velodrome-v2-weth-usdc",
-    "name": "ETH-USDCe vLP V2",
+    "name": "WETH-USDCe vLP V2",
     "type": "standard",
     "token": "ETH-USDCe vLP V2",
     "tokenAddress": "0x0493Bf8b6DBB159Ce2Db2E0E8403E753Abd1235b",
@@ -8556,7 +8556,7 @@
   },
   {
     "id": "velodrome-v2-weth-frxeth",
-    "name": "frxETH-ETH sLP V2",
+    "name": "frxETH-WETH sLP V2",
     "type": "standard",
     "token": "frxETH-ETH sLP V2",
     "tokenAddress": "0x3f42Dc59DC4dF5cD607163bC620168f7FF7aB970",
@@ -10254,7 +10254,7 @@
   },
   {
     "id": "hop-op-eth",
-    "name": "ETH LP",
+    "name": "WETH LP",
     "type": "standard",
     "token": "ETH-hETH LP",
     "tokenAddress": "0x5C2048094bAaDe483D0b1DA85c3Da6200A88a849",
@@ -10522,7 +10522,7 @@
   },
   {
     "id": "velodrome-weth-hop",
-    "name": "ETH-HOP vLP",
+    "name": "WETH-HOP vLP",
     "type": "standard",
     "token": "ETH-HOP vLP",
     "tokenAddress": "0xCC441718F7F50d55F497fd37E3f3f3fe4789cf6b",
@@ -10614,7 +10614,7 @@
   },
   {
     "id": "velodrome-wsteth-weth",
-    "name": "wstETH-ETH sLP",
+    "name": "wstETH-WETH sLP",
     "type": "standard",
     "token": "wstETH-ETH sLP",
     "tokenAddress": "0xBf205335De602ac38244F112d712ab04CB59A498",
@@ -12131,7 +12131,7 @@
   },
   {
     "id": "velodrome-weth-usdc",
-    "name": "ETH-USDCe vLP",
+    "name": "WETH-USDCe vLP",
     "type": "standard",
     "token": "ETH-USDCe vLP",
     "tokenAddress": "0x79c912FEF520be002c2B6e57EC4324e260f38E50",
@@ -12465,7 +12465,7 @@
   },
   {
     "id": "curve-op-f-seth",
-    "name": "sETH/ETH",
+    "name": "sETH/WETH",
     "type": "standard",
     "token": "sETH-f",
     "tokenAddress": "0x7Bc5728BC2b59B45a58d9A576E2Ffc5f0505B35E",

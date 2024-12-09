@@ -762,7 +762,7 @@
   },
   {
     "id": "aura-polygon-wmatic-maticx",
-    "name": "MaticX-POL",
+    "name": "MaticX-WPOL",
     "type": "standard",
     "token": "MaticX-MATIC Poly",
     "tokenAddress": "0xcd78A20c597E367A4e478a2411cEB790604D7c8F",
@@ -2385,7 +2385,7 @@
   },
   {
     "id": "aura-polygon-gyro-matic-stmatic",
-    "name": "Gyroscope stMATIC-POL",
+    "name": "Gyroscope stMATIC-WPOL",
     "type": "standard",
     "token": "Gyroscope stMATIC-MATIC",
     "tokenAddress": "0xf0ad209e2e969EAAA8C882aac71f02D8a047d5c2",
@@ -3342,7 +3342,7 @@
   },
   {
     "id": "quick-gamma-wmatic-usdc-narrow",
-    "name": "POL-USDC.e Narrow LP",
+    "name": "WPOL-USDC.e Narrow LP",
     "type": "standard",
     "token": "aMATIC-USDC.e",
     "tokenAddress": "0x04d521E2c414E6d898c6F2599FdD863Edf49e247",
@@ -3470,7 +3470,7 @@
   },
   {
     "id": "quick-gamma-wmatic-weth-narrow",
-    "name": "POL-ETH Narrow LP",
+    "name": "WPOL-ETH Narrow LP",
     "type": "standard",
     "token": "aMATIC-WETH",
     "tokenAddress": "0x02203f2351E7aC6aB5051205172D3f772db7D814",
@@ -3502,7 +3502,7 @@
   },
   {
     "id": "quick-gamma-wmatic-weth-wide",
-    "name": "POL-ETH Wide LP",
+    "name": "WPOL-ETH Wide LP",
     "type": "standard",
     "token": "awMATIC-WETH",
     "tokenAddress": "0x81Cec323BF8C4164c66ec066F53cc053A535f03D",
