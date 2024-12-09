@@ -763,7 +763,6 @@ export const config = {
     appMulticallContractAddress: '0xB58AD63989237E962F3E618eEeb43c30574c6F72',
     providerName: 'Scroll',
     native: { symbol: 'ETH', oracleId: 'ETH', decimals: 18 },
-    new: true,
     gas: {
       type: 'eip1559',
       blocks: 100,
@@ -783,6 +782,7 @@ export const config = {
     appMulticallContractAddress: '0x00fe0b8a136549b2bb99BBa9a7ee1eAB55234571',
     providerName: 'Lisk',
     native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
+    new: true,
     gas: {
       type: 'eip1559',
       blocks: 100,
