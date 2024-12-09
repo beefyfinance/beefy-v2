@@ -1115,6 +1115,7 @@
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xdeeaf8b0a8cf26217261b813e085418c7dd8f1ee00020000000000000000058f/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xdeeaf8b0a8cf26217261b813e085418c7dd8f1ee00020000000000000000058f/remove-liquidity",
     "network": "arbitrum",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "balancer",
@@ -1715,6 +1716,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -1746,6 +1748,7 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -1780,7 +1783,7 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "earningPoints": false,
-    "pointStructureIds": [],
+    "pointStructureIds": ["ethena"],
     "network": "arbitrum",
     "zaps": [
       {
@@ -4796,6 +4799,7 @@
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x59743f1812bb85db83e9e4ee061d124aaa64290000000000000000000000052b/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x59743f1812bb85db83e9e4ee061d124aaa64290000000000000000000000052b/remove-liquidity",
     "network": "arbitrum",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "balancer",
@@ -7349,6 +7353,7 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED", "OVER_COLLAT_ALGO_STABLECOIN"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -8429,6 +8434,7 @@
     "assets": ["USDe", "USDT"],
     "risks": ["IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["ethena"],
     "network": "arbitrum",
     "zaps": [
       {
@@ -8969,6 +8975,7 @@
     "assets": ["USDe", "wstETH"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["ethena"],
     "network": "arbitrum",
     "zaps": [
       {

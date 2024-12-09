@@ -602,6 +602,7 @@
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xb819feef8f0fcdc268afe14162983a69f6bf179e000000000000000000000689/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0xb819feef8f0fcdc268afe14162983a69f6bf179e000000000000000000000689/remove-liquidity",
     "network": "ethereum",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "balancer",
@@ -1486,6 +1487,7 @@
     "platformId": "curve",
     "assets": ["crvUSD", "sUSDe"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "pointStructureIds": ["ethena"],
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
