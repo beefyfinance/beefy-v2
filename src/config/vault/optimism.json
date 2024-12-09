@@ -2841,6 +2841,7 @@
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED", "OVER_COLLAT_ALGO_STABLECOIN"],
     "strategyTypeId": "compounds",
     "network": "optimism",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "gov-composer"

@@ -400,7 +400,8 @@
     ],
     "eligibility": [
       {
-        "type": "vault-whitelist"
+        "type": "token-holding",
+        "tokens": ["USDe", "sUSDe"]
       }
     ],
     "accounting": [
