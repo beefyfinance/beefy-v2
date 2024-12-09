@@ -80,6 +80,8 @@ async function vaultData(chain, vaultAddress, id) {
       ? ['0xAAAE8378809bb8815c08D3C59Eb0c7D1529aD769']
       : [];
 
+  let type = provider === 'aerodrome' || 'velodrome' || 'nuri' ? 'pool' : 'compounds';
+
   return {
     ...params,
     ...tokens,
@@ -87,6 +89,7 @@ async function vaultData(chain, vaultAddress, id) {
     platform,
     earnedToken,
     earnedTokenAddress,
+    type,
   };
 }
 
@@ -120,7 +123,7 @@ async function generateVault() {
     platformId: vault.provider,
     assets: [token0, token1],
     risks: ['COMPLEXITY_LOW', 'IL_HIGH', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
-    strategyTypeId: 'pool',
+    strategyTypeId: vault.type,
     network: chain,
     createdAt: Math.floor(Date.now() / 1000) + 1,
     zaps: [
@@ -141,6 +144,7 @@ async function generateVault() {
     token: vault.mooToken,
     tokenAddress: clmAddress,
     tokenDecimals: 18,
+    tokenProviderId: vault.provider,
     earnedTokens: vault.earnedToken,
     earnedTokenAddresses: vault.earnedTokenAddress,
     earnedOracleIds: vault.earnedToken,
@@ -154,7 +158,7 @@ async function generateVault() {
     platformId: vault.provider,
     assets: [token0, token1],
     risks: [],
-    strategyTypeId: 'pool',
+    strategyTypeId: vault.type,
     network: chain,
     zaps: [
       {
@@ -184,7 +188,7 @@ async function generateVault() {
     platformId: 'beefy',
     assets: [token0, token1],
     risks: ['IL_HIGH', 'MCAP_LARGE', 'CONTRACTS_VERIFIED'],
-    strategyTypeId: 'pool',
+    strategyTypeId: vault.type,
     network: chain,
     type: 'cowcentrated',
     feeTier: '1',

@@ -19,7 +19,6 @@
     "strategyTypeId": "pool",
     "network": "mode",
     "createdAt": 1732130045,
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -53,7 +52,6 @@
     "risks": [],
     "strategyTypeId": "pool",
     "network": "mode",
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -88,7 +86,6 @@
     "network": "mode",
     "type": "cowcentrated",
     "feeTier": ".01",
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -115,7 +112,6 @@
     "strategyTypeId": "pool",
     "network": "mode",
     "createdAt": 1732130045,
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -149,7 +145,6 @@
     "risks": [],
     "strategyTypeId": "pool",
     "network": "mode",
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -184,7 +179,6 @@
     "network": "mode",
     "type": "cowcentrated",
     "feeTier": "1",
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -211,7 +205,6 @@
     "strategyTypeId": "pool",
     "network": "mode",
     "createdAt": 1732130045,
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -245,7 +238,6 @@
     "risks": [],
     "strategyTypeId": "pool",
     "network": "mode",
-    "pointStructureIds": ["mode-volume"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -284,8 +276,7 @@
       {
         "strategyId": "cowcentrated"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "kim-cow-mode-weth-usdc-rp",
@@ -312,8 +303,7 @@
       {
         "strategyId": "gov-composer"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "kim-cow-mode-weth-usdc",
@@ -339,7 +329,6 @@
     "assets": ["WETH", "USDC"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["mode-volume"],
     "network": "mode",
     "zaps": [
       {
@@ -372,8 +361,7 @@
       {
         "strategyId": "gov-composer"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "kim-cow-mode-weth-mode",
@@ -399,7 +387,6 @@
     "assets": ["MODE", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["mode-volume"],
     "network": "mode",
     "zaps": [
       {
@@ -432,8 +419,7 @@
       {
         "strategyId": "gov-composer"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "kim-cow-mode-weth-kim",
@@ -459,7 +445,6 @@
     "assets": ["KIM", "WETH"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["mode-volume"],
     "network": "mode",
     "zaps": [
       {
@@ -492,8 +477,7 @@
       {
         "strategyId": "gov-composer"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "kim-cow-mode-kim-mode",
@@ -519,7 +503,6 @@
     "assets": ["KIM", "MODE"],
     "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
-    "pointStructureIds": ["mode-volume"],
     "network": "mode",
     "zaps": [
       {
@@ -564,8 +547,7 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "velodrome-mode-weeth-eth",
@@ -678,8 +660,7 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "velodrome-mode-weth-usdc",
@@ -716,8 +697,7 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "velodrome-mode-weth-mode",
@@ -754,8 +734,7 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   },
   {
     "id": "velodrome-mode-usdc-mode",
@@ -792,7 +771,6 @@
         "strategyId": "solidly",
         "ammId": "mode-velodrome-v2"
       }
-    ],
-    "pointStructureIds": ["mode-volume"]
+    ]
   }
 ]

@@ -377,8 +377,7 @@
     ],
     "eligibility": [
       {
-        "type": "on-chain-lp",
-        "chain": "mode"
+        "type": "vault-whitelist"
       }
     ],
     "accounting": [
@@ -401,7 +400,8 @@
     ],
     "eligibility": [
       {
-        "type": "vault-whitelist"
+        "type": "token-holding",
+        "tokens": ["USDe", "sUSDe"]
       }
     ],
     "accounting": [
