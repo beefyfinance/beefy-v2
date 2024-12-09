@@ -112,7 +112,6 @@ const excludedAbPools = [
   'gmx-arb-near-usdc',
   'gmx-arb-atom-usdc',
   'gmx-arb-bnb-usdc',
-  'gmx-arb-ltc-usdc',
   'gmx-arb-xrp-usdc',
   'gmx-arb-doge-usdc',
 ];
