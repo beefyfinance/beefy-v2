@@ -229,6 +229,12 @@
     "website": "https://scroll.io/bridge"
   },
   {
+    "id": "lisk-canonical",
+    "name": "Lisk Bridge",
+    "tagName": "lisk",
+    "website": "https://bridge.gelato.network/bridge/lisk"
+  },
+  {
     "id": "sovryn",
     "name": "Sovryn",
     "tagName": "sovryn",

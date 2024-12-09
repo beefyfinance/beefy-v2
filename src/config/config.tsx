@@ -773,6 +773,25 @@ export const config = {
     },
     stableCoins: ['USDT', 'USDC', 'loreUSD'],
   },
+  lisk: {
+    name: 'Lisk',
+    chainId: 1135,
+    rpc: ['https://rpc.api.lisk.com'],
+    explorerUrl: 'https://blockscout.lisk.com/',
+    multicallAddress: '0x761b0D97f012e86aABe7053680436690Aa730CED',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x00fe0b8a136549b2bb99BBa9a7ee1eAB55234571',
+    providerName: 'Lisk',
+    native: { symbol: 'ETH', oracleId: 'WETH', decimals: 18 },
+    gas: {
+      type: 'eip1559',
+      blocks: 100,
+      percentile: 0.7,
+      baseSafetyMargin: 0.2,
+      priorityMinimum: '10000000', // 0.01 gwei
+    },
+    stableCoins: ['USDT'],
+  },
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,
