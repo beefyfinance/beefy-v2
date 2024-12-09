@@ -1,5 +1,284 @@
 [
   {
+    "id": "velodrome-cow-lisk-usdt-weth-vault",
+    "name": "USDT-WETH",
+    "type": "standard",
+    "token": "USDT-WETH",
+    "tokenAddress": "0x270c72285aa76233AdAd07b6C20ac81d4fE68F8e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooCowVelodromeUSDT-WETH",
+    "earnedTokenAddress": "0x54d91365cB1eA8F454DaA43af91f9198d32b62FD",
+    "earnContractAddress": "0x54d91365cB1eA8F454DaA43af91f9198d32b62FD",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-lisk-usdt-weth",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["USDT", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "lisk",
+    "createdAt": 1733781628,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-lisk-usdt-weth-rp",
+    "name": "USDT-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowVelodromeUSDT-WETH",
+    "tokenAddress": "0x270c72285aa76233AdAd07b6C20ac81d4fE68F8e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedTokens": ["XVELO"],
+    "earnedTokenAddresses": ["0x7f9AdFbd38b669F03d1d11000Bc76b9AaEA28A81"],
+    "earnedOracleIds": ["XVELO"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowVelodromeUSDT-WETH",
+    "earnContractAddress": "0x7C491106dc9583f4cAC26e226E0f44E8884F0C93",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-lisk-usdt-weth",
+    "status": "active",
+    "createdAt": 1733781627,
+    "platformId": "velodrome",
+    "assets": ["USDT", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "lisk",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-lisk-usdt-weth",
+    "name": "USDT-WETH",
+    "token": "USDT-WETH velodrome",
+    "tokenAddress": "0x25B559e6E64226C0A1637B8E94f3f4740fa0D562",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x05D032ac25d322df992303dCa074EE7392C117b9",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "tokenProviderId": "velodrome",
+    "earnedToken": "cowVelodromeUSDT-WETH",
+    "earnedTokenAddress": "0x270c72285aa76233AdAd07b6C20ac81d4fE68F8e",
+    "earnContractAddress": "0x270c72285aa76233AdAd07b6C20ac81d4fE68F8e",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-lisk-usdt-weth",
+    "status": "active",
+    "createdAt": 1733781627,
+    "platformId": "beefy",
+    "assets": ["USDT", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "lisk",
+    "type": "cowcentrated",
+    "feeTier": "0.3",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-lisk-usdt-usdc.e-vault",
+    "name": "USDT-USDC.e",
+    "type": "standard",
+    "token": "USDT-USDC.e",
+    "tokenAddress": "0xB3AAc1293632706E134E4cC41976B49EC89fAb1b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooCowVelodromeUSDT-USDC.e",
+    "earnedTokenAddress": "0x19D1F0A1a2FE5807958b34ADBc0d0569A93727C7",
+    "earnContractAddress": "0x19D1F0A1a2FE5807958b34ADBc0d0569A93727C7",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-lisk-usdt-usdc.e",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["USDT", "USDCe"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "lisk",
+    "createdAt": 1733781628,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-lisk-usdt-usdc.e-rp",
+    "name": "USDT-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowVelodromeUSDT-USDC.e",
+    "tokenAddress": "0xB3AAc1293632706E134E4cC41976B49EC89fAb1b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedTokens": ["XVELO"],
+    "earnedTokenAddresses": ["0x7f9AdFbd38b669F03d1d11000Bc76b9AaEA28A81"],
+    "earnedOracleIds": ["XVELO"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowVelodromeUSDT-USDC.e",
+    "earnContractAddress": "0x6b18251437f88b8f169ecC5d950Cc7c4b885614E",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-lisk-usdt-usdc.e",
+    "status": "active",
+    "createdAt": 1733781627,
+    "platformId": "velodrome",
+    "assets": ["USDT", "USDCe"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "lisk",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-lisk-usdt-usdc.e",
+    "name": "USDT-USDC.e",
+    "token": "USDT-USDC.e velodrome",
+    "tokenAddress": "0x18Eb25a15eC48Db3C42A0F41EC0a716Ba6b54514",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x05D032ac25d322df992303dCa074EE7392C117b9",
+      "0xF242275d3a6527d877f2c927a82D9b057609cc71"
+    ],
+    "tokenProviderId": "velodrome",
+    "earnedToken": "cowVelodromeUSDT-USDC.e",
+    "earnedTokenAddress": "0xB3AAc1293632706E134E4cC41976B49EC89fAb1b",
+    "earnContractAddress": "0xB3AAc1293632706E134E4cC41976B49EC89fAb1b",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-lisk-usdt-usdc.e",
+    "status": "active",
+    "createdAt": 1733781627,
+    "platformId": "beefy",
+    "assets": ["USDT", "USDC.e"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "lisk",
+    "type": "cowcentrated",
+    "feeTier": ".01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-lisk-weth-xvelo-vault",
+    "name": "WETH-XVELO",
+    "type": "standard",
+    "token": "WETH-XVELO",
+    "tokenAddress": "0x38Dfe64d47E54feD51eAc11813a2a648e0024BFe",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooCowVelodromeXVELO-WETH",
+    "earnedTokenAddress": "0x8F4488c0423d418c4e4796A912Dd3E8c23624969",
+    "earnContractAddress": "0x8F4488c0423d418c4e4796A912Dd3E8c23624969",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-lisk-weth-xvelo",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["WETH", "XVELO"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "lisk",
+    "createdAt": 1733781628,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-lisk-weth-xvelo-rp",
+    "name": "WETH-XVELO Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowVelodromeXVELO-WETH",
+    "tokenAddress": "0x38Dfe64d47E54feD51eAc11813a2a648e0024BFe",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedTokens": ["XVELO"],
+    "earnedTokenAddresses": ["0x7f9AdFbd38b669F03d1d11000Bc76b9AaEA28A81"],
+    "earnedOracleIds": ["XVELO"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowVelodromeXVELO-WETH",
+    "earnContractAddress": "0x23C9159A4429c90dD250a900ea9F11222e6E88bd",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-lisk-weth-xvelo",
+    "status": "active",
+    "createdAt": 1733781627,
+    "platformId": "velodrome",
+    "assets": ["WETH", "XVELO"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "lisk",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-lisk-weth-xvelo",
+    "name": "WETH-XVELO",
+    "token": "WETH-XVELO velodrome",
+    "tokenAddress": "0xc2026f3fb6fc51F4EcAE40a88b4509cB6C143ed4",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x7f9AdFbd38b669F03d1d11000Bc76b9AaEA28A81"
+    ],
+    "tokenProviderId": "velodrome",
+    "earnedToken": "cowVelodromeXVELO-WETH",
+    "earnedTokenAddress": "0x38Dfe64d47E54feD51eAc11813a2a648e0024BFe",
+    "earnContractAddress": "0x38Dfe64d47E54feD51eAc11813a2a648e0024BFe",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-lisk-weth-xvelo",
+    "status": "active",
+    "createdAt": 1733781627,
+    "platformId": "beefy",
+    "assets": ["WETH", "XVELO"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "lisk",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-lisk-weth-lsk-rp",
     "name": "LSK-WETH Reward Pool",
     "type": "gov",

@@ -790,7 +790,7 @@ export const config = {
       baseSafetyMargin: 0.2,
       priorityMinimum: '10000000', // 0.01 gwei
     },
-    stableCoins: ['USDT'],
+    stableCoins: ['USDT', 'USDCe'],
   },
   aurora: {
     name: 'Aurora',
