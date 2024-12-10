@@ -1777,7 +1777,7 @@
   },
   {
     "id": "lynex-wsteth-weth",
-    "name": "wstETH-ETH LP",
+    "name": "wstETH-WETH LP",
     "type": "standard",
     "token": "wstETH-ETH sLP",
     "tokenAddress": "0xa8e4B5401F98cf20F7e4e9323B02c40f10661f06",
