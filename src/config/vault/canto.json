@@ -1098,7 +1098,7 @@
   },
   {
     "id": "canto-note-wcanto",
-    "name": "NOTE-CANTO vLP",
+    "name": "NOTE-WCANTO vLP",
     "type": "standard",
     "token": "NOTE-CANTO vLP",
     "tokenAddress": "0x1D20635535307208919f0b67c3B2065965A85aA9",
@@ -1135,7 +1135,7 @@
   },
   {
     "id": "canto-eth-wcanto",
-    "name": "ETH-CANTO vLP",
+    "name": "ETH-WCANTO vLP",
     "type": "standard",
     "token": "ETH-CANTO vLP",
     "tokenAddress": "0x216400ba362d8FCE640085755e47075109718C8B",
@@ -1165,7 +1165,7 @@
   },
   {
     "id": "canto-wcanto-atom",
-    "name": "ATOM-CANTO vLP",
+    "name": "ATOM-WCANTO vLP",
     "type": "standard",
     "token": "ATOM-CANTO vLP",
     "tokenAddress": "0x30838619C55B787BafC3A4cD9aEa851C1cfB7b19",

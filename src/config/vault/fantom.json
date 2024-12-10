@@ -49,7 +49,7 @@
   },
   {
     "id": "wigo-wftm-usdc.e",
-    "name": "USDC.e-FTM LP",
+    "name": "USDC.e-WFTM LP",
     "type": "standard",
     "token": "USDC.e-FTM LP",
     "tokenAddress": "0x2D0Ed226891E256d94F1071E2F94FBcDC9060E14",
@@ -86,7 +86,7 @@
   },
   {
     "id": "wigo-wftm-lzusdc",
-    "name": "lzUSDC-FTM LP",
+    "name": "lzUSDC-WFTM LP",
     "type": "standard",
     "token": "lzUSDC-FTM LP",
     "tokenAddress": "0x8dD580271D823CBDC4a1C6153f69Dad594C521Fd",
@@ -123,7 +123,7 @@
   },
   {
     "id": "wigo-axlusdc-wftm",
-    "name": "axlUSDC-FTM LP",
+    "name": "axlUSDC-WFTM LP",
     "type": "standard",
     "token": "axlUSDC-FTM LP",
     "tokenAddress": "0x084F933B6401a72291246B5B5eD46218a68773e6",
@@ -999,7 +999,7 @@
   },
   {
     "id": "boo-wftm-lzusdc",
-    "name": "lzUSDC-FTM LP",
+    "name": "lzUSDC-WFTM LP",
     "type": "standard",
     "token": "lzUSDC-FTM LP",
     "tokenAddress": "0x90469ACbC4b6d877873CD4f1CCA54fDE8075A998",
@@ -1038,7 +1038,7 @@
   },
   {
     "id": "boo-axlusdc-wftm",
-    "name": "axlUSDC-FTM LP",
+    "name": "axlUSDC-WFTM LP",
     "type": "standard",
     "token": "axlUSDC-FTM LP",
     "tokenAddress": "0xA196C7754f4ec79dE55bB5Db82187bBE82275f7f",
@@ -1171,7 +1171,7 @@
   },
   {
     "id": "equalizer-axlusdc-wftm",
-    "name": "axlUSDC-FTM vLP",
+    "name": "axlUSDC-WFTM vLP",
     "type": "standard",
     "token": "axlUSDC-FTM vLP",
     "tokenAddress": "0x77CfeE25570b291b0882F68Bac770Abf512c2b5C",
@@ -1528,7 +1528,7 @@
   },
   {
     "id": "wigo-wftm-sftmx",
-    "name": "sFTMx-FTM LP",
+    "name": "sFTMx-WFTM LP",
     "type": "standard",
     "token": "sFTMx-FTM LP",
     "tokenAddress": "0x43E1059c05D3153B5D74303DD6474a43BC87E73e",
@@ -3545,7 +3545,7 @@
   },
   {
     "id": "boo-wftm-spell",
-    "name": "SPELL-FTM LP",
+    "name": "SPELL-WFTM LP",
     "type": "standard",
     "token": "SPELL-FTM LP",
     "tokenAddress": "0x78f82c16992932EfDd18d93f889141CcF326DBc2",
@@ -4320,7 +4320,7 @@
   },
   {
     "id": "boo-mim-ftm",
-    "name": "MIM-FTM LP",
+    "name": "MIM-WFTM LP",
     "type": "standard",
     "token": "MIM-FTM LP",
     "tokenAddress": "0x6f86e65b255c9111109d2D2325ca2dFc82456efc",
@@ -4358,7 +4358,7 @@
   },
   {
     "id": "boo-boo-ftm",
-    "name": "BOO-FTM LP",
+    "name": "BOO-WFTM LP",
     "type": "standard",
     "token": "BOO-FTM LP",
     "tokenAddress": "0xEc7178F4C41f346b2721907F5cF7628E388A7a58",
@@ -6430,7 +6430,7 @@
   },
   {
     "id": "boo-wftm-brush",
-    "name": "BRUSH-FTM LP",
+    "name": "BRUSH-WFTM LP",
     "type": "standard",
     "token": "BRUSH-FTM LP",
     "tokenAddress": "0x4EE115137ac73A3e5F99598564905465C101b11F",
@@ -6467,7 +6467,7 @@
   },
   {
     "id": "boo-wftm-beets",
-    "name": "BEETS-FTM LP",
+    "name": "BEETS-WFTM LP",
     "type": "standard",
     "token": "BEETS-FTM LP",
     "tokenAddress": "0x648a7452DA25B4fB4BDB79bADf374a8f8a5ea2b5",
@@ -8411,7 +8411,7 @@
   },
   {
     "id": "wigo-wigo-ftm",
-    "name": "WIGO-FTM LP",
+    "name": "WIGO-WFTM LP",
     "type": "standard",
     "token": "WIGO-FTM WLP",
     "tokenAddress": "0xB66E5c89EbA830B31B3dDcc468dD50b3256737c5",
@@ -11598,7 +11598,7 @@
   },
   {
     "id": "tomb-usdc-wftm",
-    "name": "FTM-USDC LP",
+    "name": "WFTM-USDC LP",
     "type": "standard",
     "token": "FTM-USDC LP",
     "tokenAddress": "0x8C853ce1561A2c2cD2E857670e3cCd04BA4cB27b",
