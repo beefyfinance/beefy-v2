@@ -16717,7 +16717,7 @@
   },
   {
     "id": "chronos-weth-arb",
-    "name": "WETHARB vLP",
+    "name": "WETH-ARB vLP",
     "type": "standard",
     "token": "vAMM-WETH/ARB",
     "tokenAddress": "0xafE909b1A5ed90d36f9eE1490fCB855645C00EB3",

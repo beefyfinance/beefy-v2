@@ -11114,7 +11114,7 @@
   },
   {
     "id": "equalizer-base-ichi-weth-usdc",
-    "name": "WETHUSDC LP",
+    "name": "WETH-USDC LP",
     "type": "standard",
     "token": "ETH-USDC LP",
     "tokenAddress": "0xF5834bdE4859763840d8449262D296AD7D17cE21",
