@@ -1,5 +1,92 @@
 [
   {
+    "id": "thena-cake-mcake",
+    "name": "mCAKE-CAKE sLP",
+    "token": "sAMM-Cake/mCake",
+    "tokenAddress": "0x7569Ae71A1832fa5F403471a01289222b1Daacb5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnContractAddress": "0xcD1b190f6bAA900235a475938012E78DD8f6BCA6",
+    "earnedToken": "mooThena-CAKE-mCAKE",
+    "earnedTokenAddress": "0xcD1b190f6bAA900235a475938012E78DD8f6BCA6",
+    "oracle": "lps",
+    "oracleId": "thena-cake-mcake",
+    "status": "active",
+    "createdAt": 1733822327,
+    "platformId": "thena",
+    "assets": ["mCAKE", "CAKE"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://thena.fi/pools/0x7569Ae71A1832fa5F403471a01289222b1Daacb5",
+    "removeLiquidityUrl": "https://thena.fi/pools/0x7569Ae71A1832fa5F403471a01289222b1Daacb5",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "bsc-thena"
+      }
+    ]
+  },
+  {
+    "id": "thena-mpendle-pendle",
+    "name": "mPENDLE-PENDLE sLP",
+    "token": "sAMM-mPendle/PENDLE",
+    "tokenAddress": "0x5bC828A5035AAc2fa3aAb46f7A25D08165d19A08",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnContractAddress": "0x6E7F21f879434E0286F975c17b9b1F6c16679e62",
+    "earnedToken": "mooThena-mPENDLE-PENDLE",
+    "earnedTokenAddress": "0x6E7F21f879434E0286F975c17b9b1F6c16679e62",
+    "oracle": "lps",
+    "oracleId": "thena-mpendle-pendle",
+    "status": "active",
+    "createdAt": 1733822318,
+    "platformId": "thena",
+    "assets": ["mPENDLE", "PENDLE"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://thena.fi/pools/0x5bC828A5035AAc2fa3aAb46f7A25D08165d19A08",
+    "removeLiquidityUrl": "https://thena.fi/pools/0x5bC828A5035AAc2fa3aAb46f7A25D08165d19A08",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "bsc-thena"
+      }
+    ]
+  },
+  {
+    "id": "thena-btcb-mbtc",
+    "name": "mBTC-BTCB sLP",
+    "token": "sAMM-BTCB/mBTC",
+    "tokenAddress": "0x01e4a13b64A35EC29C490374C0aC6a585FF7cE79",
+    "tokenDecimals": 18,
+    "tokenProviderId": "thena",
+    "earnContractAddress": "0x3776b18836FAE9Ee4f7A204298E2B60045bD8467",
+    "earnedToken": "mooThena-BTCB-mBTC",
+    "earnedTokenAddress": "0x3776b18836FAE9Ee4f7A204298E2B60045bD8467",
+    "oracle": "lps",
+    "oracleId": "thena-btcb-mbtc",
+    "status": "active",
+    "createdAt": 1733822307,
+    "platformId": "thena",
+    "assets": ["mBTC", "BTCB"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://thena.fi/pools/0x01e4a13b64A35EC29C490374C0aC6a585FF7cE79",
+    "removeLiquidityUrl": "https://thena.fi/pools/0x01e4a13b64A35EC29C490374C0aC6a585FF7cE79",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "bsc-thena"
+      }
+    ]
+  },
+  {
     "id": "thena-qthe-quo",
     "name": "qTHE/QUO vLP",
     "token": "vAMM-qTHE/QUO",
