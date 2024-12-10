@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 229.1 259">
-  <polygon fill="#FFF" class="bg" points="114.4 0 88.5 42.9 173.7 182.5 102.4 259 162.8 259 229.1 187.9 114.4 0"/>
-  <polygon fill="#FFF" class="bg" points="86.6 215.9 55.5 182.5 107.8 96.6 81.7 53.9 0 187.9 66.3 259 88.3 259 128.7 215.9 86.6 215.9"/>
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path class='bg' d="M23.7895 3L19 10.1224L34.7553 33.2992L21.5704 46H32.7397L45 34.1958L23.7895 3Z" fill="white"/>
+<path class='bg' d="M18.1492 38.8552L12.3497 33.3184L22.1026 19.0785L17.2354 12L2 34.2136L14.3636 46H18.4662L26 38.8552H18.1492Z" fill="white"/>
 </svg>
