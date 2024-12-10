@@ -7,6 +7,7 @@ import { styles } from './styles';
 import clsx from 'clsx';
 import { useAppSelector } from '../../../../../../store';
 import { NewBadge } from '../../../../../../components/Header/components/Badges/NewBadge';
+import { sortBy } from 'lodash-es';
 
 const useStyles = makeStyles(styles);
 const networkIcons = import.meta.glob<FC<SVGProps<SVGSVGElement>>>(
@@ -85,7 +86,7 @@ export const ChainButtonSelector = memo<ChainButtonSelectorProps>(function Chain
 
   return (
     <div className={clsx(classes.selector, className)}>
-      {chainIds.map(id => (
+      {sortBy(chainIds, id => id).map(id => (
         <ChainButton
           key={id}
           id={id}
