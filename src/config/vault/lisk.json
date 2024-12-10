@@ -1,5 +1,61 @@
 [
   {
+    "id": "velodrome-lisk-weth-usdc.e",
+    "name": "WETH-USDC.e vLP",
+    "type": "standard",
+    "token": "WETH-USDC.e vLP",
+    "tokenAddress": "0x5C2bb5Fcb384D7244e5892926985bF5Ec6cE3488",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromeLiskWETH-USDC.e",
+    "earnedTokenAddress": "0xFF37EBCA7B998fd39b2C7867e06e1D283bAB69b8",
+    "earnContractAddress": "0xFF37EBCA7B998fd39b2C7867e06e1D283bAB69b8",
+    "oracle": "lps",
+    "oracleId": "velodrome-lisk-weth-usdc.e",
+    "createdAt": 1733835557,
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["WETH", "USDCe"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xF242275d3a6527d877f2c927a82D9b057609cc71&type=-1&factory=0x31832f2a97Fd20664D76Cc421207669b55CE4BC0&chain=1135",
+    "network": "lisk",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "lisk-velodrome"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-lisk-lsk-weth",
+    "name": "LSK-WETH vLP",
+    "type": "standard",
+    "token": "LSK-WETH vLP",
+    "tokenAddress": "0x79a7dBF4d7eA058F0d3B94db7fF86F1c1A7BDb25",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromeLiskLSK-WETH",
+    "earnedTokenAddress": "0x573F85C231a382Fa749E5Dae729dC09C36f71bA4",
+    "earnContractAddress": "0x573F85C231a382Fa749E5Dae729dC09C36f71bA4",
+    "oracle": "lps",
+    "oracleId": "velodrome-lisk-lsk-weth",
+    "createdAt": 1733835621,
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["LSK", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xac485391EB2d7D88253a7F1eF18C37f4242D1A24&type=-1&factory=0x31832f2a97Fd20664D76Cc421207669b55CE4BC0&chain=1135",
+    "network": "lisk",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "lisk-velodrome"
+      }
+    ]
+  },
+  {
     "id": "velodrome-cow-lisk-usdt-weth-vault",
     "name": "USDT-WETH",
     "type": "standard",
@@ -173,7 +229,7 @@
     "status": "active",
     "createdAt": 1733781627,
     "platformId": "beefy",
-    "assets": ["USDT", "USDC.e"],
+    "assets": ["USDT", "USDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "lisk",
