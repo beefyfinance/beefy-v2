@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_aero-cow-wsteth-weth-vault-lido",
+    "poolId": "aero-cow-wsteth-weth-vault",
+    "name": "Lido",
+    "assets": ["wstETH", "ETH"],
+    "tokenAddress": "0xf18a30B4c2a9df72447e54DC7cA4D0B4A1Dc8dE3",
+    "earnedToken": "wstETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452",
+    "earnContractAddress": "0x3ccbbA6D5943eB822909445Cf56e17Ae3edA32ab",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "wstETH",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["lido-eth"]
+  },
+  {
     "id": "moo_alienbase-cbeth-weth-alienbase2",
     "poolId": "alienbase-cbeth-weth",
     "name": "Alienbase",
