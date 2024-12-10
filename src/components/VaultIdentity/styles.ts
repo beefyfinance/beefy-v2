@@ -116,7 +116,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#000',
   },
   'vaultNetwork-manta': {
-    backgroundColor: '#000',
+    backgroundColor: '#FFF',
   },
   'vaultNetwork-real': {
     backgroundColor: '#FFF',
