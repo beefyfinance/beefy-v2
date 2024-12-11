@@ -1,37 +1,55 @@
-// To run: yarn pause gamma
-import { promises as fs } from 'fs';
 import { config } from '../src/config/config';
-import { saveJson } from './common/files';
-import { ChainConfig } from '../src/features/data/apis/config-types';
+import { loadJson, saveJson } from './common/files';
+import { ChainConfig, VaultConfig } from '../src/features/data/apis/config-types';
+import pc from 'picocolors';
 
-const vaultsDir = './src/config/vault/';
+const vaultsDir = './src/config/vault';
 
-async function pause() {
+async function start() {
   for (const [chainKey, chainInfo] of Object.entries(config) as unknown as [
     string,
     ChainConfig
   ][]) {
-    if (chainKey === 'base') {
-      //skip eol chains
-      const vaultsFile = `${vaultsDir}${chainKey}.json`;
-      const vaults = JSON.parse(await fs.readFile(vaultsFile, 'utf8'));
+    if (chainInfo.eol) {
+      continue;
+    }
 
-      vaults.forEach(v => {
-        if (
-          v.name.includes(`-${chainInfo.native.symbol} `) &&
-          !v.name.includes(chainInfo.native.oracleId) &&
-          v.status === 'active'
-        ) {
-          v.name = v.name.replace(chainInfo.native.symbol, chainInfo.native.oracleId);
+    const vaultsFile = `${vaultsDir}/${chainKey}.json`;
+    const vaults = await loadJson<VaultConfig[]>(vaultsFile);
+    const native = chainInfo.native.symbol;
+    const wnative = chainInfo.native.oracleId;
+    const findNative = new RegExp(`\\b${native}([-/\\s$])`, 'gmi');
+
+    let shouldSave = false;
+
+    const modifiedVaults = vaults.map(v => {
+      if (v.status === 'eol') {
+        return v;
+      }
+
+      const newName = v.name.replace(findNative, `${wnative}$1`);
+      if (newName !== v.name) {
+        const oldFormatted = v.name.replace(findNative, `${pc.red(native)}$1`);
+        const newFormatted = v.name.replace(findNative, `${pc.green(wnative)}$1`);
+
+        if (!shouldSave) {
+          console.log('==', chainKey);
+          shouldSave = true;
         }
-      });
+        console.log(oldFormatted, '->', newFormatted);
 
-      await saveJson(vaultsFile, vaults, 'prettier');
+        return { ...v, name: newName };
+      }
+      return v;
+    });
+
+    if (shouldSave) {
+      await saveJson(vaultsFile, modifiedVaults, 'prettier');
     }
   }
 }
 
-pause().catch(err => {
+start().catch(err => {
   console.error(err);
   process.exit(-1);
 });
