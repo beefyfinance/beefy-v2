@@ -14105,7 +14105,7 @@
   },
   {
     "id": "aura-arb-weth-reth-v2",
-    "name": "rETH-ETH V2",
+    "name": "rETH-WETH V2",
     "type": "standard",
     "token": "rETH-ETH V2 Arb",
     "tokenAddress": "0xd0EC47c54cA5e20aaAe4616c25C825c7f48D4069",
@@ -14149,7 +14149,7 @@
   },
   {
     "id": "equilibria-arb-seth",
-    "name": "ETH 26Dec24",
+    "name": "WETH 26Dec24",
     "type": "standard",
     "token": "sETH-26Dec24",
     "tokenAddress": "0xACcd9A7cb5518326BeD715f90bD32CDf2fEc2D14",
