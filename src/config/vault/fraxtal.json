@@ -700,7 +700,7 @@
   },
   {
     "id": "ra-wbtc-wfrxeth",
-    "name": "WBTC-frxETH vLP",
+    "name": "WBTC-wfrxETH vLP",
     "type": "standard",
     "token": "WBTC-frxETH vLP",
     "tokenAddress": "0x59e8F1FDE7C3E49B5b8c9EBFba73216F94F3D992",
@@ -730,7 +730,7 @@
   },
   {
     "id": "ra-fxs-wfrxeth",
-    "name": "FXS-frxETH vLP",
+    "name": "FXS-wfrxETH vLP",
     "type": "standard",
     "token": "FXS-frxETH vLP",
     "tokenAddress": "0x4f66cBd698F1fe6E2692D1De5d758027a5272787",
