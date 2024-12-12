@@ -1,5 +1,98 @@
 [
   {
+    "id": "velodrome-cow-optimism-aleth-alusd-vault",
+    "name": "alETH-alUSD",
+    "type": "standard",
+    "token": "alETH-alUSD",
+    "tokenAddress": "0x3Fd005c3A6DfD2CB143beEF5665706CfAc6e27d3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooCowVelodromealETH-alUSDC",
+    "earnedTokenAddress": "0x935aFdB7A1445e365BB86E58989c37E6c275dB52",
+    "earnContractAddress": "0x935aFdB7A1445e365BB86E58989c37E6c275dB52",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-optimism-aleth-alusd",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["alETH", "alUSD"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "createdAt": 1734022553,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-optimism-aleth-alusd-rp",
+    "name": "alETH-alUSD Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowVelodromealETH-alUSDC",
+    "tokenAddress": "0x3Fd005c3A6DfD2CB143beEF5665706CfAc6e27d3",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedTokens": ["VELOV2"],
+    "earnedTokenAddresses": ["0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db"],
+    "earnedOracleIds": ["VELOV2"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowVelodromealETH-alUSDC",
+    "earnContractAddress": "0xE1c263fa0F94Fd340b8AE0a3d5F9720A06F3eE95",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-optimism-aleth-alusd",
+    "status": "active",
+    "createdAt": 1734022552,
+    "platformId": "velodrome",
+    "assets": ["alETH", "alUSD"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-optimism-aleth-alusd",
+    "name": "alETH-alUSD",
+    "token": "alETH-alUSD velodrome",
+    "tokenAddress": "0x844BdA8C554D3F14C2C068314b294A5b0Ed2E0dF",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x3E29D3A9316dAB217754d13b28646B76607c5f04",
+      "0xCB8FA9a76b8e203D8C3797bF438d8FB81Ea3326A"
+    ],
+    "tokenProviderId": "velodrome",
+    "earnedToken": "cowVelodromealETH-alUSDC",
+    "earnedTokenAddress": "0x3Fd005c3A6DfD2CB143beEF5665706CfAc6e27d3",
+    "earnContractAddress": "0x3Fd005c3A6DfD2CB143beEF5665706CfAc6e27d3",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-optimism-aleth-alusd",
+    "status": "active",
+    "createdAt": 1734022552,
+    "platformId": "beefy",
+    "assets": ["alETH", "alUSD"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "optimism",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "velodrome-v2-usdc-alcx",
     "name": "ALCX-USDC vLP V2",
     "type": "standard",

@@ -1,5 +1,98 @@
 [
   {
+    "id": "velodrome-cow-lisk-wbtc-weth-vault",
+    "name": "WBTC-WETH",
+    "type": "standard",
+    "token": "WBTC-WETH",
+    "tokenAddress": "0x129E66F12e46D0B529786BA517dd00CECA343a73",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooCowVelodromeWBTC-WETH",
+    "earnedTokenAddress": "0xAc0E6ba47A20EE95E3149910dA3844b851537f25",
+    "earnContractAddress": "0xAc0E6ba47A20EE95E3149910dA3844b851537f25",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-lisk-wbtc-weth",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "lisk",
+    "createdAt": 1734022387,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-lisk-wbtc-weth-rp",
+    "name": "WBTC-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowVelodromeWBTC-WETH",
+    "tokenAddress": "0x129E66F12e46D0B529786BA517dd00CECA343a73",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedTokens": ["XVELO"],
+    "earnedTokenAddresses": ["0x7f9AdFbd38b669F03d1d11000Bc76b9AaEA28A81"],
+    "earnedOracleIds": ["XVELO"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowVelodromeWBTC-WETH",
+    "earnContractAddress": "0xb1A1A9486d6FC5146525C010Df70e1E095ADD9a3",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-lisk-wbtc-weth",
+    "status": "active",
+    "createdAt": 1734022386,
+    "platformId": "velodrome",
+    "assets": ["WBTC", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "lisk",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-lisk-wbtc-weth",
+    "name": "WBTC-WETH",
+    "token": "WBTC-WETH velodrome",
+    "tokenAddress": "0xDC1479FD1Db51cA0079ceCfaA879232e168c8246",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
+      "0x4200000000000000000000000000000000000006"
+    ],
+    "tokenProviderId": "velodrome",
+    "earnedToken": "cowVelodromeWBTC-WETH",
+    "earnedTokenAddress": "0x129E66F12e46D0B529786BA517dd00CECA343a73",
+    "earnContractAddress": "0x129E66F12e46D0B529786BA517dd00CECA343a73",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-lisk-wbtc-weth",
+    "status": "active",
+    "createdAt": 1734022386,
+    "platformId": "beefy",
+    "assets": ["WBTC", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "lisk",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "velodrome-lisk-weth-usdc.e",
     "name": "WETH-USDC.e vLP",
     "type": "standard",
