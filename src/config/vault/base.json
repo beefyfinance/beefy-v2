@@ -1,5 +1,34 @@
 [
   {
+    "id": "aerodrome-weth-anz",
+    "name": "ANZ-WETH vLP",
+    "token": "vAMM-WETH/ANZ",
+    "tokenAddress": "0xE4faa73134C66832c272f067adC401f0963A9D7a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x7DC15bc095e77E7CA6f30Bf5BDe3eD4C2083cAA0",
+    "earnedToken": "mooAeroWETH-ANZ",
+    "earnedTokenAddress": "0x7DC15bc095e77E7CA6f30Bf5BDe3eD4C2083cAA0",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-anz",
+    "status": "active",
+    "createdAt": 1733999046,
+    "platformId": "aerodrome",
+    "assets": ["ANZ", "WETH"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xeeC468333ccc16D4BF1cEf497A56cf8C0aAe4Ca3&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-ox-cbbtc",
     "name": "OX-cbBTC vLP",
     "type": "standard",
