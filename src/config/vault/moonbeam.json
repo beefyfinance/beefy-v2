@@ -1,5 +1,69 @@
 [
   {
+    "id": "stellaswap-cow-moonbeam-stdot-xcdot-rp",
+    "name": "stDOT-xcDOT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowStellaswapMoonbeamstDOT-xcDOT",
+    "tokenAddress": "0x505450e20Bfc7F192073AcC85bE2d072155C1e16",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowStellaswapMoonbeamstDOT-xcDOT",
+    "earnContractAddress": "0x66e5662411cc6e3a62387354fa3F80dEa097fceD",
+    "oracle": "lps",
+    "oracleId": "stellaswap-cow-moonbeam-stdot-xcdot",
+    "status": "active",
+    "createdAt": 1734029067,
+    "platformId": "stellaswap",
+    "assets": ["stDOT", "xcDOT"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "moonbeam",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "stellaswap-cow-moonbeam-stdot-xcdot",
+    "name": "stDOT-xcDOT",
+    "token": "stDOT-xcDOT stellaswap",
+    "tokenAddress": "0xD9d1064E32704BDd540F90D3A9ecAF037748b966",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0xbc7E02c4178a7dF7d3E564323a5c359dc96C4db4",
+      "0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080"
+    ],
+    "tokenProviderId": "stellaswap",
+    "earnedToken": "cowStellaswapMoonbeamstDOT-xcDOT",
+    "earnedTokenAddress": "0x505450e20Bfc7F192073AcC85bE2d072155C1e16",
+    "earnContractAddress": "0x505450e20Bfc7F192073AcC85bE2d072155C1e16",
+    "oracle": "lps",
+    "oracleId": "stellaswap-cow-moonbeam-stdot-xcdot",
+    "status": "active",
+    "createdAt": 1734029067,
+    "platformId": "beefy",
+    "assets": ["stDOT", "xcDOT"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "moonbeam",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-moonbeam-xcusdc-xcusdt-rp",
     "name": "xcUSDC-xcUSDT Reward Pool",
     "type": "gov",
