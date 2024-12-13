@@ -489,6 +489,7 @@ export const config = {
   kava: {
     name: 'Kava',
     chainId: 2222,
+    eol: 1734101117,
     rpc: ['https://evm.kava.io'],
     explorerUrl: 'https://explorer.kava.io',
     multicallAddress: '0x13C6bCC2411861A31dcDC2f990ddbe2325482222',
@@ -504,6 +505,7 @@ export const config = {
   canto: {
     name: 'Canto',
     chainId: 7700,
+    eol: 1734101117,
     rpc: ['https://canto-rpc.ansybl.io'],
     explorerUrl: 'https://tuber.build',
     multicallAddress: '0xc34b9c9DBB39Be0Ef850170127A7b4283484f804',
@@ -685,6 +687,7 @@ export const config = {
   manta: {
     name: 'Manta',
     chainId: 169,
+    eol: 1734101117,
     rpc: ['https://pacific-rpc.manta.network/http'],
     explorerUrl: 'https://pacific-explorer.manta.network/',
     multicallAddress: '0x663504a9453eD242335C3dCc9E4B52620F566b30',
