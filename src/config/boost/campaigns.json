@@ -1,4 +1,12 @@
 {
+  "renzo-lido": {
+    "title": "Lido x Renzo",
+    "description": "Lido and Renzo joined forces with Beefy to bring users earnings competely denominated in ETH. Earn rsETH and wstETH on top of your ezETH-wstETH position.",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://twitter.com/beefyfinance"
+    }
+  },
   "rootstock-grant": {
     "title": "Beefy × Rootstock",
     "tagText": "Rootstock Grant",
