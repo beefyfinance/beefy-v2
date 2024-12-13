@@ -20,27 +20,6 @@
     "pinned": true
   },
   {
-    "id": "moo_ramses-cl-weeth-weth-vault",
-    "poolId": "ramses-cl-weeth-weth-vault",
-    "name": "Beefy",
-    "tagText": "Arb LTIPP",
-    "assets": ["weETH", "WETH"],
-    "tokenAddress": "0xc16a8425d27567fBeBDa82Bc005377cEDadbFa31",
-    "earnedToken": "ARB",
-    "earnedTokenDecimals": 18,
-    "earnedTokenAddress": "0x912CE59144191C1204E64559FE8253a0e49E6548",
-    "earnContractAddress": "0xB88416Cd55F2fff15845656B30d747A0d40Eca4C",
-    "version": 2,
-    "earnedOracle": "tokens",
-    "earnedOracleId": "ARB",
-    "partnership": true,
-    "status": "active",
-    "isMooStaked": true,
-    "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
-  },
-  {
     "id": "moo_stargate-v2-arb-weth",
     "poolId": "stargate-v2-arb-weth",
     "name": "Beefy",

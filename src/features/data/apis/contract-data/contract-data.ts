@@ -23,7 +23,10 @@ import type {
   RewardContractData,
   StandardVaultContractData,
 } from './contract-data-types';
-import { featureFlag_getContractDataApiChunkSize } from '../../utils/feature-flags';
+import {
+  featureFlag_getContractDataApiChunkSize,
+  featureFlag_simulateLiveBoost,
+} from '../../utils/feature-flags';
 import type { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
 import { selectTokenByAddress, selectTokenByAddressOrUndefined } from '../../selectors/tokens';
@@ -31,6 +34,7 @@ import { makeBatchRequest, viemToWeb3Abi, type Web3Call } from '../../../../help
 import { isFiniteNumber } from '../../../../helpers/number';
 import type Web3 from 'web3';
 import { BIG_ZERO } from '../../../../helpers/big-number';
+import { addDays } from 'date-fns';
 
 export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi {
   constructor(protected web3: Web3, protected chain: T) {}
@@ -318,13 +322,23 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       !rewards.some(reward => reward.token.address === boost.earnedTokenAddress)
     ) {
       const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
-      rewards.push({
-        token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
-        rewardRate: BIG_ZERO,
-        periodFinish: undefined,
-        isPreStake: false,
-        index: -1,
-      });
+      if (featureFlag_simulateLiveBoost(boost.id)) {
+        rewards.push({
+          token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+          rewardRate: new BigNumber('0.5'),
+          periodFinish: addDays(new Date(), 7),
+          isPreStake: false,
+          index: -1,
+        });
+      } else {
+        rewards.push({
+          token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+          rewardRate: BIG_ZERO,
+          periodFinish: undefined,
+          isPreStake: false,
+          index: -1,
+        });
+      }
     }
 
     const vault = selectVaultById(state, boost.vaultId);

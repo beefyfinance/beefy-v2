@@ -39,7 +39,11 @@ export const styles = (theme: Theme) => ({
   campaignText: {
     color: theme.palette.text.middle,
   },
-  partners: {},
+  partners: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '16px',
+  },
   partnerSubCard: {
     borderRadius: '12px',
     backgroundColor: theme.palette.background.contentLight,

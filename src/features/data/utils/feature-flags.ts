@@ -1,19 +1,15 @@
 import type { ChainEntity } from '../entities/chain';
 import { clamp } from '../../../helpers/number';
+import { createFactory } from './factory-utils';
 
 const DEFAULT_CHUNK_SIZE = 468;
 const DEFAULT_CHUNK_SIZE_BY_CHAIN: Record<string, number> = {
   fantom: 200,
 };
 
-let searchParamsCache: URLSearchParams | undefined;
-
-function getSearchParams(): URLSearchParams {
-  if (!searchParamsCache) {
-    searchParamsCache = new URLSearchParams(window.location.search);
-  }
-  return searchParamsCache;
-}
+const getSearchParams = createFactory((): URLSearchParams => {
+  return new URLSearchParams(window.location.search);
+});
 
 export const isDevelopment = import.meta.env.DEV;
 export const isProduction = import.meta.env.PROD;
@@ -290,4 +286,15 @@ export function featureFlag_simulateMerklApiFailure(): number | false {
   }
 
   return clamp(parseFloat(params.get('__simulate_merkl_api_failure') || '0'), 0, 1);
+}
+
+const getSimulateLiveBoosts = createFactory((): Set<string> => {
+  const params = getSearchParams();
+  const boostIds = (params.get('__simulate_live_boost') || '').split(',');
+  return new Set(boostIds);
+});
+
+export function featureFlag_simulateLiveBoost(boostId: string): boolean {
+  const boostIds = getSimulateLiveBoosts();
+  return boostIds.has(boostId);
 }
