@@ -2,7 +2,7 @@
   {
     "id": "moo_aura-arb-ezeth-wsteth-renzo",
     "poolId": "aura-arb-ezeth-wsteth",
-    "name": "Renzo",
+    "name": "Renzo × Lido",
     "assets": ["ezETH", "wstETH"],
     "tokenAddress": "0xEFAd727469e7e4e410376986AB0af8B6F9559fDc",
     "earnedToken": "ezETH",
