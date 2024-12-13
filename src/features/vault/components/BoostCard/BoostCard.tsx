@@ -131,8 +131,8 @@ const CampaignContent = memo<CampaignContentProps>(function CampaignContent({
         </div>
       </div>
       <CardContent className={classes.content}>
-        <div className={classes.campaignTitle}>{title}</div>
-        <div className={classes.campaignText}>{description}</div>
+        {title && <div className={classes.campaignTitle}>{title}</div>}
+        {description && <div className={classes.campaignText}>{description}</div>}
         {partnerIds && partnerIds.length > 0 && (
           <div className={classes.partners}>
             {partnerIds.map(partnerId => (
