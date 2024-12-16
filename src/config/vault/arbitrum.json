@@ -1,5 +1,45 @@
 [
   {
+    "id": "curve-arb-asdcrv-v2.1",
+    "name": "CRV/vsdCRV/asdCRV",
+    "token": "vasdcrvv2",
+    "tokenAddress": "0x5C959D2c1a49B637Fb988c40d663265F8Bf6d289",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x0165384487d26b3bb71aE2f3e26635071b71CC25",
+    "earnedToken": "mooCurveCRV-vsdCRV-asdCRV-2.1",
+    "earnedTokenAddress": "0x0165384487d26b3bb71aE2f3e26635071b71CC25",
+    "oracle": "lps",
+    "oracleId": "curve-arb-asdcrv-v2.1",
+    "status": "active",
+    "createdAt": 1734344258,
+    "platformId": "convex",
+    "assets": ["CRV", "vsdCRV", "asdCRV"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-27/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-27/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x5C959D2c1a49B637Fb988c40d663265F8Bf6d289",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x5C959D2c1a49B637Fb988c40d663265F8Bf6d289",
+            "coins": [
+              "0x11cDb42B0EB46D95f990BeDD4695A6e3fA034978",
+              "0x62d5a59E0d67c0381aAd53B201B4A1B8Dcd2C833",
+              "0x75289388d50364c3013583d97bd70cED0e183e32"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "pendle-arb-gusdc-26jun25",
     "name": "gUSDC 26Jun25",
     "token": "gUSDC-26JUN25",
