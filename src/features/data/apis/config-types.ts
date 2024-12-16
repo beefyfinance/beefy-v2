@@ -191,6 +191,7 @@ type ChainId =
   | 'rootstock'
   | 'scroll'
   | 'sonic'
+  | 'lisk'
   | 'aurora'
   | 'emerald'
   | 'celo'

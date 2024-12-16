@@ -128,5 +128,10 @@
     "chainId": "scroll",
     "router": "0x75c9D65e7C0d6b40F356452f8A11aeD525B67197",
     "manager": "0x3d38fa251b0C5dAC8B31Aef9dE7a54B4dE114342"
+  },
+  {
+    "chainId": "lisk",
+    "router": "0xaF0f1B33Ef5A61b88F84BA2Ed2388f2C69fEaB55",
+    "manager": "0x60242b3c90a3F477a0FC5B4095f5946583Fbd6ce"
   }
 ]

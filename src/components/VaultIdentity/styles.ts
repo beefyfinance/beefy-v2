@@ -116,7 +116,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#000',
   },
   'vaultNetwork-manta': {
-    backgroundColor: '#000',
+    backgroundColor: '#FFF',
   },
   'vaultNetwork-real': {
     backgroundColor: '#FFF',
@@ -129,6 +129,9 @@ export const styles = (theme: Theme) => ({
   },
   'vaultNetwork-scroll': {
     backgroundColor: '#ffe6c8',
+  },
+  'vaultNetwork-lisk': {
+    backgroundColor: '#000',
   },
   'vaultNetwork-sonic': {
     backgroundColor: '#EC5409',

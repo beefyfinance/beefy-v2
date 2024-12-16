@@ -124,7 +124,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: 'rgba(18, 18, 18, 0.2)',
   },
   'headerNetwork-manta': {
-    backgroundColor: 'rgba(18, 18, 18, 0.2)',
+    backgroundColor: 'rgb(201, 203, 206)',
   },
   'headerNetwork-real': {
     backgroundColor: 'rgba(28, 18, 44, 0.4)',
@@ -137,6 +137,9 @@ export const styles = (theme: Theme) => ({
   },
   'headerNetwork-scroll': {
     backgroundColor: 'rgb(201, 203, 206)',
+  },
+  'headerNetwork-lisk': {
+    backgroundColor: 'rgba(18, 18, 18, 0.2)',
   },
   'headerNetwork-sonic': {
     backgroundColor: 'rgb(201, 203, 206)',

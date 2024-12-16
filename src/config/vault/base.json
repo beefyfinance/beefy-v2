@@ -1,5 +1,34 @@
 [
   {
+    "id": "aerodrome-weth-anz",
+    "name": "ANZ-WETH vLP",
+    "token": "vAMM-WETH/ANZ",
+    "tokenAddress": "0xE4faa73134C66832c272f067adC401f0963A9D7a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x7DC15bc095e77E7CA6f30Bf5BDe3eD4C2083cAA0",
+    "earnedToken": "mooAeroWETH-ANZ",
+    "earnedTokenAddress": "0x7DC15bc095e77E7CA6f30Bf5BDe3eD4C2083cAA0",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-anz",
+    "status": "active",
+    "createdAt": 1733999046,
+    "platformId": "aerodrome",
+    "assets": ["ANZ", "WETH"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xeeC468333ccc16D4BF1cEf497A56cf8C0aAe4Ca3&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-ox-cbbtc",
     "name": "OX-cbBTC vLP",
     "type": "standard",
@@ -368,7 +397,9 @@
     "earnContractAddress": "0x81E4675C6A312e502eF10aA038e6159B921132C6",
     "oracle": "lps",
     "oracleId": "uniswap-cow-base-hyusd-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1733690769,
+    "retireReason": "tvl",
     "createdAt": 1733420000,
     "platformId": "uniswap",
     "assets": ["hyUSD", "USDC"],
@@ -400,7 +431,9 @@
     "earnContractAddress": "0xD937c1b7761f053FDDA541C731fdf255FC3222Ea",
     "oracle": "lps",
     "oracleId": "uniswap-cow-base-hyusd-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1733690769,
+    "retireReason": "tvl",
     "createdAt": 1733420000,
     "platformId": "beefy",
     "assets": ["hyUSD", "USDC"],
@@ -568,7 +601,7 @@
   },
   {
     "id": "alienbase-alb-eth-wide",
-    "name": "ALB-ETH V3-Wide",
+    "name": "ALB-WETH V3-Wide",
     "token": "ALB-ETH V3-Wide",
     "tokenAddress": "0x70DE8B9baC83E39cea0389EfDbCBAa0700400dAd",
     "tokenDecimals": 18,
@@ -591,7 +624,7 @@
   },
   {
     "id": "alienbase-cbeth-eth-narrow",
-    "name": "cbETH-ETH V3-Narrow",
+    "name": "cbETH-WETH V3-Narrow",
     "token": "cbETH-ETH V3-Narrow",
     "tokenAddress": "0x9a85cA2ea6473CBedc27DF10C126711bEACe089e",
     "tokenDecimals": 18,
@@ -1123,7 +1156,9 @@
     "earnContractAddress": "0xEe37B2135237B460a85FF3755443C5B74F11580d",
     "oracle": "lps",
     "oracleId": "aerodrome-jarvis-wsteth",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1733532788,
+    "retireReason": "tvl",
     "createdAt": 1732176041,
     "platformId": "aerodrome",
     "assets": ["JARVIS", "wstETH"],
@@ -1531,7 +1566,8 @@
     "earnContractAddress": "0x7E8b48068c61f4775Ba74F518e9016a4dFE0f004",
     "oracle": "tokens",
     "oracleId": "AERO",
-    "status": "active",
+    "status": "paused",
+    "pausedAt": 1733690690,
     "createdAt": 1732037064,
     "platformId": "compound",
     "assets": ["AERO"],
@@ -1773,7 +1809,9 @@
     "earnContractAddress": "0x6229A4448eccfaf817b6978A566507e177440A45",
     "oracle": "lps",
     "oracleId": "aerodrome-hbr-usdbc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1733532788,
+    "retireReason": "tvl",
     "createdAt": 1731325644,
     "platformId": "aerodrome",
     "assets": ["HBR", "USDbC"],
@@ -3138,7 +3176,7 @@
   },
   {
     "id": "aerodrome-weth-silo",
-    "name": "SILO-ETH vLP",
+    "name": "SILO-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/SILO",
     "tokenAddress": "0x57bd5C33c8002A634b389Ab4de5e09eC1C31Dce7",
@@ -3285,7 +3323,9 @@
     "earnContractAddress": "0xDdb87848aABDf0532dfBb01c6575041FBbe2798C",
     "oracle": "tokens",
     "oracleId": "cbETH",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1733532754,
+    "retireReason": "rewards",
     "createdAt": 1729264245,
     "platformId": "silo",
     "assets": ["cbETH"],
@@ -3757,7 +3797,14 @@
     "createdAt": 1729264245,
     "platformId": "silo",
     "assets": ["bsdETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "PLATFORM_ESTABLISHED", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "strategyTypeId": "lendingNoBorrow",
     "network": "base",
     "zaps": [
@@ -3786,7 +3833,14 @@
     "createdAt": 1729264245,
     "platformId": "silo",
     "assets": ["WETH"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "PLATFORM_ESTABLISHED", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "strategyTypeId": "lendingNoBorrow",
     "network": "base",
     "zaps": [
@@ -4392,7 +4446,7 @@
   },
   {
     "id": "aerodrome-weth-degen",
-    "name": "DEGEN-ETH vLP",
+    "name": "DEGEN-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/DEGEN",
     "tokenAddress": "0x2C4909355b0C036840819484c3A882A95659aBf3",
@@ -5451,7 +5505,7 @@
   },
   {
     "id": "aerodrome-weth-spx",
-    "name": "SPX-ETH vLP",
+    "name": "SPX-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/SPX",
     "tokenAddress": "0xe96a4E9EA3a2C6Db214174738a19Eb7Dbb8A3069",
@@ -7447,7 +7501,7 @@
   },
   {
     "id": "aerodrome-weth-eurc",
-    "name": "ETH-EURC vLP",
+    "name": "WETH-EURC vLP",
     "type": "standard",
     "token": "vAMM-WETH/EURC",
     "tokenAddress": "0x9DFf4b5AE4fD673213502Ab8fbf6d36015efb3E1",
@@ -8923,7 +8977,7 @@
   },
   {
     "id": "aerodrome-usdz-weth",
-    "name": "USDz-ETH vLP",
+    "name": "USDz-WETH vLP",
     "type": "standard",
     "token": "vAMM-USDz/WETH",
     "tokenAddress": "0x2ce63497999F520CC2afaaadbCFC37Afd9deF4b0",
@@ -8953,7 +9007,7 @@
   },
   {
     "id": "aerodrome-weth-susdz",
-    "name": "sUSDz-ETH vLP",
+    "name": "sUSDz-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/sUSDz",
     "tokenAddress": "0x5346a22ee56d200971eC63F98c83e233bd07648d",
@@ -10244,7 +10298,7 @@
   },
   {
     "id": "aerodrome-weth-reth-s",
-    "name": "ETH-rETH sLP",
+    "name": "WETH-rETH sLP",
     "type": "standard",
     "token": "sAMM-WETH/rETH",
     "tokenAddress": "0xb8866732424AcDdd729C6fcf7146b19bFE4A2e36",
@@ -10734,7 +10788,7 @@
   },
   {
     "id": "aura-base-weeth-weth",
-    "name": "weETH-ETH",
+    "name": "weETH-WETH",
     "type": "standard",
     "token": "weETH-ETH Base",
     "tokenAddress": "0xaB99a3e856dEb448eD99713dfce62F937E2d4D74",
@@ -10780,7 +10834,7 @@
   },
   {
     "id": "aerodrome-weth-ghst",
-    "name": "ETH-GHST vLP",
+    "name": "WETH-GHST vLP",
     "type": "standard",
     "token": "vAMM-WETH-GHST",
     "tokenAddress": "0x0DFb9Cb66A18468850d6216fCc691aa20ad1e091",
@@ -10840,7 +10894,7 @@
   },
   {
     "id": "aerodrome-weeth-weth",
-    "name": "weETH-ETH vLP",
+    "name": "weETH-WETH vLP",
     "type": "standard",
     "token": "vAMM-weETH/WETH",
     "tokenAddress": "0x91F0f34916Ca4E2cCe120116774b0e4fA0cdcaA8",
@@ -10915,7 +10969,7 @@
   },
   {
     "id": "aerodrome-weth-wrseth",
-    "name": "wrsETH-ETH vLP",
+    "name": "wrsETH-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/wrsETH",
     "tokenAddress": "0xA24382874A6FD59de45BbccFa160488647514c28",
@@ -11066,7 +11120,7 @@
   },
   {
     "id": "equalizer-base-ichi-weth-usdbc",
-    "name": "ETH-USDbC LP",
+    "name": "WETH-USDbC LP",
     "type": "standard",
     "token": "ETH-USDbC LP",
     "tokenAddress": "0x0E8CD30FC79a79cf16E11424ff5681441361149E",
@@ -11089,7 +11143,7 @@
   },
   {
     "id": "equalizer-base-ichi-weth-usdc",
-    "name": "ETH-USDC LP",
+    "name": "WETH-USDC LP",
     "type": "standard",
     "token": "ETH-USDC LP",
     "tokenAddress": "0xF5834bdE4859763840d8449262D296AD7D17cE21",
@@ -11114,7 +11168,7 @@
   },
   {
     "id": "equalizer-base-ichi-usdbc-weth",
-    "name": "USDbC-ETH LP",
+    "name": "USDbC-WETH LP",
     "type": "standard",
     "token": "USDbC-ETH LP",
     "tokenAddress": "0x98c7030EA996D325559E3B0f0eCf800C3F376Fe4",
@@ -11284,7 +11338,7 @@
   },
   {
     "id": "aerodrome-weth-normilio",
-    "name": "NORMILIO-ETH vLP",
+    "name": "NORMILIO-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/NORMILIO",
     "tokenAddress": "0x7D68c4E183e31971deb223e6F8A064751d0599d0",
@@ -11356,7 +11410,7 @@
   },
   {
     "id": "aerodrome-weth-hop",
-    "name": "HOP-ETH vLP",
+    "name": "HOP-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/HOP",
     "tokenAddress": "0x75D18ee68bB93BE5cB2dcCFa0d8151E25CBC8Eb8",
@@ -11565,7 +11619,7 @@
   },
   {
     "id": "aerodrome-weth-qi",
-    "name": "QI-ETH vLP",
+    "name": "QI-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/QI",
     "tokenAddress": "0x06709C364dd4E2f5b0c10b1eBf80B2Ce483dbdC5",
@@ -11601,7 +11655,7 @@
   },
   {
     "id": "aerodrome-mog-weth",
-    "name": "Mog-ETH vLP",
+    "name": "Mog-WETH vLP",
     "type": "standard",
     "token": "vAMM-Mog/WETH",
     "tokenAddress": "0x4A311ac4563abc30E71D0631C88A6232C1309ac5",
@@ -11675,7 +11729,7 @@
   },
   {
     "id": "aerodrome-hpc-weth",
-    "name": "HPC-ETH vLP",
+    "name": "HPC-WETH vLP",
     "type": "standard",
     "token": "vAMM-HPC/WETH",
     "tokenAddress": "0xd07B4d7CeA966B6E8087C8be3347E4B790679785",
@@ -11711,7 +11765,7 @@
   },
   {
     "id": "aerodrome-weth-npc",
-    "name": "NPC-ETH vLP",
+    "name": "NPC-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/NPC",
     "tokenAddress": "0x5E14319D52c9C18a04BFBBE12dd3a0FE3C1A816a",
@@ -11747,7 +11801,7 @@
   },
   {
     "id": "aerodrome-weth-chad",
-    "name": "CHAD-ETH vLP",
+    "name": "CHAD-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/CHAD",
     "tokenAddress": "0x17Cf4aBb54a9D18c90FA0e36B8669aB0f4936f2e",
@@ -11783,7 +11837,7 @@
   },
   {
     "id": "aerodrome-anime-weth",
-    "name": "ANIME-ETH vLP",
+    "name": "ANIME-WETH vLP",
     "type": "standard",
     "token": "vAMM-ANIME/WETH",
     "tokenAddress": "0xeB956b77D455e33b41bBE6052dBE4388dCfD729B",
@@ -12149,7 +12203,7 @@
   },
   {
     "id": "aerodrome-wbasedoge-weth",
-    "name": "wBaseDOGE-ETH vLP",
+    "name": "wBaseDOGE-WETH vLP",
     "type": "standard",
     "token": "vAMM-wBaseDOGE/WETH",
     "tokenAddress": "0x9D933f0AF9dc01A6f9e5D2e6dcB25B6D0837EA81",
@@ -12214,7 +12268,7 @@
   },
   {
     "id": "aerodrome-weth-bwell",
-    "name": "WELL-ETH vLP",
+    "name": "WELL-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/WELL",
     "tokenAddress": "0x89D0F320ac73dd7d9513FFC5bc58D1161452a657",
@@ -12251,7 +12305,7 @@
   },
   {
     "id": "aerodrome-ezeth-weth",
-    "name": "ezETH-ETH vLP",
+    "name": "ezETH-WETH vLP",
     "type": "standard",
     "token": "vAMM-ezETH/WETH",
     "tokenAddress": "0x0C8bF3cb3E1f951B284EF14aa95444be86a33E2f",
@@ -12288,7 +12342,7 @@
   },
   {
     "id": "aerodrome-ezeth-weth-s",
-    "name": "ezETH-ETH sLP",
+    "name": "ezETH-WETH sLP",
     "type": "standard",
     "token": "sAMM-ezETH/WETH",
     "tokenAddress": "0x497139e8435E01555AC1e3740fccab7AFf149e02",
@@ -12335,7 +12389,8 @@
     "earnContractAddress": "0xeF6ED674486E54507d0f711C0d388BD8a1552E6F",
     "oracle": "tokens",
     "oracleId": "USDC",
-    "status": "active",
+    "status": "paused",
+    "pausedAt": 1733690690,
     "createdAt": 1711975000,
     "platformId": "compound",
     "assets": ["USDC"],
@@ -12399,7 +12454,7 @@
   },
   {
     "id": "aerodrome-weth-l2ve",
-    "name": "L2VE-ETH vLP",
+    "name": "L2VE-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/L2VE",
     "tokenAddress": "0x253Da544f498b85429F6ACDc6E98B36b36c1C824",
@@ -12435,7 +12490,7 @@
   },
   {
     "id": "aerodrome-weth-doginme",
-    "name": "doginme-ETH vLP",
+    "name": "doginme-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/doginme",
     "tokenAddress": "0x139E9f235588A9720e7Eab045da29dC781c4b658",
@@ -12531,7 +12586,7 @@
   },
   {
     "id": "aerodrome-weth-reth",
-    "name": "ETH-rETH vLP",
+    "name": "WETH-rETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/rETH",
     "tokenAddress": "0xA6F8A6bc3deA678d5bA786f2Ad2f5F93d1c87c18",
@@ -12629,7 +12684,7 @@
   },
   {
     "id": "aerodrome-weth-dog",
-    "name": "DOG-ETH vLP",
+    "name": "DOG-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/DOG",
     "tokenAddress": "0xF89042057D079debe2a65A1a899E48E0E825105F",
@@ -12658,7 +12713,7 @@
   },
   {
     "id": "aerodrome-tybg-weth",
-    "name": "TYBG-ETH vLP",
+    "name": "TYBG-WETH vLP",
     "type": "standard",
     "token": "vAMM-TYBG/WETH",
     "tokenAddress": "0x20000FbfeDFD172821821C9c59284129B04ffB2e",
@@ -12687,7 +12742,7 @@
   },
   {
     "id": "aerodrome-weth-bsdeth",
-    "name": "ETH-bsdETH vLP",
+    "name": "WETH-bsdETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/bsdETH",
     "tokenAddress": "0x6B87B8663eE63191887F18225F79D9eEb2DE0d34",
@@ -12716,7 +12771,7 @@
   },
   {
     "id": "aerodrome-weth-usd+",
-    "name": "ETH-USD+ vLP",
+    "name": "WETH-USD+ vLP",
     "type": "standard",
     "token": "vAMM-WETH/USD+",
     "tokenAddress": "0x08B935148AB10d3699Cb8d944519e8213abE6f1D",
@@ -12856,7 +12911,7 @@
   },
   {
     "id": "aerodrome-weth-mseth",
-    "name": "msETH-ETH sLP",
+    "name": "msETH-WETH sLP",
     "type": "standard",
     "token": "sAMM-WETH/msETH",
     "tokenAddress": "0xDE4FB30cCC2f1210FcE2c8aD66410C586C8D1f9A",
@@ -13069,7 +13124,7 @@
   },
   {
     "id": "aerodrome-weth-usdc",
-    "name": "ETH-USDC vLP",
+    "name": "WETH-USDC vLP",
     "type": "standard",
     "token": "vAMM-ETH/USDC",
     "tokenAddress": "0xcDAC0d6c6C59727a65F871236188350531885C43",
@@ -13460,7 +13515,7 @@
   },
   {
     "id": "aerodrome-weth-axlusdc",
-    "name": "ETH-axlUSDC vLP",
+    "name": "WETH-axlUSDC vLP",
     "type": "standard",
     "token": "vAMM-WETH-axlUSDC",
     "tokenAddress": "0xD266fB3E928b2A5f631B072a79Fd5b82704Ba983",
@@ -13520,7 +13575,7 @@
   },
   {
     "id": "aerodrome-weth-wsteth",
-    "name": "ETH-wstETH vLP",
+    "name": "WETH-wstETH vLP",
     "type": "standard",
     "token": "vAMM-WETH-wstETH",
     "tokenAddress": "0xA6385c73961dd9C58db2EF0c4EB98cE4B60651e8",
@@ -13652,7 +13707,7 @@
   },
   {
     "id": "compound-base-eth",
-    "name": "ETH",
+    "name": "WETH",
     "type": "standard",
     "token": "ETH",
     "tokenDecimals": 18,
@@ -13661,7 +13716,8 @@
     "earnContractAddress": "0x62e5B9934dCB87618CFC74B222305D16C997E8c1",
     "oracle": "tokens",
     "oracleId": "ETH",
-    "status": "active",
+    "status": "paused",
+    "pausedAt": 1733690690,
     "createdAt": 1698951095,
     "platformId": "compound",
     "assets": ["ETH"],
@@ -14063,7 +14119,7 @@
   },
   {
     "id": "baseswap-weth-bsx",
-    "name": "BSX-ETH LP",
+    "name": "BSX-WETH LP",
     "type": "standard",
     "token": "BSX-ETH LP",
     "tokenAddress": "0x7fea0384F38EF6Ae79bB12295a9e10C464204F52",
@@ -14170,7 +14226,7 @@
   },
   {
     "id": "balancer-base-weth-reth",
-    "name": "rETH-ETH",
+    "name": "rETH-WETH",
     "type": "standard",
     "token": "rETH-ETH Base",
     "tokenAddress": "0xC771c1a5905420DAEc317b154EB13e4198BA97D0",
@@ -14215,7 +14271,7 @@
   },
   {
     "id": "baseswap-weth-usdc",
-    "name": "USDC-ETH LP",
+    "name": "USDC-WETH LP",
     "type": "standard",
     "token": "USDC-ETH LP",
     "tokenAddress": "0xab067c01C7F5734da168C699Ae9d23a4512c9FdB",
@@ -14356,7 +14412,7 @@
   },
   {
     "id": "aerodrome-weth-dai",
-    "name": "ETH-DAI vLP",
+    "name": "WETH-DAI vLP",
     "type": "standard",
     "token": "vAMM-WETH-DAI",
     "tokenAddress": "0x9287C921f5d920cEeE0d07d7c58d476E46aCC640",
@@ -14742,7 +14798,7 @@
   },
   {
     "id": "aerodrome-weth-well",
-    "name": "WELL.wh-ETH vLP",
+    "name": "WELL.wh-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/WELL",
     "tokenAddress": "0xffA3F8737C39e36dec4300B162c2153c67c8352f",
@@ -14771,7 +14827,7 @@
   },
   {
     "id": "aerodrome-weth-aero",
-    "name": "AERO-ETH vLP",
+    "name": "AERO-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/AERO",
     "tokenAddress": "0x7f670f78B17dEC44d5Ef68a48740b6f8849cc2e6",
@@ -14902,7 +14958,7 @@
   },
   {
     "id": "aerodrome-weth-thales",
-    "name": "THALES-ETH vLP",
+    "name": "THALES-WETH vLP",
     "type": "standard",
     "token": "vAMM-WETH/THALES",
     "tokenAddress": "0x3f386Acc3A8E9194cF6279C219DF8DD3C5B71974",
@@ -14942,7 +14998,9 @@
     "earnContractAddress": "0x55258aAE799E72444A9261DFf46c271E5a063091",
     "oracle": "lps",
     "oracleId": "aerodrome-ageur-usdbc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1733532788,
+    "retireReason": "tvl",
     "createdAt": 1693493753,
     "platformId": "aerodrome",
     "assets": ["EURA", "USDbC"],
@@ -15057,7 +15115,7 @@
   },
   {
     "id": "aerodrome-tbtc-weth",
-    "name": "tBTC-ETH vLP",
+    "name": "tBTC-WETH vLP",
     "type": "standard",
     "token": "vAMM-tBTC/WETH",
     "tokenAddress": "0x2722C8f9B5E2aC72D1f225f8e8c990E449ba0078",
@@ -15122,7 +15180,7 @@
   },
   {
     "id": "aerodrome-cbeth-weth",
-    "name": "cbETH-ETH vLP",
+    "name": "cbETH-WETH vLP",
     "type": "standard",
     "token": "vAMM-cbETH/WETH",
     "tokenAddress": "0x44Ecc644449fC3a9858d2007CaA8CFAa4C561f91",
@@ -15180,7 +15238,7 @@
   },
   {
     "id": "aerodrome-weth-usdbc",
-    "name": "ETH-USDbC vLP",
+    "name": "WETH-USDbC vLP",
     "type": "standard",
     "token": "vAMM-WETH/USDbC",
     "tokenAddress": "0xB4885Bc63399BF5518b994c1d0C153334Ee579D0",
@@ -15238,7 +15296,7 @@
   },
   {
     "id": "baso-weth-usdbc",
-    "name": "ETH-USDbC LP",
+    "name": "WETH-USDbC LP",
     "type": "standard",
     "token": "ETH-USDbC LP",
     "tokenAddress": "0xE1ADA5ACb1759b3159c9d2D0ff9d6a3BbFE775D7",
@@ -15786,7 +15844,7 @@
   },
   {
     "id": "alienbase-alb-weth",
-    "name": "ALB-ETH LP",
+    "name": "ALB-WETH LP",
     "type": "standard",
     "token": "ALB-ETH LP",
     "tokenAddress": "0xd79Ef386f26E40B5e60e4aeB324F2678F6eBbF49",
@@ -15844,7 +15902,7 @@
   },
   {
     "id": "alienbase-weth-usdbc",
-    "name": "ETH-USDbC LP",
+    "name": "WETH-USDbC LP",
     "type": "standard",
     "token": "ETH-USDbC LP",
     "tokenAddress": "0xeF24722d5daE32Dc155d961561cFFbc5f347EeE7",
@@ -15904,7 +15962,7 @@
   },
   {
     "id": "alienbase-cbeth-weth",
-    "name": "cbETH-ETH LP",
+    "name": "cbETH-WETH LP",
     "type": "standard",
     "token": "cbETH-ETH LP",
     "tokenAddress": "0x9BB646BF0F4Da44bfaF3d899e774DE065731EDFe",
@@ -15965,7 +16023,7 @@
   },
   {
     "id": "bvm-cbeth-weth",
-    "name": "cbETH-ETH vLP",
+    "name": "cbETH-WETH vLP",
     "type": "standard",
     "token": "cbETH-ETH vLP",
     "tokenAddress": "0x291CDd70257c17bC719D11531ec01C33C34A4d8b",
@@ -16138,7 +16196,7 @@
   },
   {
     "id": "baseswap-cbeth-weth",
-    "name": "cbETH-ETH LP",
+    "name": "cbETH-WETH LP",
     "type": "standard",
     "token": "cbETH-ETH LP",
     "tokenAddress": "0x07CFA5Df24fB17486AF0CBf6C910F24253a674D3",
@@ -16288,7 +16346,7 @@
   },
   {
     "id": "balancer-base-eth-bbsusd",
-    "name": "ETH-bsUSD",
+    "name": "WETH-bsUSD",
     "type": "standard",
     "token": "ETH-bsUSD base",
     "tokenAddress": "0x2Db50a0e0310723EF0C2a165CB9A9f80D772ba2F",

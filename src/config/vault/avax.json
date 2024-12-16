@@ -679,7 +679,7 @@
   },
   {
     "id": "balancer-avax-savax-avax",
-    "name": "sAVAX-AVAX",
+    "name": "sAVAX-WAVAX",
     "type": "standard",
     "token": "sAVAX-AVAX Avax",
     "tokenAddress": "0xfD2620C9cfceC7D152467633B3B0Ca338D3d78cc",
@@ -964,7 +964,7 @@
   },
   {
     "id": "joe-auto-wavax-usdc",
-    "name": "AVAX-USDC APT",
+    "name": "WAVAX-USDC APT",
     "type": "standard",
     "token": "AVAX-USDC APT",
     "tokenAddress": "0x32833a12ed3Fd5120429FB01564c98ce3C60FC1d",
@@ -1092,7 +1092,7 @@
   },
   {
     "id": "solisnek-wavax-usdc",
-    "name": "AVAX-USDC vLP",
+    "name": "WAVAX-USDC vLP",
     "type": "standard",
     "token": "AVAX-USDC vLP",
     "tokenAddress": "0xDF214f497BeCA7f550a74CEB89240FB185CE19b4",
@@ -2692,30 +2692,6 @@
     "buyTokenUrl": "https://avadex.complus.exchange/#/swap?inputCurrency=0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15&outputCurrency=AVAX",
     "addLiquidityUrl": "https://avadex.complus.exchange/#/add/AVAX/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15",
     "removeLiquidityUrl": "https://avadex.complus.exchange/#/remove/AVAX/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15",
-    "network": "avax"
-  },
-  {
-    "id": "com-png-avax-eol",
-    "name": "PNG-AVAX LP",
-    "type": "standard",
-    "token": "PNG-AVAX CLP",
-    "tokenAddress": "0xEcee953e187d9e82D57bAedAaEF1e56E5283f5C3",
-    "tokenDecimals": 18,
-    "tokenProviderId": "complus",
-    "earnedToken": "mooComplusPNG-AVAX",
-    "earnedTokenAddress": "0x7076a33b6525132fF77F0FeE2daB2a1e79688DA0",
-    "earnContractAddress": "0x7076a33b6525132fF77F0FeE2daB2a1e79688DA0",
-    "oracle": "lps",
-    "oracleId": "com-png-avax",
-    "status": "eol",
-    "createdAt": 1616228454,
-    "retiredAt": 1620654547,
-    "platformId": "complus",
-    "assets": ["PNG", "AVAX"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://avadex.complus.exchange/#/swap?inputCurrency=0x60781C2586D68229fde47564546784ab3fACA982&outputCurrency=AVAX",
-    "addLiquidityUrl": "https://avadex.complus.exchange/#/add/AVAX/0x60781C2586D68229fde47564546784ab3fACA982",
-    "removeLiquidityUrl": "https://avadex.complus.exchange/#/remove/AVAX/0x60781C2586D68229fde47564546784ab3fACA982",
     "network": "avax"
   },
   {

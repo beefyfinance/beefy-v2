@@ -1,5 +1,25 @@
 [
   {
+    "id": "moo_aura-arb-ezeth-wsteth-renzo",
+    "poolId": "aura-arb-ezeth-wsteth",
+    "name": "Renzo × Lido",
+    "assets": ["ezETH", "wstETH"],
+    "tokenAddress": "0xEFAd727469e7e4e410376986AB0af8B6F9559fDc",
+    "earnedToken": "ezETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+    "earnContractAddress": "0x8d4faAa513943Cee209f819779075e5cD80FbF8D",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "ezETH",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "renzo-lido",
+    "partners": ["renzo", "lido-eth"],
+    "pinned": true
+  },
+  {
     "id": "moo_stargate-v2-arb-weth",
     "poolId": "stargate-v2-arb-weth",
     "name": "Beefy",

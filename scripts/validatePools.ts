@@ -103,6 +103,7 @@ const nonHarvestOnDepositPools = [
   'compound-op-usdt',
   'compound-op-usdc',
   'compound-op-eth',
+  'compound-base-usdc',
   'nuri-cow-scroll-usdc-scr-vault',
   'tokan-wbtc-weth',
   'aero-cow-usdz-cbbtc-vault',
@@ -112,7 +113,6 @@ const excludedAbPools = [
   'gmx-arb-near-usdc',
   'gmx-arb-atom-usdc',
   'gmx-arb-bnb-usdc',
-  'gmx-arb-ltc-usdc',
   'gmx-arb-xrp-usdc',
   'gmx-arb-doge-usdc',
 ];

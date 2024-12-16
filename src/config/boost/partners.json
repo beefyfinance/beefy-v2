@@ -1,4 +1,13 @@
 {
+  "renzo": {
+    "title": "Renzo",
+    "text": "Renzo is a liquid restaking protocol that aims to improve the Ethereum ecosystem by simplifying the restaking process and providing higher yields.",
+    "website": "https://www.renzoprotocol.com/",
+    "social": {
+      "telegram": "https://t.me/RenzoProtocolChat",
+      "twitter": "https://x.com/RenzoProtocol"
+    }
+  },
   "beefy-clm": {
     "title": "Beefy",
     "text": "Participate in concentrated liquidity pools while still earning compounded interest in the farming rewards, thanks to the Beefy CLM vaults. Earn boosted OP rewards by using the 'Boost Vault' button in the BOOST module.",

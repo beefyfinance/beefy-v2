@@ -1,8 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 27.6.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 1000 1000" style="enable-background:new 0 0 1000 1000;" xml:space="preserve">
-
-<path fill='#DFFE00' class="bg" d="M784.2,750.7H673.3V500l44.4-143l-31.5-11.2L542.4,750.7H458L314.1,345.8L282.7,357l44.4,143v250.8H216.2V247.6
-	h165.1l102.4,288v84.6h33.5v-84.6l102.4-288h165.1v503.1H784.2z"/>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle class="bg" cx="12" cy="12" r="12" fill="black"/>
+<path class="fg" d="M18.9877 18.3894H16.2566V12.2157L17.35 8.69411L16.5743 8.41829L13.0331 18.3894H10.9546L7.41091 8.41829L6.63764 8.69411L7.73105 12.2157V18.3919H5V6H9.06579L11.5875 13.0923V15.1757H12.4125V13.0923L14.9342 6H19V18.3894H18.9877Z" fill="#DFFE00"/>
 </svg>

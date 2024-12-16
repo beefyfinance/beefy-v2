@@ -1,5 +1,45 @@
 [
   {
+    "id": "curve-arb-asdcrv-v2.1",
+    "name": "CRV/vsdCRV/asdCRV",
+    "token": "vasdcrvv2",
+    "tokenAddress": "0x5C959D2c1a49B637Fb988c40d663265F8Bf6d289",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0x0165384487d26b3bb71aE2f3e26635071b71CC25",
+    "earnedToken": "mooCurveCRV-vsdCRV-asdCRV-2.1",
+    "earnedTokenAddress": "0x0165384487d26b3bb71aE2f3e26635071b71CC25",
+    "oracle": "lps",
+    "oracleId": "curve-arb-asdcrv-v2.1",
+    "status": "active",
+    "createdAt": 1734344258,
+    "platformId": "convex",
+    "assets": ["CRV", "vsdCRV", "asdCRV"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-27/deposit",
+    "removeLiquidityUrl": "https://curve.fi/#/arbitrum/pools/factory-tricrypto-27/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x5C959D2c1a49B637Fb988c40d663265F8Bf6d289",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x5C959D2c1a49B637Fb988c40d663265F8Bf6d289",
+            "coins": [
+              "0x11cDb42B0EB46D95f990BeDD4695A6e3fA034978",
+              "0x62d5a59E0d67c0381aAd53B201B4A1B8Dcd2C833",
+              "0x75289388d50364c3013583d97bd70cED0e183e32"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "pendle-arb-gusdc-26jun25",
     "name": "gUSDC 26Jun25",
     "token": "gUSDC-26JUN25",
@@ -1115,6 +1155,7 @@
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xdeeaf8b0a8cf26217261b813e085418c7dd8f1ee00020000000000000000058f/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0xdeeaf8b0a8cf26217261b813e085418c7dd8f1ee00020000000000000000058f/remove-liquidity",
     "network": "arbitrum",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "balancer",
@@ -1715,6 +1756,7 @@
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -1746,6 +1788,7 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -1780,7 +1823,7 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "earningPoints": false,
-    "pointStructureIds": [],
+    "pointStructureIds": ["ethena"],
     "network": "arbitrum",
     "zaps": [
       {
@@ -2442,7 +2485,9 @@
     "earnedTokenAddress": "0xDfB581df5407f7176314327Ef10C0ba44AD16a9e",
     "oracle": "lps",
     "oracleId": "sushi-cow-arb-wbtc-tbtc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1733690769,
+    "retireReason": "tvl",
     "createdAt": 1724161456,
     "platformId": "sushi",
     "assets": ["WBTC", "tBTC"],
@@ -2473,7 +2518,9 @@
     "earnedOracleIds": ["ARB"],
     "oracle": "lps",
     "oracleId": "sushi-cow-arb-wbtc-tbtc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1733690769,
+    "retireReason": "tvl",
     "createdAt": 1724161455,
     "platformId": "sushi",
     "assets": ["WBTC", "tBTC"],
@@ -2506,7 +2553,9 @@
     "earnedTokenAddress": "0xaB072B7B2c8ABF25d50c970d50D6Ca3aa66387bd",
     "oracle": "lps",
     "oracleId": "sushi-cow-arb-wbtc-tbtc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1733690769,
+    "retireReason": "tvl",
     "createdAt": 1724161455,
     "platformId": "beefy",
     "feeTier": "0.05",
@@ -2849,7 +2898,9 @@
     "earnedTokenAddress": "0xEA66381184De8FD7C28869c3C055618107DD1b90",
     "oracle": "lps",
     "oracleId": "pendle-arb-usde-28nov24",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1733532754,
+    "retireReason": "rewards",
     "createdAt": 1723797084,
     "platformId": "magpie",
     "assets": ["USDe"],
@@ -4770,7 +4821,9 @@
     "earnedTokenAddress": "0xdB306FF22760C79faa69E3139760AF9151902ECE",
     "oracle": "lps",
     "oracleId": "aura-arb-susde-sfrax",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1733532787,
+    "retireReason": "tvl",
     "createdAt": 1722363570,
     "platformId": "aura",
     "assets": ["sUSDe", "sFRAX"],
@@ -4786,6 +4839,7 @@
     "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x59743f1812bb85db83e9e4ee061d124aaa64290000000000000000000000052b/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/arbitrum/v2/0x59743f1812bb85db83e9e4ee061d124aaa64290000000000000000000000052b/remove-liquidity",
     "network": "arbitrum",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "balancer",
@@ -5995,7 +6049,9 @@
     "earnedTokenAddress": "0x02dB67e732748027293C2eaeb21C949d8DF3F6a8",
     "oracle": "lps",
     "oracleId": "uniswap-cow-arb-eusd-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1733690769,
+    "retireReason": "tvl",
     "createdAt": 1721779510,
     "platformId": "uniswap",
     "assets": ["eUSD", "USDC"],
@@ -6838,7 +6894,9 @@
     "earnedTokenAddress": "0x9eEd71e0Cf1681Fb4554cFcC9C1eAAC6F6307EAC",
     "oracle": "lps",
     "oracleId": "aura-arb-gyro-ausdt-usdt",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1734101117,
+    "retireReason": "tvl",
     "createdAt": 1721130845,
     "platformId": "aura",
     "assets": ["stataArbUSDTn", "USDT"],
@@ -7015,7 +7073,7 @@
   },
   {
     "id": "curve-arb-eth+-eth-v2",
-    "name": "ETH+/ETH",
+    "name": "ETH+/WETH",
     "type": "standard",
     "token": "ETH+WETH",
     "tokenAddress": "0x1Fb84Fa6D252762e8367eA607A6586E09dceBe3D",
@@ -7055,7 +7113,7 @@
   },
   {
     "id": "equilibria-arb-seth-ezeth-26sep24",
-    "name": "ETH (ezETHSilo) 26Sep24",
+    "name": "WETH (ezETHSilo) 26Sep24",
     "type": "standard",
     "token": "ETH (ezETHSilo) 26Sep24",
     "tokenAddress": "0xb4781463a1261F60fca37732EFa510c22DEc5ADa",
@@ -7109,7 +7167,7 @@
   },
   {
     "id": "balancer-gyro-arb-wsteth-weth",
-    "name": "Gyroscope wstETH-ETH",
+    "name": "Gyroscope wstETH-WETH",
     "type": "standard",
     "token": "wstETH-ETH Arb",
     "tokenAddress": "0x7967FA58B9501600D96bD843173b9334983EE6E6",
@@ -7337,6 +7395,7 @@
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED", "OVER_COLLAT_ALGO_STABLECOIN"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -8417,6 +8476,7 @@
     "assets": ["USDe", "USDT"],
     "risks": ["IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["ethena"],
     "network": "arbitrum",
     "zaps": [
       {
@@ -8957,6 +9017,7 @@
     "assets": ["USDe", "wstETH"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
+    "pointStructureIds": ["ethena"],
     "network": "arbitrum",
     "zaps": [
       {
@@ -9360,7 +9421,9 @@
     "earnedOracleIds": ["ARB", "RSR"],
     "oracle": "lps",
     "oracleId": "uniswap-cow-arb-eusd-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1733690769,
+    "retireReason": "tvl",
     "createdAt": 1719824584,
     "platformId": "uniswap",
     "assets": ["eUSD", "USDC"],
@@ -9671,7 +9734,7 @@
   },
   {
     "id": "aura-arb-gyro-weth-woeth",
-    "name": "Gyroscope WOETH-ETH",
+    "name": "Gyroscope WOETH-WETH",
     "type": "standard",
     "token": "WOETH-ETH Arb",
     "tokenAddress": "0xef0c116A2818A5b1A5D836A291856A321f43C2Fb",
@@ -9713,7 +9776,7 @@
   },
   {
     "id": "aura-arb-rseth-weth",
-    "name": "rsETH-ETH",
+    "name": "rsETH-WETH",
     "type": "standard",
     "token": "rsETH-ETH Arb",
     "tokenAddress": "0x90e6CB5249f5e1572afBF8A96D8A1ca6aCFFd739",
@@ -12025,7 +12088,9 @@
     "earnedTokenAddress": "0xEEA4114Ab4FCb82a28c514e21d656Ca78D75b1A9",
     "oracle": "lps",
     "oracleId": "uniswap-cow-arb-eusd-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1733690769,
+    "retireReason": "tvl",
     "createdAt": 1718042016,
     "platformId": "beefy",
     "feeTier": "0.05",
@@ -12895,7 +12960,7 @@
   },
   {
     "id": "curve-arb-fethxeth",
-    "name": "fETH/xETH/ETH",
+    "name": "fETH/xETH/WETH",
     "type": "standard",
     "token": "fxETH",
     "tokenAddress": "0xF7Fed8Ae0c5B78c19Aadd68b700696933B0Cefd9",
@@ -13087,7 +13152,7 @@
   },
   {
     "id": "uniswap-cow-arb-eth-usdc.e",
-    "name": "ETH-USDC.e Beta",
+    "name": "WETH-USDC.e Beta",
     "type": "cowcentrated",
     "token": "ETH-USDC.e",
     "tokenAddress": "0xC31E54c7a869B9FcBEcc14363CF510d1c41fa443",
@@ -13928,32 +13993,6 @@
     "network": "arbitrum"
   },
   {
-    "id": "equilibria-arb-ausdc-jun24",
-    "name": "USDC 27Jun24",
-    "type": "standard",
-    "token": "aUSDC-27Jun24",
-    "tokenAddress": "0xBa4A858d664Ddb052158168DB04AFA3cFF5CFCC8",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pendle",
-    "earnContractAddress": "0x4C8f7Cb643D410df5762bab54729bBb6A897883C",
-    "earnedToken": "mooEqb-aUSDC_27JUN24",
-    "earnedTokenAddress": "0x4C8f7Cb643D410df5762bab54729bBb6A897883C",
-    "oracle": "lps",
-    "oracleId": "equilibria-arb-ausdc-jun24",
-    "status": "eol",
-    "createdAt": 1710748967,
-    "retireReason": "rewards",
-    "retiredAt": 1719496677,
-    "platformId": "equilibria",
-    "assets": ["USDC"],
-    "migrationIds": ["magpie"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pendle",
-    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0xba4a858d664ddb052158168db04afa3cff5cfcc8/zap/in?chain=arbitrum",
-    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0xba4a858d664ddb052158168db04afa3cff5cfcc8/zap/out?chain=arbitrum",
-    "network": "arbitrum"
-  },
-  {
     "id": "aura-arb-cbeth-wsteth-reth-v2",
     "name": "cbETH/wstETH/rETH V2",
     "type": "standard",
@@ -14108,7 +14147,7 @@
   },
   {
     "id": "aura-arb-weth-reth-v2",
-    "name": "rETH-ETH V2",
+    "name": "rETH-WETH V2",
     "type": "standard",
     "token": "rETH-ETH V2 Arb",
     "tokenAddress": "0xd0EC47c54cA5e20aaAe4616c25C825c7f48D4069",
@@ -14152,7 +14191,7 @@
   },
   {
     "id": "equilibria-arb-seth",
-    "name": "ETH 26Dec24",
+    "name": "WETH 26Dec24",
     "type": "standard",
     "token": "sETH-26Dec24",
     "tokenAddress": "0xACcd9A7cb5518326BeD715f90bD32CDf2fEc2D14",
@@ -14594,7 +14633,7 @@
   },
   {
     "id": "curve-arb-tricrypto-crvusd",
-    "name": "crvUSD/WBTC/ETH",
+    "name": "crvUSD/WBTC/WETH",
     "type": "standard",
     "token": "3c-crvUSD",
     "tokenAddress": "0x82670f35306253222F8a165869B28c64739ac62e",
@@ -15284,38 +15323,6 @@
     "network": "arbitrum"
   },
   {
-    "id": "gmx-arb-ltc-usdc",
-    "name": "LTC-USDC GM",
-    "type": "standard",
-    "token": "LTC-USDC GM",
-    "tokenAddress": "0xD9535bB5f58A1a75032416F2dFe7880C30575a41",
-    "tokenDecimals": 18,
-    "tokenProviderId": "gmx",
-    "earnedToken": "mooGmxLTC-USDC",
-    "earnedTokenAddress": "0x6aEE64C2B41A05F55b883BB85473e8aeF7E98510",
-    "earnContractAddress": "0x6aEE64C2B41A05F55b883BB85473e8aeF7E98510",
-    "oracle": "lps",
-    "oracleId": "gmx-arb-ltc-usdc",
-    "status": "eol",
-    "retiredAt": 1727377666,
-    "retireReason": "rewards",
-    "createdAt": 1700568258,
-    "platformId": "gmx",
-    "assets": ["LTC", "USDC"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "gmx-gm",
-    "addLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "removeLiquidityUrl": "https://app.gmx.io/#/pools?ref=beefy",
-    "network": "arbitrum"
-  },
-  {
     "id": "gmx-arb-doge-usdc",
     "name": "DOGE-USDC GM",
     "type": "standard",
@@ -15635,7 +15642,7 @@
   },
   {
     "id": "joe-auto-weth-usdc",
-    "name": "ETH-USDC APT",
+    "name": "WETH-USDC APT",
     "type": "standard",
     "token": "ETH-USDC APT",
     "tokenAddress": "0x5FB31318E9A82EfCaA2cfEFBaCF63e85f4dFF2F1",
@@ -16139,7 +16146,7 @@
   },
   {
     "id": "balancer-wsteth-weth-v3",
-    "name": "wstETH-ETH V3",
+    "name": "wstETH-WETH V3",
     "type": "standard",
     "token": "wstETH-ETH V3 Arb",
     "tokenAddress": "0x9791d590788598535278552EEcD4b211bFc790CB",
@@ -16484,7 +16491,7 @@
   },
   {
     "id": "joe-auto-weth-usdc.e",
-    "name": "ETH-USDC.e APT",
+    "name": "WETH-USDC.e APT",
     "type": "standard",
     "token": "ETH-USDC.e APT",
     "tokenAddress": "0xFd421D60905d2f7caBd49e6A5703A3499367B8F4",
@@ -16721,7 +16728,7 @@
   },
   {
     "id": "chronos-weth-usdc",
-    "name": "ETH-USDC.e vLP",
+    "name": "WETH-USDC.e vLP",
     "type": "standard",
     "token": "vAMM-WETH/USDC.e",
     "tokenAddress": "0xA2F1C1B52E1b7223825552343297Dc68a29ABecC",
@@ -16752,7 +16759,7 @@
   },
   {
     "id": "chronos-weth-arb",
-    "name": "ETH-ARB vLP",
+    "name": "WETH-ARB vLP",
     "type": "standard",
     "token": "vAMM-WETH/ARB",
     "tokenAddress": "0xafE909b1A5ed90d36f9eE1490fCB855645C00EB3",
@@ -16970,7 +16977,7 @@
   },
   {
     "id": "hop-arb-eth",
-    "name": "ETH LP",
+    "name": "WETH LP",
     "type": "standard",
     "token": "ETH-hETH LP",
     "tokenAddress": "0x59745774Ed5EfF903e615F5A2282Cae03484985a",
@@ -17378,7 +17385,7 @@
   },
   {
     "id": "ramses-eth-usdt",
-    "name": "ETH-USDT vLP",
+    "name": "WETH-USDT vLP",
     "type": "standard",
     "token": "ETH-USDT vLP",
     "tokenAddress": "0x7E0A6013B8f15209491e021e394271b9D3Ee5B68",
@@ -18401,7 +18408,7 @@
   },
   {
     "id": "solidlizard-weth-usdc",
-    "name": "ETH-USDC.e vLP",
+    "name": "WETH-USDC.e vLP",
     "type": "standard",
     "token": "ETH-USDC.e vLP",
     "tokenAddress": "0xe20F93279fF3538b1ad70D11bA160755625e3400",
@@ -19030,7 +19037,7 @@
   },
   {
     "id": "swapfish-weth-usdc",
-    "name": "ETH-USDC.e LP",
+    "name": "WETH-USDC.e LP",
     "type": "standard",
     "token": "ETH-USDC.e LP",
     "tokenAddress": "0x8Bc2Cd9DAB840231A0Dab5B747b8A6085c4eA459",
@@ -20021,7 +20028,9 @@
     "earnContractAddress": "0xEc7c0205a6f426c2Cb1667d783B5B4fD2f875434",
     "oracle": "lps",
     "oracleId": "curve-arb-2pool",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1734101086,
+    "retireReason": "rewards",
     "createdAt": 1669709222,
     "platformId": "convex",
     "assets": ["USDT", "arbUSDCe"],
