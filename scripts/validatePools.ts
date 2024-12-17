@@ -857,7 +857,7 @@ const populateGovData = async (
       });
     } catch (e) {
       if (retries > 0) {
-        console.warn(`retrying populateGovData ${e.message}`);
+        console.warn(`retrying populateGovData on ${chain} ${e.message}`);
         await sleep(1_000);
         return populateGovData(chain, pools, web3, retries - 1);
       }
