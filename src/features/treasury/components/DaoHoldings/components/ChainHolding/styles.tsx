@@ -141,7 +141,10 @@ export const styles = (theme: Theme) => ({
   'headerNetwork-lisk': {
     backgroundColor: 'rgba(18, 18, 18, 0.2)',
   },
+  'headerNetwork-sonic': {
+    backgroundColor: 'rgb(201, 203, 206)',
+  },
   'headerMM-system9': {
-    backgroundColor: 'rgba(243, 243, 200, 0.5)',
+    backgroundColor: 'rgba(236, 84, 9, 0.5)',
   },
 });
