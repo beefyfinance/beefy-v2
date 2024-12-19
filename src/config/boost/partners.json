@@ -1385,5 +1385,14 @@
     "social": {
       "twitter": "https://x.com/MountainUSDM"
     }
+  },
+  "lisk": {
+    "title": "Lisk",
+    "text": "Lisk provides a cost-efficient, fast, and scalable Layer 2 (L2) network based on Optimism (OP) that is secured by Ethereum.",
+    "website": "https://lisk.com/",
+    "social": {
+      "discord": "https://discord.com/invite/lisk",
+      "twitter": "https://x.com/LiskHQ"
+    }
   }
 }
