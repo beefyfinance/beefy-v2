@@ -4266,42 +4266,6 @@
     "network": "polygon"
   },
   {
-    "id": "mvx-mvx",
-    "name": "MVX",
-    "type": "standard",
-    "token": "MVX",
-    "tokenAddress": "0x2760E46d9BB43dafCbEcaad1F64b93207f9f0eD7",
-    "tokenDecimals": 18,
-    "tokenProviderId": "mvx",
-    "earnedToken": "mooMvxMVX",
-    "earnedTokenAddress": "0x2ee96Db9E7f029F086E45466FcD761066148599E",
-    "earnContractAddress": "0x2ee96Db9E7f029F086E45466FcD761066148599E",
-    "oracle": "tokens",
-    "oracleId": "MVX",
-    "status": "eol",
-    "createdAt": 1672503160,
-    "retireReason": "rewards",
-    "retiredAt": 1714130472,
-    "platformId": "mvx",
-    "assets": ["MVX"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "strategyTypeId": "mvlp-mvx",
-    "buyTokenUrl": "https://app.1inch.io/#/137/unified/swap/AVAX/0x2760E46d9BB43dafCbEcaad1F64b93207f9f0eD7",
-    "network": "polygon",
-    "zaps": [
-      {
-        "strategyId": "single"
-      }
-    ]
-  },
-  {
     "id": "kyber-wsteth-eth",
     "name": "wstETH-ETH LP",
     "type": "standard",
