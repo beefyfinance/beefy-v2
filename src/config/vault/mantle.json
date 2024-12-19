@@ -1,5 +1,43 @@
 [
   {
+    "id": "compound-mantle-usde",
+    "name": "USDe",
+    "type": "standard",
+    "token": "USDe",
+    "tokenAddress": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+    "tokenDecimals": 18,
+    "earnedToken": "mooCompoundMantleUSDe",
+    "earnedTokenAddress": "0x42A70d30ac4e18e2A5f3acbb5d3F40249d512fA5",
+    "earnContractAddress": "0x42A70d30ac4e18e2A5f3acbb5d3F40249d512fA5",
+    "oracle": "tokens",
+    "oracleId": "USDe",
+    "status": "active",
+    "createdAt": 1734565198,
+    "platformId": "compound",
+    "assets": ["USDe"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+    "network": "mantle",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "api3",
+      "address": "0xc49E06B50FCA57751155DA78803DCa691AfcDB22"
+    }
+  },
+  {
     "id": "uniswap-cow-mantle-usdt-wmnt-rp",
     "name": "WMNT-USDT Reward Pool",
     "type": "gov",

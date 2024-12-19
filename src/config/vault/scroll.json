@@ -1,5 +1,43 @@
 [
   {
+    "id": "compound-scroll-usdc",
+    "name": "USDC",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+    "tokenDecimals": 6,
+    "earnedToken": "mooCompoundScrollUSDC",
+    "earnedTokenAddress": "0x372ca585D60190Cb0C65774763f7a98ca66d688D",
+    "earnContractAddress": "0x372ca585D60190Cb0C65774763f7a98ca66d688D",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1734565198,
+    "platformId": "compound",
+    "assets": ["USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lendingNoBorrow",
+    "buyTokenUrl": "https://swap.defillama.com/?chain=scroll&from=0x0000000000000000000000000000000000000000&tab=swap&to=0x06efdbff2a14a7c8e15944d1f4a48f9f95f663a4",
+    "network": "scroll",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ],
+    "lendingOracle": {
+      "provider": "chainlink",
+      "address": "0x43d12Fb3AfCAd5347fA764EeAB105478337b7200"
+    }
+  },
+  {
     "id": "tokan-usdc-usdt",
     "name": "USDC-USDT sLP",
     "type": "standard",
