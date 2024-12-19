@@ -1,5 +1,28 @@
 [
   {
+    "id": "pendle-eqb-arb-ausdc-26jun25",
+    "name": "USDC 26Jun25",
+    "token": "aUSDC-26JUN25",
+    "tokenAddress": "0x4505ec38982Bb796B34D050ca8d765aCFF1aBdee",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0x942e0B173662011Eac66AB7f2D9BF37c51819Cd6",
+    "earnedToken": "mooEqb-aUSDC-26JUN25",
+    "earnedTokenAddress": "0x942e0B173662011Eac66AB7f2D9BF37c51819Cd6",
+    "oracle": "lps",
+    "oracleId": "pendle-arb-ausdc-26jun25",
+    "status": "active",
+    "createdAt": 1734598896,
+    "platformId": "equilibria",
+    "assets": ["USDC"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x4505ec38982Bb796B34D050ca8d765aCFF1aBdee/zap/in?chain=arbitrum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x4505ec38982Bb796B34D050ca8d765aCFF1aBdee/zap/out?chain=arbitrum",
+    "network": "arbitrum"
+  },
+  {
     "id": "curve-arb-asdcrv-v2.1",
     "name": "CRV/vsdCRV/asdCRV",
     "token": "vasdcrvv2",
