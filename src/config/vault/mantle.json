@@ -7,8 +7,8 @@
     "tokenAddress": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
     "tokenDecimals": 18,
     "earnedToken": "mooCompoundMantleUSDe",
-    "earnedTokenAddress": "0x42A70d30ac4e18e2A5f3acbb5d3F40249d512fA5",
-    "earnContractAddress": "0x42A70d30ac4e18e2A5f3acbb5d3F40249d512fA5",
+    "earnedTokenAddress": "0x467B4f73Aa321f4447F1F9822B7e6807BE2935e8",
+    "earnContractAddress": "0x467B4f73Aa321f4447F1F9822B7e6807BE2935e8",
     "oracle": "tokens",
     "oracleId": "USDe",
     "status": "active",
@@ -27,6 +27,7 @@
     "strategyTypeId": "lendingNoBorrow",
     "buyTokenUrl": "https://merchantmoe.com/trade?outputCurrency=0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
     "network": "mantle",
+    "pointStructureIds": ["ethena"],
     "zaps": [
       {
         "strategyId": "single"
