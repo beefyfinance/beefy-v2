@@ -861,7 +861,6 @@ export const config = {
   canto: {
     name: 'Canto',
     chainId: 7700,
-    eol: 1734101117,
     rpc: ['https://canto-rpc.ansybl.io'],
     explorerUrl: 'https://tuber.build',
     multicallAddress: '0xc34b9c9DBB39Be0Ef850170127A7b4283484f804',
