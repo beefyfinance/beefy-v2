@@ -326,17 +326,16 @@ export const selectIsStandardVaultEarnTokenAddress = (
   );
 };
 
-export const selectStandardVaultByEarnTokenAddress = (
+export const selectStandardVaultByAddressOrUndefined = (
   state: BeefyState,
   chainId: ChainEntity['id'],
-  tokenAddress: TokenEntity['address']
+  contractAddress: VaultStandard['contractAddress']
 ) => {
   const vaultId =
-    state.entities.vaults.byChainId[chainId]?.byType.standard.byAddress[tokenAddress.toLowerCase()];
-  if (vaultId === undefined) {
-    throw new Error(`Vault id by earn token id not found`);
-  }
-  return vaultId;
+    state.entities.vaults.byChainId[chainId]?.byType.standard.byAddress[
+      contractAddress.toLowerCase()
+    ];
+  return vaultId ? selectStandardVaultById(state, vaultId) : undefined;
 };
 
 export const selectAllActiveVaultIds = (state: BeefyState) => state.entities.vaults.allActiveIds;

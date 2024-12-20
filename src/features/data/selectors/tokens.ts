@@ -4,11 +4,16 @@ import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity } from '../entities/token';
 import { isTokenErc20, isTokenNative } from '../entities/token';
 import { selectAllChainIds, selectChainById } from './chains';
-import { BIG_ZERO } from '../../../helpers/big-number';
+import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import { selectIsAddressBookLoaded, selectIsPricesAvailable } from './data-loader';
 import { isStandardVault, type VaultEntity } from '../entities/vault';
 import { createCachedSelector } from 're-reselect';
-import { selectCowcentratedLikeVaultById, selectGovVaultById, selectVaultById } from './vaults';
+import {
+  selectCowcentratedLikeVaultById,
+  selectGovVaultById,
+  selectVaultById,
+  selectVaultPricePerFullShare,
+} from './vaults';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
 import { orderBy } from 'lodash-es';
 import { BigNumber } from 'bignumber.js';
@@ -20,6 +25,7 @@ import {
 } from '../apis/beefy/beefy-data-api-helpers';
 import { createSelector } from '@reduxjs/toolkit';
 import { valueOrThrow } from '../utils/selector-utils';
+import { mooAmountToOracleAmount } from '../utils/ppfs';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -240,6 +246,28 @@ export const selectTokenPriceByTokenOracleId = createCachedSelector(
     state.entities.tokens.prices.byOracleId[oracleId],
   price => price || BIG_ZERO
 )((state: BeefyState, oracleId: TokenEntity['oracleId']) => oracleId);
+
+export const selectVaultReceiptTokenPrice = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  ppfs?: BigNumber
+) => {
+  const vault = selectVaultById(state, vaultId);
+  if (!isStandardVault(vault)) {
+    return BIG_ZERO;
+  }
+  const receiptToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
+  const receiptTokenPPFS = ppfs || selectVaultPricePerFullShare(state, vaultId);
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const depositTokenPrice = selectTokenPriceByTokenOracleId(state, depositToken.oracleId);
+  const receiptTokenToDepositToken = mooAmountToOracleAmount(
+    receiptToken,
+    depositToken,
+    receiptTokenPPFS,
+    BIG_ONE
+  );
+  return depositTokenPrice.times(receiptTokenToDepositToken);
+};
 
 export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
   state.entities.tokens.breakdown.byOracleId[oracleId];
