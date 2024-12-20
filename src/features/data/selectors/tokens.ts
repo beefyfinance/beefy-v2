@@ -256,17 +256,13 @@ export const selectVaultReceiptTokenPrice = (
   if (!isStandardVault(vault)) {
     return BIG_ZERO;
   }
-  const receiptToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
   const receiptTokenPPFS = ppfs || selectVaultPricePerFullShare(state, vaultId);
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const depositTokenPrice = selectTokenPriceByTokenOracleId(state, depositToken.oracleId);
-  const receiptTokenToDepositToken = mooAmountToOracleAmount(
-    receiptToken,
-    depositToken,
-    receiptTokenPPFS,
-    BIG_ONE
+  const depositTokenPrice = selectTokenPriceByAddress(
+    state,
+    vault.chainId,
+    vault.depositTokenAddress
   );
-  return depositTokenPrice.times(receiptTokenToDepositToken);
+  return depositTokenPrice.times(receiptTokenPPFS);
 };
 
 export const selectLpBreakdownByOracleId = (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
