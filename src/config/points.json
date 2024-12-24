@@ -65,6 +65,21 @@
     ]
   },
   {
+    "id": "lombard",
+    "docs": "https://docs.lombard.finance/lbtc-liquid-bitcoin/lux-and-luminary-program",
+    "points": [
+      {
+        "id": "lombard",
+        "name": "Lombard Lux"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "vault-whitelist"
+      }
+    ]
+  },
+  {
     "id": "babylon",
     "docs": "https://docs.babylonlabs.io/docs/introduction/overview",
     "points": [
