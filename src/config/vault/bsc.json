@@ -14411,37 +14411,6 @@
     ]
   },
   {
-    "id": "cakev2-pbtc-bnb-eol",
-    "name": "pBTC-BNB LP",
-    "type": "standard",
-    "token": "pBTC-BNB LP2",
-    "tokenAddress": "0x0362ba706DFE8ED12Ec1470aB171d8Dcb1C72B8D",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pancakeswap",
-    "earnedToken": "mooCakeV2PBTC-BNB",
-    "earnedTokenAddress": "0x2D8653881D8216AF7E5de31D5321FC21f45845FE",
-    "earnContractAddress": "0x2D8653881D8216AF7E5de31D5321FC21f45845FE",
-    "oracle": "lps",
-    "oracleId": "cakev2-pbtc-bnb",
-    "status": "eol",
-    "createdAt": 1619335412,
-    "retireReason": "rewards",
-    "retiredAt": 1630461640,
-    "platformId": "pancakeswap",
-    "assets": ["pBTC", "BNB"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://pancakeswap.finance/swap?inputCurrency=0xeD28A457A5A76596ac48d87C0f577020F6Ea1c4C&outputCurrency=BNB",
-    "addLiquidityUrl": "https://pancakeswap.finance/v2/add/0xeD28A457A5A76596ac48d87C0f577020F6Ea1c4C/BNB",
-    "removeLiquidityUrl": "https://pancakeswap.finance/v2/remove/0xeD28A457A5A76596ac48d87C0f577020F6Ea1c4C/BNB",
-    "network": "bsc",
-    "zaps": [
-      {
-        "strategyId": "uniswap-v2",
-        "ammId": "bsc-pancakeswap-v2"
-      }
-    ]
-  },
-  {
     "id": "cakev2-bel-bnb-eol",
     "name": "BEL-BNB LP",
     "type": "standard",
