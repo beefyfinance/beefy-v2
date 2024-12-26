@@ -4,7 +4,7 @@ import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity } from '../entities/token';
 import { isTokenErc20, isTokenNative } from '../entities/token';
 import { selectAllChainIds, selectChainById } from './chains';
-import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
+import { BIG_ZERO } from '../../../helpers/big-number';
 import { selectIsAddressBookLoaded, selectIsPricesAvailable } from './data-loader';
 import { isStandardVault, type VaultEntity } from '../entities/vault';
 import { createCachedSelector } from 're-reselect';
@@ -25,7 +25,6 @@ import {
 } from '../apis/beefy/beefy-data-api-helpers';
 import { createSelector } from '@reduxjs/toolkit';
 import { valueOrThrow } from '../utils/selector-utils';
-import { mooAmountToOracleAmount } from '../utils/ppfs';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
