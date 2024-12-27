@@ -235,6 +235,12 @@
     "website": "https://bridge.gelato.network/bridge/lisk"
   },
   {
+    "id": "sonic-canonical",
+    "name": "Sonic Bridge",
+    "tagName": "sonic",
+    "website": "https://gateway.soniclabs.com/ethereum/sonic/weth"
+  },
+  {
     "id": "sovryn",
     "name": "Sovryn",
     "tagName": "sovryn",

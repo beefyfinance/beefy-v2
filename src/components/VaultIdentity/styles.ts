@@ -133,4 +133,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-lisk': {
     backgroundColor: '#000',
   },
+  'vaultNetwork-sonic': {
+    backgroundColor: '#EC5409',
+  },
 });
