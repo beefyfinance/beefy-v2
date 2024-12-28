@@ -2,6 +2,7 @@ import { createTheme } from '@material-ui/core/styles';
 import type { ThemeOptions } from '@material-ui/core/styles';
 import type { TypographyStyleOptions } from '@material-ui/core/styles/createTypography';
 import { featureFlag_breakpoints } from './features/data/utils/feature-flags';
+import { breakpoints } from '@material-ui/system';
 
 const fontStack = [
   '"DM Sans"',
@@ -109,12 +110,14 @@ function withCustomBreakpoints(theme: ThemeOptions) {
           xs: 0,
           sm: readBreakpoint('sm', 600),
           md: readBreakpoint('md', 960),
-          lg: readBreakpoint('lg', 1280),
+          lg: readBreakpoint('lg', 1220),
           xl: readBreakpoint('xl', 1920),
         },
       },
     };
   }
+
+  console.log('Breakpoints:', breakpoints);
 
   return theme;
 }
@@ -247,7 +250,7 @@ const theme = createTheme(
         xs: 0,
         sm: 600,
         md: 960,
-        lg: 1296,
+        lg: 1220,
         xl: 1920,
       },
     },
