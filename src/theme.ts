@@ -117,8 +117,6 @@ function withCustomBreakpoints(theme: ThemeOptions) {
     };
   }
 
-  console.log('Breakpoints:', breakpoints);
-
   return theme;
 }
 
