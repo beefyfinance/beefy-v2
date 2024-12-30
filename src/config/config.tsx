@@ -760,7 +760,7 @@ export const config = {
       priorityMinimum: '1000000000',
       baseSafetyMargin: 0.1,
     },
-    stableCoins: ['USDCe'],
+    stableCoins: ['USDCe', 'scUSD'],
   },
   aurora: {
     name: 'Aurora',

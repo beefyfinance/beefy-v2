@@ -1,5 +1,89 @@
 [
   {
+    "id": "equalizer-sonic-usdc.e-scusd",
+    "name": "scUSD-USDC.e sLP",
+    "type": "standard",
+    "token": "scUSD-USDC.e sLP",
+    "tokenAddress": "0xB78CdF29F7E563ea447feBB5b48DDe9bC3278Ba4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "equalizer",
+    "earnedToken": "mooEqualizerSonicscUSD-USDC.e",
+    "earnedTokenAddress": "0xc84ABde550ae615257067D898a6Cdd235E1857D0",
+    "earnContractAddress": "0xc84ABde550ae615257067D898a6Cdd235E1857D0",
+    "oracle": "lps",
+    "oracleId": "equalizer-sonic-usdc.e-scusd",
+    "createdAt": 1735515466,
+    "status": "active",
+    "platformId": "equalizer",
+    "assets": ["scUSD", "USDCe"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xB78CdF29F7E563ea447feBB5b48DDe9bC3278Ba4",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "sonic-equalizer"
+      }
+    ]
+  },
+  {
+    "id": "equalizer-sonic-ws-sts",
+    "name": "stS-wS sLP",
+    "type": "standard",
+    "token": "stS-wS sLP",
+    "tokenAddress": "0xB75C9073ea00AbDa9ff420b5Ae46fEe248993380",
+    "tokenDecimals": 18,
+    "tokenProviderId": "equalizer",
+    "earnedToken": "mooEqualizerSonicstS-wS",
+    "earnedTokenAddress": "0xdF06292Aad85dFF85C45fb859864C961edD4732B",
+    "earnContractAddress": "0xdF06292Aad85dFF85C45fb859864C961edD4732B",
+    "oracle": "lps",
+    "oracleId": "equalizer-sonic-ws-sts",
+    "createdAt": 1735515344,
+    "status": "active",
+    "platformId": "equalizer",
+    "assets": ["stS", "S"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xB75C9073ea00AbDa9ff420b5Ae46fEe248993380",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "sonic-equalizer"
+      }
+    ]
+  },
+  {
+    "id": "equalizer-sonic-ws-brush",
+    "name": "BRUSH-wS vLP",
+    "type": "standard",
+    "token": "BRUSH-wS vLP",
+    "tokenAddress": "0x38cFA6cB37d074B6E954C52d10a4cf0e4268607b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "equalizer",
+    "earnedToken": "mooEqualizerSonicBRUSH-wS",
+    "earnedTokenAddress": "0x2F1C5834baf0cF8F72462Ac05c8184dF9ecDdC8a",
+    "earnContractAddress": "0x2F1C5834baf0cF8F72462Ac05c8184dF9ecDdC8a",
+    "oracle": "lps",
+    "oracleId": "equalizer-sonic-ws-brush",
+    "createdAt": 1735515200,
+    "status": "active",
+    "platformId": "equalizer",
+    "assets": ["BRUSH", "S"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0x38cFA6cB37d074B6E954C52d10a4cf0e4268607b",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "sonic-equalizer"
+      }
+    ]
+  },
+  {
     "id": "equalizer-sonic-usdc.e-weth",
     "name": "USDC.e-WETH vLP",
     "type": "standard",
