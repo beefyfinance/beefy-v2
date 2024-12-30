@@ -832,5 +832,39 @@
         "role": "Distribution of rewards"
       }
     ]
+  },
+  {
+    "id": "rings",
+    "docs": "https://x.com/Rings_Protocol/status/1869027802155983085?t=1S3IsVivc-QA5YK0yaj4wA&s=19",
+    "points": [
+      {
+        "id": "rings-points",
+        "name": "Rings Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["scUSD"]
+      }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-balances-subgraph",
+        "role": "Indexing of all balances of all beefy products",
+        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "rings",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://app.rings.money/"
+      }
+    ]
   }
 ]
