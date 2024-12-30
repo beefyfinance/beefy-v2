@@ -18,7 +18,6 @@ export type StandardGasPrice = {
 };
 
 export type EIP1559GasPrice = {
-  baseFeePerGas: string;
   maxPriorityFeePerGas: string;
   maxFeePerGas: string;
 };
@@ -154,7 +153,6 @@ export class EIP1559GasPricer implements IGasPricer {
     );
 
     return {
-      baseFeePerGas: baseFee.toString(10),
       maxPriorityFeePerGas: priorityFee.toString(10),
       maxFeePerGas: baseFee.plus(priorityFee).toString(10),
     };
@@ -211,7 +209,6 @@ export class CeloGasPricer implements IGasPricer {
     const priorityFee = baseFee.dividedToIntegerBy(10); // 0.01 gwei
 
     return {
-      baseFeePerGas: baseFee.toString(10),
       maxPriorityFeePerGas: priorityFee.toString(10),
       maxFeePerGas: baseFee.plus(priorityFee).toString(10),
     };
