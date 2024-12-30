@@ -93,7 +93,7 @@ const oldValidRewardPoolOwners = {
 const nonHarvestOnDepositChains = ['ethereum', 'avax', 'rootstock'];
 const nonHarvestOnDepositPools = [
   'venus-bnb',
-  'equilibria-arb-silo-usdc.e',
+  'pendle-eqb-base-lbtc-29may25',
   'silo-eth-pendle-weeth',
   'silo-op-tbtc-tbtc',
   'sushi-cow-arb-wbtc-tbtc-vault',
