@@ -647,11 +647,11 @@
   },
   {
     "id": "beethovenx",
-    "name": "Beethoven X",
+    "name": "Beets",
     "website": "https://beets.fi/",
     "twitter": "beethoven_x",
     "documentation": "https://docs.beets.fi/",
-    "description": "Beethoven X is a next generation decentralized investment platform built for the future of finance. Leveraging the most advanced technology in the industry, we provide innovative, capital-efficient, and sustainable solutions for all DeFi users. Built around the core concept of programmable liquidity, Beethoven X is more than just a Decentralized Exchange. Versatile and adaptable, our product is future oriented and primed to meet the needs of an evolving industry.",
+    "description": "Beets is a next generation decentralized investment platform built for the future of finance. Leveraging the most advanced technology in the industry, we provide innovative, capital-efficient, and sustainable solutions for all DeFi users. Built around the core concept of programmable liquidity, Beethoven X is more than just a Decentralized Exchange. Versatile and adaptable, our product is future oriented and primed to meet the needs of an evolving industry.",
     "type": "amm"
   },
   {
