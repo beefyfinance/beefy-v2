@@ -18,8 +18,21 @@
     "assets": ["BEETS", "stS", "LUDWIG"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "",
-    "network": "sonic"
+    "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x21fed4063bf8ebf4f51f4adf4ecfc9717aa4ca9d000100000000000000000044/add-liquidity",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "sonic-beets",
+        "poolId": "0x21fed4063bf8ebf4f51f4adf4ecfc9717aa4ca9d000100000000000000000044",
+        "poolType": "weighted",
+        "tokens": [
+          "0x2D0E0814E62D80056181F5cd932274405966e4f0",
+          "0xE5DA20F15420aD15DE0fa650600aFc998bbE3955",
+          "0xe6cc4D855B4fD4A9D02F46B9adae4C5EfB1764B5"
+        ]
+      }
+    ]
   },
   {
     "id": "beets-sonic-put-a-ring-on-it",
@@ -42,7 +55,19 @@
     "pointStructureIds": ["rings"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x25ca5451cd5a50ab1d324b5e64f32c0799661891000200000000000000000018/add-liquidity",
-    "network": "sonic"
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "sonic-beets",
+        "poolId": "0x25ca5451cd5a50ab1d324b5e64f32c0799661891000200000000000000000018",
+        "poolType": "weighted",
+        "tokens": [
+          "0xd3DCe716f3eF535C5Ff8d041c1A41C3bd89b97aE",
+          "0xE5DA20F15420aD15DE0fa650600aFc998bbE3955"
+        ]
+      }
+    ]
   },
   {
     "id": "beets-sonic-ringing-stable-beets",
@@ -65,7 +90,19 @@
     "pointStructureIds": ["rings"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xcd4d2b142235d5650ffa6a38787ed0b7d7a51c0c000000000000000000000037/add-liquidity",
-    "network": "sonic"
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "sonic-beets",
+        "poolId": "0xcd4d2b142235d5650ffa6a38787ed0b7d7a51c0c000000000000000000000037",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+          "0xd3DCe716f3eF535C5Ff8d041c1A41C3bd89b97aE"
+        ]
+      }
+    ]
   },
   {
     "id": "beets-sonic-staked-sonic-symphony",
@@ -87,7 +124,19 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x374641076b68371e69d03c417dac3e5f236c32fa000000000000000000000006/add-liquidity/0xf1dacc181cbb176ead93b2a7db5884161f95c40598ee588ae8d35f3118740cb8",
-    "network": "sonic"
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "sonic-beets",
+        "poolId": "0x374641076b68371e69d03c417dac3e5f236c32fa000000000000000000000006",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38",
+          "0xE5DA20F15420aD15DE0fa650600aFc998bbE3955"
+        ]
+      }
+    ]
   },
   {
     "id": "equalizer-sonic-usdc.e-scusd",

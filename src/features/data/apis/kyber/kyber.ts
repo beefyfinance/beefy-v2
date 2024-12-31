@@ -28,6 +28,7 @@ export const supportedChainIds: ChainConfig['id'][] = [
   'aurora',
   'mantle',
   'scroll',
+  'sonic',
 ];
 
 export class KyberSwapApi implements IKyberSwapApi {
