@@ -39,6 +39,7 @@
     "platformId": "beethovenx",
     "assets": ["scUSD", "stS"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["rings"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x25ca5451cd5a50ab1d324b5e64f32c0799661891000200000000000000000018/add-liquidity",
     "network": "sonic"
@@ -61,6 +62,7 @@
     "platformId": "beethovenx",
     "assets": ["scUSD", "USDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["rings"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xcd4d2b142235d5650ffa6a38787ed0b7d7a51c0c000000000000000000000037/add-liquidity",
     "network": "sonic"
@@ -105,6 +107,7 @@
     "platformId": "equalizer",
     "assets": ["scUSD", "USDCe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["rings"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xB78CdF29F7E563ea447feBB5b48DDe9bC3278Ba4",
     "network": "sonic",
