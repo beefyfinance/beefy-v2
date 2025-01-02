@@ -55,6 +55,22 @@ export const excludeChains: Record<string, { count: number; hash: string }> = {
     count: 36,
     hash: '263fc197d9d5447d4a47854cf12dd8abac9c891573dedeb6db3d14ebdc75cc53',
   },
+  kava: {
+    count: 36,
+    hash: 'ae8214d27a1ac70c0ac99fee47776b57ab9d0c5feefdd10689241f5427657a4e',
+  },
+  real: {
+    count: 14,
+    hash: 'd6d09c5287828a3cad212f59cfcc062f93913143fec6e53cbe1e6b8451032ea7',
+  },
+  zkevm: {
+    count: 14,
+    hash: '3c0b5912d989a8825916118d50ff72a6a9b9bbf2ea2c65b2579f759ef17239e8',
+  },
+  manta: {
+    count: 8,
+    hash: '213e11533e3173172b0476d79675b2d9930226811faf8fce7fea01238b5d1366',
+  },
 };
 
 export const excludedChainIds = Object.keys(excludeChains);
