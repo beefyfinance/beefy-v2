@@ -1,5 +1,28 @@
 [
   {
+    "id": "pendle-eqb-base-susdz-27mar25",
+    "name": "sUSDz 27Mar25",
+    "token": "sUSDz-27MAR25",
+    "tokenAddress": "0x14936C9B8eb798cA6291c2d6CE5de2c6cB5f1f9C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0xf829483E7E7d813137f160B2C1bC4155D15A39C4",
+    "earnedToken": "mooEqb-sUSDz-27MAR25",
+    "earnedTokenAddress": "0xf829483E7E7d813137f160B2C1bC4155D15A39C4",
+    "oracle": "lps",
+    "oracleId": "pendle-base-susdz-27mar25",
+    "status": "active",
+    "createdAt": 1735796564,
+    "platformId": "equilibria",
+    "assets": ["sUSDz"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x14936C9B8eb798cA6291c2d6CE5de2c6cB5f1f9C/zap/in?chain=base",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x14936C9B8eb798cA6291c2d6CE5de2c6cB5f1f9C/zap/out?chain=base",
+    "network": "base"
+  },
+  {
     "id": "pendle-eqb-base-lbtc-29may25",
     "name": "LBTC 29May25",
     "token": "LBTC-29MAY25",
