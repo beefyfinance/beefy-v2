@@ -505,7 +505,7 @@
       "provider": "dia"
     }
   },
-    {
+  {
     "id": "venus-arb-ls-weth",
     "name": "WETH (LST Market)",
     "type": "standard",
