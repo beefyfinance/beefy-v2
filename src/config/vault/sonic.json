@@ -23,6 +23,7 @@
     "risks": [],
     "strategyTypeId": "pool",
     "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "gov-composer"
@@ -57,6 +58,7 @@
     "network": "sonic",
     "type": "cowcentrated",
     "feeTier": "0.15",
+    "pointStructureIds": ["sonic-points"],
     "zaps": [
       {
         "strategyId": "cowcentrated"
