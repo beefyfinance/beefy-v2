@@ -20,6 +20,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x353d0B2EFB5B3a7987fB06D30Ad6160522d08426/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x353d0B2EFB5B3a7987fB06D30Ad6160522d08426/zap/out?chain=ethereum",
+    "pointStructureIds": ["resolv"],
     "network": "ethereum"
   },
   {
@@ -43,6 +44,7 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x353d0B2EFB5B3a7987fB06D30Ad6160522d08426/zap/in?chain=ethereum",
     "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x353d0B2EFB5B3a7987fB06D30Ad6160522d08426/zap/out?chain=ethereum",
+    "pointStructureIds": ["resolv"],
     "network": "ethereum"
   },
   {
