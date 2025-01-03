@@ -1,5 +1,69 @@
 [
   {
+    "id": "wagmi-cow-sonic-ws-usdc.e-rp",
+    "name": "wS-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowWagmiSonicwS-USDC.e",
+    "tokenAddress": "0xE7e6a718218d737945E6f039c161D3C3c550CBA8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "wagmi",
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowWagmiSonicwS-USDC.e",
+    "earnContractAddress": "0x52115E698dC76Fc0ac75145c4f3F5d986E4CE162",
+    "oracle": "lps",
+    "oracleId": "wagmi-cow-sonic-ws-usdc.e",
+    "status": "active",
+    "createdAt": 1735910512,
+    "platformId": "wagmi",
+    "assets": ["S", "USDCe"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "wagmi-cow-sonic-ws-usdc.e",
+    "name": "wS-USDC.e",
+    "token": "wS-USDC.e wagmi",
+    "tokenAddress": "0x25f746bB206041Ed8dA6F08Ed1D32454A5856D37",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38",
+      "0x29219dd400f2Bf60E5a23d13Be72B486D4038894"
+    ],
+    "tokenProviderId": "wagmi",
+    "earnedToken": "cowWagmiSonicwS-USDC.e",
+    "earnedTokenAddress": "0xE7e6a718218d737945E6f039c161D3C3c550CBA8",
+    "earnContractAddress": "0xE7e6a718218d737945E6f039c161D3C3c550CBA8",
+    "oracle": "lps",
+    "oracleId": "wagmi-cow-sonic-ws-usdc.e",
+    "status": "active",
+    "createdAt": 1735910512,
+    "platformId": "beefy",
+    "assets": ["S", "USDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "type": "cowcentrated",
+    "feeTier": "0.15",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "beets-sonic-high-speed-perfect-beets",
     "name": "High Speed Perfect Beets",
     "type": "standard",

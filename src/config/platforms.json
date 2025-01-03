@@ -1356,5 +1356,14 @@
     "description": "Kim is an ecosystem-focused, community-driven DEX built on Mode. Kim has been built as a highly efficient and customizable protocol, allowing both builders and users to leverage our custom infrastructure for deep, sustainable, and adaptable liquidity. Kim moves beyond the traditional design of DEXs to focus on offering a custom approach that prioritizes the community and ecosystem. By leveraging Mode's unique approach to sequencer fee sharing, Kim is able to provide projects with greater incentives.",
     "type": "amm",
     "risks": ["NO_TIMELOCK"]
+  },
+  {
+    "id": "wagmi",
+    "name": "WAGMI",
+    "website": "https://wagmi.com/",
+    "twitter": "popsiclefinance",
+    "documentation": "https://docs.wagmi.com/wagmi",
+    "description": "At the heart of the WAGMI protocol lies a commitment to revolutionize decentralized finance (DeFi) by providing secure, robust, and innovative products that make DeFi more accessible and user-friendly.",
+    "type": "amm"
   }
 ]
