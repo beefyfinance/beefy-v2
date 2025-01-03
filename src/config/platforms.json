@@ -1365,5 +1365,14 @@
     "documentation": "https://docs.wagmi.com/wagmi",
     "description": "At the heart of the WAGMI protocol lies a commitment to revolutionize decentralized finance (DeFi) by providing secure, robust, and innovative products that make DeFi more accessible and user-friendly.",
     "type": "amm"
+  },
+  {
+    "id": "shadow",
+    "name": "Shadow",
+    "website": "https://www.shadow.so/",
+    "twitter": "ShadowonSonic",
+    "documentation": "https://docs.shadow.so/",
+    "description": "A Sonic-native concentrated liquidity exchange. The ultimate trading hub on Sonic.",
+    "type": "amm"
   }
 ]

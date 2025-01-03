@@ -1,5 +1,197 @@
 [
   {
+    "id": "shadow-cow-sonic-usdc.e-weth-vault",
+    "name": "USDC.e-WETH",
+    "type": "standard",
+    "token": "USDC.e-WETH",
+    "tokenAddress": "0xDd4E83EDD68AcD40139923B06C51da23C76C2C43",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnedToken": "mooCowShadowSonicWETH-USDC.e",
+    "earnedTokenAddress": "0xA233A41B4a2711b704b0daCeD3956f378a8cB6aA",
+    "earnContractAddress": "0xA233A41B4a2711b704b0daCeD3956f378a8cB6aA",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-weth",
+    "status": "active",
+    "platformId": "shadow",
+    "assets": ["USDCe", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "createdAt": 1735931476,
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-usdc.e-weth-rp",
+    "name": "USDC.e-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowShadowSonicWETH-USDC.e",
+    "tokenAddress": "0xDd4E83EDD68AcD40139923B06C51da23C76C2C43",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowShadowSonicWETH-USDC.e",
+    "earnContractAddress": "0x0d372Ab96C19A894F47313318040b3C87dA1AcFb",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-weth",
+    "status": "active",
+    "createdAt": 1735931475,
+    "platformId": "shadow",
+    "assets": ["USDCe", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-usdc.e-weth",
+    "name": "USDC.e-WETH",
+    "token": "USDC.e-WETH shadow",
+    "tokenAddress": "0x6Fb30F3FCB864D49cdff15061ed5c6ADFEE40B40",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+      "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b"
+    ],
+    "tokenProviderId": "shadow",
+    "earnedToken": "cowShadowSonicWETH-USDC.e",
+    "earnedTokenAddress": "0xDd4E83EDD68AcD40139923B06C51da23C76C2C43",
+    "earnContractAddress": "0xDd4E83EDD68AcD40139923B06C51da23C76C2C43",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-weth",
+    "status": "active",
+    "createdAt": 1735931475,
+    "platformId": "beefy",
+    "assets": ["USDCe", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "type": "cowcentrated",
+    "feeTier": "0.04",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-ws-usdc.e-vault",
+    "name": "wS-USDC.e",
+    "type": "standard",
+    "token": "wS-USDC.e",
+    "tokenAddress": "0xc46833F6217Db6586fD129cC2f61361dfCE4c21D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnedToken": "mooCowShadowSonicwS-USDC.e",
+    "earnedTokenAddress": "0x90dEfd0D2D69FBFF5C5eC3D271A5D24b12FB96F1",
+    "earnContractAddress": "0x90dEfd0D2D69FBFF5C5eC3D271A5D24b12FB96F1",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-usdc.e",
+    "status": "active",
+    "platformId": "shadow",
+    "assets": ["S", "USDCe"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "createdAt": 1735931476,
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-ws-usdc.e-rp",
+    "name": "wS-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowShadowSonicwS-USDC.e",
+    "tokenAddress": "0xc46833F6217Db6586fD129cC2f61361dfCE4c21D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowShadowSonicwS-USDC.e",
+    "earnContractAddress": "0xbf18216043C5C0200F6ffaDD09537DEEE318a732",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-usdc.e",
+    "status": "active",
+    "createdAt": 1735931475,
+    "platformId": "shadow",
+    "assets": ["S", "USDCe"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-ws-usdc.e",
+    "name": "wS-USDC.e",
+    "token": "wS-USDC.e shadow",
+    "tokenAddress": "0x324963c267C354c7660Ce8CA3F5f167E05649970",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38",
+      "0x29219dd400f2Bf60E5a23d13Be72B486D4038894"
+    ],
+    "tokenProviderId": "shadow",
+    "earnedToken": "cowShadowSonicwS-USDC.e",
+    "earnedTokenAddress": "0xc46833F6217Db6586fD129cC2f61361dfCE4c21D",
+    "earnContractAddress": "0xc46833F6217Db6586fD129cC2f61361dfCE4c21D",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-usdc.e",
+    "status": "active",
+    "createdAt": 1735931475,
+    "platformId": "beefy",
+    "assets": ["S", "USDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "type": "cowcentrated",
+    "feeTier": "0.15",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "wagmi-cow-sonic-ws-usdc.e-rp",
     "name": "wS-USDC.e Reward Pool",
     "type": "gov",
