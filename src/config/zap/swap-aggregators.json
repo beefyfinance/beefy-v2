@@ -358,7 +358,7 @@
       "value": 0.0005,
       "recipient": "0x10E13f11419165beB0F456eC8a230899E4013BBD"
     },
-    "priorityTokens": ["S", "USDCe", "WETH"],
+    "priorityTokens": ["S", "WS", "USDCe", "WETH"],
     "blockedTokens": [],
     "blockedVaults": []
   },
@@ -527,6 +527,17 @@
       "value": 0.0005
     },
     "priorityTokens": ["WETH", "USDC", "USDT", "WBTC"],
+    "blockedTokens": [],
+    "blockedVaults": [""]
+  },
+  {
+    "id": "odos-sonic",
+    "type": "odos",
+    "chainId": "sonic",
+    "fee": {
+      "value": 0.0005
+    },
+    "priorityTokens": ["S", "WS", "USDCe", "WETH"],
     "blockedTokens": [],
     "blockedVaults": [""]
   }
