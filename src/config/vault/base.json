@@ -1,5 +1,55 @@
 [
   {
+    "id": "stargate-v2-base-usdc",
+    "name": "USDC",
+    "token": "USDC",
+    "tokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x0827A181C868142DC92cC94715F7B79d763eBb21",
+    "earnedToken": "mooStargateUSDC",
+    "earnedTokenAddress": "0x0827A181C868142DC92cC94715F7B79d763eBb21",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1736145712,
+    "platformId": "stargate",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single-lp",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "stargate-v2-base-weth",
+    "name": "WETH",
+    "token": "WETH",
+    "tokenAddress": "0x4200000000000000000000000000000000000006",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0xA3D7c94cE8fd211902343C3F92E307077Ea88506",
+    "earnedToken": "mooStargateWETH",
+    "earnedTokenAddress": "0xA3D7c94cE8fd211902343C3F92E307077Ea88506",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1736145705,
+    "platformId": "stargate",
+    "assets": ["WETH"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single-lp",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "pendle-base-virtual-cbbtc-26jun25",
     "name": "VIRTUAL-cbBTC 26Jun25",
     "token": "VIRTUAL-cbBTC-26JUN25",
