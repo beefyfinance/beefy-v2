@@ -64,7 +64,9 @@ export const StandardExplainer = memo<StandardExplainerProps>(function StandardE
       description={<StandardDescription vaultId={vaultId} />}
       details={
         <>
-          {showApy ? <ApyDetails type={getApyLabelsTypeForVault(vault)} values={apys} /> : null}
+          {showApy ? (
+            <ApyDetails type={getApyLabelsTypeForVault(vault, apys.totalType)} values={apys} />
+          ) : null}
           {showLendingOracle ? <LendingOracle vaultId={vault.id} /> : null}
         </>
       }
