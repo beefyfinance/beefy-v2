@@ -3,15 +3,30 @@ import type { NavItemProps } from '../DropNavItem/types';
 import { NavItem } from './NavItem';
 import { markAllProposalsRead } from '../../../../features/data/actions/proposal';
 import { useAppDispatch } from '../../../../store';
-import { UnreadProposalsCount } from '../Badges/UnreadProposalsCount';
+import {
+  UnreadMainProposalsCount,
+  UnreadProfitProposalsCount,
+} from '../Badges/UnreadProposalsCount';
 
-export const ProposalsNavItem = memo<NavItemProps>(function ProposalsNavItem({ url, title, Icon }) {
+type ProposalsNavItemProps = NavItemProps & {
+  space: string;
+};
+
+const ProposalsNavItem = memo<ProposalsNavItemProps>(function ProposalsNavItem({ space, ...rest }) {
   const dispatch = useAppDispatch();
   const markRead = useCallback(() => {
-    dispatch(markAllProposalsRead());
-  }, [dispatch]);
+    dispatch(markAllProposalsRead({ space }));
+  }, [dispatch, space]);
 
+  return <NavItem {...rest} onClick={markRead} />;
+});
+
+export const MainProposalsNavItem = memo<NavItemProps>(function MainProposalNavItem(props) {
+  return <ProposalsNavItem {...props} space="beefydao.eth" Badge={UnreadMainProposalsCount} />;
+});
+
+export const ProfitProposalsNavItem = memo<NavItemProps>(function ProfitProposalNavItem(props) {
   return (
-    <NavItem url={url} title={title} Icon={Icon} onClick={markRead} Badge={UnreadProposalsCount} />
+    <ProposalsNavItem {...props} space="profit.beefy.eth" Badge={UnreadProfitProposalsCount} />
   );
 });

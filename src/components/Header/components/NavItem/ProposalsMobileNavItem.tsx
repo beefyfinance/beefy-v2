@@ -3,31 +3,45 @@ import type { NavItemProps } from '../DropNavItem/types';
 import { NavItemMobile } from './NavItem';
 import { markAllProposalsRead } from '../../../../features/data/actions/proposal';
 import { useAppDispatch } from '../../../../store';
-import { UnreadProposalsCount } from '../Badges/UnreadProposalsCount';
+import {
+  UnreadMainProposalsCount,
+  UnreadProfitProposalsCount,
+} from '../Badges/UnreadProposalsCount';
 
-export const ProposalsMobileNavItem = memo<NavItemProps>(function ProposalsMobileNavItem({
-  url,
-  title,
-  Icon,
-  className,
+type ProposalsNavItemProps = NavItemProps & {
+  space: string;
+};
+
+const ProposalsMobileNavItem = memo<ProposalsNavItemProps>(function ProposalsMobileNavItem({
+  space,
   onClick,
+  ...rest
 }) {
   const dispatch = useAppDispatch();
   const markRead = useCallback(() => {
-    dispatch(markAllProposalsRead());
+    dispatch(markAllProposalsRead({ space }));
     if (onClick) {
       onClick();
     }
-  }, [dispatch, onClick]);
+  }, [dispatch, onClick, space]);
 
+  return <NavItemMobile {...rest} onClick={markRead} />;
+});
+
+export const MainProposalsMobileNavItem = memo<NavItemProps>(function MainProposalNavItem(props) {
   return (
-    <NavItemMobile
-      url={url}
-      title={title}
-      Icon={Icon}
-      onClick={markRead}
-      className={className}
-      Badge={UnreadProposalsCount}
+    <ProposalsMobileNavItem {...props} space="beefydao.eth" Badge={UnreadMainProposalsCount} />
+  );
+});
+
+export const ProfitProposalsMobileNavItem = memo<NavItemProps>(function ProfitProposalNavItem(
+  props
+) {
+  return (
+    <ProposalsMobileNavItem
+      {...props}
+      space="profit.beefy.eth"
+      Badge={UnreadProfitProposalsCount}
     />
   );
 });
