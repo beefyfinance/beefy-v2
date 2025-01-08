@@ -1,4 +1,4 @@
-import { createAsyncThunk, current } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyMetaThunkConfig, BeefyState } from '../../../redux-types';
 import { getClmApi, getDatabarnApi } from '../apis/instances';
 import {
@@ -1169,6 +1169,7 @@ export const recalculateClmVaultHarvestsForUserVaultId = createAsyncThunk<
         isAfter(harvest.timestamp, timeline.current[timelineIdx + 1].datetime)
       ) {
         currentUnderlying = timeline.current[++timelineIdx].underlyingBalance;
+        currentShares = timeline.current[timelineIdx].shareBalance;
       }
 
       // If we see a standard harvest, we update the current underlying balance
