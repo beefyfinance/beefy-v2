@@ -72,6 +72,7 @@ export interface AnalyticsState {
     [address: string]: {
       timeline: AnalyticsByVaultId<AnyTimelineEntity>;
       clmHarvests: AnalyticsByVaultId<ClmUserHarvestsTimeline>;
+      clmVaultHarvests: AnalyticsByVaultId<ClmUserHarvestsTimeline>;
     };
   };
 }

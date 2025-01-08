@@ -3,7 +3,11 @@ import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import { ClmPnl, PnL } from '../../../helpers/pnl';
 import type { BeefyState } from '../../../redux-types';
 import type { DatabarnProductPriceRow } from '../apis/databarn/databarn-types';
-import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault';
+import {
+  isCowcentratedLikeVault,
+  isCowcentratedStandardVault,
+  type VaultEntity,
+} from '../entities/vault';
 import {
   selectCowcentratedLikeVaultDepositTokens,
   selectCowcentratedLikeVaultDepositTokensWithPrices,
@@ -606,11 +610,31 @@ export const selectClmHarvestsByVaultId = (state: BeefyState, vaultId: VaultEnti
   return state.user.analytics.clmHarvests.byVaultId[vaultId];
 };
 
+export const selectClassicHarvestsByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  return state.user.analytics.classicHarvests.byVaultId[vaultId];
+};
+
 export const selectClmPendingRewardsByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
   return state.user.analytics.clmPendingRewards.byVaultId[vaultId];
 };
 
 export const selectUserClmHarvestTimelineByVaultId = createCachedSelector(
+  (state: BeefyState, _vaultId: VaultEntity['id'], address?: string) =>
+    selectUserAnalytics(state, address),
+  (state: BeefyState, vaultId: VaultEntity['id'], _walletAddress: string) =>
+    selectVaultById(state, vaultId),
+  (userAnalytics, vault) => {
+    if (!userAnalytics) {
+      return undefined;
+    }
+
+    return isCowcentratedStandardVault(vault)
+      ? userAnalytics.clmVaultHarvests.byVaultId[vault.id] || undefined
+      : userAnalytics.clmHarvests.byVaultId[vault.id] || undefined;
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
+
+export const selectUserClmVaultHarvestTimelineByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], address?: string) =>
     selectUserAnalytics(state, address),
   (state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId,
@@ -619,7 +643,7 @@ export const selectUserClmHarvestTimelineByVaultId = createCachedSelector(
       return undefined;
     }
 
-    return userAnalytics.clmHarvests.byVaultId[vaultId] || undefined;
+    return userAnalytics.clmVaultHarvests.byVaultId[vaultId] || undefined;
   }
 )((_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
 
@@ -632,7 +656,10 @@ export const selectClmAutocompoundedPendingFeesByVaultId = (
   const { price: token0Price, symbol: token0Symbol, decimals: token0Decimals } = token0;
   const { price: token1Price, symbol: token1Symbol, decimals: token1Decimals } = token1;
 
-  const harvestTimeline = selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress);
+  const vault = selectCowcentratedLikeVaultById(state, vaultId);
+  const harvestTimeline = isCowcentratedStandardVault(vault)
+    ? selectUserClmVaultHarvestTimelineByVaultId(state, vaultId, walletAddress)
+    : selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress);
   const compoundedYield = harvestTimeline
     ? {
         token0AccruedRewards: harvestTimeline.totals[0],

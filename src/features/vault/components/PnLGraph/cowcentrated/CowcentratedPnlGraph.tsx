@@ -1,9 +1,5 @@
 import { type FC, memo, useEffect, useMemo, useState } from 'react';
-import {
-  isCowcentratedGovVault,
-  isCowcentratedStandardVault,
-  type VaultEntity,
-} from '../../../../data/entities/vault';
+import { isCowcentratedStandardVault, type VaultEntity } from '../../../../data/entities/vault';
 import { Card, CardContent, CardHeader, CardTitle } from '../../Card';
 import { useTranslation } from 'react-i18next';
 import { StatSwitcher } from '../../StatSwitcher';
@@ -149,7 +145,7 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
   const { t } = useTranslation();
   const classes = useStyles();
   const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
-  const compounds = vault.strategyTypeId === 'compounds' && isCowcentratedGovVault(vault); // TODO implement for CLM vaults || isCowcentratedStandardVault(vault);
+  const compounds = vault.strategyTypeId === 'compounds';
 
   useEffect(() => {
     if (compounds) {

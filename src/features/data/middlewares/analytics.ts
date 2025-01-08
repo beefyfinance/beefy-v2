@@ -4,6 +4,7 @@ import {
   fetchClmHarvestsForVaultsOfUserOnChain,
   fetchWalletTimeline,
   recalculateClmPoolHarvestsForUserVaultId,
+  recalculateClmVaultHarvestsForUserVaultId,
 } from '../actions/analytics';
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import {
@@ -101,8 +102,9 @@ analyticsListener.startListening({
     for (const { vaultId, type } of action.payload) {
       if (type === 'clm') {
         dispatch(recalculateClmPoolHarvestsForUserVaultId({ walletAddress, vaultId }));
+      } else {
+        dispatch(recalculateClmVaultHarvestsForUserVaultId({ walletAddress, vaultId }));
       }
-      // TODO CLM Vaults aka classic
     }
   },
 });
