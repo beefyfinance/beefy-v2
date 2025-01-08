@@ -97,6 +97,8 @@ export type BeefySnapshotProposal = {
   end: number;
   author: string;
   coreProposal: boolean;
+  space: string;
+  url: string;
 };
 export type BeefySnapshotActiveResponse = BeefySnapshotProposal[];
 export type BeefyArticleConfig = {

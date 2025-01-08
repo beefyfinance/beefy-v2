@@ -1,9 +1,3 @@
-export type ProposalEntity = {
-  id: string;
-  title: string;
-  start: number;
-  end: number;
-  author: string;
-  coreProposal: boolean;
-  url: string;
-};
+import type { BeefySnapshotProposal } from '../apis/beefy/beefy-api-types';
+
+export type ProposalEntity = BeefySnapshotProposal;

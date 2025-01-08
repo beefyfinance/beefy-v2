@@ -1,20 +1,33 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import type { BadgeComponentProps } from './types';
 import { useAppSelector } from '../../../../store';
-import { selectUnreadActiveProposals } from '../../../../features/data/selectors/proposals';
+import { selectUnreadActiveProposalsBySpace } from '../../../../features/data/selectors/proposals';
 import { NotificationCount } from './NotificationCount';
-import { useHaveUnreadProposal } from './hooks';
 
-export const UnreadProposalsCount = memo<BadgeComponentProps>(function UnreadProposalsCount() {
-  const proposals = useAppSelector(selectUnreadActiveProposals);
-  const unreadCount = useMemo(() => {
-    return proposals.length;
-  }, [proposals.length]);
-  const haveUnreadProposal = useHaveUnreadProposal();
+type UnreadSpaceProposalsCountProps = BadgeComponentProps & {
+  space: string;
+};
 
-  if (!haveUnreadProposal) {
-    return null;
+const UnreadSpaceProposalsCount = memo<UnreadSpaceProposalsCountProps>(
+  function UnreadProposalsCount({ space }) {
+    const proposals = useAppSelector(state => selectUnreadActiveProposalsBySpace(state, space));
+
+    if (!proposals.length) {
+      return null;
+    }
+
+    return <NotificationCount count={proposals.length} />;
   }
+);
 
-  return <NotificationCount count={unreadCount} />;
-});
+export const UnreadMainProposalsCount = memo<BadgeComponentProps>(
+  function UnreadMainProposalsCount() {
+    return <UnreadSpaceProposalsCount space="beefydao.eth" />;
+  }
+);
+
+export const UnreadProfitProposalsCount = memo<BadgeComponentProps>(
+  function UnreadProfitProposalsCount() {
+    return <UnreadSpaceProposalsCount space="profit.beefy.eth" />;
+  }
+);
