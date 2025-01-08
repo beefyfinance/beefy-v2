@@ -132,8 +132,11 @@ export const getApiApyDataComponents = createFactory(() => {
   } as const;
 });
 
-export function getApyLabelsTypeForVault(vault: VaultEntity): ApyLabelsType {
-  if (isCowcentratedGovVault(vault) && vault.strategyTypeId === 'compounds') {
+export function getApyLabelsTypeForVault(
+  vault: VaultEntity,
+  totalType: 'apy' | 'apr'
+): ApyLabelsType {
+  if (isCowcentratedGovVault(vault) && totalType === 'apy') {
     return 'cowcentrated-compounds';
   }
 

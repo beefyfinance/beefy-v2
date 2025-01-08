@@ -1,7 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi } from '../apis/instances';
-import { isCowcentratedGovVault, isGovVault, type VaultEntity } from '../entities/vault';
+import {
+  isCowcentratedGovVault,
+  isCowcentratedVault,
+  isGovVault,
+  isStandardVault,
+  type VaultEntity,
+} from '../entities/vault';
 import type { TotalApy } from '../reducers/apy';
 import { selectAllVaultIdsIncludingHidden, selectVaultById } from '../selectors/vaults';
 import { selectActiveVaultBoostIds } from '../selectors/boosts';
@@ -36,7 +42,10 @@ export type RecalculateTotalApyPayload = {
   totals: Record<VaultEntity['id'], TotalApy>;
 };
 
-function sumTotalApyComponents(total: TotalApy, fields: Array<keyof TotalApy>): number {
+function sumTotalApyComponents(
+  total: TotalApy,
+  fields: Array<Exclude<keyof TotalApy, 'totalApy' | 'totalMonthly' | 'totalDaily' | 'totalType'>>
+): number {
   return fields
     .map(key => total[key])
     .filter(isDefined)
@@ -65,6 +74,7 @@ export const recalculateTotalApyAction = createAsyncThunk<
       totalApy: 'totalApy' in apy ? apy.totalApy : 0,
       totalMonthly: 0,
       totalDaily: 0,
+      totalType: isStandardVault(vault) ? 'apy' : 'apr',
     };
 
     // Extract all the components from the apy object to the total object as Apr and Daily
@@ -126,6 +136,14 @@ export const recalculateTotalApyAction = createAsyncThunk<
         total.boostedTotalDaily = total.boostedTotalDaily ?? total.totalDaily;
         total.totalApy -= additionalApr;
         total.totalDaily -= additionalApr / 365;
+      }
+    }
+
+    // Mark as compounding if base CLM compounds
+    if (isCowcentratedGovVault(vault) || isCowcentratedVault(vault)) {
+      const hasCompounding = compoundableDaily.some(key => key in total && total[key]);
+      if (hasCompounding) {
+        total.totalType = 'apy';
       }
     }
 

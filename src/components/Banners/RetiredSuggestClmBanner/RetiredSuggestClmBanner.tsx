@@ -114,7 +114,7 @@ const VaultLink = memo(function VaultLink({ vaultId }: { vaultId: VaultEntity['i
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const platform = useAppSelector(state => selectPlatformById(state, vault.platformId));
   const apy = useAppSelector(state => selectVaultTotalApy(state, vaultId));
-  const apyLabel = vault.type == 'gov' && vault.strategyTypeId !== 'compounds' ? 'APR' : 'APY';
+  const apyLabel = apy.totalType.toUpperCase();
 
   return (
     <Trans
