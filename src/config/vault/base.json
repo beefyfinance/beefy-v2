@@ -1,5 +1,98 @@
 [
   {
+    "id": "aerodrome-cow-base-usdc-odos-vault",
+    "name": "USDC-ODOS",
+    "type": "standard",
+    "token": "USDC-ODOS",
+    "tokenAddress": "0x13c5d61c629CcA308850998083715068015dAc6e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooCowAerodromeUSDC-ODOS",
+    "earnedTokenAddress": "0x5655333C2086D274D200843964B038c1A32F4f82",
+    "earnContractAddress": "0x5655333C2086D274D200843964B038c1A32F4f82",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-odos",
+    "status": "active",
+    "platformId": "aerodrome",
+    "assets": ["USDC", "ODOS"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "createdAt": 1735180245,
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-odos-rp",
+    "name": "USDC-ODOS Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeUSDC-ODOS",
+    "tokenAddress": "0x13c5d61c629CcA308850998083715068015dAc6e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedTokens": ["AERO"],
+    "earnedTokenAddresses": ["0x940181a94A35A4569E4529A3CDfB74e38FD98631"],
+    "earnedOracleIds": ["AERO"],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowAerodromeUSDC-ODOS",
+    "earnContractAddress": "0x9354F0934D274BA935780C2B3650FdAec93E5b5f",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-odos",
+    "status": "active",
+    "createdAt": 1735180244,
+    "platformId": "aerodrome",
+    "assets": ["USDC", "ODOS"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-usdc-odos",
+    "name": "USDC-ODOS",
+    "token": "USDC-ODOS aerodrome",
+    "tokenAddress": "0xb7068556049dF8Fb3ae77CCbb9611FE0e85B2641",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xca73ed1815e5915489570014e024b7EbE65dE679"
+    ],
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "cowAerodromeUSDC-ODOS",
+    "earnedTokenAddress": "0x13c5d61c629CcA308850998083715068015dAc6e",
+    "earnContractAddress": "0x13c5d61c629CcA308850998083715068015dAc6e",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-usdc-odos",
+    "status": "active",
+    "createdAt": 1735180244,
+    "platformId": "beefy",
+    "assets": ["USDC", "ODOS"],
+    "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "type": "cowcentrated",
+    "feeTier": "1",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "stargate-v2-base-usdc",
     "name": "USDC",
     "token": "USDC",
