@@ -52,9 +52,9 @@ function convertRange(range: BigNumber) {
 
 function convertRanges(min: BigNumber, current: BigNumber, max: BigNumber, inverted: boolean) {
   if (inverted) {
-    const minRange = convertRange(min);
+    const minRange = convertRange(max);
     const currentRange = convertRange(current);
-    const maxRange = convertRange(max);
+    const maxRange = convertRange(min);
 
     return {
       minRange,
