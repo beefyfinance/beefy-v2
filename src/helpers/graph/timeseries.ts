@@ -650,7 +650,7 @@ class ClmInvestorFeesTimeSeriesGenerator {
   }
 
   protected getTimestamps(txTimestamps: number[]) {
-    const timestamps: number[] = [...txTimestamps];
+    const timestamps: number[] = [...txTimestamps].filter(t => t >= this.bucketBeforeFirstUnix);
     const firstTxTimeStamp = txTimestamps[0];
 
     for (let t = this.bucketBeforeFirstUnix; t <= this.lastUnix; t += this.bucketSize) {
