@@ -269,14 +269,15 @@ export function formatLargeUsd(
   return `${prefix}${formatLargeNumber(value.absoluteValue(), largeOptions)}`;
 }
 
-export function formatTotalApy(
-  totalApy: TotalApy,
-  placeholder?: string
-): AllValuesAs<TotalApy, string>;
+export type FormattedTotalApy<T = string> = {
+  [K in keyof TotalApy]: TotalApy[K] extends T ? TotalApy[K] : T;
+};
+
+export function formatTotalApy(totalApy: TotalApy, placeholder?: string): FormattedTotalApy;
 export function formatTotalApy(
   totalApy: TotalApy,
   placeholder?: ReactNode
-): AllValuesAs<TotalApy, ReactNode>;
+): FormattedTotalApy<ReactNode>;
 /**
  * Formats a TotalApy object to a string for display
  */
@@ -286,9 +287,12 @@ export function formatTotalApy(
 ): AllValuesAs<TotalApy, string | ReactNode> {
   return Object.fromEntries(
     strictEntries(totalApy).map(([key, value]) => {
-      const formattedValue = key.toLowerCase().includes('daily')
-        ? formatLargePercent(value, 4, placeholder)
-        : formatLargePercent(value, 2, placeholder);
+      const formattedValue =
+        key === 'totalType'
+          ? value
+          : key.toLowerCase().includes('daily')
+          ? formatLargePercent(value, 4, placeholder)
+          : formatLargePercent(value, 2, placeholder);
       return [key, formattedValue];
     })
   ) as AllValuesAs<TotalApy, string | ReactNode>; // required keys in input so should exist in output

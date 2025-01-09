@@ -12,24 +12,38 @@ import { ReactComponent as TreasuryIcon } from '../../images/icons/navigation/tr
 import { ReactComponent as DaoIcon } from '../../images/icons/navigation/dao.svg';
 import { ReactComponent as PartnersIcon } from '../../images/icons/navigation/partners.svg';
 import { ReactComponent as AnalyticsIcon } from '../../images/icons/navigation/analytics.svg';
-import { ProposalsNavItem } from './components/NavItem/ProposalsNavItem';
+import { ReactComponent as ProfitDistributionIcon } from '../../images/icons/navigation/profit-distribution.svg';
+import {
+  MainProposalsNavItem,
+  ProfitProposalsNavItem,
+} from './components/NavItem/ProposalsNavItem';
 import type { NavConfig, NavItemConfig } from './components/DropNavItem/types';
-import { ProposalsMobileNavItem } from './components/NavItem/ProposalsMobileNavItem';
+import {
+  MainProposalsMobileNavItem,
+  ProfitProposalsMobileNavItem,
+} from './components/NavItem/ProposalsMobileNavItem';
 import { ArticlesNavItem } from './components/NavItem/ArticlesNavItem';
 import { ArticlesMobileNavItem } from './components/NavItem/ArticlesMobileNavItem';
 
 export const DaoNavItems: NavItemConfig[] = [
   {
-    title: 'Header-Proposals',
-    Icon: ProposalsIcon,
-    url: 'https://vote.beefy.finance/#/',
-    Component: ProposalsNavItem,
-    MobileComponent: ProposalsMobileNavItem,
-  },
-  {
     title: 'Header-Treasury',
     Icon: TreasuryIcon,
     url: '/treasury',
+  },
+  {
+    title: 'Header-Proposals',
+    Icon: ProposalsIcon,
+    url: 'https://vote.beefy.finance/#/',
+    Component: MainProposalsNavItem,
+    MobileComponent: MainProposalsMobileNavItem,
+  },
+  {
+    title: 'Header-ProfitDistribution',
+    Icon: ProfitDistributionIcon,
+    url: 'https://snapshot.box/#/s:profit.beefy.eth/',
+    Component: ProfitProposalsNavItem,
+    MobileComponent: ProfitProposalsMobileNavItem,
   },
 ];
 

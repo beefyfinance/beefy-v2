@@ -1,0 +1,21 @@
+[
+  {
+    "id": "sonic-equalizer",
+    "name": "Equalizer",
+    "type": "solidly",
+    "routerAddress": "0xED9d262985E18710DDDAC0dfC10a3f900679063B",
+    "factoryAddress": "0xDDD9845Ba0D8f38d3045f804f67A1a8B9A528FcC",
+    "pairInitHash": "0x051c604b41e4f5c09d8eda985fa5e49ab9b1574a1aed994119102593d18fc954",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "200000000000000",
+    "swapFeeDenominator": "1000000000000000000",
+    "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "sonic-beets",
+    "type": "balancer",
+    "name": "Beets",
+    "vaultAddress": "0xBA12222222228d8Ba445958a75a0704d566BF2C8",
+    "queryAddress": "0x8E9aa87E45e92bad84D5F8DD1bff34Fb92637dE9"
+  }
+]

@@ -26,6 +26,7 @@ export const supportedChainIds: ChainConfig['id'][] = [
   'bsc',
   'fantom',
   'scroll',
+  'sonic',
 ];
 
 export class OdosApi implements IOdosApi {

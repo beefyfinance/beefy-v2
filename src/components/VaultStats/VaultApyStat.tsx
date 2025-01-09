@@ -1,12 +1,10 @@
 import { type VaultEntity } from '../../features/data/entities/vault';
 import { memo, useMemo } from 'react';
 import { selectVaultById } from '../../features/data/selectors/vaults';
-import { formatTotalApy } from '../../helpers/format';
+import { type FormattedTotalApy, formatTotalApy } from '../../helpers/format';
 import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat';
 import { selectApyVaultUIData } from '../../features/data/selectors/apy';
 import { useAppSelector } from '../../store';
-import type { AllValuesAsString } from '../../features/data/utils/types-utils';
-import type { TotalApy } from '../../features/data/reducers/apy';
 import { InterestTooltipContent } from '../InterestTooltipContent';
 import { getApyComponents, getApyLabelsForType, getApyLabelsTypeForVault } from '../../helpers/apy';
 import { useTranslation } from 'react-i18next';
@@ -79,7 +77,7 @@ type ApyTooltipContentProps = {
   vaultId: VaultEntity['id'];
   type: 'yearly' | 'daily';
   isBoosted: boolean;
-  rates: AllValuesAsString<TotalApy>;
+  rates: FormattedTotalApy;
 };
 
 export const ApyTooltipContent = memo<ApyTooltipContentProps>(function ApyTooltipContent({
@@ -90,7 +88,7 @@ export const ApyTooltipContent = memo<ApyTooltipContentProps>(function ApyToolti
 }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const rows = useMemo(() => {
-    const labels = getApyLabelsForType(getApyLabelsTypeForVault(vault));
+    const labels = getApyLabelsForType(getApyLabelsTypeForVault(vault, rates.totalType));
     const allComponents = getApyComponents();
     const components = allComponents[type];
     const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';

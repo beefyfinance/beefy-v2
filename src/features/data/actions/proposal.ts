@@ -3,7 +3,7 @@ import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi } from '../apis/instances';
 import type { ProposalEntity } from '../entities/proposal';
 import { uniq } from 'lodash-es';
-import { selectAllProposalIds } from '../selectors/proposals';
+import { selectAllProposalIdsBySpace } from '../selectors/proposals';
 import type {
   BeefySnapshotActiveResponse,
   BeefySnapshotProposal,
@@ -66,13 +66,17 @@ export type MarkAllProposalsReadFulfilledPayload = {
   read: ProposalEntity['id'][];
 };
 
+export type MarkAllProposalsReadArgs = {
+  space: string;
+};
+
 export const markAllProposalsRead = createAsyncThunk<
   MarkAllProposalsReadFulfilledPayload,
-  void,
+  MarkAllProposalsReadArgs,
   { state: BeefyState }
->('proposals/markAllRead', async (_, { getState }) => {
+>('proposals/markAllRead', async ({ space }, { getState }) => {
   const state = getState();
-  const proposalIds: ProposalEntity['id'][] = selectAllProposalIds(state);
+  const proposalIds: ProposalEntity['id'][] = selectAllProposalIdsBySpace(state, space);
   const read = setReadProposals(proposalIds, false);
   return { read };
 });

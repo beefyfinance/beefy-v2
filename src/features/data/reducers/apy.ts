@@ -24,6 +24,7 @@ interface AprData {
 // TODO: this should be reworked
 export interface TotalApy {
   totalApy: number;
+  totalType: 'apy' | 'apr';
   totalMonthly: number;
   totalDaily: number;
   vaultApr?: number;
@@ -53,7 +54,7 @@ export interface TotalApy {
 }
 
 type ExtractAprComponents<T extends string> = T extends `${infer C}Apr` ? C : never;
-export type TotalApyKey = keyof TotalApy;
+export type TotalApyKey = Exclude<keyof TotalApy, 'totalType'>;
 export type TotalApyComponent = ExtractAprComponents<TotalApyKey>;
 export type TotalApyYearlyComponent = `${TotalApyComponent}Apr`;
 export type TotalApyDailyComponent = `${TotalApyComponent}Daily`;

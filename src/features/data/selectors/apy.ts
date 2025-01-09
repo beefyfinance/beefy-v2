@@ -31,6 +31,7 @@ const EMPTY_TOTAL_APY: TotalApy = {
   totalApy: 0,
   totalMonthly: 0,
   totalDaily: 0,
+  totalType: 'apy',
 };
 
 export const selectVaultTotalApyOrUndefined = (
@@ -275,7 +276,7 @@ export function selectApyVaultUIData(
 
   return {
     status: 'available',
-    type: vault.strategyTypeId === 'compounds' ? 'apy' : 'apr',
+    type: values.totalType,
     values,
     boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
   };

@@ -1,0 +1,579 @@
+[
+  {
+    "id": "shadow-cow-sonic-usdc.e-weth-vault",
+    "name": "USDC.e-WETH",
+    "type": "standard",
+    "token": "USDC.e-WETH",
+    "tokenAddress": "0xDd4E83EDD68AcD40139923B06C51da23C76C2C43",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnedToken": "mooCowShadowSonicWETH-USDC.e",
+    "earnedTokenAddress": "0xA233A41B4a2711b704b0daCeD3956f378a8cB6aA",
+    "earnContractAddress": "0xA233A41B4a2711b704b0daCeD3956f378a8cB6aA",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-weth",
+    "status": "active",
+    "platformId": "shadow",
+    "assets": ["USDCe", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "createdAt": 1735931476,
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-usdc.e-weth-rp",
+    "name": "USDC.e-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowShadowSonicWETH-USDC.e",
+    "tokenAddress": "0xDd4E83EDD68AcD40139923B06C51da23C76C2C43",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowShadowSonicWETH-USDC.e",
+    "earnContractAddress": "0x0d372Ab96C19A894F47313318040b3C87dA1AcFb",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-weth",
+    "status": "active",
+    "createdAt": 1735931475,
+    "platformId": "shadow",
+    "assets": ["USDCe", "WETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-usdc.e-weth",
+    "name": "USDC.e-WETH",
+    "token": "USDC.e-WETH shadow",
+    "tokenAddress": "0x6Fb30F3FCB864D49cdff15061ed5c6ADFEE40B40",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+      "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b"
+    ],
+    "tokenProviderId": "shadow",
+    "earnedToken": "cowShadowSonicWETH-USDC.e",
+    "earnedTokenAddress": "0xDd4E83EDD68AcD40139923B06C51da23C76C2C43",
+    "earnContractAddress": "0xDd4E83EDD68AcD40139923B06C51da23C76C2C43",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-weth",
+    "status": "active",
+    "createdAt": 1735931475,
+    "platformId": "beefy",
+    "assets": ["USDCe", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "type": "cowcentrated",
+    "feeTier": "0.04",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-ws-usdc.e-vault",
+    "name": "wS-USDC.e",
+    "type": "standard",
+    "token": "wS-USDC.e",
+    "tokenAddress": "0xc46833F6217Db6586fD129cC2f61361dfCE4c21D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnedToken": "mooCowShadowSonicwS-USDC.e",
+    "earnedTokenAddress": "0x90dEfd0D2D69FBFF5C5eC3D271A5D24b12FB96F1",
+    "earnContractAddress": "0x90dEfd0D2D69FBFF5C5eC3D271A5D24b12FB96F1",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-usdc.e",
+    "status": "active",
+    "platformId": "shadow",
+    "assets": ["S", "USDCe"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "createdAt": 1735931476,
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-ws-usdc.e-rp",
+    "name": "wS-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowShadowSonicwS-USDC.e",
+    "tokenAddress": "0xc46833F6217Db6586fD129cC2f61361dfCE4c21D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowShadowSonicwS-USDC.e",
+    "earnContractAddress": "0xbf18216043C5C0200F6ffaDD09537DEEE318a732",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-usdc.e",
+    "status": "active",
+    "createdAt": 1735931475,
+    "platformId": "shadow",
+    "assets": ["S", "USDCe"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-ws-usdc.e",
+    "name": "wS-USDC.e",
+    "token": "wS-USDC.e shadow",
+    "tokenAddress": "0x324963c267C354c7660Ce8CA3F5f167E05649970",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38",
+      "0x29219dd400f2Bf60E5a23d13Be72B486D4038894"
+    ],
+    "tokenProviderId": "shadow",
+    "earnedToken": "cowShadowSonicwS-USDC.e",
+    "earnedTokenAddress": "0xc46833F6217Db6586fD129cC2f61361dfCE4c21D",
+    "earnContractAddress": "0xc46833F6217Db6586fD129cC2f61361dfCE4c21D",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-usdc.e",
+    "status": "active",
+    "createdAt": 1735931475,
+    "platformId": "beefy",
+    "assets": ["S", "USDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "type": "cowcentrated",
+    "feeTier": "0.15",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "wagmi-cow-sonic-ws-usdc.e-rp",
+    "name": "wS-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowWagmiSonicwS-USDC.e",
+    "tokenAddress": "0xE7e6a718218d737945E6f039c161D3C3c550CBA8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "wagmi",
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowWagmiSonicwS-USDC.e",
+    "earnContractAddress": "0x52115E698dC76Fc0ac75145c4f3F5d986E4CE162",
+    "oracle": "lps",
+    "oracleId": "wagmi-cow-sonic-ws-usdc.e",
+    "status": "active",
+    "createdAt": 1735910512,
+    "platformId": "wagmi",
+    "assets": ["S", "USDCe"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "wagmi-cow-sonic-ws-usdc.e",
+    "name": "wS-USDC.e",
+    "token": "wS-USDC.e wagmi",
+    "tokenAddress": "0x25f746bB206041Ed8dA6F08Ed1D32454A5856D37",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38",
+      "0x29219dd400f2Bf60E5a23d13Be72B486D4038894"
+    ],
+    "tokenProviderId": "wagmi",
+    "earnedToken": "cowWagmiSonicwS-USDC.e",
+    "earnedTokenAddress": "0xE7e6a718218d737945E6f039c161D3C3c550CBA8",
+    "earnContractAddress": "0xE7e6a718218d737945E6f039c161D3C3c550CBA8",
+    "oracle": "lps",
+    "oracleId": "wagmi-cow-sonic-ws-usdc.e",
+    "status": "active",
+    "createdAt": 1735910512,
+    "platformId": "beefy",
+    "assets": ["S", "USDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "sonic",
+    "type": "cowcentrated",
+    "feeTier": "0.15",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "beets-sonic-high-speed-perfect-beets",
+    "name": "High Speed Perfect Beets",
+    "type": "standard",
+    "token": "High Speed Perfect Beets",
+    "tokenAddress": "0x21FeD4063BF8ebf4F51f4ADF4ECFC9717aa4cA9D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeethovenXSonicBEETS/stS/LUDWIG",
+    "earnedTokenAddress": "0x01cd2addD10540C538231965486aCE234d07385a",
+    "earnContractAddress": "0x01cd2addD10540C538231965486aCE234d07385a",
+    "oracle": "lps",
+    "oracleId": "beets-sonic-high-speed-perfect-beets",
+    "createdAt": 1735589544,
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["BEETS", "stS", "LUDWIG"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x21fed4063bf8ebf4f51f4adf4ecfc9717aa4ca9d000100000000000000000044/add-liquidity",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "sonic-beets",
+        "poolId": "0x21fed4063bf8ebf4f51f4adf4ecfc9717aa4ca9d000100000000000000000044",
+        "poolType": "weighted",
+        "tokens": [
+          "0x2D0E0814E62D80056181F5cd932274405966e4f0",
+          "0xE5DA20F15420aD15DE0fa650600aFc998bbE3955",
+          "0xe6cc4D855B4fD4A9D02F46B9adae4C5EfB1764B5"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "beets-sonic-put-a-ring-on-it",
+    "name": "Put A Ring On It",
+    "type": "standard",
+    "token": "Put A Ring On It",
+    "tokenAddress": "0x25ca5451CD5a50AB1d324B5E64F32C0799661891",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeethovenXSonicscUSD/stS",
+    "earnedTokenAddress": "0x8f001b85E8E457976d4fAE884548c9772Aa4056C",
+    "earnContractAddress": "0x8f001b85E8E457976d4fAE884548c9772Aa4056C",
+    "oracle": "lps",
+    "oracleId": "beets-sonic-put-a-ring-on-it",
+    "createdAt": 1735588172,
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["scUSD", "stS"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points", "rings"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x25ca5451cd5a50ab1d324b5e64f32c0799661891000200000000000000000018/add-liquidity",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "sonic-beets",
+        "poolId": "0x25ca5451cd5a50ab1d324b5e64f32c0799661891000200000000000000000018",
+        "poolType": "weighted",
+        "tokens": [
+          "0xd3DCe716f3eF535C5Ff8d041c1A41C3bd89b97aE",
+          "0xE5DA20F15420aD15DE0fa650600aFc998bbE3955"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "beets-sonic-ringing-stable-beets",
+    "name": "Ringing Stable Beets",
+    "type": "standard",
+    "token": "Ringing Stable Beets",
+    "tokenAddress": "0xCd4D2b142235D5650fFA6A38787eD0b7d7A51c0C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeethovenXSonicscUSD/USDC.e",
+    "earnedTokenAddress": "0xCAf41F4Db603c3c0427EA700061B94849b848174",
+    "earnContractAddress": "0xCAf41F4Db603c3c0427EA700061B94849b848174",
+    "oracle": "lps",
+    "oracleId": "beets-sonic-ringing-stable-beets",
+    "createdAt": 1735587429,
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["scUSD", "USDCe"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points", "rings"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xcd4d2b142235d5650ffa6a38787ed0b7d7a51c0c000000000000000000000037/add-liquidity",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "sonic-beets",
+        "poolId": "0xcd4d2b142235d5650ffa6a38787ed0b7d7a51c0c000000000000000000000037",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+          "0xd3DCe716f3eF535C5Ff8d041c1A41C3bd89b97aE"
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
+      }
+    ]
+  },
+  {
+    "id": "beets-sonic-staked-sonic-symphony",
+    "name": "Staked Sonic Symphony",
+    "type": "standard",
+    "token": "Staked Sonic Symphony",
+    "tokenAddress": "0x374641076B68371e69D03C417DAc3E5F236c32FA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeethovenXSonicstS/wS",
+    "earnedTokenAddress": "0xb43Af41806aeEc8EEE1a532D20cE37535811ec67",
+    "earnContractAddress": "0xb43Af41806aeEc8EEE1a532D20cE37535811ec67",
+    "oracle": "lps",
+    "oracleId": "beets-sonic-staked-sonic-symphony",
+    "createdAt": 1735581085,
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["stS", "S"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x374641076b68371e69d03c417dac3e5f236c32fa000000000000000000000006/add-liquidity/0xf1dacc181cbb176ead93b2a7db5884161f95c40598ee588ae8d35f3118740cb8",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "sonic-beets",
+        "poolId": "0x374641076b68371e69d03c417dac3e5f236c32fa000000000000000000000006",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38",
+          "0xE5DA20F15420aD15DE0fa650600aFc998bbE3955"
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
+      }
+    ]
+  },
+  {
+    "id": "equalizer-sonic-usdc.e-scusd",
+    "name": "scUSD-USDC.e sLP",
+    "type": "standard",
+    "token": "scUSD-USDC.e sLP",
+    "tokenAddress": "0xB78CdF29F7E563ea447feBB5b48DDe9bC3278Ba4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "equalizer",
+    "earnedToken": "mooEqualizerSonicscUSD-USDC.e",
+    "earnedTokenAddress": "0xc84ABde550ae615257067D898a6Cdd235E1857D0",
+    "earnContractAddress": "0xc84ABde550ae615257067D898a6Cdd235E1857D0",
+    "oracle": "lps",
+    "oracleId": "equalizer-sonic-usdc.e-scusd",
+    "createdAt": 1735515466,
+    "status": "active",
+    "platformId": "equalizer",
+    "assets": ["scUSD", "USDCe"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points", "rings"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xB78CdF29F7E563ea447feBB5b48DDe9bC3278Ba4",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "sonic-equalizer"
+      }
+    ]
+  },
+  {
+    "id": "equalizer-sonic-ws-sts",
+    "name": "stS-wS sLP",
+    "type": "standard",
+    "token": "stS-wS sLP",
+    "tokenAddress": "0xB75C9073ea00AbDa9ff420b5Ae46fEe248993380",
+    "tokenDecimals": 18,
+    "tokenProviderId": "equalizer",
+    "earnedToken": "mooEqualizerSonicstS-wS",
+    "earnedTokenAddress": "0xdF06292Aad85dFF85C45fb859864C961edD4732B",
+    "earnContractAddress": "0xdF06292Aad85dFF85C45fb859864C961edD4732B",
+    "oracle": "lps",
+    "oracleId": "equalizer-sonic-ws-sts",
+    "createdAt": 1735515344,
+    "status": "active",
+    "platformId": "equalizer",
+    "assets": ["stS", "S"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xB75C9073ea00AbDa9ff420b5Ae46fEe248993380",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "sonic-equalizer"
+      }
+    ]
+  },
+  {
+    "id": "equalizer-sonic-ws-brush",
+    "name": "BRUSH-wS vLP",
+    "type": "standard",
+    "token": "BRUSH-wS vLP",
+    "tokenAddress": "0x38cFA6cB37d074B6E954C52d10a4cf0e4268607b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "equalizer",
+    "earnedToken": "mooEqualizerSonicBRUSH-wS",
+    "earnedTokenAddress": "0x2F1C5834baf0cF8F72462Ac05c8184dF9ecDdC8a",
+    "earnContractAddress": "0x2F1C5834baf0cF8F72462Ac05c8184dF9ecDdC8a",
+    "oracle": "lps",
+    "oracleId": "equalizer-sonic-ws-brush",
+    "createdAt": 1735515200,
+    "status": "active",
+    "platformId": "equalizer",
+    "assets": ["BRUSH", "S"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0x38cFA6cB37d074B6E954C52d10a4cf0e4268607b",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "sonic-equalizer"
+      }
+    ]
+  },
+  {
+    "id": "equalizer-sonic-usdc.e-weth",
+    "name": "USDC.e-WETH vLP",
+    "type": "standard",
+    "token": "USDC.e-WETH vLP",
+    "tokenAddress": "0xbCbC5777537c0D0462fb82BA48Eeb6cb361E853f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "equalizer",
+    "earnedToken": "mooEqualizerSonicUSDC.e-WETH",
+    "earnedTokenAddress": "0xe6A7828d249016e615Ad14855Aaad5e47B6875fb",
+    "earnContractAddress": "0xe6A7828d249016e615Ad14855Aaad5e47B6875fb",
+    "oracle": "lps",
+    "oracleId": "equalizer-sonic-usdc.e-weth",
+    "createdAt": 1735316739,
+    "status": "active",
+    "platformId": "equalizer",
+    "assets": ["USDCe", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xbCbC5777537c0D0462fb82BA48Eeb6cb361E853f",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "sonic-equalizer"
+      }
+    ]
+  },
+  {
+    "id": "equalizer-sonic-ws-usdc.e",
+    "name": "wS-USDC.e vLP",
+    "type": "standard",
+    "token": "wS-USDC.e vLP",
+    "tokenAddress": "0xdc85F86d5E3189e0d4a776e6Ae3B3911eC7B0133",
+    "tokenDecimals": 18,
+    "tokenProviderId": "equalizer",
+    "earnedToken": "mooEqualizerSonicwS-USDC.e",
+    "earnedTokenAddress": "0xcD7a80F7CFD3cD60cA1eE3F581FD7A7520B72f72",
+    "earnContractAddress": "0xcD7a80F7CFD3cD60cA1eE3F581FD7A7520B72f72",
+    "oracle": "lps",
+    "oracleId": "equalizer-sonic-ws-usdc.e",
+    "createdAt": 1735316603,
+    "status": "active",
+    "platformId": "equalizer",
+    "assets": ["S", "USDCe"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xdc85F86d5E3189e0d4a776e6Ae3B3911eC7B0133",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "sonic-equalizer"
+      }
+    ]
+  },
+  {
+    "id": "equalizer-sonic-ws-weth",
+    "name": "wS-WETH vLP",
+    "type": "standard",
+    "token": "wS-WETH vLP",
+    "tokenAddress": "0xcD7D89FF7bB263a5C45aD81ddE4Eed5892Ad540C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "equalizer",
+    "earnedToken": "mooEqualizerSonicwS-WETH",
+    "earnedTokenAddress": "0x8e2fc9E5CC29869Ebf810a8660239D6027cE75ec",
+    "earnContractAddress": "0x8e2fc9E5CC29869Ebf810a8660239D6027cE75ec",
+    "oracle": "lps",
+    "oracleId": "equalizer-sonic-ws-weth",
+    "createdAt": 1735314830,
+    "status": "active",
+    "platformId": "equalizer",
+    "assets": ["S", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://sonic.equalizer.exchange/liquidity/0xcD7D89FF7bB263a5C45aD81ddE4Eed5892Ad540C",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "sonic-equalizer"
+      }
+    ]
+  }
+]

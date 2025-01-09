@@ -1,5 +1,21 @@
 [
   {
+    "id": "resolv",
+    "docs": "https://docs.resolv.xyz/litepaper/using-resolv/resolv-points",
+    "points": [
+      {
+        "id": "resolv",
+        "name": "Resolv Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["wstUSR"]
+      }
+    ]
+  },
+  {
     "id": "syrup",
     "docs": "https://syrup.gitbook.io/syrup/about-syrup/drips-program",
     "points": [
@@ -830,6 +846,84 @@
       {
         "id": "pearl",
         "role": "Distribution of rewards"
+      }
+    ]
+  },
+  {
+    "id": "rings",
+    "docs": "https://x.com/Rings_Protocol/status/1869027802155983085?t=1S3IsVivc-QA5YK0yaj4wA&s=19",
+    "points": [
+      {
+        "id": "rings-points",
+        "name": "Rings Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "token-holding",
+        "tokens": ["scUSD"]
+      }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-balances-subgraph",
+        "role": "Indexing of all balances of all beefy products",
+        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "rings",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://app.rings.money/"
+      }
+    ]
+  },
+  {
+    "id": "sonic-points",
+    "docs": "https://docs.soniclabs.com/funding/airdrop",
+    "points": [
+      {
+        "id": "sonic-points",
+        "name": "Sonic Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "on-chain-lp",
+        "chain": "sonic"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-cowcentrated-subgraph-for-sentio",
+        "role": "Indexing of all balances of all beefy products",
+        "url": "https://github.com/beefyfinance/cowcentrated-subgraph/tree/sentio-compatibility"
+      },
+      {
+        "id": "sentio-processor",
+        "role": "Indexer running the subgraph",
+        "url": "https://app.sentio.xyz/rxp/beefy-clm-sonic-sentio"
+      },
+      {
+        "id": "openblock-labs-beefy-classic-sonic",
+        "role": "Run queries on sentio to get accounting data",
+        "url": "https://app.openblocklabs.com/app/sonic-points/protocols/Beefy-Yield-Aggregator"
+      },
+      {
+        "id": "openblock-labs-beefy-clm-sonic",
+        "role": "Run queries on sentio to get accounting data",
+        "url": "https://app.openblocklabs.com/app/sonic-points/protocols/Beefy-Automated-Liquidity-Management"
+      },
+      {
+        "id": "sonic-points",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://docs.soniclabs.com/funding/airdrop"
       }
     ]
   }

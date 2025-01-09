@@ -133,5 +133,10 @@
     "chainId": "lisk",
     "router": "0xaF0f1B33Ef5A61b88F84BA2Ed2388f2C69fEaB55",
     "manager": "0x60242b3c90a3F477a0FC5B4095f5946583Fbd6ce"
+  },
+  {
+    "chainId": "sonic",
+    "router": "0x03C2E2e84031d913d45B1F5b5dDC8E50Fcb28652",
+    "manager": "0x5B8F906E9E3355155F05A9c46c5bF3e6D1dEBE5E"
   }
 ]

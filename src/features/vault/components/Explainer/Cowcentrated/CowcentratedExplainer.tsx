@@ -91,7 +91,9 @@ export const CowcentratedExplainer = memo<CowcentratedExplainerProps>(
         links={links}
         description={<CowcentratedLikeDescription vaultId={vaultId} />}
         details={
-          showApy ? <ApyDetails type={getApyLabelsTypeForVault(vault)} values={apys} /> : undefined
+          showApy ? (
+            <ApyDetails type={getApyLabelsTypeForVault(vault, apys.totalType)} values={apys} />
+          ) : undefined
         }
       />
     );
