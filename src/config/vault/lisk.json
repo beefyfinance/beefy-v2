@@ -449,7 +449,7 @@
     "platformId": "uniswap",
     "assets": ["LSK", "WETH"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "lisk",
     "zaps": [
       {
@@ -481,7 +481,7 @@
     "platformId": "beefy",
     "assets": ["LSK", "WETH"],
     "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "lisk",
     "type": "cowcentrated",
     "feeTier": "0.3",
@@ -513,7 +513,7 @@
     "platformId": "uniswap",
     "assets": ["USDT", "WETH"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "lisk",
     "zaps": [
       {
@@ -545,7 +545,7 @@
     "platformId": "beefy",
     "assets": ["USDT", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "lisk",
     "type": "cowcentrated",
     "feeTier": "0.3",
