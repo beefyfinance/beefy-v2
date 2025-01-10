@@ -1114,7 +1114,7 @@ export const recalculateClmVaultHarvestsForUserVaultId = createAsyncThunk<
     }
 
     if (!isTimelineEntityCowcentratedVault(timeline)) {
-      console.warn(`Non CLM Pool timeline found for vault ${vaultId}`);
+      console.warn(`No CLM Vault timeline found for vault ${vaultId}`);
       return result;
     }
 
@@ -1134,7 +1134,7 @@ export const recalculateClmVaultHarvestsForUserVaultId = createAsyncThunk<
     const clmPool = getCowcentratedPool(clmVault);
 
     if (!clmPool) {
-      console.warn(`No clm pool found for vault ${vaultId}`);
+      console.warn(`No CLM Pool found for vault ${vaultId}`);
       return result;
     }
 
