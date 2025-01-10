@@ -16,7 +16,7 @@
     "platformId": "shadow",
     "assets": ["USDCe", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "sonic",
     "createdAt": 1735931476,
     "pointStructureIds": ["sonic-points"],
@@ -51,7 +51,7 @@
     "platformId": "shadow",
     "assets": ["USDCe", "WETH"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "sonic",
     "pointStructureIds": ["sonic-points"],
     "zaps": [
@@ -84,7 +84,7 @@
     "platformId": "beefy",
     "assets": ["USDCe", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "sonic",
     "type": "cowcentrated",
     "feeTier": "0.04",
@@ -112,7 +112,7 @@
     "platformId": "shadow",
     "assets": ["S", "USDCe"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "sonic",
     "createdAt": 1735931476,
     "pointStructureIds": ["sonic-points"],
@@ -147,7 +147,7 @@
     "platformId": "shadow",
     "assets": ["S", "USDCe"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "sonic",
     "pointStructureIds": ["sonic-points"],
     "zaps": [
@@ -180,7 +180,7 @@
     "platformId": "beefy",
     "assets": ["S", "USDCe"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "sonic",
     "type": "cowcentrated",
     "feeTier": "0.15",
@@ -219,9 +219,6 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },

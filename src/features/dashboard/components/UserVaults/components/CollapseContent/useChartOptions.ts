@@ -1,11 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../store';
 import { selectHasDataToShowGraphByVaultId } from '../../../../../data/selectors/analytics';
-import {
-  isCowcentratedLikeVault,
-  isCowcentratedStandardVault,
-  type VaultEntity,
-} from '../../../../../data/entities/vault';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../../../../data/entities/vault';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { useMemo } from 'react';
 import {
@@ -35,8 +31,7 @@ export function useChartOptions(vaultId: VaultEntity['id'], address: string) {
       availableCharts['positionChart'] = t('Dashboard-Chart');
       if (typeOfCharts === 'cowcentrated') {
         availableCharts['positionChart'] = t('Dashboard-PositionChart');
-        if (vault.strategyTypeId === 'compounds' && !isCowcentratedStandardVault(vault)) {
-          // TODO implement for CLM vaults
+        if (vault.strategyTypeId === 'compounds') {
           availableCharts['compoundsChart'] = t('Dashboard-CompoundsChart');
         }
       }

@@ -14,6 +14,7 @@ import {
   type UnprocessedTimelineEntryCowcentratedWithoutRewardPoolPart,
   type UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart,
   type UnprocessedTimelineEntryStandard,
+  isTimelineEntityCowcentratedVault,
 } from '../entities/analytics';
 import { BigNumber } from 'bignumber.js';
 import type {
@@ -39,12 +40,13 @@ import {
   selectVaultStrategyAddressOrUndefined,
 } from '../selectors/vaults';
 import { selectCowcentratedLikeVaultDepositTokens } from '../selectors/tokens';
-import { groupBy, keyBy, mapValues, omitBy, partition, pick, sortBy } from 'lodash-es';
+import { groupBy, keyBy, mapValues, omitBy, partition, pick, sortBy, values } from 'lodash-es';
 import type { ChainEntity } from '../entities/chain';
 import { entries } from '../../../helpers/object';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
 import { selectUserDepositedVaultIds } from '../selectors/balance';
 import {
+  selectClassicHarvestsByVaultId,
   selectClmHarvestsByVaultId,
   selectUserDepositedTimelineByVaultId,
   selectUserFirstDepositDateByVaultId,
@@ -897,8 +899,10 @@ export const fetchClmHarvestsForVaultsOfUserOnChain = createAsyncThunk<
     );
     const harvests = await api.getHarvestsForVaultsSince(chainId, vaultAddresses, earliest);
 
-    return harvests.map(({ vaultAddress, harvests }): FetchClmHarvestsForUserResult => {
+    const doneRequests = new Set<string>();
+    const result = harvests.map(({ vaultAddress, harvests }): FetchClmHarvestsForUserResult => {
       const req = requestsByAddress[vaultAddress.toLowerCase()];
+      doneRequests.add(req.id);
       if (req.type === 'clm') {
         return {
           vaultId: req.id,
@@ -914,6 +918,20 @@ export const fetchClmHarvestsForVaultsOfUserOnChain = createAsyncThunk<
         harvests: harvests as ApiClassicHarvestRow[],
       };
     });
+
+    // Add empty harvests for vaults that did not return any
+    values(requestsByAddress)
+      .filter(req => !doneRequests.has(req.id))
+      .forEach(req => {
+        result.push({
+          vaultId: req.id,
+          chainId: req.chainId,
+          type: req.type,
+          harvests: [],
+        });
+      });
+
+    return result;
   },
   {
     condition: ({ chainId, walletAddress }, { getState }) => {
@@ -1050,6 +1068,145 @@ export const recalculateClmPoolHarvestsForUserVaultId = createAsyncThunk<
           : amountsUsd,
         cumulativeTotalUsd: previous ? previous.cumulativeTotalUsd.plus(totalUsd) : totalUsd,
       });
+    }
+
+    if (result.timeline.harvests.length > 0) {
+      const lastHarvest = result.timeline.harvests[result.timeline.harvests.length - 1];
+      result.timeline.totals = lastHarvest.cumulativeAmounts;
+      result.timeline.totalsUsd = lastHarvest.cumulativeAmountsUsd;
+      result.timeline.totalUsd = lastHarvest.cumulativeTotalUsd;
+    }
+
+    return result;
+  }
+);
+
+/**
+ * Needs: User Timeline, Vault Harvests and User Balances
+ */
+export const recalculateClmVaultHarvestsForUserVaultId = createAsyncThunk<
+  RecalculateClmHarvestsForUserVaultIdPayload,
+  { walletAddress: string; vaultId: VaultEntity['id'] },
+  { state: BeefyState }
+>(
+  'analytics/recalculateClmVaultHarvestsForUserVaultId',
+  async ({ walletAddress, vaultId }, { getState }) => {
+    const state = getState();
+    const [token0, token1] = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
+    const result: RecalculateClmHarvestsForUserVaultIdPayload = {
+      vaultId,
+      walletAddress,
+      timeline: {
+        tokens: [token0, token1],
+        harvests: [],
+        totals: [BIG_ZERO, BIG_ZERO],
+        totalsUsd: [BIG_ZERO, BIG_ZERO],
+        totalUsd: BIG_ZERO,
+      },
+    };
+
+    // We make sure we have everything we need from the clm _vault_
+    const timeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
+
+    if (!timeline) {
+      console.warn(`No timeline data found for vault ${vaultId}`);
+      return result;
+    }
+
+    if (!isTimelineEntityCowcentratedVault(timeline)) {
+      console.warn(`No CLM Vault timeline found for vault ${vaultId}`);
+      return result;
+    }
+
+    const harvests = selectClassicHarvestsByVaultId(state, vaultId) ?? [];
+    if (!harvests) {
+      console.warn(`No classic harvest data found for vault ${vaultId}`);
+      return result;
+    }
+
+    if (timeline.current.length === 0) {
+      console.warn(`No current timeline entries found for vault ${vaultId}`);
+      return result;
+    }
+
+    // We make sure we have everything we need from the underlying clm
+    const clmVault = selectCowcentratedLikeVaultById(state, vaultId);
+    const clmPool = getCowcentratedPool(clmVault);
+
+    if (!clmPool) {
+      console.warn(`No CLM Pool found for vault ${vaultId}`);
+      return result;
+    }
+
+    const clmHarvests = selectClmHarvestsByVaultId(state, clmPool) ?? [];
+
+    const firstDeposit = timeline.current[0];
+    const vaultHarvestsAfterDeposit = harvests.filter(h =>
+      isAfter(h.timestamp, firstDeposit.datetime)
+    );
+    const clmHarvestsAfterDeposit = clmHarvests.filter(h =>
+      isAfter(h.timestamp, firstDeposit.datetime)
+    );
+
+    if (clmHarvestsAfterDeposit.length === 0) {
+      console.warn(`No clm harvests found after first deposit for vault ${vaultId}`);
+      return result;
+    }
+
+    // We now have a timeline of both vault harvests: standard(ppfs and hence underlying increase) and clm(compounded fees)
+    const mergedHarvests = [...vaultHarvestsAfterDeposit, ...clmHarvestsAfterDeposit].sort(
+      (a, b) => a.timestamp.getTime() - b.timestamp.getTime()
+    );
+
+    const lastTimelineIdx = timeline.current.length - 1;
+    let timelineIdx = 0;
+
+    let currentUnderlying = timeline.current[timelineIdx].underlyingBalance;
+    let currentShares = timeline.current[timelineIdx].shareBalance;
+    for (const harvest of mergedHarvests) {
+      while (
+        timelineIdx < lastTimelineIdx &&
+        isAfter(harvest.timestamp, timeline.current[timelineIdx + 1].datetime)
+      ) {
+        currentUnderlying = timeline.current[++timelineIdx].underlyingBalance;
+        currentShares = timeline.current[timelineIdx].shareBalance;
+      }
+
+      // If we see a standard harvest, we update the current underlying balance
+      if (harvest.type === 'classic') {
+        currentUnderlying = currentUnderlying.plus(
+          harvest.compoundedAmount.times(currentShares).dividedBy(harvest.totalSupply)
+        );
+      } else {
+        //fee harvest
+        const token0share = currentUnderlying
+          .multipliedBy(harvest.compoundedAmount0)
+          .dividedBy(harvest.totalSupply);
+        const token1share = currentUnderlying
+          .multipliedBy(harvest.compoundedAmount1)
+          .dividedBy(harvest.totalSupply);
+
+        const amounts = [token0share, token1share];
+        const prices = [harvest.token0ToUsd, harvest.token1ToUsd];
+        const amountsUsd = amounts.map((a, i) => a.multipliedBy(prices[i]));
+        const totalUsd = amountsUsd.reduce((acc, a) => acc.plus(a), BIG_ZERO);
+        const previous = result.timeline.harvests[result.timeline.harvests.length - 1];
+
+        result.timeline.harvests.push({
+          timestamp: harvest.timestamp,
+          prices,
+          amounts,
+          amountsUsd,
+          totalUsd,
+          cumulativeAmounts: previous
+            ? amounts.map((a, i) => a.plus(previous.cumulativeAmounts[i]))
+            : amounts,
+          cumulativeAmountsUsd: previous
+            ? amountsUsd.map((a, i) => a.plus(previous.cumulativeAmountsUsd[i]))
+            : amountsUsd,
+          cumulativeTotalUsd: previous ? previous.cumulativeTotalUsd.plus(totalUsd) : totalUsd,
+        });
+      }
     }
 
     if (result.timeline.harvests.length > 0) {

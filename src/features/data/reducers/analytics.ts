@@ -7,6 +7,7 @@ import {
   fetchShareToUnderlying,
   fetchWalletTimeline,
   recalculateClmPoolHarvestsForUserVaultId,
+  recalculateClmVaultHarvestsForUserVaultId,
 } from '../actions/analytics';
 import type { VaultEntity } from '../entities/vault';
 import type { Draft } from 'immer';
@@ -150,6 +151,11 @@ export const analyticsSlice = createSlice({
         const { vaultId, timeline, walletAddress } = action.payload;
         const addressState = getOrCreateAnalyticsAddressState(sliceState, walletAddress);
         addressState.clmHarvests.byVaultId[vaultId] = timeline;
+      })
+      .addCase(recalculateClmVaultHarvestsForUserVaultId.fulfilled, (sliceState, action) => {
+        const { vaultId, timeline, walletAddress } = action.payload;
+        const addressState = getOrCreateAnalyticsAddressState(sliceState, walletAddress);
+        addressState.clmVaultHarvests.byVaultId[vaultId] = timeline;
       });
   },
 });
@@ -185,6 +191,7 @@ function getOrCreateAnalyticsAddressState(
     addressState = sliceState.byAddress[walletAddress] = {
       timeline: { byVaultId: {} },
       clmHarvests: { byVaultId: {} },
+      clmVaultHarvests: { byVaultId: {} },
     };
   }
 

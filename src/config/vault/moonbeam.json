@@ -21,7 +21,7 @@
     "platformId": "stellaswap",
     "assets": ["stDOT", "xcDOT"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "moonbeam",
     "zaps": [
       {
@@ -53,7 +53,7 @@
     "platformId": "beefy",
     "assets": ["stDOT", "xcDOT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "moonbeam",
     "type": "cowcentrated",
     "feeTier": "1",
