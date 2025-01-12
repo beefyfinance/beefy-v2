@@ -14,6 +14,7 @@ export const beefyBridgeConfig = {
     ethereum: '0xb1feA302f3B2E93FA04E46dCCE35F2Fc522d7bB9',
     optimism: '0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
     base: '0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
+    sonic: '0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
   },
   bridges: [
     {
@@ -129,6 +130,18 @@ export const beefyBridgeConfig = {
             approve: new BigNumber('70000'),
             outgoing: new BigNumber('280000'), // ~279,132 before refunds
             incoming: new BigNumber('270000'), // ~261,283 before refunds
+          },
+        },
+        sonic: {
+          bridge: '0xdddaEc9c267dF24aD66Edc3B2cBe25dB86422051',
+          time: {
+            outgoing: 1,
+            incoming: 4,
+          },
+          gasLimits: {
+            approve: new BigNumber('70000'),
+            outgoing: new BigNumber('310000'), // ~301,943 before refunds
+            incoming: new BigNumber('330000'), // ~325,620 before refunds
           },
         },
       },
