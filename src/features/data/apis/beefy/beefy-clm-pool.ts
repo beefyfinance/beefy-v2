@@ -354,11 +354,17 @@ export class BeefyCLMPool {
 
   public async previewWithdraw(liquidity: BigNumber) {
     const multicall = await this.getMulticall();
-    const [previewWithdrawResponse] = await multicall.all([
+    const [previewWithdrawResponse, isCalmRequest] = await multicall.all([
       this.getPreviewWithdrawRequests(toWei(liquidity, 18)),
+      this.getIsCalmRequests(),
     ]);
 
-    const result = this.consumePreviewWithdraw(previewWithdrawResponse);
-    return result;
+    const previewResult = this.consumePreviewWithdraw(previewWithdrawResponse);
+    const isCalmResult = this.consumeIsCalm(isCalmRequest);
+
+    return {
+      ...previewResult,
+      ...isCalmResult,
+    };
   }
 }

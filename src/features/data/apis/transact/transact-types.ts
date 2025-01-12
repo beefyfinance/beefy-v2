@@ -584,9 +584,13 @@ export type GovVaultWithdrawQuote = BaseQuote<GovVaultWithdrawOption> & {
 
 export type CowcentratedVaultWithdrawQuote = BaseQuote<CowcentratedVaultWithdrawOption> & {
   vaultType: 'cowcentrated';
+  isCalm: boolean;
 };
 
-export type CowcentratedZapWithdrawQuote = BaseZapQuote<CowcentratedZapWithdrawOption>;
+export type CowcentratedZapWithdrawQuote = BaseZapQuote<CowcentratedZapWithdrawOption> & {
+  vaultType: 'cowcentrated';
+  isCalm: boolean;
+};
 
 export type SingleWithdrawQuote = BaseZapQuote<SingleWithdrawOption>;
 
@@ -745,6 +749,28 @@ export function isCowcentratedVaultWithdrawQuote(
   );
 }
 
+export function isCowcentratedZapWithdrawQuote(
+  quote: TransactQuote
+): quote is CowcentratedVaultWithdrawQuote {
+  return (
+    isWithdrawQuote(quote) &&
+    isZapQuote(quote) &&
+    quote.strategyId === 'cowcentrated' &&
+    quote.vaultType === 'cowcentrated'
+  );
+}
+
+export function isCowcentratedWithdrawQuote(
+  quote: TransactQuote
+): quote is CowcentratedVaultWithdrawQuote | CowcentratedZapWithdrawQuote {
+  return (
+    isCowcentratedVaultWithdrawQuote(quote) ||
+    isCowcentratedZapWithdrawQuote(quote) ||
+    isGovUnderlyingCowcentratedWithdrawQuote(quote) ||
+    isVaultUnderlyingCowcentratedWithdrawQuote(quote)
+  );
+}
+
 export function isVaultWithdrawQuote(quote: TransactQuote): quote is VaultWithdrawQuote {
   return isWithdrawQuote(quote) && quote.strategyId === 'vault';
 }
@@ -772,6 +798,28 @@ export function isVaultUnderlyingCowcentratedDepositQuote(
     quote.strategyId === 'vault-composer' &&
     (isCowcentratedZapDepositQuote(quote.underlyingQuote) ||
       isCowcentratedVaultDepositQuote(quote.underlyingQuote))
+  );
+}
+
+export function isGovUnderlyingCowcentratedWithdrawQuote(
+  quote: TransactQuote
+): quote is GovComposerZapWithdrawQuote {
+  return (
+    isWithdrawQuote(quote) &&
+    quote.strategyId === 'gov-composer' &&
+    (isCowcentratedZapWithdrawQuote(quote.underlyingQuote) ||
+      isCowcentratedVaultWithdrawQuote(quote.underlyingQuote))
+  );
+}
+
+export function isVaultUnderlyingCowcentratedWithdrawQuote(
+  quote: TransactQuote
+): quote is VaultComposerZapWithdrawQuote {
+  return (
+    isWithdrawQuote(quote) &&
+    quote.strategyId === 'vault-composer' &&
+    (isCowcentratedZapWithdrawQuote(quote.underlyingQuote) ||
+      isCowcentratedVaultWithdrawQuote(quote.underlyingQuote))
   );
 }
 
