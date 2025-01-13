@@ -149,7 +149,7 @@ const QuoteError = memo(function QuoteError() {
         <AlertError>
           <Trans
             t={t}
-            i18nKey={'Transact-Quote-Error-Calm'}
+            i18nKey={`Transact-Quote-Error-Calm-${error.action}`}
             components={{
               LinkCalm: (
                 <a

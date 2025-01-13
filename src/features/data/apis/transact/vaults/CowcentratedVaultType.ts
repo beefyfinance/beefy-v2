@@ -125,7 +125,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     }
 
     if (!isCalm) {
-      throw new QuoteCowcentratedNotCalmError();
+      throw new QuoteCowcentratedNotCalmError('deposit');
     }
 
     const depositUsed = [used0, used1].map((amount, i) => ({
@@ -229,7 +229,11 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       chain,
       this.depositTokens
     );
-    const { amount0, amount1 } = await clmPool.previewWithdraw(input.amount);
+    const { amount0, amount1, isCalm } = await clmPool.previewWithdraw(input.amount);
+
+    if (!isCalm) {
+      throw new QuoteCowcentratedNotCalmError('withdraw');
+    }
 
     const outputs: TokenAmount[] = [
       {
@@ -252,6 +256,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       returned: [],
       allowances: [],
       priceImpact: 0,
+      isCalm,
     };
   }
 

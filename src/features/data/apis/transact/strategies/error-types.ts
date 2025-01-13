@@ -8,6 +8,7 @@ export type SerializedQuoteCowcentratedNoSingleSideError = {
 
 export type SerializedQuoteCowcentratedNotCalmError = {
   name: 'QuoteCowcentratedNotCalmError';
+  action: 'deposit' | 'withdraw';
 };
 
 export type SerializedError =

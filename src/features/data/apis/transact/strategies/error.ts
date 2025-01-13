@@ -56,9 +56,11 @@ export class QuoteCowcentratedNotCalmError extends SerializableError {
   public static readonly name = 'QuoteCowcentratedNotCalmError';
   public readonly name = QuoteCowcentratedNotCalmError.name;
 
-  constructor() {
+  constructor(public readonly action: 'deposit' | 'withdraw') {
     super(
-      'New deposits are temporarily unavailable as the current price is outside the calm zone. Please wait a few minutes and try again.'
+      `${
+        action === 'withdraw' ? 'Withdraws' : 'New deposits'
+      } are temporarily unavailable as the current price is outside the calm zone. Please wait a few minutes and try again.`
     );
   }
 
@@ -66,6 +68,7 @@ export class QuoteCowcentratedNotCalmError extends SerializableError {
     return {
       ...miniSerializeError(this),
       name: this.name,
+      action: this.action,
     };
   }
 

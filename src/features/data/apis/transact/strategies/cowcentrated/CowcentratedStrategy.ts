@@ -11,6 +11,7 @@ import {
   type CowcentratedZapWithdrawOption,
   type CowcentratedZapWithdrawQuote,
   type InputTokenAmount,
+  isCowcentratedWithdrawQuote,
   isZapQuoteStepDeposit,
   isZapQuoteStepSwap,
   isZapQuoteStepSwapAggregator,
@@ -367,6 +368,13 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
 
     // Common: Withdraw as token0/1
     const vaultWithdrawn = await this.vaultType.fetchWithdrawQuote(inputs, option);
+    if (!isCowcentratedWithdrawQuote(vaultWithdrawn)) {
+      throw new Error('Invalid withdraw quote');
+    }
+    if (!vaultWithdrawn.isCalm) {
+      throw new QuoteCowcentratedNotCalmError('withdraw');
+    }
+
     const withdrawSteps: ZapQuoteStep[] = [
       {
         type: 'withdraw',
@@ -399,6 +407,8 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
       allowances,
       steps,
       fee,
+      isCalm: vaultWithdrawn.isCalm,
+      vaultType: vaultWithdrawn.vaultType,
     };
   }
 
@@ -638,7 +648,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     }
 
     if (!isCalm) {
-      throw new QuoteCowcentratedNotCalmError();
+      throw new QuoteCowcentratedNotCalmError('deposit');
     }
 
     const depositUsed = [used0, used1].map((amount, i) => ({
