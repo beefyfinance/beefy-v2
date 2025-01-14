@@ -13,6 +13,24 @@
         "type": "token-holding",
         "tokens": ["wstUSR"]
       }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-balances-subgraph",
+        "role": "Indexing of all balances of all beefy products",
+        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "resolv",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
+        "url": "https://app.resolv.xyz/points"
+      }
     ]
   },
   {
