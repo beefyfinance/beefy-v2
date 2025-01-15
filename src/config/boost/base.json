@@ -1,5 +1,26 @@
 [
   {
+    "id": "moo_compound-base-usdc",
+    "poolId": "compound-base-usdc",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["USDC"],
+    "tokenAddress": "0xeF6ED674486E54507d0f711C0d388BD8a1552E6F",
+    "earnedToken": "mooBIFI",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+    "earnContractAddress": "0x7334D86B64cf27DaDe76f130E974B725259B98FB",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "basemooBIFI",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": [],
+    "pinned": true
+  },
+  {
     "id": "moo_aero-cow-wsteth-weth-vault-lido",
     "poolId": "aero-cow-wsteth-weth-vault",
     "name": "Lido",
