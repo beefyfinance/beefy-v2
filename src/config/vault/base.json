@@ -1,5 +1,41 @@
 [
   {
+    "id": "aerodrome-weth-drv",
+    "name": "DRV-WETH vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/DRV",
+    "tokenAddress": "0xaC4e562d7C6108f971321F14238E24AE2cC398ac",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseWETH-DRV",
+    "earnedTokenAddress": "0xf1BA1CC5e17cc83cd35e41e62C30aDC20dE58466",
+    "earnContractAddress": "0xf1BA1CC5e17cc83cd35e41e62C30aDC20dE58466",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-drv",
+    "status": "active",
+    "createdAt": 1736914251,
+    "platformId": "aerodrome",
+    "assets": ["DRV", "WETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x9d0E8f5b25384C7310CB8C6aE32C8fbeb645d083&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-usdc-odos-vault",
     "name": "USDC-ODOS",
     "type": "standard",
