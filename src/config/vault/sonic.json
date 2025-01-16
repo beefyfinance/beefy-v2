@@ -1,5 +1,101 @@
 [
   {
+    "id": "shadow-cow-sonic-shadow-sts-vault",
+    "name": "SHADOW-stS",
+    "type": "standard",
+    "token": "SHADOW-stS",
+    "tokenAddress": "0x72cE11866e242Cd7d302cDAE9588cB32Cf2a2bB1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnedToken": "mooCowShadowSonicSHADOW-stS",
+    "earnedTokenAddress": "0x84aD5B236605F7a6425DE729A8C941fc0b89890F",
+    "earnContractAddress": "0x84aD5B236605F7a6425DE729A8C941fc0b89890F",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-shadow-sts",
+    "status": "active",
+    "platformId": "shadow",
+    "assets": ["SHADOW", "stS"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "createdAt": 1737032979,
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-shadow-sts-rp",
+    "name": "SHADOW-stS Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowShadowSonicSHADOW-stS",
+    "tokenAddress": "0x72cE11866e242Cd7d302cDAE9588cB32Cf2a2bB1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnedTokens": [],
+    "earnedTokenAddresses": [],
+    "earnedOracleIds": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowShadowSonicSHADOW-stS",
+    "earnContractAddress": "0x57B4160A82786aCDe84594048dE024F9301Ab70C",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-shadow-sts",
+    "status": "active",
+    "createdAt": 1737032979,
+    "platformId": "shadow",
+    "assets": ["SHADOW", "stS"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-shadow-sts",
+    "name": "SHADOW-stS",
+    "token": "SHADOW-stS shadow",
+    "tokenAddress": "0x66af3655e14a045F1742b3c9544553Ef7915ed35",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x3333b97138D4b086720b5aE8A7844b1345a33333",
+      "0xE5DA20F15420aD15DE0fa650600aFc998bbE3955"
+    ],
+    "tokenProviderId": "shadow",
+    "earnedToken": "cowShadowSonicSHADOW-stS",
+    "earnedTokenAddress": "0x72cE11866e242Cd7d302cDAE9588cB32Cf2a2bB1",
+    "earnContractAddress": "0x72cE11866e242Cd7d302cDAE9588cB32Cf2a2bB1",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-shadow-sts",
+    "status": "active",
+    "createdAt": 1737032979,
+    "platformId": "beefy",
+    "assets": ["SHADOW", "stS"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "type": "cowcentrated",
+    "feeTier": "2",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "shadow-cow-sonic-usdc.e-weth-vault",
     "name": "USDC.e-WETH",
     "type": "standard",
