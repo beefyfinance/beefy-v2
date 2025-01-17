@@ -3,7 +3,7 @@
     "description": "Lido and Renzo joined forces with Beefy to bring users earnings competely denominated in ETH. Earn ezETH and wstETH on top of your ezETH-wstETH position.",
     "social": {
       "discord": "https://beefy.com/discord",
-      "twitter": "https://twitter.com/beefyfinance"
+      "twitter": "https://x.com/beefyfinance"
     }
   },
   "rootstock-grant": {
@@ -12,7 +12,7 @@
     "description": "Celebrate the launch of Beefy on Rootstock, Bitcoin's first and longest-lasting sidechain. Beefy users can earn grant-funded $rBTC tokens for trying out new products on Rootstock. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your rewards whenever you're ready.",
     "social": {
       "discord": "https://beefy.com/discord",
-      "twitter": "https://twitter.com/beefyfinance"
+      "twitter": "https://x.com/beefyfinance"
     }
   },
   "arb-ltipp": {
@@ -21,7 +21,7 @@
     "learn": "https://beefy.com/articles/ltipp/",
     "social": {
       "discord": "https://beefy.com/discord",
-      "twitter": "https://twitter.com/beefyfinance"
+      "twitter": "https://x.com/beefyfinance"
     }
   },
   "zap-v3": {
@@ -32,7 +32,7 @@
     "learn": "https://beefy.com/articles/zap-v3/",
     "social": {
       "discord": "https://beefy.com/discord",
-      "twitter": "https://twitter.com/beefyfinance"
+      "twitter": "https://x.com/beefyfinance"
     }
   },
   "offchain-zap-v3": {
@@ -43,7 +43,7 @@
     "learn": "https://beefy.com/articles/zap-v3/",
     "social": {
       "discord": "https://beefy.com/discord",
-      "twitter": "https://twitter.com/beefyfinance"
+      "twitter": "https://x.com/beefyfinance"
     }
   },
   "offchain-mode-grant": {
@@ -52,7 +52,7 @@
     "description": "Earn $OP on Optimism network for participating in Beefy vaults on Mode. Beefy users earn additional $OP tokens for using products on the Superchain. Rewards accrue linearly over time depending on the user's TVL. Simply click the 'Claim' tab to find details of all onchain and offchain rewards, and then manually claim your rewards whenever you're ready.",
     "social": {
       "discord": "https://beefy.com/discord",
-      "twitter": "https://twitter.com/beefyfinance"
+      "twitter": "https://x.com/beefyfinance"
     }
   },
   "dao-rewards": {
@@ -61,7 +61,7 @@
     "learn": "https://snapshot.org/#/beefydao.eth/proposal/0xefe70f50c7743085e72f4c2421cc8e92c8b82fa14bfd479a26bd0a0c14c5f07e",
     "social": {
       "discord": "https://beefy.com/discord",
-      "twitter": "https://twitter.com/beefyfinance"
+      "twitter": "https://x.com/beefyfinance"
     }
   },
   "optimism-grant": {
@@ -70,7 +70,7 @@
     "learn": "https://beefy.com/articles/beefy-helps-grow-the-optimism-community-with-a-650-000-op-grant/",
     "social": {
       "discord": "https://beefy.com/discord",
-      "twitter": "https://twitter.com/beefyfinance"
+      "twitter": "https://x.com/beefyfinance"
     }
   }
 }
