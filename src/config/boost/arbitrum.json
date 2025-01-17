@@ -17,7 +17,7 @@
     "isMooStaked": true,
     "campaign": "renzo-lido",
     "partners": ["renzo", "lido-eth"],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_stargate-v2-arb-weth",
@@ -38,7 +38,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_compound-arbitrum-usdc",
@@ -59,7 +59,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_silo-arb-silo",
