@@ -18,7 +18,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_velodrome-v2-wbtc-tbtc",
@@ -170,7 +170,7 @@
     "isMooStaked": true,
     "campaign": "zap-v3",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_compound-op-usdc",
@@ -192,7 +192,7 @@
     "isMooStaked": true,
     "campaign": "zap-v3",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_velodrome-v2-hai-pxeth",
@@ -495,7 +495,7 @@
     "isMooStaked": true,
     "campaign": "zap-v3",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
 
   {
@@ -1808,7 +1808,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_velodrome-v2-weth-moobifi",
@@ -1829,7 +1829,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_sushi-cow-op-weth-op-vault",
@@ -1917,7 +1917,7 @@
     "isMooStaked": true,
     "campaign": "zap-v3",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_stargate-v2-op-usdc",
