@@ -1367,6 +1367,16 @@
     "type": "amm"
   },
   {
+    "id": "swapx",
+    "name": "SwapX",
+    "website": "https://swapx.fi/",
+    "twitter": "swapxfi",
+    "documentation": "https://swapxfi.gitbook.io/swapx-docs",
+    "description": "SwapX is a decentralized exchange (DEX) which aims to become the leading platform for native concentrated liquidity on Sonic Blockchain.",
+    "type": "amm",
+    "risks": ["NO_TIMELOCK"]
+  },
+  {
     "id": "shadow",
     "name": "Shadow",
     "website": "https://www.shadow.so/",
