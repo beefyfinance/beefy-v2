@@ -1,5 +1,32 @@
 [
   {
+    "id": "silov2-sonic-usdce-ws",
+    "name": "USDC.e (wS Market)",
+    "type": "standard",
+    "token": "USDC.e (wS Market)",
+    "tokenAddress": "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+    "tokenDecimals": 6,
+    "tokenProviderId": "silo",
+    "earnedToken": "mooSiloV2SonicUSDC.e (wS Market)",
+    "earnedTokenAddress": "0xdb6E5dC4C6748EcECb97b565F6C074f24384fD07",
+    "earnContractAddress": "0xdb6E5dC4C6748EcECb97b565F6C074f24384fD07",
+    "oracle": "lps",
+    "oracleId": "silov2-sonic-usdce-ws",
+    "createdAt": 1737212030,
+    "status": "active",
+    "platformId": "silo",
+    "assets": ["USDCe"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lendingNoBorrow",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "swapx-ichi-ws-sts",
     "name": "wS-stS",
     "token": "IV-SWAPX-7-wS-stS",
