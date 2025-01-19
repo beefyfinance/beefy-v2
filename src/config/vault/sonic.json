@@ -5,7 +5,7 @@
     "type": "standard",
     "token": "USDC.e (wS Market)",
     "tokenAddress": "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
-    "tokenDecimals": 6,
+    "tokenDecimals": 9,
     "tokenProviderId": "silo",
     "earnedToken": "mooSiloV2SonicUSDC.e (wS Market)",
     "earnedTokenAddress": "0xdb6E5dC4C6748EcECb97b565F6C074f24384fD07",
