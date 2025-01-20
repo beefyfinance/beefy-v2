@@ -3245,38 +3245,6 @@
     "retiredAt": 1731274075
   },
   {
-    "id": "quick-gamma-mimatic-usdt-narrow",
-    "name": "MAI-USDT Stable LP",
-    "type": "standard",
-    "token": "aMAI-USDT",
-    "tokenAddress": "0x1825c76cED3c1625250B8af6204Bf4fc4e5b9FCF",
-    "tokenDecimals": 18,
-    "tokenProviderId": "quickswap",
-    "earnedToken": "mooQuickMAI-USDT_Stable",
-    "earnedTokenAddress": "0xe7B6CB2BfaB7C886CAA97fd3f181bBDad664A19B",
-    "earnContractAddress": "0xe7B6CB2BfaB7C886CAA97fd3f181bBDad664A19B",
-    "oracle": "lps",
-    "oracleId": "quick-gamma-mimatic-usdt-narrow",
-    "status": "eol",
-    "createdAt": 1686917464,
-    "retireReason": "rewards",
-    "retiredAt": 1698574248,
-    "platformId": "gamma",
-    "assets": ["MAI", "USDT"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "managed-conc-lp",
-    "addLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-    "removeLiquidityUrl": "https://quickswap.exchange/#/pools?currency0=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&currency1=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-    "network": "polygon",
-    "zaps": [
-      {
-        "strategyId": "gamma",
-        "ammId": "polygon-gamma-quickswap-e0a6",
-        "tokenHolder": "0x20ec0d06F447d550fC6edee42121bc8C1817b97D"
-      }
-    ]
-  },
-  {
     "id": "quick-gamma-usdc-dai-narrow",
     "name": "USDC.e-DAI Stable LP",
     "type": "standard",

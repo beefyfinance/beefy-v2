@@ -17,5 +17,17 @@
     "name": "Beets",
     "vaultAddress": "0xBA12222222228d8Ba445958a75a0704d566BF2C8",
     "queryAddress": "0x8E9aa87E45e92bad84D5F8DD1bff34Fb92637dE9"
+  },
+  {
+    "id": "sonic-swapx",
+    "name": "swapx",
+    "type": "solidly",
+    "routerAddress": "0xF5F7231073b3B41c04BA655e1a7438b1a7b29c27",
+    "factoryAddress": "0x05c1be79d3aC21Cc4B727eeD58C9B2fF757F5663",
+    "pairInitHash": "0x6c45999f36731ff6ab43e943fca4b5a700786bbb202116cf6633b32039161e05",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "1",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
   }
 ]
