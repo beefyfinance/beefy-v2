@@ -18,7 +18,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aero-cow-wsteth-weth-vault-lido",
@@ -37,7 +37,7 @@
     "status": "active",
     "isMooStaked": true,
     "partners": ["lido-eth"],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-weth-klima",
@@ -58,7 +58,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_alienbase-alb-usdc-wide",
@@ -79,7 +79,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_alienbase-alb-eth-wide",
@@ -100,7 +100,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_alienbase-cbeth-eth-narrow",
@@ -121,7 +121,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_alienbase-usdc-usdbc-narrow",
@@ -142,7 +142,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-msusd-usdc",
@@ -163,7 +163,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-usd+-mai",
@@ -184,7 +184,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-weth-qi",
@@ -205,7 +205,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-virtual-weth",
@@ -289,7 +289,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-usdc-cbbtc",
@@ -625,7 +625,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_aerodrome-ovn-usd+",
