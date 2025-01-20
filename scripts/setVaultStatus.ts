@@ -1,5 +1,5 @@
 import { ArgumentConfig, parse } from 'ts-command-line-args';
-import { getChain, getVaultsByIds } from './common/config';
+import { getAllVaultConfigsByChainId } from './common/config';
 import { sortVaultKeys } from './common/vault-fields';
 import { saveJson } from './common/files';
 
@@ -96,7 +96,7 @@ async function main() {
     allVaultsIds = Array.from(new Set([...args.vaults, ...relatedVaults]));
   }
 
-  const allVaultsByChainId = await getVaultsByIds(allVaultsIds);
+  const allVaultsByChainId = await getAllVaultConfigsByChainId();
   const timestamp = Math.floor(Date.now() / 1000);
   for (const chainId in allVaultsByChainId) {
     if (args.chain && chainId !== args.chain) {
