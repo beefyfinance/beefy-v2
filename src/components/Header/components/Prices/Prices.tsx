@@ -105,7 +105,7 @@ const tokens: Token[] = [
     explorer: {
       name: 'Etherscan',
       icon: sonicIcon,
-      url: 'https://sonicscan.org//token/0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
+      url: 'https://sonicscan.org/token/0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
     },
     walletIconUrl: 'https://beefy.com/icons/128/mooBIFI.png',
     llamaSwapUrl:
