@@ -47,23 +47,21 @@ jobs:
 
       - name: Set Vault Status
         run: |
+          # Optionally include chain argument
+          CHAIN_ARG=$(if [ -n "${{ github.event.inputs.chain }}" ]; then echo "--chain ${{{ github.event.inputs.chain }}}" ; fi)
+          # Optionally include includeRelated argument
+          INCLUDE_RELATED_ARG=$(if [ "${{ github.event.inputs.includeRelated }}" = "true" ]; then echo "--includeRelated" ; fi)
+          # Optionally include reason argument
+          REASON_ARG=$(if [ -n "${{ github.event.inputs.reason }}" ]; then echo "--reason ${{ github.event.inputs.reason }}" ; fi)
           # Convert comma-separated vault IDs into multiple --vault arguments
-          VAULT_ARGS=$(echo "${{ github.event.inputs.vaults }}" | tr ',' '\n' | xargs -I {} echo "--vault {}" | tr '\n' ' ')
+          VAULT_ARGS=$(echo "${{ github.event.inputs.vaults }}" | tr ',' '\n' | xargs -I {} echo "--vaults {}" | tr '\n' ' ')
 
-          if [ -n "${{ github.event.inputs.reason }}" ]; then
-            yarn setVaultStatus \
-              --chain "${{ github.event.inputs.chain }}" \
-              --status "${{ github.event.inputs.status }}" \
-              --reason "${{ github.event.inputs.reason }}" \
-              ${{ github.event.inputs.includeRelated == 'true' && '--includeRelated' || '' }} \
-              $VAULT_ARGS
-          else
-            yarn setVaultStatus \
-              --chain "${{ github.event.inputs.chain }}" \
-              --status "${{ github.event.inputs.status }}" \
-              ${{ github.event.inputs.includeRelated == 'true' && '--includeRelated' || '' }} \
-              $VAULT_ARGS
-          fi
+          yarn setVaultStatus \
+            --status "${{ github.event.inputs.status }}" \
+            $CHAIN_ARG \
+            $REASON_ARG \
+            $INCLUDE_RELATED_ARG \
+            $VAULT_ARGS
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
