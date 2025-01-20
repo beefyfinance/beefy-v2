@@ -1,5 +1,35 @@
 [
   {
+    "id": "velodrome-v2-weth-syn",
+    "name": "SYN-WETH vLP V2",
+    "type": "standard",
+    "token": "vAMMV2-WETH/SYN",
+    "tokenAddress": "0xb00583Fd5787a991c90a3c1F3ce59A7eC5cF874c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2WETH-SYN",
+    "earnedTokenAddress": "0x51d502171C36EaB3D0538769f9F0E4f3a1b9Ba0e",
+    "earnContractAddress": "0x51d502171C36EaB3D0538769f9F0E4f3a1b9Ba0e",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-weth-syn",
+    "status": "active",
+    "createdAt": 1737327241,
+    "platformId": "velodrome",
+    "assets": ["SYN", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x4200000000000000000000000000000000000006&to=0x5a5fff6f753d7c11a56a52fe47a177a87e431655&chain0=10&chain1=10",
+    "addLiquidityUrl": "https://velodrome.finance/pools?token0=0x4200000000000000000000000000000000000006&token1=0x5A5fFf6F753d7C11A56A52FE47a177a87e431655&type=-1&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a&chain=10",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xb00583Fd5787a991c90a3c1F3ce59A7eC5cF874c",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "velodrome-cow-optimism-aleth-alusd-vault",
     "name": "alETH-alUSD",
     "type": "standard",
