@@ -12,8 +12,8 @@ on:
         required: true
         type: choice
         options:
-          - active
           - eol
+          - active
           - paused
       reason:
         description: 'Reason code for pause/retire (optional)'
