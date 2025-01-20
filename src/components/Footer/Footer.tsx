@@ -55,7 +55,7 @@ const socialLinks = [
   },
   {
     title: 'Twitter',
-    path: 'https://twitter.com/beefyfinance',
+    path: 'https://x.com/beefyfinance',
     Icon: IconTwitter,
   },
   {

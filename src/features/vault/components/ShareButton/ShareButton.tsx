@@ -184,7 +184,7 @@ const TwitterItem = memo<ShareServiceItemProps>(function TwitterItem({ details }
       url: details.vaultUrl,
     });
 
-    window.open(`https://twitter.com/intent/tweet?${params}`, '_blank');
+    window.open(`https://x.com/intent/tweet?${params}`, '_blank');
   }, [details, t]);
 
   return <ShareItem text={t('Vault-Share-Twitter')} onClick={onClick} icon={twitterIcon} />;
