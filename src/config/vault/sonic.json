@@ -1,7 +1,7 @@
 [
   {
     "id": "swapx-ichi-usdc.e-scusd",
-    "name": "USDC.e-scUSD",
+    "name": "USDC.e-scUSD (USDC.e deposit)",
     "token": "IV-SWAPX-2-USDC.e-scUSD",
     "tokenAddress": "0xF77CeeD15596BfC127D17bA45dEA9767BC349Be0",
     "tokenDecimals": 18,
@@ -82,7 +82,7 @@
   },
   {
     "id": "swapx-ichi-ws-sts",
-    "name": "wS-stS",
+    "name": "wS-stS (wS deposit)",
     "token": "IV-SWAPX-7-wS-stS",
     "tokenAddress": "0xfD10ac67449C16F368a4BB49f544E0A865A77614",
     "tokenDecimals": 18,
@@ -93,7 +93,7 @@
     "oracle": "lps",
     "oracleId": "swapx-ichi-ws-sts",
     "status": "active",
-    "createdAt": 1737212030,
+    "createdAt": 1737120172,
     "platformId": "ichi",
     "assets": ["S", "stS"],
     "migrationIds": [],
@@ -106,7 +106,7 @@
   },
   {
     "id": "swapx-ichi-ws-swpx",
-    "name": "SWPx-wS",
+    "name": "SWPx-wS (wS deposit)",
     "token": "IV-SWAPX-19-wS-SWPx",
     "tokenAddress": "0xfDEc32751Faade573B285C8CC606677beE656A4C",
     "tokenDecimals": 18,
@@ -130,7 +130,7 @@
   },
   {
     "id": "swapx-ichi-usdc.e-swpx",
-    "name": "SWPx-USDC.e",
+    "name": "SWPx-USDC.e (USDC.e deposit)",
     "token": "IV-SWAPX-18-USDC.e-SWPx",
     "tokenAddress": "0x5De651be21beeDe8ABE808D1425b278ac4a3604B",
     "tokenDecimals": 18,
@@ -154,7 +154,7 @@
   },
   {
     "id": "swapx-ichi-ws-usdc.e",
-    "name": "wS-USDC.e",
+    "name": "wS-USDC.e (wS deposit)",
     "token": "IV-SWAPX-1-wS-USDC.e",
     "tokenAddress": "0x5F62d612c69fF7BE3FBd9a0cD530D57bCbC7b642",
     "tokenDecimals": 18,
