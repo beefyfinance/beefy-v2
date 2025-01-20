@@ -15,6 +15,16 @@ on:
           - active
           - eol
           - paused
+      reason:
+        description: 'Reason code for pause/retire (optional)'
+        required: true
+        type: choice
+        options:
+          - tvl
+          - rewards
+          - exploit
+          - upgrade
+          - noReason
       vaults:
         description: 'Comma-separated list of vault IDs'
         required: true
@@ -24,10 +34,6 @@ on:
         required: false
         type: boolean
         default: false
-      reason:
-        description: 'Reason code for pause/retire (optional)'
-        required: false
-        type: string
       chain:
         description: 'Consider only this chain (optional)'
         required: false
