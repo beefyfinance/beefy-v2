@@ -3,10 +3,6 @@ name: Set Vault Status Manual
 on:
   workflow_dispatch:
     inputs:
-      chain:
-        description: 'Chain json file to process'
-        required: false
-        type: string
       status:
         description: 'Status to set'
         required: true
@@ -15,10 +11,6 @@ on:
           - active
           - eol
           - paused
-      reason:
-        description: 'Reason code for pause/retire (optional)'
-        required: false
-        type: string
       vaults:
         description: 'Comma-separated list of vault IDs'
         required: true
@@ -28,6 +20,14 @@ on:
         required: false
         type: boolean
         default: false
+      reason:
+        description: 'Reason code for pause/retire (optional)'
+        required: false
+        type: string
+      chain:
+        description: 'Consider only this chain (optional)'
+        required: false
+        type: string
 
 jobs:
   set-vault-status:
@@ -48,7 +48,7 @@ jobs:
       - name: Set Vault Status
         run: |
           # Optionally include chain argument
-          CHAIN_ARG=$(if [ -n "${{ github.event.inputs.chain }}" ]; then echo "--chain ${{{ github.event.inputs.chain }}}" ; fi)
+          CHAIN_ARG=$(if [ -n "${{ github.event.inputs.chain }}" ]; then echo "--chain ${{ github.event.inputs.chain }}" ; fi)
           # Optionally include includeRelated argument
           INCLUDE_RELATED_ARG=$(if [ "${{ github.event.inputs.includeRelated }}" = "true" ]; then echo "--includeRelated" ; fi)
           # Optionally include reason argument
