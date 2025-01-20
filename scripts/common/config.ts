@@ -95,6 +95,20 @@ export function getChain(chainId: string): ChainConfig {
   return config;
 }
 
+export async function getVaultsByIds(
+  vaultIds: string[]
+): Promise<{ [chainId: string]: VaultConfig[] }> {
+  const vaults: { [chainId: string]: VaultConfig[] } = {};
+  for (const chainId of chainIds) {
+    const chainVaults = await getVaultsForChain(chainId);
+    const filteredVaults = chainVaults.filter(vault => vaultIds.includes(vault.id));
+    if (filteredVaults.length > 0) {
+      vaults[chainId] = filteredVaults;
+    }
+  }
+  return vaults;
+}
+
 export async function getVaultsForChain(chainId: string): Promise<VaultConfig[]> {
   const id = addressBookToAppId(chainId);
 

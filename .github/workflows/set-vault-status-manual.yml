@@ -1,0 +1,82 @@
+name: Set Vault Status Manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      chain:
+        description: 'Chain json file to process'
+        required: false
+        type: string
+      status:
+        description: 'Status to set'
+        required: true
+        type: choice
+        options:
+          - active
+          - eol
+          - paused
+      reason:
+        description: 'Reason code for pause/retire (optional)'
+        required: false
+        type: string
+      vaults:
+        description: 'Comma-separated list of vault IDs'
+        required: true
+        type: string
+      includeRelated:
+        description: 'Include related vaults (vault/rp variants)'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  set-vault-status:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Set Vault Status
+        run: |
+          # Convert comma-separated vault IDs into multiple --vault arguments
+          VAULT_ARGS=$(echo "${{ github.event.inputs.vaults }}" | tr ',' '\n' | xargs -I {} echo "--vault {}" | tr '\n' ' ')
+
+          if [ -n "${{ github.event.inputs.reason }}" ]; then
+            yarn setVaultStatus \
+              --chain "${{ github.event.inputs.chain }}" \
+              --status "${{ github.event.inputs.status }}" \
+              --reason "${{ github.event.inputs.reason }}" \
+              ${{ github.event.inputs.includeRelated == 'true' && '--includeRelated' || '' }} \
+              $VAULT_ARGS
+          else
+            yarn setVaultStatus \
+              --chain "${{ github.event.inputs.chain }}" \
+              --status "${{ github.event.inputs.status }}" \
+              ${{ github.event.inputs.includeRelated == 'true' && '--includeRelated' || '' }} \
+              $VAULT_ARGS
+          fi
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: 'chore: update vault status for ${{ github.event.inputs.chain }}'
+          title: 'Update vault status for ${{ github.event.inputs.chain }}'
+          body: |
+            Vault Status Update:
+            - Chain: ${{ github.event.inputs.chain }}
+            - Status: ${{ github.event.inputs.status }}
+            - Reason: ${{ github.event.inputs.reason || 'N/A' }}
+            - Vaults: ${{ github.event.inputs.vaults }}
+            - Include Related: ${{ github.event.inputs.includeRelated }}
+            - Triggered by: @${{ github.actor }}
+          branch: vault-status-${{ github.actor }}-${{ github.event.inputs.status }}-${{ github.run_id }}
+          delete-branch: true
