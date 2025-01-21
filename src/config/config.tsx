@@ -405,7 +405,6 @@ export const config = {
       'DAIs',
       'stella4pool',
       'USDCwh',
-      'USDTxc',
       'BUSDwh',
       'xcUSDC',
       'xcUSDT',
