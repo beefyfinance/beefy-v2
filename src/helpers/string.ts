@@ -26,3 +26,8 @@ export function stringFoundAnywhere(
 export function ucFirstLetter<T extends string>(word: T): Capitalize<T> {
   return `${word.charAt(0).toUpperCase()}${word.slice(1)}` as Capitalize<T>;
 }
+
+export function capitalizeFirstLetter(text: string) {
+  if (!text) return '';
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}

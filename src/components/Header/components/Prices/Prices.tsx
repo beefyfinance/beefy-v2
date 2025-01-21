@@ -32,6 +32,9 @@ import {
 import type { ChainEntity } from '../../../../features/data/entities/chain';
 import { addTokenToWalletAction } from '../../../../features/data/actions/add-to-wallet';
 import { AccountBalanceWallet } from '@material-ui/icons';
+import type { PlatformEntity } from '../../../../features/data/entities/platform';
+import { getPlatformSrc } from '../../../../helpers/platformsSrc';
+import { capitalizeFirstLetter } from '../../../../helpers/string';
 
 const useStyles = makeStyles(styles);
 
@@ -48,6 +51,7 @@ type Token = {
   };
   walletIconUrl: string;
   llamaSwapUrl?: string;
+  platformId?: PlatformEntity['id'];
 };
 
 const tokens: Token[] = [
@@ -110,6 +114,7 @@ const tokens: Token[] = [
     walletIconUrl: 'https://beefy.com/icons/128/mooBIFI.png',
     llamaSwapUrl:
       'https://www.shadow.so/trade?inputCurrency=0x29219dd400f2Bf60E5a23d13Be72B486D4038894&outputCurrency=0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
+    platformId: 'shadow',
   },
 ];
 
@@ -173,7 +178,17 @@ type TooltipTokenProps = {
 };
 
 const TooltipToken = memo<TooltipTokenProps>(function TooltipToken({ token }) {
-  const { symbol, oracleId, icon, explorer, llamaSwapUrl, address, walletIconUrl, chainId } = token;
+  const {
+    symbol,
+    oracleId,
+    icon,
+    explorer,
+    llamaSwapUrl,
+    address,
+    walletIconUrl,
+    chainId,
+    platformId,
+  } = token;
   const classes = useStyles();
   const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, oracleId));
 
@@ -196,10 +211,15 @@ const TooltipToken = memo<TooltipTokenProps>(function TooltipToken({ token }) {
           href={llamaSwapUrl}
           target="_blank"
           rel="noopener"
-          title={`Buy via LlamaSwap`}
+          title={`Buy via ${platformId ? capitalizeFirstLetter(platformId) : 'LlamaSwap'}`}
           className={classes.iconLink}
         >
-          <img alt={'LlamaSwap'} src={llamaSwapIcon} height={24} className={classes.icon} />
+          <img
+            alt={platformId ?? 'LlamaSwap'}
+            src={platformId ? getPlatformSrc(platformId) : llamaSwapIcon}
+            height={24}
+            className={classes.icon}
+          />
         </a>
       ) : null}
       <AddToWallet
