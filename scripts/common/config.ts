@@ -95,6 +95,15 @@ export function getChain(chainId: string): ChainConfig {
   return config;
 }
 
+export async function getAllVaultConfigsByChainId(): Promise<{ [chainId: string]: VaultConfig[] }> {
+  const vaults: { [chainId: string]: VaultConfig[] } = {};
+  for (const chainId of chainIds) {
+    const chainVaults = await getVaultsForChain(chainId);
+    vaults[chainId] = chainVaults;
+  }
+  return vaults;
+}
+
 export async function getVaultsForChain(chainId: string): Promise<VaultConfig[]> {
   const id = addressBookToAppId(chainId);
 
