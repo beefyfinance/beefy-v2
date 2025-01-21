@@ -163,7 +163,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_aerodrome-usd+-mai",
