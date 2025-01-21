@@ -148,7 +148,7 @@
     "isMooStaked": true,
     "campaign": "zap-v3",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_compound-op-usdt",
@@ -1808,7 +1808,7 @@
     "isMooStaked": true,
     "campaign": "dao-rewards",
     "partners": [],
-    "pinned": false
+    "pinned": true
   },
   {
     "id": "moo_velodrome-v2-weth-moobifi",
@@ -1917,7 +1917,7 @@
     "isMooStaked": true,
     "campaign": "zap-v3",
     "partners": [],
-    "pinned": true
+    "pinned": false
   },
   {
     "id": "moo_stargate-v2-op-usdc",
