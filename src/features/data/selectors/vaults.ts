@@ -468,3 +468,9 @@ export const selectAllCowcentratedVaults = createSelector(
   (clmIds, vaultsById): VaultCowcentrated[] =>
     clmIds.map(id => vaultsById[id]).filter(isCowcentratedVault)
 );
+
+export const selectVaultsPinnedConfigs = (state: BeefyState) =>
+  state.entities.vaults.pinned.configs;
+
+export const selectVaultIsPinned = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  state.entities.vaults.pinned.byId[vaultId] || false;

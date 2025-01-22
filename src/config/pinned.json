@@ -1,0 +1,10 @@
+[
+  {
+    "conditions": [
+      {
+        "type": "boosted",
+        "contractPinned": true
+      }
+    ]
+  }
+]

@@ -82,6 +82,11 @@ export const selectVaultHasActiveStellaSwapCampaigns = createSelector(
   campaigns => !!campaigns && campaigns.length > 0
 );
 
+export const selectVaultHasActiveOffchainCampaigns = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => state.biz.rewards.offchain.byVaultId[vaultId],
+  campaigns => !!campaigns && campaigns.length > 0 && campaigns.some(c => c.apr > 0)
+);
+
 export const selectVaultActiveGovRewards = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => state.biz.rewards.gov.byVaultId[vaultId],
   selectVaultRawTvl,

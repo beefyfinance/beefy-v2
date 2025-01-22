@@ -10,6 +10,7 @@ import type {
   ChainConfig,
   MinterConfig,
   PartnersConfig,
+  PinnedConfig,
   PlatformConfig,
   PlatformType,
   SwapAggregatorConfig,
@@ -140,5 +141,9 @@ export class ConfigAPI {
 
   public async fetchBridges(): Promise<BridgeConfig[]> {
     return (await import('../../../config/bridges.json')).default;
+  }
+
+  public async fetchPinnedConfig(): Promise<PinnedConfig[]> {
+    return (await import('../../../config/pinned.json')).default as PinnedConfig[];
   }
 }

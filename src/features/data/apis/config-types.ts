@@ -536,3 +536,28 @@ export type BeefyBridgeConfig = Readonly<{
    */
   bridges: ReadonlyArray<BeefyAnyBridgeConfig>;
 }>;
+
+export type PinnedConfigConditionUntil = {
+  type: 'until';
+  timestamp: number;
+};
+
+export type PinnedConfigConditionBoosted = {
+  type: 'boosted';
+  /** active pinned boost contract [default: false] */
+  contractPinned?: boolean;
+  /** active boost contract [default: false] */
+  contract?: boolean;
+  /** active offchain campaign [default: false] */
+  offchain?: boolean;
+  /** boostedTotalDaily apr > 0 [default: false] */
+  other?: boolean;
+};
+
+export type PinnedConfigCondition = PinnedConfigConditionUntil | PinnedConfigConditionBoosted;
+
+export type PinnedConfig = {
+  /** vault id, undefined = all vaults */
+  id?: string;
+  conditions: Array<PinnedConfigCondition>;
+};
