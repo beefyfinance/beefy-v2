@@ -19,6 +19,7 @@ import bifiIcon from '../../../../images/single-assets/BIFI.png';
 import mooIcon from '../../../../images/single-assets/mooBIFI.png';
 import opIcon from '../../../../images/networks/optimism.svg';
 import baseIcon from '../../../../images/networks/base.svg';
+import sonicIcon from '../../../../images/networks/sonic.svg';
 import ethIcon from '../../../../images/networks/ethereum.svg';
 import llamaSwapIcon from '../../../../images/icons/llama-swap.png';
 import { Tooltip, TRIGGERS } from '../../../Tooltip';
@@ -31,6 +32,9 @@ import {
 import type { ChainEntity } from '../../../../features/data/entities/chain';
 import { addTokenToWalletAction } from '../../../../features/data/actions/add-to-wallet';
 import { AccountBalanceWallet } from '@material-ui/icons';
+import type { PlatformEntity } from '../../../../features/data/entities/platform';
+import { getPlatformSrc } from '../../../../helpers/platformsSrc';
+import { selectPlatformByIdOrUndefined } from '../../../../features/data/selectors/platforms';
 
 const useStyles = makeStyles(styles);
 
@@ -46,7 +50,8 @@ type Token = {
     url: string;
   };
   walletIconUrl: string;
-  llamaSwapUrl?: string;
+  buyPlatformUrl?: string;
+  buyPlatformId?: PlatformEntity['id'];
 };
 
 const tokens: Token[] = [
@@ -62,7 +67,7 @@ const tokens: Token[] = [
       url: 'https://etherscan.io/token/0xB1F1ee126e9c96231Cc3d3fAD7C08b4cf873b1f1',
     },
     walletIconUrl: 'https://beefy.com/icons/128/BIFI.png',
-    llamaSwapUrl:
+    buyPlatformUrl:
       'https://swap.defillama.com/?chain=ethereum&from=0x0000000000000000000000000000000000000000&to=0xb1f1ee126e9c96231cc3d3fad7c08b4cf873b1f1',
   },
   {
@@ -77,7 +82,7 @@ const tokens: Token[] = [
       url: 'https://optimistic.etherscan.io/token/0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
     },
     walletIconUrl: 'https://beefy.com/icons/128/mooBIFI.png',
-    llamaSwapUrl:
+    buyPlatformUrl:
       'https://swap.defillama.com/?chain=optimism&from=0x0000000000000000000000000000000000000000&to=0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
   },
   {
@@ -92,8 +97,24 @@ const tokens: Token[] = [
       url: 'https://basescan.org/token/0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
     },
     walletIconUrl: 'https://beefy.com/icons/128/mooBIFI.png',
-    llamaSwapUrl:
+    buyPlatformUrl:
       'https://swap.defillama.com/?chain=base&from=0x0000000000000000000000000000000000000000&to=0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
+  },
+  {
+    symbol: 'mooBIFI',
+    address: '0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
+    oracleId: 'smooBIFI',
+    chainId: 'sonic',
+    icon: mooIcon,
+    explorer: {
+      name: 'Etherscan',
+      icon: sonicIcon,
+      url: 'https://sonicscan.org/token/0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
+    },
+    walletIconUrl: 'https://beefy.com/icons/128/mooBIFI.png',
+    buyPlatformUrl:
+      'https://www.shadow.so/trade?inputCurrency=0x29219dd400f2Bf60E5a23d13Be72B486D4038894&outputCurrency=0xc55E93C62874D8100dBd2DfE307EDc1036ad5434',
+    buyPlatformId: 'shadow',
   },
 ];
 
@@ -157,9 +178,20 @@ type TooltipTokenProps = {
 };
 
 const TooltipToken = memo<TooltipTokenProps>(function TooltipToken({ token }) {
-  const { symbol, oracleId, icon, explorer, llamaSwapUrl, address, walletIconUrl, chainId } = token;
+  const {
+    symbol,
+    oracleId,
+    icon,
+    explorer,
+    buyPlatformUrl,
+    address,
+    walletIconUrl,
+    chainId,
+    buyPlatformId = '',
+  } = token;
   const classes = useStyles();
   const price = useAppSelector(state => selectTokenPriceByTokenOracleId(state, oracleId));
+  const platform = useAppSelector(state => selectPlatformByIdOrUndefined(state, buyPlatformId));
 
   return (
     <>
@@ -175,15 +207,20 @@ const TooltipToken = memo<TooltipTokenProps>(function TooltipToken({ token }) {
       >
         <img alt={explorer.name} src={explorer.icon} height={24} className={classes.icon} />
       </a>
-      {llamaSwapUrl ? (
+      {buyPlatformUrl ? (
         <a
-          href={llamaSwapUrl}
+          href={buyPlatformUrl}
           target="_blank"
           rel="noopener"
-          title={`Buy via LlamaSwap`}
+          title={`Buy via ${platform ? platform.name : 'LlamaSwap'}`}
           className={classes.iconLink}
         >
-          <img alt={'LlamaSwap'} src={llamaSwapIcon} height={24} className={classes.icon} />
+          <img
+            alt={platform ? platform.name : 'LlamaSwap'}
+            src={platform ? getPlatformSrc(platform.id) : llamaSwapIcon}
+            height={24}
+            className={classes.icon}
+          />
         </a>
       ) : null}
       <AddToWallet
