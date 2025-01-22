@@ -398,12 +398,20 @@ function selectVaultMatchesCondition(
   }
 }
 
-function selectVaultMatchesConditions(
+function selectVaultMatchesAllConditions(
   state: BeefyState,
   vaultId: string,
   conditions: PinnedConfigCondition[]
 ) {
   return conditions.every(condition => selectVaultMatchesCondition(state, vaultId, condition));
+}
+
+function selectVaultMatchesAnyCondition(
+  state: BeefyState,
+  vaultId: string,
+  conditions: PinnedConfigCondition[]
+) {
+  return conditions.some(condition => selectVaultMatchesCondition(state, vaultId, condition));
 }
 
 export const vaultsRecalculatePinned = createAsyncThunk<
@@ -417,7 +425,15 @@ export const vaultsRecalculatePinned = createAsyncThunk<
   const allVaultIds = selectAllVisibleVaultIds(state);
 
   for (const config of configs) {
-    const ids = config.id ? [config.id] : allVaultIds;
+    const ids = config.id
+      ? (Array.isArray(config.id) ? config.id : [config.id]).filter(id => allVaultIds.includes(id))
+      : allVaultIds;
+    if (!ids.length) {
+      console.warn(`No active vaults found for pinned config`, config);
+      continue;
+    }
+
+    const mode = config.mode || 'all';
 
     for (const id of ids) {
       // already pinned by another condition
@@ -429,8 +445,11 @@ export const vaultsRecalculatePinned = createAsyncThunk<
         byId[id] = true;
         continue;
       }
-      // pin if all conditions are met
-      if (selectVaultMatchesConditions(state, id, config.conditions)) {
+      // pin if all/any conditions are met
+      if (
+        (mode === 'all' && selectVaultMatchesAllConditions(state, id, config.conditions)) ||
+        (mode === 'any' && selectVaultMatchesAnyCondition(state, id, config.conditions))
+      ) {
         byId[id] = true;
       }
     }

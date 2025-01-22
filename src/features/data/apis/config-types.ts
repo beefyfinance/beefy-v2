@@ -557,7 +557,9 @@ export type PinnedConfigConditionBoosted = {
 export type PinnedConfigCondition = PinnedConfigConditionUntil | PinnedConfigConditionBoosted;
 
 export type PinnedConfig = {
-  /** vault id, undefined = all vaults */
-  id?: string;
+  /** vault id, or array of vault ids, undefined = all vaults */
+  id?: string | string[];
+  /** all conditions must match, or only one of them [default: all] */
+  mode?: 'all' | 'any';
   conditions: Array<PinnedConfigCondition>;
 };
