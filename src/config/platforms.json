@@ -1358,6 +1358,10 @@
     "risks": ["NO_TIMELOCK"]
   },
   {
+    "id": "morpho",
+    "name": "Morpho"
+  },
+  {
     "id": "wagmi",
     "name": "WAGMI",
     "website": "https://wagmi.com/",

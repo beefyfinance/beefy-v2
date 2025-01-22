@@ -1,5 +1,80 @@
 [
   {
+    "id": "morpho-ionic-usdc",
+    "name": "Ionic USDC",
+    "token": "USDC",
+    "tokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xf779fBa773b28472749c071C5185e99014850406",
+    "earnedToken": "mooMorpho-Ionic-USDC",
+    "earnedTokenAddress": "0xf779fBa773b28472749c071C5185e99014850406",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1737542790,
+    "platformId": "morpho",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-morpho-eusd",
+    "name": "eUSD",
+    "token": "eUSD",
+    "tokenAddress": "0xCfA3Ef56d303AE4fAabA0592388F19d7C3399FB4",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x0C14589F416301C44D772Cf06bCdb1109d3aE7bf",
+    "earnedToken": "mooMorpho-eUSD",
+    "earnedTokenAddress": "0x0C14589F416301C44D772Cf06bCdb1109d3aE7bf",
+    "oracle": "tokens",
+    "oracleId": "eUSD",
+    "status": "active",
+    "createdAt": 1737542790,
+    "platformId": "morpho",
+    "assets": ["eUSD"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-ionic-weth",
+    "name": "Ionic WETH",
+    "token": "WETH",
+    "tokenAddress": "0x4200000000000000000000000000000000000006",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0xcAE00aD88C7980255E04FF1A03E07BF386190Eae",
+    "earnedToken": "mooMorpho-Ionic-WETH",
+    "earnedTokenAddress": "0xcAE00aD88C7980255E04FF1A03E07BF386190Eae",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1737542790,
+    "platformId": "morpho",
+    "assets": ["WETH"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-champ",
     "name": "CHAMP-WETH vLP",
     "type": "standard",
