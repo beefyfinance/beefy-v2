@@ -1,5 +1,112 @@
 [
   {
+    "id": "beets-sonic-echoes-of-ether",
+    "name": "Echoes Of Ether",
+    "type": "standard",
+    "token": "Echoes Of Ether",
+    "tokenAddress": "0xE54DD58a6d4e04687f2034dd4dDAb49da55F8afF",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsSonicscETH/WETH",
+    "earnedTokenAddress": "0x121C89A5bE1C6fb8713Dd7C85d77d070b19498be",
+    "earnContractAddress": "0x121C89A5bE1C6fb8713Dd7C85d77d070b19498be",
+    "oracle": "lps",
+    "oracleId": "beets-sonic-echoes-of-ether",
+    "createdAt": 1737588967,
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["scETH", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points", "rings"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xe54dd58a6d4e04687f2034dd4ddab49da55f8aff00000000000000000000007c/add-liquidity",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "sonic-beets",
+        "poolId": "0xe54dd58a6d4e04687f2034dd4ddab49da55f8aff00000000000000000000007c",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x3bcE5CB273F0F148010BbEa2470e7b5df84C7812",
+          "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b"
+        ],
+        "bptIndex": 2,
+        "hasNestedPool": false
+      }
+    ]
+  },
+  {
+    "id": "beets-sonic-ringing-of-painted-melodies",
+    "name": "Ringing Of Painted Melodies",
+    "type": "standard",
+    "token": "Ringing Of Painted Melodies",
+    "tokenAddress": "0xc5AB8d98F959453E416b2F15848a02CC99bc695e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsSonicscUSD/BRUSH",
+    "earnedTokenAddress": "0xc2eE5f2F9EdBdd83F6061dcf8e8474D0AaF0a47d",
+    "earnContractAddress": "0xc2eE5f2F9EdBdd83F6061dcf8e8474D0AaF0a47d",
+    "oracle": "lps",
+    "oracleId": "beets-sonic-ringing-of-painted-melodies",
+    "createdAt": 1737587231,
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["scUSD", "BRUSH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points", "rings"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0xc5ab8d98f959453e416b2f15848a02cc99bc695e000200000000000000000022/add-liquidity",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "sonic-beets",
+        "poolId": "0xc5ab8d98f959453e416b2f15848a02cc99bc695e000200000000000000000022",
+        "poolType": "weighted",
+        "tokens": [
+          "0xd3DCe716f3eF535C5Ff8d041c1A41C3bd89b97aE",
+          "0xE51EE9868C1f0d6cd968A8B8C8376Dc2991BFE44"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "beets-sonic-staked-sonic-circle-concerto",
+    "name": "Staked Sonic Circle Concerto",
+    "type": "standard",
+    "token": "Staked Sonic Circle Concerto",
+    "tokenAddress": "0x713FB5036dC70012588d77a5B066f1Dd05c712d7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsSonicUSDC.e/stS",
+    "earnedTokenAddress": "0xc7D04a20bbaE8e47865aa87c2C1D23F697668C68",
+    "earnContractAddress": "0xc7D04a20bbaE8e47865aa87c2C1D23F697668C68",
+    "oracle": "lps",
+    "oracleId": "beets-sonic-staked-sonic-circle-concerto",
+    "createdAt": 1737586238,
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["USDCe", "stS"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://beets.fi/pools/sonic/v2/0x713fb5036dc70012588d77a5b066f1dd05c712d7000200000000000000000041/add-liquidity",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "sonic-beets",
+        "poolId": "0x713fb5036dc70012588d77a5b066f1dd05c712d7000200000000000000000041",
+        "poolType": "weighted",
+        "tokens": [
+          "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+          "0xE5DA20F15420aD15DE0fa650600aFc998bbE3955"
+        ]
+      }
+    ]
+  },
+  {
     "id": "swapx-ichi-usdc.e-scusd",
     "name": "USDC.e-scUSD (USDC.e deposit)",
     "token": "IV-SWAPX-2-USDC.e-scUSD",

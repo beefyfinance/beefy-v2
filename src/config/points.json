@@ -879,7 +879,7 @@
     "eligibility": [
       {
         "type": "token-holding",
-        "tokens": ["scUSD"]
+        "tokens": ["scUSD", "scETH"]
       }
     ],
     "accounting": [
