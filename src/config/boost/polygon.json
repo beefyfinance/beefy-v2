@@ -17,8 +17,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_retro-gamma-usdc-cash-retro",

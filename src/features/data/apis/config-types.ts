@@ -121,7 +121,6 @@ export interface BoostConfig {
   partners?: string[] | undefined;
   campaign?: string | undefined;
   fixedStatus?: boolean | null;
-  pinned?: boolean | undefined;
   /** tmp: exclude from being loaded */
   hidden?: boolean;
 }
@@ -544,8 +543,6 @@ export type PinnedConfigConditionUntil = {
 
 export type PinnedConfigConditionBoosted = {
   type: 'boosted';
-  /** active pinned boost contract [default: false] */
-  contractPinned?: boolean;
   /** active boost contract [default: false] */
   contract?: boolean;
   /** active offchain campaign [default: false] */

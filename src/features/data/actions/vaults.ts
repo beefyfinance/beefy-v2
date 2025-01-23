@@ -19,7 +19,7 @@ import { getVaultNames } from '../utils/vault-utils';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
 import { isDefined } from '../utils/array-utils';
 import { selectAllVisibleVaultIds, selectVaultsPinnedConfigs } from '../selectors/vaults';
-import { selectBoostById, selectVaultCurrentBoostId } from '../selectors/boosts';
+import { selectVaultCurrentBoostId } from '../selectors/boosts';
 import { selectVaultHasActiveOffchainCampaigns } from '../selectors/rewards';
 import { getUnixNow } from '../../../helpers/date';
 import { selectVaultTotalApy } from '../selectors/apy';
@@ -360,18 +360,10 @@ function selectVaultMatchesCondition(
 ) {
   switch (condition.type) {
     case 'boosted': {
-      if (condition.contract || condition.contractPinned) {
+      if (condition.contract) {
         const boostId = selectVaultCurrentBoostId(state, vaultId);
         if (boostId) {
-          // do not care if the boost was pinned in config or not
-          if (condition.contract) {
-            return true;
-          }
-          // must be pinned in the boost config too
-          const boost = selectBoostById(state, boostId);
-          if (boost.pinned) {
-            return true;
-          }
+          return true;
         }
       }
       if (condition.offchain) {

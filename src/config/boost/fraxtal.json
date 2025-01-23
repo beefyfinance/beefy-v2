@@ -17,7 +17,6 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": true
+    "partners": []
   }
 ]

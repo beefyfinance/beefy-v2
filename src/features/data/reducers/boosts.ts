@@ -239,7 +239,6 @@ function addBoostToState(
     campaignId: apiBoost.campaign ? apiBoost.campaign : undefined,
     vaultId: apiBoost.poolId,
     version: apiBoost.version || 1,
-    pinned: apiBoost.pinned === undefined ? true : apiBoost.pinned, // default to true
   };
   sliceState.byId[boost.id] = boost;
   sliceState.allIds.push(boost.id);

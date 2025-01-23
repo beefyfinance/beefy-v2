@@ -17,8 +17,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": true
+    "partners": []
   },
   {
     "id": "moo_venus-zksync-usdt",
@@ -38,8 +37,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": true
+    "partners": []
   },
   {
     "id": "moo_venus-zksync-wbtc",
@@ -59,8 +57,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": true
+    "partners": []
   },
   {
     "id": "moo_venus-zksync-weth",
@@ -80,8 +77,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": true
+    "partners": []
   },
   {
     "id": "moo_venus-zksync-zk",
@@ -101,8 +97,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": true
+    "partners": []
   },
   {
     "id": "moo_vesync-usdc-wtbt-tprotocol",

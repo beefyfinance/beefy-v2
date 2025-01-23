@@ -16,8 +16,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "renzo-lido",
-    "partners": ["renzo", "lido-eth"],
-    "pinned": false
+    "partners": ["renzo", "lido-eth"]
   },
   {
     "id": "moo_stargate-v2-arb-weth",
@@ -37,8 +36,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_compound-arbitrum-usdc",
@@ -58,8 +56,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_silo-arb-silo",
@@ -79,8 +76,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_sushi-cow-arb-usdc-usdt-vault",
@@ -100,8 +96,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-usdc-usd+-vault",
@@ -121,8 +116,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-usd+-usdt-vault",
@@ -142,8 +136,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-weth-usd+-500-vault",
@@ -163,8 +156,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-weth-usd+-100-vault",
@@ -184,8 +176,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_sushi-cow-arb-zro-weth-vault",
@@ -205,8 +196,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_sushi-cow-arb-weth-arb-500-vault",
@@ -226,8 +216,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_sushi-cow-arb-weth-usdc-vault",
@@ -247,8 +236,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_sushi-cow-arb-wbtc-tbtc-vault",
@@ -268,8 +256,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_sushi-cow-arb-wsteth-weth-vault",
@@ -289,8 +276,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_ramses-cl-rseth-ethx-vault",
@@ -310,8 +296,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_sushi-cow-arb-usdt-usdc.e-vault",
@@ -331,8 +316,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_sushi-cow-arb-wbtc-usdc-vault",
@@ -352,8 +336,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_sushi-cow-arb-arb-usdc-vault",
@@ -373,8 +356,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_sushi-cow-arb-usdc-usdc.e-vault",
@@ -394,8 +376,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_sushi-cow-arb-weth-usdc-100-vault",
@@ -415,8 +396,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_pancake-cow-arb-weth-usdt-500-vault",
@@ -436,8 +416,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_pancake-cow-arb-weth-usdc-500-vault",
@@ -457,8 +436,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_pancake-cow-arb-wbtc-usdc-vault",
@@ -478,8 +456,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_pancake-cow-arb-arb-usdc-vault",
@@ -499,8 +476,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_pancake-cow-arb-zro-weth-vault",
@@ -520,8 +496,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_pancake-cow-arb-weth-usd+-vault",
@@ -541,8 +516,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_pancake-cow-arb-weth-reth-vault",
@@ -562,8 +536,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_pancake-cow-arb-wsteth-weth-vault",
@@ -583,8 +556,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_pancake-cow-arb-wbtc-weth-vault",
@@ -604,8 +576,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_pancake-cow-arb-usdc-usdt-vault",
@@ -625,8 +596,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_pancake-cow-arb-cake-weth-vault",
@@ -646,8 +616,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_aura-arb-ezeth-wsteth-lido",
@@ -701,8 +670,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_ramses-cl-rseth-weth-vault",
@@ -722,8 +690,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-rseth-weth-vault",
@@ -743,8 +710,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_curve-arb-usdc-usdm-mountain",
@@ -761,8 +727,7 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "partners": ["mountain"],
-    "pinned": false
+    "partners": ["mountain"]
   },
   {
     "id": "moo_uniswap-cow-arb-rseth-wsteth-vault",
@@ -782,8 +747,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-usdc-usdt-vault",
@@ -803,8 +767,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-usdv-usdc-vault",
@@ -824,8 +787,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-comp-weth-vault",
@@ -845,8 +807,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-usdc-aave-vault",
@@ -866,8 +827,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-ldo-usdc-vault",
@@ -887,8 +847,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-uni-usdt-vault",
@@ -908,8 +867,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-usdc-uni-vault",
@@ -929,8 +887,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-wbtc-link-vault",
@@ -950,8 +907,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-link-usdt-vault",
@@ -971,8 +927,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-usde-usdt-vault",
@@ -992,8 +947,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-frax-usdt-vault",
@@ -1013,8 +967,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-crv-weth-vault",
@@ -1034,8 +987,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-cbeth-weth-vault",
@@ -1055,8 +1007,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-weth-rpl-vault",
@@ -1076,8 +1027,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-weth-reth-vault",
@@ -1097,8 +1047,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-pepe-weth-vault",
@@ -1118,8 +1067,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-wsteth-usdc-vault",
@@ -1139,8 +1087,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-tbtc-weth-prod-vault",
@@ -1160,8 +1107,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-wbtc-tbtc-vault",
@@ -1181,8 +1127,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-wusdm-wsteth-vault",
@@ -1202,8 +1147,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_ramses-zero-weth-vault",
@@ -1223,8 +1167,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_ramses-cl-weth-usdc-vault",
@@ -1244,8 +1187,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_ramses-cl-arb-usdc-vault",
@@ -1265,8 +1207,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_ramses-ethfi-weth-vault",
@@ -1286,8 +1227,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_ramses-cl-wbtc-weth-vault",
@@ -1307,8 +1247,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-weth-uni-vault",
@@ -1328,8 +1267,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-weth-dai-vault",
@@ -1349,8 +1287,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-wsteth-weth-vault",
@@ -1370,8 +1307,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-eusd-usdc-vault",
@@ -1391,8 +1327,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-eusd-knox-vault",
@@ -1412,8 +1347,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-eth+-weth-vault",
@@ -1433,8 +1367,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_uniswap-cow-arb-link-eth-vault",
@@ -1454,8 +1387,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "arb-ltipp",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_balancer-gyro-arb-wsteth-weth-balancer",

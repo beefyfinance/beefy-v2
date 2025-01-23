@@ -17,8 +17,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-wbtc-tbtc",
@@ -38,8 +37,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": true
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-hai-lusd",
@@ -59,8 +57,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_sushi-cow-op-weth-wbtc-vault",
@@ -81,8 +78,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_silo-op-eth-op",
@@ -103,8 +99,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_silo-op-eth-wsteth",
@@ -125,8 +120,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_compound-op-eth",
@@ -147,8 +141,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_compound-op-usdt",
@@ -169,8 +162,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_compound-op-usdc",
@@ -191,8 +183,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-hai-pxeth",
@@ -213,8 +204,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-pxeth-aleth",
@@ -235,8 +225,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velo-cow-op-wsteth-op-vault-beefyclm",
@@ -257,8 +246,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velo-cow-op-weth-tbtc-vault-beefyclm",
@@ -279,8 +267,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velo-cow-op-snx-usdc-vault-beefyclm",
@@ -301,8 +288,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velo-cow-op-wbtc-tbtc-vault-beefyclm",
@@ -323,8 +309,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velo-cow-op-op-usdc-vault-beefyclm",
@@ -345,8 +330,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velo-cow-op-usdc-usdt-vault-beefyclm",
@@ -366,8 +350,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "",
-    "partners": ["beefy-clm"],
-    "pinned": false
+    "partners": ["beefy-clm"]
   },
   {
     "id": "moo_velo-cow-op-wsteth-ezeth-vault-beefyclm",
@@ -387,8 +370,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "",
-    "partners": ["beefy-clm"],
-    "pinned": false
+    "partners": ["beefy-clm"]
   },
   {
     "id": "moo_velo-cow-op-wsteth-weth-vault-beefyclm",
@@ -408,8 +390,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "",
-    "partners": ["beefy-clm"],
-    "pinned": false
+    "partners": ["beefy-clm"]
   },
   {
     "id": "moo_velo-cow-op-weth-wbtc-vault-beefyclm",
@@ -429,8 +410,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "",
-    "partners": ["beefy-clm"],
-    "pinned": false
+    "partners": ["beefy-clm"]
   },
   {
     "id": "moo_velo-cow-op-weth-op-vault-beefyclm",
@@ -451,8 +431,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velo-cow-op-wsteth-usdc-vault-beefyclm",
@@ -472,8 +451,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "",
-    "partners": ["beefy-clm"],
-    "pinned": false
+    "partners": ["beefy-clm"]
   },
   {
     "id": "moo_velo-cow-op-weth-usdc-vault-beefyclm",
@@ -494,8 +472,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": true
+    "partners": []
   },
 
   {
@@ -516,8 +493,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "",
-    "partners": ["beefy-clm"],
-    "pinned": false
+    "partners": ["beefy-clm"]
   },
   {
     "id": "moo_velo-cow-op-moobifi-usdc-vault-beefyclm",
@@ -537,8 +513,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "",
-    "partners": ["beefy-clm"],
-    "pinned": false
+    "partners": ["beefy-clm"]
   },
   {
     "id": "moo_velo-cow-op-moobifi-usdc-vault",
@@ -559,8 +534,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-velo-usdc-beefy",
@@ -1371,8 +1345,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": ["optimism"],
-    "pinned": false
+    "partners": ["optimism"]
   },
   {
     "id": "moo_velodrome-v2-usdce-msusd",
@@ -1393,8 +1366,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": ["optimism"],
-    "pinned": false
+    "partners": ["optimism"]
   },
   {
     "id": "moo_velodrome-v2-usdc-alusd-2",
@@ -1415,8 +1387,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": ["optimism"],
-    "pinned": false
+    "partners": ["optimism"]
   },
   {
     "id": "moo_curve-op-usdc-usdm",
@@ -1437,8 +1408,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": ["optimism"],
-    "pinned": false
+    "partners": ["optimism"]
   },
   {
     "id": "moo_velodrome-v2-hai-susd",
@@ -1459,8 +1429,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": ["optimism"],
-    "pinned": false
+    "partners": ["optimism"]
   },
   {
     "id": "moo_velodrome-v2-frax-dola",
@@ -1481,8 +1450,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": ["optimism"],
-    "pinned": false
+    "partners": ["optimism"]
   },
   {
     "id": "moo_stargate-v2-op-weth",
@@ -1502,8 +1470,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-mseth-weth",
@@ -1524,8 +1491,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-aleth-weth",
@@ -1545,8 +1511,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-pxeth-weth",
@@ -1566,8 +1531,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-velo-usdc",
@@ -1588,8 +1552,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_curve-op-tricrv",
@@ -1610,8 +1573,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-weth-tlx",
@@ -1632,8 +1594,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-op-velo",
@@ -1654,8 +1615,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-weth-velo",
@@ -1676,8 +1636,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-usdc-stg",
@@ -1698,8 +1657,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-wsteth-pendle",
@@ -1720,8 +1678,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-thales-weth",
@@ -1742,8 +1699,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-weth-kwenta",
@@ -1764,8 +1720,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-usdc-velo",
@@ -1786,8 +1741,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velo-cow-op-moobifi-usdc-vault-2",
@@ -1807,8 +1761,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": true
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-weth-moobifi",
@@ -1828,8 +1781,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_sushi-cow-op-weth-op-vault",
@@ -1850,8 +1802,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_sushi-cow-op-usdc-weth-vault",
@@ -1872,8 +1823,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_curve-op-tricrypto-crvusd",
@@ -1894,8 +1844,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_stargate-v2-op-usdt",
@@ -1916,8 +1865,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_stargate-v2-op-usdc",
@@ -1938,8 +1886,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_aura-op-weth-wrseth",
@@ -1960,8 +1907,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-weth-owell",
@@ -1982,8 +1928,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-wsteth-wusdm",
@@ -2004,8 +1949,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_silo-op-usdc-wsteth",
@@ -2026,8 +1970,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-wsteth-weeth",
@@ -2048,8 +1991,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_velodrome-v2-msop-op",
@@ -2070,7 +2012,6 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "zap-v3",
-    "partners": [],
-    "pinned": false
+    "partners": []
   }
 ]
