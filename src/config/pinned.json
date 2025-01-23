@@ -8,8 +8,7 @@
     ],
     "conditions": [
       {
-        "type": "boosted",
-        "contract": true
+        "type": "boosted"
       }
     ]
   }

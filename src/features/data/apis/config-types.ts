@@ -543,12 +543,8 @@ export type PinnedConfigConditionUntil = {
 
 export type PinnedConfigConditionBoosted = {
   type: 'boosted';
-  /** active boost contract [default: false] */
-  contract?: boolean;
-  /** active offchain campaign [default: false] */
-  offchain?: boolean;
-  /** boostedTotalDaily apr > 0 [default: false] */
-  other?: boolean;
+  /** default: anything with boostedTotalDaily > 0 */
+  only?: 'contract' | 'offchain';
 };
 
 export type PinnedConfigCondition = PinnedConfigConditionUntil | PinnedConfigConditionBoosted;
@@ -558,5 +554,6 @@ export type PinnedConfig = {
   id?: string | string[];
   /** all conditions must match, or only one of them [default: all] */
   mode?: 'all' | 'any';
-  conditions: Array<PinnedConfigCondition>;
+  /** conditions to match according to mode, undefined = match */
+  conditions?: Array<PinnedConfigCondition>;
 };
