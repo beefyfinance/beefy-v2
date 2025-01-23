@@ -6,7 +6,7 @@ import {
   recalculateDepositedVaultsAction,
 } from '../actions/balance';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { fetchAllVaults } from '../actions/vaults';
+import { fetchAllVaults, vaultsRecalculatePinned } from '../actions/vaults';
 import { fetchAllPricesAction } from '../actions/prices';
 import { fetchApyAction } from '../actions/apy';
 import { fetchAllBoosts } from '../actions/boosts';
@@ -119,6 +119,7 @@ function listenForChanges() {
       await delay(500);
 
       // Recalculate
+      await dispatch(vaultsRecalculatePinned());
       await dispatch(recalculateFilteredVaultsAction({ dataChanged: true }));
     },
   });

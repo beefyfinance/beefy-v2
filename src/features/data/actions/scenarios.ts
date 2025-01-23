@@ -7,7 +7,7 @@ import { fetchApyAction } from './apy';
 import { fetchAllBoosts } from './boosts';
 import { fetchChainConfigs } from './chains';
 import { fetchAllPricesAction } from './prices';
-import { fetchAllVaults, fetchVaultsLastHarvests } from './vaults';
+import { fetchAllVaults, fetchVaultsLastHarvests, fetchVaultsPinnedConfig } from './vaults';
 import { fetchAllBalanceAction } from './balance';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_noDataPolling } from '../utils/feature-flags';
@@ -64,6 +64,8 @@ export async function initAppData(store: BeefyStore) {
   setTimeout(async () => {
     // we can start fetching apy, it will arrive when it wants, nothing depends on it
     store.dispatch(fetchApyAction());
+
+    store.dispatch(fetchVaultsPinnedConfig());
 
     store.dispatch(fetchPartnersConfig());
 

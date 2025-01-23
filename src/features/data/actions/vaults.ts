@@ -2,8 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { getBeefyApi, getConfigApi } from '../apis/instances';
 import type { ChainEntity, ChainId } from '../entities/chain';
-import type { VaultConfig } from '../apis/config-types';
-import { first, keyBy, mapValues } from 'lodash-es';
+import type { PinnedConfig, PinnedConfigCondition, VaultConfig } from '../apis/config-types';
+import { first, isEqual, keyBy, mapValues } from 'lodash-es';
 import {
   type VaultBase,
   type VaultCowcentrated,
@@ -18,6 +18,11 @@ import {
 import { getVaultNames } from '../utils/vault-utils';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
 import { isDefined } from '../utils/array-utils';
+import { selectAllVisibleVaultIds, selectVaultsPinnedConfigs } from '../selectors/vaults';
+import { selectVaultCurrentBoostId } from '../selectors/boosts';
+import { selectVaultHasActiveOffchainCampaigns } from '../selectors/rewards';
+import { getUnixNow } from '../../../helpers/date';
+import { selectVaultTotalApy } from '../selectors/apy';
 
 export interface FulfilledAllVaultsPayload {
   byChainId: {
@@ -330,3 +335,119 @@ function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBas
     breakdownId: config.oracle === 'tokens' ? config.id : config.oracleId, // use vault id when deposit token is not a LP
   };
 }
+
+type FulfilledVaultsPinnedConfigPayload = {
+  configs: PinnedConfig[];
+};
+
+export const fetchVaultsPinnedConfig = createAsyncThunk<FulfilledVaultsPinnedConfigPayload>(
+  'vaults/pinned-config',
+  async () => {
+    const api = await getConfigApi();
+    const configs = await api.fetchPinnedConfig();
+    return { configs };
+  }
+);
+
+type FulfilledVaultsPinnedPayload = {
+  byId: { [vaultId: VaultConfig['id']]: boolean };
+};
+
+function selectVaultMatchesCondition(
+  state: BeefyState,
+  vaultId: string,
+  condition: PinnedConfigCondition
+) {
+  switch (condition.type) {
+    case 'boosted': {
+      if (condition.contract) {
+        const boostId = selectVaultCurrentBoostId(state, vaultId);
+        if (boostId) {
+          return true;
+        }
+      }
+      if (condition.offchain) {
+        const hasOffchainCampaign = selectVaultHasActiveOffchainCampaigns(state, vaultId);
+        if (hasOffchainCampaign) {
+          return true;
+        }
+      }
+      if (condition.other) {
+        const apy = selectVaultTotalApy(state, vaultId);
+        if (!!apy && (apy.boostedTotalDaily || 0) > 0) {
+          return true;
+        }
+      }
+      return false;
+    }
+    case 'until': {
+      return getUnixNow() <= condition.timestamp;
+    }
+    default: {
+      // @ts-expect-error when all cases are covered
+      throw new Error(`Unknown pinned condition type ${condition.type}`);
+    }
+  }
+}
+
+function selectVaultMatchesAllConditions(
+  state: BeefyState,
+  vaultId: string,
+  conditions: PinnedConfigCondition[]
+) {
+  return conditions.every(condition => selectVaultMatchesCondition(state, vaultId, condition));
+}
+
+function selectVaultMatchesAnyCondition(
+  state: BeefyState,
+  vaultId: string,
+  conditions: PinnedConfigCondition[]
+) {
+  return conditions.some(condition => selectVaultMatchesCondition(state, vaultId, condition));
+}
+
+export const vaultsRecalculatePinned = createAsyncThunk<
+  FulfilledVaultsPinnedPayload,
+  void,
+  { state: BeefyState }
+>('vaults/recalculate-pinned', async (_, { getState }) => {
+  const state = getState();
+  const configs = selectVaultsPinnedConfigs(state);
+  const byId: Record<string, boolean> = {};
+  const allVaultIds = selectAllVisibleVaultIds(state);
+
+  for (const config of configs) {
+    const ids = config.id
+      ? (Array.isArray(config.id) ? config.id : [config.id]).filter(id => allVaultIds.includes(id))
+      : allVaultIds;
+    if (!ids.length) {
+      console.warn(`No active vaults found for pinned config`, config);
+      continue;
+    }
+
+    const mode = config.mode || 'all';
+
+    for (const id of ids) {
+      // already pinned by another condition
+      if (byId[id]) {
+        continue;
+      }
+      // condition-less pin
+      if (!config.conditions) {
+        byId[id] = true;
+        continue;
+      }
+      // pin if all/any conditions are met
+      if (
+        (mode === 'all' && selectVaultMatchesAllConditions(state, id, config.conditions)) ||
+        (mode === 'any' && selectVaultMatchesAnyCondition(state, id, config.conditions))
+      ) {
+        byId[id] = true;
+      }
+    }
+  }
+
+  // return same object if nothing changed
+  const existingById = state.entities.vaults.pinned.byId;
+  return { byId: isEqual(existingById, byId) ? existingById : byId };
+});

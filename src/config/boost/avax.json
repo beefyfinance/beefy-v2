@@ -110,8 +110,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_pharaoh-cow-btc.b-wavax-vault",
@@ -131,8 +130,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_pharaoh-cow-weth.e-wavax-vault",
@@ -152,8 +150,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_pharaoh-cow-usdt-usdc-vault",
@@ -173,8 +170,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_gmx-avax-gmx",
@@ -194,8 +190,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_joe-joe",
@@ -215,7 +210,6 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   }
 ]

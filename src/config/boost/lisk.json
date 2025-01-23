@@ -15,8 +15,7 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "partners": ["lisk"],
-    "pinned": true
+    "partners": ["lisk"]
   },
   {
     "id": "moo_velodrome-cow-lisk-usdt-usdc.e-vault-lisk",
@@ -34,7 +33,6 @@
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
-    "partners": ["lisk"],
-    "pinned": true
+    "partners": ["lisk"]
   }
 ]

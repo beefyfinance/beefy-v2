@@ -13,7 +13,6 @@ import {
   selectFilterOptions,
   selectFilterPlatformIdsForVault,
   selectVaultIsBoostedForFilter,
-  selectVaultIsBoostedForSorting,
   selectVaultMatchesText,
 } from '../selectors/filtered-vaults';
 import {
@@ -22,6 +21,7 @@ import {
   selectIsVaultCorrelated,
   selectIsVaultStable,
   selectVaultById,
+  selectVaultIsPinned,
 } from '../selectors/vaults';
 import { selectActiveChainIds, selectAllChainIds } from '../selectors/chains';
 import { selectVaultSupportsZap } from '../selectors/zap';
@@ -255,9 +255,9 @@ function applyDefaultSort(
   vaults: VaultEntity[],
   filters: FilteredVaultsState
 ): VaultEntity['id'][] {
-  const boostedVaultsToPin = new Set<VaultEntity['id']>(
+  const vaultsToPin = new Set<VaultEntity['id']>(
     vaults
-      .filter(vault => vault.status === 'active' && selectVaultIsBoostedForSorting(state, vault.id))
+      .filter(vault => vault.status === 'active' && selectVaultIsPinned(state, vault.id))
       .map(v => v.id)
   );
 
@@ -268,7 +268,7 @@ function applyDefaultSort(
         ? -3
         : vault.status === 'paused'
         ? -2
-        : boostedVaultsToPin.has(vault.id)
+        : vaultsToPin.has(vault.id)
         ? -1
         : 1
     ).map(v => v.id);
@@ -276,7 +276,7 @@ function applyDefaultSort(
 
   // Surface boosted
   return sortBy(vaults, vault =>
-    boostedVaultsToPin.has(vault.id)
+    vaultsToPin.has(vault.id)
       ? selectIsVaultPrestakedBoost(state, vault.id)
         ? -Number.MAX_SAFE_INTEGER
         : -selectVaultsActiveBoostPeriodFinish(state, vault.id)

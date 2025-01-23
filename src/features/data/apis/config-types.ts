@@ -121,7 +121,6 @@ export interface BoostConfig {
   partners?: string[] | undefined;
   campaign?: string | undefined;
   fixedStatus?: boolean | null;
-  pinned?: boolean | undefined;
   /** tmp: exclude from being loaded */
   hidden?: boolean;
 }
@@ -536,3 +535,28 @@ export type BeefyBridgeConfig = Readonly<{
    */
   bridges: ReadonlyArray<BeefyAnyBridgeConfig>;
 }>;
+
+export type PinnedConfigConditionUntil = {
+  type: 'until';
+  timestamp: number;
+};
+
+export type PinnedConfigConditionBoosted = {
+  type: 'boosted';
+  /** active boost contract [default: false] */
+  contract?: boolean;
+  /** active offchain campaign [default: false] */
+  offchain?: boolean;
+  /** boostedTotalDaily apr > 0 [default: false] */
+  other?: boolean;
+};
+
+export type PinnedConfigCondition = PinnedConfigConditionUntil | PinnedConfigConditionBoosted;
+
+export type PinnedConfig = {
+  /** vault id, or array of vault ids, undefined = all vaults */
+  id?: string | string[];
+  /** all conditions must match, or only one of them [default: all] */
+  mode?: 'all' | 'any';
+  conditions: Array<PinnedConfigCondition>;
+};

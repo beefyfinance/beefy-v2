@@ -118,8 +118,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_stargate-v2-eth-weth",
@@ -138,8 +137,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_aura-reth-weth",
@@ -158,8 +156,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_aura-ezeth-eth",
@@ -178,8 +175,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_aura-pxeth-weth",
@@ -198,8 +194,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_convex-eth+",
@@ -218,8 +213,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_convex-cvxcrv",
@@ -239,8 +233,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_convex-cvxeth",
@@ -260,8 +253,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_fx-fxn-eth",
@@ -281,8 +273,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_convex-geareth",
@@ -302,8 +293,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_aura-reth-rpl",
@@ -323,8 +313,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_convex-t",
@@ -344,8 +333,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_convex-staked-cvxFXN",
@@ -365,8 +353,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_convex-staked-cvx",
@@ -386,8 +373,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_convex-staked-cvxCRV",
@@ -407,8 +393,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_aura-alcx-eth",
@@ -428,7 +413,6 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   }
 ]

@@ -17,8 +17,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": true
+    "partners": []
   },
   {
     "id": "moo_nuri-cow-scroll-weth-wsteth-vault",
@@ -38,8 +37,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": true
+    "partners": []
   },
   {
     "id": "moo_nuri-cow-scroll-weth-usdt-vault",
@@ -59,8 +57,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": true
+    "partners": []
   },
   {
     "id": "moo_nuri-cow-scroll-usdc-weth-vault",
@@ -80,8 +77,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": true
+    "partners": []
   },
   {
     "id": "moo_nuri-cow-scroll-usdc-scr-vault",
@@ -101,8 +97,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_nuri-cow-scroll-weth-scr-vault",
@@ -122,8 +117,7 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
   {
     "id": "moo_nuri-usdc-loreusd",
@@ -143,28 +137,26 @@
     "status": "active",
     "isMooStaked": true,
     "campaign": "dao-rewards",
-    "partners": [],
-    "pinned": false
+    "partners": []
   },
-    {
-      "id": "moo_nuri-weth-nuri",
-      "poolId": "nuri-weth-nuri",
-      "name": "Beefy",
-      "tagText": "DAO Boost",
-      "assets": ["NURI", "ETH"],
-      "tokenAddress": "0x01Fbf9B624a6133Ab04Fc4000ae513AC97e4d114",
-      "earnedToken": "USDC",
-      "earnedTokenDecimals": 6,
-      "earnedTokenAddress": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
-      "earnContractAddress": "0xeC982aF0f2250Acf5bA0404D6672384349A57241",
-      "version": 2,
-      "earnedOracle": "tokens",
-      "earnedOracleId": "USDC",
-      "partnership": true,
-      "status": "active",
-      "isMooStaked": true,
-      "campaign": "dao-rewards",
-      "partners": [],
-      "pinned": false
-    }
+  {
+    "id": "moo_nuri-weth-nuri",
+    "poolId": "nuri-weth-nuri",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["NURI", "ETH"],
+    "tokenAddress": "0x01Fbf9B624a6133Ab04Fc4000ae513AC97e4d114",
+    "earnedToken": "USDC",
+    "earnedTokenDecimals": 6,
+    "earnedTokenAddress": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+    "earnContractAddress": "0xeC982aF0f2250Acf5bA0404D6672384349A57241",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "USDC",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": []
+  }
 ]
