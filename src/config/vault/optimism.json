@@ -1,5 +1,35 @@
 [
   {
+    "id": "velodrome-v2-hai-reth",
+    "name": "HAI-rETH vLP V2",
+    "type": "standard",
+    "token": "vAMMV2-HAI/rETH",
+    "tokenAddress": "0x4cE1d27d824062B159D000e3212B2F5106792C34",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2HAI-rETH",
+    "earnedTokenAddress": "0x79da3D39969Ac0d47f2CeD0B3d189C033050DB19",
+    "earnContractAddress": "0x79da3D39969Ac0d47f2CeD0B3d189C033050DB19",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-hai-reth",
+    "status": "active",
+    "createdAt": 1737647299,
+    "platformId": "velodrome",
+    "assets": ["HAI", "rETH"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x10398AbC267496E49106B07dd6BE13364D10dC71&to=0x9Bcef72be871e61ED4fBbc7630889beE758eb81D&chain0=10&chain1=10",
+    "addLiquidityUrl": "https://velodrome.finance/pools?token0=0x10398AbC267496E49106B07dd6BE13364D10dC71&token1=0x9Bcef72be871e61ED4fBbc7630889beE758eb81D&type=-1&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a&chain=10",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x4cE1d27d824062B159D000e3212B2F5106792C34",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "velodrome-v2-weth-syn",
     "name": "SYN-WETH vLP V2",
     "type": "standard",
