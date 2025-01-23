@@ -1,24 +1,10 @@
 [
   {
     "id": [
-      "uniswap-cow-rootstock-eths-wrbtc-vault",
-      "sushi-cow-rootstock-eths-wrbtc-vault",
-      "aerodrome-msusd-usdc",
-      "curve-lend-fraxtal-sfrax-crvusd",
-      "velodrome-cow-lisk-usdt-weth-vault",
-      "velodrome-cow-lisk-usdt-usdc.e-vault",
-      "velodrome-v2-wbtc-tbtc",
-      "velo-cow-op-weth-usdc-vault",
-      "velo-cow-op-moobifi-usdc-vault",
-      "nuri-cow-scroll-wbtc-weth-vault",
-      "nuri-cow-scroll-weth-wsteth-vault",
-      "nuri-cow-scroll-weth-usdt-vault",
-      "nuri-cow-scroll-usdc-weth-vault",
-      "venus-zksync-usdc.e",
-      "venus-zksync-usdt",
-      "venus-zksync-wbtc",
-      "venus-zksync-weth",
-      "venus-zksync-zk"
+      "uniswap-cow-base-weth-toshi-rp",
+      "uniswap-cow-base-weth-doginme-rp",
+      "uniswap-cow-base-weth-chomp-rp",
+      "uniswap-cow-base-weth-miggles-rp",
     ],
     "conditions": [
       {
