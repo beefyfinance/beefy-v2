@@ -1359,7 +1359,12 @@
   },
   {
     "id": "morpho",
-    "name": "Morpho"
+    "name": "Morpho",
+    "website": "https://app.morpho.org/",
+    "twitter": "MorphoLabs",
+    "documentation": "https://docs.morpho.org/",
+    "description": "Morpho is a trustless and efficient lending primitive with permissionless market creation.",
+    "type": "money-market"
   },
   {
     "id": "wagmi",
