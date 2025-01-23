@@ -1,5 +1,249 @@
 [
   {
+    "id": "uniswap-cow-sonic-ws-weth-rp",
+    "name": "wS-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapSonicwS-WETH",
+    "tokenAddress": "0x78e665d178062F266412fbeDa705aB193E3Fe74d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x38f99EF6019CfF7f2156148fFDAa2fAAbCD7ae7d",
+    "earnedToken": "rCowUniswapSonicwS-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-sonic-ws-weth",
+    "status": "active",
+    "createdAt": 1737673341,
+    "platformId": "uniswap",
+    "assets": ["S", "WETH"],
+    "risks": [],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-sonic-ws-weth",
+    "name": "wS-WETH",
+    "type": "cowcentrated",
+    "token": "wS-WETH uniswap",
+    "tokenAddress": "0x21043D7Ad92d9e7bC45C055AF29771E37307B111",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38",
+      "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b"
+    ],
+    "earnContractAddress": "0x78e665d178062F266412fbeDa705aB193E3Fe74d",
+    "earnedToken": "cowUniswapSonicwS-WETH",
+    "earnedTokenAddress": "0x78e665d178062F266412fbeDa705aB193E3Fe74d",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-sonic-ws-weth",
+    "status": "active",
+    "createdAt": 1737673341,
+    "platformId": "beefy",
+    "feeTier": "0.30",
+    "assets": ["S", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-sonic-usdc.e-scusd-rp",
+    "name": "USDC.e-scUSD Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapSonicUSDC.e-scUSD",
+    "tokenAddress": "0x06Be77C1605f7fD9d1cC393dB480ba887D2a01F6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xac763E75B02164b39A240DA60b060281BAd66a55",
+    "earnedToken": "rCowUniswapSonicUSDC.e-scUSD",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-sonic-usdc.e-scusd",
+    "status": "active",
+    "createdAt": 1737673309,
+    "platformId": "uniswap",
+    "assets": ["USDCe", "scUSD"],
+    "risks": [],
+    "pointStructureIds": ["sonic-points", "rings"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-sonic-usdc.e-scusd",
+    "name": "USDC.e-scUSD",
+    "type": "cowcentrated",
+    "token": "USDC.e-scUSD uniswap",
+    "tokenAddress": "0xDFCDAD314b0b96AB8890391e3F0540278E3B80F7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+      "0xd3DCe716f3eF535C5Ff8d041c1A41C3bd89b97aE"
+    ],
+    "earnContractAddress": "0x06Be77C1605f7fD9d1cC393dB480ba887D2a01F6",
+    "earnedToken": "cowUniswapSonicUSDC.e-scUSD",
+    "earnedTokenAddress": "0x06Be77C1605f7fD9d1cC393dB480ba887D2a01F6",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-sonic-usdc.e-scusd",
+    "status": "active",
+    "createdAt": 1737673309,
+    "platformId": "beefy",
+    "feeTier": "0.01",
+    "assets": ["USDCe", "scUSD"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points", "rings"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-sonic-ws-usdc.e-rp",
+    "name": "wS-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapSonicwS-USDC.e",
+    "tokenAddress": "0xA546b2253E5e4032a1dB62D02C59694B6BD46233",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x129E66F12e46D0B529786BA517dd00CECA343a73",
+    "earnedToken": "rCowUniswapSonicwS-USDC.e",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-sonic-ws-usdc.e",
+    "status": "active",
+    "createdAt": 1737673284,
+    "platformId": "uniswap",
+    "assets": ["S", "USDCe"],
+    "risks": [],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-sonic-ws-usdc.e",
+    "name": "wS-USDC.e",
+    "type": "cowcentrated",
+    "token": "wS-USDC.e uniswap",
+    "tokenAddress": "0xEcb04e075503Bd678241f00155AbCB532c0a15Eb",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38",
+      "0x29219dd400f2Bf60E5a23d13Be72B486D4038894"
+    ],
+    "earnContractAddress": "0xA546b2253E5e4032a1dB62D02C59694B6BD46233",
+    "earnedToken": "cowUniswapSonicwS-USDC.e",
+    "earnedTokenAddress": "0xA546b2253E5e4032a1dB62D02C59694B6BD46233",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-sonic-ws-usdc.e",
+    "status": "active",
+    "createdAt": 1737673284,
+    "platformId": "beefy",
+    "feeTier": "0.30",
+    "assets": ["S", "USDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-sonic-usdc.e-weth-rp",
+    "name": "USDC.e-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapSonicUSDC.e-WETH",
+    "tokenAddress": "0x382987965b01671FB05367B943C457191C27834e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xB3AAc1293632706E134E4cC41976B49EC89fAb1b",
+    "earnedToken": "rCowUniswapSonicUSDC.e-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-sonic-usdc.e-weth",
+    "status": "active",
+    "createdAt": 1737673247,
+    "platformId": "uniswap",
+    "assets": ["USDCe", "WETH"],
+    "risks": [],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-sonic-usdc.e-weth",
+    "name": "USDC.e-WETH",
+    "type": "cowcentrated",
+    "token": "USDC.e-WETH uniswap",
+    "tokenAddress": "0xCfD41dF89D060b72eBDd50d65f9021e4457C477e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+      "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b"
+    ],
+    "earnContractAddress": "0x382987965b01671FB05367B943C457191C27834e",
+    "earnedToken": "cowUniswapSonicUSDC.e-WETH",
+    "earnedTokenAddress": "0x382987965b01671FB05367B943C457191C27834e",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-sonic-usdc.e-weth",
+    "status": "active",
+    "createdAt": 1737673247,
+    "platformId": "beefy",
+    "feeTier": "0.05",
+    "assets": ["USDCe", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "swapx-ichi-ws-weth-weth",
     "name": "wS-WETH (WETH deposit)",
     "token": "IV-SWAPX-23-WETH-wS",
