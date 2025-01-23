@@ -1,5 +1,96 @@
 [
   {
+    "id": "shadow-cow-sonic-usdc.e-moobifi-vault",
+    "name": "mooBIFI-USDC.e",
+    "type": "standard",
+    "token": "mooBIFI-USDC.e",
+    "tokenAddress": "0x03BdAf7eb1b109E3C3348ee98cde734a82aea8FD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnedToken": "mooCowShadowSonicUSDC.e-mooBIFI",
+    "earnedTokenAddress": "0xAFFcd41595f83918A3cF360C5909C577E8F74b77",
+    "earnContractAddress": "0xAFFcd41595f83918A3cF360C5909C577E8F74b77",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-moobifi",
+    "status": "active",
+    "platformId": "shadow",
+    "assets": ["mooBIFI", "USDCe"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "createdAt": 1737594510,
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-usdc.e-moobifi-rp",
+    "name": "mooBIFI-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowShadowSonicmooBIFI-USDC.e",
+    "tokenAddress": "0x03BdAf7eb1b109E3C3348ee98cde734a82aea8FD",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0x270c72285aa76233AdAd07b6C20ac81d4fE68F8e",
+    "earnedToken": "rCowShadowSonicmooBIFI-USDC.e",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-moobifi",
+    "status": "active",
+    "createdAt": 1737594509,
+    "platformId": "shadow",
+    "assets": ["mooBIFI", "USDCe"],
+    "risks": [],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-usdc.e-moobifi",
+    "name": "mooBIFI-USDC.e",
+    "type": "cowcentrated",
+    "token": "mooBIFI-USDC.e shadow",
+    "tokenAddress": "0xFD8fc59E65860e7FAaf09482e6Be4af65741DEba",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "depositTokenAddresses": [
+      "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+      "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434"
+    ],
+    "earnContractAddress": "0x03BdAf7eb1b109E3C3348ee98cde734a82aea8FD",
+    "earnedToken": "cowShadowSonicmooBIFI-USDC.e",
+    "earnedTokenAddress": "0x03BdAf7eb1b109E3C3348ee98cde734a82aea8FD",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-moobifi",
+    "status": "active",
+    "createdAt": 1737594509,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["mooBIFI", "USDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "beets-sonic-echoes-of-ether",
     "name": "Echoes Of Ether",
     "type": "standard",
