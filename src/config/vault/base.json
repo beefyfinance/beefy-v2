@@ -1,5 +1,77 @@
 [
   {
+    "id": "aerodrome-usdc-ox",
+    "name": "OX-USDC vLP",
+    "type": "standard",
+    "token": "vAMM-OX/USDC",
+    "tokenAddress": "0x33A20Ce534aE0F2fC00BC28e7133836B34415E7B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseUSDC-OX",
+    "earnedTokenAddress": "0x3Edee07DC484c306192b936F808521d3e69ddc83",
+    "earnContractAddress": "0x3Edee07DC484c306192b936F808521d3e69ddc83",
+    "oracle": "lps",
+    "oracleId": "aerodrome-usdc-ox",
+    "status": "active",
+    "createdAt": 1737647085,
+    "platformId": "aerodrome",
+    "assets": ["OX", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&token1=0xba0Dda8762C24dA9487f5FA026a9B64b695A07Ea&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-dai-ox",
+    "name": "OX-DAI vLP",
+    "type": "standard",
+    "token": "vAMM-DAI/OX",
+    "tokenAddress": "0xaCC2c24D1e380De50eD04bE8d68F4E985a28bf2F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseDAI-OX",
+    "earnedTokenAddress": "0x31DD2c52298632ce2A8c6a2b8ee0D946cb11C133",
+    "earnContractAddress": "0x31DD2c52298632ce2A8c6a2b8ee0D946cb11C133",
+    "oracle": "lps",
+    "oracleId": "aerodrome-dai-ox",
+    "status": "active",
+    "createdAt": 1737647085,
+    "platformId": "aerodrome",
+    "assets": ["OX", "DAI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb&token1=0xba0Dda8762C24dA9487f5FA026a9B64b695A07Ea&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "morpho-ionic-usdc",
     "name": "Ionic USDC",
     "token": "USDC",
