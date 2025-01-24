@@ -360,22 +360,23 @@ function selectVaultMatchesCondition(
 ) {
   switch (condition.type) {
     case 'boosted': {
-      if (condition.contract) {
-        const boostId = selectVaultCurrentBoostId(state, vaultId);
-        if (boostId) {
+      const apy = selectVaultTotalApy(state, vaultId);
+      if (!!apy && (apy.boostedTotalDaily || 0) > 0) {
+        if (!condition.only) {
+          // default: no further checks
           return true;
-        }
-      }
-      if (condition.offchain) {
-        const hasOffchainCampaign = selectVaultHasActiveOffchainCampaigns(state, vaultId);
-        if (hasOffchainCampaign) {
-          return true;
-        }
-      }
-      if (condition.other) {
-        const apy = selectVaultTotalApy(state, vaultId);
-        if (!!apy && (apy.boostedTotalDaily || 0) > 0) {
-          return true;
+        } else if (condition.only === 'contract') {
+          // only if boosted via traditional boost contract/config
+          const boostId = selectVaultCurrentBoostId(state, vaultId);
+          if (boostId) {
+            return true;
+          }
+        } else if (condition.only === 'offchain') {
+          // only if there is an offchain campaign (e.g. merkl)
+          const hasOffchainCampaign = selectVaultHasActiveOffchainCampaigns(state, vaultId);
+          if (hasOffchainCampaign) {
+            return true;
+          }
         }
       }
       return false;
