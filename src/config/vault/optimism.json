@@ -13,7 +13,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-v2-hai-reth",
     "status": "active",
-    "createdAt": 1737647299,
+    "createdAt": 1737809354,
     "platformId": "velodrome",
     "assets": ["HAI", "rETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
