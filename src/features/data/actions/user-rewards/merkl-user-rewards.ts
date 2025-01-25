@@ -43,6 +43,7 @@ export const MERKL_SUPPORTED_CHAINS: Partial<Record<ChainEntity['id'], Address>>
   celo: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
   sei: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
   rootstock: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
+  sonic: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
 };
 
 function parseReasonId(
