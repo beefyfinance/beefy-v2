@@ -1,10 +1,10 @@
 [
   {
     "id": [
-      "uniswap-cow-base-weth-toshi-rp",
-      "uniswap-cow-base-weth-doginme-rp",
-      "uniswap-cow-base-weth-chomp-rp",
-      "uniswap-cow-base-weth-miggles-rp"
+      "uniswap-cow-base-usdc-cbbtc-rp",
+      "uniswap-cow-op-weth-dai-rp",
+      "uniswap-cow-op-weth-usdc.e-rp",
+      "uniswap-cow-op-usdc-weth-rp"
     ],
     "conditions": [
       {
