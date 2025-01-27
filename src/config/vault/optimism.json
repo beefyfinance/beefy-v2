@@ -9490,38 +9490,6 @@
     ]
   },
   {
-    "id": "velodrome-sfrxeth-frxeth",
-    "name": "sfrxETH-frxETH sLP",
-    "type": "standard",
-    "token": "sfrxETH-frxETH sLP",
-    "tokenAddress": "0xeB676aE691df237aC09a0f7410123A714D84afb3",
-    "tokenDecimals": 18,
-    "tokenProviderId": "velodrome",
-    "earnedToken": "mooVelodromesfrxETH-frxETH",
-    "earnedTokenAddress": "0xFb806C7D711f6F48b23F682cB73eE2e020a84425",
-    "earnContractAddress": "0xFb806C7D711f6F48b23F682cB73eE2e020a84425",
-    "oracle": "lps",
-    "oracleId": "velodrome-sfrxeth-frxeth",
-    "status": "eol",
-    "createdAt": 1676926172,
-    "retireReason": "rewards",
-    "retiredAt": 1690357628,
-    "platformId": "velodrome",
-    "assets": ["sfrxETH", "frxETH"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://velodrome.finance/swap?from=0x484c2D6e3cDd945a8B2DF735e079178C1036578c&to=0x6806411765Af15Bddd26f8f544A34cC40cb9838B",
-    "addLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xeB676aE691df237aC09a0f7410123A714D84afb3",
-    "removeLiquidityUrl": "https://v1.velodrome.finance/liquidity/manage?address=0xeB676aE691df237aC09a0f7410123A714D84afb3",
-    "network": "optimism",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "optimism-velodrome"
-      }
-    ]
-  },
-  {
     "id": "velodrome-weth-wsteth",
     "name": "wstETH-ETH vLP",
     "type": "standard",
