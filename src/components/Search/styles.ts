@@ -35,12 +35,22 @@ export const styles = (theme: Theme) => ({
       cursor: 'pointer',
     },
   },
+  iconOnRight: {
+    '& .MuiInputBase-input': {
+      padding: '8px 16px 8px 4px',
+    },
+  },
+  searchIconMargin: {
+    margin: '0 0 0 16px',
+  },
   focusIcon: {
-    border: `2px solid ${theme.palette.text.dark}`,
+    border: `1px solid ${theme.palette.text.dark}`,
     borderRadius: '4px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontWeight: 700,
+    width: '20px',
+    height: '20px',
+    fontWeight: 500,
   },
 });
