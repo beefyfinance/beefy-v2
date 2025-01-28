@@ -35,4 +35,12 @@ export const styles = (theme: Theme) => ({
       cursor: 'pointer',
     },
   },
+  focusIcon: {
+    border: `2px solid ${theme.palette.text.dark}`,
+    borderRadius: '4px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight: 700,
+  },
 });
