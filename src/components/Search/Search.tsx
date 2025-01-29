@@ -2,7 +2,7 @@ import type { ChangeEvent, MouseEventHandler } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { InputBaseProps } from '@material-ui/core';
-import { InputBase, makeStyles } from '@material-ui/core';
+import { InputBase, makeStyles, useMediaQuery } from '@material-ui/core';
 import { CloseRounded, Search as SearchIcon } from '@material-ui/icons';
 import { styles } from './styles';
 import clsx from 'clsx';
@@ -30,11 +30,12 @@ export const Search = memo<SearchProps>(function Search({
   onClick,
   onFocus,
   onBlur,
-  focusOnSlashPressed,
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const [inputFocused, setInputFocused] = useState<boolean>(false);
+
+  const focusOnSlashPressed = useMediaQuery('(min-width: 960px)', { noSsr: true });
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -74,35 +75,21 @@ export const Search = memo<SearchProps>(function Search({
 
   const searchIcon = useMemo(() => {
     return (
-      <div className={clsx(iconClass, { [searchIconClass]: focusOnSlashPressed })}>
+      <div className={clsx(iconClass, searchIconClass)}>
         <SearchIcon />
       </div>
     );
-  }, [focusOnSlashPressed, iconClass, searchIconClass]);
+  }, [iconClass, searchIconClass]);
 
   const icon = useMemo(() => {
-    return valueLength === 0 ? (
-      focusOnSlashPressed ? (
-        !inputFocused ? (
-          <div className={clsx(focusIconClass, iconClass)}>/</div>
-        ) : null
-      ) : (
-        searchIcon
-      )
-    ) : (
+    return valueLength === 0 && focusOnSlashPressed && !inputFocused ? (
+      <div className={clsx(focusIconClass, iconClass)}>/</div>
+    ) : valueLength > 0 ? (
       <button onClick={handleClear} className={iconClass}>
         <CloseRounded />
       </button>
-    );
-  }, [
-    valueLength,
-    focusOnSlashPressed,
-    inputFocused,
-    searchIcon,
-    focusIconClass,
-    iconClass,
-    handleClear,
-  ]);
+    ) : null;
+  }, [valueLength, focusOnSlashPressed, inputFocused, focusIconClass, iconClass, handleClear]);
 
   useEffect(() => {
     if (focusOnSlashPressed) {
@@ -124,7 +111,7 @@ export const Search = memo<SearchProps>(function Search({
     <InputBase
       onFocus={handleFocus}
       onBlur={handleBlur}
-      className={clsx(className, classes.search, { [classes.iconOnRight]: focusOnSlashPressed })}
+      className={clsx(className, classes.search)}
       value={searchText}
       onChange={handleSearchText}
       fullWidth={true}
@@ -133,7 +120,7 @@ export const Search = memo<SearchProps>(function Search({
       placeholder={t('Filter-Search')}
       onClick={onClick}
       inputRef={inputRef}
-      startAdornment={focusOnSlashPressed ? searchIcon : undefined}
+      startAdornment={searchIcon}
     />
   );
 });
