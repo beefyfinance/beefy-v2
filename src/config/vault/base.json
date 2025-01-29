@@ -1,5 +1,64 @@
 [
   {
+    "id": "uniswap-cow-base-usdc-vvv-rp",
+    "name": "VVV-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseVVV-USDC",
+    "tokenAddress": "0x1FDB1C1fC19Fc869Cdc938A86b3888A847c82F78",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xA785171662f87CDdD786E486Ce3f9E734D844F4f",
+    "earnedToken": "rCowUniswapBaseVVV-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-vvv",
+    "status": "active",
+    "createdAt": 1738163455,
+    "platformId": "uniswap",
+    "assets": ["VVV", "USDC"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-usdc-vvv",
+    "name": "VVV-USDC ",
+    "type": "cowcentrated",
+    "token": "VVV-USDC  uniswap",
+    "tokenAddress": "0x67A11022B7B6ed66f81233F6C8Ed6e48F7826530",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xacfE6019Ed1A7Dc6f7B508C02d1b04ec88cC21bf"
+    ],
+    "earnContractAddress": "0x1FDB1C1fC19Fc869Cdc938A86b3888A847c82F78",
+    "earnedToken": "cowUniswapBaseVVV-USDC",
+    "earnedTokenAddress": "0x1FDB1C1fC19Fc869Cdc938A86b3888A847c82F78",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-vvv",
+    "status": "active",
+    "createdAt": 1738163455,
+    "platformId": "beefy",
+    "feeTier": "0.30",
+    "assets": ["VVV", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-weth-vvv-rp",
     "name": "VVV-WETH Reward Pool",
     "type": "gov",
