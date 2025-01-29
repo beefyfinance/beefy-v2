@@ -143,7 +143,7 @@ export class BeefyAPI {
     }
 
     return await getJson<TreasuryCompleteBreakdownConfig>({
-      url: `${this.api}/treasury/complete`,
+      url: `http://localhost:3000/treasury/complete`,
       cacheBuster: 'short',
       timeout: this.timeout,
     });
