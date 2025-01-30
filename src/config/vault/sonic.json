@@ -667,7 +667,7 @@
     "id": "silov2-sonic-usdce-ws",
     "name": "USDC.e (wS Market)",
     "type": "standard",
-    "token": "USDC.e (wS Market)",
+    "token": "USDCe",
     "tokenAddress": "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
     "tokenDecimals": 6,
     "tokenProviderId": "silo",
