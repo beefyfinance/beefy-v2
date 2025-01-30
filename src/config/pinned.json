@@ -1,6 +1,23 @@
 [
   {
     "id": [
+      "uniswap-cow-base-usdc-cbbtc-rp",
+      "uniswap-cow-op-weth-dai-rp",
+      "uniswap-cow-op-weth-usdc.e-rp",
+      "uniswap-cow-op-usdc-weth-rp"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "to": 1738195200
+      }
+    ]
+  },
+  {
+    "id": [
       "uniswap-cow-sonic-usdc.e-weth-rp",
       "uniswap-cow-base-weth-vvv-rp",
       "uniswap-cow-base-weth-chomp-rp",
@@ -9,6 +26,10 @@
     "conditions": [
       {
         "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1738195200
       }
     ]
   }
