@@ -1,5 +1,65 @@
 [
   {
+    "id": "velodrome-v2-bold-lusd",
+    "name": "Bold-LUSD sLP V2",
+    "type": "standard",
+    "token": "sAMMV2-Bold/LUSD",
+    "tokenAddress": "0xfE09D5156c4d4ac3b57b192608a8423401bac186",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2Bold-LUSD",
+    "earnedTokenAddress": "0x07C72C4A1Dcb0ab718D83C033b3f3F0EebbfB58a",
+    "earnContractAddress": "0x07C72C4A1Dcb0ab718D83C033b3f3F0EebbfB58a",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-bold-lusd",
+    "status": "active",
+    "createdAt": 1738191752,
+    "platformId": "velodrome",
+    "assets": ["Bold", "LUSD"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x087C440F251Ff6Cfe62B86DdE1bE558B95b4bb9b&to=0xc40F949F8a4e094D1b49a23ea9241D289B7b2819&chain0=10&chain1=10",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x087C440F251Ff6Cfe62B86DdE1bE558B95b4bb9b&token1=0xc40F949F8a4e094D1b49a23ea9241D289B7b2819&type=0&chain=10&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xfE09D5156c4d4ac3b57b192608a8423401bac186",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-v2-bold-usdc",
+    "name": "Bold-USDC sLP V2",
+    "type": "standard",
+    "token": "sAMMV2-Bold/USDC",
+    "tokenAddress": "0xF5cE76B51A4D7f0242bb02b830A73ABFa9792157",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2Bold-USDC",
+    "earnedTokenAddress": "0x6315F02deD7a1E583dF3397134A6E1D9C0Af183C",
+    "earnContractAddress": "0x6315F02deD7a1E583dF3397134A6E1D9C0Af183C",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-bold-usdc",
+    "status": "active",
+    "createdAt": 1738191752,
+    "platformId": "velodrome",
+    "assets": ["Bold", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x087C440F251Ff6Cfe62B86DdE1bE558B95b4bb9b&to=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&chain0=10&chain1=10",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x087C440F251Ff6Cfe62B86DdE1bE558B95b4bb9b&token1=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&type=0&chain=10&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xF5cE76B51A4D7f0242bb02b830A73ABFa9792157",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "velodrome-v2-hai-reth",
     "name": "HAI-rETH vLP V2",
     "type": "standard",
