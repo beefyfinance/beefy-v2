@@ -381,8 +381,15 @@ function selectVaultMatchesCondition(
       }
       return false;
     }
-    case 'until': {
-      return getUnixNow() <= condition.timestamp;
+    case 'time': {
+      const now = getUnixNow();
+      if (condition.from && now < condition.from) {
+        return false;
+      }
+      if (condition.to && now > condition.to) {
+        return false;
+      }
+      return true;
     }
     default: {
       // @ts-expect-error when all cases are covered
