@@ -551,6 +551,7 @@ export const config = {
       'USDT',
       'EURC',
       'msUSD',
+      'Bold',
     ],
   },
   gnosis: {
