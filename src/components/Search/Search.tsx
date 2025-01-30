@@ -94,11 +94,13 @@ export const Search = memo<SearchProps>(function Search({
   useEffect(() => {
     if (focusOnSlashPressed) {
       const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === '/') {
-          e.preventDefault();
-          setInputFocused(true);
-          inputRef.current?.focus();
-        }
+        if (e.key !== '/') return; // Exit early if the key is not "/"
+
+        if (document.activeElement instanceof HTMLInputElement) return; // Do nothing if input is already focused
+
+        e.preventDefault();
+        setInputFocused(true);
+        inputRef.current?.focus();
       };
       window.addEventListener('keydown', handleKeyDown);
       return () => {
