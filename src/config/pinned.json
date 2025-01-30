@@ -1,10 +1,10 @@
 [
   {
     "id": [
-      "uniswap-cow-base-usdc-cbbtc-rp",
-      "uniswap-cow-op-weth-dai-rp",
-      "uniswap-cow-op-weth-usdc.e-rp",
-      "uniswap-cow-op-usdc-weth-rp"
+      "uniswap-cow-sonic-usdc.e-weth-rp",
+      "uniswap-cow-base-weth-vvv-rp",
+      "uniswap-cow-base-weth-chomp-rp",
+      "compound-op-eth"
     ],
     "conditions": [
       {
