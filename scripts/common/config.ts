@@ -71,6 +71,10 @@ export const excludeChains: Record<string, { count: number; hash: string }> = {
     count: 8,
     hash: '213e11533e3173172b0476d79675b2d9930226811faf8fce7fea01238b5d1366',
   },
+  cronos: {
+    count: 49,
+    hash: 'ab8d548370e2613888ce97a8fa50211f169851a04d32a927f33c773bfa2ca0de',
+  },
 };
 
 export const excludedChainIds = Object.keys(excludeChains);

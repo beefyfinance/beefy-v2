@@ -183,7 +183,7 @@ const validatePools = async () => {
         return;
       }
 
-      console.log(`Excluded chain ${chainId} integrity check passed`);
+      // console.log(`Excluded chain ${chainId} integrity check passed`);
     });
 
     if (exitCode != 0) {
