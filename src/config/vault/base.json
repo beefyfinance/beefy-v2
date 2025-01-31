@@ -102,7 +102,7 @@
     "status": "active",
     "createdAt": 1738191752,
     "platformId": "aerodrome",
-    "assets": ["Bold", "USDC"],
+    "assets": ["Bold", "LUSD"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x087C440F251Ff6Cfe62B86DdE1bE558B95b4bb9b&token1=0x368181499736d0c0CC614DBB145E2EC1AC86b8c6&type=0",
