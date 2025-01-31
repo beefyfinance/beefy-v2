@@ -192,7 +192,7 @@ export const config = {
     ],
   },
   optimism: {
-    name: 'OP Mainnet',
+    name: 'Optimism',
     chainId: 10,
     rpc: ['https://mainnet.optimism.io'],
     explorerUrl: 'https://optimistic.etherscan.io',
