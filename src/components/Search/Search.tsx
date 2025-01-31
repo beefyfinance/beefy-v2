@@ -30,12 +30,17 @@ export const Search = memo<SearchProps>(function Search({
   onClick,
   onFocus,
   onBlur,
+  focusOnSlashPressed = true,
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const [inputFocused, setInputFocused] = useState<boolean>(false);
 
-  const focusOnSlashPressed = useMediaQuery('(min-width: 960px)', { noSsr: true });
+  const isDesktop = useMediaQuery('(min-width: 960px)', { noSsr: true });
+
+  const focusOnSlash = useMemo(() => {
+    return isDesktop && focusOnSlashPressed;
+  }, [focusOnSlashPressed, isDesktop]);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -82,17 +87,17 @@ export const Search = memo<SearchProps>(function Search({
   }, [iconClass, searchIconClass]);
 
   const icon = useMemo(() => {
-    return valueLength === 0 && focusOnSlashPressed && !inputFocused ? (
+    return valueLength === 0 && focusOnSlash && !inputFocused ? (
       <div className={clsx(focusIconClass, iconClass)}>/</div>
     ) : valueLength > 0 ? (
       <button onClick={handleClear} className={iconClass}>
         <CloseRounded />
       </button>
     ) : null;
-  }, [valueLength, focusOnSlashPressed, inputFocused, focusIconClass, iconClass, handleClear]);
+  }, [valueLength, focusOnSlash, inputFocused, focusIconClass, iconClass, handleClear]);
 
   useEffect(() => {
-    if (focusOnSlashPressed) {
+    if (focusOnSlash) {
       const handleKeyDown = (e: KeyboardEvent) => {
         if (e.key !== '/') return; // Exit early if the key is not "/"
 
@@ -107,7 +112,7 @@ export const Search = memo<SearchProps>(function Search({
         window.removeEventListener('keydown', handleKeyDown);
       };
     }
-  }, [focusOnSlashPressed]);
+  }, [focusOnSlash]);
 
   return (
     <InputBase

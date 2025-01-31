@@ -155,6 +155,7 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
                 handleSearchText={handleInputChange}
                 handleClearText={handleClearInput}
                 onClick={handleAvoidClosePopUp}
+                focusOnSlashPressed={false}
               />
             </div>
             {optionsList.map(({ value: optionValue, label }) => (
