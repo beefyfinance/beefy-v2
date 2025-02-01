@@ -139,6 +139,7 @@
     "platformId": "tokan",
     "assets": ["USDC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.tokan.exchange/liquidity?liquidityToken1Symbol=WETH&liquidityToken2Symbol=USDC",
     "network": "scroll",
