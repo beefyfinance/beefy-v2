@@ -12,8 +12,7 @@
       },
       {
         "type": "time",
-        "from": 1738317600,
-        "to": 1738404000
+        "to": 1738584000
       }
     ]
   },
@@ -30,7 +29,25 @@
       },
       {
         "type": "time",
-        "from": 1738404001
+        "from": 1738584000,
+        "to": 1738670400
+      }
+    ]
+  },
+  {
+    "id": [
+      "uniswap-cow-sonic-ws-usdc.e-rp",
+      "uniswap-cow-base-weth-keycat-rp",
+      "aerodrome-cow-base-weth-uada-vault",
+      "aerodrome-cow-base-weth-usui-vault"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1738670400
       }
     ]
   }
