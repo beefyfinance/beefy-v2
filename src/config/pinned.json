@@ -1,10 +1,10 @@
 [
   {
     "id": [
-      "uniswap-cow-base-usdc-cbbtc-rp",
-      "uniswap-cow-op-weth-dai-rp",
-      "uniswap-cow-op-weth-usdc.e-rp",
-      "uniswap-cow-op-usdc-weth-rp"
+      "compound-op-eth",
+      "aerodrome-cow-base-weth-usui-vault",
+      "aerodrome-cow-base-weth-usol-vault",
+      "uniswap-cow-sonic-usdc.e-weth-rp"
     ],
     "conditions": [
       {
@@ -12,16 +12,16 @@
       },
       {
         "type": "time",
-        "to": 1738195200
+        "to": 1738584000
       }
     ]
   },
   {
     "id": [
-      "uniswap-cow-sonic-usdc.e-weth-rp",
-      "uniswap-cow-base-weth-vvv-rp",
-      "uniswap-cow-base-weth-chomp-rp",
-      "compound-op-eth"
+      "uniswap-cow-sonic-ws-weth-rp",
+      "uniswap-cow-sonic-usdc.e-scusd-rp",
+      "aerodrome-cow-base-uxrp-weth-vault",
+      "aerodrome-cow-base-weth-ulink-vault"
     ],
     "conditions": [
       {
@@ -29,7 +29,25 @@
       },
       {
         "type": "time",
-        "from": 1738195200
+        "from": 1738584000,
+        "to": 1738670400
+      }
+    ]
+  },
+  {
+    "id": [
+      "uniswap-cow-sonic-ws-usdc.e-rp",
+      "uniswap-cow-base-weth-keycat-rp",
+      "aerodrome-cow-base-weth-uada-vault",
+      "aerodrome-cow-base-weth-usui-vault"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1738670400
       }
     ]
   }
