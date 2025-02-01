@@ -18,6 +18,7 @@
     "platformId": "tokan",
     "assets": ["USDC", "USDT"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.tokan.exchange/liquidity",
     "network": "scroll",
@@ -47,6 +48,7 @@
     "platformId": "tokan",
     "assets": ["WETH", "wstETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.tokan.exchange/liquidity",
     "network": "scroll",
@@ -76,6 +78,7 @@
     "platformId": "tokan",
     "assets": ["WBTC", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.tokan.exchange/liquidity",
     "network": "scroll",
@@ -106,6 +109,7 @@
     "platformId": "tokan",
     "assets": ["TKN", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://app.tokan.exchange/liquidity",
     "network": "scroll",
@@ -163,6 +167,7 @@
     "platformId": "nuri",
     "assets": ["WBTC", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -196,6 +201,7 @@
     "platformId": "nuri",
     "assets": ["WBTC", "WETH"],
     "risks": [],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -230,6 +236,7 @@
     "feeTier": "0.05",
     "assets": ["WBTC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -256,6 +263,7 @@
     "platformId": "nuri",
     "assets": ["WETH", "wstETH"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -289,6 +297,7 @@
     "platformId": "nuri",
     "assets": ["WETH", "wstETH"],
     "risks": [],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -323,6 +332,7 @@
     "feeTier": "0.05",
     "assets": ["WETH", "wstETH"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -349,6 +359,7 @@
     "platformId": "nuri",
     "assets": ["WETH", "USDT"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -382,6 +393,7 @@
     "platformId": "nuri",
     "assets": ["WETH", "USDT"],
     "risks": [],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -416,6 +428,7 @@
     "feeTier": "0.05",
     "assets": ["WETH", "USDT"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -442,6 +455,7 @@
     "platformId": "nuri",
     "assets": ["USDC", "WETH"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -475,6 +489,7 @@
     "platformId": "nuri",
     "assets": ["USDC", "WETH"],
     "risks": [],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -509,6 +524,7 @@
     "feeTier": "0.05",
     "assets": ["USDC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -539,6 +555,7 @@
     "platformId": "oku",
     "assets": ["SCR", "USDC"],
     "risks": [],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -570,6 +587,7 @@
     "feeTier": "1",
     "assets": ["SCR", "USDC"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -596,6 +614,7 @@
     "platformId": "nuri",
     "assets": ["USDC", "SCR"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -629,6 +648,7 @@
     "platformId": "nuri",
     "assets": ["USDC", "SCR"],
     "risks": [],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -663,6 +683,7 @@
     "feeTier": "1",
     "assets": ["USDC", "SCR"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -689,6 +710,7 @@
     "platformId": "nuri",
     "assets": ["WETH", "SCR"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -722,6 +744,7 @@
     "platformId": "nuri",
     "assets": ["WETH", "SCR"],
     "risks": [],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -756,6 +779,7 @@
     "feeTier": "1",
     "assets": ["WETH", "SCR"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -786,6 +810,7 @@
     "platformId": "sushi",
     "assets": ["WETH", "SCR"],
     "risks": [],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -817,6 +842,7 @@
     "feeTier": "1",
     "assets": ["WETH", "SCR"],
     "risks": ["IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -843,6 +869,7 @@
     "platformId": "nuri",
     "assets": ["loreUSD", "USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://www.nuri.exchange/manage/v1/0x4775dFFd8762eE4C8DE49f4FD6D02A1f0d8f1698",
     "network": "scroll",
@@ -871,6 +898,7 @@
     "platformId": "nuri",
     "assets": ["NURI", "ETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://www.nuri.exchange/manage/v1/0x8ae1c699c9c62fac468a1e253e15b571b69a7ffe",
     "network": "scroll",
@@ -903,6 +931,7 @@
     "platformId": "sushi",
     "assets": ["USDC", "WETH"],
     "risks": [],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -934,6 +963,7 @@
     "feeTier": "0.05",
     "assets": ["USDC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -964,6 +994,7 @@
     "platformId": "sushi",
     "assets": ["USDC", "USDT"],
     "risks": [],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -995,6 +1026,7 @@
     "feeTier": "0.01",
     "assets": ["USDC", "USDT"],
     "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -1025,6 +1057,7 @@
     "platformId": "oku",
     "assets": ["USDC", "WETH"],
     "risks": [],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [
@@ -1056,6 +1089,7 @@
     "feeTier": "0.05",
     "assets": ["USDC", "WETH"],
     "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["scroll-points"],
     "strategyTypeId": "compounds",
     "network": "scroll",
     "zaps": [

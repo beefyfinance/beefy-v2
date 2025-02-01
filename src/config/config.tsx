@@ -193,7 +193,7 @@ export const config = {
     ],
   },
   optimism: {
-    name: 'Optimism',
+    name: 'OP Mainnet',
     chainId: 10,
     rpc: ['https://mainnet.optimism.io'],
     explorerUrl: 'https://optimistic.etherscan.io',
@@ -751,7 +751,6 @@ export const config = {
   sonic: {
     name: 'Sonic',
     chainId: 146,
-    new: true,
     rpc: ['https://rpc.soniclabs.com'],
     explorerUrl: 'https://sonicscan.org/',
     multicallAddress: '0x0D17eE2ed4e67b626B43C3695586E5aE6a039949',
