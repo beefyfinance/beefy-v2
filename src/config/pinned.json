@@ -9,6 +9,27 @@
     "conditions": [
       {
         "type": "boosted"
+      },
+      {
+        "type": "time",
+        "to": 1738195200
+      }
+    ]
+  },
+  {
+    "id": [
+      "uniswap-cow-sonic-usdc.e-weth-rp",
+      "uniswap-cow-base-weth-vvv-rp",
+      "uniswap-cow-base-weth-chomp-rp",
+      "compound-op-eth"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1738195200
       }
     ]
   }

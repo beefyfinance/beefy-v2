@@ -1,5 +1,65 @@
 [
   {
+    "id": "velodrome-v2-bold-lusd",
+    "name": "Bold-LUSD sLP V2",
+    "type": "standard",
+    "token": "sAMMV2-Bold/LUSD",
+    "tokenAddress": "0xfE09D5156c4d4ac3b57b192608a8423401bac186",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2Bold-LUSD",
+    "earnedTokenAddress": "0x07C72C4A1Dcb0ab718D83C033b3f3F0EebbfB58a",
+    "earnContractAddress": "0x07C72C4A1Dcb0ab718D83C033b3f3F0EebbfB58a",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-bold-lusd",
+    "status": "active",
+    "createdAt": 1738191752,
+    "platformId": "velodrome",
+    "assets": ["Bold", "LUSD"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x087C440F251Ff6Cfe62B86DdE1bE558B95b4bb9b&to=0xc40F949F8a4e094D1b49a23ea9241D289B7b2819&chain0=10&chain1=10",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x087C440F251Ff6Cfe62B86DdE1bE558B95b4bb9b&token1=0xc40F949F8a4e094D1b49a23ea9241D289B7b2819&type=0&chain=10&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xfE09D5156c4d4ac3b57b192608a8423401bac186",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-v2-bold-usdc",
+    "name": "Bold-USDC sLP V2",
+    "type": "standard",
+    "token": "sAMMV2-Bold/USDC",
+    "tokenAddress": "0xF5cE76B51A4D7f0242bb02b830A73ABFa9792157",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2Bold-USDC",
+    "earnedTokenAddress": "0x6315F02deD7a1E583dF3397134A6E1D9C0Af183C",
+    "earnContractAddress": "0x6315F02deD7a1E583dF3397134A6E1D9C0Af183C",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-bold-usdc",
+    "status": "active",
+    "createdAt": 1738191752,
+    "platformId": "velodrome",
+    "assets": ["Bold", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x087C440F251Ff6Cfe62B86DdE1bE558B95b4bb9b&to=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&chain0=10&chain1=10",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x087C440F251Ff6Cfe62B86DdE1bE558B95b4bb9b&token1=0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85&type=0&chain=10&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0xF5cE76B51A4D7f0242bb02b830A73ABFa9792157",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "velodrome-v2-hai-reth",
     "name": "HAI-rETH vLP V2",
     "type": "standard",
@@ -190,12 +250,15 @@
     "tokenAddress": "0x11261f2ccA8cc18374C3dB932300ADc1FEe2A264",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
+    "earnContractAddress": "0x0102c38B0A699831116b0F552B9CA450a51F09Ba",
     "earnedToken": "mooCowVeloUSDC-wUSDM",
     "earnedTokenAddress": "0x0102c38B0A699831116b0F552B9CA450a51F09Ba",
-    "earnContractAddress": "0x0102c38B0A699831116b0F552B9CA450a51F09Ba",
     "oracle": "lps",
     "oracleId": "velo-cow-op-usdc-wusdm",
-    "status": "active",
+    "status": "eol",
+    "createdAt": 1729244040,
+    "retireReason": "tvl",
+    "retiredAt": 1738031991,
     "platformId": "velodrome",
     "assets": ["wUSDM", "USDC"],
     "risks": [
@@ -208,7 +271,6 @@
     ],
     "strategyTypeId": "pool",
     "network": "optimism",
-    "createdAt": 1729244040,
     "zaps": [
       {
         "strategyId": "vault-composer"
@@ -235,8 +297,10 @@
     "earnedOracleIds": ["VELOV2"],
     "oracle": "lps",
     "oracleId": "velo-cow-op-usdc-wusdm",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1729244039,
+    "retireReason": "tvl",
+    "retiredAt": 1738031991,
     "platformId": "velodrome",
     "assets": ["wUSDM", "USDC"],
     "risks": [],
@@ -254,28 +318,30 @@
   {
     "id": "velo-cow-op-usdc-wusdm",
     "name": "wUSDM-USDC",
+    "type": "cowcentrated",
     "token": "wUSDM-USDC",
     "tokenAddress": "0x16F582eA9F07BDd207E37AA1A02d5335940bAFa3",
     "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
     "depositTokenAddresses": [
       "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
       "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812"
     ],
-    "tokenProviderId": "velodrome",
+    "earnContractAddress": "0x11261f2ccA8cc18374C3dB932300ADc1FEe2A264",
     "earnedToken": "cowVeloUSDC-wUSDM",
     "earnedTokenAddress": "0x11261f2ccA8cc18374C3dB932300ADc1FEe2A264",
-    "earnContractAddress": "0x11261f2ccA8cc18374C3dB932300ADc1FEe2A264",
     "oracle": "lps",
     "oracleId": "velo-cow-op-usdc-wusdm",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1729244039,
+    "retireReason": "tvl",
+    "retiredAt": 1738031991,
     "platformId": "beefy",
+    "feeTier": "0.05",
     "assets": ["wUSDM", "USDC"],
     "risks": ["IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED", "OVER_COLLAT_ALGO_STABLECOIN"],
     "strategyTypeId": "pool",
     "network": "optimism",
-    "type": "cowcentrated",
-    "feeTier": "0.05",
     "zaps": [
       {
         "strategyId": "cowcentrated"
@@ -1057,8 +1123,10 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "uniswap-cow-op-weth-kwenta",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1725021320,
+    "retireReason": "tvl",
+    "retiredAt": 1738031991,
     "platformId": "uniswap",
     "assets": ["KWENTA", "WETH"],
     "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
@@ -1073,28 +1141,30 @@
   {
     "id": "uniswap-cow-op-weth-kwenta",
     "name": "KWENTA-WETH",
+    "type": "cowcentrated",
     "token": "KWENTA-WETH",
     "tokenAddress": "0xe9e3893921dE87b1194a8108F9d70C24BdE71c27",
     "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
     "depositTokenAddresses": [
       "0x4200000000000000000000000000000000000006",
       "0x920Cf626a271321C151D027030D5d08aF699456b"
     ],
-    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xC3b089dE5a8b8A42Fa79C6f7f887B7d5eF567bf1",
     "earnedToken": "cowUniswapOpWETH-KWENTA",
     "earnedTokenAddress": "0xC3b089dE5a8b8A42Fa79C6f7f887B7d5eF567bf1",
-    "earnContractAddress": "0xC3b089dE5a8b8A42Fa79C6f7f887B7d5eF567bf1",
     "oracle": "lps",
     "oracleId": "uniswap-cow-op-weth-kwenta",
-    "status": "active",
+    "status": "eol",
     "createdAt": 1725021320,
+    "retireReason": "tvl",
+    "retiredAt": 1738031991,
     "platformId": "beefy",
+    "feeTier": "0.30",
     "assets": ["KWENTA", "WETH"],
     "risks": ["IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "optimism",
-    "type": "cowcentrated",
-    "feeTier": "0.30",
     "zaps": [
       {
         "strategyId": "cowcentrated"

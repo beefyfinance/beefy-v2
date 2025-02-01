@@ -73,6 +73,7 @@ export const config = {
       'USR',
       'stUSR',
       'wstUSR',
+      'Bold',
     ],
   },
   polygon: {
@@ -245,6 +246,7 @@ export const config = {
       'HAI',
       'msUSD',
       'wUSDM',
+      'Bold',
     ],
   },
   arbitrum: {
@@ -551,6 +553,7 @@ export const config = {
       'USDT',
       'EURC',
       'msUSD',
+      'Bold',
     ],
   },
   gnosis: {
