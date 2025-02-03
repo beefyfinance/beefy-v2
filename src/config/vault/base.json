@@ -1,5 +1,31 @@
 [
   {
+    "id": "morpho-seamless-usdc",
+    "name": "Seamless USDC",
+    "token": "USDC",
+    "tokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "tokenDecimals": 6,
+    "tokenProviderId": "morpho",
+    "earnContractAddress": "0xF3C4Db91F380963e00CaA4AC1f0508259C9a3d3A",
+    "earnedToken": "mooMorpho-Seamless-USDC",
+    "earnedTokenAddress": "0xF3C4Db91F380963e00CaA4AC1f0508259C9a3d3A",
+    "oracle": "lps",
+    "oracleId": "morpho-seamless-usdc",
+    "status": "active",
+    "createdAt": 1738578011,
+    "platformId": "morpho",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-vvv",
     "name": "VVV-WETH vLP",
     "type": "standard",
@@ -74,7 +100,14 @@
     "createdAt": 1738191752,
     "platformId": "aerodrome",
     "assets": ["Bold", "USDC"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x087C440F251Ff6Cfe62B86DdE1bE558B95b4bb9b&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
@@ -103,7 +136,14 @@
     "createdAt": 1738191752,
     "platformId": "aerodrome",
     "assets": ["Bold", "LUSD"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x087C440F251Ff6Cfe62B86DdE1bE558B95b4bb9b&token1=0x368181499736d0c0CC614DBB145E2EC1AC86b8c6&type=0",
     "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
