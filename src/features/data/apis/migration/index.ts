@@ -11,6 +11,7 @@ const migrators: MigrationConfig['id'][] = [
   'polygon-pearl',
   'magpie',
   'real-pearl',
+  'sonic-swapx',
 ];
 
 export class MigrationApi implements IMigrationApi {
