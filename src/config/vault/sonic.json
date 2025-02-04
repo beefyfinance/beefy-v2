@@ -1,5 +1,28 @@
 [
   {
+    "id": "beetsv3-sonic-beefyusdce-scusd",
+    "name": "Boosted Stable Rings",
+    "type": "standard",
+    "token": "Boosted Stable Rings",
+    "tokenAddress": "0x43026d483f42fB35efe03c20B251142D022783f2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetsSonicmooSiloUSDCe/scUSD",
+    "earnedTokenAddress": "0x0aD8162B686af063073EABbEA9bC6FdA2D8184A4",
+    "earnContractAddress": "0x0aD8162B686af063073EABbEA9bC6FdA2D8184A4",
+    "oracle": "lps",
+    "oracleId": "beetsv3-sonic-beefyusdce-scusd",
+    "createdAt": 1738683378,
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["mooSiloSonicUSDCe", "scUSD"],
+    "pointStructureIds": ["sonic-points", "rings"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://beets.fi/pools/sonic/v3/0x43026d483f42fb35efe03c20b251142d022783f2/add-liquidity",
+    "network": "sonic"
+  },
+  {
     "id": "swapx-ichi-sceth-weth-sceth",
     "name": "scETH-WETH (scETH deposit)",
     "token": "IV-SWAPX-34-scETH-WETH",
