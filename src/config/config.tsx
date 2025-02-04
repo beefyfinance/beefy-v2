@@ -74,6 +74,7 @@ export const config = {
       'stUSR',
       'wstUSR',
       'Bold',
+      'BOLD',
     ],
   },
   polygon: {
