@@ -1,11 +1,136 @@
 [
   {
+    "id": "morpho-smokehouse-wsteth",
+    "name": "wstETH",
+    "token": "wstETH",
+    "tokenAddress": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x63a936Cc9740126f21eC8144aCfF22C2Ff89149c",
+    "earnedToken": "mooMorpho-Smokehouse-wstETH",
+    "earnedTokenAddress": "0x63a936Cc9740126f21eC8144aCfF22C2Ff89149c",
+    "oracle": "tokens",
+    "oracleId": "wstETH",
+    "status": "active",
+    "createdAt": 1738747669,
+    "platformId": "morpho",
+    "assets": ["wstETH"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-smokehouse-usdc",
+    "name": "USDC",
+    "token": "USDC",
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x562Ea6FfFD1293b9433E7b81A2682C31892ea013",
+    "earnedToken": "mooMorpho-Smokehouse-USDC",
+    "earnedTokenAddress": "0x562Ea6FfFD1293b9433E7b81A2682C31892ea013",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1738747657,
+    "platformId": "morpho",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-steakhouse-wbtc",
+    "name": "WBTC",
+    "token": "WBTC",
+    "tokenAddress": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+    "tokenDecimals": 8,
+    "earnContractAddress": "0xe36cDbd69adF2F74C8ab987a1CfD448Ae91fa153",
+    "earnedToken": "mooMorpho-Steakhouse-WBTC",
+    "earnedTokenAddress": "0xe36cDbd69adF2F74C8ab987a1CfD448Ae91fa153",
+    "oracle": "tokens",
+    "oracleId": "WBTC",
+    "status": "active",
+    "createdAt": 1738747644,
+    "platformId": "morpho",
+    "assets": ["WBTC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-steakhouse-weth",
+    "name": "WETH",
+    "token": "WETH",
+    "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x68Ad3F6da23ad1cD24CB5089492ccF186bfBBe7b",
+    "earnedToken": "mooMorpho-Steakhouse-WETH",
+    "earnedTokenAddress": "0x68Ad3F6da23ad1cD24CB5089492ccF186bfBBe7b",
+    "oracle": "tokens",
+    "oracleId": "WETH",
+    "status": "active",
+    "createdAt": 1738747637,
+    "platformId": "morpho",
+    "assets": ["WETH"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-steakhouse-usdc",
+    "name": "USDC",
+    "token": "USDC",
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xbBA4D1CEcc111BDC74bD2f95050Fb11aCB3b8A5E",
+    "earnedToken": "mooMorpho-Steakhouse-USDC",
+    "earnedTokenAddress": "0xbBA4D1CEcc111BDC74bD2f95050Fb11aCB3b8A5E",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1738747621,
+    "platformId": "morpho",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "fx-usdc-fxusd",
     "name": "fxUSD/USDC",
     "token": "USDCfxUSD",
     "tokenAddress": "0x5018BE882DccE5E3F2f3B0913AE2096B9b3fB61f",
     "tokenDecimals": 18,
-    "tokenProviderId": "fx",
+    "tokenProviderId": "curve",
     "earnContractAddress": "0xD81eaAE8E6195e67695bE9aC447c9D6214CB717A",
     "earnedToken": "mooFxConvexUSDC-fxUSD",
     "earnedTokenAddress": "0xD81eaAE8E6195e67695bE9aC447c9D6214CB717A",
