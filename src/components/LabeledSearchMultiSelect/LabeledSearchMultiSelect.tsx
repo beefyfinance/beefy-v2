@@ -56,6 +56,7 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
     dropdownFlip = true,
     dropdownAutoHide = true,
     selectClass,
+    inputAutoFocus = false,
   }) {
     const { t } = useTranslation();
     const classes = useStyles();
@@ -156,6 +157,7 @@ export const LabeledSearchMultiSelect = memo<LabeledMultiSelectProps>(
                 handleClearText={handleClearInput}
                 onClick={handleAvoidClosePopUp}
                 focusOnSlashPressed={false}
+                autoFocus={inputAutoFocus}
               />
             </div>
             {optionsList.map(({ value: optionValue, label }) => (

@@ -25,6 +25,7 @@ export type LabeledMultiSelectProps<V extends string = string> = LabeledSelectCo
   SelectedItemComponent?: FC<SelectedItemProps<V>>;
   DropdownItemComponent?: FC<DropdownItemProps<V | 'all'>>;
   DropdownItemLabelComponent?: FC<DropdownItemLabelProps<V | 'all'>>;
+  inputAutoFocus?: boolean;
 };
 
 export type DropdownItemProps<V extends string = string> = {
