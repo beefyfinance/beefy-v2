@@ -7,7 +7,6 @@ import { selectFilterPlatformIds } from '../../../../../data/selectors/filtered-
 import type { PlatformEntity } from '../../../../../data/entities/platform';
 import { LabeledSearchMultiSelect } from '../../../../../../components/LabeledSearchMultiSelect';
 import type { LabeledSelectCommonProps } from '../../../../../../components/LabeledSelect';
-import { useMediaQuery, type Theme } from '@material-ui/core';
 
 interface PlatformDropdownFilterProps {
   placement?: LabeledSelectCommonProps['placement'];
@@ -39,8 +38,6 @@ export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
       [dispatch, platformsIds]
     );
 
-    const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
-
     return (
       <LabeledSearchMultiSelect
         selectClass={className}
@@ -54,7 +51,6 @@ export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
         dropdownFlip={dropDownFlip}
         dropdownShift={dropDownShift}
         dropdownAutoHide={false}
-        inputAutoFocus={!isMobile}
       />
     );
   }
