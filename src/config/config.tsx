@@ -74,6 +74,7 @@ export const config = {
       'stUSR',
       'wstUSR',
       'Bold',
+      'BOLD',
     ],
   },
   polygon: {
@@ -765,7 +766,7 @@ export const config = {
       priorityMinimum: '1000000000',
       baseSafetyMargin: 0.1,
     },
-    stableCoins: ['USDCe', 'scUSD'],
+    stableCoins: ['USDCe', 'scUSD', 'mooSiloSonicUSDCe'],
   },
   aurora: {
     name: 'Aurora',
