@@ -1,5 +1,44 @@
 [
   {
+    "id": "curve-aioz-weth",
+    "name": "AIOZ/ETH",
+    "token": "AIOZETH",
+    "tokenAddress": "0x8D688646ebB400f7DE2b713B80b6a58fCF35d2d9",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xB045a2ed3C471EA3DB62Bd028ebC85B2661fbfe7",
+    "earnedToken": "mooCurveAIOZ-WETH",
+    "earnedTokenAddress": "0xB045a2ed3C471EA3DB62Bd028ebC85B2661fbfe7",
+    "oracle": "lps",
+    "oracleId": "curve-aioz-weth",
+    "status": "active",
+    "createdAt": 1738835398,
+    "platformId": "convex",
+    "assets": ["AIOZ", "ETH"],
+    "migrationIds": ["ethereum-convex", "ethereum-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/dex/#/ethereum/pools/factory-twocrypto-90/deposit",
+    "removeLiquidityUrl": "https://curve.fi/dex/#/ethereum/pools/factory-twocrypto-90/withdraw",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x8D688646ebB400f7DE2b713B80b6a58fCF35d2d9",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x8D688646ebB400f7DE2b713B80b6a58fCF35d2d9",
+            "coins": [
+              "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "0x626E8036dEB333b408Be468F951bdB42433cBF18"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "morpho-smokehouse-wsteth",
     "name": "wstETH",
     "token": "wstETH",
