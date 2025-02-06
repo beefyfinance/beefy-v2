@@ -213,6 +213,11 @@ const selectDashboardYieldRewardDataAvailableByVaultId = (
       return DashboardDataStatus.Loading;
     }
 
+    if (isCowcentratedLikeVault(vault) && !selectHasBreakdownDataForVault(state, vault)) {
+      // CLM Yield is from CLM Pnl which needs the LP breakdown
+      return DashboardDataStatus.Missing;
+    }
+
     const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
     if (!vaultTimeline) {
       return DashboardDataStatus.Missing;
