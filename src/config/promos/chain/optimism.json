@@ -1,0 +1,2163 @@
+[
+  {
+    "id": "merkl_uniswap-cow-base-weth-toshi-rp",
+    "title": "Beefy x Optimism Governance Fund",
+    "vaultId": "uniswap-cow-base-weth-toshi-rp",
+    "type": "offchain",
+    "campaign": "offchain-zap-v3",
+    "campaignType": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "merkl_uniswap-cow-base-weth-miggles-rp",
+    "title": "Beefy x Optimism Governance Fund",
+    "vaultId": "uniswap-cow-base-weth-miggles-rp",
+    "type": "offchain",
+    "campaign": "offchain-zap-v3",
+    "campaignType": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "merkl_uniswap-cow-base-weth-doginme-rp",
+    "title": "Beefy x Optimism Governance Fund",
+    "vaultId": "uniswap-cow-base-weth-doginme-rp",
+    "type": "offchain",
+    "campaign": "offchain-zap-v3",
+    "campaignType": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "merkl_uniswap-cow-base-weth-chomp-rp",
+    "title": "Beefy x Optimism Governance Fund",
+    "vaultId": "uniswap-cow-base-weth-chomp-rp",
+    "type": "offchain",
+    "campaign": "offchain-zap-v3",
+    "campaignType": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-op-tbtc",
+    "title": "Beefy",
+    "vaultId": "curve-op-tbtc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xBCdFA337B024Bf5778c866a9cbcd0f5Bd5b3e7F5",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "opmooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-wbtc-tbtc",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-wbtc-tbtc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x795c3ae64280c1B14AdcCfe38a610A87FD99DD26",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "opmooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-hai-lusd",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-hai-lusd",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xa26783dEcd88b50A5a7B280DfCc8cC56189fDBAA",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "opmooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-op-weth-wbtc-vault",
+    "title": "Beefy",
+    "vaultId": "sushi-cow-op-weth-wbtc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xF001B141FB44D0aDb0c907365F3a043DeBea8605",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_silo-op-eth-op",
+    "title": "Beefy",
+    "vaultId": "silo-op-eth-op",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xdB2159E702a97562A1BaA67A221c72EE3d315a47",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_silo-op-eth-wsteth",
+    "title": "Beefy",
+    "vaultId": "silo-op-eth-wsteth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xe0e26DAAA57f76f13210b6557Bc2326e6a66599D",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_compound-op-eth",
+    "title": "Beefy",
+    "vaultId": "compound-op-eth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xdBf55813B8993AA987253f0e2d0203E87Da76407",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_compound-op-usdt",
+    "title": "Beefy",
+    "vaultId": "compound-op-usdt",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x5061fE109CfdC75b7b44252D9C9F30AE77cc8ee1",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_compound-op-usdc",
+    "title": "Beefy",
+    "vaultId": "compound-op-usdc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x07Eb20111A3541379dC5dEC9599Ff4a327E432D2",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-hai-pxeth",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-hai-pxeth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x9580ef2B05A1859E5929BDCCa8f01bbC216e97e9",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-pxeth-aleth",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-pxeth-aleth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x90c8F829AeEf867c6F586C85b380fc643959db96",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-wsteth-op-vault-beefyclm",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-wsteth-op-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x0D04Dd0374b4C7c293E1398b356000918908fDB7",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-weth-tbtc-vault-beefyclm",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-weth-tbtc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x64281bf237Fd15C2572a5cC17Dc69471Ba2d6CF9",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-snx-usdc-vault-beefyclm",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-snx-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x8Bf94b769B3639F12E31A0B4CD45902AB3B164d8",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-wbtc-tbtc-vault-beefyclm",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-wbtc-tbtc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x766Dcc1e43821862619944E94aBECD6667BaBB48",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-op-usdc-vault-beefyclm",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-op-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xc49b0F02673eF6BD441f966ac1A12C75D58123dc",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-usdc-usdt-vault-beefyclm",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-usdc-usdt-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x1Aac2467cCbB0ce8640AE8F7A9982EC4052841f4",
+    "partners": ["beefy-clm"],
+    "campaign": "",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-wsteth-ezeth-vault-beefyclm",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-wsteth-ezeth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xB94b0ca6C316f65F0A5E46667CDA50B5EF1eA5F1",
+    "partners": ["beefy-clm"],
+    "campaign": "",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-wsteth-weth-vault-beefyclm",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-wsteth-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x070756A997bB16365fde9693e665B36de9deF684",
+    "partners": ["beefy-clm"],
+    "campaign": "",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-weth-wbtc-vault-beefyclm",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-weth-wbtc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xd2139fa24d343c4350F1920f1C5135421AA38131",
+    "partners": ["beefy-clm"],
+    "campaign": "",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-weth-op-vault-beefyclm",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-weth-op-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x603Cc0661eA07640AF7747D56a8261844e85066F",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-wsteth-usdc-vault-beefyclm",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-wsteth-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x7Dc5B949071CC947C47cC575c8ee696436A23202",
+    "partners": ["beefy-clm"],
+    "campaign": "",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-weth-usdc-vault-beefyclm",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-weth-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x58ee3aBc0DA4cE292AF5d67C306e4c599E623D29",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-susd-usdc-vault-beefyclm",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-susd-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xA3E8E08282713DeABA855003aE0fb6e23987cBCa",
+    "partners": ["beefy-clm"],
+    "campaign": "",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-moobifi-usdc-vault-beefyclm",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-moobifi-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xb60e5dE4c131b8a3E059Ba9241d5471361022Cf6",
+    "partners": ["beefy-clm"],
+    "campaign": "",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-moobifi-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-moobifi-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xB9175911A14929421D6b19Ca5FA428Adf216257F",
+    "tag": {
+      "text": "Zap Launch Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-velo-usdc-beefy",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-velo-usdc",
+    "type": "boost",
+    "contractAddress": "0xBC89219Fa32d8345DCFb4065B491bd32Ef6E9E3D",
+    "tag": {
+      "text": "Zap Launch Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism", "velodrome"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-op-tricrv-beefy",
+    "title": "Beefy",
+    "vaultId": "curve-op-tricrv",
+    "type": "boost",
+    "contractAddress": "0x4f9CD886AE6c9e6B151e93dEC1B727d3BF37A9C9",
+    "tag": {
+      "text": "Zap Launch Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism", "curve"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-usdc-wsteth-beefy",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-usdc-wsteth",
+    "type": "boost",
+    "contractAddress": "0x7f2e3DeabE95E26F7053004Afe6cFCDd1Ec90260",
+    "tag": {
+      "text": "Zap Launch Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism", "lido-eth"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-op-tricrypto-crvusd-beefy",
+    "title": "Beefy",
+    "vaultId": "curve-op-tricrypto-crvusd",
+    "type": "boost",
+    "contractAddress": "0x3609DeFAa7318d8b0eA9437aF6eB38693063BBEC",
+    "tag": {
+      "text": "Zap Launch Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism", "curve"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-op-crvusd-usdc-beefy",
+    "title": "Beefy",
+    "vaultId": "curve-op-crvusd-usdc",
+    "type": "boost",
+    "contractAddress": "0xD149A55810Af46a1231217C9bb95E8aC88D27CCa",
+    "tag": {
+      "text": "Zap Launch Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism", "curve"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-op-crvusd-susd-beefy",
+    "title": "Beefy",
+    "vaultId": "curve-op-crvusd-susd",
+    "type": "boost",
+    "contractAddress": "0x5d7629B52Ee3A4BEe5e4DB08c49A88B793EF89f7",
+    "tag": {
+      "text": "Zap Launch Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism", "curve"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_aura-op-yield-concerto-by-frax-beefy",
+    "title": "Beefy",
+    "vaultId": "aura-op-yield-concerto-by-frax",
+    "type": "boost",
+    "contractAddress": "0x959D9a0410dfCcEBE37F5bf838e34Ea50a0DE852",
+    "partners": ["fraxprotocol"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_sonne-op-usdc-beefy",
+    "title": "Beefy",
+    "vaultId": "sonne-op-usdc",
+    "type": "boost",
+    "contractAddress": "0xF37fE098a4FA15633448436780A935147828e381",
+    "tag": {
+      "text": "Zap Launch Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism", "sonne"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x06D95ef15b41270818Ecb0B0f4E80c71F30F8CB1",
+        "symbol": "mooSonneOP",
+        "decimals": 18,
+        "oracleId": "mooSonneOP"
+      }
+    ]
+  },
+  {
+    "id": "moo_sonne-op-usdt-beefy",
+    "title": "Beefy",
+    "vaultId": "sonne-op-usdt",
+    "type": "boost",
+    "contractAddress": "0x6C67E02A4FE899eb49cFc48bA2ADD9787eeBA5c0",
+    "tag": {
+      "text": "Zap Launch Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism", "sonne"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x06D95ef15b41270818Ecb0B0f4E80c71F30F8CB1",
+        "symbol": "mooSonneOP",
+        "decimals": 18,
+        "oracleId": "mooSonneOP"
+      }
+    ]
+  },
+  {
+    "id": "moo_sonne-op-weth-beefy",
+    "title": "Beefy",
+    "vaultId": "sonne-op-weth",
+    "type": "boost",
+    "contractAddress": "0x4E197533e83445d827e81bDb62bd02E1ace9AE93",
+    "tag": {
+      "text": "Zap Launch Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism", "sonne"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x06D95ef15b41270818Ecb0B0f4E80c71F30F8CB1",
+        "symbol": "mooSonneOP",
+        "decimals": 18,
+        "oracleId": "mooSonneOP"
+      }
+    ]
+  },
+  {
+    "id": "moo_sonne-op-lusd-beefy",
+    "title": "Beefy",
+    "vaultId": "sonne-op-lusd",
+    "type": "boost",
+    "contractAddress": "0xDA09f9368611078b81498A4bF1489C69Ec9F633c",
+    "tag": {
+      "text": "Zap Launch Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism", "sonne"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_sonne-op-dai-beefy",
+    "title": "Beefy",
+    "vaultId": "sonne-op-dai",
+    "type": "boost",
+    "contractAddress": "0xBe040E86f1be44e30164d2586C90a58582877420",
+    "tag": {
+      "text": "Zap Launch Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism", "sonne"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-wbtc-tbtc-beefy",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-wbtc-tbtc",
+    "type": "boost",
+    "contractAddress": "0x45FaE53fC7Fa5d448951f8F772d61EE69Cf76C2c",
+    "tag": {
+      "text": "Zap Launch Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism", "threshold"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-jeur-ageur-beefy",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-jeur-ageur",
+    "type": "boost",
+    "contractAddress": "0xe7cD8766C6E8A0606c94269574112D4AAAF4D133",
+    "tag": {
+      "text": "Zap Launch Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism", "jarvis", "angle"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-weth-op-beefy",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-weth-op",
+    "type": "boost",
+    "contractAddress": "0xe71d44028e4e9c68FbB24b83Da0C2AB56EBb0CDA",
+    "tag": {
+      "text": "Zap Launch Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-thales-weth-beefy",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-thales-weth",
+    "type": "boost",
+    "contractAddress": "0xfacF0e702BB7c4aCA082D814F00759Dc5D1A5c74",
+    "partners": ["lyra"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-lyra-usdc-beefy",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-lyra-usdc",
+    "type": "boost",
+    "contractAddress": "0x9150740BbBe9af436B4291F229eecB83f2dc73B5",
+    "partners": ["lyra"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-weth-kwenta-beefy",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-weth-kwenta",
+    "type": "boost",
+    "contractAddress": "0x603F169dfA7aECE99DF76DdB9c861198ddD2379A",
+    "partners": ["kwenta"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-usdc-snx-beefy",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-usdc-snx",
+    "type": "boost",
+    "contractAddress": "0x5A721E74733001CDdF00CbFE38eA058cEC7F1000",
+    "partners": ["synthetix"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_aura-op-ethereum-triplets-beefy",
+    "title": "Beefy",
+    "vaultId": "aura-op-ethereum-triplets",
+    "type": "boost",
+    "contractAddress": "0x7afE3Cfe886a38Cb5d52612FCc6fBdB56D5dA666",
+    "partners": ["beefy"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-weth-moobifi-beefy",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-weth-moobifi",
+    "type": "boost",
+    "contractAddress": "0xFA6B418801dfc7A33c30686d2673302141C2CBED",
+    "partners": ["beefy"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-ovn-usd+-op",
+    "title": "Overnight",
+    "vaultId": "velodrome-v2-ovn-usd+",
+    "type": "boost",
+    "contractAddress": "0x4FF6cC0717fA0Ba4e40075902ccFEea0103b3e59",
+    "partners": ["overnight"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-op-f-wsteth-lido-op",
+    "title": "Lido",
+    "vaultId": "curve-op-f-wsteth",
+    "type": "boost",
+    "contractAddress": "0xB4bC6fe8dA4ca4be0d93099773c1772d98e0ABe7",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_beets-eclp-wsteth-eth-lido-op",
+    "title": "Lido",
+    "vaultId": "beets-eclp-wsteth-eth",
+    "type": "boost",
+    "contractAddress": "0xFe4b72684AAB65E9FFd8CBcf692c7667334d0EB6",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-exa-weth-exactly2",
+    "title": "Exactly",
+    "vaultId": "velodrome-v2-exa-weth",
+    "type": "boost",
+    "contractAddress": "0x8D8ECabb2554f6eC626d9Fcea876EB021DA36E41",
+    "partners": ["exactly"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000006",
+        "symbol": "ETH",
+        "decimals": 18,
+        "oracleId": "WETH"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-usdc-wusdr-beefy",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-usdc-wusdr",
+    "type": "boost",
+    "contractAddress": "0x140F653C58113cAC8336Cb0271d9943287B2a6Fa",
+    "partners": ["tangible"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-exa-weth-exactly",
+    "title": "Exactly",
+    "vaultId": "velodrome-v2-exa-weth",
+    "type": "boost",
+    "contractAddress": "0xd50f954e456d1eb53AE9C44860db99c6cDDa78cb",
+    "partners": ["exactly"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-stg-usdc-stargate",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-stg-usdc",
+    "type": "boost",
+    "contractAddress": "0xEAccA4F20c4BbF9D00b263AdaB40352618747735",
+    "partners": ["stargate"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-weth-kwenta-kwenta",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-weth-kwenta",
+    "type": "boost",
+    "contractAddress": "0xA25E9db760a427FFa1b55775eBD91A7aa33B5056",
+    "partners": ["kwenta"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-weth-op-optimism",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-weth-op",
+    "type": "boost",
+    "contractAddress": "0x19F3c80a10f799d9C361A688C657510D602658d5",
+    "partners": ["optimism"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-usdc-wtbt-tprotocol",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-usdc-wtbt",
+    "type": "boost",
+    "contractAddress": "0x8978777216D5839bB1E6b904bA95b95A6b90fD87",
+    "partners": ["tprotocol"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-usdc-velo-velodrome",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-usdc-velo",
+    "type": "boost",
+    "contractAddress": "0x1201c2D3d03aB1C60395B679352ba0a97ED697cE",
+    "partners": ["velodrome"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-usdp-usdc-overnight",
+    "title": "Overnight",
+    "vaultId": "velodrome-usdp-usdc",
+    "type": "boost",
+    "contractAddress": "0xF24778729C81e634E719A9Aeb2dE2F698b55121C",
+    "partners": ["overnight"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_beets-overnight-pulse-v2-overnight",
+    "title": "Overnight",
+    "vaultId": "beets-overnight-pulse-v2",
+    "type": "boost",
+    "contractAddress": "0x6E4d1e6B78F536dB6868c80d8735b4bf1551E927",
+    "partners": ["overnight"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-weth-wsteth-lido",
+    "title": "Lido",
+    "vaultId": "velodrome-weth-wsteth",
+    "type": "boost",
+    "contractAddress": "0x5090DC83607036e93412B7739ccf3338086e885e",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xFdb794692724153d1488CcdBE0C56c252596735F",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-wsteth-weth-lido",
+    "title": "Lido",
+    "vaultId": "velodrome-wsteth-weth",
+    "type": "boost",
+    "contractAddress": "0xEbAE4810Fd13605957e7D90bd49d2fD8F8148923",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xFdb794692724153d1488CcdBE0C56c252596735F",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-op-f-wsteth-lido",
+    "title": "Lido",
+    "vaultId": "curve-op-f-wsteth",
+    "type": "boost",
+    "contractAddress": "0x358B7D1a3B7E5c508c40756242f55991a354cd41",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xFdb794692724153d1488CcdBE0C56c252596735F",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-wsteth-ldo-beefy",
+    "title": "Beefy",
+    "vaultId": "velodrome-wsteth-ldo",
+    "type": "boost",
+    "contractAddress": "0x1A3E5557039763425B00a2e1B0eB767B01d64756",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-op-f-seth-opx",
+    "title": "OPX",
+    "vaultId": "curve-op-f-seth",
+    "type": "boost",
+    "contractAddress": "0x55782BdF08e0e03DF79d3A5430762a3FCb2DCb1B",
+    "partners": ["opx"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xcdB4bB51801A1F399d4402c61bC098a72c382E65",
+        "symbol": "OPX",
+        "decimals": 18,
+        "oracleId": "OPX"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-op-f-susd-synthetix",
+    "title": "Beefy",
+    "vaultId": "curve-op-f-susd",
+    "type": "boost",
+    "contractAddress": "0x0E8a8936cb42B40AF9bcC56C81065f5D20b9Cb6a",
+    "partners": ["synthetix"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-wsteth-weth-lido-op",
+    "title": "Beefy",
+    "vaultId": "velodrome-wsteth-weth",
+    "type": "boost",
+    "contractAddress": "0x65F8a09A1C3581a02C8788a6959652E32a87FC77",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-weth-bifi-beefy",
+    "title": "Beefy",
+    "vaultId": "velodrome-weth-bifi",
+    "type": "boost",
+    "contractAddress": "0x8F755873546F4D0EDf7d41fF8604C8A632113eB7",
+    "partners": ["beefy"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-snx-usdc-synthetix",
+    "title": "Beefy",
+    "vaultId": "velodrome-snx-usdc",
+    "type": "boost",
+    "contractAddress": "0xe4b3CCbB1E48c579Ea3D764Fb258Bc908e46487E",
+    "partners": ["synthetix"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-velo-usdc-velodrome",
+    "title": "Beefy",
+    "vaultId": "velodrome-velo-usdc",
+    "type": "boost",
+    "contractAddress": "0x18eCCe7f6B8bB54933643751D3C2D4b3Ea034463",
+    "partners": ["velodrome"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-usdc-msusd",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-usdc-msusd",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x2Fed7fAB17b33702C9A159920fCDCc5463FDC153",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-usdce-msusd",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-usdce-msusd",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xB762fE7a31d75c1A8945a5e5a35B6013b6eB3cf6",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-usdc-alusd-2",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-usdc-alusd-2",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x98Ac5b46C2ec1CF1eC1A9f171Fb3f00f0Cb8c9c1",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-op-usdc-usdm",
+    "title": "Beefy",
+    "vaultId": "curve-op-usdc-usdm",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x1d9D7Cb981a681a4d03942ca3439905661994511",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-hai-susd",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-hai-susd",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xA8d3C17E723E788DB0cabE4e4A4FD4fb9A174705",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-frax-dola",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-frax-dola",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x35d6b57c51e6a9b1Bca85ec9a9fF7869a98bB41C",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "partners": ["optimism"],
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_stargate-v2-op-weth",
+    "title": "Beefy",
+    "vaultId": "stargate-v2-op-weth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x4e46be57cea20e8eFfb8bCF8B0732FD3865624b2",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "opmooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-mseth-weth",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-mseth-weth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xaF30d6bFcF17535837D56C280F6d48839CC295b3",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-aleth-weth",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-aleth-weth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x1E09cd4E8ADB9e244E99926edCF405950e5d084A",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "opmooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-pxeth-weth",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-pxeth-weth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x6D332Bf1CB8183322c8e76C9E64CBBbe82B1de70",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "opmooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-velo-usdc",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-velo-usdc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x02BD3c2a2252F7cc430BDEf3010b17232fa876f8",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-op-tricrv",
+    "title": "Beefy",
+    "vaultId": "curve-op-tricrv",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x83ecC2b6D499DB811512A7828889BC71f0d3838b",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-weth-tlx",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-weth-tlx",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x6fa5a03f3cCC0C5Cc5e3A21b961C4547acb81CC4",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-op-velo",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-op-velo",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x0EdC06Aa3Cc0Da9b9bBC352A8972311Cc930a714",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-weth-velo",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-weth-velo",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xFD2eD8D8Fa824aCa0b26f265a206D5eE3d88DFf4",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-usdc-stg",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-usdc-stg",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x66b529F258841E47D6941b4B180d19001aA7fA0b",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-wsteth-pendle",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-wsteth-pendle",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x2326d4267Ca954324BDfd7044160A24614C2FC52",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-thales-weth",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-thales-weth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x40e5fBb52a2C46bF2Fd38159Aad4deA96a3A22E7",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-weth-kwenta",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-weth-kwenta",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x359Cc498C190123d1Efbf5602EBd9EA77B4F501a",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-usdc-velo",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-usdc-velo",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x97B779548b41110B6FefAB18C7Ff67175541ce20",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velo-cow-op-moobifi-usdc-vault-2",
+    "title": "Beefy",
+    "vaultId": "velo-cow-op-moobifi-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xc36Ae0469EC19EefD6923f2e4445a782644A0371",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "opmooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-weth-moobifi",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-weth-moobifi",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x25C408987934C32202DC963219b407d263fc3161",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "opmooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-op-weth-op-vault",
+    "title": "Beefy",
+    "vaultId": "sushi-cow-op-weth-op-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x231F109a2a8be262e5AA354c7eC5B471b2f6C706",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-op-usdc-weth-vault",
+    "title": "Beefy",
+    "vaultId": "sushi-cow-op-usdc-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xa8f5f5C62912cAA4553b9204F44D91670473FDD9",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-op-tricrypto-crvusd",
+    "title": "Beefy",
+    "vaultId": "curve-op-tricrypto-crvusd",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x2D8Ba7341A5aAa2436851D85De77270f06CffBb1",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_stargate-v2-op-usdt",
+    "title": "Beefy",
+    "vaultId": "stargate-v2-op-usdt",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x4D656F61D90f5adcE41A990B503DA046BE2A6fb5",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_stargate-v2-op-usdc",
+    "title": "Beefy",
+    "vaultId": "stargate-v2-op-usdc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x086a86f1EE8Fbe52Af90722b3E7AD0AFC473Cd04",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_aura-op-weth-wrseth",
+    "title": "Beefy",
+    "vaultId": "aura-op-weth-wrseth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x154A3e33014224EC72a2F241eb8c328Bc69D3db7",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-weth-owell",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-weth-owell",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xfa546A7f55423684cD782cdbA07f65cffdb58e9f",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-wsteth-wusdm",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-wsteth-wusdm",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x9057e0CDAeE0bC81Be190F3ced2b5Cb6Ce574c5d",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_silo-op-usdc-wsteth",
+    "title": "Beefy",
+    "vaultId": "silo-op-usdc-wsteth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x38244438bc058e9bBEfb8C0224171Bc3e2e7A7b2",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-wsteth-weeth",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-wsteth-weeth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xED7d7D5810b254C3970c11AF1C35F1c6A4255626",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-v2-msop-op",
+    "title": "Beefy",
+    "vaultId": "velodrome-v2-msop-op",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x30Cd953cd81aF6b4B1a461175F143CD6fbfF4F4F",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "campaign": "zap-v3",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4200000000000000000000000000000000000042",
+        "symbol": "OP",
+        "decimals": 18,
+        "oracleId": "OP"
+      }
+    ]
+  }
+]

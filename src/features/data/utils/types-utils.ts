@@ -64,3 +64,6 @@ export type OmitNever<T> = { [K in keyof T as T[K] extends never ? never : K]: T
 export type OptionalRecord<K extends keyof any, T> = {
   [P in K]?: T;
 };
+
+/** TParent & TChild except conflicting keys are taken from TChild, not merged */
+export type Override<TParent, TChild> = Omit<TParent, keyof TChild> & TChild;

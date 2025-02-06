@@ -4,19 +4,13 @@ import type { Draft } from 'immer';
 import { sortBy } from 'lodash-es';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import {
-  fetchAllVaults,
-  fetchVaultsLastHarvests,
-  fetchVaultsPinnedConfig,
-  vaultsRecalculatePinned,
-} from '../actions/vaults';
+import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import type { ChainEntity } from '../entities/chain';
 import { isStandardVault, type VaultEntity } from '../entities/vault';
 import type { NormalizedEntity } from '../utils/normalized-entity';
 import { fromKeysBy, pushOrSet } from '../../../helpers/object';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import type { PinnedConfig } from '../apis/config-types';
 
 /**
  * State containing Vault infos
@@ -100,13 +94,6 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
   lastHarvestById: {
     [vaultId: VaultEntity['id']]: number;
   };
-
-  pinned: {
-    configs: PinnedConfig[];
-    byId: {
-      [vaultId: VaultEntity['id']]: boolean;
-    };
-  };
 };
 
 export const initialVaultsState: VaultsState = {
@@ -138,10 +125,6 @@ export const initialVaultsState: VaultsState = {
   byChainId: {},
   contractData: { byVaultId: {} },
   lastHarvestById: {},
-  pinned: {
-    configs: [],
-    byId: {},
-  },
 };
 
 export const vaultsSlice = createSlice({
@@ -177,14 +160,6 @@ export const vaultsSlice = createSlice({
         addContractDataToState(sliceState, action.payload.contractData);
       }
     );
-
-    builder
-      .addCase(fetchVaultsPinnedConfig.fulfilled, (sliceState, action) => {
-        sliceState.pinned.configs = action.payload.configs;
-      })
-      .addCase(vaultsRecalculatePinned.fulfilled, (sliceState, action) => {
-        sliceState.pinned.byId = action.payload.byId;
-      });
   },
 });
 

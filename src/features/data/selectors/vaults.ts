@@ -470,7 +470,7 @@ export const selectAllCowcentratedVaults = createSelector(
 );
 
 export const selectVaultsPinnedConfigs = (state: BeefyState) =>
-  state.entities.vaults.pinned.configs;
+  state.entities.promos.pinned.configs;
 
 export const selectVaultIsPinned = (state: BeefyState, vaultId: VaultEntity['id']) =>
-  state.entities.vaults.pinned.byId[vaultId] || false;
+  state.entities.promos.pinned.byId[vaultId] || false;

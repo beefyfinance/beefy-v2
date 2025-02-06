@@ -1,0 +1,19 @@
+[
+  {
+    "id": "moo_lendle-mantle-weth-lendle",
+    "title": "Lendle",
+    "vaultId": "lendle-mantle-weth",
+    "type": "boost",
+    "contractAddress": "0x01e8881ed2Fb41E0B3dF29f382fAf707a0B26969",
+    "partners": ["lendle"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x25356aeca4210eF7553140edb9b8026089E49396",
+        "symbol": "LEND",
+        "decimals": 18,
+        "oracleId": "LEND"
+      }
+    ]
+  }
+]

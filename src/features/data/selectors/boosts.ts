@@ -1,8 +1,6 @@
 import type { BeefyState } from '../../../redux-types';
-import type { BoostEntity } from '../entities/boost';
 import type { ChainEntity } from '../entities/chain';
 import type { VaultEntity } from '../entities/vault';
-import { getBoostStatusFromContractState } from '../reducers/boosts';
 import { selectBoostUserBalanceInToken, selectBoostUserRewardsInToken } from './balance';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number';
@@ -11,40 +9,36 @@ import { isAfter } from 'date-fns';
 import { orderBy } from 'lodash-es';
 import { valueOrThrow } from '../utils/selector-utils';
 import type { BoostRewardContractData } from '../apis/contract-data/contract-data-types';
+import type { BoostPromoEntity, PromoEntity } from '../entities/promo';
+
+function requireBoost(
+  promosById: { [id: string]: PromoEntity | undefined },
+  boostId: string
+): BoostPromoEntity {
+  const boost = promosById[boostId];
+  if (boost === undefined || boost.type !== 'boost') {
+    throw new Error(`Unknown boost id ${boostId}`);
+  }
+  return boost;
+}
 
 export const selectBoostById = createCachedSelector(
-  (state: BeefyState) => state.entities.boosts.byId,
-  (state: BeefyState, boostId: BoostEntity['id']) => boostId,
-  (boostsById, boostId) => {
-    const boost = boostsById[boostId];
-    if (boost === undefined) {
-      throw new Error(`selectBoostById: Unknown boost id ${boostId}`);
-    }
-    return boost;
-  }
-)((state: BeefyState, boostId: BoostEntity['id']) => boostId);
+  (state: BeefyState) => state.entities.promos.byId,
+  (_: BeefyState, boostId: BoostPromoEntity['id']) => boostId,
+  requireBoost
+)((_: BeefyState, boostId: BoostPromoEntity['id']) => boostId);
 
 export const selectCurrentBoostByVaultIdOrUndefined = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultCurrentBoostId(state, vaultId),
-  (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.boosts.byId,
-  (boostId, boostsById) => {
-    return boostId ? boostsById[boostId] : undefined;
+  (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.promos.byId,
+  (boostId, promosById) => {
+    return boostId ? requireBoost(promosById, boostId) : undefined;
   }
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
-
-export const selectIsBoostActive = (state: BeefyState, boostId: BoostEntity['id']) => {
-  const status = getBoostStatusFromContractState(boostId, selectBoostContractState(state, boostId));
-  return status === 'active';
-};
-
-export const selectIsBoostActiveOrPreStake = (state: BeefyState, boostId: BoostEntity['id']) => {
-  const status = getBoostStatusFromContractState(boostId, selectBoostContractState(state, boostId));
-  return status === 'active' || status === 'prestake';
-};
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectBoostsByChainId = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id']) =>
-    state.entities.boosts.byChainId[chainId]?.allBoostsIds,
+    state.entities.promos.byType.boost?.byChainId[chainId]?.allIds,
   boostsByChain => boostsByChain || []
 )((state: BeefyState, chainId: ChainEntity['id']) => chainId);
 
@@ -94,40 +88,47 @@ export const selectIsVaultPrestakedBoost = createCachedSelector(
 
 export const selectActiveVaultBoostIds = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
-    state.entities.boosts.byVaultId[vaultId]?.activeBoostsIds,
-  boostIds => boostIds || []
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+    state.entities.promos.byVaultId[vaultId]?.byType.boost?.allIds,
+  (state: BeefyState) => state.entities.promos.statusById,
+  (boostIds, statusById) => (boostIds || []).filter(id => statusById[id] === 'active')
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectPreStakeVaultBoostIds = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
-    state.entities.boosts.byVaultId[vaultId]?.prestakeBoostsIds,
-  boostIds => boostIds || []
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+    state.entities.promos.byVaultId[vaultId]?.byType.boost?.allIds,
+  (state: BeefyState) => state.entities.promos.statusById,
+  (boostIds, statusById) => (boostIds || []).filter(id => statusById[id] === 'prestake')
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectPreStakeOrActiveBoostIds = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
-  (activeBoostIds, prestakeBoostIds) => activeBoostIds.concat(prestakeBoostIds)
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    state.entities.promos.byVaultId[vaultId]?.byType.boost?.allIds,
+  (state: BeefyState) => state.entities.promos.statusById,
+  (boostIds, statusById) =>
+    (boostIds || []).filter(id => statusById[id] === 'active' || statusById[id] === 'prestake')
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectAllVaultBoostIds = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
-    state.entities.boosts.byVaultId[vaultId]?.allBoostsIds,
+    state.entities.promos.byVaultId[vaultId]?.byType.boost?.allIds,
   boostIds => boostIds || []
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectPastVaultBoostIds = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    state.entities.promos.byVaultId[vaultId]?.byType.boost?.allIds,
+  (state: BeefyState) => state.entities.promos.statusById,
+  (boostIds, statusById) => (boostIds || []).filter(id => statusById[id] === 'inactive')
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectPastBoostIdsWithUserBalance = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ) => {
-  if (!state.entities.boosts.byVaultId[vaultId]) {
-    return [];
-  }
-
-  const vaultBoosts = state.entities.boosts.byVaultId[vaultId];
+  const expiredBoostIds = selectPastVaultBoostIds(state, vaultId);
 
   const boostIds: string[] = [];
-  for (const eolBoostId of vaultBoosts.expiredBoostsIds) {
+  for (const eolBoostId of expiredBoostIds) {
     const userBalance = selectBoostUserBalanceInToken(state, eolBoostId);
     if (userBalance.gt(0)) {
       boostIds.push(eolBoostId);
@@ -142,101 +143,40 @@ export const selectPastBoostIdsWithUserBalance = (
 };
 
 export const selectShouldDisplayVaultBoost = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  if (!state.entities.boosts.byVaultId[vaultId]) {
-    return false;
-  }
-
-  const vaultBoosts = state.entities.boosts.byVaultId[vaultId];
-
-  // has an active boost
-  if (vaultBoosts.activeBoostsIds.length > 0) {
-    return true;
-  }
-  // has a prestaking boost
-  if (vaultBoosts.prestakeBoostsIds.length > 0) {
+  const activeOrPrestakeIds = selectPreStakeOrActiveBoostIds(state, vaultId);
+  if (activeOrPrestakeIds.length > 0) {
     return true;
   }
 
-  // OR, there was an ended boost and user staked into it
-  if (selectPastBoostIdsWithUserBalance(state, vaultId).length > 0) {
-    return true;
-  }
-
-  return false;
+  // OR, there is an expired boost which the user is still staked in
+  return selectPastBoostIdsWithUserBalance(state, vaultId).length > 0;
 };
 
 export const selectVaultsActiveBoostPeriodFinish = (
   state: BeefyState,
-  vaultId: BoostEntity['id']
+  vaultId: BoostPromoEntity['id']
 ) => {
   const activeBoost = selectVaultCurrentBoostIdWithStatus(state, vaultId);
   const finish = activeBoost ? selectBoostPeriodFinish(state, activeBoost.id) : new Date(0);
   return finish || new Date(0);
 };
 
-export const selectBoostPeriodFinish = (state: BeefyState, boostId: BoostEntity['id']) => {
-  return state.entities.boosts.contractState[boostId]?.periodFinish || null;
+export const selectBoostPeriodFinish = (state: BeefyState, boostId: BoostPromoEntity['id']) => {
+  return state.entities.promos.dataByType.boost[boostId]?.periodFinish || null;
 };
 
-export const selectBoostContractState = (state: BeefyState, boostId: BoostEntity['id']) => {
-  return state.entities.boosts.contractState[boostId] || { periodFinish: null, isPreStake: true };
-};
-
-export const selectUserBalanceOnActiveOrPastBoost = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-) => {
-  const isBoosted = selectIsVaultPreStakedOrBoosted(state, vaultId);
-
-  const activeBoost = isBoosted
-    ? selectBoostById(state, selectPreStakeOrActiveBoostIds(state, vaultId)[0])
-    : null;
-
-  const pastBoostsWithUserBalance = selectPastBoostIdsWithUserBalance(state, vaultId).map(
-    boostId => {
-      return boostId;
-    }
+export const selectBoostContractState = (state: BeefyState, boostId: BoostPromoEntity['id']) => {
+  return (
+    state.entities.promos.dataByType.boost[boostId] || { periodFinish: null, isPreStake: true }
   );
-
-  const isBoostedOrHaveBalanceInPastBoost = isBoosted || pastBoostsWithUserBalance.length === 1;
-
-  const boost =
-    isBoosted && activeBoost
-      ? selectBoostById(state, activeBoost.id)
-      : pastBoostsWithUserBalance.length === 1
-      ? selectBoostById(state, pastBoostsWithUserBalance[0])
-      : null;
-
-  const boostBalance =
-    isBoostedOrHaveBalanceInPastBoost && boost
-      ? selectBoostUserBalanceInToken(state, boost.id)
-      : BIG_ZERO;
-
-  return boostBalance;
-};
-
-export const selectUserActiveBoostBalanceInToken = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  walletAddress?: string
-) => {
-  const isBoosted = selectIsVaultBoosted(state, vaultId);
-
-  const activeBoost = isBoosted
-    ? selectBoostById(state, selectPreStakeOrActiveBoostIds(state, vaultId)[0])
-    : null;
-
-  return isBoosted && activeBoost
-    ? selectBoostUserBalanceInToken(state, activeBoost.id, walletAddress)
-    : BIG_ZERO;
 };
 
 export const selectBoostPartnerById = (state: BeefyState, partnerId: string) => {
-  return state.entities.boosts.partners.byId[partnerId];
+  return state.entities.promos.partners.byId[partnerId];
 };
 
 export const selectBoostCampaignById = (state: BeefyState, campaignId: string) => {
-  return state.entities.boosts.campaigns.byId[campaignId];
+  return state.entities.promos.campaigns.byId[campaignId];
 };
 
 export const selectOffchainBoostCampaignByType = (
@@ -246,22 +186,22 @@ export const selectOffchainBoostCampaignByType = (
   if (type === undefined) {
     return undefined;
   }
-  return state.entities.boosts.campaigns.byId[`offchain-${type}`];
+  return state.entities.promos.campaigns.byId[`offchain-${type}`];
 };
 
 const NO_REWARDS: BoostRewardContractData[] = [];
 export const selectBoostRewards = createCachedSelector(
-  (state: BeefyState, boostId: BoostEntity['id']) => selectBoostContractState(state, boostId),
+  (state: BeefyState, boostId: BoostPromoEntity['id']) => selectBoostContractState(state, boostId),
   contractData => {
     if (!contractData) {
       // tokens from config
     }
     return contractData.rewards || NO_REWARDS;
   }
-)((_state: BeefyState, boostId: BoostEntity['id']) => boostId);
+)((_state: BeefyState, boostId: BoostPromoEntity['id']) => boostId);
 
 export const selectBoostActiveRewards = createCachedSelector(
-  (state: BeefyState, boostId: BoostEntity['id']) => selectBoostRewards(state, boostId),
+  (state: BeefyState, boostId: BoostPromoEntity['id']) => selectBoostRewards(state, boostId),
   () => Math.trunc(Date.now() / 60_0000), // invalidate every 60s
   rewards => {
     const now = new Date();
@@ -275,10 +215,10 @@ export const selectBoostActiveRewards = createCachedSelector(
       'desc'
     );
   }
-)((_state: BeefyState, boostId: BoostEntity['id']) => boostId);
+)((_state: BeefyState, boostId: BoostPromoEntity['id']) => boostId);
 
 export const selectBoostActiveRewardTokens = createCachedSelector(
-  (state: BeefyState, boostId: BoostEntity['id']) => selectBoostActiveRewards(state, boostId),
+  (state: BeefyState, boostId: BoostPromoEntity['id']) => selectBoostActiveRewards(state, boostId),
   (state: BeefyState) => state.entities.tokens.byChainId,
   (rewards, tokensByChainId) =>
     rewards.map(reward =>
@@ -287,4 +227,4 @@ export const selectBoostActiveRewardTokens = createCachedSelector(
         `selectBoostActiveRewardTokens: Token ${reward.token.address} not found`
       )
     )
-)((_state: BeefyState, boostId: BoostEntity['id']) => boostId);
+)((_state: BeefyState, boostId: BoostPromoEntity['id']) => boostId);

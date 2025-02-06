@@ -1,0 +1,112 @@
+{
+  "renzo-lido": {
+    "title": "Renzo × Lido",
+    "description": "Lido and Renzo joined forces with Beefy to bring users earnings completely denominated in ETH. Earn ezETH and wstETH on top of your ezETH-wstETH position.",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://x.com/beefyfinance"
+    }
+  },
+  "rootstock-grant": {
+    "title": "Beefy × Rootstock",
+    "tag": {
+      "text": "Rootstock Grant"
+    },
+    "description": "Celebrate the launch of Beefy on Rootstock, Bitcoin's first and longest-lasting sidechain. Beefy users can earn grant-funded $rBTC tokens for trying out new products on Rootstock. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your rewards whenever you're ready.",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://x.com/beefyfinance"
+    }
+  },
+  "arb-ltipp": {
+    "title": "Beefy × Arbitrum LTIPP",
+    "description": "Earn extra incentives awarded to Beefy CLM vaults through Arbitrum's Long Term Incentives Pilot Program ('LTIPP'). Beefy users earn additional $ARB tokens for trying out selected CLM products. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your LTIPP rewards whenever you're ready.",
+    "learn": "https://beefy.com/articles/ltipp/",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://x.com/beefyfinance"
+    }
+  },
+  "zap-v3": {
+    "title": "Beefy x Optimism Governance Fund",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "description": "Celebrate the launch of ZAP V3 with Beefy's Optimism Governance Fund grant. Beefy users earn additional $OP tokens for using ZAP V3-supported products on the Superchain. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your $OP rewards whenever you're ready.",
+    "learn": "https://beefy.com/articles/zap-v3/",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://x.com/beefyfinance"
+    }
+  },
+  "offchain-zap-v3": {
+    "title": "Beefy x Optimism Governance Fund",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
+    "description": "Celebrate the launch of ZAP V3 with Beefy's Optimism Governance Fund grant. Beefy users earn additional $OP tokens for using ZAP V3-supported products on the Superchain. Rewards accrue linearly over time depending on the user's TVL. Simply click the 'Claim' tab to find details of all onchain and offchain rewards, and then manually claim your rewards whenever you're ready.",
+    "learn": "https://beefy.com/articles/zap-v3/",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://x.com/beefyfinance"
+    }
+  },
+  "offchain-mode-grant": {
+    "title": "Beefy x Mode Governance Fund",
+    "tag": {
+      "text": "Mode Grant"
+    },
+    "description": "Earn $OP on Optimism network for participating in Beefy vaults on Mode. Beefy users earn additional $OP tokens for using products on the Superchain. Rewards accrue linearly over time depending on the user's TVL. Simply click the 'Claim' tab to find details of all onchain and offchain rewards, and then manually claim your rewards whenever you're ready.",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://x.com/beefyfinance"
+    }
+  },
+  "dao-rewards": {
+    "title": "Beefy DAO Distribution",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "description": "Earn extra incentives awarded by the Beefy DAO from its recent quarterly earnings. Beefy users earn additional tokens for using products boosted by the Beefy DAO Distribution program. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your rewards whenever you're ready.",
+    "learn": "https://snapshot.org/#/beefydao.eth/proposal/0xefe70f50c7743085e72f4c2421cc8e92c8b82fa14bfd479a26bd0a0c14c5f07e",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://x.com/beefyfinance"
+    }
+  },
+  "pool-dao-rewards": {
+    "title": "Beefy DAO Distribution",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "description": "Earn extra incentives awarded by the Beefy DAO from its recent quarterly earnings. Beefy users earn additional tokens for using products boosted by the Beefy DAO Distribution program. Rewards accrue linearly over time depending on the user's TVL. Simply click the 'Claim' tab to find details of all onchain and offchain rewards, and then manually claim your rewards whenever you're ready.",
+    "learn": "https://snapshot.org/#/beefydao.eth/proposal/0xefe70f50c7743085e72f4c2421cc8e92c8b82fa14bfd479a26bd0a0c14c5f07e",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://x.com/beefyfinance"
+    }
+  },
+  "optimism-grant": {
+    "title": "Beefy x Optimism Governance Fund",
+    "description": "Earn extra incentives awarded to Beefy products on the Superchain through the first Beefy Optimism Governance Fund grant. Beefy users earn additional $OP tokens for trying out selected products. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your $OP rewards whenever you're ready.",
+    "learn": "https://beefy.com/articles/beefy-helps-grow-the-optimism-community-with-a-650-000-op-grant/",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://x.com/beefyfinance"
+    }
+  },
+  "airdrop-gnosis-safe": {
+    "title": "Beefy x Safe",
+    "tag": {
+      "text": "SafeBoost"
+    },
+    "description": "TODO Reward for Safe users...",
+    "learn": "https://snapshot.org/#/beefydao.eth/proposal/0xefe70f50c7743085e72f4c2421cc8e92c8b82fa14bfd479a26bd0a0c14c5f07e",
+    "social": {
+      "discord": "https://chat.safe.global/",
+      "twitter": "https://x.com/safe"
+    }
+  }
+}

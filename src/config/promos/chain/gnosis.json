@@ -1,0 +1,22 @@
+[
+  {
+    "id": "airdrop_aura-gnosis-usdc.e-usdt-sdai",
+    "title": "Beefy x SafeBoost",
+    "by": "Safe",
+    "vaultId": "aura-gnosis-usdc.e-usdt-sdai",
+    "type": "airdrop",
+    "campaign": "airdrop-gnosis-safe",
+    "status": "active",
+    "startTime": 1738797734,
+    "endTime": 1739402534,
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4d18815D14fe5c3304e87B3FA18318baa5c23820",
+        "symbol": "SAFE",
+        "decimals": 18,
+        "oracleId": "SAFE"
+      }
+    ]
+  }
+]

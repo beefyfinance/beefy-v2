@@ -1,0 +1,230 @@
+[
+  {
+    "id": "moo_grape-grape-mim-swapsicle",
+    "title": "Swapsicle",
+    "vaultId": "grape-grape-mim",
+    "type": "boost",
+    "contractAddress": "0x8B80c7eb70aaDe035a538C72b00EF114fd306c93",
+    "partners": ["swapsicle"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x240248628B7B6850352764C5dFa50D1592A033A8",
+        "symbol": "POPS",
+        "decimals": 18,
+        "oracleId": "POPS"
+      }
+    ]
+  },
+  {
+    "id": "moo_bifi_avax-singular",
+    "title": "Singular",
+    "vaultId": "joe-wavax-bifi-eol",
+    "type": "boost",
+    "contractAddress": "0x2554216fD346ABDBD59cc6f7E85A3fdAF15c1419",
+    "partners": ["singular"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xF9A075C9647e91410bF6C402bDF166e1540f67F0",
+        "symbol": "SING",
+        "decimals": 18,
+        "oracleId": "SING"
+      }
+    ]
+  },
+  {
+    "id": "moo_joe-bifi",
+    "title": "Beefy",
+    "vaultId": "joe-joe",
+    "type": "boost",
+    "contractAddress": "0x90e91cAf13F6C06fD04031cF5f398F8b3BAB794B",
+    "partners": ["beefy"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xCeefB07Ad37ff165A0b03DC7C808fD2E2fC77683",
+        "symbol": "mooAvalancheoldBIFI",
+        "decimals": 18,
+        "oracleId": "oldBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_AVAX-grape",
+    "title": "Grape Finance",
+    "vaultId": "aavev3-avax",
+    "type": "boost",
+    "contractAddress": "0xE1BBde90EB564c5f26dfcDeB9918BDA183BF4e2b",
+    "partners": ["grape"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC55036B5348CfB45a932481744645985010d3A44",
+        "symbol": "WINE",
+        "decimals": 18,
+        "oracleId": "WINE"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-avax-atricrypto-ripae",
+    "title": "Ripae",
+    "vaultId": "curve-avax-atricrypto",
+    "type": "boost",
+    "contractAddress": "0xc4C291b76F9aD94F0Ce57E7a5E629D81A02bB1C9",
+    "partners": ["ripae"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x9466Ab927611725B9AF76b9F31B2F879Ff14233d",
+        "symbol": "PAE",
+        "decimals": 18,
+        "oracleId": "PAE"
+      }
+    ]
+  },
+  {
+    "id": "moo_AVAX-nitro",
+    "title": "Nitro Network",
+    "vaultId": "aavev3-avax",
+    "type": "boost",
+    "contractAddress": "0xB27727ebeE7cfa04cAAb68522E1A14c426BBA768",
+    "partners": ["nitro"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc69Eba65e87889f0805dB717Af06797055A0BA07",
+        "symbol": "NCASH",
+        "decimals": 18,
+        "oracleId": "NCASH"
+      }
+    ]
+  },
+  {
+    "id": "moo_pharaoh-cow-wavax-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "pharaoh-cow-wavax-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x3B59C97238a57Bb7d0c3b74354714Ba5a1EE808E",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+        "symbol": "USDC",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_pharaoh-cow-btc.b-wavax-vault",
+    "title": "Beefy",
+    "vaultId": "pharaoh-cow-btc.b-wavax-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xeCFFBe027e2d08c7a24e7A89FA288Fe0C06fCBCa",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+        "symbol": "USDC",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_pharaoh-cow-weth.e-wavax-vault",
+    "title": "Beefy",
+    "vaultId": "pharaoh-cow-weth.e-wavax-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x94bbe945F694d633c84F55A6baD26b69AadC2114",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+        "symbol": "USDC",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_pharaoh-cow-usdt-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "pharaoh-cow-usdt-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x3d1A17dF6ce5705dB49747C5f89B5421Aac369D9",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+        "symbol": "USDC",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_gmx-avax-gmx",
+    "title": "Beefy",
+    "vaultId": "gmx-avax-gmx",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x915E69bdDAC466290DE14d0aDB7bA8eC20d9F39E",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+        "symbol": "USDC",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_joe-joe",
+    "title": "Beefy",
+    "vaultId": "joe-joe",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x311174CE711C69F6B67036D87279269FD012263c",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+        "symbol": "USDC",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  }
+]

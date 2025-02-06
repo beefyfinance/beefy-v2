@@ -1,6 +1,6 @@
 import {
   addressBookToAppId,
-  getBoostsForChain,
+  getPromosForChain,
   getMintersForChain,
   getVaultsForChain,
 } from './config';
@@ -95,24 +95,28 @@ async function getVaultTokensForChain(chain: ChainEntity): Promise<TokenEntity[]
 }
 
 async function getBoostTokensForChain(chain: ChainEntity): Promise<TokenEntity[]> {
-  const boosts = await getBoostsForChain(chain.id);
+  const boosts = await getPromosForChain(chain.id);
 
   return boosts.reduce((tokens: TokenEntity[], boost) => {
-    if (boost.earnedTokenAddress && boost.earnedTokenAddress !== 'native') {
-      tokens.push({
-        type: 'erc20',
-        id: boost.earnedToken,
-        symbol: boost.earnedToken,
-        chainId: chain.id,
-        oracleId: boost.earnedOracleId || boost.earnedToken,
-        address: boost.earnedTokenAddress,
-        decimals: boost.earnedTokenDecimals || 18,
-        buyUrl: undefined,
-        website: undefined,
-        description: undefined,
-        documentation: undefined,
-        risks: [],
-      });
+    for (const reward of boost.rewards) {
+      if (reward.type !== 'token' || !reward.address) continue;
+
+      if (reward.address !== 'native') {
+        tokens.push({
+          type: 'erc20',
+          id: reward.symbol,
+          symbol: reward.symbol,
+          chainId: reward.chainId || chain.id,
+          oracleId: reward.oracleId || reward.symbol,
+          address: reward.address,
+          decimals: reward.decimals || 18,
+          buyUrl: undefined,
+          website: undefined,
+          description: undefined,
+          documentation: undefined,
+          risks: [],
+        });
+      }
     }
 
     return tokens;

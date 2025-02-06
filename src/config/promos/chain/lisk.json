@@ -1,0 +1,38 @@
+[
+  {
+    "id": "moo_velodrome-cow-lisk-usdt-weth-vault-lisk",
+    "title": "Lisk",
+    "vaultId": "velodrome-cow-lisk-usdt-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x57bC7064B165fBCB1B0df55aF76e3b2aAEB0aA95",
+    "partners": ["lisk"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xac485391EB2d7D88253a7F1eF18C37f4242D1A24",
+        "symbol": "LSK",
+        "decimals": 18,
+        "oracleId": "LSK"
+      }
+    ]
+  },
+  {
+    "id": "moo_velodrome-cow-lisk-usdt-usdc.e-vault-lisk",
+    "title": "Lisk",
+    "vaultId": "velodrome-cow-lisk-usdt-usdc.e-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x69e8612c2364e0e743731c4BE16813BfD18e2E32",
+    "partners": ["lisk"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xac485391EB2d7D88253a7F1eF18C37f4242D1A24",
+        "symbol": "LSK",
+        "decimals": 18,
+        "oracleId": "LSK"
+      }
+    ]
+  }
+]

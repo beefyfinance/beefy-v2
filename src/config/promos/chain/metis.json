@@ -1,0 +1,19 @@
+[
+  {
+    "id": "moo_netswap-wbtc-metis-relay",
+    "title": "Relay Chain - Metis",
+    "vaultId": "netswap-wbtc-metis",
+    "type": "boost",
+    "contractAddress": "0xeD4ea30c755676C07d3e0e0f74Ff84C0193B4551",
+    "partners": ["relay"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+        "symbol": "Metis",
+        "decimals": 18,
+        "oracleId": "METIS"
+      }
+    ]
+  }
+]

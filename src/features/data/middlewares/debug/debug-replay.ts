@@ -1,6 +1,5 @@
 import { BigNumber } from 'bignumber.js';
 import { isString } from 'lodash-es';
-import { fetchAllBoosts } from '../../actions/boosts';
 import { fetchChainConfigs } from '../../actions/chains';
 import { fetchAllVaults } from '../../actions/vaults';
 import { mapValuesDeep } from '../../utils/array-utils';
@@ -14,9 +13,9 @@ export async function replayReduxActions(actionsList: any[], delayMs: 200) {
     // replay removed actions from log
     if (action.type.startsWith('vaults/fetchAllVaults/')) {
       await store.dispatch(fetchAllVaults());
-    } else if (action.type.startsWith('boosts/fetchAllBoosts/')) {
+    } /*else if (action.type.startsWith('boosts/fetchAllBoosts/')) {
       await store.dispatch(fetchAllBoosts());
-    } else if (action.type.startsWith('chains/fetchChainConfigs/')) {
+    } */ else if (action.type.startsWith('chains/fetchChainConfigs/')) {
       await store.dispatch(fetchChainConfigs());
     } else {
       if (action.payload && 'state' in action.payload && action.payload.state === '__STATE__') {

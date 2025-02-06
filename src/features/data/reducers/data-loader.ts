@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllAllowanceAction } from '../actions/allowance';
 import { fetchApyAction } from '../actions/apy';
 import { fetchAllBalanceAction, recalculateDepositedVaultsAction } from '../actions/balance';
-import { fetchAllBoosts, initiateBoostForm } from '../actions/boosts';
+import { initiateBoostForm } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { fetchAllPricesAction } from '../actions/prices';
@@ -64,6 +64,7 @@ import { cloneDeep } from 'lodash-es';
 import { fetchUserMerklRewardsAction } from '../actions/user-rewards/merkl-user-rewards';
 import { fetchOffChainCampaignsAction } from '../actions/rewards';
 import { fetchUserStellaSwapRewardsAction } from '../actions/user-rewards/stellaswap-user-rewards';
+import { initPromos } from '../actions/promos';
 
 const dataLoaderStateInit: LoaderStateIdle = {
   lastFulfilled: undefined,
@@ -111,7 +112,7 @@ export const initialDataLoaderState: DataLoaderState = {
     chainConfig: dataLoaderStateInit,
     prices: dataLoaderStateInit,
     apy: dataLoaderStateInit,
-    boosts: dataLoaderStateInit,
+    promos: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
     lastHarvests: dataLoaderStateInit,
     fees: dataLoaderStateInit,
@@ -477,7 +478,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy', true);
     addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults', true);
     addGlobalAsyncThunkActions(builder, fetchVaultsLastHarvests, 'lastHarvests', true);
-    addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts', true);
+    addGlobalAsyncThunkActions(builder, initPromos, 'promos', true);
     addGlobalAsyncThunkActions(builder, fetchFees, 'fees', true);
     addGlobalAsyncThunkActions(builder, fetchAllMinters, 'minters', false);
     addGlobalAsyncThunkActions(builder, fetchAllMigrators, 'migrators', false);

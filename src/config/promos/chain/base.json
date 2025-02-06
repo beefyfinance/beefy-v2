@@ -1,0 +1,1343 @@
+[
+  {
+    "id": "pool_uniswap-cow-base-weth-keycat-rp",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-base-weth-keycat-rp",
+    "type": "pool",
+    "campaign": "pool-dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cow-base-weth-usei-vault",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-weth-usei-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x02A53173Aab0f4A396e3e3D59d94D0BD50C71736",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cow-base-weth-uapt-vault",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-weth-uapt-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x0327C8035C2e3Ec61d94d84D68828bF1aB4195c2",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cow-base-weth-unear-vault",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-weth-unear-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x676a85ef11DA67123B11815FD1921439579b81eF",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cow-base-udoge-weth-vault",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-udoge-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x50EC8aa1e195b143E323c7d074862f7f44Bf5a30",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cow-base-weth-ulink-vault",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-weth-ulink-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x76bB914B943d422f010F693b3f5e6BC9B851F562",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cow-base-weth-uada-vault",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-weth-uada-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xA5B10BC49cFd281700F83BAE88cF5Ac0ED933Ff4",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cow-base-uxrp-weth-vault",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-uxrp-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xa2a7dA25fAaBd657eeC0FC313e6F1b0c1E00d7D5",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cow-base-weth-usol-vault",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-weth-usol-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x71e7186b32CaB3797fA53616806683ad1cB2FF03",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cow-base-weth-usui-vault",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-base-weth-usui-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xaC0A03ebfFf9a30d2C15917DcA42A89663Fd98dC",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_compound-base-usdc",
+    "title": "Beefy",
+    "vaultId": "compound-base-usdc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x7334D86B64cf27DaDe76f130E974B725259B98FB",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-wsteth-weth-vault-lido",
+    "title": "Lido",
+    "vaultId": "aero-cow-wsteth-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x3ccbbA6D5943eB822909445Cf56e17Ae3edA32ab",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452",
+        "symbol": "wstETH",
+        "decimals": 18,
+        "oracleId": "wstETH"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-weth-klima",
+    "title": "Beefy",
+    "vaultId": "aerodrome-weth-klima",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x94444Bf94e85462686510E44cAba098263629654",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_alienbase-alb-usdc-wide",
+    "title": "Beefy",
+    "vaultId": "alienbase-alb-usdc-wide",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xb0aCdBbDd3038e0F383feBC448A945A4b99c9a1A",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_alienbase-alb-eth-wide",
+    "title": "Beefy",
+    "vaultId": "alienbase-alb-eth-wide",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xEC929001CAfA53aEE51d0D7C0Ba5fb2106CaE39c",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_alienbase-cbeth-eth-narrow",
+    "title": "Beefy",
+    "vaultId": "alienbase-cbeth-eth-narrow",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x8313809c70595eB01f836F004f2336500d4AD6a8",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_alienbase-usdc-usdbc-narrow",
+    "title": "Beefy",
+    "vaultId": "alienbase-usdc-usdbc-narrow",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xD02fd03d6758C605F0367B6C9D4C86691cdc1ff7",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-msusd-usdc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-msusd-usdc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xa47b30E65359A838F87e9e71d34B07f219d34fE8",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-usd+-mai",
+    "title": "Beefy",
+    "vaultId": "aerodrome-usd+-mai",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xff22e826825e59161560Da5545883e0cB332FCe7",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-weth-qi",
+    "title": "Beefy",
+    "vaultId": "aerodrome-weth-qi",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x50B4728983475F6f30d8E8bfcf63bBFA8433eed9",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-virtual-weth",
+    "title": "Beefy",
+    "vaultId": "aerodrome-virtual-weth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x834f2E3e8C4F25e80375A0Ff6CB9A61398ecC749",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-virtual-cbbtc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-virtual-cbbtc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x04C524b5312f6D72689BC58b74828C054CbaE051",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-weth-luna-vault",
+    "title": "Beefy",
+    "vaultId": "aero-cow-weth-luna-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x21e73363e26c054317CA3eBd4B3aD1d8891a9F90",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-usdc-mai",
+    "title": "Beefy",
+    "vaultId": "aerodrome-usdc-mai",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x8C14bd2E49f58D7C8314E748B603493e378Bed01",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-usdc-cbbtc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-usdc-cbbtc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x7e9dE9f651F7309e59deA0deB44fab6C60cd1d8b",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-weth-cbbtc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-weth-cbbtc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x215394cF2607d4b5B370Df3E42242c44D25cc7Da",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-weth-silo",
+    "title": "Beefy",
+    "vaultId": "aerodrome-weth-silo",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x2E55517131Cb344F9383235e95e83F6Ca347Bee0",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-tbtc-cbbtc-vault",
+    "title": "Beefy",
+    "vaultId": "aero-cow-tbtc-cbbtc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x0e18909039f0646168dF6B5bc31Ccf60E505E9dd",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cow-weth-eurc-vault",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-weth-eurc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x6337F546aCEDBf7b184b14A64009dBbA9f30710d",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cow-usdz-weth-vault",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-usdz-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xc35cD21310b16b993E05cA926b62b92B594aD921",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-weth-degen",
+    "title": "Beefy",
+    "vaultId": "aerodrome-weth-degen",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x9457908369f13192303715356F88a9B316c02645",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cow-weth-degen-vault",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-weth-degen-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xE6CF17CcE127D84c2760D1901d12242D729F4fDd",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cow-degen-usd+-vault",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-degen-usd+-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x3Aa232d60589C8FfaFeA2e8B1F219D87D8Bc35ea",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-jeur-eurc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-jeur-eurc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x292D28438D7849F7aC057eD1a024da3c33C795a4",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-crvusd-usdc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-crvusd-usdc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x95F2083F28F2C33F6dA5A8d5a762400aEA3D294b",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-weth-ovn-vault",
+    "title": "Beefy",
+    "vaultId": "aero-cow-weth-ovn-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x9970Fa52188f2e60348CA45d79439A5876d55F92",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-weth-spx",
+    "title": "Beefy",
+    "vaultId": "aerodrome-weth-spx",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xA5487C4eDf638D605646B0Ef1CE7814E09c75e56",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-doginme-weth-vault",
+    "title": "Beefy",
+    "vaultId": "aero-cow-doginme-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x57419002C40Ec11d9527b283423091367fB69CA0",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-mog-weth-vault",
+    "title": "Beefy",
+    "vaultId": "aero-cow-mog-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x8F2afc9aB45C146173E4F7693265CEA7d55DA9ed",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-weth-moobifi-vault",
+    "title": "Beefy",
+    "vaultId": "aero-cow-weth-moobifi-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xc7036D7B4a3a1AD6193e74789e03046C0777Cf0a",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-ovn-usd+",
+    "title": "Beefy",
+    "vaultId": "aerodrome-ovn-usd+",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x399e1Ba5a1c0D9e711777Db3960Ac9a7Dba06882",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-aero-l2ve",
+    "title": "Beefy",
+    "vaultId": "aerodrome-aero-l2ve",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x5f5b755f11273cE28a83320F630a710cb8332f30",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-aero-wsteth",
+    "title": "Beefy",
+    "vaultId": "aerodrome-aero-wsteth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xc4bf2511F01fB3A6aC91A1B06bF899b74DC4D2F6",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-aero-usdbc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-aero-usdbc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xC3922FB2a5E4Fd2359904AD012a0b37FE6f84033",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-weth-aero",
+    "title": "Beefy",
+    "vaultId": "aerodrome-weth-aero",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x86f863b55a74CcF7c976B1Ee1a4aa3001D394a37",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-usdc-aero",
+    "title": "Beefy",
+    "vaultId": "aerodrome-usdc-aero",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xB84934f3D223B24f87096E9388Fc9D4eB7546F64",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-usdz-susdz",
+    "title": "Beefy",
+    "vaultId": "aerodrome-usdz-susdz",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x1442bCfa9aB4EB8dBfE1947d18Fbd59fbbC20306",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-usd+-weth-vault",
+    "title": "Beefy",
+    "vaultId": "aero-cow-usd+-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xa6dDc012D709a4B7eB20613a4C25D8F0a9e3076b",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cbbtc-susdz",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cbbtc-susdz",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xF8982AF4da5A85b7A82F0348f6Bd6970Dc363466",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-weth-zro-vault",
+    "title": "Beefy",
+    "vaultId": "aero-cow-weth-zro-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x26899043fbbD47C763C684Eb2b3A599B63ab10CE",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-wif-weth-vault",
+    "title": "Beefy",
+    "vaultId": "aero-cow-wif-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x2e4b03571FEb5243617e385C4790c26eb1f1B3D6",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-eurc-cbbtc-vault",
+    "title": "Beefy",
+    "vaultId": "aero-cow-eurc-cbbtc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xBDfF6C8bF77a086Fc3743617598460F3d4ea8A33",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-tbtc-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "aero-cow-tbtc-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x2B87845Fec4f5D7cBd264385F3eee91c444340DB",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-weth-usdt-vault",
+    "title": "Beefy",
+    "vaultId": "aero-cow-weth-usdt-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xB0CA8CC0B97CEC58Fe6739c4AE04774128Ba7aC5",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_baseswap-cow-weth-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "baseswap-cow-weth-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x9aa27671C67249cEDAf2094455521eb4E49a5ea4",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-weth-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "aero-cow-weth-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xF6DB810709A29bb4DA2969613D25eE32573b0ACa",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-weth-bwell",
+    "title": "Beefy",
+    "vaultId": "aerodrome-weth-bwell",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x09DcD7a4A2dd2ec39e00030b57bA738eB397Feca",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-weth-usdbc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-weth-usdbc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x245E3fc0C87b21ae1ef8DF68cb7d444972CB3E4F",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-weth-cbbtc-vault",
+    "title": "Beefy",
+    "vaultId": "aero-cow-weth-cbbtc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x08E21740455E2DB8F3894dAB86ebF301235F12fF",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aero-cow-usdc-cbbtc-vault",
+    "title": "Beefy",
+    "vaultId": "aero-cow-usdc-cbbtc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x3C57210e88EAe000D0023554b94d614Af2060f61",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-tbtc-usdc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-tbtc-usdc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xA1Efd7353872EDDEB1CC3Bb55D0B405178dC31F9",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_alienbase-cbeth-weth-alienbase2",
+    "title": "Alienbase",
+    "vaultId": "alienbase-cbeth-weth",
+    "type": "boost",
+    "contractAddress": "0x31EAc0C43F0564f17314738D0a2de067C05D385E",
+    "partners": ["alienbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xbBdeAaa32CBCE61E0A2809edcAE8d1857c55A5DD",
+        "symbol": "mooALB",
+        "decimals": 18,
+        "oracleId": "mooALB"
+      }
+    ]
+  },
+  {
+    "id": "moo_alienbase-weth-usdbc-alienbase2",
+    "title": "Alienbase",
+    "vaultId": "alienbase-weth-usdbc",
+    "type": "boost",
+    "contractAddress": "0xA91F38BB21c51131d2915F025DfbAAF74cb50385",
+    "partners": ["alienbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xbBdeAaa32CBCE61E0A2809edcAE8d1857c55A5DD",
+        "symbol": "mooALB",
+        "decimals": 18,
+        "oracleId": "mooALB"
+      }
+    ]
+  },
+  {
+    "id": "moo_alienbase-dai-usdbc-alienbase",
+    "title": "Alienbase",
+    "vaultId": "alienbase-dai-usdbc",
+    "type": "boost",
+    "contractAddress": "0x819D32901DF52ac4bd513Cf28CBf0Ef3d029a6fF",
+    "partners": ["alienbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
+        "symbol": "ALB",
+        "decimals": 18,
+        "oracleId": "ALB"
+      }
+    ]
+  },
+  {
+    "id": "moo_alienbase-cbeth-weth-alienbase",
+    "title": "Alienbase",
+    "vaultId": "alienbase-cbeth-weth",
+    "type": "boost",
+    "contractAddress": "0x01e8881ed2Fb41E0B3dF29f382fAf707a0B26969",
+    "partners": ["alienbase"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4",
+        "symbol": "ALB",
+        "decimals": 18,
+        "oracleId": "ALB"
+      }
+    ]
+  }
+]

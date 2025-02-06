@@ -93,10 +93,11 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
         const boostIds = selectPreStakeOrActiveBoostIds(state, vault.id);
         if (boostIds.length && apys.boostApr && apys.boostApr > 0) {
           const boost = selectBoostById(state, boostIds[0]);
-          if (boost && boost.partnerIds.length) {
-            const mainPartner = selectBoostPartnerById(state, boost.partnerIds[0]);
-            const boostToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
-            const partnerTag = '#' + boost.name.toLowerCase().replace(' ', '');
+          if (boost && boost.partners?.length) {
+            const mainPartner = selectBoostPartnerById(state, boost.partners[0]);
+            const reward = boost.rewards[0];
+            const boostToken = selectTokenByAddress(state, reward.chainId, reward.address);
+            const partnerTag = '#' + boost.title.toLowerCase().replace(' ', '');
             let partnerHandle;
             if (mainPartner.social?.twitter) {
               partnerHandle =
@@ -113,7 +114,7 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
               vaultApy: formatLargePercent(apys.boostedTotalApy, 2),
               boostToken: boostToken.symbol,
               boostTokenTag: '$' + boostToken.symbol.replace(/[^a-z0-9-_]/gi, ''),
-              partnerName: boost.name,
+              partnerName: boost.title,
               partnerHandle,
               partnerTag,
               partnerHandleOrTag,

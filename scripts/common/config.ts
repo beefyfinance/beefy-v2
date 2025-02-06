@@ -3,10 +3,11 @@ import { ChainId } from 'blockchain-addressbook';
 import { config } from '../../src/config/config';
 import type {
   AmmConfig,
-  BoostConfig,
   MinterConfig,
   VaultConfig,
 } from '../../src/features/data/apis/config-types';
+import { PromoConfig } from '../../src/features/data/apis/promos/types';
+import { fileExists } from './files';
 
 /** Harmony->One to match addressbook */
 const chainConfigs = Object.fromEntries(
@@ -118,16 +119,21 @@ export async function getVaultsForChain(chainId: string): Promise<VaultConfig[]>
   return vaultsByChainId[id];
 }
 
-const boostsByChainId = {};
+const promosByChainId = {};
 
-export async function getBoostsForChain(chainId: string): Promise<BoostConfig[]> {
+export async function getPromosForChain(chainId: string): Promise<PromoConfig[]> {
   const id = addressBookToAppId(chainId);
 
-  if (!(id in boostsByChainId)) {
-    boostsByChainId[id] = (await import(`../../src/config/boost/${id}.json`)).default;
+  if (!(id in promosByChainId)) {
+    const path = `../../src/config/promos/chain/${id}.json`;
+    if (await fileExists(path)) {
+      promosByChainId[id] = (await import(path)).default;
+    } else {
+      promosByChainId[id] = [];
+    }
   }
 
-  return boostsByChainId[id];
+  return promosByChainId[id];
 }
 
 const ammsByChainId = {};

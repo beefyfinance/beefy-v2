@@ -75,32 +75,6 @@ export interface PartnersConfig {
   Nexus: ChainEntity['id'][];
 }
 
-export interface BoostPartnerConfig {
-  title: string;
-  text: string;
-  website: string;
-  social: {
-    telegram: string;
-    twitter: string;
-    discord?: string | null;
-  };
-}
-
-export interface BoostCampaignConfig {
-  title: string;
-  description: string;
-  learn: string;
-  social: BoostSocials;
-  tagText?: string;
-  tagIcon?: string;
-}
-
-export type BoostSocials = {
-  telegram?: string;
-  twitter?: string;
-  discord?: string;
-};
-
 export interface BoostConfig {
   id: string;
   poolId: string;
@@ -535,26 +509,3 @@ export type BeefyBridgeConfig = Readonly<{
    */
   bridges: ReadonlyArray<BeefyAnyBridgeConfig>;
 }>;
-
-export type PinnedConfigConditionTime = {
-  type: 'time';
-  from?: number;
-  to?: number;
-};
-
-export type PinnedConfigConditionBoosted = {
-  type: 'boosted';
-  /** default: anything with boostedTotalDaily > 0 */
-  only?: 'contract' | 'offchain';
-};
-
-export type PinnedConfigCondition = PinnedConfigConditionTime | PinnedConfigConditionBoosted;
-
-export type PinnedConfig = {
-  /** vault id, or array of vault ids, undefined = all vaults */
-  id?: string | string[];
-  /** all conditions must match, or only one of them [default: all] */
-  mode?: 'all' | 'any';
-  /** conditions to match according to mode, undefined = match */
-  conditions?: Array<PinnedConfigCondition>;
-};

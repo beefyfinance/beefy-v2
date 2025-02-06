@@ -1,0 +1,1645 @@
+[
+  {
+    "id": "moo_aura-arb-ezeth-wsteth-renzo",
+    "title": "Renzo × Lido",
+    "vaultId": "aura-arb-ezeth-wsteth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x8d4faAa513943Cee209f819779075e5cD80FbF8D",
+    "partners": ["renzo", "lido-eth"],
+    "campaign": "renzo-lido",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+        "symbol": "ezETH",
+        "decimals": 18,
+        "oracleId": "ezETH"
+      }
+    ]
+  },
+  {
+    "id": "moo_stargate-v2-arb-weth",
+    "title": "Beefy",
+    "vaultId": "stargate-v2-arb-weth",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x38C21401B42eC072d1C74bF550fc7370AC8Ec9E5",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+        "symbol": "arbUSDCe",
+        "decimals": 6,
+        "oracleId": "arbUSDCe"
+      }
+    ]
+  },
+  {
+    "id": "moo_compound-arbitrum-usdc",
+    "title": "Beefy",
+    "vaultId": "compound-arbitrum-usdc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x4Bd7605259Dc577B3765Ed573E8188d5435bBB8C",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+        "symbol": "arbUSDCe",
+        "decimals": 6,
+        "oracleId": "arbUSDCe"
+      }
+    ]
+  },
+  {
+    "id": "moo_silo-arb-silo",
+    "title": "Beefy",
+    "vaultId": "silo-arb-silo",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x39Cb8CF3Fd0e0Ed4468ba9F93493BB61189E7a0e",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+        "symbol": "arbUSDCe",
+        "decimals": 6,
+        "oracleId": "arbUSDCe"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-arb-usdc-usdt-vault",
+    "title": "Beefy",
+    "vaultId": "sushi-cow-arb-usdc-usdt-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xC2fcA425DFc22Aa9da86157AeDF1B86645650f81",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-usdc-usd+-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-usdc-usd+-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xD7B1912fc125C69a47F5Adc07D44c12379C08aA7",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-usd+-usdt-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-usd+-usdt-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xf57E88E72883B186272CC1EFe1bB546B86eE82Cf",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-weth-usd+-500-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-weth-usd+-500-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xe092831Bf4C96BA4fbd1007874057b9a143A9cAc",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-weth-usd+-100-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-weth-usd+-100-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x8109315AA279662A3395024Fe043A527b5585241",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-arb-zro-weth-vault",
+    "title": "Beefy",
+    "vaultId": "sushi-cow-arb-zro-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xe127E1B797257BBafB057CA7Be9fAc2B8C4D0557",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-arb-weth-arb-500-vault",
+    "title": "Beefy",
+    "vaultId": "sushi-cow-arb-weth-arb-500-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xEDcFE8448bc77e5A48B475b17736B6Ff32Ca9088",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-arb-weth-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "sushi-cow-arb-weth-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x16c2b704bd087719E5A30e13D818B8F40d20c88C",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-arb-wbtc-tbtc-vault",
+    "title": "Beefy",
+    "vaultId": "sushi-cow-arb-wbtc-tbtc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x499B0476F0b8F46D3B797682F59fAac58E117010",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-arb-wsteth-weth-vault",
+    "title": "Beefy",
+    "vaultId": "sushi-cow-arb-wsteth-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x8F89DA2B4d8b23Ba14FF18bE17873657784e23FA",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_ramses-cl-rseth-ethx-vault",
+    "title": "Beefy",
+    "vaultId": "ramses-cl-rseth-ethx-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x1f84DaF589C0b9Dea8c9a1B7463099e2DB2F589a",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-arb-usdt-usdc.e-vault",
+    "title": "Beefy",
+    "vaultId": "sushi-cow-arb-usdt-usdc.e-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xE3c5261025F0c0429A9830d89aF5BA36490bB9f9",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-arb-wbtc-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "sushi-cow-arb-wbtc-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xB1Da84f8e61A608d0af0A4A4AdFA70b2044162B8",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-arb-arb-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "sushi-cow-arb-arb-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xFAcCeA76b9d568e082a231b2f4A6868F50771c40",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-arb-usdc-usdc.e-vault",
+    "title": "Beefy",
+    "vaultId": "sushi-cow-arb-usdc-usdc.e-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x6cbd32536329FB5F3bd8c3135ca9C3AF98887fb1",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-arb-weth-usdc-100-vault",
+    "title": "Beefy",
+    "vaultId": "sushi-cow-arb-weth-usdc-100-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xb54426b02D6FfdC5Fc566C442C50391320fdE5DA",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_pancake-cow-arb-weth-usdt-500-vault",
+    "title": "Beefy",
+    "vaultId": "pancake-cow-arb-weth-usdt-500-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x2c211394765134e7088d3A5F8706c8904FD9d1F0",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_pancake-cow-arb-weth-usdc-500-vault",
+    "title": "Beefy",
+    "vaultId": "pancake-cow-arb-weth-usdc-500-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x86f77B5aC938f733F0a185272CC3Ee20B4AAdf60",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_pancake-cow-arb-wbtc-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "pancake-cow-arb-wbtc-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x8Ff63Fac412f627b6f608383785A018439489B15",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_pancake-cow-arb-arb-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "pancake-cow-arb-arb-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x65D449dC1f69D1c82fDFD8F3d79D2a685fa19068",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_pancake-cow-arb-zro-weth-vault",
+    "title": "Beefy",
+    "vaultId": "pancake-cow-arb-zro-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xdb219520eBBcBb399910D83DBa0E9A0C4d4b492A",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_pancake-cow-arb-weth-usd+-vault",
+    "title": "Beefy",
+    "vaultId": "pancake-cow-arb-weth-usd+-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xc425Ea6804a0c9A0Dc82E82F6D3F2eb1Cb9383b0",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_pancake-cow-arb-weth-reth-vault",
+    "title": "Beefy",
+    "vaultId": "pancake-cow-arb-weth-reth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x417D4b2e11a7D9bF1d3d27C7c9Ae9d0Afa0081bA",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_pancake-cow-arb-wsteth-weth-vault",
+    "title": "Beefy",
+    "vaultId": "pancake-cow-arb-wsteth-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xFBDea01bccaE9525B4D3eEaeC0a7D5ee86AECa7E",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_pancake-cow-arb-wbtc-weth-vault",
+    "title": "Beefy",
+    "vaultId": "pancake-cow-arb-wbtc-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xb6e5c44b555391ccaE4Fa6F16dAf2B49772ED20c",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_pancake-cow-arb-usdc-usdt-vault",
+    "title": "Beefy",
+    "vaultId": "pancake-cow-arb-usdc-usdt-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x439Ed74657ce0a52ed5577724122387F0a3A6201",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_pancake-cow-arb-cake-weth-vault",
+    "title": "Beefy",
+    "vaultId": "pancake-cow-arb-cake-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xf402D21A2860f458081d7435d9594Fc60fFa745E",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_aura-arb-ezeth-wsteth-lido",
+    "title": "Lido",
+    "vaultId": "aura-arb-ezeth-wsteth",
+    "type": "boost",
+    "contractAddress": "0xfcF293AFa58fa277935eddAa44E0f782EC41B09B",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_aura-arb-gyro-weeth-wsteth-lido",
+    "title": "Lido",
+    "vaultId": "aura-arb-gyro-weeth-wsteth",
+    "type": "boost",
+    "contractAddress": "0x6B970F0D1F0255b8E0B1c4515Ae827931b32312C",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_ramses-cl-weeth-weth-vault",
+    "title": "Beefy",
+    "vaultId": "ramses-cl-weeth-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xB88416Cd55F2fff15845656B30d747A0d40Eca4C",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_ramses-cl-rseth-weth-vault",
+    "title": "Beefy",
+    "vaultId": "ramses-cl-rseth-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x338Fb7e54f4875c76cA77AA9653eB08e856e1FcD",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-rseth-weth-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-rseth-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x7f3e9f5EFFE06169Db679658392e4Ca79fd5E594",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-arb-usdc-usdm-mountain",
+    "title": "Mountain",
+    "vaultId": "curve-arb-usdc-usdm",
+    "type": "boost",
+    "contractAddress": "0x2e78A4cb6c61A3CAD98FCa902515938C85B9B082",
+    "partners": ["mountain"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-rseth-wsteth-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-rseth-wsteth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x3Cfb81925e69650127b0cA3d9869027a94C01aC4",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-usdc-usdt-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-usdc-usdt-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x9cbB28eE98699aB491afE05653804B7aa426880b",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-usdv-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-usdv-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x5582625d651DB5290Ae751beDD172042f4bb2539",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-comp-weth-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-comp-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x6bEc888b438d9aEAA28cF99aE2F73c51df3351f4",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-usdc-aave-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-usdc-aave-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x003774c2Eda7Aaa2f88469F9dcf005cb63146fcb",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-ldo-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-ldo-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x6c69b6146536467525894527a1c47141A5D9A128",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-uni-usdt-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-uni-usdt-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xC104d3d4B435B4888eCF362B587FE4B407120184",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-usdc-uni-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-usdc-uni-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xa1f71C3395107ED7B1588ED2b12b1080f4Dffe4c",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-wbtc-link-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-wbtc-link-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x83C2540B9f3a74beCD9c0Df5f879247FA19bE0A9",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-link-usdt-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-link-usdt-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x69Bc09460519DCE01a9008AA52a74e7c911CAe24",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-usde-usdt-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-usde-usdt-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x4Bf7b1Be5c10b4BdA826F0048Ad8bc44D7Bf2ca7",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-frax-usdt-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-frax-usdt-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x3390a5Ae22828c17e0556dd29d1dfF5528F28Ea4",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-crv-weth-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-crv-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x72A1bcB6f5751F676ddD248D61263a8CE953c54a",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-cbeth-weth-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-cbeth-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xc89c67dc90cC626145062351Cc0512Eab8Ec9c0D",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-weth-rpl-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-weth-rpl-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x1D05A29ea5AD345D4569F53Bc4152fAf7c790D2f",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-weth-reth-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-weth-reth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x8797cA7D776638720bE4A6ECa3398E27b622c0c4",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-pepe-weth-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-pepe-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x6BfEC4E5BCf4dE8b5Ba5be1422663218f425A242",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-wsteth-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-wsteth-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xb6BdEf20E867D181614fB49eD2dd93e465cc5db1",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-tbtc-weth-prod-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-tbtc-weth-prod-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x2Da8956087A383fF944a970c2E6875C4Cec22449",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-wbtc-tbtc-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-wbtc-tbtc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x3cB4431D21De3a7DB320f848393d75997f79d2AB",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-wusdm-wsteth-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-wusdm-wsteth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x9b237e46CC354F7A50D9770FDe8e92FEC2aefe0A",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_ramses-zero-weth-vault",
+    "title": "Beefy",
+    "vaultId": "ramses-zero-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xC48822E6B1a6A5BfB23fCE08e431ed27b765AEBa",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_ramses-cl-weth-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "ramses-cl-weth-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x3E798d20deB96D5C2F3A1a75308a279683504e7E",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_ramses-cl-arb-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "ramses-cl-arb-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xeD37a23c162d44Cd3E65645f25Aa789C2317C071",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_ramses-ethfi-weth-vault",
+    "title": "Beefy",
+    "vaultId": "ramses-ethfi-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xba0F0f0eE2410B7647678A570122E9B07c6E8a28",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_ramses-cl-wbtc-weth-vault",
+    "title": "Beefy",
+    "vaultId": "ramses-cl-wbtc-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xe701DC23A60134DfA6fb4d60a97804569D40f8EE",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-weth-uni-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-weth-uni-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xcF0841923B1a9F95bEc83a4057715cefA6b15A60",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-weth-dai-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-weth-dai-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x107B276ADa1A012f69587Ba5a7fE94219cAabBb0",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-wsteth-weth-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-wsteth-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xe2362bFfA5b00d16ddd4D751F735481E95740ac6",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-eusd-usdc-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-eusd-usdc-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xB4C93E5DB96d28680373a9984225e78B03a15338",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-eusd-knox-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-eusd-knox-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xd7cD8bBe700BD0a154Dab09B3155C9E5a053da3D",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-eth+-weth-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-eth+-weth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x0188Fc5DEDfc8004841ceFbD098f5B72b3DE7532",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-arb-link-eth-vault",
+    "title": "Beefy",
+    "vaultId": "uniswap-cow-arb-link-eth-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xff8249cF5B9B7F724d73F54e4D342d4f29504c0C",
+    "tag": {
+      "text": "Arb LTIPP"
+    },
+    "campaign": "arb-ltipp",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_balancer-gyro-arb-wsteth-weth-balancer",
+    "title": "Balancer",
+    "vaultId": "balancer-gyro-arb-wsteth-weth",
+    "type": "boost",
+    "contractAddress": "0x12f0520DAFd65e6468d4dD4F79dd15b6589cb76a",
+    "partners": ["balancer"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_balancer-arb-usdc-gusdc-gains",
+    "title": "Gains",
+    "vaultId": "balancer-arb-usdc-gusdc",
+    "type": "boost",
+    "contractAddress": "0x8Fa95a5Ff8aC0d1f17DB56d3e5953bB3E74f9B71",
+    "partners": ["gains"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_silo-eth-ezeth-silo",
+    "title": "Silo",
+    "vaultId": "silo-eth-ezeth",
+    "type": "boost",
+    "contractAddress": "0x514335828cC8Ee3e063e2402183307e0bD41260C",
+    "partners": ["silo"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x0341C0C0ec423328621788d4854119B97f44E391",
+        "symbol": "SILO",
+        "decimals": 18,
+        "oracleId": "SILO"
+      }
+    ]
+  },
+  {
+    "id": "moo_silo-usdce-arb-silo",
+    "title": "Silo",
+    "vaultId": "silo-usdce-arb",
+    "type": "boost",
+    "contractAddress": "0x26335B07c15944FcDA937EEaC881AB2425A14Bb9",
+    "partners": ["silo"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x0341C0C0ec423328621788d4854119B97f44E391",
+        "symbol": "SILO",
+        "decimals": 18,
+        "oracleId": "SILO"
+      }
+    ]
+  },
+  {
+    "id": "moo_silo-usdce-wbtc-silo",
+    "title": "Silo",
+    "vaultId": "silo-usdce-wbtc",
+    "type": "boost",
+    "contractAddress": "0xAe4d5E25b6aB69595858D3426dD90C960D545FFD",
+    "partners": ["silo"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x0341C0C0ec423328621788d4854119B97f44E391",
+        "symbol": "SILO",
+        "decimals": 18,
+        "oracleId": "SILO"
+      }
+    ]
+  },
+  {
+    "id": "moo_silo-usdc-wsteth-silo",
+    "title": "Silo",
+    "vaultId": "silo-usdc-wsteth",
+    "type": "boost",
+    "contractAddress": "0x59b7A10FCc3069899a17224f61D656649d2dc13b",
+    "partners": ["silo"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x0341C0C0ec423328621788d4854119B97f44E391",
+        "symbol": "SILO",
+        "decimals": 18,
+        "oracleId": "SILO"
+      }
+    ]
+  },
+  {
+    "id": "moo_silo-eth-pendle-weeth-silo",
+    "title": "Silo",
+    "vaultId": "silo-eth-pendle-weeth",
+    "type": "boost",
+    "contractAddress": "0xD9245a8Fb1Fc5e62dDA55FfDfBe86c5799C842cF",
+    "partners": ["silo"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x0341C0C0ec423328621788d4854119B97f44E391",
+        "symbol": "SILO",
+        "decimals": 18,
+        "oracleId": "SILO"
+      }
+    ]
+  },
+  {
+    "id": "moo_balancer-sfrax-4pool-frax",
+    "title": "Frax",
+    "vaultId": "balancer-sfrax-4pool",
+    "type": "boost",
+    "contractAddress": "0x68F6d90727EB96eeC1C9f50578213e8e6d59128b",
+    "partners": ["frax"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_balancer-wsteth-weth-v3-lido-arb",
+    "title": "Lido",
+    "vaultId": "balancer-wsteth-weth-v3",
+    "type": "boost",
+    "contractAddress": "0xcDD9438B1DBC510763B525e0dbA2435D7e52CD82",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "symbol": "ARB",
+        "decimals": 18,
+        "oracleId": "ARB"
+      }
+    ]
+  },
+  {
+    "id": "moo_balancer-wsteth-eth-v2-lido",
+    "title": "Lido",
+    "vaultId": "balancer-wsteth-eth-v2",
+    "type": "boost",
+    "contractAddress": "0xfd30cEAD8E54568fe535747929775e95Fdb6d3f7",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x13Ad51ed4F1B7e9Dc168d8a00cB3f4dDD85EfA60",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-arb-f-wsteth-lido",
+    "title": "Lido",
+    "vaultId": "curve-arb-f-wsteth",
+    "type": "boost",
+    "contractAddress": "0x81350D3b7eaCA4d4Afb66721A9b5bBE2a6301b35",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x13Ad51ed4F1B7e9Dc168d8a00cB3f4dDD85EfA60",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  }
+]

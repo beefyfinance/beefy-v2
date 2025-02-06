@@ -3,14 +3,10 @@ import type { ChainEntity } from '../entities/chain';
 import type {
   AmmConfig,
   BeefyBridgeConfig,
-  BoostCampaignConfig,
-  BoostConfig,
-  BoostPartnerConfig,
   BridgeConfig,
   ChainConfig,
   MinterConfig,
   PartnersConfig,
-  PinnedConfig,
   PlatformConfig,
   PlatformType,
   SwapAggregatorConfig,
@@ -77,36 +73,6 @@ export class ConfigAPI {
     return mapValues(vaultsByChainId, vaults => vaults.filter(v => !v.hidden));
   }
 
-  public async fetchAllBoosts(): Promise<{
-    boostsByChainId: Record<ChainEntity['id'], BoostConfig[]>;
-    partnersById: Record<string, BoostPartnerConfig>;
-    campaignsById: Record<string, BoostCampaignConfig>;
-  }> {
-    const [partnersById, campaignsById, ...boostsPerChain] = (
-      await Promise.all([
-        import(`../../../config/boost/partners.json`),
-        import(`../../../config/boost/campaigns.json`),
-        ...keys(chainConfigs).map(async chainId => import(`../../../config/boost/${chainId}.json`)),
-      ])
-    ).map(i => i.default);
-
-    const boosts: Record<ChainEntity['id'], BoostConfig[]> = Object.fromEntries(
-      await Promise.all(keys(chainConfigs).map(async (chainId, i) => [chainId, boostsPerChain[i]]))
-    );
-
-    const boostsByChainId = mapValues(boosts, boosts =>
-      boosts
-        .map(boost => ({
-          ...boost,
-          partners: (boost.partners || []).filter(id => !!partnersById[id]),
-          campaign: boost.campaign && campaignsById[boost.campaign] ? boost.campaign : undefined,
-        }))
-        .filter(b => !b.hidden)
-    );
-
-    return { boostsByChainId, partnersById, campaignsById };
-  }
-
   public async fetchAllMinters(): Promise<{ [chainId in ChainEntity['id']]?: MinterConfig[] }> {
     const entries = await Promise.all(
       keys(chainConfigs).map(async chainId => {
@@ -141,9 +107,5 @@ export class ConfigAPI {
 
   public async fetchBridges(): Promise<BridgeConfig[]> {
     return (await import('../../../config/bridges.json')).default;
-  }
-
-  public async fetchPinnedConfig(): Promise<PinnedConfig[]> {
-    return (await import('../../../config/pinned.json')).default as PinnedConfig[];
   }
 }

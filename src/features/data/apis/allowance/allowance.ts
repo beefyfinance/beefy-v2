@@ -4,7 +4,7 @@ import type { VaultGov, VaultStandard } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import { BigNumber } from 'bignumber.js';
 import type { AllValuesAsString } from '../../utils/types-utils';
-import type { BoostEntity } from '../../entities/boost';
+import type { BoostPromoEntity } from '../../entities/promo';
 import { chunk } from 'lodash-es';
 import type { TokenEntity, TokenErc20 } from '../../entities/token';
 import { isTokenErc20 } from '../../entities/token';
@@ -22,7 +22,7 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
     state: BeefyState,
     standardVaults: VaultStandard[],
     govVaults: VaultGov[],
-    boosts: BoostEntity[],
+    boosts: BoostPromoEntity[],
     walletAddress: string
   ): Promise<FetchAllAllowanceResult> {
     const mc = new this.web3.eth.Contract(

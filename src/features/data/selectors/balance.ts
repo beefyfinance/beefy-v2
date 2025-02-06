@@ -1,6 +1,6 @@
 import { mooAmountToOracleAmount } from '../utils/ppfs';
 import type { BeefyState } from '../../../redux-types';
-import type { BoostEntity } from '../entities/boost';
+import type { BoostPromoEntity } from '../entities/promo';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token';
 import {
@@ -395,7 +395,7 @@ export type UserVaultBalanceBreakdownBoost = {
   type: 'boost';
   id: string;
   amount: BigNumber;
-  boostId: BoostEntity['id'];
+  boostId: BoostPromoEntity['id'];
 };
 export type UserVaultBalanceBreakdownBridged = {
   type: 'bridged';
@@ -504,7 +504,7 @@ export const selectGovVaultUserStakedBalanceInDepositToken = (
 
 export const selectBoostUserBalanceInToken = (
   state: BeefyState,
-  boostId: BoostEntity['id'],
+  boostId: BoostPromoEntity['id'],
   walletAddress?: string
 ) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
@@ -514,7 +514,7 @@ export const selectBoostUserBalanceInToken = (
 const NO_REWARDS: BoostReward[] = [];
 export const selectBoostUserRewardsInToken = (
   state: BeefyState,
-  boostId: BoostEntity['id'],
+  boostId: BoostPromoEntity['id'],
   walletAddress?: string
 ) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
@@ -604,7 +604,10 @@ export const selectGovVaultPendingRewardsWithPrice = createSelector(
  * Get the token for which the boost balance is expressed in
  * for boosts, balance is the amount of earnedToken of the target vault
  */
-export const selectBoostBalanceTokenEntity = (state: BeefyState, boostId: BoostEntity['id']) => {
+export const selectBoostBalanceTokenEntity = (
+  state: BeefyState,
+  boostId: BoostPromoEntity['id']
+) => {
   const boost = selectBoostById(state, boostId);
   const boostedVault = selectVaultById(state, boost.vaultId);
   return selectTokenByAddress(state, boostedVault.chainId, boostedVault.contractAddress);
