@@ -1,5 +1,34 @@
 [
   {
+    "id": "aerodrome-bold-pool",
+    "name": "Bold-POOL vLP",
+    "type": "standard",
+    "token": "vAMM-Bold/POOL",
+    "tokenAddress": "0x72cCcbd837E15500169323d3cC3FCC266db03700",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseBold-POOL",
+    "earnedTokenAddress": "0x580d427D96B7a7eB90742a7668d8eBc0760Bc2DC",
+    "earnContractAddress": "0x580d427D96B7a7eB90742a7668d8eBc0760Bc2DC",
+    "oracle": "lps",
+    "oracleId": "aerodrome-bold-pool",
+    "status": "active",
+    "createdAt": 1738837914,
+    "platformId": "aerodrome",
+    "assets": ["Bold", "POOL"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x087C440F251Ff6Cfe62B86DdE1bE558B95b4bb9b&token1=0xd652C5425aea2Afd5fb142e120FeCf79e18fafc3&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "morpho-seamless-usdc",
     "name": "Seamless USDC",
     "token": "USDC",
