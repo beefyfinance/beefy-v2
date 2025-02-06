@@ -365,7 +365,7 @@ export const config = {
   cronos: {
     name: 'Cronos',
     chainId: 25,
-    rpc: ['https://rpc.vvs.finance'],
+    rpc: ['https://evm.cronos.org'],
     explorerUrl: 'https://cronoscan.com',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
