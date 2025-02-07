@@ -1,0 +1,120 @@
+[
+  {
+    "id": "kodiak-cow-berachain-wbera-honey-rp",
+    "name": "WBERA-HONEY Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowKodiakBerachainBERA-HONEY",
+    "tokenAddress": "0x730c6F352e585EA0c29e30f8AbaE1FC2117A1035",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kodiak",
+    "earnContractAddress": "0x4b56306EFCE792BC8d4079973B35DA7497728407",
+    "earnedToken": "rCowKodiakBerachainBERA-HONEY",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "kodiak-cow-berachain-wbera-honey",
+    "status": "active",
+    "createdAt": 1738895503,
+    "platformId": "kodiak",
+    "assets": ["WBERA", "HONEY"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "berachain",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "kodiak-cow-berachain-wbera-honey",
+    "name": "WBERA-HONEY",
+    "type": "cowcentrated",
+    "token": "WBERA-HONEY kodiak",
+    "tokenAddress": "0x1127f801Cb3ab7BDF8923272949AA7Dba94B5805",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kodiak",
+    "depositTokenAddresses": [
+      "0x6969696969696969696969696969696969696969",
+      "0xFCBD14DC51f0A4d49d5E53C2E0950e0bC26d0Dce"
+    ],
+    "earnContractAddress": "0x730c6F352e585EA0c29e30f8AbaE1FC2117A1035",
+    "earnedToken": "cowKodiakBerachainBERA-HONEY",
+    "earnedTokenAddress": "0x730c6F352e585EA0c29e30f8AbaE1FC2117A1035",
+    "oracle": "lps",
+    "oracleId": "kodiak-cow-berachain-wbera-honey",
+    "status": "active",
+    "createdAt": 1738895503,
+    "platformId": "beefy",
+    "feeTier": "0.30",
+    "assets": ["WBERA", "HONEY"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "berachain",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "kodiak-cow-berachain-weth-wbera-rp",
+    "name": "WBERA-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowKodiakBerachainBERA-WETH",
+    "tokenAddress": "0xb06D2126645024c35347bf1A59b30fC213839840",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kodiak",
+    "earnContractAddress": "0x06AEb8790E49DD13A874e90c7Ff956Df7CA43CB6",
+    "earnedToken": "rCowKodiakBerachainBERA-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "kodiak-cow-berachain-weth-wbera",
+    "status": "active",
+    "createdAt": 1738892368,
+    "platformId": "kodiak",
+    "assets": ["WBERA", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "berachain",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "kodiak-cow-berachain-weth-wbera",
+    "name": "WBERA-WETH",
+    "type": "cowcentrated",
+    "token": "WBERA-WETH kodiak",
+    "tokenAddress": "0xCda0ca7C3a609773067261D86E817bf777a2870d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kodiak",
+    "depositTokenAddresses": [
+      "0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590",
+      "0x6969696969696969696969696969696969696969"
+    ],
+    "earnContractAddress": "0xb06D2126645024c35347bf1A59b30fC213839840",
+    "earnedToken": "cowKodiakBerachainBERA-WETH",
+    "earnedTokenAddress": "0xb06D2126645024c35347bf1A59b30fC213839840",
+    "oracle": "lps",
+    "oracleId": "kodiak-cow-berachain-weth-wbera",
+    "status": "active",
+    "createdAt": 1738892368,
+    "platformId": "beefy",
+    "feeTier": "0.30",
+    "assets": ["WBERA", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "berachain",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  }
+]

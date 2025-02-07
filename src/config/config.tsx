@@ -768,6 +768,22 @@ export const config = {
     },
     stableCoins: ['USDCe', 'scUSD', 'mooSiloSonicUSDCe'],
   },
+  berachain: {
+    name: 'Berachain',
+    chainId: 80094,
+    rpc: ['https://rpc.berachain.com'],
+    explorerUrl: 'https://berascan.com/',
+    multicallAddress: '0x0D17eE2ed4e67b626B43C3695586E5aE6a039949',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x75c9D65e7C0d6b40F356452f8A11aeD525B67197',
+    providerName: 'Berachain',
+    native: { symbol: 'BERA', oracleId: 'WBEAR', decimals: 18 },
+    new: true,
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['HONEY'],
+  },
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,
