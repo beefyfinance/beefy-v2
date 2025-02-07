@@ -10,6 +10,7 @@ import { useAppSelector } from '../../store';
 import { Banners } from './components/Banners';
 import { HomeMeta } from '../../components/Meta/HomeMeta';
 import { Container } from '../../components/Container/Container';
+import { RpcModalTrigger } from '../../components/Header/components/RpcModal';
 
 const useStyles = makeStyles(styles);
 
@@ -28,6 +29,7 @@ export const Home = memo(function Home() {
 
   return (
     <>
+      <RpcModalTrigger />
       <HomeMeta />
       <div className={classes.top}>
         <Banners />
