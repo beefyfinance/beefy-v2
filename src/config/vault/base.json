@@ -1,5 +1,64 @@
 [
   {
+    "id": "uniswap-cow-base-weth-flay-rp",
+    "name": "FLAY-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-FLAY",
+    "tokenAddress": "0xF5C5a88E2324937459af9321e82f6b9EAE707Ea6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x4568c077F1ad1dF4E5Bd5b528be5B478b3Dfc670",
+    "earnedToken": "rCowUniswapBaseWETH-FLAY",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-flay",
+    "status": "active",
+    "createdAt": 1738918373,
+    "platformId": "uniswap",
+    "assets": ["FLAY", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-flay",
+    "name": "FLAY-WETH",
+    "type": "cowcentrated",
+    "token": "WETH-FLAY uniswap",
+    "tokenAddress": "0x7B9FDA92Bfa6FDadFdc4f6C72c0Cc8336e7d7497",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xF1A7000000950C7ad8Aff13118Bb7aB561A448ee"
+    ],
+    "earnContractAddress": "0xF5C5a88E2324937459af9321e82f6b9EAE707Ea6",
+    "earnedToken": "cowUniswapBaseWETH-FLAY",
+    "earnedTokenAddress": "0xF5C5a88E2324937459af9321e82f6b9EAE707Ea6",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-flay",
+    "status": "active",
+    "createdAt": 1738918373,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["FLAY", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "morpho-seamless-usdc",
     "name": "Seamless USDC",
     "token": "USDC",
