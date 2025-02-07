@@ -1402,5 +1402,14 @@
     "documentation": "https://documentation.kodiak.finance/",
     "description": "Berachain's Native Liquidity Hub.",
     "type": "amm"
+  },
+  {
+    "id": "beraswap",
+    "name": "Beraswap",
+    "website": "https://hub.berachain.com/",
+    "twitter": "berachain",
+    "documentation": "https://docs.berachain.com/",
+    "description": "Beraswap is a decentralized exchange (DEX) that allows users to trade and swap tokens on the Berachain blockchain.",
+    "type": "amm"
   }
 ]
