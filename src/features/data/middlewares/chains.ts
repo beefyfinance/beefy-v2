@@ -13,7 +13,9 @@ chainsListener.startListening({
     await condition(() => selectAllChains(getState()).length > 0);
     console.log('Initializing viem clients. Took', Date.now() - start, 'ms');
     const state = getState();
-    selectAllChains(state).forEach(chain => {
+    const chains = selectAllChains(state);
+    console.log('Chains ', chains);
+    chains.forEach(chain => {
       console.log(`Initializing viem clients for chain ${chain.id} `, chain);
       rpcClientManager.setClients(chain, selectActiveRpcUrlForChain(state, chain.id));
     });
