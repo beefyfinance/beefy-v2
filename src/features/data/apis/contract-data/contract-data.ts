@@ -206,10 +206,6 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       }
 
       const { rewardAddress, rate, periodFinish } = reward;
-      if (!rewardAddress || !rate || !periodFinish) {
-        console.error(`Invalid reward data for rewardpool ${govVault.id}`);
-        continue;
-      }
 
       const rewardToken = selectTokenByAddressOrUndefined(state, govVault.chainId, rewardAddress);
       if (!rewardToken) {
