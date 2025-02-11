@@ -57,7 +57,6 @@ export const Search = memo<SearchProps>(function Search({
       if (onBlur) {
         onBlur(e);
       }
-      inputRef.current?.blur();
       setInputFocused(false);
     },
     [onBlur]
