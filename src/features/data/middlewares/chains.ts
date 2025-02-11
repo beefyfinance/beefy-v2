@@ -10,7 +10,7 @@ chainsListener.startListening({
   matcher: isFulfilled(fetchChainConfigs),
   effect: async (action, { getState, cancelActiveListeners, unsubscribe, condition }) => {
     const start = Date.now();
-    await condition(() => selectAllChains(getState()).length > 0);
+    await condition((_, state) => selectAllChains(state).length > 0);
     console.log('Initializing viem clients. Took', Date.now() - start, 'ms');
     const state = getState();
     const chains = selectAllChains(state);
