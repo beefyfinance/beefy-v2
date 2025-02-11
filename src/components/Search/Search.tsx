@@ -110,8 +110,10 @@ export const Search = memo<SearchProps>(function Search({
       return () => {
         window.removeEventListener('keydown', handleKeyDown);
       };
+    } else if (autoFocus) {
+      inputRef.current?.focus();
     }
-  }, [focusOnSlash]);
+  }, [focusOnSlash, autoFocus]);
 
   return (
     <InputBase
@@ -122,7 +124,6 @@ export const Search = memo<SearchProps>(function Search({
       onChange={handleSearchText}
       fullWidth={true}
       endAdornment={icon}
-      autoFocus={autoFocus}
       placeholder={t('Filter-Search')}
       onClick={onClick}
       inputRef={inputRef}
