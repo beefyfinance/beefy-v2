@@ -1,11 +1,144 @@
 [
   {
     "id": [
+      "aerodrome-cow-base-weth-uada-vault",
+      "uniswap-cow-sonic-usdc.e-scusd-rp",
+      "aerodrome-cow-wsteth-wrseth-rp",
+      "compound-base-usdc",
+      "aerodrome-cow-base-weth-unear-vault"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1739268000,
+        "to": 1739282400
+      }
+    ]
+  },
+  {
+    "id": [
+      "uniswap-cow-sonic-ws-weth-rp",
+      "velodrome-v2-wbtc-tbtc",
+      "aerodrome-cow-base-weth-uapt-vault",
+      "aerodrome-usdc-mai",
+      "uniswap-cow-base-weth-vvv-rp"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1739282400,
+        "to": 1739296800
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-cow-base-weth-usei-vault",
+      "compound-arbitrum-usdc",
+      "aerodrome-cow-base-udoge-weth-vault",
+      "uniswap-cow-sonic-ws-usdc.e-rp",
+      "aerodrome-msusd-usdc"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1739296800,
+        "to": 1739311200
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-cow-base-weth-usol-vault",
+      "aerodrome-cow-base-weth-ulink-vault",
+      "velodrome-v2-weth-moobifi",
+      "curve-poly-mai-usdc.e",
+      "uniswap-cow-base-usdc-cbbtc-rp"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1739311200,
+        "to": 1739325600
+      }
+    ]
+  },
+  {
+    "id": [
+      "velo-cow-op-moobifi-usdc-vault",
+      "aerodrome-cow-base-uxrp-weth-vault",
+      "aerodrome-cow-base-weth-usui-vault",
+      "aerodrome-weth-qi",
+      "aero-cow-weth-moobifi-vault"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1739325600,
+        "to": 1739340000
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-cow-base-weth-uapt-vault",
+      "velodrome-v2-wbtc-tbtc",
+      "uniswap-cow-sonic-ws-usdc.e-rp",
+      "compound-arbitrum-usdc",
+      "aerodrome-cow-base-weth-usui-vault"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1739340000,
+        "to": 1739354400
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-cow-base-weth-uada-vault",
+      "compound-base-usdc",
+      "uniswap-cow-sonic-usdc.e-weth-rp",
+      "uniswap-cow-base-weth-keycat-rp",
+      "aerodrome-cow-wsteth-wrseth-rp"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1739354400,
+        "to": 1739368800
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-cow-base-weth-usei-vault",
       "aerodrome-cow-base-weth-ulink-vault",
       "uniswap-cow-sonic-ws-weth-rp",
-      "aerodrome-cow-base-weth-uapt-vault",
-      "uniswap-cow-base-weth-keycat-rp",
-      "compound-op-eth"
+      "aerodrome-msusd-usdc",
+      "curve-poly-mai-usdc.e"
     ],
     "conditions": [
       {
@@ -13,18 +146,18 @@
       },
       {
         "type": "time",
-        "from": 1738612800,
-        "to": 1738627200
+        "from": 1739368800,
+        "to": 1739383200
       }
     ]
   },
   {
     "id": [
-      "aerodrome-cow-base-uxrp-weth-vault",
-      "uniswap-cow-sonic-usdc.e-scusd-rp",
       "aerodrome-cow-base-weth-unear-vault",
-      "velo-cow-op-moobifi-usdc-vault",
-      "compound-op-usdc"
+      "aerodrome-cow-base-udoge-weth-vault",
+      "velodrome-v2-weth-moobifi",
+      "aerodrome-usdc-mai",
+      "velo-cow-op-moobifi-usdc-vault"
     ],
     "conditions": [
       {
@@ -32,18 +165,18 @@
       },
       {
         "type": "time",
-        "from": 1738627200,
-        "to": 1738641600
+        "from": 1739383200,
+        "to": 1739397600
       }
     ]
   },
   {
     "id": [
-      "uniswap-cow-sonic-ws-weth-rp",
-      "aerodrome-cow-base-weth-usei-vault",
+      "uniswap-cow-sonic-usdc.e-weth-rp",
+      "aerodrome-cow-base-uxrp-weth-vault",
+      "aerodrome-weth-qi",
       "uniswap-cow-base-usdc-cbbtc-rp",
-      "aerodrome-weth-qi",
-      "compound-base-usdc"
+      "aero-cow-weth-moobifi-vault"
     ],
     "conditions": [
       {
@@ -51,292 +184,7 @@
       },
       {
         "type": "time",
-        "from": 1738641600,
-        "to": 1738656000
-      }
-    ]
-  },
-  {
-    "id": [
-      "uniswap-cow-sonic-usdc.e-weth-rp",
-      "aerodrome-cow-base-weth-uada-vault",
-      "aerodrome-cow-wsteth-wrseth-rp",
-      "curve-poly-mai-usdc.e",
-      "compound-arbitrum-usdc"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1738656000,
-        "to": 1738670400
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-cow-base-weth-usol-vault",
-      "uniswap-cow-sonic-ws-usdc.e-rp",
-      "aerodrome-msusd-usdc",
-      "velodrome-v2-weth-moobifi",
-      "compound-op-eth"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1738670400,
-        "to": 1738684800
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-cow-base-weth-usui-vault",
-      "uniswap-cow-base-weth-vvv-rp",
-      "aero-cow-weth-moobifi-vault",
-      "velodrome-v2-wbtc-tbtc",
-      "compound-op-usdc"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1738684800,
-        "to": 1738699200
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-cow-base-udoge-weth-vault",
-      "uniswap-cow-sonic-usdc.e-scusd-rp",
-      "aerodrome-cow-base-weth-ulink-vault",
-      "aerodrome-usdc-mai",
-      "compound-base-usdc"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1738699200,
-        "to": 1738713600
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-cow-base-uxrp-weth-vault",
-      "uniswap-cow-sonic-ws-weth-rp",
-      "aerodrome-cow-base-weth-uapt-vault",
-      "velo-cow-op-moobifi-usdc-vault",
-      "compound-arbitrum-usdc"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1738713600,
-        "to": 1738728000
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-cow-base-weth-usei-vault",
-      "uniswap-cow-sonic-usdc.e-weth-rp",
-      "aerodrome-cow-base-weth-unear-vault",
-      "curve-poly-mai-usdc.e",
-      "compound-op-eth"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1738728000,
-        "to": 1738742400
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-cow-base-weth-uada-vault",
-      "uniswap-cow-base-weth-keycat-rp",
-      "aerodrome-cow-wsteth-wrseth-rp",
-      "aerodrome-weth-qi",
-      "compound-op-usdc"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1738742400,
-        "to": 1738756800
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-cow-base-weth-usol-vault",
-      "uniswap-cow-sonic-ws-usdc.e-rp",
-      "aerodrome-msusd-usdc",
-      "velodrome-v2-weth-moobifi",
-      "compound-base-usdc"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1738756800,
-        "to": 1738771200
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-cow-base-weth-usui-vault",
-      "uniswap-cow-base-weth-vvv-rp",
-      "aero-cow-weth-moobifi-vault",
-      "velodrome-v2-wbtc-tbtc",
-      "compound-arbitrum-usdc"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1738771200,
-        "to": 1738785600
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-cow-base-udoge-weth-vault",
-      "uniswap-cow-sonic-usdc.e-scusd-rp",
-      "aerodrome-cow-base-weth-ulink-vault",
-      "aerodrome-usdc-mai",
-      "compound-op-eth"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1738785600,
-        "to": 1738800000
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-cow-base-uxrp-weth-vault",
-      "uniswap-cow-sonic-ws-weth-rp",
-      "aerodrome-cow-base-weth-uapt-vault",
-      "velo-cow-op-moobifi-usdc-vault",
-      "compound-op-usdc"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1738800000,
-        "to": 1738814400
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-cow-base-weth-usei-vault",
-      "uniswap-cow-sonic-usdc.e-weth-rp",
-      "aerodrome-cow-base-weth-unear-vault",
-      "curve-poly-mai-usdc.e",
-      "compound-base-usdc"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1738814400,
-        "to": 1738828800
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-cow-base-weth-uada-vault",
-      "uniswap-cow-base-weth-keycat-rp",
-      "aerodrome-cow-wsteth-wrseth-rp",
-      "aerodrome-weth-qi",
-      "compound-arbitrum-usdc"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1738828800,
-        "to": 1738843200
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-cow-base-weth-usol-vault",
-      "uniswap-cow-sonic-ws-usdc.e-rp",
-      "aerodrome-msusd-usdc",
-      "velodrome-v2-weth-moobifi",
-      "compound-op-eth"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1738843200,
-        "to": 1738857600
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-cow-base-weth-usui-vault",
-      "uniswap-cow-base-weth-vvv-rp",
-      "aero-cow-weth-moobifi-vault",
-      "velodrome-v2-wbtc-tbtc",
-      "compound-op-usdc"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1738857600
+        "from": 1739397600
       }
     ]
   }
