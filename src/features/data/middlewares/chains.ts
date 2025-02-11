@@ -8,16 +8,17 @@ const chainsListener = createListenerMiddleware<BeefyState>();
 
 chainsListener.startListening({
   matcher: isFulfilled(fetchChainConfigs),
-  effect: async (action, { getState, cancelActiveListeners, unsubscribe }) => {
-    cancelActiveListeners();
-    unsubscribe();
-
-    console.log('Initializing viem clients');
+  effect: async (action, { getState, cancelActiveListeners, unsubscribe, condition }) => {
+    const start = Date.now();
+    await condition(() => selectAllChains(getState()).length > 0);
+    console.log('Initializing viem clients. Took', Date.now() - start, 'ms');
     const state = getState();
     selectAllChains(state).forEach(chain => {
       console.log(`Initializing viem clients for chain ${chain.id} `, chain);
       rpcClientManager.setClients(chain, selectActiveRpcUrlForChain(state, chain.id));
     });
+    cancelActiveListeners();
+    unsubscribe();
   },
 });
 

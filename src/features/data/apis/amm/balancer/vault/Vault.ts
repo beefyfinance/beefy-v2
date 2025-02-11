@@ -27,13 +27,7 @@ import { BalancerQueriesAbi } from '../../../../../../config/abi/BalancerQueries
 import { bigNumberToBigInt, bigNumberToUint256String } from '../../../../../../helpers/big-number';
 import type { StepToken, ZapStep } from '../../../transact/zap/types';
 import { getInsertIndex } from '../../../transact/helpers/zap';
-import {
-  getAddress,
-  type Address,
-  type GetContractReturnType,
-  type Abi,
-  encodeFunctionData,
-} from 'viem';
+import { getAddress, type Address, encodeFunctionData } from 'viem';
 import { PoolExitKind, PoolJoinKind } from '../common/types';
 import { JoinExitEncoder } from '../common/JoinExitEncoder';
 import { fetchContract } from '../../../rpc-contract/viem-contract';
