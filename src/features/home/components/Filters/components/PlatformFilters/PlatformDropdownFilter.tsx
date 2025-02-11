@@ -7,6 +7,7 @@ import { selectFilterPlatformIds } from '../../../../../data/selectors/filtered-
 import type { PlatformEntity } from '../../../../../data/entities/platform';
 import { LabeledSearchMultiSelect } from '../../../../../../components/LabeledSearchMultiSelect';
 import type { LabeledSelectCommonProps } from '../../../../../../components/LabeledSelect';
+import { useMediaQuery } from '@material-ui/core';
 
 interface PlatformDropdownFilterProps {
   placement?: LabeledSelectCommonProps['placement'];
@@ -24,7 +25,7 @@ export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
       () => Object.fromEntries(platforms.map(platform => [platform.id, platform.name])),
       [platforms]
     ) satisfies Record<string, string>;
-
+    const isMouse = useMediaQuery('(pointer: fine)');
     const platformsIds = useAppSelector(selectFilterPlatformIds);
 
     const handleChange = useCallback(
@@ -51,6 +52,7 @@ export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
         dropdownFlip={dropDownFlip}
         dropdownShift={dropDownShift}
         dropdownAutoHide={false}
+        inputAutoFocus={isMouse}
       />
     );
   }

@@ -16,7 +16,7 @@ export const styles = (theme: Theme) => ({
     '& .MuiInputBase-input': {
       minWidth: '200px',
       transition: '0.2s ease-in-out',
-      padding: '8px 16px',
+      padding: '8px 16px 8px 4px',
       color: theme.palette.text.middle,
       height: 'auto',
       '&:focus': {
@@ -52,6 +52,9 @@ export const styles = (theme: Theme) => ({
       cursor: 'pointer',
     },
   },
+  leftIcon: {
+    margin: '0 0 0 16px',
+  },
   activeIcon: {
     color: theme.palette.text.light,
   },
@@ -62,6 +65,10 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
   },
   loader: {
-    margin: '0 16px 0 0',
+    margin: '0 0 0 16px',
+  },
+  enterButton: {
+    borderRadius: '4px',
+    border: `1px solid ${theme.palette.text.light}`,
   },
 });
