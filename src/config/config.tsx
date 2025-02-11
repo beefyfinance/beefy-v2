@@ -75,6 +75,12 @@ export const config = {
       'wstUSR',
       'Bold',
       'BOLD',
+      'waEthUSDC',
+      'waEthUSDT',
+      'waEthUSDe',
+      'waEthLidoGHO',
+      'csUSDC',
+      'csUSDL',
     ],
   },
   polygon: {
