@@ -17,4 +17,5 @@ export const tenderlyChains = new Set<ChainId>([
   'mantle',
   'moonbeam',
   'moonriver',
+  'berachain',
 ]);

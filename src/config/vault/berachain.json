@@ -7,19 +7,33 @@
     "tokenAddress": "0xdE04c469Ad658163e2a5E860a03A86B52f6FA8C8",
     "tokenDecimals": 18,
     "tokenProviderId": "beraswap",
+    "earnContractAddress": "0x3bAFeB462E27154CBc58405355E71e85c091F0A4",
     "earnedToken": "mooBeraswapBerachainBYUSD/HONEY",
     "earnedTokenAddress": "0x3bAFeB462E27154CBc58405355E71e85c091F0A4",
-    "earnContractAddress": "0x3bAFeB462E27154CBc58405355E71e85c091F0A4",
     "oracle": "lps",
     "oracleId": "beraswap-byusd-honey",
-    "createdAt": 1738950529,
     "status": "active",
+    "createdAt": 1738950529,
     "platformId": "beraswap",
     "assets": ["BYUSD", "HONEY"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://hub.berachain.com/pools/0xde04c469ad658163e2a5e860a03a86b52f6fa8c8000000000000000000000000/deposit/",
-    "network": "berachain"
+    "network": "berachain",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "berachain-beraswap",
+        "poolId": "0xde04c469ad658163e2a5e860a03a86b52f6fa8c8000000000000000000000000",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x688e72142674041f8f6Af4c808a4045cA1D6aC82",
+          "0xFCBD14DC51f0A4d49d5E53C2E0950e0bC26d0Dce"
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
+      }
+    ]
   },
   {
     "id": "beraswap-usdc.e-honey",
@@ -29,19 +43,33 @@
     "tokenAddress": "0xF961a8f6d8c69E7321e78d254ecAfBcc3A637621",
     "tokenDecimals": 18,
     "tokenProviderId": "beraswap",
+    "earnContractAddress": "0x873629E73CD5FAc9e3Ee1963A796Ad0aBDf17542",
     "earnedToken": "mooBeraswapBerachainUSDC.e/HONEY",
     "earnedTokenAddress": "0x873629E73CD5FAc9e3Ee1963A796Ad0aBDf17542",
-    "earnContractAddress": "0x873629E73CD5FAc9e3Ee1963A796Ad0aBDf17542",
     "oracle": "lps",
     "oracleId": "beraswap-usdc.e-honey",
-    "createdAt": 1738950331,
     "status": "active",
+    "createdAt": 1738950331,
     "platformId": "beraswap",
     "assets": ["USDCe", "HONEY"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://hub.berachain.com/pools/0xf961a8f6d8c69e7321e78d254ecafbcc3a637621000000000000000000000001/deposit/",
-    "network": "berachain"
+    "network": "berachain",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "berachain-beraswap",
+        "poolId": "0xf961a8f6d8c69e7321e78d254ecafbcc3a637621000000000000000000000001",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x549943e04f40284185054145c6E4e9568C1D3241",
+          "0xFCBD14DC51f0A4d49d5E53C2E0950e0bC26d0Dce"
+        ],
+        "bptIndex": 1,
+        "hasNestedPool": false
+      }
+    ]
   },
   {
     "id": "beraswap-wbera-wbtc",
@@ -51,19 +79,31 @@
     "tokenAddress": "0x38fdD999Fe8783037dB1bBFE465759e312f2d809",
     "tokenDecimals": 18,
     "tokenProviderId": "beraswap",
+    "earnContractAddress": "0x816716ebDB0D4c882d364C61aD3373eEAD91C86a",
     "earnedToken": "mooBeraswapBerachainWBERA/WBTC",
     "earnedTokenAddress": "0x816716ebDB0D4c882d364C61aD3373eEAD91C86a",
-    "earnContractAddress": "0x816716ebDB0D4c882d364C61aD3373eEAD91C86a",
     "oracle": "lps",
     "oracleId": "beraswap-wbera-wbtc",
-    "createdAt": 1738948867,
     "status": "active",
+    "createdAt": 1738948867,
     "platformId": "beraswap",
     "assets": ["WBERA", "WBTC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://hub.berachain.com/pools/0x38fdd999fe8783037db1bbfe465759e312f2d809000200000000000000000004/deposit/",
-    "network": "berachain"
+    "network": "berachain",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "berachain-beraswap",
+        "poolId": "0x38fdd999fe8783037db1bbfe465759e312f2d809000200000000000000000004",
+        "poolType": "weighted",
+        "tokens": [
+          "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+          "0x6969696969696969696969696969696969696969"
+        ]
+      }
+    ]
   },
   {
     "id": "beraswap-wbera-weth",
@@ -73,19 +113,31 @@
     "tokenAddress": "0xDd70A5eF7d8CfE5C5134b5f9874b09Fb5Ce812b4",
     "tokenDecimals": 18,
     "tokenProviderId": "beraswap",
+    "earnContractAddress": "0x9f841372612E0106Cd540AB976656cDd8F1553C5",
     "earnedToken": "mooBeraswapBerachainWBERA/WETH",
     "earnedTokenAddress": "0x9f841372612E0106Cd540AB976656cDd8F1553C5",
-    "earnContractAddress": "0x9f841372612E0106Cd540AB976656cDd8F1553C5",
     "oracle": "lps",
     "oracleId": "beraswap-wbera-weth",
-    "createdAt": 1738948742,
     "status": "active",
+    "createdAt": 1738948742,
     "platformId": "beraswap",
     "assets": ["WBERA", "WETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://hub.berachain.com/pools/0xdd70a5ef7d8cfe5c5134b5f9874b09fb5ce812b4000200000000000000000003/deposit/",
-    "network": "berachain"
+    "network": "berachain",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "berachain-beraswap",
+        "poolId": "0xdd70a5ef7d8cfe5c5134b5f9874b09fb5ce812b4000200000000000000000003",
+        "poolType": "weighted",
+        "tokens": [
+          "0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590",
+          "0x6969696969696969696969696969696969696969"
+        ]
+      }
+    ]
   },
   {
     "id": "beraswap-wbera-honey",
@@ -95,19 +147,31 @@
     "tokenAddress": "0x2c4a603A2aA5596287A06886862dc29d56DbC354",
     "tokenDecimals": 18,
     "tokenProviderId": "beraswap",
+    "earnContractAddress": "0x65d17B3fFea64602B0014659141a2Cd530aBadd1",
     "earnedToken": "mooBeraswapBerachainWBERA/HONEY",
     "earnedTokenAddress": "0x65d17B3fFea64602B0014659141a2Cd530aBadd1",
-    "earnContractAddress": "0x65d17B3fFea64602B0014659141a2Cd530aBadd1",
     "oracle": "lps",
     "oracleId": "beraswap-wbera-honey",
-    "createdAt": 1738947906,
     "status": "active",
+    "createdAt": 1738947906,
     "platformId": "beraswap",
     "assets": ["WBERA", "HONEY"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://hub.berachain.com/pools/0x2c4a603a2aa5596287a06886862dc29d56dbc354000200000000000000000002/deposit/",
-    "network": "berachain"
+    "network": "berachain",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "berachain-beraswap",
+        "poolId": "0x2c4a603a2aa5596287a06886862dc29d56dbc354000200000000000000000002",
+        "poolType": "weighted",
+        "tokens": [
+          "0x6969696969696969696969696969696969696969",
+          "0xFCBD14DC51f0A4d49d5E53C2E0950e0bC26d0Dce"
+        ]
+      }
+    ]
   },
   {
     "id": "kodiak-cow-berachain-wbtc-weth-rp",
