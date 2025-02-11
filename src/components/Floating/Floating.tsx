@@ -33,7 +33,7 @@ export const Floating = memo<FloatingProps>(function Floating({
   placement = 'bottom-start',
   autoHeight = true,
   autoWidth = true,
-  autoHide = true,
+  autoHide = false,
   display = 'block',
   shift = true,
   flip = true,
@@ -43,8 +43,8 @@ export const Floating = memo<FloatingProps>(function Floating({
     if (autoHide) middlewares.push(hide());
 
     middlewares.push(offset(4));
-    if (flip) middlewares.push(flipFloating());
-    if (shift) middlewares.push(shiftFloating());
+    if (flip) middlewares.push(flipFloating({ padding: 16 }));
+    if (shift) middlewares.push(shiftFloating({ padding: 16 }));
 
     if (autoWidth || autoHeight) {
       middlewares.push(

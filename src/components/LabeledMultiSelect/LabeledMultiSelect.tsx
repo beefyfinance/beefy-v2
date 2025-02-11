@@ -138,7 +138,7 @@ export const LabeledMultiSelect = memo(function LabeledMultiSelect<V extends str
   dropdownItemSelectedClass,
   dropdownAutoWidth = true,
   dropdownAutoHeight = true,
-  dropdownAutoHide = true,
+  dropdownAutoHide = false,
 }: LabeledMultiSelectProps<V>) {
   const baseClasses = useStyles();
   const allKey = 'all';
