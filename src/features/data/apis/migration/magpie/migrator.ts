@@ -7,6 +7,8 @@ import { toWei } from '../../../../../helpers/big-number';
 import type { AbiItem } from 'web3-utils';
 import type Web3 from 'web3';
 import { buildExecute, buildFetchBalance } from '../utils';
+import { fetchContract } from '../../rpc-contract/viem-contract';
+import type { Abi, Address } from 'abitype';
 
 const id = 'magpie';
 
@@ -17,15 +19,16 @@ const poolHelpers = {
 
 async function getBalance(
   vault: VaultEntity,
-  web3: Web3,
   walletAddress: string,
   _: BeefyState
 ): Promise<string> {
   const poolHelper = poolHelpers[vault.chainId];
   if (!poolHelper) return '0';
-  return new web3.eth.Contract(PoolHelperAbi, poolHelper).methods
-    .balance(vault.depositTokenAddress, walletAddress)
-    .call();
+  const walletBalance = await fetchContract(poolHelper, PoolHelperAbi, vault.chainId).read.balance([
+    vault.depositTokenAddress as Address,
+    walletAddress as Address,
+  ]);
+  return walletBalance.toString(10);
 }
 
 async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, state: BeefyState) {
@@ -33,14 +36,13 @@ async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, st
   const amountInWei = toWei(amount, depositToken.decimals);
   const poolHelper = poolHelpers[vault.chainId];
   if (!poolHelper) return;
-  return new web3.eth.Contract(PoolHelperAbi, poolHelper).methods.withdrawMarketWithClaim(
-    vault.depositTokenAddress,
-    amountInWei.toString(10),
-    true
-  );
+  return new web3.eth.Contract(
+    PoolHelperAbi as unknown as AbiItem[],
+    poolHelper
+  ).methods.withdrawMarketWithClaim(vault.depositTokenAddress, amountInWei.toString(10), true);
 }
 
-const PoolHelperAbi: AbiItem[] = [
+const PoolHelperAbi = [
   {
     inputs: [
       { internalType: 'address', name: '_market', type: 'address' },
@@ -62,7 +64,7 @@ const PoolHelperAbi: AbiItem[] = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export const migrator: Migrator = {
   update: buildFetchBalance(id, getBalance),

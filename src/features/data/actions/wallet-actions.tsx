@@ -63,7 +63,6 @@ import type { ThunkDispatch } from '@reduxjs/toolkit';
 import { selectOneInchSwapAggregatorForChain, selectZapByChainId } from '../selectors/zap';
 import type { UserlessZapRequest, ZapOrder, ZapStep } from '../apis/transact/zap/types';
 import { ZERO_ADDRESS } from '../../../helpers/addresses';
-import { MultiCall } from 'eth-multicall';
 import { getVaultWithdrawnFromContract } from '../apis/transact/helpers/vault';
 import { migratorUpdate } from './migrator';
 import type { MigrationConfig } from '../reducers/wallet/migration';
@@ -431,7 +430,6 @@ const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) =
     const walletApi = await getWalletConnectionApi();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const chain = selectChainById(state, vault.chainId);
-    const multicall = new MultiCall(web3, chain.multicallAddress);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     const { sharesToWithdrawWei } = await getVaultWithdrawnFromContract(
@@ -442,9 +440,7 @@ const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) =
       },
       vault,
       state,
-      address,
-      web3,
-      multicall
+      address
     );
 
     const native = selectChainNativeToken(state, vault.chainId);

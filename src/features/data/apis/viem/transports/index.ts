@@ -7,6 +7,9 @@ export function makeCustomFallbackTransport(rpcUrls: string[]): CustomFallbackTr
       timeout: 10000,
       retryCount: 5,
       retryDelay: 100,
+      batch: {
+        batchSize: 10,
+      },
     })
   );
 

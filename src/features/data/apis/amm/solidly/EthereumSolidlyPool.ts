@@ -1,5 +1,3 @@
-import type { ShapeWithLabel } from 'eth-multicall';
-import { createContract } from '../../../../../helpers/web3';
 import { BigNumber } from 'bignumber.js';
 import type { SwapFeeParams } from '../types';
 import type {
@@ -7,7 +5,8 @@ import type {
   PairDataResponse as BasePairDataResponse,
 } from './SolidlyPool';
 import { SolidlyPool } from './SolidlyPool';
-import type { AbiItem } from 'web3-utils';
+import { fetchContract } from '../../rpc-contract/viem-contract';
+import type { Abi } from 'abitype';
 
 type PairDataResponse = BasePairDataResponse & {
   feeRatio: string;
@@ -17,7 +16,7 @@ type PairData = BasePairData & {
   feeRatio: BigNumber;
 };
 
-const EthereumSolidlyPairAbi: AbiItem[] = [
+const EthereumSolidlyPairAbi = [
   {
     inputs: [],
     name: 'feeRatio',
@@ -31,31 +30,18 @@ const EthereumSolidlyPairAbi: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export class EthereumSolidlyPool extends SolidlyPool {
   protected pairData: PairData | undefined = undefined;
 
-  protected getPairDataRequest(): ShapeWithLabel[] {
-    const contract = createContract(EthereumSolidlyPairAbi, this.address);
-    return [
-      {
-        ...super.getPairDataRequest()[0],
-        feeRatio: contract.methods.feeRatio(),
-      },
-    ];
-  }
-
-  protected consumePairDataResponse(untypedResult: unknown[]) {
-    const result = (untypedResult as PairDataResponse[])[0];
-
-    super.consumePairDataResponse(untypedResult);
-
-    if (!this.pairData) {
-      throw new Error('Pair data is not loaded');
-    }
-
-    this.pairData.feeRatio = new BigNumber(result.feeRatio);
+  protected async updatePairData() {
+    const contract = fetchContract(this.address, EthereumSolidlyPairAbi, this.chain.id);
+    const [_, feeRatio] = await Promise.all([super.updatePairData(), contract.read.feeRatio()]);
+    this.pairData = {
+      ...this.pairData!,
+      feeRatio: new BigNumber(feeRatio.toString(10)),
+    };
   }
 
   protected getSwapFeeParams(): SwapFeeParams {

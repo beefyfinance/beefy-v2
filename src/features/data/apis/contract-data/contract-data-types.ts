@@ -8,6 +8,7 @@ import type {
   VaultStandard,
 } from '../../entities/vault';
 import type { TokenEntity } from '../../entities/token';
+import type { Address } from 'abitype';
 
 export interface IContractDataApi {
   fetchAllContractData(
@@ -19,6 +20,10 @@ export interface IContractDataApi {
     boosts: BoostEntity[],
     boostsMulti: BoostEntity[]
   ): Promise<FetchAllContractDataResult>;
+}
+
+export interface GovVaultRawContractData {
+  totalSupply: bigint;
 }
 
 export interface GovVaultContractData {
@@ -38,14 +43,25 @@ export interface BoostRewardContractData extends RewardContractData {
 }
 
 export interface GovVaultMultiRawContractData {
-  totalSupply: string;
-  rewards: [string, string, string][]; // [tokenAddress, rewardRate, periodFinish]
+  totalSupply: bigint;
+  rewards: readonly {
+    rewardAddress: string;
+    rate: bigint;
+    periodFinish: bigint;
+  }[];
 }
 
 export interface GovVaultMultiContractData {
   id: string;
   totalSupply: BigNumber;
   rewards: RewardContractData[];
+}
+
+export interface StandardVaultRawContractData {
+  balance: bigint;
+  pricePerFullShare: bigint;
+  strategy: string;
+  paused: boolean;
 }
 
 export interface StandardVaultContractData {
@@ -69,6 +85,12 @@ export interface StandardVaultContractData {
   paused: boolean;
 }
 
+export interface CowVaultRawContractData {
+  token0Balance: bigint;
+  token1Balance: bigint;
+  strategy: Address;
+  paused: boolean;
+}
 export interface CowVaultContractData {
   id: string;
   balances: BigNumber[];
@@ -77,10 +99,9 @@ export interface CowVaultContractData {
 }
 
 export interface BoostRawContractData {
-  id: string;
-  totalSupply: string;
-  rewardRate: string;
-  periodFinish: string | undefined; // undefined means boost is in prestake
+  totalSupply: bigint;
+  rewardRate: bigint;
+  periodFinish: bigint | undefined; // undefined means boost is in prestake
   isPreStake: boolean;
 }
 

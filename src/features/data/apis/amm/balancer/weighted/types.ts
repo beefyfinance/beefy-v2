@@ -11,5 +11,3 @@ export enum WeightedPoolExitKind {
   BPT_IN_FOR_EXACT_TOKENS_OUT,
   MANAGEMENT_FEE_TOKENS_OUT,
 }
-
-export type NormalizedWeightsResult = string[];

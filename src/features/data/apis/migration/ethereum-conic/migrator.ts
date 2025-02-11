@@ -4,8 +4,7 @@ import type { VaultEntity } from '../../../entities/vault';
 import { BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { selectVaultById } from '../../../selectors/vaults';
-import { selectChainById } from '../../../selectors/chains';
-import { getWalletConnectionApi, getWeb3Instance } from '../../instances';
+import { getWalletConnectionApi } from '../../instances';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import { selectUserBalanceToMigrateByVaultId } from '../../../selectors/migration';
 import { ConicLpTokenStakerAbi } from '../../../../../config/abi/ConicLpTokenStakerAbi';
@@ -17,6 +16,8 @@ import { isTokenErc20 } from '../../../entities/token';
 import { selectAllowanceByTokenAddress } from '../../../selectors/allowances';
 import type { ConicMigrationUpdateFulfilledPayload } from './types';
 import type { AbiItem } from 'web3-utils';
+import { fetchContract } from '../../rpc-contract/viem-contract';
+import type { Address } from 'abitype';
 
 const CONIC_LP_TOKEN_STAKER = '0xA5241560306298efb9ed80b87427e664FFff0CF9';
 
@@ -27,26 +28,22 @@ export const fetchConicStakedBalance = createAsyncThunk<
 >('migration/ethereum-conic/update', async ({ vaultId, walletAddress }, { getState }) => {
   const state = getState();
   const vault = selectVaultById(state, vaultId);
-  const chain = selectChainById(state, vault.chainId);
-  const web3 = await getWeb3Instance(chain);
 
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const lpTokenStaker = new web3.eth.Contract(
-    ConicLpTokenStakerAbi as unknown as AbiItem[],
-    CONIC_LP_TOKEN_STAKER
+  const lpTokenStakerContract = fetchContract(
+    CONIC_LP_TOKEN_STAKER,
+    ConicLpTokenStakerAbi,
+    vault.chainId
   );
+  const lpContract = fetchContract(depositToken.address, ConicLpTokenStakerAbi, vault.chainId);
 
-  const lpContract = new web3.eth.Contract(
-    ConicLpTokenStakerAbi as unknown as AbiItem[],
-    depositToken.address
-  );
+  const conicPoolAddress = await lpContract.read.minter();
+  const balance = await lpTokenStakerContract.read.getUserBalanceForPool([
+    conicPoolAddress,
+    walletAddress as Address,
+  ]);
 
-  const conicPoolAddress = await lpContract.methods.minter().call();
-  const balance = await lpTokenStaker.methods
-    .getUserBalanceForPool(conicPoolAddress, walletAddress)
-    .call();
-
-  const fixedBalance = new BigNumber(balance).shiftedBy(-depositToken.decimals);
+  const fixedBalance = new BigNumber(balance.toString(10)).shiftedBy(-depositToken.decimals);
 
   return { vaultId, walletAddress, balance: fixedBalance, migrationId: 'ethereum-conic' };
 });

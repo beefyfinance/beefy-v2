@@ -15,11 +15,11 @@ import {
 } from '../../../../selectors/tokens';
 import { toWeiString } from '../../../../../../helpers/big-number';
 import type { VaultEntity } from '../../../../entities/vault';
-import abiCoder from 'web3-eth-abi';
 import { getInsertIndex } from '../../helpers/zap';
 import { nativeAndWrappedAreSame } from '../../helpers/tokens';
 import { ZERO_FEE } from '../../helpers/quotes';
 import { selectAllChainIds } from '../../../../selectors/chains';
+import { encodeFunctionData, type Abi } from 'viem';
 
 export class WNativeSwapProvider implements ISwapProvider {
   getId(): string {
@@ -78,32 +78,36 @@ export class WNativeSwapProvider implements ISwapProvider {
   }
 
   protected encodeWrapCall(): string {
-    return abiCoder.encodeFunctionCall(
-      {
-        type: 'function',
-        name: 'deposit',
-        constant: false,
-        stateMutability: 'payable',
-        payable: true,
-        inputs: [],
-        outputs: [],
-      },
-      []
-    );
+    return encodeFunctionData({
+      abi: [
+        {
+          type: 'function',
+          name: 'deposit',
+          constant: false,
+          stateMutability: 'payable',
+          payable: true,
+          inputs: [],
+          outputs: [],
+        },
+      ] as const satisfies Abi,
+    });
   }
 
   protected encodeUnwrapCall(amountWei: string): string {
-    return abiCoder.encodeFunctionCall(
-      {
-        type: 'function',
-        name: 'withdraw',
-        constant: false,
-        payable: false,
-        inputs: [{ type: 'uint256', name: 'wad' }],
-        outputs: [],
-      },
-      [amountWei]
-    );
+    return encodeFunctionData({
+      abi: [
+        {
+          type: 'function',
+          name: 'withdraw',
+          constant: false,
+          payable: false,
+          stateMutability: 'nonpayable',
+          inputs: [{ type: 'uint256', name: 'wad' }],
+          outputs: [],
+        },
+      ] as const satisfies Abi,
+      args: [BigInt(amountWei)],
+    });
   }
 
   async getSupportedChains(state: BeefyState): Promise<ChainEntity['id'][]> {

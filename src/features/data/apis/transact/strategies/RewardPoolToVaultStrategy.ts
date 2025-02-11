@@ -44,14 +44,13 @@ import { getVaultTypeBuilder } from '../vaults';
 import { createOptionId, createQuoteId, createSelectionId, onlyOneInput } from '../helpers/options';
 import { selectErc20TokenByAddress } from '../../../selectors/tokens';
 import { TransactMode } from '../../../reducers/wallet/transact-types';
-import { BIG_ZERO, toWei, toWeiString } from '../../../../../helpers/big-number';
+import { BIG_ZERO, bigNumberToBigInt, toWei, toWeiString } from '../../../../../helpers/big-number';
 import { selectChainById } from '../../../selectors/chains';
 import { ZERO_FEE } from '../helpers/quotes';
 import type { BeefyState, BeefyThunk } from '../../../../../redux-types';
 import { walletActions } from '../../../actions/wallet-actions';
 import type { ChainEntity } from '../../../entities/chain';
 import { NO_RELAY, getInsertIndex } from '../helpers/zap';
-import abiCoder from 'web3-eth-abi';
 import type {
   OrderOutput,
   UserlessZapRequest,
@@ -63,6 +62,7 @@ import { type BigNumber } from 'bignumber.js';
 import { selectTransactSlippage } from '../../../selectors/transact';
 import { uniqBy } from 'lodash-es';
 import { slipBy } from '../helpers/amounts';
+import { encodeFunctionData, type Abi } from 'viem';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -591,22 +591,25 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
     return {
       target: govVaultAddress,
       value: '0',
-      data: abiCoder.encodeFunctionCall(
-        {
-          type: 'function',
-          name: 'withdraw',
-          constant: false,
-          payable: false,
-          inputs: [
-            {
-              name: '_amount0',
-              type: 'uint256',
-            },
-          ],
-          outputs: [],
-        },
-        [amount.toString(10)]
-      ),
+      data: encodeFunctionData({
+        abi: [
+          {
+            type: 'function',
+            name: 'withdraw',
+            constant: false,
+            payable: false,
+            inputs: [
+              {
+                name: '_amount0',
+                type: 'uint256',
+              },
+            ],
+            stateMutability: 'nonpayable',
+            outputs: [],
+          },
+        ] as const satisfies Abi,
+        args: [bigNumberToBigInt(amount)],
+      }),
       tokens: [
         {
           token: govVaultAddress,
@@ -665,22 +668,25 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
     return {
       target: govVaultAddress,
       value: '0',
-      data: abiCoder.encodeFunctionCall(
-        {
-          type: 'function',
-          name: 'stake',
-          constant: false,
-          payable: false,
-          inputs: [
-            {
-              name: '_amount0',
-              type: 'uint256',
-            },
-          ],
-          outputs: [],
-        },
-        [amount.toString(10)]
-      ),
+      data: encodeFunctionData({
+        abi: [
+          {
+            type: 'function',
+            name: 'stake',
+            constant: false,
+            payable: false,
+            inputs: [
+              {
+                name: '_amount0',
+                type: 'uint256',
+              },
+            ],
+            stateMutability: 'nonpayable',
+            outputs: [],
+          },
+        ] as const satisfies Abi,
+        args: [bigNumberToBigInt(amount)],
+      }),
       tokens: [
         {
           token: depositTokenAddress,

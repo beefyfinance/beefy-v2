@@ -5,23 +5,17 @@ import type {
 } from './UniswapV2Pool';
 import { UniswapV2Pool } from './UniswapV2Pool';
 import { BigNumber } from 'bignumber.js';
-import type { ShapeWithLabel } from 'eth-multicall';
-import { createContract } from '../../../../../helpers/web3';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
 import type { SwapFeeParams } from '../types';
-import type { AbiItem } from 'web3-utils';
-
-type PairDataResponse = BasePairDataResponse & {
-  devFee: string;
-  swapFee: string;
-};
+import type { Abi } from 'abitype';
+import { fetchContract } from '../../rpc-contract/viem-contract';
 
 type PairData = BasePairData & {
   devFee: BigNumber;
   swapFee: BigNumber;
 };
 
-const BiSwapPairAbi: AbiItem[] = [
+const BiSwapPairAbi = [
   {
     constant: true,
     inputs: [],
@@ -52,33 +46,23 @@ const BiSwapPairAbi: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export class BiSwapUniswapV2Pool extends UniswapV2Pool {
   protected pairData: PairData | undefined = undefined;
 
-  protected getPairDataRequest(): ShapeWithLabel[] {
-    const contract = createContract(BiSwapPairAbi, this.address);
-    return [
-      {
-        ...super.getPairDataRequest()[0],
-        devFee: contract.methods.devFee(),
-        swapFee: contract.methods.swapFee(),
-      },
-    ];
-  }
-
-  protected consumePairDataResponse(untypedResult: unknown[]) {
-    const result = (untypedResult as PairDataResponse[])[0];
-
-    super.consumePairDataResponse(untypedResult);
-
+  protected async updatePairData() {
+    const contract = fetchContract(this.address, BiSwapPairAbi, this.chain.id);
+    const [_, devFee, swapFee] = await Promise.all([
+      super.updatePairData(),
+      contract.read.devFee(),
+      contract.read.swapFee(),
+    ]);
     if (!this.pairData) {
       throw new Error('Pair data is not loaded');
     }
-
-    this.pairData.devFee = new BigNumber(result.devFee);
-    this.pairData.swapFee = new BigNumber(result.swapFee);
+    this.pairData.devFee = new BigNumber(devFee);
+    this.pairData.swapFee = new BigNumber(swapFee);
   }
 
   protected getMintFeeParams(): MintFeeParams {

@@ -151,22 +151,22 @@ export const getGasPricer = createDependencyFactoryWithCacheByChain(
 );
 
 export const getContractDataApi = createDependencyFactoryWithCacheByChain(
-  async (chain, { ContractDataAPI }) => new ContractDataAPI(await getWeb3Instance(chain), chain),
+  async (chain, { ContractDataAPI }) => new ContractDataAPI(chain),
   () => import('./contract-data')
 );
 
 export const getBalanceApi = createDependencyFactoryWithCacheByChain(
-  async (chain, { BalanceAPI }) => new BalanceAPI(await getWeb3Instance(chain), chain),
+  async (chain, { BalanceAPI }) => new BalanceAPI(chain),
   () => import('./balance')
 );
 
 export const getAllowanceApi = createDependencyFactoryWithCacheByChain(
-  async (chain, { AllowanceAPI }) => new AllowanceAPI(await getWeb3Instance(chain), chain),
+  async (chain, { AllowanceAPI }) => new AllowanceAPI(chain),
   () => import('./allowance')
 );
 
 export const getMintersApi = createDependencyFactoryWithCacheByChain(
-  async (chain, { MinterApi }) => new MinterApi(await getWeb3Instance(chain), chain),
+  async (chain, { MinterApi }) => new MinterApi(chain),
   () => import('./minter/minter')
 );
 

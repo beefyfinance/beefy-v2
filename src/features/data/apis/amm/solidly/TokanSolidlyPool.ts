@@ -4,6 +4,8 @@ import { BigNumber } from 'bignumber.js';
 import type { SwapFeeParams } from '../types';
 import { SolidlyPool } from './SolidlyPool';
 import type { AbiItem } from 'web3-utils';
+import { fetchContract } from '../../rpc-contract/viem-contract';
+import type { Abi } from 'abitype';
 
 export type FactoryDataResponse = {
   fee: string;
@@ -13,7 +15,7 @@ export type FactoryData = {
   fee: BigNumber;
 };
 
-const TokanFactoryAbi: AbiItem[] = [
+const TokanFactoryAbi = [
   {
     inputs: [
       {
@@ -33,45 +35,25 @@ const TokanFactoryAbi: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export class TokanSolidlyPool extends SolidlyPool {
   protected factoryData: FactoryData | undefined = undefined;
 
-  protected getFactoryDataRequest(): ShapeWithLabel[] {
+  protected async updateFactoryData() {
     if (!this.pairData) {
       throw new Error('Pair data is not loaded');
     }
-
-    const contract = createContract(TokanFactoryAbi, this.amm.factoryAddress);
-
-    return [
-      {
-        fee: contract.methods.getDefaultFee(this.pairData.stable),
-      },
-    ];
-  }
-
-  protected consumeFactoryDataResponse(untypedResult: unknown[]) {
-    const result = (untypedResult as FactoryDataResponse[])[0];
-
+    const contract = fetchContract(this.amm.factoryAddress, TokanFactoryAbi, this.chain.id);
+    const fee = await contract.read.getDefaultFee([this.pairData.stable]);
     this.factoryData = {
-      fee: new BigNumber(result.fee),
+      fee: new BigNumber(fee.toString(10)),
     };
   }
 
-  async updateFactoryData() {
-    const multicall = await this.getMulticall();
-    const [results] = await multicall.all([this.getFactoryDataRequest()]);
-    this.consumeFactoryDataResponse(results);
-  }
-
-  async updateAllData(otherCalls: ShapeWithLabel[][] = []): Promise<unknown[][]> {
-    const otherResults = await super.updateAllData(otherCalls);
-
+  async updateAllData() {
+    await super.updateAllData();
     await this.updateFactoryData();
-
-    return otherResults;
   }
 
   protected getSwapFeeParams(): SwapFeeParams {

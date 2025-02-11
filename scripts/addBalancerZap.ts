@@ -249,7 +249,7 @@ function createViemClient(chainId: AppChainId, chain: ChainConfig) {
   return createPublicClient({
     batch: {
       multicall: {
-        batchSize: 128,
+        batchSize: 512,
         wait: 100,
       },
     },

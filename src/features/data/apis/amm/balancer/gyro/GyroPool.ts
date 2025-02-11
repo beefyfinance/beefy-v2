@@ -4,19 +4,18 @@ import type {
   QueryJoinPoolResponse,
   VaultConfig,
 } from '../vault/types';
-import type { RatesResult } from './types';
 import { BigNumber } from 'bignumber.js';
 import { BIG_ONE, bigNumberToStringDeep } from '../../../../../../helpers/big-number';
 import { FixedPoint } from '../common/FixedPoint';
 import type { ZapStep } from '../../../transact/zap/types';
 import { WeightedMath } from '../weighted/WeightedMath';
 import type { ChainEntity } from '../../../../entities/chain';
-import { viemToWeb3Abi } from '../../../../../../helpers/web3';
 import { BalancerGyroEPoolAbi } from '../../../../../../config/abi/BalancerGyroEPoolAbi';
 import { AllPool } from '../common/AllPool';
 import { BalancerFeature, type IBalancerAllPool } from '../types';
 import { PoolExitKind, PoolJoinKind } from '../common/types';
 import { poolExitKindToGyroPoolExitKind, poolJoinKindToGyroPoolJoinKind } from './join-exit-kinds';
+import { fetchContract } from '../../../rpc-contract/viem-contract';
 
 const SUPPORTED_FEATURES = new Set<BalancerFeature>([
   BalancerFeature.AddRemoveAll,
@@ -208,19 +207,18 @@ export class GyroPool extends AllPool implements IBalancerAllPool {
   }
 
   protected async getTokenRates(): Promise<BigNumber[]> {
-    const pool = await this.getPoolContract();
-    const rates: RatesResult = await pool.methods.getTokenRates().call();
-    return [rates.rate0, rates.rate1].map(rate => new BigNumber(rate));
+    const pool = this.getPoolContract();
+    const rates = await pool.read.getTokenRates();
+    return rates.map(rate => new BigNumber(rate.toString(10)));
   }
 
-  protected async getPoolContract() {
-    const web3 = await this.getWeb3();
-    return new web3.eth.Contract(viemToWeb3Abi(BalancerGyroEPoolAbi), this.config.poolAddress);
+  protected getPoolContract() {
+    return fetchContract(this.config.poolAddress, BalancerGyroEPoolAbi, this.chain.id);
   }
 
   protected async getActualSupply(): Promise<BigNumber> {
-    const pool = await this.getPoolContract();
-    const totalSupply: string = await pool.methods.getActualSupply().call();
-    return new BigNumber(totalSupply);
+    const pool = this.getPoolContract();
+    const totalSupply = await pool.read.getActualSupply();
+    return new BigNumber(totalSupply.toString(10));
   }
 }

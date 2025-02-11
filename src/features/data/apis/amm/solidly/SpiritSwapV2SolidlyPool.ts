@@ -5,9 +5,8 @@ import type {
 import { SolidlyPool } from './SolidlyPool';
 import type { SwapFeeParams } from '../types';
 import { BigNumber } from 'bignumber.js';
-import type { ShapeWithLabel } from 'eth-multicall';
-import { createContract } from '../../../../../helpers/web3';
-import type { AbiItem } from 'web3-utils';
+import { fetchContract } from '../../rpc-contract/viem-contract';
+import type { Abi } from 'abitype';
 
 type PairDataResponse = BasePairDataResponse & {
   fee: string;
@@ -17,7 +16,7 @@ type PairData = BasePairData & {
   fee: BigNumber;
 };
 
-const SpiritSwapPairAbi: AbiItem[] = [
+const SpiritSwapPairAbi = [
   {
     inputs: [],
     name: 'fee',
@@ -31,31 +30,18 @@ const SpiritSwapPairAbi: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export class SpiritSwapV2SolidlyPool extends SolidlyPool {
   protected pairData: PairData | undefined = undefined;
 
-  protected getPairDataRequest(): ShapeWithLabel[] {
-    const contract = createContract(SpiritSwapPairAbi, this.address);
-    return [
-      {
-        ...super.getPairDataRequest()[0],
-        fee: contract.methods.fee(),
-      },
-    ];
-  }
-
-  protected consumePairDataResponse(untypedResult: unknown[]) {
-    const result = (untypedResult as PairDataResponse[])[0];
-
-    super.consumePairDataResponse(untypedResult);
-
-    if (!this.pairData) {
-      throw new Error('Pair data is not loaded');
-    }
-
-    this.pairData.fee = new BigNumber(result.fee);
+  protected async updatePairData() {
+    const contract = fetchContract(this.address, SpiritSwapPairAbi, this.chain.id);
+    const [_, fee] = await Promise.all([super.updatePairData(), contract.read.fee()]);
+    this.pairData = {
+      ...this.pairData!,
+      fee: new BigNumber(fee.toString(10)),
+    };
   }
 
   protected getSwapFeeParams(): SwapFeeParams {

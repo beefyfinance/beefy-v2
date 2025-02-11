@@ -9,38 +9,40 @@ import { toWei } from '../../../../../helpers/big-number';
 import type { AbiItem } from 'web3-utils';
 import type Web3 from 'web3';
 import { buildExecute, buildFetchBalance } from '../utils';
+import { fetchContract } from '../../rpc-contract/viem-contract';
+import type { Abi, Address } from 'abitype';
 
 const id = 'ethereum-convex';
 
-function getStakingAddress(vault: VaultEntity, web3: Web3, state: BeefyState): Promise<string> {
+function getStakingAddress(vault: VaultEntity, state: BeefyState): Promise<string> {
   const strategyAddress = selectVaultStrategyAddress(state, vault.id);
-  const strategy = new web3.eth.Contract(ConvexStrategyAbi, strategyAddress);
+  const strategy = fetchContract(strategyAddress, ConvexStrategyAbi, vault.chainId);
   if (vault.assetIds.length === 1) {
     if (vault.assetIds[0] == 'cvxCRV') {
-      return strategy.methods.stakedCvxCrv().call();
+      return strategy.read.stakedCvxCrv();
     } else {
-      return strategy.methods.staking().call();
+      return strategy.read.staking();
     }
   } else {
-    return strategy.methods.rewardPool().call();
+    return strategy.read.rewardPool();
   }
 }
 
 async function getBalance(
   vault: VaultEntity,
-  web3: Web3,
   walletAddress: string,
   state: BeefyState
 ): Promise<string> {
-  const stakingAddress = await getStakingAddress(vault, web3, state);
-  const staking = new web3.eth.Contract(ERC20Abi as unknown as AbiItem, stakingAddress);
-  return staking.methods.balanceOf(walletAddress).call();
+  const stakingAddress = await getStakingAddress(vault, state);
+  const stakingContract = fetchContract(stakingAddress, ERC20Abi, vault.chainId);
+  const walletBalance = await stakingContract.read.balanceOf([walletAddress as Address]);
+  return walletBalance.toString(10);
 }
 
 async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, state: BeefyState) {
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const amountInWei = toWei(amount, depositToken.decimals);
-  const stakingAddress = await getStakingAddress(vault, web3, state);
+  const stakingAddress = await getStakingAddress(vault, state);
   const convexStaking = new web3.eth.Contract(ConvexAbi, stakingAddress);
 
   if (vault.assetIds.length === 1) {
@@ -53,7 +55,7 @@ async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, st
   }
 }
 
-const ConvexStrategyAbi: AbiItem[] = [
+const ConvexStrategyAbi = [
   {
     inputs: [],
     name: 'stakedCvxCrv',
@@ -75,7 +77,7 @@ const ConvexStrategyAbi: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 const ConvexAbi: AbiItem[] = [
   {

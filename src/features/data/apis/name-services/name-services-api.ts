@@ -2,7 +2,6 @@ import { type Address } from 'viem';
 import { getAllChainsFromTldToChain, normalizeAddress } from './utils';
 import type { ChainEntity, ChainId } from '../../entities/chain';
 import type { Resolver } from './types';
-import { getWeb3Instance } from '../instances';
 import { resolvers } from './resolvers';
 import { isFulfilledResult } from '../../../../helpers/promises';
 import { isDefined } from '../../utils/array-utils';
@@ -33,8 +32,7 @@ export class NameServicesApi {
     const results = await Promise.allSettled(
       lookups.map(async ({ resolver, chainId }) => {
         const { addressToDomain } = await resolver.methods();
-        const web3 = await getWeb3Instance(this.chainIdToEntity[chainId]);
-        return addressToDomain(checksumAddress, chainId, web3);
+        return addressToDomain(checksumAddress, chainId);
       })
     );
 
@@ -75,8 +73,7 @@ export class NameServicesApi {
     const results = await Promise.allSettled(
       lookups.map(async ({ resolver, chainId }) => {
         const { domainToAddress } = await resolver.methods();
-        const web3 = await getWeb3Instance(this.chainIdToEntity[chainId]);
-        return domainToAddress(domain, chainId, web3);
+        return domainToAddress(domain, chainId);
       })
     );
 

@@ -1,14 +1,13 @@
 import { type CurveTokenOption, getMethodSignaturesForType } from './types';
 import { getInsertIndex, getTokenAddress } from '../../helpers/zap';
-import type { AbiItem } from 'web3-utils';
 import { type BigNumber } from 'bignumber.js';
 import type { TokenAmount } from '../../transact-types';
-import { getWeb3Instance } from '../../../instances';
 import { fromWeiString, toWeiString } from '../../../../../../helpers/big-number';
 import type { ChainEntity } from '../../../../entities/chain';
 import { isTokenNative, type TokenEntity } from '../../../../entities/token';
 import type { ZapStep } from '../../zap/types';
-import abiCoder from 'web3-eth-abi';
+import { fetchContract } from '../../../rpc-contract/viem-contract';
+import { encodeFunctionData, type Abi, type Address } from 'viem';
 
 export class CurvePool {
   public constructor(
@@ -20,30 +19,36 @@ export class CurvePool {
 
   /** calc_token_amount */
   public async quoteAddLiquidity(depositAmount: BigNumber): Promise<TokenAmount> {
-    const web3 = await getWeb3Instance(this.chain);
-    const contract = new web3.eth.Contract(
-      [this.typeToAddLiquidityQuoteAbi(this.option.type, this.option.numCoins)],
-      this.option.target
+    const contract = fetchContract(
+      this.option.target as Address,
+      this.typeToAddLiquidityQuoteAbi(this.option.type, this.option.numCoins),
+      this.chain.id
     );
+
     const amounts = this.makeAmounts(
       toWeiString(depositAmount, this.option.token.decimals),
       this.option.index,
       this.option.numCoins
     );
 
-    const params = this.typeToAddLiquidityQuoteParams(this.option.type, this.poolAddress, amounts);
+    const params = this.typeToAddLiquidityQuoteParams(
+      this.option.type,
+      this.poolAddress,
+      amounts.map(amount => BigInt(amount))
+    );
     console.log(this.option.type, this.option.target, 'calc_token_amount', params);
-    const amount = await contract.methods.calc_token_amount(...params).call();
+
+    const amount = (await contract.read.calc_token_amount([...params])) as bigint;
     console.log('->', amount);
 
     return {
       token: this.depositToken,
-      amount: fromWeiString(amount, this.depositToken.decimals),
+      amount: fromWeiString(amount.toString(10), this.depositToken.decimals),
     };
   }
 
   /** calc_token_amount abi */
-  protected typeToAddLiquidityQuoteAbi(type: CurveTokenOption['type'], numCoins: number): AbiItem {
+  protected typeToAddLiquidityQuoteAbi(type: CurveTokenOption['type'], numCoins: number): Abi {
     const signatures = getMethodSignaturesForType(type);
     return this.signatureToAbiItem(signatures.depositQuote, numCoins);
   }
@@ -52,7 +57,7 @@ export class CurvePool {
   protected typeToAddLiquidityQuoteParams(
     type: CurveTokenOption['type'],
     poolAddress: string,
-    amounts: string[]
+    amounts: bigint[]
   ): unknown[] {
     switch (type) {
       case 'fixed':
@@ -97,7 +102,10 @@ export class CurvePool {
     return {
       target: this.option.target,
       value: isNative ? depositAmountWei.toString(10) : '0',
-      data: abiCoder.encodeFunctionCall(methodAbi, methodParams),
+      data: encodeFunctionData({
+        abi: methodAbi,
+        args: methodParams,
+      }),
       tokens: insertBalance
         ? [
             {
@@ -150,7 +158,7 @@ export class CurvePool {
   }
 
   /** add_liquidity abi */
-  protected typeToAddLiquidityAbi(type: CurveTokenOption['type'], numCoins: number): AbiItem {
+  protected typeToAddLiquidityAbi(type: CurveTokenOption['type'], numCoins: number): Abi {
     const signatures = getMethodSignaturesForType(type);
     return this.signatureToAbiItem(signatures.deposit, numCoins, 'payable');
   }
@@ -181,33 +189,30 @@ export class CurvePool {
 
   /** calc_withdraw_one_coin */
   public async quoteRemoveLiquidity(withdrawAmount: BigNumber): Promise<TokenAmount> {
-    const web3 = await getWeb3Instance(this.chain);
-    const contract = new web3.eth.Contract(
-      [this.typeToRemoveLiquidityQuoteAbi(this.option.type, this.option.numCoins)],
-      this.option.target
+    const contract = fetchContract(
+      this.option.target,
+      this.typeToRemoveLiquidityQuoteAbi(this.option.type, this.option.numCoins),
+      this.chain.id
     );
     const amount = toWeiString(withdrawAmount, this.depositToken.decimals);
     const params = this.typeToRemoveLiquidityQuoteParams(
       this.option.type,
       this.poolAddress,
-      amount,
+      BigInt(amount),
       this.option.index
     );
     console.log(this.option.type, this.option.target, 'calc_withdraw_one_coin', params);
-    const withdrawn = await contract.methods.calc_withdraw_one_coin(...params).call();
+    const withdrawn = (await contract.read.calc_withdraw_one_coin(params)) as bigint;
     console.log('->', withdrawn);
 
     return {
       token: this.option.token,
-      amount: fromWeiString(withdrawn, this.option.token.decimals),
+      amount: fromWeiString(withdrawn.toString(10), this.option.token.decimals),
     };
   }
 
   /** calc_withdraw_one_coin abi */
-  protected typeToRemoveLiquidityQuoteAbi(
-    type: CurveTokenOption['type'],
-    numCoins: number
-  ): AbiItem {
+  protected typeToRemoveLiquidityQuoteAbi(type: CurveTokenOption['type'], numCoins: number): Abi {
     const signatures = getMethodSignaturesForType(type);
     return this.signatureToAbiItem(signatures.withdrawQuote, numCoins);
   }
@@ -216,7 +221,7 @@ export class CurvePool {
   protected typeToRemoveLiquidityQuoteParams(
     type: CurveTokenOption['type'],
     poolAddress: string,
-    amount: string,
+    amount: bigint,
     tokenIndex: number
   ): unknown[] {
     switch (type) {
@@ -253,7 +258,10 @@ export class CurvePool {
     return {
       target: this.option.target,
       value: '0',
-      data: abiCoder.encodeFunctionCall(methodAbi, methodParams),
+      data: encodeFunctionData({
+        abi: methodAbi,
+        args: methodParams,
+      }),
       tokens: insertBalance
         ? [
             {
@@ -292,7 +300,7 @@ export class CurvePool {
   }
 
   /** remove_liquidity_one_coin abi */
-  protected typeToRemoveLiquidityAbi(type: CurveTokenOption['type'], numCoins: number): AbiItem {
+  protected typeToRemoveLiquidityAbi(type: CurveTokenOption['type'], numCoins: number): Abi {
     const signatures = getMethodSignaturesForType(type);
     return this.signatureToAbiItem(signatures.withdraw, numCoins, 'payable');
   }
@@ -332,63 +340,65 @@ export class CurvePool {
     signature: string,
     numCoins: number,
     stateMutability: 'payable' | 'view' = 'view'
-  ): AbiItem {
+  ): Abi {
     const [name, inputsPart] = signature.split(':');
     const inputs = inputsPart.split('/');
 
-    return {
-      type: 'function',
-      name,
-      stateMutability,
-      inputs: inputs.map(input => {
-        switch (input) {
-          case 'fixed_amounts':
-            return {
-              name: 'amounts',
-              type: `uint256[${numCoins}]`,
-            };
-          case 'dynamic_amounts':
-            return {
-              name: 'amounts',
-              type: `uint256[]`,
-            };
-          case 'amount':
-          case 'min_amount':
-            return {
-              name: input,
-              type: 'uint256',
-            };
-          case 'uint256_index':
-            return {
-              name: 'index',
-              type: 'uint256',
-            };
-          case 'int128_index':
-            return {
-              name: 'index',
-              type: 'int128',
-            };
-          case 'is_deposit':
-          case 'use_underlying':
-            return {
-              name: input,
-              type: 'bool',
-            };
-          case 'pool':
-            return {
-              name: input,
-              type: 'address',
-            };
-          default:
-            throw new Error(`Invalid input type ${input}`);
-        }
-      }),
-      outputs: [
-        {
-          name: 'amount',
-          type: 'uint256',
-        },
-      ],
-    };
+    return [
+      {
+        type: 'function',
+        name,
+        stateMutability,
+        inputs: inputs.map(input => {
+          switch (input) {
+            case 'fixed_amounts':
+              return {
+                name: 'amounts',
+                type: `uint256[${numCoins}]`,
+              };
+            case 'dynamic_amounts':
+              return {
+                name: 'amounts',
+                type: `uint256[]`,
+              };
+            case 'amount':
+            case 'min_amount':
+              return {
+                name: input,
+                type: 'uint256',
+              };
+            case 'uint256_index':
+              return {
+                name: 'index',
+                type: 'uint256',
+              };
+            case 'int128_index':
+              return {
+                name: 'index',
+                type: 'int128',
+              };
+            case 'is_deposit':
+            case 'use_underlying':
+              return {
+                name: input,
+                type: 'bool',
+              };
+            case 'pool':
+              return {
+                name: input,
+                type: 'address',
+              };
+            default:
+              throw new Error(`Invalid input type ${input}`);
+          }
+        }),
+        outputs: [
+          {
+            name: 'amount',
+            type: 'uint256',
+          },
+        ],
+      },
+    ];
   }
 }

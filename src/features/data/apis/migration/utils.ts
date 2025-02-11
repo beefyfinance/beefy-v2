@@ -16,17 +16,11 @@ import { selectAllowanceByTokenAddress } from '../../selectors/allowances';
 import type { VaultEntity } from '../../entities/vault';
 import { BigNumber } from 'bignumber.js';
 import type Web3 from 'web3';
-import { selectChainById } from '../../selectors/chains';
-import { getWalletConnectionApi, getWeb3Instance } from '../instances';
+import { getWalletConnectionApi } from '../instances';
 
 export function buildFetchBalance(
   id: string,
-  fetchBalance: (
-    vault: VaultEntity,
-    web3: Web3,
-    walletAddress: string,
-    state: BeefyState
-  ) => Promise<string>
+  fetchBalance: (vault: VaultEntity, walletAddress: string, state: BeefyState) => Promise<string>
 ) {
   return createAsyncThunk<
     CommonMigrationUpdateFulfilledPayload,
@@ -36,10 +30,8 @@ export function buildFetchBalance(
     const state = getState();
     const vault = selectVaultById(state, vaultId);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    const chain = selectChainById(state, vault.chainId);
-    const web3 = await getWeb3Instance(chain);
 
-    const balance = await fetchBalance(vault, web3, walletAddress, state);
+    const balance = await fetchBalance(vault, walletAddress, state);
     const fixedBalance = new BigNumber(balance).shiftedBy(-depositToken.decimals);
     console.debug(id, vault.id, fixedBalance.toNumber());
     return { vaultId, walletAddress, balance: fixedBalance, migrationId: id };

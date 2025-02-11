@@ -10,6 +10,8 @@ import type Web3 from 'web3';
 import { buildExecute, buildFetchBalance } from '../utils';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
 import type { ChainEntity } from '../../../entities/chain';
+import { fetchContract } from '../../rpc-contract/viem-contract';
+import type { Abi, Address } from 'abitype';
 
 const id = 'l2-curve';
 
@@ -22,33 +24,33 @@ const override = {
   'spell-mim-crv': '0x6d2070b13929Df15B13D96cFC509C574168988Cd',
 };
 
-async function getStakingAddress(vault: VaultEntity, web3: Web3, _: BeefyState): Promise<string> {
+async function getStakingAddress(vault: VaultEntity, _: BeefyState): Promise<string> {
   if (vault.id in override) return override[vault.id];
-  const factory = new web3.eth.Contract(CurveAbi, crvFactory(vault.chainId));
-  return factory.methods.get_gauge_from_lp_token(vault.depositTokenAddress).call();
+  const factory = fetchContract(crvFactory(vault.chainId) as Address, CurveAbi, vault.chainId);
+  return factory.read.get_gauge_from_lp_token([vault.depositTokenAddress as Address]);
 }
 
 async function getBalance(
   vault: VaultEntity,
-  web3: Web3,
   walletAddress: string,
   state: BeefyState
 ): Promise<string> {
-  const stakingAddress = await getStakingAddress(vault, web3, state);
+  const stakingAddress = await getStakingAddress(vault, state);
   if (stakingAddress == ZERO_ADDRESS) return '0';
-  const staking = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], stakingAddress);
-  return staking.methods.balanceOf(walletAddress).call();
+  const stakingContract = fetchContract(stakingAddress, ERC20Abi, vault.chainId);
+  const walletBalance = await stakingContract.read.balanceOf([walletAddress as Address]);
+  return walletBalance.toString(10);
 }
 
 async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, state: BeefyState) {
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const amountInWei = toWei(amount, depositToken.decimals);
-  const stakingAddress = await getStakingAddress(vault, web3, state);
-  const staking = new web3.eth.Contract(CurveAbi, stakingAddress);
+  const stakingAddress = await getStakingAddress(vault, state);
+  const staking = new web3.eth.Contract(CurveAbi as unknown as AbiItem[], stakingAddress);
   return staking.methods.withdraw(amountInWei.toString(10));
 }
 
-const CurveAbi: AbiItem[] = [
+const CurveAbi = [
   {
     inputs: [{ name: 'lp', type: 'address' }],
     name: 'get_gauge_from_lp_token',
@@ -63,7 +65,7 @@ const CurveAbi: AbiItem[] = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export const migrator: Migrator = {
   update: buildFetchBalance(id, getBalance),

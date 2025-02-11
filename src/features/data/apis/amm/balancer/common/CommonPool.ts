@@ -2,12 +2,11 @@ import type { BalancerFeature, IBalancerPool } from '../types';
 import type { ChainEntity } from '../../../../entities/chain';
 import type { PoolConfig, VaultConfig } from '../vault/types';
 import { createFactory } from '../../../../utils/factory-utils';
-import { getWeb3Instance } from '../../../instances';
 import { Vault } from '../vault/Vault';
 import { checkAddressOrder } from '../../../../../../helpers/tokens';
-import type { Contract } from 'web3-eth-contract';
 import { type BigNumber } from 'bignumber.js';
 import { FixedPoint } from './FixedPoint';
+import type { Abi, GetContractReturnType } from 'viem';
 
 export abstract class CommonPool implements IBalancerPool {
   public readonly type = 'balancer';
@@ -23,14 +22,13 @@ export abstract class CommonPool implements IBalancerPool {
     this.getPoolTokens = this.cacheMethod(this.getPoolTokens);
     this.getBalances = this.cacheMethod(this.getBalances);
     this.getUpscaledBalances = this.cacheMethod(this.getUpscaledBalances);
-    this.getWeb3 = this.cacheMethod(this.getWeb3);
     this.getPoolContract = this.cacheMethod(this.getPoolContract);
     this.getVault = this.cacheMethod(this.getVault);
   }
 
   abstract supportsFeature(feature: BalancerFeature): boolean;
 
-  protected abstract getPoolContract(): Promise<Contract>;
+  protected abstract getPoolContract(): GetContractReturnType<Abi>;
 
   /**
    * Multiplier to normalize to 18 decimals
@@ -72,10 +70,6 @@ export abstract class CommonPool implements IBalancerPool {
 
   protected async getUpscaledBalances() {
     return await this.upscaleAmounts(await this.getBalances());
-  }
-
-  protected async getWeb3() {
-    return getWeb3Instance(this.chain);
   }
 
   protected getVault() {
