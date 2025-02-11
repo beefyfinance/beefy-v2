@@ -944,5 +944,28 @@
         "url": "https://docs.soniclabs.com/funding/airdrop"
       }
     ]
+  },
+  {
+    "id": "scroll-points",
+    "docs": "https://scroll.network/scroll-points",
+    "points": [
+      {
+        "id": "scroll-points",
+        "name": "Scroll Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "on-chain-lp",
+        "chain": "scroll"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "scroll",
+        "role": "Scroll points",
+        "url": ""
+      }
+    ]
   }
 ]

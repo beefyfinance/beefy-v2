@@ -141,6 +141,9 @@ export const styles = (theme: Theme) => ({
   'headerNetwork-sonic': {
     background: 'linear-gradient(90deg, rgba(16,40,60,0.5) 0%, rgba(254,154,76,0.5) 100%)',
   },
+  'headerNetwork-berachain': {
+    backgroundColor: 'rgb(129, 70, 37)',
+  },
   'headerMM-system9': {
     backgroundColor: 'rgba(243, 243, 200, 0.5)',
   },

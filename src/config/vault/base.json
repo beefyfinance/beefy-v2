@@ -1,5 +1,337 @@
 [
   {
+    "id": "uniswap-cow-base-weth-flay-rp",
+    "name": "FLAY-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseWETH-FLAY",
+    "tokenAddress": "0xF5C5a88E2324937459af9321e82f6b9EAE707Ea6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x4568c077F1ad1dF4E5Bd5b528be5B478b3Dfc670",
+    "earnedToken": "rCowUniswapBaseWETH-FLAY",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-flay",
+    "status": "active",
+    "createdAt": 1738918373,
+    "platformId": "uniswap",
+    "assets": ["FLAY", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-flay",
+    "name": "FLAY-WETH",
+    "type": "cowcentrated",
+    "token": "WETH-FLAY uniswap",
+    "tokenAddress": "0x7B9FDA92Bfa6FDadFdc4f6C72c0Cc8336e7d7497",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xF1A7000000950C7ad8Aff13118Bb7aB561A448ee"
+    ],
+    "earnContractAddress": "0xF5C5a88E2324937459af9321e82f6b9EAE707Ea6",
+    "earnedToken": "cowUniswapBaseWETH-FLAY",
+    "earnedTokenAddress": "0xF5C5a88E2324937459af9321e82f6b9EAE707Ea6",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-flay",
+    "status": "active",
+    "createdAt": 1738918373,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["FLAY", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "morpho-seamless-usdc",
+    "name": "Seamless USDC",
+    "token": "USDC",
+    "tokenAddress": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xF3C4Db91F380963e00CaA4AC1f0508259C9a3d3A",
+    "earnedToken": "mooMorpho-Seamless-USDC",
+    "earnedTokenAddress": "0xF3C4Db91F380963e00CaA4AC1f0508259C9a3d3A",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1738578011,
+    "platformId": "morpho",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-weth-vvv",
+    "name": "VVV-WETH vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/VVV",
+    "tokenAddress": "0x01784ef301D79e4B2DF3a21ad9a536d4cF09A5Ce",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseWETH-VVV",
+    "earnedTokenAddress": "0x4794158d7587961B1C462c0774A06C95018a854B",
+    "earnContractAddress": "0x4794158d7587961B1C462c0774A06C95018a854B",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-vvv",
+    "status": "active",
+    "createdAt": 1738191753,
+    "platformId": "aerodrome",
+    "assets": ["VVV", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xacfE6019Ed1A7Dc6f7B508C02d1b04ec88cC21bf&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-weth-veil",
+    "name": "VEIL-WETH vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/VEIL",
+    "tokenAddress": "0xf207d02BECD4417aAA3383804b6B87b17602c86D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseWETH-VEIL",
+    "earnedTokenAddress": "0x25069D69a2be06330C879EB4bf4db5E6C543C4c4",
+    "earnContractAddress": "0x25069D69a2be06330C879EB4bf4db5E6C543C4c4",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-veil",
+    "status": "active",
+    "createdAt": 1738191753,
+    "platformId": "aerodrome",
+    "assets": ["VEIL", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x767A739D1A152639e9Ea1D8c1BD55FDC5B217D7f&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-bold-usdc",
+    "name": "Bold-USDC sLP",
+    "type": "standard",
+    "token": "sAMM-Bold/USDC",
+    "tokenAddress": "0xeb754F9750e1d2CD87835592d37eE9f15c217b50",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseBold-USDC",
+    "earnedTokenAddress": "0xb2233b3e3ED97AEAd2761F510FbA25FF56cbb44a",
+    "earnContractAddress": "0xb2233b3e3ED97AEAd2761F510FbA25FF56cbb44a",
+    "oracle": "lps",
+    "oracleId": "aerodrome-bold-usdc",
+    "status": "active",
+    "createdAt": 1738191752,
+    "platformId": "aerodrome",
+    "assets": ["Bold", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x087C440F251Ff6Cfe62B86DdE1bE558B95b4bb9b&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=0",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-bold-lusd",
+    "name": "Bold-LUSD sLP",
+    "type": "standard",
+    "token": "sAMM-Bold/LUSD",
+    "tokenAddress": "0x285De0b9fDa5dC3f3704b1c1510A5D7a1A28d355",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseBold-LUSD",
+    "earnedTokenAddress": "0xd6113a43b2C556ba4de7bA3Adc2e99F91bd37948",
+    "earnContractAddress": "0xd6113a43b2C556ba4de7bA3Adc2e99F91bd37948",
+    "oracle": "lps",
+    "oracleId": "aerodrome-bold-lusd",
+    "status": "active",
+    "createdAt": 1738191752,
+    "platformId": "aerodrome",
+    "assets": ["Bold", "LUSD"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x087C440F251Ff6Cfe62B86DdE1bE558B95b4bb9b&token1=0x368181499736d0c0CC614DBB145E2EC1AC86b8c6&type=0",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-usdc-vvv-rp",
+    "name": "VVV-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseVVV-USDC",
+    "tokenAddress": "0x1FDB1C1fC19Fc869Cdc938A86b3888A847c82F78",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xA785171662f87CDdD786E486Ce3f9E734D844F4f",
+    "earnedToken": "rCowUniswapBaseVVV-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-vvv",
+    "status": "active",
+    "createdAt": 1738163455,
+    "platformId": "uniswap",
+    "assets": ["VVV", "USDC"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-usdc-vvv",
+    "name": "VVV-USDC ",
+    "type": "cowcentrated",
+    "token": "VVV-USDC  uniswap",
+    "tokenAddress": "0x67A11022B7B6ed66f81233F6C8Ed6e48F7826530",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0xacfE6019Ed1A7Dc6f7B508C02d1b04ec88cC21bf"
+    ],
+    "earnContractAddress": "0x1FDB1C1fC19Fc869Cdc938A86b3888A847c82F78",
+    "earnedToken": "cowUniswapBaseVVV-USDC",
+    "earnedTokenAddress": "0x1FDB1C1fC19Fc869Cdc938A86b3888A847c82F78",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-vvv",
+    "status": "active",
+    "createdAt": 1738163455,
+    "platformId": "beefy",
+    "feeTier": "0.30",
+    "assets": ["VVV", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-vvv-rp",
+    "name": "VVV-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseVVV-WETH",
+    "tokenAddress": "0x3d0d2539b3D808529A5459DeC624cb1a4A239Ec5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xcdE74fDeF82B775Ef774695c325e36aaf83dF772",
+    "earnedToken": "rCowUniswapBaseVVV-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-vvv",
+    "status": "active",
+    "createdAt": 1738002710,
+    "platformId": "uniswap",
+    "assets": ["VVV", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-vvv",
+    "name": "VVV-WETH",
+    "type": "cowcentrated",
+    "token": "VVV-WETH uniswap",
+    "tokenAddress": "0x1D2bdB7117a5A7D7fE4c1d95681a92e4Df13bB69",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0xacfE6019Ed1A7Dc6f7B508C02d1b04ec88cC21bf"
+    ],
+    "earnContractAddress": "0x3d0d2539b3D808529A5459DeC624cb1a4A239Ec5",
+    "earnedToken": "cowUniswapBaseVVV-WETH",
+    "earnedTokenAddress": "0x3d0d2539b3D808529A5459DeC624cb1a4A239Ec5",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-vvv",
+    "status": "active",
+    "createdAt": 1738002710,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["VVV", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-aixbt-usdc-rp",
     "name": "AIXBT-USDC Reward Pool",
     "type": "gov",
@@ -1163,7 +1495,7 @@
     "oracle": "lps",
     "oracleId": "aerodrome-dai-ox",
     "status": "active",
-    "createdAt": 17378093534,
+    "createdAt": 1737809354,
     "platformId": "aerodrome",
     "assets": ["OX", "DAI"],
     "risks": [

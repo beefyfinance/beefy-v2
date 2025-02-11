@@ -104,6 +104,7 @@ const nonHarvestOnDepositPools = [
   'compound-op-usdc',
   'compound-op-eth',
   'compound-base-usdc',
+  'compound-base-aero',
   'nuri-cow-scroll-usdc-scr-vault',
   'tokan-wbtc-weth',
   'aero-cow-usdz-cbbtc-vault',
@@ -183,7 +184,7 @@ const validatePools = async () => {
         return;
       }
 
-      console.log(`Excluded chain ${chainId} integrity check passed`);
+      // console.log(`Excluded chain ${chainId} integrity check passed`);
     });
 
     if (exitCode != 0) {

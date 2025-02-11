@@ -73,6 +73,8 @@ export const config = {
       'USR',
       'stUSR',
       'wstUSR',
+      'Bold',
+      'BOLD',
     ],
   },
   polygon: {
@@ -192,7 +194,7 @@ export const config = {
     ],
   },
   optimism: {
-    name: 'Optimism',
+    name: 'OP Mainnet',
     chainId: 10,
     rpc: ['https://mainnet.optimism.io'],
     explorerUrl: 'https://optimistic.etherscan.io',
@@ -245,6 +247,7 @@ export const config = {
       'HAI',
       'msUSD',
       'wUSDM',
+      'Bold',
     ],
   },
   arbitrum: {
@@ -362,7 +365,7 @@ export const config = {
   cronos: {
     name: 'Cronos',
     chainId: 25,
-    rpc: ['https://rpc.vvs.finance'],
+    rpc: ['https://evm.cronos.org'],
     explorerUrl: 'https://cronoscan.com',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -551,6 +554,7 @@ export const config = {
       'USDT',
       'EURC',
       'msUSD',
+      'Bold',
     ],
   },
   gnosis: {
@@ -748,7 +752,6 @@ export const config = {
   sonic: {
     name: 'Sonic',
     chainId: 146,
-    new: true,
     rpc: ['https://rpc.soniclabs.com'],
     explorerUrl: 'https://sonicscan.org/',
     multicallAddress: '0x0D17eE2ed4e67b626B43C3695586E5aE6a039949',
@@ -763,7 +766,23 @@ export const config = {
       priorityMinimum: '1000000000',
       baseSafetyMargin: 0.1,
     },
-    stableCoins: ['USDCe', 'scUSD'],
+    stableCoins: ['USDCe', 'scUSD', 'mooSiloSonicUSDCe'],
+  },
+  berachain: {
+    name: 'Berachain',
+    chainId: 80094,
+    rpc: ['https://rpc.berachain.com'],
+    explorerUrl: 'https://berascan.com/',
+    multicallAddress: '0x0D17eE2ed4e67b626B43C3695586E5aE6a039949',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x75c9D65e7C0d6b40F356452f8A11aeD525B67197',
+    providerName: 'Berachain',
+    native: { symbol: 'BERA', oracleId: 'WBEAR', decimals: 18 },
+    new: true,
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['HONEY', 'USDCe', 'BYUSD'],
   },
   aurora: {
     name: 'Aurora',

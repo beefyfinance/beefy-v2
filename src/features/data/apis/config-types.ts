@@ -193,6 +193,7 @@ type ChainId =
   | 'sonic'
   | 'aurora'
   | 'emerald'
+  | 'berachain'
   | 'celo'
   | 'heco'
   | 'harmony';
@@ -536,9 +537,10 @@ export type BeefyBridgeConfig = Readonly<{
   bridges: ReadonlyArray<BeefyAnyBridgeConfig>;
 }>;
 
-export type PinnedConfigConditionUntil = {
-  type: 'until';
-  timestamp: number;
+export type PinnedConfigConditionTime = {
+  type: 'time';
+  from?: number;
+  to?: number;
 };
 
 export type PinnedConfigConditionBoosted = {
@@ -547,7 +549,7 @@ export type PinnedConfigConditionBoosted = {
   only?: 'contract' | 'offchain';
 };
 
-export type PinnedConfigCondition = PinnedConfigConditionUntil | PinnedConfigConditionBoosted;
+export type PinnedConfigCondition = PinnedConfigConditionTime | PinnedConfigConditionBoosted;
 
 export type PinnedConfig = {
   /** vault id, or array of vault ids, undefined = all vaults */

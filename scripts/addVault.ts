@@ -45,8 +45,14 @@ async function vaultData(chain, vaultAddress, id) {
     ? 'pancakeswap'
     : params.mooToken.startsWith('mooThena')
     ? 'thena'
+    : params.mooToken.startsWith('mooSwapX')
+    ? 'swapx'
     : id.substring(0, id.indexOf('-'));
-  let platform = params.mooToken.startsWith('mooConvex') ? 'convex' : provider;
+  let platform = params.mooToken.startsWith('mooConvex')
+    ? 'convex'
+    : provider === 'swapx'
+    ? 'ichi'
+    : provider;
   if (provider === 'pendle') {
     platform = 'magpie';
     if (id.startsWith('pendle-eqb')) platform = 'equilibria';
@@ -59,8 +65,8 @@ async function vaultData(chain, vaultAddress, id) {
       ? ['l2-convex', 'l2-curve']
       : ['pendle'].includes(provider)
       ? ['magpie']
-      : provider === 'pearl'
-      ? ['real-pearl']
+      : provider === 'swapx'
+      ? ['sonic-swapx']
       : [];
 
   if (provider === 'pendle') {
@@ -72,15 +78,17 @@ async function vaultData(chain, vaultAddress, id) {
   let addLiquidityUrl =
     provider === 'pendle'
       ? `https://app.pendle.finance/trade/pools/${params.want}/zap/in?chain=${chain}`
+      : provider === 'swapx'
+      ? 'https://swapx.fi/earn'
       : 'XXX';
   let removeLiquidityUrl =
     provider === 'pendle'
       ? `https://app.pendle.finance/trade/pools/${params.want}/zap/out?chain=${chain}`
-      : provider === 'pearl'
-      ? 'https://www.pearl.exchange/dashboard/my-pools'
+      : provider === 'swapx'
+      ? 'https://swapx.fi/earn?ownerType=my-positions&filter=my-lp'
       : 'XXX';
 
-  const points = provider === 'pearl' ? ['pearl'] : [];
+  const points = provider === 'pearl' ? ['pearl'] : chain === 'sonic' ? ['sonic-points'] : [];
 
   return {
     ...params,
