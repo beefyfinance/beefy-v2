@@ -15,10 +15,12 @@ chainsListener.startListening({
     const state = getState();
     const chains = selectAllChains(state);
     console.log('Chains ', chains);
-    chains.forEach(chain => {
+    for (const chain of chains) {
       console.log(`Initializing viem clients for chain ${chain.id} `, chain);
-      rpcClientManager.setClients(chain, selectActiveRpcUrlForChain(state, chain.id));
-    });
+      const activeRpcsForChain = selectActiveRpcUrlForChain(state, chain.id);
+      console.log('Active RPCS: ', activeRpcsForChain);
+      rpcClientManager.setClients(chain, activeRpcsForChain);
+    }
     cancelActiveListeners();
     unsubscribe();
   },
