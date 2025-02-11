@@ -1,8 +1,4 @@
-import type {
-  MintFeeParams,
-  PairData as BasePairData,
-  PairDataResponse as BasePairDataResponse,
-} from './UniswapV2Pool';
+import type { MintFeeParams, PairData as BasePairData } from './UniswapV2Pool';
 import { UniswapV2Pool } from './UniswapV2Pool';
 import { BigNumber } from 'bignumber.js';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';

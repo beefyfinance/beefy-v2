@@ -1,23 +1,10 @@
-import {
-  createPublicClient,
-  http,
-  fallback,
-  type PublicClient,
-  type Client,
-  type Address,
-  type BlockTag,
-} from 'viem';
+import { createPublicClient, type PublicClient, type Client, type BlockTag } from 'viem';
 import type { ChainEntity, ChainId } from '../../entities/chain';
 import { makeCustomFallbackTransport } from '../viem/transports';
 import { buildViemChain } from '../viem/chains';
-import BigNumber from 'bignumber.js';
-import type {
-  BeefyBlock,
-  BeefyBlockWithTransactions,
-  BeefyFeeHistory,
-} from '../../../../helpers/web3';
-// import { getFeeHistory } from 'viem/_types/actions/public/getFeeHistory';
+import type { BeefyFeeHistory } from '../../../../helpers/web3';
 import { getGasPrice, getFeeHistory } from 'viem/actions';
+import { BigNumber } from 'bignumber.js';
 
 type RpcClients = {
   singleCallClient: PublicClient;

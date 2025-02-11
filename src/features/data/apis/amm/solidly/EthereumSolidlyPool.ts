@@ -1,16 +1,9 @@
 import { BigNumber } from 'bignumber.js';
 import type { SwapFeeParams } from '../types';
-import type {
-  PairData as BasePairData,
-  PairDataResponse as BasePairDataResponse,
-} from './SolidlyPool';
+import type { PairData as BasePairData } from './SolidlyPool';
 import { SolidlyPool } from './SolidlyPool';
 import { fetchContract } from '../../rpc-contract/viem-contract';
 import type { Abi } from 'abitype';
-
-type PairDataResponse = BasePairDataResponse & {
-  feeRatio: string;
-};
 
 type PairData = BasePairData & {
   feeRatio: BigNumber;
