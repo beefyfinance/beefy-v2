@@ -856,6 +856,8 @@
   "RpcModal-List": "Select Chain",
   "RpcModal-Edit": "Modify RPC",
   "RpcModal-Add": "Modify RPC URL",
+  "RpcModal-Save": "Save",
   "RpcModal-InputPlaceholder": "Enter the RPC URL",
-  "RpcModal-InvalidRpc": "Please insert a valid RPC"
+  "RpcModal-InvalidRpc": "Please insert a valid RPC",
+  "RpcModal-EmptyList": "You can modify Beefy’s default RPC for each chain. Once modified, it will be used for the connection until it is removed."
 }

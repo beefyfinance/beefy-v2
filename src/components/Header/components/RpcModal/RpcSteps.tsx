@@ -8,6 +8,7 @@ import { styles } from './styles';
 import { InputBase, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import { ChainIcon } from '../../../ChainIcon';
+import { ReactComponent as EmptyIcon } from '../../../../images/empty-state.svg';
 import { ChainListItem, ModifiedListItem, ModifiedListItemEndComponent } from './ListItems';
 
 const useStyles = makeStyles(styles);
@@ -20,7 +21,7 @@ export const Menu = memo<RpcStepsProps>(function Menu({ handleStep }) {
   const classes = useStyles();
   const { t } = useTranslation();
   //change selector for updated Chains
-  const chainIds = ['arbitrum', 'bsc'];
+  const chainIds = ['bsc'];
 
   const onSelect = useCallback(() => {
     //Action to delete
@@ -35,14 +36,18 @@ export const Menu = memo<RpcStepsProps>(function Menu({ handleStep }) {
             onSelect={onSelect}
             ItemInnerComponent={ModifiedListItem}
             EndComponent={ModifiedListItemEndComponent}
+            size="sm"
           />
         </div>
       ) : (
-        <div className={classes.flexGrow}>{t('RpcEdit-NoModified')}</div>
+        <div className={clsx(classes.flexGrow, classes.emptyList)}>
+          <EmptyIcon className={classes.emptyIcon} />
+          <div className={classes.emptyTextContainer}>{t('RpcModal-EmptyList')}</div>
+        </div>
       )}
       <div className={classes.footer}>
-        <Button onClick={handleStep} variant="success" size="sm" style={{ width: '100%' }}>
-          {t('RpcEdit-Add')}
+        <Button onClick={handleStep} size="lg" style={{ width: '100%' }}>
+          {t('RpcModal-Add')}
         </Button>
       </div>
     </>
@@ -87,13 +92,7 @@ export const Edit = memo<RpcStepsProps>(function Edit({ handleStep }) {
         {isDisabled && <div>{t('RpcModal-InvalidRpc')}</div>}
       </div>
       <div className={classes.footer}>
-        <Button
-          disabled={isDisabled}
-          onClick={onSave}
-          variant="success"
-          size="sm"
-          style={{ width: '100%' }}
-        >
+        <Button disabled={isDisabled} onClick={onSave} size="lg" style={{ width: '100%' }}>
           {t('RpcModal-Save')}
         </Button>
       </div>
@@ -112,7 +111,12 @@ export const List = memo<RpcStepsProps>(function List({ handleStep }) {
 
   return (
     <div className={classes.list}>
-      <SearchableList options={chainIds} onSelect={onSelect} ItemInnerComponent={ChainListItem} />
+      <SearchableList
+        size="sm"
+        options={chainIds}
+        onSelect={onSelect}
+        ItemInnerComponent={ChainListItem}
+      />
     </div>
   );
 });

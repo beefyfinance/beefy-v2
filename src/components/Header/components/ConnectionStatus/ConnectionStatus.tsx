@@ -3,6 +3,7 @@ import { lazy, memo, Suspense, useRef } from 'react';
 
 import { NetworkStatus } from '../../../NetworkStatus';
 import { styles } from './styles';
+import { RpcModalTrigger } from '../RpcModal';
 
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = lazy(() => import(`../WalletContainer`));
@@ -14,6 +15,7 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
   const anchorEl = useRef<HTMLDivElement>(null);
   return (
     <div ref={anchorEl} className={classes.container}>
+      <RpcModalTrigger />
       <NetworkStatus anchorEl={anchorEl} />
       <div>
         <Suspense>
