@@ -1,5 +1,25 @@
 [
   {
+    "id": "moo_pendle-eqb-base-susdz-27mar25",
+    "poolId": "pendle-eqb-base-susdz-27mar25",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["sUSDz"],
+    "tokenAddress": "0xf829483E7E7d813137f160B2C1bC4155D15A39C4",
+    "earnedToken": "mooBIFI",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+    "earnContractAddress": "0xAf15AC5b663Dc72c178970fD1876AD62339e319F",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "basemooBIFI",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": []
+  },
+  {
     "id": "moo_aerodrome-cow-base-weth-usei-vault",
     "poolId": "aerodrome-cow-base-weth-usei-vault",
     "name": "Beefy",
