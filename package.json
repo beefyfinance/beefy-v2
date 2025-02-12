@@ -8,6 +8,7 @@
     "node": "^20.18.0"
   },
   "dependencies": {
+    "@coinbase/wallet-sdk": "^4.3.0",
     "@deficonnect/web3-connector": "^2.0.3",
     "@floating-ui/react-dom": "^0.7.0",
     "@material-ui/core": "^4.12.4",
@@ -16,15 +17,15 @@
     "@material-ui/system": "^4.12.2",
     "@reduxjs/toolkit": "1.9.3",
     "@web3-onboard/coinbase": "^2.4.1",
-    "@web3-onboard/core": "^2.22.2",
+    "@web3-onboard/core": "^2.24.0",
     "@web3-onboard/gas": "^2.2.1",
-    "@web3-onboard/injected-wallets": "^2.11.1",
-    "@web3-onboard/metamask": "^2.1.2",
-    "@web3-onboard/transaction-preview": "^2.1.1",
-    "@web3-onboard/trust": "^2.1.1",
-    "@web3-onboard/walletconnect": "^2.6.1",
+    "@web3-onboard/injected-wallets": "^2.11.3",
+    "@web3-onboard/metamask": "^2.2.0",
+    "@web3-onboard/transaction-preview": "^2.1.2",
+    "@web3-onboard/trust": "^2.1.2",
+    "@web3-onboard/walletconnect": "^2.6.2",
     "bignumber.js": "^9.0.1",
-    "blockchain-addressbook": "^0.47.137",
+    "blockchain-addressbook": "^0.47.155",
     "clsx": "^1.1.1",
     "date-fns": "^2.29.3",
     "eip-712": "^1.0.0",
@@ -53,6 +54,7 @@
     "web3": "^1.10.4"
   },
   "resolutions": {
+    "@coinbase/wallet-sdk": "^4.3.0",
     "web3": "^1.10.4",
     "rollup": "3.27.1",
     "react": "18.3.1",

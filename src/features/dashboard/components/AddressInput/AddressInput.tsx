@@ -23,6 +23,7 @@ import {
   isPendingStatus,
   isRejectedStatus,
 } from '../../../data/reducers/wallet/resolver-types';
+import { ReactComponent as EnterIcon } from '../../../../images/icons/enter.svg';
 
 const useStyles = makeStyles(styles);
 
@@ -117,7 +118,7 @@ export const AddressInput = memo(function AddressInput({ className }: { classNam
         onBlur={handleBlur}
         fullWidth={true}
         onKeyPress={handleGoToDashboardOnEnterKey}
-        endAdornment={
+        startAdornment={
           <GoToDashboardButton
             domainResolving={isDomainResolving}
             isValid={isValid}
@@ -125,6 +126,9 @@ export const AddressInput = memo(function AddressInput({ className }: { classNam
             handleClear={handleClear}
             inputMode={inputMode}
           />
+        }
+        endAdornment={
+          <ClearEnterButton userInput={userInput} handleClear={handleClear} isValid={isValid} />
         }
         placeholder={t('Dashboard-SearchInput-Placeholder')}
       />
@@ -179,12 +183,47 @@ const GoToDashboardButton = memo<GoToDashboardButtonProps>(function GoToDashboar
     return (
       <Link
         onClick={handleClear}
-        className={clsx(classes.icon, classes.activeIcon)}
+        className={clsx(classes.icon, classes.leftIcon, classes.activeIcon)}
         aria-disabled={isValid}
         to={`/dashboard/${userInput}`}
       >
         <Search />
       </Link>
+    );
+  }
+
+  return (
+    <div className={clsx(classes.icon, classes.leftIcon, classes.disabledIcon)}>
+      <Search />
+    </div>
+  );
+});
+
+const ClearEnterButton = memo(function ClearButton({
+  userInput,
+  handleClear,
+  isValid,
+}: {
+  userInput: string;
+  handleClear: () => void;
+  isValid: boolean;
+}) {
+  const classes = useStyles();
+  const history = useHistory();
+
+  const handleGoToDashboard = useCallback(() => {
+    history.push(`/dashboard/${userInput}`);
+    handleClear();
+  }, [userInput, handleClear, history]);
+
+  if (isValid) {
+    return (
+      <button
+        onClick={handleGoToDashboard}
+        className={clsx(classes.icon, classes.enterButton, classes.activeIcon)}
+      >
+        <EnterIcon />
+      </button>
     );
   }
 
@@ -196,9 +235,5 @@ const GoToDashboardButton = memo<GoToDashboardButtonProps>(function GoToDashboar
     );
   }
 
-  return (
-    <div className={clsx(classes.icon, classes.disabledIcon)}>
-      <Search />
-    </div>
-  );
+  return null;
 });
