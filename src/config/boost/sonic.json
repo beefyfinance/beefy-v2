@@ -12,7 +12,7 @@
       "earnContractAddress": "0x3242340e23902A90f859338A589A402D05047A84",
       "version": 2,
       "earnedOracle": "tokens",
-      "earnedOracleId": "sonicmooBIFI",
+      "earnedOracleId": "smooBIFI",
       "partnership": true,
       "status": "active",
       "isMooStaked": true,
