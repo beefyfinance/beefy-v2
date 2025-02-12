@@ -1,5 +1,34 @@
 [
   {
+    "id": "shadow-ws-shadow",
+    "name": "SHADOW-wS vLP",
+    "type": "standard",
+    "token": "SHADOW-wS vLP",
+    "tokenAddress": "0xF19748a0E269c6965a84f8C98ca8C47A064D4dd0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnedToken": "mooShadowwS-SHADOW",
+    "earnedTokenAddress": "0x9C243115b385d62FD2d20EA2c3798EA9Df0c0D44",
+    "earnContractAddress": "0x9C243115b385d62FD2d20EA2c3798EA9Df0c0D44",
+    "oracle": "lps",
+    "oracleId": "shadow-ws-shadow",
+    "createdAt": 1739389763,
+    "status": "active",
+    "platformId": "shadow",
+    "assets": ["SHADOW", "S"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://www.shadow.so/liquidity/0xf19748a0e269c6965a84f8c98ca8c47a064d4dd0",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "sonic-shadow"
+      }
+    ]
+  },
+  {
     "id": "beetsv3-sonic-beefyusdce-scusd",
     "name": "Boosted Stable Rings",
     "type": "standard",
