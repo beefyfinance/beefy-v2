@@ -6,10 +6,10 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     padding: '0px 8px 0px 16px',
     gap: '8px',
-    color: theme.palette.text.dark,
+    color: theme.palette.text.middle,
     '&:hover': {
       cursor: 'pointer' as const,
-      color: theme.palette.text.middle,
+      color: theme.palette.text.light,
     },
   },
   dropdown: {
@@ -18,7 +18,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.contentPrimary,
     borderRadius: '8px',
     marginTop: '4px',
-    minWidth: '280px',
+    width: '280px',
     zIndex: 999,
   },
   header: {
@@ -47,7 +47,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   content: {
-    height: '362px',
+    height: '356px',
     display: 'flex',
     flexDirection: 'column' as const,
     flexGrow: 1,

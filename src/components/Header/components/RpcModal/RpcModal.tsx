@@ -36,13 +36,10 @@ export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: (
   const [step, setStep] = useState<RpcStepEnum>(RpcStepEnum.Menu);
 
   const headerTitle = useMemo(() => {
-    if (step === RpcStepEnum.Edit) {
-      return t('RpcModal-Edit');
-    }
     if (step === RpcStepEnum.List) {
       return t('RpcModal-List');
     }
-    return t('RpcModal-Menu');
+    return t('RpcModal-Menu-Edit');
   }, [step, t]);
 
   const handleStepChange = useCallback(() => {
@@ -90,28 +87,29 @@ export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: (
 
 export const RpcModalTrigger = memo(function ModalTrigger({
   anchorEl,
+  isOpen,
+  handleIsOpen,
+  handleClose,
 }: {
   anchorEl: RefObject<HTMLElement>;
+  isOpen: boolean;
+  handleIsOpen: () => void;
+  handleClose: () => void;
 }) {
   const classes = useStyles();
-  const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = useCallback<MouseEventHandler<HTMLDivElement>>(
     e => {
       e.stopPropagation();
-      setIsOpen(open => !open);
+      handleIsOpen();
     },
-    [setIsOpen]
+    [handleIsOpen]
   );
-
-  const handleClose = useCallback(() => {
-    setIsOpen(false);
-  }, [setIsOpen]);
 
   return (
     <>
       <div className={classes.container} onClick={handleToggle}>
-        <SettingsIcon height={22} width={22} />
+        <SettingsIcon height={24} width={24} />
         <div className={classes.line} />
       </div>
       <ClickAwayListener
