@@ -1,6 +1,17 @@
 import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0px 8px 0px 16px',
+    gap: '8px',
+    color: theme.palette.text.dark,
+    '&:hover': {
+      cursor: 'pointer' as const,
+      color: theme.palette.text.middle,
+    },
+  },
   dropdown: {
     display: 'flex',
     flexDirection: 'column' as const,
@@ -146,5 +157,11 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItem: 'center',
     gap: '12px',
+  },
+  line: {
+    height: '16px',
+    width: '2px',
+    borderRadius: '3px',
+    backgroundColor: theme.palette.background.contentLight,
   },
 });

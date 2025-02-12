@@ -15,7 +15,7 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
   const anchorEl = useRef<HTMLDivElement>(null);
   return (
     <div ref={anchorEl} className={classes.container}>
-      <RpcModalTrigger />
+      <RpcModalTrigger anchorEl={anchorEl} />
       <NetworkStatus anchorEl={anchorEl} />
       <div>
         <Suspense>

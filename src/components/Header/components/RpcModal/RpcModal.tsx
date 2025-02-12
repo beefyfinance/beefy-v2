@@ -2,10 +2,10 @@ import {
   memo,
   useCallback,
   useMemo,
-  useRef,
   useState,
   type FC,
   type MouseEventHandler,
+  type RefObject,
 } from 'react';
 import { Menu, Edit, List, type RpcStepsProps } from './RpcSteps';
 import { useTranslation } from 'react-i18next';
@@ -88,9 +88,12 @@ export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: (
   );
 });
 
-export const RpcModalTrigger = memo(function ModalTrigger() {
+export const RpcModalTrigger = memo(function ModalTrigger({
+  anchorEl,
+}: {
+  anchorEl: RefObject<HTMLElement>;
+}) {
   const classes = useStyles();
-  const anchorEl = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = useCallback<MouseEventHandler<HTMLDivElement>>(
@@ -106,20 +109,25 @@ export const RpcModalTrigger = memo(function ModalTrigger() {
   }, [setIsOpen]);
 
   return (
-    <ClickAwayListener onClickAway={handleClose}>
-      <>
-        <div ref={anchorEl} onClick={handleToggle}>
-          <SettingsIcon />
-        </div>
+    <>
+      <div className={classes.container} onClick={handleToggle}>
+        <SettingsIcon height={22} width={22} />
+        <div className={classes.line} />
+      </div>
+      <ClickAwayListener
+        onClickAway={handleClose}
+        mouseEvent="onMouseDown"
+        touchEvent="onTouchStart"
+      >
         <Floating
           open={isOpen}
           className={classes.dropdown}
           anchorEl={anchorEl}
           children={<RpcModal handleClose={handleClose} />}
-          placement="bottom-start"
+          placement="bottom-end"
           autoWidth={false}
         />
-      </>
-    </ClickAwayListener>
+      </ClickAwayListener>
+    </>
   );
 });
