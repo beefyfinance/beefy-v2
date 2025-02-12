@@ -21,7 +21,7 @@ export const Menu = memo<RpcStepsProps>(function Menu({ handleStep }) {
   const classes = useStyles();
   const { t } = useTranslation();
   //change selector for updated Chains
-  const chainIds = ['bsc'];
+  const chainIds = [];
 
   const onSelect = useCallback(() => {
     //Action to delete
