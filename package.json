@@ -80,6 +80,7 @@
     "updateRewardPoolRewards": "ts-node -r dotenv/config ./scripts/updateRewardPoolRewards.ts",
     "addCurveZap": "ts-node -r dotenv/config ./scripts/addCurveZap.ts",
     "addBalancerZap": "ts-node -r dotenv/config ./scripts/addBalancerZap.ts",
+    "addBeraSwapZap": "ts-node -r dotenv/config ./scripts/addBeraSwapZap.ts",
     "checkVaultTokenDecimals": "ts-node -r dotenv/config ./scripts/checkVaultTokenDecimals.ts && prettier --write ./src/config/vault/*.json",
     "checkZapAddresses": "ts-node -r dotenv/config ./scripts/checkZapAddresses.ts",
     "makeExcludeConfig": "ts-node -r dotenv/config ./scripts/makeExcludeConfig.ts",
