@@ -1,1 +1,22 @@
-[]
+[
+    {
+      "id": "moo_swapx-usdc.e-scusd",
+      "poolId": "swapx-usdc.e-scusd",
+      "name": "Beefy",
+      "tagText": "DAO Boost",
+      "assets": ["USDCe", "scUSD"],
+      "tokenAddress": "0x7D881FE2288f2f0D77296F3be2D8f480D264f3fB",
+      "earnedToken": "mooBIFI",
+      "earnedTokenDecimals": 18,
+      "earnedTokenAddress": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+      "earnContractAddress": "0x3242340e23902A90f859338A589A402D05047A84",
+      "version": 2,
+      "earnedOracle": "tokens",
+      "earnedOracleId": "smooBIFI",
+      "partnership": true,
+      "status": "active",
+      "isMooStaked": true,
+      "campaign": "dao-rewards",
+      "partners": []
+    }
+]
