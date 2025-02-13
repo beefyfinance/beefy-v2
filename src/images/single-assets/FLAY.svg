@@ -1,0 +1,11 @@
+<svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4"
+     data-sentry-element="svg" data-sentry-component="FlayerLogo" data-sentry-source-file="icons.tsx">
+    <path d="M11.3719 6.68936C8.78581 6.68936 6.68936 8.78581 6.68936 11.3719L6.68936 31.6407L5.95312e-06 31.6407L2.1396e-06 11.3719C9.57932e-07 5.09138 5.09138 -9.57931e-07 11.3719 -2.1396e-06L40.4037 -2.52579e-06L44.317 6.68935L11.3719 6.68936Z"
+          fill="#4BA5F2" data-sentry-element="path" data-sentry-source-file="icons.tsx"></path>
+    <path d="M37.8556 41.3414C40.4417 41.3414 42.5382 39.245 42.5382 36.6589L42.5382 16.3901L49.2275 16.3901L49.2275 36.6589C49.2275 42.9394 44.1362 48.0308 37.8556 48.0308L8.82382 48.0308L4.91054 41.3414L37.8556 41.3414Z"
+          fill="#E7692C" data-sentry-element="path" data-sentry-source-file="icons.tsx"></path>
+    <path d="M14.8659 14.8615L49.2492 14.8615L44.8676 8.17211L11.7219 8.17212C9.76382 8.17212 8.17651 9.75944 8.17651 11.7175L8.17652 31.6518L14.8659 31.6518L14.8659 14.8615Z"
+          fill="#EFBC41" data-sentry-element="path" data-sentry-source-file="icons.tsx"></path>
+    <path d="M34.3873 33.1693L0.00400784 33.1693L4.38554 39.8587L37.5313 39.8587C39.4894 39.8587 41.0767 38.2714 41.0767 36.3133L41.0767 16.379L34.3873 16.379L34.3873 33.1693Z"
+          fill="#EB88EF" data-sentry-element="path" data-sentry-source-file="icons.tsx"></path>
+</svg>

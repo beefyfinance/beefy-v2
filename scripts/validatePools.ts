@@ -104,6 +104,7 @@ const nonHarvestOnDepositPools = [
   'compound-op-usdc',
   'compound-op-eth',
   'compound-base-usdc',
+  'compound-base-aero',
   'nuri-cow-scroll-usdc-scr-vault',
   'tokan-wbtc-weth',
   'aero-cow-usdz-cbbtc-vault',
