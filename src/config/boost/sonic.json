@@ -1,10 +1,10 @@
 [
   {
-    "id": "moo_",
-    "poolId": "",
+    "id": "moo_shadow-cow-sonic-ws-weth-vault",
+    "poolId": "shadow-cow-sonic-ws-weth-vault",
     "name": "Beefy",
     "tagText": "DAO Boost",
-    "assets": [""],
+    "assets": ["S", "WETH"],
     "tokenAddress": "0x7821Fc48A8E3547519b49853c8dDBa47b51f29Cd",
     "earnedToken": "mooBIFI",
     "earnedTokenDecimals": 18,
