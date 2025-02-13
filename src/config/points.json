@@ -11,7 +11,7 @@
     "eligibility": [
       {
         "type": "token-holding",
-        "tokens": ["wstUSR"]
+        "tokens": ["wstUSR", "USR"]
       }
     ],
     "accounting": [
