@@ -21,6 +21,7 @@ export const styles = () => ({
     flexDirection: 'column' as const,
     rowGap: '16px',
     overflowY: 'auto' as const,
+    overflowX: 'hidden' as const,
   },
   searchableListSM: {
     width: 'calc(100% + 24px)',

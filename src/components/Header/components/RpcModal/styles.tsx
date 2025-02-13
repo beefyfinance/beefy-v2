@@ -16,6 +16,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     backgroundColor: theme.palette.background.contentPrimary,
+    border: `solid 2px ${theme.palette.background.contentDark}`,
     borderRadius: '8px',
     marginTop: '4px',
     width: '280px',
@@ -55,6 +56,8 @@ export const styles = (theme: Theme) => ({
   list: {
     padding: `12px`,
     height: '100%',
+    width: '100%',
+    color: theme.palette.text.light,
   },
   footer: {
     display: 'flex',
