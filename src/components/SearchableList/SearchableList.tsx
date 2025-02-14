@@ -9,6 +9,7 @@ import { SearchInput } from '../SearchInput';
 import { useTranslation } from 'react-i18next';
 import { Scrollable } from '../Scrollable';
 import clsx from 'clsx';
+import sortBy from 'lodash-es/sortBy';
 
 const useStyles = makeStyles(styles);
 
@@ -54,7 +55,7 @@ export const SearchableList = memo<SearchableListProps>(function SearchableList(
       <Scrollable>
         <div className={clsx(classes.list, { [classes.searchableListSM]: size === 'sm' })}>
           {filteredOptions.length ? (
-            filteredOptions.map(value => (
+            sortBy(filteredOptions, id => id).map(value => (
               <Item
                 key={value}
                 value={value}
