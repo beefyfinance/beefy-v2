@@ -7,8 +7,6 @@ import type { AbiItem } from 'web3-utils';
 import type Web3 from 'web3';
 import { buildExecute, buildFetchBalance } from '../utils';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
-import { toWei } from '../../../../../helpers/big-number';
-import { selectTokenByAddress } from '../../../selectors/tokens';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults';
 
 const id = 'sonic-swapx';
