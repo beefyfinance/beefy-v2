@@ -31,11 +31,9 @@ async function getBalance(
   return staking.methods.balanceOf(walletAddress).call();
 }
 
-async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, state: BeefyState) {
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const amountInWei = toWei(amount, depositToken.decimals);
+async function unstakeCall(vault: VaultEntity, web3: Web3, _: BigNumber, state: BeefyState) {
   const stakingAddress = await getStakingAddress(vault, web3, state);
-  return new web3.eth.Contract(Abi, stakingAddress).methods.withdraw(amountInWei.toString(10));
+  return new web3.eth.Contract(Abi, stakingAddress).methods.withdrawAllAndHarvest();
 }
 
 const Abi: AbiItem[] = [
@@ -49,6 +47,13 @@ const Abi: AbiItem[] = [
   {
     inputs: [{ name: 'amount', type: 'uint256' }],
     name: 'withdraw',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'withdrawAllAndHarvest',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
