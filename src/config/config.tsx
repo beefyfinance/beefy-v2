@@ -371,7 +371,11 @@ export const config = {
   cronos: {
     name: 'Cronos',
     chainId: 25,
-    rpc: ['https://evm.cronos.org'],
+    rpc: [
+      'https://evm.cronos.org',
+      'https://cronos.drpc.org',
+      'https://cronos-evm-rpc.publicnode.com',
+    ],
     explorerUrl: 'https://cronoscan.com',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -561,6 +565,7 @@ export const config = {
       'EURC',
       'msUSD',
       'Bold',
+      'USR',
     ],
   },
   gnosis: {
@@ -772,7 +777,7 @@ export const config = {
       priorityMinimum: '1000000000',
       baseSafetyMargin: 0.1,
     },
-    stableCoins: ['USDCe', 'scUSD', 'mooSiloSonicUSDCe'],
+    stableCoins: ['USDCe', 'scUSD', 'mooSiloSonicUSDCe', 'USDT', 'frxUSD'],
   },
   berachain: {
     name: 'Berachain',
