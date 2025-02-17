@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',
-    padding: '0px 8px 0px 16px',
+    padding: '0px 8px',
     gap: '8px',
     color: theme.palette.text.middle,
     '&:hover': {

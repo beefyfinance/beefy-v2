@@ -17,7 +17,6 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
 
   const handleModals = modalName => {
     setOpen(prev => ({
-      // Close the other modal automatically when opening one
       rpcModal: modalName === 'rpcModal' ? !prev.rpcModal : false,
       networkStatusModal: modalName === 'networkStatusModal' ? !prev.networkStatusModal : false,
     }));
