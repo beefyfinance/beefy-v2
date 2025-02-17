@@ -1,7 +1,7 @@
 [
   {
     "id": "curve-fraxtal-frax-susde",
-    "name": "FRAX/sUSDe",
+    "name": "frxUSD/sUSDe",
     "token": "FRAXsUSDe",
     "tokenAddress": "0x8b4E5263E8D6cc0bbF31EDF14491fc6077B88229",
     "tokenDecimals": 18,
@@ -41,7 +41,7 @@
   },
   {
     "id": "curve-fraxtal-frax-usde",
-    "name": "FRAX/USDe",
+    "name": "frxUSD/USDe",
     "type": "standard",
     "token": "FRAXUSDe",
     "tokenAddress": "0x1e199DbE1f7aa237282fE941d5Bcc3b167c8Ce48",
@@ -240,7 +240,7 @@
   },
   {
     "id": "curve-fraxtal-fxb_20291231",
-    "name": "FRAX/FXB20291231",
+    "name": "frxUSD/FXB20291231",
     "type": "standard",
     "token": "FXB291231",
     "tokenAddress": "0xeE454138083b9B9714cac3c7cF12560248d76D6B",
@@ -281,7 +281,7 @@
   },
   {
     "id": "curve-fraxtal-fxb_20551231",
-    "name": "FRAX/FXB20551231",
+    "name": "frxUSD/FXB20551231",
     "type": "standard",
     "token": "FXB551231",
     "tokenAddress": "0x4Cfc391d75c43Cf1Bdb368e8bF680AEd1228df39",
@@ -322,7 +322,7 @@
   },
   {
     "id": "curve-fraxtal-fxb_20251231",
-    "name": "FRAX/FXB20251231",
+    "name": "frxUSD/FXB20251231",
     "type": "standard",
     "token": "FXB251231",
     "tokenAddress": "0x63d64A76C2D616676CBAC3068D3C6548F8485314",
@@ -385,7 +385,7 @@
   },
   {
     "id": "curve-fraxtal-frax-sdai",
-    "name": "FRAX/sDAI",
+    "name": "frxUSD/sDAI",
     "type": "standard",
     "token": "FRAXsDAI",
     "tokenAddress": "0x385540FdA649A114Ffeb943fD73ae82cE7908Da3",
@@ -425,7 +425,7 @@
   },
   {
     "id": "curve-fraxtal-fxb_20261231",
-    "name": "FRAX/FXB20261231",
+    "name": "frxUSD/FXB20261231",
     "type": "standard",
     "token": "FXB261231",
     "tokenAddress": "0xbC3705b2bfD42d38e8FA2c8EFDC3Fdda645C3b2a",
@@ -506,7 +506,7 @@
   },
   {
     "id": "curve-fraxtal-frax-usdt",
-    "name": "FRAX/USDT",
+    "name": "frxUSD/USDT",
     "type": "standard",
     "token": "FRAXUSDT",
     "tokenAddress": "0xcAEF324bea3Ff5c7a08710081294F3344fFAdC54",
@@ -546,7 +546,7 @@
   },
   {
     "id": "curve-fraxtal-frax-dai",
-    "name": "FRAX/DAI",
+    "name": "frxUSD/DAI",
     "type": "standard",
     "token": "FRAXDAI",
     "tokenAddress": "0x86d7FA03a70c428D3E28092F4509a16f16eC5b7C",
@@ -586,7 +586,7 @@
   },
   {
     "id": "curve-fraxtal-frax-pyusd",
-    "name": "FRAX/PYUSD",
+    "name": "frxUSD/PYUSD",
     "type": "standard",
     "token": "FRAXPYUSD",
     "tokenAddress": "0x35c6c59277f8fA9Ae98dea29b0546D79957ACDd8",
@@ -626,7 +626,7 @@
   },
   {
     "id": "curve-fraxtal-trifxs",
-    "name": "FRAX/wfrxETH/FXS",
+    "name": "frxUSD/wfrxETH/FXS",
     "type": "standard",
     "token": "TriFXS",
     "tokenAddress": "0xa0D3911349e701A1F49C1Ba2dDA34b4ce9636569",
@@ -801,7 +801,7 @@
   },
   {
     "id": "curve-fraxtal-crvusd-frax",
-    "name": "crvUSD/FRAX",
+    "name": "crvUSD/frxUSD",
     "type": "standard",
     "token": "crvUSDFRAX",
     "tokenAddress": "0x63Eb7846642630456707C3efBb50A03c79B89D81",
