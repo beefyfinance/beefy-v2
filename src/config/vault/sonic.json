@@ -1,5 +1,96 @@
 [
   {
+    "id": "shadow-cow-sonic-ws-brush-vault",
+    "name": "BRUSH-wS",
+    "type": "standard",
+    "token": "BRUSH-wS",
+    "tokenAddress": "0x5Eb126927242BaB536Ea9067624e78d8f7A9d4Ce",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnedToken": "mooCowShadowSonicwS-BRUSH",
+    "earnedTokenAddress": "0x7a271775B163045f8C7D3e29dd5F24831a3c9c58",
+    "earnContractAddress": "0x7a271775B163045f8C7D3e29dd5F24831a3c9c58",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-brush",
+    "status": "active",
+    "platformId": "shadow",
+    "assets": ["BRUSH", "S"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "createdAt": 1739903476,
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-ws-brush-rp",
+    "name": "BRUSH-wS Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "mooCowShadowSonicwS-BRUSH",
+    "tokenAddress": "0x5Eb126927242BaB536Ea9067624e78d8f7A9d4Ce",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0x97A3Edd21800F2bF43BB600cd64A18f6403daEad",
+    "earnedToken": "rCowShadowSonicwS-BRUSH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-brush",
+    "status": "active",
+    "createdAt": 1739903476,
+    "platformId": "shadow",
+    "assets": ["BRUSH", "S"],
+    "risks": [],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-ws-brush",
+    "name": "BRUSH-wS",
+    "type": "cowcentrated",
+    "token": "BRUSH-wS shadow",
+    "tokenAddress": "0xB8bda81EcCb1a21198899ac8F1f2F73C82bD7695",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "depositTokenAddresses": [
+      "0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38",
+      "0xE51EE9868C1f0d6cd968A8B8C8376Dc2991BFE44"
+    ],
+    "earnContractAddress": "0x5Eb126927242BaB536Ea9067624e78d8f7A9d4Ce",
+    "earnedToken": "cowShadowSonicwS-BRUSH",
+    "earnedTokenAddress": "0x5Eb126927242BaB536Ea9067624e78d8f7A9d4Ce",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-brush",
+    "status": "active",
+    "createdAt": 1739903476,
+    "platformId": "beefy",
+    "feeTier": "0.50",
+    "assets": ["BRUSH", "S"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "pointStructureIds": ["sonic-points"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "swapx-ichi-usdc.e-usdt",
     "name": "USDC.e-USDT (USDC.e deposit)",
     "token": "IV-SWAPX-49-USDC.e-USDT",
