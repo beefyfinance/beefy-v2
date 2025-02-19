@@ -47,6 +47,7 @@ export const ModifiedListItem = memo(function ChainListItem({
 export const ModifiedListItemEndComponent = memo(function ChainListItem() {
   const classes = useStyles();
 
+  // add function to delete
   return (
     <>
       <CloseIcon className={classes.cross} />

@@ -10,22 +10,30 @@ import clsx from 'clsx';
 import { ChainIcon } from '../../../ChainIcon';
 import { ReactComponent as EmptyIcon } from '../../../../images/empty-state.svg';
 import { ChainListItem, ModifiedListItem, ModifiedListItemEndComponent } from './ListItems';
+import { RpcStepEnum } from './RpcModal';
+import type { ChainEntity } from '../../../../features/data/entities/chain';
 
 const useStyles = makeStyles(styles);
 
 export interface RpcStepsProps {
-  handleStep: () => void;
+  handleStep: (step: RpcStepEnum) => void;
+  setEditChainId: (chainId: string | null) => void;
+  editChainId: ChainEntity['id'] | null;
 }
 
-export const Menu = memo<RpcStepsProps>(function Menu({ handleStep }) {
+export const Menu = memo<RpcStepsProps>(function Menu({ handleStep, setEditChainId }) {
   const classes = useStyles();
   const { t } = useTranslation();
   //change selector for updated Chains
-  const chainIds = [];
+  const chainIds = ['bsc'];
 
-  const onSelect = useCallback(() => {
-    //Action to delete
-  }, []);
+  const onSelect = useCallback(
+    (chainId: ChainEntity['id']) => {
+      setEditChainId(chainId);
+      handleStep(RpcStepEnum.Edit);
+    },
+    [handleStep, setEditChainId]
+  );
 
   return (
     <>
@@ -46,7 +54,7 @@ export const Menu = memo<RpcStepsProps>(function Menu({ handleStep }) {
         </div>
       )}
       <div className={classes.footer}>
-        <Button onClick={handleStep} size="lg" style={{ width: '100%' }}>
+        <Button onClick={() => handleStep(RpcStepEnum.List)} size="lg" style={{ width: '100%' }}>
           {t('RpcModal-Add')}
         </Button>
       </div>
@@ -54,10 +62,10 @@ export const Menu = memo<RpcStepsProps>(function Menu({ handleStep }) {
   );
 });
 
-export const Edit = memo<RpcStepsProps>(function Edit({ handleStep }) {
+export const Edit = memo<RpcStepsProps>(function Edit({ handleStep, setEditChainId, editChainId }) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const chain = useAppSelector(state => selectChainById(state, 'arbitrum'));
+  const chain = useAppSelector(state => editChainId && selectChainById(state, editChainId));
   const [text, setText] = useState('');
 
   const isDisabled = useMemo(() => {
@@ -72,8 +80,11 @@ export const Edit = memo<RpcStepsProps>(function Edit({ handleStep }) {
 
   const onSave = useCallback(() => {
     //action to save  + return to menu
-    handleStep();
-  }, [handleStep]);
+    handleStep(RpcStepEnum.Menu);
+    setEditChainId(null);
+  }, [handleStep, setEditChainId]);
+
+  if (!chain) return null;
 
   return (
     <>
@@ -100,14 +111,18 @@ export const Edit = memo<RpcStepsProps>(function Edit({ handleStep }) {
   );
 });
 
-export const List = memo<RpcStepsProps>(function List({ handleStep }) {
+export const List = memo<RpcStepsProps>(function List({ handleStep, setEditChainId }) {
   const classes = useStyles();
   const chainIds = useAppSelector(selectActiveChainIds);
 
-  const onSelect = useCallback(() => {
-    //Action to modify step to edit
-    handleStep();
-  }, [handleStep]);
+  const onSelect = useCallback(
+    (value: ChainEntity['id']) => {
+      //Action to modify step to edit
+      setEditChainId(value);
+      handleStep(RpcStepEnum.Edit);
+    },
+    [handleStep, setEditChainId]
+  );
 
   return (
     <div className={classes.list}>

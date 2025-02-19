@@ -49,11 +49,11 @@ export const SearchableList = memo<SearchableListProps>(function SearchableList(
 
   return (
     <div className={clsx(classes.searchableList, { [classes.searchableListSM]: size === 'sm' })}>
-      <div className={clsx(classes.search, { [classes.searchableListSM]: size === 'sm' })}>
+      <div className={clsx(classes.search, { [classes.searchSM]: size === 'sm' })}>
         <SearchInput value={search} onChange={setSearch} />
       </div>
       <Scrollable>
-        <div className={clsx(classes.list, { [classes.searchableListSM]: size === 'sm' })}>
+        <div className={clsx(classes.list, { [classes.listSM]: size === 'sm' })}>
           {filteredOptions.length ? (
             sortBy(filteredOptions, id => id).map(value => (
               <Item

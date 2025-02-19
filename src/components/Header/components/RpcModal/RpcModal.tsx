@@ -15,10 +15,11 @@ import { Floating } from '../../../Floating';
 import CloseIcon from '@material-ui/icons/Close';
 import { ReactComponent as SettingsIcon } from '../../../../images/icons/settings.svg';
 import { ReactComponent as BackArrow } from '../../../../images/back-arrow.svg';
+import type { ChainEntity } from '../../../../features/data/entities/chain';
 
 const useStyles = makeStyles(styles);
 
-enum RpcStepEnum {
+export enum RpcStepEnum {
   Menu = 1,
   Edit,
   List,
@@ -34,6 +35,8 @@ export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: (
   const classes = useStyles();
   const { t } = useTranslation();
   const [step, setStep] = useState<RpcStepEnum>(RpcStepEnum.Menu);
+  const [previousStep, setPreviousStep] = useState<RpcStepEnum | null>(null);
+  const [editChainId, setEditChainId] = useState<ChainEntity['id'] | null>(null);
 
   const headerTitle = useMemo(() => {
     if (step === RpcStepEnum.List) {
@@ -42,19 +45,20 @@ export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: (
     return t('RpcModal-Menu-Edit');
   }, [step, t]);
 
-  const handleStepChange = useCallback(() => {
-    if (step === RpcStepEnum.Menu) {
-      setStep(RpcStepEnum.List);
-    }
+  const handleStepChange = useCallback(
+    (nextStep: RpcStepEnum) => {
+      setPreviousStep(step);
+      setStep(nextStep);
+    },
+    [step]
+  );
 
-    if (step === RpcStepEnum.List) {
-      setStep(RpcStepEnum.Edit);
-    }
-
-    if (step === RpcStepEnum.Edit) {
-      setStep(RpcStepEnum.Menu);
-    }
-  }, [step]);
+  const handleEditChainId = useCallback(
+    (chainId: ChainEntity['id'] | null) => {
+      setEditChainId(chainId);
+    },
+    [setEditChainId]
+  );
 
   const StepComponent = useMemo(() => stepToComponent[step], [step]);
 
@@ -63,7 +67,12 @@ export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: (
     [step]
   );
 
-  const onBack = useCallback(() => {}, []);
+  const onBack = useCallback(() => {
+    if (previousStep !== null) {
+      setStep(previousStep);
+      setPreviousStep(null);
+    }
+  }, [previousStep]);
 
   return (
     <>
@@ -79,7 +88,11 @@ export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: (
         <CloseIcon onClick={handleClose} className={classes.cross} />
       </div>
       <div className={classes.content}>
-        <StepComponent handleStep={handleStepChange} />
+        <StepComponent
+          handleStep={handleStepChange}
+          editChainId={editChainId}
+          setEditChainId={handleEditChainId}
+        />
       </div>
     </>
   );
