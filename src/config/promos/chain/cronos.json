@@ -1,0 +1,57 @@
+[
+  {
+    "id": "moo_ripae-scro-cro-ripae",
+    "title": "Ripae",
+    "vaultId": "ripae-scro-cro",
+    "assets": ["sCRO", "CRO"],
+    "tokenAddress": "0xEaa2Ce6351d803456235809D82357ED8D23E8502",
+    "type": "boost",
+    "contractAddress": "0x657cc938053126FA29d9dBCb347f37807005b4F1",
+    "partners": ["ripae"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
+        "symbol": "sCRO",
+        "decimals": 18,
+        "oracleId": "sCRO"
+      }
+    ]
+  },
+  {
+    "id": "moo_vvs-cro-btc-liquidus",
+    "title": "Liquidus",
+    "vaultId": "vvs-cro-btc",
+    "assets": ["CRO", "WBTC"],
+    "type": "boost",
+    "contractAddress": "0xF424488CD9213b6Fd83F63C2BdCA8B0492b2a9a5",
+    "partners": ["liquidus"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xABd380327Fe66724FFDa91A87c772FB8D00bE488",
+        "symbol": "LIQ",
+        "decimals": 18,
+        "oracleId": "LIQ"
+      }
+    ]
+  },
+  {
+    "id": "moo_vvs-vvs-cro-darkcrypto",
+    "title": "DarkCrypto",
+    "vaultId": "vvs-vvs-cro",
+    "assets": ["VVS", "CRO"],
+    "type": "boost",
+    "contractAddress": "0xE06575Cfd4a631e8C0Cd9FBDd8d77AB04CFfA52C",
+    "partners": ["dark"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x9D3BBb0e988D9Fb2d55d07Fe471Be2266AD9c81c",
+        "symbol": "SKY",
+        "decimals": 18,
+        "oracleId": "SKY"
+      }
+    ]
+  }
+]

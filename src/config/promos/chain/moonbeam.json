@@ -1,0 +1,95 @@
+[
+  {
+    "id": "moo_beamswap-wstdot-xcdot-lido",
+    "title": "Lido",
+    "vaultId": "beamswap-wstdot-xcdot",
+    "assets": ["wstDOT", "xcDOT"],
+    "tokenAddress": "0xc302DF25DA018444f8B9261CF7f0f4eA0999e97B",
+    "type": "boost",
+    "contractAddress": "0xc2c792807A32fB9F9f985749Ef90673D8e1Bad44",
+    "partners": ["lido-moonbeam"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x9Fda7cEeC4c18008096C2fE2B85F05dc300F94d0",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_stellaswap-wstdot-xcdot-lido",
+    "title": "Lido",
+    "vaultId": "stellaswap-wstdot-xcdot",
+    "assets": ["wstDOT", "xcDOT"],
+    "tokenAddress": "0x6EA8ad7228eBcA6C686096269d60bb1C72D13fa8",
+    "type": "boost",
+    "contractAddress": "0x7bA322C00372037De54797B0449a4157CaB81BB4",
+    "partners": ["lido-moonbeam"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x9Fda7cEeC4c18008096C2fE2B85F05dc300F94d0",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-moonbeam-f-stdot-lido",
+    "title": "Lido",
+    "vaultId": "curve-moonbeam-f-stdot",
+    "assets": ["stDOT", "xcDOT"],
+    "tokenAddress": "0x4d5bBce91D9bf7434Bf358C1199C8a9c33303787",
+    "type": "boost",
+    "contractAddress": "0x65c6FC773729c30aC4d570C8B8040C454fFA5960",
+    "partners": ["lido-moonbeam"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x9Fda7cEeC4c18008096C2fE2B85F05dc300F94d0",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_stellaswap-stella-wglmr-stellaswap",
+    "title": "StellaSwap",
+    "vaultId": "stellaswap-stella-wglmr",
+    "assets": ["STELLA", "GLMR"],
+    "type": "boost",
+    "contractAddress": "0x74EB99854c10BCD138AEd017516f9835e8325B87",
+    "partners": ["stellaswap"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x0E358838ce72d5e61E0018a2ffaC4bEC5F4c88d2",
+        "symbol": "STELLA",
+        "decimals": 18,
+        "oracleId": "STELLA"
+      }
+    ]
+  },
+  {
+    "id": "moo_stellaswap-stella-usdc-stellaswap",
+    "title": "StellaSwap",
+    "vaultId": "stellaswap-stella-usdc",
+    "assets": ["STELLA", "USDC"],
+    "type": "boost",
+    "contractAddress": "0xc3a4fdcba79DB04b4C3e352b1C467B3Ba909D84A",
+    "partners": ["stellaswap"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x0E358838ce72d5e61E0018a2ffaC4bEC5F4c88d2",
+        "symbol": "STELLA",
+        "decimals": 18,
+        "oracleId": "STELLA"
+      }
+    ]
+  }
+]

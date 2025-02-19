@@ -4,9 +4,8 @@ import { lazy, memo } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { styles } from './styles';
 import { SafetyCard } from './components/SafetyCard';
-import { BoostCard } from './components/BoostCard';
+import { PromoCardLoader } from './components/BoostCard';
 import { selectVaultByIdOrUndefined, selectVaultIdIgnoreCase } from '../data/selectors/vaults';
-import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
 import { getCowcentratedPool, isCowcentratedVault, type VaultEntity } from '../data/entities/vault';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { TechLoader } from '../../components/TechLoader';
@@ -81,9 +80,6 @@ type VaultContentProps = PropsWithChildren<{
 const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) {
   const classes = useStyles();
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
-  const isBoostedOrPreStake = useAppSelector(state =>
-    selectIsVaultPreStakedOrBoosted(state, vaultId)
-  );
 
   return (
     <Container maxWidth="lg" className={classes.page}>
@@ -104,7 +100,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
             </Hidden>
           </div>
           <div className={classes.columnInfo}>
-            {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
+            <PromoCardLoader vaultId={vaultId} />
             <PnLGraphIfWallet vaultId={vaultId} walletAddress={walletAddress} />
             <HistoricGraphsLoader vaultId={vaultId} />
             <LiquidityPoolBreakdownLoader vaultId={vaultId} />

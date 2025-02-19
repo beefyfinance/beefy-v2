@@ -13,11 +13,12 @@ import { styles } from './styles';
 import { explorerTokenUrl } from '../../../../helpers/url';
 import { addTokenToWalletAction } from '../../../data/actions/add-to-wallet';
 import clsx from 'clsx';
+import { selectTokenByAddress } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles);
 
 interface RewardTokenDetailsProps {
-  token: TokenEntity;
+  address: TokenEntity['address'];
   chainId: ChainEntity['id'];
   className?: string;
   prependButtons?: ReactNode;
@@ -25,7 +26,7 @@ interface RewardTokenDetailsProps {
 }
 
 export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardTokenDetails({
-  token,
+  address,
   chainId,
   className,
   prependButtons,
@@ -35,6 +36,7 @@ export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardT
   const dispatch = useAppDispatch();
   const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, chainId));
+  const token = useAppSelector(state => selectTokenByAddress(state, chainId, address));
   const addTokenToWallet = useCallback(() => {
     dispatch(addTokenToWalletAction({ tokenAddress: token.address, chainId }));
   }, [dispatch, chainId, token.address]);

@@ -1,6 +1,7 @@
 {
   "renzo-lido": {
-    "description": "Lido and Renzo joined forces with Beefy to bring users earnings competely denominated in ETH. Earn ezETH and wstETH on top of your ezETH-wstETH position.",
+    "title": "Renzo × Lido",
+    "description": "Lido and Renzo joined forces with Beefy to bring users earnings completely denominated in ETH. Earn ezETH and wstETH on top of your ezETH-wstETH position.",
     "social": {
       "discord": "https://beefy.com/discord",
       "twitter": "https://x.com/beefyfinance"
@@ -8,7 +9,9 @@
   },
   "rootstock-grant": {
     "title": "Beefy × Rootstock",
-    "tagText": "Rootstock Grant",
+    "tag": {
+      "text": "Rootstock Grant"
+    },
     "description": "Celebrate the launch of Beefy on Rootstock, Bitcoin's first and longest-lasting sidechain. Beefy users can earn grant-funded $rBTC tokens for trying out new products on Rootstock. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your rewards whenever you're ready.",
     "social": {
       "discord": "https://beefy.com/discord",
@@ -26,8 +29,10 @@
   },
   "zap-v3": {
     "title": "Beefy x Optimism Governance Fund",
-    "tagText": "Zap Boost",
-    "tagIcon": "zap",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
     "description": "Celebrate the launch of ZAP V3 with Beefy's Optimism Governance Fund grant. Beefy users earn additional $OP tokens for using ZAP V3-supported products on the Superchain. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your $OP rewards whenever you're ready.",
     "learn": "https://beefy.com/articles/zap-v3/",
     "social": {
@@ -37,8 +42,10 @@
   },
   "offchain-zap-v3": {
     "title": "Beefy x Optimism Governance Fund",
-    "tagText": "Zap Boost",
-    "tagIcon": "zap",
+    "tag": {
+      "text": "Zap Boost",
+      "icon": "zap"
+    },
     "description": "Celebrate the launch of ZAP V3 with Beefy's Optimism Governance Fund grant. Beefy users earn additional $OP tokens for using ZAP V3-supported products on the Superchain. Rewards accrue linearly over time depending on the user's TVL. Simply click the 'Claim' tab to find details of all onchain and offchain rewards, and then manually claim your rewards whenever you're ready.",
     "learn": "https://beefy.com/articles/zap-v3/",
     "social": {
@@ -48,7 +55,9 @@
   },
   "offchain-mode-grant": {
     "title": "Beefy x Mode Governance Fund",
-    "tagText": "Mode Grant",
+    "tag": {
+      "text": "Mode Grant"
+    },
     "description": "Earn $OP on Optimism network for participating in Beefy vaults on Mode. Beefy users earn additional $OP tokens for using products on the Superchain. Rewards accrue linearly over time depending on the user's TVL. Simply click the 'Claim' tab to find details of all onchain and offchain rewards, and then manually claim your rewards whenever you're ready.",
     "social": {
       "discord": "https://beefy.com/discord",
@@ -57,7 +66,22 @@
   },
   "dao-rewards": {
     "title": "Beefy DAO Distribution",
+    "tag": {
+      "text": "DAO Boost"
+    },
     "description": "Earn extra incentives awarded by the Beefy DAO from its recent quarterly earnings. Beefy users earn additional tokens for using products boosted by the Beefy DAO Distribution program. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your rewards whenever you're ready.",
+    "learn": "https://snapshot.org/#/beefydao.eth/proposal/0xefe70f50c7743085e72f4c2421cc8e92c8b82fa14bfd479a26bd0a0c14c5f07e",
+    "social": {
+      "discord": "https://beefy.com/discord",
+      "twitter": "https://x.com/beefyfinance"
+    }
+  },
+  "pool-dao-rewards": {
+    "title": "Beefy DAO Distribution",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "description": "Earn extra incentives awarded by the Beefy DAO from its recent quarterly earnings. Beefy users earn additional tokens for using products boosted by the Beefy DAO Distribution program. Rewards accrue linearly over time depending on the user's TVL. Simply click the 'Claim' tab to find details of all onchain and offchain rewards, and then manually claim your rewards whenever you're ready.",
     "learn": "https://snapshot.org/#/beefydao.eth/proposal/0xefe70f50c7743085e72f4c2421cc8e92c8b82fa14bfd479a26bd0a0c14c5f07e",
     "social": {
       "discord": "https://beefy.com/discord",
@@ -71,6 +95,18 @@
     "social": {
       "discord": "https://beefy.com/discord",
       "twitter": "https://x.com/beefyfinance"
+    }
+  },
+  "airdrop-gnosis-safe": {
+    "title": "Beefy x Safe",
+    "tag": {
+      "text": "SafeBoost"
+    },
+    "description": "Accelerating the adoption of Safe Smart Accounts and earning SAFE tokens in the process! SafeBoost is a 6-month campaign hosted by Safe and Gnosis, where Safe users are incentivized for their activities on Gnosis Chain. Users earn points based on their assets, volume, transactions and completing highlighted activities. Points translate into SAFE token rewards. As a launch partner, Beefy is pleased to be contributing incentives for Safe users on Gnosis Chain who interact with Beefy products.",
+    "learn": "https://beefy.com/articles/safeboost/",
+    "social": {
+      "discord": "https://chat.safe.global/",
+      "twitter": "https://x.com/safe"
     }
   }
 }

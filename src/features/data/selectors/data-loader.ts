@@ -26,7 +26,7 @@ export const selectIsChainConfigAvailable = createGlobalDataSelector(
   hasLoaderFulfilledOnce
 );
 export const selectIsVaultsAvailable = createGlobalDataSelector('vaults', hasLoaderFulfilledOnce);
-export const selectIsBoostsAvailable = createGlobalDataSelector('boosts', hasLoaderFulfilledOnce);
+export const selectIsPromosAvailable = createGlobalDataSelector('promos', hasLoaderFulfilledOnce);
 export const selectIsPlatformsAvailable = createGlobalDataSelector(
   'platforms',
   hasLoaderFulfilledOnce
@@ -34,7 +34,7 @@ export const selectIsPlatformsAvailable = createGlobalDataSelector(
 export const selectIsConfigAvailable: GlobalDataSelectorFn = createSelector(
   selectIsChainConfigAvailable,
   selectIsVaultsAvailable,
-  selectIsBoostsAvailable,
+  selectIsPromosAvailable,
   selectIsPlatformsAvailable,
   (...availables) => availables.every(available => available === true)
 );

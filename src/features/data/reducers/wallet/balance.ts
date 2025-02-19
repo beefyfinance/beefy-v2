@@ -16,7 +16,7 @@ import type {
   GovVaultReward,
   TokenBalance,
 } from '../../apis/balance/balance-types';
-import type { BoostEntity } from '../../entities/boost';
+import type { BoostPromoEntity } from '../../entities/promo';
 import type { ChainEntity } from '../../entities/chain';
 import type { TokenEntity } from '../../entities/token';
 import type { VaultEntity } from '../../entities/vault';
@@ -59,7 +59,7 @@ export interface BalanceState {
          * and how much rewards we can claim
          */
         byBoostId: {
-          [boostId: BoostEntity['id']]: {
+          [boostId: BoostPromoEntity['id']]: {
             balance: BigNumber;
             rewards: BoostReward[];
           };

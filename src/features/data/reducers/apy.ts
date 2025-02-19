@@ -5,16 +5,16 @@ import { fetchApyAction, recalculateTotalApyAction } from '../actions/apy';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
-import type { BoostEntity } from '../entities/boost';
+import type { BoostPromoEntity } from '../entities/promo';
 import type { VaultEntity } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
 import { selectTokenPriceByAddress, selectVaultReceiptTokenPrice } from '../selectors/tokens';
 import { selectStandardVaultByAddressOrUndefined } from '../selectors/vaults';
 import { createIdMap } from '../utils/array-utils';
 import type { BigNumber } from 'bignumber.js';
-import { getBoostStatusFromContractState } from './boosts';
 import type { ApiApyData } from '../apis/beefy/beefy-api-types';
 import { isAfter } from 'date-fns';
+import { getBoostStatusFromContractState } from './promos';
 
 // boost is expressed as APR
 interface AprData {
@@ -69,7 +69,7 @@ export interface ApyState {
       [vaultId: VaultEntity['id']]: ApiApyData;
     };
     byBoostId: {
-      [boostId: BoostEntity['id']]: AprData;
+      [boostId: BoostPromoEntity['id']]: AprData;
     };
   };
   totalApy: {
@@ -127,7 +127,7 @@ function addContractDataToState(
   for (const boostContractData of contractData.boosts) {
     const boost = selectBoostById(state, boostContractData.id);
     // we can't use the selectIsBoostActiveOrPreStake selector here as state is not updated yet
-    const boostStatus = getBoostStatusFromContractState(boost.id, boostContractData);
+    const boostStatus = getBoostStatusFromContractState(boostContractData);
     const isBoostActiveOrPrestake = boostStatus === 'active' || boostStatus === 'prestake';
     // boost is expired
     if (!isBoostActiveOrPrestake) {

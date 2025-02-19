@@ -1,0 +1,136 @@
+[
+  {
+    "id": "moo_venus-zksync-usdc.e",
+    "title": "Beefy",
+    "vaultId": "venus-zksync-usdc.e",
+    "assets": ["USDCe"],
+    "tokenAddress": "0xf3C2B394c2015E5394a5f97ab18B73a97976a650",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xFe8A01930d7720B229FD3317cf88152dc2b3277b",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
+        "symbol": "USDCe",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_venus-zksync-usdt",
+    "title": "Beefy",
+    "vaultId": "venus-zksync-usdt",
+    "assets": ["USDT"],
+    "tokenAddress": "0x4dbC00B2534ea20a82b239b543c253c2F2ac609C",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x047C4880283e4c795BabB13cc18e37e0D7aE8AE5",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
+        "symbol": "USDCe",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_venus-zksync-wbtc",
+    "title": "Beefy",
+    "vaultId": "venus-zksync-wbtc",
+    "assets": ["WBTC"],
+    "tokenAddress": "0x5E9A02C0b587D8966D17ef73753204f457fB36AC",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x9f45EeF8bCc77f5238b3A5992e3B5Cbb55f56cDd",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
+        "symbol": "USDCe",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_venus-zksync-weth",
+    "title": "Beefy",
+    "vaultId": "venus-zksync-weth",
+    "assets": ["WETH"],
+    "tokenAddress": "0x7b9643658d5A1516B5E22995819dF4d54b059D54",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x0465Cb2f05D69728E0e1d988bf65EB0a9cd68DFf",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
+        "symbol": "USDCe",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_venus-zksync-zk",
+    "title": "Beefy",
+    "vaultId": "venus-zksync-zk",
+    "assets": ["ZK"],
+    "tokenAddress": "0x6a839d7269734251C0C5EA73b6CCc0EE4E541B75",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x5595961Efc3302d78eBac0Af31Ec029caCBaCc73",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
+        "symbol": "USDCe",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_vesync-usdc-wtbt-tprotocol",
+    "title": "TProtocol",
+    "vaultId": "vesync-usdc-wtbt",
+    "assets": ["wTBT", "USDC"],
+    "tokenAddress": "0x5288D86d78571278e7C5591F264bcF65e787550e",
+    "type": "boost",
+    "contractAddress": "0x829e669bfb45AB51E853572920D9258a4907f89D",
+    "partners": ["tprotocol"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
+        "symbol": "USDCe",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  }
+]

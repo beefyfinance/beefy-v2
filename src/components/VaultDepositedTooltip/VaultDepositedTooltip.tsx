@@ -81,7 +81,7 @@ const BoostEntry = memo<EntryProps<UserVaultBalanceBreakdownBoost>>(function Boo
       entry={entry}
       depositToken={depositToken}
       price={price}
-      label={t(`VaultStat-Deposited-${entry.type}`, { boost: boost.name })}
+      label={t(`VaultStat-Deposited-${entry.type}`, { boost: boost.title })}
     />
   );
 });
