@@ -1,5 +1,96 @@
 [
   {
+    "id": "velodrome-cow-mode-wmlt-usdc-vault",
+    "name": "wMLT-USDC",
+    "type": "standard",
+    "token": "wMLT-USDC",
+    "tokenAddress": "0x6874c5Ab0b675A10b7c08EA78b64A75196e42AEE",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnContractAddress": "0x8f2961ed1A8b2a77e3bD763b857470FAC74AE1BB",
+    "earnedToken": "mooCowVelodromewMLT-USDC",
+    "earnedTokenAddress": "0x8f2961ed1A8b2a77e3bD763b857470FAC74AE1BB",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-mode-wmlt-usdc",
+    "status": "active",
+    "createdAt": 1739956528,
+    "platformId": "velodrome",
+    "assets": ["wMLT", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "mode",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-mode-wmlt-usdc-rp",
+    "name": "wMLT-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowVelodromewMLT-USDC",
+    "tokenAddress": "0x6874c5Ab0b675A10b7c08EA78b64A75196e42AEE",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnContractAddress": "0xEFE3a65A87151FC8F070E9030230c99d09Dd7999",
+    "earnedToken": "rCowVelodromewMLT-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x7f9AdFbd38b669F03d1d11000Bc76b9AaEA28A81"],
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-mode-wmlt-usdc",
+    "status": "active",
+    "createdAt": 1739956527,
+    "platformId": "velodrome",
+    "assets": ["wMLT", "USDC"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "mode",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "velodrome-cow-mode-wmlt-usdc",
+    "name": "wMLT-USDC",
+    "type": "cowcentrated",
+    "token": "wMLT-USDC velodrome",
+    "tokenAddress": "0x8874846147AfF9a207d8f925a9Bc229e0eB0A4A6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "depositTokenAddresses": [
+      "0x8b2EeA0999876AAB1E7955fe01A5D261b570452C",
+      "0xd988097fb8612cc24eeC14542bC03424c656005f"
+    ],
+    "earnContractAddress": "0x6874c5Ab0b675A10b7c08EA78b64A75196e42AEE",
+    "earnedToken": "cowVelodromewMLT-USDC",
+    "earnedTokenAddress": "0x6874c5Ab0b675A10b7c08EA78b64A75196e42AEE",
+    "oracle": "lps",
+    "oracleId": "velodrome-cow-mode-wmlt-usdc",
+    "status": "active",
+    "createdAt": 1739956527,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["wMLT", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "mode",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "velodrome-cow-mode-usdc-usdt-vault",
     "name": "USDC-USDT",
     "type": "standard",

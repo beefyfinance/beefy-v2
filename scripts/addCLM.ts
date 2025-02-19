@@ -79,8 +79,10 @@ async function vaultData(chain: string, vaultAddress: string, id: string) {
   const earnedTokenAddress =
     provider === 'aerodrome'
       ? ['0x940181a94A35A4569E4529A3CDfB74e38FD98631']
-      : provider === 'velodrome'
+      : provider === 'velodrome' && chain === 'optimism'
       ? ['0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db']
+      : provider === 'velodrome'
+      ? ['0x7f9AdFbd38b669F03d1d11000Bc76b9AaEA28A81']
       : provider === 'nuri'
       ? ['0xAAAE8378809bb8815c08D3C59Eb0c7D1529aD769']
       : [];
