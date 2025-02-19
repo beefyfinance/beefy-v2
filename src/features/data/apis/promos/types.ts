@@ -48,6 +48,10 @@ export type BasePromoConfig = {
   /** defaults to title */
   by?: string;
   vaultId: string;
+  /** @deprecated use vaultId to retrieve from vault entity */
+  assets: string[];
+  /** @deprecated use vaultId to retrieve from vault entity */
+  tokenAddress: string;
   tag?: {
     /** defaults to title */
     text?: string;

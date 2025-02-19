@@ -97,6 +97,8 @@ export interface BoostConfig {
   fixedStatus?: boolean | null;
   /** tmp: exclude from being loaded */
   hidden?: boolean;
+  /** @deprecated want() of the vault - used by various apis but not in app - look up via vault id instead */
+  tokenAddress: string;
 }
 
 export interface StandardGasConfig {

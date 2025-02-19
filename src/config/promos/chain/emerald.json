@@ -1,0 +1,56 @@
+[
+  {
+    "id": "moo_valley-usdt-vs-valleyswap",
+    "title": "ValleySwap",
+    "vaultId": "valley-usdt-vs-pause",
+    "assets": ["VS", "USDT"],
+    "type": "boost",
+    "contractAddress": "0x405EE7F4f067604b787346bC22ACb66b06b15A4B",
+    "partners": ["valleyswap"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xBC033203796CC2C8C543a5aAe93a9a643320433D",
+        "symbol": "VS",
+        "decimals": 18,
+        "oracleId": "VS"
+      }
+    ]
+  },
+  {
+    "id": "moo_valley-usdt-usdc-valleyswap",
+    "title": "ValleySwap",
+    "vaultId": "valley-usdt-usdc-pause",
+    "assets": ["USDC", "USDT"],
+    "type": "boost",
+    "contractAddress": "0xc3a4fdcba79DB04b4C3e352b1C467B3Ba909D84A",
+    "partners": ["valleyswap"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xBC033203796CC2C8C543a5aAe93a9a643320433D",
+        "symbol": "VS",
+        "decimals": 18,
+        "oracleId": "VS"
+      }
+    ]
+  },
+  {
+    "id": "moo_valley-btc-usdt-valleyswap",
+    "title": "ValleySwap",
+    "vaultId": "valley-btc-usdt-pause",
+    "assets": ["BTC", "USDT"],
+    "type": "boost",
+    "contractAddress": "0x3C9C884eFAB85c44D675039de227b3Dd275c360e",
+    "partners": ["valleyswap"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xBC033203796CC2C8C543a5aAe93a9a643320433D",
+        "symbol": "VS",
+        "decimals": 18,
+        "oracleId": "VS"
+      }
+    ]
+  }
+]
