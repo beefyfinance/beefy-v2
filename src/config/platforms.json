@@ -1393,5 +1393,23 @@
     "documentation": "https://docs.shadow.so/",
     "description": "A Sonic-native concentrated liquidity exchange. The ultimate trading hub on Sonic.",
     "type": "amm"
+  },
+  {
+    "id": "kodiak",
+    "name": "Kodiak",
+    "website": "https://kodiak.finance/",
+    "twitter": "KodiakFi",
+    "documentation": "https://documentation.kodiak.finance/",
+    "description": "Berachain's Native Liquidity Hub.",
+    "type": "amm"
+  },
+  {
+    "id": "beraswap",
+    "name": "Beraswap",
+    "website": "https://hub.berachain.com/",
+    "twitter": "berachain",
+    "documentation": "https://docs.berachain.com/",
+    "description": "Beraswap is a decentralized exchange (DEX) that allows users to trade and swap tokens on the Berachain blockchain.",
+    "type": "amm"
   }
 ]

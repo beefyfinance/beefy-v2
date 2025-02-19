@@ -167,6 +167,7 @@ type ChainId =
   | 'sonic'
   | 'aurora'
   | 'emerald'
+  | 'berachain'
   | 'celo'
   | 'heco'
   | 'harmony';

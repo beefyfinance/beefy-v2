@@ -1,10 +1,148 @@
 [
   {
-    "id": "pool_uniswap-cow-base-weth-keycat-rp",
+    "id": "moo_aerodrome-weth-vvv",
     "title": "Beefy",
-    "vaultId": "uniswap-cow-base-weth-keycat-rp",
-    "type": "pool",
-    "campaign": "pool-dao-rewards",
+    "vaultId": "aerodrome-weth-vvv",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x1203a29Ecdb0eB3E3Eb072cb12F80b7C32BDAD39",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "status": "active",
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-weth-champ",
+    "title": "Beefy",
+    "vaultId": "aerodrome-weth-champ",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x9469E5f2757FD95eF8071bFbfA1b0ed72Dbe7726",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "status": "active",
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cbbtc-champ",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cbbtc-champ",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xb245470789387776cEf62e818C323a82cF8E76A2",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "status": "active",
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-cow-weth-drv-vault",
+    "title": "Beefy",
+    "vaultId": "aerodrome-cow-weth-drv-vault",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x05F59ddD43776f66b85913D03D72acFDdaf18b78",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "status": "active",
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-weth-fai",
+    "title": "Beefy",
+    "vaultId": "aerodrome-weth-fai",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xc4916196E785CF4d1Ddc1B017A245ca657B45EF1",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "status": "active",
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-tbtc-cbbtc",
+    "title": "Beefy",
+    "vaultId": "aerodrome-tbtc-cbbtc",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xEd6a44157b24c209f05e5B61f2dbB1Fece2B317c",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "status": "active",
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_pendle-eqb-base-susdz-27mar25",
+    "title": "Beefy",
+    "vaultId": "pendle-eqb-base-susdz-27mar25",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xAf15AC5b663Dc72c178970fD1876AD62339e319F",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "status": "active",
+    "campaign": "dao-rewards",
     "rewards": [
       {
         "type": "token",
@@ -25,6 +163,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -46,6 +185,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -67,6 +207,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -88,6 +229,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -109,6 +251,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -130,6 +273,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -151,6 +295,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -172,6 +317,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -193,6 +339,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -214,6 +361,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -232,6 +380,7 @@
     "type": "boost",
     "version": 2,
     "contractAddress": "0x3ccbbA6D5943eB822909445Cf56e17Ae3edA32ab",
+    "status": "active",
     "partners": ["lido-eth"],
     "rewards": [
       {
@@ -253,6 +402,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -274,6 +424,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -295,6 +446,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -316,6 +468,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -337,6 +490,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -358,6 +512,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -379,6 +534,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -400,6 +556,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -421,6 +578,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -442,6 +600,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -463,6 +622,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -484,6 +644,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -505,6 +666,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -526,6 +688,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -547,6 +710,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -568,6 +732,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -589,6 +754,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -610,6 +776,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -631,6 +798,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -652,6 +820,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -673,6 +842,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -694,6 +864,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -715,6 +886,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -736,6 +908,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -757,6 +930,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -778,6 +952,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -799,6 +974,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -820,6 +996,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -841,6 +1018,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -862,6 +1040,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -883,6 +1062,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -904,6 +1084,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -925,6 +1106,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -946,6 +1128,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -967,6 +1150,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -988,6 +1172,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -1009,6 +1194,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -1030,6 +1216,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -1051,6 +1238,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -1072,6 +1260,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -1093,6 +1282,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -1114,6 +1304,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -1135,6 +1326,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -1156,6 +1348,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -1177,6 +1370,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -1198,6 +1392,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -1219,6 +1414,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -1240,6 +1436,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -1261,6 +1458,7 @@
     "tag": {
       "text": "DAO Boost"
     },
+    "status": "active",
     "campaign": "dao-rewards",
     "rewards": [
       {
@@ -1278,6 +1476,7 @@
     "vaultId": "alienbase-cbeth-weth",
     "type": "boost",
     "contractAddress": "0x31EAc0C43F0564f17314738D0a2de067C05D385E",
+    "status": "active",
     "partners": ["alienbase"],
     "rewards": [
       {
@@ -1295,6 +1494,7 @@
     "vaultId": "alienbase-weth-usdbc",
     "type": "boost",
     "contractAddress": "0xA91F38BB21c51131d2915F025DfbAAF74cb50385",
+    "status": "active",
     "partners": ["alienbase"],
     "rewards": [
       {
@@ -1312,6 +1512,7 @@
     "vaultId": "alienbase-dai-usdbc",
     "type": "boost",
     "contractAddress": "0x819D32901DF52ac4bd513Cf28CBf0Ef3d029a6fF",
+    "status": "active",
     "partners": ["alienbase"],
     "rewards": [
       {
@@ -1329,6 +1530,7 @@
     "vaultId": "alienbase-cbeth-weth",
     "type": "boost",
     "contractAddress": "0x01e8881ed2Fb41E0B3dF29f382fAf707a0B26969",
+    "status": "active",
     "partners": ["alienbase"],
     "rewards": [
       {

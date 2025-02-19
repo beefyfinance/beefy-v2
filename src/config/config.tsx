@@ -75,6 +75,12 @@ export const config = {
       'wstUSR',
       'Bold',
       'BOLD',
+      'waEthUSDC',
+      'waEthUSDT',
+      'waEthUSDe',
+      'waEthLidoGHO',
+      'csUSDC',
+      'csUSDL',
     ],
   },
   polygon: {
@@ -365,7 +371,11 @@ export const config = {
   cronos: {
     name: 'Cronos',
     chainId: 25,
-    rpc: ['https://rpc.vvs.finance'],
+    rpc: [
+      'https://evm.cronos.org',
+      'https://cronos.drpc.org',
+      'https://cronos-evm-rpc.publicnode.com',
+    ],
     explorerUrl: 'https://cronoscan.com',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -555,6 +565,7 @@ export const config = {
       'EURC',
       'msUSD',
       'Bold',
+      'USR',
     ],
   },
   gnosis: {
@@ -766,7 +777,23 @@ export const config = {
       priorityMinimum: '1000000000',
       baseSafetyMargin: 0.1,
     },
-    stableCoins: ['USDCe', 'scUSD', 'mooSiloSonicUSDCe'],
+    stableCoins: ['USDCe', 'scUSD', 'mooSiloSonicUSDCe', 'USDT', 'frxUSD'],
+  },
+  berachain: {
+    name: 'Berachain',
+    chainId: 80094,
+    rpc: ['https://rpc.berachain.com'],
+    explorerUrl: 'https://berascan.com/',
+    multicallAddress: '0x0D17eE2ed4e67b626B43C3695586E5aE6a039949',
+    multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    appMulticallContractAddress: '0x75c9D65e7C0d6b40F356452f8A11aeD525B67197',
+    providerName: 'Berachain',
+    native: { symbol: 'BERA', oracleId: 'WBERA', decimals: 18 },
+    new: true,
+    gas: {
+      type: 'standard',
+    },
+    stableCoins: ['HONEY', 'USDCe', 'BYUSD'],
   },
   aurora: {
     name: 'Aurora',
