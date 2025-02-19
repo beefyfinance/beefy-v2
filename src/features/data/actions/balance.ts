@@ -26,7 +26,7 @@ import {
 } from '../entities/vault';
 import { uniqueTokens } from '../../../helpers/tokens';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import type { BoostEntity } from '../entities/boost';
+import type { BoostPromoEntity } from '../entities/promo';
 
 export interface FetchAllBalanceActionParams {
   chainId: ChainEntity['id'];
@@ -92,7 +92,7 @@ export const fetchBalanceAction = createAsyncThunk<
 
     const tokens = requestedTokens;
     const govVaults: VaultGov[] = [];
-    const boosts: BoostEntity[] = [];
+    const boosts: BoostPromoEntity[] = [];
 
     if (vaults.length) {
       for (const vault of vaults) {

@@ -1,5 +1,5 @@
 import type { BeefyState } from '../../../../redux-types';
-import type { BoostEntity } from '../../entities/boost';
+import type { BoostPromoEntity } from '../../entities/promo';
 import { type BigNumber } from 'bignumber.js';
 import type {
   VaultCowcentrated,
@@ -16,8 +16,8 @@ export interface IContractDataApi {
     govVaults: VaultGov[],
     govVaultsMulti: VaultGovMulti[],
     cowVaults: VaultCowcentrated[],
-    boosts: BoostEntity[],
-    boostsMulti: BoostEntity[]
+    boosts: BoostPromoEntity[],
+    boostsMulti: BoostPromoEntity[]
   ): Promise<FetchAllContractDataResult>;
 }
 

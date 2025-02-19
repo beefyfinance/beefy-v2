@@ -3,7 +3,7 @@ import { type BigNumber } from 'bignumber.js';
 import { mooAmountToOracleAmount } from '../utils/ppfs';
 import type { Draft } from 'immer';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import type { BoostEntity } from '../entities/boost';
+import type { BoostPromoEntity } from '../entities/promo';
 import { isStandardVault, type VaultCowcentrated, type VaultEntity } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
 import { selectTokenByAddress, selectTokenPriceByAddress } from '../selectors/tokens';
@@ -27,7 +27,7 @@ export interface TvlState {
     };
   };
   byBoostId: {
-    [boostId: BoostEntity['id']]: {
+    [boostId: BoostPromoEntity['id']]: {
       staked: BigNumber;
       tvl: BigNumber;
     };

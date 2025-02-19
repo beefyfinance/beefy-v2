@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../store';
-import type { BoostEntity } from '../../../../../data/entities/boost';
+import type { BoostPromoEntity } from '../../../../../data/entities/promo';
 import {
   selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
@@ -21,7 +21,7 @@ import { ActionConnectSwitch } from '../ActionConnectSwitch';
 const useStyles = makeStyles(styles);
 
 interface BoostPastCardActionCardProps {
-  boostId: BoostEntity['id'];
+  boostId: BoostPromoEntity['id'];
 }
 
 export const BoostPastActionCard = memo(function BoostPastActionCard({
@@ -58,7 +58,9 @@ export const BoostPastActionCard = memo(function BoostPastActionCard({
   return (
     <div className={classes.expiredBoostContainer}>
       <div className={classes.title}>
-        <div className={classes.expiredBoostName}>{t('Boost-NameBoost', { name: boost.name })}</div>
+        <div className={classes.expiredBoostName}>
+          {t('Boost-NameBoost', { name: boost.title })}
+        </div>
       </div>
       <div>
         <div className={classes.label}>{t('Staked')}</div>

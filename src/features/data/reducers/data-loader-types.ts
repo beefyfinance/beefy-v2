@@ -61,7 +61,7 @@ export interface DataLoaderState {
     vaults: LoaderState;
     lastHarvests: LoaderState;
     fees: LoaderState;
-    boosts: LoaderState;
+    promos: LoaderState;
     wallet: LoaderState;
     zapAmms: LoaderState;
     zapConfigs: LoaderState;

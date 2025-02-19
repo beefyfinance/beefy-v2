@@ -1,0 +1,192 @@
+[
+  {
+    "id": "moo_kinetix-klp-kava",
+    "title": "Kava",
+    "vaultId": "kinetix-klp",
+    "assets": ["KLP"],
+    "tokenAddress": "0x9a207D4D2ee8175995C69c0Fb1F117Bf7CcC93cd",
+    "type": "boost",
+    "contractAddress": "0x7E4bEdE523726283BdF309d49087C3305e681cE0",
+    "partners": ["kinetix"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc86c7C0eFbd6A49B35E8714C5f59D99De09A225b",
+        "symbol": "WKAVA",
+        "decimals": 18,
+        "oracleId": "WKAVA"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-kava-mimusdt-new-beefy",
+    "title": "Beefy",
+    "vaultId": "curve-kava-mimusdt-new",
+    "assets": ["MIM", "USDt"],
+    "tokenAddress": "0x4ec819843F6229722FD0d6F8944aCF3FF9F8acB8",
+    "type": "boost",
+    "contractAddress": "0x5EaB91542fd4a2b9D047fD5E4Fd584eFC796D19d",
+    "partners": ["beefy"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc86c7C0eFbd6A49B35E8714C5f59D99De09A225b",
+        "symbol": "WKAVA",
+        "decimals": 18,
+        "oracleId": "WKAVA"
+      }
+    ]
+  },
+  {
+    "id": "moo_equilibre-axlusdt-usdt-kava",
+    "title": "Beefy",
+    "vaultId": "equilibre-axlusdt-usdt",
+    "assets": ["axlUSDT", "USDt"],
+    "tokenAddress": "0xd7A71C0C38198ce2e73D803aA77cbD1C9b6dF1B9",
+    "type": "boost",
+    "contractAddress": "0xce272A3dAd3307BfbAB1dd0afF83462f471f1bFa",
+    "partners": ["kava"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc86c7C0eFbd6A49B35E8714C5f59D99De09A225b",
+        "symbol": "WKAVA",
+        "decimals": 18,
+        "oracleId": "WKAVA"
+      }
+    ]
+  },
+  {
+    "id": "moo_equilibre-usdt-wkava-kava",
+    "title": "Kava",
+    "vaultId": "equilibre-usdt-wkava",
+    "assets": ["KAVA", "USDt"],
+    "tokenAddress": "0x7E9C61362cf7547107aDC0A4157808406Cc5D99e",
+    "type": "boost",
+    "contractAddress": "0x99B966B099ED886a3Dc465b56B874EA12813c498",
+    "partners": ["kava"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc86c7C0eFbd6A49B35E8714C5f59D99De09A225b",
+        "symbol": "WKAVA",
+        "decimals": 18,
+        "oracleId": "WKAVA"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-kava-axlusdt-f-kava",
+    "title": "Kava",
+    "vaultId": "curve-kava-axlusdt-f",
+    "assets": ["axlUSDT", "USDt"],
+    "tokenAddress": "0xd5BC6DEa24A93A542C0d3Aa7e4dFBD05d97AF0F8",
+    "type": "boost",
+    "contractAddress": "0xA43d8f6Db69610C8260B953658553cabF01D77c6",
+    "partners": ["kava"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc86c7C0eFbd6A49B35E8714C5f59D99De09A225b",
+        "symbol": "WKAVA",
+        "decimals": 18,
+        "oracleId": "WKAVA"
+      }
+    ]
+  },
+  {
+    "id": "moo_equilibre-wkava-eth-kava",
+    "title": "Kava",
+    "vaultId": "equilibre-wkava-eth",
+    "assets": ["ETH", "KAVA"],
+    "tokenAddress": "0xd3754c0D018A5A5E318129Fb12dEdED653c700Ba",
+    "type": "boost",
+    "contractAddress": "0x15fd34559B0508F4C8504aC4c1122b4AD35d2660",
+    "partners": ["kava"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc86c7C0eFbd6A49B35E8714C5f59D99De09A225b",
+        "symbol": "WKAVA",
+        "decimals": 18,
+        "oracleId": "WKAVA"
+      }
+    ]
+  },
+  {
+    "id": "moo_equilibre-wkava-usdc-kava",
+    "title": "Beefy",
+    "vaultId": "equilibre-wkava-usdc",
+    "assets": ["KAVA", "USDC"],
+    "tokenAddress": "0x9C91730de8Df9eAc0D40AedA285Bfe052B32Cc77",
+    "type": "boost",
+    "contractAddress": "0x107Dbf9c9C0EF2Df114159e5C7DC2baf7C444cFF",
+    "partners": ["kava"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc86c7C0eFbd6A49B35E8714C5f59D99De09A225b",
+        "symbol": "WKAVA",
+        "decimals": 18,
+        "oracleId": "WKAVA"
+      }
+    ]
+  },
+  {
+    "id": "moo_equilibre-bifi-wkava-kava",
+    "title": "Beefy",
+    "vaultId": "equilibre-bifi-wkava",
+    "assets": ["oldBIFI", "KAVA"],
+    "tokenAddress": "0xB5d4049c2f7cf590F10e3fD0D6E0444F3a109E01",
+    "type": "boost",
+    "contractAddress": "0x3C9C884eFAB85c44D675039de227b3Dd275c360e",
+    "partners": ["kava"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc86c7C0eFbd6A49B35E8714C5f59D99De09A225b",
+        "symbol": "WKAVA",
+        "decimals": 18,
+        "oracleId": "WKAVA"
+      }
+    ]
+  },
+  {
+    "id": "moo_equilibre-mai-usdc-kava",
+    "title": "Beefy",
+    "vaultId": "equilibre-mai-usdc",
+    "assets": ["MAI", "USDC"],
+    "tokenAddress": "0xbC0A5aF32CF1143Dc1532B709A027F1A3fD380aa",
+    "type": "boost",
+    "contractAddress": "0xc3a4fdcba79DB04b4C3e352b1C467B3Ba909D84A",
+    "partners": ["kava"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc86c7C0eFbd6A49B35E8714C5f59D99De09A225b",
+        "symbol": "WKAVA",
+        "decimals": 18,
+        "oracleId": "WKAVA"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-kava-3pool-kava",
+    "title": "Beefy",
+    "vaultId": "curve-kava-3pool",
+    "assets": ["DAI", "USDC", "USDT"],
+    "tokenAddress": "0xC3821F0b56FA4F4794d5d760f94B812DE261361B",
+    "type": "boost",
+    "contractAddress": "0x405EE7F4f067604b787346bC22ACb66b06b15A4B",
+    "partners": ["kava"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc86c7C0eFbd6A49B35E8714C5f59D99De09A225b",
+        "symbol": "WKAVA",
+        "decimals": 18,
+        "oracleId": "WKAVA"
+      }
+    ]
+  }
+]

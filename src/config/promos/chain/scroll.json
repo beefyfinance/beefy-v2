@@ -1,0 +1,186 @@
+[
+  {
+    "id": "moo_nuri-cow-scroll-wbtc-weth-vault",
+    "title": "Beefy",
+    "vaultId": "nuri-cow-scroll-wbtc-weth-vault",
+    "assets": ["WBTC", "WETH"],
+    "tokenAddress": "0x65A360bb4E4C8Fc6134dcFE645B1bd5FB11D36CB",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xB80114171cA830e4575aD06A50aFDF392f7D67f2",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+        "symbol": "USDC",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_nuri-cow-scroll-weth-wsteth-vault",
+    "title": "Beefy",
+    "vaultId": "nuri-cow-scroll-weth-wsteth-vault",
+    "assets": ["WETH", "wstETH"],
+    "tokenAddress": "0x215886A8DBF3eB528a95A21eF3bbeac18f2b2fE3",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xc6FBada2A0c02405A69B221fA8b0e06E07b00d3A",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+        "symbol": "USDC",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_nuri-cow-scroll-weth-usdt-vault",
+    "title": "Beefy",
+    "vaultId": "nuri-cow-scroll-weth-usdt-vault",
+    "assets": ["WETH", "USDT"],
+    "tokenAddress": "0x50fF3200afefd39e2bd4ad45bfEbD74C6f1C4377",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x3561F2b20784b0dB2bD7170f5305b6a3932Bf84D",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+        "symbol": "USDC",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_nuri-cow-scroll-usdc-weth-vault",
+    "title": "Beefy",
+    "vaultId": "nuri-cow-scroll-usdc-weth-vault",
+    "assets": ["USDC", "WETH"],
+    "tokenAddress": "0x2b88C84022415D5c03160D8c1E1a3D08b5Ceb292",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xDf2A68667d66E0dadabAB9aFE9356e0495dde49B",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+        "symbol": "USDC",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_nuri-cow-scroll-usdc-scr-vault",
+    "title": "Beefy",
+    "vaultId": "nuri-cow-scroll-usdc-scr-vault",
+    "assets": ["USDC", "SCR"],
+    "tokenAddress": "0xb72AfbdAFBBa235776C93a1a58D29A479fE8D863",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xD822780630EaebFF1410cc1AC9c16F4EAB8322Ae",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+        "symbol": "USDC",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_nuri-cow-scroll-weth-scr-vault",
+    "title": "Beefy",
+    "vaultId": "nuri-cow-scroll-weth-scr-vault",
+    "assets": ["WETH", "SCR"],
+    "tokenAddress": "0x9cDcfD900E08bb4580EA79B0A8CdE4F69D0Dec3d",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x0B999E1b12b1F04c3dc0dfC21c9709eAf9041E1d",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+        "symbol": "USDC",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_nuri-usdc-loreusd",
+    "title": "Beefy",
+    "vaultId": "nuri-usdc-loreusd",
+    "assets": ["loreUSD", "USDC"],
+    "tokenAddress": "0xE7296b1FC3Df47B4E6d7AefaF5a289b405268D8E",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xE2262Ec661EBbbc1C8b0FD420bEb8d431f0e8C6D",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+        "symbol": "USDC",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_nuri-weth-nuri",
+    "title": "Beefy",
+    "vaultId": "nuri-weth-nuri",
+    "assets": ["NURI", "ETH"],
+    "tokenAddress": "0x01Fbf9B624a6133Ab04Fc4000ae513AC97e4d114",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xeC982aF0f2250Acf5bA0404D6672384349A57241",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+        "symbol": "USDC",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  }
+]

@@ -6,13 +6,13 @@ import {
   selectIsVaultBoosted,
   selectPastBoostIdsWithUserBalance,
 } from '../../../../data/selectors/boosts';
-import type { BoostEntity } from '../../../../data/entities/boost';
+import type { BoostPromoEntity } from '../../../../data/entities/promo';
 import { useAppSelector } from '../../../../../store';
 import { BoostPastActionCard } from './BoostPastActionCard';
 
 const useStyles = makeStyles(styles);
 
-export function PastBoosts({ vaultId }: { vaultId: BoostEntity['id'] }) {
+export function PastBoosts({ vaultId }: { vaultId: BoostPromoEntity['id'] }) {
   const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
   const classes = useStyles({ isBoosted });
   const { t } = useTranslation();

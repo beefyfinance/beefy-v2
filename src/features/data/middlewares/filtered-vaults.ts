@@ -6,10 +6,9 @@ import {
   recalculateDepositedVaultsAction,
 } from '../actions/balance';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { fetchAllVaults, vaultsRecalculatePinned } from '../actions/vaults';
+import { fetchAllVaults } from '../actions/vaults';
 import { fetchAllPricesAction } from '../actions/prices';
 import { fetchApyAction } from '../actions/apy';
-import { fetchAllBoosts } from '../actions/boosts';
 import { fetchPlatforms } from '../actions/platforms';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { calculateZapAvailabilityAction } from '../actions/zap';
@@ -27,6 +26,7 @@ import {
   walletHasDisconnected,
 } from '../reducers/wallet/wallet';
 import { selectWalletAddress } from '../selectors/wallet';
+import { initPromos, promosRecalculatePinned } from '../actions/promos';
 
 const filteredVaultsListener = createListenerMiddleware<BeefyState>();
 
@@ -40,12 +40,7 @@ function isRehydrateFiltersAction(action: any): action is RehydrateAction {
   return isRehydrateAction(action) && action.key === 'filters';
 }
 
-const hasDataLoaded = isFulfilled(
-  fetchChainConfigs,
-  fetchAllVaults,
-  fetchAllBoosts,
-  fetchPlatforms
-);
+const hasDataLoaded = isFulfilled(fetchChainConfigs, fetchAllVaults, fetchPlatforms, initPromos);
 
 const hasDataChanged = isFulfilled(
   fetchAllPricesAction,
@@ -119,7 +114,7 @@ function listenForChanges() {
       await delay(500);
 
       // Recalculate
-      await dispatch(vaultsRecalculatePinned());
+      await dispatch(promosRecalculatePinned());
       await dispatch(recalculateFilteredVaultsAction({ dataChanged: true }));
     },
   });
