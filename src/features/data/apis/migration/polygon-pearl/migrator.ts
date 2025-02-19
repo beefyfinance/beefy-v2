@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type {
   CommonMigrationUpdateFulfilledPayload,
   Migrator,
+  MigratorUnstakeProps,
   MigratorExecuteProps,
   MigratorUpdateProps,
 } from '../migration-types';
@@ -16,13 +17,12 @@ import { SolidlyGaugeAbi } from '../../../../../config/abi/SolidlyGaugeAbi';
 import { SolidlyVoterAbi } from '../../../../../config/abi/SolidlyVoterAbi';
 import type { Step } from '../../../reducers/wallet/stepper';
 import { walletActions } from '../../../actions/wallet-actions';
-import { toWei } from '../../../../../helpers/big-number';
+import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number';
 import { startStepperWithSteps } from '../../../actions/stepper';
 import { isTokenErc20 } from '../../../entities/token';
 import { selectAllowanceByTokenAddress } from '../../../selectors/allowances';
-import type { AbiItem } from 'web3-utils';
-import { fetchContract } from '../../rpc-contract/viem-contract';
-import type { Address } from 'viem';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
+import type { Address, Hash } from 'viem';
 
 const PEARL_VOTER = '0xa26C2A6BfeC5512c13Ae9EacF41Cb4319d30cCF0';
 
@@ -49,18 +49,19 @@ async function unstakeCall(
   vault: VaultEntity,
   amount: BigNumber,
   state: BeefyState
-  // eslint-disable-next-line
-): Promise<any> {
+): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const walletApi = await getWalletConnectionApi();
-  const web3 = await walletApi.getConnectedWeb3Instance();
+  const walletClient = await walletApi.getConnectedViemClient();
 
-  const voter = new web3.eth.Contract(SolidlyVoterAbi as unknown as AbiItem[], PEARL_VOTER);
-  const gaugeAddress = await voter.methods.gauges(depositToken.address).call();
+  const voterContract = fetchContract(PEARL_VOTER, SolidlyVoterAbi, vault.chainId);
+  const gaugeAddress = await voterContract.read.gauges([depositToken.address as Address]);
 
-  const gauge = new web3.eth.Contract(SolidlyGaugeAbi as unknown as AbiItem[], gaugeAddress);
+  const gaugeContract = fetchWalletContract(gaugeAddress, SolidlyGaugeAbi, walletClient);
   const amountInWei = toWei(amount, depositToken.decimals);
-  return gauge.methods.withdraw(amountInWei.toString(10));
+
+  return (args: MigratorUnstakeProps) =>
+    gaugeContract.write.withdraw([bigNumberToBigInt(amountInWei)], args);
 }
 
 export const executePearlAction = createAsyncThunk<

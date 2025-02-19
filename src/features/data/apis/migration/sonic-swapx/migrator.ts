@@ -1,17 +1,17 @@
-import type { Migrator } from '../migration-types';
+import type { Migrator, MigratorUnstakeProps } from '../migration-types';
 import type { VaultEntity } from '../../../entities/vault';
 import { type BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi';
-import type { AbiItem } from 'web3-utils';
-import type Web3 from 'web3';
 import { buildExecute, buildFetchBalance } from '../utils';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
-import { toWei } from '../../../../../helpers/big-number';
+import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults';
-import { fetchContract } from '../../rpc-contract/viem-contract';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
 import type { Abi, Address } from 'abitype';
+import { getWalletConnectionApi } from '../../instances';
+import type { Hash } from 'viem';
 
 const id = 'sonic-swapx';
 
@@ -33,13 +33,19 @@ async function getBalance(
   return balance.toString(10);
 }
 
-async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, state: BeefyState) {
+async function unstakeCall(
+  vault: VaultEntity,
+  amount: BigNumber,
+  state: BeefyState
+): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const amountInWei = toWei(amount, depositToken.decimals);
   const stakingAddress = await getStakingAddress(vault, state);
-  return new web3.eth.Contract(abi as unknown as AbiItem[], stakingAddress).methods.withdraw(
-    amountInWei.toString(10)
-  );
+  const walletApi = await getWalletConnectionApi();
+  const walletClient = await walletApi.getConnectedViemClient();
+  const walletContract = fetchWalletContract(stakingAddress, abi, walletClient);
+  return (args: MigratorUnstakeProps) =>
+    walletContract.write.withdraw([bigNumberToBigInt(amountInWei)], args);
 }
 
 const abi = [

@@ -75,31 +75,20 @@ const Fulfilled = memo(function Fulfilled() {
   const handleAddToken = useCallback(() => {
     const perform = async () => {
       const walletApi = await getWalletConnectionApi();
-      const web3 = await walletApi.getConnectedWeb3Instance();
-      const currentProvider = web3.currentProvider;
-      if (
-        currentProvider &&
-        typeof currentProvider === 'object' &&
-        'request' in currentProvider &&
-        typeof currentProvider.request === 'function'
-      ) {
-        await currentProvider.request({
-          method: 'wallet_watchAsset',
-          params: {
-            type: 'ERC20',
-            options: {
-              chainId,
-              address,
-              symbol,
-              decimals,
-              image: iconUrl,
-            },
-          },
-        });
-      }
+      const client = await walletApi.getConnectedViemClient();
+
+      await client.watchAsset({
+        type: 'ERC20',
+        options: {
+          address: address,
+          symbol: symbol,
+          decimals: decimals,
+          image: iconUrl ?? undefined,
+        },
+      });
     };
     perform().catch(err => console.error(err));
-  }, [address, symbol, decimals, iconUrl, chainId]);
+  }, [address, symbol, decimals, iconUrl]);
 
   const handleConnect = useCallback(() => {
     if (!isWalletConnected) {

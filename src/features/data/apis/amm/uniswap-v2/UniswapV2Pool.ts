@@ -1,9 +1,7 @@
 import { BigNumber } from 'bignumber.js';
-import type { ShapeWithLabel } from 'eth-multicall';
 import { UniswapV2FactoryAbi } from '../../../../../config/abi/UniswapV2FactoryAbi';
 import { UniswapV2PairAbi } from '../../../../../config/abi/UniswapV2PairAbi';
 import type { ChainEntity } from '../../../entities/chain';
-import { createContract, viemToWeb3Abi } from '../../../../../helpers/web3';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
 import { BIG_ZERO, bigNumberToBigInt, toWei } from '../../../../../helpers/big-number';
 import type {
@@ -83,23 +81,6 @@ export class UniswapV2Pool implements IUniswapLikePool {
     protected amm: AmmEntityUniswapV2,
     protected chain: ChainEntity
   ) {}
-
-  protected getFactoryDataRequest(): ShapeWithLabel[] {
-    const contract = createContract(viemToWeb3Abi(UniswapV2FactoryAbi), this.amm.factoryAddress);
-    return [
-      {
-        feeTo: contract.methods.feeTo(),
-      },
-    ];
-  }
-
-  protected consumeFactoryDataResponse(untypedResult: unknown[]) {
-    const result = (untypedResult as FactoryDataResponse[])[0];
-
-    this.factoryData = {
-      feeTo: result.feeTo || ZERO_ADDRESS,
-    };
-  }
 
   protected async updatePairData() {
     const contract = fetchContract(this.address, UniswapV2PairAbi, this.chain.id);

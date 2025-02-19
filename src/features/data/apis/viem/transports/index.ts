@@ -1,11 +1,14 @@
 import { http } from 'viem';
 import { customFallback, type CustomFallbackTransport } from './fallbackTransport';
 
-export function makeCustomFallbackTransport(rpcUrls: string[]): CustomFallbackTransport {
+export function makeCustomFallbackTransport(
+  rpcUrls: string[],
+  retries: number = 5
+): CustomFallbackTransport {
   const transports = rpcUrls.map(url =>
     http(url, {
       timeout: 10000,
-      retryCount: 5,
+      retryCount: retries,
       retryDelay: 100,
       batch: {
         batchSize: 10,
@@ -13,5 +16,7 @@ export function makeCustomFallbackTransport(rpcUrls: string[]): CustomFallbackTr
     })
   );
 
-  return customFallback(transports);
+  return customFallback(transports, {
+    retryCount: retries,
+  });
 }

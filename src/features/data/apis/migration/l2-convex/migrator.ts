@@ -1,15 +1,15 @@
-import type { Migrator } from '../migration-types';
+import type { Migrator, MigratorUnstakeProps } from '../migration-types';
 import type { VaultEntity } from '../../../entities/vault';
 import { type BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi';
-import type { AbiItem } from 'web3-utils';
-import type Web3 from 'web3';
 import { buildExecute, buildFetchBalance } from '../utils';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
 import type { ChainEntity } from '../../../entities/chain';
-import { fetchContract } from '../../rpc-contract/viem-contract';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
 import type { Abi, Address } from 'abitype';
+import { getWalletConnectionApi } from '../../instances';
+import type { Hash } from 'viem';
 
 const id = 'l2-convex';
 
@@ -41,10 +41,15 @@ async function getBalance(
   return walletBalance.toString(10);
 }
 
-async function unstakeCall(vault: VaultEntity, web3: Web3, _: BigNumber, state: BeefyState) {
+async function unstakeCall(
+  vault: VaultEntity,
+  _: BigNumber,
+  state: BeefyState
+): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
   const stakingAddress = await getStakingAddress(vault, state);
-  const convexStaking = new web3.eth.Contract(ConvexAbi, stakingAddress);
-  return convexStaking.methods.withdrawAll(true);
+  const walletClient = await (await getWalletConnectionApi()).getConnectedViemClient();
+  const contract = fetchWalletContract(stakingAddress, ConvexAbi, walletClient);
+  return (args: MigratorUnstakeProps) => contract.write.withdrawAll([true], args);
 }
 
 const CurveAbi = [
@@ -64,7 +69,7 @@ const CurveAbi = [
   },
 ] as const satisfies Abi;
 
-const ConvexAbi: AbiItem[] = [
+const ConvexAbi = [
   {
     inputs: [{ name: 'claim', type: 'bool' }],
     name: 'withdrawAll',
@@ -72,7 +77,7 @@ const ConvexAbi: AbiItem[] = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export const migrator: Migrator = {
   update: buildFetchBalance(id, getBalance),

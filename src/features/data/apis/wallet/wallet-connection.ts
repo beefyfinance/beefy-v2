@@ -1,9 +1,7 @@
-import type Web3 from 'web3';
 import type { ChainEntity } from '../../entities/chain';
 import { find, sample, uniq } from 'lodash-es';
 import type { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types';
 import { maybeHexToNumber } from '../../../../helpers/format';
-import { isHexStrict, numberToHex } from 'web3-utils';
 import type { OnboardAPI } from '@web3-onboard/core';
 import Onboard from '@web3-onboard/core';
 import createInjectedWallets from '@web3-onboard/injected-wallets';
@@ -16,7 +14,6 @@ import type { ConnectOptions } from '@web3-onboard/core/dist/types';
 import type { WalletInit } from '@web3-onboard/common';
 import { createEIP1193Provider } from '@web3-onboard/common';
 import { customInjectedWallets } from './custom-injected-wallets';
-import { createWeb3Instance } from '../../../../helpers/web3';
 import appIcon from '../../../../images/bifi-logos/header-logo-notext.svg';
 import appLogo from '../../../../images/bifi-logos/header-logo.svg';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
@@ -26,6 +23,7 @@ import type { WalletHelpers } from '@web3-onboard/common/dist/types';
 import type { WalletConnectOptions } from '@web3-onboard/walletconnect/dist/types';
 import { isDefined } from '../../utils/array-utils';
 import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url';
+import { createWalletClient, custom, isHex, numberToHex } from 'viem';
 
 const walletConnectImages: Record<string, string> = {
   '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489': fireblocksLogo,
@@ -181,7 +179,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
           },
           eth_chainId: async ({ baseRequest }) => {
             const value = await baseRequest({ method: 'eth_chainId' });
-            return isHexStrict(value) ? value : `0x${parseInt(value + '', 10).toString(16)}`;
+            return isHex(value, { strict: true })
+              ? value
+              : `0x${parseInt(value + '', 10).toString(16)}`;
           },
         });
 
@@ -192,7 +192,11 @@ export class WalletConnectionApi implements IWalletConnectionApi {
           originalOn(event, value => {
             // chainId: Dec->Hex
             if (event === 'chainChanged') {
-              listener(isHexStrict(value) ? value : `0x${parseInt(value + '', 10).toString(16)}`);
+              listener(
+                isHex(value, { strict: true })
+                  ? value
+                  : `0x${parseInt(value + '', 10).toString(16)}`
+              );
               return;
             }
             // rest
@@ -433,21 +437,18 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     }
   }
 
-  /**
-   * Provider the web3 instance for signed TXs
-   */
-  public async getConnectedWeb3Instance(): Promise<Web3> {
+  public async getConnectedViemClient() {
     if (!this.isConnected()) {
       throw new Error(`Wallet not connected.`);
     }
 
     const onboard = this.getOnboard();
     const wallet = onboard.state.get().wallets[0];
-    const realProvider = wallet.provider as unknown as AbstractProvider;
-    const wrappedProvider = this.providerWrapper
-      ? this.providerWrapper(realProvider)
-      : realProvider;
-    return createWeb3Instance(wrappedProvider);
+    const provider = wallet.provider;
+
+    return createWalletClient({
+      transport: custom(provider),
+    });
   }
 
   public async withProviderWrapper<T>(

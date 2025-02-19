@@ -1,7 +1,7 @@
 import { BigNumber } from 'bignumber.js';
 import { first, groupBy, uniqBy } from 'lodash-es';
 import type { Action } from 'redux';
-import boostAbi from '../../../config/abi/boost.json';
+import { BoostAbi } from '../../../config/abi/BoostAbi';
 import { ERC20Abi } from '../../../config/abi/ERC20Abi';
 import { StandardVaultAbi } from '../../../config/abi/StandardVaultAbi';
 import { MinterAbi } from '../../../config/abi/MinterAbi';
@@ -27,8 +27,6 @@ import {
   createWalletActionResetAction,
   createWalletActionSuccessAction,
   type TrxError,
-  type TrxHash,
-  type TrxReceipt,
   type TxAdditionalData,
 } from '../reducers/wallet/wallet-action';
 import {
@@ -49,16 +47,20 @@ import { selectStandardVaultById, selectVaultById } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
 import { getGasPriceOptions } from '../utils/gas-utils';
-import type { AbiItem } from 'web3-utils';
 import { convertAmountToRawNumber, errorToString } from '../../../helpers/format';
 import { FriendlyError } from '../utils/error-utils';
 import type { MinterEntity } from '../entities/minter';
 import { reloadReserves } from './minters';
 import { selectChainById } from '../selectors/chains';
-import { BIG_ZERO, fromWei, toWei, toWeiString } from '../../../helpers/big-number';
+import {
+  BIG_ZERO,
+  bigNumberToBigInt,
+  fromWei,
+  toWei,
+  toWeiString,
+} from '../../../helpers/big-number';
 import { startStepperWithSteps, updateSteps } from './stepper';
 import { type Step, StepContent, stepperActions } from '../reducers/wallet/stepper';
-import type { PromiEvent } from 'web3-core';
 import type { ThunkDispatch } from '@reduxjs/toolkit';
 import { selectOneInchSwapAggregatorForChain, selectZapByChainId } from '../selectors/zap';
 import type { UserlessZapRequest, ZapOrder, ZapStep } from '../apis/transact/zap/types';
@@ -69,9 +71,11 @@ import type { MigrationConfig } from '../reducers/wallet/migration';
 import type { IBridgeQuote } from '../apis/bridge/providers/provider-types';
 import type { BeefyAnyBridgeConfig } from '../apis/config-types';
 import { transactActions } from '../reducers/wallet/transact';
-import { viemToWeb3Abi } from '../../../helpers/web3';
 import { BeefyCommonBridgeAbi } from '../../../config/abi/BeefyCommonBridgeAbi';
-import { BeefyZapRouterAbi } from '../../../config/abi/BeefyZapRouterAbi';
+import {
+  BeefyZapRouterAbi,
+  BeezyZapRouterPayableExecuteAbi,
+} from '../../../config/abi/BeefyZapRouterAbi';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
 import { selectTransactSelectedQuote, selectTransactSlippage } from '../selectors/transact';
 import { AngleMerklDistributorAbi } from '../../../config/abi/AngleMerklDistributor';
@@ -86,6 +90,13 @@ import { stellaswapRewarderAbi } from '../../../config/abi/StellaSwapRewarder';
 import { selectBoostById } from '../selectors/boosts';
 import { selectIsApprovalNeededForBoostStaking } from '../selectors/wallet-actions';
 import type { TFunction } from 'react-i18next';
+import { fetchWalletContract } from '../apis/rpc-contract/viem-contract';
+import type { Address } from 'abitype';
+import { rpcClientManager } from '../apis/rpc-contract/rpc-manager';
+import { waitForTransactionReceipt } from 'viem/actions';
+import type { Chain, Hash, PublicClient, TransactionReceipt } from 'viem';
+import type { MigratorUnstakeProps } from '../apis/migration/migration-types';
+import type { GasPricing } from '../apis/gas-prices';
 
 const MIN_APPROVAL_AMOUNT = new BigNumber('8000000000000000000000000000'); // wei
 
@@ -111,6 +122,11 @@ type TxContext = {
   refreshOnSuccess?: TxRefreshOnSuccess;
 };
 
+type TxWriteProps = {
+  account: Address;
+  chain: Chain | undefined;
+} & GasPricing;
+
 /**
  * Called before building a transaction
  */
@@ -133,7 +149,7 @@ function txWallet(dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>) 
 function txSubmitted(
   dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>,
   context: TxContext,
-  hash: TrxHash
+  hash: Hash
 ) {
   const { additionalData } = context;
   dispatch(createWalletActionPendingAction(hash, additionalData));
@@ -146,7 +162,7 @@ function txSubmitted(
 function txMined(
   dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>,
   context: TxContext,
-  receipt: TrxReceipt
+  receipt: TransactionReceipt
 ) {
   const { additionalData, refreshOnSuccess } = context;
 
@@ -237,23 +253,30 @@ const approval = (token: TokenErc20, spenderAddress: string, amount: BigNumber) 
     }
 
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
+    const client = rpcClientManager.getBatchClient(token.chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
+    const viemContract = fetchWalletContract(token.address, ERC20Abi, walletClient);
     const native = selectChainNativeToken(state, token.chainId);
 
-    const contract = new web3.eth.Contract(viemToWeb3Abi(ERC20Abi), token.address);
     const amountWei = toWei(amount, token.decimals);
     const approvalAmountWei = amountWei.gt(MIN_APPROVAL_AMOUNT) ? amountWei : MIN_APPROVAL_AMOUNT;
     const chain = selectChainById(state, token.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
-    const transaction = contract.methods
-      .approve(spenderAddress, approvalAmountWei.toString(10))
-      .send({ from: address, ...gasPrices });
+    const transaction = viemContract.write.approve(
+      [spenderAddress as Address, bigNumberToBigInt(approvalAmountWei)],
+      {
+        account: address as Address,
+        ...gasPrices,
+        chain: walletClient.chain,
+      }
+    );
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      client,
       { spender: spenderAddress, amount: fromWei(approvalAmountWei, token.decimals), token: token },
       {
         walletAddress: address,
@@ -266,7 +289,7 @@ const approval = (token: TokenErc20, spenderAddress: string, amount: BigNumber) 
 };
 
 const migrateUnstake = (
-  unstakeCall,
+  unstakeCall: (args: MigratorUnstakeProps) => Promise<Hash>,
   vault: VaultEntity,
   amount: BigNumber,
   migrationId: MigrationConfig['id']
@@ -279,15 +302,23 @@ const migrateUnstake = (
       return;
     }
 
+    const walletApi = await getWalletConnectionApi();
+    const walletClient = await walletApi.getConnectedViemClient();
+    const publicClient = rpcClientManager.getBatchClient(vault.chainId);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
     txWallet(dispatch);
-    const transaction = unstakeCall.send({ from: address, ...gasPrices });
+    const transaction = unstakeCall({
+      account: address as Address,
+      ...gasPrices,
+      chain: walletClient.chain,
+    });
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       { spender: vault.contractAddress, amount, token: depositToken },
       {
         walletAddress: address,
@@ -311,7 +342,8 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     }
 
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
+    const viemClient = await walletApi.getConnectedViemClient();
+    const publicClient = await rpcClientManager.getBatchClient(vault.chainId);
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.contractAddress);
@@ -319,7 +351,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     const native = selectChainNativeToken(state, vault.chainId);
     const isNativeToken = depositToken.id === native.id;
     const contractAddr = mooToken.address;
-    const contract = new web3.eth.Contract(viemToWeb3Abi(StandardVaultAbi), contractAddr);
+    const contract = fetchWalletContract(contractAddr, StandardVaultAbi, viemClient);
     const rawAmount = toWei(amount, depositToken.decimals);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
@@ -327,22 +359,25 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     txWallet(dispatch);
     const transaction = (() => {
       if (isNativeToken) {
-        if (max) {
-          return contract.methods
-            .depositAllBNB()
-            .send({ from: address, value: rawAmount.toString(10), ...gasPrices });
-        } else {
-          return contract.methods
-            .depositBNB()
-            .send({ from: address, value: rawAmount.toString(10), ...gasPrices });
-        }
+        return contract.write.depositBNB({
+          value: bigNumberToBigInt(rawAmount),
+          ...gasPrices,
+          account: address as Address,
+          chain: viemClient.chain,
+        });
       } else {
         if (max) {
-          return contract.methods.depositAll().send({ from: address, ...gasPrices });
+          return contract.write.depositAll({
+            account: address as Address,
+            ...gasPrices,
+            chain: viemClient.chain,
+          });
         } else {
-          return contract.methods
-            .deposit(rawAmount.toString(10))
-            .send({ from: address, ...gasPrices });
+          return contract.write.deposit([bigNumberToBigInt(rawAmount)], {
+            account: address as Address,
+            ...gasPrices,
+            chain: viemClient.chain,
+          });
         }
       }
     })();
@@ -350,6 +385,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       { spender: contractAddr, amount, token: depositToken },
       {
         walletAddress: address,
@@ -373,12 +409,15 @@ const v3Deposit = (vault: VaultCowcentrated, amountToken0: BigNumber, amountToke
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const walletApi = await getWalletConnectionApi();
-    const chain = selectChainById(state, vault.chainId);
-    const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(
-      viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
-      vault.contractAddress
+    const publicClient = rpcClientManager.getBatchClient(vault.chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
+    const contract = fetchWalletContract(
+      vault.contractAddress,
+      BeefyCowcentratedLiquidityVaultAbi,
+      walletClient
     );
+
+    const chain = selectChainById(state, vault.chainId);
     const tokens = vault.depositTokenAddresses.map(address =>
       selectTokenByAddress(state, vault.chainId, address)
     );
@@ -393,15 +432,19 @@ const v3Deposit = (vault: VaultCowcentrated, amountToken0: BigNumber, amountToke
     );
     txWallet(dispatch);
 
-    const transaction = (() => {
-      return contract.methods
-        .deposit(rawAmounts[0], rawAmounts[1], estimatedLiquidity)
-        .send({ from: address, ...gasPrices });
-    })();
+    const transaction = contract.write.deposit(
+      [BigInt(rawAmounts[0]), BigInt(rawAmounts[1]), BigInt(estimatedLiquidity)],
+      {
+        account: address as Address,
+        ...gasPrices,
+        chain: walletClient.chain,
+      }
+    );
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       {
         spender: vault.contractAddress,
         amount: selectTransactSelectedQuote(state)?.outputs[0].amount,
@@ -428,7 +471,8 @@ const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) =
     }
 
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
+    const publicClient = rpcClientManager.getBatchClient(vault.chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
     const chain = selectChainById(state, vault.chainId);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
@@ -445,26 +489,38 @@ const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) =
 
     const native = selectChainNativeToken(state, vault.chainId);
     const isNativeToken = depositToken.id === native.id;
-    const contract = new web3.eth.Contract(viemToWeb3Abi(StandardVaultAbi), vault.contractAddress);
+    const contract = fetchWalletContract(vault.contractAddress, StandardVaultAbi, walletClient);
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
     const transaction = (() => {
       if (isNativeToken) {
         if (max) {
-          return contract.methods.withdrawAllBNB().send({ from: address, ...gasPrices });
+          return contract.write.withdrawAllBNB({
+            account: address as Address,
+            ...gasPrices,
+            chain: walletClient.chain,
+          });
         } else {
-          return contract.methods
-            .withdrawBNB(sharesToWithdrawWei.toString(10))
-            .send({ from: address, ...gasPrices });
+          return contract.write.withdrawBNB([bigNumberToBigInt(sharesToWithdrawWei)], {
+            account: address as Address,
+            ...gasPrices,
+            chain: walletClient.chain,
+          });
         }
       } else {
         if (max) {
-          return contract.methods.withdrawAll().send({ from: address, ...gasPrices });
+          return contract.write.withdrawAll({
+            account: address as Address,
+            ...gasPrices,
+            chain: walletClient.chain,
+          });
         } else {
-          return contract.methods
-            .withdraw(sharesToWithdrawWei.toString(10))
-            .send({ from: address, ...gasPrices });
+          return contract.write.withdraw([bigNumberToBigInt(sharesToWithdrawWei)], {
+            account: address as Address,
+            ...gasPrices,
+            chain: walletClient.chain,
+          });
         }
       }
     })();
@@ -472,6 +528,7 @@ const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) =
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       { spender: vault.contractAddress, amount: oracleAmount, token: depositToken },
       {
         chainId: vault.chainId,
@@ -494,13 +551,15 @@ const v3Withdraw = (vault: VaultCowcentrated, withdrawAmount: BigNumber, max: bo
     }
 
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
+    const publicClient = rpcClientManager.getBatchClient(vault.chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
     const chain = selectChainById(state, vault.chainId);
     const slippage = selectTransactSlippage(state);
 
-    const contract = new web3.eth.Contract(
-      viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
-      vault.contractAddress
+    const contract = fetchWalletContract(
+      vault.contractAddress,
+      BeefyCowcentratedLiquidityVaultAbi,
+      walletClient
     );
     const gasPrices = await getGasPriceOptions(chain);
 
@@ -514,19 +573,27 @@ const v3Withdraw = (vault: VaultCowcentrated, withdrawAmount: BigNumber, max: bo
     txWallet(dispatch);
     const transaction = (() => {
       if (max) {
-        return contract.methods
-          .withdrawAll(minOutputsWei[0], minOutputsWei[1])
-          .send({ from: address, ...gasPrices });
+        return contract.write.withdrawAll([BigInt(minOutputsWei[0]), BigInt(minOutputsWei[1])], {
+          account: address as Address,
+          ...gasPrices,
+          chain: walletClient.chain,
+        });
       } else {
-        return contract.methods
-          .withdraw(sharesToWithdrawWei, minOutputsWei[0], minOutputsWei[1])
-          .send({ from: address, ...gasPrices });
+        return contract.write.withdraw(
+          [BigInt(sharesToWithdrawWei), BigInt(minOutputsWei[0]), BigInt(minOutputsWei[1])],
+          {
+            account: address as Address,
+            ...gasPrices,
+            chain: walletClient.chain,
+          }
+        );
       }
     })();
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       {
         spender: vault.contractAddress,
         amount: withdrawAmount,
@@ -553,23 +620,27 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     }
 
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
+    const publicClient = rpcClientManager.getBatchClient(vault.chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
     const inputToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     const contractAddr = vault.contractAddress;
-    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
+    const contract = fetchWalletContract(contractAddr, BoostAbi, walletClient);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
-    const transaction = contract.methods
-      .stake(rawAmount.toString(10))
-      .send({ from: address, ...gasPrices });
+    const transaction = contract.write.stake([bigNumberToBigInt(rawAmount)], {
+      account: address as Address,
+      ...gasPrices,
+      chain: walletClient.chain,
+    });
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       { spender: contractAddr, amount, token: inputToken },
       {
         walletAddress: address,
@@ -593,23 +664,27 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     }
 
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
+    const publicClient = rpcClientManager.getBatchClient(vault.chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const rawAmount = toWei(amount, depositToken.decimals);
 
     const contractAddr = vault.contractAddress;
-    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
+    const contract = fetchWalletContract(contractAddr, BoostAbi, walletClient);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
-    const transaction = contract.methods
-      .withdraw(rawAmount.toString(10))
-      .send({ from: address, ...gasPrices });
+    const transaction = contract.write.withdraw([bigNumberToBigInt(rawAmount)], {
+      account: address as Address,
+      ...gasPrices,
+      chain: walletClient.chain,
+    });
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       { spender: contractAddr, amount, token: depositToken },
       {
         walletAddress: address,
@@ -642,19 +717,26 @@ const claimGovVault = (vault: VaultGov) => {
     const { amount, token } = pendingRewards[0];
 
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
+    const publicClient = rpcClientManager.getBatchClient(vault.chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
+
     const contractAddr = vault.contractAddress;
 
-    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
+    const contract = fetchWalletContract(contractAddr, BoostAbi, walletClient);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
-    const transaction = contract.methods.getReward().send({ from: address, ...gasPrices });
+    const transaction = contract.write.getReward({
+      account: address as Address,
+      ...gasPrices,
+      chain: walletClient.chain,
+    });
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       { spender: contractAddr, amount, token },
       {
         walletAddress: address,
@@ -681,10 +763,11 @@ const exitGovVault = (vault: VaultGov) => {
     const token = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
+    const publicClient = rpcClientManager.getBatchClient(vault.chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
     const contractAddr = vault.contractAddress;
 
-    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
+    const contract = fetchWalletContract(contractAddr, BoostAbi, walletClient);
 
     /**
      * withdraw() and by extension exit() will fail if already withdrawn (Cannot withdraw 0),
@@ -695,12 +778,21 @@ const exitGovVault = (vault: VaultGov) => {
 
     txWallet(dispatch);
     const transaction = balanceAmount.gt(0)
-      ? contract.methods.exit().send({ from: address, ...gasPrices })
-      : contract.methods.getReward().send({ from: address, ...gasPrices });
+      ? contract.write.exit({
+          account: address as Address,
+          ...gasPrices,
+          chain: walletClient.chain,
+        })
+      : contract.write.getReward({
+          account: address as Address,
+          ...gasPrices,
+          chain: walletClient.chain,
+        });
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       { spender: contractAddr, amount: balanceAmount, token },
       {
         walletAddress: address,
@@ -727,19 +819,25 @@ const claimBoost = (boostId: BoostEntity['id']) => {
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
+    const publicClient = rpcClientManager.getBatchClient(vault.chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
     const contractAddr = boost.contractAddress;
 
-    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
+    const contract = fetchWalletContract(contractAddr, BoostAbi, walletClient);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
-    const transaction = contract.methods.getReward().send({ from: address, ...gasPrices });
+    const transaction = contract.write.getReward({
+      account: address as Address,
+      ...gasPrices,
+      chain: walletClient.chain,
+    });
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       {
         type: 'boost',
         boostId: boost.id,
@@ -773,10 +871,11 @@ const exitBoost = (boostId: BoostEntity['id']) => {
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
+    const publicClient = rpcClientManager.getBatchClient(vault.chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
     const contractAddr = boost.contractAddress;
 
-    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
+    const contract = fetchWalletContract(contractAddr, BoostAbi, walletClient);
 
     /**
      * withdraw() and by extension exit() will fail if already withdrawn (Cannot withdraw 0),
@@ -787,12 +886,21 @@ const exitBoost = (boostId: BoostEntity['id']) => {
 
     txWallet(dispatch);
     const transaction = boostAmount.gt(0)
-      ? contract.methods.exit().send({ from: address, ...gasPrices })
-      : contract.methods.getReward().send({ from: address, ...gasPrices });
+      ? contract.write.exit({
+          account: address as Address,
+          ...gasPrices,
+          chain: walletClient.chain,
+        })
+      : contract.write.getReward({
+          account: address as Address,
+          ...gasPrices,
+          chain: walletClient.chain,
+        });
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       {
         type: 'boost',
         boostId: boost.id,
@@ -853,27 +961,31 @@ const stakeBoost = (boostId: BoostEntity['id'], amount: BigNumber) => {
       return;
     }
 
-    const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
-
     const boost = selectBoostById(state, boostId);
     const vault = selectStandardVaultById(state, boost.vaultId);
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
+    const walletApi = await getWalletConnectionApi();
+    const publicClient = rpcClientManager.getBatchClient(boost.chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
+
     const contractAddr = boost.contractAddress;
-    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
+    const contract = fetchWalletContract(contractAddr, BoostAbi, walletClient);
     const rawAmount = amount.shiftedBy(mooToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
-    const transaction = contract.methods
-      .stake(rawAmount.toString(10))
-      .send({ from: address, ...gasPrices });
+    const transaction = contract.write.stake([bigNumberToBigInt(rawAmount)], {
+      account: address as Address,
+      ...gasPrices,
+      chain: walletClient.chain,
+    });
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       { type: 'boost', boostId: boost.id, amount, token: mooToken, walletAddress: address },
       {
         walletAddress: address,
@@ -926,27 +1038,31 @@ const unstakeBoost = (boostId: BoostEntity['id'], amount: BigNumber) => {
     if (!address) {
       return;
     }
-
-    const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
     const boost = selectBoostById(state, boostId);
     const vault = selectStandardVaultById(state, boost.vaultId);
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
+    const walletApi = await getWalletConnectionApi();
+    const publicClient = rpcClientManager.getBatchClient(boost.chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
+
     const contractAddr = boost.contractAddress;
-    const contract = new web3.eth.Contract(boostAbi as AbiItem[], contractAddr);
+    const contract = fetchWalletContract(contractAddr, BoostAbi, walletClient);
     const rawAmount = amount.shiftedBy(mooToken.decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
-    const transaction = contract.methods
-      .withdraw(rawAmount.toString(10))
-      .send({ from: address, ...gasPrices });
+    const transaction = contract.write.withdraw([bigNumberToBigInt(rawAmount)], {
+      account: address as Address,
+      ...gasPrices,
+      chain: walletClient.chain,
+    });
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       { type: 'boost', boostId: boost.id, amount, token: mooToken, walletAddress: address },
       {
         walletAddress: address,
@@ -978,15 +1094,21 @@ const mintDeposit = (
     const { minterAddress, chainId, canZapInWithOneInch } = minter;
     const gasToken = selectChainNativeToken(state, chainId);
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(viemToWeb3Abi(MinterAbi), minterAddress);
+    const publicClient = rpcClientManager.getBatchClient(chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
+    const contract = fetchWalletContract(minterAddress, MinterAbi, walletClient);
     const chain = selectChainById(state, chainId);
     const gasPrices = await getGasPriceOptions(chain);
     const amountInWei = toWei(amount, payToken.decimals);
     const amountInWeiString = amountInWei.toString(10);
     const isNative = isTokenNative(payToken);
+    const txProps: TxWriteProps = {
+      account: address as Address,
+      ...gasPrices,
+      chain: walletClient.chain,
+    };
 
-    const buildCall = async () => {
+    const buildCall = async (args: TxWriteProps) => {
       if (canZapInWithOneInch) {
         const swapInToken = isNative ? selectChainWrappedNativeToken(state, chainId) : payToken;
         const oneInchSwapAgg = selectOneInchSwapAggregatorForChain(state, chain.id);
@@ -1011,50 +1133,48 @@ const mintDeposit = (
 
         // mint is better
         if (shouldMint) {
-          return {
-            method: isNative
-              ? contract.methods.depositNative('', true)
-              : contract.methods.deposit(amountInWeiString, '', true),
-            options: isNative ? { value: amountInWeiString } : {},
-          };
+          return isNative
+            ? contract.write.depositNative(['0x', true], {
+                ...args,
+                value: BigInt(amountInWeiString),
+              })
+            : contract.write.deposit([BigInt(amountInWeiString), '0x', true], args);
         }
 
         // swap after max slippage is better
-        return {
-          method: isNative
-            ? contract.methods.depositNative(swapData.tx.data, false)
-            : contract.methods.deposit(amountInWeiString, swapData.tx.data, false),
-          options: isNative ? { value: amountInWeiString } : {},
-        };
+        return isNative
+          ? contract.write.depositNative([swapData.tx.data as `0x${string}`, false], {
+              ...args,
+              value: BigInt(amountInWeiString),
+            })
+          : // contract.methods.depositNative(swapData.tx.data, false)
+            contract.write.deposit(
+              [BigInt(amountInWeiString), swapData.tx.data as `0x${string}`, false],
+              args
+            );
       }
 
       // non-zap
       if (isNative) {
-        return {
-          method: contract.methods.depositNative(),
-          options: { value: amountInWeiString },
-        };
+        return contract.write.depositNative({
+          ...args,
+          value: BigInt(amountInWeiString),
+        });
       }
 
       if (max) {
-        return {
-          method: contract.methods.depositAll(),
-          options: {},
-        };
+        return contract.write.depositAll(args);
       }
 
-      return {
-        method: contract.methods.deposit(amountInWeiString),
-        options: {},
-      };
+      return contract.write.deposit([BigInt(amountInWeiString)], args);
     };
-    const call = await buildCall();
     txWallet(dispatch);
-    const transaction = call.method.send({ from: address, ...gasPrices, ...call.options });
+    const transaction = buildCall(txProps);
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       {
         amount: amount,
         token: mintedToken,
@@ -1089,20 +1209,26 @@ const burnWithdraw = (
 
     const gasToken = selectChainNativeToken(state, chainId);
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(viemToWeb3Abi(MinterAbi), contractAddr);
+    const publicClient = rpcClientManager.getBatchClient(chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
+    const contract = fetchWalletContract(contractAddr, MinterAbi, walletClient);
     const chain = selectChainById(state, chainId);
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
     const transaction = (() => {
       const rawAmount = convertAmountToRawNumber(amount, burnedToken.decimals);
-      return contract.methods.withdraw(rawAmount).send({ from: address, ...gasPrices });
+      return contract.write.withdraw([BigInt(rawAmount)], {
+        account: address as Address,
+        ...gasPrices,
+        chain: walletClient.chain,
+      });
     })();
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       {
         amount: amount,
         token: burnedToken,
@@ -1148,25 +1274,26 @@ const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => 
     }
 
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(
-      viemToWeb3Abi(BeefyCommonBridgeAbi),
-      viaBeefyBridgeAddress
-    );
+    const publicClient = rpcClientManager.getBatchClient(fromChainId);
+    const walletClient = await walletApi.getConnectedViemClient();
+    const contract = fetchWalletContract(viaBeefyBridgeAddress, BeefyCommonBridgeAbi, walletClient);
     const gasPrices = await getGasPriceOptions(fromChain);
 
     txWallet(dispatch);
-    const transaction = contract.methods
-      .bridge(toChain.networkChainId, inputWei, receiverAddress)
-      .send({
+    const transaction = contract.write.bridge(
+      [BigInt(toChain.networkChainId), BigInt(inputWei), receiverAddress as Address],
+      {
         ...gasPrices,
-        from: fromAddress,
-        value: feeWei,
-      });
+        account: fromAddress as Address,
+        value: BigInt(feeWei),
+        chain: walletClient.chain,
+      }
+    );
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       {
         type: 'bridge',
         amount: input.amount,
@@ -1214,29 +1341,81 @@ const zapExecuteOrder = (
       throw new Error('No inputs provided');
     }
 
+    const castedOrder = {
+      relay: {
+        target: params.order.relay.target as Address,
+        data: params.order.relay.data as `0x${string}`,
+        value: BigInt(params.order.relay.value),
+      },
+      inputs: params.order.inputs
+        .filter(i => BIG_ZERO.lt(i.amount))
+        .map(i => ({
+          amount: BigInt(i.amount),
+          token: i.token as Address,
+        })), // remove <= zero amounts
+      outputs: params.order.outputs.map(o => ({
+        minOutputAmount: BigInt(o.minOutputAmount),
+        token: o.token as Address,
+      })),
+      user: address as Address,
+      recipient: address as Address,
+    };
+
     const steps: ZapStep[] = params.steps;
     if (!steps.length) {
       throw new Error('No steps provided');
     }
+    const castedSteps = params.steps.map(step => ({
+      data: step.data as `0x${string}`,
+      target: step.target as Address,
+      value: BigInt(step.value),
+      tokens: step.tokens.map(t => ({
+        token: t.token as Address,
+        index: t.index,
+      })),
+    }));
 
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
+    const publicClient = rpcClientManager.getBatchClient(vault.chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
     const gasPrices = await getGasPriceOptions(chain);
-    const nativeInput = order.inputs.find(input => input.token === ZERO_ADDRESS);
+    const nativeInput = castedOrder.inputs.find(input => input.token === ZERO_ADDRESS);
 
-    const contract = new web3.eth.Contract(viemToWeb3Abi(BeefyZapRouterAbi), zap.router);
-    const options = {
-      ...gasPrices,
-      value: nativeInput ? nativeInput.amount : '0',
-      from: order.user,
+    const contract = fetchWalletContract(zap.router, BeefyZapRouterAbi, walletClient);
+
+    const buildTransaction = () => {
+      if (nativeInput) {
+        const options = {
+          ...gasPrices,
+          account: castedOrder.user,
+          chain: walletClient.chain,
+          value: nativeInput ? nativeInput.amount : undefined,
+        };
+        const contract = fetchWalletContract(
+          zap.router,
+          BeezyZapRouterPayableExecuteAbi,
+          walletClient
+        );
+        console.debug('executeOrder payable', { order: order, steps, options });
+        return contract.write.executeOrder([castedOrder, castedSteps], options);
+      } else {
+        const options = {
+          ...gasPrices,
+          account: castedOrder.user,
+          chain: walletClient.chain,
+        };
+        console.debug('executeOrder', { order: castedOrder, steps, options });
+        return contract.write.executeOrder([castedOrder, castedSteps], options);
+      }
     };
-    console.debug('executeOrder', { order, steps, options });
+
     txWallet(dispatch);
-    const transaction = contract.methods.executeOrder(order, steps).send(options);
+    const transaction = buildTransaction();
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       {
         type: 'zap',
         amount: BIG_ZERO,
@@ -1290,21 +1469,34 @@ const claimMerkl = (chainId: ChainEntity['id']) => {
     const proofs = unclaimedRewards.map(reward => reward.proof);
 
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(
-      viemToWeb3Abi(AngleMerklDistributorAbi),
-      distributorAddress
+    const publicClient = rpcClientManager.getBatchClient(chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
+    const contract = fetchWalletContract(
+      distributorAddress,
+      AngleMerklDistributorAbi,
+      walletClient
     );
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
-    const transaction = contract.methods
-      .claim(users, tokens, amounts, proofs)
-      .send({ from: address, ...gasPrices });
+    const transaction = contract.write.claim(
+      [
+        users as Address[],
+        tokens as Address[],
+        amounts.map(amount => BigInt(amount)),
+        proofs.map(proof => proof as Address[]),
+      ],
+      {
+        account: address as Address,
+        ...gasPrices,
+        chain: walletClient.chain,
+      }
+    );
 
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       { amount: BIG_ZERO, token: native }, // TODO fix so these are not required
       {
         walletAddress: address,
@@ -1365,16 +1557,32 @@ const claimStellaSwap = (chainId: ChainEntity['id'], vaultId: VaultEntity['id'])
     }));
 
     const walletApi = await getWalletConnectionApi();
-    const web3 = await walletApi.getConnectedWeb3Instance();
-    const abi = viemToWeb3Abi(stellaswapRewarderAbi);
+    const publicClient = rpcClientManager.getBatchClient(chainId);
+    const walletClient = await walletApi.getConnectedViemClient();
     const gasPrices = await getGasPriceOptions(chain);
 
     const makeTransaction = () => {
       if (claimsByContract.length === 1) {
         const { to, claims } = claimsByContract[0];
         console.log(claims);
-        const contract = new web3.eth.Contract(abi, to);
-        return contract.methods.claim(claims).send({ from: address, ...gasPrices });
+        const contract = fetchWalletContract(to, stellaswapRewarderAbi, walletClient);
+        return contract.write.claim(
+          [
+            claims.map(claim => ({
+              user: claim.user as Address,
+              token: claim.token as Address,
+              amount: BigInt(claim.amount),
+              position: BigInt(claim.position),
+              isNative: claim.isNative,
+              proof: claim.proof as Address[],
+            })),
+          ],
+          {
+            account: address as Address,
+            ...gasPrices,
+            chain: walletClient.chain,
+          }
+        );
       } else {
         throw new Error('TODO: implement multi-rewarder contract claim');
       }
@@ -1388,6 +1596,7 @@ const claimStellaSwap = (chainId: ChainEntity['id'], vaultId: VaultEntity['id'])
     bindTransactionEvents(
       dispatch,
       transaction,
+      publicClient,
       { amount: BIG_ZERO, token: native }, // TODO fix so these are not required
       {
         walletAddress: address,
@@ -1451,23 +1660,27 @@ export function captureWalletErrors(
   };
 }
 
-function bindTransactionEvents(
+async function bindTransactionEvents(
   dispatch: ThunkDispatch<BeefyState, unknown, Action<unknown>>,
-  transaction: PromiEvent<unknown>,
+  transactionHashPromise: Promise<Hash>,
+  client: PublicClient,
   additionalData: TxAdditionalData,
   refreshOnSuccess?: TxRefreshOnSuccess
 ) {
   const context: TxContext = { additionalData, refreshOnSuccess };
+  const hash = await transactionHashPromise.then(hash => {
+    txSubmitted(dispatch, context, hash);
+    return hash;
+  });
 
-  transaction
-    .on('transactionHash', function (hash: TrxHash) {
-      txSubmitted(dispatch, context, hash);
-    })
-    .on('receipt', function (receipt: TrxReceipt) {
-      txMined(dispatch, context, receipt);
-    })
-    .on('error', function (error: TrxError) {
-      txError(dispatch, context, error);
+  waitForTransactionReceipt(client, { hash })
+    .then(receipt => {
+      const success = receipt.status === 'success';
+      if (success) {
+        txMined(dispatch, context, receipt);
+      } else {
+        txError(dispatch, context, { message: 'Transaction failed.' });
+      }
     })
     .catch(error => {
       txError(dispatch, context, { message: String(error) });

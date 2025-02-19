@@ -6,6 +6,7 @@ import type { VaultEntity } from '../../entities/vault';
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types';
 import type { BeefyAnyBridgeConfig } from '../../apis/config-types';
 import type { BoostEntity } from '../../entities/boost';
+import type { Hash, TransactionReceipt } from 'viem';
 
 export type TrxHash = string;
 export type TrxReceipt = {
@@ -104,8 +105,8 @@ export type WalletActionsPendingState<T extends TxAdditionalData = TxAdditionalD
 export type WalletActionsSuccessState<T extends TxAdditionalData = TxAdditionalData> = {
   result: 'success';
   data: {
-    hash: TrxHash;
-    receipt: TrxReceipt;
+    hash: Hash;
+    receipt: TransactionReceipt;
   };
   additional?: T;
 };
@@ -196,7 +197,7 @@ export function createWalletActionErrorAction(
 }
 
 export function createWalletActionPendingAction(
-  hash: TrxHash,
+  hash: Hash,
   additionalData: TxAdditionalData | undefined
 ): WalletAction<WalletActionsPendingState> {
   return {
@@ -212,7 +213,7 @@ export function createWalletActionPendingAction(
 }
 
 export function createWalletActionSuccessAction(
-  receipt: TrxReceipt,
+  receipt: TransactionReceipt,
   additionalData: TxAdditionalData | undefined
 ): WalletAction<WalletActionsSuccessState> {
   return {

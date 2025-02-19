@@ -6,6 +6,7 @@ import {
   BIG_MAX_UINT256,
   BIG_ONE,
   BIG_ZERO,
+  bigNumberToBigInt,
   compareBigNumber,
 } from '../../../../helpers/big-number';
 import { sortWith } from '../../utils/array-utils';
@@ -19,12 +20,12 @@ import type { Abi, Address } from 'abitype';
 import type { GetContractReturnType } from 'viem';
 
 export type StandardGasPrice = {
-  gasPrice: string;
+  gasPrice: bigint;
 };
 
 export type EIP1559GasPrice = {
-  maxPriorityFeePerGas: string;
-  maxFeePerGas: string;
+  maxPriorityFeePerGas: bigint;
+  maxFeePerGas: bigint;
 };
 
 export type GasPricing = StandardGasPrice | EIP1559GasPrice;
@@ -74,11 +75,8 @@ export class StandardGasPricer implements IGasPricer {
     const gasPrice = await getBeefyGasPrice(client);
 
     return {
-      gasPrice: multiplyAndClampToString(
-        gasPrice,
-        this.safetyMultiplier,
-        this.minimum,
-        this.maximum
+      gasPrice: BigInt(
+        multiplyAndClampToString(gasPrice, this.safetyMultiplier, this.minimum, this.maximum)
       ),
     };
   }
@@ -160,8 +158,8 @@ export class EIP1559GasPricer implements IGasPricer {
     );
 
     return {
-      maxPriorityFeePerGas: priorityFee.toString(10),
-      maxFeePerGas: baseFee.plus(priorityFee).toString(10),
+      maxPriorityFeePerGas: bigNumberToBigInt(priorityFee),
+      maxFeePerGas: bigNumberToBigInt(baseFee.plus(priorityFee)),
     };
   }
 }
@@ -231,8 +229,8 @@ export class CeloGasPricer implements IGasPricer {
     const priorityFee = baseFee.dividedToIntegerBy(10); // 0.01 gwei
 
     return {
-      maxPriorityFeePerGas: priorityFee.toString(10),
-      maxFeePerGas: baseFee.plus(priorityFee).toString(10),
+      maxPriorityFeePerGas: bigNumberToBigInt(priorityFee),
+      maxFeePerGas: bigNumberToBigInt(baseFee.plus(priorityFee)),
     };
   }
 }

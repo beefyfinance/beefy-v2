@@ -5,7 +5,7 @@ import Web3 from 'web3';
 import { promises as fs } from 'fs';
 
 import { chainRpcs, getVaultsForChain } from './common/config';
-import launchPoolABI from '../src/config/abi/boost.json';
+import { BoostAbi } from '../src/config/abi/BoostAbi';
 import { ERC20Abi } from '../src/config/abi/ERC20Abi';
 import partners from '../src/config/boost/partners.json';
 import { AbiItem } from 'web3-utils';
@@ -15,7 +15,7 @@ let boostsFile = './src/config/boost/$chain.json';
 
 async function boostParams(chain, boostAddress) {
   const web3 = new Web3(chainRpcs[chain]);
-  const boostContract = new web3.eth.Contract(launchPoolABI as AbiItem[], boostAddress);
+  const boostContract = new web3.eth.Contract(BoostAbi as unknown as AbiItem[], boostAddress);
   const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
   let calls: ShapeWithLabel[] = [
     {

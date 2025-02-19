@@ -2,13 +2,19 @@ import { createPublicClient, type PublicClient, type Client, type BlockTag } fro
 import type { ChainEntity, ChainId } from '../../entities/chain';
 import { makeCustomFallbackTransport } from '../viem/transports';
 import { buildViemChain } from '../viem/chains';
-import type { BeefyFeeHistory } from '../../../../helpers/web3';
 import { getGasPrice, getFeeHistory } from 'viem/actions';
 import { BigNumber } from 'bignumber.js';
 
 type RpcClients = {
   singleCallClient: PublicClient;
   batchCallClient: PublicClient;
+};
+
+type BeefyFeeHistory = {
+  baseFeePerGas: BigNumber[];
+  gasUsedRatio: number[];
+  oldestBlock: BigNumber;
+  reward: BigNumber[][];
 };
 
 export const getBeefyGasPrice = async (client: Client) => {
@@ -48,22 +54,17 @@ class RpcClientManager {
 
   // Create new viem clients using the provided chain config and RPC URLs.
   private createClients(chain: ChainEntity, rpcUrls: string[]): RpcClients {
+    const retries = chain.eol ? 1 : 5;
     // Create a viem client with a fallback transport for single calls.
     const singleCallClient = createPublicClient({
       chain: buildViemChain(chain),
-      transport: makeCustomFallbackTransport(rpcUrls),
-    }).extend(client => ({
-      async getChainId() {
-        return client.request({
-          method: 'eth_chainId',
-        });
-      },
-    }));
+      transport: makeCustomFallbackTransport(rpcUrls, retries),
+    });
 
     // Create a viem client with batching enabled. (Assumes multicall support)
     const batchCallClient = createPublicClient({
       chain: buildViemChain(chain),
-      transport: makeCustomFallbackTransport(rpcUrls),
+      transport: makeCustomFallbackTransport(rpcUrls, retries),
       batch: {
         multicall: {
           batchSize: 1024,

@@ -1,4 +1,3 @@
-import { sample } from 'lodash-es';
 import {
   createDependencyFactory,
   createDependencyFactoryWithCacheByChain,
@@ -103,30 +102,6 @@ export const getWalletConnectionApi = createDependencyInitializerFactory(
   async (options: WalletConnectionOptions, { WalletConnectionApi }) =>
     new WalletConnectionApi(options),
   () => import('./wallet/wallet-connection')
-);
-
-export const getWeb3Instance = createDependencyFactoryWithCacheByChain(
-  async (chain, { rateLimitWeb3Instance, createWeb3Instance, PQueue }) => {
-    // pick one RPC endpoint at random
-    const rpc = sample(chain.rpc);
-    if (!rpc) throw new Error(`No RPC endpoint found for chain ${chain.id}`);
-
-    const requestsPerSecond = 10; // may need to be configurable per rpc [ankr allows ~30 rps]
-    const queue = new PQueue({
-      concurrency: requestsPerSecond,
-      intervalCap: requestsPerSecond,
-      interval: 1000,
-      carryoverConcurrencyCount: true,
-      autoStart: true,
-    });
-
-    console.debug(`Instantiating rate-limited Web3 for chain ${chain.id} via ${rpc}`);
-    return rateLimitWeb3Instance(createWeb3Instance(rpc), queue);
-  },
-  async () => {
-    const [web3, PQueue] = await Promise.all([import('../../../helpers/web3'), import('p-queue')]);
-    return { ...web3, PQueue: PQueue.default };
-  }
 );
 
 export const getPublicClient = createDependencyFactoryWithCacheByChain(
