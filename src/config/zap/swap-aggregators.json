@@ -363,6 +363,18 @@
     "blockedVaults": []
   },
   {
+    "id": "kyber-berachain",
+    "type": "kyber",
+    "chainId": "berachain",
+    "fee": {
+      "value": 0.0005,
+      "recipient": "0x02Ae4716B9D5d48Db1445814b0eDE39f5c28264B"
+    },
+    "priorityTokens": ["BERA", "WBERA", "USDCe"],
+    "blockedTokens": [],
+    "blockedVaults": []
+  },
+  {
     "id": "odos-ethereum",
     "type": "odos",
     "chainId": "ethereum",
