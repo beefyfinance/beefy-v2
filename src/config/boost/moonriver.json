@@ -1,0 +1,51 @@
+[
+  {
+    "id": "moo_solarbeam-wstksm-xcksm-lido",
+    "poolId": "solarbeam-wstksm-xcksm",
+    "name": "Lido",
+    "assets": ["wstKSM", "xcKSM"],
+    "tokenAddress": "0x29554e14B823f8b7C2D84Ae0126bF56645Ad6ad1",
+    "earnedToken": "LDO",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x6Ccf12B480A99C54b23647c995f4525D544A7E72",
+    "earnContractAddress": "0x3Ee361eA7Bf033b7Abb840A6853D417E85941965",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "LDO",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["lido-moonriver"]
+  },
+  {
+    "id": "moo_finn-wmovr-finn-huckleberry",
+    "poolId": "finn-wmovr-finn",
+    "name": "Huckleberry",
+    "assets": ["FINN", "MOVR"],
+    "earnedToken": "FINN",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
+    "earnContractAddress": "0x405EE7F4f067604b787346bC22ACb66b06b15A4B",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "FINN",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["huckleberry"]
+  },
+  {
+    "id": "moo_solarbeam-frax-wmovr-2-huckleberry",
+    "poolId": "solarbeam-frax-wmovr-2-eol",
+    "name": "Huckleberry",
+    "assets": ["FRAX", "MOVR"],
+    "earnedToken": "FINN",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
+    "earnContractAddress": "0x3C9C884eFAB85c44D675039de227b3Dd275c360e",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "FINN",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["huckleberry"]
+  }
+]

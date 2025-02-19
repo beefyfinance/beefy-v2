@@ -1,0 +1,38 @@
+[
+  {
+    "id": "moo_velodrome-cow-lisk-usdt-weth-vault-lisk",
+    "poolId": "velodrome-cow-lisk-usdt-weth-vault",
+    "name": "Lisk",
+    "assets": ["ETH", "USDT"],
+    "tokenAddress": "0x54d91365cB1eA8F454DaA43af91f9198d32b62FD",
+    "earnedToken": "LSK",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xac485391EB2d7D88253a7F1eF18C37f4242D1A24",
+    "earnContractAddress": "0x57bC7064B165fBCB1B0df55aF76e3b2aAEB0aA95",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "LSK",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["lisk"]
+  },
+  {
+    "id": "moo_velodrome-cow-lisk-usdt-usdc.e-vault-lisk",
+    "poolId": "velodrome-cow-lisk-usdt-usdc.e-vault",
+    "name": "Lisk",
+    "assets": ["USDC.e", "USDT"],
+    "tokenAddress": "0x19D1F0A1a2FE5807958b34ADBc0d0569A93727C7",
+    "earnedToken": "LSK",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xac485391EB2d7D88253a7F1eF18C37f4242D1A24",
+    "earnContractAddress": "0x69e8612c2364e0e743731c4BE16813BfD18e2E32",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "LSK",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["lisk"]
+  }
+]

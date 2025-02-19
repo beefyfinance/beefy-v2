@@ -1,0 +1,50 @@
+[
+  {
+    "id": "moo_valley-usdt-vs-valleyswap",
+    "poolId": "valley-usdt-vs-pause",
+    "name": "ValleySwap",
+    "assets": ["VS", "USDT"],
+    "earnedToken": "VS",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xBC033203796CC2C8C543a5aAe93a9a643320433D",
+    "earnContractAddress": "0x405EE7F4f067604b787346bC22ACb66b06b15A4B",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "VS",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["valleyswap"]
+  },
+  {
+    "id": "moo_valley-usdt-usdc-valleyswap",
+    "poolId": "valley-usdt-usdc-pause",
+    "name": "ValleySwap",
+    "assets": ["USDC", "USDT"],
+    "earnedToken": "VS",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xBC033203796CC2C8C543a5aAe93a9a643320433D",
+    "earnContractAddress": "0xc3a4fdcba79DB04b4C3e352b1C467B3Ba909D84A",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "VS",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["valleyswap"]
+  },
+  {
+    "id": "moo_valley-btc-usdt-valleyswap",
+    "poolId": "valley-btc-usdt-pause",
+    "name": "ValleySwap",
+    "assets": ["BTC", "USDT"],
+    "earnedToken": "VS",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xBC033203796CC2C8C543a5aAe93a9a643320433D",
+    "earnContractAddress": "0x3C9C884eFAB85c44D675039de227b3Dd275c360e",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "VS",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["valleyswap"]
+  }
+]
