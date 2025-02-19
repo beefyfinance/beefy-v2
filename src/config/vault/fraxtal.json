@@ -668,7 +668,7 @@
   },
   {
     "id": "ra-wbtc-frax",
-    "name": "FRAX-WBTC vLP",
+    "name": "frxUSD-WBTC vLP",
     "type": "standard",
     "token": "FRAX-WBTC vLP",
     "tokenAddress": "0x2010dD6089082463c13Af7a715D68cfd9AbfAD03",
@@ -841,7 +841,7 @@
   },
   {
     "id": "curve-fraxtal-fraxusdc",
-    "name": "FRAX/USDC",
+    "name": "frxUSD/USDC",
     "type": "standard",
     "token": "FRAXUSDC",
     "tokenAddress": "0xa8eB7B41fe8dF7Ea3de982397AD183721784D987",
