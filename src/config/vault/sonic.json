@@ -1097,7 +1097,7 @@
     "tokenAddress": "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
     "tokenDecimals": 6,
     "tokenProviderId": "silo",
-    "earnedToken": "mooSiloV2SonicUSDC.e (wS Market)",
+    "earnedToken": "USDC.e (Silo vault)",
     "earnedTokenAddress": "0xdb6E5dC4C6748EcECb97b565F6C074f24384fD07",
     "earnContractAddress": "0xdb6E5dC4C6748EcECb97b565F6C074f24384fD07",
     "oracle": "lps",
