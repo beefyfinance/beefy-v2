@@ -54,9 +54,9 @@ export const selectTokenById = (
   const address = chain.byId[tokenId];
   if (address === undefined) {
     // fallback to addressbook token
-    throw new Error(
-      `selectTokenById: Unknown token id ${tokenId} for chain ${chainId}, maybe you need to load the addressbook`
-    );
+    // throw new Error(
+    //   `selectTokenById: Unknown token id ${tokenId} for chain ${chainId}, maybe you need to load the addressbook`
+    // );
   }
 
   return chain.byAddress[address];

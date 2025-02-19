@@ -64,6 +64,8 @@ async function vaultData(chain: string, vaultAddress: string, id: string) {
     ? 'uniswap'
     : params.mooToken.startsWith('cowRamses')
     ? 'ramses'
+    : params.mooToken.startsWith('cowPancake')
+    ? 'pancakeswap'
     : id.substring(0, id.indexOf('-'));
   const platform = provider;
 

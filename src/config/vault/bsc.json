@@ -1,5 +1,96 @@
 [
   {
+    "id": "pancake-cow-bsc-wbnb-shell-vault",
+    "name": "SHELL-WBNB",
+    "type": "standard",
+    "token": "WBNB-SHELL",
+    "tokenAddress": "0xb1f9EA84780BEeA0A9D2c89c0163511aA1f1328D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x806dC239aB0C64b2bf3e9D2EDb21Ac70856dF47A",
+    "earnedToken": "mooCowPancakeWBNB-SHELL",
+    "earnedTokenAddress": "0x806dC239aB0C64b2bf3e9D2EDb21Ac70856dF47A",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-wbnb-shell",
+    "status": "active",
+    "createdAt": 1739968878,
+    "platformId": "pancakeswap",
+    "assets": ["SHELL", "WBNB"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-wbnb-shell-rp",
+    "name": "SHELL-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeWBNB-SHELL",
+    "tokenAddress": "0xb1f9EA84780BEeA0A9D2c89c0163511aA1f1328D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xc6806B70774e9a3167B5574CDc197E6b6Cb12a55",
+    "earnedToken": "rCowPancakeWBNB-SHELL",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-wbnb-shell",
+    "status": "active",
+    "createdAt": 1739968877,
+    "platformId": "pancakeswap",
+    "assets": ["SHELL", "WBNB"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-wbnb-shell",
+    "name": "WBNB-SHELL",
+    "type": "cowcentrated",
+    "token": "WBNB-SHELL pancakeswap",
+    "tokenAddress": "0x1D519280255d5D90F469f79dC8f5ABE05F64429f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      "0xf2c88757f8d03634671208935974B60a2a28Bdb3"
+    ],
+    "earnContractAddress": "0xb1f9EA84780BEeA0A9D2c89c0163511aA1f1328D",
+    "earnedToken": "cowPancakeWBNB-SHELL",
+    "earnedTokenAddress": "0xb1f9EA84780BEeA0A9D2c89c0163511aA1f1328D",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-wbnb-shell",
+    "status": "active",
+    "createdAt": 1739968877,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["WBNB", "SHELL"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "thena-cake-mcake",
     "name": "mCAKE-CAKE sLP",
     "token": "sAMM-Cake/mCake",
