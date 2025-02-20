@@ -1,0 +1,140 @@
+[
+  {
+    "id": "moo_uniswap-cow-rootstock-eths-wrbtc-vault",
+    "title": "Rootstock",
+    "vaultId": "uniswap-cow-rootstock-eths-wrbtc-vault",
+    "assets": ["ETHs", "WRBTC"],
+    "tokenAddress": "0xfcdCDb71FF7D0711F8F9A36032Aa3a77A659055D",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x24b7B6fB9acd69f8BD6c64EfC0664056eb612af9",
+    "tag": {
+      "text": "Rootstock Grant"
+    },
+    "campaign": "rootstock-grant",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x542fDA317318eBF1d3DEAf76E0b632741A7e677d",
+        "symbol": "WRBTC",
+        "decimals": 18,
+        "oracleId": "WBTC"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-rootstock-wrbtc-rusdt-vault",
+    "title": "Rootstock",
+    "vaultId": "uniswap-cow-rootstock-wrbtc-rusdt-vault",
+    "assets": ["WRBTC", "rUSDT"],
+    "tokenAddress": "0x70B212EBe2bde9812ad63BA1AedD5179B4B3082E",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x073ddA19364bB91dDb5e838ca57eBd36353E4061",
+    "tag": {
+      "text": "Rootstock Grant"
+    },
+    "campaign": "rootstock-grant",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x542fDA317318eBF1d3DEAf76E0b632741A7e677d",
+        "symbol": "WRBTC",
+        "decimals": 18,
+        "oracleId": "WBTC"
+      }
+    ]
+  },
+  {
+    "id": "moo_uniswap-cow-rootstock-doc-rusdt-vault",
+    "title": "Rootstock",
+    "vaultId": "uniswap-cow-rootstock-doc-rusdt-vault",
+    "assets": ["DOC", "rUSDT"],
+    "tokenAddress": "0x5eC6Afb2163535631d738e8A7a92A1974Aa1E0B9",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xC3De4BaB30AEB98Bcc062Cd4b1768cD5A5Caccc3",
+    "tag": {
+      "text": "Rootstock Grant"
+    },
+    "campaign": "rootstock-grant",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x542fDA317318eBF1d3DEAf76E0b632741A7e677d",
+        "symbol": "WRBTC",
+        "decimals": 18,
+        "oracleId": "WBTC"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-rootstock-eths-wrbtc-vault",
+    "title": "Rootstock",
+    "vaultId": "sushi-cow-rootstock-eths-wrbtc-vault",
+    "assets": ["ETHs", "WRBTC"],
+    "tokenAddress": "0xACA6fEDb6885A455961500A9A2871F4a209669d9",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xBCc7C5e9bfcCD677B189AD932A073C56639de82a",
+    "tag": {
+      "text": "Rootstock Grant"
+    },
+    "campaign": "rootstock-grant",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x542fDA317318eBF1d3DEAf76E0b632741A7e677d",
+        "symbol": "WRBTC",
+        "decimals": 18,
+        "oracleId": "WBTC"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-rootstock-wrbtc-rusdt-vault",
+    "title": "Rootstock",
+    "vaultId": "sushi-cow-rootstock-wrbtc-rusdt-vault",
+    "assets": ["ETHs", "WRBTC"],
+    "tokenAddress": "0xe7D3015A4f647F14CDD9c8c95a41FD5ad65cEF7c",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x76C8DaE55CD103B9865c6f056C8da915C8a98c4C",
+    "tag": {
+      "text": "Rootstock Grant"
+    },
+    "campaign": "rootstock-grant",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x542fDA317318eBF1d3DEAf76E0b632741A7e677d",
+        "symbol": "WRBTC",
+        "decimals": 18,
+        "oracleId": "WBTC"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-cow-rootstock-doc-rusdt-vault",
+    "title": "Rootstock",
+    "vaultId": "sushi-cow-rootstock-doc-rusdt-vault",
+    "assets": ["DOC", "rUSDT"],
+    "tokenAddress": "0x41c8fDc1f2EB272CB51c224D4C68F277c3C7878B",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xdC9d2c590145f3a006FE899D175F93E97dC3a516",
+    "tag": {
+      "text": "Rootstock Grant"
+    },
+    "campaign": "rootstock-grant",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x542fDA317318eBF1d3DEAf76E0b632741A7e677d",
+        "symbol": "WRBTC",
+        "decimals": 18,
+        "oracleId": "WBTC"
+      }
+    ]
+  }
+]

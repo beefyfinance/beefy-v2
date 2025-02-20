@@ -4,12 +4,12 @@ import { useAppDispatch } from '../../../../../../store';
 import { startStepperWithSteps } from '../../../../../data/actions/stepper';
 import { walletActions } from '../../../../../data/actions/wallet-actions';
 import type { Step } from '../../../../../data/reducers/wallet/stepper';
-import type { BoostEntity } from '../../../../../data/entities/boost';
+import type { BoostPromoEntity } from '../../../../../data/entities/promo';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import { ActionButton } from './ActionButton';
 
 type ClaimProps = {
-  boostId: BoostEntity['id'];
+  boostId: BoostPromoEntity['id'];
   chainId: ChainEntity['id'];
   disabled?: boolean;
 };

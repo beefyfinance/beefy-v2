@@ -8,7 +8,6 @@ import { tvlSlice } from './tvl';
 import { apySlice } from './apy';
 import { balanceSlice } from './wallet/balance';
 import { allowanceSlice } from './wallet/allowance';
-import { boostsSlice } from './boosts';
 import { dataLoaderSlice } from './data-loader';
 import { walletSlice } from './wallet/wallet';
 import type { BeefyState } from '../../../redux-types';
@@ -46,12 +45,13 @@ import { userRewardsReducer } from './wallet/user-rewards';
 import { versionReducer } from './ui-version';
 import { rewardsReducer } from './rewards';
 import { tenderlyReducer } from './tenderly';
+import { promosReducer } from './promos';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
   vaults: vaultsSlice.reducer,
   tokens: tokensSlice.reducer,
-  boosts: boostsSlice.reducer as Reducer<BeefyState['entities']['boosts'], AnyAction>,
+  promos: promosReducer as Reducer<BeefyState['entities']['promos'], AnyAction>, // WritableDraft and BigNumber types do not play well together
   fees: feesSlice.reducer,
   platforms: platformsSlice.reducer,
   zaps: zapsSlice.reducer,

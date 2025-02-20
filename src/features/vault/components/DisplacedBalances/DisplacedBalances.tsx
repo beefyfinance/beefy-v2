@@ -49,7 +49,7 @@ const BoostEntry = memo<EntryProps<UserVaultBalanceBreakdownBoost>>(function Boo
           i18nKey="Transact-Displaced-boost"
           values={{
             symbol: depositToken.symbol,
-            boost: boost.name,
+            boost: boost.title,
           }}
           components={{
             amount: <TokenAmountFromEntity amount={entry.amount} token={depositToken} />,

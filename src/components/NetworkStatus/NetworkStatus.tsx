@@ -235,7 +235,7 @@ const findBeefyApiMatching = (state: BeefyState, matcher: (loader: LoaderState) 
 
 const findConfigMatching = (state: BeefyState, matcher: (loader: LoaderState) => boolean) => {
   const matchingKeys: (keyof DataLoaderState['global'])[] = [];
-  const configKeys: (keyof DataLoaderState['global'])[] = ['chainConfig', 'boosts', 'vaults'];
+  const configKeys: (keyof DataLoaderState['global'])[] = ['chainConfig', 'promos', 'vaults'];
   for (const key of configKeys) {
     if (matcher(state.ui.dataLoader.global[key])) {
       matchingKeys.push(key);

@@ -1,0 +1,298 @@
+[
+  {
+    "id": "moo_beets-guqin-qi-2-qidao",
+    "title": "Beefy",
+    "vaultId": "beets-guqin-qi-2",
+    "type": "boost",
+    "contractAddress": "0x0eEeefE7e7f5361b7410f9e50FD1B329b81896b7",
+    "partners": ["beefy"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xbF07093ccd6adFC3dEB259C557b61E94c1F66945",
+        "symbol": "mooFantomoldBIFI",
+        "decimals": 18,
+        "oracleId": "mooFantomoldBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-ftm-geist-pearzap",
+    "title": "PearZap",
+    "vaultId": "curve-ftm-geist",
+    "type": "boost",
+    "contractAddress": "0xBE316e157BDfe5f06413E6DB9916D3F52D32d65F",
+    "partners": ["pearzap"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x7C10108d4B7f4bd659ee57A53b30dF928244b354",
+        "symbol": "PEAR",
+        "decimals": 18,
+        "oracleId": "PEAR"
+      }
+    ]
+  },
+  {
+    "id": "moo_bifi-scream",
+    "title": "Scream",
+    "vaultId": "fantom-bifi-maxi",
+    "type": "boost",
+    "contractAddress": "0xE105940939444b056C2de0834214824254D23615",
+    "partners": ["scream"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
+        "symbol": "SCREAM",
+        "decimals": 18,
+        "oracleId": "SCREAM"
+      }
+    ]
+  },
+  {
+    "id": "moo_boo_ftm-tomb",
+    "title": "TOMB.Finance",
+    "vaultId": "boo-boo-ftm",
+    "assets": ["BOO", "FTM"],
+    "type": "boost",
+    "contractAddress": "0x1643BC20913fA2D62C521E7cE8fFeD9e1Dd87964",
+    "partners": ["tombfinance"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xbF07093ccd6adFC3dEB259C557b61E94c1F66945",
+        "symbol": "mooFantomoldBIFI",
+        "decimals": 18,
+        "oracleId": "oldBIFI"
+      }
+    ]
+  },
+  {
+    "id": "boo-bifi-ftm-bifi",
+    "title": "Beefy",
+    "vaultId": "boo-bifi-ftm",
+    "assets": ["oldBIFI", "FTM"],
+    "type": "boost",
+    "contractAddress": "0xa8b86b9AF7e844DA90A2e72840Ad01CCBD11EdC3",
+    "partners": ["beefy"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xbF07093ccd6adFC3dEB259C557b61E94c1F66945",
+        "symbol": "mooFantomoldBIFI",
+        "decimals": 18,
+        "oracleId": "oldBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_usdc-ftm-ester",
+    "title": "Ester Finance",
+    "vaultId": "boo-ftm-usdc",
+    "assets": ["USDC", "FTM"],
+    "type": "boost",
+    "contractAddress": "0xed5010eDF8812003B7d4c9a69E7AfCBceaB62F4f",
+    "status": "inactive",
+    "partners": ["esterfinance"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x181F3F22C9a751E2ce673498A03E1FDFC0ebBFB6",
+        "symbol": "EST",
+        "decimals": 18,
+        "oracleId": "EST"
+      }
+    ]
+  },
+  {
+    "id": "moo_WFTM-2omb",
+    "title": "2omb",
+    "vaultId": "scream-ftm",
+    "type": "boost",
+    "contractAddress": "0xd7784f23A04D0ea3647bd6Ce15fD2d0D1FcD30Fe",
+    "partners": ["2omb"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca",
+        "symbol": "2SHARES",
+        "decimals": 18,
+        "oracleId": "2SHARES"
+      }
+    ]
+  },
+  {
+    "id": "moo_binSPIRIT-beefy",
+    "title": "Beefy",
+    "vaultId": "beefy-binspirit",
+    "type": "boost",
+    "contractAddress": "0xB883FE481d4442EEe83BA4eCF358D7F9f624fB40",
+    "partners": ["beefy"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xbF07093ccd6adFC3dEB259C557b61E94c1F66945",
+        "symbol": "mooFantomoldBIFI",
+        "decimals": 18,
+        "oracleId": "mooFantomoldBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_spirit-binspirit-spirit-spirit",
+    "title": "SpiritSwap",
+    "vaultId": "spirit-binspirit-spirit",
+    "assets": ["binSPIRIT", "SPIRIT"],
+    "type": "boost",
+    "contractAddress": "0xf5ea5496F26413D1Db47A5B23Bb78263bf4d325d",
+    "partners": ["spirit"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x7345a537A975d9Ca588eE631BEFdDfEF34fD5e8f",
+        "symbol": "mooBinSPIRIT",
+        "decimals": 18,
+        "oracleId": "binSPIRIT"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-ftm-geist-ripae",
+    "title": "Ripae.Finance",
+    "vaultId": "curve-ftm-geist",
+    "type": "boost",
+    "contractAddress": "0x7a9797082ca4D661f8B79a4B5b82b1C7DB372E0c",
+    "partners": ["ripae"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x8a41f13a4FaE75ca88B1ee726ee9D52B148b0498",
+        "symbol": "PAE",
+        "decimals": 18,
+        "oracleId": "PAE"
+      }
+    ]
+  },
+  {
+    "id": "moo_binSPIRIT-wigoswap",
+    "title": "WigoSwap",
+    "vaultId": "beefy-binspirit",
+    "type": "boost",
+    "contractAddress": "0x80F442b0207Fbc58efBd55da37F2fCc134CAEE7B",
+    "partners": ["wigoswap"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xE992bEAb6659BFF447893641A378FbbF031C5bD6",
+        "symbol": "WIGO",
+        "decimals": 18,
+        "oracleId": "WIGO"
+      }
+    ]
+  },
+  {
+    "id": "moo_beFTM-based",
+    "title": "Based",
+    "vaultId": "beefy-beFTM",
+    "type": "boost",
+    "contractAddress": "0xA31D040bb52c7C41eAb80fB975e5Caf95a8CD2Aa",
+    "partners": ["based"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x49C290Ff692149A4E16611c694fdED42C954ab7a",
+        "symbol": "BSHARE",
+        "decimals": 18,
+        "oracleId": "BSHARE"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-ftm-f-4pool-orkan",
+    "title": "Orkan",
+    "vaultId": "curve-ftm-f-4pool",
+    "assets": ["UST", "FRAX", "fUSDT", "USDC"],
+    "type": "boost",
+    "contractAddress": "0x432914274883a7632fdC639B1E64526c197f5829",
+    "partners": ["orkan"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xfB66e49e303A186a4c57414Ceeed651a7a78161a",
+        "symbol": "ORKAN",
+        "decimals": 9,
+        "oracleId": "ORKAN"
+      }
+    ]
+  },
+  {
+    "id": "moo_beFTM-hector",
+    "title": "Hector (TOR)",
+    "vaultId": "beefy-beFTM",
+    "type": "boost",
+    "contractAddress": "0x9A18B566355d394D67693c4C2d269c524c7Eb182",
+    "partners": ["hector"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x74E23dF9110Aa9eA0b6ff2fAEE01e740CA1c642e",
+        "symbol": "TOR",
+        "decimals": 18,
+        "oracleId": "TOR"
+      }
+    ]
+  },
+  {
+    "id": "moo_hector-tor-crv-hector",
+    "title": "Hector (TOR)",
+    "vaultId": "hector-tor-crv",
+    "type": "boost",
+    "contractAddress": "0xC370B3a3958579F2aAFedF4c3548F75DeB43DB11",
+    "partners": ["hector"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x74E23dF9110Aa9eA0b6ff2fAEE01e740CA1c642e",
+        "symbol": "TOR",
+        "decimals": 18,
+        "oracleId": "TOR"
+      }
+    ]
+  },
+  {
+    "id": "moo_boo-wftm-tor-hector",
+    "title": "Hector (TOR)",
+    "vaultId": "boo-wftm-tor",
+    "assets": ["TOR", "FTM"],
+    "type": "boost",
+    "contractAddress": "0xF7077ad75d6f027fb1DeAF7fE88eA5819044F31C",
+    "partners": ["hector"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x5C4FDfc5233f935f20D2aDbA572F770c2E377Ab0",
+        "symbol": "HEC",
+        "decimals": 9,
+        "oracleId": "HECTOR"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-ftm-geist-midas",
+    "title": "Midas",
+    "vaultId": "curve-ftm-geist",
+    "type": "boost",
+    "contractAddress": "0x541163b90Bc31CE17E813Ee4Eb0b91296C580118",
+    "partners": ["midas"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xb37528DA6b4D378305d000a66Ad91bd88E626761",
+        "symbol": "MIDAS",
+        "decimals": 18,
+        "oracleId": "MIDAS"
+      }
+    ]
+  }
+]

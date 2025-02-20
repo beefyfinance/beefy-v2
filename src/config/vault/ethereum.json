@@ -566,7 +566,9 @@
     "earnedTokenAddress": "0x35C3ecA69a0D9A631eE613Fe044653B72E6c4408",
     "oracle": "lps",
     "oracleId": "pendle-syrupusdc-30jan25",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1739314033,
+    "retireReason": "rewards",
     "createdAt": 1729668189,
     "platformId": "magpie",
     "assets": ["syrupUSDC"],
@@ -591,7 +593,9 @@
     "earnedTokenAddress": "0x5Fd8c79C2A56d3A070ADA4e3767C807956aC534b",
     "oracle": "lps",
     "oracleId": "pendle-syrupusdc-30jan25",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1739314033,
+    "retireReason": "rewards",
     "createdAt": 1729668180,
     "platformId": "equilibria",
     "assets": ["syrupUSDC"],
@@ -1643,48 +1647,6 @@
             "coins": [
               "0xD60EeA80C83779a8A5BFCDAc1F3323548e6BB62d",
               "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "convex-dgneth-eth+",
-    "name": "dgnETH/ETH+",
-    "type": "standard",
-    "token": "dgnETHETH+",
-    "tokenAddress": "0x021cF6B7ebb8c8EFcF21396Eb4c94658976172c7",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnContractAddress": "0x127ee8a1D37cDFa3922aa75C959189682c18c6be",
-    "earnedToken": "mooCurve_dgnETH-ETH+",
-    "earnedTokenAddress": "0x127ee8a1D37cDFa3922aa75C959189682c18c6be",
-    "oracle": "lps",
-    "oracleId": "convex-dgneth-eth+",
-    "status": "eol",
-    "createdAt": 1720426690,
-    "retireReason": "rewards",
-    "retiredAt": 1731017785,
-    "platformId": "convex",
-    "assets": ["dgnETH", "ETH+"],
-    "migrationIds": ["ethereum-convex", "ethereum-curve"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "XXX",
-    "removeLiquidityUrl": "XXX",
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0x021cF6B7ebb8c8EFcF21396Eb4c94658976172c7",
-        "methods": [
-          {
-            "type": "dynamic-deposit",
-            "target": "0x021cF6B7ebb8c8EFcF21396Eb4c94658976172c7",
-            "coins": [
-              "0x005F893EcD7bF9667195642f7649DA8163e23658",
-              "0xE72B141DF173b999AE7c1aDcbF60Cc9833Ce56a8"
             ]
           }
         ]
@@ -3068,7 +3030,9 @@
     "earnedTokenAddress": "0x8D719AD5Cc19d5413A9D11Bd39813847f352De65",
     "oracle": "lps",
     "oracleId": "aura-sdai-3pool",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1739314051,
+    "retireReason": "tvl",
     "createdAt": 1705249187,
     "platformId": "aura",
     "assets": ["sDAI", "bpt3POOL"],

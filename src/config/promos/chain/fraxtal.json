@@ -1,0 +1,25 @@
+[
+  {
+    "id": "moo_curve-lend-fraxtal-sfrax-crvusd",
+    "title": "Beefy",
+    "vaultId": "curve-lend-fraxtal-sfrax-crvusd",
+    "assets": ["crvUSD"],
+    "tokenAddress": "0x971e5D920369B05B793a5c2Fd0539468ddf14f7a",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0xf0D557794D6C65A4cA6D20C454aEc455620E9eD5",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xFc00000000000000000000000000000000000001",
+        "symbol": "FRAX",
+        "decimals": 18,
+        "oracleId": "FRAX"
+      }
+    ]
+  }
+]

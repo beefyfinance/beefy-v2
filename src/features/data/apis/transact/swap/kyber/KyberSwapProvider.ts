@@ -74,12 +74,20 @@ export class KyberSwapProvider implements ISwapProvider {
     if (!quote.extra) {
       throw new Error(`No route summary found for kyber swap`);
     }
+
+    // use a slightly reduced max slippage setting
+    // this lets us accept a swap for a slightly lower amount than the original quote,
+    // knowing that the min amount out is still within the original max slippage setting
+    // needed as output can change between fetchQuote and fetchSwap
+    const slippageTolerance = Math.trunc(slippage * 0.99 * 10_000); // 1% buffer (of slippage)
+    const reducedSlippage = slippageTolerance / 10_000;
+
     const api = await getKyberSwapApi(chain);
     const swap = await api.postSwap({
       recipient: fromAddress,
       sender: fromAddress,
       routeSummary: quote.extra,
-      slippageTolerance: slippage * 10000, // convert to bps (0.0005 -> 5bps = 0.05%)
+      slippageTolerance, // in bps (1/10_000)
     });
 
     return {
@@ -90,7 +98,7 @@ export class KyberSwapProvider implements ISwapProvider {
       toAmount: fromWeiString(swap.amountOut, quote.toToken.decimals),
       toAmountMin: slipBy(
         fromWeiString(swap.amountOut, quote.toToken.decimals),
-        slippage,
+        reducedSlippage,
         quote.toToken.decimals
       ),
       tx: {

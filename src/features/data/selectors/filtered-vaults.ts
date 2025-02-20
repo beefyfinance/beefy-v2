@@ -2,7 +2,6 @@ import { createSelector } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import { type VaultEntity } from '../entities/vault';
 import { selectUserDepositedVaultIds } from './balance';
-import { selectIsVaultPreStakedOrBoosted } from './boosts';
 import { selectAllVisibleVaultIds, selectVaultById } from './vaults';
 import { selectTokenByAddress, selectVaultTokenSymbols } from './tokens';
 import { createCachedSelector } from 're-reselect';
@@ -13,7 +12,7 @@ import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string
 import escapeStringRegexp from 'escape-string-regexp';
 import { type BigNumber } from 'bignumber.js';
 import { selectVaultTotalApy } from './apy';
-import { selectVaultHasActiveMerklBoostCampaigns } from './rewards';
+import { selectActivePromoForVault } from './promos';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
@@ -187,11 +186,7 @@ export const selectTotalVaultCount = (state: BeefyState) => selectAllVisibleVaul
 
 /** standard boost, off chain boost, or anything with boostedTotalDaily entry */
 export const selectVaultIsBoostedForFilter = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  if (selectIsVaultPreStakedOrBoosted(state, vaultId)) {
-    return true;
-  }
-
-  if (selectVaultHasActiveMerklBoostCampaigns(state, vaultId)) {
+  if (selectActivePromoForVault(state, vaultId)) {
     return true;
   }
 

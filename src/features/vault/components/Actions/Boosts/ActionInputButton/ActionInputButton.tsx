@@ -3,7 +3,7 @@ import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { memo, useCallback, useEffect, useMemo } from 'react';
 import { Button } from '../../../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import type { BoostEntity } from '../../../../../data/entities/boost';
+import type { BoostPromoEntity } from '../../../../../data/entities/promo';
 import { selectBoostById } from '../../../../../data/selectors/boosts';
 import { selectIsAddressBookLoaded } from '../../../../../data/selectors/data-loader';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
@@ -22,7 +22,7 @@ import { ActionButton } from '../ActionButton/ActionButton';
 const useStyles = makeStyles(styles);
 
 export interface ActionInputButtonProps {
-  boostId: BoostEntity['id'];
+  boostId: BoostPromoEntity['id'];
   open: boolean;
   onToggle: () => void;
   onSubmit: (amount: BigNumber, max: boolean) => void;

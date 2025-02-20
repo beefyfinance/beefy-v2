@@ -1,0 +1,939 @@
+[
+  {
+    "id": "moo_curve-poly-mai-usdc.e",
+    "title": "Beefy",
+    "vaultId": "curve-poly-mai-usdc.e",
+    "assets": ["MAI", "pUSDCe"],
+    "tokenAddress": "0x378FcE425239B0c6B43eF79E773794dd2e9979AD",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x914C8140bEB3c668E0144CF6bC75e936A53d545D",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+        "symbol": "USDC",
+        "decimals": 6,
+        "oracleId": "USDC"
+      }
+    ]
+  },
+  {
+    "id": "moo_retro-gamma-usdc-cash-retro",
+    "title": "Retro",
+    "vaultId": "retro-gamma-usdc-cash",
+    "assets": ["CASH", "pUSDCe"],
+    "tokenAddress": "0x69359cb103F75F8BCdF3264E649D51e91C5EE62a",
+    "type": "boost",
+    "contractAddress": "0x6986507B3D085CceB854658EF8BeCd35c358053D",
+    "partners": ["retro"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x3A29CAb2E124919d14a6F735b6033a3AaD2B260F",
+        "symbol": "oRETRO",
+        "decimals": 18,
+        "oracleId": "oRETRO"
+      }
+    ]
+  },
+  {
+    "id": "moo_pearl-usdrv3-dai-tangible",
+    "title": "Tangible",
+    "vaultId": "pearl-usdrv3-dai",
+    "assets": ["USDR", "DAI"],
+    "tokenAddress": "0x2C6d11e756986f1537a2c71c851e9a1F7A0008b2",
+    "type": "boost",
+    "contractAddress": "0x5fa9bBaBCd7791D65B175F7cFefC8CC7e66B6329",
+    "partners": ["tangible"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x6AE96Cc93331c19148541D4D2f31363684917092",
+        "symbol": "CVR",
+        "decimals": 18,
+        "oracleId": "CVR"
+      }
+    ]
+  },
+  {
+    "id": "moo_pearl-usdrv3-usdt-tangible",
+    "title": "Tangible",
+    "vaultId": "pearl-usdrv3-usdt",
+    "assets": ["USDR", "USDT"],
+    "tokenAddress": "0xb759b56d82C88806bbcBcD60767E39Af5cc51F32",
+    "type": "boost",
+    "contractAddress": "0xdeBE535063bB71dee0a298f6eA09d7743dB7081D",
+    "partners": ["tangible"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x6AE96Cc93331c19148541D4D2f31363684917092",
+        "symbol": "CVR",
+        "decimals": 18,
+        "oracleId": "CVR"
+      }
+    ]
+  },
+  {
+    "id": "moo_pearl-usdc-usdrv3-tangible",
+    "title": "Tangible",
+    "vaultId": "pearl-usdc-usdrv3",
+    "assets": ["USDR", "pUSDCe"],
+    "tokenAddress": "0xD74B5df80347cE9c81b91864DF6a50FfAfE44aa5",
+    "type": "boost",
+    "contractAddress": "0x0d0bbB0605f19c65a4269776b4F334c5b8a68157",
+    "partners": ["tangible"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x6AE96Cc93331c19148541D4D2f31363684917092",
+        "symbol": "CVR",
+        "decimals": 18,
+        "oracleId": "CVR"
+      }
+    ]
+  },
+  {
+    "id": "moo_balancer-jeur-par-v2-jarvis",
+    "title": "Jarvis",
+    "vaultId": "balancer-jeur-par-v2",
+    "assets": ["jEUR", "PAR"],
+    "tokenAddress": "0xB476B7A027da3D9fB5A5c9CB6078A34f7289B476",
+    "type": "boost",
+    "contractAddress": "0x4F0C2f936b4dDFB93019986C000ea3aeE7F83Baf",
+    "partners": ["jarvis"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c",
+        "symbol": "jEUR",
+        "decimals": 18,
+        "oracleId": "jEUR"
+      }
+    ]
+  },
+  {
+    "id": "moo_balancer-wsteth-bbaweth-lido",
+    "title": "Lido",
+    "vaultId": "balancer-wsteth-bbaweth",
+    "assets": ["wstETH", "bbaWETH"],
+    "tokenAddress": "0x108a7474461dC3059E4a6f9F8c7C8612056195A7",
+    "type": "boost",
+    "contractAddress": "0x022221f19a2eD9124C5c9B9F19A58eb6dA2C018e",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_balancer-stmatic-bbawmatic-lido",
+    "title": "Lido",
+    "vaultId": "balancer-stmatic-bbawmatic",
+    "assets": ["stMATIC", "bbaWMATIC"],
+    "tokenAddress": "0xf0695B22d8F416FEC35E02668aE01B9EEAF96a0D",
+    "type": "boost",
+    "contractAddress": "0x9e41CeC5A11c81AeF1bFc112910Eb0d19dFbA6b6",
+    "partners": ["lido"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_balancer-maticx-bbawmatic-stader",
+    "title": "Stader",
+    "vaultId": "balancer-maticx-bbawmatic",
+    "assets": ["MaticX", "bbaWMATIC"],
+    "tokenAddress": "0x4C98CB046c3eb7e3ae7Eb49a33D6f3386Ec2b9D9",
+    "type": "boost",
+    "contractAddress": "0x2e5598608A4436dBb9c34CE6862B5AF882F49a6B",
+    "partners": ["stader"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x1d734A02eF1e1f5886e66b0673b71Af5B53ffA94",
+        "symbol": "SD",
+        "decimals": 18,
+        "oracleId": "SD"
+      }
+    ]
+  },
+  {
+    "id": "moo_kyber-wsteth-eth-lido",
+    "title": "Lido",
+    "vaultId": "kyber-wsteth-eth",
+    "assets": ["wstETH", "ETH"],
+    "tokenAddress": "0xEC209bCdEf8798772aC1456ea9d93C940187363C",
+    "type": "boost",
+    "contractAddress": "0xaF3c12372791ffccf8cB2A03838f5e7A16538424",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_balancer-poly-wsteth-eth-lido",
+    "title": "Lido",
+    "vaultId": "balancer-poly-wsteth-eth",
+    "assets": ["wstETH", "ETH"],
+    "tokenAddress": "0x1d81c50d5aB5f095894c41B41BA49B9873033399",
+    "type": "boost",
+    "contractAddress": "0x4Cc44C30f4d3789AE8d8e9C8dE409D11c79C5CE3",
+    "partners": ["lido-eth"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_balancer-jeur-par-mimo",
+    "title": "Mimo",
+    "vaultId": "balancer-jeur-par",
+    "assets": ["jEUR", "PAR"],
+    "tokenAddress": "0x0593E77cBFA4Ca5472d8070E19E2b92E9e95A33C",
+    "type": "boost",
+    "contractAddress": "0xfB4C18b6C84124460997Eceeb201149deeD29F2B",
+    "partners": ["mimo"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xADAC33f543267c4D59a8c299cF804c303BC3e4aC",
+        "symbol": "MIMO",
+        "decimals": 18,
+        "oracleId": "MIMO"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-poly-atricrypto3-metavault trade",
+    "title": "Metavault Trade",
+    "vaultId": "curve-poly-atricrypto3",
+    "assets": ["DAI", "pUSDCe", "USDT", "WBTC", "ETH"],
+    "tokenAddress": "0x5A0801BAd20B6c62d86C566ca90688A6b9ea1d3f",
+    "type": "boost",
+    "contractAddress": "0x76f6102305A1a1351f37fA42Aed0d95576050503",
+    "partners": ["metavault"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x2760E46d9BB43dafCbEcaad1F64b93207f9f0eD7",
+        "symbol": "MVX",
+        "decimals": 18,
+        "oracleId": "MVX"
+      }
+    ]
+  },
+  {
+    "id": "moo_dystopia-usd+-stmatic-lido",
+    "title": "Lido",
+    "vaultId": "dystopia-usd+-stmatic",
+    "assets": ["USD+", "stMATIC"],
+    "tokenAddress": "0x727555858111Bf77027710c19bc4a4B35b38727E",
+    "type": "boost",
+    "contractAddress": "0xf93993dDD85D2f8fC5D3736a11237205c84F8DeB",
+    "partners": ["lido"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_balancer-matic-stmatic-v2-lido",
+    "title": "Lido",
+    "vaultId": "balancer-matic-stmatic-v2",
+    "assets": ["stMATIC", "MATIC"],
+    "tokenAddress": "0xF79BF908d0e6d8E7054375CD80dD33424B1980bf",
+    "type": "boost",
+    "contractAddress": "0x69C28193185CFcd42D62690Db3767915872bC5EA",
+    "partners": ["lido"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_dystopia-wmatic-stmatic-lido",
+    "title": "Lido",
+    "vaultId": "dystopia-wmatic-stmatic",
+    "assets": ["stMATIC", "MATIC"],
+    "tokenAddress": "0xfA2AE38776b792f6629996B07FAa009a8cDEc5F9",
+    "type": "boost",
+    "contractAddress": "0x50a11621886c0d2f6D34b17B02513bC1E38Bb0A2",
+    "partners": ["lido"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_quick-stmatic-matic-lido-refill",
+    "title": "Lido",
+    "vaultId": "quick-stmatic-matic",
+    "assets": ["stMATIC", "MATIC"],
+    "tokenAddress": "0x8829ADf1a9a7facE44c8FAb3Bc454f93F330E492",
+    "type": "boost",
+    "contractAddress": "0x752255D6c6f48378d21FE415805a9E4112848A3f",
+    "partners": ["lido"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_balancer-matic-stmatic-lido-refill",
+    "title": "Lido",
+    "vaultId": "balancer-matic-stmatic",
+    "assets": ["stMATIC", "MATIC"],
+    "tokenAddress": "0x755e426A8B445eAE53b1c051c1E7acA7381fCDb7",
+    "type": "boost",
+    "contractAddress": "0x30f688241CC054C3b23Cc466F5244bc210640D6b",
+    "partners": ["lido"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-matic-stmatic-lido-refill",
+    "title": "Lido",
+    "vaultId": "curve-matic-stmatic",
+    "assets": ["stMATIC", "MATIC"],
+    "tokenAddress": "0xE0570ddFca69E5E90d83Ea04bb33824D3BbE6a85",
+    "type": "boost",
+    "contractAddress": "0xBb77dDe3101B8f9B71755ABe2F69b64e79AE4A41",
+    "partners": ["lido"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_balancer-matic-maticx-stader",
+    "title": "Stader",
+    "vaultId": "balancer-matic-maticx",
+    "assets": ["MaticX", "MATIC"],
+    "tokenAddress": "0xB0D20b7d047e10a8Af2bE8C7c4C976653A0f2ECA",
+    "type": "boost",
+    "contractAddress": "0x2bBa2F3260096C501Df11Fa2bB20A8cBF5a6A614",
+    "partners": ["stader"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x1d734A02eF1e1f5886e66b0673b71Af5B53ffA94",
+        "symbol": "SD",
+        "decimals": 18,
+        "oracleId": "SD"
+      }
+    ]
+  },
+  {
+    "id": "moo_quick-wmatic-maticx-stader",
+    "title": "Stader",
+    "vaultId": "quick-wmatic-maticx",
+    "assets": ["MaticX", "MATIC"],
+    "tokenAddress": "0xa448e9833095ad50693B025c275F48b271aDe882",
+    "type": "boost",
+    "contractAddress": "0x84170776Da23Faa49D332F7D49A219375633f9e6",
+    "partners": ["stader"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x1d734A02eF1e1f5886e66b0673b71Af5B53ffA94",
+        "symbol": "SD",
+        "decimals": 18,
+        "oracleId": "SD"
+      }
+    ]
+  },
+  {
+    "id": "moo_quick-stmatic-matic-lido3",
+    "title": "Lido",
+    "vaultId": "quick-stmatic-matic",
+    "assets": ["stMATIC", "MATIC"],
+    "tokenAddress": "0x8829ADf1a9a7facE44c8FAb3Bc454f93F330E492",
+    "type": "boost",
+    "contractAddress": "0x251618047E91b101721baFFF005BB45081f7090C",
+    "partners": ["lido"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_balancer-matic-stmatic-lido",
+    "title": "Lido",
+    "vaultId": "balancer-matic-stmatic",
+    "assets": ["stMATIC", "MATIC"],
+    "tokenAddress": "0x755e426A8B445eAE53b1c051c1E7acA7381fCDb7",
+    "type": "boost",
+    "contractAddress": "0xB782c7c2d8a57b6B9A97722Fa9B303c53a074dF5",
+    "partners": ["lido"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-matic-stmatic-lido",
+    "title": "Lido",
+    "vaultId": "curve-matic-stmatic",
+    "assets": ["stMATIC", "MATIC"],
+    "tokenAddress": "0xE0570ddFca69E5E90d83Ea04bb33824D3BbE6a85",
+    "type": "boost",
+    "contractAddress": "0xB160623B6516DB607339FE9b518f2D87edb0CfF4",
+    "partners": ["lido"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_quick-stmatic-matic-lido2",
+    "title": "Lido",
+    "vaultId": "quick-stmatic-matic",
+    "assets": ["stMATIC", "MATIC"],
+    "tokenAddress": "0x8829ADf1a9a7facE44c8FAb3Bc454f93F330E492",
+    "type": "boost",
+    "contractAddress": "0x9aCf64E273431c70134045875b332f6607245b62",
+    "partners": ["lido"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  },
+  {
+    "id": "moo_jarvis-2jpy2-jarvis",
+    "title": "Jarvis",
+    "vaultId": "jarvis-2jpy2",
+    "tokenAddress": "0x122E09FdD2FF73C8CEa51D432c45A474BAa1518a",
+    "type": "boost",
+    "contractAddress": "0x809FF72292009E68fa6463b966e6D86154B67fa1",
+    "partners": ["jarvis"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x8343091F2499FD4b6174A46D067A920a3b851FF9",
+        "symbol": "jJPY",
+        "decimals": 18,
+        "oracleId": "jJPY"
+      }
+    ]
+  },
+  {
+    "id": "moo_kyber-usdc-jeur-jarvis",
+    "title": "Jarvis",
+    "vaultId": "kyber-usdc-jeur-eol",
+    "assets": ["jEUR", "pUSDCe"],
+    "type": "boost",
+    "contractAddress": "0xE2C04ff677394872e43ee06B4a28a3cbd542A327",
+    "partners": ["jarvis"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xFbdd194376de19a88118e84E279b977f165d01b8",
+        "symbol": "oldBIFI",
+        "decimals": 18,
+        "oracleId": "oldBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-am3crv-jarvis",
+    "title": "Jarvis",
+    "vaultId": "curve-am3crv",
+    "type": "boost",
+    "contractAddress": "0x5936Db923b6E1727DA19d801eC22CeE555b6047b",
+    "partners": ["jarvis"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c",
+        "symbol": "jEUR",
+        "decimals": 18,
+        "oracleId": "jEUR"
+      }
+    ]
+  },
+  {
+    "id": "moo_BIFI-jarvis",
+    "title": "Jarvis",
+    "vaultId": "polygon-bifi-maxi",
+    "type": "boost",
+    "contractAddress": "0x68161e06104d2d2f48cBfE7f6970720BB62DCA92",
+    "partners": ["jarvis"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xFbdd194376de19a88118e84E279b977f165d01b8",
+        "symbol": "oldBIFI",
+        "decimals": 18,
+        "oracleId": "oldBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_QUICK-polysage",
+    "title": "PolySage",
+    "vaultId": "quick-quick",
+    "type": "boost",
+    "contractAddress": "0xC01b5D452F2a5571E8FbC2D589Ab940DB7B16EFA",
+    "partners": ["polysage"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x2ed945Dc703D85c80225d95ABDe41cdeE14e1992",
+        "symbol": "polySAGE",
+        "decimals": 18,
+        "oracleId": "polySAGE"
+      }
+    ]
+  },
+  {
+    "id": "moo_bifi-usdc-cafe",
+    "title": "CafeSwap",
+    "vaultId": "sushi-poly-usdc-bifi",
+    "assets": ["oldBIFI", "pUSDCe"],
+    "type": "boost",
+    "contractAddress": "0x602fAEa31a6F388559E88B93666Ff5908CAE2c9c",
+    "partners": ["cafeswap"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xb5106A3277718eCaD2F20aB6b86Ce0Fee7A21F09",
+        "symbol": "pBREW",
+        "decimals": 18,
+        "oracleId": "pBREW"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-ren-tetu",
+    "title": "Tetu",
+    "vaultId": "curve-poly-ren",
+    "type": "boost",
+    "contractAddress": "0x73EA48822D7802590294a56d153b3458849A41C2",
+    "partners": ["tetu"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x255707B70BF90aa112006E1b07B9AeA6De021424",
+        "symbol": "TETU",
+        "decimals": 18,
+        "oracleId": "TETU"
+      }
+    ]
+  },
+  {
+    "id": "moo_banana_matic-polywise",
+    "title": "PolyWise",
+    "vaultId": "ape-banana-matic",
+    "assets": ["BANANA", "MATIC"],
+    "type": "boost",
+    "contractAddress": "0x4d20db515199B7C799Ca0da4e2Eaedc99F1367Fc",
+    "partners": ["polywise"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4c19DdeebAF84cA3A255730295AD9d824D4Ff51f",
+        "symbol": "WISE",
+        "decimals": 18,
+        "oracleId": "polyWISE"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-tricrypto-polyalpha",
+    "title": "PolyAlpha",
+    "vaultId": "curve-poly-atricrypto3",
+    "type": "boost",
+    "contractAddress": "0x0C2741b8eD387803D876Cd63A67dD814a029A4f1",
+    "partners": ["polyalpha"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x0B048D6e01a6b9002C291060bF2179938fd8264c",
+        "symbol": "ALPHA",
+        "decimals": 18,
+        "oracleId": "polyALPHA"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-poly-sandman",
+    "title": "Sandman",
+    "vaultId": "curve-am3crv",
+    "type": "boost",
+    "contractAddress": "0x7ee6B34B51eAEbc887A16616AfE0855795B6ac74",
+    "partners": ["sandman"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x238779aFfE6FFD475cB7e84582FcA7789F310Dc8",
+        "symbol": "DELIRIUM",
+        "decimals": 18,
+        "oracleId": "DELIRIUM"
+      }
+    ]
+  },
+  {
+    "id": "moo_bifi-yieldwatch",
+    "title": "Yieldwatch",
+    "vaultId": "polygon-bifi-maxi",
+    "type": "boost",
+    "contractAddress": "0x71a4449dD18177A1a19fEF671558964f10AF4be8",
+    "partners": ["yieldwatch"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x09211Dc67f9fe98Fb7bBB91Be0ef05f4a12FA2b2",
+        "symbol": "WATCH",
+        "decimals": 18,
+        "oracleId": "WATCH"
+      }
+    ]
+  },
+  {
+    "id": "moo_bifi-pearzap",
+    "title": "PearZap",
+    "vaultId": "polygon-bifi-maxi",
+    "type": "boost",
+    "contractAddress": "0x77D205420cE5557cd8E9DEFC915Fd0D701CCaEa3",
+    "partners": ["pearzap"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc8bcb58caEf1bE972C0B638B1dD8B0748Fdc8A44",
+        "symbol": "PEAR",
+        "decimals": 18,
+        "oracleId": "PEAR"
+      }
+    ]
+  },
+  {
+    "id": "moo_bifi-polypup",
+    "title": "PolyPup",
+    "vaultId": "polygon-bifi-maxi",
+    "type": "boost",
+    "contractAddress": "0x6B30E11d72AA1D14f79Ba52aF3139F798DFca18d",
+    "partners": ["polypup"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x883aBe4168705d2e5dA925d28538B7a6AA9d8419",
+        "symbol": "BALL",
+        "decimals": 18,
+        "oracleId": "BALL"
+      }
+    ]
+  },
+  {
+    "id": "moo_bifi-polyfarm",
+    "title": "PolygonFarm",
+    "vaultId": "polygon-bifi-maxi",
+    "type": "boost",
+    "contractAddress": "0x3439A5815153CA1156828bBa89Aa332f41534602",
+    "partners": ["polyfarm"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xf5EA626334037a2cf0155D49eA6462fDdC6Eff19",
+        "symbol": "SPADE",
+        "decimals": 18,
+        "oracleId": "SPADE"
+      }
+    ]
+  },
+  {
+    "id": "moo_bifi-lithium",
+    "title": "PolyWantsACracker",
+    "vaultId": "polygon-bifi-maxi",
+    "type": "boost",
+    "contractAddress": "0xC1d4DaBE517B5715077082ade69872ab82F86899",
+    "status": "inactive",
+    "partners": ["polycracker"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xE08d7B24E2D22B242dEA3DE85032261810F35B09",
+        "symbol": "mooPolyCrackerLITH",
+        "decimals": 18,
+        "oracleId": "LITHIUM"
+      }
+    ]
+  },
+  {
+    "id": "moo_polyyeld-xyeld",
+    "title": "PolyYeld",
+    "vaultId": "polyyeld-xyeld-quick-wmatic-xyeld-eol",
+    "type": "boost",
+    "contractAddress": "0x6b4971b8dAfc3c426EdE7E629394f31B0BdF3c16",
+    "status": "inactive",
+    "partners": ["xyeld"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x2Fa3A4671b977a8f0c16334e4CF16EA91F22db75",
+        "symbol": "mooPolyyeldL2xYELD",
+        "decimals": 18,
+        "oracleId": "xYELD"
+      }
+    ]
+  },
+  {
+    "id": "moo_jetswap-pwings",
+    "title": "JetSwap",
+    "vaultId": "jetswap-poly-usdc-usdt",
+    "type": "boost",
+    "contractAddress": "0x9231457582c0E6F3c631e93AEA2d063F59606710",
+    "status": "inactive",
+    "partners": ["jetswap"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xa55e8326a9AC7B0bFcA5E6Fc9Cf1141E2dc11f67",
+        "symbol": "mooJetSwapPWINGS",
+        "decimals": 18,
+        "oracleId": "pWINGS"
+      }
+    ]
+  },
+  {
+    "id": "moo_mai_usdc_matic-qidao",
+    "title": "QiDao",
+    "vaultId": "mai-usdc-mimatic",
+    "type": "boost",
+    "contractAddress": "0xd1Cae9751268Eb4f93bfdE9A4788F312D2c0D045",
+    "status": "inactive",
+    "partners": ["qidao"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x580A84C73811E1839F75d86d75d88cCa0c241fF4",
+        "symbol": "QI",
+        "decimals": 18,
+        "oracleId": "QI"
+      }
+    ]
+  },
+  {
+    "id": "moo_poly_usdc-bone",
+    "title": "PolyPup",
+    "vaultId": "polypup-usdc-bone-eol",
+    "type": "boost",
+    "contractAddress": "0xa8b86b9AF7e844DA90A2e72840Ad01CCBD11EdC3",
+    "status": "inactive",
+    "partners": ["polypup"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x8Fa291074B9E28055fFdBCd4C1C1Dad67B9a130A",
+        "symbol": "mooPolypupBONE",
+        "decimals": 18,
+        "oracleId": "BONE"
+      }
+    ]
+  },
+  {
+    "id": "moo_atricrypto-bone",
+    "title": "Boneswap",
+    "vaultId": "curve-poly-atricrypto",
+    "type": "boost",
+    "contractAddress": "0xed5010eDF8812003B7d4c9a69E7AfCBceaB62F4f",
+    "status": "inactive",
+    "partners": ["boneswap"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x80244C2441779361F35803b8C711C6c8fC6054a3",
+        "symbol": "BONE",
+        "decimals": 18,
+        "oracleId": "BONEswap"
+      }
+    ]
+  },
+  {
+    "id": "moo_curve-poly-ren",
+    "title": "PolyPup",
+    "vaultId": "curve-poly-ren",
+    "type": "boost",
+    "contractAddress": "0x54c9B796a96877dee81E1A22e9DfA2488ab2675D",
+    "status": "inactive",
+    "partners": ["polypup"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x8Fa291074B9E28055fFdBCd4C1C1Dad67B9a130A",
+        "symbol": "mooPolypupBONE",
+        "decimals": 18,
+        "oracleId": "BONE"
+      }
+    ]
+  },
+  {
+    "id": "moo_matic_yeld-yeld",
+    "title": "PolyYeld",
+    "vaultId": "polyyeld-quick-wmatic-yeld-eol",
+    "type": "boost",
+    "contractAddress": "0x86EB0e64Ca632543BE37e73836d84eD612bb7C34",
+    "status": "inactive",
+    "partners": ["polyyeld"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xd0f3121A190d85dE0AB6131f2bCEcdbfcfB38891",
+        "symbol": "YELD",
+        "decimals": 18,
+        "oracleId": "YELD"
+      }
+    ]
+  },
+  {
+    "id": "moo_aave-eth",
+    "title": "Iron / Garuda / Fanatics",
+    "vaultId": "aave-eth-eol",
+    "type": "boost",
+    "contractAddress": "0x9B508ad657ed5A139D1a7c97fD84d7B7240849Cf",
+    "status": "inactive",
+    "partners": ["garuda", "ironfinance", "fanatics"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3",
+        "symbol": "mooPolygonoldBIFI",
+        "decimals": 18,
+        "oracleId": "oldBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_aave-btc",
+    "title": "Iron / Garuda / Fanatics",
+    "vaultId": "aave-wbtc-eol",
+    "type": "boost",
+    "contractAddress": "0x20948Cad130c3D7B24d27CC66163b4aaed4684F0",
+    "status": "inactive",
+    "partners": ["garuda", "ironfinance", "fanatics"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3",
+        "symbol": "mooPolygonoldBIFI",
+        "decimals": 18,
+        "oracleId": "oldBIFI"
+      }
+    ]
+  },
+  {
+    "id": "moo_sushi-jrt-eth-jarvis",
+    "title": "Jarvis",
+    "vaultId": "sushi-poly-jrt-eth-eol",
+    "assets": ["JRT", "ETH"],
+    "type": "boost",
+    "contractAddress": "0x87346455bC3216fFa5c3C8Df21d7B70183B07399",
+    "partners": ["jarvis"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x37c2a140bD1dE90D195d7CE3587fAbA7963879Fb",
+        "symbol": "JRT-ETH-KPI",
+        "decimals": 18,
+        "oracleId": "JRT-ETH-KPI"
+      }
+    ]
+  },
+  {
+    "id": "moo_quick-stmatic-matic-lido",
+    "title": "Lido on Polygon",
+    "vaultId": "quick-stmatic-matic",
+    "assets": ["stMATIC", "MATIC"],
+    "type": "boost",
+    "contractAddress": "0x20E504E52476cc0d84981b6F0562D19e33f0F188",
+    "partners": ["lido"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+        "symbol": "LDO",
+        "decimals": 18,
+        "oracleId": "LDO"
+      }
+    ]
+  }
+]
