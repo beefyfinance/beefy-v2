@@ -1,5 +1,64 @@
 [
   {
+    "id": "uniswap-cow-base-weth-kaito-rp",
+    "name": "KAITO-WETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseKAITO-WETH",
+    "tokenAddress": "0xcbBC79eE06A8371Be91a511b4Bd4268f856f3135",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x6D692E6D6212278a4aC084A82423410CC89282E8",
+    "earnedToken": "rCowUniswapBaseKAITO-WETH",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-kaito",
+    "status": "active",
+    "createdAt": 1740055214,
+    "platformId": "uniswap",
+    "assets": ["KAITO", "WETH"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-weth-kaito",
+    "name": "KAITO-WETH",
+    "type": "cowcentrated",
+    "token": "KAITO-WETH uniswap",
+    "tokenAddress": "0x2eA054c177Abd8b8C87704EaA08680DB5C6d805c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x4200000000000000000000000000000000000006",
+      "0x98d0baa52b2D063E780DE12F615f963Fe8537553"
+    ],
+    "earnContractAddress": "0xcbBC79eE06A8371Be91a511b4Bd4268f856f3135",
+    "earnedToken": "cowUniswapBaseKAITO-WETH",
+    "earnedTokenAddress": "0xcbBC79eE06A8371Be91a511b4Bd4268f856f3135",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-weth-kaito",
+    "status": "active",
+    "createdAt": 1740055214,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["KAITO", "WETH"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "morpho-seamless-weth",
     "name": "Seamless WETH",
     "token": "WETH",
