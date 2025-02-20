@@ -116,7 +116,7 @@ export class SolidlyPool implements IUniswapLikePool {
 
   async updateAllData() {
     // For solidly pools we just update pair data on the base pool.
-    this.updatePairData();
+    await this.updatePairData();
   }
 
   removeLiquidity(amount: BigNumber, updateReserves: boolean = false): RemoveLiquidityResult {
