@@ -1654,48 +1654,6 @@
     ]
   },
   {
-    "id": "convex-dgneth-eth+",
-    "name": "dgnETH/ETH+",
-    "type": "standard",
-    "token": "dgnETHETH+",
-    "tokenAddress": "0x021cF6B7ebb8c8EFcF21396Eb4c94658976172c7",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnContractAddress": "0x127ee8a1D37cDFa3922aa75C959189682c18c6be",
-    "earnedToken": "mooCurve_dgnETH-ETH+",
-    "earnedTokenAddress": "0x127ee8a1D37cDFa3922aa75C959189682c18c6be",
-    "oracle": "lps",
-    "oracleId": "convex-dgneth-eth+",
-    "status": "eol",
-    "createdAt": 1720426690,
-    "retireReason": "rewards",
-    "retiredAt": 1731017785,
-    "platformId": "convex",
-    "assets": ["dgnETH", "ETH+"],
-    "migrationIds": ["ethereum-convex", "ethereum-curve"],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "XXX",
-    "removeLiquidityUrl": "XXX",
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0x021cF6B7ebb8c8EFcF21396Eb4c94658976172c7",
-        "methods": [
-          {
-            "type": "dynamic-deposit",
-            "target": "0x021cF6B7ebb8c8EFcF21396Eb4c94658976172c7",
-            "coins": [
-              "0x005F893EcD7bF9667195642f7649DA8163e23658",
-              "0xE72B141DF173b999AE7c1aDcbF60Cc9833Ce56a8"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "curve-eusd-usdc",
     "name": "eUSD/USDC",
     "type": "standard",
