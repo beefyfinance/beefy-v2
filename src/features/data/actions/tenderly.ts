@@ -138,8 +138,9 @@ export async function captureTransactionsFromSteps(
   const result = await withTimeoutSignal(10000, (signal: AbortSignal) =>
     api.withProviderWrapper(wrapper, async () => {
       for (const step of steps) {
+        const callsCompleted = calls.length;
         await dispatch(step.action);
-        while (inProgress.size > 0) {
+        while (calls.length <= callsCompleted) {
           signal.throwIfAborted();
           await sleep(100);
         }
@@ -152,7 +153,7 @@ export async function captureTransactionsFromSteps(
     })
   );
 
-  if (result.length !== calls.length) {
+  if (result.length !== steps.length) {
     throw new Error(`Did not capture all transactions`);
   }
 

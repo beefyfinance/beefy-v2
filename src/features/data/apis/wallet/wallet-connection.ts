@@ -443,10 +443,19 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     const onboard = this.getOnboard();
     const wallet = onboard.state.get().wallets[0];
-    const provider: EIP1193Provider = wallet.provider;
+    const realProvider: EIP1193Provider = wallet.provider;
+
+    /*
+     * this is a hack to extract calls to the provider for use in Tenderly simulations
+     * withProviderWrapper(), which sets providerWrapper, is only called from Tenderly actions
+     * otherwise providerWrapper is undefined and the original unmodified provider is used
+     */
+    const wrappedProvider = this.providerWrapper
+      ? this.providerWrapper(realProvider)
+      : realProvider;
 
     return createWalletClient({
-      transport: custom(provider),
+      transport: custom(wrappedProvider),
     });
   }
 
