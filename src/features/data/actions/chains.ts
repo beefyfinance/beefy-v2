@@ -3,6 +3,7 @@ import { getConfigApi } from '../apis/instances';
 import type { ChainConfig } from '../apis/config-types';
 import type { ChainEntity, ChainId } from '../entities/chain';
 import { isObject } from 'lodash-es';
+import { rpcClientManager } from '../apis/rpc-contract/rpc-manager';
 
 export interface FulfilledPayload {
   chainConfigs: ChainConfig[];
@@ -65,6 +66,9 @@ export const fetchChainConfigs = createAsyncThunk<FulfilledPayload>(
     const api = await getConfigApi();
     const chainConfigs = await api.fetchChainConfigs();
     const localRpcs = fetchLocalStoredRpcs();
+    for (const chain of chainConfigs) {
+      rpcClientManager.setClients(chain, localRpcs[chain.id] || chain.rpc);
+    }
     return { chainConfigs, localRpcs };
   }
 );

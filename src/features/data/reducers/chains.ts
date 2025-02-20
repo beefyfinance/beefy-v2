@@ -9,7 +9,6 @@ import type { NormalizedEntity } from '../utils/normalized-entity';
 import { omit } from 'lodash-es';
 import type { Draft } from 'immer';
 import { djb2Hash } from '../utils/string-utils';
-import { rpcClientManager } from '../apis/rpc-contract/rpc-manager';
 
 type ActiveRpcConfig = {
   hash: number;
@@ -78,7 +77,6 @@ export const chainsSlice = createSlice({
           hash: djb2Hash(JSON.stringify(rpcs)),
           rpcs,
         };
-        rpcClientManager.setClients(chain, rpcs);
       }
     });
 

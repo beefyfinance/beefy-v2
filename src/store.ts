@@ -18,7 +18,6 @@ import { transactMiddleware } from './features/data/middlewares/transact';
 import { filteredVaultsMiddleware } from './features/data/middlewares/filtered-vaults';
 import { walletMiddleware } from './features/data/middlewares/wallet';
 import { analyticsMiddleware } from './features/data/middlewares/analytics';
-import { chainMiddleware } from './features/data/middlewares/chains';
 
 let middlewares: Middleware[] = [];
 
@@ -40,7 +39,6 @@ if (!featureFlag_replayReduxActions()) {
     filteredVaultsMiddleware,
     walletMiddleware,
     analyticsMiddleware,
-    chainMiddleware,
   ];
 }
 
