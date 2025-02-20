@@ -72,7 +72,7 @@ import type { IBridgeQuote } from '../apis/bridge/providers/provider-types';
 import type { BeefyAnyBridgeConfig } from '../apis/config-types';
 import { transactActions } from '../reducers/wallet/transact';
 import { BeefyCommonBridgeAbi } from '../../../config/abi/BeefyCommonBridgeAbi';
-import { BeezyZapRouterPayableExecuteAbi } from '../../../config/abi/BeefyZapRouterAbi';
+import { BeefyZapRouterAbi } from '../../../config/abi/BeefyZapRouterAbi';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
 import { selectTransactSelectedQuote, selectTransactSlippage } from '../selectors/transact';
 import { AngleMerklDistributorAbi } from '../../../config/abi/AngleMerklDistributor';
@@ -1376,31 +1376,17 @@ const zapExecuteOrder = (
     const gasPrices = await getGasPriceOptions(chain);
     const nativeInput = castedOrder.inputs.find(input => input.token === ZERO_ADDRESS);
 
-    const contract = fetchWalletContract(zap.router, BeezyZapRouterPayableExecuteAbi, walletClient);
-
-    const buildTransaction = () => {
-      if (nativeInput) {
-        const options = {
-          ...gasPrices,
-          account: castedOrder.user,
-          chain: publicClient.chain,
-          value: nativeInput ? nativeInput.amount : undefined,
-        };
-        console.debug('executeOrder payable', { order: order, steps, options });
-        return contract.write.executeOrder([castedOrder, castedSteps], options);
-      } else {
-        const options = {
-          ...gasPrices,
-          account: castedOrder.user,
-          chain: publicClient.chain,
-        };
-        console.debug('executeOrder', { order: castedOrder, steps, options });
-        return contract.write.executeOrder([castedOrder, castedSteps], options);
-      }
+    const contract = fetchWalletContract(zap.router, BeefyZapRouterAbi, walletClient);
+    const options = {
+      ...gasPrices,
+      account: castedOrder.user,
+      chain: publicClient.chain,
+      value: nativeInput ? nativeInput.amount : undefined,
     };
 
     txWallet(dispatch);
-    const transaction = buildTransaction();
+    console.debug('executeOrder', { order: castedOrder, steps: castedSteps, options });
+    const transaction = contract.write.executeOrder([castedOrder, castedSteps], options);
 
     bindTransactionEvents(
       dispatch,
