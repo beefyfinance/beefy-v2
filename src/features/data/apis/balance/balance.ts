@@ -164,7 +164,9 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       });
     });
 
-    res.tokens.push(this.nativeTokenFormatter(nativeResults, nativeTokens[0]));
+    if (nativeTokens.length > 1) {
+      res.tokens.push(this.nativeTokenFormatter(nativeResults, nativeTokens[0]));
+    }
 
     return res;
   }

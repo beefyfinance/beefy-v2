@@ -9,11 +9,7 @@ import {
   featureFlag_disableKyber,
   featureFlag_disableOdos,
   featureFlag_disableOneInch,
-  featureFlag_getContractDataApiChunkSize,
 } from '../utils/feature-flags';
-import { createPublicClient, type PublicClient } from 'viem';
-import { buildViemChain } from './viem/chains';
-import { makeCustomFallbackTransport } from './viem/transports';
 import type { ChainEntity, ChainId } from '../entities/chain';
 
 export const getBeefyApi = createDependencyFactory(
@@ -102,22 +98,6 @@ export const getWalletConnectionApi = createDependencyInitializerFactory(
   async (options: WalletConnectionOptions, { WalletConnectionApi }) =>
     new WalletConnectionApi(options),
   () => import('./wallet/wallet-connection')
-);
-
-export const getPublicClient = createDependencyFactoryWithCacheByChain(
-  async (chain): Promise<PublicClient> => {
-    return createPublicClient({
-      batch: {
-        multicall: {
-          batchSize: featureFlag_getContractDataApiChunkSize(chain.id),
-          wait: 100,
-        },
-      },
-      chain: buildViemChain(chain),
-      transport: makeCustomFallbackTransport(chain.rpc),
-    });
-  },
-  async () => undefined
 );
 
 export const getGasPricer = createDependencyFactoryWithCacheByChain(
