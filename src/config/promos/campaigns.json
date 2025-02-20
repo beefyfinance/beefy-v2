@@ -28,7 +28,7 @@
     }
   },
   "zap-v3": {
-    "title": "Beefy x Optimism Governance Fund",
+    "title": "Beefy × Optimism Governance Fund",
     "tag": {
       "text": "Zap Boost",
       "icon": "zap"
@@ -41,7 +41,7 @@
     }
   },
   "offchain-zap-v3": {
-    "title": "Beefy x Optimism Governance Fund",
+    "title": "Beefy × Optimism Governance Fund",
     "tag": {
       "text": "Zap Boost",
       "icon": "zap"
@@ -54,7 +54,7 @@
     }
   },
   "offchain-mode-grant": {
-    "title": "Beefy x Mode Governance Fund",
+    "title": "Beefy × Mode Governance Fund",
     "tag": {
       "text": "Mode Grant"
     },
@@ -89,7 +89,7 @@
     }
   },
   "optimism-grant": {
-    "title": "Beefy x Optimism Governance Fund",
+    "title": "Beefy × Optimism Governance Fund",
     "description": "Earn extra incentives awarded to Beefy products on the Superchain through the first Beefy Optimism Governance Fund grant. Beefy users earn additional $OP tokens for trying out selected products. Rewards accrue linearly over time, depending on the user's TVL. Simply use the 'Boost Vault' button in the BOOST module to enter the boost, and then manually claim your $OP rewards whenever you're ready.",
     "learn": "https://beefy.com/articles/beefy-helps-grow-the-optimism-community-with-a-650-000-op-grant/",
     "social": {
@@ -98,7 +98,7 @@
     }
   },
   "airdrop-gnosis-safe": {
-    "title": "Beefy x Safe",
+    "title": "Beefy × Safe",
     "tag": {
       "text": "SafeBoost"
     },
