@@ -1,5 +1,64 @@
 [
   {
+    "id": "uniswap-cow-base-usdc-kaito-rp",
+    "name": "KAITO-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseKAITO-USDC",
+    "tokenAddress": "0x246dDB057d237Cc5059a0588C4E66cfDFc774B7b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xA986F852Bdb554e8f42ab55D5769C69708E4031E",
+    "earnedToken": "rCowUniswapBaseKAITO-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-kaito",
+    "status": "active",
+    "createdAt": 1740092905,
+    "platformId": "uniswap",
+    "assets": ["KAITO", "USDC"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-usdc-kaito",
+    "name": "KAITO-USDC",
+    "type": "cowcentrated",
+    "token": "KAITO-USDC uniswap",
+    "tokenAddress": "0xce9a14706402f56605D1595362a4D081a2ea0c4e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "0x98d0baa52b2D063E780DE12F615f963Fe8537553"
+    ],
+    "earnContractAddress": "0x246dDB057d237Cc5059a0588C4E66cfDFc774B7b",
+    "earnedToken": "cowUniswapBaseKAITO-USDC",
+    "earnedTokenAddress": "0x246dDB057d237Cc5059a0588C4E66cfDFc774B7b",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-usdc-kaito",
+    "status": "active",
+    "createdAt": 1740092905,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["KAITO", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-weth-kaito-rp",
     "name": "KAITO-WETH Reward Pool",
     "type": "gov",
