@@ -1,12 +1,12 @@
 import { BigNumber } from 'bignumber.js';
 import type { TotalApy } from '../features/data/reducers/apy';
-import { toNumber } from 'web3-utils';
 import type { ReactNode } from 'react';
 import type { AllValuesAs } from '../features/data/utils/types-utils';
 import { type BigNumberish, toBigNumber } from './big-number';
 import type { SerializedError } from '@reduxjs/toolkit';
 import { isString, padStart } from 'lodash-es';
 import { strictEntries } from './object';
+import { hexToBigInt } from 'viem';
 
 export enum Scale {
   None = 0,
@@ -328,11 +328,11 @@ export function maybeHexToNumber(input: number | string | unknown): number {
   if (typeof input === 'number') {
     return input;
   }
-
   if (typeof input === 'string') {
-    const maybeNumber = toNumber(input, false);
-    if (typeof maybeNumber === 'number') {
-      return maybeNumber;
+    const maybeNumber = hexToBigInt(input as `0x${string}`, { signed: false });
+    const number = Number(maybeNumber);
+    if (BigInt(number) === maybeNumber) {
+      return number;
     }
 
     throw new Error(`${typeof input} "${input}" is too large to be a number.`);

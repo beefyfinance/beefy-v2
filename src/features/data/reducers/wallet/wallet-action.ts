@@ -1,7 +1,6 @@
 import { type BigNumber } from 'bignumber.js';
 import { WALLET_ACTION, WALLET_ACTION_RESET } from '../../actions/wallet-actions';
 import type { TokenEntity } from '../../entities/token';
-import type { EventLog } from 'web3-core';
 import type { VaultEntity } from '../../entities/vault';
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types';
 import type { BeefyAnyBridgeConfig } from '../../apis/config-types';
@@ -9,14 +8,6 @@ import type { BoostEntity } from '../../entities/boost';
 import type { Hash, TransactionReceipt } from 'viem';
 
 export type TrxHash = string;
-export type TrxReceipt = {
-  readonly transactionHash: string;
-  readonly from: string;
-  readonly to: string;
-  readonly events?: {
-    [eventName: string]: EventLog | EventLog[];
-  };
-};
 export type TrxError = {
   message: string;
   friendlyMessage?: string;
