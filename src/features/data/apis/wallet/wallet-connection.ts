@@ -17,13 +17,12 @@ import { customInjectedWallets } from './custom-injected-wallets';
 import appIcon from '../../../../images/bifi-logos/header-logo-notext.svg';
 import appLogo from '../../../../images/bifi-logos/header-logo.svg';
 import { getNetworkSrc } from '../../../../helpers/networkSrc';
-import type { AbstractProvider } from 'web3-core';
 import { featureFlag_walletConnectChainId } from '../../utils/feature-flags';
 import type { WalletHelpers } from '@web3-onboard/common/dist/types';
 import type { WalletConnectOptions } from '@web3-onboard/walletconnect/dist/types';
 import { isDefined } from '../../utils/array-utils';
 import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url';
-import { createWalletClient, custom, isHex, numberToHex } from 'viem';
+import { createWalletClient, custom, isHex, numberToHex, type EIP1193Provider } from 'viem';
 
 const walletConnectImages: Record<string, string> = {
   '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489': fireblocksLogo,
@@ -33,7 +32,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | undefined;
   protected onboardWalletInitializers: WalletInit[] | undefined;
   protected ignoreDisconnectFromAutoConnect = false;
-  protected providerWrapper: ((provider: AbstractProvider) => AbstractProvider) | undefined;
+  protected providerWrapper: ((provider: EIP1193Provider) => EIP1193Provider) | undefined;
 
   constructor(protected options: WalletConnectionOptions) {
     this.onboard = undefined;
@@ -444,7 +443,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     const onboard = this.getOnboard();
     const wallet = onboard.state.get().wallets[0];
-    const provider = wallet.provider;
+    const provider: EIP1193Provider = wallet.provider;
 
     return createWalletClient({
       transport: custom(provider),
@@ -452,7 +451,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   }
 
   public async withProviderWrapper<T>(
-    wrapFn: (provider: AbstractProvider) => AbstractProvider,
+    wrapFn: (provider: EIP1193Provider) => EIP1193Provider,
     callback: () => Promise<T>
   ) {
     try {

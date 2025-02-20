@@ -72,10 +72,7 @@ import type { IBridgeQuote } from '../apis/bridge/providers/provider-types';
 import type { BeefyAnyBridgeConfig } from '../apis/config-types';
 import { transactActions } from '../reducers/wallet/transact';
 import { BeefyCommonBridgeAbi } from '../../../config/abi/BeefyCommonBridgeAbi';
-import {
-  BeefyZapRouterAbi,
-  BeezyZapRouterPayableExecuteAbi,
-} from '../../../config/abi/BeefyZapRouterAbi';
+import { BeezyZapRouterPayableExecuteAbi } from '../../../config/abi/BeefyZapRouterAbi';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
 import { selectTransactSelectedQuote, selectTransactSlippage } from '../selectors/transact';
 import { AngleMerklDistributorAbi } from '../../../config/abi/AngleMerklDistributor';
@@ -253,7 +250,7 @@ const approval = (token: TokenErc20, spenderAddress: string, amount: BigNumber) 
     }
 
     const walletApi = await getWalletConnectionApi();
-    const client = rpcClientManager.getBatchClient(token.chainId);
+    const publicClient = rpcClientManager.getBatchClient(token.chainId);
     const walletClient = await walletApi.getConnectedViemClient();
     const viemContract = fetchWalletContract(token.address, ERC20Abi, walletClient);
     const native = selectChainNativeToken(state, token.chainId);
@@ -269,14 +266,14 @@ const approval = (token: TokenErc20, spenderAddress: string, amount: BigNumber) 
       {
         account: address as Address,
         ...gasPrices,
-        chain: walletClient.chain,
+        chain: publicClient.chain,
       }
     );
 
     bindTransactionEvents(
       dispatch,
       transaction,
-      client,
+      publicClient,
       { spender: spenderAddress, amount: fromWei(approvalAmountWei, token.decimals), token: token },
       {
         walletAddress: address,
@@ -302,8 +299,6 @@ const migrateUnstake = (
       return;
     }
 
-    const walletApi = await getWalletConnectionApi();
-    const walletClient = await walletApi.getConnectedViemClient();
     const publicClient = rpcClientManager.getBatchClient(vault.chainId);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const chain = selectChainById(state, vault.chainId);
@@ -312,7 +307,7 @@ const migrateUnstake = (
     const transaction = unstakeCall({
       account: address as Address,
       ...gasPrices,
-      chain: walletClient.chain,
+      chain: publicClient.chain,
     });
 
     bindTransactionEvents(
@@ -363,20 +358,20 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
           value: bigNumberToBigInt(rawAmount),
           ...gasPrices,
           account: address as Address,
-          chain: viemClient.chain,
+          chain: publicClient.chain,
         });
       } else {
         if (max) {
           return contract.write.depositAll({
             account: address as Address,
             ...gasPrices,
-            chain: viemClient.chain,
+            chain: publicClient.chain,
           });
         } else {
           return contract.write.deposit([bigNumberToBigInt(rawAmount)], {
             account: address as Address,
             ...gasPrices,
-            chain: viemClient.chain,
+            chain: publicClient.chain,
           });
         }
       }
@@ -437,7 +432,7 @@ const v3Deposit = (vault: VaultCowcentrated, amountToken0: BigNumber, amountToke
       {
         account: address as Address,
         ...gasPrices,
-        chain: walletClient.chain,
+        chain: publicClient.chain,
       }
     );
 
@@ -499,13 +494,13 @@ const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) =
           return contract.write.withdrawAllBNB({
             account: address as Address,
             ...gasPrices,
-            chain: walletClient.chain,
+            chain: publicClient.chain,
           });
         } else {
           return contract.write.withdrawBNB([bigNumberToBigInt(sharesToWithdrawWei)], {
             account: address as Address,
             ...gasPrices,
-            chain: walletClient.chain,
+            chain: publicClient.chain,
           });
         }
       } else {
@@ -513,13 +508,13 @@ const withdraw = (vault: VaultStandard, oracleAmount: BigNumber, max: boolean) =
           return contract.write.withdrawAll({
             account: address as Address,
             ...gasPrices,
-            chain: walletClient.chain,
+            chain: publicClient.chain,
           });
         } else {
           return contract.write.withdraw([bigNumberToBigInt(sharesToWithdrawWei)], {
             account: address as Address,
             ...gasPrices,
-            chain: walletClient.chain,
+            chain: publicClient.chain,
           });
         }
       }
@@ -576,7 +571,7 @@ const v3Withdraw = (vault: VaultCowcentrated, withdrawAmount: BigNumber, max: bo
         return contract.write.withdrawAll([BigInt(minOutputsWei[0]), BigInt(minOutputsWei[1])], {
           account: address as Address,
           ...gasPrices,
-          chain: walletClient.chain,
+          chain: publicClient.chain,
         });
       } else {
         return contract.write.withdraw(
@@ -584,7 +579,7 @@ const v3Withdraw = (vault: VaultCowcentrated, withdrawAmount: BigNumber, max: bo
           {
             account: address as Address,
             ...gasPrices,
-            chain: walletClient.chain,
+            chain: publicClient.chain,
           }
         );
       }
@@ -634,7 +629,7 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     const transaction = contract.write.stake([bigNumberToBigInt(rawAmount)], {
       account: address as Address,
       ...gasPrices,
-      chain: walletClient.chain,
+      chain: publicClient.chain,
     });
 
     bindTransactionEvents(
@@ -678,7 +673,7 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     const transaction = contract.write.withdraw([bigNumberToBigInt(rawAmount)], {
       account: address as Address,
       ...gasPrices,
-      chain: walletClient.chain,
+      chain: publicClient.chain,
     });
 
     bindTransactionEvents(
@@ -730,7 +725,7 @@ const claimGovVault = (vault: VaultGov) => {
     const transaction = contract.write.getReward({
       account: address as Address,
       ...gasPrices,
-      chain: walletClient.chain,
+      chain: publicClient.chain,
     });
 
     bindTransactionEvents(
@@ -781,12 +776,12 @@ const exitGovVault = (vault: VaultGov) => {
       ? contract.write.exit({
           account: address as Address,
           ...gasPrices,
-          chain: walletClient.chain,
+          chain: publicClient.chain,
         })
       : contract.write.getReward({
           account: address as Address,
           ...gasPrices,
-          chain: walletClient.chain,
+          chain: publicClient.chain,
         });
 
     bindTransactionEvents(
@@ -831,7 +826,7 @@ const claimBoost = (boostId: BoostEntity['id']) => {
     const transaction = contract.write.getReward({
       account: address as Address,
       ...gasPrices,
-      chain: walletClient.chain,
+      chain: publicClient.chain,
     });
 
     bindTransactionEvents(
@@ -889,12 +884,12 @@ const exitBoost = (boostId: BoostEntity['id']) => {
       ? contract.write.exit({
           account: address as Address,
           ...gasPrices,
-          chain: walletClient.chain,
+          chain: publicClient.chain,
         })
       : contract.write.getReward({
           account: address as Address,
           ...gasPrices,
-          chain: walletClient.chain,
+          chain: publicClient.chain,
         });
 
     bindTransactionEvents(
@@ -979,7 +974,7 @@ const stakeBoost = (boostId: BoostEntity['id'], amount: BigNumber) => {
     const transaction = contract.write.stake([bigNumberToBigInt(rawAmount)], {
       account: address as Address,
       ...gasPrices,
-      chain: walletClient.chain,
+      chain: publicClient.chain,
     });
 
     bindTransactionEvents(
@@ -1056,7 +1051,7 @@ const unstakeBoost = (boostId: BoostEntity['id'], amount: BigNumber) => {
     const transaction = contract.write.withdraw([bigNumberToBigInt(rawAmount)], {
       account: address as Address,
       ...gasPrices,
-      chain: walletClient.chain,
+      chain: publicClient.chain,
     });
 
     bindTransactionEvents(
@@ -1105,7 +1100,7 @@ const mintDeposit = (
     const txProps: TxWriteProps = {
       account: address as Address,
       ...gasPrices,
-      chain: walletClient.chain,
+      chain: publicClient.chain,
     };
 
     const buildCall = async (args: TxWriteProps) => {
@@ -1221,7 +1216,7 @@ const burnWithdraw = (
       return contract.write.withdraw([BigInt(rawAmount)], {
         account: address as Address,
         ...gasPrices,
-        chain: walletClient.chain,
+        chain: publicClient.chain,
       });
     })();
 
@@ -1286,7 +1281,7 @@ const bridgeViaCommonInterface = (quote: IBridgeQuote<BeefyAnyBridgeConfig>) => 
         ...gasPrices,
         account: fromAddress as Address,
         value: BigInt(feeWei),
-        chain: walletClient.chain,
+        chain: publicClient.chain,
       }
     );
 
@@ -1381,28 +1376,23 @@ const zapExecuteOrder = (
     const gasPrices = await getGasPriceOptions(chain);
     const nativeInput = castedOrder.inputs.find(input => input.token === ZERO_ADDRESS);
 
-    const contract = fetchWalletContract(zap.router, BeefyZapRouterAbi, walletClient);
+    const contract = fetchWalletContract(zap.router, BeezyZapRouterPayableExecuteAbi, walletClient);
 
     const buildTransaction = () => {
       if (nativeInput) {
         const options = {
           ...gasPrices,
           account: castedOrder.user,
-          chain: walletClient.chain,
+          chain: publicClient.chain,
           value: nativeInput ? nativeInput.amount : undefined,
         };
-        const contract = fetchWalletContract(
-          zap.router,
-          BeezyZapRouterPayableExecuteAbi,
-          walletClient
-        );
         console.debug('executeOrder payable', { order: order, steps, options });
         return contract.write.executeOrder([castedOrder, castedSteps], options);
       } else {
         const options = {
           ...gasPrices,
           account: castedOrder.user,
-          chain: walletClient.chain,
+          chain: publicClient.chain,
         };
         console.debug('executeOrder', { order: castedOrder, steps, options });
         return contract.write.executeOrder([castedOrder, castedSteps], options);
@@ -1489,7 +1479,7 @@ const claimMerkl = (chainId: ChainEntity['id']) => {
       {
         account: address as Address,
         ...gasPrices,
-        chain: walletClient.chain,
+        chain: publicClient.chain,
       }
     );
 
@@ -1580,7 +1570,7 @@ const claimStellaSwap = (chainId: ChainEntity['id'], vaultId: VaultEntity['id'])
           {
             account: address as Address,
             ...gasPrices,
-            chain: walletClient.chain,
+            chain: publicClient.chain,
           }
         );
       } else {
