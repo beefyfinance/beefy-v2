@@ -1,6 +1,10 @@
 import { memo, useCallback, useMemo, useState } from 'react';
-import { useAppSelector } from '../../../../store';
-import { selectActiveChainIds, selectChainById } from '../../../../features/data/selectors/chains';
+import { useAppDispatch, useAppSelector } from '../../../../store';
+import {
+  selectActiveChainIds,
+  selectAllChainIds,
+  selectChainById,
+} from '../../../../features/data/selectors/chains';
 import { SearchableList } from '../../../SearchableList';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../Button';
@@ -12,6 +16,7 @@ import { ReactComponent as EmptyIcon } from '../../../../images/empty-state.svg'
 import { ChainListItem, ModifiedListItem, ModifiedListItemEndComponent } from './ListItems';
 import { RpcStepEnum } from './RpcModal';
 import type { ChainEntity } from '../../../../features/data/entities/chain';
+import { updateActiveRpc } from '../../../../features/data/actions/chains';
 
 const useStyles = makeStyles(styles);
 
@@ -24,8 +29,7 @@ export interface RpcStepsProps {
 export const Menu = memo<RpcStepsProps>(function Menu({ handleStep, setEditChainId }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  //change selector for updated Chains
-  const chainIds = ['bsc'];
+  const chainIds = useAppSelector(state => selectAllChainIds(state));
 
   const onSelect = useCallback(
     (chainId: ChainEntity['id']) => {
@@ -66,23 +70,24 @@ export const Edit = memo<RpcStepsProps>(function Edit({ handleStep, setEditChain
   const { t } = useTranslation();
   const classes = useStyles();
   const chain = useAppSelector(state => editChainId && selectChainById(state, editChainId));
-  const [text, setText] = useState('');
+  const [updatedRPC, setUpdatedRPC] = useState('');
 
   const isDisabled = useMemo(() => {
     const regex = /^https:\/\//;
 
-    return text.length > 7 && !regex.test(text);
-  }, [text]);
+    return updatedRPC.length > 7 && !regex.test(updatedRPC);
+  }, [updatedRPC]);
 
   const handleSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
+    setUpdatedRPC(e.target.value);
   };
 
+  const dispatch = useAppDispatch();
   const onSave = useCallback(() => {
-    //action to save  + return to menu
+    dispatch(updateActiveRpc(chain!.id, updatedRPC));
     handleStep(RpcStepEnum.Menu);
     setEditChainId(null);
-  }, [handleStep, setEditChainId]);
+  }, [dispatch, handleStep, setEditChainId, chain, updatedRPC]);
 
   if (!chain) return null;
 
@@ -95,7 +100,7 @@ export const Edit = memo<RpcStepsProps>(function Edit({ handleStep, setEditChain
         </div>
         <InputBase
           className={classes.input}
-          value={text}
+          value={updatedRPC}
           onChange={handleSearchText}
           fullWidth={true}
           placeholder={t('RpcModal-InputPlaceholder')}

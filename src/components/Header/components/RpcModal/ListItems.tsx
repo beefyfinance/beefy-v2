@@ -4,7 +4,10 @@ import type { ChainEntity } from '../../../../features/data/entities/chain';
 import { ChainIcon } from '../../../ChainIcon';
 import type { ItemInnerProps } from '../../../SearchableList/ItemInner';
 import { useAppSelector } from '../../../../store';
-import { selectChainById } from '../../../../features/data/selectors/chains';
+import {
+  selectActiveRpcUrlForChain,
+  selectChainById,
+} from '../../../../features/data/selectors/chains';
 import CloseIcon from '@material-ui/icons/Close';
 import { styles } from './styles';
 
@@ -30,8 +33,7 @@ export const ModifiedListItem = memo(function ChainListItem({
   const chain = useAppSelector(state => selectChainById(state, value));
   const classes = useStyles();
 
-  // udpate for selector
-  const modifiedURL = 'https://rpc.mevblocker.io';
+  const activeChainRpc = useAppSelector(state => selectActiveRpcUrlForChain(state, chain.id));
 
   return (
     <div>
@@ -39,7 +41,7 @@ export const ModifiedListItem = memo(function ChainListItem({
         <ChainIcon chainId={value} />
         {chain.name}
       </div>
-      <div className={classes.url}>{modifiedURL}</div>
+      <div className={classes.url}>{activeChainRpc[0]}</div>
     </div>
   );
 });
