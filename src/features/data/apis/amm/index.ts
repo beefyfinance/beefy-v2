@@ -57,6 +57,7 @@ const mapSolidly = {
   'ethereum-solidly': EthereumSolidlyPool,
   'scroll-nuri': VelodromeSolidlyPool,
   'scroll-tokan': TokanSolidlyPool,
+  'sonic-shadow': SpiritSwapV2SolidlyPool,
 } as const satisfies Record<string, typeof SolidlyPool>;
 
 export async function getUniswapLikePool(

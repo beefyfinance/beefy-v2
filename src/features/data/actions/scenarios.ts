@@ -4,29 +4,29 @@ import { selectIsWalletKnown, selectWalletAddress } from '../selectors/wallet';
 import type { PollStop } from '../utils/async-utils';
 import { createFulfilledActionCapturer, poll } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
-import { fetchAllBoosts } from './boosts';
 import { fetchChainConfigs } from './chains';
 import { fetchAllPricesAction } from './prices';
-import { fetchAllVaults, fetchVaultsLastHarvests, fetchVaultsPinnedConfig } from './vaults';
+import { fetchAllVaults, fetchVaultsLastHarvests } from './vaults';
 import { fetchAllBalanceAction } from './balance';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_noDataPolling } from '../utils/feature-flags';
 import type { BeefyStore, BeefyThunk } from '../../../redux-types';
 import { chains as chainsConfig } from '../../../config/config';
 import { initWallet } from './wallet';
-import { recomputeBoostStatus } from '../reducers/boosts';
 import { fetchPartnersConfig } from './partners';
 import { fetchAllAddressBookAction } from './tokens';
 import { fetchPlatforms } from './platforms';
 import { selectAllChainIds } from '../selectors/chains';
 import { fetchBridges } from './bridges';
 import {
-  fetchZapSwapAggregatorsAction,
-  fetchZapConfigsAction,
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
+  fetchZapConfigsAction,
+  fetchZapSwapAggregatorsAction,
 } from './zap';
 import { fetchOffChainCampaignsAction } from './rewards';
+import { initPromos } from './promos';
+import { recalculatePromoStatuses } from '../reducers/promos';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 
@@ -54,7 +54,7 @@ export async function initAppData(store: BeefyStore) {
   const chainListPromise = store.dispatch(fetchChainConfigs());
 
   // we fetch the configuration for all chain
-  const boostListPromise = store.dispatch(fetchAllBoosts());
+  const promosPromise = store.dispatch(initPromos());
   const vaultListFulfill = captureFulfill(fetchAllVaults());
 
   // we can start fetching prices right now and await them later
@@ -64,8 +64,6 @@ export async function initAppData(store: BeefyStore) {
   setTimeout(async () => {
     // we can start fetching apy, it will arrive when it wants, nothing depends on it
     store.dispatch(fetchApyAction());
-
-    store.dispatch(fetchVaultsPinnedConfig());
 
     store.dispatch(fetchPartnersConfig());
 
@@ -96,7 +94,7 @@ export async function initAppData(store: BeefyStore) {
   const addressBookPromise = store.dispatch(fetchAllAddressBookAction());
   // we need the chain list to handle the vault list
   store.dispatch((await vaultListFulfill)());
-  await boostListPromise;
+  await promosPromise;
   await addressBookPromise;
 
   // then, we work by chain
@@ -160,8 +158,8 @@ export async function initAppData(store: BeefyStore) {
 
   // recompute boost activity status
   let pollStop = poll(async () => {
-    return store.dispatch(recomputeBoostStatus());
-  }, 5 * 1000 /* every 5s */);
+    return store.dispatch(recalculatePromoStatuses());
+  }, 15 * 1000 /* every 15s */);
   pollStopFns.push(pollStop);
 
   // now set regular calls to update prices
@@ -214,7 +212,7 @@ export function manualPoll(): BeefyThunk {
     const state = getState();
     const chains = selectAllChainIds(state);
 
-    dispatch(recomputeBoostStatus());
+    dispatch(recalculatePromoStatuses());
     dispatch(fetchAllPricesAction());
     dispatch(fetchApyAction());
 

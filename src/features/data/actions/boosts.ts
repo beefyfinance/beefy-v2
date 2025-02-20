@@ -2,36 +2,16 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
 import type { TokenAllowance } from '../apis/allowance/allowance-types';
 import type { FetchAllBalancesResult } from '../apis/balance/balance-types';
-import { getAllowanceApi, getBalanceApi, getConfigApi } from '../apis/instances';
-import type { BoostEntity } from '../entities/boost';
-import type { ChainEntity } from '../entities/chain';
+import { getAllowanceApi, getBalanceApi } from '../apis/instances';
+import type { BoostPromoEntity } from '../entities/promo';
 import { selectBoostById } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
 import { selectErc20TokenByAddress } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
-import type { BoostCampaignConfig, BoostConfig, BoostPartnerConfig } from '../apis/config-types';
 import { isGovVault } from '../entities/vault';
 
-// given the list of vaults is pulled from some api at some point
-// we use the api to create an action
-// this action should return just enough data for the state to work with
-
-export interface FulfilledAllBoostsPayload {
-  boostsByChainId: Record<ChainEntity['id'], BoostConfig[]>;
-  partnersById: Record<string, BoostPartnerConfig>;
-  campaignsById: Record<string, BoostCampaignConfig>;
-}
-
-export const fetchAllBoosts = createAsyncThunk<FulfilledAllBoostsPayload>(
-  'boosts/fetchAllBoosts',
-  async () => {
-    const api = await getConfigApi();
-    return api.fetchAllBoosts();
-  }
-);
-
 interface InitBoostFormParams {
-  boostId: BoostEntity['id'];
+  boostId: BoostPromoEntity['id'];
   walletAddress: string | undefined;
 }
 
@@ -39,7 +19,7 @@ interface InitBoostFormPayload {
   walletAddress: string | undefined;
   balance: FetchAllBalancesResult;
   allowance: TokenAllowance[];
-  boost: BoostEntity;
+  boost: BoostPromoEntity;
 }
 
 export const initiateBoostForm = createAsyncThunk<

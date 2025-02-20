@@ -8,7 +8,6 @@ import type {
   ThunkMiddleware,
 } from '@reduxjs/toolkit';
 import type { ApyState } from './features/data/reducers/apy';
-import type { BoostsState } from './features/data/reducers/boosts';
 import type { ChainsState } from './features/data/reducers/chains';
 import type { FilteredVaultsState } from './features/data/reducers/filtered-vaults';
 import type { PartnersState } from './features/data/reducers/partners';
@@ -45,13 +44,14 @@ import type { VersionState } from './features/data/reducers/ui-version';
 import type { TenderlyState } from './features/data/reducers/tenderly-types';
 import type { AnalyticsState } from './features/data/reducers/analytics-types';
 import type { RewardsState } from './features/data/reducers/rewards-types';
+import type { PromosState } from './features/data/reducers/promos';
 
 export interface BeefyState {
   entities: {
     chains: ChainsState;
     tokens: TokensState;
     vaults: VaultsState;
-    boosts: BoostsState;
+    promos: PromosState;
     fees: FeesState;
     platforms: PlatformsState;
     zaps: ZapsState;

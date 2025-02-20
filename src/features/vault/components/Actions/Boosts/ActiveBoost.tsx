@@ -8,7 +8,7 @@ import {
   selectBoostById,
   selectBoostContractState,
 } from '../../../../data/selectors/boosts';
-import type { BoostEntity } from '../../../../data/entities/boost';
+import type { BoostPromoEntity } from '../../../../data/entities/promo';
 import {
   selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
@@ -26,7 +26,7 @@ import { UnstakeInput } from './ActionInputButton/UnstakeInput';
 
 const useStyles = makeStyles(styles);
 
-export function ActiveBoost({ boostId }: { boostId: BoostEntity['id'] }) {
+export function ActiveBoost({ boostId }: { boostId: BoostPromoEntity['id'] }) {
   const boost = useAppSelector(state => selectBoostById(state, boostId));
   const vault = useAppSelector(state => selectVaultById(state, boost.vaultId));
   const data = useAppSelector(state => selectBoostContractState(state, boost.id));

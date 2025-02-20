@@ -29,5 +29,17 @@
     "swapFeeNumerator": "1",
     "swapFeeDenominator": "10000",
     "getAmountOutMode": "getAmountOut"
+  },
+  {
+    "id": "sonic-shadow",
+    "name": "Shadow",
+    "type": "solidly",
+    "routerAddress": "0x1D368773735ee1E678950B7A97bcA2CafB330CDc",
+    "factoryAddress": "0x2dA25E7446A70D7be65fd4c053948BEcAA6374c8",
+    "pairInitHash": "0x4ed7aeec7c0286cad1e282dee1c391719fc17fe923b04fb0775731e413ed3554",
+    "minimumLiquidity": "1000",
+    "swapFeeNumerator": "1",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
   }
 ]

@@ -136,4 +136,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-sonic': {
     background: 'linear-gradient(90deg, rgba(16,40,60,1) 0%, rgba(254,154,76,1) 100%)',
   },
+  'vaultNetwork-berachain': {
+    backgroundColor: '#814625',
+  },
 });

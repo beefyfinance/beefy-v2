@@ -5,8 +5,6 @@ import type { BeefyState } from '../../../../../redux-types';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi';
 import { buildExecute, buildFetchBalance } from '../utils';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
-import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number';
-import { selectTokenByAddress } from '../../../selectors/tokens';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults';
 import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
 import type { Abi, Address } from 'abitype';
@@ -38,14 +36,12 @@ async function unstakeCall(
   amount: BigNumber,
   state: BeefyState
 ): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
-  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const amountInWei = toWei(amount, depositToken.decimals);
   const stakingAddress = await getStakingAddress(vault, state);
   const walletApi = await getWalletConnectionApi();
   const walletClient = await walletApi.getConnectedViemClient();
   const walletContract = fetchWalletContract(stakingAddress, abi, walletClient);
-  return (args: MigratorUnstakeProps) =>
-    walletContract.write.withdraw([bigNumberToBigInt(amountInWei)], args);
+
+  return (args: MigratorUnstakeProps) => walletContract.write.withdrawAllAndHarvest(args);
 }
 
 const abi = [
@@ -57,8 +53,8 @@ const abi = [
     type: 'function',
   },
   {
-    inputs: [{ name: 'amount', type: 'uint256' }],
-    name: 'withdraw',
+    inputs: [],
+    name: 'withdrawAllAndHarvest',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',

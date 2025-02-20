@@ -6,7 +6,7 @@ import type { TokenAllowance } from '../apis/allowance/allowance-types';
 import type { FetchAllBalancesResult } from '../apis/balance/balance-types';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { getAllowanceApi, getBalanceApi, getBeefyApi, getContractDataApi } from '../apis/instances';
-import type { BoostEntity } from '../entities/boost';
+import type { BoostPromoEntity } from '../entities/promo';
 import type { ChainEntity } from '../entities/chain';
 import type { CurrentCowcentratedRangeData, TokenEntity } from '../entities/token';
 import { isTokenErc20 } from '../entities/token';
@@ -56,7 +56,7 @@ interface ReloadBalanceAllowanceRewardsParams {
   tokens: TokenEntity[];
   spenderAddress: string;
   govVaultId?: VaultGov['id'];
-  boostId?: BoostEntity['id'];
+  boostId?: BoostPromoEntity['id'];
   walletAddress: string;
 }
 

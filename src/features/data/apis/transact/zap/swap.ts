@@ -36,8 +36,9 @@ export async function fetchZapAggregatorSwap(
     state
   );
 
-  if (swap.toAmount.lt(output.amount)) {
-    console.error({ quote, swap });
+  const quoteMin = output.amount.times(maxSlippage);
+  if (swap.toAmountMin.lt(quoteMin)) {
+    console.error('QuoteChangedError', { quote, swap });
     throw new QuoteChangedError(
       `Expected swap output amount changed between quote and execution for ${providerId}`
     );

@@ -7,7 +7,7 @@ import { StandardVaultAbi } from '../../../config/abi/StandardVaultAbi';
 import { MinterAbi } from '../../../config/abi/MinterAbi';
 import type { BeefyState, BeefyThunk } from '../../../redux-types';
 import { getOneInchApi, getWalletConnectionApi } from '../apis/instances';
-import type { BoostEntity } from '../entities/boost';
+import type { BoostPromoEntity } from '../entities/promo';
 import type { ChainEntity } from '../entities/chain';
 import type { TokenEntity, TokenErc20 } from '../entities/token';
 import { isTokenEqual, isTokenNative } from '../entities/token';
@@ -106,7 +106,7 @@ type TxRefreshOnSuccess = {
   spenderAddress: string;
   tokens: TokenEntity[];
   govVaultId?: VaultEntity['id'];
-  boostId?: BoostEntity['id'];
+  boostId?: BoostPromoEntity['id'];
   minterId?: MinterEntity['id'];
   vaultId?: VaultEntity['id'];
   migrationId?: MigrationConfig['id'];
@@ -801,7 +801,7 @@ const exitGovVault = (vault: VaultGov) => {
   });
 };
 
-const claimBoost = (boostId: BoostEntity['id']) => {
+const claimBoost = (boostId: BoostPromoEntity['id']) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -851,7 +851,7 @@ const claimBoost = (boostId: BoostEntity['id']) => {
   });
 };
 
-const exitBoost = (boostId: BoostEntity['id']) => {
+const exitBoost = (boostId: BoostPromoEntity['id']) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -915,7 +915,7 @@ const exitBoost = (boostId: BoostEntity['id']) => {
 };
 
 export const startStakeBoostSteps = (
-  boostId: BoostEntity['id'],
+  boostId: BoostPromoEntity['id'],
   t: TFunction,
   amount: BigNumber
 ) => {
@@ -947,7 +947,7 @@ export const startStakeBoostSteps = (
   });
 };
 
-const stakeBoost = (boostId: BoostEntity['id'], amount: BigNumber) => {
+const stakeBoost = (boostId: BoostPromoEntity['id'], amount: BigNumber) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();
@@ -994,7 +994,7 @@ const stakeBoost = (boostId: BoostEntity['id'], amount: BigNumber) => {
 };
 
 export const startUnstakeBoostSteps = (
-  boostId: BoostEntity['id'],
+  boostId: BoostPromoEntity['id'],
   t: TFunction,
   amount: BigNumber,
   max: boolean
@@ -1025,7 +1025,7 @@ export const startUnstakeBoostSteps = (
   });
 };
 
-const unstakeBoost = (boostId: BoostEntity['id'], amount: BigNumber) => {
+const unstakeBoost = (boostId: BoostPromoEntity['id'], amount: BigNumber) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
     const state = getState();

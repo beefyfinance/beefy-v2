@@ -7,7 +7,7 @@ import type {
 } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import { BigNumber } from 'bignumber.js';
-import type { BoostEntity } from '../../entities/boost';
+import type { BoostPromoEntity } from '../../entities/promo';
 import { chunk, pick, sortBy } from 'lodash-es';
 import type {
   BoostContractData,
@@ -47,8 +47,8 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     govVaults: VaultGov[],
     govVaultsMulti: VaultGovMulti[],
     cowVaults: VaultCowcentrated[],
-    boosts: BoostEntity[],
-    boostsMulti: BoostEntity[]
+    boosts: BoostPromoEntity[],
+    boostsMulti: BoostPromoEntity[]
   ): Promise<FetchAllContractDataResult> {
     const multicallContract = fetchContract(
       this.chain.appMulticallContractAddress,
@@ -247,8 +247,17 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     } satisfies CowVaultContractData;
   }
 
-  protected boostFormatter(state: BeefyState, result: BoostRawContractData, boost: BoostEntity) {
-    const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
+  protected boostFormatter(
+    state: BeefyState,
+    result: BoostRawContractData,
+    boost: BoostPromoEntity
+  ) {
+    const reward = boost.rewards[0];
+    if (!reward) {
+      throw new Error(`Boost ${boost.id} has no rewards`);
+    }
+
+    const earnedToken = selectTokenByAddress(state, reward.chainId, reward.address);
     const vault = selectVaultById(state, boost.vaultId);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const periodFinish = this.periodFinishToDate(result.periodFinish?.toString(10));
@@ -274,7 +283,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
   protected boostFormatterMulti(
     state: BeefyState,
     result: GovVaultMultiRawContractData,
-    boost: BoostEntity
+    boost: BoostPromoEntity
   ): BoostContractData {
     const rewards: BoostRewardContractData[] = [];
     const now = new Date();
@@ -308,28 +317,31 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       });
     }
 
-    // Make sure the earned token is included in the rewards
-    if (
-      rewards.length === 0 ||
-      !rewards.some(reward => reward.token.address === boost.earnedTokenAddress)
-    ) {
-      const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
-      if (featureFlag_simulateLiveBoost(boost.id)) {
-        rewards.push({
-          token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
-          rewardRate: new BigNumber('0.5'),
-          periodFinish: addDays(new Date(), 7),
-          isPreStake: false,
-          index: -1,
-        });
-      } else {
-        rewards.push({
-          token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
-          rewardRate: BIG_ZERO,
-          periodFinish: undefined,
-          isPreStake: false,
-          index: -1,
-        });
+    // Make sure config rewards[] tokens are included in the results
+    const missing = boost.rewards.filter(
+      reward =>
+        !rewards.some(r => r.token.address === reward.address && r.token.chainId === reward.chainId)
+    );
+    if (missing.length > 0) {
+      for (const reward of missing) {
+        const earnedToken = selectTokenByAddress(state, reward.chainId, reward.address);
+        if (featureFlag_simulateLiveBoost(boost.id)) {
+          rewards.push({
+            token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+            rewardRate: new BigNumber('0.5'),
+            periodFinish: addDays(new Date(), 7),
+            isPreStake: false,
+            index: -1,
+          });
+        } else {
+          rewards.push({
+            token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+            rewardRate: BIG_ZERO,
+            periodFinish: undefined,
+            isPreStake: false,
+            index: -1,
+          });
+        }
       }
     }
 

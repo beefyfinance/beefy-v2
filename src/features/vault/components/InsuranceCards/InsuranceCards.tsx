@@ -24,7 +24,7 @@ export const InsuranceCards = memo<InsuraceCardProps>(function InsuranceCards({ 
     <div className={classes.container}>
       <Collapsable openByDefault={true} titleClassName={classes.title} title={t('Insurance')}>
         {isNexus && <NexusCard />}
-        <OpenCoverCard vaultId={vaultId} />
+        <OpenCoverCard />
       </Collapsable>
     </div>
   );

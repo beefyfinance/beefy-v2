@@ -1,4 +1,4 @@
-import type { BoostEntity } from '../../../../../data/entities/boost';
+import type { BoostPromoEntity } from '../../../../../data/entities/promo';
 import { type BigNumber } from 'bignumber.js';
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +7,7 @@ import { ActionInputButton, type ActionInputButtonProps } from './ActionInputBut
 import { startStakeBoostSteps } from '../../../../../data/actions/wallet-actions';
 
 export type StakeInputProps = {
-  boostId: BoostEntity['id'];
+  boostId: BoostPromoEntity['id'];
   balance: BigNumber;
   open: string | undefined;
   toggleOpen: (mode: string) => void;

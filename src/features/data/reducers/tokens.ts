@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { BigNumber } from 'bignumber.js';
 import type { Draft } from 'immer';
-import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllPricesAction } from '../actions/prices';
 import type { FetchAddressBookPayload } from '../actions/tokens';
@@ -20,12 +19,9 @@ import type {
   TokenNative,
 } from '../entities/token';
 import { isTokenErc20, isTokenNative } from '../entities/token';
-import {
-  getBoostTokenAddressFromLegacyConfig,
-  getDepositTokenFromLegacyVaultConfig,
-} from '../utils/config-hacks';
+import { getDepositTokenFromLegacyVaultConfig } from '../utils/config-hacks';
 import { fetchAllMinters } from '../actions/minters';
-import type { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
+import type { MinterConfig, VaultConfig } from '../apis/config-types';
 import { isNativeAlternativeAddress } from '../../../helpers/addresses';
 import { fetchBridgeConfig } from '../actions/bridge';
 import { entries } from '../../../helpers/object';
@@ -36,6 +32,8 @@ import {
   isCowcentratedVault,
   type VaultEntity,
 } from '../entities/vault';
+import { initPromos } from '../actions/promos';
+import type { PromoTokenRewardConfig } from '../apis/promos/types';
 
 /**
  * State containing Vault infos
@@ -129,11 +127,13 @@ export const tokensSlice = createSlice({
       }
     });
 
-    // when boost list is fetched, add all new tokens
-    builder.addCase(fetchAllBoosts.fulfilled, (sliceState, action) => {
-      for (const [chainId, boosts] of entries(action.payload.boostsByChainId)) {
-        for (const boost of boosts) {
-          addBoostToState(sliceState, chainId, boost);
+    // when promos list is fetched, add all new tokens
+    builder.addCase(initPromos.fulfilled, (sliceState, action) => {
+      for (const promo of action.payload.promos) {
+        for (const reward of promo.rewards) {
+          if (reward.type === 'token') {
+            addPromoRewardTokenToState(sliceState, promo.chainId, reward);
+          }
         }
       }
     });
@@ -391,25 +391,25 @@ function tempFilterRisks(risks: string[]) {
   return risks.filter(risk => risk === 'NO_TIMELOCK');
 }
 
-function addBoostToState(
+function addPromoRewardTokenToState(
   sliceState: Draft<TokensState>,
   chainId: ChainEntity['id'],
-  apiBoost: BoostConfig
+  promoReward: PromoTokenRewardConfig
 ) {
-  const chainState = getOrCreateTokensChainState(sliceState, chainId);
-  const tokenAddress = getBoostTokenAddressFromLegacyConfig(apiBoost);
+  const chainState = getOrCreateTokensChainState(sliceState, promoReward.chainId || chainId);
+  const tokenAddress = promoReward.address;
   const addressKey = tokenAddress.toLowerCase();
 
   // Add if it does not exist already
   if (chainState.byAddress[addressKey] === undefined) {
     const token: TokenErc20 = {
-      id: apiBoost.earnedToken,
+      id: promoReward.symbol,
       type: 'erc20',
       chainId: chainId,
-      address: apiBoost.earnedTokenAddress,
-      oracleId: apiBoost.earnedOracleId,
-      decimals: apiBoost.earnedTokenDecimals,
-      symbol: apiBoost.earnedToken,
+      address: promoReward.address,
+      oracleId: promoReward.oracleId,
+      decimals: promoReward.decimals,
+      symbol: promoReward.symbol,
       buyUrl: undefined,
       description: undefined,
       website: undefined,

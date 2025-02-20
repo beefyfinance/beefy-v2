@@ -4,8 +4,8 @@ import type { TokenEntity } from '../../entities/token';
 import type { VaultEntity } from '../../entities/vault';
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types';
 import type { BeefyAnyBridgeConfig } from '../../apis/config-types';
-import type { BoostEntity } from '../../entities/boost';
 import type { Hash, TransactionReceipt } from 'viem';
+import type { BoostPromoEntity } from '../../entities/promo';
 
 export type TrxHash = string;
 export type TrxError = {
@@ -40,7 +40,7 @@ export type BridgeAdditionalData = BaseAdditionalData & {
 
 export type BoostAdditionalData = BaseAdditionalData & {
   type: 'boost';
-  boostId: BoostEntity['id'];
+  boostId: BoostPromoEntity['id'];
   walletAddress: string;
 };
 

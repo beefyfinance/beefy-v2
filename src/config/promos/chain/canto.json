@@ -1,0 +1,21 @@
+[
+  {
+    "id": "moo_velocimeterv2-wcanto-scanto-scanto",
+    "title": "sCANTO",
+    "vaultId": "velocimeterv2-wcanto-scanto",
+    "assets": ["sCANTO", "CANTO"],
+    "tokenAddress": "0x798C8c08E1B2Dd39C1133fe081F26CC0ee9C946E",
+    "type": "boost",
+    "contractAddress": "0x405EE7F4f067604b787346bC22ACb66b06b15A4B",
+    "partners": ["scanto"],
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xFf0BAF077e8035A3dA0dD2abeCECFbd98d8E63bE",
+        "symbol": "BLOTR",
+        "decimals": 18,
+        "oracleId": "BLOTR"
+      }
+    ]
+  }
+]

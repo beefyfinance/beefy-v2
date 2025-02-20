@@ -7,15 +7,15 @@ import {
   chainIds,
   excludeChains,
   excludedChainIds,
-  getBoostsForChain,
+  getPromosForChain,
   getVaultsForChain,
 } from './common/config';
 import { getStrategyIds } from './common/strategies';
 import { StratAbi } from '../src/config/abi/StrategyAbi';
 import { StandardVaultAbi } from '../src/config/abi/StandardVaultAbi';
 import platforms from '../src/config/platforms.json';
-import partners from '../src/config/boost/partners.json';
-import campaigns from '../src/config/boost/campaigns.json';
+import partners from '../src/config/promos/partners.json';
+import campaigns from '../src/config/promos/campaigns.json';
 import pointProviders from '../src/config/points.json';
 import type { PlatformType, VaultConfig } from '../src/features/data/apis/config-types';
 import partition from 'lodash/partition';
@@ -102,6 +102,7 @@ const nonHarvestOnDepositPools = [
   'compound-op-usdc',
   'compound-op-eth',
   'compound-base-usdc',
+  'compound-base-aero',
   'nuri-cow-scroll-usdc-scr-vault',
   'tokan-wbtc-weth',
   'aero-cow-usdz-cbbtc-vault',
@@ -216,7 +217,7 @@ const validatePools = async () => {
 };
 
 const validateSingleChain = async (chainId, uniquePoolId) => {
-  let [pools, boosts] = await Promise.all([getVaultsForChain(chainId), getBoostsForChain(chainId)]);
+  let [pools, promos] = await Promise.all([getVaultsForChain(chainId), getPromosForChain(chainId)]);
 
   console.log(`Validating ${pools.length} pools in ${chainId}...`);
 
@@ -434,96 +435,81 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   });
 
   // Boosts
-  const seenBoostIds = new Set();
-  boosts.forEach(boost => {
-    if (seenBoostIds.has(boost.id)) {
-      console.error(`Error: Boost ${boost.id}: Boost id duplicated: ${boost.id}`);
+  const seenPromoIds = new Set();
+  promos.forEach(promo => {
+    if (seenPromoIds.has(promo.id)) {
+      console.error(`Error: Promo ${promo.id}: Promo id duplicated: ${promo.id}`);
       exitCode = 1;
     }
-    seenBoostIds.add(boost.id);
+    seenPromoIds.add(promo.id);
 
-    if (!poolIds.has(boost.poolId)) {
-      console.error(`Error: Boost ${boost.id}: Boost has non-existent pool id ${boost.poolId}.`);
-      exitCode = 1;
-      return;
-    }
-
-    if ((boost.partners || []).length === 0 && !boost.campaign) {
-      console.error(`Error: Boost ${boost.id}: Boost has no partners or campaign.`);
+    if (!poolIds.has(promo.vaultId)) {
+      console.error(`Error: Promo ${promo.id}: Promo has non-existent vault id ${promo.vaultId}.`);
       exitCode = 1;
       return;
     }
 
-    if (boost.partners && boost.partners.length) {
-      const invalidPartners = boost.partners.filter(partner => !(partner in partners));
+    if ((promo.partners || []).length === 0 && !promo.campaign) {
+      console.error(`Error: Promo ${promo.id}: Promo has no partners or campaign.`);
+      exitCode = 1;
+      return;
+    }
+
+    if (promo.partners && promo.partners.length) {
+      const invalidPartners = promo.partners.filter(partner => !(partner in partners));
       if (invalidPartners.length) {
-        console.error(`Error: Boost ${boost.id}: Missing partners: ${invalidPartners.join(', ')}`);
+        console.error(`Error: Promo ${promo.id}: Missing partners: ${invalidPartners.join(', ')}`);
         exitCode = 1;
         return;
       }
     }
 
-    if (boost.campaign && !(boost.campaign in campaigns)) {
-      console.error(`Error: Boost ${boost.id}: Missing campaign: ${boost.campaign}`);
+    if (promo.campaign && !(promo.campaign in campaigns)) {
+      console.error(`Error: Promo ${promo.id}: Missing campaign: ${promo.campaign}`);
       exitCode = 1;
       return;
     }
 
-    if (boost.assets && boost.assets.length) {
-      for (const assetId of boost.assets) {
-        if (!assetId?.trim().length) {
-          console.error(`Error: Boost ${boost.id}: Asset id is empty`);
+    for (const reward of promo.rewards) {
+      if (reward.type !== 'token' || !reward.address) continue;
+
+      const earnedVault = pools.find(pool => pool.earnContractAddress === reward.address);
+      if (earnedVault) {
+        if (reward.decimals !== 18) {
+          console.error(
+            `Error: Promo ${promo.id}: Earned token decimals mismatch ${reward.decimals} != 18`
+          );
           exitCode = 1;
+          return;
         }
-        // TODO need to tidy up old boosts before we can enable this
-        // if (!(assetId in addressBook[chainId].tokens)) {
-        //   console.error(`Error: Boost ${boost.id}: Asset "${assetId}" not in addressbook on ${chainId}`);
-        //   exitCode = 1;
-        // }
-      }
-    }
+        // TODO oracle etc
+      } else {
+        const abToken = addressBook[chainId].tokenAddressMap[reward.address];
+        if (!abToken) {
+          // TODO need to tidy up old boosts before we can make this error
+          console.warn(
+            `Warn: Promo ${promo.id}: Earned token ${reward.symbol} not in addressbook at ${reward.address}`
+          );
+          // exitCode = 1;
+          //return;
+          continue;
+        }
 
-    const earnedVault = pools.find(pool => pool.earnContractAddress === boost.earnedTokenAddress);
-    if (earnedVault) {
-      if (boost.earnedTokenDecimals !== 18) {
-        console.error(
-          `Error: Boost ${boost.id}: Earned token decimals mismatch ${boost.earnedTokenDecimals} != 18`
-        );
-        exitCode = 1;
-        return;
-      }
-      // TODO oracle etc
-    } else {
-      const earnedToken = addressBook[chainId].tokens[boost.earnedToken];
-      if (!earnedToken) {
-        // TODO need to tidy up old boosts before we can enable this
-        // console.error(`Error: Boost ${boost.id}: Earned token ${boost.earnedToken} not in addressbook`);
-        // exitCode = 1;
-        return;
-      }
+        if (abToken.decimals !== reward.decimals) {
+          console.error(
+            `Error: Promo ${promo.id}: Earned token decimals mismatch ${reward.decimals} != ${abToken.decimals}`
+          );
+          exitCode = 1;
+          return;
+        }
 
-      if (earnedToken.address !== boost.earnedTokenAddress) {
-        console.error(
-          `Error: Boost ${boost.id}: Earned token address mismatch ${boost.earnedTokenAddress} != ${earnedToken.address}`
-        );
-        exitCode = 1;
-        return;
-      }
-
-      if (earnedToken.decimals !== boost.earnedTokenDecimals) {
-        console.error(
-          `Error: Boost ${boost.id}: Earned token decimals mismatch ${boost.earnedTokenDecimals} != ${earnedToken.decimals}`
-        );
-        exitCode = 1;
-        return;
-      }
-
-      if (earnedToken.oracleId !== boost.earnedOracleId) {
-        console.error(
-          `Error: Boost ${boost.id}: Earned token oracle id mismatch ${boost.earnedOracleId} != ${earnedToken.oracleId}`
-        );
-        exitCode = 1;
-        return;
+        if (abToken.oracleId !== reward.oracleId) {
+          console.error(
+            `Error: Promo ${promo.id}: Earned token oracle id mismatch ${reward.oracleId} != ${abToken.oracleId}`
+          );
+          exitCode = 1;
+          return;
+        }
       }
     }
   });

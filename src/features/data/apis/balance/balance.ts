@@ -8,9 +8,8 @@ import {
 } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import { BigNumber } from 'bignumber.js';
-import type { BoostEntity } from '../../entities/boost';
+import type { BoostPromoEntity } from '../../entities/promo';
 import { chunk, partition, pick } from 'lodash-es';
-
 import type {
   BoostBalance,
   BoostBalanceContractData,
@@ -44,7 +43,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     state: BeefyState,
     tokens: TokenEntity[],
     govVaults: VaultGov[],
-    boosts: BoostEntity[],
+    boosts: BoostPromoEntity[],
     walletAddress: string
   ): Promise<FetchAllBalancesResult> {
     const client = rpcClientManager.getBatchClient(this.chain.id);
@@ -211,10 +210,15 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   protected boostFormatter(
     state: BeefyState,
     result: BoostBalanceContractData,
-    boost: BoostEntity
+    boost: BoostPromoEntity
   ): BoostBalance {
+    const firstReward = boost.rewards[0]; // v1 only has one reward
+    if (!firstReward) {
+      throw new Error(`Boost ${boost.id} has no rewards`);
+    }
+
     const balanceToken = selectBoostBalanceTokenEntity(state, boost.id);
-    const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
+    const earnedToken = selectTokenByAddress(state, firstReward.chainId, firstReward.address);
     const balance = fromWeiString(result.balance.toString(10), balanceToken.decimals);
     const reward = {
       token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
@@ -273,7 +277,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   protected boostV2Formatter(
     state: BeefyState,
     result: GovVaultMultiBalanceContractData,
-    boost: BoostEntity
+    boost: BoostPromoEntity
   ): BoostBalance {
     if (result.rewards.length !== result.rewardTokens.length) {
       throw new Error(`Invalid rewards and rewardTokens length`);
@@ -301,13 +305,20 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       })
       .filter(isDefined);
 
-    if (rewards.length === 0) {
-      const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
-      rewards.push({
-        token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
-        amount: BIG_ZERO,
-        index: 0,
-      });
+    // Make sure config rewards[] tokens are included in the results
+    const missing = boost.rewards.filter(
+      reward =>
+        !rewards.some(r => r.token.address === reward.address && r.token.chainId === reward.chainId)
+    );
+    if (missing.length > 0) {
+      for (const reward of missing) {
+        const earnedToken = selectTokenByAddress(state, reward.chainId, reward.address);
+        rewards.push({
+          token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
+          amount: BIG_ZERO,
+          index: -1,
+        });
+      }
     }
 
     return {

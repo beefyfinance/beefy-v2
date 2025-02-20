@@ -1,0 +1,42 @@
+[
+  {
+    "id": "airdrop_balancerv3-gnosis-wagwsteth-waggno",
+    "title": "Beefy x SafeBoost",
+    "by": "Safe",
+    "vaultId": "balancerv3-gnosis-wagwsteth-waggno",
+    "type": "airdrop",
+    "campaign": "airdrop-gnosis-safe",
+    "status": "active",
+    "startTime": 1740009600,
+    "endTime": 1740614400,
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4d18815D14fe5c3304e87B3FA18318baa5c23820",
+        "symbol": "SAFE",
+        "decimals": 18,
+        "oracleId": "SAFE"
+      }
+    ]
+  },
+  {
+    "id": "airdrop_balancerv3-gnosis-wagwsteth-wageth",
+    "title": "Beefy x SafeBoost",
+    "by": "Safe",
+    "vaultId": "balancerv3-gnosis-wagwsteth-wageth",
+    "type": "airdrop",
+    "campaign": "airdrop-gnosis-safe",
+    "status": "active",
+    "startTime": 1740009600,
+    "endTime": 1740614400,
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4d18815D14fe5c3304e87B3FA18318baa5c23820",
+        "symbol": "SAFE",
+        "decimals": 18,
+        "oracleId": "SAFE"
+      }
+    ]
+  }
+]
