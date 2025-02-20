@@ -41,19 +41,28 @@ const ActiveChain = ({ chainId }: { chainId: ChainEntity['id'] | null }) => {
 
 export const NetworkStatus = memo(function NetworkStatus({
   anchorEl,
+  isOpen,
+  handleIsOpen,
+  closeModal,
 }: {
   anchorEl: RefObject<HTMLElement>;
+  isOpen: boolean;
+  handleIsOpen: () => void;
+  closeModal: () => void;
 }) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const open = useAppSelector(state => state.ui.dataLoader.statusIndicator.open);
+  const open = useAppSelector(state => state.ui.dataLoader.statusIndicator.open) && isOpen;
   const chainsById = useAppSelector(state => state.entities.chains.byId);
-  const handleClose = useCallback(() => dispatch(dataLoaderActions.closeIndicator()), [dispatch]);
-  const handleToggle = useCallback(
-    () => dispatch(open ? dataLoaderActions.closeIndicator() : dataLoaderActions.openIndicator()),
-    [dispatch, open]
-  );
+  const handleClose = useCallback(() => {
+    dispatch(dataLoaderActions.closeIndicator());
+    closeModal();
+  }, [closeModal, dispatch]);
+  const handleToggle = useCallback(() => {
+    handleIsOpen();
+    dispatch(open ? dataLoaderActions.closeIndicator() : dataLoaderActions.openIndicator());
+  }, [dispatch, handleIsOpen, open]);
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const currentChainId = useAppSelector(selectCurrentChainId);
 

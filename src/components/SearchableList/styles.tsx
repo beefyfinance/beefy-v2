@@ -21,6 +21,18 @@ export const styles = () => ({
     flexDirection: 'column' as const,
     rowGap: '16px',
     overflowY: 'auto' as const,
+    overflowX: 'hidden' as const,
+  },
+  searchableListSM: {
+    width: 'calc(100% + 24px)',
+    height: 'calc(100% + 12px)',
+    margin: '0 -12px -12px -12px',
+  },
+  searchSM: {
+    padding: '0 12px',
+  },
+  listSM: {
+    padding: '0 12px 12px 12px',
   },
 });
 

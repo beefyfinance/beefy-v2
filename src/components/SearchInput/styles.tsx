@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => ({
     background: theme.palette.background.searchInputBg,
     borderRadius: '8px',
     '& .MuiInputBase-input': {
-      padding: '8px 16px',
+      padding: '8px 16px 8px 4px',
       color: theme.palette.text.middle,
       height: 'auto',
       '&:focus': {
@@ -34,5 +34,8 @@ export const styles = (theme: Theme) => ({
     'button&': {
       cursor: 'pointer',
     },
+  },
+  searchIconMargin: {
+    margin: '0 0 0 16px',
   },
 });
