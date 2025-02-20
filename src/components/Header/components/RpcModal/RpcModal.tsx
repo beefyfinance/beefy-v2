@@ -35,7 +35,7 @@ export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: (
   const classes = useStyles();
   const { t } = useTranslation();
   const [step, setStep] = useState<RpcStepEnum>(RpcStepEnum.Menu);
-  const [previousStep, setPreviousStep] = useState<RpcStepEnum | null>(null);
+  const [previousStep, setPreviousStep] = useState<RpcStepEnum>(RpcStepEnum.Menu);
   const [editChainId, setEditChainId] = useState<ChainEntity['id'] | null>(null);
 
   const headerTitle = useMemo(() => {
@@ -47,7 +47,9 @@ export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: (
 
   const handleStepChange = useCallback(
     (nextStep: RpcStepEnum) => {
-      setPreviousStep(step);
+      if (nextStep === RpcStepEnum.Edit) {
+        setPreviousStep(step);
+      }
       setStep(nextStep);
     },
     [step]
@@ -68,11 +70,12 @@ export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: (
   );
 
   const onBack = useCallback(() => {
-    if (previousStep !== null) {
-      setStep(previousStep);
-      setPreviousStep(null);
+    if (step === RpcStepEnum.Edit) {
+      setStep(previousStep); // Go back to Menu or List
+    } else if (step === RpcStepEnum.List) {
+      setStep(RpcStepEnum.Menu); // Go back to Menu
     }
-  }, [previousStep]);
+  }, [step, previousStep]);
 
   return (
     <>
