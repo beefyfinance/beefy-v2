@@ -1336,22 +1336,23 @@ const zapExecuteOrder = (
       throw new Error('No inputs provided');
     }
 
+    // @dev key order must match actual function / `components` in ABI
     const castedOrder = {
-      relay: {
-        target: params.order.relay.target as Address,
-        data: params.order.relay.data as `0x${string}`,
-        value: BigInt(params.order.relay.value),
-      },
       inputs: params.order.inputs
         .filter(i => BIG_ZERO.lt(i.amount))
         .map(i => ({
-          amount: BigInt(i.amount),
           token: i.token as Address,
+          amount: BigInt(i.amount),
         })), // remove <= zero amounts
       outputs: params.order.outputs.map(o => ({
-        minOutputAmount: BigInt(o.minOutputAmount),
         token: o.token as Address,
+        minOutputAmount: BigInt(o.minOutputAmount),
       })),
+      relay: {
+        target: params.order.relay.target as Address,
+        value: BigInt(params.order.relay.value),
+        data: params.order.relay.data as `0x${string}`,
+      },
       user: address as Address,
       recipient: address as Address,
     };
@@ -1360,10 +1361,12 @@ const zapExecuteOrder = (
     if (!steps.length) {
       throw new Error('No steps provided');
     }
+
+    // @dev key order must match actual function / `components` in ABI
     const castedSteps = params.steps.map(step => ({
-      data: step.data as `0x${string}`,
       target: step.target as Address,
       value: BigInt(step.value),
+      data: step.data as `0x${string}`,
       tokens: step.tokens.map(t => ({
         token: t.token as Address,
         index: t.index,
@@ -1636,7 +1639,8 @@ export function captureWalletErrors(
   };
 }
 
-async function bindTransactionEvents(
+/** @dev await-ing this is optional and resolves once transaction has been submitted */
+function bindTransactionEvents(
   dispatch: ThunkDispatch<BeefyState, unknown, Action<unknown>>,
   transactionHashPromise: Promise<Hash>,
   client: PublicClient,
@@ -1644,21 +1648,26 @@ async function bindTransactionEvents(
   refreshOnSuccess?: TxRefreshOnSuccess
 ) {
   const context: TxContext = { additionalData, refreshOnSuccess };
-  const hash = await transactionHashPromise.then(hash => {
-    txSubmitted(dispatch, context, hash);
-    return hash;
-  });
 
-  waitForTransactionReceipt(client, { hash })
-    .then(receipt => {
-      const success = receipt.status === 'success';
-      if (success) {
-        txMined(dispatch, context, receipt);
-      } else {
-        txError(dispatch, context, { message: 'Transaction failed.' });
-      }
+  return transactionHashPromise
+    .then(hash => {
+      txSubmitted(dispatch, context, hash);
+      waitForTransactionReceipt(client, { hash })
+        .then(receipt => {
+          const success = receipt.status === 'success';
+          if (success) {
+            txMined(dispatch, context, receipt);
+          } else {
+            txError(dispatch, context, { message: 'Transaction failed.' });
+          }
+        })
+        .catch(error => {
+          // error mining transaction
+          txError(dispatch, context, { message: String(error) });
+        });
     })
     .catch(error => {
+      // error submitting transaction
       txError(dispatch, context, { message: String(error) });
     });
 }
