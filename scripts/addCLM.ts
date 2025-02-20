@@ -1,17 +1,15 @@
 // To run: yarn clm ethereum 0xclm 0xpool 0xvault clm-id
-import { MultiCall, ShapeWithLabel } from 'eth-multicall';
-import { addressBook } from 'blockchain-addressbook';
-import Web3 from 'web3';
-import { chainRpcs } from './common/config';
+import { AppChainId, chainRpcs } from './common/config';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../src/config/abi/BeefyCowcentratedLiquidityVaultAbi';
-import stratABI from '../src/config/abi/strategy.json';
+import { StratAbi } from '../src/config/abi/StrategyAbi';
 import { ERC20Abi } from '../src/config/abi/ERC20Abi';
-import type { AbiItem } from 'web3-utils';
 import { sortVaultKeys } from './common/vault-fields';
 import { isValidChecksumAddress } from './common/utils';
 import { join as pathJoin } from 'node:path';
 import type { VaultConfig } from '../src/features/data/apis/config-types';
 import { loadJson, saveJson } from './common/files';
+import { getViemClient } from './common/viem';
+import { Address, getContract } from 'viem';
 
 // Which platforms **only** send fee rewards to the reward pool
 // i.e. strategies that do not call pool.collect()
@@ -19,41 +17,45 @@ import { loadJson, saveJson } from './common/files';
 const poolPlatforms = ['aerodrome', 'velodrome'];
 
 async function vaultData(chain: string, vaultAddress: string, id: string) {
-  const web3 = new Web3(chainRpcs[chain]);
-  const abi = [...(BeefyCowcentratedLiquidityVaultAbi as unknown as AbiItem[]), ...stratABI];
-  const vaultContract = new web3.eth.Contract(abi as AbiItem[], vaultAddress);
-  const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
-  const vaultCalls: ShapeWithLabel[] = [
-    {
-      want: vaultContract.methods.want(),
-      wants: vaultContract.methods.wants(),
-      mooToken: vaultContract.methods.symbol(),
-    },
-  ];
-  const [vaultResults] = await multicall.all([vaultCalls]);
+  const viemClient = getViemClient(chain as AppChainId);
+  const abi = [...BeefyCowcentratedLiquidityVaultAbi, ...StratAbi];
+  const vaultContract = getContract({
+    client: viemClient,
+    address: vaultAddress as Address,
+    abi,
+  });
+
+  const [want, wants, mooToken] = await Promise.all([
+    vaultContract.read.want(),
+    vaultContract.read.wants(),
+    vaultContract.read.symbol(),
+  ]);
 
   const params = {
-    want: vaultResults[0].want,
-    wants: [vaultResults[0].wants['0'], vaultResults[0].wants['1']],
-    mooToken: vaultResults[0].mooToken,
+    want,
+    wants,
+    mooToken,
   };
 
-  const token0Contract = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], params.wants[0]);
-  const token1Contract = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], params.wants[1]);
+  const token0Contract = getContract({
+    client: viemClient,
+    address: params.wants[0],
+    abi: ERC20Abi,
+  });
+  const token1Contract = getContract({
+    client: viemClient,
+    address: params.wants[1],
+    abi: ERC20Abi,
+  });
 
-  const tokenCalls: ShapeWithLabel[] = [
-    {
-      token0: token0Contract.methods.symbol(),
-    },
-    {
-      token1: token1Contract.methods.symbol(),
-    },
-  ];
-  const [tokenResults] = await multicall.all([tokenCalls]);
+  const [token0, token1] = await Promise.all([
+    token0Contract.read.symbol(),
+    token1Contract.read.symbol(),
+  ]);
 
   const tokens = {
-    token0: tokenResults[0].token0,
-    token1: tokenResults[1].token1,
+    token0,
+    token1,
   };
 
   const provider = params.mooToken.startsWith('cowAerodrome')

@@ -6,7 +6,7 @@ function createViemClient(chainId: AppChainId, chain: ChainConfig) {
   return createPublicClient({
     batch: {
       multicall: {
-        batchSize: 512,
+        batchSize: 1028,
         wait: 100,
       },
     },
@@ -31,7 +31,10 @@ function createViemClient(chainId: AppChainId, chain: ChainConfig) {
         },
       },
     },
-    transport: http(),
+    transport: http(chainRpcs[chainId], {
+      retryCount: 5,
+      retryDelay: 800,
+    }),
   });
 }
 

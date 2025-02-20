@@ -1,13 +1,11 @@
-import { appToAddressBookId, chainRpcs, getVaultsForChain } from './common/config';
+import { appToAddressBookId, getVaultsForChain } from './common/config';
 import { saveJson } from './common/files';
 import { allChainIds, AppChainId } from './common/chains';
 import { sortVaultKeys } from './common/vault-fields';
-import { MultiCall } from 'eth-multicall';
-import { addressBook } from 'blockchain-addressbook';
-import Web3 from 'web3';
-import type { AbiItem } from 'web3-utils';
+import { Abi, Address, getContract } from 'viem';
+import { getViemClient } from './common/viem';
 
-const decimalsAbi: AbiItem[] = [
+const decimalsAbi = [
   {
     constant: true,
     inputs: [],
@@ -23,27 +21,27 @@ const decimalsAbi: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 async function fetchDecimalsForTokens(
   tokenAddresses: string[],
   chainId: AppChainId
 ): Promise<Record<string, number>> {
+  const viemClient = getViemClient(chainId);
   const uniqAddresses = Array.from(new Set(tokenAddresses.map(a => a.toLowerCase())));
   const abChain = appToAddressBookId(chainId);
-  const web3 = new Web3(chainRpcs[abChain]);
-  const multicall = new MultiCall(web3, addressBook[abChain].platforms.beefyfinance.multicall);
-  const [results] = await multicall.all([
+  const results = await Promise.all(
     uniqAddresses.map(address => {
-      const contract = new web3.eth.Contract(decimalsAbi, address);
-      return {
-        address: address,
-        decimals: contract.methods.decimals(),
-      };
-    }),
-  ]);
+      const contract = getContract({
+        abi: decimalsAbi,
+        address: address as Address,
+        client: viemClient,
+      });
+      return contract.read.decimals();
+    })
+  );
 
-  return Object.fromEntries(results.map(({ address, decimals }) => [address, parseInt(decimals)]));
+  return Object.fromEntries(results.map((decimals, i) => [uniqAddresses[i], decimals]));
 }
 
 async function getModifiedConfig(chainId: AppChainId) {

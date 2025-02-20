@@ -1,23 +1,22 @@
 import { ArgumentConfig, parse } from 'ts-command-line-args';
 import {
+  AppChainId,
   addressBookToAppId,
   appToAddressBookId,
-  chainRpcs,
   getChain,
   getVaultsForChain,
 } from './common/config';
 import { sortVaultKeys } from './common/vault-fields';
 import { fileReadable, loadJson, saveJson } from './common/files';
 import type { VaultConfig } from '../src/features/data/apis/config-types';
-import Web3 from 'web3';
-import { addressBook } from 'blockchain-addressbook';
-import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import { mkdir } from 'node:fs/promises';
 import * as path from 'node:path';
 import { isNonEmptyArray, NonEmptyArray, sleep } from './common/utils';
 import type { CurveStrategyConfig } from '../src/features/data/apis/transact/strategies/strategy-configs';
 import type { CurveMethodTypes } from '../src/features/data/apis/transact/strategies/curve/types';
-import { getAddress } from 'viem';
+import { Abi, Address, getAddress, getContract } from 'viem';
+import { getViemClient } from './common/viem';
+import { isFulfilledResult } from '../src/helpers/promises';
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const EEEE_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
@@ -416,11 +415,10 @@ export async function getApiPool(
 }
 
 async function fetchCoins(poolOrZapAddress: string, chainId: string): Promise<ChainPoolCoins> {
-  const web3 = new Web3(chainRpcs[chainId]);
-  const multicall = new MultiCall(web3, addressBook[chainId].platforms.beefyfinance.multicall);
-
-  const poolContract = new web3.eth.Contract(
-    [
+  const viemClient = getViemClient(chainId as AppChainId);
+  const poolContract = getContract({
+    address: poolOrZapAddress as Address,
+    abi: [
       {
         stateMutability: 'view',
         type: 'function',
@@ -455,60 +453,57 @@ async function fetchCoins(poolOrZapAddress: string, chainId: string): Promise<Ch
           },
         ],
       },
-    ],
-    poolOrZapAddress
-  );
-
-  const poolCalls: ShapeWithLabel[] = [
-    {
-      coin0: poolContract.methods.coins(0),
-      coin1: poolContract.methods.coins(1),
-      coin2: poolContract.methods.coins(2),
-      coin3: poolContract.methods.coins(3),
-      coin4: poolContract.methods.coins(4),
-      coin5: poolContract.methods.coins(5),
-      coin6: poolContract.methods.coins(6),
-      coin7: poolContract.methods.coins(7),
-      underlyingCoin0: poolContract.methods.underlying_coins(0),
-      underlyingCoin1: poolContract.methods.underlying_coins(1),
-      underlyingCoin2: poolContract.methods.underlying_coins(2),
-      underlyingCoin3: poolContract.methods.underlying_coins(3),
-      underlyingCoin4: poolContract.methods.underlying_coins(4),
-      underlyingCoin5: poolContract.methods.underlying_coins(5),
-      underlyingCoin6: poolContract.methods.underlying_coins(6),
-      underlyingCoin7: poolContract.methods.underlying_coins(7),
-    },
-  ];
+    ] as const satisfies Abi,
+    client: viemClient,
+  });
 
   const [
-    [
-      {
-        coin0,
-        coin1,
-        coin2,
-        coin3,
-        coin4,
-        coin5,
-        coin6,
-        coin7,
-        underlyingCoin0,
-        underlyingCoin1,
-        underlyingCoin2,
-        underlyingCoin3,
-        underlyingCoin4,
-        underlyingCoin5,
-        underlyingCoin6,
-        underlyingCoin7,
-      },
-    ],
-  ] = (await multicall.all([poolCalls])) as [[ChainPoolCoinsResponse]];
+    coin0,
+    coin1,
+    coin2,
+    coin3,
+    coin4,
+    coin5,
+    coin6,
+    coin7,
+    underlyingCoin0,
+    underlyingCoin1,
+    underlyingCoin2,
+    underlyingCoin3,
+    underlyingCoin4,
+    underlyingCoin5,
+    underlyingCoin6,
+    underlyingCoin7,
+  ] = await Promise.allSettled([
+    poolContract.read.coins([0n]),
+    poolContract.read.coins([1n]),
+    poolContract.read.coins([2n]),
+    poolContract.read.coins([3n]),
+    poolContract.read.coins([4n]),
+    poolContract.read.coins([5n]),
+    poolContract.read.coins([6n]),
+    poolContract.read.coins([7n]),
+    poolContract.read.underlying_coins([0n]),
+    poolContract.read.underlying_coins([1n]),
+    poolContract.read.underlying_coins([2n]),
+    poolContract.read.underlying_coins([3n]),
+    poolContract.read.underlying_coins([4n]),
+    poolContract.read.underlying_coins([5n]),
+    poolContract.read.underlying_coins([6n]),
+    poolContract.read.underlying_coins([7n]),
+  ]);
+
   await sleep(1000); // avoid rate limit
 
   return {
-    coins: [coin0, coin1, coin2, coin3, coin4, coin5, coin6, coin7].filter(
-      (coin): coin is string =>
-        !!coin && coin !== '0x' && coin !== '0x0000000000000000000000000000000000000000'
-    ),
+    coins: [coin0, coin1, coin2, coin3, coin4, coin5, coin6, coin7]
+      .filter(
+        coinResult =>
+          coinResult.status === 'fulfilled' &&
+          coinResult.value !== '0x' &&
+          coinResult.value !== '0x0000000000000000000000000000000000000000'
+      )
+      .map((coinResult: PromiseFulfilledResult<`0x${string}`>) => coinResult.value),
     underlyingCoins: [
       underlyingCoin0,
       underlyingCoin1,
@@ -518,10 +513,14 @@ async function fetchCoins(poolOrZapAddress: string, chainId: string): Promise<Ch
       underlyingCoin5,
       underlyingCoin6,
       underlyingCoin7,
-    ].filter(
-      (coin): coin is string =>
-        !!coin && coin !== '0x' && coin !== '0x0000000000000000000000000000000000000000'
-    ),
+    ]
+      .filter(
+        coinResult =>
+          coinResult.status === 'fulfilled' &&
+          coinResult.value !== '0x' &&
+          coinResult.value !== '0x0000000000000000000000000000000000000000'
+      )
+      .map((coinResult: PromiseFulfilledResult<`0x${string}`>) => coinResult.value),
   };
 }
 
@@ -622,10 +621,10 @@ async function isDepositFlagNeededFixed(
   coins: number,
   chainId: string
 ): Promise<boolean> {
-  const web3 = new Web3(chainRpcs[chainId]);
-  const multicall = new MultiCall(web3, addressBook[chainId].platforms.beefyfinance.multicall);
-  const poolContract = new web3.eth.Contract(
-    [
+  const viemClient = getViemClient(chainId as AppChainId);
+  const poolContract = getContract({
+    address: pool as Address,
+    abi: [
       {
         stateMutability: 'view',
         type: 'function',
@@ -664,31 +663,32 @@ async function isDepositFlagNeededFixed(
           },
         ],
       },
-    ],
-    pool
-  );
-  const amounts = makeAmounts('10000000', 0, coins);
-  const calls: ShapeWithLabel[] = [
-    {
-      no: poolContract.methods.calc_token_amount(amounts),
-      yes: poolContract.methods.calc_token_amount(amounts, true),
-    },
-  ];
+    ] as const satisfies Abi,
+    client: viemClient,
+  });
 
-  const [[{ no, yes }]] = (await multicall.all([calls])) as [
-    [{ no: string | undefined; yes: string | undefined }]
-  ];
+  const amounts = makeAmounts('10000000', 0, coins).map(a => BigInt(a));
+  const [no, yes] = await Promise.allSettled([
+    poolContract.read.calc_token_amount([amounts]),
+    poolContract.read.calc_token_amount([amounts, true]),
+  ]);
+
   await sleep(1000); // avoid rate limit
 
-  if (no === undefined && yes == undefined) {
+  if (no.status === 'rejected' && yes.status == 'rejected') {
     throw new Error(`Neither calc_token_amount nor calc_token_amount(bool) found on ${pool}`);
   }
 
-  if (no !== undefined && yes !== undefined) {
+  console.log('AAAAAAA');
+
+  if (no.status !== 'rejected' && yes.status !== 'rejected') {
     throw new Error(`Both calc_token_amount and calc_token_amount(bool) found on ${pool}`);
   }
+  console.log('BBBBBBB');
 
-  return yes !== undefined;
+  console.log(yes.status !== 'rejected' ? 'CCCCCCC' : 'DDdDDD');
+
+  return yes.status !== 'rejected';
 }
 
 function poolEndpointToIndexType(

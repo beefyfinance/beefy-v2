@@ -1,43 +1,46 @@
 // To run: yarn launchpool bsc <0x12312312> CafeSwap
-import { MultiCall, ShapeWithLabel } from 'eth-multicall';
-import { addressBook } from 'blockchain-addressbook';
-import Web3 from 'web3';
 import { promises as fs } from 'fs';
 
-import { chainRpcs, getVaultsForChain } from './common/config';
+import { getVaultsForChain } from './common/config';
 import { BoostAbi } from '../src/config/abi/BoostAbi';
 import { ERC20Abi } from '../src/config/abi/ERC20Abi';
 import partners from '../src/config/boost/partners.json';
-import { AbiItem } from 'web3-utils';
+import { getViemClient } from './common/viem';
+import { getContract } from 'viem';
 
 const partnersFile = './src/config/boost/partners.json';
 let boostsFile = './src/config/boost/$chain.json';
 
 async function boostParams(chain, boostAddress) {
-  const web3 = new Web3(chainRpcs[chain]);
-  const boostContract = new web3.eth.Contract(BoostAbi as unknown as AbiItem[], boostAddress);
-  const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
-  let calls: ShapeWithLabel[] = [
-    {
-      staked: boostContract.methods.stakedToken(),
-      reward: boostContract.methods.rewardToken(),
-      duration: boostContract.methods.duration(),
-    },
-  ];
-  let [results] = await multicall.all([calls]);
-  const params = results[0];
+  const viemClient = getViemClient(chain);
+  const boostContract = getContract({
+    abi: BoostAbi,
+    address: boostAddress,
+    client: viemClient,
+  });
+  const [staked, reward, duration] = await Promise.all([
+    boostContract.read.stakedToken(),
+    boostContract.read.rewardToken(),
+    boostContract.read.duration(),
+  ]);
 
-  const tokenContract = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], params.reward);
-  calls = [
-    {
-      earnedToken: tokenContract.methods.symbol(),
-      earnedTokenDecimals: tokenContract.methods.decimals(),
-    },
-  ];
-  [results] = await multicall.all([calls]);
-  const token = results[0];
+  const tokenContract = getContract({
+    abi: ERC20Abi,
+    address: reward,
+    client: viemClient,
+  });
+  const [earnedToken, earnedTokenDecimals] = await Promise.all([
+    tokenContract.read.symbol(),
+    tokenContract.read.decimals(),
+  ]);
 
-  return { ...params, ...token };
+  return {
+    earnedToken,
+    earnedTokenDecimals,
+    staked,
+    reward,
+    duration,
+  };
 }
 
 async function generateLaunchpool() {

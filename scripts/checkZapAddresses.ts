@@ -1,9 +1,9 @@
-import { appToAddressBookId, chainRpcs } from './common/config';
+import { appToAddressBookId } from './common/config';
 import { loadJson } from './common/files';
 import { AppChainId } from './common/chains';
-import { MultiCall } from 'eth-multicall';
 import { addressBook } from 'blockchain-addressbook';
-import Web3 from 'web3';
+import { getViemClient } from './common/viem';
+import { Abi, Address, checksumAddress, getContract } from 'viem';
 
 type Zap = {
   chainId: AppChainId;
@@ -12,11 +12,9 @@ type Zap = {
 };
 
 async function checkZap(zap: Zap): Promise<Zap> {
-  const abChain = appToAddressBookId(zap.chainId);
-  const web3 = new Web3(chainRpcs[abChain]);
-  const multicall = new MultiCall(web3, addressBook[abChain].platforms.beefyfinance.multicall);
-  const router = new web3.eth.Contract(
-    [
+  const viemClient = getViemClient(zap.chainId);
+  const router = getContract({
+    abi: [
       {
         type: 'function',
         name: 'tokenManager',
@@ -35,12 +33,13 @@ async function checkZap(zap: Zap): Promise<Zap> {
         inputs: [],
         outputs: [{ type: 'address', name: 'owner' }],
       },
-    ],
-    zap.router
-  );
+    ] as const satisfies Abi,
+    address: zap.router as Address,
+    client: viemClient,
+  });
 
-  const manager = new web3.eth.Contract(
-    [
+  const manager = getContract({
+    abi: [
       {
         type: 'function',
         name: 'zap',
@@ -50,25 +49,23 @@ async function checkZap(zap: Zap): Promise<Zap> {
         inputs: [],
         outputs: [{ type: 'address', name: 'zap' }],
       },
-    ],
-    zap.manager
-  );
+    ] as const satisfies Abi,
+    address: zap.manager as Address,
+    client: viemClient,
+  });
+  const abChain = appToAddressBookId(zap.chainId);
 
-  const [[{ tokenManagerAddress, routerOwnerAddress }], [{ routerAddress }]] = await multicall.all([
-    [
-      {
-        tokenManagerAddress: router.methods.tokenManager(),
-        routerOwnerAddress: router.methods.owner(),
-      },
-    ],
-    [{ routerAddress: manager.methods.zap() }],
+  const [tokenManagerAddress, routerOwnerAddress, routerAddress] = await Promise.all([
+    router.read.tokenManager(),
+    router.read.owner(),
+    manager.read.zap(),
   ]);
 
-  const checksummedConfigRouter = web3.utils.toChecksumAddress(zap.router);
-  const checksummedConfigManager = web3.utils.toChecksumAddress(zap.manager);
-  const checksummedContractRouter = web3.utils.toChecksumAddress(routerAddress);
-  const checksummedContractManager = web3.utils.toChecksumAddress(tokenManagerAddress);
-  const checksummedContractOwner = web3.utils.toChecksumAddress(routerOwnerAddress);
+  const checksummedConfigRouter = checksumAddress(zap.router as Address);
+  const checksummedConfigManager = checksumAddress(zap.manager as Address);
+  const checksummedContractRouter = checksumAddress(routerAddress);
+  const checksummedContractManager = checksumAddress(tokenManagerAddress);
+  const checksummedContractOwner = checksumAddress(routerOwnerAddress);
   let errors = 0;
 
   if (checksummedConfigRouter !== checksummedContractRouter) {
