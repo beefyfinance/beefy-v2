@@ -2,12 +2,12 @@ import type { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   search: {
-    color: theme.palette.text.middle,
+    color: theme.palette.text.dark,
     background: theme.palette.background.searchInputBg,
     borderRadius: '8px',
     '& .MuiInputBase-input': {
       padding: '8px 16px 8px 4px',
-      color: theme.palette.text.middle,
+      color: theme.palette.text.dark,
       height: 'auto',
       '&:focus': {
         color: theme.palette.text.light,
@@ -27,7 +27,7 @@ export const styles = (theme: Theme) => ({
     lineHeight: 'inherit',
     display: 'flex',
     alignItems: 'center',
-    color: theme.palette.text.middle,
+    color: theme.palette.text.dark,
     flexShrink: 0,
     width: '24px',
     height: '24px',

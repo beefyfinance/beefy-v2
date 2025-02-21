@@ -75,6 +75,7 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     padding: `12px`,
     rowGap: '16px',
+    color: theme.palette.text.middle,
   },
   chainInfo: {
     ...theme.typography['body-lg-med'],
@@ -112,9 +113,11 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-sm'],
     marginLeft: '32px',
     color: theme.palette.text.dark,
-    maxWidth: '100%',
+    width: '196px',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
+    whiteSpace: 'nowrap' as const,
+    textAlign: 'start' as const,
   },
   emptyList: {
     display: 'flex',
@@ -166,5 +169,15 @@ export const styles = (theme: Theme) => ({
     width: '2px',
     borderRadius: '3px',
     backgroundColor: theme.palette.background.contentLight,
+  },
+  inputContainer: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+  },
+  inputError: {
+    ...theme.typography['body-sm'],
+    color: theme.palette.error.main,
+    marginLeft: '16px',
+    transition: 'ease-in-out 2s;',
   },
 });

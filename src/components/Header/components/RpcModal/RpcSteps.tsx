@@ -1,10 +1,6 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import {
-  selectActiveChainIds,
-  selectAllChainIds,
-  selectChainById,
-} from '../../../../features/data/selectors/chains';
+import { selectAllChainIds, selectChainById } from '../../../../features/data/selectors/chains';
 import { SearchableList } from '../../../SearchableList';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../Button';
@@ -12,8 +8,7 @@ import { styles } from './styles';
 import { InputBase, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import { ChainIcon } from '../../../ChainIcon';
-import { ReactComponent as EmptyIcon } from '../../../../images/empty-state.svg';
-import { ChainListItem, ModifiedListItem, ModifiedListItemEndComponent } from './ListItems';
+import { ModifiedListItem, ModifiedListItemEndComponent } from './ListItems';
 import { RpcStepEnum } from './RpcModal';
 import type { ChainEntity } from '../../../../features/data/entities/chain';
 import { updateActiveRpc } from '../../../../features/data/actions/chains';
@@ -28,7 +23,6 @@ export interface RpcStepsProps {
 
 export const Menu = memo<RpcStepsProps>(function Menu({ handleStep, setEditChainId }) {
   const classes = useStyles();
-  const { t } = useTranslation();
   const chainIds = useAppSelector(state => selectAllChainIds(state));
 
   const onSelect = useCallback(
@@ -41,26 +35,15 @@ export const Menu = memo<RpcStepsProps>(function Menu({ handleStep, setEditChain
 
   return (
     <>
-      {chainIds.length > 0 ? (
-        <div className={clsx(classes.flexGrow, classes.list)}>
-          <SearchableList
-            options={chainIds}
-            onSelect={onSelect}
-            ItemInnerComponent={ModifiedListItem}
-            EndComponent={ModifiedListItemEndComponent}
-            size="sm"
-          />
-        </div>
-      ) : (
-        <div className={clsx(classes.flexGrow, classes.emptyList)}>
-          <EmptyIcon className={classes.emptyIcon} />
-          <div className={classes.emptyTextContainer}>{t('RpcModal-EmptyList')}</div>
-        </div>
-      )}
-      <div className={classes.footer}>
-        <Button onClick={() => handleStep(RpcStepEnum.List)} size="lg" style={{ width: '100%' }}>
-          {t('RpcModal-Add')}
-        </Button>
+      <div className={clsx(classes.flexGrow, classes.list)}>
+        <SearchableList
+          options={chainIds}
+          onSelect={onSelect}
+          ItemInnerComponent={ModifiedListItem}
+          EndComponent={ModifiedListItemEndComponent}
+          size="sm"
+          hideShadows={true}
+        />
       </div>
     </>
   );
@@ -98,14 +81,17 @@ export const Edit = memo<RpcStepsProps>(function Edit({ handleStep, setEditChain
           <ChainIcon chainId={chain.id} />
           {chain.name}
         </div>
-        <InputBase
-          className={classes.input}
-          value={updatedRPC}
-          onChange={handleSearchText}
-          fullWidth={true}
-          placeholder={t('RpcModal-InputPlaceholder')}
-        />
-        {isDisabled && <div>{t('RpcModal-InvalidRpc')}</div>}
+        <div className={classes.inputContainer}>
+          <InputBase
+            className={classes.input}
+            value={updatedRPC}
+            onChange={handleSearchText}
+            fullWidth={true}
+            placeholder={t('RpcModal-InputPlaceholder')}
+          />
+          {isDisabled && <div className={classes.inputError}>{t('RpcModal-InvalidRpc')}</div>}
+        </div>
+        <div className={classes.emptyTextContainer}>{t('RpcModal-EmptyList')}</div>
       </div>
       <div className={classes.footer}>
         <Button disabled={isDisabled} onClick={onSave} size="lg" style={{ width: '100%' }}>
@@ -113,30 +99,5 @@ export const Edit = memo<RpcStepsProps>(function Edit({ handleStep, setEditChain
         </Button>
       </div>
     </>
-  );
-});
-
-export const List = memo<RpcStepsProps>(function List({ handleStep, setEditChainId }) {
-  const classes = useStyles();
-  const chainIds = useAppSelector(selectActiveChainIds);
-
-  const onSelect = useCallback(
-    (value: ChainEntity['id']) => {
-      //Action to modify step to edit
-      setEditChainId(value);
-      handleStep(RpcStepEnum.Edit);
-    },
-    [handleStep, setEditChainId]
-  );
-
-  return (
-    <div className={classes.list}>
-      <SearchableList
-        size="sm"
-        options={chainIds}
-        onSelect={onSelect}
-        ItemInnerComponent={ChainListItem}
-      />
-    </div>
   );
 });
