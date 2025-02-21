@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import { memo } from 'react';
+import { memo, useCallback, type MouseEventHandler } from 'react';
 import type { ChainEntity } from '../../../../features/data/entities/chain';
 import { ChainIcon } from '../../../ChainIcon';
 import type { ItemInnerProps } from '../../../SearchableList/ItemInner';
@@ -10,6 +10,8 @@ import {
 } from '../../../../features/data/selectors/chains';
 import CloseIcon from '@material-ui/icons/Close';
 import { styles } from './styles';
+import { useDispatch } from 'react-redux';
+import { restoreDefaultRpcsOnSingleChain } from '../../../../features/data/actions/chains';
 
 const useStyles = makeStyles(styles);
 
@@ -46,13 +48,22 @@ export const ModifiedListItem = memo(function ChainListItem({
   );
 });
 
-export const ModifiedListItemEndComponent = memo(function ChainListItem() {
+export const ModifiedListItemEndComponent = memo(function ChainListItem({
+  value: chain,
+}: ItemInnerProps<ChainEntity['id']>) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
+    e => {
+      e.stopPropagation();
+      dispatch(restoreDefaultRpcsOnSingleChain(chain));
+    },
+    [dispatch, chain]
+  );
 
-  // add function to delete
   return (
-    <>
+    <div onClick={handleClick}>
       <CloseIcon className={classes.cross} />
-    </>
+    </div>
   );
 });
