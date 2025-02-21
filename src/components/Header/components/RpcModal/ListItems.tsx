@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import { memo, useCallback, type MouseEventHandler } from 'react';
+import { memo, useCallback, type MouseEventHandler, useMemo } from 'react';
 import type { ChainEntity } from '../../../../features/data/entities/chain';
 import { ChainIcon } from '../../../ChainIcon';
 import type { ItemInnerProps } from '../../../SearchableList/ItemInner';
@@ -54,7 +54,8 @@ export const ModifiedListItemEndComponent = memo(function ChainListItem({
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  //  const activeChainRpc = useAppSelector(state => selectActiveRpcUrlForChain(state, chain));
+  const activeChainRpc = useAppSelector(state => selectActiveRpcUrlForChain(state, chain));
+  const defaultRPC = useAppSelector(state => selectChainById(state, chain)).rpc;
 
   const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
     e => {
@@ -63,6 +64,15 @@ export const ModifiedListItemEndComponent = memo(function ChainListItem({
     },
     [dispatch, chain]
   );
+
+  const rpcsAreEqual = useMemo(
+    () =>
+      activeChainRpc.length === defaultRPC.length &&
+      activeChainRpc.every((url, index) => url === defaultRPC[index]),
+    [activeChainRpc, defaultRPC]
+  );
+
+  if (rpcsAreEqual) return <></>;
 
   return (
     <div onClick={handleClick}>
