@@ -75,20 +75,22 @@ export const fetchChainConfigs = createAsyncThunk<FulfilledPayload>(
 
 export const updateActiveRpc = createAction(
   'updateActiveRpc',
-  (chainId: ChainId, rpcUrl: string) => {
-    addLocalStoredRpcs(chainId, rpcUrl);
+  (chain: ChainEntity, rpcUrl: string) => {
+    rpcClientManager.setClients(chain, [rpcUrl]);
+    addLocalStoredRpcs(chain.id, rpcUrl);
     return {
-      payload: { chainId, rpcUrl },
+      payload: { chainId: chain.id, rpcUrl },
     };
   }
 );
 
 export const restoreDefaultRpcsOnSingleChain = createAction(
   'restoreDefaultRpcsOnSingleChain',
-  (chainId: ChainId) => {
-    removeLocalStoredRpcs(chainId);
+  (chain: ChainEntity) => {
+    rpcClientManager.setClients(chain, chain.rpc);
+    removeLocalStoredRpcs(chain.id);
     return {
-      payload: { chainId },
+      payload: { chainId: chain.id },
     };
   }
 );

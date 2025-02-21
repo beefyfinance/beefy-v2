@@ -71,7 +71,7 @@ export const Edit = memo<RpcStepsProps>(function Edit({ handleStep, setEditChain
 
   const dispatch = useAppDispatch();
   const onSave = useCallback(() => {
-    dispatch(updateActiveRpc(chain!.id, updatedRPC));
+    dispatch(updateActiveRpc(chain!, updatedRPC));
     handleStep(RpcStepEnum.Menu);
     setEditChainId(null);
   }, [dispatch, handleStep, setEditChainId, chain, updatedRPC]);

@@ -3,13 +3,13 @@ import { customFallback, type CustomFallbackTransport } from './fallbackTranspor
 
 export function makeCustomFallbackTransport(
   rpcUrls: string[],
-  retries: number = 5
+  retries: number = 3
 ): CustomFallbackTransport {
   const transports = rpcUrls.map(url =>
     http(url, {
       timeout: 10000,
       retryCount: retries,
-      retryDelay: 100,
+      retryDelay: 350,
       batch: {
         batchSize: 10,
       },

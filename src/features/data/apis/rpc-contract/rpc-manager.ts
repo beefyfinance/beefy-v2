@@ -55,7 +55,7 @@ class RpcClientManager {
 
   // Create new viem clients using the provided chain config and RPC URLs.
   private createClients(chain: ChainEntity | ChainConfig, rpcUrls: string[]): RpcClients {
-    const retries = chain.eol ? 1 : 5;
+    const retries = chain.eol ? 1 : 3;
     // Create a viem client with a fallback transport for single calls.
     const singleCallClient = createPublicClient({
       chain: buildViemChain(chain),

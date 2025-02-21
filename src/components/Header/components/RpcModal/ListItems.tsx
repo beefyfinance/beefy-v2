@@ -56,13 +56,14 @@ export const ModifiedListItemEndComponent = memo(function ChainListItem({
 
   const activeChainRpc = useAppSelector(state => selectActiveRpcUrlForChain(state, chain));
   const defaultRPC = useAppSelector(state => selectChainById(state, chain)).rpc;
+  const chainEntity = useAppSelector(state => selectChainById(state, chain));
 
   const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
     e => {
       e.stopPropagation();
-      dispatch(restoreDefaultRpcsOnSingleChain(chain));
+      dispatch(restoreDefaultRpcsOnSingleChain(chainEntity));
     },
-    [dispatch, chain]
+    [dispatch, chainEntity]
   );
 
   const rpcsAreEqual = useMemo(
