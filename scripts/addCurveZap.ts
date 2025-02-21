@@ -679,15 +679,9 @@ async function isDepositFlagNeededFixed(
     throw new Error(`Neither calc_token_amount nor calc_token_amount(bool) found on ${pool}`);
   }
 
-  console.log('AAAAAAA');
-
   if (no.status !== 'rejected' && yes.status !== 'rejected') {
     throw new Error(`Both calc_token_amount and calc_token_amount(bool) found on ${pool}`);
   }
-  console.log('BBBBBBB');
-
-  console.log(yes.status !== 'rejected' ? 'CCCCCCC' : 'DDdDDD');
-
   return yes.status !== 'rejected';
 }
 
