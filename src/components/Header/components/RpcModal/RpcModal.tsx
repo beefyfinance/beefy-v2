@@ -7,7 +7,7 @@ import {
   type MouseEventHandler,
   type RefObject,
 } from 'react';
-import { Menu, Edit, List, type RpcStepsProps } from './RpcSteps';
+import { Menu, Edit, type RpcStepsProps } from './RpcSteps';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
@@ -22,38 +22,22 @@ const useStyles = makeStyles(styles);
 export enum RpcStepEnum {
   Menu = 1,
   Edit,
-  List,
 }
 
 const stepToComponent: Record<RpcStepEnum, FC<RpcStepsProps>> = {
   [RpcStepEnum.Menu]: Menu,
   [RpcStepEnum.Edit]: Edit,
-  [RpcStepEnum.List]: List,
 };
 
 export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: () => void }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const [step, setStep] = useState<RpcStepEnum>(RpcStepEnum.Menu);
-  const [previousStep, setPreviousStep] = useState<RpcStepEnum>(RpcStepEnum.Menu);
   const [editChainId, setEditChainId] = useState<ChainEntity['id'] | null>(null);
 
-  const headerTitle = useMemo(() => {
-    if (step === RpcStepEnum.List) {
-      return t('RpcModal-List');
-    }
-    return t('RpcModal-Menu-Edit');
-  }, [step, t]);
-
-  const handleStepChange = useCallback(
-    (nextStep: RpcStepEnum) => {
-      if (nextStep === RpcStepEnum.Edit) {
-        setPreviousStep(step);
-      }
-      setStep(nextStep);
-    },
-    [step]
-  );
+  const handleStepChange = useCallback((nextStep: RpcStepEnum) => {
+    setStep(nextStep);
+  }, []);
 
   const handleEditChainId = useCallback(
     (chainId: ChainEntity['id'] | null) => {
@@ -64,18 +48,11 @@ export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: (
 
   const StepComponent = useMemo(() => stepToComponent[step], [step]);
 
-  const showStepBack = useMemo(
-    () => step === RpcStepEnum.List || step === RpcStepEnum.Edit,
-    [step]
-  );
+  const showStepBack = useMemo(() => step === RpcStepEnum.Edit, [step]);
 
   const onBack = useCallback(() => {
-    if (step === RpcStepEnum.Edit) {
-      setStep(previousStep); // Go back to Menu or List
-    } else if (step === RpcStepEnum.List) {
-      setStep(RpcStepEnum.Menu); // Go back to Menu
-    }
-  }, [step, previousStep]);
+    setStep(RpcStepEnum.Menu); // Go back to Menu
+  }, []);
 
   return (
     <>
@@ -86,7 +63,7 @@ export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: (
               <BackArrow className={classes.backIcon} />
             </button>
           )}
-          {headerTitle}
+          {t('RpcModal-Menu-Edit')}
         </div>
         <CloseIcon onClick={handleClose} className={classes.cross} />
       </div>

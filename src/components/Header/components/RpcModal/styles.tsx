@@ -28,7 +28,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: `12px`,
+    padding: `${12 - 2}px`,
     backgroundColor: theme.palette.background.contentDark,
     borderRadius: '8px 8px 0px 0px',
   },
@@ -54,7 +54,7 @@ export const styles = (theme: Theme) => ({
     flexGrow: 1,
   },
   list: {
-    padding: `12px`,
+    padding: `${12 - 2}px`,
     height: '100%',
     width: '100%',
     color: theme.palette.text.light,
@@ -63,7 +63,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     justifyContent: 'center',
     marginTop: '24px',
-    padding: `12px`,
+    padding: `${12 - 2}px`,
     borderRadius: '0 0 8px 8px',
   },
   flexGrow: {
@@ -73,8 +73,9 @@ export const styles = (theme: Theme) => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column' as const,
-    padding: `12px`,
+    padding: `${12 - 2}px`,
     rowGap: '16px',
+    color: theme.palette.text.middle,
   },
   chainInfo: {
     ...theme.typography['body-lg-med'],
@@ -112,16 +113,11 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-sm'],
     marginLeft: '32px',
     color: theme.palette.text.dark,
-    maxWidth: '100%',
+    width: '196px',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
-  },
-  emptyList: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    alignItems: 'center',
-    gap: '12px',
-    padding: '12px',
+    whiteSpace: 'nowrap' as const,
+    textAlign: 'start' as const,
   },
   emptyTextContainer: {
     ...theme.typography['body-sm-med'],
@@ -166,5 +162,15 @@ export const styles = (theme: Theme) => ({
     width: '2px',
     borderRadius: '3px',
     backgroundColor: theme.palette.background.contentLight,
+  },
+  inputContainer: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+  },
+  inputError: {
+    ...theme.typography['body-sm'],
+    color: theme.palette.error.main,
+    marginLeft: '16px',
+    transition: 'ease-in-out 2s;',
   },
 });

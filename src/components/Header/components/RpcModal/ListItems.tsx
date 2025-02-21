@@ -8,7 +8,7 @@ import {
   selectActiveRpcUrlForChain,
   selectChainById,
 } from '../../../../features/data/selectors/chains';
-import CloseIcon from '@material-ui/icons/Close';
+import Refresh from '@material-ui/icons/Refresh';
 import { styles } from './styles';
 import { useDispatch } from 'react-redux';
 import { restoreDefaultRpcsOnSingleChain } from '../../../../features/data/actions/chains';
@@ -53,6 +53,9 @@ export const ModifiedListItemEndComponent = memo(function ChainListItem({
 }: ItemInnerProps<ChainEntity['id']>) {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  //  const activeChainRpc = useAppSelector(state => selectActiveRpcUrlForChain(state, chain));
+
   const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
     e => {
       e.stopPropagation();
@@ -63,7 +66,7 @@ export const ModifiedListItemEndComponent = memo(function ChainListItem({
 
   return (
     <div onClick={handleClick}>
-      <CloseIcon className={classes.cross} />
+      <Refresh className={classes.cross} />
     </div>
   );
 });

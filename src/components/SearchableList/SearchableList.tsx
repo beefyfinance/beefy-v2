@@ -19,6 +19,7 @@ export type SearchableListProps = {
   ItemInnerComponent?: FC<ItemInnerProps>;
   EndComponent?: FC<ItemInnerProps>;
   size?: 'sm' | 'md';
+  hideShadows?: boolean;
 };
 
 export const SearchableList = memo<SearchableListProps>(function SearchableList({
@@ -27,6 +28,7 @@ export const SearchableList = memo<SearchableListProps>(function SearchableList(
   ItemInnerComponent = ItemInner,
   EndComponent,
   size = 'md',
+  hideShadows,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -52,7 +54,7 @@ export const SearchableList = memo<SearchableListProps>(function SearchableList(
       <div className={clsx(classes.search, { [classes.searchSM]: size === 'sm' })}>
         <SearchInput value={search} onChange={setSearch} />
       </div>
-      <Scrollable>
+      <Scrollable hideShadows={hideShadows}>
         <div className={clsx(classes.list, { [classes.listSM]: size === 'sm' })}>
           {filteredOptions.length ? (
             sortBy(filteredOptions, id => id).map(value => (
