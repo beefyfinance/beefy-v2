@@ -49,17 +49,21 @@ export const Menu = memo<RpcStepsProps>(function Menu({ handleStep, setEditChain
   );
 });
 
+const URL_REGX = /^https:\/\//;
+
 export const Edit = memo<RpcStepsProps>(function Edit({ handleStep, setEditChainId, editChainId }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const chain = useAppSelector(state => editChainId && selectChainById(state, editChainId));
   const [updatedRPC, setUpdatedRPC] = useState('');
 
-  const isDisabled = useMemo(() => {
-    const regex = /^https:\/\//;
-
-    return updatedRPC.length > 7 && !regex.test(updatedRPC);
+  const isError = useMemo(() => {
+    return updatedRPC.length > 7 && !URL_REGX.test(updatedRPC);
   }, [updatedRPC]);
+
+  const isDisabled = useMemo(() => {
+    return updatedRPC.length <= 7 || isError;
+  }, [isError, updatedRPC.length]);
 
   const handleSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUpdatedRPC(e.target.value);
@@ -89,7 +93,7 @@ export const Edit = memo<RpcStepsProps>(function Edit({ handleStep, setEditChain
             fullWidth={true}
             placeholder={t('RpcModal-InputPlaceholder')}
           />
-          {isDisabled && <div className={classes.inputError}>{t('RpcModal-InvalidRpc')}</div>}
+          {isError && <div className={classes.inputError}>{t('RpcModal-InvalidRpc')}</div>}
         </div>
         <div className={classes.emptyTextContainer}>{t('RpcModal-EmptyList')}</div>
       </div>
