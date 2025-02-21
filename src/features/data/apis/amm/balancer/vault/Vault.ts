@@ -99,12 +99,7 @@ export class Vault {
     ]);
     const [bptOut, amountsIn] = simulationResult.result;
 
-    if (
-      !amountsIn ||
-      !amountsIn.length ||
-      typeof amountsIn !== typeof Array<bigint> ||
-      amountsIn.length !== request.request.assets.length
-    ) {
+    if (!amountsIn || !amountsIn.length || amountsIn.length !== request.request.assets.length) {
       throw new Error('Invalid result');
     }
 
@@ -138,7 +133,7 @@ export class Vault {
       args.recipient,
       JSON.stringify({
         assets: args.request.assets,
-        minAmountsOut: args.request.minAmountsOut.map(bigNumberToBigInt),
+        minAmountsOut: args.request.minAmountsOut.map(amount => amount.toString(10)),
         userData: args.request.userData,
         toInternalBalance: args.request.toInternalBalance,
       })
