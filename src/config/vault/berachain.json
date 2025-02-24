@@ -1,5 +1,37 @@
 [
   {
+    "id": "infrared-ibgt",
+    "name": "iBGT",
+    "type": "standard",
+    "token": "iBGT",
+    "tokenAddress": "0xac03CABA51e17c86c921E1f6CBFBdC91F8BB2E6b",
+    "tokenDecimals": 18,
+    "earnedToken": "mooInfraredBerachainiBGT",
+    "earnedTokenAddress": "0xd16fA9b21786F8F23b9DEaC61197830E0e15752b",
+    "earnContractAddress": "0xd16fA9b21786F8F23b9DEaC61197830E0e15752b",
+    "oracle": "tokens",
+    "oracleId": "iBGT",
+    "status": "active",
+    "createdAt": 1740418060,
+    "platformId": "infrared",
+    "assets": ["iBGT"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "single",
+    "network": "berachain",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "beraswap-byusd-honey",
     "name": "BYUSD/HONEY LP",
     "type": "standard",
