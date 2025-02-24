@@ -40,19 +40,17 @@ import {
 import type { Step } from '../../../../reducers/wallet/stepper';
 import {
   BIG_ZERO,
+  bigNumberToBigInt,
   fromWei,
   fromWeiString,
   toWeiString,
 } from '../../../../../../helpers/big-number';
-import { getWeb3Instance } from '../../../instances';
-import { selectChainById } from '../../../../selectors/chains';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { BeefyThunk } from '../../../../../../redux-types';
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes';
 import { isStandardVault, type VaultStandard } from '../../../../entities/vault';
 import { getVaultWithdrawnFromState } from '../../helpers/vault';
-import ZapAbi from '../../../../../../config/abi/zap.json';
-import type { AbiItem } from 'web3-utils';
+import { ZapAbi } from '../../../../../../config/abi/ZapAbi';
 import {
   includeWrappedAndNative,
   nativeAndWrappedAreSame,
@@ -66,10 +64,12 @@ import { getTokenAddress, NO_RELAY } from '../../helpers/zap';
 import type { OrderInput, OrderOutput, UserlessZapRequest, ZapStep } from '../../zap/types';
 import { first, uniqBy } from 'lodash-es';
 import { slipBy } from '../../helpers/amounts';
-import coder from 'web3-eth-abi';
 import { fetchZapAggregatorSwap } from '../../zap/swap';
 import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
 import type { ConicStrategyConfig } from '../strategy-configs';
+import { fetchContract } from '../../../rpc-contract/viem-contract';
+import type { Abi, Address } from 'abitype';
+import { encodeFunctionData, getAbiItem } from 'viem';
 
 const strategyId = 'conic' as const;
 type StrategyId = typeof strategyId;
@@ -164,16 +164,17 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
         ]
       : [];
 
-    const chain = selectChainById(state, this.vault.chainId);
-    const web3 = await getWeb3Instance(chain);
-    const zapContract = new web3.eth.Contract(ZapAbi as AbiItem[], this.conicZap);
+    const zapContract = fetchContract(this.conicZap, ZapAbi, this.vault.chainId);
     const zapTokenIn = nativeToWNative(input.token, this.wnative);
     const userAmountInWei = toWeiString(input.amount, input.token.decimals);
-    const estimate = await zapContract.methods
-      .estimateSwap(this.vault.contractAddress, zapTokenIn.address, userAmountInWei)
-      .call();
+    const [, swapAmountOutResult] = await zapContract.read.estimateSwap([
+      this.vault.contractAddress as Address,
+      zapTokenIn.address as Address,
+      BigInt(userAmountInWei),
+    ]);
+
     const lpToken = this.vaultType.depositToken;
-    const swapAmountOut = fromWeiString(estimate.swapAmountOut, lpToken.decimals);
+    const swapAmountOut = fromWeiString(swapAmountOutResult.toString(10), lpToken.decimals);
     const outputs: TokenAmount[] = [{ token: lpToken, amount: swapAmountOut }];
     const returned: TokenAmount[] = [];
 
@@ -346,21 +347,17 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
       },
     ];
 
-    const chain = selectChainById(state, this.vault.chainId);
-    const web3 = await getWeb3Instance(chain);
-    const zapContract = new web3.eth.Contract(ZapAbi as AbiItem[], this.conicZap);
+    const zapContract = fetchContract(this.conicZap, ZapAbi, this.vault.chainId);
     const poolOutputToken = nativeToWNative(desiredToken, this.wnative); // pool withdraws are always erc20...
     const customOutputToken = wnativeToNative(desiredToken, this.wnative, this.native); // ...but custom zap unwraps to native
 
     // Withdraw and split via custom zap contract
-    const estimate = await zapContract.methods
-      .estimateSwapOut(
-        this.vault.contractAddress,
-        poolOutputToken.address,
-        sharesToWithdrawWei.toString(10)
-      )
-      .call();
-    const swapAmountOut = fromWeiString(estimate.swapAmountOut, desiredToken.decimals);
+    const [, swapAmountOutResult] = await zapContract.read.estimateSwapOut([
+      this.vault.contractAddress as Address,
+      poolOutputToken.address as Address,
+      bigNumberToBigInt(sharesToWithdrawWei),
+    ]);
+    const swapAmountOut = fromWeiString(swapAmountOutResult.toString(10), desiredToken.decimals);
 
     const steps: ZapQuoteStep[] = [
       {
@@ -574,19 +571,17 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
     tokenIn: string,
     amountWei: string
   ): string {
-    return coder.encodeFunctionCall(ZapAbi.find(item => item.name === 'beefIn') as AbiItem, [
-      vault,
-      tokenAmountOutMin,
-      tokenIn,
-      amountWei,
-    ]);
+    return encodeFunctionData({
+      abi: [getAbiItem({ abi: ZapAbi, name: 'beefIn' })] as const as Abi,
+      args: [vault as Address, BigInt(tokenAmountOutMin), tokenIn as Address, BigInt(amountWei)],
+    });
   }
 
   private encodeBeefInETHCall(vault: string, tokenAmountOutMin: string): string {
-    return coder.encodeFunctionCall(ZapAbi.find(item => item.name === 'beefInETH') as AbiItem, [
-      vault,
-      tokenAmountOutMin,
-    ]);
+    return encodeFunctionData({
+      abi: [getAbiItem({ abi: ZapAbi, name: 'beefInETH' })] as const satisfies Abi,
+      args: [vault as Address, BigInt(tokenAmountOutMin)],
+    });
   }
 
   private encodeBeefOutAndSwap(
@@ -595,10 +590,15 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
     desiredToken: string,
     desiredTokenOutMin: string
   ): string {
-    return coder.encodeFunctionCall(
-      ZapAbi.find(item => item.name === 'beefOutAndSwap') as AbiItem,
-      [vault, withdrawAmount, desiredToken, desiredTokenOutMin]
-    );
+    return encodeFunctionData({
+      abi: [getAbiItem({ abi: ZapAbi, name: 'beefOutAndSwap' })] as const satisfies Abi,
+      args: [
+        vault as Address,
+        BigInt(withdrawAmount),
+        desiredToken as Address,
+        BigInt(desiredTokenOutMin),
+      ],
+    });
   }
 }
 

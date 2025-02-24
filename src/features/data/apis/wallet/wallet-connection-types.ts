@@ -1,5 +1,5 @@
-import type Web3 from 'web3';
 import type { ChainEntity } from '../../entities/chain';
+import type { WalletClient } from 'viem';
 
 export interface WalletConnectionOptions {
   chains: ChainEntity[];
@@ -20,5 +20,5 @@ export interface IWalletConnectionApi {
   askUserToConnectIfNeeded(): Promise<void>;
   askUserForChainChange(chainId: ChainEntity['id']): Promise<void>;
   disconnect(): Promise<void>;
-  getConnectedWeb3Instance(): Promise<Web3>;
+  getConnectedViemClient(): Promise<WalletClient>;
 }

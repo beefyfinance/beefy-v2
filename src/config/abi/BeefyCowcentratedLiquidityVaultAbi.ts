@@ -488,6 +488,19 @@ export const BeefyCowcentratedLiquidityVaultAbi = [
   },
   {
     inputs: [],
+    name: 'isCalm',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'totalSupply',
     outputs: [
       {

@@ -1,36 +1,34 @@
-import type { Migrator } from '../migration-types';
+import type { Migrator, MigratorUnstakeProps } from '../migration-types';
 import type { VaultEntity } from '../../../entities/vault';
 import { type BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi';
-import { toWei } from '../../../../../helpers/big-number';
-import type { AbiItem } from 'web3-utils';
-import type Web3 from 'web3';
+import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number';
 import { buildExecute, buildFetchBalance } from '../utils';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
+import type { Abi, Address } from 'abitype';
+import { getWalletConnectionApi } from '../../instances';
+import type { Hash } from 'viem';
 
 const id = 'ethereum-curve';
 
 const convexBooster = '0xF403C135812408BFbE8713b5A23a04b3D48AAE31';
 
-async function getStakingAddress(
-  vault: VaultEntity,
-  web3: Web3,
-  state: BeefyState
-): Promise<string> {
+async function getStakingAddress(vault: VaultEntity, state: BeefyState): Promise<string> {
   const strategyAddress = selectVaultStrategyAddress(state, vault.id);
-  const strategy = new web3.eth.Contract(ABI, strategyAddress);
+  const strategyContract = fetchContract(strategyAddress, abi, vault.chainId);
   let gauge = ZERO_ADDRESS;
   try {
-    gauge = await strategy.methods.gauge().call();
+    gauge = await strategyContract.read.gauge();
   } catch {
     // old convex-only strat, get gauge by pid from booster
     try {
-      const pid = await strategy.methods.pid().call();
-      const res = await new web3.eth.Contract(ABI, convexBooster).methods.poolInfo(pid).call();
-      gauge = res.gauge;
+      const pid = await strategyContract.read.pid();
+      const res = await fetchContract(convexBooster, abi, vault.chainId).read.poolInfo([pid]);
+      gauge = res[2];
     } catch (err) {
       console.error(id, vault.name, 'migrator cant find gauge', err);
     }
@@ -40,25 +38,31 @@ async function getStakingAddress(
 
 async function getBalance(
   vault: VaultEntity,
-  web3: Web3,
   walletAddress: string,
   state: BeefyState
 ): Promise<string> {
-  const stakingAddress = await getStakingAddress(vault, web3, state);
+  const stakingAddress = await getStakingAddress(vault, state);
   if (stakingAddress == ZERO_ADDRESS) return '0';
-  const staking = new web3.eth.Contract(ERC20Abi as unknown as AbiItem, stakingAddress);
-  return staking.methods.balanceOf(walletAddress).call();
+  const stakingContract = fetchContract(stakingAddress, ERC20Abi, vault.chainId);
+  const walletBalance = await stakingContract.read.balanceOf([walletAddress as Address]);
+  return walletBalance.toString(10);
 }
 
-async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, state: BeefyState) {
+async function unstakeCall(
+  vault: VaultEntity,
+  amount: BigNumber,
+  state: BeefyState
+): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const amountInWei = toWei(amount, depositToken.decimals);
-  const stakingAddress = await getStakingAddress(vault, web3, state);
-  const curveGauge = new web3.eth.Contract(ABI, stakingAddress);
-  return curveGauge.methods.withdraw(amountInWei.toString(10));
+  const stakingAddress = await getStakingAddress(vault, state);
+  const walletClient = await (await getWalletConnectionApi()).getConnectedViemClient();
+  const contract = fetchWalletContract(stakingAddress, abi, walletClient);
+  return (args: MigratorUnstakeProps) =>
+    contract.write.withdraw([bigNumberToBigInt(amountInWei)], args);
 }
 
-const ABI: AbiItem[] = [
+const abi = [
   {
     inputs: [],
     name: 'gauge',
@@ -112,7 +116,7 @@ const ABI: AbiItem[] = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export const migrator: Migrator = {
   update: buildFetchBalance(id, getBalance),

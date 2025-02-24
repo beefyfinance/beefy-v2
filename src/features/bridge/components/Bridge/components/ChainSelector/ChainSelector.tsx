@@ -6,9 +6,9 @@ import { selectBridgeFormState } from '../../../../../data/selectors/bridge';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import clsx from 'clsx';
 import type { ChainEntity } from '../../../../../data/entities/chain';
-import { ChainIcon } from '../ChainIcon';
 import { useTranslation } from 'react-i18next';
 import { bridgeActions, FormStep } from '../../../../../data/reducers/wallet/bridge';
+import { ChainIcon } from '../../../../../../components/ChainIcon';
 
 const useStyles = makeStyles(styles);
 

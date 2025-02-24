@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
 import type { BeefyState } from '../../../redux-types';
-import type { ChainEntity } from '../entities/chain';
+import type { ChainEntity, ChainId } from '../entities/chain';
 
 function makeChainSelector(idsSelector: (state: BeefyState) => ChainEntity['id'][]) {
   return createSelector(
@@ -32,6 +32,13 @@ export const selectChainByNetworkChainId = (
 export const selectAllChainIds = (state: BeefyState) => state.entities.chains.allIds;
 export const selectActiveChainIds = (state: BeefyState) => state.entities.chains.activeIds;
 export const selectEolChainIds = (state: BeefyState) => state.entities.chains.eolIds;
+export const selectActiveRpcUrlForChain = (state: BeefyState, chainId: ChainId) => {
+  const activeRpcsForChain = state.entities.chains.activeRpcsByChainId[chainId];
+  if (!activeRpcsForChain) {
+    throw new Error(`No active RPCs found for chainId: ${chainId}`);
+  }
+  return activeRpcsForChain.rpcs;
+};
 
 export const selectAllChains = makeChainSelector(selectAllChainIds);
 export const selectActiveChains = makeChainSelector(selectActiveChainIds);

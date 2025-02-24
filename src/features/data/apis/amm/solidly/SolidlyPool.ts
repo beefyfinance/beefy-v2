@@ -1,11 +1,13 @@
-import type Web3 from 'web3';
 import { BigNumber } from 'bignumber.js';
-import { MultiCall, type ShapeWithLabel } from 'eth-multicall';
 import { SolidlyPairAbi } from '../../../../../config/abi/SolidlyPairAbi';
 import type { ChainEntity } from '../../../entities/chain';
-import { createContract, viemToWeb3Abi } from '../../../../../helpers/web3';
-import { getWeb3Instance } from '../../instances';
-import { BIG_ONE, BIG_ZERO, fromWei, toWei } from '../../../../../helpers/big-number';
+import {
+  BIG_ONE,
+  BIG_ZERO,
+  bigNumberToBigInt,
+  fromWei,
+  toWei,
+} from '../../../../../helpers/big-number';
 import type {
   AddLiquidityRatio,
   AddLiquidityResult,
@@ -18,10 +20,11 @@ import type { ZapStep, ZapStepRequest, ZapStepResponse } from '../../transact/za
 import type { TokenAmount } from '../../transact/transact-types';
 import { slipAllBy, slipBy } from '../../transact/helpers/amounts';
 import { isTokenNative, type TokenEntity } from '../../../entities/token';
-import abiCoder from 'web3-eth-abi';
 import { getInsertIndex } from '../../transact/helpers/zap';
 import type { AmmEntitySolidly } from '../../../entities/zap';
 import { onlyOneTokenAmount } from '../../transact/helpers/options';
+import { encodeFunctionData, type Abi, type Address } from 'viem';
+import { fetchContract } from '../../rpc-contract/viem-contract';
 
 export enum MetadataKeys {
   decimals0,
@@ -79,8 +82,6 @@ export class SolidlyPool implements IUniswapLikePool {
   public readonly type = 'solidly';
 
   protected pairData: PairData | undefined = undefined;
-  private web3: Web3 | undefined = undefined;
-  private multicall: MultiCall | undefined = undefined;
 
   constructor(
     protected address: string,
@@ -88,63 +89,34 @@ export class SolidlyPool implements IUniswapLikePool {
     protected chain: ChainEntity
   ) {}
 
-  async getWeb3(): Promise<Web3> {
-    if (this.web3 === undefined) {
-      this.web3 = await getWeb3Instance(this.chain);
-    }
-
-    return this.web3;
-  }
-
-  async getMulticall(): Promise<MultiCall> {
-    if (this.multicall === undefined) {
-      this.multicall = new MultiCall(await this.getWeb3(), this.chain.multicallAddress);
-    }
-
-    return this.multicall;
-  }
-
-  protected getPairDataRequest(): ShapeWithLabel[] {
-    const contract = createContract(viemToWeb3Abi(SolidlyPairAbi), this.address);
-    return [
-      {
-        totalSupply: contract.methods.totalSupply(),
-        decimals: contract.methods.decimals(),
-        metadata: contract.methods.metadata(),
-      },
-    ];
-  }
-
-  protected consumePairDataResponse(untypedResult: unknown[]) {
-    const result = (untypedResult as PairDataResponse[])[0];
+  protected async updatePairData() {
+    const contract = fetchContract(this.address, SolidlyPairAbi, this.chain.id);
+    const [
+      totalSupply,
+      decimals,
+      [decimal0, decimal1, reserves0, reserves1, stable, token0, token1],
+    ] = await Promise.all([
+      contract.read.totalSupply(),
+      contract.read.decimals(),
+      contract.read.metadata(),
+    ]);
 
     this.pairData = {
-      totalSupply: new BigNumber(result.totalSupply),
-      decimals: parseInt(result.decimals, 10),
-      token0: result.metadata[MetadataKeys.token0],
-      token1: result.metadata[MetadataKeys.token1],
-      reserves0: new BigNumber(result.metadata[MetadataKeys.reserves0]),
-      reserves1: new BigNumber(result.metadata[MetadataKeys.reserves1]),
-      decimals0: new BigNumber(result.metadata[MetadataKeys.decimals0]).e!, // 1e18 -> 18
-      decimals1: new BigNumber(result.metadata[MetadataKeys.decimals1]).e!,
-      stable: result.metadata[MetadataKeys.stable],
+      totalSupply: new BigNumber(totalSupply.toString(10)),
+      decimals: decimals,
+      token0: token0,
+      token1: token1,
+      reserves0: new BigNumber(reserves0.toString(10)),
+      reserves1: new BigNumber(reserves1.toString(10)),
+      decimals0: new BigNumber(decimal0.toString(10)).e!, // 1e18 -> 18
+      decimals1: new BigNumber(decimal1.toString(10)).e!,
+      stable: stable,
     };
   }
 
-  async updatePairData() {
-    const multicall = await this.getMulticall();
-    const [results] = await multicall.all([this.getPairDataRequest()]);
-    this.consumePairDataResponse(results);
-  }
-
-  async updateAllData(otherCalls: ShapeWithLabel[][] = []): Promise<unknown[][]> {
-    const multicall = await this.getMulticall();
-    const calls = [this.getPairDataRequest(), ...otherCalls];
-    const [pairResults, ...otherResults] = await multicall.all(calls);
-
-    this.consumePairDataResponse(pairResults);
-
-    return otherResults;
+  async updateAllData() {
+    // For solidly pools we just update pair data on the base pool.
+    await this.updatePairData();
   }
 
   removeLiquidity(amount: BigNumber, updateReserves: boolean = false): RemoveLiquidityResult {
@@ -767,43 +739,50 @@ export class SolidlyPool implements IUniswapLikePool {
     return {
       target: this.amm.routerAddress,
       value: '0',
-      data: abiCoder.encodeFunctionCall(
-        {
-          type: 'function',
-          name: 'swapExactTokensForTokens',
-          constant: false,
-          payable: false,
-          inputs: [
-            { type: 'uint256', name: 'amountIn' },
-            {
-              type: 'uint256',
-              name: 'amountOutMin',
-            },
-            {
-              type: 'tuple[]',
-              name: 'routes',
-              components: [
-                { type: 'address', name: 'from' },
-                { type: 'address', name: 'to' },
-                {
-                  type: 'bool',
-                  name: 'stable',
-                },
-              ],
-            },
-            { type: 'address', name: 'to' },
-            { type: 'uint256', name: 'deadline' },
-          ],
-          outputs: [{ type: 'uint256[]', name: 'amounts' }],
-        },
-        [
-          amountIn.toString(10),
-          amountOutMin.toString(10),
-          routes.map(({ from, to }) => [from, to, pairData.stable]),
-          to,
-          deadline.toString(10),
-        ]
-      ),
+      data: encodeFunctionData({
+        abi: [
+          {
+            type: 'function',
+            name: 'swapExactTokensForTokens',
+            constant: false,
+            payable: false,
+            inputs: [
+              { type: 'uint256', name: 'amountIn' },
+              {
+                type: 'uint256',
+                name: 'amountOutMin',
+              },
+              {
+                type: 'tuple[]',
+                name: 'routes',
+                components: [
+                  { type: 'address', name: 'from' },
+                  { type: 'address', name: 'to' },
+                  {
+                    type: 'bool',
+                    name: 'stable',
+                  },
+                ],
+              },
+              { type: 'address', name: 'to' },
+              { type: 'uint256', name: 'deadline' },
+            ],
+            outputs: [{ type: 'uint256[]', name: 'amounts' }],
+            stateMutability: 'nonpayable',
+          },
+        ] as const satisfies Abi,
+        args: [
+          bigNumberToBigInt(amountIn),
+          bigNumberToBigInt(amountOutMin),
+          routes.map(({ from, to }) => ({
+            from: from as Address,
+            to: to as Address,
+            stable: pairData.stable,
+          })),
+          to as Address,
+          BigInt(deadline),
+        ],
+      }),
       tokens: [
         {
           token: routes[0].from,
@@ -861,53 +840,56 @@ export class SolidlyPool implements IUniswapLikePool {
     return {
       target: this.amm.routerAddress,
       value: '0',
-      data: abiCoder.encodeFunctionCall(
-        {
-          type: 'function',
-          name: 'addLiquidity',
-          constant: false,
-          payable: false,
-          inputs: [
-            { type: 'address', name: 'tokenA' },
-            { type: 'address', name: 'tokenB' },
-            {
-              type: 'bool',
-              name: 'stable',
-            },
-            { type: 'uint256', name: 'amountADesired' },
-            {
-              type: 'uint256',
-              name: 'amountBDesired',
-            },
-            { type: 'uint256', name: 'amountAMin' },
-            {
-              type: 'uint256',
-              name: 'amountBMin',
-            },
-            { type: 'address', name: 'to' },
-            { type: 'uint256', name: 'deadline' },
-          ],
-          outputs: [
-            { type: 'uint256', name: 'amountA' },
-            {
-              type: 'uint256',
-              name: 'amountB',
-            },
-            { type: 'uint256', name: 'liquidity' },
-          ],
-        },
-        [
-          tokenA,
-          tokenB,
+      data: encodeFunctionData({
+        abi: [
+          {
+            type: 'function',
+            name: 'addLiquidity',
+            constant: false,
+            payable: false,
+            inputs: [
+              { type: 'address', name: 'tokenA' },
+              { type: 'address', name: 'tokenB' },
+              {
+                type: 'bool',
+                name: 'stable',
+              },
+              { type: 'uint256', name: 'amountADesired' },
+              {
+                type: 'uint256',
+                name: 'amountBDesired',
+              },
+              { type: 'uint256', name: 'amountAMin' },
+              {
+                type: 'uint256',
+                name: 'amountBMin',
+              },
+              { type: 'address', name: 'to' },
+              { type: 'uint256', name: 'deadline' },
+            ],
+            outputs: [
+              { type: 'uint256', name: 'amountA' },
+              {
+                type: 'uint256',
+                name: 'amountB',
+              },
+              { type: 'uint256', name: 'liquidity' },
+            ],
+            stateMutability: 'nonpayable',
+          },
+        ] as const satisfies Abi,
+        args: [
+          tokenA as Address,
+          tokenB as Address,
           stable,
-          amountADesired.toString(10),
-          amountBDesired.toString(10),
-          amountAMin.toString(10),
-          amountBMin.toString(10),
-          to,
-          deadline.toString(10),
-        ]
-      ),
+          bigNumberToBigInt(amountADesired),
+          bigNumberToBigInt(amountBDesired),
+          bigNumberToBigInt(amountAMin),
+          bigNumberToBigInt(amountBMin),
+          to as Address,
+          BigInt(deadline),
+        ],
+      }),
       tokens: [
         {
           token: tokenA,
@@ -982,47 +964,50 @@ export class SolidlyPool implements IUniswapLikePool {
     return {
       target: this.amm.routerAddress,
       value: '0',
-      data: abiCoder.encodeFunctionCall(
-        {
-          type: 'function',
-          name: 'removeLiquidity',
-          constant: false,
-          payable: false,
-          inputs: [
-            { type: 'address', name: 'tokenA' },
-            { type: 'address', name: 'tokenB' },
-            {
-              type: 'bool',
-              name: 'stable',
-            },
-            { type: 'uint256', name: 'liquidity' },
-            {
-              type: 'uint256',
-              name: 'amountAMin',
-            },
-            { type: 'uint256', name: 'amountBMin' },
-            { type: 'address', name: 'to' },
-            {
-              type: 'uint256',
-              name: 'deadline',
-            },
-          ],
-          outputs: [
-            { type: 'uint256', name: 'amountA' },
-            { type: 'uint256', name: 'amountB' },
-          ],
-        },
-        [
-          tokenA,
-          tokenB,
+      data: encodeFunctionData({
+        abi: [
+          {
+            type: 'function',
+            name: 'removeLiquidity',
+            constant: false,
+            payable: false,
+            inputs: [
+              { type: 'address', name: 'tokenA' },
+              { type: 'address', name: 'tokenB' },
+              {
+                type: 'bool',
+                name: 'stable',
+              },
+              { type: 'uint256', name: 'liquidity' },
+              {
+                type: 'uint256',
+                name: 'amountAMin',
+              },
+              { type: 'uint256', name: 'amountBMin' },
+              { type: 'address', name: 'to' },
+              {
+                type: 'uint256',
+                name: 'deadline',
+              },
+            ],
+            outputs: [
+              { type: 'uint256', name: 'amountA' },
+              { type: 'uint256', name: 'amountB' },
+            ],
+            stateMutability: 'nonpayable',
+          },
+        ] as const satisfies Abi,
+        args: [
+          tokenA as Address,
+          tokenB as Address,
           stable,
-          liquidity.toString(10),
-          amountAMin.toString(10),
-          amountBMin.toString(10),
-          to,
-          deadline.toString(10),
-        ]
-      ),
+          bigNumberToBigInt(liquidity),
+          bigNumberToBigInt(amountAMin),
+          bigNumberToBigInt(amountBMin),
+          to as Address,
+          BigInt(deadline),
+        ],
+      }),
       tokens: [
         {
           token: this.address,

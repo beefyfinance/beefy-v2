@@ -1,15 +1,17 @@
-import type { Migrator } from '../migration-types';
+import type { Migrator, MigratorUnstakeProps } from '../migration-types';
 import type { VaultEntity } from '../../../entities/vault';
 import { BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi';
-import { toWei } from '../../../../../helpers/big-number';
-import type { AbiItem } from 'web3-utils';
-import type Web3 from 'web3';
+import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number';
 import { buildExecute, buildFetchBalance } from '../utils';
 import { selectWalletAddress } from '../../../selectors/wallet';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
+import type { Abi, Address } from 'abitype';
+import { getWalletConnectionApi } from '../../instances';
+import type { Hash } from 'viem';
 
 const id = 'ethereum-prisma';
 
@@ -25,55 +27,64 @@ const prismaPools = [
   ['0xDA70A660d635e496B336059b38EBb5f849A75CAf', '0xFEaB09F0DDE4D03C1345519F281025f9B8A11CDF'],
 ];
 
-function getStakingAddress(vault: VaultEntity, web3: Web3, state: BeefyState): Promise<string> {
+function getStakingAddress(vault: VaultEntity, state: BeefyState): Promise<string> {
   const strategyAddress = selectVaultStrategyAddress(state, vault.id);
-  const strategy = new web3.eth.Contract(StrategyAbi, strategyAddress);
-  return strategy.methods.rewardPool().call();
+  const strategyContract = fetchContract(strategyAddress, StrategyAbi, vault.chainId);
+  return strategyContract.read.rewardPool();
 }
 
 async function getBalance(
   vault: VaultEntity,
-  web3: Web3,
   walletAddress: string,
   state: BeefyState
 ): Promise<string> {
-  const stakingAddress = await getStakingAddress(vault, web3, state);
+  const stakingAddress = await getStakingAddress(vault, state);
   const pools = prismaPools.find(s => s.includes(stakingAddress)) || [];
   if (pools.length > 0) {
     const promises = pools.map(address => {
-      const staking = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], address);
-      return staking.methods.balanceOf(walletAddress).call();
+      const stakingContract = fetchContract(address, ERC20Abi, vault.chainId);
+      return stakingContract.read.balanceOf([walletAddress as Address]);
     });
     const res = await Promise.all(promises);
-    const balances = res.map(b => new BigNumber(b)).sort((b1, b2) => (b1.gte(b2) ? -1 : 1));
+    const balances = res
+      .map(b => new BigNumber(b.toString(10)))
+      .sort((b1, b2) => (b1.gte(b2) ? -1 : 1));
     return balances[0].toString(10);
   } else {
-    const staking = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], stakingAddress);
-    return staking.methods.balanceOf(walletAddress).call();
+    const stakingContract = fetchContract(stakingAddress, ERC20Abi, vault.chainId);
+    const walletBalance = await stakingContract.read.balanceOf([walletAddress as Address]);
+    return walletBalance.toString(10);
   }
 }
 
-async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, state: BeefyState) {
+async function unstakeCall(
+  vault: VaultEntity,
+  amount: BigNumber,
+  state: BeefyState
+): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
   const wallet = selectWalletAddress(state);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const amountInWei = toWei(amount, depositToken.decimals);
-  let stakingAddress = await getStakingAddress(vault, web3, state);
+  let stakingAddress = await getStakingAddress(vault, state);
   const pools = prismaPools.find(s => s.includes(stakingAddress)) || [];
   if (pools.length > 1) {
     for (const address of pools) {
-      const staking = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], address);
-      const bal = await staking.methods.balanceOf(wallet).call();
-      if (amountInWei.eq(new BigNumber(bal))) {
+      const contract = fetchContract(address, ERC20Abi, vault.chainId);
+      const bal = await contract.read.balanceOf([wallet as Address]);
+      // const bal = await staking.methods.balanceOf(wallet).call();
+      if (amountInWei.eq(new BigNumber(bal.toString(10)))) {
         stakingAddress = address;
         break;
       }
     }
   }
-  const staking = new web3.eth.Contract(StakingAbi, stakingAddress);
-  return staking.methods.withdraw(wallet, amountInWei.toString(10));
+  const walletClient = await (await getWalletConnectionApi()).getConnectedViemClient();
+  const contract = fetchWalletContract(stakingAddress, StakingAbi, walletClient);
+  return (args: MigratorUnstakeProps) =>
+    contract.write.withdraw([wallet as Address, bigNumberToBigInt(amountInWei)], args);
 }
 
-const StrategyAbi: AbiItem[] = [
+const StrategyAbi = [
   {
     inputs: [],
     name: 'rewardPool',
@@ -81,9 +92,9 @@ const StrategyAbi: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
-const StakingAbi: AbiItem[] = [
+const StakingAbi = [
   {
     inputs: [
       { internalType: 'address', name: 'receiver', type: 'address' },
@@ -94,7 +105,7 @@ const StakingAbi: AbiItem[] = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export const migrator: Migrator = {
   update: buildFetchBalance(id, getBalance),

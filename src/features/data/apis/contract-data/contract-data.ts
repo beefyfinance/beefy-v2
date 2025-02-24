@@ -7,7 +7,6 @@ import type {
 } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import { BigNumber } from 'bignumber.js';
-import type { AsWeb3Result } from '../../utils/types-utils';
 import type { BoostPromoEntity } from '../../entities/promo';
 import { chunk, pick, sortBy } from 'lodash-es';
 import type {
@@ -15,13 +14,16 @@ import type {
   BoostRawContractData,
   BoostRewardContractData,
   CowVaultContractData,
+  CowVaultRawContractData,
   FetchAllContractDataResult,
   GovVaultContractData,
   GovVaultMultiContractData,
   GovVaultMultiRawContractData,
+  GovVaultRawContractData,
   IContractDataApi,
   RewardContractData,
   StandardVaultContractData,
+  StandardVaultRawContractData,
 } from './contract-data-types';
 import {
   featureFlag_getContractDataApiChunkSize,
@@ -30,14 +32,14 @@ import {
 import type { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
 import { selectTokenByAddress, selectTokenByAddressOrUndefined } from '../../selectors/tokens';
-import { makeBatchRequest, viemToWeb3Abi, type Web3Call } from '../../../../helpers/web3';
 import { isFiniteNumber } from '../../../../helpers/number';
-import type Web3 from 'web3';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import { addDays } from 'date-fns';
+import { fetchContract } from '../rpc-contract/viem-contract';
+import type { Address } from 'abitype';
 
 export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi {
-  constructor(protected web3: Web3, protected chain: T) {}
+  constructor(protected chain: T) {}
 
   public async fetchAllContractData(
     state: BeefyState,
@@ -48,12 +50,12 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     boosts: BoostPromoEntity[],
     boostsMulti: BoostPromoEntity[]
   ): Promise<FetchAllContractDataResult> {
-    const mc = new this.web3.eth.Contract(
-      viemToWeb3Abi(BeefyV2AppMulticallAbi),
-      this.chain.appMulticallContractAddress
+    const multicallContract = fetchContract(
+      this.chain.appMulticallContractAddress,
+      BeefyV2AppMulticallAbi,
+      this.chain.id
     );
 
-    // if we send too much in a single call, we get "execution reversed"
     const CHUNK_SIZE = featureFlag_getContractDataApiChunkSize(this.chain.id);
 
     const boostBatches = chunk(boosts, CHUNK_SIZE);
@@ -63,50 +65,44 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const vaultBatches = chunk(standardVaults, CHUNK_SIZE);
     const cowVaultBatches = chunk(cowVaults, CHUNK_SIZE);
 
-    const requestsForBatch: Web3Call[] = [];
+    const boostRequests = boostBatches.map(batch =>
+      multicallContract.read.getBoostInfo([batch.map(boost => boost.contractAddress as Address)])
+    );
+    const boostMultiRequests = boostMultiBatches.map(batch =>
+      multicallContract.read.getGovVaultMultiInfo([
+        batch.map(vault => vault.contractAddress as Address),
+      ])
+    );
+    const vaultRequests = vaultBatches.map(batch =>
+      multicallContract.read.getVaultInfo([batch.map(vault => vault.contractAddress as Address)])
+    );
+    const govVaultRequests = govVaultBatches.map(batch =>
+      multicallContract.read.getGovVaultInfo([batch.map(vault => vault.contractAddress as Address)])
+    );
+    const govVaultMultiRequests = govVaultMultiBatches.map(batch =>
+      multicallContract.read.getGovVaultMultiInfo([
+        batch.map(vault => vault.contractAddress as Address),
+      ])
+    );
+    const cowVaultRequests = cowVaultBatches.map(batch =>
+      multicallContract.read.getCowVaultInfo([batch.map(vault => vault.contractAddress as Address)])
+    );
 
-    boostBatches.forEach(boostBatch => {
-      requestsForBatch.push({
-        method: mc.methods.getBoostInfo(boostBatch.map(boost => boost.contractAddress)).call,
-        params: { from: '0x0000000000000000000000000000000000000000' },
-      });
-    });
-    boostMultiBatches.forEach(boostBatch => {
-      requestsForBatch.push({
-        method: mc.methods.getGovVaultMultiInfo(boostBatch.map(vault => vault.contractAddress))
-          .call,
-        params: { from: '0x0000000000000000000000000000000000000000' },
-      });
-    });
-    vaultBatches.forEach(vaultBatch => {
-      requestsForBatch.push({
-        method: mc.methods.getVaultInfo(vaultBatch.map(vault => vault.contractAddress)).call,
-        params: { from: '0x0000000000000000000000000000000000000000' },
-      });
-    });
-    govVaultBatches.forEach(govVaultBatch => {
-      requestsForBatch.push({
-        method: mc.methods.getGovVaultInfo(govVaultBatch.map(vault => vault.contractAddress)).call,
-        params: { from: '0x0000000000000000000000000000000000000000' },
-      });
-    });
-    govVaultMultiBatches.forEach(govVaultBatch => {
-      requestsForBatch.push({
-        method: mc.methods.getGovVaultMultiInfo(govVaultBatch.map(vault => vault.contractAddress))
-          .call,
-        params: { from: '0x0000000000000000000000000000000000000000' },
-      });
-    });
-    cowVaultBatches.forEach(cowVaultBatch => {
-      requestsForBatch.push({
-        method: mc.methods.getCowVaultInfo(cowVaultBatch.map(vault => vault.contractAddress)).call,
-        params: { from: '0x0000000000000000000000000000000000000000' },
-      });
-    });
-
-    const results: unknown[] = await makeBatchRequest(this.web3, requestsForBatch);
-
-    // now reasign results
+    const [
+      boostResults,
+      boostMultiResults,
+      vaultResults,
+      govVaultResults,
+      govVaultMultiResults,
+      cowVaultResults,
+    ] = await Promise.all([
+      Promise.all(boostRequests),
+      Promise.all(boostMultiRequests),
+      Promise.all(vaultRequests),
+      Promise.all(govVaultRequests),
+      Promise.all(govVaultMultiRequests),
+      Promise.all(cowVaultRequests),
+    ]);
 
     const res: FetchAllContractDataResult = {
       boosts: [],
@@ -116,56 +112,52 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       cowVaults: [],
     };
 
-    let resultsIdx = 0;
-    for (const boostBatch of boostBatches) {
-      const batchRes = (results[resultsIdx] as BoostRawContractData[]).map((boostRes, elemidx) =>
-        this.boostFormatter(state, boostRes, boostBatch[elemidx])
-      );
-      res.boosts = res.boosts.concat(batchRes);
-      resultsIdx++;
-    }
-    for (const boostBatch of boostMultiBatches) {
-      const batchRes = (results[resultsIdx] as GovVaultMultiRawContractData[]).map(
-        (boostRes, elemidx) => this.boostFormatterMulti(state, boostRes, boostBatch[elemidx])
-      );
-      res.boosts = res.boosts.concat(batchRes);
-      resultsIdx++;
-    }
-    for (const vaultBatch of vaultBatches) {
-      const batchRes = (results[resultsIdx] as AsWeb3Result<StandardVaultContractData>[]).map(
-        (vaultRes, elemidx) => this.standardVaultFormatter(state, vaultRes, vaultBatch[elemidx])
-      );
-      res.standardVaults = res.standardVaults.concat(batchRes);
-      resultsIdx++;
-    }
-    for (const vaultBatch of govVaultBatches) {
-      const batchRes = (results[resultsIdx] as AsWeb3Result<GovVaultContractData>[]).map(
-        (vaultRes, elemidx) => this.govVaultFormatter(state, vaultRes, vaultBatch[elemidx])
-      );
-      res.govVaults = res.govVaults.concat(batchRes);
-      resultsIdx++;
-    }
-    for (const vaultBatch of govVaultMultiBatches) {
-      const batchRes = (results[resultsIdx] as AsWeb3Result<GovVaultMultiRawContractData>[]).map(
-        (vaultRes, elemidx) => this.govVaultMultiFormatter(state, vaultRes, vaultBatch[elemidx])
-      );
-      res.govVaultsMulti = res.govVaultsMulti.concat(batchRes);
-      resultsIdx++;
-    }
-    for (const cowBatch of cowVaultBatches) {
-      const batchRes = (results[resultsIdx] as AsWeb3Result<CowVaultContractData>[]).map(
-        (vaultRes, elemidx) => this.cowVaultFormatter(state, vaultRes, cowBatch[elemidx])
-      );
-      res.cowVaults = res.cowVaults.concat(batchRes);
-      resultsIdx++;
-    }
+    boostBatches.forEach((boostBatch, idx) => {
+      boostBatch.forEach((boost, elemidx) => {
+        res.boosts.push(this.boostFormatter(state, boostResults[idx][elemidx], boost));
+      });
+    });
+
+    boostMultiBatches.forEach((boostBatch, idx) => {
+      boostBatch.forEach((boost, elemidx) => {
+        res.boosts.push(this.boostFormatterMulti(state, boostMultiResults[idx][elemidx], boost));
+      });
+    });
+
+    vaultBatches.forEach((vaultBatch, idx) => {
+      vaultBatch.forEach((vault, elemidx) => {
+        res.standardVaults.push(
+          this.standardVaultFormatter(state, vaultResults[idx][elemidx], vault)
+        );
+      });
+    });
+
+    govVaultBatches.forEach((govVaultBatch, idx) => {
+      govVaultBatch.forEach((govVault, elemidx) => {
+        res.govVaults.push(this.govVaultFormatter(state, govVaultResults[idx][elemidx], govVault));
+      });
+    });
+
+    govVaultMultiBatches.forEach((govVaultBatch, idx) => {
+      govVaultBatch.forEach((govVault, elemidx) => {
+        res.govVaultsMulti.push(
+          this.govVaultMultiFormatter(state, govVaultMultiResults[idx][elemidx], govVault)
+        );
+      });
+    });
+
+    cowVaultBatches.forEach((cowVaultBatch, idx) => {
+      cowVaultBatch.forEach((cowVault, elemidx) => {
+        res.cowVaults.push(this.cowVaultFormatter(state, cowVaultResults[idx][elemidx], cowVault));
+      });
+    });
 
     return res;
   }
 
   protected standardVaultFormatter(
     state: BeefyState,
-    result: AsWeb3Result<StandardVaultContractData>,
+    result: StandardVaultRawContractData,
     standardVault: VaultStandard
   ) {
     const vault = selectVaultById(state, standardVault.id);
@@ -173,9 +165,11 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     return {
       id: standardVault.id,
-      balance: new BigNumber(result.balance).shiftedBy(-depositToken.decimals),
+      balance: new BigNumber(result.balance.toString(10)).shiftedBy(-depositToken.decimals),
       /** always 18 decimals for PPFS */
-      pricePerFullShare: new BigNumber(result.pricePerFullShare).shiftedBy(-mooToken.decimals),
+      pricePerFullShare: new BigNumber(result.pricePerFullShare.toString(10)).shiftedBy(
+        -mooToken.decimals
+      ),
       strategy: result.strategy,
       paused: result.paused,
     } satisfies StandardVaultContractData;
@@ -183,20 +177,20 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
   protected govVaultFormatter(
     state: BeefyState,
-    result: AsWeb3Result<GovVaultContractData>,
+    result: GovVaultRawContractData,
     govVault: VaultGov
   ) {
     const vault = selectVaultById(state, govVault.id);
     const token = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     return {
       id: govVault.id,
-      totalSupply: new BigNumber(result.totalSupply).shiftedBy(-token.decimals),
+      totalSupply: new BigNumber(result.totalSupply.toString(10)).shiftedBy(-token.decimals),
     } satisfies GovVaultContractData;
   }
 
   protected govVaultMultiFormatter(
     state: BeefyState,
-    result: AsWeb3Result<GovVaultMultiRawContractData>,
+    result: GovVaultMultiRawContractData,
     govVault: VaultGovMulti
   ): GovVaultMultiContractData {
     const token = selectTokenByAddress(state, govVault.chainId, govVault.receiptTokenAddress);
@@ -206,16 +200,12 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     for (const reward of result.rewards) {
       ++index;
 
-      if (!reward || reward.length !== 3) {
+      if (!reward) {
         console.error(`Invalid reward data for rewardpool ${govVault.id}`);
         continue;
       }
 
-      const [rewardAddress, rewardRate, periodFinish] = reward;
-      if (!rewardAddress || !rewardRate || !periodFinish) {
-        console.error(`Invalid reward data for rewardpool ${govVault.id}`);
-        continue;
-      }
+      const { rewardAddress, rate, periodFinish } = reward;
 
       const rewardToken = selectTokenByAddressOrUndefined(state, govVault.chainId, rewardAddress);
       if (!rewardToken) {
@@ -225,22 +215,22 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
       rewards.push({
         token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
-        rewardRate: new BigNumber(rewardRate).shiftedBy(-rewardToken.decimals),
-        periodFinish: this.periodFinishToDate(periodFinish)!,
+        rewardRate: new BigNumber(rate.toString(10)).shiftedBy(-rewardToken.decimals),
+        periodFinish: this.periodFinishToDate(periodFinish?.toString(10))!,
         index,
       });
     }
 
     return {
       id: govVault.id,
-      totalSupply: new BigNumber(result.totalSupply).shiftedBy(-token.decimals),
+      totalSupply: new BigNumber(result.totalSupply.toString(10)).shiftedBy(-token.decimals),
       rewards,
     };
   }
 
   protected cowVaultFormatter(
     state: BeefyState,
-    result: AsWeb3Result<CowVaultContractData>,
+    result: CowVaultRawContractData,
     cowVault: VaultCowcentrated
   ) {
     const tokens = cowVault.depositTokenAddresses.map(tokenAddress =>
@@ -249,8 +239,8 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     return {
       id: cowVault.id,
       balances: [
-        new BigNumber(result[0]).shiftedBy(-tokens[0].decimals),
-        new BigNumber(result[1]).shiftedBy(-tokens[1].decimals),
+        new BigNumber(result.token0Balance.toString(10)).shiftedBy(-tokens[0].decimals),
+        new BigNumber(result.token1Balance.toString(10)).shiftedBy(-tokens[1].decimals),
       ],
       strategy: result.strategy,
       paused: result.paused,
@@ -270,16 +260,18 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const earnedToken = selectTokenByAddress(state, reward.chainId, reward.address);
     const vault = selectVaultById(state, boost.vaultId);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    const periodFinish = this.periodFinishToDate(result.periodFinish);
+    const periodFinish = this.periodFinishToDate(result.periodFinish?.toString(10));
     return {
       id: boost.id,
       periodFinish,
       isPreStake: result.isPreStake,
-      totalSupply: new BigNumber(result.totalSupply).shiftedBy(-depositToken.decimals),
+      totalSupply: new BigNumber(result.totalSupply.toString(10)).shiftedBy(-depositToken.decimals),
       rewards: [
         {
           token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
-          rewardRate: new BigNumber(result.rewardRate).shiftedBy(-earnedToken.decimals),
+          rewardRate: new BigNumber(result.rewardRate.toString(10)).shiftedBy(
+            -earnedToken.decimals
+          ),
           periodFinish,
           isPreStake: result.isPreStake,
           index: 0,
@@ -299,13 +291,13 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     for (const reward of result.rewards) {
       ++index;
 
-      if (!reward || reward.length !== 3) {
+      if (!reward) {
         console.error(`Invalid reward data for boost ${boost.id}`);
         continue;
       }
 
-      const [rewardAddress, rewardRate, periodFinish] = reward;
-      if (!rewardAddress || !rewardRate || !periodFinish) {
+      const { rewardAddress, rate, periodFinish } = reward;
+      if (!rewardAddress || !rate || !periodFinish) {
         console.error(`Invalid reward data for boost ${boost.id}`);
         continue;
       }
@@ -318,8 +310,8 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
       rewards.push({
         token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
-        rewardRate: new BigNumber(rewardRate).shiftedBy(-rewardToken.decimals),
-        periodFinish: this.periodFinishToDate(periodFinish),
+        rewardRate: new BigNumber(rate.toString(10)).shiftedBy(-rewardToken.decimals),
+        periodFinish: this.periodFinishToDate(periodFinish?.toString(10)),
         isPreStake: false,
         index,
       });
@@ -366,7 +358,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
     return {
       id: boost.id,
-      totalSupply: new BigNumber(result.totalSupply).shiftedBy(-depositToken.decimals),
+      totalSupply: new BigNumber(result.totalSupply.toString(10)).shiftedBy(-depositToken.decimals),
       isPreStake: sortedRewards[0].isPreStake,
       periodFinish: sortedRewards[0].periodFinish,
       rewards: sortedRewards,

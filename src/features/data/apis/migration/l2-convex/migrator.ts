@@ -1,13 +1,15 @@
-import type { Migrator } from '../migration-types';
+import type { Migrator, MigratorUnstakeProps } from '../migration-types';
 import type { VaultEntity } from '../../../entities/vault';
 import { type BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi';
-import type { AbiItem } from 'web3-utils';
-import type Web3 from 'web3';
 import { buildExecute, buildFetchBalance } from '../utils';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
 import type { ChainEntity } from '../../../entities/chain';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
+import type { Abi, Address } from 'abitype';
+import { getWalletConnectionApi } from '../../instances';
+import type { Hash } from 'viem';
 
 const id = 'l2-convex';
 
@@ -17,33 +19,40 @@ const crvFactory = (chainId: ChainEntity['id']) =>
     ? '0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c'
     : '0xabC000d88f23Bb45525E447528DBF656A9D55bf5';
 
-async function getStakingAddress(vault: VaultEntity, web3: Web3, _: BeefyState): Promise<string> {
-  const factory = new web3.eth.Contract(CurveAbi, crvFactory(vault.chainId));
-  const gauge = await factory.methods.get_gauge_from_lp_token(vault.depositTokenAddress).call();
-  if (gauge == ZERO_ADDRESS) return gauge;
-  const Gauge = new web3.eth.Contract(CurveAbi, gauge);
-  return Gauge.methods.rewards_receiver(convexVoterProxy).call();
+async function getStakingAddress(vault: VaultEntity, _: BeefyState): Promise<string> {
+  const factory = fetchContract(crvFactory(vault.chainId) as Address, CurveAbi, vault.chainId);
+  const gaugeAddress = await factory.read.get_gauge_from_lp_token([
+    vault.depositTokenAddress as Address,
+  ]);
+  if (gaugeAddress == ZERO_ADDRESS) return gaugeAddress;
+  const gaugeContract = fetchContract(gaugeAddress, CurveAbi, vault.chainId);
+  return gaugeContract.read.rewards_receiver([convexVoterProxy]);
 }
 
 async function getBalance(
   vault: VaultEntity,
-  web3: Web3,
   walletAddress: string,
   state: BeefyState
 ): Promise<string> {
-  const stakingAddress = await getStakingAddress(vault, web3, state);
+  const stakingAddress = await getStakingAddress(vault, state);
   if (stakingAddress == ZERO_ADDRESS) return '0';
-  const staking = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], stakingAddress);
-  return staking.methods.balanceOf(walletAddress).call();
+  const stakingContract = fetchContract(stakingAddress, ERC20Abi, vault.chainId);
+  const walletBalance = await stakingContract.read.balanceOf([walletAddress as Address]);
+  return walletBalance.toString(10);
 }
 
-async function unstakeCall(vault: VaultEntity, web3: Web3, _: BigNumber, state: BeefyState) {
-  const stakingAddress = await getStakingAddress(vault, web3, state);
-  const convexStaking = new web3.eth.Contract(ConvexAbi, stakingAddress);
-  return convexStaking.methods.withdrawAll(true);
+async function unstakeCall(
+  vault: VaultEntity,
+  _: BigNumber,
+  state: BeefyState
+): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
+  const stakingAddress = await getStakingAddress(vault, state);
+  const walletClient = await (await getWalletConnectionApi()).getConnectedViemClient();
+  const contract = fetchWalletContract(stakingAddress, ConvexAbi, walletClient);
+  return (args: MigratorUnstakeProps) => contract.write.withdrawAll([true], args);
 }
 
-const CurveAbi: AbiItem[] = [
+const CurveAbi = [
   {
     inputs: [{ name: 'lp', type: 'address' }],
     name: 'get_gauge_from_lp_token',
@@ -58,9 +67,9 @@ const CurveAbi: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
-const ConvexAbi: AbiItem[] = [
+const ConvexAbi = [
   {
     inputs: [{ name: 'claim', type: 'bool' }],
     name: 'withdrawAll',
@@ -68,7 +77,7 @@ const ConvexAbi: AbiItem[] = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export const migrator: Migrator = {
   update: buildFetchBalance(id, getBalance),

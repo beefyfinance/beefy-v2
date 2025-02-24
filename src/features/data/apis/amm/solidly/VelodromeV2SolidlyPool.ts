@@ -1,14 +1,13 @@
-import type { ShapeWithLabel } from 'eth-multicall';
-import { createContract, viemToWeb3Abi } from '../../../../../helpers/web3';
 import { BigNumber } from 'bignumber.js';
 import type { SwapFeeParams } from '../types';
 import type { PairData, PairDataResponse } from './SolidlyPool';
-import { MetadataKeys, SolidlyPool } from './SolidlyPool';
-import type { AbiItem } from 'web3-utils';
+import { SolidlyPool } from './SolidlyPool';
 import { VelodromeV2PairAbi } from '../../../../../config/abi/VelodromeV2PairAbi';
-import abiCoder from 'web3-eth-abi';
 import type { ZapStep } from '../../transact/zap/types';
 import { getInsertIndex } from '../../transact/helpers/zap';
+import { encodeFunctionData, type Abi, type Address } from 'viem';
+import { fetchContract } from '../../rpc-contract/viem-contract';
+import { bigNumberToBigInt } from '../../../../../helpers/big-number';
 
 export type FactoryDataResponse = {
   fee: string;
@@ -18,7 +17,7 @@ export type FactoryData = {
   fee: BigNumber;
 };
 
-const VelodromeFactoryAbi: AbiItem[] = [
+const VelodromeFactoryAbi = [
   {
     inputs: [
       { internalType: 'address', name: 'pool', type: 'address' },
@@ -33,7 +32,7 @@ const VelodromeFactoryAbi: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export type VelodromeV2PairData = PairData & {
   factory: string;
@@ -47,69 +46,49 @@ export class VelodromeV2SolidlyPool extends SolidlyPool {
   protected pairData: VelodromeV2PairData | undefined = undefined;
   protected factoryData: FactoryData | undefined = undefined;
 
-  protected getFactoryDataRequest(): ShapeWithLabel[] {
-    if (!this.pairData) {
-      throw new Error('Pair data is not loaded');
-    }
-
-    const contract = createContract(VelodromeFactoryAbi, this.pairData.factory);
-
-    return [
-      {
-        fee: contract.methods.getFee(this.address, this.pairData.stable),
-      },
-    ];
-  }
-
-  protected consumeFactoryDataResponse(untypedResult: unknown[]) {
-    const result = (untypedResult as FactoryDataResponse[])[0];
-
-    this.factoryData = {
-      fee: new BigNumber(result.fee),
-    };
-  }
-
-  protected getPairDataRequest(): ShapeWithLabel[] {
-    const contract = createContract(viemToWeb3Abi(VelodromeV2PairAbi), this.address);
-    return [
-      {
-        totalSupply: contract.methods.totalSupply(),
-        decimals: contract.methods.decimals(),
-        metadata: contract.methods.metadata(),
-        factory: contract.methods.factory(),
-      },
-    ];
-  }
-
-  protected consumePairDataResponse(untypedResult: unknown[]) {
-    const result = (untypedResult as VelodromeV2PairDataResponse[])[0];
+  protected async updatePairData() {
+    const contract = fetchContract(this.address, VelodromeV2PairAbi, this.chain.id);
+    const [
+      totalSupply,
+      decimals,
+      [decimal0, decimal1, reserves0, reserves1, stable, token0, token1],
+      factory,
+    ] = await Promise.all([
+      contract.read.totalSupply(),
+      contract.read.decimals(),
+      contract.read.metadata(),
+      contract.read.factory(),
+    ]);
 
     this.pairData = {
-      totalSupply: new BigNumber(result.totalSupply),
-      decimals: parseInt(result.decimals, 10),
-      token0: result.metadata[MetadataKeys.token0],
-      token1: result.metadata[MetadataKeys.token1],
-      reserves0: new BigNumber(result.metadata[MetadataKeys.reserves0]),
-      reserves1: new BigNumber(result.metadata[MetadataKeys.reserves1]),
-      decimals0: new BigNumber(result.metadata[MetadataKeys.decimals0]).e!, // 1e18 -> 18
-      decimals1: new BigNumber(result.metadata[MetadataKeys.decimals1]).e!,
-      stable: result.metadata[MetadataKeys.stable],
-      factory: result.factory,
+      totalSupply: new BigNumber(totalSupply.toString(10)),
+      decimals: decimals,
+      token0: token0,
+      token1: token1,
+      reserves0: new BigNumber(reserves0.toString(10)),
+      reserves1: new BigNumber(reserves1.toString(10)),
+      decimals0: new BigNumber(decimal0.toString(10)).e!, // 1e18 -> 18
+      decimals1: new BigNumber(decimal1.toString(10)).e!,
+      stable: stable,
+      factory: factory,
     };
   }
 
   async updateFactoryData() {
-    const multicall = await this.getMulticall();
-    const [results] = await multicall.all([this.getFactoryDataRequest()]);
-    this.consumeFactoryDataResponse(results);
+    if (!this.pairData) {
+      throw new Error('Pair data is not loaded');
+    }
+    const contract = fetchContract(this.pairData.factory, VelodromeFactoryAbi, this.chain.id);
+    const fee = await contract.read.getFee([this.address as Address, this.pairData.stable]);
+    this.factoryData = {
+      fee: new BigNumber(fee.toString(10)),
+    };
   }
 
-  async updateAllData(otherCalls: ShapeWithLabel[][] = []): Promise<unknown[][]> {
-    const otherResults = await super.updateAllData(otherCalls);
-
+  async updateAllData() {
+    // Not longer needed since we are overriding pairData here
+    await super.updateAllData();
     await this.updateFactoryData();
-
-    return otherResults;
   }
 
   protected getSwapFeeParams(): SwapFeeParams {
@@ -139,44 +118,52 @@ export class VelodromeV2SolidlyPool extends SolidlyPool {
     return {
       target: this.amm.routerAddress,
       value: '0',
-      data: abiCoder.encodeFunctionCall(
-        {
-          type: 'function',
-          name: 'swapExactTokensForTokens',
-          constant: false,
-          payable: false,
-          inputs: [
-            { type: 'uint256', name: 'amountIn' },
-            {
-              type: 'uint256',
-              name: 'amountOutMin',
-            },
-            {
-              type: 'tuple[]',
-              name: 'routes',
-              components: [
-                { type: 'address', name: 'from' },
-                { type: 'address', name: 'to' },
-                {
-                  type: 'bool',
-                  name: 'stable',
-                },
-                { type: 'address', name: 'factory' },
-              ],
-            },
-            { type: 'address', name: 'to' },
-            { type: 'uint256', name: 'deadline' },
-          ],
-          outputs: [{ type: 'uint256[]', name: 'amounts' }],
-        },
-        [
-          amountIn.toString(10),
-          amountOutMin.toString(10),
-          routes.map(({ from, to }) => [from, to, pairData.stable, pairData.factory]),
-          to,
-          deadline.toString(10),
-        ]
-      ),
+      data: encodeFunctionData({
+        abi: [
+          {
+            type: 'function',
+            name: 'swapExactTokensForTokens',
+            constant: false,
+            payable: false,
+            inputs: [
+              { type: 'uint256', name: 'amountIn' },
+              {
+                type: 'uint256',
+                name: 'amountOutMin',
+              },
+              {
+                type: 'tuple[]',
+                name: 'routes',
+                components: [
+                  { type: 'address', name: 'from' },
+                  { type: 'address', name: 'to' },
+                  {
+                    type: 'bool',
+                    name: 'stable',
+                  },
+                  { type: 'address', name: 'factory' },
+                ],
+              },
+              { type: 'address', name: 'to' },
+              { type: 'uint256', name: 'deadline' },
+            ],
+            outputs: [{ type: 'uint256[]', name: 'amounts' }],
+            stateMutability: 'nonpayable',
+          },
+        ] as const satisfies Abi,
+        args: [
+          bigNumberToBigInt(amountIn),
+          bigNumberToBigInt(amountOutMin),
+          routes.map(({ from, to }) => ({
+            from: from as Address,
+            to: to as Address,
+            stable: pairData.stable,
+            factory: pairData.factory as Address,
+          })),
+          to as Address,
+          BigInt(deadline),
+        ],
+      }),
       tokens: [
         {
           token: routes[0].from,

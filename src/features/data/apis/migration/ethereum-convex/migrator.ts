@@ -1,59 +1,69 @@
-import type { Migrator } from '../migration-types';
+import type { Migrator, MigratorUnstakeProps } from '../migration-types';
 import type { VaultEntity } from '../../../entities/vault';
 import { type BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi';
-import { toWei } from '../../../../../helpers/big-number';
-import type { AbiItem } from 'web3-utils';
-import type Web3 from 'web3';
+import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number';
 import { buildExecute, buildFetchBalance } from '../utils';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
+import type { Abi, Address } from 'abitype';
+import { getWalletConnectionApi } from '../../instances';
+import type { Hash } from 'viem';
 
 const id = 'ethereum-convex';
 
-function getStakingAddress(vault: VaultEntity, web3: Web3, state: BeefyState): Promise<string> {
+function getStakingAddress(vault: VaultEntity, state: BeefyState): Promise<string> {
   const strategyAddress = selectVaultStrategyAddress(state, vault.id);
-  const strategy = new web3.eth.Contract(ConvexStrategyAbi, strategyAddress);
+  const strategy = fetchContract(strategyAddress, ConvexStrategyAbi, vault.chainId);
   if (vault.assetIds.length === 1) {
     if (vault.assetIds[0] == 'cvxCRV') {
-      return strategy.methods.stakedCvxCrv().call();
+      return strategy.read.stakedCvxCrv();
     } else {
-      return strategy.methods.staking().call();
+      return strategy.read.staking();
     }
   } else {
-    return strategy.methods.rewardPool().call();
+    return strategy.read.rewardPool();
   }
 }
 
 async function getBalance(
   vault: VaultEntity,
-  web3: Web3,
   walletAddress: string,
   state: BeefyState
 ): Promise<string> {
-  const stakingAddress = await getStakingAddress(vault, web3, state);
-  const staking = new web3.eth.Contract(ERC20Abi as unknown as AbiItem, stakingAddress);
-  return staking.methods.balanceOf(walletAddress).call();
+  const stakingAddress = await getStakingAddress(vault, state);
+  const stakingContract = fetchContract(stakingAddress, ERC20Abi, vault.chainId);
+  const walletBalance = await stakingContract.read.balanceOf([walletAddress as Address]);
+  return walletBalance.toString(10);
 }
 
-async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, state: BeefyState) {
+async function unstakeCall(
+  vault: VaultEntity,
+  amount: BigNumber,
+  state: BeefyState
+): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const amountInWei = toWei(amount, depositToken.decimals);
-  const stakingAddress = await getStakingAddress(vault, web3, state);
-  const convexStaking = new web3.eth.Contract(ConvexAbi, stakingAddress);
+  const stakingAddress = await getStakingAddress(vault, state);
+  const walletApi = await getWalletConnectionApi();
+  const walletClient = await walletApi.getConnectedViemClient();
+  const contract = fetchWalletContract(stakingAddress, ConvexAbi, walletClient);
 
   if (vault.assetIds.length === 1) {
     if (vault.assetIds[0] == 'CVX') {
-      return convexStaking.methods.withdraw(amountInWei.toString(10), false);
+      return (args: MigratorUnstakeProps) =>
+        contract.write.withdraw([bigNumberToBigInt(amountInWei), false], args);
     }
-    return convexStaking.methods.withdraw(amountInWei.toString(10));
+    return (args: MigratorUnstakeProps) =>
+      contract.write.withdraw([bigNumberToBigInt(amountInWei)], args);
   } else {
-    return convexStaking.methods.withdrawAllAndUnwrap(true);
+    return (args: MigratorUnstakeProps) => contract.write.withdrawAllAndUnwrap([true], args);
   }
 }
 
-const ConvexStrategyAbi: AbiItem[] = [
+const ConvexStrategyAbi = [
   {
     inputs: [],
     name: 'stakedCvxCrv',
@@ -75,9 +85,9 @@ const ConvexStrategyAbi: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
-const ConvexAbi: AbiItem[] = [
+const ConvexAbi = [
   {
     inputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
     name: 'withdraw',
@@ -102,7 +112,7 @@ const ConvexAbi: AbiItem[] = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export const migrator: Migrator = {
   update: buildFetchBalance(id, getBalance),

@@ -1,8 +1,6 @@
-import type Web3 from 'web3';
 import { BigNumber } from 'bignumber.js';
 import { BIG_ZERO, toWeiFromString } from '../../../../helpers/big-number';
 import type { ChainEntity } from '../../entities/chain';
-import { getWeb3Instance } from '../instances';
 import type {
   AxelarChain,
   AxelarGasToken,
@@ -16,6 +14,8 @@ import type {
   Token,
 } from './axelar-sdk-types';
 import { postJson } from '../../../../helpers/http';
+import { fetchContract } from '../rpc-contract/viem-contract';
+import type { Abi, Address } from 'abitype';
 
 /**
  * Slimmed down copy of the Axelar SDK with only a estimateGasFee analog implemented.
@@ -176,15 +176,13 @@ export class AxelarSDK implements IAxelarSDK {
 
   /** @see https://github.com/axelarnetwork/axelarjs-sdk/blob/main/src/libs/fee/getL1Fee.ts */
   async estimateL1GasFee(params: EstimateL1FeeParams): Promise<BigNumber> {
-    const web3 = await getWeb3Instance(this.destinationChain);
-
     const { l1GasOracleAddress } = params;
     const realL1GasOracleAddress =
       l1GasOracleAddress || '0x420000000000000000000000000000000000000F';
 
     switch (params.l2Type) {
       case 'op':
-        return this.getOptimismL1Fee(web3, {
+        return this.getOptimismL1Fee({
           ...params,
           l1GasOracleAddress: realL1GasOracleAddress,
         });
@@ -196,27 +194,22 @@ export class AxelarSDK implements IAxelarSDK {
     }
   }
 
-  async getOptimismL1Fee(web3: Web3, estimateL1FeeParams: EstimateL1FeeParams) {
+  async getOptimismL1Fee(estimateL1FeeParams: EstimateL1FeeParams) {
     const { executeData, l1GasOracleAddress } = estimateL1FeeParams;
 
-    const contract = new web3.eth.Contract(
-      [
-        {
-          inputs: [{ internalType: 'bytes', name: '_data', type: 'bytes' }],
-          name: 'getL1Fee',
-          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-          stateMutability: 'view',
-          type: 'function',
-        },
-      ],
-      l1GasOracleAddress
-    );
+    const gasOracleAbi = [
+      {
+        inputs: [{ internalType: 'bytes', name: '_data', type: 'bytes' }],
+        name: 'getL1Fee',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ] as const satisfies Abi;
 
-    const result = await contract.methods.getL1Fee(executeData).call();
-    if (typeof result !== 'string') {
-      throw new Error(`Unexpected rpc response from getOptimismL1Fee`);
-    }
+    const contract = fetchContract(l1GasOracleAddress, gasOracleAbi, this.destinationChain.id);
+    const result = await contract.read.getL1Fee([l1GasOracleAddress as Address]);
 
-    return new BigNumber(result);
+    return new BigNumber(result.toString(10));
   }
 }

@@ -3,6 +3,7 @@ import type { BeefyState } from '../../../../redux-types';
 import type { BoostPromoEntity } from '../../entities/promo';
 import type { TokenEntity } from '../../entities/token';
 import type { VaultEntity, VaultGov } from '../../entities/vault';
+import type { Address } from 'abitype';
 
 export interface IBalanceApi {
   fetchAllBalances(
@@ -20,14 +21,14 @@ export interface TokenBalance {
 }
 
 export interface GovVaultSingleBalanceContractData {
-  balance: string;
-  rewards: string;
+  balance: bigint;
+  rewards: bigint;
 }
 
 export interface GovVaultMultiBalanceContractData {
-  balance: string;
-  rewardTokens: string[];
-  rewards: string[];
+  balance: bigint;
+  rewardTokens: readonly Address[];
+  rewards: readonly bigint[];
 }
 
 export interface GovVaultReward {
@@ -43,8 +44,8 @@ export interface GovVaultBalance {
 }
 
 export interface BoostBalanceContractData {
-  balance: string;
-  rewards: string;
+  balance: bigint;
+  rewards: bigint;
 }
 
 export interface BoostReward {

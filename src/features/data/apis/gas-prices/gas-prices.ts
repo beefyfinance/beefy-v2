@@ -1,25 +1,31 @@
 import type { ChainEntity } from '../../entities/chain';
 import type { EIP1559GasConfig, GasConfig, StandardGasConfig } from '../config-types';
-import { getWeb3Instance } from '../instances';
 import { BigNumber } from 'bignumber.js';
 import {
   averageBigNumbers,
   BIG_MAX_UINT256,
   BIG_ONE,
   BIG_ZERO,
+  bigNumberToBigInt,
   compareBigNumber,
 } from '../../../../helpers/big-number';
 import { sortWith } from '../../utils/array-utils';
-import type Web3 from 'web3';
-import type { Contract } from 'web3-eth-contract';
+import {
+  getBeefyFeeHistory,
+  getBeefyGasPrice,
+  rpcClientManager,
+} from '../rpc-contract/rpc-manager';
+import { fetchContract } from '../rpc-contract/viem-contract';
+import type { Abi, Address } from 'abitype';
+import type { GetContractReturnType } from 'viem';
 
 export type StandardGasPrice = {
-  gasPrice: string;
+  gasPrice: bigint;
 };
 
 export type EIP1559GasPrice = {
-  maxPriorityFeePerGas: string;
-  maxFeePerGas: string;
+  maxPriorityFeePerGas: bigint;
+  maxFeePerGas: bigint;
 };
 
 export type GasPricing = StandardGasPrice | EIP1559GasPrice;
@@ -65,15 +71,12 @@ export class StandardGasPricer implements IGasPricer {
   }
 
   async getGasPrice(): Promise<StandardGasPrice> {
-    const web3 = await getWeb3Instance(this.chain);
-    const gasPrice = await web3.eth.getBeefyGasPrice();
+    const client = rpcClientManager.getBatchClient(this.chain.id);
+    const gasPrice = await getBeefyGasPrice(client);
 
     return {
-      gasPrice: multiplyAndClampToString(
-        gasPrice,
-        this.safetyMultiplier,
-        this.minimum,
-        this.maximum
+      gasPrice: BigInt(
+        multiplyAndClampToString(gasPrice, this.safetyMultiplier, this.minimum, this.maximum)
       ),
     };
   }
@@ -121,16 +124,18 @@ export class EIP1559GasPricer implements IGasPricer {
   }
 
   async getGasPrice(): Promise<EIP1559GasPrice> {
-    const web3 = await getWeb3Instance(this.chain);
-    const feeHistory = await web3.eth.getBeefyFeeHistory(this.blockCount, 'latest', [
+    const client = rpcClientManager.getBatchClient(this.chain.id);
+    const feeHistory = await getBeefyFeeHistory(client, this.blockCount, 'latest', [
       this.percentile,
     ]);
-    const nextBlock = await web3.eth.getBlock('latest');
+    const nextBlock = await client.getBlock({
+      blockTag: 'latest',
+    });
 
     const sortedBaseFees = sortWith(feeHistory.baseFeePerGas, compareBigNumber);
     const initialBaseFee = BigNumber.max(
       averageBigNumbers(sortedBaseFees),
-      nextBlock.baseFeePerGas || 0
+      new BigNumber((nextBlock.baseFeePerGas || 0n).toString(10))
     );
     const sortedPriorityFees = sortWith(
       feeHistory.reward.map(reward => reward[0]),
@@ -153,8 +158,8 @@ export class EIP1559GasPricer implements IGasPricer {
     );
 
     return {
-      maxPriorityFeePerGas: priorityFee.toString(10),
-      maxFeePerGas: baseFee.plus(priorityFee).toString(10),
+      maxPriorityFeePerGas: bigNumberToBigInt(priorityFee),
+      maxFeePerGas: bigNumberToBigInt(baseFee.plus(priorityFee)),
     };
   }
 }
@@ -167,13 +172,14 @@ export class EIP1559GasPricer implements IGasPricer {
  */
 export class CeloGasPricer implements IGasPricer {
   protected readonly gasPriceMinimumAddress: string = '0xDfca3a8d7699D8bAfe656823AD60C17cb8270ECC';
-  protected gasPriceMinimumContract: Contract | null = null;
+  protected gasPriceMinimumContract: GetContractReturnType;
 
   constructor(protected readonly chain: ChainEntity) {}
 
-  protected getGasPriceMinimumContract(web3: Web3): Contract {
+  protected getGasPriceMinimumContract() {
     if (!this.gasPriceMinimumContract) {
-      this.gasPriceMinimumContract = new web3.eth.Contract(
+      const contract = fetchContract(
+        this.gasPriceMinimumAddress as Address,
         [
           {
             type: 'function',
@@ -184,9 +190,10 @@ export class CeloGasPricer implements IGasPricer {
             inputs: [],
             constant: true,
           },
-        ],
-        this.gasPriceMinimumAddress
+        ] as const satisfies Abi,
+        this.chain.id
       );
+      this.gasPriceMinimumContract = contract;
     }
 
     return this.gasPriceMinimumContract;
@@ -201,16 +208,29 @@ export class CeloGasPricer implements IGasPricer {
    * tips are under 0.5 gwei and most TX do not have tips
    */
   async getGasPrice(): Promise<EIP1559GasPrice> {
-    const web3 = await getWeb3Instance(this.chain);
-    const gasPriceMinimumContract = this.getGasPriceMinimumContract(web3);
-    const minimumGasPrice = await gasPriceMinimumContract.methods.gasPriceMinimum().call();
+    const gasPriceMinimumContract = fetchContract(
+      this.gasPriceMinimumAddress as Address,
+      [
+        {
+          type: 'function',
+          stateMutability: 'view',
+          payable: false,
+          outputs: [{ type: 'uint256', name: '', internalType: 'uint256' }],
+          name: 'gasPriceMinimum',
+          inputs: [],
+          constant: true,
+        },
+      ] as const satisfies Abi,
+      this.chain.id
+    );
+    const minimumGasPrice = await gasPriceMinimumContract.read.gasPriceMinimum();
 
-    const baseFee = new BigNumber(minimumGasPrice); // 0.1 gwei
+    const baseFee = new BigNumber(minimumGasPrice.toString(10)); // 0.1 gwei
     const priorityFee = baseFee.dividedToIntegerBy(10); // 0.01 gwei
 
     return {
-      maxPriorityFeePerGas: priorityFee.toString(10),
-      maxFeePerGas: baseFee.plus(priorityFee).toString(10),
+      maxPriorityFeePerGas: bigNumberToBigInt(priorityFee),
+      maxFeePerGas: bigNumberToBigInt(baseFee.plus(priorityFee)),
     };
   }
 }

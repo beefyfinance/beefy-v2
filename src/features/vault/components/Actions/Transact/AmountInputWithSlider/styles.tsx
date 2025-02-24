@@ -45,7 +45,7 @@ export const styles = (theme: Theme) => ({
     '-webkit-appearance': 'none' as const,
     height: '8px',
     width: '100%',
-    zIndex: 999,
+    zIndex: 995,
     margin: 0,
     padding: 0,
     borderRadius: '0px 0px 8px 8px',

@@ -1,16 +1,14 @@
 import { ArgumentConfig, parse } from 'ts-command-line-args';
-import { appToAddressBookId, chainRpcs, getChain, getVaultsForChain } from './common/config';
+import { AppChainId, appToAddressBookId, getChain, getVaultsForChain } from './common/config';
 import { sortVaultKeys } from './common/vault-fields';
 import { VaultConfig } from '../src/features/data/apis/config-types';
-import Web3 from 'web3';
 import { addressBook } from 'blockchain-addressbook';
 import chunk from 'lodash/chunk';
 import { BeefyV2AppMulticallAbi } from '../src/config/abi/BeefyV2AppMulticallAbi';
-import type { GovVaultMultiContractDataResponse } from '../src/features/data/apis/contract-data/contract-data-types';
-import type { AsWeb3Result } from '../src/features/data/utils/types-utils';
 import BigNumber from 'bignumber.js';
-import type { AbiItem } from 'web3-utils';
 import { saveJson } from './common/files';
+import { getViemClient } from './common/viem';
+import { Address, getContract } from 'viem';
 
 type RunArgs = {
   help?: boolean;
@@ -54,39 +52,43 @@ async function fetchActiveRewards(appChainId: string, configs: VaultConfig[]) {
   const chain = getChain(appChainId);
   const abChainId = appToAddressBookId(appChainId);
   const addresses = configs.map(c => c.earnContractAddress);
-  const web3 = new Web3(chainRpcs[abChainId]);
-  const mc = new web3.eth.Contract(
-    BeefyV2AppMulticallAbi as unknown as AbiItem[],
-    chain.appMulticallContractAddress
-  );
+  const viemClient = getViemClient(appChainId as AppChainId);
+  const appMulticallContract = getContract({
+    abi: BeefyV2AppMulticallAbi,
+    address: chain.appMulticallContractAddress as Address,
+    client: viemClient,
+  });
+
   const results = (
     await Promise.all(
-      chunk(addresses, 200).map(chunk => mc.methods.getGovVaultMultiInfo(chunk).call())
+      chunk(addresses, 200).map(chunk =>
+        appMulticallContract.read.getGovVaultMultiInfo([chunk as Address[]])
+      )
     )
-  ).flat() as AsWeb3Result<GovVaultMultiContractDataResponse>[];
+  ).flat();
 
   return results.map((result, i) => {
     const config = configs[i];
     return result.rewards
-      .filter(([address, rate, finish]) => {
-        const token = addressBook[abChainId].tokenAddressMap[address];
+      .filter(({ rewardAddress, rate, periodFinish }) => {
+        const token = addressBook[abChainId].tokenAddressMap[rewardAddress];
         if (!token) {
-          console.warn(config.id, `${address} not found in ${abChainId} address book`);
+          console.warn(config.id, `${rewardAddress} not found in ${abChainId} address book`);
           return false;
         }
 
-        const periodFinish = parseInt(finish);
+        const periodFinishNumber = Number(periodFinish);
         if (periodFinish <= now) {
           console.warn(
             config.id,
-            `${token.symbol} periodFinish ${periodFinish} (${new Date(
-              periodFinish * 1000
+            `${token.symbol} periodFinish ${periodFinishNumber} (${new Date(
+              periodFinishNumber * 1000
             )}) has past`
           );
           return false;
         }
 
-        const rewardRate = new BigNumber(rate);
+        const rewardRate = new BigNumber(rate.toString(10));
         if (rewardRate.lte(0)) {
           console.warn(config.id, `${token.symbol} rewardRate is zero`);
           return false;
@@ -94,7 +96,7 @@ async function fetchActiveRewards(appChainId: string, configs: VaultConfig[]) {
 
         return true;
       })
-      .map(([address]) => address);
+      .map(({ rewardAddress }) => rewardAddress);
   });
 }
 

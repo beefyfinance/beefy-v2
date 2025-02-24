@@ -847,7 +847,7 @@ export const config = {
     name: 'HECO',
     eol: 1681913494,
     chainId: 128,
-    rpc: ['https://http-mainnet.hecochain.com'],
+    rpc: ['https://128.rpc.thirdweb.com/'],
     explorerUrl: 'https://hecoinfo.com',
     multicallAddress: '0x2776CF9B6E2Fa7B33A37139C3CB1ee362Ff0356e',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',

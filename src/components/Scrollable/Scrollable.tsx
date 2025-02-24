@@ -65,7 +65,9 @@ export type ScrollableProps = {
   leftShadowClassName?: string;
   rightShadowClassName?: string;
   thumbClassName?: string;
+  hideShadows?: boolean;
 };
+
 export const Scrollable = memo<ScrollableProps>(function Scrollable({
   children,
   className,
@@ -76,6 +78,7 @@ export const Scrollable = memo<ScrollableProps>(function Scrollable({
   rightShadowClassName,
   thumbClassName,
   autoHeight = false,
+  hideShadows = false,
 }) {
   const classes = useStyles();
   const [shadows, setShadows] = useState({
@@ -126,27 +129,41 @@ export const Scrollable = memo<ScrollableProps>(function Scrollable({
       >
         {children}
       </ScrollContainer>
-      <div
-        className={clsx(classes.shadow, classes.topShadow, shadowClassName, topShadowClassName)}
-        style={{ opacity: shadows.top }}
-      />
-      <div
-        className={clsx(
-          classes.shadow,
-          classes.bottomShadow,
-          shadowClassName,
-          bottomShadowClassName
-        )}
-        style={{ opacity: shadows.bottom }}
-      />
-      <div
-        className={clsx(classes.shadow, classes.leftShadow, shadowClassName, leftShadowClassName)}
-        style={{ opacity: shadows.left }}
-      />
-      <div
-        className={clsx(classes.shadow, classes.rightShadow, shadowClassName, rightShadowClassName)}
-        style={{ opacity: shadows.right }}
-      />
+      {!hideShadows && (
+        <>
+          <div
+            className={clsx(classes.shadow, classes.topShadow, shadowClassName, topShadowClassName)}
+            style={{ opacity: shadows.top }}
+          />
+          <div
+            className={clsx(
+              classes.shadow,
+              classes.bottomShadow,
+              shadowClassName,
+              bottomShadowClassName
+            )}
+            style={{ opacity: shadows.bottom }}
+          />
+          <div
+            className={clsx(
+              classes.shadow,
+              classes.leftShadow,
+              shadowClassName,
+              leftShadowClassName
+            )}
+            style={{ opacity: shadows.left }}
+          />
+          <div
+            className={clsx(
+              classes.shadow,
+              classes.rightShadow,
+              shadowClassName,
+              rightShadowClassName
+            )}
+            style={{ opacity: shadows.right }}
+          />
+        </>
+      )}
     </div>
   );
 });

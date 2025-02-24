@@ -4,12 +4,11 @@ import type {
   FactoryDataResponse as BaseFactoryDataResponse,
 } from './UniswapV2Pool';
 import { UniswapV2Pool } from './UniswapV2Pool';
-import type { ShapeWithLabel } from 'eth-multicall';
-import { createContract } from '../../../../../helpers/web3';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
 import { BigNumber } from 'bignumber.js';
 import type { SwapFeeParams } from '../types';
-import type { AbiItem } from 'web3-utils';
+import { fetchContract } from '../../rpc-contract/viem-contract';
+import type { Abi, Address } from 'abitype';
 
 export type FactoryDataResponse = BaseFactoryDataResponse & {
   pairRate: string;
@@ -23,7 +22,7 @@ export type FactoryData = BaseFactoryData & {
 
 const MINT_FEE_DISABLED_RATE = new BigNumber(9);
 
-const MdexFactoryAbi: AbiItem[] = [
+const MdexFactoryAbi = [
   {
     constant: true,
     inputs: [
@@ -66,33 +65,23 @@ const MdexFactoryAbi: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export class MdexUniswapV2Pool extends UniswapV2Pool {
   protected factoryData: FactoryData | undefined = undefined;
 
-  protected getFactoryDataRequest(): ShapeWithLabel[] {
-    const contract = createContract(MdexFactoryAbi, this.amm.factoryAddress);
-    return [
-      {
-        ...super.getFactoryDataRequest()[0],
-        pairRate: contract.methods.getPairRate(this.address),
-        pairFees: contract.methods.getPairFees(this.address),
-      },
-    ];
-  }
-
-  protected consumeFactoryDataResponse(untypedResult: unknown[]) {
-    const result = (untypedResult as FactoryDataResponse[])[0];
-
-    super.consumeFactoryDataResponse(untypedResult);
-
+  protected async updateFactoryData() {
+    const contract = fetchContract(this.amm.factoryAddress, MdexFactoryAbi, this.chain.id);
+    const [_, pairRate, pairFees] = await Promise.all([
+      super.updateFactoryData(),
+      contract.read.getPairRate([this.address as Address]),
+      contract.read.getPairFees([this.address as Address]),
+    ]);
     if (!this.factoryData) {
       throw new Error('Factory data is not loaded');
     }
-
-    this.factoryData.pairRate = new BigNumber(result.pairRate);
-    this.factoryData.pairFees = new BigNumber(result.pairFees);
+    this.factoryData.pairRate = new BigNumber(pairRate.toString(10));
+    this.factoryData.pairFees = new BigNumber(pairFees.toString(10));
   }
 
   protected getMintFeeParams(): MintFeeParams {

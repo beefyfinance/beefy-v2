@@ -8,7 +8,6 @@ import type { IBridgeProvider, IBridgeQuote } from './provider-types';
 import type { ChainEntity } from '../../../entities/chain';
 import { BeefyCommonBridgeAbi } from '../../../../../config/abi/BeefyCommonBridgeAbi';
 import { XErc20Abi } from '../../../../../config/abi/XErc20Abi';
-import { getWeb3Instance } from '../../instances';
 import { BIG_ZERO, fromWeiString, toWeiString } from '../../../../../helpers/big-number';
 import type { BeefyState } from '../../../../../redux-types';
 import { selectChainNativeToken } from '../../../selectors/tokens';
@@ -23,12 +22,12 @@ import { walletActions } from '../../../actions/wallet-actions';
 import { BigNumber } from 'bignumber.js';
 import { selectWalletAddress } from '../../../selectors/wallet';
 import { isFiniteNumber } from '../../../../../helpers/number';
-import { MultiCall } from 'eth-multicall';
 import {
   featureFlag_simulateAllBridgeRateLimit,
   featureFlag_simulateBridgeRateLimit,
 } from '../../../utils/feature-flags';
-import { viemToWeb3Abi } from '../../../../../helpers/web3';
+import { fetchContract } from '../../rpc-contract/viem-contract';
+import type { Address } from 'abitype';
 
 export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
   implements IBridgeProvider<T>
@@ -91,30 +90,15 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
     state: BeefyState
   ) {
     const token = selectBridgeXTokenForChainId(state, chain.id);
-    const web3 = await getWeb3Instance(chain);
-    const contract = new web3.eth.Contract(viemToWeb3Abi(XErc20Abi), token.address);
-    const multicall = new MultiCall(web3, chain.multicallAddress);
+    const xTokenContract = fetchContract(token.address, XErc20Abi, chain.id);
     const isBurn = direction === 'outgoing';
-
-    type MulticallReturnType = [
-      [
-        {
-          current: string;
-          max: string;
-        }
-      ]
-    ];
-
     const currentMethod = isBurn ? 'burningCurrentLimitOf' : 'mintingCurrentLimitOf';
     const maxMethod = isBurn ? 'burningMaxLimitOf' : 'mintingMaxLimitOf';
-    const [[data]] = (await multicall.all([
-      [
-        {
-          current: contract.methods[currentMethod](bridgeAddress),
-          max: contract.methods[maxMethod](bridgeAddress),
-        },
-      ],
-    ])) as MulticallReturnType;
+
+    const [currentResult, maxResult] = await Promise.all([
+      xTokenContract.read[currentMethod]([bridgeAddress as Address]),
+      xTokenContract.read[maxMethod]([bridgeAddress as Address]),
+    ]);
 
     if (
       featureFlag_simulateAllBridgeRateLimit() ||
@@ -127,8 +111,8 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
       };
     }
 
-    const current = fromWeiString(data.current, token.decimals);
-    const max = fromWeiString(data.max, token.decimals);
+    const current = fromWeiString(currentResult.toString(10), token.decimals);
+    const max = fromWeiString(maxResult.toString(10), token.decimals);
 
     return { current, max };
   }
@@ -153,18 +137,20 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
     }
 
     try {
-      const web3 = await getWeb3Instance(from);
-      const contract = new web3.eth.Contract(viemToWeb3Abi(BeefyCommonBridgeAbi), bridgeAddress);
+      const bridgeContract = fetchContract(bridgeAddress, BeefyCommonBridgeAbi, from.id);
       const inputWei = toWeiString(input.amount, input.token.decimals);
       const feeWei = toWeiString(fee.amount, fee.token.decimals);
-      const chainEstimate: number = await contract.methods
-        .bridge(to.networkChainId, inputWei, address)
-        .estimateGas({
-          from: address,
-          value: feeWei,
-        });
-      if (isFiniteNumber(chainEstimate) && chainEstimate > 0) {
-        return new BigNumber(chainEstimate);
+
+      const chainEstimate = await bridgeContract.estimateGas.bridge(
+        [BigInt(to.networkChainId), BigInt(inputWei), address as Address],
+        {
+          account: address as Address,
+          value: BigInt(feeWei),
+        }
+      );
+
+      if (isFiniteNumber(Number(chainEstimate)) && chainEstimate > 0n) {
+        return new BigNumber(chainEstimate.toString(10));
       }
     } catch (e) {
       console[gasLimits.approve ? 'warn' : 'error'](this.id, 'fetchOutgoingGasLimit', e);
@@ -181,22 +167,23 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
     state: BeefyState
   ): Promise<TokenAmount<TokenNative>> {
     try {
-      const web3 = await getWeb3Instance(from);
       const fromChain = config.chains[from.id];
       const toChain = config.chains[to.id];
       if (!fromChain || !toChain) {
         throw new Error(`bridge '${this.id}' not available for ${from.id}->${to.id}.`);
       }
-
       const { bridge: bridgeAddress } = fromChain;
-      const contract = new web3.eth.Contract(viemToWeb3Abi(BeefyCommonBridgeAbi), bridgeAddress);
-      const inputWei = toWeiString(input.amount, input.token.decimals);
 
+      const bridgeContract = fetchContract(bridgeAddress, BeefyCommonBridgeAbi, from.id);
+      const inputWei = toWeiString(input.amount, input.token.decimals);
       const feeToken = selectChainNativeToken(state, from.id);
-      const feeWei = await contract.methods
-        .bridgeCost(to.networkChainId, inputWei, toChain.bridge)
-        .call();
-      const fee = fromWeiString(feeWei, feeToken.decimals);
+
+      const feeWei = await bridgeContract.read.bridgeCost([
+        BigInt(to.networkChainId),
+        BigInt(inputWei),
+        toChain.bridge as Address,
+      ]);
+      const fee = fromWeiString(feeWei.toString(10), feeToken.decimals);
 
       return { token: feeToken, amount: fee };
     } catch (e) {

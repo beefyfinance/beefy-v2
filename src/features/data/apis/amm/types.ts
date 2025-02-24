@@ -1,5 +1,4 @@
 import { type BigNumber } from 'bignumber.js';
-import type { ShapeWithLabel } from 'eth-multicall';
 import type { ZapStepRequest, ZapStepResponse } from '../transact/zap/types';
 import type { TokenAmount } from '../transact/transact-types';
 
@@ -85,5 +84,5 @@ export interface IGammaPool extends IPool {
 export interface IPool {
   readonly type: string;
 
-  updateAllData(otherCalls?: ShapeWithLabel[][]): Promise<unknown[][]>;
+  updateAllData(): Promise<void>;
 }

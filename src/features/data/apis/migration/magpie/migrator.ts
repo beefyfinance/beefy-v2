@@ -1,12 +1,14 @@
-import type { Migrator } from '../migration-types';
+import type { Migrator, MigratorUnstakeProps } from '../migration-types';
 import type { VaultEntity } from '../../../entities/vault';
 import type { BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { selectTokenByAddress } from '../../../selectors/tokens';
-import { toWei } from '../../../../../helpers/big-number';
-import type { AbiItem } from 'web3-utils';
-import type Web3 from 'web3';
+import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number';
 import { buildExecute, buildFetchBalance } from '../utils';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
+import type { Abi, Address } from 'abitype';
+import { getWalletConnectionApi } from '../../instances';
+import type { Hash } from 'viem';
 
 const id = 'magpie';
 
@@ -17,30 +19,37 @@ const poolHelpers = {
 
 async function getBalance(
   vault: VaultEntity,
-  web3: Web3,
   walletAddress: string,
   _: BeefyState
 ): Promise<string> {
   const poolHelper = poolHelpers[vault.chainId];
   if (!poolHelper) return '0';
-  return new web3.eth.Contract(PoolHelperAbi, poolHelper).methods
-    .balance(vault.depositTokenAddress, walletAddress)
-    .call();
+  const walletBalance = await fetchContract(poolHelper, PoolHelperAbi, vault.chainId).read.balance([
+    vault.depositTokenAddress as Address,
+    walletAddress as Address,
+  ]);
+  return walletBalance.toString(10);
 }
 
-async function unstakeCall(vault: VaultEntity, web3: Web3, amount: BigNumber, state: BeefyState) {
+async function unstakeCall(
+  vault: VaultEntity,
+  amount: BigNumber,
+  state: BeefyState
+): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const amountInWei = toWei(amount, depositToken.decimals);
   const poolHelper = poolHelpers[vault.chainId];
-  if (!poolHelper) return;
-  return new web3.eth.Contract(PoolHelperAbi, poolHelper).methods.withdrawMarketWithClaim(
-    vault.depositTokenAddress,
-    amountInWei.toString(10),
-    true
-  );
+  if (!poolHelper) throw new Error('No pool helper found for chain');
+  const walletClient = await (await getWalletConnectionApi()).getConnectedViemClient();
+  const contract = fetchWalletContract(poolHelper, PoolHelperAbi, walletClient);
+  return (args: MigratorUnstakeProps) =>
+    contract.write.withdrawMarketWithClaim(
+      [vault.depositTokenAddress as Address, bigNumberToBigInt(amountInWei), true],
+      args
+    );
 }
 
-const PoolHelperAbi: AbiItem[] = [
+const PoolHelperAbi = [
   {
     inputs: [
       { internalType: 'address', name: '_market', type: 'address' },
@@ -62,7 +71,7 @@ const PoolHelperAbi: AbiItem[] = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export const migrator: Migrator = {
   update: buildFetchBalance(id, getBalance),

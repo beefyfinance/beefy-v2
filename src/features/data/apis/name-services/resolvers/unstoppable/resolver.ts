@@ -1,10 +1,9 @@
-import type Web3 from 'web3';
-import type { AbiItem } from 'web3-utils';
 import type { ChainId } from '../../../../entities/chain';
 import { normalizeAddress, normalizeAndHashDomain } from '../../utils';
-import type { Address } from 'viem';
+import { hexToBigInt, type Abi, type Address } from 'viem';
 import type { AllChainsFromTldToChain } from '../../types';
 import type { tldToChain } from './tlds';
+import { fetchContract } from '../../../rpc-contract/viem-contract';
 
 // https://docs.unstoppabledomains.com/smart-contracts/contract-reference/uns-smart-contracts/#unsregistry
 // https://github.com/unstoppabledomains/uns/blob/main/Contracts.md
@@ -30,7 +29,7 @@ const registryAbi = [
     stateMutability: 'view',
     type: 'function',
   },
-] satisfies AbiItem[];
+] as const satisfies Abi;
 
 const proxyReaderAbi = [
   {
@@ -47,15 +46,14 @@ const proxyReaderAbi = [
     stateMutability: 'view',
     type: 'function',
   },
-] satisfies AbiItem[];
+] as const satisfies Abi;
 
 /**
  * Lookup the (first) address for a domain name
  */
 export async function domainToAddress(
   domain: string,
-  chainId: ChainId,
-  web3: Web3
+  chainId: ChainId
 ): Promise<Address | undefined> {
   const hash = normalizeAndHashDomain(domain);
   if (!hash) {
@@ -67,9 +65,12 @@ export async function domainToAddress(
     return undefined;
   }
 
-  const proxyReaderContract = new web3.eth.Contract(proxyReaderAbi, proxyReaderAddress);
+  const proxyReaderContract = fetchContract(proxyReaderAddress, proxyReaderAbi, chainId);
   try {
-    const data = await proxyReaderContract.methods.getMany(['crypto.ETH.address'], hash).call();
+    const data = await proxyReaderContract.read.getMany([
+      ['crypto.ETH.address'],
+      hexToBigInt(hash as Address),
+    ]);
     return normalizeAddress(data?.[0]);
   } catch {
     return undefined;
@@ -81,17 +82,16 @@ export async function domainToAddress(
  */
 export async function addressToDomain(
   address: string,
-  chainId: ChainId,
-  web3: Web3
+  chainId: ChainId
 ): Promise<string | undefined> {
   const registryAddress = registryAddresses[chainId];
   if (!registryAddress) {
     return undefined;
   }
 
-  const contract = new web3.eth.Contract(registryAbi, registryAddress);
+  const contract = fetchContract(registryAddress, registryAbi, chainId);
   try {
-    const domain = await contract.methods.reverseNameOf(address).call();
+    const domain = await contract.read.reverseNameOf([address as Address]);
     return domain || undefined;
   } catch {
     return undefined;

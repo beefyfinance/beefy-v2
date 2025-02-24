@@ -2,7 +2,7 @@ import { memo, useCallback, useMemo } from 'react';
 import { InputBase, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
-import { CloseRounded, Search } from '@material-ui/icons';
+import { CloseRounded, Search as SearchIcon } from '@material-ui/icons';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
@@ -33,12 +33,18 @@ export const SearchInput = memo<SearchInputProps>(function SearchInput({
 
   const valueLength = value.length;
   const iconClass = classes.icon;
-  const icon = useMemo(() => {
-    return valueLength === 0 ? (
-      <div className={iconClass}>
-        <Search />
+  const searchIconClass = classes.searchIconMargin;
+
+  const searchIcon = useMemo(() => {
+    return (
+      <div className={clsx(iconClass, searchIconClass)}>
+        <SearchIcon />
       </div>
-    ) : (
+    );
+  }, [iconClass, searchIconClass]);
+
+  const icon = useMemo(() => {
+    return valueLength === 0 ? null : (
       <button onClick={handleClear} className={iconClass}>
         <CloseRounded />
       </button>
@@ -53,6 +59,7 @@ export const SearchInput = memo<SearchInputProps>(function SearchInput({
       fullWidth={true}
       endAdornment={icon}
       placeholder={t('OnRamp-SearchInput-Placeholder')}
+      startAdornment={searchIcon}
     />
   );
 });

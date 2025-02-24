@@ -1,5 +1,4 @@
 import { type ThunkDispatch, type AnyAction, createAsyncThunk } from '@reduxjs/toolkit';
-import type { AbstractProvider } from 'web3-core';
 import type { Step } from '../reducers/wallet/stepper';
 import type { BeefyState } from '../../../redux-types';
 import { getWalletConnectionApi } from '../apis/instances';
@@ -18,6 +17,7 @@ import type { TenderlySimulateRequest, TenderlySimulateResponse } from '../apis/
 import { selectChainById } from '../selectors/chains';
 import type { VaultEntity } from '../entities/vault';
 import { walletActions } from './wallet-actions';
+import type { EIP1193Provider } from 'viem';
 
 export type TenderlyTxCallRequest = {
   data: string;
@@ -83,10 +83,10 @@ export async function captureTransactionsFromSteps(
   const calls: TenderlyTxCallRequest[] = [];
   let nextMockTxHash = BigInt('0x0101010101010101010101010101010101010101010101010101010100000000');
 
-  const wrapper = (provider: AbstractProvider): AbstractProvider => {
+  const wrapper = (provider: EIP1193Provider): EIP1193Provider => {
     return new Proxy(provider, {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      get(target: AbstractProvider, p: string | symbol, receiver: any): any {
+      get(target: EIP1193Provider, p: string | symbol, receiver: any): any {
         const base = Reflect.get(target, p, receiver);
         if (typeof base === 'function') {
           if (p === 'request') {
@@ -138,8 +138,9 @@ export async function captureTransactionsFromSteps(
   const result = await withTimeoutSignal(10000, (signal: AbortSignal) =>
     api.withProviderWrapper(wrapper, async () => {
       for (const step of steps) {
+        const callsCompleted = calls.length;
         await dispatch(step.action);
-        while (inProgress.size > 0) {
+        while (calls.length <= callsCompleted) {
           signal.throwIfAborted();
           await sleep(100);
         }
@@ -152,7 +153,7 @@ export async function captureTransactionsFromSteps(
     })
   );
 
-  if (result.length !== calls.length) {
+  if (result.length !== steps.length) {
     throw new Error(`Did not capture all transactions`);
   }
 

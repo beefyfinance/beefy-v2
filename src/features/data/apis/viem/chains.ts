@@ -1,9 +1,11 @@
 import type { Chain } from 'viem/chains';
 import type { ChainEntity } from '../../entities/chain';
+import type { ChainConfig } from '../config-types';
 
-export function buildViemChain(chain: ChainEntity): Chain {
+export function buildViemChain(chain: ChainEntity | ChainConfig): Chain {
+  const id = 'networkChainId' in chain ? chain.networkChainId : chain.chainId;
   return {
-    id: chain.networkChainId,
+    id: id,
     name: chain.name,
     nativeCurrency: {
       decimals: chain.native.decimals,

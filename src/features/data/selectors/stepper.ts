@@ -15,13 +15,9 @@ import {
   isWalletActionBridgeSuccess,
   isWalletActionSuccess,
   isZapAdditionalData,
-  type TrxReceipt,
   type WalletActionsSuccessState,
 } from '../reducers/wallet/wallet-action';
-import { decodeEventLog, getAddress } from 'viem';
-import { uniqBy } from 'lodash-es';
-import { ERC20Abi } from '../../../config/abi/ERC20Abi';
-import type { Hex } from 'viem/types/misc';
+import { getAddress, type Abi, parseEventLogs } from 'viem';
 import { selectBoostById } from './boosts';
 import { isDefined } from '../utils/array-utils';
 
@@ -54,6 +50,19 @@ export const selectStepperStepContent = (state: BeefyState) => {
   return state.ui.stepperState.stepContent;
 };
 
+const transferAbi = [
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'from', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'to', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
+    ],
+    name: 'Transfer',
+    type: 'event',
+  },
+] as const satisfies Abi;
+
 export function selectMintResult(state: BeefyState) {
   if (!isWalletActionSuccess(state.user.walletActions)) {
     throw new Error('Not wallet action success');
@@ -72,39 +81,42 @@ export function selectMintResult(state: BeefyState) {
     token: mintToken,
   };
 
+  const transferEvents = parseEventLogs({
+    abi: transferAbi,
+    logs: receipt.logs,
+    eventName: 'Transfer',
+  });
+
   if (
     !mintToken ||
     !isTokenErc20(mintToken) ||
     !receipt ||
-    !receipt.events ||
-    !('Transfer' in receipt.events)
+    !transferEvents ||
+    transferEvents.length === 0
   ) {
     return result;
   }
 
   const userAddress = receipt.from.toLowerCase();
-  const mintContractAddress = receipt.to.toLowerCase();
+  const mintContractAddress = receipt.to!.toLowerCase();
   const mintTokenAddress = mintToken.address.toLowerCase();
-  const transferEvents = Array.isArray(receipt.events['Transfer'])
-    ? receipt.events['Transfer']
-    : [receipt.events['Transfer']];
   const mintTransferEvent = transferEvents.find(
     e =>
       e.address.toLowerCase() === mintTokenAddress &&
-      e.returnValues.to.toLowerCase() === mintContractAddress &&
-      e.returnValues.from.toLowerCase() === ZERO_ADDRESS
+      e.args.to.toLowerCase() === mintContractAddress &&
+      e.args.from.toLowerCase() === ZERO_ADDRESS
   );
   const userTransferEvent = transferEvents.find(
     e =>
       e.address.toLowerCase() === mintTokenAddress &&
-      e.returnValues.to.toLowerCase() === userAddress &&
-      e.returnValues.from.toLowerCase() === mintContractAddress
+      e.args.to.toLowerCase() === userAddress &&
+      e.args.from.toLowerCase() === mintContractAddress
   );
 
   if (!mintTransferEvent && userTransferEvent) {
     result.type = 'buy';
     result.amount = formatTokenDisplayCondensed(
-      fromWei(userTransferEvent.returnValues.value, mintToken.decimals),
+      fromWei(new BigNumber(userTransferEvent.args.value.toString(10)), mintToken.decimals),
       mintToken.decimals
     );
   }
@@ -140,7 +152,7 @@ export function selectBoostClaimed(state: BeefyState) {
   const { receipt } = state.user.walletActions.data;
   const { boostId, token, walletAddress } = state.user.walletActions.additional;
 
-  if (!boostId || !receipt || !receipt.events) {
+  if (!boostId || !receipt || !receipt.logs) {
     return [];
   }
 
@@ -150,13 +162,17 @@ export function selectBoostClaimed(state: BeefyState) {
   const from = getAddress(boost.contractAddress);
   const to = getAddress(walletAddress);
   const contract = getAddress(token.address);
-  const transferEvents = getTransferEvents(receipt.events).filter(
-    e => e.args.from === from && e.args.to === to && e.contract !== contract
-  );
+
+  const transferEvents = parseEventLogs({
+    abi: transferAbi,
+    logs: receipt.logs,
+    eventName: 'Transfer',
+  });
 
   return transferEvents
+    .filter(e => e.address === contract && e.args.from === from && e.args.to === to)
     .map(e => {
-      const token = selectTokenByAddressOrUndefined(state, boost.chainId, e.contract);
+      const token = selectTokenByAddressOrUndefined(state, boost.chainId, e.address);
       if (!token) {
         return undefined;
       }
@@ -170,34 +186,6 @@ export function selectBoostClaimed(state: BeefyState) {
       };
     })
     .filter(isDefined);
-}
-
-const TransferEventTopic = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
-
-/** Takes events from web3 receipt and decodes the Transfer events using viem */
-function getTransferEvents(events: TrxReceipt['events']) {
-  if (events === undefined) {
-    return [];
-  }
-
-  const transferLogs = uniqBy(
-    Object.values(events).flatMap(eventOrEvents => {
-      const events = Array.isArray(eventOrEvents) ? eventOrEvents : [eventOrEvents];
-      return events.filter(event => event.raw?.topics[0] === TransferEventTopic);
-    }),
-    e => `${e.transactionHash}-${e.logIndex}`
-  );
-
-  return transferLogs.map(log => {
-    const event = decodeEventLog({
-      abi: ERC20Abi,
-      data: log.raw?.data as Hex | undefined,
-      eventName: 'Transfer',
-      strict: true,
-      topics: log.raw?.topics as [Hex, ...Hex[]],
-    });
-    return { ...event, contract: getAddress(log.address) };
-  });
 }
 
 export const selectStepperProgress = (state: BeefyState) => {
@@ -237,6 +225,28 @@ export const selectSuccessBar = (state: BeefyState) => {
   return stepContent === StepContent.SuccessTx;
 };
 
+const tokenReturnedAbi = [
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'token',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'TokenReturned',
+    type: 'event',
+  },
+] as const satisfies Abi;
+
 export function selectZapReturned(state: BeefyState) {
   if (!isWalletActionSuccess(state.user.walletActions)) {
     return [];
@@ -248,7 +258,13 @@ export function selectZapReturned(state: BeefyState) {
   const { receipt } = state.user.walletActions.data;
   const { vaultId, expectedTokens } = state.user.walletActions.additional;
 
-  if (!vaultId || !receipt || !receipt.events || !('TokenReturned' in receipt.events)) {
+  const tokenReturnedEvents = parseEventLogs({
+    abi: tokenReturnedAbi,
+    logs: receipt.logs,
+    eventName: 'TokenReturned',
+  });
+
+  if (!vaultId || !receipt || !tokenReturnedEvents || !receipt.contractAddress) {
     return [];
   }
 
@@ -261,12 +277,8 @@ export function selectZapReturned(state: BeefyState) {
   );
 
   const vault = selectVaultById(state, vaultId);
-  const zapAddress = receipt.to.toLowerCase();
-  const returnEvents = (
-    Array.isArray(receipt.events['TokenReturned'])
-      ? receipt.events['TokenReturned']
-      : [receipt.events['TokenReturned']]
-  ).filter(e => e.address.toLowerCase() === zapAddress);
+  const zapAddress = receipt.contractAddress.toLowerCase();
+  const returnEvents = tokenReturnedEvents.filter(e => e.address.toLowerCase() === zapAddress);
 
   if (!returnEvents.length) {
     return [];
@@ -277,12 +289,12 @@ export function selectZapReturned(state: BeefyState) {
   const tokenAmounts: TokenAmount[] = returnEvents
     .map(e => {
       const token =
-        e.returnValues.token === ZERO_ADDRESS
+        e.args.token === ZERO_ADDRESS
           ? native
-          : selectTokenByAddressOrUndefined(state, vault.chainId, e.returnValues.token);
+          : selectTokenByAddressOrUndefined(state, vault.chainId, e.args.token);
 
       return {
-        amount: token ? fromWeiString(e.returnValues.amount, token.decimals) : BIG_ZERO,
+        amount: token ? fromWeiString(e.args.amount.toString(10), token.decimals) : BIG_ZERO,
         token,
       };
     })

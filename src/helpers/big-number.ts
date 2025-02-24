@@ -66,6 +66,17 @@ export function bigNumberToInt256String(value: BigNumber): string {
   return bigNumberToString(value, 'int256');
 }
 
+export function bigNumberToBigInt(value: BigNumber): bigint {
+  // Ensure the BigNumber is an integer.
+  const dp = value.decimalPlaces();
+  if (dp === null || dp > 0) {
+    throw new Error('BigNumber must be an integer to convert to bigint');
+  }
+
+  // Convert the BigNumber to a string and then to a native bigint.
+  return BigInt(value.toString(10));
+}
+
 export function truncateBigNumber(value: BigNumber, places: number): BigNumber {
   if (value.isNaN() || !value.isFinite()) {
     return value;

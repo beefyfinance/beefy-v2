@@ -4,12 +4,11 @@ import type {
   MintFeeResult,
 } from './UniswapV2Pool';
 import { UniswapV2Pool } from './UniswapV2Pool';
-import type { ShapeWithLabel } from 'eth-multicall';
-import { createContract } from '../../../../../helpers/web3';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
 import { BIG_ZERO } from '../../../../../helpers/big-number';
-import type { AbiItem } from 'web3-utils';
 import { BigNumber } from 'bignumber.js';
+import { fetchContract } from '../../rpc-contract/viem-contract';
+import type { Abi } from 'abitype';
 
 export type FactoryDataResponse = BaseFactoryDataResponse & {
   feeToStake: string;
@@ -19,7 +18,7 @@ export type FactoryData = BaseFactoryData & {
   feeToStake: string;
 };
 
-const SwapsicleFactoryAbi: AbiItem[] = [
+const SwapsicleFactoryAbi = [
   {
     inputs: [],
     name: 'feeToStake',
@@ -33,31 +32,21 @@ const SwapsicleFactoryAbi: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export class SwapsicleUniswapV2Pool extends UniswapV2Pool {
   protected factoryData: FactoryData | undefined = undefined;
 
-  protected getFactoryDataRequest(): ShapeWithLabel[] {
-    const contract = createContract(SwapsicleFactoryAbi, this.amm.factoryAddress);
-    return [
-      {
-        ...super.getFactoryDataRequest()[0],
-        feeToStake: contract.methods.feeToStake(),
-      },
-    ];
-  }
-
-  protected consumeFactoryDataResponse(untypedResult: unknown[]) {
-    const result = (untypedResult as FactoryDataResponse[])[0];
-
-    super.consumeFactoryDataResponse(untypedResult);
-
+  protected async updateFactoryData() {
+    const contract = fetchContract(this.amm.factoryAddress, SwapsicleFactoryAbi, this.chain.id);
+    const [_, feeToStake] = await Promise.all([
+      super.updateFactoryData(),
+      contract.read.feeToStake(),
+    ]);
     if (!this.factoryData) {
       throw new Error('Factory data is not loaded');
     }
-
-    this.factoryData.feeToStake = result.feeToStake;
+    this.factoryData.feeToStake = feeToStake;
   }
 
   protected getMintFee(): MintFeeResult {

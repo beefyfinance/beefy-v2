@@ -3,14 +3,13 @@ import { toWei } from '../../../../../helpers/big-number';
 import type { InputTokenAmount } from '../transact-types';
 import type { VaultStandard } from '../../../entities/vault';
 import type { BeefyState } from '../../../../../redux-types';
-import type Web3 from 'web3';
-import type { MultiCall } from 'eth-multicall';
 import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../selectors/tokens';
 import { selectUserBalanceOfToken } from '../../../selectors/balance';
 import { selectVaultPricePerFullShare } from '../../../selectors/vaults';
 import { selectFeesByVaultId } from '../../../selectors/fees';
 import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi';
-import type { AbiItem } from 'web3-utils';
+import { fetchContract } from '../../rpc-contract/viem-contract';
+import type { Address } from 'abitype';
 
 export function getVaultWithdrawnFromState(
   userInput: InputTokenAmount,
@@ -59,44 +58,26 @@ export async function getVaultWithdrawnFromContract(
   userInput: InputTokenAmount,
   vault: VaultStandard,
   state: BeefyState,
-  userAddress: string,
-  web3: Web3,
-  multicall: MultiCall
+  userAddress: string
 ) {
   const withdrawAll = userInput.max;
   const withdrawnToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const requestedAmountWei = toWei(userInput.amount, withdrawnToken.decimals);
   const shareToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
-  const vaultContract = new web3.eth.Contract(
-    StandardVaultAbi as unknown as AbiItem[],
-    vault.contractAddress
-  );
+  const vaultContract = fetchContract(vault.contractAddress, StandardVaultAbi, vault.chainId);
+
   const vaultFees = selectFeesByVaultId(state, vault.id);
   const withdrawFee = vaultFees?.withdraw || 0;
 
-  type MulticallReturnType = [
-    [
-      {
-        balance: string;
-        totalSupply: string;
-        userBalance: string;
-      }
-    ]
-  ];
+  const [balance, totalSupply, userBalance] = await Promise.all([
+    vaultContract.read.balance(),
+    vaultContract.read.totalSupply(),
+    vaultContract.read.balanceOf([userAddress as Address]),
+  ]);
 
-  const [[vaultData]]: MulticallReturnType = (await multicall.all([
-    [
-      {
-        balance: vaultContract.methods.balance(),
-        totalSupply: vaultContract.methods.totalSupply(),
-        userBalance: vaultContract.methods.balanceOf(userAddress),
-      },
-    ],
-  ])) as MulticallReturnType;
-
-  const totalSharesWei = new BigNumber(vaultData.userBalance);
-  const vaultTotalSupplyWei = new BigNumber(vaultData.totalSupply);
-  const vaultBalanceWei = new BigNumber(vaultData.balance);
+  const totalSharesWei = new BigNumber(userBalance.toString(10));
+  const vaultTotalSupplyWei = new BigNumber(totalSupply.toString(10));
+  const vaultBalanceWei = new BigNumber(balance.toString(10));
 
   let sharesToWithdrawWei = totalSharesWei; // max
   if (!withdrawAll) {

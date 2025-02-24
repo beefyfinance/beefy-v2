@@ -11,7 +11,7 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'center',
     cursor: 'pointer',
     backgroundColor: 'transparent',
-    padding: '0px 16px',
+    padding: '0px 16px 0px 0px',
   },
   circle: {
     width: '12px',

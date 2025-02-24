@@ -3,9 +3,9 @@ import { memo } from 'react';
 import type { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
 import { useAppSelector } from '../../../../../../store';
 import { selectChainById } from '../../../../../data/selectors/chains';
-import { ChainIcon } from '../ChainIcon';
 import { styles } from './styles';
 import type { ChainEntity } from '../../../../../data/entities/chain';
+import { ChainIcon } from '../../../../../../components/ChainIcon';
 
 const useStyles = makeStyles(styles);
 

@@ -1,7 +1,6 @@
 import type { ChainEntity } from '../../../../entities/chain';
 import type { PoolConfig, VaultConfig } from '../vault/types';
 import { BigNumber } from 'bignumber.js';
-import { viemToWeb3Abi } from '../../../../../../helpers/web3';
 import { BalancerMetaStablePoolAbi } from '../../../../../../config/abi/BalancerMetaStablePoolAbi';
 import { BIG_ZERO, fromWei } from '../../../../../../helpers/big-number';
 import { FixedPoint } from '../common/FixedPoint';
@@ -12,6 +11,7 @@ import {
   poolJoinKindToMetaStablePoolJoinKind,
 } from './join-exit-kinds';
 import { SingleAllPool } from '../common/SingleAllPool';
+import { fetchContract } from '../../../rpc-contract/viem-contract';
 
 const SUPPORTED_FEATURES = new Set<BalancerFeature>([
   BalancerFeature.AddRemoveAll,
@@ -70,13 +70,12 @@ export class MetaStablePool extends SingleAllPool implements IBalancerSinglePool
    * For meta stable pools, the scaling factors include the token rate too
    */
   protected async getScalingFactors() {
-    const pool = await this.getPoolContract();
-    const factors: string[] = await pool.methods.getScalingFactors().call();
-    return factors.map(f => new BigNumber(f));
+    const pool = this.getPoolContract();
+    const factors = await pool.read.getScalingFactors();
+    return factors.map(f => new BigNumber(f.toString(10)));
   }
 
-  protected async getPoolContract() {
-    const web3 = await this.getWeb3();
-    return new web3.eth.Contract(viemToWeb3Abi(BalancerMetaStablePoolAbi), this.config.poolAddress);
+  protected getPoolContract() {
+    return fetchContract(this.config.poolAddress, BalancerMetaStablePoolAbi, this.chain.id);
   }
 }

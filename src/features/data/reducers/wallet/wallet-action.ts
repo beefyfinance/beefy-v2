@@ -1,21 +1,13 @@
 import { type BigNumber } from 'bignumber.js';
 import { WALLET_ACTION, WALLET_ACTION_RESET } from '../../actions/wallet-actions';
 import type { TokenEntity } from '../../entities/token';
-import type { EventLog } from 'web3-core';
 import type { VaultEntity } from '../../entities/vault';
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types';
 import type { BeefyAnyBridgeConfig } from '../../apis/config-types';
+import type { Hash, TransactionReceipt } from 'viem';
 import type { BoostPromoEntity } from '../../entities/promo';
 
 export type TrxHash = string;
-export type TrxReceipt = {
-  readonly transactionHash: string;
-  readonly from: string;
-  readonly to: string;
-  readonly events?: {
-    [eventName: string]: EventLog | EventLog[];
-  };
-};
 export type TrxError = {
   message: string;
   friendlyMessage?: string;
@@ -104,8 +96,8 @@ export type WalletActionsPendingState<T extends TxAdditionalData = TxAdditionalD
 export type WalletActionsSuccessState<T extends TxAdditionalData = TxAdditionalData> = {
   result: 'success';
   data: {
-    hash: TrxHash;
-    receipt: TrxReceipt;
+    hash: Hash;
+    receipt: TransactionReceipt;
   };
   additional?: T;
 };
@@ -196,7 +188,7 @@ export function createWalletActionErrorAction(
 }
 
 export function createWalletActionPendingAction(
-  hash: TrxHash,
+  hash: Hash,
   additionalData: TxAdditionalData | undefined
 ): WalletAction<WalletActionsPendingState> {
   return {
@@ -212,7 +204,7 @@ export function createWalletActionPendingAction(
 }
 
 export function createWalletActionSuccessAction(
-  receipt: TrxReceipt,
+  receipt: TransactionReceipt,
   additionalData: TxAdditionalData | undefined
 ): WalletAction<WalletActionsSuccessState> {
   return {

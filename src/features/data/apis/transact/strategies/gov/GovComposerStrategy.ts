@@ -55,15 +55,16 @@ import type {
   ZapStepResponse,
 } from '../../zap/types';
 import { type BigNumber } from 'bignumber.js';
-import abiCoder from 'web3-eth-abi';
 import { getInsertIndex, NO_RELAY } from '../../helpers/zap';
-import { toWei, toWeiString } from '../../../../../../helpers/big-number';
+import { bigNumberToBigInt, toWei, toWeiString } from '../../../../../../helpers/big-number';
 import { slipBy } from '../../helpers/amounts';
 import type { GovComposerStrategyConfig } from '../strategy-configs';
 import { onlyOneInput } from '../../helpers/options';
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes';
 import { pickTokens } from '../../helpers/tokens';
 import { uniqBy } from 'lodash-es';
+import type { Abi } from 'abitype';
+import { encodeFunctionData } from 'viem';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -411,22 +412,25 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     return {
       target: govVaultAddress,
       value: '0',
-      data: abiCoder.encodeFunctionCall(
-        {
-          type: 'function',
-          name: 'stake',
-          constant: false,
-          payable: false,
-          inputs: [
-            {
-              name: '_amount0',
-              type: 'uint256',
-            },
-          ],
-          outputs: [],
-        },
-        [amount.toString(10)]
-      ),
+      data: encodeFunctionData({
+        abi: [
+          {
+            type: 'function',
+            name: 'stake',
+            constant: false,
+            payable: false,
+            inputs: [
+              {
+                name: '_amount0',
+                type: 'uint256',
+              },
+            ],
+            stateMutability: 'nonpayable',
+            outputs: [],
+          },
+        ] as const satisfies Abi,
+        args: [bigNumberToBigInt(amount)],
+      }),
       tokens: [
         {
           token: depositTokenAddress,
@@ -726,22 +730,25 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
     return {
       target: govVaultAddress,
       value: '0',
-      data: abiCoder.encodeFunctionCall(
-        {
-          type: 'function',
-          name: 'withdraw',
-          constant: false,
-          payable: false,
-          inputs: [
-            {
-              name: '_amount0',
-              type: 'uint256',
-            },
-          ],
-          outputs: [],
-        },
-        [amount.toString(10)]
-      ),
+      data: encodeFunctionData({
+        abi: [
+          {
+            type: 'function',
+            name: 'withdraw',
+            constant: false,
+            payable: false,
+            inputs: [
+              {
+                name: '_amount0',
+                type: 'uint256',
+              },
+            ],
+            stateMutability: 'nonpayable',
+            outputs: [],
+          },
+        ] as const satisfies Abi,
+        args: [bigNumberToBigInt(amount)],
+      }),
       tokens: [
         {
           token: govVaultAddress,

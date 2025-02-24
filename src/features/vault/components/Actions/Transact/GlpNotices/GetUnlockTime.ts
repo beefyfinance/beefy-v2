@@ -1,13 +1,12 @@
 import type { GlpLikeConfig, UnlockTimeResult } from './types';
-import type { AbiItem } from 'web3-utils';
 import type { ChainEntity } from '../../../../../data/entities/chain';
-import { getWeb3Instance } from '../../../../../data/apis/instances';
-import { MultiCall } from 'eth-multicall';
 import { BigNumber } from 'bignumber.js';
+import { fetchContract } from '../../../../../data/apis/rpc-contract/viem-contract';
+import type { Abi, Address } from 'abitype';
 
-const stakedAbiCache: Record<string, AbiItem[]> = {};
+const stakedAbiCache: Record<string, Abi> = {};
 
-function getStakedAbi(config: GlpLikeConfig): AbiItem[] {
+function getStakedAbi(config: GlpLikeConfig): Abi {
   if (!(config.managerMethod in stakedAbiCache)) {
     stakedAbiCache[config.managerMethod] = [
       {
@@ -23,13 +22,13 @@ function getStakedAbi(config: GlpLikeConfig): AbiItem[] {
         stateMutability: 'view',
         type: 'function',
       },
-    ];
+    ] as const satisfies Abi;
   }
 
   return stakedAbiCache[config.managerMethod];
 }
 
-const managerAbi: AbiItem[] = [
+const managerAbi = [
   {
     inputs: [
       {
@@ -62,7 +61,7 @@ const managerAbi: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export async function getUnlockTime(
   depositTokenAddress: string,
@@ -70,29 +69,20 @@ export async function getUnlockTime(
   chain: ChainEntity,
   config: GlpLikeConfig
 ): Promise<UnlockTimeResult> {
-  const web3 = await getWeb3Instance(chain);
-  const multicall = new MultiCall(web3, chain.multicallAddress);
-  const stakedContract = new web3.eth.Contract(getStakedAbi(config), depositTokenAddress);
-  const [[addresses]] = (await multicall.all([
-    [
-      {
-        manager: stakedContract.methods[config.managerMethod](),
-      },
-    ],
-  ])) as [[{ manager: string }]];
+  const stakedContract = fetchContract(depositTokenAddress, getStakedAbi(config), chain.id);
+  // dynamic abi screws up with type inference so we make it explicit
+  const manager = (await stakedContract.read[config.managerMethod]()) as Address;
 
-  const managerContract = new web3.eth.Contract(managerAbi, addresses.manager);
-  const [[result]] = (await multicall.all([
-    [
-      {
-        lastAddedAt: userAddress ? managerContract.methods.lastAddedAt(userAddress) : '0',
-        cooldownDuration: managerContract.methods.cooldownDuration(),
-      },
-    ],
-  ])) as [[{ lastAddedAt: string; cooldownDuration: string }]];
+  const managerContract = fetchContract(manager, managerAbi, chain.id);
+  const [lastAddedAtResult, cooldownDurationResult] = await Promise.all([
+    userAddress ? managerContract.read.lastAddedAt([userAddress as Address]) : 0n,
+    managerContract.read.cooldownDuration(),
+  ]);
 
-  const lastAddedAt = new BigNumber(result.lastAddedAt || '0').multipliedBy(1000).toNumber();
-  const cooldownDuration = new BigNumber(result.cooldownDuration || '0')
+  const lastAddedAt = new BigNumber(lastAddedAtResult?.toString(10) || '0')
+    .multipliedBy(1000)
+    .toNumber();
+  const cooldownDuration = new BigNumber(cooldownDurationResult?.toString(10) || '0')
     .multipliedBy(1000)
     .toNumber();
 

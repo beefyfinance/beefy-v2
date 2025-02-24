@@ -1,22 +1,28 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { Migrator, MigratorExecuteProps, MigratorUpdateProps } from '../migration-types';
+import type {
+  Migrator,
+  MigratorUnstakeProps,
+  MigratorExecuteProps,
+  MigratorUpdateProps,
+} from '../migration-types';
 import type { VaultEntity } from '../../../entities/vault';
 import { BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types';
 import { selectVaultById } from '../../../selectors/vaults';
-import { selectChainById } from '../../../selectors/chains';
-import { getWalletConnectionApi, getWeb3Instance } from '../../instances';
+import { getWalletConnectionApi } from '../../instances';
 import { selectTokenByAddress } from '../../../selectors/tokens';
 import { selectUserBalanceToMigrateByVaultId } from '../../../selectors/migration';
 import { ConicLpTokenStakerAbi } from '../../../../../config/abi/ConicLpTokenStakerAbi';
 import type { Step } from '../../../reducers/wallet/stepper';
 import { walletActions } from '../../../actions/wallet-actions';
-import { toWei } from '../../../../../helpers/big-number';
+import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number';
 import { startStepperWithSteps } from '../../../actions/stepper';
 import { isTokenErc20 } from '../../../entities/token';
 import { selectAllowanceByTokenAddress } from '../../../selectors/allowances';
 import type { ConicMigrationUpdateFulfilledPayload } from './types';
-import type { AbiItem } from 'web3-utils';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
+import type { Address } from 'abitype';
+import type { Hash } from 'viem';
 
 const CONIC_LP_TOKEN_STAKER = '0xA5241560306298efb9ed80b87427e664FFff0CF9';
 
@@ -27,26 +33,22 @@ export const fetchConicStakedBalance = createAsyncThunk<
 >('migration/ethereum-conic/update', async ({ vaultId, walletAddress }, { getState }) => {
   const state = getState();
   const vault = selectVaultById(state, vaultId);
-  const chain = selectChainById(state, vault.chainId);
-  const web3 = await getWeb3Instance(chain);
 
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const lpTokenStaker = new web3.eth.Contract(
-    ConicLpTokenStakerAbi as unknown as AbiItem[],
-    CONIC_LP_TOKEN_STAKER
+  const lpTokenStakerContract = fetchContract(
+    CONIC_LP_TOKEN_STAKER,
+    ConicLpTokenStakerAbi,
+    vault.chainId
   );
+  const lpContract = fetchContract(depositToken.address, ConicLpTokenStakerAbi, vault.chainId);
 
-  const lpContract = new web3.eth.Contract(
-    ConicLpTokenStakerAbi as unknown as AbiItem[],
-    depositToken.address
-  );
+  const conicPoolAddress = await lpContract.read.minter();
+  const balance = await lpTokenStakerContract.read.getUserBalanceForPool([
+    conicPoolAddress,
+    walletAddress as Address,
+  ]);
 
-  const conicPoolAddress = await lpContract.methods.minter().call();
-  const balance = await lpTokenStaker.methods
-    .getUserBalanceForPool(conicPoolAddress, walletAddress)
-    .call();
-
-  const fixedBalance = new BigNumber(balance).shiftedBy(-depositToken.decimals);
+  const fixedBalance = new BigNumber(balance.toString(10)).shiftedBy(-depositToken.decimals);
 
   return { vaultId, walletAddress, balance: fixedBalance, migrationId: 'ethereum-conic' };
 });
@@ -55,24 +57,19 @@ async function unstakeCall(
   vault: VaultEntity,
   amount: BigNumber,
   state: BeefyState
-  // eslint-disable-next-line
-): Promise<any> {
+): Promise<(args: MigratorUnstakeProps) => Promise<Hash>> {
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const walletApi = await getWalletConnectionApi();
-  const web3 = await walletApi.getConnectedWeb3Instance();
+  const walletClient = await walletApi.getConnectedViemClient();
 
-  const lpContract = new web3.eth.Contract(
-    ConicLpTokenStakerAbi as unknown as AbiItem[],
-    depositToken.address
-  );
-  const conicPoolAddress = await lpContract.methods.minter().call();
+  const lpContract = fetchContract(depositToken.address, ConicLpTokenStakerAbi, vault.chainId);
+  const conicPoolAddress = await lpContract.read.minter();
 
-  const lpStaker = new web3.eth.Contract(
-    ConicLpTokenStakerAbi as unknown as AbiItem[],
-    CONIC_LP_TOKEN_STAKER
-  );
+  const lpStaker = fetchWalletContract(CONIC_LP_TOKEN_STAKER, ConicLpTokenStakerAbi, walletClient);
   const amountInWei = toWei(amount, depositToken.decimals);
-  return lpStaker.methods.unstake(amountInWei.toString(10), conicPoolAddress);
+
+  return (args: MigratorUnstakeProps) =>
+    lpStaker.write.unstake([bigNumberToBigInt(amountInWei), conicPoolAddress], args);
 }
 
 export const executeConicAction = createAsyncThunk<

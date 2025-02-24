@@ -1,7 +1,8 @@
-import abiCoder from 'web3-eth-abi';
 import type { BigNumber } from 'bignumber.js';
 import type { ZapStep } from './types';
 import { getInsertIndex } from '../helpers/zap';
+import { encodeFunctionData, type Abi, type Address } from 'viem';
+import { bigNumberToBigInt } from '../../../../../helpers/big-number';
 
 export function buildTokenApproveTx(
   token: string,
@@ -12,23 +13,26 @@ export function buildTokenApproveTx(
   return {
     target: token,
     value: '0',
-    data: abiCoder.encodeFunctionCall(
-      {
-        type: 'function',
-        name: 'approve',
-        constant: false,
-        payable: false,
-        inputs: [
-          { type: 'address', name: 'spender' },
-          {
-            type: 'uint256',
-            name: 'amount',
-          },
-        ],
-        outputs: [{ type: 'bool', name: 'success' }],
-      },
-      [spender, amountWei.toString(10)]
-    ),
+    data: encodeFunctionData({
+      abi: [
+        {
+          type: 'function',
+          name: 'approve',
+          constant: false,
+          payable: false,
+          inputs: [
+            { type: 'address', name: 'spender' },
+            {
+              type: 'uint256',
+              name: 'amount',
+            },
+          ],
+          stateMutability: 'nonpayable',
+          outputs: [{ type: 'bool', name: 'success' }],
+        },
+      ] as const satisfies Abi,
+      args: [spender as Address, bigNumberToBigInt(amountWei)],
+    }),
     tokens: insertBalance
       ? [
           {
