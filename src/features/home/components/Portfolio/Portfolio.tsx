@@ -27,7 +27,7 @@ export const Portfolio = () => {
 
   return (
     <div className={classes.portfolio}>
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" className={classes.container}>
         <div className={classes.stats}>
           <div className={classes.userStats}>
             <div className={classes.title}>

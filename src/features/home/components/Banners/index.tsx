@@ -9,6 +9,7 @@ const useStyles = makeStyles(() => ({
   banners: {
     display: 'flex',
     flexDirection: 'column' as const,
+    padding: '12px',
     gap: '24px',
     '& > :last-child': {
       marginBottom: '24px',

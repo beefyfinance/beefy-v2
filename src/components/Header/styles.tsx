@@ -21,8 +21,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.footerHeader,
   },
   container: {
-    paddingTop: '12px',
-    paddingBottom: '12px',
+    padding: '12px',
   },
   content: {
     justifyContent: 'space-between',
