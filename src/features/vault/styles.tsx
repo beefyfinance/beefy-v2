@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     gap: '24px',
-    padding: '20px 16px',
+    padding: '20px 12px',
   },
   contentContainer: {},
   contentColumns: {

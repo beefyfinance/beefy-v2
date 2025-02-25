@@ -8,6 +8,9 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     rowGap: '16px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px',
+    },
   },
   containerExpired: {
     display: 'flex',
@@ -16,6 +19,9 @@ export const styles = (theme: Theme) => ({
     padding: '24px',
     backgroundColor: theme.palette.background.contentPrimary,
     borderRadius: '12px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px',
+    },
   },
   containerExpiredBoosts: {
     display: 'flex',

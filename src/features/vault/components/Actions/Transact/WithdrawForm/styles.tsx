@@ -3,6 +3,9 @@ import type { Theme } from '@material-ui/core';
 export const styles = (theme: Theme) => ({
   container: {
     padding: '24px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px',
+    },
   },
   stakedInBoost: {
     marginBottom: '24px',

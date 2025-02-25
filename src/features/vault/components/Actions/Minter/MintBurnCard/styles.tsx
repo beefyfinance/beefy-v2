@@ -40,6 +40,9 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.contentPrimary,
     borderRadius: '0 0 12px 12px',
     padding: '24px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px',
+    },
   },
   logo: {
     height: '50px',

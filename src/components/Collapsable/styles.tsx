@@ -5,6 +5,9 @@ export const styles = (theme: Theme) => ({
     padding: 24,
     borderRadius: '12px',
     backgroundColor: theme.palette.background.contentPrimary,
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px',
+    },
   },
   content: {
     padding: 16,
