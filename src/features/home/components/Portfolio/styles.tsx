@@ -4,7 +4,9 @@ export const styles = theme => ({
     padding: `${40 - 24}px 0 40px 0`,
   },
   container: {
-    padding: '12px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '0 12px',
+    },
   },
   stats: {
     display: 'grid',

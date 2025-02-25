@@ -5,7 +5,11 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column' as const,
     gap: '24px',
-    padding: '20px 12px',
+    paddingTop: '32px',
+    paddingBottom: '32px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '32px 12px',
+    },
   },
   contentContainer: {},
   contentColumns: {

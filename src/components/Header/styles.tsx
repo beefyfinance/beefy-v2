@@ -21,7 +21,11 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.footerHeader,
   },
   container: {
-    padding: '12px',
+    paddingTop: '12px',
+    paddingBottom: '12px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '12px',
+    },
   },
   content: {
     justifyContent: 'space-between',
