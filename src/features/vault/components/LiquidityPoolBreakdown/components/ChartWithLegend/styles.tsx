@@ -13,6 +13,9 @@ export const styles = (theme: Theme) => ({
       flexDirection: 'column' as const,
       borderRight: 'solid 2px #363B63',
     },
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px',
+    },
   },
   legend: {
     [theme.breakpoints.up('lg')]: {

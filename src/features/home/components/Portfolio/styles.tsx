@@ -3,6 +3,9 @@ export const styles = theme => ({
     backgroundColor: theme.palette.background.header,
     padding: `${40 - 24}px 0 40px 0`,
   },
+  container: {
+    padding: '12px',
+  },
   stats: {
     display: 'grid',
     gridTemplateColumns: '100%',

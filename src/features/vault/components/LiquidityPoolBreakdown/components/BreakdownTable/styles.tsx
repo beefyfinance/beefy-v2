@@ -31,6 +31,9 @@ export const styles = (theme: Theme) => ({
     '& $cell:nth-child(2), & $cell:nth-child(3)': {
       textAlign: 'right' as const,
     },
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px',
+    },
   },
   header: {
     ...theme.typography['subline-sm'],
