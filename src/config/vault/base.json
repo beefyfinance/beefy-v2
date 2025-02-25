@@ -123,7 +123,6 @@
     "token": "WETH",
     "tokenAddress": "0x4200000000000000000000000000000000000006",
     "tokenDecimals": 18,
-    "tokenProviderId": "morpho",
     "earnContractAddress": "0x0A2Bc5Bd33bac3C34551C67Af3657451911518Fa",
     "earnedToken": "mooMorpho-Seamless-WETH",
     "earnedTokenAddress": "0x0A2Bc5Bd33bac3C34551C67Af3657451911518Fa",
