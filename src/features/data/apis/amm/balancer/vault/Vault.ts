@@ -397,9 +397,9 @@ export class Vault {
         args.recipient as Address,
         {
           assets: args.request.assets as Address[],
-          minAmountsOut: args.request.maxAmountsIn.map(bigNumberToBigInt),
+          maxAmountsIn: args.request.maxAmountsIn.map(bigNumberToBigInt),
           userData: args.request.userData,
-          toInternalBalance: args.request.fromInternalBalance,
+          fromInternalBalance: args.request.fromInternalBalance,
         },
       ],
     });
