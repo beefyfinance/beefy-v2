@@ -1,5 +1,123 @@
 [
   {
+    "id": "pancake-cow-bsc-siren-wbnb-rp",
+    "name": "SIREN-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBscSIREN-WBNB",
+    "tokenAddress": "0x4831CAF3C5d5c4c6cE283122FCFeDF8F4b71dAD4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0xf3193B209e2cF77f9547eFF865D4D4461C30c3C8",
+    "earnedToken": "rCowPancakeBscSIREN-WBNB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-siren-wbnb",
+    "status": "active",
+    "createdAt": 1740568031,
+    "platformId": "pancakeswap",
+    "assets": ["SIREN", "WBNB"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-siren-wbnb",
+    "name": "SIREN-WBNB",
+    "type": "cowcentrated",
+    "token": "SIREN-WBNB pancakeswap",
+    "tokenAddress": "0xb2AF49dBF526054FAf19602860A5E298a79F3D05",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x997A58129890bBdA032231A52eD1ddC845fc18e1",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnContractAddress": "0x4831CAF3C5d5c4c6cE283122FCFeDF8F4b71dAD4",
+    "earnedToken": "cowPancakeBscSIREN-WBNB",
+    "earnedTokenAddress": "0x4831CAF3C5d5c4c6cE283122FCFeDF8F4b71dAD4",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-siren-wbnb",
+    "status": "active",
+    "createdAt": 1740568031,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["SIREN", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-broccoli-wbnb-rp",
+    "name": "Broccoli-WBNB Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowPancakeBscBroccoli-WBNB",
+    "tokenAddress": "0x9604a80A90c87207BcC1Cb189De8653A6873F212",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnContractAddress": "0x8A2b67b4bd8aC160288300180679FA8DfEf9E3a6",
+    "earnedToken": "rCowPancakeBscBroccoli-WBNB",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-broccoli-wbnb",
+    "status": "active",
+    "createdAt": 1740566296,
+    "platformId": "pancakeswap",
+    "assets": ["Broccoli", "WBNB"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "pancake-cow-bsc-broccoli-wbnb",
+    "name": "Broccoli-WBNB",
+    "type": "cowcentrated",
+    "token": "Broccoli-WBNB pancakeswap",
+    "tokenAddress": "0xdB25C09d96C165B62F6e6F9d9b17174738d897BA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "depositTokenAddresses": [
+      "0x12B4356C65340Fb02cdff01293F95FEBb1512F3b",
+      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+    ],
+    "earnContractAddress": "0x9604a80A90c87207BcC1Cb189De8653A6873F212",
+    "earnedToken": "cowPancakeBscBroccoli-WBNB",
+    "earnedTokenAddress": "0x9604a80A90c87207BcC1Cb189De8653A6873F212",
+    "oracle": "lps",
+    "oracleId": "pancake-cow-bsc-broccoli-wbnb",
+    "status": "active",
+    "createdAt": 1740566296,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["Broccoli", "WBNB"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "bsc",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "pancake-cow-bsc-tst-wbnb-vault",
     "name": "TST-WBNB",
     "type": "standard",
