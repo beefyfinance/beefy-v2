@@ -14,6 +14,9 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.contentDark,
     borderRadius: '12px 12px 0px 0px ',
     padding: '24px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px',
+    },
   },
   icon: {
     height: '48px',
@@ -34,5 +37,8 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'center',
     padding: '24px',
     rowGap: '16px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px',
+    },
   },
 });

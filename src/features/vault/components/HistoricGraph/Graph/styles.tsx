@@ -35,6 +35,9 @@ export const styles = (theme: Theme) => ({
   cowcentratedStat: {
     backgroundColor: theme.palette.background.contentPrimary,
     padding: '16px 24px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px',
+    },
   },
   label: {
     ...theme.typography['body-sm-med'],

@@ -13,7 +13,8 @@ export const styles = theme => ({
     paddingBottom: 0,
     marginRight: '32px',
     [theme.breakpoints.down('sm')]: {
-      margin: '8px 24px 8px 0px',
+      minWidth: '140px',
+      margin: 0,
     },
   },
   value: {
