@@ -4,8 +4,10 @@ export const styles = (theme: Theme) => ({
   filters: {
     display: 'flex',
     flexWrap: 'wrap' as const,
-    rowGap: '16px',
-    columnGap: '16px',
+    gap: '16px',
+    [theme.breakpoints.down('sm')]: {
+      gap: '12px',
+    },
   },
   userCategory: {
     width: '100%',

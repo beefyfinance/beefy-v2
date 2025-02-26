@@ -9,17 +9,20 @@ export const styles = (theme: Theme) => ({
     paddingBottom: '32px',
     [theme.breakpoints.down('sm')]: {
       padding: '32px 12px',
+      gap: '16px',
     },
   },
   contentContainer: {},
   contentColumns: {
     display: 'grid',
     gridTemplateColumns: '100%',
-    rowGap: '24px',
-    columnGap: '24px',
+    gap: '24px',
     [theme.breakpoints.up('md')]: {
       display: 'grid',
       gridTemplateColumns: 'minmax(0,666fr) minmax(0,333fr)',
+    },
+    [theme.breakpoints.down('sm')]: {
+      gap: '12px',
     },
   },
   columnActions: {
@@ -33,6 +36,9 @@ export const styles = (theme: Theme) => ({
     [theme.breakpoints.up('md')]: {
       order: 1,
     },
+    [theme.breakpoints.down('sm')]: {
+      gap: '12px',
+    },
   },
   columnInfo: {
     width: '100%',
@@ -41,6 +47,9 @@ export const styles = (theme: Theme) => ({
     rowGap: '24px',
     [theme.breakpoints.up('md')]: {
       marginTop: 0,
+    },
+    [theme.breakpoints.down('sm')]: {
+      gap: '12px',
     },
   },
 });

@@ -2,6 +2,9 @@ export const styles = theme => ({
   portfolio: {
     backgroundColor: theme.palette.background.header,
     padding: `${40 - 24}px 0 40px 0`,
+    [theme.breakpoints.down('sm')]: {
+      padding: '12px 0 32px 0',
+    },
   },
   container: {
     [theme.breakpoints.down('sm')]: {
@@ -11,10 +14,12 @@ export const styles = theme => ({
   stats: {
     display: 'grid',
     gridTemplateColumns: '100%',
-    rowGap: '32px',
-    columnGap: '32px',
+    gap: '32px',
     [theme.breakpoints.up('md')]: {
       gridTemplateColumns: '583fr 417fr',
+    },
+    [theme.breakpoints.down('sm')]: {
+      rowGap: '24px',
     },
   },
   userStats: {},
