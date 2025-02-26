@@ -3,7 +3,7 @@ export const styles = theme => ({
     backgroundColor: theme.palette.background.header,
     padding: `${40 - 24}px 0 40px 0`,
     [theme.breakpoints.down('sm')]: {
-      padding: '12px 0 32px 0',
+      padding: '16px 0 32px 0',
     },
   },
   container: {

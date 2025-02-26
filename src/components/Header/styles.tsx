@@ -24,7 +24,7 @@ export const styles = (theme: Theme) => ({
     paddingTop: '12px',
     paddingBottom: '12px',
     [theme.breakpoints.down('sm')]: {
-      padding: '12px',
+      padding: '4px 20px 4px 12px',
     },
   },
   content: {
