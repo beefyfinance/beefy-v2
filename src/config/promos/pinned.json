@@ -1,10 +1,10 @@
 [
   {
     "id": [
+      "swapx-usdc.e-scusd",
       "pendle-eqb-base-susdz-27mar25",
-      "uniswap-cow-base-spx-usdc-rp",
-      "shadow-cow-sonic-ws-usdc.e-vault",
-      "shadow-cow-sonic-ws-weth-vault"
+      "aerodrome-usdc-mai",
+      "velodrome-v2-wbtc-tbtc"
     ],
     "conditions": [
       {
