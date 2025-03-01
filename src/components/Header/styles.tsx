@@ -23,6 +23,9 @@ export const styles = (theme: Theme) => ({
   container: {
     paddingTop: '12px',
     paddingBottom: '12px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '4px 20px 4px 12px',
+    },
   },
   content: {
     justifyContent: 'space-between',
