@@ -15,21 +15,7 @@ import { restoreDefaultRpcsOnSingleChain } from '../../../../features/data/actio
 
 const useStyles = makeStyles(styles);
 
-export const ChainListItem = memo(function ChainListItem({
-  value,
-}: ItemInnerProps<ChainEntity['id']>) {
-  const classes = useStyles();
-  const chain = useAppSelector(state => selectChainById(state, value));
-
-  return (
-    <>
-      <ChainIcon chainId={value} className={classes.listItemIcon} />
-      {chain.name}
-    </>
-  );
-});
-
-export const ModifiedListItem = memo(function ChainListItem({
+export const ModifiedListItem = memo(function ModifiedListItem({
   value,
 }: ItemInnerProps<ChainEntity['id']>) {
   const chain = useAppSelector(state => selectChainById(state, value));
