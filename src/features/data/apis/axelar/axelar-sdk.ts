@@ -15,7 +15,8 @@ import type {
 } from './axelar-sdk-types';
 import { postJson } from '../../../../helpers/http';
 import { fetchContract } from '../rpc-contract/viem-contract';
-import type { Abi, Address } from 'abitype';
+import type { Abi } from 'abitype';
+import type { Hex } from 'viem';
 
 /**
  * Slimmed down copy of the Axelar SDK with only a estimateGasFee analog implemented.
@@ -30,7 +31,7 @@ export class AxelarSDK implements IAxelarSDK {
     destinationChainId: AxelarChain,
     destinationContractAddress: string,
     gasLimit: BigNumber,
-    executeData: string,
+    executeData: Hex,
     gasMultiplier: number | 'auto' = 'auto',
     /** in wei */
     minDestinationGasPriceWei: BigNumber = BIG_ZERO
@@ -88,7 +89,7 @@ export class AxelarSDK implements IAxelarSDK {
   protected async calculateL1FeeForDestL2(
     destChainId: AxelarChain,
     destToken: DestinationToken,
-    executeData: string,
+    executeData: Hex,
     sourceToken: SourceToken,
     ethereumToken: Token,
     actualGasMultiplier: number,
@@ -208,7 +209,7 @@ export class AxelarSDK implements IAxelarSDK {
     ] as const satisfies Abi;
 
     const contract = fetchContract(l1GasOracleAddress, gasOracleAbi, this.destinationChain.id);
-    const result = await contract.read.getL1Fee([l1GasOracleAddress as Address]);
+    const result = await contract.read.getL1Fee([executeData]);
 
     return new BigNumber(result.toString(10));
   }

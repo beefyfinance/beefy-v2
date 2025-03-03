@@ -9,13 +9,6 @@ const wethAddress = '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1';
 const transferCallData =
   '0xa9059cbb00000000000000000000000082af49447d8a07e3bd95bd0d56f35241523fbab10000000000000000000000000000000000000000000000000000000000000001'; // transfer(wethAddress, 1)
 
-type GasEstimateComponentsResponse = {
-  baseFee: string;
-  gasEstimate: string;
-  gasEstimateForL1: string;
-  l1BaseFeeEstimate: string;
-};
-
 /**
  * You pay for the sequencer by using more gas on L2
  * The extra gas is calculated from the size of the transaction data and current L1 gas prices,

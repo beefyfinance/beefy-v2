@@ -1,4 +1,5 @@
 import type { BigNumber } from 'bignumber.js';
+import type { Hex } from 'viem';
 
 export type Token = {
   name: string;
@@ -76,7 +77,7 @@ export type GetFeesResult = {
 export type EstimateL1FeeParams = {
   l2Type: L2Type;
   l1GasOracleAddress: string;
-  executeData: string;
+  executeData: Hex;
   l1GasPrice: GasPriceInUnits;
   destChain: AxelarChain;
 };
