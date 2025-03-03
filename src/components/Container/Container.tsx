@@ -8,9 +8,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto',
-    padding: '0px 16px',
-    [theme.breakpoints.up('xs')]: {
-      padding: '0px 24px',
+    paddingInline: '16px',
+    [theme.breakpoints.up('md')]: {
+      paddingInline: '24px',
     },
   },
   'width-xl': {},
