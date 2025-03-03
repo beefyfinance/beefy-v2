@@ -1,13 +1,13 @@
 import {
+  type FC,
   memo,
+  type MouseEventHandler,
+  type RefObject,
   useCallback,
   useMemo,
   useState,
-  type FC,
-  type MouseEventHandler,
-  type RefObject,
 } from 'react';
-import { Menu, Edit, type RpcStepsProps } from './RpcSteps';
+import { Edit, Menu, type RpcStepsProps } from './RpcSteps';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
@@ -81,44 +81,50 @@ export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: (
 export const RpcModalTrigger = memo(function ModalTrigger({
   anchorEl,
   isOpen,
-  handleIsOpen,
-  handleClose,
+  onOpen,
+  onClose,
 }: {
   anchorEl: RefObject<HTMLElement>;
   isOpen: boolean;
-  handleIsOpen: () => void;
-  handleClose: () => void;
+  onOpen: () => void;
+  onClose: () => void;
 }) {
   const classes = useStyles();
 
   const handleToggle = useCallback<MouseEventHandler<HTMLDivElement>>(
     e => {
       e.stopPropagation();
-      handleIsOpen();
+      onOpen();
     },
-    [handleIsOpen]
+    [onOpen]
   );
 
+  const handleClickAway = useCallback(() => {
+    if (isOpen) {
+      onClose();
+    }
+  }, [isOpen, onClose]);
+
   return (
-    <>
-      <div className={classes.container} onClick={handleToggle}>
-        <SettingsIcon height={24} width={24} />
-        <div className={classes.line} />
-      </div>
-      <ClickAwayListener
-        onClickAway={handleClose}
-        mouseEvent="onMouseDown"
-        touchEvent="onTouchStart"
-      >
+    <ClickAwayListener
+      onClickAway={handleClickAway}
+      mouseEvent="onMouseDown"
+      touchEvent="onTouchStart"
+    >
+      <div>
+        <div className={classes.container} onClick={handleToggle}>
+          <SettingsIcon height={24} width={24} />
+          <div className={classes.line} />
+        </div>
         <Floating
           open={isOpen}
           className={classes.dropdown}
           anchorEl={anchorEl}
-          children={<RpcModal handleClose={handleClose} />}
+          children={<RpcModal handleClose={onClose} />}
           placement="bottom-end"
           autoWidth={false}
         />
-      </ClickAwayListener>
-    </>
+      </div>
+    </ClickAwayListener>
   );
 });
