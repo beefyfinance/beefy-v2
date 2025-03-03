@@ -15,7 +15,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
-    columnGap: '16px',
+    columnGap: '12px',
   },
   hasPortfolio: {
     backgroundColor: theme.palette.background.footerHeader,
