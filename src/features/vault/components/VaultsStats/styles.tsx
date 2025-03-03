@@ -4,11 +4,13 @@ export const styles = (theme: Theme) => ({
   boxes: {
     display: 'grid',
     gridTemplateColumns: '100%',
-    rowGap: '24px',
-    columnGap: '24px',
+    gap: '24px',
     [theme.breakpoints.up('lg')]: {
       display: 'grid',
       gridTemplateColumns: 'minmax(0,666fr) minmax(0,333fr)',
+    },
+    [theme.breakpoints.down('sm')]: {
+      gap: '12px',
     },
   },
   stats: {
