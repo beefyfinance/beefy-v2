@@ -13,6 +13,7 @@ import type { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
 import { fetchContract } from '../rpc-contract/viem-contract';
 import type { Address } from 'abitype';
+import { BIG_ZERO } from '../../../../helpers/big-number';
 
 export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
   constructor(protected chain: T) {}
@@ -91,15 +92,17 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
       for (const spendersCalls of callBatch.map(c => c[1])) {
         for (const spenderAddress of Array.from(spendersCalls.spenders)) {
           const allowance = batchResults[resIdx];
-          if (allowance !== 0n) {
-            res.push({
-              tokenAddress: spendersCalls.tokenAddress,
-              spenderAddress,
-              allowance: new BigNumber(allowance.toString(10)).shiftedBy(
-                -tokensByAddress[spendersCalls.tokenAddress.toLowerCase()].decimals
-              ),
-            });
-          }
+          res.push({
+            tokenAddress: spendersCalls.tokenAddress,
+            spenderAddress,
+            allowance:
+              allowance === 0n
+                ? BIG_ZERO
+                : new BigNumber(allowance.toString(10)).shiftedBy(
+                    -tokensByAddress[spendersCalls.tokenAddress.toLowerCase()].decimals
+                  ),
+          });
+
           resIdx++;
         }
       }
@@ -172,15 +175,17 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
       for (const spendersCalls of callBatch.map(c => c[1])) {
         for (const spenderAddress of Array.from(spendersCalls.spenders)) {
           const allowance = batchResults[resIdx];
-          if (allowance !== 0n) {
-            res.push({
-              tokenAddress: spendersCalls.tokenAddress,
-              spenderAddress,
-              allowance: new BigNumber(allowance.toString(10)).shiftedBy(
-                -tokensByAddress[spendersCalls.tokenAddress.toLowerCase()].decimals
-              ),
-            });
-          }
+          res.push({
+            tokenAddress: spendersCalls.tokenAddress,
+            spenderAddress,
+            allowance:
+              allowance === 0n
+                ? BIG_ZERO
+                : new BigNumber(allowance.toString(10)).shiftedBy(
+                    -tokensByAddress[spendersCalls.tokenAddress.toLowerCase()].decimals
+                  ),
+          });
+
           resIdx++;
         }
       }
