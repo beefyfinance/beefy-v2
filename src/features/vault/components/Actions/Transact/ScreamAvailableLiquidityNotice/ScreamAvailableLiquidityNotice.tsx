@@ -1,21 +1,19 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import type { VaultEntity } from '../../../../../data/entities/vault';
 import { AlertWarning } from '../../../../../../components/Alerts';
-import { getWeb3Instance } from '../../../../../data/apis/instances';
 import { useAppSelector } from '../../../../../../store';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import type { ChainEntity } from '../../../../../data/entities/chain';
 import { StandardVaultAbi } from '../../../../../../config/abi/StandardVaultAbi';
 import { ERC20Abi } from '../../../../../../config/abi/ERC20Abi';
-import type { AbiItem } from 'web3-utils';
-import { MultiCall } from 'eth-multicall';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import type { TokenEntity } from '../../../../../data/entities/token';
 import { BigNumber } from 'bignumber.js';
 import { useAsync } from '../../../../../../helpers/useAsync';
+import { fetchContract } from '../../../../../data/apis/rpc-contract/viem-contract';
 
-const strategyABI: AbiItem[] = [
+const strategyABI = [
   {
     inputs: [],
     name: 'iToken',
@@ -23,7 +21,7 @@ const strategyABI: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const;
 
 const enableForVaults: VaultEntity['id'][] = ['scream-tusd', 'scream-frax'];
 type ScreamAvailableLiquidityProps = {
@@ -32,32 +30,25 @@ type ScreamAvailableLiquidityProps = {
 };
 
 async function getLiquidity(vault: VaultEntity, chain: ChainEntity, depositToken: TokenEntity) {
-  const web3 = await getWeb3Instance(chain);
-  const vaultContract = new web3.eth.Contract(
-    StandardVaultAbi as unknown as AbiItem[],
-    vault.contractAddress
-  );
-  const strategyAddress = await vaultContract.methods.strategy().call();
-  const strategyContract = new web3.eth.Contract(strategyABI as AbiItem[], strategyAddress);
-  const iTokenAddress = await strategyContract.methods.iToken().call();
-  const wantContract = new web3.eth.Contract(
-    ERC20Abi as unknown as AbiItem[],
-    vault.depositTokenAddress
-  );
-  const multicall = new MultiCall(web3, chain.multicallAddress);
-  const [[balances]] = await multicall.all([
-    [
-      {
-        strategy: wantContract.methods.balanceOf(strategyAddress),
-        iToken: wantContract.methods.balanceOf(iTokenAddress),
-      },
-    ],
+  const vaultContract = fetchContract(vault.contractAddress, StandardVaultAbi, chain.id);
+  const strategyAddress = await vaultContract.read.strategy();
+
+  const strategyContract = fetchContract(strategyAddress, strategyABI, chain.id);
+  const iTokenAddress = await strategyContract.read.iToken();
+
+  const wantTokenContract = fetchContract(vault.depositTokenAddress, ERC20Abi, chain.id);
+
+  const [strategyBalance, iTokenBalance] = await Promise.all([
+    wantTokenContract.read.balanceOf([strategyAddress]),
+    wantTokenContract.read.balanceOf([iTokenAddress]),
   ]);
 
-  const balanceOfStrategy = new BigNumber(balances.strategy || '0').shiftedBy(
+  const balanceOfStrategy = new BigNumber((strategyBalance || 0n).toString(10)).shiftedBy(
     -depositToken.decimals
   );
-  const balanceOfiToken = new BigNumber(balances.iToken || '0').shiftedBy(-depositToken.decimals);
+  const balanceOfiToken = new BigNumber((iTokenBalance || 0n).toString(10)).shiftedBy(
+    -depositToken.decimals
+  );
   const totalAvailable = balanceOfStrategy.plus(balanceOfiToken);
 
   return totalAvailable.toNumber();

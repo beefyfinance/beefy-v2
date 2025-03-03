@@ -32,8 +32,11 @@ export const Item = memo<ItemProps>(function Item({
     <button onClick={handleClick} className={clsx(classes.item, className)}>
       <ItemInnerComponent value={value} />
       <div className={classes.endAdornment}>
-        {EndAdornmentComponent && <EndAdornmentComponent value={value} />}
-        <ChevronRight className={clsx(classes.arrow)} />
+        {EndAdornmentComponent ? (
+          <EndAdornmentComponent value={value} />
+        ) : (
+          <ChevronRight className={clsx(classes.arrow)} />
+        )}
       </div>
     </button>
   );

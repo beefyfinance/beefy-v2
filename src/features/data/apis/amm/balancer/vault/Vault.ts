@@ -1,17 +1,13 @@
 import type { ChainEntity } from '../../../../entities/chain';
 import {
-  type AbiEncodeArgs,
   type BatchSwapArgs,
   type ExitPoolArgs,
-  type ExitPoolResult,
   type ExitPoolZapRequest,
   type FundManagement,
   type JoinPoolArgs,
-  type JoinPoolResult,
   type JoinPoolZapRequest,
   type PoolConfig,
   type PoolTokensResponse,
-  type PoolTokensResult,
   type QueryBatchSwapArgs,
   type QueryBatchSwapRequest,
   type QueryBatchSwapResponse,
@@ -25,27 +21,21 @@ import {
 } from './types';
 import { ZERO_ADDRESS } from '../../../../../../helpers/addresses';
 import { BigNumber } from 'bignumber.js';
-import { getWeb3Instance } from '../../../instances';
-import { viemToWeb3Abi } from '../../../../../../helpers/web3';
 import { BalancerVaultAbi } from '../../../../../../config/abi/BalancerVaultAbi';
 import { createCachedFactory, createFactory } from '../../../../utils/factory-utils';
 import { BalancerQueriesAbi } from '../../../../../../config/abi/BalancerQueriesAbi';
-import abiCoder from 'web3-eth-abi';
-import type { AbiItem } from 'web3-utils';
-import {
-  bigNumberToInt256String,
-  bigNumberToUint256String,
-} from '../../../../../../helpers/big-number';
+import { bigNumberToBigInt, bigNumberToUint256String } from '../../../../../../helpers/big-number';
 import type { StepToken, ZapStep } from '../../../transact/zap/types';
 import { getInsertIndex } from '../../../transact/helpers/zap';
-import { getAddress } from 'viem';
+import { getAddress, type Address, encodeFunctionData } from 'viem';
 import { PoolExitKind, PoolJoinKind } from '../common/types';
 import { JoinExitEncoder } from '../common/JoinExitEncoder';
+import { fetchContract } from '../../../rpc-contract/viem-contract';
 
 const queryFunds: FundManagement = {
-  sender: ZERO_ADDRESS,
+  sender: ZERO_ADDRESS as Address,
   fromInternalBalance: false,
-  recipient: ZERO_ADDRESS,
+  recipient: ZERO_ADDRESS as Address,
   toInternalBalance: false,
 };
 
@@ -54,21 +44,21 @@ export class Vault {
 
   async getPoolTokens(poolId: string): Promise<PoolTokensResponse> {
     const vault = await this.getVaultContract();
-    const result: PoolTokensResult = await vault.methods.getPoolTokens(poolId).call();
+    const [tokens, balances] = await vault.read.getPoolTokens([poolId as Address]);
 
     if (
-      !result?.tokens ||
-      !Array.isArray(result.tokens) ||
-      !result.balances ||
-      !Array.isArray(result.balances) ||
-      result.tokens.length !== result.balances.length
+      !tokens ||
+      !tokens.length ||
+      !balances ||
+      !balances.length ||
+      tokens.length !== balances.length
     ) {
       throw new Error('Invalid result');
     }
 
-    return result.tokens.map((token, index) => ({
+    return tokens.map((token, i) => ({
       token: getAddress(token),
-      balance: new BigNumber(result.balances[index]),
+      balance: new BigNumber(balances[i].toString(10)),
     }));
   }
 
@@ -96,27 +86,27 @@ export class Vault {
       }),
     });
 
-    const result: JoinPoolResult = await query.methods
-      .queryJoin(args.poolId, args.sender, args.recipient, [
-        args.request.assets,
-        args.request.maxAmountsIn.map(bigNumberToUint256String),
-        args.request.userData,
-        args.request.fromInternalBalance,
-      ])
-      .call();
+    const simulationResult = await query.simulate.queryJoin([
+      args.poolId as Address,
+      args.sender as Address,
+      args.recipient as Address,
+      {
+        assets: args.request.assets as Address[],
+        maxAmountsIn: args.request.maxAmountsIn.map(bigNumberToBigInt),
+        userData: args.request.userData,
+        fromInternalBalance: args.request.fromInternalBalance,
+      },
+    ]);
+    const [bptOut, amountsIn] = simulationResult.result;
 
-    if (
-      !result ||
-      !Array.isArray(result.amountsIn) ||
-      result.amountsIn.length !== request.request.assets.length
-    ) {
+    if (!amountsIn || !amountsIn.length || amountsIn.length !== request.request.assets.length) {
       throw new Error('Invalid result');
     }
 
-    const usedInput = result.amountsIn.map(amount => new BigNumber(amount));
+    const usedInput = amountsIn.map(amount => new BigNumber(amount.toString(10)));
 
     return {
-      liquidity: new BigNumber(result.bptOut),
+      liquidity: new BigNumber(bptOut.toString(10)),
       usedInput,
       unusedInput: request.request.maxAmountsIn.map((amount, index) =>
         amount.minus(usedInput[index])
@@ -143,32 +133,33 @@ export class Vault {
       args.recipient,
       JSON.stringify({
         assets: args.request.assets,
-        minAmountsOut: args.request.minAmountsOut.map(bigNumberToUint256String),
+        minAmountsOut: args.request.minAmountsOut.map(amount => amount.toString(10)),
         userData: args.request.userData,
         toInternalBalance: args.request.toInternalBalance,
       })
     );
 
-    const result: ExitPoolResult = await query.methods
-      .queryExit(args.poolId, args.sender, args.recipient, [
-        args.request.assets,
-        args.request.minAmountsOut.map(bigNumberToUint256String),
-        args.request.userData,
-        args.request.toInternalBalance,
-      ])
-      .call();
+    const simulationResult = await query.simulate.queryExit([
+      args.poolId as Address,
+      args.sender as Address,
+      args.recipient as Address,
+      {
+        assets: args.request.assets as Address[],
+        minAmountsOut: args.request.minAmountsOut.map(bigNumberToBigInt),
+        userData: args.request.userData,
+        toInternalBalance: args.request.toInternalBalance,
+      },
+    ]);
 
-    if (
-      !result ||
-      !Array.isArray(result.amountsOut) ||
-      result.amountsOut.length !== request.request.assets.length
-    ) {
+    if (!simulationResult?.result || simulationResult.result.length !== 2) {
       throw new Error('Invalid result');
     }
 
+    const [bptIn, amountsOut] = simulationResult.result;
+
     return {
-      liquidity: new BigNumber(result.bptIn),
-      outputs: result.amountsOut.map(amount => new BigNumber(amount)),
+      liquidity: new BigNumber(bptIn.toString(10)),
+      outputs: amountsOut.map(amount => new BigNumber(amount.toString(10))),
     };
   }
 
@@ -179,23 +170,25 @@ export class Vault {
       funds: queryFunds,
     };
 
-    const result: Array<string> | undefined = await vault.methods
-      .queryBatchSwap(
-        args.kind,
-        args.swaps.map(s => ({
-          ...s,
-          amount: bigNumberToUint256String(s.amount),
-        })),
-        args.assets,
-        args.funds
-      )
-      .call();
+    const simulationResult = await vault.simulate.queryBatchSwap([
+      args.kind,
+      args.swaps.map(s => ({
+        poolId: s.poolId as Address,
+        assetInIndex: BigInt(s.assetInIndex),
+        assetOutIndex: BigInt(s.assetOutIndex),
+        amount: bigNumberToBigInt(s.amount),
+        userData: s.userData as Address,
+      })),
+      args.assets as Address[],
+      args.funds,
+    ]);
+    const result = simulationResult.result;
 
-    if (!result || !Array.isArray(result) || result.length !== request.assets.length) {
+    if (result.length !== request.assets.length) {
       throw new Error('Invalid result');
     }
 
-    return result.map(value => new BigNumber(value));
+    return result.map(value => new BigNumber(value.toString(10)));
   }
 
   async getJoinPoolZap(request: JoinPoolZapRequest): Promise<ZapStep> {
@@ -374,16 +367,12 @@ export class Vault {
     };
   }
 
-  protected getWeb3 = createFactory(() => getWeb3Instance(this.chain));
-
   protected getVaultContract = createFactory(async () => {
-    const web3 = await this.getWeb3();
-    return new web3.eth.Contract(viemToWeb3Abi(BalancerVaultAbi), this.config.vaultAddress);
+    return fetchContract(this.config.vaultAddress, BalancerVaultAbi, this.chain.id);
   });
 
   protected getQueryContract = createFactory(async () => {
-    const web3 = await this.getWeb3();
-    return new web3.eth.Contract(viemToWeb3Abi(BalancerQueriesAbi), this.config.queryAddress);
+    return fetchContract(this.config.queryAddress, BalancerQueriesAbi, this.chain.id);
   });
 
   protected getVaultFunctionAbi = createCachedFactory(
@@ -392,7 +381,7 @@ export class Vault {
       if (!methodAbi) {
         throw new Error(`Function "${name}" not found in vault ABI`);
       }
-      return methodAbi as AbiItem;
+      return methodAbi;
     },
     (name: string) => name
   );
@@ -400,80 +389,95 @@ export class Vault {
   protected encodeJoinPool(args: JoinPoolArgs): string {
     const methodAbi = this.getVaultFunctionAbi('joinPool');
 
-    return abiCoder.encodeFunctionCall(methodAbi, [
-      args.poolId,
-      args.sender,
-      args.recipient,
-      [
-        args.request.assets,
-        args.request.maxAmountsIn.map(bigNumberToUint256String),
-        args.request.userData,
-        args.request.fromInternalBalance,
+    return encodeFunctionData({
+      abi: [methodAbi],
+      args: [
+        args.poolId as Address,
+        args.sender as Address,
+        args.recipient as Address,
+        {
+          assets: args.request.assets as Address[],
+          maxAmountsIn: args.request.maxAmountsIn.map(bigNumberToBigInt),
+          userData: args.request.userData,
+          fromInternalBalance: args.request.fromInternalBalance,
+        },
       ],
-    ] satisfies AbiEncodeArgs);
+    });
   }
 
   protected encodeExitPool(args: ExitPoolArgs): string {
     const methodAbi = this.getVaultFunctionAbi('exitPool');
 
-    return abiCoder.encodeFunctionCall(methodAbi, [
-      args.poolId,
-      args.sender,
-      args.recipient,
-      [
-        args.request.assets,
-        args.request.minAmountsOut.map(bigNumberToUint256String),
-        args.request.userData,
-        args.request.toInternalBalance,
+    return encodeFunctionData({
+      abi: [methodAbi],
+      args: [
+        args.poolId as Address,
+        args.sender as Address,
+        args.recipient as Address,
+        {
+          assets: args.request.assets as Address[],
+          minAmountsOut: args.request.minAmountsOut.map(bigNumberToBigInt),
+          userData: args.request.userData,
+          toInternalBalance: args.request.toInternalBalance,
+        },
       ],
-    ] satisfies AbiEncodeArgs);
+    });
   }
 
   protected encodeSwap(args: SwapArgs): string {
     const methodAbi = this.getVaultFunctionAbi('swap');
 
-    return abiCoder.encodeFunctionCall(methodAbi, [
-      [
-        args.singleSwap.poolId,
-        args.singleSwap.kind,
-        args.singleSwap.assetIn,
-        args.singleSwap.assetOut,
-        bigNumberToUint256String(args.singleSwap.amount),
-        args.singleSwap.userData,
+    return encodeFunctionData({
+      abi: [methodAbi],
+      args: [
+        {
+          poolId: args.singleSwap.poolId as Address,
+          kind: args.singleSwap.kind,
+          assetIn: args.singleSwap.assetIn as Address,
+          assetOut: args.singleSwap.assetOut as Address,
+          amount: bigNumberToBigInt(args.singleSwap.amount),
+          userData: args.singleSwap.userData as Address,
+        },
+        {
+          sender: args.funds.sender as Address,
+          fromInternalBalance: args.funds.fromInternalBalance,
+          recipient: args.funds.recipient as Address,
+          toInternalBalance: args.funds.toInternalBalance,
+        },
+        bigNumberToBigInt(args.limit),
+        BigInt(args.deadline),
       ],
-      [
-        args.funds.sender,
-        args.funds.fromInternalBalance,
-        args.funds.recipient,
-        args.funds.toInternalBalance,
-      ],
-      bigNumberToUint256String(args.limit),
-      args.deadline,
-    ] satisfies AbiEncodeArgs);
+    });
   }
 
   protected encodeBatchSwap(args: BatchSwapArgs): string {
     const methodAbi = this.getVaultFunctionAbi('batchSwap');
 
-    return abiCoder.encodeFunctionCall(methodAbi, [
-      args.kind,
-      args.swaps.map(swap => [
-        swap.poolId,
-        swap.assetInIndex,
-        swap.assetOutIndex,
-        bigNumberToUint256String(swap.amount),
-        swap.userData,
-      ]),
-      args.assets,
-      [
-        args.funds.sender,
-        args.funds.fromInternalBalance,
-        args.funds.recipient,
-        args.funds.toInternalBalance,
+    return encodeFunctionData({
+      abi: [methodAbi],
+      args: [
+        args.kind,
+        args.swaps.map(
+          swap =>
+            ({
+              poolId: swap.poolId as Address,
+              assetInIndex: BigInt(swap.assetInIndex),
+              assetOutIndex: BigInt(swap.assetOutIndex),
+              amount: bigNumberToBigInt(swap.amount),
+              userData: swap.userData as Address,
+            } as const)
+        ),
+        args.assets as Address[],
+        {
+          sender: args.funds.sender as Address,
+          fromInternalBalance: args.funds.fromInternalBalance,
+          recipient: args.funds.recipient as Address,
+          toInternalBalance: args.funds.toInternalBalance,
+        } as const,
+        args.limits.map(bigNumberToBigInt),
+        BigInt(args.deadline),
       ],
-      args.limits.map(bigNumberToInt256String),
-      args.deadline,
-    ] satisfies AbiEncodeArgs);
+    });
   }
 
   protected checkToken(pool: PoolConfig, token: string, label: string = 'token') {

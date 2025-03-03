@@ -1,5 +1,4 @@
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi';
-import type Web3 from 'web3';
 import {
   isGovVaultSingle,
   type VaultGov,
@@ -11,7 +10,6 @@ import type { ChainEntity } from '../../entities/chain';
 import { BigNumber } from 'bignumber.js';
 import type { BoostPromoEntity } from '../../entities/promo';
 import { chunk, partition, pick } from 'lodash-es';
-
 import type {
   BoostBalance,
   BoostBalanceContractData,
@@ -31,18 +29,15 @@ import {
   selectGovVaultBalanceTokenEntity,
   selectGovVaultRewardsTokenEntity,
 } from '../../selectors/balance';
-import {
-  makeBatchRequest,
-  viemToWeb3Abi,
-  type Web3Call,
-  type Web3CallMethod,
-} from '../../../../helpers/web3';
 import { selectTokenByAddress } from '../../selectors/tokens';
 import { BIG_ZERO, fromWeiString, isFiniteBigNumber } from '../../../../helpers/big-number';
 import { isDefined } from '../../utils/array-utils';
+import { rpcClientManager } from '../rpc-contract/rpc-manager';
+import { fetchContract } from '../rpc-contract/viem-contract';
+import type { Address } from 'abitype';
 
 export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
-  constructor(protected web3: Web3, protected chain: T) {}
+  constructor(protected chain: T) {}
 
   public async fetchAllBalances(
     state: BeefyState,
@@ -51,12 +46,13 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     boosts: BoostPromoEntity[],
     walletAddress: string
   ): Promise<FetchAllBalancesResult> {
-    const mc = new this.web3.eth.Contract(
-      viemToWeb3Abi(BeefyV2AppMulticallAbi),
-      this.chain.appMulticallContractAddress
+    const client = rpcClientManager.getBatchClient(this.chain.id);
+    const appMulticallContract = fetchContract(
+      this.chain.appMulticallContractAddress,
+      BeefyV2AppMulticallAbi,
+      this.chain.id
     );
 
-    // if we send too much in a single call, we get "execution reversed"
     const CHUNK_SIZE = featureFlag_getBalanceApiChunkSize();
 
     const nativeTokens: TokenNative[] = [];
@@ -77,46 +73,35 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     const boostAndGovVaultV1Batches = chunk([...boostsV1, ...govVaultsV1], CHUNK_SIZE);
     const boostAndGovVaultsV2Batches = chunk([...boostsV2, ...govVaultsV2], CHUNK_SIZE);
 
-    const requestsForBatch: Web3Call[] = [];
+    const boostAndGovVaultV1Requests = boostAndGovVaultV1Batches.map(batch =>
+      appMulticallContract.read.getBoostOrGovBalance([
+        batch.map(boostOrGovVault => boostOrGovVault.contractAddress as Address),
+        walletAddress as Address,
+      ])
+    );
 
-    boostAndGovVaultV1Batches.forEach(boostAndGovVaultBatch => {
-      requestsForBatch.push({
-        method: mc.methods.getBoostOrGovBalance(
-          boostAndGovVaultBatch.map(boostOrGovVault => boostOrGovVault.contractAddress),
-          walletAddress
-        ).call,
-        params: { from: '0x0000000000000000000000000000000000000000' },
-      });
-    });
+    const boostAndGovVaultV2Requests = boostAndGovVaultsV2Batches.map(batch =>
+      appMulticallContract.read.getGovVaultMultiBalance([
+        batch.map(gov => gov.contractAddress as Address),
+        walletAddress as Address,
+      ])
+    );
 
-    boostAndGovVaultsV2Batches.forEach(govVaultsV2Batch => {
-      requestsForBatch.push({
-        method: mc.methods.getGovVaultMultiBalance(
-          govVaultsV2Batch.map(gov => gov.contractAddress),
-          walletAddress
-        ).call,
-        params: { from: '0x0000000000000000000000000000000000000000' },
-      });
-    });
+    const erc20TokensRequests = erc20TokensBatches.map(batch =>
+      appMulticallContract.read.getTokenBalances([
+        batch.map(token => token.address as Address),
+        walletAddress as Address,
+      ])
+    );
 
-    erc20TokensBatches.forEach(erc20TokenBatch => {
-      requestsForBatch.push({
-        method: mc.methods.getTokenBalances(
-          erc20TokenBatch.map(token => token.address),
-          walletAddress
-        ).call,
-        params: { from: '0x0000000000000000000000000000000000000000' },
-      });
-    });
+    const nativeTokenRequest = client.getBalance({ address: walletAddress as Address });
 
-    requestsForBatch.push({
-      method: this.web3.eth.getBalance as unknown as Web3CallMethod,
-      params: walletAddress,
-    });
-
-    const results = await makeBatchRequest(this.web3, requestsForBatch);
-
-    // now reasign results
+    const [govV1Results, govV2Results, erc20Results, nativeResults] = await Promise.all([
+      Promise.all(boostAndGovVaultV1Requests),
+      Promise.all(boostAndGovVaultV2Requests),
+      Promise.all(erc20TokensRequests),
+      nativeTokenRequest,
+    ]);
 
     const res: FetchAllBalancesResult = {
       tokens: [],
@@ -124,87 +109,78 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
       boosts: [],
     };
 
-    let resultsIdx = 0;
-
-    {
-      let boostIndex = 0;
-      for (let j = 0; j < boostAndGovVaultV1Batches.length; j++) {
-        const batchResults = results[resultsIdx] as unknown[];
-        for (let i = 0; i < batchResults.length; i++) {
-          const boostOrGovVaultRes = batchResults[i];
-          if (boostIndex < boostsV1.length) {
-            res.boosts.push(
-              this.boostFormatter(
-                state,
-                boostOrGovVaultRes as BoostBalanceContractData,
-                boostsV1[boostIndex]
-              )
-            );
-          } else {
-            res.govVaults.push(
-              this.govVaultFormatter(
-                state,
-                boostOrGovVaultRes as GovVaultSingleBalanceContractData,
-                govVaultsV1[boostIndex - boostsV1.length]
-              )
-            );
-          }
-          boostIndex++;
+    let boostOrGovV1ArrayIndex = 0; // We need to track if we are on a boost or a gov vault
+    boostAndGovVaultV1Batches.forEach((batch, batchIndex) => {
+      batch.forEach((_, index) => {
+        // Boosts and gov vaults are part of the same array
+        if (boostOrGovV1ArrayIndex < boostsV1.length) {
+          res.boosts.push(
+            this.boostFormatter(
+              state,
+              govV1Results[batchIndex][index],
+              boostsV1[boostOrGovV1ArrayIndex]
+            )
+          );
+        } else {
+          res.govVaults.push(
+            this.govVaultFormatter(
+              state,
+              govV1Results[batchIndex][index],
+              govVaultsV1[boostOrGovV1ArrayIndex - boostsV1.length]
+            )
+          );
         }
-        resultsIdx++;
-      }
-    }
+        boostOrGovV1ArrayIndex++;
+      });
+    });
 
-    {
-      let boostIndex = 0;
-      for (let j = 0; j < boostAndGovVaultsV2Batches.length; j++) {
-        const batchResults = results[resultsIdx] as GovVaultMultiBalanceContractData[];
-        for (let i = 0; i < batchResults.length; i++) {
-          const boostOrGovVaultRes = batchResults[i];
-          if (boostIndex < boostsV2.length) {
-            res.boosts.push(this.boostV2Formatter(state, boostOrGovVaultRes, boostsV2[boostIndex]));
-          } else {
-            res.govVaults.push(
-              this.govVaultV2Formatter(
-                state,
-                boostOrGovVaultRes,
-                govVaultsV2[boostIndex - boostsV2.length]
-              )
-            );
-          }
-          boostIndex++;
+    let boostOrGovV2ArrayIndex = 0;
+    boostAndGovVaultsV2Batches.forEach((batch, batchIndex) => {
+      batch.forEach((_, index) => {
+        if (boostOrGovV2ArrayIndex < boostsV2.length) {
+          res.boosts.push(
+            this.boostV2Formatter(
+              state,
+              govV2Results[batchIndex][index],
+              boostsV2[boostOrGovV2ArrayIndex]
+            )
+          );
+        } else {
+          res.govVaults.push(
+            this.govVaultV2Formatter(
+              state,
+              govV2Results[batchIndex][index],
+              govVaultsV2[boostOrGovV2ArrayIndex - boostsV2.length]
+            )
+          );
         }
-        resultsIdx++;
-      }
-    }
+        boostOrGovV2ArrayIndex++;
+      });
+    });
 
-    for (const erc20TokenBatch of erc20TokensBatches) {
-      const batchRes = (results[resultsIdx] as string[]).map((vaultRes, elemidx) =>
-        this.erc20TokenFormatter(vaultRes, erc20TokenBatch[elemidx])
-      );
-      res.tokens = res.tokens.concat(batchRes);
-      resultsIdx++;
-    }
+    erc20TokensBatches.forEach((batch, batchIndex) => {
+      batch.forEach((token, index) => {
+        res.tokens.push(this.erc20TokenFormatter(erc20Results[batchIndex][index], token));
+      });
+    });
 
-    for (const nativeToken of nativeTokens) {
-      const formatted = this.nativeTokenFormatter(results[resultsIdx] as string, nativeToken);
-      res.tokens.push(formatted);
-      resultsIdx++;
+    if (nativeTokens.length > 0) {
+      res.tokens.push(this.nativeTokenFormatter(nativeResults, nativeTokens[0]));
     }
 
     return res;
   }
 
-  protected erc20TokenFormatter(result: string, token: TokenEntity): TokenBalance {
-    const rawAmount = new BigNumber(result);
+  protected erc20TokenFormatter(result: bigint, token: TokenEntity): TokenBalance {
+    const rawAmount = new BigNumber(result.toString(10));
     return {
       tokenAddress: token.address,
       amount: rawAmount.shiftedBy(-token.decimals),
     };
   }
 
-  protected nativeTokenFormatter(result: string, token: TokenNative): TokenBalance {
-    const rawAmount = new BigNumber(result);
+  protected nativeTokenFormatter(result: bigint, token: TokenNative): TokenBalance {
+    const rawAmount = new BigNumber(result.toString(10));
     return {
       tokenAddress: token.address,
       amount: rawAmount.shiftedBy(-token.decimals),
@@ -218,8 +194,8 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   ): GovVaultBalance {
     const balanceToken = selectGovVaultBalanceTokenEntity(state, govVault.id);
     const rewardsToken = selectGovVaultRewardsTokenEntity(state, govVault.id);
-    const balance = fromWeiString(result.balance, balanceToken.decimals);
-    const rewards = fromWeiString(result.rewards, rewardsToken.decimals);
+    const balance = fromWeiString(result.balance.toString(10), balanceToken.decimals);
+    const rewards = fromWeiString(result.rewards.toString(10), rewardsToken.decimals);
     return {
       vaultId: govVault.id,
       balance: balance,
@@ -245,10 +221,10 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     const balanceToken = selectBoostBalanceTokenEntity(state, boost.id);
     const earnedToken = selectTokenByAddress(state, firstReward.chainId, firstReward.address);
-    const balance = fromWeiString(result.balance, balanceToken.decimals);
+    const balance = fromWeiString(result.balance.toString(10), balanceToken.decimals);
     const reward = {
       token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
-      amount: fromWeiString(result.rewards, earnedToken.decimals),
+      amount: fromWeiString(result.rewards.toString(10), earnedToken.decimals),
       index: 0,
     };
 
@@ -280,7 +256,10 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
           return undefined;
         }
 
-        const amount = fromWeiString(result.rewards[index] || '0', rewardToken.decimals);
+        const amount = fromWeiString(
+          result.rewards[index]?.toString(10) || '0',
+          rewardToken.decimals
+        );
 
         return {
           token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
@@ -292,7 +271,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     return {
       vaultId: govVault.id,
-      balance: fromWeiString(result.balance, balanceToken.decimals),
+      balance: fromWeiString(result.balance.toString(10), balanceToken.decimals),
       rewards,
     };
   }
@@ -315,7 +294,10 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
           return undefined;
         }
 
-        const amount = fromWeiString(result.rewards[index] || '0', rewardToken.decimals);
+        const amount = fromWeiString(
+          result.rewards[index]?.toString(10) || '0',
+          rewardToken.decimals
+        );
 
         return {
           token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
@@ -343,7 +325,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     return {
       boostId: boost.id,
-      balance: fromWeiString(result.balance, balanceToken.decimals),
+      balance: fromWeiString(result.balance.toString(10), balanceToken.decimals),
       rewards,
     };
   }

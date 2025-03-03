@@ -8,12 +8,15 @@ export const styles = (theme: Theme) => ({
   },
   toggleDrawer: {
     background: 'transparent',
-    padding: '3px',
+    padding: '0',
     border: 0,
     boxShadow: 'none',
     color: theme.palette.text.light,
     fontSize: '30px',
     position: 'relative' as const,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   toggleDrawerIcon: {
     display: 'block',

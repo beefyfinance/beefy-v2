@@ -1,5 +1,10 @@
 import type { BigNumber } from 'bignumber.js';
-import { BIG_ZERO, fromWei, toWeiFromTokenAmount } from '../../../../../helpers/big-number';
+import {
+  BIG_ZERO,
+  bigNumberToBigInt,
+  fromWei,
+  toWeiFromTokenAmount,
+} from '../../../../../helpers/big-number';
 import type { BeefyStateFn } from '../../../../../redux-types';
 import {
   isTokenEqual,
@@ -40,7 +45,6 @@ import { selectChainById } from '../../../selectors/chains';
 import { BeefyCLMPool } from '../../beefy/beefy-clm-pool';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults';
 import type { ZapStep } from '../zap/types';
-import abiCoder from 'web3-eth-abi';
 import { getInsertIndex } from '../helpers/zap';
 import { slipAllBy } from '../helpers/amounts';
 import { selectTransactSlippage } from '../../../selectors/transact';
@@ -49,6 +53,7 @@ import {
   QuoteCowcentratedNoSingleSideError,
   QuoteCowcentratedNotCalmError,
 } from '../strategies/error';
+import { encodeFunctionData, type Abi } from 'viem';
 
 export class CowcentratedVaultType implements ICowcentratedVaultType {
   public readonly id = 'cowcentrated';
@@ -381,30 +386,37 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     return {
       target: clmAddress,
       value: '0',
-      data: abiCoder.encodeFunctionCall(
-        {
-          type: 'function',
-          name: 'deposit',
-          constant: false,
-          payable: false,
-          inputs: [
-            {
-              name: '_amount0',
-              type: 'uint256',
-            },
-            {
-              name: '_amount1',
-              type: 'uint256',
-            },
-            {
-              name: '_minShares',
-              type: 'uint256',
-            },
-          ],
-          outputs: [],
-        },
-        [amountA.toString(10), amountB.toString(10), minShares.toString(10)]
-      ),
+      data: encodeFunctionData({
+        abi: [
+          {
+            type: 'function',
+            name: 'deposit',
+            constant: false,
+            payable: false,
+            inputs: [
+              {
+                name: '_amount0',
+                type: 'uint256',
+              },
+              {
+                name: '_amount1',
+                type: 'uint256',
+              },
+              {
+                name: '_minShares',
+                type: 'uint256',
+              },
+            ],
+            stateMutability: 'nonpayable',
+            outputs: [],
+          },
+        ] as const satisfies Abi,
+        args: [
+          bigNumberToBigInt(amountA),
+          bigNumberToBigInt(amountB),
+          bigNumberToBigInt(minShares),
+        ],
+      }),
       tokens: [
         {
           token: tokenA,
@@ -429,27 +441,29 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
       return {
         target: clmAddress,
         value: '0',
-        data: abiCoder.encodeFunctionCall(
-          {
-            constant: false,
-            inputs: [
-              {
-                name: '_minAmount0',
-                type: 'uint256',
-              },
-              {
-                name: '_minAmount1',
-                type: 'uint256',
-              },
-            ],
-            name: 'withdrawAll',
-            outputs: [],
-            payable: false,
-            stateMutability: 'nonpayable',
-            type: 'function',
-          },
-          [minAmountAWei.toString(10), minAmountBWei.toString(10)]
-        ),
+        data: encodeFunctionData({
+          abi: [
+            {
+              constant: false,
+              inputs: [
+                {
+                  name: '_minAmount0',
+                  type: 'uint256',
+                },
+                {
+                  name: '_minAmount1',
+                  type: 'uint256',
+                },
+              ],
+              name: 'withdrawAll',
+              outputs: [],
+              payable: false,
+              stateMutability: 'nonpayable',
+              type: 'function',
+            },
+          ] as const satisfies Abi,
+          args: [bigNumberToBigInt(minAmountAWei), bigNumberToBigInt(minAmountBWei)],
+        }),
         tokens: [
           {
             token: clmAddress,
@@ -462,31 +476,37 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     return {
       target: clmAddress,
       value: '0',
-      data: abiCoder.encodeFunctionCall(
-        {
-          constant: false,
-          inputs: [
-            {
-              name: '_shares',
-              type: 'uint256',
-            },
-            {
-              name: '_minAmount0',
-              type: 'uint256',
-            },
-            {
-              name: '_minAmount1',
-              type: 'uint256',
-            },
-          ],
-          name: 'withdraw',
-          outputs: [],
-          payable: false,
-          stateMutability: 'nonpayable',
-          type: 'function',
-        },
-        [amountToWithdrawWei.toString(10), minAmountAWei.toString(10), minAmountBWei.toString(10)]
-      ),
+      data: encodeFunctionData({
+        abi: [
+          {
+            constant: false,
+            inputs: [
+              {
+                name: '_shares',
+                type: 'uint256',
+              },
+              {
+                name: '_minAmount0',
+                type: 'uint256',
+              },
+              {
+                name: '_minAmount1',
+                type: 'uint256',
+              },
+            ],
+            name: 'withdraw',
+            outputs: [],
+            payable: false,
+            stateMutability: 'nonpayable',
+            type: 'function',
+          },
+        ] as const satisfies Abi,
+        args: [
+          bigNumberToBigInt(amountToWithdrawWei),
+          bigNumberToBigInt(minAmountAWei),
+          bigNumberToBigInt(minAmountBWei),
+        ],
+      }),
       tokens: [
         {
           token: clmAddress,

@@ -33,7 +33,13 @@ import {
   onlyOneToken,
 } from '../../helpers/options';
 import { TransactMode } from '../../../../reducers/wallet/transact-types';
-import { BIG_ZERO, fromWei, toWei, toWeiString } from '../../../../../../helpers/big-number';
+import {
+  BIG_ZERO,
+  bigNumberToBigInt,
+  fromWei,
+  toWei,
+  toWeiString,
+} from '../../../../../../helpers/big-number';
 import { selectChainById } from '../../../../selectors/chains';
 import { selectVaultStrategyAddress } from '../../../../selectors/vaults';
 import { BeefyCLMPool } from '../../../beefy/beefy-clm-pool';
@@ -56,7 +62,6 @@ import { Balances } from '../../helpers/Balances';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens';
 import { fetchZapAggregatorSwap } from '../../zap/swap';
 import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap';
-import abiCoder from 'web3-eth-abi';
 import { mergeTokenAmounts, slipAllBy, slipBy } from '../../helpers/amounts';
 import { walletActions } from '../../../../actions/wallet-actions';
 import { BigNumber } from 'bignumber.js';
@@ -64,6 +69,7 @@ import { isCowcentratedVault, type VaultCowcentrated } from '../../../../entitie
 import { type ICowcentratedVaultType, isCowcentratedVaultType } from '../../vaults/IVaultType';
 import type { CowcentratedStrategyConfig } from '../strategy-configs';
 import { QuoteCowcentratedNoSingleSideError, QuoteCowcentratedNotCalmError } from '../error';
+import { encodeFunctionData, type Abi } from 'viem';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -890,30 +896,37 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     return {
       target: clmAddress,
       value: '0',
-      data: abiCoder.encodeFunctionCall(
-        {
-          type: 'function',
-          name: 'deposit',
-          constant: false,
-          payable: false,
-          inputs: [
-            {
-              name: '_amount0',
-              type: 'uint256',
-            },
-            {
-              name: '_amount1',
-              type: 'uint256',
-            },
-            {
-              name: '_minShares',
-              type: 'uint256',
-            },
-          ],
-          outputs: [],
-        },
-        [amountA.toString(10), amountB.toString(10), liquidity.toString(10)]
-      ),
+      data: encodeFunctionData({
+        abi: [
+          {
+            type: 'function',
+            name: 'deposit',
+            constant: false,
+            payable: false,
+            inputs: [
+              {
+                name: '_amount0',
+                type: 'uint256',
+              },
+              {
+                name: '_amount1',
+                type: 'uint256',
+              },
+              {
+                name: '_minShares',
+                type: 'uint256',
+              },
+            ],
+            stateMutability: 'nonpayable',
+            outputs: [],
+          },
+        ] as const satisfies Abi,
+        args: [
+          bigNumberToBigInt(amountA),
+          bigNumberToBigInt(amountB),
+          bigNumberToBigInt(liquidity),
+        ],
+      }),
       tokens: [
         {
           token: tokenA,

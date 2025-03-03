@@ -1,23 +1,15 @@
-import type {
-  PairData as BasePairData,
-  PairDataResponse as BasePairDataResponse,
-} from './SolidlyPool';
+import type { PairData as BasePairData } from './SolidlyPool';
 import { SolidlyPool } from './SolidlyPool';
 import type { SwapFeeParams } from '../types';
 import { BigNumber } from 'bignumber.js';
-import type { ShapeWithLabel } from 'eth-multicall';
-import { createContract } from '../../../../../helpers/web3';
-import type { AbiItem } from 'web3-utils';
-
-type PairDataResponse = BasePairDataResponse & {
-  swapFee: string;
-};
+import { fetchContract } from '../../rpc-contract/viem-contract';
+import type { Abi } from 'abitype';
 
 type PairData = BasePairData & {
   swapFee: BigNumber;
 };
 
-const ConePairAbi: AbiItem[] = [
+const ConePairAbi = [
   {
     inputs: [],
     name: 'swapFee',
@@ -31,31 +23,18 @@ const ConePairAbi: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const satisfies Abi;
 
 export class ConeSolidlyPool extends SolidlyPool {
   protected pairData: PairData | undefined = undefined;
 
-  protected getPairDataRequest(): ShapeWithLabel[] {
-    const contract = createContract(ConePairAbi, this.address);
-    return [
-      {
-        ...super.getPairDataRequest()[0],
-        swapFee: contract.methods.swapFee(),
-      },
-    ];
-  }
-
-  protected consumePairDataResponse(untypedResult: unknown[]) {
-    const result = (untypedResult as PairDataResponse[])[0];
-
-    super.consumePairDataResponse(untypedResult);
-
-    if (!this.pairData) {
-      throw new Error('Pair data is not loaded');
-    }
-
-    this.pairData.swapFee = new BigNumber(result.swapFee);
+  protected async updatePairData() {
+    const contract = fetchContract(this.address, ConePairAbi, this.chain.id);
+    const [_, feeRatio] = await Promise.all([super.updatePairData(), contract.read.swapFee()]);
+    this.pairData = {
+      ...this.pairData!,
+      swapFee: new BigNumber(feeRatio.toString(10)),
+    };
   }
 
   protected getSwapFeeParams(): SwapFeeParams {

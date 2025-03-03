@@ -1,9 +1,7 @@
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi';
-import type Web3 from 'web3';
 import type { VaultGov, VaultStandard } from '../../entities/vault';
 import type { ChainEntity } from '../../entities/chain';
 import { BigNumber } from 'bignumber.js';
-import type { AllValuesAsString } from '../../utils/types-utils';
 import type { BoostPromoEntity } from '../../entities/promo';
 import { chunk } from 'lodash-es';
 import type { TokenEntity, TokenErc20 } from '../../entities/token';
@@ -13,10 +11,12 @@ import { selectTokenByAddress } from '../../selectors/tokens';
 import { featureFlag_getAllowanceApiChunkSize } from '../../utils/feature-flags';
 import type { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
-import { viemToWeb3Abi } from '../../../../helpers/web3';
+import { fetchContract } from '../rpc-contract/viem-contract';
+import type { Address } from 'abitype';
+import { BIG_ZERO } from '../../../../helpers/big-number';
 
 export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
-  constructor(protected web3: Web3, protected chain: T) {}
+  constructor(protected chain: T) {}
 
   public async fetchAllAllowances(
     state: BeefyState,
@@ -25,9 +25,10 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
     boosts: BoostPromoEntity[],
     walletAddress: string
   ): Promise<FetchAllAllowanceResult> {
-    const mc = new this.web3.eth.Contract(
-      viemToWeb3Abi(BeefyV2AppMulticallAbi),
-      this.chain.appMulticallContractAddress
+    const appMulticallContract = fetchContract(
+      this.chain.appMulticallContractAddress,
+      BeefyV2AppMulticallAbi,
+      this.chain.id
     );
 
     // first, build a list of tokens and spenders we want info on
@@ -72,43 +73,40 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
     const allowanceCalls = Object.entries(allowanceCallsByToken);
     const callBatches = chunk(allowanceCalls, CHUNK_SIZE);
 
-    const allowancePromises = callBatches.map(callBatch =>
-      mc.methods
-        .getAllowancesFlat(
-          callBatch.map(([tokenAddress, _]) => tokenAddress),
-          callBatch.map(([_, spendersCalls]) => Array.from(spendersCalls.spenders)),
-          walletAddress
-        )
-        .call()
+    const allowanceResults = await Promise.all(
+      callBatches.map(callBatch => {
+        return appMulticallContract.read.getAllowancesFlat([
+          callBatch.map(([tokenAddress, _]) => tokenAddress as Address),
+          callBatch.map(([_, spendersCalls]) => Array.from(spendersCalls.spenders) as Address[]),
+          walletAddress as Address,
+        ]);
+      })
     );
 
-    const results = (await Promise.all([...allowancePromises])) as AllValuesAsString<string[][]>;
-
-    // now reasign results
+    // now reassign results
     const res: FetchAllAllowanceResult = [];
 
-    let resultsIdx = 0;
-
-    for (const callBatch of callBatches) {
-      const batchResults = results[resultsIdx];
+    callBatches.forEach((callBatch, index) => {
+      const batchResults = allowanceResults[index];
       let resIdx = 0;
       for (const spendersCalls of callBatch.map(c => c[1])) {
         for (const spenderAddress of Array.from(spendersCalls.spenders)) {
           const allowance = batchResults[resIdx];
-          if (allowance !== '0') {
-            res.push({
-              tokenAddress: spendersCalls.tokenAddress,
-              spenderAddress,
-              allowance: new BigNumber(allowance).shiftedBy(
-                -tokensByAddress[spendersCalls.tokenAddress.toLowerCase()].decimals
-              ),
-            });
-          }
+          res.push({
+            tokenAddress: spendersCalls.tokenAddress,
+            spenderAddress,
+            allowance:
+              allowance === 0n
+                ? BIG_ZERO
+                : new BigNumber(allowance.toString(10)).shiftedBy(
+                    -tokensByAddress[spendersCalls.tokenAddress.toLowerCase()].decimals
+                  ),
+          });
+
           resIdx++;
         }
       }
-      resultsIdx++;
-    }
+    });
 
     return res;
   }
@@ -119,9 +117,10 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
     walletAddress: string,
     spenderAddress: string
   ) {
-    const mc = new this.web3.eth.Contract(
-      viemToWeb3Abi(BeefyV2AppMulticallAbi),
-      this.chain.appMulticallContractAddress
+    const appMulticallContract = fetchContract(
+      this.chain.appMulticallContractAddress,
+      BeefyV2AppMulticallAbi,
+      this.chain.id
     );
 
     // first, build a list of tokens and spenders we want info on
@@ -158,42 +157,39 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
     const allowanceCalls = Object.entries(allowanceCallsByToken);
     const callBatches = chunk(allowanceCalls, CHUNK_SIZE);
 
-    const allowancePromises = callBatches.map(callBatch =>
-      mc.methods
-        .getAllowancesFlat(
-          callBatch.map(([tokenAddress, _]) => tokenAddress),
-          callBatch.map(([_, spendersCalls]) => Array.from(spendersCalls.spenders)),
-          walletAddress
-        )
-        .call()
+    const allowanceResults = await Promise.all(
+      callBatches.map(callBatch =>
+        appMulticallContract.read.getAllowancesFlat([
+          callBatch.map(([tokenAddress, _]) => tokenAddress as Address),
+          callBatch.map(([_, spendersCalls]) => Array.from(spendersCalls.spenders) as Address[]),
+          walletAddress as Address,
+        ])
+      )
     );
-
-    const results = (await Promise.all([...allowancePromises])) as AllValuesAsString<string[][]>;
 
     const res: FetchAllAllowanceResult = [];
 
-    let resultsIdx = 0;
-
-    for (const callBatch of callBatches) {
-      const batchResults = results[resultsIdx];
+    callBatches.forEach((callBatch, index) => {
+      const batchResults = allowanceResults[index];
       let resIdx = 0;
       for (const spendersCalls of callBatch.map(c => c[1])) {
         for (const spenderAddress of Array.from(spendersCalls.spenders)) {
           const allowance = batchResults[resIdx];
-          if (allowance !== '0') {
-            res.push({
-              tokenAddress: spendersCalls.tokenAddress,
-              spenderAddress,
-              allowance: new BigNumber(allowance).shiftedBy(
-                -tokensByAddress[spendersCalls.tokenAddress.toLowerCase()].decimals
-              ),
-            });
-          }
+          res.push({
+            tokenAddress: spendersCalls.tokenAddress,
+            spenderAddress,
+            allowance:
+              allowance === 0n
+                ? BIG_ZERO
+                : new BigNumber(allowance.toString(10)).shiftedBy(
+                    -tokensByAddress[spendersCalls.tokenAddress.toLowerCase()].decimals
+                  ),
+          });
+
           resIdx++;
         }
       }
-      resultsIdx++;
-    }
+    });
 
     return res;
   }

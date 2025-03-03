@@ -8,6 +8,8 @@ import { ItemInner } from './ItemInner';
 import { SearchInput } from '../SearchInput';
 import { useTranslation } from 'react-i18next';
 import { Scrollable } from '../Scrollable';
+import clsx from 'clsx';
+import sortBy from 'lodash-es/sortBy';
 
 const useStyles = makeStyles(styles);
 
@@ -16,6 +18,8 @@ export type SearchableListProps = {
   onSelect: (value: string) => void;
   ItemInnerComponent?: FC<ItemInnerProps>;
   EndComponent?: FC<ItemInnerProps>;
+  size?: 'sm' | 'md';
+  hideShadows?: boolean;
 };
 
 export const SearchableList = memo<SearchableListProps>(function SearchableList({
@@ -23,6 +27,8 @@ export const SearchableList = memo<SearchableListProps>(function SearchableList(
   onSelect,
   ItemInnerComponent = ItemInner,
   EndComponent,
+  size = 'md',
+  hideShadows,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -44,14 +50,14 @@ export const SearchableList = memo<SearchableListProps>(function SearchableList(
   );
 
   return (
-    <div className={classes.searchableList}>
-      <div className={classes.search}>
+    <div className={clsx(classes.searchableList, { [classes.searchableListSM]: size === 'sm' })}>
+      <div className={clsx(classes.search, { [classes.searchSM]: size === 'sm' })}>
         <SearchInput value={search} onChange={setSearch} />
       </div>
-      <Scrollable>
-        <div className={classes.list}>
+      <Scrollable hideShadows={hideShadows}>
+        <div className={clsx(classes.list, { [classes.listSM]: size === 'sm' })}>
           {filteredOptions.length ? (
-            filteredOptions.map(value => (
+            sortBy(filteredOptions, id => id).map(value => (
               <Item
                 key={value}
                 value={value}

@@ -36,22 +36,25 @@ import {
 } from '../transact-types';
 import { TransactMode } from '../../../reducers/wallet/transact-types';
 import { first } from 'lodash-es';
-import { BIG_ZERO, fromWei, toWei, toWeiString } from '../../../../../helpers/big-number';
+import {
+  BIG_ZERO,
+  bigNumberToBigInt,
+  fromWei,
+  toWei,
+  toWeiString,
+} from '../../../../../helpers/big-number';
 import { selectFeesByVaultId } from '../../../selectors/fees';
-import { selectChainById } from '../../../selectors/chains';
-import { getWeb3Instance } from '../../instances';
 import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi';
 import { BigNumber } from 'bignumber.js';
-import abiCoder from 'web3-eth-abi';
 import { getInsertIndex, getTokenAddress } from '../helpers/zap';
 import { walletActions } from '../../../actions/wallet-actions';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../reducers/wallet/stepper';
-import { MultiCall } from 'eth-multicall';
 import { getVaultWithdrawnFromContract, getVaultWithdrawnFromState } from '../helpers/vault';
 import { selectWalletAddressOrThrow } from '../../../selectors/wallet';
 import type { ZapStep } from '../zap/types';
-import type { AbiItem } from 'web3-utils';
+import { fetchContract } from '../../rpc-contract/viem-contract';
+import { encodeFunctionData } from 'viem';
 
 export class StandardVaultType implements IStandardVaultType {
   public readonly id = 'standard';
@@ -96,14 +99,13 @@ export class StandardVaultType implements IStandardVaultType {
     }
 
     const state = this.getState();
-    const chain = selectChainById(state, this.vault.chainId);
-    const web3 = await getWeb3Instance(chain);
-    const vaultContract = new web3.eth.Contract(
-      StandardVaultAbi as unknown as AbiItem[],
-      this.vault.contractAddress
+    const vaultContract = fetchContract(
+      this.vault.contractAddress,
+      StandardVaultAbi,
+      this.vault.chainId
     );
-    const ppfsRaw = await vaultContract.methods.getPricePerFullShare().call();
-    const ppfs = new BigNumber(ppfsRaw);
+    const ppfsRaw = await vaultContract.read.getPricePerFullShare();
+    const ppfs = new BigNumber(ppfsRaw.toString(10));
     const depositFee = this.calculateDepositFee(input, state);
     const inputWeiAfterFee = toWei(input.amount.minus(depositFee), input.token.decimals);
     const expectedShares = inputWeiAfterFee
@@ -142,18 +144,19 @@ export class StandardVaultType implements IStandardVaultType {
       return {
         target: vaultAddress,
         value: '0',
-        data: abiCoder.encodeFunctionCall(
-          {
-            constant: false,
-            inputs: [],
-            name: 'depositAll',
-            outputs: [],
-            payable: false,
-            stateMutability: 'nonpayable',
-            type: 'function',
-          },
-          []
-        ),
+        data: encodeFunctionData({
+          abi: [
+            {
+              constant: false,
+              inputs: [],
+              name: 'depositAll',
+              outputs: [],
+              payable: false,
+              stateMutability: 'nonpayable',
+              type: 'function',
+            },
+          ],
+        }),
         tokens: [
           {
             token: getTokenAddress(depositToken),
@@ -166,24 +169,26 @@ export class StandardVaultType implements IStandardVaultType {
     return {
       target: vaultAddress,
       value: '0',
-      data: abiCoder.encodeFunctionCall(
-        {
-          constant: false,
-          inputs: [
-            {
-              internalType: 'uint256',
-              name: '_amount',
-              type: 'uint256',
-            },
-          ],
-          name: 'deposit',
-          outputs: [],
-          payable: false,
-          stateMutability: 'nonpayable',
-          type: 'function',
-        },
-        [toWeiString(depositAmount, depositToken.decimals)]
-      ),
+      data: encodeFunctionData({
+        abi: [
+          {
+            constant: false,
+            inputs: [
+              {
+                internalType: 'uint256',
+                name: '_amount',
+                type: 'uint256',
+              },
+            ],
+            name: 'deposit',
+            outputs: [],
+            payable: false,
+            stateMutability: 'nonpayable',
+            type: 'function',
+          },
+        ],
+        args: [BigInt(toWeiString(depositAmount, depositToken.decimals))],
+      }),
       tokens: [
         {
           token: getTokenAddress(depositToken),
@@ -201,18 +206,19 @@ export class StandardVaultType implements IStandardVaultType {
     return {
       target: vaultAddress,
       value: toWeiString(depositAmount, depositToken.decimals),
-      data: abiCoder.encodeFunctionCall(
-        {
-          constant: false,
-          inputs: [],
-          name: 'depositBNB',
-          outputs: [],
-          payable: true,
-          stateMutability: 'payable',
-          type: 'function',
-        },
-        []
-      ),
+      data: encodeFunctionData({
+        abi: [
+          {
+            constant: false,
+            inputs: [],
+            name: 'depositBNB',
+            outputs: [],
+            payable: true,
+            stateMutability: 'payable',
+            type: 'function',
+          },
+        ],
+      }),
       tokens: [
         {
           token: getTokenAddress(depositToken),
@@ -373,17 +379,12 @@ export class StandardVaultType implements IStandardVaultType {
     }
 
     const state = this.getState();
-    const chain = selectChainById(state, this.vault.chainId);
-    const web3 = await getWeb3Instance(chain);
-    const multicall = new MultiCall(web3, chain.multicallAddress);
     const address = selectWalletAddressOrThrow(state);
     const { sharesToWithdrawWei, withdrawnAmountAfterFeeWei } = await getVaultWithdrawnFromContract(
       input,
       this.vault,
       state,
-      address,
-      web3,
-      multicall
+      address
     );
 
     const inputs = [
@@ -430,18 +431,19 @@ export class StandardVaultType implements IStandardVaultType {
       return {
         target: vaultAddress,
         value: '0',
-        data: abiCoder.encodeFunctionCall(
-          {
-            constant: false,
-            inputs: [],
-            name: 'withdrawAllBNB',
-            outputs: [],
-            payable: false,
-            stateMutability: 'nonpayable',
-            type: 'function',
-          },
-          []
-        ),
+        data: encodeFunctionData({
+          abi: [
+            {
+              constant: false,
+              inputs: [],
+              name: 'withdrawAllBNB',
+              outputs: [],
+              payable: false,
+              stateMutability: 'nonpayable',
+              type: 'function',
+            },
+          ],
+        }),
         tokens: [
           {
             token: getTokenAddress(shareToken),
@@ -454,24 +456,26 @@ export class StandardVaultType implements IStandardVaultType {
     return {
       target: vaultAddress,
       value: '0',
-      data: abiCoder.encodeFunctionCall(
-        {
-          constant: false,
-          inputs: [
-            {
-              internalType: 'uint256',
-              name: '_shares',
-              type: 'uint256',
-            },
-          ],
-          name: 'withdrawBNB',
-          outputs: [],
-          payable: false,
-          stateMutability: 'nonpayable',
-          type: 'function',
-        },
-        [sharesToWithdrawWei.toString(10)]
-      ),
+      data: encodeFunctionData({
+        abi: [
+          {
+            constant: false,
+            inputs: [
+              {
+                internalType: 'uint256',
+                name: '_shares',
+                type: 'uint256',
+              },
+            ],
+            name: 'withdrawBNB',
+            outputs: [],
+            payable: false,
+            stateMutability: 'nonpayable',
+            type: 'function',
+          },
+        ],
+        args: [bigNumberToBigInt(sharesToWithdrawWei)],
+      }),
       tokens: [
         {
           token: getTokenAddress(shareToken),
@@ -491,18 +495,19 @@ export class StandardVaultType implements IStandardVaultType {
       return {
         target: vaultAddress,
         value: '0',
-        data: abiCoder.encodeFunctionCall(
-          {
-            constant: false,
-            inputs: [],
-            name: 'withdrawAll',
-            outputs: [],
-            payable: false,
-            stateMutability: 'nonpayable',
-            type: 'function',
-          },
-          []
-        ),
+        data: encodeFunctionData({
+          abi: [
+            {
+              constant: false,
+              inputs: [],
+              name: 'withdrawAll',
+              outputs: [],
+              payable: false,
+              stateMutability: 'nonpayable',
+              type: 'function',
+            },
+          ],
+        }),
         tokens: [
           {
             token: getTokenAddress(shareToken),
@@ -515,24 +520,26 @@ export class StandardVaultType implements IStandardVaultType {
     return {
       target: vaultAddress,
       value: '0',
-      data: abiCoder.encodeFunctionCall(
-        {
-          constant: false,
-          inputs: [
-            {
-              internalType: 'uint256',
-              name: '_shares',
-              type: 'uint256',
-            },
-          ],
-          name: 'withdraw',
-          outputs: [],
-          payable: false,
-          stateMutability: 'nonpayable',
-          type: 'function',
-        },
-        [sharesToWithdrawWei.toString(10)]
-      ),
+      data: encodeFunctionData({
+        abi: [
+          {
+            constant: false,
+            inputs: [
+              {
+                internalType: 'uint256',
+                name: '_shares',
+                type: 'uint256',
+              },
+            ],
+            name: 'withdraw',
+            outputs: [],
+            payable: false,
+            stateMutability: 'nonpayable',
+            type: 'function',
+          },
+        ] as const,
+        args: [bigNumberToBigInt(sharesToWithdrawWei)],
+      }),
       tokens: [
         {
           token: getTokenAddress(shareToken),

@@ -2,6 +2,7 @@ import { type BigNumber } from 'bignumber.js';
 import type { TokenEntity } from '../../../../entities/token';
 import type { Hex } from 'viem/types/misc';
 import type { ExitPoolUserData, JoinPoolUserData } from '../common/types';
+import type { Address } from 'abitype';
 
 export type VaultConfig = {
   /** address */
@@ -54,11 +55,11 @@ type BatchSwapStep = {
 
 export type FundManagement = {
   /** address */
-  sender: string;
+  sender: Address;
   /** bool */
   fromInternalBalance: boolean;
   /** address */
-  recipient: string;
+  recipient: Address;
   /** bool */
   toInternalBalance: boolean;
 };
@@ -155,8 +156,6 @@ export type ExitPoolResult = {
   /** uint256[] */
   amountsOut: string[];
 };
-
-export type AbiEncodeArgs = string | number | boolean | Array<AbiEncodeArgs>;
 
 export type QueryBatchSwapRequest = Omit<QueryBatchSwapArgs, 'funds'>;
 export type QueryBatchSwapResponse = BigNumber[];

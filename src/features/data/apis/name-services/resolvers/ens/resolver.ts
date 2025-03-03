@@ -1,11 +1,10 @@
-import type Web3 from 'web3';
-import type { AbiItem } from 'web3-utils';
 import type { ChainId } from '../../../../entities/chain';
 import { ZERO_ADDRESS } from '../../../../../../helpers/addresses';
 import { normalizeAddress, normalizeAndHashDomain } from '../../utils';
-import type { Address } from 'viem';
+import type { Abi, Address, Hash } from 'viem';
 import type { AllChainsFromTldToChain } from '../../types';
 import type { tldToChain } from './tlds';
+import { fetchContract } from '../../../rpc-contract/viem-contract';
 
 const registryAddresses: Record<AllChainsFromTldToChain<typeof tldToChain>, Address> = {
   ethereum: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
@@ -23,7 +22,7 @@ const registryAbi = [
     stateMutability: 'view',
     type: 'function',
   },
-] satisfies AbiItem[];
+] as const satisfies Abi;
 
 const resolverAbi = [
   {
@@ -33,7 +32,7 @@ const resolverAbi = [
     stateMutability: 'view',
     type: 'function',
   },
-] satisfies AbiItem[];
+] as const satisfies Abi;
 
 const reverseRecordsAbi = [
   {
@@ -43,21 +42,17 @@ const reverseRecordsAbi = [
     stateMutability: 'view',
     type: 'function',
   },
-] satisfies AbiItem[];
+] as const satisfies Abi;
 
-async function fetchResolverAddress(
-  hash: string,
-  chainId: ChainId,
-  web3: Web3
-): Promise<Address | undefined> {
+async function fetchResolverAddress(hash: Hash, chainId: ChainId): Promise<Address | undefined> {
   const registryAddress = registryAddresses[chainId];
   if (!registryAddress) {
     return undefined;
   }
 
-  const contract = new web3.eth.Contract(registryAbi, registryAddress);
+  const contract = fetchContract(registryAddress, registryAbi, chainId);
   try {
-    const resolved = await contract.methods.resolver(hash).call();
+    const resolved = await contract.read.resolver([hash]);
     return normalizeAddress(resolved);
   } catch {
     return undefined;
@@ -69,22 +64,21 @@ async function fetchResolverAddress(
  */
 export async function domainToAddress(
   domain: string,
-  chainId: ChainId,
-  web3: Web3
+  chainId: ChainId
 ): Promise<Address | undefined> {
   const hash = normalizeAndHashDomain(domain);
   if (!hash) {
     return undefined;
   }
 
-  const resolverAddress = await fetchResolverAddress(hash, chainId, web3);
+  const resolverAddress = await fetchResolverAddress(hash, chainId);
   if (!resolverAddress || resolverAddress === ZERO_ADDRESS) {
     return undefined;
   }
 
-  const resolverContract = new web3.eth.Contract(resolverAbi, resolverAddress);
+  const resolverContract = fetchContract(resolverAddress, resolverAbi, chainId);
   try {
-    const resolved = await resolverContract.methods.addr(hash).call();
+    const resolved = await resolverContract.read.addr([hash]);
     return normalizeAddress(resolved);
   } catch {
     return undefined;
@@ -95,18 +89,17 @@ export async function domainToAddress(
  * Lookup the (first) domain name for an address
  */
 export async function addressToDomain(
-  address: string,
-  chainId: ChainId,
-  web3: Web3
+  address: Address,
+  chainId: ChainId
 ): Promise<string | undefined> {
   const reverseRecordsAddress = reverseRecordsAddresses[chainId];
   if (!reverseRecordsAddress) {
     return undefined;
   }
 
-  const contract = new web3.eth.Contract(reverseRecordsAbi, reverseRecordsAddress);
+  const contract = fetchContract(reverseRecordsAddress, reverseRecordsAbi, chainId);
   try {
-    const domains = await contract.methods.getNames([address]).call();
+    const domains = await contract.read.getNames([[address]]);
     return domains?.[0] || undefined;
   } catch {
     return undefined;

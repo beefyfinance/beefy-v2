@@ -3,11 +3,10 @@ import type {
   FactoryDataResponse as BaseFactoryDataResponse,
 } from './UniswapV2Pool';
 import { UniswapV2Pool } from './UniswapV2Pool';
-import type { ShapeWithLabel } from 'eth-multicall';
-import { createContract } from '../../../../../helpers/web3';
 import { BigNumber } from 'bignumber.js';
 import type { SwapFeeParams } from '../types';
-import type { AbiItem } from 'web3-utils';
+import type { Abi } from 'abitype';
+import { fetchContract } from '../../rpc-contract/viem-contract';
 
 export type FactoryDataResponse = BaseFactoryDataResponse & {
   feeRate: string;
@@ -17,7 +16,7 @@ export type FactoryData = BaseFactoryData & {
   feeRate: BigNumber;
 };
 
-const NetswapFactoryAbi: AbiItem[] = [
+const NetswapFactoryAbi = [
   {
     type: 'function',
     stateMutability: 'view',
@@ -31,31 +30,18 @@ const NetswapFactoryAbi: AbiItem[] = [
     name: 'feeRate',
     inputs: [],
   },
-];
+] as const satisfies Abi;
 
 export class NetswapUniswapV2Pool extends UniswapV2Pool {
   protected factoryData: FactoryData | undefined = undefined;
 
-  protected getFactoryDataRequest(): ShapeWithLabel[] {
-    const contract = createContract(NetswapFactoryAbi, this.amm.factoryAddress);
-    return [
-      {
-        ...super.getFactoryDataRequest()[0],
-        feeRate: contract.methods.feeRate(),
-      },
-    ];
-  }
-
-  protected consumeFactoryDataResponse(untypedResult: unknown[]) {
-    const result = (untypedResult as FactoryDataResponse[])[0];
-
-    super.consumeFactoryDataResponse(untypedResult);
-
+  protected async updateFactoryData() {
+    const contract = fetchContract(this.amm.factoryAddress, NetswapFactoryAbi, this.chain.id);
+    const [_, feeRate] = await Promise.all([super.updateFactoryData(), contract.read.feeRate()]);
     if (!this.factoryData) {
       throw new Error('Factory data is not loaded');
     }
-
-    this.factoryData.feeRate = new BigNumber(result.feeRate);
+    this.factoryData.feeRate = new BigNumber(feeRate.toString(10));
   }
 
   protected getSwapFeeParams(): SwapFeeParams {

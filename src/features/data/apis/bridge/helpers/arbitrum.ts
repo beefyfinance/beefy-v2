@@ -1,21 +1,13 @@
 import { BigNumber } from 'bignumber.js';
 import type { ChainEntity } from '../../../entities/chain';
-import { getWeb3Instance } from '../../instances';
 import { ArbitrumNodeInterfaceAbi } from '../../../../../config/abi/ArbitrumNodeInterfaceAbi';
-import { viemToWeb3Abi } from '../../../../../helpers/web3';
+import { fetchContract } from '../../rpc-contract/viem-contract';
 
 const fallbackSequencerGasPerByte = new BigNumber('5000');
 const gasContractAddress = '0x00000000000000000000000000000000000000C8';
 const wethAddress = '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1';
 const transferCallData =
   '0xa9059cbb00000000000000000000000082af49447d8a07e3bd95bd0d56f35241523fbab10000000000000000000000000000000000000000000000000000000000000001'; // transfer(wethAddress, 1)
-
-type GasEstimateComponentsResponse = {
-  baseFee: string;
-  gasEstimate: string;
-  gasEstimateForL1: string;
-  l1BaseFeeEstimate: string;
-};
 
 /**
  * You pay for the sequencer by using more gas on L2
@@ -42,17 +34,15 @@ export async function estimateArbitrumSequencerGas(
   const realTotalBytes = callBytes + overheadBytes;
 
   try {
-    const web3 = await getWeb3Instance(chain);
-    const gasContract = new web3.eth.Contract(
-      viemToWeb3Abi(ArbitrumNodeInterfaceAbi),
-      gasContractAddress
+    const gasContractX = fetchContract(gasContractAddress, ArbitrumNodeInterfaceAbi, chain.id);
+
+    const gasEstimationResult = await gasContractX.simulate.gasEstimateComponents(
+      [wethAddress, false, transferCallData],
+      { account: wethAddress }
     );
-    const result: GasEstimateComponentsResponse = await gasContract.methods
-      .gasEstimateComponents(wethAddress, false, transferCallData)
-      .call({
-        from: wethAddress,
-      });
-    const l1Gas = new BigNumber(result.gasEstimateForL1);
+    const result = gasEstimationResult.result[1]; // gasEstimateForL1
+
+    const l1Gas = new BigNumber(result.toString(10));
 
     return l1Gas.multipliedBy(realTotalBytes).dividedToIntegerBy(dummyTotalBytes);
   } catch (e) {

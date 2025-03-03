@@ -41,19 +41,36 @@ const ActiveChain = ({ chainId }: { chainId: ChainEntity['id'] | null }) => {
 
 export const NetworkStatus = memo(function NetworkStatus({
   anchorEl,
+  isOpen: isUserOpen,
+  isOtherOpen,
+  onOpen,
+  onClose,
 }: {
   anchorEl: RefObject<HTMLElement>;
+  isOpen: boolean;
+  isOtherOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
 }) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const open = useAppSelector(state => state.ui.dataLoader.statusIndicator.open);
+  const isAutoOpen = useAppSelector(state => state.ui.dataLoader.statusIndicator.open);
+  const open = isUserOpen || (isAutoOpen && !isOtherOpen);
   const chainsById = useAppSelector(state => state.entities.chains.byId);
-  const handleClose = useCallback(() => dispatch(dataLoaderActions.closeIndicator()), [dispatch]);
-  const handleToggle = useCallback(
-    () => dispatch(open ? dataLoaderActions.closeIndicator() : dataLoaderActions.openIndicator()),
-    [dispatch, open]
-  );
+  const handleClose = useCallback(() => {
+    if (isAutoOpen) {
+      dispatch(dataLoaderActions.closeIndicator());
+    }
+    onClose();
+  }, [dispatch, onClose, isAutoOpen]);
+  const handleToggle = useCallback(() => {
+    if (open) {
+      handleClose();
+    } else {
+      onOpen();
+    }
+  }, [open, handleClose, onOpen]);
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const currentChainId = useAppSelector(selectCurrentChainId);
 

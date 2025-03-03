@@ -1,54 +1,52 @@
 // To run: yarn vault ethereum <0x12312312>
-import { MultiCall, ShapeWithLabel } from 'eth-multicall';
-import { addressBook } from 'blockchain-addressbook';
-import Web3 from 'web3';
 import { promises as fs } from 'fs';
 
-import { chainRpcs } from './common/config';
 import { StandardVaultAbi } from '../src/config/abi/StandardVaultAbi';
-import stratABI from '../src/config/abi/strategy.json';
+
+import { StratAbi } from '../src/config/abi/StrategyAbi';
 import { ERC20Abi } from '../src/config/abi/ERC20Abi';
-import type { AbiItem } from 'web3-utils';
 import { sortVaultKeys } from './common/vault-fields';
+import { getViemClient } from './common/viem';
+import { Abi, getContract } from 'viem';
 
 let vaultsFile = './src/config/vault/$chain.json';
 
 async function vaultData(chain, vaultAddress, id) {
-  const web3 = new Web3(chainRpcs[chain]);
-  const abi = [...(StandardVaultAbi as unknown as AbiItem[]), ...stratABI];
-  const vaultContract = new web3.eth.Contract(abi as AbiItem[], vaultAddress);
-  const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
-  let calls: ShapeWithLabel[] = [
-    {
-      want: vaultContract.methods.want(),
-      mooToken: vaultContract.methods.symbol(),
-    },
-  ];
-  let [results] = await multicall.all([calls]);
-  const params = results[0];
+  const viemClient = getViemClient(chain);
+  const abi = [...StandardVaultAbi, ...StratAbi] as const satisfies Abi;
 
-  const tokenContract = new web3.eth.Contract(ERC20Abi as unknown as AbiItem[], params.want);
-  calls = [
-    {
-      token: tokenContract.methods.symbol(),
-      tokenDecimals: tokenContract.methods.decimals(),
-    },
-  ];
-  [results] = await multicall.all([calls]);
-  const token = results[0];
+  const vaultContract = getContract({
+    address: vaultAddress,
+    abi,
+    client: viemClient,
+  });
+  const [want, mooToken] = await Promise.all([
+    vaultContract.read.want(),
+    vaultContract.read.symbol(),
+  ]);
 
-  let provider = params.mooToken.startsWith('mooCurveLend')
+  const tokenContract = getContract({
+    address: want,
+    abi: ERC20Abi,
+    client: viemClient,
+  });
+  const [token, tokenDecimals] = await Promise.all([
+    tokenContract.read.symbol(),
+    tokenContract.read.decimals(),
+  ]);
+
+  let provider = mooToken.startsWith('mooCurveLend')
     ? 'curve-lend'
-    : params.mooToken.startsWith('mooCurve') || params.mooToken.startsWith('mooConvex')
+    : mooToken.startsWith('mooCurve') || mooToken.startsWith('mooConvex')
     ? 'curve'
-    : params.mooToken.startsWith('mooCake')
+    : mooToken.startsWith('mooCake')
     ? 'pancakeswap'
-    : params.mooToken.startsWith('mooThena')
+    : mooToken.startsWith('mooThena')
     ? 'thena'
-    : params.mooToken.startsWith('mooSwapX')
+    : mooToken.startsWith('mooSwapX')
     ? 'swapx'
     : id.substring(0, id.indexOf('-'));
-  let platform = params.mooToken.startsWith('mooConvex')
+  let platform = mooToken.startsWith('mooConvex')
     ? 'convex'
     : provider === 'swapx'
     ? 'ichi'
@@ -69,8 +67,9 @@ async function vaultData(chain, vaultAddress, id) {
       ? ['sonic-swapx']
       : [];
 
+  let tokenToUse = token;
   if (provider === 'pendle') {
-    token.token = params.mooToken.slice(params.mooToken.indexOf('-') + 1);
+    tokenToUse = mooToken.slice(mooToken.indexOf('-') + 1);
   }
   let oracleId = id;
   if (id.startsWith('pendle-eqb')) oracleId = id.replace('pendle-eqb', 'pendle');
@@ -91,8 +90,10 @@ async function vaultData(chain, vaultAddress, id) {
   const points = provider === 'pearl' ? ['pearl'] : chain === 'sonic' ? ['sonic-points'] : [];
 
   return {
-    ...params,
-    ...token,
+    mooToken,
+    want,
+    token: tokenToUse,
+    tokenDecimals,
     provider,
     platform,
     migrationIds,

@@ -4,6 +4,8 @@ import type { VaultEntity } from '../../entities/vault';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { MigrationConfig } from '../../reducers/wallet/migration';
 import type { BeefyState } from '../../../../redux-types';
+import type { Address, Chain } from 'viem';
+import type { GasPricing } from '../gas-prices';
 
 export interface IMigrationApi {
   getMigrator(id: MigrationConfig['id']): Promise<Migrator>;
@@ -45,6 +47,11 @@ export type CommonMigrationExecuteAsyncThunk = AsyncThunk<
   MigratorExecuteProps,
   { state: BeefyState }
 >;
+
+export type MigratorUnstakeProps = {
+  account: Address;
+  chain: Chain | undefined;
+} & GasPricing;
 
 export interface Migrator {
   update: CommonMigrationUpdateAsyncThunk;

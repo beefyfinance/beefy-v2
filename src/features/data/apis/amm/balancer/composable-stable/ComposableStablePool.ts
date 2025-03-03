@@ -10,7 +10,6 @@ import {
   type QueryJoinPoolResponse,
   type VaultConfig,
 } from '../vault/types';
-import { viemToWeb3Abi } from '../../../../../../helpers/web3';
 import { BalancerComposableStablePoolAbi } from '../../../../../../config/abi/BalancerComposableStablePoolAbi';
 import { FixedPoint } from '../common/FixedPoint';
 import {
@@ -24,6 +23,7 @@ import {
   poolJoinKindToComposableStablePoolJoinKind,
 } from './join-exit-kinds';
 import { SingleAllPool } from '../common/SingleAllPool';
+import { fetchContract } from '../../../rpc-contract/viem-contract';
 
 const SUPPORTED_FEATURES = new Set<BalancerFeature>([
   BalancerFeature.AddRemoveAll,
@@ -131,15 +131,11 @@ export class ComposableStablePool
    */
   protected async getScalingFactors() {
     const pool = await this.getPoolContract();
-    const factors: string[] = await pool.methods.getScalingFactors().call();
-    return factors.map(f => new BigNumber(f));
+    const factors = await pool.read.getScalingFactors();
+    return factors.map(f => new BigNumber(f.toString(10)));
   }
 
-  protected async getPoolContract() {
-    const web3 = await this.getWeb3();
-    return new web3.eth.Contract(
-      viemToWeb3Abi(BalancerComposableStablePoolAbi),
-      this.config.poolAddress
-    );
+  protected getPoolContract() {
+    return fetchContract(this.config.poolAddress, BalancerComposableStablePoolAbi, this.chain.id);
   }
 }

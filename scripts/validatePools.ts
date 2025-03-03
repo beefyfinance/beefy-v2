@@ -1,20 +1,17 @@
-import { MultiCall } from 'eth-multicall';
 import { addressBook } from 'blockchain-addressbook';
-import Web3 from 'web3';
 import BigNumber from 'bignumber.js';
 import { isEmpty, isValidChecksumAddress, maybeChecksumAddress, sleep } from './common/utils';
 import { getVaultsIntegrity } from './common/exclude';
 import {
   addressBookToAppId,
   chainIds,
-  chainRpcs,
   excludeChains,
   excludedChainIds,
   getPromosForChain,
   getVaultsForChain,
 } from './common/config';
 import { getStrategyIds } from './common/strategies';
-import strategyABI from '../src/config/abi/strategy.json';
+import { StratAbi } from '../src/config/abi/StrategyAbi';
 import { StandardVaultAbi } from '../src/config/abi/StandardVaultAbi';
 import platforms from '../src/config/platforms.json';
 import partners from '../src/config/promos/partners.json';
@@ -22,9 +19,10 @@ import campaigns from '../src/config/promos/campaigns.json';
 import pointProviders from '../src/config/points.json';
 import type { PlatformType, VaultConfig } from '../src/features/data/apis/config-types';
 import partition from 'lodash/partition';
-import type { AbiItem } from 'web3-utils';
 import i18keys from '../src/locales/en/main.json';
 import { fileExists } from './common/files';
+import { getViemClient } from './common/viem';
+import { Abi, Address, PublicClient, getContract } from 'viem';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
@@ -238,13 +236,13 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   let activePools = 0;
 
   // Populate some extra data.
-  const web3 = new Web3(chainRpcs[chainId]);
-  const poolsWithGovData = await populateGovData(chainId, govPools, web3);
-  const poolsWithVaultData = await populateVaultsData(chainId, pools, web3);
+  const viemClient = getViemClient(chainId);
+  const poolsWithGovData = await populateGovData(chainId, govPools, viemClient);
+  const poolsWithVaultData = await populateVaultsData(chainId, pools, viemClient);
   const poolsWithStrategyData = override(
-    await populateStrategyData(chainId, poolsWithVaultData, web3)
+    await populateStrategyData(chainId, poolsWithVaultData, viemClient)
   );
-  const clmsWithData = await populateCowcentratedData(chainId, pools, web3);
+  const clmsWithData = await populateCowcentratedData(chainId, pools, viemClient);
 
   poolsWithStrategyData.forEach(pool => {
     // Errors, should not proceed with build
@@ -817,36 +815,33 @@ type VaultConfigWithGovData = Omit<VaultConfig, 'type'> & {
 const populateGovData = async (
   chain,
   pools: VaultConfig[],
-  web3,
+  viemClient: PublicClient,
   retries = 5
 ): Promise<VaultConfigWithGovData[]> => {
   try {
-    const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
-
-    const calls = pools.map(pool => {
-      const vaultContract = new web3.eth.Contract(
-        StandardVaultAbi as unknown as AbiItem[],
-        pool.earnContractAddress
-      );
-      return {
-        owner: vaultContract.methods.owner(),
-      };
-    });
-
     try {
-      const [results] = await multicall.all([calls]);
+      const results = await Promise.all(
+        pools.map(pool => {
+          const vaultContract = getContract({
+            client: viemClient,
+            abi: StandardVaultAbi,
+            address: pool.earnContractAddress as Address,
+          });
+          return vaultContract.read.owner();
+        })
+      );
       return pools.map((pool, i) => {
         return {
           ...pool,
           type: pool.type || 'gov',
-          rewardPoolOwner: results[i].owner,
+          rewardPoolOwner: results[i],
         };
       });
     } catch (e) {
       if (retries > 0) {
         console.warn(`retrying populateGovData on ${chain} ${e.message}`);
         await sleep(1_000);
-        return populateGovData(chain, pools, web3, retries - 1);
+        return populateGovData(chain, pools, viemClient, retries - 1);
       }
       throw e;
     }
@@ -866,7 +861,7 @@ type VaultConfigWithCowcentratedData = ClmVaultConfig & {
 const populateCowcentratedData = async (
   chain: keyof typeof addressBook,
   pools: VaultConfig[],
-  web3: Web3,
+  viemClient: PublicClient,
   retries = 5
 ): Promise<VaultConfigWithCowcentratedData[]> => {
   try {
@@ -880,34 +875,40 @@ const populateCowcentratedData = async (
     if (!multicallAddress || !beefyOracleAddress) {
       throw new Error('Missing multicall or beefyOracle address');
     }
+    const beefyOracleSingle = getContract({
+      client: viemClient,
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: 'address',
+              name: '',
+              type: 'address',
+            },
+          ],
+          name: 'subOracle',
+          outputs: [
+            {
+              internalType: 'address',
+              name: 'oracle',
+              type: 'address',
+            },
+            {
+              internalType: 'bytes',
+              name: 'data',
+              type: 'bytes',
+            },
+          ],
+          stateMutability: 'view',
+          type: 'function',
+        },
+      ] as const satisfies Abi,
+      address: beefyOracleAddress as Address,
+    });
 
-    const multicall = new MultiCall(web3, multicallAddress);
-    const beefyOracle = new web3.eth.Contract(
-      [
-        {
-          inputs: [
-            {
-              internalType: 'address',
-              name: '',
-              type: 'address',
-            },
-          ],
-          name: 'subOracle',
-          outputs: [
-            {
-              internalType: 'address',
-              name: 'oracle',
-              type: 'address',
-            },
-            {
-              internalType: 'bytes',
-              name: 'data',
-              type: 'bytes',
-            },
-          ],
-          stateMutability: 'view',
-          type: 'function',
-        },
+    const beefyOracleDouble = getContract({
+      client: viemClient,
+      abi: [
         {
           inputs: [
             {
@@ -937,17 +938,20 @@ const populateCowcentratedData = async (
           stateMutability: 'view',
           type: 'function',
         },
-      ],
-      beefyOracleAddress
-    );
+      ] as const satisfies Abi,
+      address: beefyOracleAddress as Address,
+    });
+
     const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
     try {
       const tokenResults = (
-        await multicall.all([
-          clms.map(clm => {
-            const vaultContract = new web3.eth.Contract(
-              [
+        await Promise.all(
+          clms.map(async clm => {
+            const vaultContract = getContract({
+              address: clm.earnContractAddress as Address,
+              client: viemClient,
+              abi: [
                 {
                   inputs: [],
                   name: 'wants',
@@ -966,57 +970,69 @@ const populateCowcentratedData = async (
                   stateMutability: 'view',
                   type: 'function',
                 },
-              ],
-              clm.earnContractAddress
-            );
-            return {
-              wants: vaultContract.methods.wants(),
-            };
-          }),
-        ])
-      )
-        .flat()
-        .map(result => ({
-          token0: result.wants[0],
-          token1: result.wants[1],
-        }));
+              ] as const satisfies Abi,
+            });
+            return vaultContract.read.wants();
+          })
+        )
+      ).map(wantsResult => ({
+        token0: wantsResult[0],
+        token1: wantsResult[1],
+      }));
 
-      const oracleResults = (
-        await multicall.all([
-          tokenResults.map(result => ({
-            token0: beefyOracle.methods.subOracle(result.token0),
-            token1: beefyOracle.methods.subOracle(result.token1),
-            token0For0xZero: beefyOracle.methods.subOracle(ZERO_ADDRESS, result.token0),
-            token1For0xZero: beefyOracle.methods.subOracle(ZERO_ADDRESS, result.token1),
-          })),
-        ])
-      )
-        .flat()
+      const oracleResults = await Promise.all(
+        tokenResults.map(async result => {
+          return await Promise.all([
+            beefyOracleSingle.read
+              .subOracle([result.token0])
+              .catch(e => catchRevertErrorIntoUndefined(e)),
+            beefyOracleSingle.read
+              .subOracle([result.token1])
+              .catch(e => catchRevertErrorIntoUndefined(e)),
+            beefyOracleDouble.read
+              .subOracle([ZERO_ADDRESS, result.token0])
+              .catch(e => catchRevertErrorIntoUndefined(e)),
+            beefyOracleDouble.read
+              .subOracle([ZERO_ADDRESS, result.token1])
+              .catch(e => catchRevertErrorIntoUndefined(e)),
+          ]);
+        })
+      );
+
+      const oracles = oracleResults
         .map(result => ({
-          oracleForToken0:
+          token0: result[0],
+          token1: result[1],
+          token0For0xZero: result[2],
+          token1For0xZero: result[3],
+        }))
+        .map(result => ({
+          oracleForToken0: !!(
             (result.token0 && result.token0[0] && result.token0[0] !== ZERO_ADDRESS) ||
             (result.token0For0xZero &&
               result.token0For0xZero[0] &&
-              result.token0For0xZero[0] !== ZERO_ADDRESS),
-          oracleForToken1:
+              result.token0For0xZero[0] !== ZERO_ADDRESS)
+          ),
+          oracleForToken1: !!(
             (result.token1 && result.token1[0] && result.token1[0] !== ZERO_ADDRESS) ||
             (result.token1For0xZero &&
               result.token1For0xZero[0] &&
-              result.token1For0xZero[0] !== ZERO_ADDRESS),
+              result.token1For0xZero[0] !== ZERO_ADDRESS)
+          ),
         }));
 
       return clms.map((clm, i) => ({
         ...clm,
         token0: tokenResults[i].token0,
         token1: tokenResults[i].token1,
-        oracleForToken0: oracleResults[i].oracleForToken0,
-        oracleForToken1: oracleResults[i].oracleForToken1,
+        oracleForToken0: oracles[i].oracleForToken0,
+        oracleForToken1: oracles[i].oracleForToken1,
       }));
     } catch (e) {
       if (retries > 0) {
         console.warn(`retrying populateCowcentratedData ${e.message}`);
         await sleep(1_000);
-        return populateCowcentratedData(chain, pools, web3, retries - 1);
+        return populateCowcentratedData(chain, pools, viemClient, retries - 1);
       }
       throw e;
     }
@@ -1034,41 +1050,40 @@ type VaultConfigWithVaultData = Omit<VaultConfig, 'type'> & {
 const populateVaultsData = async (
   chain,
   pools: VaultConfig[],
-  web3,
+  viemClient: PublicClient,
   retries = 5
 ): Promise<VaultConfigWithVaultData[]> => {
   try {
-    const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
-
-    const calls = pools.map(pool => {
-      const vaultContract = new web3.eth.Contract(
-        StandardVaultAbi as unknown as AbiItem[],
-        pool.earnContractAddress
-      );
-      return {
-        strategy: vaultContract.methods.strategy(),
-        owner: vaultContract.methods.owner(),
-        totalSupply: vaultContract.methods.totalSupply(),
-      };
-    });
-
     try {
-      const [results] = await multicall.all([calls]);
+      const results = await Promise.all(
+        pools.map(async pool => {
+          const vaultContract = getContract({
+            client: viemClient,
+            abi: StandardVaultAbi,
+            address: pool.earnContractAddress as Address,
+          });
+          return await Promise.all([
+            vaultContract.read.strategy(),
+            vaultContract.read.owner().catch(e => catchRevertErrorIntoUndefined(e)),
+            vaultContract.read.totalSupply(),
+          ]);
+        })
+      );
 
       return pools.map((pool, i) => {
         return {
           ...pool,
           type: pool.type || 'standard',
-          strategy: results[i].strategy,
-          vaultOwner: results[i].owner,
-          totalSupply: results[i].totalSupply,
+          strategy: results[i][0],
+          vaultOwner: results[i][1],
+          totalSupply: results[i][2].toString(10),
         };
       });
     } catch (e) {
       if (retries > 0) {
         console.warn(`retrying populateVaultsData ${e.message}`);
         await sleep(1_000);
-        return populateVaultsData(chain, pools, web3, retries - 1);
+        return populateVaultsData(chain, pools, viemClient, retries - 1);
       }
       throw e;
     }
@@ -1087,40 +1102,46 @@ type VaultConfigWithStrategyData = VaultConfigWithVaultData & {
 const populateStrategyData = async (
   chain,
   pools: VaultConfigWithVaultData[],
-  web3,
+  viemClient: PublicClient,
   retries = 5
 ): Promise<VaultConfigWithStrategyData[]> => {
-  const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
-
-  const calls = pools.map(pool => {
-    const stratContract = new web3.eth.Contract(strategyABI, pool.strategy);
-    return {
-      keeper: stratContract.methods.keeper(),
-      beefyFeeRecipient: stratContract.methods.beefyFeeRecipient(),
-      beefyFeeConfig: stratContract.methods.beefyFeeConfig(),
-      owner: stratContract.methods.owner(),
-      harvestOnDeposit: stratContract.methods.harvestOnDeposit(),
-    };
-  });
-
   try {
-    const [results] = await multicall.all([calls]);
+    const results = await Promise.all(
+      pools.map(async pool => {
+        const stratContract = getContract({
+          client: viemClient,
+          abi: StratAbi,
+          address: pool.strategy as Address,
+        });
+        return Promise.all([
+          stratContract.read.keeper().catch(e => catchRevertErrorIntoUndefined(e)),
+          stratContract.read.beefyFeeRecipient().catch(e => catchRevertErrorIntoUndefined(e)),
+          stratContract.read.beefyFeeConfig().catch(e => catchRevertErrorIntoUndefined(e)),
+          stratContract.read.owner().catch(e => catchRevertErrorIntoUndefined(e)),
+          stratContract.read.harvestOnDeposit().catch(e => catchRevertErrorIntoUndefined(e)),
+        ]);
+      })
+    );
+
+    const mappedResults = results.map(res => ({
+      keeper: res[0],
+      beefyFeeRecipient: res[1],
+      beefyFeeConfig: res[2],
+      stratOwner: res[3],
+      harvestOnDeposit: res[4],
+    }));
 
     return pools.map((pool, i) => {
       return {
         ...pool,
-        keeper: results[i].keeper,
-        beefyFeeRecipient: results[i].beefyFeeRecipient,
-        beefyFeeConfig: results[i].beefyFeeConfig,
-        stratOwner: results[i].owner,
-        harvestOnDeposit: results[i].harvestOnDeposit,
+        ...mappedResults[i],
       };
     });
   } catch (e) {
     if (retries > 0) {
       console.warn(`retrying populateStrategyData ${e.message}`);
       await sleep(1_000);
-      return populateStrategyData(chain, pools, web3, retries - 1);
+      return populateStrategyData(chain, pools, viemClient, retries - 1);
     }
     throw e;
   }
@@ -1193,6 +1214,18 @@ async function validatePlatformTypes(): Promise<number> {
   );
 
   return exitCode;
+}
+
+function catchRevertErrorIntoUndefined(e) {
+  if (
+    e &&
+    e.shortMessage &&
+    typeof e.shortMessage === 'string' &&
+    e.shortMessage.endsWith('reverted.')
+  ) {
+    return undefined;
+  }
+  throw e;
 }
 
 const override = (pools: VaultConfigWithVaultData[]): VaultConfigWithVaultData[] => {

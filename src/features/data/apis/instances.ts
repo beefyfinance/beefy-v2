@@ -1,4 +1,3 @@
-import { sample } from 'lodash-es';
 import {
   createDependencyFactory,
   createDependencyFactoryWithCacheByChain,
@@ -10,12 +9,7 @@ import {
   featureFlag_disableKyber,
   featureFlag_disableOdos,
   featureFlag_disableOneInch,
-  featureFlag_getContractDataApiChunkSize,
 } from '../utils/feature-flags';
-import { createPublicClient, type PublicClient } from 'viem';
-import { buildViemChain } from './viem/chains';
-import { makeCustomFallbackTransport } from './viem/transports';
-import type { ChainEntity, ChainId } from '../entities/chain';
 
 export const getBeefyApi = createDependencyFactory(
   async ({ BeefyAPI }) => new BeefyAPI(),
@@ -105,68 +99,28 @@ export const getWalletConnectionApi = createDependencyInitializerFactory(
   () => import('./wallet/wallet-connection')
 );
 
-export const getWeb3Instance = createDependencyFactoryWithCacheByChain(
-  async (chain, { rateLimitWeb3Instance, createWeb3Instance, PQueue }) => {
-    // pick one RPC endpoint at random
-    const rpc = sample(chain.rpc);
-    if (!rpc) throw new Error(`No RPC endpoint found for chain ${chain.id}`);
-
-    const requestsPerSecond = 10; // may need to be configurable per rpc [ankr allows ~30 rps]
-    const queue = new PQueue({
-      concurrency: requestsPerSecond,
-      intervalCap: requestsPerSecond,
-      interval: 1000,
-      carryoverConcurrencyCount: true,
-      autoStart: true,
-    });
-
-    console.debug(`Instantiating rate-limited Web3 for chain ${chain.id} via ${rpc}`);
-    return rateLimitWeb3Instance(createWeb3Instance(rpc), queue);
-  },
-  async () => {
-    const [web3, PQueue] = await Promise.all([import('../../../helpers/web3'), import('p-queue')]);
-    return { ...web3, PQueue: PQueue.default };
-  }
-);
-
-export const getPublicClient = createDependencyFactoryWithCacheByChain(
-  async (chain): Promise<PublicClient> => {
-    return createPublicClient({
-      batch: {
-        multicall: {
-          batchSize: featureFlag_getContractDataApiChunkSize(chain.id),
-          wait: 100,
-        },
-      },
-      chain: buildViemChain(chain),
-      transport: makeCustomFallbackTransport(chain.rpc),
-    });
-  },
-  async () => undefined
-);
-
 export const getGasPricer = createDependencyFactoryWithCacheByChain(
   async (chain, { createGasPricer }) => createGasPricer(chain),
   () => import('./gas-prices')
 );
 
 export const getContractDataApi = createDependencyFactoryWithCacheByChain(
-  async (chain, { ContractDataAPI }) => new ContractDataAPI(await getWeb3Instance(chain), chain),
+  async (chain, { ContractDataAPI }) => new ContractDataAPI(chain),
   () => import('./contract-data')
 );
 
 export const getBalanceApi = createDependencyFactoryWithCacheByChain(
-  async (chain, { BalanceAPI }) => new BalanceAPI(await getWeb3Instance(chain), chain),
+  async (chain, { BalanceAPI }) => new BalanceAPI(chain),
   () => import('./balance')
 );
 
 export const getAllowanceApi = createDependencyFactoryWithCacheByChain(
-  async (chain, { AllowanceAPI }) => new AllowanceAPI(await getWeb3Instance(chain), chain),
+  async (chain, { AllowanceAPI }) => new AllowanceAPI(chain),
   () => import('./allowance')
 );
 
 export const getMintersApi = createDependencyFactoryWithCacheByChain(
-  async (chain, { MinterApi }) => new MinterApi(await getWeb3Instance(chain), chain),
+  async (chain, { MinterApi }) => new MinterApi(chain),
   () => import('./minter/minter')
 );
 
@@ -185,8 +139,7 @@ export const getOdosApi = createDependencyFactoryWithCacheByChain(
   () => import('./odos')
 );
 
-export const getNameServicesApi = createDependencyInitializerFactory(
-  async (chainIdToEntity: Record<ChainId, ChainEntity>, { NameServicesApi }) =>
-    new NameServicesApi(chainIdToEntity),
+export const getNameServicesApi = createDependencyFactory(
+  async ({ NameServicesApi }) => new NameServicesApi(),
   () => import('./name-services/name-services-api')
 );

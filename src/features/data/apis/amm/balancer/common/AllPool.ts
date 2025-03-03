@@ -12,10 +12,10 @@ import type {
 } from '../vault/types';
 import { BIG_ONE, BIG_ZERO, bigNumberToStringDeep } from '../../../../../../helpers/big-number';
 import type { ZapStep } from '../../../transact/zap/types';
-import type { Contract } from 'web3-eth-contract';
 import { type BigNumber } from 'bignumber.js';
 import { CommonPool } from './CommonPool';
 import { type ExitPoolUserData, type JoinPoolUserData, PoolExitKind, PoolJoinKind } from './types';
+import type { Abi, GetContractReturnType } from 'viem';
 
 /** Join/Exit with all tokens in ratio */
 export abstract class AllPool extends CommonPool implements IBalancerAllPool {
@@ -33,7 +33,7 @@ export abstract class AllPool extends CommonPool implements IBalancerAllPool {
 
   abstract getSwapRatios(): Promise<BigNumber[]>;
 
-  protected abstract getPoolContract(): Promise<Contract>;
+  protected abstract getPoolContract(): GetContractReturnType<Abi>;
 
   protected abstract getJoinKindValue(kind: PoolJoinKind): number;
 

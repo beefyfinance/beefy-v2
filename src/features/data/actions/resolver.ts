@@ -1,8 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types';
-import { selectAllChainIds, selectChainById } from '../selectors/chains';
 import { getNameServicesApi } from '../apis/instances';
-import type { ChainEntity, ChainId } from '../entities/chain';
 
 type ResolveFulfilledPayload = {
   address: string;
@@ -19,17 +17,12 @@ export const resolveAddressToDomain = createAsyncThunk<
   { state: BeefyState }
 >(
   'resolver/addressToDomain',
-  async ({ address }, { getState }) => {
+  async ({ address }) => {
     if (!address || !address.length) {
       throw new Error('No address provided');
     }
 
-    const state = getState();
-    const chainIdToEntity = selectAllChainIds(state).reduce((acc, chainId) => {
-      acc[chainId] = selectChainById(state, chainId);
-      return acc;
-    }, {} as Record<ChainId, ChainEntity>);
-    const nameServices = await getNameServicesApi(chainIdToEntity);
+    const nameServices = await getNameServicesApi();
     const domain = await nameServices.resolveAddressToDomain(address);
 
     if (!domain) {
@@ -67,17 +60,12 @@ export const resolveDomainToAddress = createAsyncThunk<
   { state: BeefyState }
 >(
   'resolver/domainToAddress',
-  async ({ domain }, { getState }) => {
+  async ({ domain }) => {
     if (!domain || !domain.length) {
       throw new Error('No domain provided');
     }
 
-    const state = getState();
-    const chainIdToEntity = selectAllChainIds(state).reduce((acc, chainId) => {
-      acc[chainId] = selectChainById(state, chainId);
-      return acc;
-    }, {} as Record<ChainId, ChainEntity>);
-    const nameServices = await getNameServicesApi(chainIdToEntity);
+    const nameServices = await getNameServicesApi();
     const address = await nameServices.resolveDomainToAddress(domain);
 
     if (!address) {

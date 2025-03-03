@@ -1,40 +1,15 @@
-import { MultiCall, type ShapeWithLabel } from 'eth-multicall';
-import type Web3 from 'web3';
 import type { ChainEntity } from '../../entities/chain';
-import { getWeb3Instance } from '../instances';
-import { createContract, viemToWeb3Abi } from '../../../../helpers/web3';
 import { BeefyCowcentratedLiquidityStrategyAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityStrategyAbi';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
 import { BigNumber } from 'bignumber.js';
 import { isTokenEqual, type TokenEntity } from '../../entities/token';
 import type { InputTokenAmount, TokenAmount } from '../transact/transact-types';
-import { BIG_ONE, BIG_ZERO, toWei } from '../../../../helpers/big-number';
-
-type StrategyDataResponse = {
-  price: string;
-};
-type IsCalmResponse = {
-  isCalm: boolean;
-};
-
-type CLMDataResponse = {
-  balances: Record<number, string>;
-  totalSupply: string;
-};
-
-type PreviewDepositResponse = {
-  previewDeposit: Record<number, string>;
-};
-
-type PreviewWithdrawResponse = {
-  previewDeposit: Record<number, string>;
-};
+import { BIG_ONE, BIG_ZERO, bigNumberToBigInt, toWei } from '../../../../helpers/big-number';
+import { fetchContract } from '../rpc-contract/viem-contract';
 
 export class BeefyCLMPool {
   public readonly type = 'uniswap-v2';
 
-  protected web3: Web3 | undefined = undefined;
-  protected multicall: MultiCall | undefined = undefined;
   protected readonly PRECISION = 1e36;
 
   constructor(
@@ -44,145 +19,32 @@ export class BeefyCLMPool {
     protected tokens: TokenEntity[]
   ) {}
 
-  async getWeb3(): Promise<Web3> {
-    if (this.web3 === undefined) {
-      this.web3 = await getWeb3Instance(this.chain);
-    }
-
-    return this.web3;
-  }
-
-  async getMulticall(): Promise<MultiCall> {
-    if (this.multicall === undefined) {
-      this.multicall = new MultiCall(await this.getWeb3(), this.chain.multicallAddress);
-    }
-
-    return this.multicall;
-  }
-
-  protected getStrategyDataRequests(): ShapeWithLabel[] {
-    const contract = createContract(
-      viemToWeb3Abi(BeefyCowcentratedLiquidityStrategyAbi),
-      this.strategy
-    );
-    return [
-      {
-        price: contract.methods.price(),
-      },
-    ];
-  }
-
-  protected getIsCalmRequests(): ShapeWithLabel[] {
-    const contract = createContract(
-      viemToWeb3Abi(BeefyCowcentratedLiquidityStrategyAbi),
-      this.address
-    );
-    return [
-      {
-        isCalm: contract.methods.isCalm(),
-      },
-    ];
-  }
-
-  protected getCLMDataRequests(): ShapeWithLabel[] {
-    const contract = createContract(
-      viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
-      this.address
-    );
-    return [
-      {
-        balances: contract.methods.balances(),
-        totalSupply: contract.methods.totalSupply(),
-      },
-    ];
-  }
-
-  protected getPreviewDepositRequests(
-    inputAmount0Wei: BigNumber,
-    inputamount1Wei: BigNumber
-  ): ShapeWithLabel[] {
-    const contract = createContract(
-      viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
-      this.address
-    );
-    const calls: ShapeWithLabel[] = [
-      {
-        previewDeposit: contract.methods.previewDeposit(
-          inputAmount0Wei.toString(10),
-          inputamount1Wei.toString(10)
-        ),
-      },
-    ];
-    return calls;
-  }
-
-  protected getPreviewWithdrawRequests(liquidityAmountWei: BigNumber): ShapeWithLabel[] {
-    const contract = createContract(
-      viemToWeb3Abi(BeefyCowcentratedLiquidityVaultAbi),
-      this.address
-    );
-    const calls: ShapeWithLabel[] = [
-      {
-        previewDeposit: contract.methods.previewWithdraw(liquidityAmountWei.toString(10)),
-      },
-    ];
-    return calls;
-  }
-
-  protected consumeStrategyData(untypedData: unknown[]) {
-    const result = (untypedData as StrategyDataResponse[])[0];
-    return {
-      price: new BigNumber(result.price),
-    };
-  }
-
-  protected consumeIsCalm(untypedData: unknown[]) {
-    const result = (untypedData as IsCalmResponse[])[0];
-    return {
-      isCalm: result.isCalm,
-    };
-  }
-
-  protected consumeCLMData(untypedData: unknown[]) {
-    const result = (untypedData as CLMDataResponse[])[0];
-    return {
-      balance0: new BigNumber(result.balances[0]),
-      balance1: new BigNumber(result.balances[1]),
-      totalSupply: new BigNumber(result.totalSupply),
-    };
-  }
-
-  protected consumePreviewDeposit(untypedData: unknown[]) {
-    const result = (untypedData as PreviewDepositResponse[])[0];
-    return {
-      liquidity: new BigNumber(result.previewDeposit[0]),
-      used0: new BigNumber(result.previewDeposit[1]),
-      used1: new BigNumber(result.previewDeposit[2]),
-    };
-  }
-
-  protected consumePreviewWithdraw(untypedData: unknown[]) {
-    const result = (untypedData as PreviewWithdrawResponse[])[0];
-    return {
-      amount0: new BigNumber(result.previewDeposit[0]),
-      amount1: new BigNumber(result.previewDeposit[1]),
-    };
-  }
-
   public async getDepositRatioData(
     inputToken: InputTokenAmount,
     inputTokenPrice: BigNumber,
     token1Price: BigNumber
   ) {
-    const multicall = await this.getMulticall();
-    const [strategyResults, clmResults] = await multicall.all([
-      this.getStrategyDataRequests(),
-      this.getCLMDataRequests(),
+    const strategyContract = fetchContract(
+      this.strategy,
+      BeefyCowcentratedLiquidityStrategyAbi,
+      this.chain.id
+    );
+    const clmContract = fetchContract(
+      this.address,
+      BeefyCowcentratedLiquidityVaultAbi,
+      this.chain.id
+    );
+
+    const [priceResult, balanceResults] = await Promise.all([
+      strategyContract.read.price(),
+      clmContract.read.balances(),
     ]);
 
-    const { price } = this.consumeStrategyData(strategyResults);
-    const { balance0, balance1 } = this.consumeCLMData(clmResults);
-
+    const [balance0, balance1] = [
+      new BigNumber(balanceResults[0].toString(10)),
+      new BigNumber(balanceResults[1].toString(10)),
+    ];
+    const price = new BigNumber(priceResult.toString(10));
     const bal0inToken1 = balance0.times(price).div(this.PRECISION);
 
     const balancingAmount: TokenAmount = balance1.gt(bal0inToken1)
@@ -328,17 +190,33 @@ export class BeefyCLMPool {
   }
 
   public async previewDeposit(inputAmount0: BigNumber, inputAmount1: BigNumber) {
-    const multicall = await this.getMulticall();
     const input0 = toWei(inputAmount0, this.tokens[0].decimals);
     const input1 = toWei(inputAmount1, this.tokens[1].decimals);
-    const [previewDepositResponse, isCalmRequest, clmData] = await multicall.all([
-      this.getPreviewDepositRequests(input0, input1),
-      this.getIsCalmRequests(),
-      this.getCLMDataRequests(),
+
+    const clmContract = fetchContract(
+      this.address,
+      BeefyCowcentratedLiquidityVaultAbi,
+      this.chain.id
+    );
+
+    const [previewDepositResult, isCalm, balancesResult, totalSupplyResult] = await Promise.all([
+      clmContract.read.previewDeposit([bigNumberToBigInt(input0), bigNumberToBigInt(input1)]),
+      clmContract.read.isCalm(),
+      clmContract.read.balances(),
+      clmContract.read.totalSupply(),
     ]);
-    const { liquidity, used0, used1 } = this.consumePreviewDeposit(previewDepositResponse);
-    const { isCalm } = this.consumeIsCalm(isCalmRequest);
-    const { balance0, balance1, totalSupply } = this.consumeCLMData(clmData);
+
+    //bigint -> bigNumber
+    const [liquidity, used0, used1] = [
+      new BigNumber(previewDepositResult[0].toString(10)),
+      new BigNumber(previewDepositResult[1].toString(10)),
+      new BigNumber(previewDepositResult[2].toString(10)),
+    ];
+    const [balance0, balance1] = [
+      new BigNumber(balancesResult[0].toString(10)),
+      new BigNumber(balancesResult[1].toString(10)),
+    ];
+    const totalSupply = new BigNumber(totalSupplyResult.toString(10));
 
     const newTotalSupply = totalSupply.plus(liquidity);
     const newBalance0 = balance0.plus(used0);
@@ -353,18 +231,20 @@ export class BeefyCLMPool {
   }
 
   public async previewWithdraw(liquidity: BigNumber) {
-    const multicall = await this.getMulticall();
-    const [previewWithdrawResponse, isCalmRequest] = await multicall.all([
-      this.getPreviewWithdrawRequests(toWei(liquidity, 18)),
-      this.getIsCalmRequests(),
+    const clmContract = fetchContract(
+      this.address,
+      BeefyCowcentratedLiquidityVaultAbi,
+      this.chain.id
+    );
+    const [withdrawResult, isCalm] = await Promise.all([
+      clmContract.read.previewWithdraw([bigNumberToBigInt(toWei(liquidity, 18))]),
+      clmContract.read.isCalm(),
     ]);
 
-    const previewResult = this.consumePreviewWithdraw(previewWithdrawResponse);
-    const isCalmResult = this.consumeIsCalm(isCalmRequest);
-
     return {
-      ...previewResult,
-      ...isCalmResult,
+      amount0: new BigNumber(withdrawResult[0].toString(10)),
+      amount1: new BigNumber(withdrawResult[1].toString(10)),
+      isCalm,
     };
   }
 }
