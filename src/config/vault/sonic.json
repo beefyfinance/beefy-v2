@@ -1,5 +1,289 @@
 [
   {
+    "id": "swapx-ichi-wbtc-scbtc",
+    "name": "WBTC-scBTC",
+    "token": "IV-SWAPX-62-WBTC-scBTC",
+    "tokenAddress": "0x59BFaa386CcBf648eaCd28c91834Ce7C6C8E773A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapx",
+    "earnContractAddress": "0x7152bf607BD043084f265c649a09A8F90BBdBF1B",
+    "earnedToken": "mooSwapX-Ichi-WBTC-scBTC",
+    "earnedTokenAddress": "0x7152bf607BD043084f265c649a09A8F90BBdBF1B",
+    "oracle": "lps",
+    "oracleId": "swapx-ichi-wbtc-scbtc",
+    "status": "active",
+    "createdAt": 1740477804,
+    "platformId": "ichi",
+    "assets": ["WBTC", "scBTC"],
+    "migrationIds": ["sonic-swapx"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://swapx.fi/earn",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic"
+  },
+  {
+    "id": "swapx-ichi-scbtc-wbtc",
+    "name": "scBTC-WBTC",
+    "token": "IV-SWAPX-63-scBTC-WBTC",
+    "tokenAddress": "0xe1D0c34d6A7eEa99C87005147D950BE89294C632",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapx",
+    "earnContractAddress": "0x7B096c4C73Fbf5A96943243D1F78ADDDf820D2ae",
+    "earnedToken": "mooSwapX-Ichi-scBTC-WBTC",
+    "earnedTokenAddress": "0x7B096c4C73Fbf5A96943243D1F78ADDDf820D2ae",
+    "oracle": "lps",
+    "oracleId": "swapx-ichi-scbtc-wbtc",
+    "status": "active",
+    "createdAt": 1740477793,
+    "platformId": "ichi",
+    "assets": ["scBTC", "WBTC"],
+    "migrationIds": ["sonic-swapx"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://swapx.fi/earn",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic"
+  },
+  {
+    "id": "swapx-ichi-sfrxeth-frxeth",
+    "name": "sfrxETH-frxETH",
+    "token": "IV-SWAPX-54-sfrxETH-frxETH",
+    "tokenAddress": "0x5746f9777954e8DD2835020ba8b7c950f52C6251",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapx",
+    "earnContractAddress": "0x32a1951b9Cc8011be3d1aDCaeF6306Bab27eb8d2",
+    "earnedToken": "mooSwapX-Ichi-sfrxETH-frxETH",
+    "earnedTokenAddress": "0x32a1951b9Cc8011be3d1aDCaeF6306Bab27eb8d2",
+    "oracle": "lps",
+    "oracleId": "swapx-ichi-sfrxeth-frxeth",
+    "status": "active",
+    "createdAt": 1740477771,
+    "platformId": "ichi",
+    "assets": ["sfrxETH", "frxETH"],
+    "migrationIds": ["sonic-swapx"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://swapx.fi/earn",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic"
+  },
+  {
+    "id": "swapx-ichi-frxeth-sfrxeth",
+    "name": "frxETH-sfrxETH",
+    "token": "IV-SWAPX-55-frxETH-sfrxETH",
+    "tokenAddress": "0x8c30686DC5AA85C5861163174BDEb22A011bb749",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapx",
+    "earnContractAddress": "0xF853d4f565ac1147Eb4e48eAB15B6ACe79b78D5e",
+    "earnedToken": "mooSwapX-Ichi-frxETH-sfrxETH",
+    "earnedTokenAddress": "0xF853d4f565ac1147Eb4e48eAB15B6ACe79b78D5e",
+    "oracle": "lps",
+    "oracleId": "swapx-ichi-frxeth-sfrxeth",
+    "status": "active",
+    "createdAt": 1740477761,
+    "platformId": "ichi",
+    "assets": ["frxETH", "sfrxETH"],
+    "migrationIds": ["sonic-swapx"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://swapx.fi/earn",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic"
+  },
+  {
+    "id": "shadow-cow-sonic-usdc.e-usdt-vault",
+    "name": "USDC.e-USDT",
+    "type": "standard",
+    "token": "USDC.e-USDT",
+    "tokenAddress": "0x7D31356E48A296A09b9Aadb495B749fc83a6b62f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0x2f2dF796D53a511cAf1F1818123fb90631346CdE",
+    "earnedToken": "mooCowShadowSonicUSDT-USDC.e",
+    "earnedTokenAddress": "0x2f2dF796D53a511cAf1F1818123fb90631346CdE",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-usdt",
+    "status": "active",
+    "createdAt": 1740419131,
+    "platformId": "shadow",
+    "assets": ["USDCe", "USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-usdc.e-usdt-rp",
+    "name": "USDC.e-USDT Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowShadowSonicUSDT-USDC.e",
+    "tokenAddress": "0x7D31356E48A296A09b9Aadb495B749fc83a6b62f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0x65EbD1e745290d32791373431bd9e0cf363255e4",
+    "earnedToken": "rCowShadowSonicUSDT-USDC.e",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-usdt",
+    "status": "active",
+    "createdAt": 1740419130,
+    "platformId": "shadow",
+    "assets": ["USDCe", "USDT"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-usdc.e-usdt",
+    "name": "USDC.e-USDT",
+    "type": "cowcentrated",
+    "token": "USDC.e-USDT shadow",
+    "tokenAddress": "0x9053fE060f412ad5677f934F89e07524343eE8E7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "depositTokenAddresses": [
+      "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+      "0x6047828dc181963ba44974801FF68e538dA5eaF9"
+    ],
+    "earnContractAddress": "0x7D31356E48A296A09b9Aadb495B749fc83a6b62f",
+    "earnedToken": "cowShadowSonicUSDT-USDC.e",
+    "earnedTokenAddress": "0x7D31356E48A296A09b9Aadb495B749fc83a6b62f",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-usdt",
+    "status": "active",
+    "createdAt": 1740419130,
+    "platformId": "beefy",
+    "feeTier": "0.01",
+    "assets": ["USDCe", "USDT"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-usdc.e-shadow-vault",
+    "name": "SHADOW-USDC.e",
+    "type": "standard",
+    "token": "SHADOW-USDC.e",
+    "tokenAddress": "0x7168464Ac7330EC5177694005e60FBe319DC40c2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0xf5Be0aF42862eE909b83a78757b27d8A3efffcCa",
+    "earnedToken": "mooCowShadowSonicSHADOW-USDC.e",
+    "earnedTokenAddress": "0xf5Be0aF42862eE909b83a78757b27d8A3efffcCa",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-shadow",
+    "status": "active",
+    "createdAt": 1740419131,
+    "platformId": "shadow",
+    "assets": ["SHADOW", "USDCe"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-usdc.e-shadow-rp",
+    "name": "SHADOW-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowShadowSonicSHADOW-USDC.e",
+    "tokenAddress": "0x7168464Ac7330EC5177694005e60FBe319DC40c2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0x83c55d2e17908f4103C5c9f420Ff0D88D8fa375b",
+    "earnedToken": "rCowShadowSonicSHADOW-USDC.e",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-shadow",
+    "status": "active",
+    "createdAt": 1740419081,
+    "platformId": "shadow",
+    "assets": ["SHADOW", "USDCe"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-usdc.e-shadow",
+    "name": "SHADOW-USDC.e",
+    "type": "cowcentrated",
+    "token": "SHADOW-USDC.e shadow",
+    "tokenAddress": "0x779cA4E7F14d10489cd32655fc513641bA3a8d8F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "depositTokenAddresses": [
+      "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+      "0x3333b97138D4b086720b5aE8A7844b1345a33333"
+    ],
+    "earnContractAddress": "0x7168464Ac7330EC5177694005e60FBe319DC40c2",
+    "earnedToken": "cowShadowSonicSHADOW-USDC.e",
+    "earnedTokenAddress": "0x7168464Ac7330EC5177694005e60FBe319DC40c2",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-shadow",
+    "status": "active",
+    "createdAt": 1740419081,
+    "platformId": "beefy",
+    "feeTier": "1",
+    "assets": ["SHADOW", "USDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "shadow-cow-sonic-ws-brush-vault",
     "name": "BRUSH-wS",
     "type": "standard",

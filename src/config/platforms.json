@@ -1404,12 +1404,21 @@
     "type": "amm"
   },
   {
-    "id": "beraswap",
-    "name": "Beraswap",
+    "id": "bex",
+    "name": "BEX",
     "website": "https://hub.berachain.com/",
     "twitter": "berachain",
     "documentation": "https://docs.berachain.com/",
-    "description": "Beraswap is a decentralized exchange (DEX) that allows users to trade and swap tokens on the Berachain blockchain.",
+    "description": "BEX is a decentralized exchange (DEX) that allows users to trade and swap tokens on the Berachain blockchain.",
     "type": "amm"
+  },
+  {
+    "id": "infrared",
+    "name": "Infrared",
+    "website": "https://infrared.finance/",
+    "twitter": "infraredfinance",
+    "documentation": "https://infrared.finance/docs",
+    "description": "Infrared is focused on building infrastructure around the Proof of Liquidity (PoL) mechanism pioneered by Berachain. The protocol aims to maximize value capture by providing easy-to-use liquid staking solutions for BGT and BERA, node infrastructure, and vaults. Through building solutions around Proof of Liquidity (PoL), Infrared is dedicated to enhancing the user experience and driving the growth of the Berachain ecosystem.",
+    "type": "farm"
   }
 ]
