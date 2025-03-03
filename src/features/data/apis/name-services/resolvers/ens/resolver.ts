@@ -1,7 +1,7 @@
 import type { ChainId } from '../../../../entities/chain';
 import { ZERO_ADDRESS } from '../../../../../../helpers/addresses';
 import { normalizeAddress, normalizeAndHashDomain } from '../../utils';
-import type { Abi, Address } from 'viem';
+import type { Abi, Address, Hash } from 'viem';
 import type { AllChainsFromTldToChain } from '../../types';
 import type { tldToChain } from './tlds';
 import { fetchContract } from '../../../rpc-contract/viem-contract';
@@ -44,7 +44,7 @@ const reverseRecordsAbi = [
   },
 ] as const satisfies Abi;
 
-async function fetchResolverAddress(hash: string, chainId: ChainId): Promise<Address | undefined> {
+async function fetchResolverAddress(hash: Hash, chainId: ChainId): Promise<Address | undefined> {
   const registryAddress = registryAddresses[chainId];
   if (!registryAddress) {
     return undefined;
@@ -52,7 +52,7 @@ async function fetchResolverAddress(hash: string, chainId: ChainId): Promise<Add
 
   const contract = fetchContract(registryAddress, registryAbi, chainId);
   try {
-    const resolved = await contract.read.resolver([hash as Address]);
+    const resolved = await contract.read.resolver([hash]);
     return normalizeAddress(resolved);
   } catch {
     return undefined;
@@ -78,7 +78,7 @@ export async function domainToAddress(
 
   const resolverContract = fetchContract(resolverAddress, resolverAbi, chainId);
   try {
-    const resolved = await resolverContract.read.addr([hash as Address]);
+    const resolved = await resolverContract.read.addr([hash]);
     return normalizeAddress(resolved);
   } catch {
     return undefined;
@@ -89,7 +89,7 @@ export async function domainToAddress(
  * Lookup the (first) domain name for an address
  */
 export async function addressToDomain(
-  address: string,
+  address: Address,
   chainId: ChainId
 ): Promise<string | undefined> {
   const reverseRecordsAddress = reverseRecordsAddresses[chainId];
@@ -99,7 +99,7 @@ export async function addressToDomain(
 
   const contract = fetchContract(reverseRecordsAddress, reverseRecordsAbi, chainId);
   try {
-    const domains = await contract.read.getNames([[address as Address]]);
+    const domains = await contract.read.getNames([[address]]);
     return domains?.[0] || undefined;
   } catch {
     return undefined;

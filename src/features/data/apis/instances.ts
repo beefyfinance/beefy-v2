@@ -10,7 +10,6 @@ import {
   featureFlag_disableOdos,
   featureFlag_disableOneInch,
 } from '../utils/feature-flags';
-import type { ChainEntity, ChainId } from '../entities/chain';
 
 export const getBeefyApi = createDependencyFactory(
   async ({ BeefyAPI }) => new BeefyAPI(),
@@ -140,8 +139,7 @@ export const getOdosApi = createDependencyFactoryWithCacheByChain(
   () => import('./odos')
 );
 
-export const getNameServicesApi = createDependencyInitializerFactory(
-  async (chainIdToEntity: Record<ChainId, ChainEntity>, { NameServicesApi }) =>
-    new NameServicesApi(chainIdToEntity),
+export const getNameServicesApi = createDependencyFactory(
+  async ({ NameServicesApi }) => new NameServicesApi(),
   () => import('./name-services/name-services-api')
 );

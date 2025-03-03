@@ -1,14 +1,12 @@
 import { type Address } from 'viem';
 import { getAllChainsFromTldToChain, normalizeAddress } from './utils';
-import type { ChainEntity, ChainId } from '../../entities/chain';
+import type { ChainId } from '../../entities/chain';
 import type { Resolver } from './types';
 import { resolvers } from './resolvers';
 import { isFulfilledResult } from '../../../../helpers/promises';
 import { isDefined } from '../../utils/array-utils';
 
 export class NameServicesApi {
-  constructor(protected chainIdToEntity: Record<ChainId, ChainEntity>) {}
-
   /** Get the domain for an address */
   public async resolveAddressToDomain(address: string): Promise<string | undefined> {
     if (!address || !address.length) {

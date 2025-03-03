@@ -69,7 +69,7 @@ export async function domainToAddress(
   try {
     const data = await proxyReaderContract.read.getMany([
       ['crypto.ETH.address'],
-      hexToBigInt(hash as Address),
+      hexToBigInt(hash),
     ]);
     return normalizeAddress(data?.[0]);
   } catch {
@@ -81,7 +81,7 @@ export async function domainToAddress(
  * Lookup the (first) domain name for an address
  */
 export async function addressToDomain(
-  address: string,
+  address: Address,
   chainId: ChainId
 ): Promise<string | undefined> {
   const registryAddress = registryAddresses[chainId];
@@ -91,7 +91,7 @@ export async function addressToDomain(
 
   const contract = fetchContract(registryAddress, registryAbi, chainId);
   try {
-    const domain = await contract.read.reverseNameOf([address as Address]);
+    const domain = await contract.read.reverseNameOf([address]);
     return domain || undefined;
   } catch {
     return undefined;

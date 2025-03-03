@@ -1,10 +1,10 @@
 import { namehash, normalize } from 'viem/ens';
-import { type Address, getAddress, isAddress } from 'viem';
+import { type Address, getAddress, type Hash, isAddress } from 'viem';
 import { ZERO_ADDRESS } from '../../../../helpers/addresses';
 import type { ChainId } from '../../entities/chain';
 import { uniq } from 'lodash-es';
 
-export function hashDomain(domain: string): string {
+export function hashDomain(domain: string): Hash {
   return namehash(domain);
 }
 
@@ -12,7 +12,7 @@ export function normalizeDomain(domain: string): string {
   return normalize(domain);
 }
 
-export function normalizeAndHashDomain(domain: string): string {
+export function normalizeAndHashDomain(domain: string): Hash {
   return hashDomain(normalizeDomain(domain));
 }
 
