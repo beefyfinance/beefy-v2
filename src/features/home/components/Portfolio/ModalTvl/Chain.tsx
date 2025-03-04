@@ -56,14 +56,14 @@ const Logo = styled(
 
 const Name = styled('div', {
   base: {
-    textStyle: 'subline-sm',
+    textStyle: 'subline.sm',
     color: 'text.dark',
   },
 });
 
 const Tvl = styled('div', {
   base: {
-    textStyle: 'body-lg-med',
+    textStyle: 'body.med',
     color: 'text.middle',
   },
 });

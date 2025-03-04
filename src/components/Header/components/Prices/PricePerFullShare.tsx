@@ -9,7 +9,7 @@ import { selectTokenByAddress } from '../../../../features/data/selectors/tokens
 
 export const PricePerFullShare = memo(function PricePerFullShare() {
   const className = css({
-    textStyle: 'subline-lg',
+    textStyle: 'subline',
     textTransform: 'none',
     textAlign: 'center',
     lineHeight: '1.1',

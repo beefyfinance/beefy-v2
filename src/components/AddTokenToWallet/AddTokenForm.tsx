@@ -25,7 +25,7 @@ const addTokenFormRecipe = sva({
       gap: '8px',
     },
     label: {
-      textStyle: 'subline-sm',
+      textStyle: 'subline.sm',
     },
     buttons: {
       marginTop: '24px',

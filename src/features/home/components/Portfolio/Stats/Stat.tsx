@@ -37,7 +37,7 @@ export const Stat = memo<StatProps>(function UserStat({
 
 const Label = styled('div', {
   base: {
-    textStyle: 'subline-lg',
+    textStyle: 'subline',
     color: 'text.dark',
     display: 'inline-flex',
     gap: '4px',

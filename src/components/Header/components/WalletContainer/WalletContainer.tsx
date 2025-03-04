@@ -75,7 +75,7 @@ const Button = styled('button', {
     borderStyle: 'solid',
     borderWidth: '2px',
     color: 'text.light',
-    textStyle: 'body-lg-med',
+    textStyle: 'body.med',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden',

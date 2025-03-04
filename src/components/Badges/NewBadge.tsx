@@ -10,7 +10,7 @@ const NewText = memo<BadgeComponentProps>(function NewText({ className }) {
 
 export const NewBadge = styled(NewText, {
   base: {
-    textStyle: 'body-sm',
+    textStyle: 'body.sm',
     backgroundColor: 'green',
     color: 'background.header',
     paddingInline: '6px',

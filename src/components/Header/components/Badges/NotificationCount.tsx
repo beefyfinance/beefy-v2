@@ -13,7 +13,7 @@ export const NotificationCount = memo<NotificationCountProps>(function Notificat
 
 const Badge = styled('div', {
   base: {
-    textStyle: 'body-sm',
+    textStyle: 'body.sm',
     backgroundColor: 'indicators.warning',
     color: 'text.light',
     pointerEvents: 'none',
