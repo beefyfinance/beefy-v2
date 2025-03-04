@@ -1,7 +1,7 @@
 import { defineConfig } from '@pandacss/dev';
-import { buildConfig } from './tools/styles/config-builder';
-import { pluginStricterProperties } from './tools/styles/stricter-properties-plugin';
-import { pluginMoreTypes } from './tools/styles/more-types-plugin';
+import { buildConfig } from './tools/styles/config-builder.ts';
+import { pluginStricterProperties } from './tools/styles/stricter-properties-plugin.ts';
+import { pluginMoreTypes } from './tools/styles/more-types-plugin.ts';
 
 // @dev some changes require running `npx panda codegen` after
 
@@ -726,4 +726,5 @@ const config = buildConfig(
   }
 );
 
+// eslint-disable-next-line no-restricted-syntax -- default export required for Panda
 export default defineConfig(config);

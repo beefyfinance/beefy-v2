@@ -14,7 +14,7 @@ export const styles = {
     padding: '0px 16px 0px 0px',
   }),
   circleOuter: css.raw({
-    width: '20px',
+    width: '16px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
