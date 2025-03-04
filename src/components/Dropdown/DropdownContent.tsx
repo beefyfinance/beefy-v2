@@ -32,16 +32,17 @@ export const DropdownContent = memo(function DropdownContent(innerProps: Dropdow
 
 const DropdownOuter = styled('div', {
   base: {
+    colorPalette: 'dropdown',
     minWidth: '36px',
     maxWidth: 'min(calc(100vw - 32px), 440px)',
   },
   variants: {
     variant: {
       light: {
-        colorPalette: 'tooltip.light',
+        colorPalette: 'dropdown.light',
       },
       dark: {
-        colorPalette: 'tooltip.dark',
+        colorPalette: 'dropdown.dark',
       },
     },
     layer: {
@@ -57,7 +58,6 @@ const DropdownOuter = styled('div', {
     },
   },
   defaultVariants: {
-    variant: 'light',
     layer: 0,
   },
 });

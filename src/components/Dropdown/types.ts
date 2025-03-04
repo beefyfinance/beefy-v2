@@ -39,4 +39,5 @@ export type DropdownData<TRef extends ReferenceType = Element> = {
   manualReference: boolean;
 } & UseInteractionsReturn &
   UseFloatingReturn<TRef> &
-  Required<Pick<DropdownOptions, 'variant' | 'size' | 'layer'>>;
+  Pick<DropdownOptions, 'variant'> &
+  Required<Pick<DropdownOptions, 'size' | 'layer'>>;

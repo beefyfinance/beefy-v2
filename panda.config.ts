@@ -464,6 +464,26 @@ const config = buildConfig(
               },
             },
           },
+          dropdown: {
+            light: {
+              background: { value: '{colors.quillTip}' },
+              text: {
+                DEFAULT: { value: '{colors.whiteOff}' },
+              },
+            },
+            DEFAULT: {
+              background: { value: '{colors.blackMarket1}' },
+              text: {
+                DEFAULT: { value: '{colors.whiteOff}' },
+              },
+            },
+            dark: {
+              background: { value: '{colors.eclipseElixir}' },
+              text: {
+                DEFAULT: { value: '{colors.whiteOff}' },
+              },
+            },
+          },
           searchInput: {
             background: { value: '{colors.purpleDarkest}' },
             text: { value: '{colors.gray}' },

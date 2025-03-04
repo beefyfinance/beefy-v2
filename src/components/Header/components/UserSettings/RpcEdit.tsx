@@ -1,58 +1,23 @@
 import { type ChangeEvent, memo, useCallback, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../store.ts';
-import { selectAllChainIds, selectChainById } from '../../../../features/data/selectors/chains.ts';
-import { SearchableList } from '../../../SearchableList/SearchableList.tsx';
+import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import { useTranslation } from 'react-i18next';
-import { styles } from './styles.ts';
-import { ModifiedListItem, ModifiedListItemEndComponent } from './ListItems.tsx';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import { updateActiveRpc } from '../../../../features/data/actions/chains.ts';
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { BaseInput } from '../../../Form/Input/BaseInput.tsx';
 import { Button } from '../../../Button/Button.tsx';
 import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
-
-const useStyles = legacyMakeStyles(styles);
-
-export interface MenuProps {
-  onSelect: (chainId: ChainEntity['id']) => void;
-}
-
-export const Menu = memo(function Menu({ onSelect }: MenuProps) {
-  const classes = useStyles();
-  const chainIds = useAppSelector(state => selectAllChainIds(state));
-
-  const handleSelect = useCallback(
-    (chainId: ChainEntity['id']) => {
-      onSelect(chainId);
-    },
-    [onSelect]
-  );
-
-  return (
-    <div className={classes.list}>
-      <SearchableList
-        options={chainIds}
-        onSelect={handleSelect}
-        ItemInnerComponent={ModifiedListItem}
-        EndComponent={ModifiedListItemEndComponent}
-        size="sm"
-        hideShadows={true}
-      />
-    </div>
-  );
-});
+import { styled } from '@repo/styles/jsx';
 
 const URL_REGX = /^https:\/\//;
 
-export interface EditProps {
+export interface RpcEditProps {
   chainId: ChainEntity['id'];
   onBack: () => void;
 }
 
-export const Edit = memo(function Edit({ chainId, onBack }: EditProps) {
+export const RpcEdit = memo(function RpcEdit({ chainId, onBack }: RpcEditProps) {
   const { t } = useTranslation();
-  const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const [updatedRPC, setUpdatedRPC] = useState('');
 
@@ -79,28 +44,84 @@ export const Edit = memo(function Edit({ chainId, onBack }: EditProps) {
 
   return (
     <>
-      <div className={classes.edit}>
-        <div className={classes.chainInfo}>
+      <Top>
+        <ChainInfo>
           <ChainIcon chainId={chain.id} />
           {chain.name}
-        </div>
-        <div className={classes.inputContainer}>
+        </ChainInfo>
+        <InputGroup>
           <BaseInput
-            className={classes.input}
             value={updatedRPC}
             onChange={handleSearchText}
             fullWidth={true}
             placeholder={t('RpcModal-InputPlaceholder')}
           />
-          {isError && <div className={classes.inputError}>{t('RpcModal-InvalidRpc')}</div>}
-        </div>
-        <div className={classes.emptyTextContainer}>{t('RpcModal-EmptyList')}</div>
-      </div>
-      <div className={classes.footer}>
+          {isError && <InputError>{t('RpcModal-InvalidRpc')}</InputError>}
+        </InputGroup>
+        <Explainer>{t('RpcModal-EmptyList')}</Explainer>
+      </Top>
+      <Footer>
         <Button disabled={isDisabled} onClick={onSave} size="lg" fullWidth={true}>
           {t('RpcModal-Save')}
         </Button>
-      </div>
+      </Footer>
     </>
   );
+});
+
+const Top = styled('div', {
+  base: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: `${12 - 2}px`,
+    rowGap: '16px',
+    color: 'text.middle',
+    flexGrow: '1',
+  },
+});
+
+const ChainInfo = styled('div', {
+  base: {
+    textStyle: 'body.med',
+    display: 'flex',
+    columnGap: '8px',
+    color: 'text.middle',
+  },
+});
+
+const InputGroup = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+});
+
+const InputError = styled('div', {
+  base: {
+    textStyle: 'body.sm',
+    color: 'indicators.error',
+    marginLeft: '16px',
+    transition: 'ease-in-out 2s',
+  },
+});
+
+const Explainer = styled('div', {
+  base: {
+    textStyle: 'body.sm.med',
+    padding: '12px',
+    backgroundColor: 'background.content.light',
+    borderRadius: '8px',
+    color: 'text.middle',
+  },
+});
+
+const Footer = styled('div', {
+  base: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '24px',
+    padding: `${12 - 2}px`,
+    borderRadius: '0 0 8px 8px',
+  },
 });
