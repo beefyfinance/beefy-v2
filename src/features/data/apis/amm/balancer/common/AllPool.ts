@@ -1,5 +1,5 @@
-import type { BalancerFeature, IBalancerAllPool } from '../types';
-import type { ChainEntity } from '../../../../entities/chain';
+import type { BalancerFeature, IBalancerAllPool } from '../types.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
 import type {
   ExitPoolRequest,
   JoinPoolRequest,
@@ -9,13 +9,18 @@ import type {
   QueryJoinPoolRequest,
   QueryJoinPoolResponse,
   VaultConfig,
-} from '../vault/types';
-import { BIG_ONE, BIG_ZERO, bigNumberToStringDeep } from '../../../../../../helpers/big-number';
-import type { ZapStep } from '../../../transact/zap/types';
+} from '../vault/types.ts';
+import { BIG_ONE, BIG_ZERO, bigNumberToStringDeep } from '../../../../../../helpers/big-number.ts';
+import type { ZapStep } from '../../../transact/zap/types.ts';
 import { type BigNumber } from 'bignumber.js';
-import { CommonPool } from './CommonPool';
-import { type ExitPoolUserData, type JoinPoolUserData, PoolExitKind, PoolJoinKind } from './types';
-import type { Abi, GetContractReturnType } from 'viem';
+import { CommonPool } from './CommonPool.ts';
+import {
+  type ExitPoolUserData,
+  type JoinPoolUserData,
+  PoolExitKind,
+  PoolJoinKind,
+} from './types.ts';
+import type { GetContractReturnType } from 'viem';
 
 /** Join/Exit with all tokens in ratio */
 export abstract class AllPool extends CommonPool implements IBalancerAllPool {
@@ -33,7 +38,7 @@ export abstract class AllPool extends CommonPool implements IBalancerAllPool {
 
   abstract getSwapRatios(): Promise<BigNumber[]>;
 
-  protected abstract getPoolContract(): GetContractReturnType<Abi>;
+  protected abstract getPoolContract(): GetContractReturnType;
 
   protected abstract getJoinKindValue(kind: PoolJoinKind): number;
 

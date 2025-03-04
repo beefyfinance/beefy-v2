@@ -1,4 +1,4 @@
-import type { ChainId } from '../../entities/chain';
+import type { ChainId } from '../../entities/chain.ts';
 import type { Address } from 'viem';
 
 export type AllChainsFromTldToChain<T extends Record<string, ChainId[]>> = {

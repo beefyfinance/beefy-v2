@@ -1,31 +1,31 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  icon: {
+export const styles = {
+  icon: css.raw({
     marginRight: '8px',
-  },
-  badge: {
+  }),
+  badge: css.raw({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    flexShrink: 0,
-    flexGrow: 0,
+    flexShrink: '0',
+    flexGrow: '0',
     width: '24px',
     height: '24px',
     marginRight: '8px',
     '&:before': {
-      ...theme.typography['body-sm-med'],
+      textStyle: 'body.sm.med',
       content: 'attr(data-count)',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      flexShrink: 0,
-      flexGrow: 0,
-      backgroundColor: theme.palette.background.indicators.error,
+      flexShrink: '0',
+      flexGrow: '0',
+      backgroundColor: 'indicators.error',
       width: '20px',
       height: '20px',
       borderRadius: '50%',
-      color: '#fff',
+      color: 'white',
     },
-  },
-});
+  }),
+};

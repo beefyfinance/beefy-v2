@@ -1,35 +1,35 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  label: {
+export const styles = {
+  label: css.raw({
     display: 'flex',
     alignItems: 'center',
-  },
-  labelText: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
-  },
-  tooltipTrigger: {
+  }),
+  labelText: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
+  }),
+  tooltipTrigger: css.raw({
     width: '16px',
     height: '16px',
-    flexShrink: 0,
+    flexShrink: '0',
     marginLeft: '4px',
     '& svg': {
       width: '16px',
       height: '16px',
     },
-  },
-  subValue: {
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.dark,
-  },
-  blurValue: {
+  }),
+  subValue: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
+  }),
+  blurValue: css.raw({
     filter: 'blur(.5rem)',
-  },
-  boostedValue: {
-    color: theme.palette.background.vaults.boost,
-  },
-  lineThroughValue: {
+  }),
+  boostedValue: css.raw({
+    color: 'background.vaults.boost',
+  }),
+  lineThroughValue: css.raw({
     textDecoration: 'line-through',
-  },
-});
+  }),
+};

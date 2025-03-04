@@ -1,31 +1,31 @@
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { useAppSelector } from '../../../../../../store';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { useAppSelector } from '../../../../../../store.ts';
 import {
   selectTransactForceSelection,
   selectTransactNumTokens,
   selectTransactOptionsError,
   selectTransactOptionsStatus,
   selectTransactVaultId,
-} from '../../../../../data/selectors/transact';
-import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance';
-import { errorToString } from '../../../../../../helpers/format';
-import { TextLoader } from '../../../../../../components/TextLoader';
-import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
-import { TransactQuote } from '../TransactQuote';
-import { AlertError } from '../../../../../../components/Alerts';
-import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
-import { WithdrawTokenAmountInput } from '../WithdrawTokenAmountInput';
-import { WithdrawActions } from '../WithdrawActions';
-import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
+} from '../../../../../data/selectors/transact.ts';
+import { selectUserVaultBalanceInDepositTokenWithToken } from '../../../../../data/selectors/balance.ts';
+import { errorToString } from '../../../../../../helpers/format.ts';
+import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
+import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
+import { TransactQuote } from '../TransactQuote/TransactQuote.tsx';
+import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
+import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { WithdrawTokenAmountInput } from '../WithdrawTokenAmountInput/WithdrawTokenAmountInput.tsx';
+import { WithdrawActions } from '../WithdrawActions/WithdrawActions.tsx';
+import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import zapIcon from '../../../../../../images/icons/zap.svg';
-import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice';
+import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice/WithdrawnInWalletNotice.tsx';
 import { useDispatch } from 'react-redux';
-import { transactActions } from '../../../../../data/reducers/wallet/transact';
+import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 const DepositedInVault = memo(function DepositedInVault() {
   const vaultId = useAppSelector(selectTransactVaultId);
@@ -60,7 +60,7 @@ const DepositedInVault = memo(function DepositedInVault() {
   );
 });
 
-export const WithdrawFormLoader = memo(function WithdrawFormLoader() {
+const WithdrawFormLoader = memo(function WithdrawFormLoader() {
   const { t } = useTranslation();
   const classes = useStyles();
   const status = useAppSelector(selectTransactOptionsStatus);
@@ -97,7 +97,7 @@ export const WithdrawForm = memo(function WithdrawForm() {
 
   return (
     <>
-      <WithdrawnInWalletNotice className={classes.notice} />
+      <WithdrawnInWalletNotice css={styles.notice} />
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
           {hasOptions ? <img src={zapIcon} alt="Zap" height={12} /> : null}
@@ -113,10 +113,13 @@ export const WithdrawForm = memo(function WithdrawForm() {
       <div className={classes.inputs}>
         <WithdrawTokenAmountInput />
       </div>
-      <TransactQuote title={t('Transact-YouWithdraw')} className={classes.quote} />
+      <TransactQuote title={t('Transact-YouWithdraw')} css={styles.quote} />
       <div className={classes.actions}>
         <WithdrawActions />
       </div>
     </>
   );
 });
+
+// eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
+export default WithdrawFormLoader;

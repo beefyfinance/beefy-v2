@@ -1,52 +1,53 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: 'var(--tooltip-content-vertical-gap, 8px)',
     columnGap: 'var(--tooltip-content-horizontal-gap, 16px)',
-    ...theme.typography['body-lg'],
-  },
-  itemContainer: {
+    textStyle: 'body',
+  }),
+  itemContainer: css.raw({
     display: 'flex',
     alignItems: 'center',
     rowGap: 'var(--tooltip-content-vertical-gap, 8px)',
     columnGap: 'var(--tooltip-content-horizontal-gap, 16px)',
     justifyContent: 'space-between',
-  },
-  label: {
+  }),
+  label: css.raw({
     color: 'var(--tooltip-label-color)',
     '[data-compact] &': {
-      ...theme.typography['body-sm'],
+      textStyle: 'body.sm',
     },
-  },
-  value: {
+  }),
+  value: css.raw({
     color: 'var(--tooltip-value-color)',
-    textAlign: 'right' as const,
+    textAlign: 'right',
     '[data-compact] &': {
-      ...theme.typography['subline-sm'],
+      textStyle: 'subline.sm',
     },
-  },
-  valueBreakdown: {
+  }),
+  valueBreakdown: css.raw({
     display: 'grid',
     gridTemplateColumns: 'auto 1fr',
     rowGap: 'var(--tooltip-content-vertical-gap, 8px)',
     columnGap: 'var(--tooltip-content-horizontal-gap, 16px)',
     color: 'var(--tooltip-value-color)',
     paddingLeft: '8px',
-    '& $value, & $label': {
-      color: 'var(--tooltip-value-color)',
-    },
-  },
-  total: {
-    '& $label': {
-      fontWeight: theme.typography['body-lg-med'].fontWeight,
-      color: 'var(--tooltip-title-color)',
-    },
-    '& $value': {
-      fontWeight: theme.typography['body-lg-med'].fontWeight,
-      color: 'var(--tooltip-label-color)',
-    },
-  },
-});
+  }),
+  valueBreakdownLabel: css.raw({
+    color: 'var(--tooltip-value-color)',
+  }),
+  valueBreakdownValue: css.raw({
+    color: 'var(--tooltip-value-color)',
+  }),
+  totalLabel: css.raw({
+    fontWeight: 'body.medium',
+    color: 'var(--tooltip-title-color)',
+  }),
+  totalValue: css.raw({
+    fontWeight: 'body.medium',
+    color: 'var(--tooltip-label-color)',
+  }),
+};

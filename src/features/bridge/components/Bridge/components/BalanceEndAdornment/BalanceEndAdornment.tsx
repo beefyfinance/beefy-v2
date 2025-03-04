@@ -1,15 +1,15 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { memo } from 'react';
-import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { formatTokenDisplayCondensed } from '../../../../../../helpers/format';
-import { useAppSelector } from '../../../../../../store';
-import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
-import { selectBridgeDepositTokenForChainId } from '../../../../../data/selectors/bridge';
-import { selectIsWalletConnected } from '../../../../../data/selectors/wallet';
-import { styles } from './styles';
-import type { ChainEntity } from '../../../../../data/entities/chain';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { formatTokenDisplayCondensed } from '../../../../../../helpers/format.ts';
+import { useAppSelector } from '../../../../../../store.ts';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
+import { selectBridgeDepositTokenForChainId } from '../../../../../data/selectors/bridge.ts';
+import { selectIsWalletConnected } from '../../../../../data/selectors/wallet.ts';
+import { styles } from './styles.ts';
+import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface BalanceEndAdornmentProps<V extends string = string> {
   value: V;

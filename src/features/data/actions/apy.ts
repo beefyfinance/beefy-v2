@@ -1,26 +1,26 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import { getBeefyApi } from '../apis/instances';
+import type { BeefyState } from '../../../redux-types.ts';
+import { getBeefyApi } from '../apis/instances.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedVault,
   isGovVault,
   isStandardVault,
   type VaultEntity,
-} from '../entities/vault';
-import type { TotalApy } from '../reducers/apy';
-import { selectAllVaultIdsIncludingHidden, selectVaultById } from '../selectors/vaults';
-import { selectActiveVaultBoostIds } from '../selectors/boosts';
+} from '../entities/vault.ts';
+import type { TotalApy } from '../reducers/apy.ts';
+import { selectAllVaultIdsIncludingHidden, selectVaultById } from '../selectors/vaults.ts';
+import { selectActiveVaultBoostIds } from '../selectors/boosts.ts';
 import { first, partition } from 'lodash-es';
-import { compoundInterest, yearlyToDaily } from '../../../helpers/number';
-import { isDefined } from '../utils/array-utils';
-import { getApiApyDataComponents } from '../../../helpers/apy';
-import type { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api-types';
+import { compoundInterest, yearlyToDaily } from '../../../helpers/number.ts';
+import { isDefined } from '../utils/array-utils.ts';
+import { getApiApyDataComponents } from '../../../helpers/apy.ts';
+import type { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api-types.ts';
 import {
   isMerklBoostCampaign,
   type MerklRewardsCampaignWithApr,
   selectVaultActiveMerklCampaigns,
-} from '../selectors/rewards';
+} from '../selectors/rewards.ts';
 
 export interface FetchAllApyFulfilledPayload {
   data: BeefyAPIApyBreakdownResponse;
@@ -31,7 +31,9 @@ export interface FetchAllApyFulfilledPayload {
 export const fetchApyAction = createAsyncThunk<
   FetchAllApyFulfilledPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('apy/fetchApy', async (_, { getState }) => {
   const api = await getBeefyApi();
   const prices = await api.getApyBreakdown();
@@ -55,7 +57,9 @@ function sumTotalApyComponents(
 export const recalculateTotalApyAction = createAsyncThunk<
   RecalculateTotalApyPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('apy/recalculateTotalApy', async (_, { getState }) => {
   const state = getState();
   const vaultIds = selectAllVaultIdsIncludingHidden(state); // Hidden: OK

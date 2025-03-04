@@ -4,13 +4,13 @@ import type {
   QuoteResponse,
   SwapRequest,
   SwapResponse,
-} from './one-inch-types';
-import type { ChainEntity } from '../../entities/chain';
-import type { ChainConfig } from '../config-types';
-import { API_ZAP_URL } from '../beefy/beefy-api';
-import { getErrorMessageFromResponse } from '../transact/helpers/fetch';
-import { getJson } from '../../../../helpers/http';
-import { isFetchResponseError } from '../../../../helpers/http/errors';
+} from './one-inch-types.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
+import type { ChainConfig } from '../config-types.ts';
+import { API_ZAP_URL } from '../beefy/beefy-api.ts';
+import { getErrorMessageFromResponse } from '../transact/helpers/fetch.ts';
+import { getJson } from '../../../../helpers/http/http.ts';
+import { isFetchResponseError } from '../../../../helpers/http/errors.ts';
 
 export const supportedChainIds: ChainConfig['id'][] = [
   'ethereum',
@@ -39,7 +39,7 @@ export class OneInchApi implements IOneInchApi {
 
   protected async get<
     ResponseType extends object,
-    RequestType extends Record<string, string | number | boolean>
+    RequestType extends Record<string, string | number | boolean>,
   >(url: string, request: RequestType): Promise<ResponseType> {
     try {
       return await getJson<ResponseType>({

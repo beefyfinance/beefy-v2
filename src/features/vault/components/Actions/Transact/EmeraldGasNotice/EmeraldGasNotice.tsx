@@ -1,13 +1,14 @@
 import { memo } from 'react';
-import { AlertWarning } from '../../../../../../components/Alerts';
+import { AlertWarning } from '../../../../../../components/Alerts/Alerts.tsx';
 import { useTranslation } from 'react-i18next';
+import { type CssStyles } from '@repo/styles/css';
 
 export type EmeraldGasNoticeProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const EmeraldGasNotice = memo<EmeraldGasNoticeProps>(function EmeraldGasNotice({
-  className,
-}) {
+export const EmeraldGasNotice = memo(function EmeraldGasNotice({
+  css: cssProp,
+}: EmeraldGasNoticeProps) {
   const { t } = useTranslation();
-  return <AlertWarning className={className}>{t('Transact-Notice-EmeraldGas')} </AlertWarning>;
+  return <AlertWarning css={cssProp}>{t('Transact-Notice-EmeraldGas')} </AlertWarning>;
 });

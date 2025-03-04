@@ -3,19 +3,22 @@ import type {
   QueryJoinPoolRequest,
   QueryJoinPoolResponse,
   VaultConfig,
-} from '../vault/types';
+} from '../vault/types.ts';
 import { BigNumber } from 'bignumber.js';
-import { BIG_ONE, bigNumberToStringDeep } from '../../../../../../helpers/big-number';
-import { FixedPoint } from '../common/FixedPoint';
-import type { ZapStep } from '../../../transact/zap/types';
-import { WeightedMath } from '../weighted/WeightedMath';
-import type { ChainEntity } from '../../../../entities/chain';
-import { BalancerGyroEPoolAbi } from '../../../../../../config/abi/BalancerGyroEPoolAbi';
-import { AllPool } from '../common/AllPool';
-import { BalancerFeature, type IBalancerAllPool } from '../types';
-import { PoolExitKind, PoolJoinKind } from '../common/types';
-import { poolExitKindToGyroPoolExitKind, poolJoinKindToGyroPoolJoinKind } from './join-exit-kinds';
-import { fetchContract } from '../../../rpc-contract/viem-contract';
+import { BIG_ONE, bigNumberToStringDeep } from '../../../../../../helpers/big-number.ts';
+import { FixedPoint } from '../common/FixedPoint.ts';
+import type { ZapStep } from '../../../transact/zap/types.ts';
+import { WeightedMath } from '../weighted/WeightedMath.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
+import { BalancerGyroEPoolAbi } from '../../../../../../config/abi/BalancerGyroEPoolAbi.ts';
+import { AllPool } from '../common/AllPool.ts';
+import { BalancerFeature, type IBalancerAllPool } from '../types.ts';
+import { PoolExitKind, PoolJoinKind } from '../common/types.ts';
+import {
+  poolExitKindToGyroPoolExitKind,
+  poolJoinKindToGyroPoolJoinKind,
+} from './join-exit-kinds.ts';
+import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
 
 const SUPPORTED_FEATURES = new Set<BalancerFeature>([
   BalancerFeature.AddRemoveAll,

@@ -1,10 +1,10 @@
-import type { TokenAmount } from '../transact-types';
-import { BIG_ZERO } from '../../../../../helpers/big-number';
+import type { TokenAmount } from '../transact-types.ts';
+import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
 import {
   type SerializedError,
   type SerializedQuoteCowcentratedNoSingleSideError,
   type SerializedQuoteCowcentratedNotCalmError,
-} from './error-types';
+} from './error-types.ts';
 import { miniSerializeError } from '@reduxjs/toolkit';
 
 export class QuoteChangedError extends Error {

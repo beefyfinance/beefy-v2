@@ -1,5 +1,5 @@
 import { BigNumber } from 'bignumber.js';
-import type { TokenEntity } from '../entities/token';
+import type { TokenEntity } from '../entities/token.ts';
 
 /**
  * ppfs applies to "chain" representation of numbers

@@ -1,17 +1,7 @@
-import { Dropdown } from '../../../../components/Dropdown';
-import ShareIcon from '@material-ui/icons/Share';
-import { Button } from '../../../../components/Button';
-import {
-  memo,
-  type MutableRefObject,
-  type RefObject,
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import ShareIcon from '../../../../images/icons/mui/Share.svg?react';
+import { memo, useCallback, useMemo } from 'react';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
 import { useTranslation } from 'react-i18next';
 import twitterIcon from '../../../../images/icons/share/twitter.svg';
 import lensterIcon from '../../../../images/icons/share/lenster.svg';
@@ -21,19 +11,19 @@ import {
   isCowcentratedVault,
   isGovVault,
   isGovVaultCowcentrated,
-} from '../../../data/entities/vault';
-import { useAppSelector } from '../../../../store';
-import { selectVaultById } from '../../../data/selectors/vaults';
-import { selectChainById } from '../../../data/selectors/chains';
-import { selectTokenByAddress } from '../../../data/selectors/tokens';
-import { selectVaultTotalApy } from '../../../data/selectors/apy';
-import { formatLargePercent } from '../../../../helpers/format';
-import type { BeefyState } from '../../../../redux-types';
+} from '../../../data/entities/vault.ts';
+import { useAppSelector } from '../../../../store.ts';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
+import { selectChainById } from '../../../data/selectors/chains.ts';
+import { selectTokenByAddress } from '../../../data/selectors/tokens.ts';
+import { selectVaultTotalApy } from '../../../data/selectors/apy.ts';
+import { formatLargePercent } from '../../../../helpers/format.ts';
+import type { BeefyState } from '../../../../redux-types.ts';
 import {
   selectBoostById,
   selectBoostPartnerById,
   selectPreStakeOrActiveBoostIds,
-} from '../../../data/selectors/boosts';
+} from '../../../data/selectors/boosts.ts';
 import type {
   BoostedVaultExtraDetails,
   CommonExtraDetails,
@@ -43,21 +33,22 @@ import type {
   ShareItemProps,
   ShareServiceItemProps,
   VaultDetails,
-} from './types';
-import clsx from 'clsx';
+} from './types.ts';
+import { DropdownButtonTrigger } from '../../../../components/Dropdown/DropdownTrigger.tsx';
+import { styled } from '@repo/styles/jsx';
+import { DropdownProvider } from '../../../../components/Dropdown/DropdownProvider.tsx';
+import { DropdownContent } from '../../../../components/Dropdown/DropdownContent.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-export const ShareButton = memo<ShareButtonProps>(function ShareButton({
+export const ShareButton = memo(function ShareButton({
   vaultId,
   placement,
   mobileAlternative = false,
   hideText = false,
-}) {
+}: ShareButtonProps) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const anchorEl = useRef<HTMLButtonElement>();
-  const [isOpen, setIsOpen] = useState(false);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const apys = useAppSelector(state => selectVaultTotalApy(state, vault.id));
@@ -134,47 +125,59 @@ export const ShareButton = memo<ShareButtonProps>(function ShareButton({
     [commonVaultDetails, additionalVaultDetails]
   );
 
-  const handleClose = useCallback(() => {
-    setIsOpen(false);
-  }, [setIsOpen]);
-
-  const handleOpen = useCallback(() => {
-    setIsOpen(true);
-  }, [setIsOpen]);
-
   return (
-    <>
-      <Button
-        className={clsx(classes.shareButton, {
-          active: isOpen,
-          [classes.mobileAlternative]: mobileAlternative,
-        })}
-        ref={anchorEl as RefObject<HTMLButtonElement>}
-        onClick={handleOpen}
-        active={isOpen}
-        borderless={true}
-      >
-        {!hideText && <span className={classes.shareText}>{t('Vault-Share')}</span>}
+    <DropdownProvider variant="dark" placement={placement || 'bottom-end'}>
+      <ShareTrigger>
+        {!hideText && !mobileAlternative && (
+          <span className={classes.shareText}>{t('Vault-Share')}</span>
+        )}
         <ShareIcon className={classes.shareIcon} />
-      </Button>
-      <Dropdown
-        anchorEl={anchorEl as MutableRefObject<HTMLElement>}
-        open={isOpen}
-        onClose={handleClose}
-        placement={placement || 'bottom-end'}
-        dropdownClassName={classes.dropdown}
-        innerClassName={classes.dropdownInner}
-      >
+      </ShareTrigger>
+      <ShareDropdown>
         <TwitterItem details={vaultDetails} />
         <LensterItem details={vaultDetails} />
         <TelegramItem details={vaultDetails} />
         <CopyLinkItem details={vaultDetails} />
-      </Dropdown>
-    </>
+      </ShareDropdown>
+    </DropdownProvider>
   );
 });
 
-const TwitterItem = memo<ShareServiceItemProps>(function TwitterItem({ details }) {
+const ShareDropdown = styled(DropdownContent, {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: '16px',
+    padding: '16px',
+  },
+});
+
+const ShareTrigger = styled(DropdownButtonTrigger, {
+  base: {
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '8px',
+    outline: 'none',
+    '&:focus-visible, &.active': {
+      outline: 'none',
+      backgroundColor: 'bayOfMany',
+    },
+  },
+  variants: {
+    mobile: {
+      true: {
+        lgDown: {
+          padding: '10px',
+        },
+      },
+    },
+  },
+});
+
+const TwitterItem = memo(function TwitterItem({ details }: ShareServiceItemProps) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
     const message = t(`Vault-Share-Message-${details.kind}`, details);
@@ -191,7 +194,7 @@ const TwitterItem = memo<ShareServiceItemProps>(function TwitterItem({ details }
   return <ShareItem text={t('Vault-Share-Twitter')} onClick={onClick} icon={twitterIcon} />;
 });
 
-const LensterItem = memo<ShareServiceItemProps>(function LensterItem({ details }) {
+const LensterItem = memo(function LensterItem({ details }: ShareServiceItemProps) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
     const message = t(`Vault-Share-Message-${details.kind}`, details);
@@ -208,7 +211,7 @@ const LensterItem = memo<ShareServiceItemProps>(function LensterItem({ details }
   return <ShareItem text={t('Vault-Share-Lenster')} onClick={onClick} icon={lensterIcon} />;
 });
 
-const TelegramItem = memo<ShareServiceItemProps>(function TelegramItem({ details }) {
+const TelegramItem = memo(function TelegramItem({ details }: ShareServiceItemProps) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
     const message = t(`Vault-Share-Message-${details.kind}`, details);
@@ -225,24 +228,22 @@ const TelegramItem = memo<ShareServiceItemProps>(function TelegramItem({ details
   return <ShareItem text={t('Vault-Share-Telegram')} onClick={onClick} icon={telegramIcon} />;
 });
 
-const CopyLinkItem = memo<ShareServiceItemProps>(function CopyLinkItem({ details }) {
+const CopyLinkItem = memo(function CopyLinkItem({ details }: ShareServiceItemProps) {
   const { t } = useTranslation();
   const onClick = useCallback(() => {
-    try {
-      navigator.clipboard.writeText(details.vaultUrl);
-    } catch (e) {
+    navigator.clipboard.writeText(details.vaultUrl).catch(e => {
       console.error('Failed to copy to clipboard', e);
-    }
+    });
   }, [details]);
 
   return <ShareItem text={t('Vault-Share-CopyLink')} onClick={onClick} icon={linkIcon} />;
 });
 
-const ShareItem = memo<ShareItemProps>(function ShareItem({ text, icon, onClick }) {
+const ShareItem = memo(function ShareItem({ text, icon, onClick }: ShareItemProps) {
   const classes = useStyles();
 
   return (
-    <button className={classes.shareItem} onClick={onClick}>
+    <button type="button" className={classes.shareItem} onClick={onClick}>
       <img src={icon} width={24} height={24} alt="" aria-hidden={true} /> {text}
     </button>
   );

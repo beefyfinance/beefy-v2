@@ -1,7 +1,7 @@
 import { memo, type ReactNode } from 'react';
-import { useAppSelector } from '../../../../../../store';
-import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
-import { Button } from '../../../../../../components/Button';
+import { useAppSelector } from '../../../../../../store.ts';
+import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
+import { Button } from '../../../../../../components/Button/Button.tsx';
 
 type ActionButtonProps = {
   onClick: () => void;

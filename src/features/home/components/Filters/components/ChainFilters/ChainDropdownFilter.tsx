@@ -1,88 +1,51 @@
-import type { ReactNode } from 'react';
 import { memo, useCallback, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import type { ChainEntity } from '../../../../../data/entities/chain';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
-import { selectActiveChains, selectChainById } from '../../../../../data/selectors/chains';
-import type {
-  DropdownItemLabelProps,
-  SelectedItemProps,
-} from '../../../../../../components/LabeledMultiSelect';
-import { LabeledMultiSelect } from '../../../../../../components/LabeledMultiSelect';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import type { ChainEntity } from '../../../../../data/entities/chain.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
+import { selectActiveChains } from '../../../../../data/selectors/chains.ts';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
-import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
-import { useSelectedChainIds } from './hooks';
-import { NewBadge } from '../../../../../../components/Header/components/Badges/NewBadge';
+import { type CssStyles, cva } from '@repo/styles/css';
+import { getNetworkIcon, useSelectedChainIds } from './hooks.tsx';
+import { SelectMultiple } from '../../../../../../components/Form/Select/Multi/SelectMultiple.tsx';
+import type { OptionIconProps } from '../../../../../../components/Form/Select/types.ts';
 
-const useStyles = makeStyles(styles);
+type ChainOption = {
+  value: ChainEntity['id'];
+  label: string;
+};
 
-const IconWithChain = memo<{ chainId: ChainEntity['id']; label: string; className?: string }>(
-  function IconWithChain({ chainId, label, className }) {
-    const classes = useStyles();
-    const chain = useAppSelector(state => selectChainById(state, chainId));
-
-    return (
-      <div className={clsx(classes.iconWithChain, className)}>
-        <img
-          alt=""
-          src={getNetworkSrc(chainId)}
-          width={24}
-          height={24}
-          className={classes.iconWithChainIcon}
-        />
-        {label}
-        {chain.new ? <NewBadge className={classes.badgeMobile} spacer={false} /> : null}
-      </div>
-    );
-  }
-);
-
-const SelectedChain = memo<SelectedItemProps<ChainEntity['id']>>(function SelectedChain({
-  value,
-  options,
-  allSelected,
-  allSelectedLabel,
-  countSelectedLabel,
-}) {
-  const { t } = useTranslation();
-  const classes = useStyles();
-  let label: string | ReactNode;
-
-  if (allSelected && allSelectedLabel) {
-    label = t(allSelectedLabel);
-  } else if (value.length === 1) {
-    const chainId = value[0];
-    label = (
-      <IconWithChain
-        chainId={chainId}
-        label={options[chainId]!}
-        className={classes.iconWithChainSelected}
-      />
-    );
-  } else if (countSelectedLabel) {
-    label = t(countSelectedLabel, { count: value.length });
-  } else {
-    label = 'missing label';
-  }
-
-  return <>{label}</>;
+const iconRecipe = cva({
+  base: {
+    width: '24px',
+    height: '24px',
+  },
+  variants: {
+    selected: {
+      false: {
+        '& .bg': {
+          fill: 'extracted790',
+        },
+        '& .fg': {
+          fill: 'background.body',
+        },
+      },
+    },
+  },
 });
 
-const ChainDropdownItemLabel = memo<DropdownItemLabelProps<ChainEntity['id']>>(
-  function DropdownItem({ label, value }) {
-    return <IconWithChain chainId={value} label={label} />;
-  }
-);
+const OptionIcon = memo(function OptionIcon({
+  item,
+  selected,
+  noneSelected,
+}: OptionIconProps<ChainOption>) {
+  const Icon = getNetworkIcon(item.value);
+  return <Icon className={iconRecipe({ selected: selected || noneSelected })} />;
+});
 
 export type ChainDropdownFilterProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const ChainDropdownFilter = memo<ChainDropdownFilterProps>(function ChainDropdownFilter({
-  className,
-}) {
+export const ChainDropdownFilter = memo(function ChainDropdownFilter() {
   const dispatch = useAppDispatch();
   const activeChains = useAppSelector(selectActiveChains);
   const selectedChainIds = useSelectedChainIds();
@@ -97,20 +60,24 @@ export const ChainDropdownFilter = memo<ChainDropdownFilterProps>(function Chain
     [dispatch, activeChains]
   );
 
-  const options: Partial<Record<ChainEntity['id'], string>> = useMemo(() => {
-    return Object.fromEntries(activeChains.map(chain => [chain.id, chain.name]));
+  const options = useMemo(() => {
+    return activeChains
+      .map(chain => ({
+        value: chain.id,
+        label: chain.name,
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label));
   }, [activeChains]);
 
   return (
-    <LabeledMultiSelect<ChainEntity['id']>
-      label={t('Filter-Chain')}
+    <SelectMultiple
+      labelPrefix={t('Filter-Chain')}
       onChange={handleChange}
-      value={selectedChainIds}
       options={options}
-      sortOptions="label"
-      selectClass={className}
-      SelectedItemComponent={SelectedChain}
-      DropdownItemLabelComponent={ChainDropdownItemLabel}
+      selected={selectedChainIds}
+      variant="filter"
+      OptionIconComponent={OptionIcon}
+      allSelectedLabel={t('Select-AllSelected')}
     />
   );
 });

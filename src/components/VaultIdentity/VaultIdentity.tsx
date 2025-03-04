@@ -1,27 +1,26 @@
 import { memo } from 'react';
-import type { VaultEntity } from '../../features/data/entities/vault';
-import { useAppSelector } from '../../store';
-import { selectVaultById } from '../../features/data/selectors/vaults';
-import clsx from 'clsx';
-import type { ChainEntity } from '../../features/data/entities/chain';
-import { selectChainById } from '../../features/data/selectors/chains';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { VaultIcon } from './components/VaultIcon';
-import { VaultTags } from './components/VaultTags';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
+import { useAppSelector } from '../../store.ts';
+import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import { css, type CssStyles } from '@repo/styles/css';
+import type { ChainEntity } from '../../features/data/entities/chain.ts';
+import { selectChainById } from '../../features/data/selectors/chains.ts';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { VaultIcon } from './components/VaultIcon/VaultIcon.tsx';
+import { VaultTags } from './components/VaultTags/VaultTags.tsx';
 import { Link } from 'react-router-dom';
-import { punctuationWrap } from '../../helpers/string';
-import { getNetworkSrc } from '../../helpers/networkSrc';
-import { selectVaultIsBoostedForFilter } from '../../features/data/selectors/filtered-vaults';
+import { punctuationWrap } from '../../helpers/string.ts';
+import { getNetworkSrc } from '../../helpers/networkSrc.ts';
+import { selectVaultIsBoostedForFilter } from '../../features/data/selectors/filtered-vaults.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type VaultNameProps = {
   vaultId: VaultEntity['id'];
   isLink?: boolean;
 };
-export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, isLink }) {
-  const classes = useStyles();
+export const VaultName = memo(function VaultName({ vaultId, isLink }: VaultNameProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isBoosted = useAppSelector(state => selectVaultIsBoostedForFilter(state, vaultId));
 
@@ -29,10 +28,7 @@ export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, isLi
     return (
       <Link
         to={`/vault/${vaultId}`}
-        className={clsx({
-          [classes.vaultName]: true,
-          [classes.vaultNameBoosted]: isBoosted,
-        })}
+        className={css(styles.vaultName, isBoosted && styles.vaultNameBoosted)}
       >
         {punctuationWrap(vault.names.list)}
       </Link>
@@ -40,12 +36,7 @@ export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, isLi
   }
 
   return (
-    <div
-      className={clsx({
-        [classes.vaultName]: true,
-        [classes.vaultNameBoosted]: isBoosted,
-      })}
-    >
+    <div className={css(styles.vaultName, isBoosted && styles.vaultNameBoosted)}>
       {punctuationWrap(vault.names.list)}
     </div>
   );
@@ -53,14 +44,16 @@ export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId, isLi
 
 export type VaultNetworkProps = {
   chainId: ChainEntity['id'];
-  className?: string;
+  css?: CssStyles;
 };
-export const VaultNetwork = memo<VaultNetworkProps>(function VaultNetwork({ chainId, className }) {
-  const classes = useStyles();
+export const VaultNetwork = memo(function VaultNetwork({
+  chainId,
+  css: cssProp,
+}: VaultNetworkProps) {
   const chain = useAppSelector(state => selectChainById(state, chainId));
 
   return (
-    <div className={clsx(classes.vaultNetwork, className, classes[`vaultNetwork-${chainId}`])}>
+    <div className={css(styles.vaultNetwork, cssProp, styles[`vaultNetwork-${chainId}`])}>
       <img alt={chain.name} src={getNetworkSrc(chainId)} width={24} height={24} />
     </div>
   );
@@ -68,34 +61,34 @@ export const VaultNetwork = memo<VaultNetworkProps>(function VaultNetwork({ chai
 
 export type VaultIdentityProps = {
   vaultId: VaultEntity['id'];
-  networkClassName?: string;
+  networkCss?: CssStyles;
   isLink?: boolean;
 };
-export const VaultIdentity = memo<VaultIdentityProps>(function VaultIdentity({
+export const VaultIdentity = memo(function VaultIdentity({
   vaultId,
-  networkClassName,
+  networkCss,
   isLink,
-}) {
+}: VaultIdentityProps) {
   const classes = useStyles();
 
   return (
     <div className={classes.vaultIdentity}>
-      <VaultIdentityContent isLink={isLink} vaultId={vaultId} networkClassName={networkClassName} />
+      <VaultIdentityContent isLink={isLink} vaultId={vaultId} networkCss={networkCss} />
     </div>
   );
 });
 
-export const VaultIdentityContent = memo<VaultIdentityProps>(function VaultIdentityContent({
+export const VaultIdentityContent = memo(function VaultIdentityContent({
   vaultId,
-  networkClassName,
+  networkCss,
   isLink,
-}) {
+}: VaultIdentityProps) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   return (
     <>
-      <VaultNetwork className={networkClassName} chainId={vault.chainId} />
+      <VaultNetwork css={networkCss} chainId={vault.chainId} />
       <VaultIcon vaultId={vaultId} />
       <div className={classes.vaultNameTags}>
         <VaultName isLink={isLink} vaultId={vaultId} />

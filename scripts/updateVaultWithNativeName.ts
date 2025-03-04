@@ -1,6 +1,6 @@
-import { config } from '../src/config/config';
-import { loadJson, saveJson } from './common/files';
-import { ChainConfig, VaultConfig } from '../src/features/data/apis/config-types';
+import { config } from '../src/config/config.ts';
+import { loadJson, saveJson } from './common/files.ts';
+import type { ChainConfig, VaultConfig } from '../src/features/data/apis/config-types.ts';
 import pc from 'picocolors';
 
 const vaultsDir = './src/config/vault';
@@ -8,7 +8,7 @@ const vaultsDir = './src/config/vault';
 async function start() {
   for (const [chainKey, chainInfo] of Object.entries(config) as unknown as [
     string,
-    ChainConfig
+    ChainConfig,
   ][]) {
     if (chainInfo.eol) {
       continue;

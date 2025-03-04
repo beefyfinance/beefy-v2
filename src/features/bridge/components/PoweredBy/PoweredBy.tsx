@@ -1,26 +1,26 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { styles } from './styles';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
 import { useTranslation } from 'react-i18next';
 import logoAxelar from '../../../../images/bridge-providers/logos/axelar.svg';
 import logoLayerZero from '../../../../images/bridge-providers/logos/layer-zero.svg';
 import logoChainlink from '../../../../images/bridge-providers/logos/chainlink.svg';
 import logoOptimism from '../../../../images/bridge-providers/logos/optimism.svg';
 import logoConnext from '../../../../images/bridge-providers/logos/connext.svg';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type PoweredByProps = {
-  className?: string;
+  css?: CssStyles;
 };
 
-export const PoweredBy = memo<PoweredByProps>(function PoweredBy({ className }) {
+export const PoweredBy = memo(function PoweredBy({ css: cssProp }: PoweredByProps) {
   const classes = useStyles();
   const { t } = useTranslation();
 
   return (
-    <div className={clsx(classes.poweredBy, className)}>
+    <div className={css(styles.poweredBy, cssProp)}>
       <div className={classes.poweredByLabel}>{t('Bridge-Intro-PoweredBy')}</div>
       <div className={classes.poweredByLogos}>
         <img src={logoLayerZero} alt={'LayerZero'} height="32" />

@@ -1,42 +1,38 @@
-import { ArgumentConfig, parse } from 'ts-command-line-args';
+import { type ArgumentConfig, parse } from 'ts-command-line-args';
 import {
   addressBookToAppId,
-  AppChainId,
+  type AppChainId,
   appToAddressBookId,
-  ChainConfig,
-  chainRpcs,
   getAmmsForChain,
   getChain,
+  getChainRpc,
   getVaultsForChain,
-} from './common/config';
-import type { AmmConfigBalancer, VaultConfig } from '../src/features/data/apis/config-types';
-import { isNonEmptyArray, NonEmptyArray } from './common/utils';
-import { OptionalRecord } from '../src/features/data/utils/types-utils';
-import { Address, createPublicClient, getAddress, Hex, http, parseAbi } from 'viem';
+} from './common/config.ts';
+import type {
+  AmmConfigBalancer,
+  ChainConfig,
+  VaultConfig,
+} from '../src/features/data/apis/config-types.ts';
+import { isNonEmptyArray, type NonEmptyArray } from './common/utils.ts';
+import type { OptionalRecord } from '../src/features/data/utils/types-utils.ts';
+import { type Address, createPublicClient, getAddress, type Hex, http, parseAbi } from 'viem';
 import PQueue from 'p-queue';
-import path, { dirname } from 'node:path';
-import {
-  fileReadable,
-  loadJson,
-  loadJsonSupportingBigInt,
-  saveJson,
-  saveJsonSupportingBigInt,
-} from './common/files';
-import { mkdir } from 'node:fs/promises';
-import { createCachedFactory, createFactory } from '../src/features/data/utils/factory-utils';
-import { addressBook, Token } from 'blockchain-addressbook';
-import { sortBy } from 'lodash';
+import { join as pathJoin } from 'node:path';
+import { loadJson, saveJson, withFileCache } from './common/files.ts';
+import { createCachedFactory, createFactory } from '../src/features/data/utils/factory-utils.ts';
+import { addressBook, type Token } from 'blockchain-addressbook';
+import { sortBy } from 'lodash-es';
 import platforms from '../src/config/platforms.json';
-import {
+import type {
   BalancerStrategyConfig,
   OptionalStrategySwapConfig,
-} from '../src/features/data/apis/transact/strategies/strategy-configs';
-import { sortVaultKeys } from './common/vault-fields';
+} from '../src/features/data/apis/transact/strategies/strategy-configs.ts';
+import { sortVaultKeys } from './common/vault-fields.ts';
 
-const cacheBasePath = path.join(__dirname, '.cache', 'balancer');
-const cacheApiPath = path.join(cacheBasePath, 'api');
-const cacheRpcPath = path.join(cacheBasePath, 'rpc');
-const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000' as const;
+const cacheBasePath = pathJoin(__dirname, '..', '.cache', 'scripts', 'balancer');
+const cacheApiPath = pathJoin(cacheBasePath, 'api');
+const cacheRpcPath = pathJoin(cacheBasePath, 'rpc');
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const ZERO_BYTES32 = `0x${'0'.repeat(32 * 2)}` as const;
 
 type RunArgs = {
@@ -122,13 +118,13 @@ const chainIdToBalancerChainId: OptionalRecord<AppChainId, BalancerChainId> = {
 
 const supportedProtocolVersions = new Set<number>([2]);
 
-const supportedPoolTypes: OptionalRecord<BalancerPoolType, { min: number; max: number }> = {
+const supportedPoolTypes: Record<string, { min: number; max: number }> = {
   COMPOSABLE_STABLE: { min: 3, max: 6 },
   WEIGHTED: { min: 1, max: 4 },
   GYROE: { min: 2, max: 2 },
   GYRO: { min: 2, max: 2 },
   META_STABLE: { min: 1, max: 1 },
-};
+} satisfies OptionalRecord<BalancerPoolType, { min: number; max: number }>;
 
 const balancerPoolQuery = `
 query Pool($id: String!, $chain: GqlChain){
@@ -262,8 +258,8 @@ function createViemClient(chainId: AppChainId, chain: ChainConfig) {
         symbol: chain.native.symbol,
       },
       rpcUrls: {
-        public: { http: [chainRpcs[chainId]] },
-        default: { http: [chainRpcs[chainId]] },
+        public: { http: [getChainRpc(chainId)] },
+        default: { http: [getChainRpc(chainId)] },
       },
       blockExplorers: {
         default: { name: `${chain.name} Explorer`, url: chain.explorerUrl },
@@ -282,33 +278,6 @@ const getViemClient = createCachedFactory(
   (chainId: AppChainId) => createViemClient(chainId, getChain(chainId)),
   (chainId: AppChainId) => chainId
 );
-
-function withFileCache<FN extends (...args: any[]) => any>(
-  factoryFn: FN,
-  cachePathFn: (...args: Parameters<FN>) => string
-) {
-  return async (
-    forceUpdate: boolean,
-    ...args: Parameters<FN>
-  ): Promise<Awaited<ReturnType<FN>>> => {
-    const cachePath = cachePathFn(...args);
-
-    if (!forceUpdate) {
-      try {
-        if (await fileReadable(cachePath)) {
-          return await loadJsonSupportingBigInt(cachePath);
-        }
-      } catch (e) {
-        console.error('Failed to read cache', cachePath, e);
-      }
-    }
-
-    const data = await factoryFn(...args);
-    await mkdir(dirname(cachePath), { recursive: true });
-    await saveJsonSupportingBigInt(cachePath, data, true);
-    return data;
-  };
-}
 
 function fulfilledOr<TResult, TDefault>(
   result: PromiseSettledResult<TResult>,
@@ -396,7 +365,7 @@ const fetchPoolRpcData = withFileCache(
     };
   },
   (poolAddress: Address, chainId: AppChainId) =>
-    path.join(cacheRpcPath, chainId, `pool-${poolAddress}.json`)
+    pathJoin(cacheRpcPath, chainId, `pool-${poolAddress}.json`)
 );
 
 const fetchTokenRpcData = withFileCache(
@@ -427,7 +396,7 @@ const fetchTokenRpcData = withFileCache(
     return { tokenAddress, chainId, metaDepositTypeHash, metaWithdrawTypeHash, assetAddress };
   },
   (tokenAddress: Address, chainId: AppChainId) =>
-    path.join(cacheRpcPath, chainId, `token-${tokenAddress}.json`)
+    pathJoin(cacheRpcPath, chainId, `token-${tokenAddress}.json`)
 );
 
 const balancerApiQueue = new PQueue({
@@ -446,7 +415,10 @@ balancerApiQueue.on('next', () => {
 });
 
 class BalancerApiPoolValidateError extends Error {
-  constructor(public readonly pool: BalancerApiPool<string, string>, message: string) {
+  constructor(
+    public readonly pool: BalancerApiPool<string, string>,
+    message: string
+  ) {
     super(message);
     this.name = 'BalancerApiPoolValidateError';
   }
@@ -497,18 +469,20 @@ const fetchPoolApiData = withFileCache(
     poolId: Hex,
     balancerChainId: BalancerChainId
   ): Promise<BalancerApiPool<string, string>> => {
-    const response = await balancerApiQueue.add(() =>
-      fetch('https://api-v3.balancer.fi/graphql', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          query: balancerPoolQuery,
-          variables: { id: poolId, chain: balancerChainId },
+    const response = await balancerApiQueue.add(
+      () =>
+        fetch('https://api-v3.balancer.fi/graphql', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            query: balancerPoolQuery,
+            variables: { id: poolId, chain: balancerChainId },
+          }),
         }),
-      })
+      { throwOnTimeout: true }
     );
 
     if (!response.ok) {
@@ -527,7 +501,7 @@ const fetchPoolApiData = withFileCache(
     return result.data.poolGetPool;
   },
   (poolId: Hex, balancerChainId: BalancerChainId) =>
-    path.join(cacheApiPath, balancerChainId, `${poolId}.json`)
+    pathJoin(cacheApiPath, balancerChainId, `${poolId}.json`)
 );
 
 const getPoolApiData = createCachedFactory(
@@ -541,7 +515,7 @@ const getPoolRpcData = createCachedFactory(
   (_, poolAddress: Address, chainId: AppChainId) => `${chainId}:${poolAddress}`
 );
 
-type PoolToken = BalancerPoolToken<Address> & {
+type PoolToken = BalancerPoolToken & {
   abToken?: Token;
   price?: number;
   swapProviders: string[];

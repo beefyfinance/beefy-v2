@@ -1,31 +1,31 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatLargeUsd } from '../../../../helpers/format';
-import { useAppSelector } from '../../../../store';
-import { selectUserGlobalStats } from '../../../data/selectors/apy';
-import { SummaryStats } from '../../../../components/SummaryStats';
-import { styles } from './styles';
-import { ReactComponent as WalletIcon } from '../../../../images/icons/wallet.svg';
-import { ReactComponent as VaultIcon } from '../../../../images/icons/vault.svg';
-import { ReactComponent as DailyIcon } from '../../../../images/icons/daily-yield.svg';
-import { ReactComponent as MonthlyIcon } from '../../../../images/icons/monthly-yield.svg';
-import { AddressInput } from '../AddressInput';
-import { ShortAddress } from '../ShortAddress';
-import { Container } from '../../../../components/Container/Container';
-import { selectUserTotalYieldUsd } from '../../../data/selectors/dashboard';
+import { formatLargeUsd } from '../../../../helpers/format.ts';
+import { useAppSelector } from '../../../../store.ts';
+import { selectUserGlobalStats } from '../../../data/selectors/apy.ts';
+import { SummaryStats } from '../../../../components/SummaryStats/SummaryStats.tsx';
+import { styles } from './styles.ts';
+import WalletIcon from '../../../../images/icons/wallet.svg?react';
+import VaultIcon from '../../../../images/icons/vault.svg?react';
+import DailyIcon from '../../../../images/icons/daily-yield.svg?react';
+import MonthlyIcon from '../../../../images/icons/monthly-yield.svg?react';
+import { AddressInput } from '../AddressInput/AddressInput.tsx';
+import { ShortAddress } from '../ShortAddress/ShortAddress.tsx';
+import { Container } from '../../../../components/Container/Container.tsx';
+import { selectUserTotalYieldUsd } from '../../../data/selectors/dashboard.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface DepositSummaryProps {
   address: string;
   addressLabel?: string;
 }
 
-export const DepositSummary = memo<DepositSummaryProps>(function DepositSummary({
+export const DepositSummary = memo(function DepositSummary({
   address,
   addressLabel,
-}) {
+}: DepositSummaryProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const stats = useAppSelector(state => selectUserGlobalStats(state, address));

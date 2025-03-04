@@ -1,4 +1,4 @@
-import type { ChainEntity } from '../../../../entities/chain';
+import type { ChainEntity } from '../../../../entities/chain.ts';
 import {
   type BatchSwapArgs,
   type ExitPoolArgs,
@@ -18,19 +18,22 @@ import {
   type SwapArgs,
   type SwapZapRequest,
   type VaultConfig,
-} from './types';
-import { ZERO_ADDRESS } from '../../../../../../helpers/addresses';
+} from './types.ts';
+import { ZERO_ADDRESS } from '../../../../../../helpers/addresses.ts';
 import { BigNumber } from 'bignumber.js';
-import { BalancerVaultAbi } from '../../../../../../config/abi/BalancerVaultAbi';
-import { createCachedFactory, createFactory } from '../../../../utils/factory-utils';
-import { BalancerQueriesAbi } from '../../../../../../config/abi/BalancerQueriesAbi';
-import { bigNumberToBigInt, bigNumberToUint256String } from '../../../../../../helpers/big-number';
-import type { StepToken, ZapStep } from '../../../transact/zap/types';
-import { getInsertIndex } from '../../../transact/helpers/zap';
+import { BalancerVaultAbi } from '../../../../../../config/abi/BalancerVaultAbi.ts';
+import { createCachedFactory, createFactory } from '../../../../utils/factory-utils.ts';
+import { BalancerQueriesAbi } from '../../../../../../config/abi/BalancerQueriesAbi.ts';
+import {
+  bigNumberToBigInt,
+  bigNumberToUint256String,
+} from '../../../../../../helpers/big-number.ts';
+import type { StepToken, ZapStep } from '../../../transact/zap/types.ts';
+import { getInsertIndex } from '../../../transact/helpers/zap.ts';
 import { getAddress, type Address, encodeFunctionData } from 'viem';
-import { PoolExitKind, PoolJoinKind } from '../common/types';
-import { JoinExitEncoder } from '../common/JoinExitEncoder';
-import { fetchContract } from '../../../rpc-contract/viem-contract';
+import { PoolExitKind, PoolJoinKind } from '../common/types.ts';
+import { JoinExitEncoder } from '../common/JoinExitEncoder.ts';
+import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
 
 const queryFunds: FundManagement = {
   sender: ZERO_ADDRESS as Address,
@@ -40,7 +43,10 @@ const queryFunds: FundManagement = {
 };
 
 export class Vault {
-  constructor(protected readonly chain: ChainEntity, protected readonly config: VaultConfig) {}
+  constructor(
+    protected readonly chain: ChainEntity,
+    protected readonly config: VaultConfig
+  ) {}
 
   async getPoolTokens(poolId: string): Promise<PoolTokensResponse> {
     const vault = await this.getVaultContract();
@@ -439,9 +445,9 @@ export class Vault {
           userData: args.singleSwap.userData as Address,
         },
         {
-          sender: args.funds.sender as Address,
+          sender: args.funds.sender,
           fromInternalBalance: args.funds.fromInternalBalance,
-          recipient: args.funds.recipient as Address,
+          recipient: args.funds.recipient,
           toInternalBalance: args.funds.toInternalBalance,
         },
         bigNumberToBigInt(args.limit),
@@ -465,13 +471,13 @@ export class Vault {
               assetOutIndex: BigInt(swap.assetOutIndex),
               amount: bigNumberToBigInt(swap.amount),
               userData: swap.userData as Address,
-            } as const)
+            }) as const
         ),
         args.assets as Address[],
         {
-          sender: args.funds.sender as Address,
+          sender: args.funds.sender,
           fromInternalBalance: args.funds.fromInternalBalance,
-          recipient: args.funds.recipient as Address,
+          recipient: args.funds.recipient,
           toInternalBalance: args.funds.toInternalBalance,
         } as const,
         args.limits.map(bigNumberToBigInt),

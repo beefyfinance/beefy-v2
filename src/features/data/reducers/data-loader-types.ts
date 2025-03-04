@@ -1,4 +1,4 @@
-import type { ChainEntity, ChainId } from '../entities/chain';
+import type { ChainEntity, ChainId } from '../entities/chain.ts';
 
 /**
  * because we want to be smart about data loading
@@ -96,9 +96,6 @@ export interface DataLoaderState {
       byChainId: {
         [chainId in ChainEntity['id']]?: ByAddressByChainDataEntity;
       };
-      // byVaultId: {
-      //   [vaultId: string]: ByAddressByVaultDataEntity;
-      // };
     };
   };
 }

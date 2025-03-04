@@ -1,29 +1,29 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
 import { useTranslation } from 'react-i18next';
 import techLoader from '../../images/tech-loader.gif';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type LoadingIndicatorProps = {
   text?: string;
-  className?: string;
+  css?: CssStyles;
   height?: number;
   width?: number;
 };
-export const LoadingIndicator = memo<LoadingIndicatorProps>(function LoadingIndicator({
+export const LoadingIndicator = memo(function LoadingIndicator({
   text,
-  className,
+  css: cssProp,
   height = 80,
   width = 80,
-}) {
+}: LoadingIndicatorProps) {
   const classes = useStyles();
   const { t } = useTranslation();
 
   return (
-    <div className={clsx(classes.container, className)}>
+    <div className={css(styles.container, cssProp)}>
       <img
         src={techLoader}
         height={height}

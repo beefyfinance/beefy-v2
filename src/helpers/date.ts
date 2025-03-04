@@ -1,8 +1,16 @@
-import { add, fromUnixTime, intervalToDuration, isAfter, isBefore, sub } from 'date-fns';
-import { zeroPad } from './format';
-import type { DurationSingle } from './date-types';
-import type { OptionalRecord } from '../features/data/utils/types-utils';
-import { firstKey } from './object';
+import {
+  add,
+  fromUnixTime,
+  intervalToDuration,
+  isAfter,
+  isBefore,
+  sub,
+  type Duration,
+} from 'date-fns';
+import { zeroPad } from './format.ts';
+import type { DurationSingle } from './date-types.ts';
+import type { OptionalRecord } from '../features/data/utils/types-utils.ts';
+import { firstKey } from './object.ts';
 
 export function datesAreEqual(a: Date | undefined, b: Date | undefined): boolean {
   // both are the same Date object, or both are undefined
@@ -23,7 +31,7 @@ export function formatTimeUntil(
   maxParts: number = 3,
   minParts: number = 3,
   padLength: number = 2,
-  from?: Date | undefined
+  from?: Date
 ): string {
   const parts: (keyof Duration)[] = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
   const numParts = parts.length;
@@ -117,11 +125,12 @@ export function convertDurationSingle(
   to: keyof Duration
 ): DurationSingle {
   const from = firstKey(duration);
-  if (!from) {
+  const wideDuration: Duration = duration;
+  if (!from || !wideDuration[from]) {
     throw new Error('DurationSingle is empty');
   }
   return {
-    [to]: convertDurationField(duration[from], from, to),
+    [to]: convertDurationField(wideDuration[from], from, to),
   } as DurationSingle;
 }
 

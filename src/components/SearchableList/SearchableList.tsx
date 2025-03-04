@@ -1,36 +1,31 @@
 import type { FC } from 'react';
 import { memo, useCallback, useMemo, useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { styles } from './styles';
-import { Item } from './Item';
-import type { ItemInnerProps } from './ItemInner';
-import { ItemInner } from './ItemInner';
-import { SearchInput } from '../SearchInput';
+import { styles } from './styles.ts';
+import { Item } from './Item.tsx';
+import type { ItemInnerProps } from './ItemInner.tsx';
+import { ItemInner } from './ItemInner.tsx';
 import { useTranslation } from 'react-i18next';
-import { Scrollable } from '../Scrollable';
-import clsx from 'clsx';
-import sortBy from 'lodash-es/sortBy';
+import { Scrollable } from '../Scrollable/Scrollable.tsx';
+import { SearchInput } from '../Form/Input/SearchInput.tsx';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
-
-export type SearchableListProps = {
-  options: string[];
-  onSelect: (value: string) => void;
-  ItemInnerComponent?: FC<ItemInnerProps>;
-  EndComponent?: FC<ItemInnerProps>;
+export type SearchableListProps<TValue extends string = string> = {
+  options: TValue[];
+  onSelect: (value: TValue) => void;
+  ItemInnerComponent?: FC<ItemInnerProps<TValue>>;
+  EndComponent?: FC<ItemInnerProps<TValue>>;
   size?: 'sm' | 'md';
   hideShadows?: boolean;
 };
 
-export const SearchableList = memo<SearchableListProps>(function SearchableList({
+export const SearchableList = memo(function SearchableList<TValue extends string = string>({
   options,
   onSelect,
   ItemInnerComponent = ItemInner,
   EndComponent,
   size = 'md',
   hideShadows,
-}) {
-  const classes = useStyles();
+}: SearchableListProps<TValue>) {
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const filteredOptions = useMemo(() => {
@@ -39,25 +34,25 @@ export const SearchableList = memo<SearchableListProps>(function SearchableList(
     }
 
     const lowerSearch = search.toLowerCase();
-    return options.filter(option => option.toLowerCase().includes(lowerSearch));
+    return options.filter(option => option.toLowerCase().includes(lowerSearch)).sort();
   }, [options, search]);
 
   const handleSelect = useCallback(
-    (value: string) => {
+    (value: TValue) => {
       onSelect(value);
     },
     [onSelect]
   );
 
   return (
-    <div className={clsx(classes.searchableList, { [classes.searchableListSM]: size === 'sm' })}>
-      <div className={clsx(classes.search, { [classes.searchSM]: size === 'sm' })}>
-        <SearchInput value={search} onChange={setSearch} />
+    <div className={css(styles.searchableList, size === 'sm' && styles.searchableListSM)}>
+      <div className={css(styles.search, size === 'sm' && styles.searchSM)}>
+        <SearchInput value={search} onValueChange={setSearch} />
       </div>
       <Scrollable hideShadows={hideShadows}>
-        <div className={clsx(classes.list, { [classes.listSM]: size === 'sm' })}>
+        <div className={css(styles.list, size === 'sm' && styles.listSM)}>
           {filteredOptions.length ? (
-            sortBy(filteredOptions, id => id).map(value => (
+            filteredOptions.map(value => (
               <Item
                 key={value}
                 value={value}

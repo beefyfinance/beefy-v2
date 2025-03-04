@@ -1,26 +1,26 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { memo, useMemo } from 'react';
-import type { CalculatedAsset } from '../../types';
-import { AssetsImage } from '../../../../../../components/AssetsImage';
-import type { ChainEntity } from '../../../../../data/entities/chain';
-import { formatLargePercent } from '../../../../../../helpers/format';
-import { styles } from './styles';
-import clsx from 'clsx';
+import type { CalculatedAsset } from '../../types.ts';
+import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
+import type { ChainEntity } from '../../../../../data/entities/chain.ts';
+import { formatLargePercent } from '../../../../../../helpers/format.ts';
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type LegendProps = {
   chainId: ChainEntity['id'];
   assets: CalculatedAsset[];
-  className?: string;
+  css?: CssStyles;
   isUnderlying?: boolean;
 };
-export const Legend = memo<LegendProps>(function Legend({
+export const Legend = memo(function Legend({
   chainId,
   assets,
-  className,
+  css: cssProp,
   isUnderlying,
-}) {
+}: LegendProps) {
   const classes = useStyles();
 
   const percentKey = useMemo(
@@ -30,11 +30,11 @@ export const Legend = memo<LegendProps>(function Legend({
   );
 
   return (
-    <div className={clsx(classes.holder, className)}>
+    <div className={css(styles.holder, cssProp)}>
       {assets.map(asset => (
         <div key={asset.address} className={classes.item}>
           <div className={classes.key} style={{ backgroundColor: asset.color }} />
-          <AssetsImage chainId={chainId} assetSymbols={[asset.symbol]} className={classes.icon} />
+          <AssetsImage chainId={chainId} assetSymbols={[asset.symbol]} css={styles.icon} />
           {formatLargePercent(asset[percentKey])}
         </div>
       ))}

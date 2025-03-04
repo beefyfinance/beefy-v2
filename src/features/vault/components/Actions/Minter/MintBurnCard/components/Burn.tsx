@@ -1,43 +1,47 @@
-import { memo, useMemo } from 'react';
-import { Button, makeStyles } from '@material-ui/core';
+import { memo, useCallback, useMemo } from 'react';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { useTranslation } from 'react-i18next';
-import { CardContent } from '../../../../Card';
-import { AssetsImage } from '../../../../../../../components/AssetsImage';
-import { styles } from '../styles';
+import { CardContent } from '../../../../Card/CardContent.tsx';
+import { AssetsImage } from '../../../../../../../components/AssetsImage/AssetsImage.tsx';
+import { styles } from '../styles.ts';
 import { BigNumber } from 'bignumber.js';
-import { formatTokenDisplayCondensed } from '../../../../../../../helpers/format';
-import { selectVaultById } from '../../../../../../data/selectors/vaults';
-import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance';
+import { formatTokenDisplayCondensed } from '../../../../../../../helpers/format.ts';
+import { selectVaultById } from '../../../../../../data/selectors/vaults.ts';
+import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance.ts';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
-} from '../../../../../../data/selectors/wallet';
+} from '../../../../../../data/selectors/wallet.ts';
 import {
   selectErc20TokenByAddress,
   selectTokenByAddress,
-} from '../../../../../../data/selectors/tokens';
-import { askForNetworkChange, askForWalletConnection } from '../../../../../../data/actions/wallet';
-import { walletActions } from '../../../../../../data/actions/wallet-actions';
-import type { MinterCardParams } from '../../MinterCard';
+} from '../../../../../../data/selectors/tokens.ts';
+import {
+  askForNetworkChange,
+  askForWalletConnection,
+} from '../../../../../../data/actions/wallet.ts';
+import { walletActions } from '../../../../../../data/actions/wallet-actions.ts';
+import type { MinterCardParams } from '../../MinterCard.tsx';
 import {
   selectMinterById,
   selectMinterReserves,
   selectMinterTotalSupply,
-} from '../../../../../../data/selectors/minters';
-import { selectAllowanceByTokenAddress } from '../../../../../../data/selectors/allowances';
-import { selectChainById } from '../../../../../../data/selectors/chains';
-import { AlertWarning } from '../../../../../../../components/Alerts';
-import { useAppDispatch, useAppSelector } from '../../../../../../../store';
-import { fromWei, toWei } from '../../../../../../../helpers/big-number';
-import { stepperActions } from '../../../../../../data/reducers/wallet/stepper';
-import { startStepper } from '../../../../../../data/actions/stepper';
-import { selectIsStepperStepping } from '../../../../../../data/selectors/stepper';
+} from '../../../../../../data/selectors/minters.ts';
+import { selectAllowanceByTokenAddress } from '../../../../../../data/selectors/allowances.ts';
+import { selectChainById } from '../../../../../../data/selectors/chains.ts';
+import { AlertWarning } from '../../../../../../../components/Alerts/Alerts.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../../../../store.ts';
+import { fromWei, toWei } from '../../../../../../../helpers/big-number.ts';
+import { stepperActions } from '../../../../../../data/reducers/wallet/stepper.ts';
+import { startStepper } from '../../../../../../data/actions/stepper.ts';
+import { selectIsStepperStepping } from '../../../../../../data/selectors/stepper.ts';
 import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
-import { isTokenErc20 } from '../../../../../../data/entities/token';
-import { useInputForm } from '../../../../../../data/hooks/input';
-import { AmountInput } from '../../../Transact/AmountInput';
+import { isTokenErc20 } from '../../../../../../data/entities/token.ts';
+import { useInputForm } from '../../../../../../data/hooks/input.tsx';
+import { AmountInput } from '../../../Transact/AmountInput/AmountInput.tsx';
+import { Button } from '../../../../../../../components/Button/Button.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -86,12 +90,22 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     return formData.amount;
   }, [minter.canBurn, formData.amount, reserves, totalSupply, depositToken, mintedToken]);
 
+  const handleNetworkChange = useCallback(() => {
+    dispatch(askForNetworkChange({ chainId: vault.chainId }));
+  }, [dispatch, vault]);
+
+  const handleConnectWallet = useCallback(() => {
+    dispatch(askForWalletConnection());
+  }, [dispatch]);
+
   const handleWithdraw = () => {
     if (!isWalletConnected) {
-      return dispatch(askForWalletConnection());
+      dispatch(askForWalletConnection());
+      return;
     }
     if (!isWalletOnVaultChain) {
-      return dispatch(askForNetworkChange({ chainId: vault.chainId }));
+      dispatch(askForNetworkChange({ chainId: vault.chainId }));
+      return;
     }
 
     // minted token does not need allowance to burn itself
@@ -134,7 +148,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   };
 
   return (
-    <CardContent className={classes.cardContent}>
+    <CardContent css={styles.cardContent}>
       <div className={classes.content}>
         {t(
           [
@@ -176,15 +190,13 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           value={formData.amount}
           maxValue={mintedTokenBalance}
           onChange={handleChange}
-          endAdornment={<Button onClick={handleMax}>{t('Transact-Max')}</Button>}
+          endAdornment={
+            <Button onClick={handleMax} css={styles.max}>
+              {t('Transact-Max')}
+            </Button>
+          }
           startAdornment={
-            <div className={classes.inputLogo}>
-              <AssetsImage
-                assetSymbols={[minter.mintedToken.symbol]}
-                size={24}
-                chainId={chain.id}
-              />
-            </div>
+            <AssetsImage assetSymbols={[minter.mintedToken.symbol]} size={24} chainId={chain.id} />
           }
         />
       </div>
@@ -212,23 +224,14 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           allowInputAboveBalance={true}
           disabled={true}
           startAdornment={
-            <div className={classes.inputLogo}>
-              <AssetsImage
-                assetSymbols={[minter.depositToken.symbol]}
-                size={24}
-                chainId={chain.id}
-              />
-            </div>
+            <AssetsImage assetSymbols={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
           }
         />
       </div>
       <>
         {isWalletConnected ? (
           !isWalletOnVaultChain ? (
-            <Button
-              onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
-              className={classes.btn}
-            >
+            <Button onClick={handleNetworkChange} className={classes.btn}>
               {t('Network-Change', { network: chain.name.toUpperCase() })}
             </Button>
           ) : (
@@ -245,13 +248,13 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
             </Button>
           )
         ) : (
-          <Button onClick={() => dispatch(askForWalletConnection())} className={classes.btn}>
+          <Button onClick={handleConnectWallet} className={classes.btn}>
             {t('Network-ConnectWallet')}
           </Button>
         )}
       </>
       {formData.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) && (
-        <AlertWarning className={classes.noReserves}>
+        <AlertWarning css={styles.noReserves}>
           {t('noreserves', { token: minter.depositToken.symbol })}
         </AlertWarning>
       )}

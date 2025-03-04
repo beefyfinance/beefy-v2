@@ -1,5 +1,5 @@
-import type { BeefyState } from '../../../redux-types';
-import type { IdleStatus, ResolverStatus } from '../reducers/wallet/resolver-types';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { IdleStatus, ResolverStatus } from '../reducers/wallet/resolver-types.ts';
 
 const IDLE_STATUS: IdleStatus = { status: 'idle' };
 

@@ -1,5 +1,8 @@
-import type { EnsureKeys, Prettify } from '../../../data/utils/types-utils';
-import type { ApiCowcentratedPoint, ApiPoint } from '../../../data/apis/beefy/beefy-data-api-types';
+import type { EnsureKeys, Prettify } from '../../../data/utils/types-utils.ts';
+import type {
+  ApiCowcentratedPoint,
+  ApiPoint,
+} from '../../../data/apis/beefy/beefy-data-api-types.ts';
 
 export type ChartStat = 'apy' | 'tvl' | 'price' | 'clm';
 
@@ -16,10 +19,19 @@ type ChartStatToApiPoint = EnsureKeys<
 export type AnyApiPoint = ChartStatToApiPoint[keyof ChartStatToApiPoint];
 
 type ChartStatToChartDataPoint = Prettify<{
-  apy: ChartStatToApiPoint['apy'] & { ma: number };
-  tvl: ChartStatToApiPoint['tvl'] & { ma: number };
-  price: ChartStatToApiPoint['price'] & { ma: number };
-  clm: ChartStatToApiPoint['clm'] & { ma: number; ranges: [number, number] };
+  apy: ChartStatToApiPoint['apy'] & {
+    ma: number;
+  };
+  tvl: ChartStatToApiPoint['tvl'] & {
+    ma: number;
+  };
+  price: ChartStatToApiPoint['price'] & {
+    ma: number;
+  };
+  clm: ChartStatToApiPoint['clm'] & {
+    ma: number;
+    ranges: [number, number];
+  };
 }>;
 
 export type ChartApiPoint<TStat extends ChartStat> = ChartStatToApiPoint[TStat];

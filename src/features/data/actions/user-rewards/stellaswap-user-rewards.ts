@@ -1,25 +1,27 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../../redux-types';
-import { getStellaSwapRewardsApi } from '../../apis/instances';
-import type { StellaSwapVaultReward } from '../../reducers/wallet/user-rewards-types';
+import type { BeefyState } from '../../../../redux-types.ts';
+import { getStellaSwapRewardsApi } from '../../apis/instances.ts';
+import type { StellaSwapVaultReward } from '../../reducers/wallet/user-rewards-types.ts';
 import {
   selectAllCowcentratedVaults,
   selectGovCowcentratedVaultById,
-} from '../../selectors/vaults';
-import { fromWeiString } from '../../../../helpers/big-number';
+} from '../../selectors/vaults.ts';
+import { fromWeiString } from '../../../../helpers/big-number.ts';
 import type {
   FetchUserStellaSwapRewardsActionParams,
   FetchUserStellaSwapRewardsFulfilledPayload,
-} from './stellaswap-user-rewards-types';
-import { pushOrSet } from '../../../../helpers/object';
-import { selectStellaSwapRewardsForUserShouldLoad } from '../../selectors/data-loader';
-import { isDefined } from '../../utils/array-utils';
-import { getCowcentratedPool } from '../../entities/vault';
+} from './stellaswap-user-rewards-types.ts';
+import { pushOrSet } from '../../../../helpers/object.ts';
+import { selectStellaSwapRewardsForUserShouldLoad } from '../../selectors/data-loader.ts';
+import { isDefined } from '../../utils/array-utils.ts';
+import { getCowcentratedPool } from '../../entities/vault.ts';
 
 export const fetchUserStellaSwapRewardsAction = createAsyncThunk<
   FetchUserStellaSwapRewardsFulfilledPayload,
   FetchUserStellaSwapRewardsActionParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'rewards/fetchUserStellaSwapRewardsAction',
   async ({ walletAddress }, { getState }) => {

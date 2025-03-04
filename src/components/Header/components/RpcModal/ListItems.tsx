@@ -1,19 +1,19 @@
-import { makeStyles } from '@material-ui/core';
 import { memo, useCallback, type MouseEventHandler, useMemo } from 'react';
-import type { ChainEntity } from '../../../../features/data/entities/chain';
-import { ChainIcon } from '../../../ChainIcon';
-import type { ItemInnerProps } from '../../../SearchableList/ItemInner';
-import { useAppSelector } from '../../../../store';
+import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
+import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
+import type { ItemInnerProps } from '../../../SearchableList/ItemInner.tsx';
+import { useAppSelector } from '../../../../store.ts';
 import {
   selectActiveRpcUrlForChain,
   selectChainById,
-} from '../../../../features/data/selectors/chains';
-import Refresh from '@material-ui/icons/Refresh';
-import { styles } from './styles';
+} from '../../../../features/data/selectors/chains.ts';
+import { styles } from './styles.ts';
 import { useDispatch } from 'react-redux';
-import { restoreDefaultRpcsOnSingleChain } from '../../../../features/data/actions/chains';
+import { restoreDefaultRpcsOnSingleChain } from '../../../../features/data/actions/chains.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import Refresh from '../../../../images/icons/mui/Refresh.svg?react';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const ModifiedListItem = memo(function ModifiedListItem({
   value,

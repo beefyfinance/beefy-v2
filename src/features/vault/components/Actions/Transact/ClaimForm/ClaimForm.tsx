@@ -1,24 +1,24 @@
 import { memo, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { useAppSelector } from '../../../../../../store';
-import { isCowcentratedLikeVault, isGovVault } from '../../../../../data/entities/vault';
-import { selectTransactVaultId } from '../../../../../data/selectors/transact';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
-import { selectWalletAddress } from '../../../../../data/selectors/wallet';
-import { selectHasUserDepositInVault } from '../../../../../data/selectors/balance';
-import { MerklRewards } from './Merkl/MerklRewards';
-import { GovRewards } from './Gov/GovRewards';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { useAppSelector } from '../../../../../../store.ts';
+import { isCowcentratedLikeVault, isGovVault } from '../../../../../data/entities/vault.ts';
+import { selectTransactVaultId } from '../../../../../data/selectors/transact.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { selectWalletAddress } from '../../../../../data/selectors/wallet.ts';
+import { selectHasUserDepositInVault } from '../../../../../data/selectors/balance.ts';
+import { MerklRewards } from './Merkl/MerklRewards.tsx';
+import { GovRewards } from './Gov/GovRewards.tsx';
 import {
   selectVaultHasActiveMerklCampaigns,
   selectVaultHasActiveStellaSwapCampaigns,
-} from '../../../../../data/selectors/rewards';
+} from '../../../../../data/selectors/rewards.ts';
 import { useTranslation } from 'react-i18next';
-import { StellaSwapRewards } from './StellaSwap/StellaSwapRewards';
+import { StellaSwapRewards } from './StellaSwap/StellaSwapRewards.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-export const ClaimFormLoader = memo(function ClaimFormLoader() {
+const ClaimFormLoader = memo(function ClaimFormLoader() {
   const classes = useStyles();
   const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);
@@ -77,3 +77,6 @@ export const ClaimFormLoader = memo(function ClaimFormLoader() {
     </div>
   );
 });
+
+// eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
+export default ClaimFormLoader;

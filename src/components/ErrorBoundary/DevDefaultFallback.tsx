@@ -1,10 +1,10 @@
 import { memo } from 'react';
-import { AlertError } from '../Alerts';
-import type { FallbackComponentProps } from './types';
+import { AlertError } from '../Alerts/Alerts.tsx';
+import type { FallbackComponentProps } from './types.ts';
 
-export const DevDefaultFallback = memo<FallbackComponentProps>(function DevDefaultFallback({
+export const DevDefaultFallback = memo(function DevDefaultFallback({
   error,
-}) {
+}: FallbackComponentProps) {
   return (
     <AlertError>
       <div>An error was thrown from a component</div>

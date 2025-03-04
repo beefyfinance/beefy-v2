@@ -1,42 +1,41 @@
 import type { ReactNode } from 'react';
 import { memo, useMemo } from 'react';
 import { type BigNumber } from 'bignumber.js';
-import type { TokenEntity } from '../../../../../data/entities/token';
-import { useAppSelector } from '../../../../../../store';
+import type { TokenEntity } from '../../../../../data/entities/token.ts';
+import { useAppSelector } from '../../../../../../store.ts';
 import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
-} from '../../../../../data/selectors/tokens';
-import { TokenAmount } from '../../../../../../components/TokenAmount';
-import { formatLargeUsd } from '../../../../../../helpers/format';
-import { TokenImage } from '../../../../../../components/TokenImage/TokenImage';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
-import { TextLoader } from '../../../../../../components/TextLoader';
-import { IconLoader } from '../../../../../../components/IconLoader';
+} from '../../../../../data/selectors/tokens.ts';
+import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { formatLargeUsd } from '../../../../../../helpers/format.ts';
+import { TokenImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
+import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
+import { IconLoader } from '../../../../../../components/IconLoader/IconLoader.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type TokenAmountIconProps = {
   amount: BigNumber;
   tokenAddress: TokenEntity['address'];
   chainId: TokenEntity['chainId'];
-  className?: string;
+  css?: CssStyles;
   showSymbol?: boolean;
   tokenImageSize?: number;
-  amountWithValueClassName?: string;
+  amountWithValueCss?: CssStyles;
 };
-export const TokenAmountIcon = memo<TokenAmountIconProps>(function TokenAmountIcon({
+export const TokenAmountIcon = memo(function TokenAmountIcon({
   amount,
   tokenAddress,
   chainId,
-  className,
+  css: cssProp,
   showSymbol = true,
   tokenImageSize = 24,
-  amountWithValueClassName,
-}) {
-  const classes = useStyles();
+  amountWithValueCss,
+}: TokenAmountIconProps) {
   const token = useAppSelector(state => selectTokenByAddress(state, chainId, tokenAddress));
   const tokenPrice = useAppSelector(state =>
     selectTokenPriceByAddress(state, chainId, tokenAddress)
@@ -47,16 +46,16 @@ export const TokenAmountIcon = memo<TokenAmountIconProps>(function TokenAmountIc
 
   return (
     <TokenAmountIconComponent
-      className={className}
-      amountWithValueClassName={amountWithValueClassName}
-      amount={<TokenAmount amount={amount} decimals={token.decimals} className={classes.token} />}
+      css={cssProp}
+      amountWithValueCss={amountWithValueCss}
+      amount={<TokenAmount amount={amount} decimals={token.decimals} css={styles.token} />}
       value={`~${formatLargeUsd(valueInUsd)}`}
       tokenSymbol={showSymbol ? token.symbol : null}
       tokenIcon={
         <TokenImage
           chainId={token.chainId}
           tokenAddress={token.address}
-          className={classes.icon}
+          css={styles.icon}
           size={tokenImageSize}
         />
       }
@@ -65,51 +64,49 @@ export const TokenAmountIcon = memo<TokenAmountIconProps>(function TokenAmountIc
 });
 
 export type TokenAmountIconLoaderProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const TokenAmountIconLoader = memo<TokenAmountIconLoaderProps>(
-  function TokenAmountIconLoader({ className }) {
-    return (
-      <TokenAmountIconComponent
-        className={className}
-        amount={<TextLoader placeholder="1234.5678" />}
-        value={<TextLoader placeholder="~$1245.56" />}
-        tokenSymbol={<TextLoader placeholder="ABC-XYZ LP" />}
-        tokenIcon={<IconLoader size={32} />}
-      />
-    );
-  }
-);
+export const TokenAmountIconLoader = memo(function TokenAmountIconLoader({
+  css: cssProp,
+}: TokenAmountIconLoaderProps) {
+  return (
+    <TokenAmountIconComponent
+      css={cssProp}
+      amount={<TextLoader placeholder="1234.5678" />}
+      value={<TextLoader placeholder="~$1245.56" />}
+      tokenSymbol={<TextLoader placeholder="ABC-XYZ LP" />}
+      tokenIcon={<IconLoader size={32} />}
+    />
+  );
+});
 
 type TokenAmountIconComponentProps = {
   amount: ReactNode;
   value: ReactNode;
   tokenSymbol?: ReactNode;
   tokenIcon?: ReactNode;
-  className?: string;
-  amountWithValueClassName?: string;
+  css?: CssStyles;
+  amountWithValueCss?: CssStyles;
 };
-const TokenAmountIconComponent = memo<TokenAmountIconComponentProps>(
-  function TokenAmountIconComponent({
-    amount,
-    value,
-    tokenSymbol,
-    tokenIcon,
-    className,
-    amountWithValueClassName,
-  }) {
-    const classes = useStyles();
-    return (
-      <div className={clsx(classes.holder, className)}>
-        <div className={clsx(classes.amountWithValue, amountWithValueClassName)}>
-          {amount}
-          <div className={classes.value}>{value}</div>
-        </div>
-        <div className={classes.tokenWithIcon}>
-          {tokenSymbol && <span className={classes.token}>{tokenSymbol}</span>}
-          {tokenIcon}
-        </div>
+const TokenAmountIconComponent = memo(function TokenAmountIconComponent({
+  amount,
+  value,
+  tokenSymbol,
+  tokenIcon,
+  css: cssProp,
+  amountWithValueCss,
+}: TokenAmountIconComponentProps) {
+  const classes = useStyles();
+  return (
+    <div className={css(styles.holder, cssProp)}>
+      <div className={css(styles.amountWithValue, amountWithValueCss)}>
+        {amount}
+        <div className={classes.value}>{value}</div>
       </div>
-    );
-  }
-);
+      <div className={classes.tokenWithIcon}>
+        {tokenSymbol && <span className={classes.token}>{tokenSymbol}</span>}
+        {tokenIcon}
+      </div>
+    </div>
+  );
+});

@@ -1,20 +1,20 @@
-import { bluechipTokens } from '../../../helpers/utils';
-import type { BeefyState } from '../../../redux-types';
-import type { ChainEntity } from '../entities/chain';
-import type { TokenEntity } from '../entities/token';
-import { isTokenErc20, isTokenNative } from '../entities/token';
-import { selectAllChainIds, selectChainById } from './chains';
-import { BIG_ZERO } from '../../../helpers/big-number';
-import { selectIsAddressBookLoaded, selectIsPricesAvailable } from './data-loader';
-import { isStandardVault, type VaultEntity } from '../entities/vault';
+import { bluechipTokens } from '../../../helpers/utils.ts';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { TokenEntity } from '../entities/token.ts';
+import { isTokenErc20, isTokenNative } from '../entities/token.ts';
+import { selectAllChainIds, selectChainById } from './chains.ts';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { selectIsAddressBookLoaded, selectIsPricesAvailable } from './data-loader.ts';
+import { isStandardVault, type VaultEntity } from '../entities/vault.ts';
 import { createCachedSelector } from 're-reselect';
 import {
   selectCowcentratedLikeVaultById,
   selectGovVaultById,
   selectVaultById,
   selectVaultPricePerFullShare,
-} from './vaults';
-import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
+} from './vaults.ts';
+import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
 import { orderBy } from 'lodash-es';
 import { BigNumber } from 'bignumber.js';
 import { fromUnixTime, sub } from 'date-fns';
@@ -22,9 +22,10 @@ import { fromUnixTime, sub } from 'date-fns';
 import {
   getDataApiBucket,
   getDataApiBucketsLongerThan,
-} from '../apis/beefy/beefy-data-api-helpers';
+} from '../apis/beefy/beefy-data-api-helpers.ts';
 import { createSelector } from '@reduxjs/toolkit';
-import { valueOrThrow } from '../utils/selector-utils';
+import { valueOrThrow } from '../utils/selector-utils.ts';
+import { isDefined } from '../utils/array-utils.ts';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -77,14 +78,11 @@ export const selectTokenByAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
   address: TokenEntity['address']
-) => {
-  const tokensByChainId = selectTokensByChainId(state, chainId);
-  const token = tokensByChainId.byAddress[address.toLowerCase()];
-  if (token === undefined) {
-    throw new Error(`selectTokenByAddress: Unknown token address "${address}"`);
-  }
-  return token;
-};
+) =>
+  valueOrThrow(
+    state.entities.tokens.byChainId[chainId]?.byAddress[address.toLowerCase()],
+    `selectTokenByAddress: Unknown token address "${address}"`
+  );
 
 export const selectTokenByAddressOrUndefined = (
   state: BeefyState,
@@ -187,9 +185,9 @@ export const selectChainWrappedNativeToken = (state: BeefyState, chainId: ChainE
 export const selectIsTokenStable = createCachedSelector(
   (state: BeefyState, chainId: ChainEntity['id'], _tokenId: TokenEntity['id']) =>
     selectChainById(state, chainId),
-  (state: BeefyState, chainId: ChainEntity['id'], tokenId: TokenEntity['id']) => tokenId,
+  (_state: BeefyState, _chainId: ChainEntity['id'], tokenId: TokenEntity['id']) => tokenId,
   (chain, tokenId) => chain.stableCoins.includes(tokenId)
-)((state: BeefyState, chainId: ChainEntity['id'], tokenId: TokenEntity['id']) => tokenId);
+)((_state: BeefyState, _chainId: ChainEntity['id'], tokenId: TokenEntity['id']) => tokenId);
 
 export const selectIsBeefyToken = (_: BeefyState, tokenId: TokenEntity['id']) => {
   return [
@@ -230,21 +228,18 @@ export const selectIsTokenBluechip = (_: BeefyState, tokenId: TokenEntity['id'])
   return bluechipTokens.includes(tokenId);
 };
 
-export const selectTokenPriceByAddress = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  address: string
-) => {
-  const token = state.entities.tokens.byChainId[chainId]?.byAddress[address.toLowerCase()];
-  if (!token) return BIG_ZERO;
-  return selectTokenPriceByTokenOracleId(state, token.oracleId);
-};
+export const selectTokenPriceByAddress = createSelector(
+  selectTokenByAddressOrUndefined,
+  (state: BeefyState) => state.entities.tokens.prices.byOracleId,
+  (token, pricesByOracleId) => {
+    return (token && pricesByOracleId[token.oracleId]) || BIG_ZERO;
+  }
+);
 
-export const selectTokenPriceByTokenOracleId = createCachedSelector(
-  (state: BeefyState, oracleId: TokenEntity['oracleId']) =>
-    state.entities.tokens.prices.byOracleId[oracleId],
-  price => price || BIG_ZERO
-)((state: BeefyState, oracleId: TokenEntity['oracleId']) => oracleId);
+export const selectTokenPriceByTokenOracleId = (
+  state: BeefyState,
+  oracleId: TokenEntity['oracleId']
+) => state.entities.tokens.prices.byOracleId[oracleId] || BIG_ZERO;
 
 export const selectVaultReceiptTokenPrice = (
   state: BeefyState,
@@ -331,14 +326,14 @@ export const selectHasBreakdownDataForVaultId = (state: BeefyState, vaultId: Vau
 export const selectIsTokenLoadedOnChain = createCachedSelector(
   (state: BeefyState, _address: TokenEntity['address'], chainId: ChainEntity['id']) =>
     state.entities.tokens.byChainId[chainId],
-  (state: BeefyState, address: TokenEntity['address']) => address.toLowerCase(),
+  (_state: BeefyState, address: TokenEntity['address']) => address.toLowerCase(),
   (tokensByChainId, address) => tokensByChainId?.byAddress[address] !== undefined
-)((state: BeefyState, address: TokenEntity['address'], _chainId: ChainEntity['id']) => address);
+)((_state: BeefyState, address: TokenEntity['address'], _chainId: ChainEntity['id']) => address);
 
 export const selectWrappedToNativeSymbolMap = (state: BeefyState) => {
   const chainIds = selectAllChainIds(state);
 
-  const wrappedToNativeSymbolMap = new Map();
+  const wrappedToNativeSymbolMap = new Map<string, string>();
 
   for (const chainId of chainIds) {
     const wnative = selectChainWrappedNativeToken(state, chainId);
@@ -350,11 +345,11 @@ export const selectWrappedToNativeSymbolMap = (state: BeefyState) => {
 
 export const selectWrappedToNativeSymbolOrTokenSymbol = createCachedSelector(
   (state: BeefyState, _symbol: string) => selectWrappedToNativeSymbolMap(state),
-  (state: BeefyState, symbol: string) => symbol,
+  (_state: BeefyState, symbol: string) => symbol,
   (wrappedToNativeSymbolMap, symbol) => {
-    return wrappedToNativeSymbolMap.has(symbol) ? wrappedToNativeSymbolMap.get(symbol) : symbol;
+    return wrappedToNativeSymbolMap.get(symbol) || symbol;
   }
-)((state: BeefyState, symbol: string) => symbol);
+)((_state: BeefyState, symbol: string) => symbol);
 
 export const selectPriceWithChange = createCachedSelector(
   (state: BeefyState, oracleId: string, _bucket: ApiTimeBucket) =>
@@ -431,33 +426,25 @@ export const selectPriceWithChange = createCachedSelector(
   }
 )((_state: BeefyState, oracleId: string, bucket: ApiTimeBucket) => `${oracleId}-${bucket}`);
 
-export const selectSupportedSwapTokenAddressesForChainAggregator = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  providerId: string
-) => {
-  return state.entities.zaps.swaps.byChainId[chainId]?.byProvider[providerId] || [];
-};
+export const selectSupportedSwapTokensForChainAggregator = createSelector(
+  (state: BeefyState, chainId: ChainEntity['id'], providerId: string) =>
+    state.entities.zaps.swaps.byChainId[chainId]?.byProvider[providerId],
+  (state: BeefyState, chainId: ChainEntity['id']) =>
+    state.entities.tokens.byChainId[chainId]?.byAddress,
+  (addresses, byAddress) => {
+    if (!byAddress || !addresses || !addresses.length) {
+      return [];
+    }
+    return addresses.map(address => byAddress[address.toLowerCase()]).filter(isDefined);
+  }
+);
 
-export const selectSupportedSwapTokensForChainAggregator = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  providerId: string
-) => {
-  return selectSupportedSwapTokenAddressesForChainAggregator(state, chainId, providerId)
-    .map(address => selectTokenByAddressOrUndefined(state, chainId, address))
-    .filter((v): v is TokenEntity => !!v);
-};
-
-export const selectSupportedSwapTokensForChainAggregatorHavingPrice = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  providerId: string
-) => {
-  return selectSupportedSwapTokensForChainAggregator(state, chainId, providerId).filter(token =>
-    selectTokenPriceByTokenOracleId(state, token.oracleId).gt(BIG_ZERO)
-  );
-};
+export const selectSupportedSwapTokensForChainAggregatorHavingPrice = createSelector(
+  selectSupportedSwapTokensForChainAggregator,
+  (state: BeefyState) => state.entities.tokens.prices.byOracleId,
+  (tokens, pricesByOracleId) =>
+    tokens.filter(token => pricesByOracleId[token.oracleId]?.gt(BIG_ZERO))
+);
 
 export const selectVaultTokenSymbols = createCachedSelector(
   selectVaultById,

@@ -1,7 +1,7 @@
-import type { IMerklRewardsApi, MerklRewardsRequest, MerklRewardsResponse } from './merkl-types';
-import { featureFlag_simulateMerklApiFailure } from '../../../utils/feature-flags';
-import { makeRateLimitedHttpHelper } from '../../../../../helpers/http';
-import type { HttpHelper } from '../../../../../helpers/http/types';
+import type { IMerklRewardsApi, MerklRewardsRequest, MerklRewardsResponse } from './merkl-types.ts';
+import { featureFlag_simulateMerklApiFailure } from '../../../utils/feature-flags.ts';
+import { makeRateLimitedHttpHelper } from '../../../../../helpers/http/http.ts';
+import type { HttpHelper } from '../../../../../helpers/http/types.ts';
 
 export class MerklRewardsApi implements IMerklRewardsApi {
   private http: HttpHelper;

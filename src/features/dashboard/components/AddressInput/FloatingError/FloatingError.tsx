@@ -1,25 +1,7 @@
 import { memo, type MutableRefObject, type RefObject } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Floating } from '../../../../../components/Floating';
-import type { Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  dropdown: {
-    ...theme.typography['body-lg-med'],
-    display: 'flex',
-    flexDirection: 'column' as const,
-    alignItems: 'center',
-    color: theme.palette.text.dark,
-    padding: '6px 12px',
-    backgroundColor: theme.palette.background.contentPrimary,
-    border: `2px solid ${theme.palette.background.border}`,
-    borderRadius: '8px',
-    marginTop: '4px',
-    minWidth: '250px',
-    zIndex: 999,
-  },
-}));
+import { DropdownProvider } from '../../../../../components/Dropdown/DropdownProvider.tsx';
+import { DropdownContent } from '../../../../../components/Dropdown/DropdownContent.tsx';
 
 interface FloatingErrorProps {
   userInput: string;
@@ -30,44 +12,45 @@ interface FloatingErrorProps {
   anchorRef: RefObject<HTMLInputElement> | MutableRefObject<HTMLInputElement>;
 }
 
-export const FloatingError = memo<FloatingErrorProps>(function FloatingError({
+export const FloatingError = memo(function FloatingError({
   userInput,
   inputMode,
   isAddressValid,
   isDomainValid,
   isDomainResolving,
   anchorRef,
-}) {
-  const classes = useStyles();
+}: FloatingErrorProps) {
   const { t } = useTranslation();
 
   if (!isDomainResolving && inputMode === 'domain') {
     return (
-      <Floating
+      <DropdownProvider
         open={!isDomainValid}
         placement="bottom-start"
-        anchorEl={anchorRef as MutableRefObject<HTMLElement>}
-        className={classes.dropdown}
-        display="flex"
-        autoWidth={false}
+        reference={anchorRef}
+        arrowEnabled={true}
+        variant="dark"
+        autoWidth={true}
+        arrowOffset={15}
       >
-        <div>{t('Dashboard-SearchInput-Invalid-Domain')}</div>
-      </Floating>
+        <DropdownContent>{t('Dashboard-SearchInput-Invalid-Domain')}</DropdownContent>
+      </DropdownProvider>
     );
   }
 
   if (inputMode === 'address' && userInput.toLowerCase().startsWith('0x')) {
     return (
-      <Floating
+      <DropdownProvider
         open={!isAddressValid}
         placement="bottom-start"
-        anchorEl={anchorRef as MutableRefObject<HTMLElement>}
-        className={classes.dropdown}
-        display="flex"
-        autoWidth={false}
+        reference={anchorRef}
+        arrowEnabled={true}
+        variant="dark"
+        autoWidth={true}
+        arrowOffset={15}
       >
-        <div>{t('Dashboard-SearchInput-Invalid-Address')}</div>
-      </Floating>
+        <DropdownContent>{t('Dashboard-SearchInput-Invalid-Address')}</DropdownContent>
+      </DropdownProvider>
     );
   }
 

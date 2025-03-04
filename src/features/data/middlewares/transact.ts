@@ -1,4 +1,4 @@
-import type { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types.ts';
 import { type AnyAction, createListenerMiddleware } from '@reduxjs/toolkit';
 import {
   selectIsAddressBookLoaded,
@@ -9,23 +9,23 @@ import {
   selectShouldInitZapAmms,
   selectShouldInitZapConfigs,
   selectShouldInitZapSwapAggregators,
-} from '../selectors/data-loader';
-import { selectAllChainIds } from '../selectors/chains';
-import { selectVaultById } from '../selectors/vaults';
-import { selectTransactPendingVaultIdOrUndefined } from '../selectors/transact';
-import { selectWalletAddress } from '../selectors/wallet';
-import { selectAreFeesLoaded, selectShouldInitFees } from '../selectors/fees';
+} from '../selectors/data-loader.ts';
+import { selectAllChainIds } from '../selectors/chains.ts';
+import { selectVaultById } from '../selectors/vaults.ts';
+import { selectTransactPendingVaultIdOrUndefined } from '../selectors/transact.ts';
+import { selectWalletAddress } from '../selectors/wallet.ts';
+import { selectAreFeesLoaded, selectShouldInitFees } from '../selectors/fees.ts';
 import {
   calculateZapAvailabilityAction,
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
   fetchZapConfigsAction,
   fetchZapSwapAggregatorsAction,
-} from '../actions/zap';
-import { transactInit, transactInitReady } from '../actions/transact';
-import { fetchFees } from '../actions/fees';
-import { fetchUserOffChainRewardsForVaultAction } from '../actions/user-rewards/user-rewards';
-import { selectMayHaveOffchainUserRewards } from '../selectors/user-rewards';
+} from '../actions/zap.ts';
+import { transactInit, transactInitReady } from '../actions/transact.ts';
+import { fetchFees } from '../actions/fees.ts';
+import { fetchUserOffChainRewardsForVaultAction } from '../actions/user-rewards/user-rewards.ts';
+import { selectMayHaveOffchainUserRewards } from '../selectors/user-rewards.ts';
 
 const transactListener = createListenerMiddleware<BeefyState>();
 

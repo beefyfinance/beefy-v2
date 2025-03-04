@@ -1,29 +1,29 @@
-import { makeStyles } from '@material-ui/core';
-
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useTranslation } from 'react-i18next';
-import { fetchAddressBookAction } from '../../../data/actions/tokens';
-import type { ChainEntity } from '../../../data/entities/chain';
-import type { TokenEntity } from '../../../data/entities/token';
-import { isTokenErc20, isTokenNative } from '../../../data/entities/token';
-import { selectChainById } from '../../../data/selectors/chains';
+import { fetchAddressBookAction } from '../../../data/actions/tokens.ts';
+import type { ChainEntity } from '../../../data/entities/chain.ts';
+import type { TokenEntity } from '../../../data/entities/token.ts';
+import { isTokenErc20, isTokenNative } from '../../../data/entities/token.ts';
+import { selectChainById } from '../../../data/selectors/chains.ts';
 import {
   selectIsAddressBookLoaded,
   selectShouldInitAddressBook,
-} from '../../../data/selectors/data-loader';
-import { selectIsTokenLoaded, selectTokenById } from '../../../data/selectors/tokens';
-import { styles } from './styles';
-import { useAppDispatch, useAppSelector } from '../../../../store';
-import { AssetsImage } from '../../../../components/AssetsImage';
-import { selectBridgeByIdIfKnown } from '../../../data/selectors/bridges';
-import { BridgeTag, NativeTag } from '../BridgeTag';
-import { explorerTokenUrl } from '../../../../helpers/url';
-import { PriceWithChange } from '../../../../components/PriceWithChange/PriceWithChange';
-import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink';
-import { Code, Link } from '@material-ui/icons';
-import { ReactComponent as DocsIcon } from '../../../../images/icons/navigation/docs.svg';
+} from '../../../data/selectors/data-loader.ts';
+import { selectIsTokenLoaded, selectTokenById } from '../../../data/selectors/tokens.ts';
+import { styles } from './styles.ts';
+import { useAppDispatch, useAppSelector } from '../../../../store.ts';
+import { AssetsImage } from '../../../../components/AssetsImage/AssetsImage.tsx';
+import { selectBridgeByIdIfKnown } from '../../../data/selectors/bridges.ts';
+import { BridgeTag, NativeTag } from '../BridgeTag/BridgeTag.tsx';
+import { explorerTokenUrl } from '../../../../helpers/url.ts';
+import { PriceWithChange } from '../../../../components/PriceWithChange/PriceWithChange.tsx';
+import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink.tsx';
+import Code from '../../../../images/icons/mui/Code.svg?react';
+import Link from '../../../../images/icons/mui/Link.svg?react';
+import DocsIcon from '../../../../images/icons/navigation/docs.svg?react';
 import { memo, useEffect } from 'react';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function TokenCardDisplay({ token }: { token: TokenEntity }) {
   const classes = useStyles();
@@ -43,7 +43,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
             assetSymbols={[token.symbol]}
             chainId={chain.id}
             size={24}
-            className={classes.assetIcon}
+            css={styles.assetIcon}
           />
           <div className={classes.assetSymbol}>{token.symbol}</div>
         </div>
@@ -53,8 +53,8 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
               Icon={Link}
               text={t('Token-Site')}
               href={token.website}
-              className={classes.assetWebsite}
-              textClassName={classes.assetLinkText}
+              css={styles.assetWebsite}
+              textCss={styles.assetLinkText}
             />
           )}
           {isErc20 && (
@@ -62,8 +62,8 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
               Icon={Code}
               href={explorerTokenUrl(chain, token.address)}
               text={t('Token-Contract')}
-              className={classes.assetContract}
-              textClassName={classes.assetLinkText}
+              css={styles.assetContract}
+              textCss={styles.assetLinkText}
             />
           )}
           {token.documentation && (
@@ -71,18 +71,18 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
               Icon={DocsIcon}
               href={token.documentation}
               text={t('Token-Docs')}
-              className={classes.assetDocumentation}
-              textClassName={classes.assetLinkText}
+              css={styles.assetDocumentation}
+              textCss={styles.assetLinkText}
             />
           )}
         </div>
         <div className={classes.assetBridgePrice}>
           {isNative ? (
-            <NativeTag chain={chain} className={classes.assetBridge} />
+            <NativeTag chain={chain} css={styles.assetBridge} />
           ) : bridge ? (
-            <BridgeTag bridge={bridge} chain={chain} className={classes.assetBridge} />
+            <BridgeTag bridge={bridge} chain={chain} css={styles.assetBridge} />
           ) : null}
-          <PriceWithChange oracleId={token.oracleId} className={classes.assetPrice} />
+          <PriceWithChange oracleId={token.oracleId} css={styles.assetPrice} />
         </div>
       </div>
       <div className={classes.description}>

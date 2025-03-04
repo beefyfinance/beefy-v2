@@ -1,49 +1,148 @@
-import { Collapse, makeStyles } from '@material-ui/core';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
-import clsx from 'clsx';
-import type { ReactNode } from 'react';
+import ExpandLess from '../../images/icons/mui/ExpandLess.svg?react';
+import ExpandMore from '../../images/icons/mui/ExpandMore.svg?react';
+import type { MouseEventHandler, ReactNode } from 'react';
 import { memo, useCallback, useState } from 'react';
-import { Button } from '../Button';
-import { styles } from './styles';
+import { css, cva, type RecipeVariantProps } from '@repo/styles/css';
 
-interface CollapsableProps {
+type CollapsableProps = {
   openByDefault?: boolean;
   children: ReactNode;
-  containerClassName?: string;
-  titleClassName?: string;
-  title: string;
-}
-
-const useStyles = makeStyles(styles);
+  title: ReactNode;
+} & CollapseRecipeProps;
 
 export const Collapsable = memo<CollapsableProps>(function Collapsable({
   openByDefault = false,
   children,
-  containerClassName,
-  titleClassName,
   title,
+  ...recipeProps
 }) {
   const [open, setOpen] = useState<boolean>(openByDefault);
-
-  const classes = useStyles();
-
+  const collapsableStyles = collapseRecipe(recipeProps);
   const handleCollapse = useCallback(() => {
     setOpen(prevStatus => !prevStatus);
-  }, []);
+  }, [setOpen]);
+  const Icon = open ? ExpandLess : ExpandMore;
 
   return (
-    <div className={clsx(containerClassName, classes.container)}>
-      <Button fullWidth={true} onClick={handleCollapse} className={classes.title}>
-        <div className={titleClassName}>{title}</div>
-        {open ? (
-          <ExpandLess className={classes.titleIcon} />
-        ) : (
-          <ExpandMore className={classes.titleIcon} />
-        )}
-      </Button>
-      <Collapse in={open} timeout="auto">
-        {children}
-      </Collapse>
+    <div className={collapsableStyles}>
+      <Header onClick={handleCollapse} variant={recipeProps.variant} open={open}>
+        {title}
+        <Icon className={iconStyles} />
+      </Header>
+      {open && <Content variant={recipeProps.variant} children={children} />}
     </div>
   );
+});
+
+const collapseRecipe = cva({
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+    borderRadius: '12px',
+  },
+  variants: {
+    padding: {
+      none: {},
+      sm: {
+        padding: '16px',
+      },
+      md: {
+        padding: '24px',
+      },
+    },
+    variant: {
+      transparent: {},
+      light: {
+        background: 'background.content.light',
+      },
+      primary: {
+        background: 'background.content',
+      },
+      card: {
+        background: 'background.content.light',
+        gap: '0',
+      },
+    },
+  },
+  defaultVariants: {
+    variant: 'transparent',
+    padding: 'md',
+  },
+});
+
+type CollapseRecipeProps = NonNullable<RecipeVariantProps<typeof collapseRecipe>>;
+
+const contentRecipe = cva({
+  base: {},
+  variants: {
+    variant: {
+      transparent: {},
+      light: {},
+      primary: {},
+      card: {
+        padding: '24px',
+      },
+    },
+  },
+  defaultVariants: {
+    variant: 'transparent',
+  },
+});
+
+type ContentRecipeProps = NonNullable<RecipeVariantProps<typeof contentRecipe>>;
+
+const Content = memo(function Header({
+  variant,
+  ...props
+}: {
+  children: ReactNode;
+} & ContentRecipeProps) {
+  return <div className={contentRecipe({ variant })} {...props} />;
+});
+
+const headerRecipe = cva({
+  base: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    borderRadius: '12px',
+  },
+  variants: {
+    variant: {
+      transparent: {},
+      light: {},
+      primary: {},
+      card: {
+        backgroundColor: 'background.contentDark',
+        padding: '24px',
+      },
+    },
+    open: {
+      true: {
+        borderRadius: '12px 12px 0 0',
+      },
+    },
+  },
+  defaultVariants: {
+    variant: 'transparent',
+  },
+});
+
+type HeaderRecipeProps = NonNullable<RecipeVariantProps<typeof headerRecipe>>;
+
+const Header = memo(function Header({
+  variant,
+  open,
+  ...props
+}: {
+  children: ReactNode;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+} & HeaderRecipeProps) {
+  return <button type="button" className={headerRecipe({ variant, open })} {...props} />;
+});
+
+const iconStyles = css({
+  fill: 'text.middle',
 });

@@ -1,8 +1,9 @@
-import { createGlobLoader } from './globLoader';
-import type { BridgeEntity } from '../features/data/entities/bridge';
+import { createGlobLoader } from './globLoader.ts';
+import type { BridgeEntity } from '../features/data/entities/bridge.ts';
 
-const iconPathToUrl = import.meta.glob('../images/bridges/*.svg', {
-  as: 'url',
+const iconPathToUrl = import.meta.glob<string>('../images/bridges/*.svg', {
+  query: '?url',
+  import: 'default',
   eager: true,
 });
 

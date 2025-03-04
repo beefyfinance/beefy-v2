@@ -1,29 +1,29 @@
-import type { FilteredVaultBooleanKeys } from '../../../../../data/reducers/filtered-vaults';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
+import type { FilteredVaultBooleanKeys } from '../../../../../data/reducers/filtered-vaults.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import type { ReactNode } from 'react';
 import { memo, useCallback } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { selectFilterBoolean } from '../../../../../data/selectors/filtered-vaults';
-import type { LabelledCheckboxProps } from '../../../../../../components/LabelledCheckbox';
-import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox';
-import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
-import { styles } from './styles';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { selectFilterBoolean } from '../../../../../data/selectors/filtered-vaults.ts';
+import type { LabelledCheckboxProps } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
+import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { css, type CssStyles } from '@repo/styles/css';
+import { styles } from './styles.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type CheckboxFilterProps = {
   filter: FilteredVaultBooleanKeys;
   label: string;
   icon?: ReactNode;
-  className?: string;
+  css?: CssStyles;
 };
-export const CheckboxFilter = memo<CheckboxFilterProps>(function CheckboxFilter({
+export const CheckboxFilter = memo(function CheckboxFilter({
   filter,
   label,
   icon,
-  className,
-}) {
+  css: cssProp,
+}: CheckboxFilterProps) {
   const dispatch = useAppDispatch();
   const classes = useStyles();
   const value = useAppSelector(state => selectFilterBoolean(state, filter));
@@ -44,7 +44,7 @@ export const CheckboxFilter = memo<CheckboxFilterProps>(function CheckboxFilter(
       }
       onChange={handleChange}
       checked={value}
-      checkboxClass={clsx(className, classes.checkbox)}
+      checkboxCss={css.raw(cssProp, styles.checkbox)}
     />
   );
 });

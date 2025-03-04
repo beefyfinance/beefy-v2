@@ -1,16 +1,16 @@
-import type { Migrator, MigratorUnstakeProps } from '../migration-types';
-import type { VaultEntity } from '../../../entities/vault';
+import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
+import type { VaultEntity } from '../../../entities/vault.ts';
 import { BigNumber } from 'bignumber.js';
-import type { BeefyState } from '../../../../../redux-types';
-import { selectVaultStrategyAddress } from '../../../selectors/vaults';
-import { selectTokenByAddress } from '../../../selectors/tokens';
-import { ERC20Abi } from '../../../../../config/abi/ERC20Abi';
-import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number';
-import { buildExecute, buildFetchBalance } from '../utils';
-import { selectWalletAddress } from '../../../selectors/wallet';
-import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
+import type { BeefyState } from '../../../../../redux-types.ts';
+import { selectVaultStrategyAddress } from '../../../selectors/vaults.ts';
+import { selectTokenByAddress } from '../../../selectors/tokens.ts';
+import { ERC20Abi } from '../../../../../config/abi/ERC20Abi.ts';
+import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number.ts';
+import { buildExecute, buildFetchBalance } from '../utils.ts';
+import { selectWalletAddress } from '../../../selectors/wallet.ts';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Abi, Address } from 'abitype';
-import { getWalletConnectionApi } from '../../instances';
+import { getWalletConnectionApi } from '../../instances.ts';
 import type { Hash } from 'viem';
 
 const id = 'ethereum-prisma';

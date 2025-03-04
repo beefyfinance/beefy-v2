@@ -1,17 +1,17 @@
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import { StepHeader } from '../StepHeader';
-import { TransactStep } from '../../../../../data/reducers/wallet/transact-types';
-import { selectTransactQuoteIds } from '../../../../../data/selectors/transact';
-import { Scrollable } from '../../../../../../components/Scrollable';
-import type { ListItemProps } from './ListItem';
-import { ListItem } from './ListItem';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
+import { StepHeader } from '../StepHeader/StepHeader.tsx';
+import { TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { selectTransactQuoteIds } from '../../../../../data/selectors/transact.ts';
+import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.tsx';
+import type { ListItemProps } from './ListItem/ListItem.tsx';
+import { ListItem } from './ListItem/ListItem.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const QuoteSelectStep = memo(function QuoteSelectStep() {
   const { t } = useTranslation();
@@ -32,7 +32,7 @@ export const QuoteSelectStep = memo(function QuoteSelectStep() {
     <div className={classes.container}>
       <StepHeader onBack={handleBack}>{t('Transact-SelectProvider')}</StepHeader>
       <div className={classes.select}>
-        <Scrollable className={classes.listContainer}>
+        <Scrollable css={styles.listContainer}>
           <div className={classes.list}>
             {quotes.map(quoteId => (
               <ListItem key={quoteId} quoteId={quoteId} onSelect={handleSelect} />

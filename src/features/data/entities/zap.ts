@@ -5,7 +5,7 @@ import type {
   AmmConfigUniswapV2,
   SwapAggregatorConfig,
   ZapConfig,
-} from '../apis/config-types';
+} from '../apis/config-types.ts';
 
 export type ZapEntity = ZapConfig;
 export type SwapAggregatorEntity = SwapAggregatorConfig;

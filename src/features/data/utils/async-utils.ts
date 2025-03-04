@@ -1,6 +1,6 @@
 import type { AsyncThunkAction } from '@reduxjs/toolkit';
 import type { Action, Dispatch, Store } from 'redux';
-import type { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types.ts';
 
 /**
  * allows us to do
@@ -9,8 +9,8 @@ import type { BeefyState } from '../../../redux-types';
  * Useful for polling data at regular interval with unknown network conditions
  */
 export function sleep(ms: number) {
-  return new Promise(resolve => {
-    setTimeout(() => resolve(ms), ms);
+  return new Promise<void>(resolve => {
+    setTimeout(() => resolve(), ms);
   });
 }
 
@@ -36,15 +36,20 @@ export function poll(
     document.addEventListener('visibilitychange', onVisibilityChange);
   }
 
-  async function doPoll() {
-    await sleep(ms);
-    if (!paused) {
-      await fn();
-    }
-    if (!stop) {
-      // do a set timeout with no ms parameter to avoid infinite stack
-      setTimeout(doPoll);
-    }
+  function doPoll() {
+    sleep(ms)
+      .then(() => {
+        if (!paused) {
+          return fn();
+        }
+      })
+      .catch(console.error)
+      .finally(() => {
+        if (!stop) {
+          // do a set timeout with no ms parameter to avoid infinite stack
+          setTimeout(doPoll);
+        }
+      });
   }
 
   doPoll();
@@ -98,8 +103,12 @@ export function poll(
  *
  * Feel free to implement any other solution if you find it better
  */
-export function createFulfilledActionCapturer(store: Store) {
-  type CustomAction<T> = Action<string> & { payload: T & { state?: BeefyState } };
+export function createFulfilledActionCapturer(store: Store<BeefyState>) {
+  type CustomAction<T> = Action<string> & {
+    payload: T & {
+      state?: BeefyState;
+    };
+  };
 
   /**
    * Some actions include the state in their payload
@@ -141,11 +150,12 @@ export function createFulfilledActionCapturer(store: Store) {
   return function captureFulfilledAction<
     Returned,
     ThunkArg,
-    ThunkApiConfig extends AsyncThunkConfig
+    ThunkApiConfig extends AsyncThunkConfig,
   >(asyncAction: AsyncThunkAction<Returned, ThunkArg, ThunkApiConfig>): Promise<() => Action> {
     const extra = {};
     return new Promise((resolve, reject) => {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         asyncAction(
           // @ts-ignore I could not find a proper TS type here
           (action: AsyncThunkAction) => {
@@ -159,6 +169,7 @@ export function createFulfilledActionCapturer(store: Store) {
               // we reject to avoid being stuck on awaiting the returned promise
               console.error(`Rejected action: ${action.type}`);
               store.dispatch(action);
+              // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
               return reject(action);
             } else if (action.type.endsWith('/pending')) {
               // dispatch the action to the store reducers as normal
@@ -174,6 +185,7 @@ export function createFulfilledActionCapturer(store: Store) {
           extra
         );
       } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
         reject(e);
       }
     });

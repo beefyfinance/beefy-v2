@@ -10,29 +10,30 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import type { VaultEntity } from '../../../../data/entities/vault';
-import type { TokenEntity } from '../../../../data/entities/token';
-import type { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
-import type { Theme } from '@material-ui/core';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
+import type { VaultEntity } from '../../../../data/entities/vault.ts';
+import type { TokenEntity } from '../../../../data/entities/token.ts';
+import type { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types.ts';
+import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
 import { format, fromUnixTime } from 'date-fns';
-import { XAxisTick } from '../../../../../components/XAxisTick';
-import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../helpers/graph/graph';
+import { XAxisTick } from '../../../../../components/XAxisTick/XAxisTick.tsx';
+import { domainOffSet, getXInterval, mapRangeToTicks } from '../../../../../helpers/graph/graph.ts';
 import {
   formatLargePercent,
   formatTokenDisplayCondensed,
   formatUsd,
-} from '../../../../../helpers/format';
-import type { LineTogglesState } from '../LineToggles';
-import { type BaseTooltipProps, TooltipContent } from '../TooltipContent';
-import { useChartData } from './useChartData';
-import { styles } from './styles';
-import { useAppSelector } from '../../../../../store';
-import { selectVaultById } from '../../../../data/selectors/vaults';
+} from '../../../../../helpers/format.ts';
+import type { LineTogglesState } from '../LineToggles/LineToggles.tsx';
+import { TooltipContent } from '../TooltipContent/TooltipContent.tsx';
+import type { BaseTooltipProps } from '../TooltipContent/TooltipContent.tsx';
+import { useChartData } from './useChartData.tsx';
+import { styles } from './styles.ts';
+import { useAppSelector } from '../../../../../store.ts';
+import { selectVaultById } from '../../../../data/selectors/vaults.ts';
 import { max as lodashMax } from 'lodash-es';
-import type { ChartStat } from '../types';
+import type { ChartStat } from '../types.ts';
+import { useBreakpoint } from '../../../../../components/MediaQueries/useBreakpoint.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ChartProp<TStat extends ChartStat> = {
   vaultId: VaultEntity['id'];
@@ -52,7 +53,7 @@ export const Graph = memo(function Graph<TStat extends ChartStat>({
   inverted,
 }: ChartProp<TStat>) {
   const classes = useStyles();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+  const isMobile = useBreakpoint({ to: 'xs' });
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const vaultType = vault.type;
   const chartData = useChartData(stat, vaultId, oracleId, bucket, inverted);
@@ -80,8 +81,8 @@ export const Graph = memo(function Graph<TStat extends ChartStat>({
     return stat === 'apy'
       ? (value: number) => formatLargePercent(value)
       : stat === 'clm'
-      ? (value: number) => formatTokenDisplayCondensed(value, 18)
-      : (value: number) => formatUsd(value);
+        ? (value: number) => formatTokenDisplayCondensed(value, 18)
+        : (value: number) => formatUsd(value);
   }, [stat]);
 
   const diff = useMemo(() => {

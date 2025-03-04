@@ -1,4 +1,4 @@
-import { getVaultsIntegrity } from './common/exclude';
+import { getVaultsIntegrity } from './common/exclude.ts';
 
 async function start() {
   const chain = process.argv[2];

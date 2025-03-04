@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import { getBeefyApi, getConfigApi } from '../apis/instances';
-import type { ChainEntity, ChainId } from '../entities/chain';
-import type { VaultConfig } from '../apis/config-types';
-import { first, keyBy, mapValues } from 'lodash-es';
+import type { BeefyState } from '../../../redux-types.ts';
+import { getBeefyApi, getConfigApi } from '../apis/instances.ts';
+import type { ChainEntity, ChainId } from '../entities/chain.ts';
+import type { VaultConfig } from '../apis/config-types.ts';
+import { first, keyBy, mapValues, partition } from 'lodash-es';
 import {
   type VaultBase,
   type VaultCowcentrated,
@@ -14,21 +14,27 @@ import {
   type VaultStandard,
   type VaultStandardBaseOnly,
   type VaultStatus,
-} from '../entities/vault';
-import { getVaultNames } from '../utils/vault-utils';
-import { safetyScoreNum } from '../../../helpers/safetyScore';
-import { isDefined } from '../utils/array-utils';
+} from '../entities/vault.ts';
+import { getVaultNames } from '../utils/vault-utils.ts';
+import { safetyScoreNum } from '../../../helpers/safetyScore.ts';
+import { isDefined } from '../utils/array-utils.ts';
+import { SCORED_RISKS } from '../../../config/risk.ts';
 
 export interface FulfilledAllVaultsPayload {
   byChainId: {
-    [chainId in ChainEntity['id']]?: { config: VaultConfig; entity: VaultEntity }[];
+    [chainId in ChainEntity['id']]?: {
+      config: VaultConfig;
+      entity: VaultEntity;
+    }[];
   };
 }
 
 export const fetchAllVaults = createAsyncThunk<
   FulfilledAllVaultsPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('vaults/fetchAllVaults', async () => {
   const api = await getConfigApi();
   const vaultsByChainId = await api.fetchAllVaults();
@@ -37,14 +43,16 @@ export const fetchAllVaults = createAsyncThunk<
       const entities = buildVaultEntitiesForChain(vaults, chainId as ChainId);
       return vaults.map((config, i) => ({
         config,
-        entity: entities[i]!,
+        entity: entities[i],
       }));
     }),
   };
 });
 
 type FulfilledVaultsLastHarvestPayload = {
-  byVaultId: { [vaultId: VaultConfig['id']]: number };
+  byVaultId: {
+    [vaultId: VaultConfig['id']]: number;
+  };
 };
 
 export const fetchVaultsLastHarvests = createAsyncThunk<FulfilledVaultsLastHarvestPayload>(
@@ -286,20 +294,32 @@ function getVaultStatus(apiVault: VaultConfig): VaultStatus {
   return apiVault.status === 'active'
     ? { status: 'active' }
     : apiVault.status === 'eol'
-    ? {
-        status: 'eol',
-        retireReason: apiVault.retireReason || 'default',
-        retiredAt: apiVault.retiredAt || 0,
-      }
-    : {
-        status: 'paused',
-        pauseReason: apiVault.pauseReason || 'default',
-        pausedAt: apiVault.pausedAt || 0,
-      };
+      ? {
+          status: 'eol',
+          retireReason: apiVault.retireReason || 'default',
+          retiredAt: apiVault.retiredAt || 0,
+        }
+      : {
+          status: 'paused',
+          pauseReason: apiVault.pauseReason || 'default',
+          pausedAt: apiVault.pausedAt || 0,
+        };
+}
+
+function getVaultRisks(apiVault: VaultConfig): string[] {
+  const risks = apiVault.risks || [];
+  const [validRisks, invalidrisks] = partition(risks, risk => risk in SCORED_RISKS);
+
+  if (invalidrisks.length > 0) {
+    console.warn(`Invalid risks found for vault ${apiVault.id}: ${invalidrisks.join(', ')}`);
+  }
+
+  return validRisks;
 }
 
 function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBase {
   const names = getVaultNames(config.name, config.type);
+  const risks = getVaultRisks(config);
 
   return {
     id: config.id,
@@ -321,8 +341,8 @@ function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBas
     pointStructureIds: config.pointStructureIds || [],
     platformId: config.platformId,
     strategyTypeId: config.strategyTypeId,
-    risks: config.risks || [],
-    safetyScore: safetyScoreNum(config.risks || []) || 0,
+    risks,
+    safetyScore: safetyScoreNum(risks) || 0,
     depositFee: config.depositFee || 0,
     migrationIds: config.migrationIds || [],
     hidden: false,

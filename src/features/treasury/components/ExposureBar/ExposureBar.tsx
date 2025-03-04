@@ -1,17 +1,17 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { memo } from 'react';
-import { formatLargePercent } from '../../../../helpers/format';
-import type { BaseEntry } from '../../../data/utils/array-utils';
-import { styles } from './styles';
-import { CHART_COLORS } from '../../../../helpers/charts';
+import { formatLargePercent } from '../../../../helpers/format.ts';
+import type { BaseEntry } from '../../../data/utils/array-utils.ts';
+import { styles } from './styles.ts';
+import { CHART_COLORS } from '../../../../helpers/charts.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface ExposureBarProps {
   data: BaseEntry[];
 }
 
-export const ExposureBar = memo<ExposureBarProps>(function ExposureBar({ data }) {
+export const ExposureBar = memo(function ExposureBar({ data }: ExposureBarProps) {
   const classes = useStyles();
   return (
     <div className={classes.bar}>

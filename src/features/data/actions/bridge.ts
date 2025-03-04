@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import { getBridgeApi, getConfigApi } from '../apis/instances';
-import type { ChainEntity } from '../entities/chain';
-import { selectCurrentChainId, selectWalletAddress } from '../selectors/wallet';
-import type { BeefyAnyBridgeConfig, BeefyBridgeConfig } from '../apis/config-types';
-import { fetchBalanceAction } from './balance';
+import type { BeefyState } from '../../../redux-types.ts';
+import { getBridgeApi, getConfigApi } from '../apis/instances.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import { selectCurrentChainId, selectWalletAddress } from '../selectors/wallet.ts';
+import type { BeefyAnyBridgeConfig, BeefyBridgeConfig } from '../apis/config-types.ts';
+import { fetchBalanceAction } from './balance.ts';
 import {
   selectBridgeConfigById,
   selectBridgeConfirmQuote,
@@ -16,20 +16,20 @@ import {
   selectBridgeSourceChainId,
   selectBridgeSupportedChainIds,
   selectShouldLoadBridgeConfig,
-} from '../selectors/bridge';
-import type { BridgeFormState } from '../reducers/wallet/bridge';
-import { FormStep } from '../reducers/wallet/bridge';
-import { BIG_ONE, BIG_ZERO, fromWeiString } from '../../../helpers/big-number';
-import { selectChainById } from '../selectors/chains';
+} from '../selectors/bridge.ts';
+import type { BridgeFormState } from '../reducers/wallet/bridge.ts';
+import { FormStep } from '../reducers/wallet/bridge.ts';
+import { BIG_ONE, BIG_ZERO, fromWeiString } from '../../../helpers/big-number.ts';
+import { selectChainById } from '../selectors/chains.ts';
 import { orderBy, partition } from 'lodash-es';
-import { isFulfilledResult } from '../../../helpers/promises';
-import type { IBridgeQuote } from '../apis/bridge/providers/provider-types';
-import { fetchAllowanceAction } from './allowance';
-import { selectAllowanceByTokenAddress } from '../selectors/allowances';
-import type { Step } from '../reducers/wallet/stepper';
-import { walletActions } from './wallet-actions';
+import { isFulfilledResult } from '../../../helpers/promises.ts';
+import type { IBridgeQuote } from '../apis/bridge/providers/provider-types.ts';
+import { fetchAllowanceAction } from './allowance.ts';
+import { selectAllowanceByTokenAddress } from '../selectors/allowances.ts';
+import type { Step } from '../reducers/wallet/stepper.ts';
+import { walletActions } from './wallet-actions.ts';
 import type { Namespace, TFunction } from 'react-i18next';
-import { startStepperWithSteps } from './stepper';
+import { startStepperWithSteps } from './stepper.ts';
 import { BigNumber } from 'bignumber.js';
 import { isAddress } from 'viem';
 
@@ -53,7 +53,9 @@ export type FetchBridgeChainPayload = {
 export const fetchBridgeConfig = createAsyncThunk<
   FetchBridgeChainPayload,
   FetchBridgeConfigParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('bridge/fetchBridgeConfig', async () => {
   const api = await getConfigApi();
   return { config: await api.fetchBeefyBridgeConfig() };
@@ -70,7 +72,9 @@ type InitBridgeFormPayload = {
 export const initiateBridgeForm = createAsyncThunk<
   InitBridgeFormPayload,
   InitBridgeFormParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('bridge/initiateBridgeForm', async ({ walletAddress }, { getState, dispatch }) => {
   if (selectShouldLoadBridgeConfig(getState())) {
     await dispatch(fetchBridgeConfig());
@@ -131,7 +135,9 @@ type ValidateBridgeFormPayload = void;
 export const validateBridgeForm = createAsyncThunk<
   ValidateBridgeFormPayload,
   ValidateBridgeFormParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('bridge/validateBridgeForm', async (_, { getState, dispatch }) => {
   const state = getState();
 
@@ -168,7 +174,11 @@ export const quoteBridgeForm = createAsyncThunk<
   {
     state: BeefyState;
     rejectValue: 'AllQuotesRateLimitedError';
-    rejectedMeta: { current: BigNumber; max: BigNumber; canWait: boolean };
+    rejectedMeta: {
+      current: BigNumber;
+      max: BigNumber;
+      canWait: boolean;
+    };
   }
 >('bridge/quoteBridgeForm', async (_, { getState, rejectWithValue }) => {
   const state = getState();
@@ -219,7 +229,7 @@ export const quoteBridgeForm = createAsyncThunk<
     const [inLimits, outLimits] = partition(sortedQuotes, q => q.withinLimits);
 
     if (inLimits.length === 0) {
-      throw rejectWithValue('AllQuotesRateLimitedError', getLimits(outLimits));
+      return rejectWithValue('AllQuotesRateLimitedError', getLimits(outLimits));
     }
 
     return { quotes: inLimits, limitedQuotes: outLimits };
@@ -234,12 +244,16 @@ export const quoteBridgeForm = createAsyncThunk<
 
 type ConfirmBridgeFormParams = void;
 
-type ConfirmBridgeFormPayload = { quote: IBridgeQuote<BeefyAnyBridgeConfig> };
+type ConfirmBridgeFormPayload = {
+  quote: IBridgeQuote<BeefyAnyBridgeConfig>;
+};
 
 export const confirmBridgeForm = createAsyncThunk<
   ConfirmBridgeFormPayload,
   ConfirmBridgeFormParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('bridge/confirmBridgeForm', async (_, { getState, dispatch }) => {
   const state = getState();
   const quoteId = selectBridgeQuoteSelectedId(state);
@@ -285,14 +299,18 @@ export const confirmBridgeForm = createAsyncThunk<
   };
 });
 
-type PerformBridgeParams = { t: TFunction<Namespace> };
+type PerformBridgeParams = {
+  t: TFunction<Namespace>;
+};
 
 type PerformBridgePayload = void;
 
 export const performBridge = createAsyncThunk<
   PerformBridgePayload,
   PerformBridgeParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('bridge/performBridge', async ({ t }, { getState, dispatch }) => {
   const state = getState();
   const quote = selectBridgeConfirmQuote(state);

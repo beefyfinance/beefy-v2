@@ -1,5 +1,5 @@
-import type { ChainEntity } from '../../entities/chain';
-import type { EIP1559GasConfig, GasConfig, StandardGasConfig } from '../config-types';
+import type { ChainEntity } from '../../entities/chain.ts';
+import type { EIP1559GasConfig, GasConfig, StandardGasConfig } from '../config-types.ts';
 import { BigNumber } from 'bignumber.js';
 import {
   averageBigNumbers,
@@ -8,14 +8,14 @@ import {
   BIG_ZERO,
   bigNumberToBigInt,
   compareBigNumber,
-} from '../../../../helpers/big-number';
-import { sortWith } from '../../utils/array-utils';
+} from '../../../../helpers/big-number.ts';
+import { sortWith } from '../../utils/array-utils.ts';
 import {
   getBeefyFeeHistory,
   getBeefyGasPrice,
   rpcClientManager,
-} from '../rpc-contract/rpc-manager';
-import { fetchContract } from '../rpc-contract/viem-contract';
+} from '../rpc-contract/rpc-manager.ts';
+import { fetchContract } from '../rpc-contract/viem-contract.ts';
 import type { Abi, Address } from 'abitype';
 import type { GetContractReturnType } from 'viem';
 
@@ -172,7 +172,7 @@ export class EIP1559GasPricer implements IGasPricer {
  */
 export class CeloGasPricer implements IGasPricer {
   protected readonly gasPriceMinimumAddress: string = '0xDfca3a8d7699D8bAfe656823AD60C17cb8270ECC';
-  protected gasPriceMinimumContract: GetContractReturnType;
+  protected gasPriceMinimumContract: GetContractReturnType | undefined;
 
   constructor(protected readonly chain: ChainEntity) {}
 

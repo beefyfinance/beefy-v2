@@ -1,31 +1,29 @@
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectBridgeDepositTokenForChainId,
   selectBridgeFormState,
-} from '../../../../../data/selectors/bridge';
-import clsx from 'clsx';
+} from '../../../../../data/selectors/bridge.ts';
+import { css, type CssStyles } from '@repo/styles/css';
 import { useTranslation } from 'react-i18next';
-import { bridgeActions } from '../../../../../data/reducers/wallet/bridge';
-import {
-  AmountInput,
-  type AmountInputProps,
-} from '../../../../../vault/components/Actions/Transact/AmountInput';
-import { formatTokenDisplayCondensed } from '../../../../../../helpers/format';
+import { bridgeActions } from '../../../../../data/reducers/wallet/bridge.ts';
+import { AmountInput } from '../../../../../vault/components/Actions/Transact/AmountInput/AmountInput.tsx';
+import type { AmountInputProps } from '../../../../../vault/components/Actions/Transact/AmountInput/AmountInput.tsx';
+import { formatTokenDisplayCondensed } from '../../../../../../helpers/format.ts';
 import { BigNumber } from 'bignumber.js';
-import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
-import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens';
-import { BIG_ZERO } from '../../../../../../helpers/big-number';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
+import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens.ts';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type AmountSelectorProps = {
-  className?: string;
+  css?: CssStyles;
 };
 
-export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector({ className }) {
+export const AmountSelector = memo(function AmountSelector({ css: cssProp }: AmountSelectorProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const classes = useStyles();
@@ -64,7 +62,7 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
   }, [input.amount, userBalance]);
 
   return (
-    <div className={clsx(classes.group, className)}>
+    <div className={css(styles.group, cssProp)}>
       <div className={classes.labels}>
         <div className={classes.label}>{t('AMOUNT')}</div>
         <div onClick={handleMax} className={classes.balance}>
@@ -75,7 +73,6 @@ export const AmountSelector = memo<AmountSelectorProps>(function AmountSelector(
         </div>
       </div>
       <AmountInput
-        className={clsx(classes.input)}
         value={input.amount}
         maxValue={userBalance}
         tokenDecimals={input.token.decimals}
@@ -99,7 +96,7 @@ const MaxButton = memo(function MaxButton({
   const classes = useStyles();
   const { t } = useTranslation();
   return (
-    <button onClick={onClick} disabled={disabled} className={classes.max}>
+    <button type="button" onClick={onClick} disabled={disabled} className={classes.max}>
       {t('Transact-Max')}
     </button>
   );

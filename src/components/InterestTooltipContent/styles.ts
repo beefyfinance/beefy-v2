@@ -1,26 +1,26 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  rows: {
-    ...theme.typography['body-lg'],
+export const styles = {
+  rows: css.raw({
+    textStyle: 'body',
     display: 'grid',
     rowGap: '8px',
     columnGap: '48px',
     gridTemplateColumns: '1fr auto',
-  },
-  label: {
+  }),
+  label: css.raw({
     color: 'var(--tooltip-label-color)',
     '&:nth-last-child(2)': {
-      fontWeight: theme.typography['body-lg-med'].fontWeight,
+      fontWeight: 'body.medium',
       color: 'var(--tooltip-title-color)',
     },
-  },
-  value: {
+  }),
+  value: css.raw({
     color: 'var(--tooltip-value-color)',
-    textAlign: 'right' as const,
+    textAlign: 'right',
     '&:last-child': {
-      fontWeight: theme.typography['body-lg-med'].fontWeight,
+      fontWeight: 'body.medium',
       color: 'var(--tooltip-label-color)',
     },
-  },
-});
+  }),
+};

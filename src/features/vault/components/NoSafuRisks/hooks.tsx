@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
-import { useAppSelector } from '../../../../store';
-import type { VaultEntity } from '../../../data/entities/vault';
+import { useAppSelector } from '../../../../store.ts';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
 import {
   selectVaultHasAssetsWithRisks,
   selectVaultHasPlatformWithRisks,
-} from '../../../data/selectors/vaults';
+} from '../../../data/selectors/vaults.ts';
 
 export const useVaultHasRisks = (
   vaultId: VaultEntity['id']
@@ -14,7 +14,11 @@ export const useVaultHasRisks = (
       values: Record<string, string>;
       risk: string;
     }
-  | { vaultHasRisks: false; values: undefined; risk: undefined } => {
+  | {
+      vaultHasRisks: false;
+      values: undefined;
+      risk: undefined;
+    } => {
   const vaultHasPlatformWithRisks = useAppSelector(state =>
     selectVaultHasPlatformWithRisks(state, vaultId)
   );

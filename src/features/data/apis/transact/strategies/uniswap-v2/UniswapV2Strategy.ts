@@ -1,9 +1,9 @@
-import type { IZapStrategyStatic } from '../IStrategy';
-import { UniswapLikeStrategy } from '../UniswapLikeStrategy';
-import type { AmmEntity, AmmEntityUniswapV2 } from '../../../../entities/zap';
-import type { UniswapV2StrategyConfig } from '../strategy-configs';
+import type { IZapStrategyStatic } from '../IStrategy.ts';
+import { UniswapLikeStrategy } from '../UniswapLikeStrategy.ts';
+import type { AmmEntity, AmmEntityUniswapV2 } from '../../../../entities/zap.ts';
+import type { UniswapV2StrategyConfig } from '../strategy-configs.ts';
 
-const strategyId = 'uniswap-v2' as const;
+const strategyId = 'uniswap-v2';
 type StrategyId = typeof strategyId;
 
 export class UniswapV2StrategyImpl extends UniswapLikeStrategy<

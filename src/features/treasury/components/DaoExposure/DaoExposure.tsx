@@ -1,15 +1,14 @@
-import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
-import { type FC, useState } from 'react';
-import { memo, useMemo } from 'react';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { css } from '@repo/styles/css';
+import { type FC, memo, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Section } from '../../../../components/Section';
-import { TreasuryAvailabilityExposure } from '../TreasuryAvailabilityExposure';
-import { TreasuryChainExposure } from '../TreasuryChainExposure';
-import { TreasuryTokensExposure } from '../TreasuryTokenExposure';
-import { styles } from './styles';
+import { Section } from '../../../../components/Section/Section.tsx';
+import { TreasuryAvailabilityExposure } from '../TreasuryAvailabilityExposure/TreasuryAvailabilityExposure.tsx';
+import { TreasuryChainExposure } from '../TreasuryChainExposure/TreasuryChainExposure.tsx';
+import { TreasuryTokensExposure } from '../TreasuryTokenExposure/TreasuryTokenExposure.tsx';
+import { styles } from './styles.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 enum ChartEnum {
   Token = 1,
@@ -52,9 +51,7 @@ export const DaoExposure = memo(function DaoExposure() {
               <div
                 key={item.key}
                 onClick={() => setChart(item.value)}
-                className={clsx(classes.option, {
-                  [classes.active]: item.value === chart,
-                })}
+                className={css(styles.option, item.value === chart && styles.active)}
               >
                 {item.text}
               </div>

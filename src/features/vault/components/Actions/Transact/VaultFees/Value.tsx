@@ -1,21 +1,21 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
-import type { Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  value: {
-    ...theme.typography['body-sm-med'],
-    color: theme.palette.text.middle,
-    textAlign: 'right' as const,
-  },
-}));
+const useStyles = legacyMakeStyles({
+  value: css.raw({
+    textStyle: 'body.sm.med',
+    color: 'text.middle',
+    textAlign: 'right',
+  }),
+});
 
 export type ValueProps = {
   children: ReactNode;
 };
 
-export const Value = memo<ValueProps>(function Value({ children }) {
+export const Value = memo(function Value({ children }: ValueProps) {
   const classes = useStyles();
   return <div className={classes.value}>{children}</div>;
 });

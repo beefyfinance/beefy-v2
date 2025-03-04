@@ -1,36 +1,36 @@
 import type { ActionReducerMapBuilder, AsyncThunk, SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAllAllowanceAction } from '../actions/allowance';
-import { fetchApyAction } from '../actions/apy';
-import { fetchAllBalanceAction, recalculateDepositedVaultsAction } from '../actions/balance';
-import { initiateBoostForm } from '../actions/boosts';
-import { fetchChainConfigs } from '../actions/chains';
-import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import { fetchAllPricesAction } from '../actions/prices';
+import { fetchAllAllowanceAction } from '../actions/allowance.ts';
+import { fetchApyAction } from '../actions/apy.ts';
+import { fetchAllBalanceAction, recalculateDepositedVaultsAction } from '../actions/balance.ts';
+import { initiateBoostForm } from '../actions/boosts.ts';
+import { fetchChainConfigs } from '../actions/chains.ts';
+import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
+import { fetchAllPricesAction } from '../actions/prices.ts';
 import {
   fetchAddressBookAction,
   fetchAllAddressBookAction,
   fetchAllCurrentCowcentratedRanges,
   reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
-} from '../actions/tokens';
-import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults';
+} from '../actions/tokens.ts';
+import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults.ts';
 import {
   askForNetworkChange,
   askForWalletConnection,
   doDisconnectWallet,
   initWallet,
-} from '../actions/wallet';
+} from '../actions/wallet.ts';
 import {
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
   fetchZapConfigsAction,
   fetchZapSwapAggregatorsAction,
-} from '../actions/zap';
-import { fetchAllMinters, initiateMinterForm } from '../actions/minters';
-import { fetchBridgeConfig } from '../actions/bridge';
-import { fetchPlatforms } from '../actions/platforms';
-import { fetchOnRampSupportedProviders } from '../actions/on-ramp';
-import { fetchFees } from '../actions/fees';
+} from '../actions/zap.ts';
+import { fetchAllMinters, initiateMinterForm } from '../actions/minters.ts';
+import { fetchBridgeConfig } from '../actions/bridge.ts';
+import { fetchPlatforms } from '../actions/platforms.ts';
+import { fetchOnRampSupportedProviders } from '../actions/on-ramp.ts';
+import { fetchFees } from '../actions/fees.ts';
 import type {
   ByAddressByChainDataEntity,
   ByChainDataEntity,
@@ -44,27 +44,27 @@ import type {
   LoaderStateIdle,
   LoaderStatePending,
   LoaderStateRejected,
-} from './data-loader-types';
-import { errorToString } from '../../../helpers/format';
-import { fetchTreasury } from '../actions/treasury';
+} from './data-loader-types.ts';
+import { errorToString } from '../../../helpers/format.ts';
+import { fetchTreasury } from '../actions/treasury.ts';
 import {
   fetchClmHarvestsForUser,
   fetchClmHarvestsForVaultsOfUserOnChain,
   fetchWalletTimeline,
   initDashboardByAddress,
-} from '../actions/analytics';
-import { fetchActiveProposals } from '../actions/proposal';
-import { fetchBridges } from '../actions/bridges';
-import { fetchAllMigrators } from '../actions/migrator';
-import { fetchLastArticle } from '../actions/articles';
-import type { BeefyState } from '../../../redux-types';
-import type { ChainEntity } from '../entities/chain';
+} from '../actions/analytics.ts';
+import { fetchActiveProposals } from '../actions/proposal.ts';
+import { fetchBridges } from '../actions/bridges.ts';
+import { fetchAllMigrators } from '../actions/migrator.ts';
+import { fetchLastArticle } from '../actions/articles.ts';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { ChainEntity, ChainId } from '../entities/chain.ts';
 import type { Draft } from 'immer';
 import { cloneDeep } from 'lodash-es';
-import { fetchUserMerklRewardsAction } from '../actions/user-rewards/merkl-user-rewards';
-import { fetchOffChainCampaignsAction } from '../actions/rewards';
-import { fetchUserStellaSwapRewardsAction } from '../actions/user-rewards/stellaswap-user-rewards';
-import { initPromos } from '../actions/promos';
+import { fetchUserMerklRewardsAction } from '../actions/user-rewards/merkl-user-rewards.ts';
+import { fetchOffChainCampaignsAction } from '../actions/rewards.ts';
+import { fetchUserStellaSwapRewardsAction } from '../actions/user-rewards/stellaswap-user-rewards.ts';
+import { initPromos } from '../actions/promos.ts';
 
 const dataLoaderStateInit: LoaderStateIdle = {
   lastFulfilled: undefined,
@@ -179,9 +179,15 @@ function makeFulfilledState(existing: LoaderState | undefined): LoaderStateFulfi
  * Handling those async actions is very generic
  * Use a helper function to handle each action state
  */
-function addGlobalAsyncThunkActions(
+function addGlobalAsyncThunkActions<TPayload, TArg>(
   builder: ActionReducerMapBuilder<DataLoaderState>,
-  action: AsyncThunk<unknown, unknown, { state: BeefyState }>,
+  action: AsyncThunk<
+    TPayload,
+    TArg,
+    {
+      state: BeefyState;
+    }
+  >,
   stateKey: LoaderGlobalKey,
   openNetworkModalOnReject: boolean = false
 ) {
@@ -224,7 +230,7 @@ function setGlobalFulfilled(sliceState: Draft<DataLoaderState>, stateKey: Loader
   sliceState.global[stateKey] = makeFulfilledState(sliceState.global[stateKey]);
 }
 
-function getOrCreateChainState(sliceState: Draft<DataLoaderState>, chainId: string) {
+function getOrCreateChainState(sliceState: Draft<DataLoaderState>, chainId: ChainId) {
   let chainState: ByChainDataEntity | undefined = sliceState.byChainId[chainId];
   if (!chainState) {
     chainState = cloneDeep(dataLoaderStateInitByChainId);
@@ -252,7 +258,7 @@ function getOrCreateAddressState(sliceState: Draft<DataLoaderState>, address: st
 
 function getOrCreateAddressChainState(
   sliceState: Draft<DataLoaderState>,
-  chainId: string,
+  chainId: ChainId,
   address: string
 ) {
   const addressKey = address.toLowerCase();
@@ -290,9 +296,20 @@ function getOrCreateAddressChainState(
   return vaultState;
 }*/
 
-function addByChainAsyncThunkActions<ActionParams extends { chainId: ChainEntity['id'] }>(
+function addByChainAsyncThunkActions<
+  TPayload,
+  TArg extends {
+    chainId: ChainEntity['id'];
+  },
+>(
   builder: ActionReducerMapBuilder<DataLoaderState>,
-  action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
+  action: AsyncThunk<
+    TPayload,
+    TArg,
+    {
+      state: BeefyState;
+    }
+  >,
   stateKeys: Array<LoaderChainKey>
 ) {
   builder
@@ -327,10 +344,20 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: ChainEntity
 }
 
 function addByAddressByChainAsyncThunkActions<
-  ActionParams extends { chainId: ChainEntity['id']; walletAddress: string }
+  TPayload,
+  TArg extends {
+    chainId: ChainEntity['id'];
+    walletAddress: string;
+  },
 >(
   builder: ActionReducerMapBuilder<DataLoaderState>,
-  action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
+  action: AsyncThunk<
+    TPayload,
+    TArg,
+    {
+      state: BeefyState;
+    }
+  >,
   stateKeys: Array<LoaderAddressChainKey>
 ) {
   builder
@@ -420,9 +447,20 @@ function addByAddressByChainAsyncThunkActions<
     });
 }*/
 
-function addByAddressAsyncThunkActions<ActionParams extends { walletAddress: string }>(
+function addByAddressAsyncThunkActions<
+  TPayload,
+  TArg extends {
+    walletAddress: string;
+  },
+>(
   builder: ActionReducerMapBuilder<DataLoaderState>,
-  action: AsyncThunk<unknown, ActionParams, { state: BeefyState }>,
+  action: AsyncThunk<
+    TPayload,
+    TArg,
+    {
+      state: BeefyState;
+    }
+  >,
   addressKeys: Array<LoaderAddressKey>,
   globalKeys?: Array<LoaderGlobalKey>
 ) {

@@ -1,41 +1,32 @@
-export const styles = () => ({
-  '@keyframes scrollBackground': {
-    '0%': {
-      backgroundPosition: '0 0',
-    },
-    '50%': {
-      backgroundPosition: '100% 0',
-    },
-    '100%': {
-      backgroundPosition: '0 0',
-    },
-  },
-  placeholder: {
+import { css } from '@repo/styles/css';
+
+export const styles = {
+  placeholder: css.raw({
     lineHeight: 'inherit',
     display: 'inline-block',
     opacity: '0',
-    visibility: 'hidden' as const,
-    userSelect: 'none' as const,
-    pointerEvents: 'none' as const,
-  },
-  holder: {
+    visibility: 'hidden',
+    userSelect: 'none',
+    pointerEvents: 'none',
+  }),
+  holder: css.raw({
     display: 'inline-block',
-    position: 'relative' as const,
-  },
-  loader: {
-    backgroundImage: 'linear-gradient(90deg, #313759, #8585A6, #313759)',
+    position: 'relative',
+  }),
+  loader: css.raw({
+    backgroundImage: 'linear-gradient(90deg, extracted198, extracted2029, extracted198)',
     backgroundSize: '300% 100%',
-    animationName: '$scrollBackground',
+    animationName: 'scrollBackground',
     animationDuration: '3s',
     animationIterationCount: 'infinite',
     animationTimingFunction: 'ease',
     borderRadius: '0.25em',
     display: 'inline-block',
-    position: 'absolute' as const,
+    position: 'absolute',
     height: '1em',
     width: '100%',
     left: '0',
     top: '50%',
     transform: 'translate(0,-50%)',
-  },
-});
+  }),
+};

@@ -1,12 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import type { BeefyLastArticleResponse } from '../apis/beefy/beefy-api-types';
-import { getBeefyApi } from '../apis/instances';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { BeefyLastArticleResponse } from '../apis/beefy/beefy-api-types.ts';
+import { getBeefyApi } from '../apis/instances.ts';
 
 export const fetchLastArticle = createAsyncThunk<
   BeefyLastArticleResponse,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('articles/fetchLastArticle', async () => {
   const api = await getBeefyApi();
 

@@ -1,8 +1,9 @@
-import type { ChainEntity } from '../features/data/entities/chain';
-import { createGlobLoader } from './globLoader';
+import type { ChainEntity } from '../features/data/entities/chain.ts';
+import { createGlobLoader } from './globLoader.ts';
 
 const pathToUrl = import.meta.glob<string>('../images/networks/*.svg', {
-  as: 'url',
+  query: '?url',
+  import: 'default',
   eager: true,
 });
 const keyToUrl = createGlobLoader(pathToUrl);

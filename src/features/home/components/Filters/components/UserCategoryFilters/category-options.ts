@@ -1,4 +1,4 @@
-import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
+import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults.ts';
 
 export const CATEGORY_OPTIONS: Record<FilteredVaultsState['userCategory'], string> = {
   all: 'Filter-AllVaults',

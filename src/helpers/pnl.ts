@@ -1,5 +1,5 @@
 import { BigNumber } from 'bignumber.js';
-import { BIG_ZERO } from './big-number';
+import { BIG_ZERO } from './big-number.ts';
 
 interface PnlTransaction {
   shares: BigNumber;
@@ -305,7 +305,10 @@ export class ClmPnl {
     return { remainingShares, remainingUnderlying, remainingToken0, remainingToken1 };
   }
 
-  getRemainingSharesAvgEntryPrice(): { token0EntryPrice: BigNumber; token1EntryPrice: BigNumber } {
+  getRemainingSharesAvgEntryPrice(): {
+    token0EntryPrice: BigNumber;
+    token1EntryPrice: BigNumber;
+  } {
     let totalSharesToken0 = BIG_ZERO;
     let totalSharesToken1 = BIG_ZERO;
     let totalCostToken0 = BIG_ZERO;

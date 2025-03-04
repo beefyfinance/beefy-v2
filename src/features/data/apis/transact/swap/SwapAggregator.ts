@@ -4,20 +4,20 @@ import type {
   QuoteResponse,
   SwapRequest,
   SwapResponse,
-} from './ISwapProvider';
-import type { TokenEntity } from '../../../entities/token';
-import { isTokenEqual, isTokenNative } from '../../../entities/token';
-import type { ChainEntity } from '../../../entities/chain';
-import type { BeefyState } from '../../../../../redux-types';
-import { mergeTokenLists } from '../helpers/tokens';
+} from './ISwapProvider.ts';
+import type { TokenEntity } from '../../../entities/token.ts';
+import { isTokenEqual, isTokenNative } from '../../../entities/token.ts';
+import type { ChainEntity } from '../../../entities/chain.ts';
+import type { BeefyState } from '../../../../../redux-types.ts';
+import { mergeTokenLists } from '../helpers/tokens.ts';
 import { orderBy, partition } from 'lodash-es';
-import { isFulfilledResult } from '../../../../../helpers/promises';
-import type { ISwapAggregator, TokenSupport } from './ISwapAggregator';
-import type { VaultEntity } from '../../../entities/vault';
-import { selectZapTokenScore } from '../../../selectors/zap';
-import { sortQuotes } from '../helpers/quotes';
-import { selectChainWrappedNativeToken } from '../../../selectors/tokens';
-import type { StrategySwapConfig } from '../strategies/strategy-configs';
+import { isFulfilledResult } from '../../../../../helpers/promises.ts';
+import type { ISwapAggregator, TokenSupport } from './ISwapAggregator.ts';
+import type { VaultEntity } from '../../../entities/vault.ts';
+import { selectZapTokenScore } from '../../../selectors/zap.ts';
+import { sortQuotes } from '../helpers/quotes.ts';
+import { selectChainWrappedNativeToken } from '../../../selectors/tokens.ts';
+import type { StrategySwapConfig } from '../strategies/strategy-configs.ts';
 
 export class SwapAggregator implements ISwapAggregator {
   protected providersById: Record<string, ISwapProvider> = {};

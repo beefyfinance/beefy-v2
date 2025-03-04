@@ -1,29 +1,29 @@
 import { BigNumber } from 'bignumber.js';
 import { fromUnixTime, getUnixTime, isAfter, isBefore, isEqual, max, subDays } from 'date-fns';
 import { pick, sortBy, sortedUniq } from 'lodash-es';
-import type { DatabarnProductPriceRow } from '../../features/data/apis/databarn/databarn-types';
+import type { DatabarnProductPriceRow } from '../../features/data/apis/databarn/databarn-types.ts';
 import {
   type TimelineEntryCowcentratedPool,
   type TimelineEntryCowcentratedVault,
   type TimelineEntryStandard,
-} from '../../features/data/entities/analytics';
-import { BIG_ONE, BIG_ZERO } from '../big-number';
-import { roundDownMinutes } from '../date';
-import { samplingPeriodMs } from '../sampling-period';
+} from '../../features/data/entities/analytics.ts';
+import { BIG_ONE, BIG_ZERO } from '../big-number.ts';
+import { roundDownMinutes } from '../date.ts';
+import { samplingPeriodMs } from '../sampling-period.ts';
 import type {
   ClmUserHarvestsTimeline,
   ClmUserHarvestsTimelineHarvest,
-} from '../../features/data/actions/analytics';
-import type { ApiPoint } from '../../features/data/apis/beefy/beefy-data-api-types';
-import { ClmPnl } from '../pnl';
-import type { TokenEntity } from '../../features/data/entities/token';
-import { getBigNumberInterpolator, type Interpolator } from '../math';
-import type { GraphBucket } from './types';
-import { graphTimeBucketToSamplingPeriod } from './graph';
+} from '../../features/data/actions/analytics.ts';
+import type { ApiPoint } from '../../features/data/apis/beefy/beefy-data-api-types.ts';
+import { ClmPnl } from '../pnl.ts';
+import type { TokenEntity } from '../../features/data/entities/token.ts';
+import { getBigNumberInterpolator, type Interpolator } from '../math.ts';
+import type { GraphBucket } from './types.ts';
+import { graphTimeBucketToSamplingPeriod } from './graph.ts';
 import type {
   ClmPriceHistoryEntryClassic,
   ClmPriceHistoryEntryClm,
-} from '../../features/data/apis/clm/clm-api-types';
+} from '../../features/data/apis/clm/clm-api-types.ts';
 
 // simulate a join between the 3 price series locally
 export interface PriceTsRow {
@@ -151,7 +151,12 @@ export function getInvestorTimeseries(
  * Advance the index of an array of data to the next item that is after the current date.
  * The key or key function must return a Date or *millisecond* timestamp
  */
-function advanceIndexIfNeeded<T extends string, U extends { [key in T]: Date | number }>(
+function advanceIndexIfNeeded<
+  T extends string,
+  U extends {
+    [key in T]: Date | number;
+  },
+>(
   data: U[],
   key: T | ((item: U) => Date | number),
   idx: number,
@@ -209,7 +214,10 @@ class TimeValueAfter<TValue> {
   protected index: number;
   protected lastIndex: number;
 
-  constructor(unsortedPoints: TimeValuePoint<TValue>[], protected defaultValue: TValue) {
+  constructor(
+    unsortedPoints: TimeValuePoint<TValue>[],
+    protected defaultValue: TValue
+  ) {
     this.points = sortBy(unsortedPoints, p => p.t);
     this.index = 0;
     this.lastIndex = this.points.length - 1;
@@ -250,7 +258,7 @@ abstract class TimeValueInterpolator<TValue> {
   protected index: number;
   protected lastIndex: number;
 
-  constructor(
+  protected constructor(
     unsortedPoints: TimeValuePoint<TValue>[],
     protected interpolator: Interpolator<TValue>
   ) {

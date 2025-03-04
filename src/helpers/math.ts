@@ -1,6 +1,6 @@
 import type { BigNumber } from 'bignumber.js';
-import { toBigNumber } from './big-number';
-import { createFactory } from '../features/data/utils/factory-utils';
+import { toBigNumber } from './big-number.ts';
+import { createFactory } from '../features/data/utils/factory-utils.ts';
 
 type NumberMathValue<TValue> = TValue | number;
 

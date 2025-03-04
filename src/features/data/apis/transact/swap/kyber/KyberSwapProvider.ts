@@ -1,24 +1,27 @@
-import type { BeefyState } from '../../../../../../redux-types';
+import type { BeefyState } from '../../../../../../redux-types.ts';
 import type {
   ISwapProvider,
   QuoteRequest,
   QuoteResponse,
   SwapRequest,
   SwapResponse,
-} from '../ISwapProvider';
-import type { ChainEntity } from '../../../../entities/chain';
-import type { TokenEntity } from '../../../../entities/token';
-import { isTokenNative } from '../../../../entities/token';
-import { selectSupportedSwapTokensForChainAggregatorHavingPrice } from '../../../../selectors/tokens';
-import { getKyberSwapApi } from '../../../instances';
-import { selectAllChainIds, selectChainById } from '../../../../selectors/chains';
-import { fromWeiString, toWeiString } from '../../../../../../helpers/big-number';
-import { EEEE_ADDRESS } from '../../../../../../helpers/addresses';
-import { selectSwapAggregatorForChainType } from '../../../../selectors/zap';
-import type { KyberSwapSwapConfig } from '../../../config-types';
-import type { VaultEntity } from '../../../../entities/vault';
-import { slipBy } from '../../helpers/amounts';
-import type { RouteSummary, QuoteRequest as KyberQuoteRequest } from '../../../kyber/kyber-types';
+} from '../ISwapProvider.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
+import type { TokenEntity } from '../../../../entities/token.ts';
+import { isTokenNative } from '../../../../entities/token.ts';
+import { selectSupportedSwapTokensForChainAggregatorHavingPrice } from '../../../../selectors/tokens.ts';
+import { getKyberSwapApi } from '../../../instances.ts';
+import { selectAllChainIds, selectChainById } from '../../../../selectors/chains.ts';
+import { fromWeiString, toWeiString } from '../../../../../../helpers/big-number.ts';
+import { EEEE_ADDRESS } from '../../../../../../helpers/addresses.ts';
+import { selectSwapAggregatorForChainType } from '../../../../selectors/zap.ts';
+import type { KyberSwapSwapConfig } from '../../../config-types.ts';
+import type { VaultEntity } from '../../../../entities/vault.ts';
+import { slipBy } from '../../helpers/amounts.ts';
+import type {
+  QuoteRequest as KyberQuoteRequest,
+  RouteSummary,
+} from '../../../kyber/kyber-types.ts';
 
 export class KyberSwapProvider implements ISwapProvider {
   getId(): string {

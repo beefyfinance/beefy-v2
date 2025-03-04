@@ -8,23 +8,23 @@ import type {
   PromoCampaignEntity,
   PromoEntity,
   PromoPartnerEntity,
-} from '../entities/promo';
-import type { ChainEntity } from '../entities/chain';
-import type { VaultEntity, VaultGov } from '../entities/vault';
-import type { NormalizedEntity } from '../utils/normalized-entity';
-import { initPromos, promosRecalculatePinned } from '../actions/promos';
+} from '../entities/promo.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { VaultEntity, VaultGov } from '../entities/vault.ts';
+import type { NormalizedEntity } from '../utils/normalized-entity.ts';
+import { initPromos, promosRecalculatePinned } from '../actions/promos.ts';
 import type {
   BoostContractData,
   FetchAllContractDataResult,
   GovVaultMultiContractData,
-} from '../apis/contract-data/contract-data-types';
-import { datesAreEqual, getUnixNow } from '../../../helpers/date';
-import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import type { PinnedConfig } from '../apis/promos/types';
+} from '../apis/contract-data/contract-data-types.ts';
+import { datesAreEqual, getUnixNow } from '../../../helpers/date.ts';
+import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
+import type { PinnedConfig } from '../apis/promos/types.ts';
 import { getUnixTime } from 'date-fns';
-import type { BeefyOffChainRewardsCampaign } from '../apis/beefy/beefy-api-types';
-import { fetchOffChainCampaignsAction } from '../actions/rewards';
+import type { BeefyOffChainRewardsCampaign } from '../apis/beefy/beefy-api-types.ts';
+import { fetchOffChainCampaignsAction } from '../actions/rewards.ts';
 
 type OffchainRewardData = Pick<
   BeefyOffChainRewardsCampaign,

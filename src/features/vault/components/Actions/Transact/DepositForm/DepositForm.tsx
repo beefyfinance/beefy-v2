@@ -1,8 +1,8 @@
 import { memo, type ReactNode, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectTransactForceSelection,
   selectTransactNumTokens,
@@ -10,34 +10,37 @@ import {
   selectTransactOptionsStatus,
   selectTransactSelected,
   selectTransactVaultId,
-} from '../../../../../data/selectors/transact';
-import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
-import { errorToString } from '../../../../../../helpers/format';
-import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
-import { DepositTokenAmountInput } from '../DepositTokenAmountInput';
-import { DepositBuyLinks } from '../DepositBuyLinks';
-import { DepositActions } from '../DepositActions';
-import { TransactQuote } from '../TransactQuote';
-import { AlertError } from '../../../../../../components/Alerts';
-import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
-import { RetirePauseReason } from '../../../RetirePauseReason';
-import { TokenAmount, TokenAmountFromEntity } from '../../../../../../components/TokenAmount';
+} from '../../../../../data/selectors/transact.ts';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
+import { errorToString } from '../../../../../../helpers/format.ts';
+import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
+import { DepositTokenAmountInput } from '../DepositTokenAmountInput/DepositTokenAmountInput.tsx';
+import { DepositBuyLinks } from '../DepositBuyLinks/DepositBuyLinks.tsx';
+import { DepositActions } from '../DepositActions/DepositActions.tsx';
+import { TransactQuote } from '../TransactQuote/TransactQuote.tsx';
+import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
+import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { RetirePauseReason } from '../../../RetirePauseReason/RetirePauseReason.tsx';
+import {
+  TokenAmount,
+  TokenAmountFromEntity,
+} from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import zapIcon from '../../../../../../images/icons/zap.svg';
-import { isVaultActive } from '../../../../../data/entities/vault';
-import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { TextLoader } from '../../../../../../components/TextLoader';
-import type { TokenEntity } from '../../../../../data/entities/token';
+import { isVaultActive } from '../../../../../data/entities/vault.ts';
+import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
+import type { TokenEntity } from '../../../../../data/entities/token.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type TokenInWalletProps = {
   token: TokenEntity;
   index: number;
 };
 
-const TokenInWallet = memo<TokenInWalletProps>(function TokenInWallet({ token, index }) {
+const TokenInWallet = memo(function TokenInWallet({ token, index }: TokenInWalletProps) {
   const dispatch = useAppDispatch();
   const balance = useAppSelector(state =>
     token ? selectUserBalanceOfToken(state, token.chainId, token.address) : undefined
@@ -62,7 +65,7 @@ const TokenInWallet = memo<TokenInWalletProps>(function TokenInWallet({ token, i
   return <TokenAmountFromEntity onClick={handleMax} amount={balance} token={token} />;
 });
 
-export const DepositFormLoader = memo(function DepositFormLoader() {
+const DepositFormLoader = memo(function DepositFormLoader() {
   const { t } = useTranslation();
   const classes = useStyles();
   const status = useAppSelector(selectTransactOptionsStatus);
@@ -96,9 +99,9 @@ export const DepositForm = memo(function DepositForm() {
       <div className={classes.inputs}>
         <DepositFormInputs />
       </div>
-      <DepositBuyLinks className={classes.links} />
-      <TransactQuote title={t('Transact-YouDeposit')} className={classes.quote} />
-      <DepositActions className={classes.actions} />
+      <DepositBuyLinks css={styles.links} />
+      <TransactQuote title={t('Transact-YouDeposit')} css={styles.quote} />
+      <DepositActions css={styles.actions} />
     </>
   );
 });
@@ -160,14 +163,14 @@ type DepositFormInputProps = {
   tokenAvailable?: ReactNode;
 };
 
-const DepositFormInput = memo<DepositFormInputProps>(function DepositFormInput({
+const DepositFormInput = memo(function DepositFormInput({
   index,
   token,
   selectLabel,
   availableLabel,
   showZapIcon,
   tokenAvailable,
-}) {
+}: DepositFormInputProps) {
   const classes = useStyles();
 
   return (
@@ -189,3 +192,6 @@ const DepositFormInput = memo<DepositFormInputProps>(function DepositFormInput({
     </div>
   );
 });
+
+// eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
+export default DepositFormLoader;

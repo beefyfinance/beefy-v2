@@ -1,32 +1,25 @@
 import { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
-import { ButtonAdornment } from '../ButtonAdornment';
-import { useAppDispatch } from '../../../../../../store';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
-import { AssetsImage } from '../../../../../../components/AssetsImage';
-import { FormStep } from '../../../../../data/reducers/on-ramp-types';
-
-const useStyles = makeStyles(styles);
+import { ButtonAdornment } from '../ButtonAdornment/ButtonAdornment.tsx';
+import { useAppDispatch } from '../../../../../../store.ts';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
+import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
+import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
+import { styles } from './styles.ts';
 
 export type TokenAmountAdornmentProps = {
   token: string;
-  className?: string;
 };
-export const TokenAmountAdornment = memo<TokenAmountAdornmentProps>(function TokenAmountAdornment({
+export const TokenAmountAdornment = memo(function TokenAmountAdornment({
   token,
-  className,
-}) {
-  const classes = useStyles();
+}: TokenAmountAdornmentProps) {
   const dispatch = useAppDispatch();
   const handleClick = useCallback(() => {
     dispatch(onRampFormActions.setStep({ step: FormStep.SelectToken }));
   }, [dispatch]);
 
   return (
-    <ButtonAdornment className={clsx(classes.button, className)} onClick={handleClick}>
-      <AssetsImage chainId={undefined} assetSymbols={[token]} size={24} className={classes.icon} />
+    <ButtonAdornment onClick={handleClick}>
+      <AssetsImage chainId={undefined} assetSymbols={[token]} size={24} css={styles.icon} />
       {token}
     </ButtonAdornment>
   );

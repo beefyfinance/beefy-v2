@@ -1,19 +1,20 @@
 import { memo } from 'react';
-import { getOnRampProviderIcon } from '../../../../../../helpers/onrampProviderSrc';
+import { getOnRampProviderIcon } from '../../../../../../helpers/onrampProviderSrc.ts';
+import { css, type CssStyles } from '@repo/styles/css';
 
 export type ProviderIconProps = {
   provider: string;
   width?: number;
-  className?: string;
+  css?: CssStyles;
 };
-export const ProviderIcon = memo<ProviderIconProps>(function CurrencyFlag({
+export const ProviderIcon = memo(function CurrencyFlag({
   provider,
-  className,
+  css: cssProp,
   width = 24,
-}) {
+}: ProviderIconProps) {
   const src = getOnRampProviderIcon(provider);
 
   return src ? (
-    <img src={src} width={width} height={width} alt={provider} className={className} />
+    <img src={src} width={width} height={width} alt={provider} className={css(cssProp)} />
   ) : null;
 });

@@ -4,24 +4,26 @@ import type {
   DetailedHTMLProps,
   FocusEventHandler,
   MouseEventHandler,
-  MutableRefObject,
 } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
-import { formatPercent } from '../../../../../../helpers/format';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { selectTransactSlippage } from '../../../../../data/selectors/transact';
-import { ErrorOutline, ExpandLess, ExpandMore, ReportProblemOutlined } from '@material-ui/icons';
-import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
-import { IconWithTooltip } from '../../../../../../components/Tooltip';
-import { IconWithBasicTooltip } from '../../../../../../components/Tooltip/IconWithBasicTooltip';
-import { transactFetchQuotes } from '../../../../../data/actions/transact';
+import { css, type CssStyles } from '@repo/styles/css';
+import { formatPercent } from '../../../../../../helpers/format.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { selectTransactSlippage } from '../../../../../data/selectors/transact.ts';
+import ErrorOutline from '../../../../../../images/icons/mui/ErrorOutline.svg?react';
+import ExpandLess from '../../../../../../images/icons/mui/ExpandLess.svg?react';
+import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
+import ReportProblemOutlined from '../../../../../../images/icons/mui/ReportProblemOutlined.svg?react';
+import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
+import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent.tsx';
+import { IconWithTooltip } from '../../../../../../components/Tooltip/IconWithTooltip.tsx';
+import { IconWithBasicTooltip } from '../../../../../../components/Tooltip/IconWithBasicTooltip.tsx';
+import { transactFetchQuotes } from '../../../../../data/actions/transact.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 // Decimal space (0.1% = 0.001)
 const SLIPPAGE_PRESETS = [0.1, 0.5, 1, 3].map(p => p / 100);
@@ -82,20 +84,19 @@ type CustomSlippageInputProps = {
   value: number;
   placeholder: string;
   isCustom: boolean;
-  className?: string;
+  css?: CssStyles;
 };
-const CustomSlippageInput = memo<CustomSlippageInputProps>(function CustomSlippageInput({
+const CustomSlippageInput = memo(function CustomSlippageInput({
   onChange,
   onFocus,
   value,
   placeholder,
-  className,
+  css: cssProp,
   isCustom,
-}) {
-  const classes = useStyles();
+}: CustomSlippageInputProps) {
   const [inputMode, setInputMode] = useState(false);
   const [input, setInput] = useState('');
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const showPlaceholder = !inputMode && !isCustom;
 
   const handleClick = useCallback<MouseEventHandler<HTMLButtonElement>>(() => {
@@ -149,21 +150,20 @@ const CustomSlippageInput = memo<CustomSlippageInputProps>(function CustomSlippa
   }, [value, setInput, inputMode]);
 
   return (
-    <div className={clsx(className, classes.custom)}>
+    <div className={css(cssProp, styles.custom)}>
       <input
-        className={clsx(classes.option, classes.customInput, {
-          [classes.customHidden]: showPlaceholder,
-        })}
+        className={css(styles.option, styles.customInput, showPlaceholder && styles.customHidden)}
         inputMode="decimal"
         value={input}
         onChange={handleChange}
         onBlur={handleBlur}
         onFocus={handleFocus}
-        ref={inputRef as MutableRefObject<HTMLInputElement>}
+        ref={inputRef}
       />
       {showPlaceholder ? (
         <button
-          className={clsx(classes.option, classes.button, classes.customPlaceholder)}
+          type="button"
+          className={css(styles.option, styles.button, styles.customPlaceholder)}
           onClick={handleClick}
         >
           {placeholder}
@@ -178,23 +178,23 @@ type SlippageButtonProps = Omit<ButtonProps, 'onChange' | 'onClick' | 'value'> &
   value: number;
   onChange: (value: number) => void;
 };
-const SlippageButton = memo<SlippageButtonProps>(function SlippageButton({
+const SlippageButton = memo(function SlippageButton({
   onChange,
   value,
   ...rest
-}) {
+}: SlippageButtonProps) {
   const handleClick = useCallback(() => onChange(value * 100), [onChange, value]);
   return (
-    <button onClick={handleClick} {...rest}>
+    <button type="button" onClick={handleClick} {...rest}>
       {formatPercent(value, 1)}
     </button>
   );
 });
 
 export type ZapSlippageProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const ZapSlippage = memo<ZapSlippageProps>(function ZapSlippage({ className }) {
+export const ZapSlippage = memo(function ZapSlippage({ css: cssProp }: ZapSlippageProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -217,21 +217,22 @@ export const ZapSlippage = memo<ZapSlippageProps>(function ZapSlippage({ classNa
   );
 
   return (
-    <div className={clsx(classes.container, className)}>
-      <button className={classes.titleToggle} onClick={handleToggle}>
+    <div className={css(styles.container, cssProp)}>
+      <button type="button" className={classes.titleToggle} onClick={handleToggle}>
         <div className={classes.title}>
           {t('Transact-Slippage')}
           <IconWithTooltip
             iconSize={16}
-            content={<BasicTooltipContent title={t('Transact-Slippage-Explainer')} />}
+            tooltip={<BasicTooltipContent title={t('Transact-Slippage-Explainer')} />}
           />
         </div>
         <div className={classes.valueIcon}>
           <div
-            className={clsx(classes.value, {
-              [classes.warning]: slippage >= SLIPPAGE_WARNING,
-              [classes.danger]: slippage >= SLIPPAGE_DANGER,
-            })}
+            className={css(
+              styles.value,
+              slippage >= SLIPPAGE_WARNING && styles.warning,
+              slippage >= SLIPPAGE_DANGER && styles.danger
+            )}
           >
             {slippage >= SLIPPAGE_WARNING ? (
               <IconWithBasicTooltip
@@ -259,15 +260,15 @@ export const ZapSlippage = memo<ZapSlippageProps>(function ZapSlippage({ classNa
               key={percent}
               value={percent}
               onChange={handleChange}
-              className={clsx(classes.option, classes.button, {
-                [classes.selected]: !customFocused && selectedIndex === i,
-              })}
+              className={css(
+                styles.option,
+                styles.button,
+                !customFocused && selectedIndex === i && styles.selected
+              )}
             />
           ))}
           <CustomSlippageInput
-            className={clsx({
-              [classes.selected]: customFocused || isCustom,
-            })}
+            css={(customFocused || isCustom) && styles.selected}
             placeholder={t('Transact-Slippage-Custom')}
             value={slippage * 100}
             onChange={handleChange}

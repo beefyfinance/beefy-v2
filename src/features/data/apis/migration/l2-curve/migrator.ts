@@ -1,16 +1,16 @@
-import type { Migrator, MigratorUnstakeProps } from '../migration-types';
-import type { VaultEntity } from '../../../entities/vault';
+import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
+import type { VaultEntity } from '../../../entities/vault.ts';
 import { type BigNumber } from 'bignumber.js';
-import type { BeefyState } from '../../../../../redux-types';
-import { selectTokenByAddress } from '../../../selectors/tokens';
-import { ERC20Abi } from '../../../../../config/abi/ERC20Abi';
-import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number';
-import { buildExecute, buildFetchBalance } from '../utils';
-import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
-import type { ChainEntity } from '../../../entities/chain';
-import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
+import type { BeefyState } from '../../../../../redux-types.ts';
+import { selectTokenByAddress } from '../../../selectors/tokens.ts';
+import { ERC20Abi } from '../../../../../config/abi/ERC20Abi.ts';
+import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number.ts';
+import { buildExecute, buildFetchBalance } from '../utils.ts';
+import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
+import type { ChainEntity } from '../../../entities/chain.ts';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Abi, Address } from 'abitype';
-import { getWalletConnectionApi } from '../../instances';
+import { getWalletConnectionApi } from '../../instances.ts';
 import type { Hash } from 'viem';
 
 const id = 'l2-curve';
@@ -20,7 +20,7 @@ const crvFactory = (chainId: ChainEntity['id']) =>
     ? '0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c'
     : '0xabC000d88f23Bb45525E447528DBF656A9D55bf5';
 
-const override = {
+const override: Record<string, string> = {
   'spell-mim-crv': '0x6d2070b13929Df15B13D96cFC509C574168988Cd',
 };
 
@@ -36,7 +36,7 @@ async function getBalance(
   state: BeefyState
 ): Promise<string> {
   const stakingAddress = await getStakingAddress(vault, state);
-  if (stakingAddress == ZERO_ADDRESS) return '0';
+  if (stakingAddress === ZERO_ADDRESS) return '0';
   const stakingContract = fetchContract(stakingAddress, ERC20Abi, vault.chainId);
   const walletBalance = await stakingContract.read.balanceOf([walletAddress as Address]);
   return walletBalance.toString(10);

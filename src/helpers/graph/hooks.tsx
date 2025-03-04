@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { domainOffSet, getXInterval, makeDateTimeTickFormatter, mapRangeToTicks } from './graph';
-import type { GraphBucket } from './types';
+import { domainOffSet, getXInterval, makeDateTimeTickFormatter, mapRangeToTicks } from './graph.ts';
+import type { GraphBucket } from './types.ts';
 
 export function useYAxis(
   min: number,

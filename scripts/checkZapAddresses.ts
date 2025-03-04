@@ -1,9 +1,9 @@
-import { appToAddressBookId } from './common/config';
-import { loadJson } from './common/files';
-import { AppChainId } from './common/chains';
+import { appToAddressBookId } from './common/config.ts';
+import { loadJson } from './common/files.ts';
+import { type AppChainId } from './common/chains.ts';
 import { addressBook } from 'blockchain-addressbook';
-import { getViemClient } from './common/viem';
-import { Abi, Address, checksumAddress, getContract } from 'viem';
+import { getViemClient } from './common/viem.ts';
+import { type Abi, type Address, checksumAddress, getContract } from 'viem';
 
 type Zap = {
   chainId: AppChainId;

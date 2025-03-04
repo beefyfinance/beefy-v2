@@ -1,13 +1,12 @@
-import type { Theme } from '@material-ui/core';
-import { useMediaQuery } from '@material-ui/core';
 import { memo, useMemo } from 'react';
 import { Cell, Pie, PieChart as RechartsPieChart, Tooltip } from 'recharts';
-import { PieChartTooltip } from '../PieChartTooltip';
-import { CHART_COLORS } from '../../helpers/charts';
-import type { PieChartProps } from './types';
+import { PieChartTooltip } from '../PieChartTooltip/PieChartTooltip.tsx';
+import { CHART_COLORS } from '../../helpers/charts.ts';
+import type { PieChartProps } from './types.ts';
+import { useBreakpoint } from '../MediaQueries/useBreakpoint.ts';
 
-export const PieChart = memo<PieChartProps>(function PieChart({ data, type, formatter }) {
-  const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'), { noSsr: true });
+export const PieChart = memo(function PieChart({ data, type, formatter }: PieChartProps) {
+  const smUp = useBreakpoint({ from: 'sm' });
   const chartPxs = useMemo(() => {
     return smUp ? 164 : 124;
   }, [smUp]);

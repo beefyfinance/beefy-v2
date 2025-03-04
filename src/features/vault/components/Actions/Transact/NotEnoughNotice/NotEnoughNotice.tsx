@@ -1,26 +1,27 @@
 import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AlertError } from '../../../../../../components/Alerts';
-import { useAppSelector } from '../../../../../../store';
+import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
+import { useAppSelector } from '../../../../../../store.ts';
 import {
   selectTransactDepositInputAmountExceedsBalance,
   selectTransactSelectedQuote,
   selectTransactWithdrawInputAmountExceedsBalance,
-} from '../../../../../data/selectors/transact';
-import { selectIsWalletConnected } from '../../../../../data/selectors/wallet';
-import { isCowcentratedDepositQuote } from '../../../../../data/apis/transact/transact-types';
-import { BIG_ZERO } from '../../../../../../helpers/big-number';
+} from '../../../../../data/selectors/transact.ts';
+import { selectIsWalletConnected } from '../../../../../data/selectors/wallet.ts';
+import { isCowcentratedDepositQuote } from '../../../../../data/apis/transact/transact-types.ts';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { type CssStyles } from '@repo/styles/css';
 
 export type NotEnoughProps = {
   onChange: (shouldDisable: boolean) => void;
   mode: 'deposit' | 'withdraw';
-  className?: string;
+  css?: CssStyles;
 };
-export const NotEnoughNotice = memo<NotEnoughProps>(function NotEnoughNotice({
+export const NotEnoughNotice = memo(function NotEnoughNotice({
   onChange,
-  className,
+  css: cssProp,
   mode,
-}) {
+}: NotEnoughProps) {
   const { t } = useTranslation();
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const inputAmountExceedsBalance = useAppSelector(
@@ -43,7 +44,7 @@ export const NotEnoughNotice = memo<NotEnoughProps>(function NotEnoughNotice({
   }
 
   return (
-    <AlertError className={className}>
+    <AlertError css={cssProp}>
       <p>{t('Transact-Notice-NotEnough')}</p>
     </AlertError>
   );

@@ -1,21 +1,24 @@
 import type { FC } from 'react';
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
-import type { Theme } from '@material-ui/core';
-import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectFilterSearchSortDirection,
   selectFilterSearchSortField,
-} from '../../../../../data/selectors/filtered-vaults';
-import type { LabeledSelectProps } from '../../../../../../components/LabeledSelect';
-import { LabeledSelect } from '../../../../../../components/LabeledSelect';
-import { styles } from './styles';
-import { SortColumnHeader } from '../../../../../../components/SortColumnHeader';
+} from '../../../../../data/selectors/filtered-vaults.ts';
+import { styles } from './styles.ts';
+import { SortColumnHeader } from '../../../../../../components/SortColumnHeader/SortColumnHeader.tsx';
+import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { Select } from '../../../../../../components/Form/Select/Single/Select.tsx';
+import type {
+  SelectItem,
+  SelectSingleProps,
+} from '../../../../../../components/Form/Select/types.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 const SORT_COLUMNS: {
   label: string;
@@ -37,7 +40,7 @@ const SortColumns = memo(function SortColumns() {
   const sortDirection = useAppSelector(selectFilterSearchSortDirection);
 
   const handleSort = useCallback(
-    field => {
+    (field: FilteredVaultsState['sort']) => {
       if (field === sortField) {
         dispatch(filteredVaultsActions.setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc'));
       } else {
@@ -64,44 +67,45 @@ const SortColumns = memo(function SortColumns() {
 
 const SortDropdown = memo(function SortDropdown() {
   const { t } = useTranslation();
-  const classes = useStyles();
   const dispatch = useAppDispatch();
   const value = useAppSelector(selectFilterSearchSortField);
-  const options = useMemo<Record<FilteredVaultsState['sort'], string>>(() => {
-    return {
-      default: t('Filter-SortDefault'),
-      walletValue: t('Filter-SortWallet'),
-      depositValue: t('Filter-SortDeposited'),
-      apy: t('Filter-SortApy'),
-      daily: t('Filter-SortDaily'),
-      tvl: t('Filter-SortTvl'),
-      safetyScore: t('Filter-SortSafety'),
-    };
-  }, [t]);
+  const options = useMemo<Array<SelectItem<FilteredVaultsState['sort']>>>(
+    () => [
+      { value: 'default', label: t('Filter-SortDefault') },
+      { value: 'walletValue', label: t('Filter-SortWallet') },
+      { value: 'depositValue', label: t('Filter-SortDeposited') },
+      { value: 'apy', label: t('Filter-SortApy') },
+      { value: 'daily', label: t('Filter-SortDaily') },
+      { value: 'tvl', label: t('Filter-SortTvl') },
+      { value: 'safetyScore', label: t('Filter-SortSafety') },
+    ],
+    [t]
+  );
 
-  const handleChange = useCallback<LabeledSelectProps['onChange']>(
+  const handleChange = useCallback<
+    SelectSingleProps<SelectItem<FilteredVaultsState['sort']>>['onChange']
+  >(
     value => {
-      dispatch(filteredVaultsActions.setSort(value as FilteredVaultsState['sort']));
+      dispatch(filteredVaultsActions.setSort(value || 'default'));
     },
     [dispatch]
   );
 
   return (
-    <LabeledSelect
-      label={t('Filter-Sort')}
-      value={value}
+    <Select
+      labelPrefix={t('Filter-Sort')}
+      selected={value}
       onChange={handleChange}
       options={options}
       borderless={true}
       fullWidth={true}
-      defaultValue={'default'}
-      selectClass={classes.sortDropdown}
+      /*selectCss={styles.sortDropdown}*/
     />
   );
 });
 
 export const VaultsSort = memo(function VaultsSort() {
-  const sortColumns = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
+  const sortColumns = useBreakpoint({ from: 'lg' });
 
   return sortColumns ? (
     <SortColumns />

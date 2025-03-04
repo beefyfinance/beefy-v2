@@ -1,18 +1,18 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import { type VaultEntity } from '../entities/vault';
-import { selectUserDepositedVaultIds } from './balance';
-import { selectAllVisibleVaultIds, selectVaultById } from './vaults';
-import { selectTokenByAddress, selectVaultTokenSymbols } from './tokens';
+import type { BeefyState } from '../../../redux-types.ts';
+import { type VaultEntity } from '../entities/vault.ts';
+import { selectUserDepositedVaultIds } from './balance.ts';
+import { selectAllVisibleVaultIds, selectVaultById } from './vaults.ts';
+import { selectTokenByAddress, selectVaultTokenSymbols } from './tokens.ts';
 import { createCachedSelector } from 're-reselect';
-import type { KeysOfType } from '../utils/types-utils';
-import type { FilteredVaultsState } from '../reducers/filtered-vaults';
-import type { PlatformEntity } from '../entities/platform';
-import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string';
+import type { KeysOfType } from '../utils/types-utils.ts';
+import type { FilteredVaultsState } from '../reducers/filtered-vaults.ts';
+import type { PlatformEntity } from '../entities/platform.ts';
+import { simplifySearchText, stringFoundAnywhere } from '../../../helpers/string.ts';
 import escapeStringRegexp from 'escape-string-regexp';
 import { type BigNumber } from 'bignumber.js';
-import { selectVaultTotalApy } from './apy';
-import { selectActivePromoForVault } from './promos';
+import { selectVaultTotalApy } from './apy.ts';
+import { selectActivePromoForVault } from './promos.ts';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
@@ -28,16 +28,16 @@ export const selectFilterVaultCategory = (state: BeefyState) =>
 export const selectFilterPlatformIds = (state: BeefyState) => state.ui.filteredVaults.platformIds;
 
 export const selectFilterBoolean = createCachedSelector(
-  (state: BeefyState, key: KeysOfType<FilteredVaultsState, boolean>) => key,
+  (_state: BeefyState, key: KeysOfType<FilteredVaultsState, boolean>) => key,
   (state: BeefyState) => state.ui.filteredVaults,
   (key, filters) => filters[key]
-)((state: BeefyState, key: KeysOfType<FilteredVaultsState, boolean>) => key);
+)((_state: BeefyState, key: KeysOfType<FilteredVaultsState, boolean>) => key);
 
 export const selectFilterBigNumber = createCachedSelector(
-  (state: BeefyState, key: KeysOfType<FilteredVaultsState, BigNumber>) => key,
+  (_state: BeefyState, key: KeysOfType<FilteredVaultsState, BigNumber>) => key,
   (state: BeefyState) => state.ui.filteredVaults,
   (key, filters) => filters[key]
-)((state: BeefyState, key: KeysOfType<FilteredVaultsState, BigNumber>) => key);
+)((_state: BeefyState, key: KeysOfType<FilteredVaultsState, BigNumber>) => key);
 
 export const selectFilterPopinFilterCount = createSelector(
   selectFilterOptions,
@@ -105,9 +105,9 @@ function searchTextToFuzzyTokenMatchers(searchText: string) {
 }
 
 export function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchText: string) {
-  // Do not match on single characters
-  if (searchText.length < 2) {
-    return false;
+  // Empty text matches all
+  if (searchText.length === 0) {
+    return true;
   }
 
   // Match if: search text is in vault name
@@ -163,7 +163,7 @@ export function selectFilterPlatformIdsForVault(state: BeefyState, vault: VaultE
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   if (depositToken.providerId) {
     const depositTokenPlatform = selectPlatformIdForFilter(state, depositToken.providerId);
-    if (depositTokenPlatform !== 'other' && depositTokenPlatform != vaultPlatform) {
+    if (depositTokenPlatform !== 'other' && depositTokenPlatform !== vaultPlatform) {
       vaultPlatforms.push(depositTokenPlatform);
     }
   }
@@ -173,9 +173,9 @@ export function selectFilterPlatformIdsForVault(state: BeefyState, vault: VaultE
 
 const selectPlatformIdForFilter = createCachedSelector(
   (state: BeefyState) => state.entities.platforms.allIds,
-  (state: BeefyState, platformId: PlatformEntity['id']) => platformId,
+  (_state: BeefyState, platformId: PlatformEntity['id']) => platformId,
   (allIds, platformId) => (allIds.includes(platformId) ? platformId : 'other')
-)((state: BeefyState, platformId: PlatformEntity['id']) => platformId);
+)((_state: BeefyState, platformId: PlatformEntity['id']) => platformId);
 
 export const selectFilteredVaults = (state: BeefyState) =>
   state.ui.filteredVaults.sortedFilteredVaultIds;

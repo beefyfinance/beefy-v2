@@ -1,7 +1,7 @@
 // To run: yarn pause gamma
-import { promises as fs } from 'fs';
-import { chains } from '../src/config/config';
-import { saveJson } from './common/files';
+import { chains } from '../src/config/config.ts';
+import { loadJson, saveJson } from './common/files.ts';
+import type { VaultConfig } from '../src/features/data/apis/config-types.ts';
 
 const vaultsDir = './src/config/vault/';
 
@@ -10,10 +10,11 @@ async function pause() {
   const platformId = process.argv[2];
   for (const chain of chains) {
     const vaultsFile = vaultsDir + chain + '.json';
-    const vaults = JSON.parse(await fs.readFile(vaultsFile, 'utf8'));
+    const vaults = await loadJson<VaultConfig[]>(vaultsFile);
     vaults.forEach(v => {
       if (v.platformId === platformId && v.status === 'active') {
         v.status = 'paused';
+        v.pausedAt = timestamp;
       }
     });
     await saveJson(vaultsFile, vaults, 'prettier');

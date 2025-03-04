@@ -2,12 +2,12 @@ import type {
   MintFeeParams,
   FactoryData as BaseFactoryData,
   FactoryDataResponse as BaseFactoryDataResponse,
-} from './UniswapV2Pool';
-import { UniswapV2Pool } from './UniswapV2Pool';
-import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
+} from './UniswapV2Pool.ts';
+import { UniswapV2Pool } from './UniswapV2Pool.ts';
+import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
 import { BigNumber } from 'bignumber.js';
-import type { SwapFeeParams } from '../types';
-import { fetchContract } from '../../rpc-contract/viem-contract';
+import type { SwapFeeParams } from '../types.ts';
+import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import type { Abi, Address } from 'abitype';
 
 export type FactoryDataResponse = BaseFactoryDataResponse & {

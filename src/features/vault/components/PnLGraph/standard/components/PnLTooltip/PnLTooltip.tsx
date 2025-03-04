@@ -1,33 +1,36 @@
-import type { Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { BigNumber } from 'bignumber.js';
 import { format } from 'date-fns';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatLargeUsd, formatTokenDisplayCondensed } from '../../../../../../../helpers/format';
+import {
+  formatLargeUsd,
+  formatTokenDisplayCondensed,
+} from '../../../../../../../helpers/format.ts';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  container: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.primary,
+const useStyles = legacyMakeStyles({
+  container: css.raw({
+    textStyle: 'body',
+    color: 'text.lightest',
     padding: '12px 16px',
     minWidth: '250px',
-    background: '#1B1D32',
+    background: 'extracted668',
     borderRadius: '8px',
-    textAlign: 'left' as const,
+    textAlign: 'left',
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '8px',
-  },
-  item: {
+  }),
+  item: css.raw({
     display: 'flex',
     justifyContent: 'space-between',
     columnGap: '4px',
-  },
-  value: {
-    fontWeight: 500,
-  },
-}));
+  }),
+  value: css.raw({
+    fontWeight: '500',
+  }),
+});
 
 // TODO: fix this type
 type PayloadData = {
@@ -38,10 +41,12 @@ type PayloadData = {
 
 interface TooltipProps {
   active?: boolean;
-  payload?: { payload: PayloadData }[];
+  payload?: {
+    payload: PayloadData;
+  }[];
 }
 
-export const PnLTooltip = memo<TooltipProps>(function PnLTooltip({ active, payload }) {
+export const PnLTooltip = memo(function PnLTooltip({ active, payload }: TooltipProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   if (active && payload && payload.length) {

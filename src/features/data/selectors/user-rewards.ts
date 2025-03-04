@@ -1,20 +1,20 @@
-import type { BeefyState } from '../../../redux-types';
-import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault';
-import type { ChainEntity } from '../entities/chain';
-import type { MerklVaultReward } from '../reducers/wallet/user-rewards-types';
+import type { BeefyState } from '../../../redux-types.ts';
+import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { MerklVaultReward } from '../reducers/wallet/user-rewards-types.ts';
 import type { BigNumber } from 'bignumber.js';
-import type { TokenEntity } from '../entities/token';
-import { BIG_ZERO } from '../../../helpers/big-number';
+import type { TokenEntity } from '../entities/token.ts';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { createSelector } from '@reduxjs/toolkit';
-import { selectTokenByAddressOrUndefined, selectTokenPriceByTokenOracleId } from './tokens';
-import { selectWalletAddress } from './wallet';
+import { selectTokenByAddressOrUndefined, selectTokenPriceByTokenOracleId } from './tokens.ts';
+import { selectWalletAddress } from './wallet.ts';
 import {
   selectVaultActiveGovRewards,
   selectVaultActiveMerklCampaigns,
   selectVaultActiveStellaSwapCampaigns,
-} from './rewards';
-import { selectGovVaultPendingRewards, selectGovVaultPendingRewardsWithPrice } from './balance';
-import { isNonEmptyArray } from '../utils/array-utils';
+} from './rewards.ts';
+import { selectGovVaultPendingRewards, selectGovVaultPendingRewardsWithPrice } from './balance.ts';
+import { isNonEmptyArray } from '../utils/array-utils.ts';
 
 type UnifiedRewardToken = Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'chainId'>;
 
@@ -104,12 +104,12 @@ export function selectUserMerklUnifiedRewardsForChain(
   return selectUnifiedMerklRewards(state, chainRewards);
 }
 
-export function selectMayHaveOffchainUserRewards(state: BeefyState, vault: VaultEntity) {
+export function selectMayHaveOffchainUserRewards(_state: BeefyState, vault: VaultEntity) {
   return isCowcentratedLikeVault(vault) || vault.chainId === 'mode';
 }
 
 const selectConnectedUserMerklRewardsForVault = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
   (state: BeefyState) => state.user.rewards.byUser,
   (state: BeefyState) => selectWalletAddress(state),
   (vaultId, rewardsByUser, walletAddress) => {
@@ -174,7 +174,7 @@ export function selectUserStellaSwapUnifiedRewardsForVault(
 }
 
 const selectConnectedUserStellaSwapRewardsForVault = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
   (state: BeefyState) => state.user.rewards.byUser,
   (state: BeefyState) => selectWalletAddress(state),
   (vaultId, rewardsByUser, walletAddress) => {

@@ -4,7 +4,7 @@ import type {
   UserlessZapDepositBreakdown,
   UserlessZapWithdrawBreakdown,
   ZapTransactHelpers,
-} from '../IStrategy';
+} from '../IStrategy.ts';
 import {
   type InputTokenAmount,
   isZapQuoteStepSwap,
@@ -20,16 +20,16 @@ import {
   type ZapFee,
   type ZapQuoteStep,
   type ZapQuoteStepSwapAggregator,
-} from '../../transact-types';
-import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
+} from '../../transact-types.ts';
+import type { BeefyState, BeefyThunk } from '../../../../../../redux-types.ts';
 import {
   isTokenEqual,
   isTokenErc20,
   isTokenNative,
   type TokenErc20,
   type TokenNative,
-} from '../../../../entities/token';
-import { TransactMode } from '../../../../reducers/wallet/transact-types';
+} from '../../../../entities/token.ts';
+import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
 import {
   createOptionId,
   createQuoteId,
@@ -37,35 +37,35 @@ import {
   onlyAssetCount,
   onlyOneInput,
   onlyOneToken,
-} from '../../helpers/options';
+} from '../../helpers/options.ts';
 import { first, uniqBy } from 'lodash-es';
-import { BIG_ZERO, fromWei, toWeiString } from '../../../../../../helpers/big-number';
-import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes';
-import { selectTransactSlippage } from '../../../../selectors/transact';
-import { walletActions } from '../../../../actions/wallet-actions';
+import { BIG_ZERO, fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
+import { selectTransactSlippage } from '../../../../selectors/transact.ts';
+import { walletActions } from '../../../../actions/wallet-actions.ts';
 import type {
   OrderInput,
   OrderOutput,
   UserlessZapRequest,
   ZapStep,
   ZapStepResponse,
-} from '../../zap/types';
-import { getTokenAddress, NO_RELAY } from '../../helpers/zap';
-import type { Step } from '../../../../reducers/wallet/stepper';
+} from '../../zap/types.ts';
+import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
+import type { Step } from '../../../../reducers/wallet/stepper.ts';
 import type { Namespace, TFunction } from 'react-i18next';
-import { getVaultWithdrawnFromState } from '../../helpers/vault';
-import { isStandardVault, type VaultStandard } from '../../../../entities/vault';
-import { slipBy } from '../../helpers/amounts';
-import { nativeAndWrappedAreSame, pickTokens } from '../../helpers/tokens';
+import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
+import { isStandardVault, type VaultStandard } from '../../../../entities/vault.ts';
+import { slipBy } from '../../helpers/amounts.ts';
+import { nativeAndWrappedAreSame, pickTokens } from '../../helpers/tokens.ts';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
-} from '../../../../selectors/tokens';
-import { fetchZapAggregatorSwap } from '../../zap/swap';
-import type { ChainEntity } from '../../../../entities/chain';
-import { selectChainById } from '../../../../selectors/chains';
-import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
-import type { SingleStrategyConfig } from '../strategy-configs';
+} from '../../../../selectors/tokens.ts';
+import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
+import { selectChainById } from '../../../../selectors/chains.ts';
+import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType.ts';
+import type { SingleStrategyConfig } from '../strategy-configs.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -73,7 +73,7 @@ type ZapHelpers = {
   state: BeefyState;
 };
 
-const strategyId = 'single' as const;
+const strategyId = 'single';
 type StrategyId = typeof strategyId;
 
 class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
@@ -90,7 +90,10 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     return this.helpers;
   }
 
-  constructor(protected options: SingleStrategyConfig, protected helpers: ZapTransactHelpers) {
+  constructor(
+    protected options: SingleStrategyConfig,
+    protected helpers: ZapTransactHelpers
+  ) {
     // Make sure zap was configured correctly for this vault
     const { vault, vaultType, getState } = this.helpers;
 

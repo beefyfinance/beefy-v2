@@ -1,12 +1,12 @@
-import type { BalancerFeature, IBalancerPool } from '../types';
-import type { ChainEntity } from '../../../../entities/chain';
-import type { PoolConfig, VaultConfig } from '../vault/types';
-import { createFactory } from '../../../../utils/factory-utils';
-import { Vault } from '../vault/Vault';
-import { checkAddressOrder } from '../../../../../../helpers/tokens';
+import type { BalancerFeature, IBalancerPool } from '../types.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
+import type { PoolConfig, VaultConfig } from '../vault/types.ts';
+import { createFactory } from '../../../../utils/factory-utils.ts';
+import { Vault } from '../vault/Vault.ts';
+import { checkAddressOrder } from '../../../../../../helpers/tokens.ts';
 import { type BigNumber } from 'bignumber.js';
-import { FixedPoint } from './FixedPoint';
-import type { Abi, GetContractReturnType } from 'viem';
+import { FixedPoint } from './FixedPoint.ts';
+import type { GetContractReturnType } from 'viem';
 
 export abstract class CommonPool implements IBalancerPool {
   public readonly type = 'balancer';
@@ -28,7 +28,7 @@ export abstract class CommonPool implements IBalancerPool {
 
   abstract supportsFeature(feature: BalancerFeature): boolean;
 
-  protected abstract getPoolContract(): GetContractReturnType<Abi>;
+  protected abstract getPoolContract(): GetContractReturnType;
 
   /**
    * Multiplier to normalize to 18 decimals

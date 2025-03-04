@@ -1,10 +1,12 @@
-import { memo, useCallback, useState } from 'react';
-import { InputBase, makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
-import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
-
-const useStyles = makeStyles(styles);
+import {
+  type ChangeEventHandler,
+  type FocusEventHandler,
+  memo,
+  useCallback,
+  useState,
+} from 'react';
+import { BaseInput } from '../../../../../../components/Form/Input/BaseInput.tsx';
+import type { BaseInputProps } from '../../../../../../components/Form/Input/BaseInput.tsx';
 
 function isValidNumberInputString(value: string, maxDecimals: number): boolean {
   const regex = new RegExp(`^[0-9]*\\.?[0-9]{0,${maxDecimals}}$`);
@@ -30,26 +32,23 @@ function numberToString(value: number, maxDecimals: number): string {
 export type AmountInputProps = {
   maxDecimals?: number;
   value: number;
-  onChange: (value: number | undefined) => void;
+  onChange: (value: number) => void;
   error?: boolean;
-  className?: string;
-  endAdornment?: InputBaseProps['endAdornment'];
+  endAdornment?: BaseInputProps['endAdornment'];
 };
-export const AmountInput = memo<AmountInputProps>(function AmountInput({
+export const AmountInput = memo(function AmountInput({
   value,
   onChange,
   maxDecimals = 2,
   error = false,
-  className,
   endAdornment,
-}) {
-  const classes = useStyles();
+}: AmountInputProps) {
   // Initial value to string
   const [input, setInput] = useState(() => {
     return numberToString(value, maxDecimals);
   });
 
-  const handleChange = useCallback<Exclude<InputBaseProps['onChange'], undefined>>(
+  const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     e => {
       const rawInput = e.target.value;
 
@@ -80,7 +79,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
     [setInput, maxDecimals, onChange]
   );
 
-  const handleBlur = useCallback<Exclude<InputBaseProps['onBlur'], undefined>>(
+  const handleBlur = useCallback<FocusEventHandler<HTMLInputElement>>(
     e => {
       const rawInput = e.target.value;
 
@@ -99,14 +98,15 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   );
 
   return (
-    <InputBase
-      className={clsx(classes.input, className, { [classes.error]: error })}
+    <BaseInput
       value={input}
       onChange={handleChange}
       onBlur={handleBlur}
       fullWidth={true}
       endAdornment={endAdornment}
       placeholder={`0`}
+      error={error}
+      variant="amount"
     />
   );
 });

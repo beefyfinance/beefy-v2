@@ -1,5 +1,5 @@
 import type { Namespace, TFunction } from 'react-i18next';
-import type { Step } from '../../../../reducers/wallet/stepper';
+import type { Step } from '../../../../reducers/wallet/stepper.ts';
 import {
   type CowcentratedVaultDepositOption,
   type CowcentratedVaultDepositQuote,
@@ -24,28 +24,28 @@ import {
   type ZapStrategyIdToDepositQuote,
   type ZapStrategyIdToWithdrawOption,
   type ZapStrategyIdToWithdrawQuote,
-} from '../../transact-types';
+} from '../../transact-types.ts';
 import {
   type AnyComposableStrategy,
   type IComposableStrategy,
   type IComposerStrategy,
   type IComposerStrategyStatic,
   type ZapTransactHelpers,
-} from '../IStrategy';
-import { isMultiGovVault, type VaultGov } from '../../../../entities/vault';
+} from '../IStrategy.ts';
+import { isMultiGovVault, type VaultGov } from '../../../../entities/vault.ts';
 import {
   type ICowcentratedVaultType,
   type IGovVaultType,
   isCowcentratedVaultType,
   isGovVaultType,
-} from '../../vaults/IVaultType';
-import { isTokenEqual, type TokenEntity, type TokenErc20 } from '../../../../entities/token';
-import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../../selectors/tokens';
-import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
-import { walletActions } from '../../../../actions/wallet-actions';
-import { selectChainById } from '../../../../selectors/chains';
-import { selectTransactSlippage } from '../../../../selectors/transact';
-import type { ChainEntity } from '../../../../entities/chain';
+} from '../../vaults/IVaultType.ts';
+import { isTokenEqual, type TokenEntity, type TokenErc20 } from '../../../../entities/token.ts';
+import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../../selectors/tokens.ts';
+import type { BeefyState, BeefyThunk } from '../../../../../../redux-types.ts';
+import { walletActions } from '../../../../actions/wallet-actions.ts';
+import { selectChainById } from '../../../../selectors/chains.ts';
+import { selectTransactSlippage } from '../../../../selectors/transact.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
 import type {
   OrderInput,
   OrderOutput,
@@ -53,15 +53,15 @@ import type {
   ZapStep,
   ZapStepRequest,
   ZapStepResponse,
-} from '../../zap/types';
+} from '../../zap/types.ts';
 import { type BigNumber } from 'bignumber.js';
-import { getInsertIndex, NO_RELAY } from '../../helpers/zap';
-import { bigNumberToBigInt, toWei, toWeiString } from '../../../../../../helpers/big-number';
-import { slipBy } from '../../helpers/amounts';
-import type { GovComposerStrategyConfig } from '../strategy-configs';
-import { onlyOneInput } from '../../helpers/options';
-import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes';
-import { pickTokens } from '../../helpers/tokens';
+import { getInsertIndex, NO_RELAY } from '../../helpers/zap.ts';
+import { bigNumberToBigInt, toWei, toWeiString } from '../../../../../../helpers/big-number.ts';
+import { slipBy } from '../../helpers/amounts.ts';
+import type { GovComposerStrategyConfig } from '../strategy-configs.ts';
+import { onlyOneInput } from '../../helpers/options.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
+import { pickTokens } from '../../helpers/tokens.ts';
 import { uniqBy } from 'lodash-es';
 import type { Abi } from 'abitype';
 import { encodeFunctionData } from 'viem';
@@ -72,7 +72,7 @@ type ZapHelpers = {
   state: BeefyState;
 };
 
-const strategyId = 'gov-composer' as const;
+const strategyId = 'gov-composer';
 type StrategyId = typeof strategyId;
 
 class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
@@ -363,7 +363,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
   }
 
   protected async fetchZapStakeStep(
-    quoteStep: ZapQuoteStepStake,
+    _quoteStep: ZapQuoteStepStake,
     minInputs: TokenAmount[],
     zapHelpers: ZapHelpers
   ): Promise<ZapStepResponse> {
@@ -570,7 +570,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
 
   async fetchWithdrawStep(
     quote: GovComposerZapWithdrawQuote,
-    t: TFunction<Namespace, undefined>
+    t: TFunction<Namespace>
   ): Promise<Step> {
     const { underlyingQuote } = quote;
 

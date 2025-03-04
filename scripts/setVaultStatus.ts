@@ -1,9 +1,9 @@
-import { ArgumentConfig, parse } from 'ts-command-line-args';
-import { getAllVaultConfigsByChainId, getVaultsForChain } from './common/config';
-import { sortVaultKeys } from './common/vault-fields';
-import { saveJson } from './common/files';
-import { VaultConfig } from '../src/features/data/apis/config-types';
-import { cloneDeep, keyBy } from 'lodash';
+import { type ArgumentConfig, parse } from 'ts-command-line-args';
+import { getAllVaultConfigsByChainId, getVaultsForChain } from './common/config.ts';
+import { sortVaultKeys } from './common/vault-fields.ts';
+import { saveJson } from './common/files.ts';
+import { type VaultConfig } from '../src/features/data/apis/config-types.ts';
+import { cloneDeep, keyBy } from 'lodash-es';
 
 type RunArgs = {
   help?: boolean;
@@ -72,10 +72,16 @@ function getRunArgs() {
   });
 }
 
-function findRelatedVaults(allVaults: VaultConfig[], earnedTokenAddress: string): any[] {
+type VaultWithTokenAddress = Omit<VaultConfig, 'tokenAddress'> & { tokenAddress: string };
+
+function findRelatedVaults(
+  allVaults: VaultConfig[],
+  earnedTokenAddress: string
+): Array<VaultWithTokenAddress> {
   const lowerEarnedTokenAddress = earnedTokenAddress.toLowerCase();
   return allVaults.filter(
-    vault => vault.tokenAddress && vault.tokenAddress.toLowerCase() === lowerEarnedTokenAddress
+    (vault): vault is VaultWithTokenAddress =>
+      !!vault.tokenAddress && vault.tokenAddress.toLowerCase() === lowerEarnedTokenAddress
   );
 }
 

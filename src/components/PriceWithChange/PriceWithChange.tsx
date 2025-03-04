@@ -1,28 +1,28 @@
-import { memo, useCallback, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { selectPriceWithChange } from '../../features/data/selectors/tokens';
-import { formatLargePercent, formatLargeUsd, formatUsd } from '../../helpers/format';
+import { memo, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store.ts';
+import { selectPriceWithChange } from '../../features/data/selectors/tokens.ts';
+import { formatLargePercent, formatLargeUsd, formatUsd } from '../../helpers/format.ts';
 import { type BigNumber } from 'bignumber.js';
-import { fetchHistoricalPrices } from '../../features/data/actions/historical';
-import { BIG_ZERO } from '../../helpers/big-number';
-import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
-import { Tooltip, type TooltipProps } from '../Tooltip';
+import { fetchHistoricalPrices } from '../../features/data/actions/historical.ts';
+import { BIG_ZERO } from '../../helpers/big-number.ts';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { css, type CssStyles } from '@repo/styles/css';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
-import { styles } from './styles';
+import { styles } from './styles.ts';
+import { DivWithTooltip } from '../Tooltip/DivWithTooltip.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type PriceWithChangeProps = {
   oracleId: string;
-  className?: string;
+  css?: CssStyles;
 };
 
-export const PriceWithChange = memo<PriceWithChangeProps>(function PriceWithChange({
+export const PriceWithChange = memo(function PriceWithChange({
   oracleId,
-  className,
-}) {
+  css: cssProp,
+}: PriceWithChangeProps) {
   const dispatch = useAppDispatch();
   const { price, bucket, shouldLoad, previousPrice, previousDate } = useAppSelector(state =>
     selectPriceWithChange(state, oracleId, '1h_1d')
@@ -39,7 +39,7 @@ export const PriceWithChange = memo<PriceWithChangeProps>(function PriceWithChan
   }
 
   if (!previousPrice || previousPrice.isZero()) {
-    return <WithoutChange price={price} className={className} />;
+    return <WithoutChange price={price} css={cssProp} />;
   }
 
   return (
@@ -47,21 +47,21 @@ export const PriceWithChange = memo<PriceWithChangeProps>(function PriceWithChan
       price={price}
       previousPrice={previousPrice}
       previousDate={previousDate}
-      className={className}
+      css={cssProp}
     />
   );
 });
 
 type WithoutChangeProps = {
   price: BigNumber;
-  className?: string;
+  css?: CssStyles;
 };
 
-const WithoutChange = memo<WithoutChangeProps>(function WithoutChange({ price, className }) {
+const WithoutChange = memo(function WithoutChange({ price, css: cssProp }: WithoutChangeProps) {
   const classes = useStyles();
 
   return (
-    <div className={clsx(classes.priceWithChange, className)}>
+    <div className={css(styles.priceWithChange, cssProp)}>
       <div className={classes.price}>{formatLargeUsd(price)}</div>
     </div>
   );
@@ -71,15 +71,15 @@ type WithChangeProps = {
   price: BigNumber;
   previousPrice: BigNumber;
   previousDate: Date;
-  className?: string;
+  css?: CssStyles;
 };
 
-const WithChange = memo<WithChangeProps>(function WithChange({
+const WithChange = memo(function WithChange({
   price,
   previousPrice,
   previousDate,
-  className,
-}) {
+  css: cssProp,
+}: WithChangeProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const diff = price.minus(previousPrice);
@@ -91,31 +91,21 @@ const WithChange = memo<WithChangeProps>(function WithChange({
     change: formatUsd(diffAbs, diffAbs.gte(0.01) ? 2 : 4),
     date: format(previousDate, 'MMM d, yyyy h:mm a'),
   });
-  const handleTooltipClick = useCallback<Exclude<TooltipProps['onTriggerClick'], undefined>>(e => {
-    if (e) {
-      // don't bubble up
-      e.preventDefault();
-    }
-  }, []);
 
   return (
-    <Tooltip
-      content={tooltipContent}
-      onTriggerClick={handleTooltipClick}
-      triggerClass={clsx(className, {
-        [classes.priceWithChange]: true,
-        [classes.tooltipTrigger]: true,
-        [classes.positive]: isPositive,
-        [classes.negative]: isNegative,
-      })}
+    <DivWithTooltip
+      tooltip={tooltipContent}
+      className={css(styles.priceWithChange, styles.tooltipTrigger, cssProp)}
     >
       <div className={classes.price}>{formatUsd(price, price.gte(0.01) ? 2 : 4)}</div>
-      <div className={classes.change}>
+      <div
+        className={css(styles.change, isPositive && styles.positive, isNegative && styles.negative)}
+      >
         <div className={classes.changeValue}>
           {isPositive ? '+' : isNegative ? '-' : ''}
           {formatLargePercent(percentChange, 2)}
         </div>
       </div>
-    </Tooltip>
+    </DivWithTooltip>
   );
 });
