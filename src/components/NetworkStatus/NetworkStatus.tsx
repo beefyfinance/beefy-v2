@@ -114,11 +114,13 @@ export const NetworkStatus = memo(function NetworkStatus({
       reference={anchorEl}
     >
       <DropdownButton onClick={handleToggle}>
-        <div className={cx(classes.circle, colorClasses)}>
-          <div className={pulseClassName} />
-          <div className={pulseClassName} />
-          <div className={pulseClassName} />
-          <div className={pulseClassName} />
+        <div className={classes.circleOuter}>
+          <div className={cx(classes.circle, colorClasses)}>
+            <div className={pulseClassName} />
+            <div className={pulseClassName} />
+            <div className={pulseClassName} />
+            <div className={pulseClassName} />
+          </div>
         </div>
         {isWalletConnected && <ActiveChain chainId={currentChainId} />}
       </DropdownButton>
@@ -195,7 +197,6 @@ const DropdownButton = styled(DropdownTrigger.button, {
     justifyContent: 'center',
     cursor: 'pointer',
     backgroundColor: 'transparent',
-    padding: '0px 16px',
   },
 });
 

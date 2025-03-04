@@ -81,8 +81,8 @@ export const RpcModalTrigger = memo(function ModalTrigger({
     >
       <DropdownTrigger.button className={classes.container}>
         <SettingsIcon height={24} width={24} />
-        <div className={classes.line} />
       </DropdownTrigger.button>
+      <div className={classes.line} />
       <DropdownContent>
         <RpcModal handleClose={onClose} />
       </DropdownContent>

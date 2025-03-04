@@ -24,26 +24,35 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
 
   return (
     <Holder ref={anchorEl}>
-      <RpcModalTrigger
-        anchorEl={anchorEl}
-        isOpen={open === 'rpc'}
-        onOpen={handleOpenRpc}
-        onClose={handleClose}
-      />
-      <NetworkStatus
-        anchorEl={anchorEl}
-        isOpen={open === 'status'}
-        isOtherOpen={open !== null}
-        onOpen={handleOpenStatus}
-        onClose={handleClose}
-      />
-      <div>
-        <Suspense>
-          <WalletContainer />
-        </Suspense>
-      </div>
+      <Icons>
+        <RpcModalTrigger
+          anchorEl={anchorEl}
+          isOpen={open === 'rpc'}
+          onOpen={handleOpenRpc}
+          onClose={handleClose}
+        />
+        <NetworkStatus
+          anchorEl={anchorEl}
+          isOpen={open === 'status'}
+          isOtherOpen={open !== null}
+          onOpen={handleOpenStatus}
+          onClose={handleClose}
+        />
+      </Icons>
+      <Suspense>
+        <WalletContainer />
+      </Suspense>
     </Holder>
   );
+});
+
+const Icons = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    paddingInline: '8px',
+    gap: '8px',
+  },
 });
 
 const Holder = styled('div', {

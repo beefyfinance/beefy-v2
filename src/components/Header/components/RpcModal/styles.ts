@@ -4,8 +4,6 @@ export const styles = {
   container: css.raw({
     display: 'flex',
     alignItems: 'center',
-    padding: '0px 8px',
-    gap: '8px',
     color: 'text.middle',
     '&:hover': {
       cursor: 'pointer',
@@ -160,7 +158,7 @@ export const styles = {
     height: '16px',
     width: '2px',
     borderRadius: '3px',
-    backgroundColor: 'background.content.dark',
+    backgroundColor: 'background.content.light',
   }),
   inputContainer: css.raw({
     display: 'flex',

@@ -13,6 +13,12 @@ export const styles = {
     backgroundColor: 'transparent',
     padding: '0px 16px 0px 0px',
   }),
+  circleOuter: css.raw({
+    width: '20px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }),
   circle: css.raw({
     width: '12px',
     height: '12px',
