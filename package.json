@@ -81,6 +81,14 @@
     "redux-thunk": "^2.4.2",
     "viem": "^2.23.6"
   },
+  "optionalDependencies": {
+    "@rollup/rollup-darwin-arm64": "^4.34.8",
+    "@rollup/rollup-darwin-x64": "^4.34.8",
+    "@rollup/rollup-win32-arm64-msvc": "^4.34.8",
+    "@rollup/rollup-win32-x64-msvc": "^4.34.8",
+    "@rollup/rollup-linux-arm64-gnu": "^4.34.8",
+    "@rollup/rollup-linux-x64-gnu": "^4.34.8"
+  },
   "overrides": {
     "@coinbase/wallet-sdk": "^4.3.0",
     "react": "^18.3.1",
