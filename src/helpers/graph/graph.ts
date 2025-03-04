@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
-import { formatLargeUsd } from '../format';
-import type { GraphBucket, GraphBucketParamMap } from './types';
+import { formatLargeUsd } from '../format.ts';
+import type { GraphBucket, GraphBucketParamMap } from './types.ts';
 
 export const domainOffSet = (min: number, max: number, heightPercentageUsedByChart: number) => {
   return ((max - min) * (1 - heightPercentageUsedByChart)) / (2 * heightPercentageUsedByChart);

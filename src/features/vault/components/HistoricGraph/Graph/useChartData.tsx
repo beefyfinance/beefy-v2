@@ -1,17 +1,17 @@
-import type { VaultEntity } from '../../../../data/entities/vault';
-import type { TokenEntity } from '../../../../data/entities/token';
+import type { VaultEntity } from '../../../../data/entities/vault.ts';
+import type { TokenEntity } from '../../../../data/entities/token.ts';
 import type {
   ApiCowcentratedPoint,
   ApiPoint,
   ApiTimeBucket,
-} from '../../../../data/apis/beefy/beefy-data-api-types';
+} from '../../../../data/apis/beefy/beefy-data-api-types.ts';
 import { useMemo } from 'react';
-import { getBucketParams } from '../utils';
-import { useAppSelector } from '../../../../../store';
-import { selectHistoricalBucketData } from '../../../../data/selectors/historical';
-import { MovingAverage } from '../../../../../helpers/number';
-import type { AnyApiPoint, ChartData, ChartStat } from '../types';
-import { minMaxAverage } from '../../../../../helpers/collection';
+import { getBucketParams } from '../utils.ts';
+import { useAppSelector } from '../../../../../store.ts';
+import { selectHistoricalBucketData } from '../../../../data/selectors/historical.ts';
+import { MovingAverage } from '../../../../../helpers/number.ts';
+import type { AnyApiPoint, ChartData, ChartStat } from '../types.ts';
+import { minMaxAverage } from '../../../../../helpers/collection.ts';
 
 function isClmData(
   data: AnyApiPoint[] | undefined,

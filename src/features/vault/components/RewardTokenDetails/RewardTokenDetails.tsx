@@ -1,37 +1,37 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { memo, type ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AssetsImage } from '../../../../components/AssetsImage';
-import { Button } from '../../../../components/Button';
-import { LinkButton } from '../../../../components/LinkButton';
-import { useAppDispatch, useAppSelector } from '../../../../store';
-import type { ChainEntity } from '../../../data/entities/chain';
-import type { TokenEntity } from '../../../data/entities/token';
-import { selectChainById } from '../../../data/selectors/chains';
-import { ReactComponent as PlusIcon } from '../../../../images/icons/plus.svg';
-import { styles } from './styles';
-import { explorerTokenUrl } from '../../../../helpers/url';
-import { addTokenToWalletAction } from '../../../data/actions/add-to-wallet';
-import clsx from 'clsx';
-import { selectTokenByAddress } from '../../../data/selectors/tokens';
+import { AssetsImage } from '../../../../components/AssetsImage/AssetsImage.tsx';
+import { Button } from '../../../../components/Button/Button.tsx';
+import { LinkButton } from '../../../../components/LinkButton/LinkButton.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../store.ts';
+import type { ChainEntity } from '../../../data/entities/chain.ts';
+import type { TokenEntity } from '../../../data/entities/token.ts';
+import { selectChainById } from '../../../data/selectors/chains.ts';
+import PlusIcon from '../../../../images/icons/plus.svg?react';
+import { styles } from './styles.ts';
+import { explorerTokenUrl } from '../../../../helpers/url.ts';
+import { addTokenToWalletAction } from '../../../data/actions/add-to-wallet.ts';
+import { css, type CssStyles } from '@repo/styles/css';
+import { selectTokenByAddress } from '../../../data/selectors/tokens.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface RewardTokenDetailsProps {
   address: TokenEntity['address'];
   chainId: ChainEntity['id'];
-  className?: string;
+  css?: CssStyles;
   prependButtons?: ReactNode;
   appendText?: ReactNode;
 }
 
-export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardTokenDetails({
+export const RewardTokenDetails = memo(function RewardTokenDetails({
   address,
   chainId,
-  className,
+  css: cssProp,
   prependButtons,
   appendText,
-}) {
+}: RewardTokenDetailsProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const classes = useStyles();
@@ -42,7 +42,7 @@ export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardT
   }, [dispatch, chainId, token.address]);
 
   return (
-    <div className={clsx(classes.container, className)}>
+    <div className={css(styles.container, cssProp)}>
       <div className={classes.token}>
         <AssetsImage size={24} chainId={chainId} assetSymbols={[token.symbol]} />{' '}
         <div className={classes.text}>
@@ -52,7 +52,7 @@ export const RewardTokenDetails = memo<RewardTokenDetailsProps>(function RewardT
       </div>
       <div className={classes.buttons}>
         {prependButtons ? prependButtons : null}
-        <Button className={classes.button} onClick={addTokenToWallet}>
+        <Button css={styles.button} onClick={addTokenToWallet}>
           {t('Add-To-Wallet')}
           <PlusIcon className={classes.icon} />
         </Button>

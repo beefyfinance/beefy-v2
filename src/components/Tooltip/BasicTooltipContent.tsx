@@ -1,24 +1,36 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
-import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
-
-const useStyles = makeStyles(styles);
+import { styled } from '@repo/styles/jsx';
 
 export type BasicTooltipContentProps = {
   title: string;
   content?: ReactNode;
 };
-export const BasicTooltipContent = memo<BasicTooltipContentProps>(function BasicTooltipContent({
+
+export const BasicTooltipContent = memo(function BasicTooltipContent({
   title,
   content,
-}) {
-  const classes = useStyles();
-
+}: BasicTooltipContentProps) {
   return (
     <>
-      <div className={classes.basicTitle}>{title}</div>
-      {content ? <div className={classes.basicContent}>{content}</div> : null}
+      <Title>{title}</Title>
+      {content ? <Text>{content}</Text> : null}
     </>
   );
+});
+
+const Title = styled('div', {
+  base: {
+    textStyle: 'body.med',
+    fontSize: 'var(--tooltip-body-font-size, {fontSizes.body})',
+    color: 'var(--tooltip-title-color, black)',
+  },
+});
+
+const Text = styled('div', {
+  base: {
+    textStyle: 'body',
+    fontSize: 'var(--tooltip-body-font-size, {fontSizes.body})',
+    color: 'var(--tooltip-content-color, black)',
+  },
 });

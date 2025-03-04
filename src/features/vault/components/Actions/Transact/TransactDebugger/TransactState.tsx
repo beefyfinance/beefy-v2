@@ -1,10 +1,10 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { useAppSelector } from '../../../../../../store';
-import type { BeefyState } from '../../../../../../redux-types';
-import { styles } from './styles';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppSelector } from '../../../../../../store.ts';
+import type { BeefyState } from '../../../../../../redux-types.ts';
+import { styles } from './styles.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function selectTransactState(state: BeefyState) {
   return state.ui.transact;

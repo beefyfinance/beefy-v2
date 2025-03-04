@@ -1,4 +1,4 @@
-import type { ChainEntity } from '../entities/chain';
+import type { ChainEntity } from '../entities/chain.ts';
 
 type FactoryFn<P, R> = (...props: P[]) => R;
 
@@ -17,13 +17,16 @@ export function createCachedFactory<FN extends (...args: any[]) => any>(
   factoryFn: FN,
   keyFn: (...args: Parameters<FN>) => string = (...args) => JSON.stringify(args)
 ) {
-  const cache: { [index: string]: ReturnType<FN> } = {};
+  const cache: {
+    [index: string]: ReturnType<FN>;
+  } = {};
   return (...args: Parameters<FN>) => {
     const index = keyFn(...args);
     let value = cache[index];
     if (value === undefined) {
       value = cache[index] = factoryFn(...args);
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return value;
   };
 }
@@ -57,10 +60,10 @@ export function createDependencyInitializerFactory<T, D, I>(
 ): (initializer?: I) => Promise<T> {
   let factoryPromise: Promise<T> | undefined;
 
-  return async (initializer: I): Promise<T> => {
+  return async (initializer?: I): Promise<T> => {
     if (factoryPromise === undefined) {
       if (!initializer) {
-        throw new Error('Initializer is required');
+        throw new Error('Initializer is required for the first call');
       }
       factoryPromise = (async () => {
         return factoryFn(initializer, await dependenciesFn());

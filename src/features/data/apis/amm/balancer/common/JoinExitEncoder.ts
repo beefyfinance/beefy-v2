@@ -1,6 +1,10 @@
-import { type ExitPoolUserData, type JoinPoolUserData, PoolExitKind, PoolJoinKind } from './types';
-import { encodeAbiParameters } from 'viem';
-import type { Hex } from 'viem/types/misc';
+import {
+  type ExitPoolUserData,
+  type JoinPoolUserData,
+  PoolExitKind,
+  PoolJoinKind,
+} from './types.ts';
+import { encodeAbiParameters, type Hex } from 'viem';
 import { type BigNumber } from 'bignumber.js';
 
 function bigNumberToBigInt(bn: BigNumber): bigint {

@@ -1,21 +1,21 @@
 import { memo, type ReactNode } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
-
-const useStyles = makeStyles(styles);
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
 
 export type HorizontalLayoutProps = {
-  className?: string;
+  css?: CssStyles;
   gap?: number;
   children: ReactNode;
 };
 
-export const HorizontalLayout = memo<HorizontalLayoutProps>(function HorizontalLayout({
-  className,
+export const HorizontalLayout = memo(function HorizontalLayout({
+  css: cssProp,
   gap,
   children,
-}) {
-  const classes = useStyles(gap === undefined ? undefined : { gap });
-  return <div className={clsx(classes.horizontal, className)}>{children}</div>;
+}: HorizontalLayoutProps) {
+  return (
+    <div className={css(styles.horizontal, cssProp)} style={{ gap: `${gap}px` }}>
+      {children}
+    </div>
+  );
 });

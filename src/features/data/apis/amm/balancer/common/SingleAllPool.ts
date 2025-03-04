@@ -1,16 +1,16 @@
-import { AllPool } from './AllPool';
-import type { IBalancerAllPool, IBalancerSinglePool } from '../types';
-import type { ChainEntity } from '../../../../entities/chain';
+import { AllPool } from './AllPool.ts';
+import type { IBalancerAllPool, IBalancerSinglePool } from '../types.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
 import {
   type PoolConfig,
   type QueryExitPoolResponse,
   type QueryJoinPoolResponse,
   type VaultConfig,
-} from '../vault/types';
+} from '../vault/types.ts';
 import { type BigNumber } from 'bignumber.js';
-import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { type ExitPoolUserData, PoolExitKind } from './types';
-import type { ZapStep } from '../../../transact/zap/types';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { type ExitPoolUserData, PoolExitKind } from './types.ts';
+import type { ZapStep } from '../../../transact/zap/types.ts';
 
 /** Join/Exit with one token or all tokens in ratio */
 export abstract class SingleAllPool

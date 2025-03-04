@@ -1,18 +1,19 @@
 import { useCallback, useMemo, useState } from 'react';
 import { orderBy } from 'lodash-es';
-import { useAppSelector } from '../../../../../../store';
-import type { VaultEntity } from '../../../../../data/entities/vault';
-import { selectUserFullTimelineEntriesByVaultId } from '../../../../../data/selectors/analytics';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
-import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
+import { useAppSelector } from '../../../../../../store.ts';
+import type { VaultEntity } from '../../../../../data/entities/vault.ts';
+import { selectUserFullTimelineEntriesByVaultId } from '../../../../../data/selectors/analytics.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens.ts';
 import { isBefore, subDays } from 'date-fns';
-import { BIG_ZERO } from '../../../../../../helpers/big-number';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import {
-  type TimelineEntryCowcentratedPool,
-  isTimelineEntryCowcentratedPool,
+  type AnyTimelineEntry,
   isTimelineEntryStandard,
+  type TimelineEntryCowcentratedPool,
+  type TimelineEntryCowcentratedVault,
   type TimelineEntryStandard,
-} from '../../../../../data/entities/analytics';
+} from '../../../../../data/entities/analytics.ts';
 
 export type SortedOptions = {
   sort: 'datetime' | 'amount' | 'balance' | 'mooTokenBal' | 'usdBalance';
@@ -22,7 +23,11 @@ export type SortedOptions = {
 type VaultTransactionHistory = {
   sortedOptions: SortedOptions;
   handleSort: (field: SortedOptions['sort']) => void;
-  sortedTimeline: (TimelineEntryStandard | TimelineEntryCowcentratedPool)[];
+  sortedTimeline: (
+    | TimelineEntryStandard
+    | TimelineEntryCowcentratedPool
+    | TimelineEntryCowcentratedVault
+  )[];
 };
 
 export function useSortedTransactionHistory(
@@ -42,7 +47,7 @@ export function useSortedTransactionHistory(
     if (!fullTimelineEntries) return [];
 
     const oneDayAgo = subDays(new Date(), 1);
-    return fullTimelineEntries.map((row: TimelineEntryStandard | TimelineEntryCowcentratedPool) => {
+    return fullTimelineEntries.map((row: AnyTimelineEntry) => {
       if (isTimelineEntryStandard(row) && !row.underlyingToUsdPrice) {
         const underlyingToUsdPrice =
           row.underlyingToUsdPrice ??
@@ -77,9 +82,9 @@ export function useSortedTransactionHistory(
         return orderBy(
           vaultTimelineFixed,
           tx =>
-            isTimelineEntryCowcentratedPool(tx)
-              ? tx.usdBalance
-              : tx.shareBalance.times(tx.shareToUnderlyingPrice).toNumber(),
+            isTimelineEntryStandard(tx)
+              ? tx.shareBalance.times(tx.shareToUnderlyingPrice).toNumber()
+              : tx.usdBalance,
           sortedOptions.sortDirection
         );
       case 'mooTokenBal':

@@ -1,30 +1,30 @@
-import { Fragment, memo, useMemo, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { memo, useMemo, useState } from 'react';
+import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
 import { Trans, useTranslation } from 'react-i18next';
-import { styles } from './styles';
-import { selectVaultById } from '../../../../data/selectors/vaults';
+import { styles } from './styles.ts';
+import { selectVaultById } from '../../../../data/selectors/vaults.ts';
 import {
   selectBoostActiveRewards,
   selectBoostById,
   selectBoostContractState,
-} from '../../../../data/selectors/boosts';
-import type { BoostPromoEntity } from '../../../../data/entities/promo';
+} from '../../../../data/selectors/boosts.ts';
+import type { BoostPromoEntity } from '../../../../data/entities/promo.ts';
 import {
   selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
   selectUserBalanceOfToken,
-} from '../../../../data/selectors/balance';
-import { useAppSelector } from '../../../../../store';
-import { IconWithBasicTooltip } from '../../../../../components/Tooltip/IconWithBasicTooltip';
-import { BIG_ZERO } from '../../../../../helpers/big-number';
-import { ActionConnectSwitch } from './ActionConnectSwitch';
-import { type Reward, Rewards } from './Rewards';
-import { Claim } from './ActionButton/Claim';
-import { Unstake } from './ActionButton/Unstake';
-import { StakeInput } from './ActionInputButton/StakeInput';
-import { UnstakeInput } from './ActionInputButton/UnstakeInput';
+} from '../../../../data/selectors/balance.ts';
+import { useAppSelector } from '../../../../../store.ts';
+import { IconWithBasicTooltip } from '../../../../../components/Tooltip/IconWithBasicTooltip.tsx';
+import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
+import { ActionConnectSwitch } from './ActionConnectSwitch.tsx';
+import { type Reward, Rewards } from './Rewards.tsx';
+import { Claim } from './ActionButton/Claim.tsx';
+import { Unstake } from './ActionButton/Unstake.tsx';
+import { StakeInput } from './ActionInputButton/StakeInput.tsx';
+import { UnstakeInput } from './ActionInputButton/UnstakeInput.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export function ActiveBoost({ boostId }: { boostId: BoostPromoEntity['id'] }) {
   const boost = useAppSelector(state => selectBoostById(state, boostId));
@@ -127,7 +127,7 @@ const Title = memo(function Title({ upcoming }: TitleProps) {
       <IconWithBasicTooltip
         title={t('Boost-WhatIs')}
         content={t('Boost-Explain')}
-        triggerClass={classes.titleTooltipTrigger}
+        iconCss={styles.titleTooltipTrigger}
       />
     </div>
   );

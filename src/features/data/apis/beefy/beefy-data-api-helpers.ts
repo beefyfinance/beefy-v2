@@ -3,16 +3,21 @@ import type {
   ApiTimeBucketData,
   ApiTimeBucketInterval,
   ApiTimeBucketRange,
-} from './beefy-data-api-types';
-import { firstKey, keys } from '../../../../helpers/object';
+} from './beefy-data-api-types.ts';
+import { firstKey, keys } from '../../../../helpers/object.ts';
 import { getUnixTime, isAfter, isBefore, sub } from 'date-fns';
-import { convertDurationSingle, isDurationEqual, isLonger } from '../../../../helpers/date';
-import type { DurationSingle } from '../../../../helpers/date-types';
+import { convertDurationSingle, isDurationEqual, isLonger } from '../../../../helpers/date.ts';
+import type { DurationSingle } from '../../../../helpers/date-types.ts';
 
 const bucketIntervals = {
   '1h': { interval: { hours: 1 } },
   '1d': { interval: { days: 1 } },
-} as const satisfies Record<ApiTimeBucketInterval, { interval: DurationSingle }>;
+} as const satisfies Record<
+  ApiTimeBucketInterval,
+  {
+    interval: DurationSingle;
+  }
+>;
 
 const bucketRanges = {
   '1d': { range: { days: 1 }, maPeriod: { hours: 6 }, available: { days: 0 } },
@@ -22,13 +27,17 @@ const bucketRanges = {
   all: { range: { years: 10 }, maPeriod: { days: 30 }, available: { years: 1 } },
 } as const satisfies Record<
   ApiTimeBucketRange,
-  { range: DurationSingle; maPeriod: DurationSingle; available: DurationSingle }
+  {
+    range: DurationSingle;
+    maPeriod: DurationSingle;
+    available: DurationSingle;
+  }
 >;
 
 function makeBucket<TId extends ApiTimeBucket>(id: TId): ApiTimeBucketData<TId> {
   const [intervalKey, rangeKey] = id.split('_') as [
     keyof typeof bucketIntervals,
-    keyof typeof bucketRanges
+    keyof typeof bucketRanges,
   ];
 
   const intervalData = bucketIntervals[intervalKey];
@@ -51,7 +60,9 @@ const timeBuckets = {
   '1d_1M': makeBucket('1d_1M'),
   '1d_1Y': makeBucket('1d_1Y'),
   '1d_all': makeBucket('1d_all'),
-} as const satisfies { [K in ApiTimeBucket]: ApiTimeBucketData<K> };
+} as const satisfies {
+  [K in ApiTimeBucket]: ApiTimeBucketData<K>;
+};
 
 export const allDataApiBuckets: ApiTimeBucket[] = keys(timeBuckets);
 

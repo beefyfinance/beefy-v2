@@ -1,34 +1,35 @@
 import { lazy, memo, type ReactNode, Suspense, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Header } from './components/Header';
-import { Footer } from './components/Footer';
-import { CssBaseline, ThemeProvider } from '@material-ui/core';
-import { ScrollToTop } from './components/ScrollToTop';
-import { theme } from './theme';
-import { initAppData } from './features/data/actions/scenarios';
-import { store } from './store';
-import { FullscreenTechLoader } from './components/TechLoader';
-import { Router } from './components/Router';
-import { DefaultMeta } from './components/Meta';
+import { Header } from './components/Header/Header.tsx';
+import { Footer } from './components/Footer/Footer.tsx';
+import { ScrollToTop } from './components/ScrollToTop/ScrollToTop.tsx';
+import { initAppData } from './features/data/actions/scenarios.ts';
+import { store } from './store.ts';
+import { FullscreenTechLoader } from './components/TechLoader/TechLoader.tsx';
+import { Router } from './components/Router/Router.tsx';
+import { DefaultMeta } from './components/Meta/DefaultMeta.tsx';
 import { HelmetProvider } from 'react-helmet-async';
-import { Redirects } from './components/Redirects';
-import { Stepper } from './components/Stepper';
-import { Layout } from './components/Layout';
-import { AddTokenToWallet } from './components/AddTokenToWallet';
-import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
-import { AppVersionCheck } from './components/AppVersionCheck';
-import { Tenderly } from './components/Tenderly/Tenderly';
+import { Redirects } from './components/Redirects/Redirects.tsx';
+import { Stepper } from './components/Stepper/Stepper.tsx';
+import { Layout } from './components/Layout/Layout.tsx';
+import { AddTokenToWallet } from './components/AddTokenToWallet/AddTokenToWallet.tsx';
+import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary.tsx';
+import { AppVersionCheck } from './components/AppVersionCheck/AppVersionCheck.tsx';
+import { Tenderly } from './components/Tenderly/Tenderly.tsx';
+import { BreakpointProvider } from './components/MediaQueries/BreakpointProvider.tsx';
 
-const Home = lazy(() => import(`./features/home`));
-const Vault = lazy(() => import(`./features/vault`));
-const OnRamp = lazy(() => import(`./features/on-ramp`));
-const Bridge = lazy(() => import(`./features/bridge`));
-const Dashboard = lazy(() => import(`./features/dashboard`));
-const Treasury = lazy(() => import(`./features/treasury`));
-const PageNotFound = lazy(() => import(`./features/pagenotfound`));
+const HomePage = lazy(() => import('./features/home/HomePage.tsx'));
+const VaultPage = lazy(() => import('./features/vault/VaultPage.tsx'));
+const OnRampPage = lazy(() => import('./features/on-ramp/OnRampPage.tsx'));
+const BridgePage = lazy(() => import('./features/bridge/BridgePage.tsx'));
+const DashboardPage = lazy(() => import('./features/dashboard/DashboardPage.tsx'));
+const TreasuryPage = lazy(() => import('./features/treasury/TreasuryPage.tsx'));
+const NotFoundPage = lazy(() => import('./features/pagenotfound/NotFoundPage.tsx'));
 
-type BoundariesProps = { children?: ReactNode };
-const Boundaries = memo<BoundariesProps>(function Boundaries({ children }) {
+type BoundariesProps = {
+  children?: ReactNode;
+};
+const Boundaries = memo(function Boundaries({ children }: BoundariesProps) {
   return (
     <ErrorBoundary>
       <Suspense fallback={<FullscreenTechLoader />}>{children}</Suspense>
@@ -36,14 +37,13 @@ const Boundaries = memo<BoundariesProps>(function Boundaries({ children }) {
   );
 });
 
-export const App = () => {
+export const App = memo(function App() {
   useEffect(() => {
-    initAppData(store);
+    void initAppData(store);
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <BreakpointProvider>
       <HelmetProvider>
         <Router>
           <ScrollToTop />
@@ -53,42 +53,42 @@ export const App = () => {
             <Switch>
               <Route exact path="/">
                 <Boundaries>
-                  <Home />
+                  <HomePage />
                 </Boundaries>
               </Route>
               <Route strict sensitive exact path={['/:network/vault/:id', '/vault/:id']}>
                 <Boundaries>
-                  <Vault />
+                  <VaultPage />
                 </Boundaries>
               </Route>
               <Route exact path="/onramp">
                 <Boundaries>
-                  <OnRamp />
+                  <OnRampPage />
                 </Boundaries>
               </Route>
               <Route exact path="/bridge">
                 <Boundaries>
-                  <Bridge />
+                  <BridgePage />
                 </Boundaries>
               </Route>
               <Route strict exact path="/dashboard/:address">
                 <Boundaries>
-                  <Dashboard mode={'url'} />
+                  <DashboardPage mode={'url'} />
                 </Boundaries>
               </Route>
               <Route exact path="/dashboard">
                 <Boundaries>
-                  <Dashboard mode={'wallet'} />
+                  <DashboardPage mode={'wallet'} />
                 </Boundaries>
               </Route>
               <Route exact path="/treasury">
                 <Boundaries>
-                  <Treasury />
+                  <TreasuryPage />
                 </Boundaries>
               </Route>
               <Route>
                 <Boundaries>
-                  <PageNotFound />
+                  <NotFoundPage />
                 </Boundaries>
               </Route>
             </Switch>
@@ -99,6 +99,6 @@ export const App = () => {
       </HelmetProvider>
       <AppVersionCheck />
       {import.meta.env.DEV ? <Tenderly /> : null}
-    </ThemeProvider>
+    </BreakpointProvider>
   );
-};
+});

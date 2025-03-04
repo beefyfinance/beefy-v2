@@ -1,7 +1,7 @@
-import type { TokenAmount } from '../transact-types';
+import type { TokenAmount } from '../transact-types.ts';
 import type { BigNumber } from 'bignumber.js';
-import { BIG_ZERO } from '../../../../../helpers/big-number';
-import type { TokenEntity } from '../../../entities/token';
+import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
+import type { TokenEntity } from '../../../entities/token.ts';
 
 export class Balances {
   protected byAddress: Record<string, BigNumber> = {};

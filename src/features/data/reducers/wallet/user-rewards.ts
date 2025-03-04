@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchUserMerklRewardsAction } from '../../actions/user-rewards/merkl-user-rewards';
+import { fetchUserMerklRewardsAction } from '../../actions/user-rewards/merkl-user-rewards.ts';
 import type { Draft } from 'immer';
-import type { UserRewardsState } from './user-rewards-types';
-import { fetchUserStellaSwapRewardsAction } from '../../actions/user-rewards/stellaswap-user-rewards';
+import type { UserRewardsState } from './user-rewards-types.ts';
+import { fetchUserStellaSwapRewardsAction } from '../../actions/user-rewards/stellaswap-user-rewards.ts';
 
 const initialState: UserRewardsState = {
   byUser: {},

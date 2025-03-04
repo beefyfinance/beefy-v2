@@ -1,8 +1,8 @@
 import { type BigNumber } from 'bignumber.js';
-import type { BeefyState } from '../../../../redux-types';
-import type { BoostPromoEntity } from '../../entities/promo';
-import type { TokenEntity, TokenErc20 } from '../../entities/token';
-import type { VaultGov, VaultStandard } from '../../entities/vault';
+import type { BeefyState } from '../../../../redux-types.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
+import type { TokenEntity, TokenErc20 } from '../../entities/token.ts';
+import type { VaultGov, VaultStandard } from '../../entities/vault.ts';
 
 export interface IAllowanceApi {
   fetchAllAllowances(
@@ -18,7 +18,7 @@ export interface IAllowanceApi {
     tokens: TokenErc20[],
     walletAddress: string,
     spenderAddress: string
-  );
+  ): Promise<FetchAllAllowanceResult>;
 }
 
 export interface TokenAllowance {

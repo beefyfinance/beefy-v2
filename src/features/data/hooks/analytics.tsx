@@ -1,25 +1,25 @@
-import { useAppDispatch, useAppSelector } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store.ts';
 import { useEffect } from 'react';
 import {
   fetchCowcentratedPriceHistoryClassic,
   fetchCowcentratedPriceHistoryClm,
   fetchShareToUnderlying,
-} from '../actions/analytics';
-import type { VaultEntity } from '../entities/vault';
+} from '../actions/analytics.ts';
+import type { VaultEntity } from '../entities/vault.ts';
 import {
   selectClassicPriceHistoryByVaultIdByInterval,
   selectClmPriceHistoryByVaultIdByInterval,
   selectShareToUnderlyingByVaultIdByInterval,
-} from '../selectors/analytics';
-import type { GraphBucket } from '../../../helpers/graph/types';
+} from '../selectors/analytics.ts';
+import type { GraphBucket } from '../../../helpers/graph/types.ts';
 import {
   getDataApiBucketIntervalKey,
   getDataApiBucketRangeStartDateUnix,
-} from '../apis/beefy/beefy-data-api-helpers';
-import type { BeefyState, BeefyThunkConfig } from '../../../redux-types';
-import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types';
-import type { AnalyticsIntervalData } from '../reducers/analytics-types';
-import type { AsyncThunk } from '@reduxjs/toolkit/src/createAsyncThunk';
+} from '../apis/beefy/beefy-data-api-helpers.ts';
+import type { BeefyMetaThunkConfig, BeefyState } from '../../../redux-types.ts';
+import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types.ts';
+import type { AnalyticsIntervalData } from '../reducers/analytics-types.ts';
+import type { AsyncThunk } from '@reduxjs/toolkit';
 
 type IntervalDataSelector<T> = (
   state: BeefyState,
@@ -27,18 +27,20 @@ type IntervalDataSelector<T> = (
   intervalKey: ApiTimeBucketInterval
 ) => Readonly<AnalyticsIntervalData<T>>;
 
-type IntervalDataAction = AsyncThunk<
-  unknown,
+type IntervalDataAction<T> = AsyncThunk<
+  T,
   {
     vaultId: VaultEntity['id'];
     timeBucket: GraphBucket;
   },
-  BeefyThunkConfig
+  BeefyMetaThunkConfig<{
+    since: number;
+  }>
 >;
 
-function makeVaultIdToIntervalData<T>(
-  selector: IntervalDataSelector<T>,
-  action: IntervalDataAction
+function makeVaultIdToIntervalData<TSelector, TPayload>(
+  selector: IntervalDataSelector<TSelector>,
+  action: IntervalDataAction<TPayload>
 ) {
   return function (vaultId: VaultEntity['id'], timeBucket: GraphBucket) {
     const dispatch = useAppDispatch();
@@ -54,7 +56,9 @@ function makeVaultIdToIntervalData<T>(
         if (!hasRequested && (status === 'idle' || status === 'fulfilled')) {
           dispatch(action({ vaultId, timeBucket }));
         } else if (status === 'rejected') {
-          const handle = setTimeout(() => dispatch(action({ vaultId, timeBucket })), 15000);
+          const handle = setTimeout(() => {
+            dispatch(action({ vaultId, timeBucket }));
+          }, 15000);
           return () => clearTimeout(handle);
         }
       }

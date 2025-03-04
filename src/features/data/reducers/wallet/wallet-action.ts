@@ -1,11 +1,12 @@
 import { type BigNumber } from 'bignumber.js';
-import { WALLET_ACTION, WALLET_ACTION_RESET } from '../../actions/wallet-actions';
-import type { TokenEntity } from '../../entities/token';
-import type { VaultEntity } from '../../entities/vault';
-import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types';
-import type { BeefyAnyBridgeConfig } from '../../apis/config-types';
+import { WALLET_ACTION, WALLET_ACTION_RESET } from '../../actions/wallet-actions.ts';
+import type { TokenEntity } from '../../entities/token.ts';
+import type { VaultEntity } from '../../entities/vault.ts';
+import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types.ts';
+import type { BeefyAnyBridgeConfig } from '../../apis/config-types.ts';
 import type { Hash, TransactionReceipt } from 'viem';
-import type { BoostPromoEntity } from '../../entities/promo';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
+import type { MergeObjectUnion } from '../../utils/types-utils.ts';
 
 export type TrxHash = string;
 export type TrxError = {
@@ -76,7 +77,7 @@ export function isBaseAdditionalData(
 export type WalletActionsIdleState = {
   result: undefined;
   data: undefined;
-  additional: undefined;
+  additional?: undefined;
 };
 
 export type WalletActionsErrorState<T extends TxAdditionalData = TxAdditionalData> = {
@@ -89,7 +90,9 @@ export type WalletActionsErrorState<T extends TxAdditionalData = TxAdditionalDat
 
 export type WalletActionsPendingState<T extends TxAdditionalData = TxAdditionalData> = {
   result: 'success_pending';
-  data: { hash: TrxHash };
+  data: {
+    hash: TrxHash;
+  };
   additional?: T;
 };
 
@@ -107,6 +110,8 @@ export type WalletActionsState =
   | WalletActionsErrorState
   | WalletActionsPendingState
   | WalletActionsSuccessState;
+
+export type WalletActionsState2 = MergeObjectUnion<WalletActionsState>;
 
 export function isWalletActionIdle(state: WalletActionsState): state is WalletActionsIdleState {
   return state.result === null;
@@ -148,8 +153,11 @@ const initialWalletActionState: WalletActionsState = {
 };
 
 export const walletActionsReducer = (
-  state = initialWalletActionState,
-  action: { type: 'WALLET_ACTION' | 'WALLET_ACTION_RESET'; payload: WalletActionsState }
+  state: WalletActionsState = initialWalletActionState,
+  action: {
+    type: 'WALLET_ACTION' | 'WALLET_ACTION_RESET';
+    payload: WalletActionsState;
+  }
 ): WalletActionsState => {
   switch (action.type) {
     case WALLET_ACTION:

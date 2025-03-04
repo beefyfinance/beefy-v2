@@ -1,16 +1,16 @@
-import type { Migrator, MigratorUnstakeProps } from '../migration-types';
-import type { VaultEntity } from '../../../entities/vault';
+import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
+import type { VaultEntity } from '../../../entities/vault.ts';
 import { type BigNumber } from 'bignumber.js';
-import type { BeefyState } from '../../../../../redux-types';
-import { ERC20Abi } from '../../../../../config/abi/ERC20Abi';
-import { buildExecute, buildFetchBalance } from '../utils';
-import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
-import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number';
-import { selectTokenByAddress } from '../../../selectors/tokens';
-import { selectVaultStrategyAddress } from '../../../selectors/vaults';
-import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
+import type { BeefyState } from '../../../../../redux-types.ts';
+import { ERC20Abi } from '../../../../../config/abi/ERC20Abi.ts';
+import { buildExecute, buildFetchBalance } from '../utils.ts';
+import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
+import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number.ts';
+import { selectTokenByAddress } from '../../../selectors/tokens.ts';
+import { selectVaultStrategyAddress } from '../../../selectors/vaults.ts';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Abi, Address } from 'abitype';
-import { getWalletConnectionApi } from '../../instances';
+import { getWalletConnectionApi } from '../../instances.ts';
 import type { Hash } from 'viem';
 
 const id = 'real-pearl';
@@ -27,7 +27,7 @@ async function getBalance(
   state: BeefyState
 ): Promise<string> {
   const stakingAddress = await getStakingAddress(vault, state);
-  if (stakingAddress == ZERO_ADDRESS) return '0';
+  if (stakingAddress === ZERO_ADDRESS) return '0';
   const staking = fetchContract(stakingAddress, ERC20Abi, vault.chainId);
   const walletBalance = await staking.read.balanceOf([walletAddress as Address]);
   return walletBalance.toString(10);

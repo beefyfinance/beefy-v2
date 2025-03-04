@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getBeefyApi } from '../apis/instances';
+import { getBeefyApi } from '../apis/instances.ts';
 import type {
   BeefyAPILpBreakdownResponse,
   BeefyAPITokenPricesResponse,
-} from '../apis/beefy/beefy-api-types';
+} from '../apis/beefy/beefy-api-types.ts';
 
 export type fetchAllPricesPayload = {
   prices: BeefyAPITokenPricesResponse;

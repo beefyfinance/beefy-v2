@@ -1,23 +1,23 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { ChainEntity } from '../entities/chain';
-import type { PlatformEntity } from '../entities/platform';
-import type { KeysOfType } from '../utils/types-utils';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { PlatformEntity } from '../entities/platform.ts';
+import type { KeysOfType } from '../utils/types-utils.ts';
 import createTransform from 'redux-persist/es/createTransform';
 import type {
   SortDirectionType,
   SortType,
+  StrategiesType,
   UserCategoryType,
   VaultAssetType,
   VaultCategoryType,
-  StrategiesType,
-} from './filtered-vaults-types';
-import { isValidUserCategory } from './filtered-vaults-types';
-import type { VaultEntity } from '../entities/vault';
-import { fetchAllVaults } from '../actions/vaults';
-import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults';
+} from './filtered-vaults-types.ts';
+import { isValidUserCategory } from './filtered-vaults-types.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import { fetchAllVaults } from '../actions/vaults.ts';
+import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
 import { BigNumber } from 'bignumber.js';
-import { BIG_ZERO } from '../../../helpers/big-number';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
 
 /**
  * State containing Vault infos

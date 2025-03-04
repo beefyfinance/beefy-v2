@@ -1,11 +1,11 @@
 import { type BigNumber } from 'bignumber.js';
 import type { AsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import type { VaultEntity } from '../../entities/vault';
+import type { VaultEntity } from '../../entities/vault.ts';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { MigrationConfig } from '../../reducers/wallet/migration';
-import type { BeefyState } from '../../../../redux-types';
+import type { MigrationConfig } from '../../reducers/wallet/migration.ts';
+import type { BeefyState } from '../../../../redux-types.ts';
 import type { Address, Chain } from 'viem';
-import type { GasPricing } from '../gas-prices';
+import type { GasPricing } from '../gas-prices/gas-prices.ts';
 
 export interface IMigrationApi {
   getMigrator(id: MigrationConfig['id']): Promise<Migrator>;
@@ -32,8 +32,7 @@ export type CommonMigrationUpdateAsyncThunk = AsyncThunk<
 export type CommonMigrationUpdateFulfilledAction = PayloadAction<
   CommonMigrationUpdateFulfilledPayload,
   string,
-  { arg: MigratorUpdateProps; requestId: string; requestStatus: 'fulfilled' },
-  never
+  { arg: MigratorUpdateProps; requestId: string; requestStatus: 'fulfilled' }
 >;
 
 export interface MigratorExecuteProps {

@@ -1,70 +1,59 @@
-import type { FC, SVGProps } from 'react';
 import { memo, useCallback } from 'react';
-import type { ChainEntity } from '../../../../../data/entities/chain';
-import { selectActiveChainIds, selectChainById } from '../../../../../data/selectors/chains';
-import { makeStyles, Tooltip } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
-import { useAppSelector } from '../../../../../../store';
-import { NewBadge } from '../../../../../../components/Header/components/Badges/NewBadge';
-import { sortBy } from 'lodash-es';
+import type { ChainEntity, ChainId } from '../../../../../data/entities/chain.ts';
+import { selectActiveChainIds, selectChainById } from '../../../../../data/selectors/chains.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { css, cx } from '@repo/styles/css';
+import { useAppSelector } from '../../../../../../store.ts';
+import { NewBadge } from '../../../../../../components/Header/components/Badges/NewBadge.tsx';
+import { styled } from '@repo/styles/jsx';
+import { ButtonWithTooltip } from '../../../../../../components/Tooltip/ButtonWithTooltip.tsx';
+import { getNetworkIcon } from './hooks.tsx';
 
-const useStyles = makeStyles(styles);
-const networkIcons = import.meta.glob<FC<SVGProps<SVGSVGElement>>>(
-  '../../../../../../images/networks/*.svg',
-  {
-    eager: true,
-    import: 'ReactComponent',
-  }
-);
+const useStyles = legacyMakeStyles(styles);
 
 type ChainButtonProps = {
   id: ChainEntity['id'];
   selected: boolean;
   onChange: (selected: boolean, id: ChainEntity['id']) => void;
 };
-const ChainButton = memo<ChainButtonProps>(function ChainButton({ id, selected, onChange }) {
+const ChainButton = memo(function ChainButton({ id, selected, onChange }: ChainButtonProps) {
   const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, id));
   const handleChange = useCallback(() => {
     onChange(!selected, id);
   }, [id, selected, onChange]);
-  const Icon: FC<SVGProps<SVGSVGElement>> =
-    networkIcons[`../../../../../../images/networks/${id}.svg`];
+  const Icon = getNetworkIcon(id);
 
   return (
-    <Tooltip
-      disableFocusListener
-      disableTouchListener
-      title={chain.name}
+    <ButtonWithTooltip
+      openOnClick={false}
+      tooltip={chain.name}
       placement="top-start"
-      classes={{ tooltip: classes.tooltip }}
+      onClick={handleChange}
+      className={css(styles.button, selected && styles.selected)}
     >
-      <button
-        onClick={handleChange}
-        className={clsx(classes.button, { [classes.selected]: selected })}
-      >
-        {chain.new ? <NewBadge className={classes.badge} /> : null}
-        <Icon className={classes.icon} width={24} height={24} />
-      </button>
-    </Tooltip>
+      {chain.new ? <NewBadge css={styles.badge} /> : null}
+      <Icon
+        className={cx(classes.icon, !selected && classes.unselectedIcon)}
+        width={24}
+        height={24}
+      />
+    </ButtonWithTooltip>
   );
 });
 
 export type ChainButtonSelectorProps = {
   selected: ChainEntity['id'][];
   onChange: (selected: ChainEntity['id'][]) => void;
-  className?: string;
 };
-export const ChainButtonSelector = memo<ChainButtonSelectorProps>(function ChainButtonSelector({
+export const ChainButtonSelector = memo(function ChainButtonSelector({
   selected,
   onChange,
-  className,
-}) {
-  const classes = useStyles();
+}: ChainButtonSelectorProps) {
   const chainIds = useAppSelector(selectActiveChainIds);
   const handleChange = useCallback(
-    (isSelected, id) => {
+    (isSelected: boolean, id: ChainId) => {
       if (isSelected) {
         if (!selected.includes(id)) {
           const newSelected = [...selected, id];
@@ -85,8 +74,8 @@ export const ChainButtonSelector = memo<ChainButtonSelectorProps>(function Chain
   );
 
   return (
-    <div className={clsx(classes.selector, className)}>
-      {sortBy(chainIds, id => id).map(id => (
+    <Buttons>
+      {chainIds.map(id => (
         <ChainButton
           key={id}
           id={id}
@@ -94,6 +83,22 @@ export const ChainButtonSelector = memo<ChainButtonSelectorProps>(function Chain
           onChange={handleChange}
         />
       ))}
-    </div>
+    </Buttons>
   );
+});
+
+const Buttons = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    columnGap: '0',
+    rowGap: '16px',
+    width: '100%',
+    borderStyle: 'solid',
+    borderWidth: '2px',
+    borderColor: 'background.content',
+    borderRadius: '8px',
+    backgroundColor: 'background.content.dark',
+  },
 });

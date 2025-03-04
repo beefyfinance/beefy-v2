@@ -1,5 +1,5 @@
-import type { VaultEntity } from '../../../data/entities/vault';
-import type { PromoEntity } from '../../../data/entities/promo';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
+import type { PromoEntity } from '../../../data/entities/promo.ts';
 import type { ComponentType } from 'react';
 
 export type PromoCardLoaderProps = {

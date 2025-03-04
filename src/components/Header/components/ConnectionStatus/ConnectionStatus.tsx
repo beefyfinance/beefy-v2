@@ -1,17 +1,12 @@
-import { makeStyles } from '@material-ui/core';
 import { lazy, memo, Suspense, useCallback, useRef, useState } from 'react';
-
-import { NetworkStatus } from '../../../NetworkStatus';
-import { styles } from './styles';
-import { RpcModalTrigger } from '../RpcModal';
+import { styled } from '@repo/styles/jsx';
+import { NetworkStatus } from '../../../NetworkStatus/NetworkStatus.tsx';
+import { RpcModalTrigger } from '../RpcModal/RpcModal.tsx';
 
 // lazy load web3 related stuff, as libs are quite heavy
-const WalletContainer = lazy(() => import(`../WalletContainer`));
-
-const useStyles = makeStyles(styles);
+const WalletContainer = lazy(() => import('../WalletContainer/WalletContainer.tsx'));
 
 export const ConnectionStatus = memo(function ConnectionStatus() {
-  const classes = useStyles();
   const anchorEl = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<null | 'rpc' | 'status'>(null);
 
@@ -28,7 +23,7 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
   }, [setOpen]);
 
   return (
-    <div ref={anchorEl} className={classes.container}>
+    <Holder ref={anchorEl}>
       <RpcModalTrigger
         anchorEl={anchorEl}
         isOpen={open === 'rpc'}
@@ -47,6 +42,15 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
           <WalletContainer />
         </Suspense>
       </div>
-    </div>
+    </Holder>
   );
+});
+
+const Holder = styled('div', {
+  base: {
+    display: 'flex',
+    backgroundColor: 'background.content.dark',
+    alignItems: 'center',
+    borderRadius: '8px',
+  },
 });

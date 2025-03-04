@@ -1,19 +1,19 @@
-import { type VaultEntity } from '../../features/data/entities/vault';
+import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { memo, useMemo } from 'react';
 import { connect } from 'react-redux';
-import type { BeefyState } from '../../redux-types';
-import { selectVaultById } from '../../features/data/selectors/vaults';
-import { VaultValueStat } from '../VaultValueStat';
-import { selectTvlBreakdownByVaultId } from '../../features/data/selectors/tvl';
-import { formatLargeUsd, formatPercent } from '../../helpers/format';
-import { InterestTooltipContent } from '../InterestTooltipContent';
-import { selectPlatformById } from '../../features/data/selectors/platforms';
-import { useAppSelector } from '../../store';
-import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types';
+import type { BeefyState } from '../../redux-types.ts';
+import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
+import { selectTvlBreakdownByVaultId } from '../../features/data/selectors/tvl.ts';
+import { formatLargeUsd, formatPercent } from '../../helpers/format.ts';
+import { InterestTooltipContent } from '../InterestTooltipContent/InterestTooltipContent.tsx';
+import { selectPlatformById } from '../../features/data/selectors/platforms.ts';
+import { useAppSelector } from '../../store.ts';
+import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types.ts';
 import {
   selectIsContractDataLoadedOnChain,
   selectIsPricesAvailable,
-} from '../../features/data/selectors/data-loader';
+} from '../../features/data/selectors/data-loader.ts';
 
 export type VaultTvlStatProps = {
   vaultId: VaultEntity['id'];
@@ -62,7 +62,7 @@ type TvlShareTooltipProps = {
   breakdown: TvlBreakdownUnderlying;
 };
 
-export const TvlShareTooltip = memo<TvlShareTooltipProps>(function TvlShareTooltip({ breakdown }) {
+export const TvlShareTooltip = memo(function TvlShareTooltip({ breakdown }: TvlShareTooltipProps) {
   const platform = useAppSelector(state =>
     breakdown.underlyingPlatformId
       ? selectPlatformById(state, breakdown.underlyingPlatformId)

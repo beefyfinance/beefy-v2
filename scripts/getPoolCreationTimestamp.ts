@@ -1,5 +1,12 @@
-import { chainRpcs, getVaultsForChain } from './common/config';
-const explorerApiUrls = {
+import {
+  type AddressBookChainId,
+  appToAddressBookId,
+  type ChainMap,
+  getChainRpc,
+  getVaultsForChain,
+} from './common/config.ts';
+
+const explorerApiUrls: ChainMap<string> = {
   cronos: 'api.cronoscan.com/api',
   bsc: 'api.bscscan.com/api',
   polygon: 'api.polygonscan.com/api',
@@ -22,10 +29,21 @@ const explorerApiUrls = {
   base: 'api.basescan.org/api',
 };
 
-const blockScoutChains = new Set(['fuse', 'metis', 'emerald', 'aurora', 'kava', 'canto']);
-const harmonyRpcChains = new Set(['one']);
+const blockScoutChains = new Set<AddressBookChainId>([
+  'fuse',
+  'metis',
+  'emerald',
+  'aurora',
+  'kava',
+  'canto',
+]);
+const harmonyRpcChains = new Set<AddressBookChainId>(['one']);
 
-const getCreationTimestamp = async (vaultAddress, explorerUrl, chain) => {
+const getCreationTimestamp = async (
+  vaultAddress: string,
+  explorerUrl: string,
+  chain: AddressBookChainId
+) => {
   const url =
     `https://${explorerUrl}?module=account&action=txlist&address=${vaultAddress}` +
     `&startblock=1&endblock=99999999&page=1&sort=asc&limit=1${
@@ -37,7 +55,11 @@ const getCreationTimestamp = async (vaultAddress, explorerUrl, chain) => {
     throw new Error(`${res.status} ${res.statusText}`);
   }
 
-  const data = (await res.json()) as { status: string; message: string; data: any };
+  const data = (await res.json()) as {
+    status: string;
+    message: string;
+    data: { result: Array<{ blockNumber: string; timeStamp: string }> };
+  };
 
   const block = data.data.result[0].blockNumber;
   const timestamp = data.data.result[0].timeStamp;
@@ -46,8 +68,8 @@ const getCreationTimestamp = async (vaultAddress, explorerUrl, chain) => {
   return timestamp;
 };
 
-const getCreationTimestampHarmonyRpc = async (vaultAddress, chain) => {
-  const url = chainRpcs[chain];
+const getCreationTimestampHarmonyRpc = async (vaultAddress: string, chain: AddressBookChainId) => {
+  const url = getChainRpc(chain);
 
   const resp = await fetch(url, {
     method: 'POST',
@@ -87,19 +109,23 @@ const getCreationTimestampHarmonyRpc = async (vaultAddress, chain) => {
   }
 
   const tx0 = data.result.transactions[0];
-  return tx0.timestamp;
+  return tx0.timestamp as string;
 };
 
-const getTimestamp = async (vaultAddress, chain) => {
+const getTimestamp = async (vaultAddress: string, chain: AddressBookChainId) => {
   if (harmonyRpcChains.has(chain)) {
     console.log('Using Harmony RPC method for this chain');
     return await getCreationTimestampHarmonyRpc(vaultAddress, chain);
   } else {
-    return await getCreationTimestamp(vaultAddress, explorerApiUrls[chain], chain);
+    const explorerApiUrl = explorerApiUrls[chain];
+    if (!explorerApiUrl) {
+      throw new Error(`No explorer api url found for chain ${chain}`);
+    }
+    return await getCreationTimestamp(vaultAddress, explorerApiUrl, chain);
   }
 };
 
-async function getContractDate(chain: string, address: string) {
+async function getContractDate(chain: AddressBookChainId, address: string) {
   const explorer = explorerApiUrls[chain];
   if (!explorer) return console.log(`No explorer api url found for chain ${chain}`);
 
@@ -109,7 +135,7 @@ async function getContractDate(chain: string, address: string) {
 
 const getPoolDate = async () => {
   const poolId = process.argv[2];
-  const chain = process.argv[3];
+  const chain = appToAddressBookId(process.argv[3]);
 
   let address = poolId;
 
@@ -119,7 +145,7 @@ const getPoolDate = async () => {
       const pools = await getVaultsForChain(chain);
       pool = pools.filter(p => p.id === poolId)[0];
     } catch (err) {
-      return console.log(`${poolId} not found in pools for chain ${chain}`);
+      return console.log(`${poolId} not found in pools for chain ${chain}`, err);
     }
     address = pool.earnContractAddress;
   }

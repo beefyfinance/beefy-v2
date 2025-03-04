@@ -1,8 +1,8 @@
 import type { SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { resolveAddressToDomain, resolveDomainToAddress } from '../../actions/resolver';
+import { resolveAddressToDomain, resolveDomainToAddress } from '../../actions/resolver.ts';
 import type { Draft } from 'immer';
-import type { ResolverState } from './resolver-types';
+import type { ResolverState } from './resolver-types.ts';
 
 const initialResolverState: ResolverState = {
   byAddress: {},

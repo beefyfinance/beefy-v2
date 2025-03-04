@@ -1,9 +1,9 @@
-import type { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types.ts';
 import { createListenerMiddleware, isFulfilled } from '@reduxjs/toolkit';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { fetchApyAction, recalculateTotalApyAction } from '../actions/apy';
-import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import { fetchOffChainCampaignsAction } from '../actions/rewards';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
+import { fetchApyAction, recalculateTotalApyAction } from '../actions/apy.ts';
+import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
+import { fetchOffChainCampaignsAction } from '../actions/rewards.ts';
 
 const apyListener = createListenerMiddleware<BeefyState>();
 
@@ -14,7 +14,7 @@ apyListener.startListening({
     reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
     fetchOffChainCampaignsAction
   ),
-  effect: async (action, { dispatch, delay, cancelActiveListeners }) => {
+  effect: async (_action, { dispatch, delay, cancelActiveListeners }) => {
     // Cancel other instances of this callback
     cancelActiveListeners();
 

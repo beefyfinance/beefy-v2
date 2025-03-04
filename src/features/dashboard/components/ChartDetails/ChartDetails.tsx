@@ -1,19 +1,21 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { memo } from 'react';
-import { formatLargePercent } from '../../../../helpers/format';
-import type { BaseEntry } from '../../../data/utils/array-utils';
-import { styles } from './styles';
-import { CHART_COLORS } from '../../../../helpers/charts';
+import { formatLargePercent } from '../../../../helpers/format.ts';
+import type { BaseEntry } from '../../../data/utils/array-utils.ts';
+import { styles } from './styles.ts';
+import { CHART_COLORS } from '../../../../helpers/charts.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-type ItemType = BaseEntry & { label?: string };
+type ItemType = BaseEntry & {
+  label?: string;
+};
 
 interface ChartDetailsProps {
   data: ItemType[];
 }
 
-export const ChartDetails = memo<ChartDetailsProps>(function ChartDetails({ data }) {
+export const ChartDetails = memo(function ChartDetails({ data }: ChartDetailsProps) {
   const classes = useStyles();
 
   return (

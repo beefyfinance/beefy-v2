@@ -1,16 +1,19 @@
 import { memo, useMemo } from 'react';
-import { LabeledStat } from '../LabeledStat';
+import { LabeledStat } from '../LabeledStat/LabeledStat.tsx';
 import { useTranslation } from 'react-i18next';
-import { formatTotalApy } from '../../helpers/format';
-import { selectApyVaultUIData } from '../../features/data/selectors/apy';
-import type { VaultEntity } from '../../features/data/entities/vault';
-import { ValueBlock } from '../ValueBlock/ValueBlock';
-import { useAppSelector } from '../../store';
-import { ApyTooltipContent } from '../VaultStats/VaultApyStat';
+import { formatTotalApy } from '../../helpers/format.ts';
+import { selectApyVaultUIData } from '../../features/data/selectors/apy.ts';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
+import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
+import { useAppSelector } from '../../store.ts';
+import { ApyTooltipContent } from '../VaultStats/VaultApyStat.tsx';
 
-type ApyStatsProps = { vaultId: VaultEntity['id']; type: 'yearly' | 'daily' };
+type ApyStatsProps = {
+  vaultId: VaultEntity['id'];
+  type: 'yearly' | 'daily';
+};
 
-export const ApyStats = memo<ApyStatsProps>(function ApyStats({ vaultId, type }) {
+export const ApyStats = memo(function ApyStats({ vaultId, type }: ApyStatsProps) {
   const { t } = useTranslation();
   const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
   const label = useMemo(
@@ -19,8 +22,8 @@ export const ApyStats = memo<ApyStatsProps>(function ApyStats({ vaultId, type })
         type === 'daily'
           ? 'VaultStat-DAILY'
           : data.type === 'apr'
-          ? 'VaultStat-APR'
-          : 'VaultStat-APY'
+            ? 'VaultStat-APR'
+            : 'VaultStat-APY'
       ),
     [t, type, data.type]
   );
@@ -31,7 +34,7 @@ export const ApyStats = memo<ApyStatsProps>(function ApyStats({ vaultId, type })
   const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';
   const boostedTotalKey = type === 'daily' ? 'boostedTotalDaily' : 'boostedTotalApy';
 
-  if (data.status == 'loading') {
+  if (data.status === 'loading') {
     return <ValueBlock label={label} value="-" loading={true} />;
   }
 
@@ -53,8 +56,8 @@ export const ApyStats = memo<ApyStatsProps>(function ApyStats({ vaultId, type })
             data.boosted === 'prestake'
               ? t('PRE-STAKE')
               : data.boosted === 'active'
-              ? formatted[boostedTotalKey]
-              : undefined
+                ? formatted[boostedTotalKey]
+                : undefined
           }
           value={formatted[totalKey]}
         />

@@ -5,8 +5,8 @@ import type {
   GetUrlSearchParamsScalarsEntry,
   GetUrlSearchParamsValuesEntry,
   URLSearchParamsInit,
-} from './types';
-import { typedDefaultsDeep } from '../object';
+} from './types.ts';
+import { typedDefaultsDeep } from '../object.ts';
 
 export const ABORT_REASON_TIMEOUT = '__timeout';
 

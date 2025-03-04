@@ -1,14 +1,15 @@
-import { omit } from 'lodash';
-import { getVaultsForChain } from './common/config';
-import { saveJson } from './common/files';
-import { allChainIds, AppChainId } from './common/chains';
-import { sortVaultKeys } from './common/vault-fields';
-import type { VaultConfig } from '../src/features/data/apis/config-types';
-import { getTokenById } from './common/tokens';
-import { TokenEntity } from '../src/features/data/entities/token';
-import { getCurvePools } from './addCurveZap';
-import { mapValuesAsync } from './common/utils';
-import { ChainEntity } from '../src/features/data/entities/chain';
+import { omit } from 'lodash-es';
+import { addressBookToAppId, getVaultsForChain } from './common/config.ts';
+import { saveJson } from './common/files.ts';
+import { allChainIds, type AppChainId } from './common/chains.ts';
+import { sortVaultKeys } from './common/vault-fields.ts';
+import type { VaultConfig } from '../src/features/data/apis/config-types.ts';
+import { getTokenById } from './common/tokens.ts';
+import { type TokenEntity } from '../src/features/data/entities/token.ts';
+import { type CurveApiPoolWithMetadata, getCurvePools } from './addCurveZap.ts';
+import { mapValuesAsync } from './common/utils.ts';
+import { type ChainEntity } from '../src/features/data/entities/chain.ts';
+import { entries } from '../src/helpers/object.ts';
 
 const WARN_MISSING_ASSET_ON_ACTIVE_VAULTS_ONLY: boolean = true;
 
@@ -18,7 +19,7 @@ type ChainProviderUrls = {
   };
 };
 
-type UrlFunction = (vault: VaultConfig, key: string) => Promise<string>;
+type UrlFunction = (vault: VaultConfig, key: keyof ProviderUrls) => Promise<string>;
 
 type ProviderUrls = {
   buyTokenUrl?: string | UrlFunction;
@@ -164,7 +165,7 @@ const URLS: ChainProviderUrls = {
   },
 };
 
-const curveEndpoints = {
+const curveEndpoints: Record<string, number> = {
   main: 0,
   crypto: 1,
   factory: 2,
@@ -175,7 +176,7 @@ const curveEndpoints = {
   'factory-crypto': 7,
 };
 
-const curveUrlKeys = {
+const curveUrlKeys: Record<string, keyof CurveApiPoolWithMetadata['poolUrls']> = {
   buyTokenUrl: 'swap',
   addLiquidityUrl: 'deposit',
   removeLiquidityUrl: 'withdraw',
@@ -186,7 +187,10 @@ async function curvePoolUrl(vault: VaultConfig, key: keyof ProviderUrls) {
   const pools = allPools.filter(pool => pool.lpTokenAddress === vault.tokenAddress);
 
   if (pools.length) {
-    pools.sort((a, b) => curveEndpoints[a.metadata.endpoint] - curveEndpoints[b.metadata.endpoint]);
+    pools.sort(
+      (a, b) =>
+        (curveEndpoints[a.metadata.endpoint] || 100) - (curveEndpoints[b.metadata.endpoint] || 100)
+    );
     return pools[0].poolUrls[curveUrlKeys[key]][0];
   }
 
@@ -202,7 +206,8 @@ async function replaceUrlsForVault(
     return undefined;
   }
 
-  const urlsForProvider = URLS[vault.network]?.[vault.tokenProviderId];
+  const chainId = addressBookToAppId(vault.network);
+  const urlsForProvider = URLS[chainId]?.[vault.tokenProviderId];
   if (!urlsForProvider) {
     return undefined;
   }
@@ -255,29 +260,31 @@ async function getUrlsForVault(
   wnative: TokenEntity
 ): Promise<ProviderUrls | undefined> {
   if (vault.tokenAddress && vault.tokenProviderId) {
-    const replacements = {
+    const replacements: Record<string, string> = {
       lp: vault.tokenAddress,
       'lp:lower': vault.tokenAddress.toLowerCase(),
     };
 
-    for (const i in vault.assets) {
-      const asset = vault.assets[i];
-      const token = await getTokenById(asset, vault.network as ChainEntity['id']);
+    if (vault.assets) {
+      for (let i = 0; i < vault.assets.length; ++i) {
+        const asset = vault.assets[i];
+        const token = await getTokenById(asset, vault.network as ChainEntity['id']);
 
-      if (!token) {
-        if (!WARN_MISSING_ASSET_ON_ACTIVE_VAULTS_ONLY || vault.status === 'active') {
-          console.error(
-            `Could not find token id ${asset} for vault ${vault.id} on ${vault.network}. Did you forget to update addressbook?`
-          );
+        if (!token) {
+          if (!WARN_MISSING_ASSET_ON_ACTIVE_VAULTS_ONLY || vault.status === 'active') {
+            console.error(
+              `Could not find token id ${asset} for vault ${vault.id} on ${vault.network}. Did you forget to update addressbook?`
+            );
+          }
+          return undefined;
         }
-        return undefined;
-      }
 
-      replacements[`token${i}`] = token.address === 'native' ? token.symbol : token.address;
-      replacements[`token${i}:wrapped`] =
-        token.address === 'native' ? wnative.address : token.address;
-      replacements[`token${i}:lower`] = replacements[`token${i}`].toLowerCase();
-      replacements[`token${i}:wrapped:lower`] = replacements[`token${i}:wrapped`].toLowerCase();
+        replacements[`token${i}`] = token.address === 'native' ? token.symbol : token.address;
+        replacements[`token${i}:wrapped`] =
+          token.address === 'native' ? wnative.address : token.address;
+        replacements[`token${i}:lower`] = replacements[`token${i}`].toLowerCase();
+        replacements[`token${i}:wrapped:lower`] = replacements[`token${i}:wrapped`].toLowerCase();
+      }
     }
 
     return await replaceUrlsForVault(vault, replacements);
@@ -298,7 +305,7 @@ async function getModifiedConfig(chainId: AppChainId) {
       if (vault.tokenAddress && vault.tokenProviderId) {
         const urls = await getUrlsForVault(vault, wnative);
         if (urls) {
-          for (const [key, url] of Object.entries(urls)) {
+          for (const [key, url] of entries(urls)) {
             if (vault[key] !== url) {
               console.log(`Setting ${key} in vault ${vault.id} on ${vault.network}...`);
               vault = { ...vault, [key]: url };
@@ -320,7 +327,7 @@ async function start() {
     if (URLS[chainId]?.['curve']) {
       await getCurvePools(chainId, false, false);
     }
-    await saveJson(`./src/config/vault/${chainId}.json`, modified[i], true);
+    await saveJson(`./src/config/vault/${chainId}.json`, modified[i], 'prettier');
   }
 }
 

@@ -1,6 +1,6 @@
 import type { SerializedError } from '@reduxjs/toolkit';
-import type { ApiQuoteRequest, ApiQuoteResponse } from '../apis/on-ramp/on-ramp-types';
-import type { ChainEntity } from '../entities/chain';
+import type { ApiQuoteRequest, ApiQuoteResponse } from '../apis/on-ramp/on-ramp-types.ts';
+import type { ChainEntity } from '../entities/chain.ts';
 
 export enum FormStep {
   UnsupportedCountry = 1,

@@ -1,22 +1,22 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { Fragment, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RISKS } from '../../../../config/risk';
-import { Card } from '../Card';
-import { CardHeader } from '../Card/CardHeader';
-import { CardContent } from '../Card/CardContent';
-import { styles } from './styles';
+import { SCORED_RISKS } from '../../../../config/risk.ts';
+import { Card } from '../Card/Card.tsx';
+import { CardHeader } from '../Card/CardHeader.tsx';
+import { CardContent } from '../Card/CardContent.tsx';
+import { styles } from './styles.ts';
 import up from './up.svg';
 import down from './down.svg';
-import { selectVaultById } from '../../../data/selectors/vaults';
-import type { VaultEntity } from '../../../data/entities/vault';
-import { useAppSelector } from '../../../../store';
-import { Collapsable } from '../../../../components/Collapsable';
-import clsx from 'clsx';
-import { NoSafuRisks } from '../NoSafuRisks';
-import { IconWithBasicTooltip } from '../../../../components/Tooltip/IconWithBasicTooltip';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
+import { useAppSelector } from '../../../../store.ts';
+import { Collapsable } from '../../../../components/Collapsable/Collapsable.tsx';
+import { css } from '@repo/styles/css';
+import { NoSafuRisks } from '../NoSafuRisks/NoSafuRisks.tsx';
+import { IconWithBasicTooltip } from '../../../../components/Tooltip/IconWithBasicTooltip.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();
@@ -25,42 +25,40 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
 
   return (
     <Card id="SafetyCard">
-      <CardHeader className={classes.header}>
+      <CardHeader css={styles.header}>
         <div className={classes.safetyLabel}>{t('Safety-Score1')}</div>
       </CardHeader>
       <CardContent>
-        <NoSafuRisks className={classes.warning} vaultId={vaultId} isTitle={false} />
+        <NoSafuRisks css={styles.warning} vaultId={vaultId} isTitle={false} />
         <div className={classes.riskList}>
           {vault.risks.map(risk => (
             <Fragment key={risk}>
-              {RISKS[risk] && (
+              {SCORED_RISKS[risk] && (
                 <div className={classes.riskRow}>
                   <div className={classes.infoContainer}>
-                    {RISKS[risk].score <= 0 ? (
-                      <img
-                        alt="Positive score"
-                        src={up}
-                        className={clsx(classes.arrow, classes.up)}
-                      />
+                    {SCORED_RISKS[risk].score <= 0 ? (
+                      <img alt="Positive score" src={up} className={css(styles.arrow, styles.up)} />
                     ) : (
                       <img
                         alt="Negative score"
                         src={down}
-                        className={clsx(classes.arrow, classes.down)}
+                        className={css(styles.arrow, styles.down)}
                       />
                     )}
                     <div>
                       <div className={classes.moreInfoContainer}>
-                        <div className={classes.risk}>{t(RISKS[risk].title, { ns: 'risks' })}</div>
+                        <div className={classes.risk}>
+                          {t(SCORED_RISKS[risk].title, { ns: 'risks' })}
+                        </div>
                         <IconWithBasicTooltip
                           iconSize={16}
-                          iconClassName={classes.tooltipIcon}
-                          title={t(RISKS[risk].title, { ns: 'risks' })}
-                          content={t(RISKS[risk].explanation, { ns: 'risks' })}
+                          iconCss={styles.tooltipIcon}
+                          title={t(SCORED_RISKS[risk].title, { ns: 'risks' })}
+                          content={t(SCORED_RISKS[risk].explanation, { ns: 'risks' })}
                         />
                       </div>
                       <div className={classes.riskCategory}>
-                        {t(RISKS[risk].category, { ns: 'risks' })}
+                        {t(SCORED_RISKS[risk].category, { ns: 'risks' })}
                       </div>
                     </div>
                   </div>
@@ -69,11 +67,7 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
             </Fragment>
           ))}
         </div>
-        <Collapsable
-          titleClassName={classes.titleClassName}
-          containerClassName={classes.howItWorksContainer}
-          title={t('How-It-Works')}
-        >
+        <Collapsable title={t('How-It-Works')} variant="light" padding="sm">
           <div className={classes.notes}>
             <p>{t('Safety-HigherSafer')}</p>
             <p>{t('Safety-BeefySecure')}</p>

@@ -1,11 +1,11 @@
-import type { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types.ts';
 import {
   fetchClmHarvestsForUser,
   fetchClmHarvestsForVaultsOfUserOnChain,
   fetchWalletTimeline,
   recalculateClmPoolHarvestsForUserVaultId,
   recalculateClmVaultHarvestsForUserVaultId,
-} from '../actions/analytics';
+} from '../actions/analytics.ts';
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import {
   selectIsAddressBookLoadedGlobal,
@@ -13,10 +13,10 @@ import {
   selectIsUserBalanceAvailable,
   selectIsWalletTimelineForUserPending,
   selectIsWalletTimelineForUserRecent,
-} from '../selectors/data-loader';
-import { recalculateDepositedVaultsAction } from '../actions/balance';
-import { createWalletDebouncer } from '../../../helpers/middleware';
-import { selectUserDepositedTimelineByVaultId } from '../selectors/analytics';
+} from '../selectors/data-loader.ts';
+import { recalculateDepositedVaultsAction } from '../actions/balance.ts';
+import { createWalletDebouncer } from '../../../helpers/middleware.ts';
+import { selectUserDepositedTimelineByVaultId } from '../selectors/analytics.ts';
 
 const analyticsListener = createListenerMiddleware<BeefyState>();
 
@@ -97,7 +97,7 @@ analyticsListener.startListening({
  */
 analyticsListener.startListening({
   actionCreator: fetchClmHarvestsForVaultsOfUserOnChain.fulfilled,
-  effect: async (action, { dispatch }) => {
+  effect: (action, { dispatch }) => {
     const walletAddress = action.meta.arg.walletAddress;
     for (const { vaultId, type } of action.payload) {
       if (type === 'clm') {

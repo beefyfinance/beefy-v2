@@ -1,15 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import type { FetchAllAllowanceResult } from '../apis/allowance/allowance-types';
-import { getAllowanceApi } from '../apis/instances';
-import type { ChainEntity } from '../entities/chain';
-import type { TokenErc20 } from '../entities/token';
-import type { VaultGov, VaultStandard } from '../entities/vault';
-import { isGovVault, isStandardVault } from '../entities/vault';
-import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
-import { selectChainById } from '../selectors/chains';
-import { selectVaultIdsByChainIdIncludingHidden, selectVaultById } from '../selectors/vaults';
-import { selectWalletAddress } from '../selectors/wallet';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { FetchAllAllowanceResult } from '../apis/allowance/allowance-types.ts';
+import { getAllowanceApi } from '../apis/instances.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { TokenErc20 } from '../entities/token.ts';
+import type { VaultGov, VaultStandard } from '../entities/vault.ts';
+import { isGovVault, isStandardVault } from '../entities/vault.ts';
+import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts.ts';
+import { selectChainById } from '../selectors/chains.ts';
+import { selectVaultById, selectVaultIdsByChainIdIncludingHidden } from '../selectors/vaults.ts';
+import { selectWalletAddress } from '../selectors/wallet.ts';
 
 interface ActionParams {
   chainId: ChainEntity['id'];
@@ -24,7 +24,9 @@ export interface FetchAllAllowanceFulfilledPayload {
 export const fetchAllAllowanceAction = createAsyncThunk<
   FetchAllAllowanceFulfilledPayload,
   ActionParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('allowance/fetchAllAllowanceAction', async ({ chainId, walletAddress }, { getState }) => {
   const state = getState();
   const chain = selectChainById(state, chainId);
@@ -69,7 +71,9 @@ interface FetchAllowanceActionParams {
 export const fetchAllowanceAction = createAsyncThunk<
   FetchAllAllowanceFulfilledPayload,
   FetchAllowanceActionParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'allowance/fetchAllowanceAction',
   async ({ chainId, spenderAddress, tokens, walletAddress }, { getState }) => {

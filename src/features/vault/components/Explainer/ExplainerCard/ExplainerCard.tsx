@@ -1,35 +1,41 @@
 import { memo, type ReactElement, type ReactNode } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { Card, CardContent, CardHeader } from '../../Card';
-import { styles } from './styles';
-import { ContractsDropdown } from '../ContractsDropdown';
+import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
+import { Card } from '../../Card/Card.tsx';
+import { CardContent } from '../../Card/CardContent.tsx';
+import { CardHeader } from '../../Card/CardHeader.tsx';
+import { styles } from './styles.ts';
+import { ContractsDropdown } from '../ContractsDropdown/ContractsDropdown.tsx';
+import { type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type ExplainerCardProps = {
-  className?: string;
+  css?: CssStyles;
   title: ReactElement;
-  links?: { label: string; link: string }[];
+  links?: {
+    label: string;
+    link: string;
+  }[];
   description: ReactElement;
   details?: ReactNode;
 };
 
-export const ExplainerCard = memo<ExplainerCardProps>(function ExplainerCard({
+export const ExplainerCard = memo(function ExplainerCard({
   title,
   links,
   description,
   details,
-  className,
-}) {
+  css: cssProp,
+}: ExplainerCardProps) {
   const classes = useStyles();
 
   return (
-    <Card className={className}>
-      <CardHeader className={classes.header}>
+    <Card css={cssProp}>
+      <CardHeader css={styles.header}>
         <div className={classes.title}>{title}</div>
         {links ? <ContractsDropdown links={links} /> : null}
       </CardHeader>
-      <CardContent className={classes.content}>
+      <CardContent css={styles.content}>
         <div className={classes.description}>{description}</div>
         {details ? <div className={classes.details}>{details}</div> : null}
       </CardContent>

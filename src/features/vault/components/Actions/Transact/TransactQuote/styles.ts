@@ -1,72 +1,72 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {},
-  divider: {
+export const styles = {
+  container: css.raw({}),
+  divider: css.raw({
     marginBottom: '16px',
-  },
-  tokenAmounts: {
+  }),
+  tokenAmounts: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '8px',
     width: '100%',
-  },
-  route: {
+  }),
+  route: css.raw({
     marginTop: '24px',
-  },
-  slippage: {
+  }),
+  slippage: css.raw({
     marginTop: '24px',
-  },
-  returned: {
+  }),
+  returned: css.raw({
     marginTop: '16px',
-  },
-  returnedTitle: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.dark,
+  }),
+  returnedTitle: css.raw({
+    textStyle: 'body',
+    color: 'text.dark',
     marginBottom: '8px',
-  },
-  disabled: {
+  }),
+  disabled: css.raw({
     opacity: '40%',
-    pointerEvents: 'none' as const,
-  },
-  cowcentratedDepositContainer: {
+    pointerEvents: 'none',
+  }),
+  cowcentratedDepositContainer: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '8px',
-  },
-  cowcentratedSharesDepositContainer: {
+  }),
+  cowcentratedSharesDepositContainer: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: '2px',
-  },
-  amountReturned: {
+  }),
+  amountReturned: css.raw({
     display: 'flex',
     gap: '2px',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  mainLp: {
+  }),
+  mainLp: css.raw({
     borderRadius: '8px 8px 0px 0px',
-  },
-  fullWidth: {
+  }),
+  fullWidth: css.raw({
     width: '100%',
-    flexDirection: 'row-reverse' as const,
-    backgroundColor: theme.palette.background.contentDark,
-  },
-  borderRadiusToken0: {
+    flexDirection: 'row-reverse',
+    backgroundColor: 'background.content.dark',
+  }),
+  borderRadiusToken0: css.raw({
     borderRadius: '0px 0px 0px 8px',
-  },
-  borderRadiusToken1: {
+  }),
+  borderRadiusToken1: css.raw({
     borderRadius: '0px 0px 8px 0px',
-  },
-  label: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.dark,
-  },
-  alignItemsEnd: {
+  }),
+  label: css.raw({
+    textStyle: 'body',
+    color: 'text.dark',
+  }),
+  alignItemsEnd: css.raw({
     alignItems: 'flex-end',
-  },
-  link: {
-    color: theme.palette.text.primary,
-  },
-});
+  }),
+  link: css.raw({
+    color: 'text.lightest',
+  }),
+};

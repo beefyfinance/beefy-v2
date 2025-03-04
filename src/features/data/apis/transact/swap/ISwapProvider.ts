@@ -1,9 +1,9 @@
-import type { ChainEntity } from '../../../entities/chain';
-import type { BeefyState } from '../../../../../redux-types';
-import type { TokenEntity } from '../../../entities/token';
+import type { ChainEntity } from '../../../entities/chain.ts';
+import type { BeefyState } from '../../../../../redux-types.ts';
+import type { TokenEntity } from '../../../entities/token.ts';
 import { type BigNumber } from 'bignumber.js';
-import type { ZapFee } from '../transact-types';
-import type { VaultEntity } from '../../../entities/vault';
+import type { ZapFee } from '../transact-types.ts';
+import type { VaultEntity } from '../../../entities/vault.ts';
 
 export type QuoteRequest = {
   fromToken: TokenEntity;

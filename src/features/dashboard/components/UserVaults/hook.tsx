@@ -1,13 +1,13 @@
 import { orderBy } from 'lodash-es';
 import { useCallback, useMemo, useState } from 'react';
-import { useAppSelector } from '../../../../store';
-import { selectUserDashboardFilteredVaults } from '../../../data/selectors/filtered-vaults';
-import { isUserClmPnl } from '../../../data/selectors/analytics-types';
-import { isVaultActive } from '../../../data/entities/vault';
+import { useAppSelector } from '../../../../store.ts';
+import { selectUserDashboardFilteredVaults } from '../../../data/selectors/filtered-vaults.ts';
+import { isUserClmPnl } from '../../../data/selectors/analytics-types.ts';
+import { isVaultActive } from '../../../data/entities/vault.ts';
 import {
   selectDashboardUserVaultsDailyYield,
   selectDashboardUserVaultsPnl,
-} from '../../../data/selectors/dashboard';
+} from '../../../data/selectors/dashboard.ts';
 
 export type SortedOptions = {
   sort: 'atDeposit' | 'now' | 'yield' | 'pnl' | 'apy' | 'dailyYield' | 'default';
@@ -21,12 +21,6 @@ export function useSortedDashboardVaults(address: string) {
     sortDirection: 'desc',
     sort: 'now',
   });
-
-  const handleSearchText = useCallback(e => setSearchText(e.target.value), [setSearchText]);
-
-  const handleClearText = useCallback(() => {
-    setSearchText('');
-  }, [setSearchText]);
 
   const filteredVaults = useAppSelector(state =>
     selectUserDashboardFilteredVaults(state, searchText, address)
@@ -126,8 +120,7 @@ export function useSortedDashboardVaults(address: string) {
     sortedFilteredVaults,
     sortedOptions,
     handleSort,
-    handleSearchText,
     searchText,
-    handleClearText,
+    setSearchText,
   };
 }

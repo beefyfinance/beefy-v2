@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import type { BridgeEntity } from '../entities/bridge';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { BridgeEntity } from '../entities/bridge.ts';
 import { createCachedSelector } from 're-reselect';
 
 export const selectBridgeById = createCachedSelector(
@@ -12,7 +12,7 @@ export const selectBridgeById = createCachedSelector(
     }
     return byId[bridgeId];
   }
-)((state: BeefyState, bridgeId: BridgeEntity['id']) => bridgeId);
+)((_state: BeefyState, bridgeId: BridgeEntity['id']) => bridgeId);
 
 export const selectBridgeByIdIfKnown = createCachedSelector(
   (state: BeefyState) => state.entities.bridges.byId,
@@ -23,7 +23,7 @@ export const selectBridgeByIdIfKnown = createCachedSelector(
     }
     return byId[bridgeId];
   }
-)((state: BeefyState, bridgeId: BridgeEntity['id']) => bridgeId);
+)((_state: BeefyState, bridgeId: BridgeEntity['id']) => bridgeId);
 
 export const selectAllBridges = createSelector(
   (state: BeefyState) => state.entities.bridges.allIds,

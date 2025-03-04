@@ -1,27 +1,27 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { styles } from './styles';
-import { ReportProblemOutlined } from '@material-ui/icons';
-import clsx from 'clsx';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import ReportProblemOutlined from '../../../../../../images/icons/mui/ReportProblemOutlined.svg?react';
+import { css, type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ErrorIndicatorProps = {
   title: string | ReactNode;
   content?: string | ReactNode;
-  className?: string;
+  css?: CssStyles;
 };
 
-export const ErrorIndicator = memo<ErrorIndicatorProps>(function ErrorIndicator({
+export const ErrorIndicator = memo(function ErrorIndicator({
   title,
   content,
-  className,
-}) {
+  css: cssProp,
+}: ErrorIndicatorProps) {
   const classes = useStyles();
 
   return (
-    <div className={clsx(classes.container, className)}>
+    <div className={css(styles.container, cssProp)}>
       <div className={classes.circle}>
         <ReportProblemOutlined className={classes.icon} />
       </div>

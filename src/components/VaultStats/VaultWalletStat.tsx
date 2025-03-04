@@ -1,20 +1,23 @@
-import { type VaultEntity } from '../../features/data/entities/vault';
+import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { memo } from 'react';
 import { connect } from 'react-redux';
-import type { BeefyState } from '../../redux-types';
-import { selectVaultById } from '../../features/data/selectors/vaults';
-import { selectUserBalanceOfToken } from '../../features/data/selectors/balance';
-import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
-import { selectIsBalanceHidden, selectWalletAddress } from '../../features/data/selectors/wallet';
-import { VaultValueStat } from '../VaultValueStat';
+import type { BeefyState } from '../../redux-types.ts';
+import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import { selectUserBalanceOfToken } from '../../features/data/selectors/balance.ts';
+import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format.ts';
+import {
+  selectIsBalanceHidden,
+  selectWalletAddress,
+} from '../../features/data/selectors/wallet.ts';
+import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
 import {
   selectTokenByAddress,
   selectTokenPriceByAddress,
-} from '../../features/data/selectors/tokens';
+} from '../../features/data/selectors/tokens.ts';
 import {
   selectIsBalanceAvailableForChainUser,
   selectIsPricesAvailable,
-} from '../../features/data/selectors/data-loader';
+} from '../../features/data/selectors/data-loader.ts';
 
 export type VaultWalletStatProps = {
   vaultId: VaultEntity['id'];

@@ -1,6 +1,6 @@
 import type { Address } from 'abitype';
-import type { ChainId } from '../../entities/chain';
-import { rpcClientManager } from './rpc-manager';
+import type { ChainId } from '../../entities/chain.ts';
+import { rpcClientManager } from './rpc-manager.ts';
 import { getContract, type Abi, type WalletClient } from 'viem';
 
 export const fetchContract = <TAbi extends Abi>(

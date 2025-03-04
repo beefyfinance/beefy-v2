@@ -1,16 +1,16 @@
-import type { IBridgeApi } from './bridge-api-types';
-import type { BeefyAnyBridgeConfig, BeefyBridgeIdToConfig } from '../config-types';
-import type { InputTokenAmount } from '../transact/transact-types';
-import type { IBridgeProvider, IBridgeQuote } from './providers/provider-types';
-import { LayerZeroProvider } from './providers/LayerZeroProvider';
-import type { ChainEntity } from '../../entities/chain';
-import type { BeefyState } from '../../../../redux-types';
-import { OptimismProvider } from './providers/OptimismProvider';
+import type { IBridgeApi } from './bridge-api-types.ts';
+import type { BeefyAnyBridgeConfig, BeefyBridgeIdToConfig } from '../config-types.ts';
+import type { InputTokenAmount } from '../transact/transact-types.ts';
+import type { IBridgeProvider, IBridgeQuote } from './providers/provider-types.ts';
+import { LayerZeroProvider } from './providers/LayerZeroProvider.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
+import type { BeefyState } from '../../../../redux-types.ts';
+import { OptimismProvider } from './providers/OptimismProvider.ts';
 import type { TFunction } from 'react-i18next';
-import type { Step } from '../../reducers/wallet/stepper';
-import type { TokenErc20 } from '../../entities/token';
-import { AxelarProvider } from './providers/AxelarProvider';
-import { ChainlinkProvider } from './providers/ChainlinkProvider';
+import type { Step } from '../../reducers/wallet/stepper.ts';
+import type { TokenErc20 } from '../../entities/token.ts';
+import { AxelarProvider } from './providers/AxelarProvider.ts';
+import { ChainlinkProvider } from './providers/ChainlinkProvider.ts';
 
 type ProviderMap = {
   [K in BeefyAnyBridgeConfig['id']]: IBridgeProvider<BeefyBridgeIdToConfig<K>>;

@@ -1,8 +1,9 @@
-import type { ApiTimeBucket } from '../../../data/apis/beefy/beefy-data-api-types';
+import type { ApiTimeBucket } from '../../../data/apis/beefy/beefy-data-api-types.ts';
 import { fromUnixTime, getUnixTime, sub } from 'date-fns';
 import { first } from 'lodash-es';
-import { getDataApiBucket } from '../../../data/apis/beefy/beefy-data-api-helpers';
-import type { ChartStat } from './types';
+import { getDataApiBucket } from '../../../data/apis/beefy/beefy-data-api-helpers.ts';
+import type { ChartStat } from './types.ts';
+import { keys } from '../../../../helpers/object.ts';
 
 // must match API
 export const SNAPSHOT_INTERVAL: number = 15 * 60;
@@ -46,13 +47,17 @@ export function getBucketParams(bucket: ApiTimeBucket) {
   const endDate = fromUnixTime(getLatestSnapshot());
   const startDate = sub(endDate, range);
   const startEpoch = getUnixTime(startDate);
-  const [intervalKeys, maPeriodKeys] = [interval, maPeriod].map(values => Object.keys(values));
+  const [intervalKeys, maPeriodKeys] = [interval, maPeriod].map(values => keys(values));
 
   if (intervalKeys.length !== 1 || maPeriodKeys.length !== 1) {
     throw new Error('Invalid bucket interval/maPeriod');
   }
 
   const key = intervalKeys[0];
+  if (!maPeriod[key] || !interval[key]) {
+    throw new Error('Missing bucket interval/maPeriod');
+  }
+
   const maPeriods = Math.floor(maPeriod[key] / interval[key]);
 
   return { startEpoch, maPeriods, maUnit: key };

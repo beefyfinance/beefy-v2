@@ -1,22 +1,22 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { styles } from './styles';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type IntroductionProps = {
-  className?: string;
+  css?: CssStyles;
 };
 
-export const Introduction = memo<IntroductionProps>(function Introduction({ className }) {
+export const Introduction = memo(function Introduction({ css: cssProp }: IntroductionProps) {
   const classes = useStyles();
   const { t } = useTranslation();
 
   return (
-    <div className={clsx(classes.introduction, className)}>
+    <div className={css(styles.introduction, cssProp)}>
       <h1 className={classes.title}>{t('Bridge-Intro-Title')}</h1>
       <div className={classes.text}>
         <Trans

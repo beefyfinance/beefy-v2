@@ -1,23 +1,23 @@
-import { ZERO_ADDRESS } from '../../../../../../helpers/addresses';
-import { fromWeiString, toWeiString } from '../../../../../../helpers/big-number';
-import type { BeefyState } from '../../../../../../redux-types';
-import type { ChainEntity } from '../../../../entities/chain';
-import { isTokenNative, type TokenEntity } from '../../../../entities/token';
-import type { VaultEntity } from '../../../../entities/vault';
-import { selectAllChainIds, selectChainById } from '../../../../selectors/chains';
-import { selectSupportedSwapTokensForChainAggregatorHavingPrice } from '../../../../selectors/tokens';
-import { selectTransactSlippage } from '../../../../selectors/transact';
-import { selectSwapAggregatorForChainType, selectZapByChainId } from '../../../../selectors/zap';
-import type { OdosSwapSwapConfig } from '../../../config-types';
-import { getOdosApi } from '../../../instances';
-import { slipBy } from '../../helpers/amounts';
+import { ZERO_ADDRESS } from '../../../../../../helpers/addresses.ts';
+import { fromWeiString, toWeiString } from '../../../../../../helpers/big-number.ts';
+import type { BeefyState } from '../../../../../../redux-types.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
+import { isTokenNative, type TokenEntity } from '../../../../entities/token.ts';
+import type { VaultEntity } from '../../../../entities/vault.ts';
+import { selectAllChainIds, selectChainById } from '../../../../selectors/chains.ts';
+import { selectSupportedSwapTokensForChainAggregatorHavingPrice } from '../../../../selectors/tokens.ts';
+import { selectTransactSlippage } from '../../../../selectors/transact.ts';
+import { selectSwapAggregatorForChainType, selectZapByChainId } from '../../../../selectors/zap.ts';
+import type { OdosSwapSwapConfig } from '../../../config-types.ts';
+import { getOdosApi } from '../../../instances.ts';
+import { slipBy } from '../../helpers/amounts.ts';
 import type {
   ISwapProvider,
   QuoteRequest,
   QuoteResponse,
   SwapRequest,
   SwapResponse,
-} from '../ISwapProvider';
+} from '../ISwapProvider.ts';
 
 export class OdosSwapProvider implements ISwapProvider {
   getId(): string {

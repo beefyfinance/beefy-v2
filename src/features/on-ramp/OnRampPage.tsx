@@ -1,16 +1,16 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { styles } from './styles';
-import Introduction from './components/Introduction';
-import OnRamp from './components/OnRamp';
-import { Container } from '../../components/Container/Container';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { Introduction } from './components/Introduction/Introduction.tsx';
+import { OnRamp } from './components/OnRamp/OnRamp.tsx';
+import { Container } from '../../components/Container/Container.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-export const OnRampPage = memo(function OnRampPage() {
+const OnRampPage = memo(function OnRampPage() {
   const classes = useStyles();
   return (
-    <Container maxWidth="lg" className={classes.pageContainer}>
+    <Container maxWidth="lg" css={styles.pageContainer}>
       <div className={classes.inner}>
         <Introduction />
         <OnRamp />
@@ -18,3 +18,6 @@ export const OnRampPage = memo(function OnRampPage() {
     </Container>
   );
 });
+
+// eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
+export default OnRampPage;

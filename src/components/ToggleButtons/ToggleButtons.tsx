@@ -1,72 +1,41 @@
-import type { FC, ReactNode } from 'react';
-import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
-import { ExtraOptionsList } from './components/ExtraOptionsList';
+import type { ReactNode } from 'react';
+import { memo, useCallback } from 'react';
+import { Button, type ButtonVariantProps } from './Button.tsx';
+import { Buttons, type ButtonsVariantProps } from './Buttons.tsx';
 
-const useStyles = makeStyles(styles);
-
-export type ToggleButtonProps = {
-  value: string;
-  label: ReactNode;
-  onClick: (value: string) => void;
-  className?: string;
+export type ToggleButtonItem<T extends string = string> = {
+  value: T;
+  label: string;
 };
 
-export type ToggleButtonsProps = {
-  value: string;
-  options: Record<string, string>;
-  extraOptions?: Record<string, string>;
-  fullWidth?: boolean;
-  buttonsClass?: string;
-  buttonClass?: string;
-  selectedClass?: string;
-  untogglableClass?: string;
-  onChange: (value: string) => void;
-  ButtonComponent?: FC<ToggleButtonProps>;
+export type ToggleButtonsProps<
+  TValue extends string = string,
+  TUntoggle extends string = TValue,
+> = {
+  value: TValue;
+  options: Array<ToggleButtonItem<TValue>>;
+  onChange: (value: TValue | TUntoggle) => void;
   /** set this to 'all' key */
-  untoggleValue?: string;
-};
+  untoggleValue?: TValue | TUntoggle;
+  noPadding?: boolean;
+} & ButtonsVariantProps;
 
-export const ToggleButton = memo<ToggleButtonProps>(function ToggleButton({
-  value,
-  label,
-  onClick,
-  className,
-}) {
-  const handleClick = useCallback(() => {
-    onClick(value);
-  }, [value, onClick]);
-
-  return (
-    <button className={className} onClick={handleClick}>
-      {label}
-    </button>
-  );
-});
-
-export const ToggleButtons = memo<ToggleButtonsProps>(function ToggleButtons({
+export const ToggleButtons = memo(function ToggleButtons<
+  TValue extends string = string,
+  TUntoggle extends string = TValue,
+>({
   value,
   options,
-  extraOptions,
   fullWidth,
-  buttonsClass,
-  buttonClass,
-  selectedClass,
-  untogglableClass,
   onChange,
-  ButtonComponent = ToggleButton,
   untoggleValue,
-}) {
-  const baseClasses = useStyles();
-  const optionsList = useMemo(
-    () => Object.entries(options).map(([value, label]) => ({ value, label })),
-    [options]
-  );
-
+  variant,
+  noBackground,
+  noPadding = false,
+}: ToggleButtonsProps<TValue, TUntoggle>) {
+  const canUntoggle = untoggleValue !== undefined;
   const handleClick = useCallback(
-    newValue => {
+    (newValue: TValue | TUntoggle) => {
       if (untoggleValue) {
         onChange(newValue === value ? untoggleValue : newValue);
       } else {
@@ -77,113 +46,42 @@ export const ToggleButtons = memo<ToggleButtonsProps>(function ToggleButtons({
   );
 
   return (
-    <div
-      className={clsx(baseClasses.buttons, buttonsClass, {
-        [baseClasses.fullWidth]: fullWidth,
-        [clsx(baseClasses.untogglable, untogglableClass)]: untoggleValue !== undefined,
-      })}
-    >
-      {optionsList.map(({ value: optionValue, label }) => (
-        <ButtonComponent
+    <Buttons fullWidth={fullWidth} variant={variant} noBackground={noBackground ?? canUntoggle}>
+      {options.map(({ value: optionValue, label }) => (
+        <ToggleButton
           key={optionValue}
           value={optionValue}
           label={label}
           onClick={handleClick}
-          className={clsx(baseClasses.button, buttonClass, {
-            [clsx(baseClasses.selected, selectedClass)]: value === optionValue,
-          })}
+          active={value === optionValue}
+          noBackground={noBackground ?? canUntoggle}
+          noPadding={noPadding}
+          unselectable={!canUntoggle && value === optionValue}
         />
       ))}
-      {extraOptions && (
-        <ExtraOptionsList
-          ButtonComponent={ButtonComponent}
-          extraOptions={extraOptions}
-          onClick={handleClick}
-          value={value}
-          buttonClass={buttonClass}
-          selectedClass={selectedClass}
-        />
-      )}
-    </div>
+    </Buttons>
   );
 });
 
-export type MultiToggleButtonProps = Omit<ToggleButtonProps, 'onClick'> & {
-  isSelected: boolean;
-  onClick: (isSelected: boolean, value: string) => void;
-};
+export type ToggleButtonProps<TValue extends string = string> = {
+  value: TValue;
+  label: ReactNode;
+  onClick: (value: TValue) => void;
+} & ButtonVariantProps;
 
-export const MultiToggleButton = memo<MultiToggleButtonProps>(function ToggleButton({
+export const ToggleButton = memo(function ToggleButton<TValue extends string = string>({
   value,
   label,
   onClick,
-  isSelected,
-  className,
-}) {
+  ...rest
+}: ToggleButtonProps<TValue>) {
   const handleClick = useCallback(() => {
-    onClick(!isSelected, value);
-  }, [onClick, isSelected, value]);
+    onClick(value);
+  }, [value, onClick]);
 
   return (
-    <button className={className} onClick={handleClick}>
+    <Button {...rest} onClick={handleClick}>
       {label}
-    </button>
-  );
-});
-
-type MultiToggleButtonsProps = Omit<
-  ToggleButtonsProps,
-  'value' | 'extraOptions' | 'onChange' | 'ButtonComponent'
-> & {
-  value: string[];
-  onChange: (value: string[]) => void;
-  ButtonComponent?: FC<MultiToggleButtonProps>;
-};
-
-export const MultiToggleButtons = memo<MultiToggleButtonsProps>(function MultiToggleButtons({
-  value,
-  options,
-  fullWidth,
-  buttonsClass,
-  buttonClass,
-  selectedClass,
-  untogglableClass,
-  onChange,
-  ButtonComponent = MultiToggleButton,
-  untoggleValue,
-}) {
-  const baseClasses = useStyles();
-  const optionsList = useMemo(
-    () => Object.entries(options).map(([value, label]) => ({ value, label })),
-    [options]
-  );
-
-  const handleClick = useCallback(
-    (isSelected, id) => {
-      onChange(isSelected ? [...value, id] : value.filter(selectedId => selectedId !== id));
-    },
-    [onChange, value]
-  );
-
-  return (
-    <div
-      className={clsx(baseClasses.buttons, buttonsClass, {
-        [baseClasses.fullWidth]: fullWidth,
-        [clsx(baseClasses.untogglable, untogglableClass)]: untoggleValue !== undefined,
-      })}
-    >
-      {optionsList.map(({ value: optionValue, label }) => (
-        <ButtonComponent
-          key={optionValue}
-          value={optionValue}
-          label={label}
-          isSelected={value.includes(optionValue)}
-          onClick={handleClick}
-          className={clsx(baseClasses.button, buttonClass, {
-            [clsx(baseClasses.selected, selectedClass)]: value.includes(optionValue),
-          })}
-        />
-      ))}
-    </div>
+    </Button>
   );
 });

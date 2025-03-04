@@ -1,19 +1,19 @@
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AssetsImage } from '../AssetsImage';
-import { BIG_ZERO } from '../../helpers/big-number';
-import { formatLargePercent, formatLargeUsd } from '../../helpers/format';
-import { styles } from './styles';
-import { getNetworkSrc } from '../../helpers/networkSrc';
+import { AssetsImage } from '../AssetsImage/AssetsImage.tsx';
+import { BIG_ZERO } from '../../helpers/big-number.ts';
+import { formatLargePercent, formatLargeUsd } from '../../helpers/format.ts';
+import { styles } from './styles.ts';
+import { getNetworkSrc } from '../../helpers/networkSrc.ts';
 import type {
   ChainExposurePayloadData,
   GenericExposurePayloadData,
   PieChartType,
   TokenExposurePayloadData,
-} from '../PieChart/types';
+} from '../PieChart/types.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type BaseExposureTooltipProps = {
   active?: boolean;
@@ -22,17 +22,23 @@ type BaseExposureTooltipProps = {
 
 type TokenExposureTooltipProps = BaseExposureTooltipProps & {
   type: 'token';
-  payload?: { payload: TokenExposurePayloadData }[];
+  payload?: {
+    payload: TokenExposurePayloadData;
+  }[];
 };
 
 type ChainExposureTooltipProps = BaseExposureTooltipProps & {
   type: 'chain';
-  payload?: { payload: ChainExposurePayloadData }[];
+  payload?: {
+    payload: ChainExposurePayloadData;
+  }[];
 };
 
 type GenericExposureTooltipProps = BaseExposureTooltipProps & {
   type: Exclude<PieChartType, 'token' | 'chain'>;
-  payload?: { payload: GenericExposurePayloadData }[];
+  payload?: {
+    payload: GenericExposurePayloadData;
+  }[];
 };
 
 type TooltipProps =
@@ -114,7 +120,7 @@ function extractProps(props: TooltipProps): InactiveData | ChainData | TokenData
   };
 }
 
-export const PieChartTooltip = memo<TooltipProps>(function PieChartTooltip(props) {
+export const PieChartTooltip = memo(function PieChartTooltip(props: TooltipProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const data = useMemo(() => extractProps(props), [props]);

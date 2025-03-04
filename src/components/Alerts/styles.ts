@@ -1,56 +1,70 @@
-import type { Theme } from '@material-ui/core';
+import { sva } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  alert: {
-    display: 'flex',
-    flexDirection: 'row' as const,
-    columnGap: '8px',
-    minWidth: 0,
-    width: '100%',
-    borderRadius: '8px',
-    padding: '16px',
-    alignItems: 'flex-start',
-    backgroundColor: 'rgba(245, 245, 255, 0.08)',
-  },
-  icon: {
-    width: '24px',
-    height: '24px',
-    flexShrink: 0,
-    flexGrow: 0,
-  },
-  content: {
-    ...theme.typography['body-lg'],
-    flexShrink: 1,
-    flexGrow: 1,
-    minWidth: 0,
-    color: theme.palette.text.middle,
-    wordBreak: 'break-word' as const,
-    '& a': {
-      color: theme.palette.text.middle,
+export const alertRecipe = sva({
+  slots: ['alert', 'icon', 'content'],
+  base: {
+    alert: {
+      display: 'flex',
+      flexDirection: 'row',
+      columnGap: '8px',
+      minWidth: 0,
+      width: '100%',
+      borderRadius: '8px',
+      padding: '16px',
+      alignItems: 'flex-start',
+      backgroundColor: 'extracted3438',
     },
-    '& p:first-child': {
-      marginTop: 0,
+    icon: {
+      width: '24px',
+      height: '24px',
+      flexShrink: 0,
+      flexGrow: 0,
     },
-    '& p:last-child': {
-      marginBottom: 0,
-    },
-  },
-  warning: {
-    backgroundColor: 'rgba(209, 152, 71, 0.15)',
-    '& $icon': {
-      fill: theme.palette.background.indicators.warning,
+    content: {
+      flexShrink: 1,
+      flexGrow: 1,
+      minWidth: 0,
+      color: 'text.middle',
+      wordBreak: 'break-word',
+      '& a': {
+        color: 'text.middle',
+      },
+      '& p:first-child': {
+        marginTop: 0,
+      },
+      '& p:last-child': {
+        marginBottom: 0,
+      },
     },
   },
-  error: {
-    backgroundColor: 'rgba(209, 83, 71, 0.15)',
-    '& $icon': {
-      fill: theme.palette.background.indicators.error,
-    },
-  },
-  info: {
-    backgroundColor: `${theme.palette.background.indicators.info}26`,
-    '& $icon': {
-      fill: theme.palette.background.indicators.info,
+  variants: {
+    variant: {
+      warning: {
+        alert: {
+          backgroundColor: 'orangeWarningo14',
+        },
+        icon: {
+          fill: 'alert.warning',
+        },
+      },
+      error: {
+        alert: {
+          backgroundColor: 'extracted583',
+        },
+        icon: {
+          fill: 'alert.error',
+        },
+      },
+      info: {
+        alert: {
+          backgroundColor: 'cornflowero13',
+        },
+        icon: {
+          fill: 'alert.info',
+        },
+      },
     },
   },
 });
+
+export type AlertRecipe = typeof alertRecipe;

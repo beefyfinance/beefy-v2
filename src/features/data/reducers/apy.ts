@@ -1,20 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { Draft } from 'immer';
-import type { BeefyState } from '../../../redux-types';
-import { fetchApyAction, recalculateTotalApyAction } from '../actions/apy';
-import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
-import type { BoostPromoEntity } from '../entities/promo';
-import type { VaultEntity } from '../entities/vault';
-import { selectBoostById } from '../selectors/boosts';
-import { selectTokenPriceByAddress, selectVaultReceiptTokenPrice } from '../selectors/tokens';
-import { selectStandardVaultByAddressOrUndefined } from '../selectors/vaults';
-import { createIdMap } from '../utils/array-utils';
+import type { BeefyState } from '../../../redux-types.ts';
+import { fetchApyAction, recalculateTotalApyAction } from '../actions/apy.ts';
+import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
+import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types.ts';
+import type { BoostPromoEntity } from '../entities/promo.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import { selectBoostById } from '../selectors/boosts.ts';
+import { selectTokenPriceByAddress, selectVaultReceiptTokenPrice } from '../selectors/tokens.ts';
+import { selectStandardVaultByAddressOrUndefined } from '../selectors/vaults.ts';
+import { createIdMap } from '../utils/array-utils.ts';
 import type { BigNumber } from 'bignumber.js';
-import type { ApiApyData } from '../apis/beefy/beefy-api-types';
+import type { ApiApyData } from '../apis/beefy/beefy-api-types.ts';
 import { isAfter } from 'date-fns';
-import { getBoostStatusFromContractState } from './promos';
+import { getBoostStatusFromContractState } from './promos.ts';
 
 // boost is expressed as APR
 interface AprData {

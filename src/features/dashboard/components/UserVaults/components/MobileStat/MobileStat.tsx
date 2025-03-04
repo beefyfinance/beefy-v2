@@ -1,25 +1,21 @@
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo, type ReactNode } from 'react';
-import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
+import { styles } from './styles.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface MobileStatsProps {
   label: string;
   value: string | ReactNode;
-  valueClassName?: string;
+  valueCss?: CssStyles;
 }
 
-export const MobileStat = memo<MobileStatsProps>(function MobileStat({
-  label,
-  value,
-  valueClassName,
-}) {
+export const MobileStat = memo(function MobileStat({ label, value, valueCss }: MobileStatsProps) {
   const classes = useStyles();
   return (
     <div className={classes.mobileStat}>
-      <div>{label}</div> <span className={clsx(classes.value, valueClassName)}>{value}</span>
+      <div>{label}</div> <span className={css(styles.value, valueCss)}>{value}</span>
     </div>
   );
 });

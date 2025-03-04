@@ -3,23 +3,28 @@ import {
   selectTenderlyErrorOrUndefined,
   selectTenderlyMode,
   selectTenderlyStatus,
-} from '../../features/data/selectors/tenderly';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { Modal } from '../Modal';
-import { tenderlyClose } from '../../features/data/reducers/tenderly';
-import { Card, CardContent, CardHeader, CardTitle } from '../../features/vault/components/Card';
-import { IconButton, makeStyles } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
-import { styles } from './styles';
-import { ResultForm } from './Result/ResultForm';
-import { RequestForm } from './Request/RequestForm';
-import { LoginForm } from './Login/LoginForm';
-import { CallsForm } from './Calls/CallsForm';
+} from '../../features/data/selectors/tenderly.ts';
+import { useAppDispatch, useAppSelector } from '../../store.ts';
+import { Modal } from '../Modal/Modal.tsx';
+import { tenderlyClose } from '../../features/data/reducers/tenderly.ts';
+import { Card } from '../../features/vault/components/Card/Card.tsx';
+import { CardContent } from '../../features/vault/components/Card/CardContent.tsx';
+import { CardHeader } from '../../features/vault/components/Card/CardHeader.tsx';
+import { CardTitle } from '../../features/vault/components/Card/CardTitle.tsx';
+import CloseIcon from '../../images/icons/mui/Close.svg?react';
+import { styles } from './styles.ts';
+import { ResultForm } from './Result/ResultForm.tsx';
+import { RequestForm } from './Request/RequestForm.tsx';
+import { LoginForm } from './Login/LoginForm.tsx';
+import { CallsForm } from './Calls/CallsForm.tsx';
 import logoUrl from './logo.svg';
-import { SimulateForm } from './Simulate/SimulateForm';
-import type { TenderlyState } from '../../features/data/reducers/tenderly-types';
+import { SimulateForm } from './Simulate/SimulateForm.tsx';
+import type { TenderlyState } from '../../features/data/reducers/tenderly-types.ts';
+import { styled } from '@repo/styles/jsx';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { token } from '@repo/styles/tokens';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 const FallbackMode = memo(function FallbackMode() {
   const mode = useAppSelector(selectTenderlyMode);
@@ -53,21 +58,27 @@ const TenderlyModal = memo<TenderlyModalProps>(function TenderlyModal({ mode, on
   const Component = modeToComponent[mode] || FallbackMode;
 
   return (
-    <div className={classes.cardHolder}>
-      <Card className={classes.card}>
-        <CardHeader className={classes.cardHeader}>
-          <img src={logoUrl} alt="" width={24} height={24} className={classes.cardIcon} />
-          <CardTitle title="Tenderly Simulation" titleClassName={classes.cardTitle} />
-          <IconButton onClick={onClose} aria-label="close" className={classes.closeButton}>
-            <CloseIcon htmlColor="#999CB3" />
-          </IconButton>
-        </CardHeader>
-        <CardContent className={classes.cardContent}>
-          <Component />
-        </CardContent>
-      </Card>
-    </div>
+    <Card>
+      <CardHeader>
+        <img src={logoUrl} alt="" width={24} height={24} className={classes.cardIcon} />
+        <CardTitle>Tenderly Simulation</CardTitle>
+        <button type="button" onClick={onClose} aria-label="close" className={classes.closeButton}>
+          <CloseIcon color={token('colors.grayDark')} />
+        </button>
+      </CardHeader>
+      <StyledCardContent>
+        <Component />
+      </StyledCardContent>
+    </Card>
   );
+});
+
+const StyledCardContent = styled(CardContent, {
+  base: {
+    minHeight: '200px',
+    overflowY: 'auto',
+    flexShrink: 1,
+  },
 });
 
 export const Tenderly = memo(function Tenderly() {
@@ -80,7 +91,7 @@ export const Tenderly = memo(function Tenderly() {
 
   return (
     <Modal open={open} onClose={handleClose}>
-      {open ? <TenderlyModal mode={mode} onClose={handleClose} /> : <></>}
+      {open ? <TenderlyModal mode={mode} onClose={handleClose} /> : null}
     </Modal>
   );
 });

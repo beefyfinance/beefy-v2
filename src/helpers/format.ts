@@ -1,11 +1,10 @@
 import { BigNumber } from 'bignumber.js';
-import type { TotalApy } from '../features/data/reducers/apy';
+import type { TotalApy } from '../features/data/reducers/apy.ts';
 import type { ReactNode } from 'react';
-import type { AllValuesAs } from '../features/data/utils/types-utils';
-import { type BigNumberish, toBigNumber } from './big-number';
-import type { SerializedError } from '@reduxjs/toolkit';
-import { isString, padStart } from 'lodash-es';
-import { strictEntries } from './object';
+import type { AllValuesAs } from '../features/data/utils/types-utils.ts';
+import { type BigNumberish, toBigNumber } from './big-number.ts';
+import { padStart } from 'lodash-es';
+import { strictEntries } from './object.ts';
 import { hexToBigInt } from 'viem';
 
 export enum Scale {
@@ -25,7 +24,14 @@ export enum Scale {
 const maxScale = Scale.Nonillion;
 
 // Scale Suffixes (Short Scale, i.e. 1000 × 1000^n, for n = 1... from million+)
-const scaleSuffixes: Record<Scale, { short: string; long: string; e: number }> = {
+const scaleSuffixes: Record<
+  Scale,
+  {
+    short: string;
+    long: string;
+    e: number;
+  }
+> = {
   [Scale.None]: { short: '', long: '', e: 0 },
   [Scale.Thousand]: { short: 'k', long: 'thousand', e: 3 },
   [Scale.Million]: { short: 'M', long: 'million', e: 6 },
@@ -291,14 +297,14 @@ export function formatTotalApy(
         key === 'totalType'
           ? value
           : key.toLowerCase().includes('daily')
-          ? formatLargePercent(value, 4, placeholder)
-          : formatLargePercent(value, 2, placeholder);
+            ? formatLargePercent(value, 4, placeholder)
+            : formatLargePercent(value, 2, placeholder);
       return [key, formattedValue];
     })
   ) as AllValuesAs<TotalApy, string | ReactNode>; // required keys in input so should exist in output
 }
 
-export const formatCountdown = deadline => {
+export const formatCountdown = (deadline: number) => {
   const time = deadline - new Date().getTime();
 
   const day = Math.floor(time / (1000 * 60 * 60 * 24))
@@ -317,14 +323,14 @@ export const formatCountdown = deadline => {
   return `${day}d ${hours}h ${minutes}m`;
 };
 
-export function convertAmountToRawNumber(value, decimals = 18) {
+export function convertAmountToRawNumber(value: BigNumber.Value, decimals = 18) {
   return new BigNumber(value)
     .shiftedBy(decimals)
     .decimalPlaces(0, BigNumber.ROUND_FLOOR)
     .toString(10);
 }
 
-export function maybeHexToNumber(input: number | string | unknown): number {
+export function maybeHexToNumber(input: unknown): number {
   if (typeof input === 'number') {
     return input;
   }
@@ -352,17 +358,27 @@ export function formatDomain(domain: string, length: number = 16): string {
   return domain;
 }
 
-export function errorToString(
-  error: SerializedError | string | undefined | null,
-  fallbackMessage: string = 'Unknown error'
-) {
+export function errorToString(error: unknown, fallbackMessage: string = 'Unknown error'): string {
   if (error === undefined || error === null) {
     return fallbackMessage;
   }
 
-  return isString(error)
-    ? error
-    : `${error?.message || error?.name || error?.code || String(error) || fallbackMessage}`;
+  if (typeof error === 'string') {
+    return error;
+  }
+
+  if (typeof error === 'object') {
+    const maybeString =
+      ('message' in error && error.message) ||
+      ('name' in error && error.name) ||
+      ('code' in error && error.code) ||
+      // eslint-disable-next-line @typescript-eslint/no-base-to-string
+      String(error);
+
+    return maybeString && typeof maybeString === 'string' ? maybeString : fallbackMessage;
+  }
+
+  return fallbackMessage;
 }
 
 function ensureMinDecimals(value: string, decimals: number): string {
@@ -390,11 +406,11 @@ function toScale(value: BigNumber, minScale: Scale = Scale.Thousand) {
   }
 
   const rawScale = Math.trunc(value.e / 3) * 3;
-  if (rawScale < minScale || rawScale < 0) {
+  if (rawScale < minScale.valueOf() || rawScale < 0) {
     return { value: value, unit: '', overMax: false };
   }
 
-  const overMax = rawScale > maxScale;
+  const overMax = rawScale > maxScale.valueOf();
   const scale = overMax || !isScale(rawScale) ? maxScale : rawScale;
   const suffix = overMax ? scaleSuffixes[maxScale] : scaleSuffixes[scale];
   const newValue = value.shiftedBy(-suffix.e);

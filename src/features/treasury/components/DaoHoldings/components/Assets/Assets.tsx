@@ -1,29 +1,30 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { Fragment, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../../store';
-import type { ChainEntity } from '../../../../../data/entities/chain';
+import { useAppSelector } from '../../../../../../store.ts';
+import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import {
   selectTreasuryAssetsByChainId,
   selectTreasuryHoldingsByMMId,
-} from '../../../../../data/selectors/treasury';
-import { AssetInfo, AssetInfoMM } from '../AssetInfo';
-import { useSortedAssets, useSortedMMHoldings } from './hooks';
-import { styles } from './styles';
+} from '../../../../../data/selectors/treasury.ts';
+import { AssetInfo, AssetInfoMM } from '../AssetInfo/AssetInfo.tsx';
+import { useSortedAssets, useSortedMMHoldings } from './hooks.ts';
+import { styles } from './styles.ts';
+import { keys } from '../../../../../../helpers/object.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type AssetsProps = {
   chainId: ChainEntity['id'];
 };
 
-const chainAssetTypes: Record<string, string> = {
+const chainAssetTypes = {
   liquid: 'Liquid Assets',
   staked: 'Staked Assets',
   locked: 'Locked Assets',
 };
 
-export const Assets = memo<AssetsProps>(function Assets({ chainId }) {
+export const Assets = memo(function Assets({ chainId }: AssetsProps) {
   const { t } = useTranslation();
 
   const assets = useAppSelector(state => selectTreasuryAssetsByChainId(state, chainId));
@@ -33,8 +34,9 @@ export const Assets = memo<AssetsProps>(function Assets({ chainId }) {
 
   return (
     <div className={classes.assetsContainer}>
-      {Object.keys(chainAssetTypes).map(
+      {keys(chainAssetTypes).map(
         assetType =>
+          sortedAssets[assetType] &&
           sortedAssets[assetType].length > 0 && (
             <Fragment key={assetType}>
               <div className={classes.assetTypes}>{t(chainAssetTypes[assetType])}</div>
@@ -48,9 +50,11 @@ export const Assets = memo<AssetsProps>(function Assets({ chainId }) {
   );
 });
 
-export type MMAssetsProps = { mmId: string };
+export type MMAssetsProps = {
+  mmId: string;
+};
 
-export const MMAssets = memo<MMAssetsProps>(function MMAssets({ mmId }) {
+export const MMAssets = memo(function MMAssets({ mmId }: MMAssetsProps) {
   const mmHoldings = useAppSelector(state => selectTreasuryHoldingsByMMId(state, mmId));
   const sortedAssetsByExchange = useSortedMMHoldings(mmHoldings);
 

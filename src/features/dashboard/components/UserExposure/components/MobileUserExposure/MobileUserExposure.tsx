@@ -1,13 +1,13 @@
 import type { FC } from 'react';
 import { memo, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { styles } from './styles';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core';
-import { TokenExposureLoader } from '../../../TokenExposure';
-import { ChainExposureLoader } from '../../../ChainExposure';
-import { PlatformExposureLoader } from '../../../PlatformExposure';
-import type { ExposureDashboardChartLoaderProps } from '../../../ExposureChart/types';
+import { styles } from './styles.ts';
+import { css } from '@repo/styles/css';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { TokenExposureLoader } from '../../../TokenExposure/TokenExposure.tsx';
+import { ChainExposureLoader } from '../../../ChainExposure/ChainExposure.tsx';
+import { PlatformExposureLoader } from '../../../PlatformExposure/PlatformExposure.tsx';
+import type { ExposureDashboardChartLoaderProps } from '../../../ExposureChart/types.ts';
 
 enum ChartEnum {
   Chain = 1,
@@ -21,15 +21,15 @@ const chartToComponent: Record<ChartEnum, FC<ExposureDashboardChartLoaderProps>>
   [ChartEnum.Platform]: PlatformExposureLoader,
 };
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface MobileUserExposureProps {
   address: string;
 }
 
-export const MobileUserExposure = memo<MobileUserExposureProps>(function MobileUserExposure({
+export const MobileUserExposure = memo(function MobileUserExposure({
   address,
-}) {
+}: MobileUserExposureProps) {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -57,9 +57,7 @@ export const MobileUserExposure = memo<MobileUserExposureProps>(function MobileU
             <div
               key={item.key}
               onClick={() => setChart(item.value)}
-              className={clsx(classes.option, {
-                [classes.active]: item.value === chart,
-              })}
+              className={css(styles.option, item.value === chart && styles.active)}
             >
               {item.text}
             </div>

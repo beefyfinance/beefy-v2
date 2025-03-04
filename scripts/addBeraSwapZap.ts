@@ -1,42 +1,41 @@
-import { ArgumentConfig, parse } from 'ts-command-line-args';
+import { type ArgumentConfig, parse } from 'ts-command-line-args';
 import {
   addressBookToAppId,
-  AppChainId,
+  type AppChainId,
   appToAddressBookId,
-  ChainConfig,
-  chainRpcs,
   getAmmsForChain,
   getChain,
+  getChainRpc,
   getVaultsForChain,
-} from './common/config';
-import type { AmmConfigBalancer, VaultConfig } from '../src/features/data/apis/config-types';
-import { isNonEmptyArray, NonEmptyArray } from './common/utils';
-import { OptionalRecord } from '../src/features/data/utils/types-utils';
-import { Address, createPublicClient, getAddress, Hex, http, parseAbi } from 'viem';
+} from './common/config.ts';
+import type {
+  AmmConfigBalancer,
+  ChainConfig,
+  VaultConfig,
+} from '../src/features/data/apis/config-types.ts';
+import type { NonEmptyArray } from './common/utils.ts';
+import { isNonEmptyArray } from './common/utils.ts';
+import type { OptionalRecord } from '../src/features/data/utils/types-utils.ts';
+import type { Address, Hex } from 'viem';
+import { createPublicClient, getAddress, http, parseAbi } from 'viem';
 import PQueue from 'p-queue';
-import path, { dirname } from 'node:path';
-import {
-  fileReadable,
-  loadJson,
-  loadJsonSupportingBigInt,
-  saveJson,
-  saveJsonSupportingBigInt,
-} from './common/files';
-import { mkdir } from 'node:fs/promises';
-import { createCachedFactory, createFactory } from '../src/features/data/utils/factory-utils';
-import { addressBook, Token } from 'blockchain-addressbook';
-import { sortBy } from 'lodash';
+import { join as pathJoin } from 'node:path';
+import { loadJson, saveJson, withFileCache } from './common/files.ts';
+import { createCachedFactory, createFactory } from '../src/features/data/utils/factory-utils.ts';
+import type { Token } from 'blockchain-addressbook';
+import { addressBook } from 'blockchain-addressbook';
+import { sortBy } from 'lodash-es';
 import platforms from '../src/config/platforms.json';
-import {
+import type {
   BalancerStrategyConfig,
   OptionalStrategySwapConfig,
-} from '../src/features/data/apis/transact/strategies/strategy-configs';
-import { sortVaultKeys } from './common/vault-fields';
+} from '../src/features/data/apis/transact/strategies/strategy-configs.ts';
+import { sortVaultKeys } from './common/vault-fields.ts';
 
-const cacheBasePath = path.join(__dirname, '.cache', 'beraswap');
-const cacheApiPath = path.join(cacheBasePath, 'api');
-const cacheRpcPath = path.join(cacheBasePath, 'rpc');
-const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000' as const;
+const cacheBasePath = pathJoin(__dirname, '..', '.cache', 'scripts', 'beraswap');
+const cacheApiPath = pathJoin(cacheBasePath, 'api');
+const cacheRpcPath = pathJoin(cacheBasePath, 'rpc');
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const ZERO_BYTES32 = `0x${'0'.repeat(32 * 2)}` as const;
 
 type RunArgs = {
@@ -91,10 +90,10 @@ type Pool = RpcPool & BeraSwapApiPool;
 
 const supportedChainIds = new Set<AppChainId>(['berachain']);
 
-const supportedPoolTypes: OptionalRecord<BeraSwapPoolType, { min: number; max: number }> = {
+const supportedPoolTypes: Record<string, { min: number; max: number }> = {
   ComposableStable: { min: 6, max: 6 },
   Weighted: { min: 4, max: 4 },
-};
+} satisfies OptionalRecord<BeraSwapPoolType, { min: number; max: number }>;
 
 const beraSwapPoolQuery = `
 query Pool($id: ID!){
@@ -226,8 +225,8 @@ function createViemClient(chainId: AppChainId, chain: ChainConfig) {
         symbol: chain.native.symbol,
       },
       rpcUrls: {
-        public: { http: [chainRpcs[chainId]] },
-        default: { http: [chainRpcs[chainId]] },
+        public: { http: [getChainRpc(chainId)] },
+        default: { http: [getChainRpc(chainId)] },
       },
       blockExplorers: {
         default: { name: `${chain.name} Explorer`, url: chain.explorerUrl },
@@ -246,33 +245,6 @@ const getViemClient = createCachedFactory(
   (chainId: AppChainId) => createViemClient(chainId, getChain(chainId)),
   (chainId: AppChainId) => chainId
 );
-
-function withFileCache<FN extends (...args: any[]) => any>(
-  factoryFn: FN,
-  cachePathFn: (...args: Parameters<FN>) => string
-) {
-  return async (
-    forceUpdate: boolean,
-    ...args: Parameters<FN>
-  ): Promise<Awaited<ReturnType<FN>>> => {
-    const cachePath = cachePathFn(...args);
-
-    if (!forceUpdate) {
-      try {
-        if (await fileReadable(cachePath)) {
-          return await loadJsonSupportingBigInt(cachePath);
-        }
-      } catch (e) {
-        console.error('Failed to read cache', cachePath, e);
-      }
-    }
-
-    const data = await factoryFn(...args);
-    await mkdir(dirname(cachePath), { recursive: true });
-    await saveJsonSupportingBigInt(cachePath, data, true);
-    return data;
-  };
-}
 
 function fulfilledOr<TResult, TDefault>(
   result: PromiseSettledResult<TResult>,
@@ -360,7 +332,7 @@ const fetchPoolRpcData = withFileCache(
     };
   },
   (poolAddress: Address, chainId: AppChainId) =>
-    path.join(cacheRpcPath, chainId, `pool-${poolAddress}.json`)
+    pathJoin(cacheRpcPath, chainId, `pool-${poolAddress}.json`)
 );
 
 const fetchTokenRpcData = withFileCache(
@@ -391,7 +363,7 @@ const fetchTokenRpcData = withFileCache(
     return { tokenAddress, chainId, metaDepositTypeHash, metaWithdrawTypeHash, assetAddress };
   },
   (tokenAddress: Address, chainId: AppChainId) =>
-    path.join(cacheRpcPath, chainId, `token-${tokenAddress}.json`)
+    pathJoin(cacheRpcPath, chainId, `token-${tokenAddress}.json`)
 );
 
 const beraSwapApiQueue = new PQueue({
@@ -410,7 +382,10 @@ beraSwapApiQueue.on('next', () => {
 });
 
 class BeraSwapApiPoolValidateError extends Error {
-  constructor(public readonly pool: BeraSwapApiPool<string, string>, message: string) {
+  constructor(
+    public readonly pool: BeraSwapApiPool<string, string>,
+    message: string
+  ) {
     super(message);
     this.name = 'BeraSwapApiPoolValidateError';
   }
@@ -451,21 +426,25 @@ function validateBeraSwapApiPool(pool: BeraSwapApiPool<string, string>): BeraSwa
 
 const fetchPoolApiData = withFileCache(
   async (poolId: Hex): Promise<BeraSwapApiPool<string, string>> => {
-    const response = await beraSwapApiQueue.add(() =>
-      fetch(
-        'https://api.goldsky.com/api/public/project_clq1h5ct0g4a201x18tfte5iv/subgraphs/bex-subgraph/mainnet-v1.0.1/gn',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({
-            query: beraSwapPoolQuery,
-            variables: { id: poolId },
-          }),
-        }
-      )
+    const response = await beraSwapApiQueue.add(
+      () =>
+        fetch(
+          'https://api.goldsky.com/api/public/project_clq1h5ct0g4a201x18tfte5iv/subgraphs/bex-subgraph/mainnet-v1.0.1/gn',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              query: beraSwapPoolQuery,
+              variables: { id: poolId },
+            }),
+          }
+        ),
+      {
+        throwOnTimeout: true,
+      }
     );
 
     if (!response.ok) {
@@ -477,13 +456,15 @@ const fetchPoolApiData = withFileCache(
     const result = (await response.json()) as {
       data?: { pool?: BeraSwapApiPool<string, string> };
     };
-    if (result?.data?.pool?.id !== poolId) {
-      throw new Error('No pool result from BeraSwap api');
+
+    const pool = result?.data?.pool;
+    if (pool && pool.id === poolId) {
+      return pool;
     }
 
-    return result.data.pool;
+    throw new Error('No pool result from BeraSwap api');
   },
-  (poolId: Hex) => path.join(cacheApiPath, `${poolId}.json`)
+  (poolId: Hex) => pathJoin(cacheApiPath, `${poolId}.json`)
 );
 
 const getPoolApiData = createCachedFactory(
@@ -497,7 +478,7 @@ const getPoolRpcData = createCachedFactory(
   (_, poolAddress: Address) => poolAddress
 );
 
-type PoolToken = BeraSwapPoolToken<Address> & {
+type PoolToken = BeraSwapPoolToken & {
   abToken?: Token;
   price?: number;
   swapProviders: string[];

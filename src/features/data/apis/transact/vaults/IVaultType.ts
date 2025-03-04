@@ -1,10 +1,10 @@
 import type {
+  VaultCowcentrated,
   VaultEntity,
   VaultGov,
   VaultStandard,
-  VaultCowcentrated,
-} from '../../../entities/vault';
-import type { BeefyStateFn } from '../../../../../redux-types';
+} from '../../../entities/vault.ts';
+import type { BeefyStateFn } from '../../../../../redux-types.ts';
 import type {
   DepositOption,
   DepositQuote,
@@ -13,10 +13,10 @@ import type {
   TransactQuote,
   WithdrawOption,
   WithdrawQuote,
-} from '../transact-types';
-import type { TokenEntity, TokenErc20 } from '../../../entities/token';
-import type { ZapStep } from '../zap/types';
-import type { Step } from '../../../reducers/wallet/stepper';
+} from '../transact-types.ts';
+import type { TokenEntity, TokenErc20 } from '../../../entities/token.ts';
+import type { ZapStep } from '../zap/types.ts';
+import type { Step } from '../../../reducers/wallet/stepper.ts';
 import type { Namespace, TFunction } from 'react-i18next';
 
 export type VaultDepositRequest = {
@@ -76,7 +76,12 @@ export interface ICowcentratedVaultType extends IVaultType {
 
 export type VaultType = IStandardVaultType | IGovVaultType | ICowcentratedVaultType;
 
-export type VaultTypeFromVault<T extends VaultEntity> = Extract<VaultType, { id: T['type'] }>;
+export type VaultTypeFromVault<T extends VaultEntity> = Extract<
+  VaultType,
+  {
+    id: T['type'];
+  }
+>;
 
 export type VaultTypeConstructor<T extends VaultEntity> = new (
   vault: T,

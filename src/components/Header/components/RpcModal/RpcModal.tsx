@@ -1,65 +1,33 @@
-import {
-  type FC,
-  memo,
-  type MouseEventHandler,
-  type RefObject,
-  useCallback,
-  useMemo,
-  useState,
-} from 'react';
-import { Edit, Menu, type RpcStepsProps } from './RpcSteps';
+import { memo, type RefObject, useCallback, useState } from 'react';
+import { Edit, Menu } from './RpcSteps.tsx';
 import { useTranslation } from 'react-i18next';
-import { styles } from './styles';
-import { ClickAwayListener, makeStyles } from '@material-ui/core';
-import { Floating } from '../../../Floating';
-import CloseIcon from '@material-ui/icons/Close';
-import { ReactComponent as SettingsIcon } from '../../../../images/icons/settings.svg';
-import { ReactComponent as BackArrow } from '../../../../images/back-arrow.svg';
-import type { ChainEntity } from '../../../../features/data/entities/chain';
+import { styles } from './styles.ts';
+import CloseIcon from '../../../../images/icons/mui/Close.svg?react';
+import SettingsIcon from '../../../../images/icons/settings.svg?react';
+import BackArrow from '../../../../images/back-arrow.svg?react';
+import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { DropdownProvider } from '../../../Dropdown/DropdownProvider.tsx';
+import { DropdownTrigger } from '../../../Dropdown/DropdownTrigger.tsx';
+import { DropdownContent } from '../../../Dropdown/DropdownContent.tsx';
 
-const useStyles = makeStyles(styles);
-
-export enum RpcStepEnum {
-  Menu = 1,
-  Edit,
-}
-
-const stepToComponent: Record<RpcStepEnum, FC<RpcStepsProps>> = {
-  [RpcStepEnum.Menu]: Menu,
-  [RpcStepEnum.Edit]: Edit,
-};
+const useStyles = legacyMakeStyles(styles);
 
 export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: () => void }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const [step, setStep] = useState<RpcStepEnum>(RpcStepEnum.Menu);
   const [editChainId, setEditChainId] = useState<ChainEntity['id'] | null>(null);
-
-  const handleStepChange = useCallback((nextStep: RpcStepEnum) => {
-    setStep(nextStep);
-  }, []);
-
-  const handleEditChainId = useCallback(
-    (chainId: ChainEntity['id'] | null) => {
-      setEditChainId(chainId);
-    },
-    [setEditChainId]
-  );
-
-  const StepComponent = useMemo(() => stepToComponent[step], [step]);
-
-  const showStepBack = useMemo(() => step === RpcStepEnum.Edit, [step]);
-
   const onBack = useCallback(() => {
-    setStep(RpcStepEnum.Menu); // Go back to Menu
-  }, []);
+    setEditChainId(null);
+  }, [setEditChainId]);
+  const showStepBack = editChainId !== null;
 
   return (
     <>
       <div className={classes.header}>
         <div className={classes.headerTitle}>
           {showStepBack && (
-            <button onClick={onBack} className={classes.backButton}>
+            <button type="button" onClick={onBack} className={classes.backButton}>
               <BackArrow className={classes.backIcon} />
             </button>
           )}
@@ -68,11 +36,11 @@ export const RpcModal = memo(function RpcModal({ handleClose }: { handleClose: (
         <CloseIcon onClick={handleClose} className={classes.cross} />
       </div>
       <div className={classes.content}>
-        <StepComponent
-          handleStep={handleStepChange}
-          editChainId={editChainId}
-          setEditChainId={handleEditChainId}
-        />
+        {editChainId ? (
+          <Edit chainId={editChainId} onBack={onBack} />
+        ) : (
+          <Menu onSelect={setEditChainId} />
+        )}
       </div>
     </>
   );
@@ -91,40 +59,33 @@ export const RpcModalTrigger = memo(function ModalTrigger({
 }) {
   const classes = useStyles();
 
-  const handleToggle = useCallback<MouseEventHandler<HTMLDivElement>>(
-    e => {
-      e.stopPropagation();
-      onOpen();
+  const handleChange = useCallback(
+    (shouldOpen: boolean) => {
+      if (shouldOpen) {
+        onOpen();
+      } else {
+        onClose();
+      }
     },
-    [onOpen]
+    [onOpen, onClose]
   );
 
-  const handleClickAway = useCallback(() => {
-    if (isOpen) {
-      onClose();
-    }
-  }, [isOpen, onClose]);
-
   return (
-    <ClickAwayListener
-      onClickAway={handleClickAway}
-      mouseEvent="onMouseDown"
-      touchEvent="onTouchStart"
+    <DropdownProvider
+      variant="dark"
+      placement="bottom-end"
+      autoWidth={false}
+      open={isOpen}
+      onChange={handleChange}
+      reference={anchorEl}
     >
-      <div>
-        <div className={classes.container} onClick={handleToggle}>
-          <SettingsIcon height={24} width={24} />
-          <div className={classes.line} />
-        </div>
-        <Floating
-          open={isOpen}
-          className={classes.dropdown}
-          anchorEl={anchorEl}
-          children={<RpcModal handleClose={onClose} />}
-          placement="bottom-end"
-          autoWidth={false}
-        />
-      </div>
-    </ClickAwayListener>
+      <DropdownTrigger.button className={classes.container}>
+        <SettingsIcon height={24} width={24} />
+        <div className={classes.line} />
+      </DropdownTrigger.button>
+      <DropdownContent>
+        <RpcModal handleClose={onClose} />
+      </DropdownContent>
+    </DropdownProvider>
   );
 });

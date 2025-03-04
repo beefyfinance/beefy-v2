@@ -1,4 +1,4 @@
-import { type FetchResponseError, isFetchResponseError } from '../../../../helpers/http/errors';
+import { type FetchResponseError, isFetchResponseError } from '../../../../helpers/http/errors.ts';
 
 export class TenderlyError extends Error {
   constructor(message: string, cause?: FetchResponseError) {
@@ -47,7 +47,7 @@ export class TenderlyInvalidResponseFormatError extends TenderlyError {
 
 async function tryGetErrorMessageFromResponse(response: Response): Promise<string | undefined> {
   try {
-    const json = await response.json();
+    const json: unknown = await response.json();
     return json && typeof json === 'object' && 'message' in json && typeof json.message === 'string'
       ? json.message
       : undefined;

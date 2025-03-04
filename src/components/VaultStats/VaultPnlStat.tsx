@@ -1,20 +1,21 @@
-import type { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { memo } from 'react';
 import { connect } from 'react-redux';
-import type { BeefyState } from '../../redux-types';
-import { formatLargePercent, formatLargeUsd } from '../../helpers/format';
-import { VaultValueStat } from '../VaultValueStat';
+import type { BeefyState } from '../../redux-types.ts';
+import { formatLargePercent, formatLargeUsd } from '../../helpers/format.ts';
+import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
 import {
   selectIsAnalyticsLoadedByAddress,
   selectUserDepositedTimelineByVaultId,
-} from '../../features/data/selectors/analytics';
-import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types';
-import { ClmPnlTooltipContent } from '../PnlTooltip/ClmPnlTooltipContent';
-import { showClmPnlTooltip } from '../PnlTooltip/helpers';
+} from '../../features/data/selectors/analytics.ts';
+import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
+import { ClmPnlTooltipContent } from '../PnlTooltip/ClmPnlTooltipContent.tsx';
+import { showClmPnlTooltip } from '../PnlTooltip/helpers.ts';
+import { type CssStyles } from '@repo/styles/css';
 
 export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];
-  className?: string;
+  css?: CssStyles;
   pnlData: UserVaultPnl;
   walletAddress: string;
 };
@@ -23,7 +24,7 @@ export const VaultPnlStat = memo(connect(mapStateToProps)(VaultValueStat));
 
 function mapStateToProps(
   state: BeefyState,
-  { vaultId, className, pnlData, walletAddress }: VaultDailyStatProps
+  { vaultId, css: cssProp, pnlData, walletAddress }: VaultDailyStatProps
 ) {
   const label = 'VaultStat-Pnl';
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
@@ -36,7 +37,7 @@ function mapStateToProps(
       subValue: null,
       blur: false,
       loading: true,
-      className: className ?? '',
+      css: cssProp,
     };
   }
 
@@ -47,7 +48,7 @@ function mapStateToProps(
       subValue: null,
       blur: false,
       loading: false,
-      className: className ?? '',
+      css: cssProp,
     };
   }
 
@@ -69,6 +70,6 @@ function mapStateToProps(
     loading: !isLoaded,
     boosted: false,
     tooltip: showClmPnlTooltip(pnlData) ? <ClmPnlTooltipContent userPnl={pnlData} /> : undefined,
-    className: className ?? '',
+    css: cssProp,
   };
 }

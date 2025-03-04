@@ -1,9 +1,9 @@
-import { type ThunkAction, createAction, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
-import type { BeefyState, BeefyThunk, BeefyStateFn } from '../../../redux-types';
-import { isCowcentratedVault, type VaultEntity, type VaultGov } from '../entities/vault';
-import { selectVaultById } from '../selectors/vaults';
-import { getTransactApi } from '../apis/instances';
-import { transactActions } from '../reducers/wallet/transact';
+import { createAction, createAsyncThunk, nanoid, type ThunkAction } from '@reduxjs/toolkit';
+import type { BeefyState, BeefyStateFn, BeefyThunk } from '../../../redux-types.ts';
+import { isCowcentratedVault, type VaultEntity, type VaultGov } from '../entities/vault.ts';
+import { selectVaultById } from '../selectors/vaults.ts';
+import { getTransactApi } from '../apis/instances.ts';
+import { transactActions } from '../reducers/wallet/transact.ts';
 import {
   selectTokenAmountsTotalValue,
   selectTransactInputAmounts,
@@ -18,41 +18,41 @@ import {
   selectTransactSelectionById,
   selectTransactSlippage,
   selectTransactVaultId,
-} from '../selectors/transact';
+} from '../selectors/transact.ts';
 import type {
   InputTokenAmount,
   ITransactApi,
   QuoteOutputTokenAmountChange,
   TransactOption,
   TransactQuote,
-} from '../apis/transact/transact-types';
+} from '../apis/transact/transact-types.ts';
 import {
   isDepositOption,
   isDepositQuote,
   isWithdrawOption,
   isWithdrawQuote,
-} from '../apis/transact/transact-types';
-import { BIG_ZERO } from '../../../helpers/big-number';
-import type { ChainEntity } from '../entities/chain';
-import type { TokenEntity } from '../entities/token';
-import { isTokenEqual, isTokenErc20 } from '../entities/token';
+} from '../apis/transact/transact-types.ts';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { TokenEntity } from '../entities/token.ts';
+import { isTokenEqual, isTokenErc20 } from '../entities/token.ts';
 import { BigNumber } from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { Step } from '../reducers/wallet/stepper';
-import { stepperActions } from '../reducers/wallet/stepper';
-import { selectAllowanceByTokenAddress } from '../selectors/allowances';
-import { walletActions } from './wallet-actions';
-import { startStepperWithSteps } from './stepper';
-import { TransactMode, TransactStatus } from '../reducers/wallet/transact-types';
-import { selectTokenByAddress } from '../selectors/tokens';
+import type { Step } from '../reducers/wallet/stepper.ts';
+import { stepperActions } from '../reducers/wallet/stepper.ts';
+import { selectAllowanceByTokenAddress } from '../selectors/allowances.ts';
+import { walletActions } from './wallet-actions.ts';
+import { startStepperWithSteps } from './stepper.ts';
+import { TransactMode, TransactStatus } from '../reducers/wallet/transact-types.ts';
+import { selectTokenByAddress } from '../selectors/tokens.ts';
 import { groupBy, uniqBy } from 'lodash-es';
-import { fetchAllowanceAction } from './allowance';
-import { uniqueTokens } from '../../../helpers/tokens';
-import { fetchBalanceAction } from './balance';
+import { fetchAllowanceAction } from './allowance.ts';
+import { uniqueTokens } from '../../../helpers/tokens.ts';
+import { fetchBalanceAction } from './balance.ts';
 import type { Action } from 'redux';
-import { selectWalletAddress } from '../selectors/wallet';
-import { isSerializableError, serializeError } from '../apis/transact/strategies/error';
-import type { SerializedError } from '../apis/transact/strategies/error-types';
+import { selectWalletAddress } from '../selectors/wallet.ts';
+import { isSerializableError, serializeError } from '../apis/transact/strategies/error.ts';
+import type { SerializedError } from '../apis/transact/strategies/error-types.ts';
 
 export type TransactInitArgs = {
   vaultId: VaultEntity['id'];
@@ -78,10 +78,16 @@ const optionsForByMode = {
 export const transactFetchOptions = createAsyncThunk<
   TransactFetchOptionsPayload,
   TransactFetchOptionsArgs,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'transact/fetchOptions',
   async ({ vaultId, mode }, { getState, dispatch }) => {
+    if (mode === TransactMode.Claim) {
+      throw new Error(`Claim mode not supported.`);
+    }
+
     const api = await getTransactApi();
     const state = getState();
     const method = optionsForByMode[mode];
@@ -147,7 +153,10 @@ export type TransactFetchQuotesPayload = {
 export const transactFetchQuotes = createAsyncThunk<
   TransactFetchQuotesPayload,
   void,
-  { state: BeefyState; rejectValue: SerializedError }
+  {
+    state: BeefyState;
+    rejectValue: SerializedError;
+  }
 >('transact/fetchQuotes', async (_, { getState, dispatch, rejectWithValue }) => {
   try {
     const api = await getTransactApi();
@@ -184,7 +193,7 @@ export const transactFetchQuotes = createAsyncThunk<
     }
 
     const quoteInputAmounts: InputTokenAmount[] = [];
-    if (mode == TransactMode.Deposit) {
+    if (mode === TransactMode.Deposit) {
       // For deposit, user enters number of the selected token(s) to deposit
       selection.tokens.forEach((token, index) => {
         quoteInputAmounts.push({
@@ -268,35 +277,38 @@ export const transactFetchQuotes = createAsyncThunk<
   }
 });
 
-export const transactFetchQuotesIfNeeded = createAsyncThunk<void, void, { state: BeefyState }>(
-  'transact/fetchQuotesIfNeeded',
-  async (_, { getState, dispatch }) => {
-    const state = getState();
-    const quote = selectTransactSelectedQuoteOrUndefined(state);
-    let shouldFetch = selectTransactQuoteStatus(state) !== TransactStatus.Fulfilled;
-
-    if (quote) {
-      const option = quote.option;
-      const vaultId = selectTransactVaultId(state);
-      const chainId = selectTransactSelectedChainId(state);
-      const selectionId = selectTransactSelectedSelectionId(state);
-      const inputAmounts = selectTransactInputAmounts(state);
-      const matchingInputs =
-        inputAmounts.length === quote.inputs.length &&
-        inputAmounts.every((amount, index) => amount.eq(quote.inputs[index].amount));
-
-      shouldFetch =
-        option.chainId !== chainId ||
-        option.vaultId !== vaultId ||
-        option.selectionId !== selectionId ||
-        !matchingInputs;
-    }
-
-    if (shouldFetch) {
-      dispatch(transactFetchQuotes());
-    }
+export const transactFetchQuotesIfNeeded = createAsyncThunk<
+  void,
+  void,
+  {
+    state: BeefyState;
   }
-);
+>('transact/fetchQuotesIfNeeded', async (_, { getState, dispatch }) => {
+  const state = getState();
+  const quote = selectTransactSelectedQuoteOrUndefined(state);
+  let shouldFetch = selectTransactQuoteStatus(state) !== TransactStatus.Fulfilled;
+
+  if (quote) {
+    const option = quote.option;
+    const vaultId = selectTransactVaultId(state);
+    const chainId = selectTransactSelectedChainId(state);
+    const selectionId = selectTransactSelectedSelectionId(state);
+    const inputAmounts = selectTransactInputAmounts(state);
+    const matchingInputs =
+      inputAmounts.length === quote.inputs.length &&
+      inputAmounts.every((amount, index) => amount.eq(quote.inputs[index].amount));
+
+    shouldFetch =
+      option.chainId !== chainId ||
+      option.vaultId !== vaultId ||
+      option.selectionId !== selectionId ||
+      !matchingInputs;
+  }
+
+  if (shouldFetch) {
+    dispatch(transactFetchQuotes());
+  }
+});
 
 export async function getTransactSteps(
   quote: TransactQuote,
@@ -354,7 +366,7 @@ export async function getTransactSteps(
 export function transactSteps(
   quote: TransactQuote,
   t: TFunction<Namespace>
-): ThunkAction<void, BeefyState, void, Action> {
+): ThunkAction<Promise<void>, BeefyState, void, Action> {
   return async function (dispatch, getState) {
     const steps = await getTransactSteps(quote, t, getState);
     dispatch(startStepperWithSteps(steps, quote.inputs[0].token.chainId));
@@ -367,7 +379,7 @@ export function transactSteps(
 export function transactStepsClaimGov(
   vault: VaultGov,
   t: TFunction<Namespace>
-): ThunkAction<void, BeefyState, void, Action> {
+): ThunkAction<Promise<void>, BeefyState, void, Action> {
   return async function (dispatch, _getState) {
     dispatch(
       startStepperWithSteps(

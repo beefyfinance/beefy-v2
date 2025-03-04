@@ -3,18 +3,18 @@ import {
   getPromosForChain,
   getMintersForChain,
   getVaultsForChain,
-} from './config';
-import { getChainAddressBook } from './addressbook';
-import { chainsByAppId } from './chains';
-import type { ChainEntity } from '../../src/features/data/entities/chain';
+} from './config.ts';
+import { chainsByAppId } from './chains.ts';
+import type { ChainEntity } from '../../src/features/data/entities/chain.ts';
 import {
   isTokenErc20,
   isTokenNative,
-  TokenEntity,
-  TokenErc20,
-  TokenNative,
-} from '../../src/features/data/entities/token';
-import { keyBy, mapValues } from 'lodash';
+  type TokenEntity,
+  type TokenErc20,
+  type TokenNative,
+} from '../../src/features/data/entities/token.ts';
+import { keyBy, mapValues } from 'lodash-es';
+import { getChainAddressBook } from '../../src/features/data/apis/addressbook.ts';
 
 /**
  * Simulates how the app loads tokens

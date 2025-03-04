@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import type { Quote } from '../../../data/reducers/on-ramp-types';
-import type { ApiUrlRequest } from '../../../data/apis/on-ramp/on-ramp-types';
-import { getOnRampApi } from '../../../data/apis/instances';
+import type { Quote } from '../../../data/reducers/on-ramp-types.ts';
+import type { ApiUrlRequest } from '../../../data/apis/on-ramp/on-ramp-types.ts';
+import { getOnRampApi } from '../../../data/apis/instances.ts';
 
 export type ProviderType = {
   title: string;

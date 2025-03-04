@@ -1,12 +1,12 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  checkbox: {
-    color: theme.palette.text.dark,
-  },
-  labelIcon: {
+export const styles = {
+  checkbox: css.raw({
+    color: 'text.dark',
+  }),
+  labelIcon: css.raw({
     '& img': {
       display: 'block',
     },
-  },
-});
+  }),
+};

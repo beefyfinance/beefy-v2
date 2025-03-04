@@ -1,6 +1,6 @@
-import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
-import type { TokenEntity } from '../../../entities/token';
-import type { OrderRelay } from '../zap/types';
+import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
+import type { TokenEntity } from '../../../entities/token.ts';
+import type { OrderRelay } from '../zap/types.ts';
 
 export const NO_RELAY: OrderRelay = { target: ZERO_ADDRESS, value: '0', data: '0x' };
 

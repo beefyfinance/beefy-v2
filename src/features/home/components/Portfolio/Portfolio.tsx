@@ -1,53 +1,98 @@
-import { Button, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { UserStats } from './UserStats';
-import { VaultsStats } from './VaultsStats';
-import { styles } from './styles';
-import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
-import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import { useTheme } from '@material-ui/core/styles';
-import { selectIsBalanceHidden } from '../../../data/selectors/wallet';
-import { setToggleHideBalance } from '../../../data/reducers/wallet/wallet';
-import { useAppDispatch, useAppSelector } from '../../../../store';
-import { Container } from '../../../../components/Container/Container';
+import { UserStats } from './Stats/UserStats.tsx';
+import { VaultsStats } from './Stats/VaultsStats.tsx';
+import VisibilityOffOutlinedIcon from '../../../../images/icons/mui/VisibilityOffOutlined.svg?react';
+import VisibilityOutlinedIcon from '../../../../images/icons/mui/VisibilityOutlined.svg?react';
+import { selectIsBalanceHidden } from '../../../data/selectors/wallet.ts';
+import { setToggleHideBalance } from '../../../data/reducers/wallet/wallet.ts';
+import { useAppDispatch, useAppSelector } from '../../../../store.ts';
+import { styled } from '@repo/styles/jsx';
+import { memo, useCallback } from 'react';
 
-const useStyles = makeStyles(styles);
-
-export const Portfolio = () => {
-  const classes = useStyles();
-  const theme = useTheme();
-  const dispatch = useAppDispatch();
-  const hideBalance = useAppSelector(selectIsBalanceHidden);
-
-  const updateHideBalance = () => {
-    dispatch(setToggleHideBalance());
-  };
-
+export const Portfolio = memo(function Portfolio() {
   const { t } = useTranslation();
 
   return (
-    <div className={classes.portfolio}>
-      <Container maxWidth="lg">
-        <div className={classes.stats}>
-          <div className={classes.userStats}>
-            <div className={classes.title}>
-              {t('Portfolio-Portfolio')}{' '}
-              <Button size="small" className={classes.btnHide} onClick={updateHideBalance}>
-                {hideBalance ? (
-                  <VisibilityOutlinedIcon htmlColor={`${theme.palette.primary.main}`} />
-                ) : (
-                  <VisibilityOffOutlinedIcon htmlColor={`${theme.palette.primary.main}`} />
-                )}
-              </Button>
-            </div>
-            <UserStats />
-          </div>
-          <div className={classes.vaultStats}>
-            <div className={classes.title}>{t('Vault-platform')}</div>
-            <VaultsStats />
-          </div>
-        </div>
-      </Container>
-    </div>
+    <Stats>
+      <Group side={'left'}>
+        <Title>
+          {t('Portfolio-Portfolio')} <VisibilityToggle />
+        </Title>
+        <UserStats />
+      </Group>
+      <Group side={'right'}>
+        <Title>{t('Vault-platform')}</Title>
+        <VaultsStats />
+      </Group>
+    </Stats>
   );
-};
+});
+
+const VisibilityToggle = memo(function VisibilityToggle() {
+  const dispatch = useAppDispatch();
+  const hideBalance = useAppSelector(selectIsBalanceHidden);
+
+  const updateHideBalance = useCallback(() => {
+    dispatch(setToggleHideBalance());
+  }, [dispatch]);
+
+  return (
+    <ToggleButton onClick={updateHideBalance}>
+      {hideBalance ? <VisibilityOutlinedIcon /> : <VisibilityOffOutlinedIcon />}
+    </ToggleButton>
+  );
+});
+
+const Stats = styled('div', {
+  base: {
+    paddingTop: '16px',
+    paddingBottom: '40px',
+    display: 'grid',
+    gridTemplateColumns: '100%',
+    gap: '32px',
+    md: {
+      gridTemplateColumns: '583fr 417fr',
+    },
+  },
+});
+
+const Group = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+    justifyContent: 'flex-start',
+    textAlign: 'left',
+  },
+  variants: {
+    side: {
+      left: {},
+      right: {
+        md: {
+          textAlign: 'right',
+          justifyContent: 'flex-end',
+        },
+      },
+    },
+  },
+  defaultVariants: {
+    side: 'left',
+  },
+});
+
+const Title = styled('div', {
+  base: {
+    textStyle: 'h3',
+    color: 'text.middle',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'inherit',
+    columnGap: '8px',
+  },
+});
+
+const ToggleButton = styled('button', {
+  base: {
+    color: 'green',
+  },
+});

@@ -1,7 +1,9 @@
 import type { BigNumber } from 'bignumber.js';
-import type { PlatformEntity } from '../entities/platform';
+import type { PlatformEntity } from '../entities/platform.ts';
 
-export type TvlBreakdownBase = { vaultTvl: BigNumber };
+export type TvlBreakdownBase = {
+  vaultTvl: BigNumber;
+};
 
 export type TvlBreakdownVault = TvlBreakdownBase & {
   vaultTvl: BigNumber;

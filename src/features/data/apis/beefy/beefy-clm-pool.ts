@@ -1,11 +1,11 @@
-import type { ChainEntity } from '../../entities/chain';
-import { BeefyCowcentratedLiquidityStrategyAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityStrategyAbi';
-import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
+import type { ChainEntity } from '../../entities/chain.ts';
+import { BeefyCowcentratedLiquidityStrategyAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityStrategyAbi.ts';
+import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi.ts';
 import { BigNumber } from 'bignumber.js';
-import { isTokenEqual, type TokenEntity } from '../../entities/token';
-import type { InputTokenAmount, TokenAmount } from '../transact/transact-types';
-import { BIG_ONE, BIG_ZERO, bigNumberToBigInt, toWei } from '../../../../helpers/big-number';
-import { fetchContract } from '../rpc-contract/viem-contract';
+import { isTokenEqual, type TokenEntity } from '../../entities/token.ts';
+import type { InputTokenAmount, TokenAmount } from '../transact/transact-types.ts';
+import { BIG_ONE, BIG_ZERO, bigNumberToBigInt, toWei } from '../../../../helpers/big-number.ts';
+import { fetchContract } from '../rpc-contract/viem-contract.ts';
 
 export class BeefyCLMPool {
   public readonly type = 'uniswap-v2';

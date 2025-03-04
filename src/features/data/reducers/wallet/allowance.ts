@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { type BigNumber } from 'bignumber.js';
-import { fetchAllAllowanceAction, fetchAllowanceAction } from '../../actions/allowance';
-import type { TokenAllowance } from '../../apis/allowance/allowance-types';
+import { fetchAllAllowanceAction, fetchAllowanceAction } from '../../actions/allowance.ts';
+import type { TokenAllowance } from '../../apis/allowance/allowance-types.ts';
 import type { Draft } from 'immer';
-import type { ChainEntity } from '../../entities/chain';
-import type { TokenEntity } from '../../entities/token';
-import { accountHasChanged, walletHasDisconnected } from './wallet';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
-import { initiateBoostForm } from '../../actions/boosts';
-import { initiateMinterForm } from '../../actions/minters';
-import { selectMinterById } from '../../selectors/minters';
+import type { ChainEntity } from '../../entities/chain.ts';
+import type { TokenEntity } from '../../entities/token.ts';
+import { accountHasChanged, walletHasDisconnected } from './wallet.ts';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens.ts';
+import { initiateBoostForm } from '../../actions/boosts.ts';
+import { initiateMinterForm } from '../../actions/minters.ts';
+import { selectMinterById } from '../../selectors/minters.ts';
 
 /**
  * State containing user allowances state

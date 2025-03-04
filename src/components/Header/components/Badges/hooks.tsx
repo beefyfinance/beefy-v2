@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 import {
   selectLastArticle,
   selectLastReadArticleId,
-} from '../../../../features/data/selectors/articles';
-import { useAppSelector } from '../../../../store';
-import { selectUnreadActiveProposals } from '../../../../features/data/selectors/proposals';
+} from '../../../../features/data/selectors/articles.ts';
+import { useAppSelector } from '../../../../store.ts';
+import { selectUnreadActiveProposals } from '../../../../features/data/selectors/proposals.ts';
 
 const SEVEN_DAYS_IN_SECONDS = 60 * 60 * 24 * 7;
 

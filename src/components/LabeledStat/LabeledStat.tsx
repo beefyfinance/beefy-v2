@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
 
-import { styles } from './styles';
+import { styles } from './styles.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 const LabeledStatImpl = ({ value, boosted }: { value: ReactNode; boosted?: ReactNode }) => {
   const classes = useStyles();
 

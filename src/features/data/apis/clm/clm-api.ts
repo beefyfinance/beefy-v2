@@ -6,16 +6,16 @@ import type {
   ClmVaultHarvestsResponse,
   ClmVaultsHarvestsResponse,
   IClmApi,
-} from './clm-api-types';
-import type { VaultEntity } from '../../entities/vault';
-import type { ChainEntity } from '../../entities/chain';
+} from './clm-api-types.ts';
+import type { VaultEntity } from '../../entities/vault.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
 import { type Abi } from 'viem';
 import { BigNumber } from 'bignumber.js';
-import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi';
+import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi.ts';
 import { getUnixTime, roundToNearestMinutes } from 'date-fns';
-import { getJson } from '../../../../helpers/http';
-import { isFetchNotFoundError } from '../../../../helpers/http/errors';
-import { fetchContract } from '../rpc-contract/viem-contract';
+import { getJson } from '../../../../helpers/http/http.ts';
+import { isFetchNotFoundError } from '../../../../helpers/http/errors.ts';
+import { fetchContract } from '../rpc-contract/viem-contract.ts';
 
 const ClmStrategyAbi = [
   {

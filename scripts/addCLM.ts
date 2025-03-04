@@ -1,23 +1,23 @@
 // To run: yarn clm ethereum 0xclm 0xpool 0xvault clm-id
-import { AppChainId, chainRpcs } from './common/config';
-import { BeefyCowcentratedLiquidityVaultAbi } from '../src/config/abi/BeefyCowcentratedLiquidityVaultAbi';
-import { StratAbi } from '../src/config/abi/StrategyAbi';
-import { ERC20Abi } from '../src/config/abi/ERC20Abi';
-import { sortVaultKeys } from './common/vault-fields';
-import { isValidChecksumAddress } from './common/utils';
+import { type AppChainId, addressBookToAppId } from './common/config.ts';
+import { BeefyCowcentratedLiquidityVaultAbi } from '../src/config/abi/BeefyCowcentratedLiquidityVaultAbi.ts';
+import { StratAbi } from '../src/config/abi/StrategyAbi.ts';
+import { ERC20Abi } from '../src/config/abi/ERC20Abi.ts';
+import { sortVaultKeys } from './common/vault-fields.ts';
+import { isValidChecksumAddress } from './common/utils.ts';
 import { join as pathJoin } from 'node:path';
-import type { VaultConfig } from '../src/features/data/apis/config-types';
-import { loadJson, saveJson } from './common/files';
-import { getViemClient } from './common/viem';
-import { Address, getContract } from 'viem';
+import type { VaultConfig } from '../src/features/data/apis/config-types.ts';
+import { loadJson, saveJson } from './common/files.ts';
+import { getViemClient } from './common/viem.ts';
+import { type Address, getContract } from 'viem';
 
 // Which platforms **only** send fee rewards to the reward pool
 // i.e. strategies that do not call pool.collect()
 // Do not add ramses/shadow/nuri etc here as the protocol fees can be set 0-100%
 const poolPlatforms = ['aerodrome', 'velodrome'];
 
-async function vaultData(chain: string, vaultAddress: string, id: string) {
-  const viemClient = getViemClient(chain as AppChainId);
+async function vaultData(chain: AppChainId, vaultAddress: string, id: string) {
+  const viemClient = getViemClient(chain);
   const abi = [...BeefyCowcentratedLiquidityVaultAbi, ...StratAbi];
   const vaultContract = getContract({
     client: viemClient,
@@ -61,35 +61,35 @@ async function vaultData(chain: string, vaultAddress: string, id: string) {
   const provider = params.mooToken.startsWith('cowAerodrome')
     ? 'aerodrome'
     : params.mooToken.startsWith('cowVelodrome')
-    ? 'velodrome'
-    : params.mooToken.startsWith('cowUniswap')
-    ? 'uniswap'
-    : params.mooToken.startsWith('cowRamses')
-    ? 'ramses'
-    : params.mooToken.startsWith('cowPancake')
-    ? 'pancakeswap'
-    : id.substring(0, id.indexOf('-'));
+      ? 'velodrome'
+      : params.mooToken.startsWith('cowUniswap')
+        ? 'uniswap'
+        : params.mooToken.startsWith('cowRamses')
+          ? 'ramses'
+          : params.mooToken.startsWith('cowPancake')
+            ? 'pancakeswap'
+            : id.substring(0, id.indexOf('-'));
   const platform = provider;
 
   const earnedToken =
     provider === 'aerodrome'
       ? ['AERO']
       : provider === 'velodrome'
-      ? ['VELOV2']
-      : provider === 'nuri'
-      ? ['NURI']
-      : [];
+        ? ['VELOV2']
+        : provider === 'nuri'
+          ? ['NURI']
+          : [];
 
   const earnedTokenAddress =
     provider === 'aerodrome'
       ? ['0x940181a94A35A4569E4529A3CDfB74e38FD98631']
       : provider === 'velodrome' && chain === 'optimism'
-      ? ['0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db']
-      : provider === 'velodrome'
-      ? ['0x7f9AdFbd38b669F03d1d11000Bc76b9AaEA28A81']
-      : provider === 'nuri'
-      ? ['0xAAAE8378809bb8815c08D3C59Eb0c7D1529aD769']
-      : [];
+        ? ['0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db']
+        : provider === 'velodrome'
+          ? ['0x7f9AdFbd38b669F03d1d11000Bc76b9AaEA28A81']
+          : provider === 'nuri'
+            ? ['0xAAAE8378809bb8815c08D3C59Eb0c7D1529aD769']
+            : [];
 
   const strategyTypeId = poolPlatforms.includes(provider) ? 'pool' : 'compounds';
 
@@ -111,8 +111,6 @@ const orThrow = <T>(v: T | false | null | undefined, msg: string) => {
   return v;
 };
 
-const requireChain = (chain: string) =>
-  orThrow(chain in chainRpcs && chain, `Unknown chain "${chain}"`);
 const requireAddress = (address: string) =>
   orThrow(
     address !== '0x' && isValidChecksumAddress(address) && address,
@@ -122,7 +120,7 @@ const maybeAddress = (address: string) => (isValidChecksumAddress(address) ? add
 const requireString = (str: string) => orThrow(str, 'Missing string');
 
 async function generateVault() {
-  const chain = requireChain(process.argv[2]);
+  const chain = addressBookToAppId(process.argv[2]);
   const clmAddress = requireAddress(process.argv[3]);
   const rewardPoolAddress = requireAddress(process.argv[4]);
   const vaultAddress = maybeAddress(process.argv[5]);

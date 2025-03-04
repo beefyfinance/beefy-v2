@@ -1,35 +1,42 @@
-import { memo, useMemo } from 'react';
-import { Button, makeStyles } from '@material-ui/core';
+import { memo, useCallback, useMemo } from 'react';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { useTranslation } from 'react-i18next';
-import { CardContent } from '../../../../Card';
-import { AssetsImage } from '../../../../../../../components/AssetsImage';
-import { styles } from '../styles';
-import { formatTokenDisplayCondensed } from '../../../../../../../helpers/format';
-import { selectVaultById } from '../../../../../../data/selectors/vaults';
-import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance';
+import { CardContent } from '../../../../Card/CardContent.tsx';
+import { AssetsImage } from '../../../../../../../components/AssetsImage/AssetsImage.tsx';
+import { styles } from '../styles.ts';
+import { formatTokenDisplayCondensed } from '../../../../../../../helpers/format.ts';
+import { selectVaultById } from '../../../../../../data/selectors/vaults.ts';
+import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance.ts';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
-} from '../../../../../../data/selectors/wallet';
+} from '../../../../../../data/selectors/wallet.ts';
 import {
   selectErc20TokenByAddress,
   selectTokenByAddress,
-} from '../../../../../../data/selectors/tokens';
-import { askForNetworkChange, askForWalletConnection } from '../../../../../../data/actions/wallet';
-import { walletActions } from '../../../../../../data/actions/wallet-actions';
-import type { MinterCardParams } from '../../MinterCard';
-import { selectMinterById, selectMinterVaultsType } from '../../../../../../data/selectors/minters';
-import { selectAllowanceByTokenAddress } from '../../../../../../data/selectors/allowances';
-import { selectChainById } from '../../../../../../data/selectors/chains';
-import { useAppDispatch, useAppSelector } from '../../../../../../../store';
-import { stepperActions } from '../../../../../../data/reducers/wallet/stepper';
-import { selectIsStepperStepping } from '../../../../../../data/selectors/stepper';
-import { startStepper } from '../../../../../../data/actions/stepper';
+} from '../../../../../../data/selectors/tokens.ts';
+import {
+  askForNetworkChange,
+  askForWalletConnection,
+} from '../../../../../../data/actions/wallet.ts';
+import { walletActions } from '../../../../../../data/actions/wallet-actions.ts';
+import type { MinterCardParams } from '../../MinterCard.tsx';
+import {
+  selectMinterById,
+  selectMinterVaultsType,
+} from '../../../../../../data/selectors/minters.ts';
+import { selectAllowanceByTokenAddress } from '../../../../../../data/selectors/allowances.ts';
+import { selectChainById } from '../../../../../../data/selectors/chains.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../../store.ts';
+import { stepperActions } from '../../../../../../data/reducers/wallet/stepper.ts';
+import { selectIsStepperStepping } from '../../../../../../data/selectors/stepper.ts';
+import { startStepper } from '../../../../../../data/actions/stepper.ts';
 import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
-import { AmountInput } from '../../../Transact/AmountInput';
-import { useInputForm } from '../../../../../../data/hooks/input';
+import { AmountInput } from '../../../Transact/AmountInput/AmountInput.tsx';
+import { useInputForm } from '../../../../../../data/hooks/input.tsx';
+import { Button } from '../../../../../../../components/Button/Button.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) {
   const classes = useStyles();
@@ -80,12 +87,22 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     depositToken.decimals
   );
 
+  const handleNetworkChange = useCallback(() => {
+    dispatch(askForNetworkChange({ chainId: vault.chainId }));
+  }, [dispatch, vault]);
+
+  const handleConnectWallet = useCallback(() => {
+    dispatch(askForWalletConnection());
+  }, [dispatch]);
+
   const handleDeposit = () => {
     if (!isWalletConnected) {
-      return dispatch(askForWalletConnection());
+      dispatch(askForWalletConnection());
+      return;
     }
     if (!isWalletOnVaultChain) {
-      return dispatch(askForNetworkChange({ chainId: vault.chainId }));
+      dispatch(askForNetworkChange({ chainId: vault.chainId }));
+      return;
     }
 
     if (depositToken.type !== 'native' && depositTokenAllowance.isLessThan(formData.amount)) {
@@ -122,7 +139,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   };
 
   return (
-    <CardContent className={classes.cardContent}>
+    <CardContent css={styles.cardContent}>
       <div className={classes.content}>
         {t(contentKey, {
           mintedToken: minter.mintedToken.symbol,
@@ -154,15 +171,13 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           value={formData.amount}
           maxValue={depositTokenBalance}
           onChange={handleChange}
-          endAdornment={<Button onClick={handleMax}>{t('Transact-Max')}</Button>}
+          endAdornment={
+            <Button onClick={handleMax} css={styles.max}>
+              {t('Transact-Max')}
+            </Button>
+          }
           startAdornment={
-            <div className={classes.inputLogo}>
-              <AssetsImage
-                assetSymbols={[minter.depositToken.symbol]}
-                size={24}
-                chainId={chain.id}
-              />
-            </div>
+            <AssetsImage assetSymbols={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
           }
         />
       </div>
@@ -190,23 +205,14 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           onChange={handleChange}
           disabled={true}
           startAdornment={
-            <div className={classes.inputLogo}>
-              <AssetsImage
-                assetSymbols={[minter.mintedToken.symbol]}
-                size={24}
-                chainId={chain.id}
-              />
-            </div>
+            <AssetsImage assetSymbols={[minter.mintedToken.symbol]} size={24} chainId={chain.id} />
           }
         />
       </div>
       <>
         {isWalletConnected ? (
           !isWalletOnVaultChain ? (
-            <Button
-              onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
-              className={classes.btn}
-            >
+            <Button onClick={handleNetworkChange} className={classes.btn}>
               {t('Network-Change', { network: chain.name.toUpperCase() })}
             </Button>
           ) : (
@@ -219,7 +225,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
             </Button>
           )
         ) : (
-          <Button onClick={() => dispatch(askForWalletConnection())} className={classes.btn}>
+          <Button onClick={handleConnectWallet} className={classes.btn}>
             {t('Network-ConnectWallet')}
           </Button>
         )}

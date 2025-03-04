@@ -1,31 +1,31 @@
-import type { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedVault,
   isVaultActive,
   type VaultEntity,
-} from '../entities/vault';
+} from '../entities/vault.ts';
 import {
   selectBoostUserBalanceInToken,
   selectUserDepositedVaultIds,
   selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
   selectUserVaultBalanceInUsdIncludingBoostsBridged,
   selectVaultSharesToDepositTokenData,
-} from './balance';
+} from './balance.ts';
 import {
   selectIsUserBalanceAvailable,
   selectIsVaultApyAvailable,
   selectVaultShouldShowInterest,
-} from './data-loader';
-import { selectTokenPriceByAddress } from './tokens';
-import { selectVaultById } from './vaults';
-import { BIG_ZERO } from '../../../helpers/big-number';
-import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from './boosts';
-import type { TotalApy } from '../reducers/apy';
-import { isEmpty } from '../../../helpers/utils';
-import { selectWalletAddress } from './wallet';
+} from './data-loader.ts';
+import { selectTokenPriceByAddress } from './tokens.ts';
+import { selectVaultById } from './vaults.ts';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from './boosts.ts';
+import type { TotalApy } from '../reducers/apy.ts';
+import { isEmpty } from '../../../helpers/utils.ts';
+import { selectWalletAddress } from './wallet.ts';
 import { first } from 'lodash-es';
-import { mooAmountToOracleAmount } from '../utils/ppfs';
+import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 
 const EMPTY_TOTAL_APY: TotalApy = {
   totalApy: 0,
@@ -205,7 +205,7 @@ export const selectYieldStatsByVaultId = (
 
   const total = sources.reduce(
     (acc, source) => {
-      for (const key of ['daily', 'yearly']) {
+      for (const key of ['daily', 'yearly'] as const) {
         acc[key] = acc[key].plus(source.tokens.multipliedBy(source[key]));
       }
       return acc;
@@ -233,7 +233,10 @@ export const selectYieldStatsByVaultId = (
 };
 
 type ApyVaultUIData =
-  | { status: 'loading' | 'missing' | 'hidden'; type: 'apy' | 'apr' }
+  | {
+      status: 'loading' | 'missing' | 'hidden';
+      type: 'apy' | 'apr';
+    }
   | {
       status: 'available';
       type: 'apy' | 'apr';

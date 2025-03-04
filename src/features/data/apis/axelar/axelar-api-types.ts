@@ -1,4 +1,4 @@
-import type { ChainEntity } from '../../entities/chain';
+import type { ChainEntity } from '../../entities/chain.ts';
 import { type BigNumber } from 'bignumber.js';
 
 export interface IAxelarApi {

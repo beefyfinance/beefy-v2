@@ -1,15 +1,15 @@
-import type { BeefyState } from '../../../redux-types';
-import type { ChainEntity } from '../entities/chain';
-import type { VaultEntity } from '../entities/vault';
-import { selectBoostUserBalanceInToken, selectBoostUserRewardsInToken } from './balance';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import { selectBoostUserBalanceInToken, selectBoostUserRewardsInToken } from './balance.ts';
 import { createCachedSelector } from 're-reselect';
-import { BIG_ZERO } from '../../../helpers/big-number';
-import type { BeefyOffChainRewardsCampaignType } from '../apis/beefy/beefy-api-types';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import type { BeefyOffChainRewardsCampaignType } from '../apis/beefy/beefy-api-types.ts';
 import { isAfter } from 'date-fns';
 import { orderBy } from 'lodash-es';
-import { valueOrThrow } from '../utils/selector-utils';
-import type { BoostRewardContractData } from '../apis/contract-data/contract-data-types';
-import type { BoostPromoEntity, PromoEntity } from '../entities/promo';
+import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
+import type { BoostRewardContractData } from '../apis/contract-data/contract-data-types.ts';
+import type { BoostPromoEntity, PromoEntity } from '../entities/promo.ts';
 
 function requireBoost(
   promosById: { [id: string]: PromoEntity | undefined },
@@ -36,22 +36,19 @@ export const selectCurrentBoostByVaultIdOrUndefined = createCachedSelector(
   }
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectBoostsByChainId = createCachedSelector(
-  (state: BeefyState, chainId: ChainEntity['id']) =>
-    state.entities.promos.byType.boost?.byChainId[chainId]?.allIds,
-  boostsByChain => boostsByChain || []
-)((state: BeefyState, chainId: ChainEntity['id']) => chainId);
+export const selectBoostsByChainId = (state: BeefyState, chainId: ChainEntity['id']) =>
+  arrayOrStaticEmpty(state.entities.promos.byType.boost?.byChainId[chainId]?.allIds);
 
 export const selectIsVaultBoosted = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
   activeBoostIds => activeBoostIds.length > 0
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectIsVaultPreStakedOrBoosted = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
   (activeBoostIds, prestakeBoostIds) => activeBoostIds.length + prestakeBoostIds.length > 0
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectVaultCurrentBoostId = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
@@ -65,7 +62,7 @@ export const selectVaultCurrentBoostId = createCachedSelector(
     }
     return undefined;
   }
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectVaultCurrentBoostIdWithStatus = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
@@ -79,25 +76,27 @@ export const selectVaultCurrentBoostIdWithStatus = createCachedSelector(
     }
     return undefined;
   }
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectIsVaultPrestakedBoost = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
   prestakeBoostIds => prestakeBoostIds.length > 0
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectActiveVaultBoostIds = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     state.entities.promos.byVaultId[vaultId]?.byType.boost?.allIds,
   (state: BeefyState) => state.entities.promos.statusById,
-  (boostIds, statusById) => (boostIds || []).filter(id => statusById[id] === 'active')
+  (boostIds, statusById) =>
+    arrayOrStaticEmpty((boostIds || []).filter(id => statusById[id] === 'active'))
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectPreStakeVaultBoostIds = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     state.entities.promos.byVaultId[vaultId]?.byType.boost?.allIds,
   (state: BeefyState) => state.entities.promos.statusById,
-  (boostIds, statusById) => (boostIds || []).filter(id => statusById[id] === 'prestake')
+  (boostIds, statusById) =>
+    arrayOrStaticEmpty((boostIds || []).filter(id => statusById[id] === 'prestake'))
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectPreStakeOrActiveBoostIds = createCachedSelector(
@@ -105,20 +104,20 @@ export const selectPreStakeOrActiveBoostIds = createCachedSelector(
     state.entities.promos.byVaultId[vaultId]?.byType.boost?.allIds,
   (state: BeefyState) => state.entities.promos.statusById,
   (boostIds, statusById) =>
-    (boostIds || []).filter(id => statusById[id] === 'active' || statusById[id] === 'prestake')
+    arrayOrStaticEmpty(
+      (boostIds || []).filter(id => statusById[id] === 'active' || statusById[id] === 'prestake')
+    )
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectAllVaultBoostIds = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) =>
-    state.entities.promos.byVaultId[vaultId]?.byType.boost?.allIds,
-  boostIds => boostIds || []
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+export const selectAllVaultBoostIds = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  arrayOrStaticEmpty(state.entities.promos.byVaultId[vaultId]?.byType.boost?.allIds);
 
 export const selectPastVaultBoostIds = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     state.entities.promos.byVaultId[vaultId]?.byType.boost?.allIds,
   (state: BeefyState) => state.entities.promos.statusById,
-  (boostIds, statusById) => (boostIds || []).filter(id => statusById[id] === 'inactive')
+  (boostIds, statusById) =>
+    arrayOrStaticEmpty((boostIds || []).filter(id => statusById[id] === 'inactive'))
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectPastBoostIdsWithUserBalance = (
@@ -202,7 +201,7 @@ export const selectBoostRewards = createCachedSelector(
 
 export const selectBoostActiveRewards = createCachedSelector(
   (state: BeefyState, boostId: BoostPromoEntity['id']) => selectBoostRewards(state, boostId),
-  () => Math.trunc(Date.now() / 60_0000), // invalidate every 60s
+  () => Math.trunc(Date.now() / 600000), // invalidate every 60s
   rewards => {
     const now = new Date();
     return orderBy(

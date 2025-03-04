@@ -1,7 +1,7 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     height: '40px',
     border: 'none',
     borderRadius: '8px',
@@ -12,43 +12,38 @@ export const styles = (theme: Theme) => ({
     cursor: 'pointer',
     backgroundColor: 'transparent',
     padding: '0px 16px 0px 0px',
-  },
-  circle: {
+  }),
+  circle: css.raw({
     width: '12px',
     height: '12px',
     borderRadius: '30px',
     '&.loading': {
-      backgroundColor: theme.palette.background.indicators.loading,
+      backgroundColor: 'indicators.loading',
     },
     '&.success': {
-      backgroundColor: theme.palette.background.indicators.success,
+      backgroundColor: 'indicators.success',
     },
     '&.warning': {
-      backgroundColor: theme.palette.background.indicators.warning,
+      backgroundColor: 'indicators.warning',
     },
-    position: 'relative' as const, // to position pulse circles
-  },
-  // https://www.kirupa.com/animations/creating_pulsing_circle_animation.htm
-  '@keyframes scaleIn': {
-    from: { transform: 'scale(.5, .5)', opacity: '.7' },
-    to: { transform: 'scale(3.0, 3.0)', opacity: '0' },
-  },
-  pulseCircle: {
+    position: 'relative',
+  }),
+  pulseCircle: css.raw({
     borderRadius: '50%',
     // w/h same as circle
     width: '12px',
     height: '12px',
-    position: 'absolute' as const,
-    opacity: 0,
-    animation: '$scaleIn 4s infinite cubic-bezier(.36, .11, .89, .32)',
+    position: 'absolute',
+    opacity: '0',
+    animation: 'loadingPulse 4s infinite cubic-bezier(.36, .11, .89, .32)',
     '&.loading': {
-      backgroundColor: theme.palette.background.indicators.loading,
+      backgroundColor: 'indicators.loading',
     },
     '&.success': {
-      backgroundColor: theme.palette.background.indicators.success,
+      backgroundColor: 'indicators.success',
     },
     '&.warning': {
-      backgroundColor: theme.palette.background.indicators.warning,
+      backgroundColor: 'indicators.warning',
     },
     '&.notLoading': {
       display: 'none',
@@ -65,77 +60,81 @@ export const styles = (theme: Theme) => ({
     '&:nth-child(4)': {
       animationDelay: '3s',
     },
-  },
-  dropdown: {
+  }),
+  dropdown: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
-    backgroundColor: theme.palette.background.contentPrimary,
-    border: `solid 2px ${theme.palette.background.contentDark}`,
-    borderRadius: '8px',
-    marginTop: '4px',
+    flexDirection: 'column',
+    border: 'solid 2px {colors.background.content.dark}',
     minWidth: '280px',
-    zIndex: 999,
-  },
-  titleContainer: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.light,
+    padding: '0px',
+  }),
+  titleContainer: css.raw({
+    textStyle: 'body.med',
+    color: 'text.light',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: `${12 - 2}px`,
-    backgroundColor: theme.palette.background.contentDark,
-  },
-  title: {
+    padding: '10px',
+    backgroundColor: 'background.content.dark',
+    borderTopLeftRadius: 'inherit',
+    borderTopRightRadius: 'inherit',
+  }),
+  title: css.raw({
     display: 'flex',
     alignItems: 'center',
     '& img': {
       height: '24px',
       margin: '0px 4px',
     },
-  },
-  cross: {
-    color: theme.palette.text.dark,
+  }),
+  cross: css.raw({
+    color: 'text.dark',
     '&:hover': {
-      color: theme.palette.text.light,
+      color: 'text.light',
       cursor: 'pointer',
     },
-  },
-  content: {
-    padding: `${12 - 2}px`,
-  },
-  contentTitle: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
-    color: theme.palette.text.dark,
-  },
-  popoverLine: {
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.middle,
+  }),
+  content: css.raw({
+    padding: '10px',
+    backgroundColor: 'background.content',
+    borderBottomLeftRadius: 'inherit',
+    borderBottomRightRadius: 'inherit',
+  }),
+  contentTitle: css.raw({
+    textStyle: 'subline.sm',
+    fontWeight: '700',
+    color: 'text.dark',
+  }),
+  contentDetail: css.raw({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
+  }),
+  popoverLine: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.middle',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
     '& .circle': {
       marginRight: '8px',
     },
-    '& + $popoverLine': {
-      marginTop: '4px',
-    },
-  },
-  popoverHelpText: {
-    ...theme.typography['body-sm'],
+  }),
+  popoverHelpText: css.raw({
+    textStyle: 'body.sm',
     marginTop: '8px',
-  },
-  line: {
+  }),
+  line: css.raw({
     height: '16px',
     width: '2px',
     borderRadius: '3px',
-    backgroundColor: theme.palette.background.contentLight,
-  },
-  chain: {
+    backgroundColor: 'background.content.light',
+  }),
+  chain: css.raw({
     display: 'flex',
     alignItems: 'center',
     '& img': {
       height: '24px',
     },
-  },
-});
+  }),
+};

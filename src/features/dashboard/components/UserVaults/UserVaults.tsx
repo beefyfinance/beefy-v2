@@ -1,46 +1,30 @@
-import { makeStyles } from '@material-ui/styles';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useTranslation } from 'react-i18next';
-import {
-  memo,
-  type MutableRefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { debounce } from 'lodash-es';
 import { useInView } from 'react-intersection-observer';
-import { Section } from '../../../../components/Section';
-import { styles } from './styles';
-import { Filter } from './components/Filter';
-import { Vault } from './components/Vault';
-import { useSortedDashboardVaults } from './hook';
-import type { VaultEntity } from '../../../data/entities/vault';
-import { NoVaults } from './components/NoVaults';
-import type { Theme } from '@material-ui/core';
-import { useMediaQuery } from '@material-ui/core';
+import { Section } from '../../../../components/Section/Section.tsx';
+import { styles } from './styles.ts';
+import { Filter } from './components/Filter/Filter.tsx';
+import { Vault } from './components/Vault/Vault.tsx';
+import { useSortedDashboardVaults } from './hook.tsx';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
+import { NoVaults } from './components/NoVaults/NoVaults.tsx';
+import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type UserVaultsProps = {
   address: string;
 };
 
-export const UserVaults = memo<UserVaultsProps>(function UserVaults({ address }) {
+export const UserVaults = memo(function UserVaults({ address }: UserVaultsProps) {
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const {
-    sortedFilteredVaults,
-    sortedOptions,
-    handleSort,
-    handleSearchText,
-    searchText,
-    handleClearText,
-  } = useSortedDashboardVaults(address);
-
-  const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
+  const { sortedFilteredVaults, sortedOptions, handleSort, searchText, setSearchText } =
+    useSortedDashboardVaults(address);
+  const mdDown = useBreakpoint({ to: 'sm' });
 
   const subTitle = useMemo(() => {
     return mdDown ? 'Dashboard-Your-Vaults-Subtitle-Mobile' : 'Dashboard-Your-Vaults-Subtitle';
@@ -52,9 +36,8 @@ export const UserVaults = memo<UserVaultsProps>(function UserVaults({ address })
         <Filter
           sortOptions={sortedOptions}
           handleSort={handleSort}
-          handleSearchText={handleSearchText}
+          handleSearchText={setSearchText}
           searchText={searchText}
-          handleClearText={handleClearText}
         />
         {sortedFilteredVaults.length === 0 ? <NoVaults /> : null}
         <VirtualList address={address} vaults={sortedFilteredVaults} />
@@ -68,13 +51,13 @@ interface VirtualListProps {
   address: string;
 }
 
-export const VirtualList = memo<VirtualListProps>(function VirtualList({ vaults, address }) {
+export const VirtualList = memo(function VirtualList({ vaults, address }: VirtualListProps) {
   const classes = useStyles();
   const totalVaults = vaults.length;
   const minBatchSize = 3;
   const [renderCount, setRenderCount] = useState(minBatchSize);
-  const containerRef = useRef<HTMLDivElement>();
-  const bottomRef = useRef<HTMLDivElement>();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
   const renderVaultIds = useMemo(() => vaults.slice(0, renderCount), [vaults, renderCount]);
   const remainingVaults = useMemo(() => {
     return Math.max(0, totalVaults - renderCount);
@@ -82,7 +65,7 @@ export const VirtualList = memo<VirtualListProps>(function VirtualList({ vaults,
 
   // Render more vaults on intersection (won't trigger again until placeholder is {75 * 2}px off screen)
   const onIntersection = useCallback(
-    inView => {
+    (inView: boolean) => {
       if (inView && remainingVaults > 0 && bottomRef.current) {
         const batchSize =
           minBatchSize +
@@ -140,12 +123,12 @@ export const VirtualList = memo<VirtualListProps>(function VirtualList({ vaults,
 
   return (
     <>
-      <div className={classes.container} ref={containerRef as MutableRefObject<HTMLDivElement>}>
+      <div className={classes.container} ref={containerRef}>
         {renderVaultIds.map(vault => {
           return <Vault address={address} key={vault.id} vaultId={vault.id} />;
         })}
       </div>
-      <div ref={bottomRef as MutableRefObject<HTMLDivElement>} />
+      <div ref={bottomRef} />
       <div ref={placeholderRef} />
     </>
   );

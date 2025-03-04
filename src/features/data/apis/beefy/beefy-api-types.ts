@@ -1,7 +1,7 @@
-import type { VaultEntity } from '../../entities/vault';
-import type { ChainEntity, ChainId } from '../../entities/chain';
-import type { TokenEntity } from '../../entities/token';
-import type { KeysOfUnion } from '../../utils/types-utils';
+import type { VaultEntity } from '../../entities/vault.ts';
+import type { ChainEntity, ChainId } from '../../entities/chain.ts';
+import type { TokenEntity } from '../../entities/token.ts';
+import type { KeysOfUnion, MergeObjectUnion } from '../../utils/types-utils.ts';
 
 export type AllCowcentratedVaultRangesResponse = {
   [chainId: string]: {
@@ -58,7 +58,8 @@ export interface ApyCLM {
 }
 
 type ExtractAprComponents<T extends string> = T extends `${infer C}Apr` ? C : never;
-export type ApiApyData = ApyGovVault | ApyGovVaultLegacy | ApyStandard | ApyCLM;
+
+export type ApiApyData = MergeObjectUnion<ApyGovVault | ApyGovVaultLegacy | ApyStandard | ApyCLM>;
 export type ApiApyDataKeys = KeysOfUnion<ApiApyData>;
 export type ApiApyDataAprComponents = ExtractAprComponents<ApiApyDataKeys>;
 
@@ -153,7 +154,7 @@ export type BeefyOffChainRewardsCampaignType =
 
 type MakeCampaign<
   TProvider extends BeefyOffChainRewardsProviderId,
-  TExtra extends Record<string, unknown>
+  TExtra extends Record<string, unknown>,
 > = {
   providerId: TProvider;
   id: string;

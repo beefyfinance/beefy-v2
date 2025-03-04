@@ -1,30 +1,32 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { memo } from 'react';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 import {
   selectErrorBar,
   selectStepperProgress,
   selectSuccessBar,
-} from '../../../../features/data/selectors/stepper';
-import { useAppSelector } from '../../../../store';
-import { styles } from './styles';
+} from '../../../../features/data/selectors/stepper.ts';
+import { useAppSelector } from '../../../../store.ts';
+import { styles } from './styles.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const ProgressBar = memo(function ProgressBar() {
   const progress = useAppSelector(selectStepperProgress);
-  const classes = useStyles({ progress });
+  const classes = useStyles();
   const showErrorBar = useAppSelector(selectErrorBar);
   const showSuccessBar = useAppSelector(selectSuccessBar);
 
   return (
     <div className={classes.topBar}>
       <div
-        className={clsx({
-          [classes.errorBar]: showErrorBar,
-          [classes.successBar]: showSuccessBar,
-          [classes.progressBar]: !showErrorBar && !showSuccessBar,
-        })}
+        className={css(
+          styles.bar,
+          showErrorBar && styles.errorBar,
+          showSuccessBar && styles.successBar,
+          !showErrorBar && !showSuccessBar && styles.progressBar
+        )}
+        style={{ width: `${progress}%` }}
       />
     </div>
   );

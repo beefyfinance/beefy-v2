@@ -1,9 +1,9 @@
 import { BigNumber } from 'bignumber.js';
-import { UniswapV2FactoryAbi } from '../../../../../config/abi/UniswapV2FactoryAbi';
-import { UniswapV2PairAbi } from '../../../../../config/abi/UniswapV2PairAbi';
-import type { ChainEntity } from '../../../entities/chain';
-import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
-import { BIG_ZERO, bigNumberToBigInt, toWei } from '../../../../../helpers/big-number';
+import { UniswapV2FactoryAbi } from '../../../../../config/abi/UniswapV2FactoryAbi.ts';
+import { UniswapV2PairAbi } from '../../../../../config/abi/UniswapV2PairAbi.ts';
+import type { ChainEntity } from '../../../entities/chain.ts';
+import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
+import { BIG_ZERO, bigNumberToBigInt, toWei } from '../../../../../helpers/big-number.ts';
 import type {
   AddLiquidityRatio,
   AddLiquidityResult,
@@ -11,17 +11,17 @@ import type {
   RemoveLiquidityResult,
   SwapFeeParams,
   SwapResult,
-} from '../types';
-import type { ZapStep, ZapStepRequest, ZapStepResponse } from '../../transact/zap/types';
-import { getInsertIndex } from '../../transact/helpers/zap';
-import type { TokenEntity } from '../../../entities/token';
-import { isTokenNative } from '../../../entities/token';
-import type { TokenAmount } from '../../transact/transact-types';
-import { slipAllBy, slipBy } from '../../transact/helpers/amounts';
-import type { AmmEntityUniswapV2 } from '../../../entities/zap';
-import { onlyOneTokenAmount } from '../../transact/helpers/options';
+} from '../types.ts';
+import type { ZapStep, ZapStepRequest, ZapStepResponse } from '../../transact/zap/types.ts';
+import { getInsertIndex } from '../../transact/helpers/zap.ts';
+import type { TokenEntity } from '../../../entities/token.ts';
+import { isTokenNative } from '../../../entities/token.ts';
+import type { TokenAmount } from '../../transact/transact-types.ts';
+import { slipAllBy, slipBy } from '../../transact/helpers/amounts.ts';
+import type { AmmEntityUniswapV2 } from '../../../entities/zap.ts';
+import { onlyOneTokenAmount } from '../../transact/helpers/options.ts';
 import { encodeFunctionData, type Abi, type Address } from 'viem';
-import { fetchContract } from '../../rpc-contract/viem-contract';
+import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 
 export type PairDataResponse = {
   totalSupply: string;

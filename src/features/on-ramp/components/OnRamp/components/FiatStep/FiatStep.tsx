@@ -1,18 +1,18 @@
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { styles } from './styles';
-import { Step } from '../../../../../../components/Step';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { Step } from '../../../../../../components/Step/Step.tsx';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { selectAllFiat, selectLastStep } from '../../../../../data/selectors/on-ramp';
-import { SearchableList } from '../../../../../../components/SearchableList';
-import type { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
-import { CurrencyFlag } from '../CurrencyFlag';
-import { FormStep } from '../../../../../data/reducers/on-ramp-types';
-import { setOnRampFiat } from '../../../../../data/actions/on-ramp';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { selectAllFiat, selectLastStep } from '../../../../../data/selectors/on-ramp.ts';
+import { SearchableList } from '../../../../../../components/SearchableList/SearchableList.tsx';
+import type { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner.tsx';
+import { CurrencyFlag } from '../CurrencyFlag/CurrencyFlag.tsx';
+import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
+import { setOnRampFiat } from '../../../../../data/actions/on-ramp.ts';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const FiatStep = memo(function FiatStep() {
   const { t } = useTranslation();
@@ -32,7 +32,7 @@ export const FiatStep = memo(function FiatStep() {
   );
 });
 
-const ListItem = memo<ItemInnerProps>(function ListItem({ value }) {
+const ListItem = memo(function ListItem({ value }: ItemInnerProps) {
   const classes = useStyles();
   return (
     <>

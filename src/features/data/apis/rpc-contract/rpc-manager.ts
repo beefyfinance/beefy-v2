@@ -1,10 +1,10 @@
 import { createPublicClient, type PublicClient, type Client, type BlockTag } from 'viem';
-import type { ChainEntity, ChainId } from '../../entities/chain';
-import { makeCustomFallbackTransport } from '../viem/transports';
-import { buildViemChain } from '../viem/chains';
+import type { ChainEntity, ChainId } from '../../entities/chain.ts';
+import { makeCustomFallbackTransport } from '../viem/transports/transports.ts';
+import { buildViemChain } from '../viem/chains.ts';
 import { getGasPrice, getFeeHistory } from 'viem/actions';
 import { BigNumber } from 'bignumber.js';
-import type { ChainConfig } from '../config-types';
+import type { ChainConfig } from '../config-types.ts';
 
 type RpcClients = {
   singleCallClient: PublicClient;

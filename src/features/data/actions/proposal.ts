@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import { getBeefyApi } from '../apis/instances';
-import type { ProposalEntity } from '../entities/proposal';
+import type { BeefyState } from '../../../redux-types.ts';
+import { getBeefyApi } from '../apis/instances.ts';
+import type { ProposalEntity } from '../entities/proposal.ts';
 import { uniq } from 'lodash-es';
-import { selectAllProposalIdsBySpace } from '../selectors/proposals';
+import { selectAllProposalIdsBySpace } from '../selectors/proposals.ts';
 import type {
   BeefySnapshotActiveResponse,
   BeefySnapshotProposal,
-} from '../apis/beefy/beefy-api-types';
+} from '../apis/beefy/beefy-api-types.ts';
 
 const READ_STORAGE_KEY = 'readProposals';
 
@@ -53,7 +53,9 @@ export type FetchActiveProposalsFulfilledPayload = {
 export const fetchActiveProposals = createAsyncThunk<
   FetchActiveProposalsFulfilledPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('proposals/fetchActive', async () => {
   const api = await getBeefyApi();
   const proposals = await api.getActiveProposals();
@@ -73,7 +75,9 @@ export type MarkAllProposalsReadArgs = {
 export const markAllProposalsRead = createAsyncThunk<
   MarkAllProposalsReadFulfilledPayload,
   MarkAllProposalsReadArgs,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('proposals/markAllRead', async ({ space }, { getState }) => {
   const state = getState();
   const proposalIds: ProposalEntity['id'][] = selectAllProposalIdsBySpace(state, space);

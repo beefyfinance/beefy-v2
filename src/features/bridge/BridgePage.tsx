@@ -1,31 +1,34 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { Hidden } from '@material-ui/core';
-import { styles } from './styles';
-import Introduction from './components/Introduction';
-import Bridge from './components/Bridge';
-import PoweredBy from './components/PoweredBy';
-import { Container } from '../../components/Container/Container';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { Introduction } from './components/Introduction/Introduction.tsx';
+import { Bridge } from './components/Bridge/Bridge.tsx';
+import { PoweredBy } from './components/PoweredBy/PoweredBy.tsx';
+import { Container } from '../../components/Container/Container.tsx';
+import { Hidden } from '../../components/MediaQueries/Hidden.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-export const BridgePage = memo(function BridgePage() {
+const BridgePage = memo(function BridgePage() {
   const classes = useStyles();
 
   return (
-    <Container maxWidth="lg" className={classes.pageContainer}>
+    <Container maxWidth="lg" css={styles.pageContainer}>
       <div className={classes.inner}>
         <div className={classes.intro}>
           <Introduction />
-          <Hidden smDown>
+          <Hidden to="sm">
             <PoweredBy />
           </Hidden>
         </div>
         <Bridge />
-        <Hidden mdUp>
+        <Hidden from="md">
           <PoweredBy />
         </Hidden>
       </div>
     </Container>
   );
 });
+
+// eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
+export default BridgePage;

@@ -1,6 +1,6 @@
-import { isTokenEqual, type TokenEntity } from '../features/data/entities/token';
+import { isTokenEqual, type TokenEntity } from '../features/data/entities/token.ts';
 import { uniqBy } from 'lodash-es';
-import type { VaultEntity } from '../features/data/entities/vault';
+import type { VaultEntity } from '../features/data/entities/vault.ts';
 
 export function uniqueTokens<T extends TokenEntity>(tokens: T[]): T[] {
   return uniqBy(tokens, token => `${token.chainId}-${token.address}`);
@@ -24,11 +24,15 @@ export function tokenInList<T extends TokenEntity>(token: T, list: T[]): boolean
   return list.some(t => isTokenEqual(t, token));
 }
 
-const tokenTagReplacements = {
+const tokenTagReplacements: Record<string, string> = {
   rCLM: 'CLM Pool',
   mooCLM: 'CLM Vault',
 };
-export function symbolToLabelAndTag(symbol: string): { label: string; tag: string | undefined } {
+
+export function symbolToLabelAndTag(symbol: string): {
+  label: string;
+  tag: string | undefined;
+} {
   const match = symbol.match(/ (?<tag>LP|sLP|vLP|CLM|rCLM|mooCLM)\b/);
   const tag = match?.groups?.tag;
   if (tag) {

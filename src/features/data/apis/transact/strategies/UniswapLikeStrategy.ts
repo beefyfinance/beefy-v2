@@ -1,4 +1,4 @@
-import type { ZapTransactHelpers } from './IStrategy';
+import type { ZapTransactHelpers } from './IStrategy.ts';
 import {
   type InputTokenAmount,
   isZapQuoteStepBuild,
@@ -20,22 +20,22 @@ import {
   type ZapQuoteStepSwap,
   type ZapQuoteStepSwapAggregator,
   type ZapQuoteStepSwapPool,
-} from '../transact-types';
+} from '../transact-types.ts';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
   selectIsTokenLoaded,
   selectTokenById,
-} from '../../../selectors/tokens';
-import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token';
-import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../entities/token';
+} from '../../../selectors/tokens.ts';
+import type { TokenEntity, TokenErc20, TokenNative } from '../../../entities/token.ts';
+import { isTokenEqual, isTokenErc20, isTokenNative } from '../../../entities/token.ts';
 import {
   allTokensAreDistinct,
   includeWrappedAndNative,
   nativeAndWrappedAreSame,
   pickTokens,
   tokensToLp,
-} from '../helpers/tokens';
+} from '../helpers/tokens.ts';
 import {
   createOptionId,
   createQuoteId,
@@ -43,9 +43,9 @@ import {
   onlyAssetCount,
   onlyOneInput,
   onlyOneToken,
-} from '../helpers/options';
-import { TransactMode } from '../../../reducers/wallet/transact-types';
-import { calculatePriceImpact, highestFeeOrZero, ZERO_FEE } from '../helpers/quotes';
+} from '../helpers/options.ts';
+import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
+import { calculatePriceImpact, highestFeeOrZero, ZERO_FEE } from '../helpers/quotes.ts';
 import { first, uniqBy } from 'lodash-es';
 import {
   BIG_ZERO,
@@ -53,37 +53,37 @@ import {
   fromWei,
   toWei,
   toWeiString,
-} from '../../../../../helpers/big-number';
-import { getUniswapLikePool } from '../../amm';
-import { selectChainById } from '../../../selectors/chains';
-import type { QuoteRequest } from '../swap/ISwapProvider';
+} from '../../../../../helpers/big-number.ts';
+import { getUniswapLikePool } from '../../amm/amm.ts';
+import { selectChainById } from '../../../selectors/chains.ts';
+import type { QuoteRequest } from '../swap/ISwapProvider.ts';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { Step } from '../../../reducers/wallet/stepper';
-import type { BeefyState, BeefyThunk } from '../../../../../redux-types';
-import { selectTransactSlippage } from '../../../selectors/transact';
+import type { Step } from '../../../reducers/wallet/stepper.ts';
+import type { BeefyState, BeefyThunk } from '../../../../../redux-types.ts';
+import { selectTransactSlippage } from '../../../selectors/transact.ts';
 import type {
   OrderInput,
   OrderOutput,
   UserlessZapRequest,
   ZapStep,
   ZapStepResponse,
-} from '../zap/types';
-import { getTokenAddress, NO_RELAY } from '../helpers/zap';
-import type { ChainEntity } from '../../../entities/chain';
-import { fetchZapAggregatorSwap } from '../zap/swap';
-import { walletActions } from '../../../actions/wallet-actions';
-import { Balances } from '../helpers/Balances';
-import { isStandardVault, type VaultStandard } from '../../../entities/vault';
-import { getVaultWithdrawnFromState } from '../helpers/vault';
+} from '../zap/types.ts';
+import { getTokenAddress, NO_RELAY } from '../helpers/zap.ts';
+import type { ChainEntity } from '../../../entities/chain.ts';
+import { fetchZapAggregatorSwap } from '../zap/swap.ts';
+import { walletActions } from '../../../actions/wallet-actions.ts';
+import { Balances } from '../helpers/Balances.ts';
+import { isStandardVault, type VaultStandard } from '../../../entities/vault.ts';
+import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
 import { BigNumber } from 'bignumber.js';
-import { slipBy, tokenAmountToWei } from '../helpers/amounts';
-import type { IUniswapLikePool } from '../../amm/types';
-import { QuoteChangedError } from './error';
-import { selectAmmById } from '../../../selectors/zap';
-import { type AmmEntityUniswapLike, isUniswapLikeAmm } from '../../../entities/zap';
-import { isStandardVaultType, type IStandardVaultType } from '../vaults/IVaultType';
-import type { UniswapLikeStrategyConfig } from './strategy-configs';
-import { tokenInList } from '../../../../../helpers/tokens';
+import { slipBy, tokenAmountToWei } from '../helpers/amounts.ts';
+import type { IUniswapLikePool } from '../../amm/types.ts';
+import { QuoteChangedError } from './error.ts';
+import { selectAmmById } from '../../../selectors/zap.ts';
+import { type AmmEntityUniswapLike, isUniswapLikeAmm } from '../../../entities/zap.ts';
+import { isStandardVaultType, type IStandardVaultType } from '../vaults/IVaultType.ts';
+import type { UniswapLikeStrategyConfig } from './strategy-configs.ts';
+import { tokenInList } from '../../../../../helpers/tokens.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -102,7 +102,7 @@ type PartialWithdrawQuote<TAmm extends AmmEntityUniswapLike> = Pick<
  */
 export abstract class UniswapLikeStrategy<
   TAmm extends AmmEntityUniswapLike,
-  TOptions extends UniswapLikeStrategyConfig<TAmm>
+  TOptions extends UniswapLikeStrategyConfig<TAmm>,
 > {
   protected readonly wnative: TokenErc20;
   protected readonly tokens: TokenEntity[];
@@ -116,7 +116,10 @@ export abstract class UniswapLikeStrategy<
 
   protected abstract isAmmType(amm: AmmEntityUniswapLike): amm is TAmm;
 
-  constructor(protected options: TOptions, protected helpers: ZapTransactHelpers) {
+  constructor(
+    protected options: TOptions,
+    protected helpers: ZapTransactHelpers
+  ) {
     // Make sure zap was configured correctly for this vault
     const { vault, vaultType, getState } = this.helpers;
 
@@ -708,7 +711,7 @@ export abstract class UniswapLikeStrategy<
       const swapQuotes = quote.steps.filter(isZapQuoteStepSwap);
       const buildQuote = quote.steps.find(isZapQuoteStepBuild);
 
-      if (!buildQuote || swapQuotes.length == 0 || swapQuotes.length > 2) {
+      if (!buildQuote || swapQuotes.length === 0 || swapQuotes.length > 2) {
         throw new Error('Invalid quote');
       }
 

@@ -1,19 +1,20 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useTranslation } from 'react-i18next';
-import { selectIsPlatformsAvailable } from '../../../data/selectors/data-loader';
-import { styles } from './styles';
-import { useAppSelector } from '../../../../store';
-import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink';
-import { Link, Twitter } from '@material-ui/icons';
-import { ReactComponent as DocsIcon } from '../../../../images/icons/navigation/docs.svg';
+import { selectIsPlatformsAvailable } from '../../../data/selectors/data-loader.ts';
+import { styles } from './styles.ts';
+import { useAppSelector } from '../../../../store.ts';
+import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink.tsx';
+import Link from '../../../../images/icons/mui/Link.svg?react';
+import Twitter from '../../../../images/icons/mui/Twitter.svg?react';
+import DocsIcon from '../../../../images/icons/navigation/docs.svg?react';
 import { memo } from 'react';
-import type { PlatformEntity } from '../../../data/entities/platform';
-import { selectPlatformById } from '../../../data/selectors/platforms';
-import { TagTooltip, TagWithTooltip } from '../BridgeTag';
-import { getPlatformSrc, platformAssetExists } from '../../../../helpers/platformsSrc';
-import clsx from 'clsx';
+import type { PlatformEntity } from '../../../data/entities/platform.ts';
+import { selectPlatformById } from '../../../data/selectors/platforms.ts';
+import { TagTooltip, TagWithTooltip } from '../BridgeTag/BridgeTag.tsx';
+import { getPlatformSrc, platformAssetExists } from '../../../../helpers/platformsSrc.ts';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
   const classes = useStyles();
@@ -32,7 +33,7 @@ function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
               Icon={Link}
               text={t('Token-Site')}
               href={platform.website}
-              textClassName={classes.assetLinkText}
+              textCss={styles.assetLinkText}
             />
           )}
           {platform.documentation && (
@@ -40,7 +41,7 @@ function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
               Icon={DocsIcon}
               href={platform.documentation}
               text={t('Token-Docs')}
-              textClassName={classes.assetLinkText}
+              textCss={styles.assetLinkText}
             />
           )}
           {platform.twitter && (
@@ -48,14 +49,14 @@ function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
               Icon={Twitter}
               href={`https://x.com/${platform.twitter}`}
               text={t('Details-Platform-Link-Twitter')}
-              textClassName={classes.assetLinkText}
+              textCss={styles.assetLinkText}
             />
           )}
         </div>
         <div className={classes.assetBridgePrice}>
           {platform.type ? (
             <TagWithTooltip
-              content={
+              tooltip={
                 <TagTooltip content={t(`Details-Platform-Type-Description-${platform.type}`)} />
               }
             >
@@ -64,9 +65,7 @@ function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
           ) : null}
         </div>
       </div>
-      <div
-        className={clsx(classes.description, !platform.description && classes.descriptionPending)}
-      >
+      <div className={css(styles.description, !platform.description && styles.descriptionPending)}>
         {platform.description ? platform.description : t('Details-Platform-Description-pending')}
       </div>
     </div>

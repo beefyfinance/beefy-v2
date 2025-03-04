@@ -1,8 +1,8 @@
 import { memo } from 'react';
 
 import { useTranslation } from 'react-i18next';
-import { Step } from '../../../../../../components/Step';
-import { ErrorIndicator } from '../ErrorIndicator';
+import { Step } from '../../../../../../components/Step/Step.tsx';
+import { ErrorIndicator } from '../ErrorIndicator/ErrorIndicator.tsx';
 
 export const UnsupportedCountryStep = memo(function UnsupportedCountryStep() {
   const { t } = useTranslation();

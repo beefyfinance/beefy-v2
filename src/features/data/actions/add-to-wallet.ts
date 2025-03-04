@@ -1,9 +1,9 @@
-import type { ChainEntity } from '../entities/chain';
+import type { ChainEntity } from '../entities/chain.ts';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import type { TokenEntity } from '../entities/token';
-import { selectTokenByAddress } from '../selectors/tokens';
-import { getSingleAssetSrc } from '../../../helpers/singleAssetSrc';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { TokenEntity } from '../entities/token.ts';
+import { selectTokenByAddress } from '../selectors/tokens.ts';
+import { getSingleAssetSrc } from '../../../helpers/singleAssetSrc.ts';
 
 export type AddToWalletParams = {
   chainId: ChainEntity['id'];
@@ -36,7 +36,9 @@ function getTokenIconUrl(
 export const addTokenToWalletAction = createAsyncThunk<
   AddTokenToWalletPayload,
   AddToWalletParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('addToWallet/open', async ({ chainId, tokenAddress, customIconUrl }, { getState }) => {
   const state = getState();
   const token = selectTokenByAddress(state, chainId, tokenAddress);

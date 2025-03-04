@@ -1,6 +1,6 @@
-import type { ChainEntity } from '../entities/chain';
-import { clamp } from '../../../helpers/number';
-import { createFactory } from './factory-utils';
+import type { ChainEntity } from '../entities/chain.ts';
+import { clamp } from '../../../helpers/number.ts';
+import { createFactory } from './factory-utils.ts';
 
 const DEFAULT_CHUNK_SIZE = 468;
 const DEFAULT_CHUNK_SIZE_BY_CHAIN: Record<string, number> = {
@@ -213,7 +213,10 @@ export function featureFlag_simulateAllBridgeRateLimit(): boolean {
   return params.has('__simulate_all_bridge_rate_limit');
 }
 
-export function featureFlag_oneInchSupport(): { chainId: string; tokenAddress: string }[] {
+export function featureFlag_oneInchSupport(): {
+  chainId: string;
+  tokenAddress: string;
+}[] {
   const params = getSearchParams();
   if (params.has('__oneinch_support')) {
     return (params.get('__oneinch_support') || '').split(',').map(s => {
@@ -224,7 +227,10 @@ export function featureFlag_oneInchSupport(): { chainId: string; tokenAddress: s
   return [];
 }
 
-export function featureFlag_kyberSwapSupport(): { chainId: string; tokenAddress: string }[] {
+export function featureFlag_kyberSwapSupport(): {
+  chainId: string;
+  tokenAddress: string;
+}[] {
   const params = getSearchParams();
   if (params.has('__kyber_support')) {
     return (params.get('__kyber_support') || '').split(',').map(s => {
@@ -235,7 +241,10 @@ export function featureFlag_kyberSwapSupport(): { chainId: string; tokenAddress:
   return [];
 }
 
-export function featureFlag_OdosSwapSupport(): { chainId: string; tokenAddress: string }[] {
+export function featureFlag_OdosSwapSupport(): {
+  chainId: string;
+  tokenAddress: string;
+}[] {
   const params = getSearchParams();
   if (params.has('__odos_support')) {
     return (params.get('__odos_support') || '').split(',').map(s => {

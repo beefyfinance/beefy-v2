@@ -1,7 +1,7 @@
 import { BigNumber } from 'bignumber.js';
-import { isBigNumber } from './big-number';
+import { isBigNumber } from './big-number.ts';
 import { cloneDeepWith, defaults as defaultsShallow, defaultsDeep } from 'lodash-es';
-import type { KeysOfUnion } from '../features/data/utils/types-utils';
+import type { KeysOfUnion } from '../features/data/utils/types-utils.ts';
 
 export function cloneDeep<T>(input: T): T {
   return cloneDeepWith(input, value => {
@@ -10,7 +10,7 @@ export function cloneDeep<T>(input: T): T {
     }
     // Return undefined to let lodash handle cloning
     return undefined;
-  });
+  }) as T;
 }
 
 type Entries<T> = [keyof T, T[keyof T]][];
@@ -32,25 +32,29 @@ export function strictEntries<T extends object>(input: T): StrictEntries<T> {
   return Object.entries(input) as StrictEntries<T>;
 }
 
-type Keys<T> = (keyof T)[];
-
 /** Key type preserving Object.keys - assumes the object input only has the keys in type T */
-export function keys<T extends Record<string, unknown>>(input: T): Keys<T> {
-  return Object.keys(input) as Keys<T>;
+export function keys<TKey extends string>(input: { [K in TKey]?: unknown }): TKey[] {
+  return Object.keys(input) as TKey[];
 }
 
 export function fromKeys<K extends string, V>(arr: K[], value: V): Record<K, V> {
-  return arr.reduce((acc, key) => {
-    acc[key] = value;
-    return acc;
-  }, {} as Record<K, V>);
+  return arr.reduce(
+    (acc, key) => {
+      acc[key] = value;
+      return acc;
+    },
+    {} as Record<K, V>
+  );
 }
 
 export function fromKeysBy<K extends string, V>(arr: K[], valueFn: (key: K) => V): Record<K, V> {
-  return arr.reduce((acc, key) => {
-    acc[key] = valueFn(key);
-    return acc;
-  }, {} as Record<K, V>);
+  return arr.reduce(
+    (acc, key) => {
+      acc[key] = valueFn(key);
+      return acc;
+    },
+    {} as Record<K, V>
+  );
 }
 
 type Mapped<T extends string, V, K extends string, KF extends (key: T) => K> = {
@@ -62,11 +66,14 @@ export function fromKeysMapper<T extends string, V, K extends string, KF extends
   valueFn: (key: T) => V,
   keyFn: KF
 ): Mapped<T, V, K, KF> {
-  return arr.reduce((acc, key) => {
-    // @ts-ignore
-    acc[keyFn(key)] = valueFn(key);
-    return acc;
-  }, {} as Mapped<T, V, K, KF>);
+  return arr.reduce(
+    (acc, key) => {
+      // @ts-ignore
+      acc[keyFn(key)] = valueFn(key);
+      return acc;
+    },
+    {} as Mapped<T, V, K, KF>
+  );
 }
 
 /** Push value to array at map[key], or set map key to [value] if array does not exist yet */
@@ -111,14 +118,20 @@ type DistributedOmit<TEntry, TKeys extends keyof TEntry> = {
 };
 
 export function distributedOmit<
-  TEntry extends { [key: string]: unknown },
-  TKeys extends keyof TEntry
+  TEntry extends {
+    [key: string]: unknown;
+  },
+  TKeys extends keyof TEntry,
 >(entry: TEntry, ...keys: TKeys[]): DistributedOmit<TEntry, TKeys> {
   return Object.fromEntries(
     Object.entries(entry).filter(([key]) => !keys.includes(key as TKeys))
   ) as DistributedOmit<TEntry, TKeys>;
 }
 
-export function firstKey<T extends { [key: string]: unknown }>(obj: T): KeysOfUnion<T> | undefined {
+export function firstKey<
+  T extends {
+    [key: string]: unknown;
+  },
+>(obj: T): KeysOfUnion<T> | undefined {
   return Object.keys(obj)[0] as KeysOfUnion<T> | undefined;
 }

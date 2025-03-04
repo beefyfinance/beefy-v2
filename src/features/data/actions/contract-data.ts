@@ -1,14 +1,24 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
-import { getContractDataApi } from '../apis/instances';
-import type { ChainEntity } from '../entities/chain';
-import type { VaultCowcentrated, VaultGov, VaultGovMulti, VaultStandard } from '../entities/vault';
-import { isGovVault, isGovVaultMulti, isGovVaultSingle, isStandardVault } from '../entities/vault';
-import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
-import { selectChainById } from '../selectors/chains';
-import { selectVaultById, selectVaultIdsByChainIdIncludingHidden } from '../selectors/vaults';
-import { featureFlag_simulateRpcError } from '../utils/feature-flags';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types.ts';
+import { getContractDataApi } from '../apis/instances.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type {
+  VaultCowcentrated,
+  VaultGov,
+  VaultGovMulti,
+  VaultStandard,
+} from '../entities/vault.ts';
+import {
+  isGovVault,
+  isGovVaultMulti,
+  isGovVaultSingle,
+  isStandardVault,
+} from '../entities/vault.ts';
+import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts.ts';
+import { selectChainById } from '../selectors/chains.ts';
+import { selectVaultById, selectVaultIdsByChainIdIncludingHidden } from '../selectors/vaults.ts';
+import { featureFlag_simulateRpcError } from '../utils/feature-flags.ts';
 import { partition } from 'lodash-es';
 
 interface ActionParams {
@@ -25,7 +35,9 @@ export interface FetchAllContractDataFulfilledPayload {
 export const fetchAllContractDataByChainAction = createAsyncThunk<
   FetchAllContractDataFulfilledPayload,
   ActionParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('contract-data/fetchAllContractDataByChainAction', async ({ chainId }, { getState }) => {
   if (featureFlag_simulateRpcError(chainId)) {
     throw new Error('Simulated RPC error');

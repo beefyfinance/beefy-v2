@@ -1,59 +1,56 @@
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
-import { selectFilterPlatforms } from '../../../../../data/selectors/platforms';
-import { selectFilterPlatformIds } from '../../../../../data/selectors/filtered-vaults';
-import type { PlatformEntity } from '../../../../../data/entities/platform';
-import { LabeledSearchMultiSelect } from '../../../../../../components/LabeledSearchMultiSelect';
-import type { LabeledSelectCommonProps } from '../../../../../../components/LabeledSelect';
-import { useMediaQuery } from '@material-ui/core';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
+import { selectFilterPlatforms } from '../../../../../data/selectors/platforms.ts';
+import { selectFilterPlatformIds } from '../../../../../data/selectors/filtered-vaults.ts';
+import type { PlatformEntity } from '../../../../../data/entities/platform.ts';
+import { SelectMultiple } from '../../../../../../components/Form/Select/Multi/SelectMultiple.tsx';
+import type { SelectMultiProps } from '../../../../../../components/Form/Select/types.ts';
 
 interface PlatformDropdownFilterProps {
-  placement?: LabeledSelectCommonProps['placement'];
-  dropDownShift?: LabeledSelectCommonProps['dropdownShift'];
-  dropDownFlip?: LabeledSelectCommonProps['dropdownFlip'];
-  className?: string;
+  placement?: SelectMultiProps['placement'];
 }
 
-export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(
-  function PlatformDropdownFilter({ placement, dropDownFlip, dropDownShift, className }) {
-    const { t } = useTranslation();
-    const dispatch = useAppDispatch();
-    const platforms = useAppSelector(selectFilterPlatforms);
-    const options = useMemo(
-      () => Object.fromEntries(platforms.map(platform => [platform.id, platform.name])),
-      [platforms]
-    ) satisfies Record<string, string>;
-    const isMouse = useMediaQuery('(pointer: fine)');
-    const platformsIds = useAppSelector(selectFilterPlatformIds);
+export const PlatformDropdownFilter = memo(function PlatformDropdownFilter({
+  placement,
+}: PlatformDropdownFilterProps) {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const platforms = useAppSelector(selectFilterPlatforms);
+  const options = useMemo(
+    () =>
+      platforms
+        .map(platform => ({
+          label: platform.name,
+          value: platform.id,
+        }))
+        .sort((a, b) => a.label.localeCompare(b.label)),
+    [platforms]
+  );
 
-    const handleChange = useCallback(
-      (selected: PlatformEntity['id'][]) => {
-        dispatch(
-          filteredVaultsActions.setPlatformIds(
-            selected.length === platformsIds.length ? [] : selected
-          )
-        );
-      },
-      [dispatch, platformsIds]
-    );
+  const platformsIds = useAppSelector(selectFilterPlatformIds);
 
-    return (
-      <LabeledSearchMultiSelect
-        selectClass={className}
-        label={t('Filter-Platform')}
-        onChange={handleChange}
-        value={platformsIds}
-        options={options}
-        sortOptions="label"
-        fullWidth={true}
-        placement={placement}
-        dropdownFlip={dropDownFlip}
-        dropdownShift={dropDownShift}
-        dropdownAutoHide={false}
-        inputAutoFocus={isMouse}
-      />
-    );
-  }
-);
+  const handleChange = useCallback(
+    (selected: PlatformEntity['id'][]) => {
+      dispatch(
+        filteredVaultsActions.setPlatformIds(
+          selected.length === platformsIds.length ? [] : selected
+        )
+      );
+    },
+    [dispatch, platformsIds]
+  );
+
+  return (
+    <SelectMultiple
+      searchEnabled={true}
+      placement={placement}
+      labelPrefix={t('Filter-Platform')}
+      onChange={handleChange}
+      selected={platformsIds}
+      options={options}
+      layer={1}
+    />
+  );
+});

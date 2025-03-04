@@ -1,9 +1,13 @@
 import { type ErrorInfo, type FC, PureComponent } from 'react';
 import { miniSerializeError } from '@reduxjs/toolkit';
-import { DefaultFallback } from './DefaultFallback';
-import { DevDefaultFallback } from './DevDefaultFallback';
-import type { ErrorBoundaryHasErrorState, ErrorBoundaryProps, ErrorBoundaryState } from './types';
-import { isError } from '../../helpers/error';
+import { DefaultFallback } from './DefaultFallback.tsx';
+import { DevDefaultFallback } from './DevDefaultFallback.tsx';
+import type {
+  ErrorBoundaryHasErrorState,
+  ErrorBoundaryProps,
+  ErrorBoundaryState,
+} from './types.ts';
+import { isError } from '../../helpers/error.ts';
 
 const DefaultFallbackComponent: FC<ErrorBoundaryHasErrorState> = import.meta.env.DEV
   ? DevDefaultFallback
@@ -12,8 +16,8 @@ const DefaultFallbackComponent: FC<ErrorBoundaryHasErrorState> = import.meta.env
 function isReactDevTools(): boolean {
   try {
     type ErrorFnWithDevTools = typeof console.error & {
-      __REACT_DEVTOOLS_STRICT_MODE_ORIGINAL_METHOD__?: unknown | undefined;
-      __REACT_DEVTOOLS_ORIGINAL_METHOD__?: unknown | undefined;
+      __REACT_DEVTOOLS_STRICT_MODE_ORIGINAL_METHOD__?: unknown;
+      __REACT_DEVTOOLS_ORIGINAL_METHOD__?: unknown;
     };
     const errorFn = console.error as ErrorFnWithDevTools;
 

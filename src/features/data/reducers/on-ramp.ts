@@ -1,19 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchOnRampQuote,
   fetchOnRampSupportedProviders,
   setOnRampFiat,
   setOnRampToken,
   validateOnRampForm,
-} from '../actions/on-ramp';
+} from '../actions/on-ramp.ts';
 import type { Draft } from 'immer';
-import type { ApiQuote, ApiQuoteRequest } from '../apis/on-ramp/on-ramp-types';
+import type { ApiQuote, ApiQuoteRequest } from '../apis/on-ramp/on-ramp-types.ts';
 import { first, orderBy } from 'lodash-es';
-import type { OnRampTypes, Quote } from './on-ramp-types';
-import { CountryError, FormStep, InputMode } from './on-ramp-types';
-import type { ChainEntity } from '../entities/chain';
-import { isDefined } from '../utils/array-utils';
+import type { OnRampTypes, Quote } from './on-ramp-types.ts';
+import { CountryError, FormStep, InputMode } from './on-ramp-types.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import { isDefined } from '../utils/array-utils.ts';
 
 const initialState: OnRampTypes = {
   step: FormStep.SelectToken,
@@ -93,10 +93,20 @@ export const onRamp = createSlice({
     reset() {
       return initialState;
     },
-    setStep(sliceState, action: PayloadAction<{ step: FormStep }>) {
+    setStep(
+      sliceState,
+      action: PayloadAction<{
+        step: FormStep;
+      }>
+    ) {
       setStep(sliceState, action.payload.step);
     },
-    setInputAmount(sliceState, action: PayloadAction<{ amount: number }>) {
+    setInputAmount(
+      sliceState,
+      action: PayloadAction<{
+        amount: number;
+      }>
+    ) {
       if (sliceState.input.value !== action.payload.amount) {
         clearQuote(sliceState);
         sliceState.input.value = action.payload.amount;
@@ -107,7 +117,12 @@ export const onRamp = createSlice({
       sliceState.input.mode =
         sliceState.input.mode === InputMode.Fiat ? InputMode.Token : InputMode.Fiat;
     },
-    selectToken(sliceState, action: PayloadAction<{ token: string }>) {
+    selectToken(
+      sliceState,
+      action: PayloadAction<{
+        token: string;
+      }>
+    ) {
       if (sliceState.token.value !== action.payload.token) {
         clearQuote(sliceState);
         sliceState.token.value = action.payload.token;
@@ -115,7 +130,12 @@ export const onRamp = createSlice({
 
       setStep(sliceState, FormStep.SelectNetwork);
     },
-    selectNetwork(sliceState, action: PayloadAction<{ network: ChainEntity['id'] }>) {
+    selectNetwork(
+      sliceState,
+      action: PayloadAction<{
+        network: ChainEntity['id'];
+      }>
+    ) {
       if (sliceState.network.value !== action.payload.network) {
         clearQuote(sliceState);
         sliceState.network.value = action.payload.network;
@@ -123,7 +143,12 @@ export const onRamp = createSlice({
 
       setStep(sliceState, FormStep.InputAmount);
     },
-    selectProvider(sliceState, action: PayloadAction<{ provider: string }>) {
+    selectProvider(
+      sliceState,
+      action: PayloadAction<{
+        provider: string;
+      }>
+    ) {
       if (sliceState.quote.provider !== action.payload.provider) {
         // Update state
         sliceState.quote.provider = action.payload.provider;
@@ -319,10 +344,13 @@ export const onRamp = createSlice({
             sliceState.quote.status = 'fulfilled';
             sliceState.quote.error = undefined;
             sliceState.quote.response = action.payload;
-            sliceState.quote.byProvider = quotes.reduce((all, next) => {
-              all[next.provider] = next;
-              return all;
-            }, {});
+            sliceState.quote.byProvider = quotes.reduce(
+              (all, next) => {
+                all[next.provider] = next;
+                return all;
+              },
+              {} as Record<string, Quote>
+            );
             sliceState.quote.providers = Object.keys(sliceState.quote.byProvider);
             sliceState.quote.cheapestProvider = cheapestQuote.provider;
             sliceState.quote.provider = sliceState.quote.cheapestProvider;

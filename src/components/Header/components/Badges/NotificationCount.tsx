@@ -1,20 +1,5 @@
 import { memo } from 'react';
-import type { Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  badge: {
-    ...theme.typography['body-sm'],
-    backgroundColor: theme.palette.background.indicators.warning,
-    color: theme.palette.text.light,
-    pointerEvents: 'none',
-    marginLeft: '6px',
-    borderRadius: '100%',
-    width: '20px',
-    height: '20px',
-    textAlign: 'center' as const,
-  },
-}));
+import { styled } from '@repo/styles/jsx';
 
 type NotificationCountProps = {
   count: number;
@@ -23,6 +8,21 @@ type NotificationCountProps = {
 export const NotificationCount = memo<NotificationCountProps>(function NotificationCount({
   count,
 }) {
-  const classes = useStyles();
-  return <div className={classes.badge}>{count}</div>;
+  return <Badge>{count}</Badge>;
+});
+
+const Badge = styled('div', {
+  base: {
+    textStyle: 'body-sm',
+    backgroundColor: 'indicators.warning',
+    color: 'text.light',
+    pointerEvents: 'none',
+    marginLeft: '6px',
+    borderRadius: '100%',
+    width: '20px',
+    height: '20px',
+    lineHeight: '20px',
+    textAlign: 'center',
+    fontSize: '12px',
+  },
 });

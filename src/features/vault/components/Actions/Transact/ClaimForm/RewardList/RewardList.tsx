@@ -1,27 +1,27 @@
 import { Fragment, memo, useMemo } from 'react';
 import type { BigNumber } from 'bignumber.js';
-import type { TokenEntity } from '../../../../../../data/entities/token';
+import type { TokenEntity } from '../../../../../../data/entities/token.ts';
 import {
   formatPercent,
   formatTokenDisplayCondensed,
   formatUsd,
-} from '../../../../../../../helpers/format';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
-import { TokenImageFromEntity } from '../../../../../../../components/TokenImage/TokenImage';
+} from '../../../../../../../helpers/format.ts';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
+import { TokenImageFromEntity } from '../../../../../../../components/TokenImage/TokenImage.tsx';
 import { orderBy } from 'lodash-es';
-import { getNetworkSrc } from '../../../../../../../helpers/networkSrc';
-import { Tooltip } from '../../../../../../../components/Tooltip';
-import type { ChainEntity } from '../../../../../../data/entities/chain';
+import { getNetworkSrc } from '../../../../../../../helpers/networkSrc.ts';
+import type { ChainEntity } from '../../../../../../data/entities/chain.ts';
+import { DivWithTooltip } from '../../../../../../../components/Tooltip/DivWithTooltip.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type Token = Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'chainId'>;
 
 type RewardListProps = {
   chainId: ChainEntity['id'];
-  className?: string;
+  css?: CssStyles;
   deposited: boolean;
   rewards: {
     active: boolean;
@@ -32,12 +32,12 @@ type RewardListProps = {
   }[];
 };
 
-export const RewardList = memo<RewardListProps>(function RewardList({
+export const RewardList = memo(function RewardList({
   rewards,
   deposited,
-  className,
+  css: cssProp,
   chainId,
-}) {
+}: RewardListProps) {
   const classes = useStyles();
   const sortedRewards = useMemo(
     () => (deposited ? rewards : orderBy(rewards, r => r.apr, 'desc')),
@@ -45,7 +45,7 @@ export const RewardList = memo<RewardListProps>(function RewardList({
   );
 
   return (
-    <div className={clsx(classes.rewards, className)}>
+    <div className={css(styles.rewards, cssProp)}>
       {sortedRewards.map(r => (
         <Fragment key={r.token.address}>
           <div className={classes.icon}>
@@ -62,8 +62,8 @@ export const RewardList = memo<RewardListProps>(function RewardList({
               <>
                 {' '}
                 on{' '}
-                <Tooltip
-                  content={`${r.token.symbol} rewards are claimable on ${
+                <DivWithTooltip
+                  tooltip={`${r.token.symbol} rewards are claimable on ${
                     r.token.chainId.charAt(0).toUpperCase() + r.token.chainId.slice(1)
                   }`}
                 >
@@ -73,7 +73,7 @@ export const RewardList = memo<RewardListProps>(function RewardList({
                     height={24}
                     width={24}
                   />
-                </Tooltip>
+                </DivWithTooltip>
               </>
             ) : null}
           </div>
@@ -81,8 +81,8 @@ export const RewardList = memo<RewardListProps>(function RewardList({
             {r.active && r.amount.isZero() && r.apr
               ? formatPercent(r.apr)
               : !r.amount.isZero() && r.price
-              ? formatUsd(r.price.multipliedBy(r.amount))
-              : '-'}
+                ? formatUsd(r.price.multipliedBy(r.amount))
+                : '-'}
           </div>
         </Fragment>
       ))}

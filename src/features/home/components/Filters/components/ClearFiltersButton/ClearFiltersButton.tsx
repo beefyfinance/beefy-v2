@@ -1,24 +1,25 @@
 import { memo, useCallback } from 'react';
-import { Button } from '../../../../../../components/Button';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { Button } from '../../../../../../components/Button/Button.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectFilterPopinFilterCount,
   selectHasActiveFilter,
-} from '../../../../../data/selectors/filtered-vaults';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
+} from '../../../../../data/selectors/filtered-vaults.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { useTranslation } from 'react-i18next';
-import { Clear } from '@material-ui/icons';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import Clear from '../../../../../../images/icons/mui/Clear.svg?react';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ClearFiltersButtonProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const ClearFiltersButton = memo<ClearFiltersButtonProps>(function ClearFiltersButton({
-  className,
-}) {
+export const ClearFiltersButton = memo(function ClearFiltersButton({
+  css: cssProp,
+}: ClearFiltersButtonProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -29,13 +30,7 @@ export const ClearFiltersButton = memo<ClearFiltersButtonProps>(function ClearFi
   }, [dispatch]);
 
   return (
-    <Button
-      className={className}
-      variant="filter"
-      size="sm"
-      disabled={!active}
-      onClick={handleReset}
-    >
+    <Button css={cssProp} variant="filter" size="sm" disabled={!active} onClick={handleReset}>
       {count > 0 ? (
         <span className={classes.badge} data-count={count} />
       ) : (

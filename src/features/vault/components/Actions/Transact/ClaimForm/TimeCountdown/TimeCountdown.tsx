@@ -1,14 +1,14 @@
 import { memo, useEffect, useRef } from 'react';
-import { Timer } from '@material-ui/icons';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import Timer from '../../../../../../../images/icons/mui/Timer.svg?react';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type TimeCountdownProps = {
   until: number;
 };
-export const TimeCountdown = memo<TimeCountdownProps>(function TimeCountdown({ until }) {
+export const TimeCountdown = memo(function TimeCountdown({ until }: TimeCountdownProps) {
   const classes = useStyles();
   const ref = useRef<HTMLDivElement>(null);
 

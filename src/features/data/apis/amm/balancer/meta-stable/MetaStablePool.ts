@@ -1,17 +1,17 @@
-import type { ChainEntity } from '../../../../entities/chain';
-import type { PoolConfig, VaultConfig } from '../vault/types';
+import type { ChainEntity } from '../../../../entities/chain.ts';
+import type { PoolConfig, VaultConfig } from '../vault/types.ts';
 import { BigNumber } from 'bignumber.js';
-import { BalancerMetaStablePoolAbi } from '../../../../../../config/abi/BalancerMetaStablePoolAbi';
-import { BIG_ZERO, fromWei } from '../../../../../../helpers/big-number';
-import { FixedPoint } from '../common/FixedPoint';
-import { BalancerFeature, type IBalancerAllPool, type IBalancerSinglePool } from '../types';
-import { PoolExitKind, PoolJoinKind } from '../common/types';
+import { BalancerMetaStablePoolAbi } from '../../../../../../config/abi/BalancerMetaStablePoolAbi.ts';
+import { BIG_ZERO, fromWei } from '../../../../../../helpers/big-number.ts';
+import { FixedPoint } from '../common/FixedPoint.ts';
+import { BalancerFeature, type IBalancerAllPool, type IBalancerSinglePool } from '../types.ts';
+import { PoolExitKind, PoolJoinKind } from '../common/types.ts';
 import {
   poolExitKindToMetaStablePoolExitKind,
   poolJoinKindToMetaStablePoolJoinKind,
-} from './join-exit-kinds';
-import { SingleAllPool } from '../common/SingleAllPool';
-import { fetchContract } from '../../../rpc-contract/viem-contract';
+} from './join-exit-kinds.ts';
+import { SingleAllPool } from '../common/SingleAllPool.ts';
+import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
 
 const SUPPORTED_FEATURES = new Set<BalancerFeature>([
   BalancerFeature.AddRemoveAll,

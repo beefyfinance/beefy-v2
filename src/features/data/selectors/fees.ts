@@ -1,13 +1,13 @@
 import { createCachedSelector } from 're-reselect';
-import type { BeefyState } from '../../../redux-types';
-import type { VaultEntity } from '../entities/vault';
-import type { VaultFee } from '../reducers/fees';
-import { selectIsVaultGov, selectVaultDepositFee } from './vaults';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import type { VaultFee } from '../reducers/fees.ts';
+import { selectIsVaultGov, selectVaultDepositFee } from './vaults.ts';
 import {
   createGlobalDataSelector,
   hasLoaderFulfilledOnce,
   shouldLoaderLoadOnce,
-} from './data-loader-helpers';
+} from './data-loader-helpers.ts';
 
 const GOV_FEES: Readonly<VaultFee> = {
   id: 'gov-fees',
@@ -43,4 +43,4 @@ export const selectFeesByVaultId = createCachedSelector(
 
     return fees;
   }
-)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);

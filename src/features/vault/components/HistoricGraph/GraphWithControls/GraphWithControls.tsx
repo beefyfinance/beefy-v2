@@ -1,24 +1,24 @@
-import type { VaultEntity } from '../../../../data/entities/vault';
-import type { TokenEntity } from '../../../../data/entities/token';
+import type { VaultEntity } from '../../../../data/entities/vault.ts';
+import type { TokenEntity } from '../../../../data/entities/token.ts';
 import { memo, useMemo, useState } from 'react';
-import { useAppSelector } from '../../../../../store';
-import { selectHistoricalAvailableBuckets } from '../../../../data/selectors/historical';
-import { GraphLoader } from '../../GraphLoader';
-import { RangeSwitcher } from '../RangeSwitcher';
-import { makeStyles } from '@material-ui/core';
-import { Graph } from '../Graph';
-import type { TimeRange } from '../utils';
-import { getAvailableRanges, getDefaultTimeRange, timeRangeToBucket } from '../utils';
-import type { LineTogglesState } from '../LineToggles';
-import { LineToggles } from '../LineToggles';
-import { styles } from './styles';
+import { useAppSelector } from '../../../../../store.ts';
+import { selectHistoricalAvailableBuckets } from '../../../../data/selectors/historical.ts';
+import { GraphLoader } from '../../GraphLoader/Loader.tsx';
+import { RangeSwitcher } from '../RangeSwitcher/RangeSwitcher.tsx';
+import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
+import { Graph } from '../Graph/Graph.tsx';
+import type { TimeRange } from '../utils.ts';
+import { getAvailableRanges, getDefaultTimeRange, timeRangeToBucket } from '../utils.ts';
+import type { LineTogglesState } from '../LineToggles/LineToggles.tsx';
+import { LineToggles } from '../LineToggles/LineToggles.tsx';
+import { styles } from './styles.ts';
 import { useTranslation } from 'react-i18next';
-import { useHistoricalStatLoader } from '../../../../data/hooks/historical';
-import type { ChartStat } from '../types';
-import { ErrorBoundary } from '../../../../../components/ErrorBoundary/ErrorBoundary';
-import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData';
+import { useHistoricalStatLoader } from '../../../../data/hooks/historical.tsx';
+import type { ChartStat } from '../types.ts';
+import { ErrorBoundary } from '../../../../../components/ErrorBoundary/ErrorBoundary.tsx';
+import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type HistoricGraphProp = {
   vaultId: VaultEntity['id'];
@@ -27,12 +27,12 @@ export type HistoricGraphProp = {
   inverted: boolean;
 };
 
-export const GraphWithControls = memo<HistoricGraphProp>(function GraphWithControls({
+export const GraphWithControls = memo(function GraphWithControls({
   vaultId,
   oracleId,
   stat,
   inverted,
-}) {
+}: HistoricGraphProp) {
   const classes = useStyles();
   const availableBuckets = useAppSelector(state =>
     selectHistoricalAvailableBuckets(state, stat, vaultId, oracleId)

@@ -1,4 +1,4 @@
-import { keys } from './object';
+import { keys } from './object.ts';
 
 export const samplingPeriodMs = {
   '1sec': 1000,

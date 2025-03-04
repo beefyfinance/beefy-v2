@@ -1,28 +1,28 @@
 import { memo } from 'react';
 import {
   isCowcentratedGovVault,
-  isCowcentratedVault,
   isCowcentratedLikeVault,
   isCowcentratedStandardVault,
+  isCowcentratedVault,
   isGovVault,
   isVaultRetired,
   type VaultEntity,
-} from '../../../data/entities/vault';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { selectVaultById } from '../../../data/selectors/vaults';
-import clsx from 'clsx';
-import { useAppSelector } from '../../../../store';
+} from '../../../data/entities/vault.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
+import { css } from '@repo/styles/css';
+import { useAppSelector } from '../../../../store.ts';
 import { Link } from 'react-router-dom';
-import { VaultIdentity } from '../../../../components/VaultIdentity';
-import { VaultStats } from '../../../../components/VaultStats';
+import { VaultIdentity } from '../../../../components/VaultIdentity/VaultIdentity.tsx';
+import { VaultStats } from '../../../../components/VaultStats/VaultStats.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type VaultProps = {
   vaultId: VaultEntity['id'];
 };
-export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
+export const Vault = memo(function Vault({ vaultId }: VaultProps) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isRetired = isVaultRetired(vault);
@@ -34,14 +34,14 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId }) {
   return (
     <Link
       to={`/vault/${vaultId}`}
-      className={clsx({
-        [classes.vault]: true,
-        [classes.vaultCowcentrated]: isCowcentrated,
-        [classes.vaultCowcentratedPool]: isCowcentratedPool,
-        [classes.vaultCowcentratedVault]: isCowcentratedStandard,
-        [classes.vaultRetired]: isRetired,
-        [classes.vaultEarnings]: isGov,
-      })}
+      className={css(
+        styles.vault,
+        isCowcentrated && styles.vaultCowcentrated,
+        isCowcentratedPool && styles.vaultCowcentratedPool,
+        isCowcentratedStandard && styles.vaultCowcentratedVault,
+        isRetired && styles.vaultRetired,
+        isGov && styles.vaultEarnings
+      )}
     >
       <div className={classes.vaultInner}>
         <VaultIdentity vaultId={vaultId} />

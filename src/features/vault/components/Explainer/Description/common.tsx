@@ -6,17 +6,20 @@ import {
   type VaultEntity,
   type VaultGov,
   type VaultStandard,
-} from '../../../../data/entities/vault';
+} from '../../../../data/entities/vault.ts';
 import { type TFunction, useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../store';
-import { selectVaultById } from '../../../../data/selectors/vaults';
-import { selectChainById } from '../../../../data/selectors/chains';
-import { selectPlatformById } from '../../../../data/selectors/platforms';
-import { selectTokenByAddress, selectVaultTokenSymbols } from '../../../../data/selectors/tokens';
+import { useAppSelector } from '../../../../../store.ts';
+import { selectVaultById } from '../../../../data/selectors/vaults.ts';
+import { selectChainById } from '../../../../data/selectors/chains.ts';
+import { selectPlatformById } from '../../../../data/selectors/platforms.ts';
+import {
+  selectTokenByAddress,
+  selectVaultTokenSymbols,
+} from '../../../../data/selectors/tokens.ts';
 import { type ReactElement, useMemo } from 'react';
-import type { PlatformEntity } from '../../../../data/entities/platform';
-import type { TokenEntity } from '../../../../data/entities/token';
-import type { ChainEntity } from '../../../../data/entities/chain';
+import type { PlatformEntity } from '../../../../data/entities/platform.ts';
+import type { TokenEntity } from '../../../../data/entities/token.ts';
+import type { ChainEntity } from '../../../../data/entities/chain.ts';
 
 export type CommonHelper<TVault extends VaultEntity = VaultEntity> = {
   vault: TVault;
@@ -58,7 +61,7 @@ export function useCommonHelper(vaultId: VaultEntity['id']): CommonHelper {
       depositTokenProvider: depositTokenProvider?.name || '[UNKNOWN]',
     };
 
-    for (const i in assetSymbols) {
+    for (let i = 0; i < assetSymbols.length; ++i) {
       values[`asset${i}`] = assetSymbols[i];
     }
 

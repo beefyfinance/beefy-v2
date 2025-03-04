@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
-import { BIG_ZERO } from '../../../helpers/big-number';
-import type { AmountInputProps } from '../../vault/components/Actions/Transact/AmountInput';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import type { AmountInputProps } from '../../vault/components/Actions/Transact/AmountInput/AmountInput.tsx';
 import { BigNumber } from 'bignumber.js';
 
 export function useInputForm(balance: BigNumber, decimals: number) {

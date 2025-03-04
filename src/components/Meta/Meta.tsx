@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { routerMode } from '../Router';
+import { routerMode } from '../Router/Router.tsx';
 import { useTranslation } from 'react-i18next';
 
 export type MetaProps = {
@@ -9,12 +9,12 @@ export type MetaProps = {
   noindex?: boolean;
   disableTitleTemplate?: boolean;
 };
-export const Meta = memo<MetaProps>(function Meta({
+export const Meta = memo(function Meta({
   title,
   description,
   noindex,
   disableTitleTemplate = false,
-}) {
+}: MetaProps) {
   const { t } = useTranslation();
   const fullTitle = useMemo(() => {
     return title && !disableTitleTemplate ? t('Meta-Title-Template', { title }) : title;

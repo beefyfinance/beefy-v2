@@ -1,25 +1,25 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  value: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.middle,
-    display: 'inline-flex' as const,
-    flexDirection: 'column' as const,
+export const styles = {
+  value: css.raw({
+    textStyle: 'body.med',
+    color: 'text.middle',
+    display: 'inline-flex',
+    flexDirection: 'column',
     alignItems: 'flex-end',
     maxWidth: '100%',
-  },
-  subValue: {
-    ...theme.typography['body-sm'],
-    color: theme.palette.text.dark,
-  },
-  blurValue: {
+  }),
+  subValue: css.raw({
+    textStyle: 'body.sm',
+    color: 'text.dark',
+  }),
+  blurValue: css.raw({
     filter: 'blur(.5rem)',
-  },
-  boostedValue: {
-    color: theme.palette.background.vaults.boost,
-  },
-  lineThroughValue: {
+  }),
+  boostedValue: css.raw({
+    color: 'background.vaults.boost',
+  }),
+  lineThroughValue: css.raw({
     textDecoration: 'line-through',
-  },
-});
+  }),
+};

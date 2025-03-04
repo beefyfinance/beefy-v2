@@ -1,25 +1,25 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  btnContainer: {
+export const styles = {
+  btnContainer: css.raw({
     display: 'flex',
-    flexWrap: 'wrap' as const,
+    flexWrap: 'wrap',
     columnGap: '8px',
     rowGap: '8px',
-  },
-  btnSecondary: {
-    ...theme.typography['body-lg'],
+  }),
+  btnSecondary: css.raw({
+    textStyle: 'body',
     textDecoration: 'none',
-    color: theme.palette.text.middle,
-    backgroundColor: theme.palette.background.buttons.button,
+    color: 'text.middle',
+    backgroundColor: 'bayOfMany',
     borderRadius: '4px',
     transition: 'color 0.2s',
     padding: '2px 8px',
     width: 'max-content',
     '&:hover': {
-      color: theme.palette.text.light,
-      backgroundColor: theme.palette.background.buttons.buttonHover,
+      color: 'text.light',
+      backgroundColor: 'blueJewel',
       transition: 'color 0.1s',
     },
-  },
-});
+  }),
+};

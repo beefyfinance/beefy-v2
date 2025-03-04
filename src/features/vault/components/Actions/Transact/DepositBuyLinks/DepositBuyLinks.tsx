@@ -1,23 +1,21 @@
-import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
-import { styles } from './styles';
-import { useAppSelector } from '../../../../../../store';
-import { LinkButton } from '../../../../../../components/LinkButton';
-import clsx from 'clsx';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { styles } from './styles.ts';
+import { useAppSelector } from '../../../../../../store.ts';
+import { LinkButton } from '../../../../../../components/LinkButton/LinkButton.tsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import { memo } from 'react';
 import {
   selectTransactNumTokens,
   selectTransactVaultId,
-} from '../../../../../data/selectors/transact';
-
-const useStyles = makeStyles(styles);
+} from '../../../../../data/selectors/transact.ts';
 
 export type DepositBuyLinksProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const DepositBuyLinks = memo<DepositBuyLinksProps>(function DepositBuyLinks({ className }) {
-  const classes = useStyles();
+export const DepositBuyLinks = memo(function DepositBuyLinks({
+  css: cssProp,
+}: DepositBuyLinksProps) {
   const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -30,7 +28,7 @@ export const DepositBuyLinks = memo<DepositBuyLinksProps>(function DepositBuyLin
   }
 
   return (
-    <div className={clsx(classes.btnContainer, className)}>
+    <div className={css(styles.btnContainer, cssProp)}>
       {vault.addLiquidityUrl && (
         <LinkButton href={vault.addLiquidityUrl} text={t('Transact-BuildLp')} />
       )}

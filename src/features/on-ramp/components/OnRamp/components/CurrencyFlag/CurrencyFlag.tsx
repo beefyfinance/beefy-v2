@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { getCurrencyFlag } from '../../../../../../helpers/flagSrc';
+import { getCurrencyFlag } from '../../../../../../helpers/flagSrc.ts';
 
 export type CurrencyFlagProps = {
   currencyCode: string;

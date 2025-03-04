@@ -1,9 +1,9 @@
-import type { VaultEntity } from '../../../../data/entities/vault';
+import type { VaultEntity } from '../../../../data/entities/vault.ts';
 import { memo } from 'react';
-import { useAppSelector } from '../../../../../store';
-import { selectVaultCurrentBoostIdWithStatus } from '../../../../data/selectors/boosts';
-import { ActiveBoost } from './ActiveBoost';
-import { PastBoosts } from './PastBoosts';
+import { useAppSelector } from '../../../../../store.ts';
+import { selectVaultCurrentBoostIdWithStatus } from '../../../../data/selectors/boosts.ts';
+import { ActiveBoost } from './ActiveBoost.tsx';
+import { PastBoosts } from './PastBoosts.tsx';
 
 export type ActivePastProps = {
   vaultId: VaultEntity['id'];

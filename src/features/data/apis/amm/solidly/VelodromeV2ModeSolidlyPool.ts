@@ -1,9 +1,9 @@
 import type { BigNumber } from 'bignumber.js';
-import type { ZapStep } from '../../transact/zap/types';
-import { getInsertIndex } from '../../transact/helpers/zap';
-import { VelodromeV2SolidlyPool } from './VelodromeV2SolidlyPool';
+import type { ZapStep } from '../../transact/zap/types.ts';
+import { getInsertIndex } from '../../transact/helpers/zap.ts';
+import { VelodromeV2SolidlyPool } from './VelodromeV2SolidlyPool.ts';
 import { encodeFunctionData, type Abi, type Address } from 'viem';
-import { bigNumberToBigInt } from '../../../../../helpers/big-number';
+import { bigNumberToBigInt } from '../../../../../helpers/big-number.ts';
 
 /**
  * Same as VelodromeV2SolidlyPool but the swap route does not include the factory address

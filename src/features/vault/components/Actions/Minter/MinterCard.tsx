@@ -1,26 +1,20 @@
 import { memo, useEffect } from 'react';
-import type { VaultEntity } from '../../../../data/entities/vault';
-import type { MinterEntity } from '../../../../data/entities/minter';
+import type { VaultEntity } from '../../../../data/entities/vault.ts';
+import type { MinterEntity } from '../../../../data/entities/minter.ts';
 import {
   selectIsAddressBookLoaded,
   selectShouldInitAddressBook,
-} from '../../../../data/selectors/data-loader';
-import { selectIsWalletKnown, selectWalletAddress } from '../../../../data/selectors/wallet';
-import { selectMinterById } from '../../../../data/selectors/minters';
-import MintBurnCard from './MintBurnCard';
-import { useAppDispatch, useAppSelector } from '../../../../../store';
-import { LoadingIndicator } from '../../../../../components/LoadingIndicator';
-import { Card } from '../../Card';
-import { makeStyles } from '@material-ui/core';
-import { isLoaderFulfilled } from '../../../../data/selectors/data-loader-helpers';
-import { initiateMinterForm } from '../../../../data/actions/minters';
-import { fetchAddressBookAction } from '../../../../data/actions/tokens';
-
-const useStyles = makeStyles(() => ({
-  loadingCardContainer: {
-    height: '580px',
-  },
-}));
+} from '../../../../data/selectors/data-loader.ts';
+import { selectIsWalletKnown, selectWalletAddress } from '../../../../data/selectors/wallet.ts';
+import { selectMinterById } from '../../../../data/selectors/minters.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../store.ts';
+import { LoadingIndicator } from '../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
+import { Card } from '../../Card/Card.tsx';
+import { isLoaderFulfilled } from '../../../../data/selectors/data-loader-helpers.ts';
+import { initiateMinterForm } from '../../../../data/actions/minters.ts';
+import { fetchAddressBookAction } from '../../../../data/actions/tokens.ts';
+import { css } from '@repo/styles/css';
+import { MintBurnCard } from './MintBurnCard/MintBurnCard.tsx';
 
 export interface MinterCardParams {
   vaultId: VaultEntity['id'];
@@ -62,10 +56,13 @@ export const MinterCard = memo(function MinterCard({ vaultId, minterId }: Minter
   );
 });
 
+const loadingCardContainerCss = css.raw({
+  height: '580px',
+});
+
 export const LoadingCard = memo(function LoadingCard() {
-  const classes = useStyles();
   return (
-    <Card className={classes.loadingCardContainer}>
+    <Card css={loadingCardContainerCss}>
       <LoadingIndicator />
     </Card>
   );

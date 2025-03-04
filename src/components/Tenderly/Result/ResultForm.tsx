@@ -1,30 +1,30 @@
-import type { ChainId } from '../../../features/data/entities/chain';
+import type { ChainId } from '../../../features/data/entities/chain.ts';
 import type {
   TenderlySimulateRequest,
   TenderlySimulateResponse,
-} from '../../../features/data/apis/tenderly/types';
+} from '../../../features/data/apis/tenderly/types.ts';
 import { Fragment, memo, useMemo } from 'react';
-import { useAppSelector } from '../../../store';
+import { useAppSelector } from '../../../store.ts';
 import {
   selectTenderlyCredentialsOrUndefined,
   selectTenderlyResultOrUndefined,
-} from '../../../features/data/selectors/tenderly';
-import { AlertError } from '../../Alerts';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+} from '../../../features/data/selectors/tenderly.ts';
+import { AlertError } from '../../Alerts/Alerts.tsx';
+import { legacyMakeStyles } from '../../../helpers/mui.ts';
+import { stackRecipe, styles, transactionRecipe } from './styles.ts';
 import type {
   TenderlySimulateConfig,
   TenderlyTxCallRequest,
-} from '../../../features/data/actions/tenderly';
-import clsx from 'clsx';
-import { ExternalLink } from '../Links/ExternalLink';
-import type { StackEntry } from './StackEntry';
-import { ExplorerAddressLink } from '../Links/ExplorerAddressLink';
-import { TenderlySimulateResponseProcessor } from './TenderlySimulateResponseProcessor';
-import { VerticalLayout } from '../Layout/VerticalLayout';
-import { Scrollable } from '../../Scrollable';
+} from '../../../features/data/actions/tenderly.ts';
+import { css, cx } from '@repo/styles/css';
+import { ExternalLink } from '../Links/ExternalLink.tsx';
+import type { StackEntry } from './StackEntry.ts';
+import { ExplorerAddressLink } from '../Links/ExplorerAddressLink.tsx';
+import { TenderlySimulateResponseProcessor } from './TenderlySimulateResponseProcessor.ts';
+import { VerticalLayout } from '../Layout/VerticalLayout.tsx';
+import { Scrollable } from '../../Scrollable/Scrollable.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type SimulationProps = {
   url?: string;
@@ -36,7 +36,7 @@ type SimulationProps = {
   response: TenderlySimulateResponse;
 };
 
-const SimulationSuccess = memo<SimulationProps>(function SimulationSuccess(_props) {
+const SimulationSuccess = memo(function SimulationSuccess(_props: SimulationProps) {
   return null;
 });
 
@@ -44,7 +44,7 @@ type BytesDisplayProps = {
   value: string;
 };
 
-const BytesDisplay = memo<BytesDisplayProps>(function BytesDisplay({ value }) {
+const BytesDisplay = memo(function BytesDisplay({ value }: BytesDisplayProps) {
   const classes = useStyles();
   const lines = useMemo((): string[] => {
     const bytes = value.slice(0, 2) === '0x' ? value.slice(2) : value;
@@ -57,7 +57,7 @@ const BytesDisplay = memo<BytesDisplayProps>(function BytesDisplay({ value }) {
   const length = lines.length.toString().length;
 
   return (
-    <Scrollable className={classes.bytesDisplay} autoHeight={180}>
+    <Scrollable css={styles.bytesDisplay} autoHeight={180}>
       <div className={classes.bytesDisplayInner}>
         {lines.map((line, i) => (
           <div
@@ -78,7 +78,7 @@ type ObjectDisplayProps = {
   input: Record<string, unknown>;
 };
 
-const ObjectDisplay = memo<ObjectDisplayProps>(function ObjectDisplay({ input, depth }) {
+const ObjectDisplay = memo(function ObjectDisplay({ input, depth }: ObjectDisplayProps) {
   return <PairDisplay input={Object.entries(input)} depth={depth} />;
 });
 
@@ -87,7 +87,7 @@ type ArrayDisplayProps = {
   input: Array<unknown>;
 };
 
-const ArrayDisplay = memo<ArrayDisplayProps>(function ArrayDisplay({ input, depth }) {
+const ArrayDisplay = memo(function ArrayDisplay({ input, depth }: ArrayDisplayProps) {
   return <PairDisplay input={input.map((value, key) => [key.toString(), value])} depth={depth} />;
 });
 
@@ -96,17 +96,17 @@ type PairDisplayProps = {
   input: Array<[string, unknown]>;
 };
 
-const PairDisplay = memo<PairDisplayProps>(function PairDisplay({ input, depth }) {
+const PairDisplay = memo(function PairDisplay({ input, depth }: PairDisplayProps) {
   const classes = useStyles();
 
   return (
     <div
-      className={clsx(classes.pairDisplay, { [classes.pairDisplayOdd]: depth % 2 === 1 })}
+      className={css(styles.pairDisplay, depth % 2 === 1 && styles.pairDisplayOdd)}
       data-depth={depth}
     >
       {input.map(([key, value], i) => (
         <Fragment key={key || i}>
-          <div className={classes.pairDisplayKey}>{key}</div>
+          <div className={cx('pairDisplayKey', classes.pairDisplayKey)}>{key}</div>
           <div className={classes.pairDisplayValue}>
             <UnknownDisplay input={value} depth={depth + 1} />
           </div>
@@ -121,7 +121,7 @@ type UnknownDisplayProps = {
   input: unknown;
 };
 
-const UnknownDisplay = memo<UnknownDisplayProps>(function UnknownDisplay({ input, depth }) {
+const UnknownDisplay = memo(function UnknownDisplay({ input, depth }: UnknownDisplayProps) {
   if (input === null) {
     return 'null';
   }
@@ -161,11 +161,9 @@ type ParamsDisplayProps = {
   input: Record<string, unknown>;
 };
 
-const ParamsDisplay = memo<ParamsDisplayProps>(function ParamsDisplay({ input }) {
-  const classes = useStyles();
-
+const ParamsDisplay = memo(function ParamsDisplay({ input }: ParamsDisplayProps) {
   return (
-    <Scrollable className={classes.paramsDisplay} autoHeight={300}>
+    <Scrollable css={styles.paramsDisplay} autoHeight={300}>
       <ObjectDisplay input={input} depth={0} />
     </Scrollable>
   );
@@ -177,8 +175,7 @@ type StackProps = {
   baseUrl?: string;
 };
 
-const Stack = memo<StackProps>(function Stack({ chainId, stack, baseUrl }) {
-  const classes = useStyles();
+const Stack = memo(function Stack({ chainId, stack, baseUrl }: StackProps) {
   const { type, typeLabel, call, errorSource } = useMemo(() => {
     const { type, label } = stack.getType();
     const call = stack.getDetails();
@@ -186,21 +183,15 @@ const Stack = memo<StackProps>(function Stack({ chainId, stack, baseUrl }) {
 
     return { type, typeLabel: label, call, errorSource };
   }, [stack]);
+  const classes = stackRecipe({ type });
+  const styles = stackRecipe.raw({ type });
   const hasInput = !!call.input || !!call.inputLabels;
   const hasOutput = !!call.output || !!call.outputLabels;
 
   return (
-    <div
-      className={clsx(classes.stack, {
-        [classes.stackRevert]: type === 'revert',
-        [classes.stackCall]: type === 'call',
-        [classes.stackCallDelegate]: type === 'delegatecall',
-        [classes.stackJumpDest]: type === 'jumpdest',
-        [classes.stackUnknown]: type === 'unknown',
-      })}
-    >
+    <div className={classes.stack}>
       {baseUrl ? (
-        <ExternalLink href={`${baseUrl}/debugger?trace=${stack.id}`} className={classes.stackTag}>
+        <ExternalLink href={`${baseUrl}/debugger?trace=${stack.id}`} css={styles.stackTag}>
           {typeLabel}
         </ExternalLink>
       ) : (
@@ -218,7 +209,7 @@ const Stack = memo<StackProps>(function Stack({ chainId, stack, baseUrl }) {
             {call.funcLabel && call.func ? (
               <abbr title={call.func}>{call.funcLabel}</abbr>
             ) : (
-              call.funcLabel ?? call.func
+              (call.funcLabel ?? call.func)
             )}
           </div>
           <div className={classes.stackFuncParamsOpen}>{'('}</div>
@@ -256,9 +247,14 @@ const Stack = memo<StackProps>(function Stack({ chainId, stack, baseUrl }) {
   );
 });
 
-type RevertProps = { baseUrl?: string; chainId: ChainId; error: string; stack: StackEntry[] };
+type RevertProps = {
+  baseUrl?: string;
+  chainId: ChainId;
+  error: string;
+  stack: StackEntry[];
+};
 
-const Revert = memo<RevertProps>(function Revert({ baseUrl, chainId, error, stack }) {
+const Revert = memo(function Revert({ baseUrl, chainId, error, stack }: RevertProps) {
   const classes = useStyles();
 
   return (
@@ -275,11 +271,11 @@ const Revert = memo<RevertProps>(function Revert({ baseUrl, chainId, error, stac
   );
 });
 
-const SimulationRevert = memo<SimulationProps>(function SimulationRevert({
+const SimulationRevert = memo(function SimulationRevert({
   url,
   chainId,
   response,
-}) {
+}: SimulationProps) {
   const classes = useStyles();
   const { reverts } = useMemo(() => {
     const processor = new TenderlySimulateResponseProcessor(response);
@@ -311,10 +307,10 @@ type TransactionDetailsProps = {
   response: TenderlySimulateResponse;
 };
 
-const TransactionDetails = memo<TransactionDetailsProps>(function TransactionDetails({
+const TransactionDetails = memo(function TransactionDetails({
   baseUrl,
   ...props
-}) {
+}: TransactionDetailsProps) {
   const { request, response } = props;
   const didSave = request.save || (request.save_if_fails && !response.simulation.status);
   const url = didSave ? `${baseUrl}/${response.simulation.id}` : undefined;
@@ -331,24 +327,18 @@ type TransactionResultProps = {
   request: TenderlySimulateRequest;
   response?: TenderlySimulateResponse;
 };
-const TransactionResult = memo<TransactionResultProps>(function TransactionResult(props) {
+const TransactionResult = memo(function TransactionResult(props: TransactionResultProps) {
   const { index, baseUrl, call, request, response } = props;
-  const classes = useStyles();
   const didSave = response
     ? request.save || (request.save_if_fails && !response.simulation.status)
     : false;
   const url = didSave && response ? `${baseUrl}/${response.simulation.id}` : undefined;
   const status = response ? (response.simulation.status ? 'success' : 'revert') : 'missing';
+  const classes = transactionRecipe({ status });
   const statusText = status === 'missing' ? '-' : status.toUpperCase();
 
   return (
-    <div
-      className={clsx(classes.transaction, {
-        [classes.transactionSuccess]: status === 'success',
-        [classes.transactionRevert]: status === 'revert',
-        [classes.transactionMissing]: status === 'missing',
-      })}
-    >
+    <div className={classes.transaction}>
       <div className={classes.transactionHeader}>
         <div className={classes.transactionHeaderIndex}>{`#${index}`}</div>
         <div className={classes.transactionHeaderStep}>{call.step}</div>

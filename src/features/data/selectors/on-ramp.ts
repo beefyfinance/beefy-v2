@@ -1,14 +1,14 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import { InputMode } from '../reducers/on-ramp-types';
+import type { BeefyState } from '../../../redux-types.ts';
+import { InputMode } from '../reducers/on-ramp-types.ts';
 import { orderBy } from 'lodash-es';
-import type { ChainEntity } from '../entities/chain';
-import { valueOrThrow } from '../utils/selector-utils';
+import type { ChainEntity } from '../entities/chain.ts';
+import { valueOrThrow } from '../utils/selector-utils.ts';
 import {
   createGlobalDataSelector,
   hasLoaderFulfilledOnce,
   isLoaderIdle,
-} from './data-loader-helpers';
+} from './data-loader-helpers.ts';
 
 export const selectIsOnRampLoaded = createGlobalDataSelector('onRamp', hasLoaderFulfilledOnce);
 
@@ -80,7 +80,7 @@ export const selectNetworksForFiatToken = createSelector(
 export const selectIsFiatTokenNetworkSupported = createSelector(
   (state: BeefyState, fiat: string, token: string) =>
     selectNetworksForFiatToken(state, fiat, token),
-  (state: BeefyState, fiat: string, token: string, network: ChainEntity['id']) => network,
+  (_state: BeefyState, _fiat: string, _token: string, network: ChainEntity['id']) => network,
   (networksForFiatToken, network) => networksForFiatToken.includes(network)
 );
 
@@ -126,7 +126,7 @@ export const selectSortedQuoteProviders = createSelector(
 );
 
 export const selectQuoteByProvider = createSelector(
-  (state: BeefyState, provider: string) => provider,
+  (_state: BeefyState, provider: string) => provider,
   (state: BeefyState) => state.ui.onRamp.quote.byProvider,
   (provider, byProvider) => byProvider[provider]
 );
@@ -147,9 +147,9 @@ export const selectIsCheapestProviderSelected = createSelector(
 );
 
 export const selectFiatTokenMinMaxFiat = createSelector(
-  (state: BeefyState, fiat: string) => fiat,
-  (state: BeefyState, fiat: string, token: string) => token,
-  (state: BeefyState, fiat: string, token: string, network: string) => network,
+  (_state: BeefyState, fiat: string) => fiat,
+  (_state: BeefyState, _fiat: string, token: string) => token,
+  (_state: BeefyState, _fiat: string, _token: string, network: string) => network,
   (state: BeefyState) => state.ui.onRamp.byFiat,
   (fiat, token, network, byFiat) => ({
     min: byFiat[fiat].byToken[token].byNetwork[network].minFiat,

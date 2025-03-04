@@ -1,13 +1,13 @@
 import { memo, useMemo } from 'react';
-import { InputBase, makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
-import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
 import ContentLoader from 'react-content-loader';
-import { useAppSelector } from '../../../../../../store';
-import { selectQuoteStatus } from '../../../../../data/selectors/on-ramp';
+import { useAppSelector } from '../../../../../../store.ts';
+import { selectQuoteStatus } from '../../../../../data/selectors/on-ramp.ts';
+import { BaseInput } from '../../../../../../components/Form/Input/BaseInput.tsx';
+import type { BaseInputProps } from '../../../../../../components/Form/Input/BaseInput.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function numberToString(value: number, maxDecimals: number): string {
   if (value <= 0) {
@@ -39,29 +39,26 @@ const PendingAmount = memo(function PendingAmount() {
 export type AmountOutputProps = {
   maxDecimals?: number;
   value: number;
-  className?: string;
-  endAdornment?: InputBaseProps['endAdornment'];
+  endAdornment?: BaseInputProps['endAdornment'];
 };
-export const AmountOutput = memo<AmountOutputProps>(function AmountOutput({
+export const AmountOutput = memo(function AmountOutput({
   value,
   maxDecimals = 2,
-  className,
   endAdornment,
-}) {
-  const classes = useStyles();
+}: AmountOutputProps) {
   const displayValue = useMemo(() => numberToString(value, maxDecimals), [value, maxDecimals]);
   const pending = useAppSelector(selectQuoteStatus) === 'pending';
   const startAdornment = useMemo(() => (pending ? <PendingAmount /> : undefined), [pending]);
 
   return (
-    <InputBase
-      className={clsx(classes.input, className)}
+    <BaseInput
       value={pending ? '' : displayValue}
       fullWidth={true}
       startAdornment={startAdornment}
       endAdornment={endAdornment}
       placeholder={pending ? '' : '0'}
       readOnly={true}
+      variant="amount"
     />
   );
 });

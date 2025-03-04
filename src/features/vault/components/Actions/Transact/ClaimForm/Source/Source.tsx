@@ -1,8 +1,8 @@
 import { memo, type ReactNode } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type SourceProps = {
   title: string;
@@ -11,7 +11,7 @@ type SourceProps = {
   children: ReactNode;
 };
 
-export const Source = memo<SourceProps>(function Source({ title, claim, refresh, children }) {
+export const Source = memo(function Source({ title, claim, refresh, children }: SourceProps) {
   const classes = useStyles();
   return (
     <div className={classes.container}>

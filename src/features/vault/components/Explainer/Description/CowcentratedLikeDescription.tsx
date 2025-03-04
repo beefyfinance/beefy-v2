@@ -5,8 +5,8 @@ import {
   type VaultCowcentrated,
   type VaultCowcentratedLike,
   type VaultGov,
-} from '../../../../data/entities/vault';
-import { type CommonHelper, isCowcentratedLikeCommonHelper, useCommonHelper } from './common';
+} from '../../../../data/entities/vault.ts';
+import { type CommonHelper, isCowcentratedLikeCommonHelper, useCommonHelper } from './common.tsx';
 
 type CowcentratedLikeHelper = CommonHelper<VaultCowcentratedLike>;
 
@@ -44,9 +44,9 @@ export type CowcentratedDescriptionProps = {
   poolId?: VaultGov['id'];
 };
 
-export const CowcentratedLikeDescription = memo<CowcentratedDescriptionProps>(
-  function CowcentratedLikeDescription({ vaultId }) {
-    const { i18n } = useCowcentratedLikeHelper(vaultId);
-    return <Trans {...i18n} />;
-  }
-);
+export const CowcentratedLikeDescription = memo(function CowcentratedLikeDescription({
+  vaultId,
+}: CowcentratedDescriptionProps) {
+  const { i18n } = useCowcentratedLikeHelper(vaultId);
+  return <Trans {...i18n} />;
+});

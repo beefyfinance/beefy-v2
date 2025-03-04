@@ -1,9 +1,9 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { Trans, useTranslation } from 'react-i18next';
-import { styles } from './styles';
+import { styles } from './styles.ts';
 import { memo, useEffect, useMemo } from 'react';
-import clsx from 'clsx';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { css, type CssStyles } from '@repo/styles/css';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectTransactInputAmounts,
   selectTransactInputMaxes,
@@ -15,40 +15,42 @@ import {
   selectTransactSelectedQuote,
   selectTransactSelectedSelectionId,
   selectTransactVaultId,
-} from '../../../../../data/selectors/transact';
-import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { transactFetchQuotesIfNeeded } from '../../../../../data/actions/transact';
-import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import { TokenAmountIcon, TokenAmountIconLoader } from '../TokenAmountIcon/TokenAmountIcon';
+} from '../../../../../data/selectors/transact.ts';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { transactFetchQuotesIfNeeded } from '../../../../../data/actions/transact.ts';
+import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
+import { TokenAmountIcon, TokenAmountIconLoader } from '../TokenAmountIcon/TokenAmountIcon.tsx';
 import {
   type CowcentratedVaultDepositQuote,
   type CowcentratedZapDepositQuote,
   isCowcentratedDepositQuote,
   isZapQuote,
   quoteNeedsSlippage,
-} from '../../../../../data/apis/transact/transact-types';
-import { ZapRoute } from '../ZapRoute';
-import { QuoteTitleRefresh } from '../QuoteTitleRefresh';
-import { AlertError } from '../../../../../../components/Alerts';
-import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types';
-import { ZapSlippage } from '../ZapSlippage';
+} from '../../../../../data/apis/transact/transact-types.ts';
+import { ZapRoute } from '../ZapRoute/ZapRoute.tsx';
+import { QuoteTitleRefresh } from '../QuoteTitleRefresh/QuoteTitleRefresh.tsx';
+import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
+import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { ZapSlippage } from '../ZapSlippage/ZapSlippage.tsx';
 import { type BigNumber } from 'bignumber.js';
 import { debounce } from 'lodash-es';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
-import { isCowcentratedLikeVault } from '../../../../../data/entities/vault';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { isCowcentratedLikeVault } from '../../../../../data/entities/vault.ts';
 import {
   QuoteCowcentratedNoSingleSideError,
   QuoteCowcentratedNotCalmError,
-} from '../../../../../data/apis/transact/strategies/error';
+} from '../../../../../data/apis/transact/strategies/error.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type TransactQuoteProps = {
   title: string;
-  className?: string;
+  css?: CssStyles;
 };
-export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ title, className }) {
-  const classes = useStyles();
+export const TransactQuote = memo(function TransactQuote({
+  title,
+  css: cssProp,
+}: TransactQuoteProps) {
   const dispatch = useAppDispatch();
   const mode = useAppSelector(selectTransactMode);
   const selectionId = useAppSelector(selectTransactSelectedSelectionId);
@@ -75,14 +77,23 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
 
   useEffect(() => {
     debouncedFetchQuotes(dispatch, inputAmounts);
-  }, [dispatch, mode, chainId, selectionId, selection, inputAmounts, inputMaxes, debouncedFetchQuotes]);
+  }, [
+    dispatch,
+    mode,
+    chainId,
+    selectionId,
+    selection,
+    inputAmounts,
+    inputMaxes,
+    debouncedFetchQuotes,
+  ]);
 
   if (status === TransactStatus.Idle) {
-    return <QuoteIdle title={title} className={className} />;
+    return <QuoteIdle title={title} css={cssProp} />;
   }
 
   return (
-    <div className={clsx(classes.container, className)}>
+    <div className={css(styles.container, cssProp)}>
       <QuoteTitleRefresh
         title={title}
         enableRefresh={status === TransactStatus.Fulfilled || status === TransactStatus.Rejected}
@@ -94,13 +105,13 @@ export const TransactQuote = memo<TransactQuoteProps>(function TransactQuote({ t
   );
 });
 
-const QuoteIdle = memo<TransactQuoteProps>(function QuoteIdle({ title, className }) {
+const QuoteIdle = memo(function QuoteIdle({ title, css: cssProp }: TransactQuoteProps) {
   const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   return (
-    <div className={clsx(classes.container, classes.disabled, className)}>
+    <div className={css(styles.container, styles.disabled, cssProp)}>
       <QuoteTitleRefresh title={title} enableRefresh={true} />
       <div className={classes.tokenAmounts}>
         {isCowcentratedLikeVault(vault) ? (
@@ -112,7 +123,7 @@ const QuoteIdle = memo<TransactQuoteProps>(function QuoteIdle({ title, className
                   amount={BIG_ZERO}
                   chainId={vault.chainId}
                   tokenAddress={tokenAddress}
-                  className={classes.fullWidth}
+                  css={styles.fullWidth}
                 />
               );
             })}
@@ -156,7 +167,6 @@ const QuoteError = memo(function QuoteError() {
                   className={classes.link}
                   href={'https://docs.beefy.finance/beefy-products/clm#calmness-check'}
                   target="_blank"
-                  rel="noopener"
                 />
               ),
             }}
@@ -204,22 +214,22 @@ const QuoteLoaded = memo(function QuoteLoaded() {
         )}
       </div>
       {/*      {quote.returned.length ? (
-        <div className={classes.returned}>
-          <div className={classes.returnedTitle}>{t('Transact-Returned')}</div>
-          <div className={classes.tokenAmounts}>
-            {quote.returned.map(({ token, amount }) => (
-              <TokenAmountIcon
-                key={token.address}
-                amount={amount}
-                chainId={token.chainId}
-                tokenAddress={token.address}
-              />
-            ))}
-          </div>
-        </div>
-      ) : null}*/}
-      {isZap ? <ZapRoute quote={quote} className={classes.route} /> : null}
-      {needsSlippage ? <ZapSlippage className={classes.slippage} /> : null}
+            <div className={classes.returned}>
+              <div className={classes.returnedTitle}>{t('Transact-Returned')}</div>
+              <div className={classes.tokenAmounts}>
+                {quote.returned.map(({ token, amount }) => (
+                  <TokenAmountIcon
+                    key={token.address}
+                    amount={amount}
+                    chainId={token.chainId}
+                    tokenAddress={token.address}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : null}*/}
+      {isZap ? <ZapRoute quote={quote} css={styles.route} /> : null}
+      {needsSlippage ? <ZapSlippage css={styles.slippage} /> : null}
     </>
   );
 });
@@ -246,9 +256,9 @@ export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
               chainId={used.token.chainId}
               tokenAddress={used.token.address}
               showSymbol={false}
-              className={classes.fullWidth}
+              css={styles.fullWidth}
               tokenImageSize={28}
-              amountWithValueClassName={classes.alignItemsEnd}
+              amountWithValueCss={styles.alignItemsEnd}
             />
           );
         })}
@@ -260,7 +270,7 @@ export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
           amount={shares.amount}
           chainId={shares.token.chainId}
           tokenAddress={vault.depositTokenAddress}
-          className={classes.mainLp}
+          css={styles.mainLp}
         />
         <div className={classes.amountReturned}>
           {quote.position.map((position, i) => {
@@ -270,10 +280,13 @@ export const CowcentratedLoadedQuote = memo(function CowcentratedLoadedQuote({
                 amount={position.amount}
                 chainId={position.token.chainId}
                 tokenAddress={position.token.address}
-                className={clsx(classes.fullWidth, classes[`borderRadiusToken${i}`])}
+                css={css.raw(
+                  styles.fullWidth,
+                  i === 0 ? styles.borderRadiusToken0 : styles.borderRadiusToken1
+                )}
                 showSymbol={false}
                 tokenImageSize={28}
-                amountWithValueClassName={classes.alignItemsEnd}
+                amountWithValueCss={styles.alignItemsEnd}
               />
             );
           })}

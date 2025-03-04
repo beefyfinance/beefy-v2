@@ -1,25 +1,25 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { Trans, useTranslation } from 'react-i18next';
-import { styles } from './styles';
-import { useAppSelector } from '../../../../../../store';
+import { styles } from './styles.ts';
+import { useAppSelector } from '../../../../../../store.ts';
 import { memo } from 'react';
-import { selectTransactVaultId } from '../../../../../data/selectors/transact';
-import { selectAreFeesLoaded, selectFeesByVaultId } from '../../../../../data/selectors/fees';
-import clsx from 'clsx';
-import { formatLargePercent } from '../../../../../../helpers/format';
-import { TextLoader } from '../../../../../../components/TextLoader';
-import { PerformanceFees } from './PerformanceFees';
-import { Label } from './Label';
-import { Value } from './Value';
-import { MaybeZapFees } from './ZapFees';
-import { LabelCustomTooltip, LabelTooltip } from './LabelTooltip';
+import { selectTransactVaultId } from '../../../../../data/selectors/transact.ts';
+import { selectAreFeesLoaded, selectFeesByVaultId } from '../../../../../data/selectors/fees.ts';
+import { css, type CssStyles } from '@repo/styles/css';
+import { formatLargePercent } from '../../../../../../helpers/format.ts';
+import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
+import { PerformanceFees } from './PerformanceFees.tsx';
+import { Label } from './Label.tsx';
+import { Value } from './Value.tsx';
+import { MaybeZapFees } from './ZapFees.tsx';
+import { LabelCustomTooltip, LabelTooltip } from './LabelTooltip.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type VaultFeesProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const VaultFees = memo<VaultFeesProps>(function VaultFees({ className }) {
+export const VaultFees = memo(function VaultFees({ css: cssProp }: VaultFeesProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);
@@ -27,7 +27,7 @@ export const VaultFees = memo<VaultFeesProps>(function VaultFees({ className }) 
   const areFeesLoaded = useAppSelector(selectAreFeesLoaded);
 
   return (
-    <div className={clsx(classes.container, className)}>
+    <div className={css(styles.container, cssProp)}>
       <div className={classes.transactionFees}>
         <Label>
           {t('Transact-Fee-Deposit')} <LabelTooltip title={t('Transact-Fee-Deposit-Explainer')} />
@@ -65,7 +65,7 @@ export const VaultFees = memo<VaultFeesProps>(function VaultFees({ className }) 
           i18nKey={'Transact-Fee-Performance-Explainer'}
           components={{
             PerformanceTooltip: fees ? (
-              <LabelCustomTooltip content={<PerformanceFees fees={fees} />} />
+              <LabelCustomTooltip tooltip={<PerformanceFees fees={fees} />} />
             ) : (
               <span />
             ),
@@ -76,14 +76,14 @@ export const VaultFees = memo<VaultFeesProps>(function VaultFees({ className }) 
   );
 });
 
-export const WithdrawFees = memo<VaultFeesProps>(function WithdrawFees({ className }) {
+export const WithdrawFees = memo(function WithdrawFees({ css: cssProp }: VaultFeesProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);
   const fees = useAppSelector(state => selectFeesByVaultId(state, vaultId));
   const areFeesLoaded = useAppSelector(selectAreFeesLoaded);
   return (
-    <div className={clsx(classes.container, className)}>
+    <div className={css(styles.container, cssProp)}>
       <div className={classes.transactionFees}>
         <Label>
           {t('Transact-Fee-Withdraw')} <LabelTooltip title={t('Transact-Fee-Withdraw-Explainer')} />

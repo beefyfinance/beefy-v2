@@ -17,7 +17,13 @@ export type FetchParamsOptions = {
 
 export type FetchHeaders = HeadersInit;
 
-export type FetchAbortSignal = { signal?: AbortSignal } | { timeout?: number };
+export type FetchAbortSignal =
+  | {
+      signal?: AbortSignal;
+    }
+  | {
+      timeout?: number;
+    };
 
 export type FetchCommonJsonRequest = {
   url: string;

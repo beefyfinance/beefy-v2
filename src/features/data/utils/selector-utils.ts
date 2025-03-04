@@ -7,3 +7,10 @@ export function valueOrThrow<T>(
   }
   return value;
 }
+
+/** For returning from selectors so a new object isn't created causing a re-render */
+export const EMPTY_ARRAY = Object.freeze([]);
+
+export function arrayOrStaticEmpty<T>(arr: T[] | undefined | null): T[] {
+  return !!arr && arr.length ? arr : (EMPTY_ARRAY as unknown as T[]);
+}

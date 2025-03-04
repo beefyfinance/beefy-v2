@@ -1,4 +1,4 @@
-import type { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types.ts';
 import { createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit';
 import {
   accountHasChanged,
@@ -6,10 +6,10 @@ import {
   chainHasChangedToUnsupported,
   userDidConnect,
   walletHasDisconnected,
-} from '../reducers/wallet/wallet';
-import { selectWalletAddress } from '../selectors/wallet';
-import { selectAllChainIds } from '../selectors/chains';
-import { fetchAllBalanceAction } from '../actions/balance';
+} from '../reducers/wallet/wallet.ts';
+import { selectWalletAddress } from '../selectors/wallet.ts';
+import { selectAllChainIds } from '../selectors/chains.ts';
+import { fetchAllBalanceAction } from '../actions/balance.ts';
 
 const hasWalletChanged = isAnyOf(
   userDidConnect,
@@ -27,7 +27,7 @@ const walletListener = createListenerMiddleware<BeefyState>();
 walletListener.startListening({
   matcher: hasWalletChanged,
   effect: async (
-    action,
+    _action,
     { dispatch, delay, cancelActiveListeners, getState, getOriginalState }
   ) => {
     const state = getState();

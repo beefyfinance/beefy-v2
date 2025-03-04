@@ -1,5 +1,5 @@
 import { type BigNumber } from 'bignumber.js';
-import type { ChainEntity } from '../../entities/chain';
+import type { ChainEntity } from '../../entities/chain.ts';
 
 export type DatabarnTimelineEntry = {
   chain: ChainEntity['id'];

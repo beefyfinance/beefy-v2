@@ -1,11 +1,14 @@
 import { memo, useCallback } from 'react';
-import type { VaultEntity } from '../../../../../data/entities/vault';
-import { useAppSelector } from '../../../../../../store';
-import { selectVaultById, selectVaultStrategyAddress } from '../../../../../data/selectors/vaults';
-import { selectChainById } from '../../../../../data/selectors/chains';
-import { GlpNotice } from './GlpNotice';
-import type { GlpLikeConfig } from './types';
-import { getUnlockTime } from './GetUnlockTime';
+import type { VaultEntity } from '../../../../../data/entities/vault.ts';
+import { useAppSelector } from '../../../../../../store.ts';
+import {
+  selectVaultById,
+  selectVaultStrategyAddress,
+} from '../../../../../data/selectors/vaults.ts';
+import { selectChainById } from '../../../../../data/selectors/chains.ts';
+import { GlpNotice } from './GlpNotice.tsx';
+import type { GlpLikeConfig } from './types.ts';
+import { getUnlockTime } from './GetUnlockTime.ts';
 
 export type GlpWithdrawNoticeImplProps = {
   vaultId: VaultEntity['id'];
@@ -13,25 +16,27 @@ export type GlpWithdrawNoticeImplProps = {
   onChange: (isLocked: boolean) => void;
 };
 
-export const GlpWithdrawNoticeImpl = memo<GlpWithdrawNoticeImplProps>(
-  function GlpWithdrawNoticeImpl({ vaultId, config, onChange }) {
-    const vault = useAppSelector(state => selectVaultById(state, vaultId));
-    const chain = useAppSelector(state => selectChainById(state, vault.chainId));
-    const strategyAddress = useAppSelector(state => selectVaultStrategyAddress(state, vault.id));
-    const depositTokenAddress = vault.depositTokenAddress;
+export const GlpWithdrawNoticeImpl = memo(function GlpWithdrawNoticeImpl({
+  vaultId,
+  config,
+  onChange,
+}: GlpWithdrawNoticeImplProps) {
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
+  const strategyAddress = useAppSelector(state => selectVaultStrategyAddress(state, vault.id));
+  const depositTokenAddress = vault.depositTokenAddress;
 
-    const fetchUnlockTime = useCallback(
-      () => getUnlockTime(depositTokenAddress, strategyAddress, chain, config),
-      [strategyAddress, depositTokenAddress, chain, config]
-    );
+  const fetchUnlockTime = useCallback(
+    () => getUnlockTime(depositTokenAddress, strategyAddress, chain, config),
+    [strategyAddress, depositTokenAddress, chain, config]
+  );
 
-    return (
-      <GlpNotice
-        noticeKey="Glp-Withdraw-Notice"
-        noticeKeyUnlocks="Glp-Withdraw-Notice-Unlocks"
-        onChange={onChange}
-        fetchUnlockTime={fetchUnlockTime}
-      />
-    );
-  }
-);
+  return (
+    <GlpNotice
+      noticeKey="Glp-Withdraw-Notice"
+      noticeKeyUnlocks="Glp-Withdraw-Notice-Unlocks"
+      onChange={onChange}
+      fetchUnlockTime={fetchUnlockTime}
+    />
+  );
+});

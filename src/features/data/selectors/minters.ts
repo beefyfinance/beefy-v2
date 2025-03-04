@@ -1,8 +1,9 @@
-import type { BeefyState } from '../../../redux-types';
-import type { MinterEntity } from '../entities/minter';
-import { isGovVault, isStandardVault, type VaultEntity } from '../entities/vault';
-import { selectVaultById } from './vaults';
-import { createGlobalDataSelector, shouldLoaderLoadOnce } from './data-loader-helpers';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { MinterEntity } from '../entities/minter.ts';
+import { isGovVault, isStandardVault, type VaultEntity } from '../entities/vault.ts';
+import { selectVaultById } from './vaults.ts';
+import { createGlobalDataSelector, shouldLoaderLoadOnce } from './data-loader-helpers.ts';
+import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
 
 export const selectMinterById = (state: BeefyState, minterId: MinterEntity['id']) => {
   const mintersById = state.entities.minters.byId;
@@ -17,7 +18,7 @@ export const selectMintersByVaultId = (
   state: BeefyState,
   vaultId: VaultEntity['id']
 ): MinterEntity['id'][] => {
-  return state.entities.minters.byVaultId[vaultId] || [];
+  return arrayOrStaticEmpty(state.entities.minters.byVaultId[vaultId]);
 };
 
 export const selectMinterReserves = (state: BeefyState, minterId: MinterEntity['id']) => {
@@ -44,6 +45,6 @@ export const selectMinterVaultsType = (state: BeefyState, minterId: MinterEntity
   return vaultsCount > 0 && govsCount > 0
     ? 'WithEarnings'
     : vaultsCount > 0 && govsCount === 0
-    ? 'WithoutEarnings'
-    : 'OnlyEarnings';
+      ? 'WithoutEarnings'
+      : 'OnlyEarnings';
 };

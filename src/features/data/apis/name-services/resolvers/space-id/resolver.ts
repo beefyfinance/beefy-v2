@@ -1,19 +1,24 @@
-import type { ChainId } from '../../../../entities/chain';
-import { ZERO_ADDRESS } from '../../../../../../helpers/addresses';
-import { hashDomain, normalizeAddress, normalizeAndHashDomain, normalizeDomain } from '../../utils';
+import type { ChainId } from '../../../../entities/chain.ts';
+import { ZERO_ADDRESS } from '../../../../../../helpers/addresses.ts';
+import {
+  hashDomain,
+  normalizeAddress,
+  normalizeAndHashDomain,
+  normalizeDomain,
+} from '../../utils.ts';
 import type { Abi, Address, Hash } from 'viem';
-import type { AllChainsFromTldToChain } from '../../types';
-import type { tldToChain } from './tlds';
-import { fetchContract } from '../../../rpc-contract/viem-contract';
+import type { AllChainsFromTldToChain } from '../../types.ts';
+import type { tldToChain } from './tlds.ts';
+import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
 
-const registryAddresses: Record<AllChainsFromTldToChain<typeof tldToChain>, Address> = {
+const registryAddresses: Partial<Record<ChainId, Address>> = {
   // ethereum: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   bsc: '0x08CEd32a7f3eeC915Ba84415e9C07a7286977956',
   gnosis: '0x5dC881dDA4e4a8d312be3544AD13118D1a04Cb17',
   // manta: '0x5dC881dDA4e4a8d312be3544AD13118D1a04Cb17',
   mode: '0x5dC881dDA4e4a8d312be3544AD13118D1a04Cb17',
   arbitrum: '0x4a067EE58e73ac5E4a43722E008DFdf65B2bF348',
-};
+} satisfies Record<AllChainsFromTldToChain<typeof tldToChain>, Address>;
 
 const registryAbi = [
   {
@@ -105,7 +110,7 @@ export async function addressToDomain(
 
   const resolverContract = fetchContract(resolverAddress, reverseResolverAbi, chainId);
   try {
-    const domain = await resolverContract.read.name([reverseHash]);
+    const domain: string = await resolverContract.read.name([reverseHash]);
     return domain || undefined;
   } catch {
     return undefined;

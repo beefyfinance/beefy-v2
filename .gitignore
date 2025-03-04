@@ -1,13 +1,21 @@
-/node_modules/
-/.idea/
-.eslintcache
-.env
-.*.sw[m-p]
-.vscode
+# OS
 .DS_Store
-/tmp
-/build
-madge.svg
-yarn-error.log
-/analyze.html
-/scripts/.cache/
+
+# IDE
+.idea/
+.vscode/
+
+# Secrets
+.env
+.env.*
+
+# Logs
+*.log
+npm-debg.log*
+analyze-bundle.html
+analyze-source.svg
+
+# Generated
+node_modules/
+.cache/
+build/

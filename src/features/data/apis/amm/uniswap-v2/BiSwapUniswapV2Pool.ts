@@ -1,10 +1,10 @@
-import type { MintFeeParams, PairData as BasePairData } from './UniswapV2Pool';
-import { UniswapV2Pool } from './UniswapV2Pool';
+import type { MintFeeParams, PairData as BasePairData } from './UniswapV2Pool.ts';
+import { UniswapV2Pool } from './UniswapV2Pool.ts';
 import { BigNumber } from 'bignumber.js';
-import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
-import type { SwapFeeParams } from '../types';
+import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
+import type { SwapFeeParams } from '../types.ts';
 import type { Abi } from 'abitype';
-import { fetchContract } from '../../rpc-contract/viem-contract';
+import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 
 type PairData = BasePairData & {
   devFee: BigNumber;
