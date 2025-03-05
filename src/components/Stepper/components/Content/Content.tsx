@@ -94,10 +94,7 @@ export const ErrorContent = memo(function ErrorContent() {
     if (e.target instanceof HTMLElement && window.getSelection) {
       const selection = window.getSelection();
       if (selection) {
-        const range = document.createRange();
-        range.selectNodeContents(e.target);
-        selection.removeAllRanges();
-        selection.addRange(range);
+        selection.selectAllChildren(e.target);
       }
     }
   }, []);

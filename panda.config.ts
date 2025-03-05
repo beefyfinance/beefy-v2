@@ -215,6 +215,7 @@ const config = buildConfig(
       '.scrollbar': {
         '&::-webkit-scrollbar': {
           width: '0.5rem',
+          height: '0.5rem',
         },
         '&::-webkit-scrollbar-thumb': {
           backgroundColor: '{colors.scrollbar.thumb}',
