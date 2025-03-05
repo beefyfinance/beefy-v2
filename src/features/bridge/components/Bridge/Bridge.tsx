@@ -1,7 +1,5 @@
 import type { FC } from 'react';
 import { memo, useEffect } from 'react';
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
 import { useAppDispatch, useAppSelector } from '../../../../store.ts';
 import { selectBridgeFormStep } from '../../../data/selectors/bridge.ts';
 import { selectWalletAddressIfKnown } from '../../../data/selectors/wallet.ts';
@@ -15,8 +13,6 @@ import { LoadingStep } from './components/LoadingStep/LoadingStep.tsx';
 import { selectIsConfigAvailable } from '../../../data/selectors/data-loader.ts';
 import { TransactionStep } from './components/TransactionStep/TransactionStep.tsx';
 
-const useStyles = legacyMakeStyles(styles);
-
 const stepToComponent: Record<FormStep, FC> = {
   [FormStep.Loading]: LoadingStep,
   [FormStep.Preview]: PreviewStep,
@@ -27,7 +23,6 @@ const stepToComponent: Record<FormStep, FC> = {
 };
 
 export const Bridge = memo(function Bridge() {
-  const classes = useStyles();
   const dispatch = useAppDispatch();
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
   const step = useAppSelector(selectBridgeFormStep);
@@ -41,7 +36,7 @@ export const Bridge = memo(function Bridge() {
   }, [dispatch, walletAddress, globalConfigLoaded]);
 
   return (
-    <div className={classes.container}>
+    <div>
       <StepComponent />
     </div>
   );

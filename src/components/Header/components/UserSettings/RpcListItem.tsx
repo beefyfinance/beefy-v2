@@ -1,7 +1,6 @@
 import { memo, type MouseEventHandler, useCallback, useMemo } from 'react';
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
 import { ChainIcon } from '../../../ChainIcon/ChainIcon.tsx';
-import type { ItemInnerProps } from '../../../SearchableList/ItemInner.tsx';
 import { useAppSelector } from '../../../../store.ts';
 import {
   selectActiveRpcUrlForChain,
@@ -12,6 +11,7 @@ import { restoreDefaultRpcsOnSingleChain } from '../../../../features/data/actio
 import Refresh from '../../../../images/icons/mui/Refresh.svg?react';
 import { PanelCloseButton } from './Panel.tsx';
 import { styled } from '@repo/styles/jsx';
+import type { ItemInnerProps } from '../../../SearchableList/Item.tsx';
 
 export const ChainRpcItem = memo(function ChainRpcItem({
   value,
