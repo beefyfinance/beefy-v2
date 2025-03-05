@@ -71,10 +71,10 @@ const config = buildConfig(
     // Browserslist for lightningcss
     browserslist: isProduction
       ? [
-          '>0.1% and fully supports es6-module and fully supports es6-module-dynamic-import',
-          'not dead',
-          'not op_mini all',
-        ]
+        '>0.1% and fully supports es6-module and fully supports es6-module-dynamic-import',
+        'not dead',
+        'not op_mini all',
+      ]
       : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
@@ -285,7 +285,8 @@ const config = buildConfig(
           clematisBlue: { value: '#38428f', description: 'tag.platformClm' },
           blueGem: { value: '#4b388f', description: 'tag.platformGov' },
           blueJewel: { value: '#495086', description: 'button bg hover' },
-          cornflower: { value: '#5c70d6', description: 'tag.clm + indicators.info' },
+          cornflower: { value: '#5c70d6', description: 'tag.points + indicators.info' },
+          clmTag: { value: '#0052CC', description: 'tag.clm' },
           grayDark: { value: '#999cb3', description: 'text dark' },
           gray: { value: '#d0d0da', description: 'text middle' },
           grayLight: { value: '#e5e5e5', description: 'txsModal.bgLine' },
@@ -454,7 +455,7 @@ const config = buildConfig(
           },
           tags: {
             clm: {
-              background: { value: '{colors.cornflower}' },
+              background: { value: '{colors.clmTag}' },
               text: { value: '{colors.whiteOff}' },
             },
             earnings: { background: { value: '{colors.cornflower}' } },
