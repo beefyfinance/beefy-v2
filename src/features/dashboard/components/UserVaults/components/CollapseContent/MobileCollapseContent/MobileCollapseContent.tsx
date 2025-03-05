@@ -10,7 +10,6 @@ import { useChartOptions } from '../useChartOptions.ts';
 import { useMediaQuery } from '../../../../../../../components/MediaQueries/useMediaQuery.ts';
 import { Select } from '../../../../../../../components/Form/Select/Single/Select.tsx';
 import type { SelectItem } from '../../../../../../../components/Form/Select/types.ts';
-import { css } from '@repo/styles/css';
 
 const useStyles = legacyMakeStyles(styles);
 

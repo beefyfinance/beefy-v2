@@ -2,7 +2,9 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   container: css.raw({
-    backgroundColor: 'white',
+    colorPalette: 'tooltip.light',
+    background: 'colorPalette.background',
+    color: 'colorPalette.text',
     borderRadius: '4px',
     minWidth: '150px',
     maxWidth: '180px',
@@ -19,14 +21,13 @@ export const styles = {
     flexDirection: 'column',
     rowGap: '4px',
   }),
-
   icon: css.raw({
     height: '24px',
     width: '24px',
   }),
   title: css.raw({
     textStyle: 'body.medium',
-    color: 'var(--tooltip-title-color)',
+    color: 'colorPalette.text.title',
     textTransform: 'uppercase',
     textOverflow: 'ellipsis',
     width: '90%',
@@ -39,11 +40,11 @@ export const styles = {
   }),
   value: css.raw({
     textStyle: 'body.sm',
-    color: 'var(--tooltip-value-color)',
+    color: 'colorPalette.text.item',
   }),
   label: css.raw({
     textStyle: 'body.sm.medium',
-    color: 'var(--tooltip-title-color)',
+    color: 'colorPalette.text.label',
   }),
   triangle: css.raw({
     width: '0',
