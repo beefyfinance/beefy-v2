@@ -1,6 +1,6 @@
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
-import { css } from '@repo/styles/css';
-import { type FC, memo, type ReactNode, useCallback, useMemo } from 'react';
+import { css, cx } from '@repo/styles/css';
+import { type FC, memo, type MouseEventHandler, type ReactNode, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import type { Step } from '../../../../features/data/reducers/wallet/stepper.ts';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper.ts';
@@ -90,6 +90,18 @@ export const ErrorContent = memo(function ErrorContent() {
   const { t } = useTranslation();
   const classes = useStyles();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
+  const handleSelectAll = useCallback<MouseEventHandler<HTMLDivElement>>(e => {
+    if (e.target instanceof HTMLElement && window.getSelection) {
+      const selection = window.getSelection();
+      if (selection) {
+        const range = document.createRange();
+        range.selectNodeContents(e.target);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    }
+  }, []);
+
   if (!isWalletActionError(walletActionsState)) {
     return null;
   }
@@ -111,7 +123,9 @@ export const ErrorContent = memo(function ErrorContent() {
             {walletActionsState.data.error.friendlyMessage}
           </div>
         )}
-        <div className={classes.message}>{walletActionsState.data.error.message}</div>
+        <div className={cx(classes.errorMessage, 'scrollbar')} onClick={handleSelectAll}>
+          {walletActionsState.data.error.message}
+        </div>
       </div>
       <div className={classes.buttons}>
         <CloseButton />

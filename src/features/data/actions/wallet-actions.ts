@@ -91,7 +91,7 @@ import { fetchWalletContract } from '../apis/rpc-contract/viem-contract.ts';
 import type { Address } from 'abitype';
 import { rpcClientManager } from '../apis/rpc-contract/rpc-manager.ts';
 import { waitForTransactionReceipt } from 'viem/actions';
-import type { Chain, Hash, PublicClient, TransactionReceipt } from 'viem';
+import { BaseError, type Chain, type Hash, type PublicClient, type TransactionReceipt } from 'viem';
 import type { MigratorUnstakeProps } from '../apis/migration/migration-types.ts';
 import type { GasPricing } from '../apis/gas-prices/gas-prices.ts';
 
@@ -230,11 +230,15 @@ function txMined(
 function txError(
   dispatch: ThunkDispatch<BeefyState, unknown, Action<string>>,
   context: TxContext,
-  error: TrxError
+  error: unknown,
+  from?: string
 ) {
   const { additionalData } = context;
-
-  dispatch(createWalletActionErrorAction(error, additionalData));
+  const txError = getWalletErrorMessage(error);
+  if (from) {
+    console.error(from, txError);
+  }
+  dispatch(createWalletActionErrorAction(txError, additionalData));
   dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
 }
 
@@ -1618,6 +1622,21 @@ export const walletActions = {
   claimStellaSwap,
 };
 
+function getWalletErrorMessage(error: unknown): TrxError {
+  if (error instanceof Error) {
+    if (error instanceof FriendlyError) {
+      return {
+        message: getWalletErrorMessage(error.getInnerError()).message,
+        friendlyMessage: error.message,
+      };
+    } else if (error instanceof BaseError && error.shortMessage) {
+      return { message: errorToString(error), friendlyMessage: error.shortMessage };
+    }
+  }
+
+  return { message: errorToString(error) };
+}
+
 export function captureWalletErrors(
   func: BeefyThunk<Promise<unknown>>
 ): BeefyThunk<Promise<unknown>> {
@@ -1625,14 +1644,7 @@ export function captureWalletErrors(
     try {
       return await func(dispatch, getState, extraArgument);
     } catch (error) {
-      const txError =
-        error instanceof FriendlyError
-          ? { message: errorToString(error.getInnerError()), friendlyMessage: error.message }
-          : { message: errorToString(error) };
-
-      console.error('captureWalletErrors', error);
-      dispatch(createWalletActionErrorAction(txError, undefined));
-      dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
+      txError(dispatch, {}, error, 'captureWalletErrors');
     }
   };
 }
@@ -1655,17 +1667,17 @@ function bindTransactionEvents(
           if (success) {
             txMined(dispatch, context, receipt);
           } else {
-            txError(dispatch, context, { message: 'Transaction failed.' });
+            txError(dispatch, context, 'Transaction failed.', 'bindTransactionEvents::reverted');
           }
         })
         .catch(error => {
           // error mining transaction
-          txError(dispatch, context, { message: String(error) });
+          txError(dispatch, context, error, 'bindTransactionEvents::receipt');
         });
     })
     .catch(error => {
       // error submitting transaction
-      txError(dispatch, context, { message: String(error) });
+      txError(dispatch, context, error, 'bindTransactionEvents::submit');
     });
 }
 
