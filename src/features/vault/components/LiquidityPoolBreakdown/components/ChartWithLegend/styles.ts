@@ -11,7 +11,7 @@ export const styles = {
     },
     lg: {
       flexDirection: 'column',
-      borderRight: 'solid 2px bayOfMany',
+      borderRight: 'solid 2px {colors.bayOfMany}',
     },
   }),
   legend: css.raw({
