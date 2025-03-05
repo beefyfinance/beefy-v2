@@ -274,6 +274,31 @@
     ]
   },
   {
+    "id": "morpho-gauntlet-eusd",
+    "name": "eUSD",
+    "token": "eUSD",
+    "tokenAddress": "0xA0d69E286B938e21CBf7E51D71F6A4c8918f482F",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0x426205AB591f5c843A83418E97e6c448A3A51733",
+    "earnedToken": "mooMorpho-eUSD",
+    "earnedTokenAddress": "0x426205AB591f5c843A83418E97e6c448A3A51733",
+    "oracle": "tokens",
+    "oracleId": "eUSD",
+    "status": "active",
+    "createdAt": XXX1738747621,
+    "platformId": "morpho",
+    "assets": ["eUSD"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "fx-usdc-fxusd",
     "name": "fxUSD/USDC",
     "token": "USDCfxUSD",
