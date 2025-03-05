@@ -1,4 +1,4 @@
-import type { ChainEntity } from '../features/data/entities/chain';
+import type { ChainEntity } from '../features/data/entities/chain.ts';
 
 export function explorerTokenUrl(chain: ChainEntity, tokenAddress: string) {
   return chain.explorerTokenUrlTemplate.replace('{address}', tokenAddress);

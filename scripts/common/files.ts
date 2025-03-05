@@ -1,8 +1,11 @@
 import { createWriteStream } from 'node:fs';
-import { access, constants, readFile, writeFile } from 'node:fs/promises';
+import { access, constants, mkdir, readFile, writeFile } from 'node:fs/promises';
 import * as prettier from 'prettier';
+import { dirname } from 'node:path';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- type from JSON.stringify
 type JsonReplacer = (key: string, value: any) => any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- type from JSON.parse
 type JsonReviver = (key: string, value: any) => any;
 
 export async function fileAccess(path: string, mode: number): Promise<boolean> {
@@ -30,16 +33,17 @@ export async function saveString(path: string, data: string) {
   return writeFile(path, data, 'utf-8');
 }
 
-async function formatJson<DataType = any>(
+async function formatJson<DataType>(
   path: string,
   json: DataType,
   pretty: boolean | 'prettier' = false,
   replacer?: JsonReplacer
 ): Promise<string> {
   switch (pretty) {
-    case 'prettier':
+    case 'prettier': {
       const config = await prettier.resolveConfig(path);
       return prettier.format(JSON.stringify(json, replacer, 2), { ...config, filepath: path });
+    }
     case true:
       return JSON.stringify(json, replacer, 2);
     default:
@@ -47,7 +51,7 @@ async function formatJson<DataType = any>(
   }
 }
 
-export async function saveJson<DataType = any>(
+export async function saveJson<DataType>(
   path: string,
   json: DataType,
   pretty: boolean | 'prettier' = false,
@@ -60,12 +64,12 @@ export async function loadString(path: string): Promise<string> {
   return await readFile(path, 'utf-8');
 }
 
-export async function loadJson<ReturnType = any>(
+export async function loadJson<ReturnType>(
   path: string,
   reviver?: JsonReviver
 ): Promise<ReturnType> {
   const json = await readFile(path, 'utf-8');
-  return JSON.parse(json, reviver);
+  return JSON.parse(json, reviver) as ReturnType;
 }
 
 function escapeCsvValue(input: string) {
@@ -74,6 +78,7 @@ function escapeCsvValue(input: string) {
   return `"${escaped}"`;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- type from JSON.stringify
 export function stringifyBigInt(_key: string, value: any): any {
   if (typeof value === 'bigint') {
     return `${value.toString(10)}n`;
@@ -82,6 +87,7 @@ export function stringifyBigInt(_key: string, value: any): any {
   return value;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- type from JSON.parse
 export function parseBigInt(_key: string, value: any): any {
   if (typeof value === 'string' && value.length > 1 && value[value.length - 1] === 'n') {
     if (value === '0n') {
@@ -96,7 +102,7 @@ export function parseBigInt(_key: string, value: any): any {
   return value;
 }
 
-export async function saveJsonSupportingBigInt<DataType = any>(
+export async function saveJsonSupportingBigInt<DataType>(
   path: string,
   json: DataType,
   pretty: boolean | 'prettier' = false
@@ -104,17 +110,15 @@ export async function saveJsonSupportingBigInt<DataType = any>(
   return saveJson(path, json, pretty, stringifyBigInt);
 }
 
-export async function loadJsonSupportingBigInt<ReturnType = any>(
-  path: string
-): Promise<ReturnType> {
+export async function loadJsonSupportingBigInt<ReturnType>(path: string): Promise<ReturnType> {
   return loadJson(path, parseBigInt);
 }
 
-export async function saveCsv<T extends Record<string, any>>(
+export async function saveCsv<T extends Record<string, unknown>>(
   path: string,
   data: T[],
   withHeader: boolean = true,
-  columns?: (keyof T)[]
+  columns?: (keyof T & string)[]
 ) {
   if (!columns || columns.length === 0) {
     if (data.length === 0) {
@@ -125,10 +129,36 @@ export async function saveCsv<T extends Record<string, any>>(
 
   const stream = createWriteStream(path);
   if (withHeader) {
-    stream.write(columns.map(escapeCsvValue).join(',') + '\n');
+    stream.write(columns.map(key => escapeCsvValue(key.toString())).join(',') + '\n');
   }
   for (const row of data) {
-    stream.write(columns.map(column => escapeCsvValue(row[column])).join(',') + '\n');
+    stream.write(columns.map(column => escapeCsvValue(String(row[column]))).join(',') + '\n');
   }
   stream.end();
+}
+
+export function withFileCache<FN extends (...args: never[]) => Promise<unknown>>(
+  factoryFn: FN,
+  cachePathFn: (...args: Parameters<FN>) => string
+) {
+  return async (forceUpdate: boolean, ...args: Parameters<FN>): Promise<ReturnType<FN>> => {
+    const cachePath = cachePathFn(...args);
+
+    if (!forceUpdate) {
+      try {
+        if (await fileReadable(cachePath)) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return await loadJsonSupportingBigInt(cachePath);
+        }
+      } catch (e) {
+        console.error('Failed to read cache', cachePath, e);
+      }
+    }
+
+    const data = (await factoryFn(...args)) as ReturnType<FN>;
+    await mkdir(dirname(cachePath), { recursive: true });
+    await saveJsonSupportingBigInt(cachePath, data, true);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return data;
+  };
 }

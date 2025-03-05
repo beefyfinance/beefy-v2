@@ -6,10 +6,10 @@ import {
   tenderlySimulateMerklClaim,
   tenderlySimulateStellaSwapClaim,
   tenderlySimulateTransactQuote,
-} from '../actions/tenderly';
-import { transactActions } from './wallet/transact';
-import type { TenderlyState } from './tenderly-types';
-import type { BeefyState } from '../../../redux-types';
+} from '../actions/tenderly.ts';
+import { transactActions } from './wallet/transact.ts';
+import type { TenderlyState } from './tenderly-types.ts';
+import type { BeefyState } from '../../../redux-types.ts';
 
 const initialState: TenderlyState = {
   mode: 'closed',
@@ -32,8 +32,14 @@ export const tenderlySlice = createSlice({
     },
   },
   extraReducers: builder => {
-    const handleCalls = (
-      thunk: AsyncThunk<TenderlyOpenSimulationPayload, unknown, { state: BeefyState }>
+    const handleCalls = <T>(
+      thunk: AsyncThunk<
+        TenderlyOpenSimulationPayload,
+        T,
+        {
+          state: BeefyState;
+        }
+      >
     ) => {
       builder
         .addCase(thunk.pending, state => {

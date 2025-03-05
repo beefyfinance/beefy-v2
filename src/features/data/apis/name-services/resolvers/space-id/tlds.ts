@@ -1,4 +1,4 @@
-import type { ChainId } from '../../../../entities/chain';
+import type { ChainId } from '../../../../entities/chain.ts';
 
 // https://etherscan.io/address/0x754D6827A57334143eD5fB58C5b1A4aAe4396ba5#readContract
 export const tldToChain = {

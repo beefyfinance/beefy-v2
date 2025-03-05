@@ -1,5 +1,5 @@
-import { config as chainConfigs } from '../../../config/config';
-import type { ChainEntity } from '../entities/chain';
+import { config as chainConfigs } from '../../../config/config.ts';
+import type { ChainEntity } from '../entities/chain.ts';
 import type {
   AmmConfig,
   BeefyBridgeConfig,
@@ -13,11 +13,11 @@ import type {
   SwapAggregatorConfigLoose,
   VaultConfig,
   ZapConfig,
-} from './config-types';
+} from './config-types.ts';
 import { mapValues } from 'lodash-es';
-import type { MigrationConfig } from '../reducers/wallet/migration';
-import { entries, keys } from '../../../helpers/object';
-import { getMigratorConfig, getMinterConfig } from '../../../helpers/getConfig';
+import type { MigrationConfig } from '../reducers/wallet/migration.ts';
+import { entries, keys } from '../../../helpers/object.ts';
+import { getMigratorConfig, getMinterConfig } from '../../../helpers/getConfig.ts';
 
 /**
  * A class to access beefy configuration
@@ -29,23 +29,27 @@ export class ConfigAPI {
   }
 
   public async fetchPartnersConfig(): Promise<PartnersConfig> {
-    return { ...(await import('../../../helpers/partners')) };
+    return { ...(await import('../../../helpers/partners.ts')) };
   }
 
-  public async fetchZapAmms(): Promise<{ [chainId in ChainEntity['id']]: AmmConfig[] }> {
+  public async fetchZapAmms(): Promise<{
+    [chainId in ChainEntity['id']]: AmmConfig[];
+  }> {
     return Object.fromEntries(
       await Promise.all(
         Object.keys(chainConfigs).map(async chainId => [
           chainId,
-          (await import(`../../../config/zap/amm/${chainId}.json`)).default,
+          (await import(`../../../config/zap/amm/${chainId}.json`)).default as AmmConfig[],
         ])
       )
-    );
+    ) as {
+      [chainId in ChainEntity['id']]: AmmConfig[];
+    };
   }
 
   public async fetchBeefyBridgeConfig(): Promise<BeefyBridgeConfig> {
     // json chain id string isn't automatically narrowed to ChainId
-    return (await import('../../../config/beefy-bridge')).beefyBridgeConfig;
+    return (await import('../../../config/beefy-bridge.ts')).beefyBridgeConfig;
   }
 
   public async fetchZapSwapAggregators(): Promise<SwapAggregatorConfig[]> {
@@ -60,12 +64,16 @@ export class ConfigAPI {
     return (await import('../../../config/zap/zaps.json')).default as ZapConfig[];
   }
 
-  public async fetchAllVaults(): Promise<{ [chainId in ChainEntity['id']]: VaultConfig[] }> {
-    const vaultsByChainId: { [chainId in ChainEntity['id']]: VaultConfig[] } = Object.fromEntries(
+  public async fetchAllVaults(): Promise<{
+    [chainId in ChainEntity['id']]: VaultConfig[];
+  }> {
+    const vaultsByChainId: {
+      [chainId in ChainEntity['id']]: VaultConfig[];
+    } = Object.fromEntries(
       await Promise.all(
         keys(chainConfigs).map(async chainId => [
           chainId,
-          (await import(`../../../config/vault/${chainId}.json`)).default,
+          (await import(`../../../config/vault/${chainId}.json`)).default as VaultConfig[],
         ])
       )
     );
@@ -81,7 +89,9 @@ export class ConfigAPI {
       })
     );
 
-    return Object.fromEntries(entries.filter(entry => entry !== undefined));
+    return Object.fromEntries(entries.filter(entry => entry !== undefined)) as {
+      [chainId in ChainEntity['id']]?: MinterConfig[];
+    };
   }
 
   public async fetchAllMigrators(): Promise<{
@@ -94,7 +104,9 @@ export class ConfigAPI {
       })
     );
 
-    return Object.fromEntries(entries.filter(entry => entry !== undefined));
+    return Object.fromEntries(entries.filter(entry => entry !== undefined)) as {
+      [chainId in ChainEntity['id']]?: MigrationConfig[];
+    };
   }
 
   public async fetchPlatforms(): Promise<PlatformConfig[]> {

@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyMetaThunkConfig, BeefyState } from '../../../redux-types';
-import { getClmApi, getDatabarnApi } from '../apis/instances';
+import type { BeefyMetaThunkConfig, BeefyState } from '../../../redux-types.ts';
+import { getClmApi, getDatabarnApi } from '../apis/instances.ts';
 import {
   type AnyTimelineEntity,
   type AnyTimelineEntry,
   isTimelineEntityCowcentratedPool,
+  isTimelineEntityCowcentratedVault,
   type TimelineEntryCowcentratedPool,
   type TimelineEntryCowcentratedVault,
   type TimelineEntryStandard,
@@ -14,14 +15,13 @@ import {
   type UnprocessedTimelineEntryCowcentratedWithoutRewardPoolPart,
   type UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart,
   type UnprocessedTimelineEntryStandard,
-  isTimelineEntityCowcentratedVault,
-} from '../entities/analytics';
+} from '../entities/analytics.ts';
 import { BigNumber } from 'bignumber.js';
 import type {
   DatabarnProductPriceRow,
   DatabarnTimeBucket,
   DatabarnTimelineEntry,
-} from '../apis/databarn/databarn-types';
+} from '../apis/databarn/databarn-types.ts';
 import {
   getCowcentratedPool,
   isCowcentratedLikeVault,
@@ -29,8 +29,8 @@ import {
   isStandardVault,
   isVaultRetired,
   type VaultEntity,
-} from '../entities/vault';
-import { isFiniteNumber } from '../../../helpers/number';
+} from '../entities/vault.ts';
+import { isFiniteNumber } from '../../../helpers/number.ts';
 import {
   selectAllVaultsWithBridgedVersion,
   selectCowcentratedLikeVaultById,
@@ -38,20 +38,20 @@ import {
   selectVaultByAddressOrUndefined,
   selectVaultById,
   selectVaultStrategyAddressOrUndefined,
-} from '../selectors/vaults';
-import { selectCowcentratedLikeVaultDepositTokens } from '../selectors/tokens';
+} from '../selectors/vaults.ts';
+import { selectCowcentratedLikeVaultDepositTokens } from '../selectors/tokens.ts';
 import { groupBy, keyBy, mapValues, omitBy, partition, pick, sortBy, values } from 'lodash-es';
-import type { ChainEntity } from '../entities/chain';
-import { entries } from '../../../helpers/object';
-import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
-import { selectUserDepositedVaultIds } from '../selectors/balance';
+import type { ChainEntity, ChainId } from '../entities/chain.ts';
+import { entries } from '../../../helpers/object.ts';
+import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
+import { selectUserDepositedVaultIds } from '../selectors/balance.ts';
 import {
   selectClassicHarvestsByVaultId,
   selectClmHarvestsByVaultId,
   selectUserDepositedTimelineByVaultId,
   selectUserFirstDepositDateByVaultId,
   selectUserHasCurrentDepositTimelineByVaultId,
-} from '../selectors/analytics';
+} from '../selectors/analytics.ts';
 import type {
   ApiClassicHarvestRow,
   ApiClmHarvestRow,
@@ -61,34 +61,30 @@ import type {
   ClmPriceHistoryEntryClm,
   ClmTimelineEntryClassic,
   ClmTimelineEntryClm,
-} from '../apis/clm/clm-api-types';
-import type { TokenEntity } from '../entities/token';
+} from '../apis/clm/clm-api-types.ts';
+import type { TokenEntity } from '../entities/token.ts';
 import { getUnixTime, isAfter, subHours } from 'date-fns';
 import {
   selectDashboardShouldLoadBalanceForChainUser,
   selectIsClmHarvestsForUserChainPending,
   selectIsClmHarvestsForUserPending,
   selectIsWalletTimelineForUserPending,
-} from '../selectors/data-loader';
-import { selectAllChainIds, selectChainById } from '../selectors/chains';
-import { fetchAllBalanceAction } from './balance';
-import {
-  isFulfilledResult,
-  isRejectedResult,
-  PromiseSettledAwaiter,
-} from '../../../helpers/promises';
-import { isDefined, isNonEmptyArray } from '../utils/array-utils';
+} from '../selectors/data-loader.ts';
+import { selectAllChainIds, selectChainById } from '../selectors/chains.ts';
+import { fetchAllBalanceAction } from './balance.ts';
+import { isFulfilledResult, isRejectedResult } from '../../../helpers/promises.ts';
+import { isDefined, isNonEmptyArray } from '../utils/array-utils.ts';
 import {
   getDataApiBucketIntervalKey,
   getDataApiBucketRangeStartDate,
   getDataApiBucketRangeStartDateUnix,
   getDataApiBucketsFromDates,
-} from '../apis/beefy/beefy-data-api-helpers';
-import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
-import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils';
-import { isLessThanDurationAgoUnix } from '../../../helpers/date';
-import { isClmTimelineEntryClassic } from '../apis/clm/clm-api-typeguards';
-import { fetchUserOffChainRewardsForDepositedVaultsAction } from './user-rewards/user-rewards';
+} from '../apis/beefy/beefy-data-api-helpers.ts';
+import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
+import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils.ts';
+import { isLessThanDurationAgoUnix } from '../../../helpers/date.ts';
+import { isClmTimelineEntryClassic } from '../apis/clm/clm-api-typeguards.ts';
+import { fetchUserOffChainRewardsForDepositedVaultsAction } from './user-rewards/user-rewards.ts';
 
 export interface FetchWalletTimelineFulfilled {
   timelines: Record<VaultEntity['id'], AnyTimelineEntity>;
@@ -98,7 +94,7 @@ export interface FetchWalletTimelineFulfilled {
 type BaseVault = {
   productKey: string;
   vaultId: string;
-  chainId: string;
+  chainId: ChainId;
 };
 
 function makeTransactionId(
@@ -174,7 +170,7 @@ function handleDatabarnTimeline(
   // Build a map of bridge vaults to their base vaults
   const bridgeVaultIds = selectAllVaultsWithBridgedVersion(state);
   const bridgeToBaseId = bridgeVaultIds.reduce(
-    (accum: Partial<Record<ChainEntity['id'], BaseVault>>, vault) => {
+    (accum: Partial<Record<string, BaseVault>>, vault) => {
       if (isStandardVault(vault) && vault.bridged) {
         for (const [chainId, address] of entries(vault.bridged)) {
           accum[`beefy:vault:${chainId}:${address.toLowerCase()}`] = {
@@ -426,8 +422,12 @@ function handleCowcentratedVaultTimeline(
 
 export const fetchWalletTimeline = createAsyncThunk<
   FetchWalletTimelineFulfilled,
-  { walletAddress: string },
-  { state: BeefyState }
+  {
+    walletAddress: string;
+  },
+  {
+    state: BeefyState;
+  }
 >(
   'analytics/fetchWalletTimeline',
   async ({ walletAddress }, { getState }) => {
@@ -636,7 +636,9 @@ interface DataBarnPricesProps {
 export const fetchShareToUnderlying = createAsyncThunk<
   DataBarnPricesFulfilled,
   DataBarnPricesProps,
-  BeefyMetaThunkConfig<{ since: number }>
+  BeefyMetaThunkConfig<{
+    since: number;
+  }>
 >(
   'analytics/fetchShareToUnderlying',
   async ({ timeBucket, vaultId }, { getState, fulfillWithValue }) => {
@@ -685,7 +687,9 @@ interface ClmPriceHistoryParams {
 export const fetchCowcentratedPriceHistoryClassic = createAsyncThunk<
   ClmPriceHistoryFulfilled<ClmPriceHistoryEntryClassic>,
   ClmPriceHistoryParams,
-  BeefyMetaThunkConfig<{ since: number }>
+  BeefyMetaThunkConfig<{
+    since: number;
+  }>
 >(
   'analytics/fetchCowcentratedPriceHistoryClassic',
   async ({ timeBucket, vaultId }, { getState, fulfillWithValue }) => {
@@ -721,7 +725,9 @@ export const fetchCowcentratedPriceHistoryClassic = createAsyncThunk<
 export const fetchCowcentratedPriceHistoryClm = createAsyncThunk<
   ClmPriceHistoryFulfilled<ClmPriceHistoryEntryClm>,
   ClmPriceHistoryParams,
-  BeefyMetaThunkConfig<{ since: number }>
+  BeefyMetaThunkConfig<{
+    since: number;
+  }>
 >(
   'analytics/fetchCowcentratedPriceHistoryClm',
   async ({ timeBucket, vaultId }, { getState, fulfillWithValue }) => {
@@ -759,8 +765,13 @@ export const fetchCowcentratedPriceHistoryClm = createAsyncThunk<
  */
 export const fetchClmHarvestsForUserVault = createAsyncThunk<
   void,
-  { vaultId: VaultEntity['id']; walletAddress: string },
-  { state: BeefyState }
+  {
+    vaultId: VaultEntity['id'];
+    walletAddress: string;
+  },
+  {
+    state: BeefyState;
+  }
 >(
   'analytics/fetchClmHarvestsForUserVault',
   async ({ vaultId, walletAddress }, { getState, dispatch }) => {
@@ -781,8 +792,12 @@ export const fetchClmHarvestsForUserVault = createAsyncThunk<
  */
 export const fetchClmHarvestsForUser = createAsyncThunk<
   void,
-  { walletAddress: string },
-  { state: BeefyState }
+  {
+    walletAddress: string;
+  },
+  {
+    state: BeefyState;
+  }
 >(
   'analytics/fetchClmHarvestsForUser',
   async ({ walletAddress }, { getState, dispatch }) => {
@@ -852,8 +867,14 @@ type FetchClmHarvestsForUserFulfilledAction = Array<FetchClmHarvestsForUserResul
  */
 export const fetchClmHarvestsForVaultsOfUserOnChain = createAsyncThunk<
   FetchClmHarvestsForUserFulfilledAction,
-  { walletAddress: string; chainId: ChainEntity['id']; vaultIds: VaultEntity['id'][] },
-  { state: BeefyState }
+  {
+    walletAddress: string;
+    chainId: ChainEntity['id'];
+    vaultIds: VaultEntity['id'][];
+  },
+  {
+    state: BeefyState;
+  }
 >(
   'analytics/fetchClmHarvestsForVaultsOfUserOnChain',
   async ({ walletAddress, chainId, vaultIds }, { getState }) => {
@@ -982,8 +1003,13 @@ export type RecalculateClmHarvestsForUserVaultIdPayload = {
  */
 export const recalculateClmPoolHarvestsForUserVaultId = createAsyncThunk<
   RecalculateClmHarvestsForUserVaultIdPayload,
-  { walletAddress: string; vaultId: VaultEntity['id'] },
-  { state: BeefyState }
+  {
+    walletAddress: string;
+    vaultId: VaultEntity['id'];
+  },
+  {
+    state: BeefyState;
+  }
 >(
   'analytics/recalculateClmPoolHarvestsForUserVaultId',
   async ({ walletAddress, vaultId }, { getState }) => {
@@ -1227,8 +1253,12 @@ interface FetchClmPendingRewardsFulfilledAction {
 
 export const fetchClmPendingRewards = createAsyncThunk<
   FetchClmPendingRewardsFulfilledAction,
-  { vaultId: VaultEntity['id'] },
-  { state: BeefyState }
+  {
+    vaultId: VaultEntity['id'];
+  },
+  {
+    state: BeefyState;
+  }
 >('analytics/fetchClmPendingRewards', async ({ vaultId }, { getState }) => {
   const state = getState();
   const vault = selectCowcentratedLikeVaultById(state, vaultId);
@@ -1259,22 +1289,29 @@ export const fetchClmPendingRewards = createAsyncThunk<
 });
 
 export const initDashboardByAddress = createAsyncThunk<
-  { walletAddress: string },
-  { walletAddress: string },
-  { state: BeefyState }
+  {
+    walletAddress: string;
+  },
+  {
+    walletAddress: string;
+  },
+  {
+    state: BeefyState;
+  }
 >('analytics/initDashboardByAddress', async ({ walletAddress }, { getState, dispatch }) => {
   const state = getState();
   const chains = selectAllChainIds(state);
   const lowerCaseAddress = walletAddress.toLowerCase();
-  const awaiter = new PromiseSettledAwaiter();
 
-  for (const chainId of chains) {
-    if (selectDashboardShouldLoadBalanceForChainUser(state, chainId, lowerCaseAddress)) {
-      awaiter.add(dispatch(fetchAllBalanceAction({ chainId, walletAddress: lowerCaseAddress })));
-    }
-  }
+  const promises = chains
+    .map(chainId => {
+      if (selectDashboardShouldLoadBalanceForChainUser(state, chainId, lowerCaseAddress)) {
+        return dispatch(fetchAllBalanceAction({ chainId, walletAddress: lowerCaseAddress }));
+      }
+    })
+    .filter(isDefined);
 
-  await awaiter.wait();
+  await Promise.allSettled(promises);
   await dispatch(fetchUserOffChainRewardsForDepositedVaultsAction(walletAddress));
 
   return { walletAddress: lowerCaseAddress };

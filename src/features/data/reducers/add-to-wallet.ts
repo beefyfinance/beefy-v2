@@ -1,6 +1,6 @@
 import { createSlice, type SerializedError } from '@reduxjs/toolkit';
-import { addTokenToWalletAction } from '../actions/add-to-wallet';
-import type { TokenEntity } from '../entities/token';
+import { addTokenToWalletAction } from '../actions/add-to-wallet.ts';
+import type { TokenEntity } from '../entities/token.ts';
 
 export type AddToWalletState = {
   status: 'idle' | 'pending' | 'fulfilled' | 'rejected';

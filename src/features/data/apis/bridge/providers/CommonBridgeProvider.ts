@@ -1,38 +1,38 @@
-import type { BeefyAnyBridgeConfig } from '../../config-types';
+import type { BeefyAnyBridgeConfig } from '../../config-types.ts';
 import type {
   AllowanceTokenAmount,
   InputTokenAmount,
   TokenAmount,
-} from '../../transact/transact-types';
-import type { IBridgeProvider, IBridgeQuote } from './provider-types';
-import type { ChainEntity } from '../../../entities/chain';
-import { BeefyCommonBridgeAbi } from '../../../../../config/abi/BeefyCommonBridgeAbi';
-import { XErc20Abi } from '../../../../../config/abi/XErc20Abi';
-import { BIG_ZERO, fromWeiString, toWeiString } from '../../../../../helpers/big-number';
-import type { BeefyState } from '../../../../../redux-types';
-import { selectChainNativeToken } from '../../../selectors/tokens';
+} from '../../transact/transact-types.ts';
+import type { IBridgeProvider, IBridgeQuote } from './provider-types.ts';
+import type { ChainEntity } from '../../../entities/chain.ts';
+import { BeefyCommonBridgeAbi } from '../../../../../config/abi/BeefyCommonBridgeAbi.ts';
+import { XErc20Abi } from '../../../../../config/abi/XErc20Abi.ts';
+import { BIG_ZERO, fromWeiString, toWeiString } from '../../../../../helpers/big-number.ts';
+import type { BeefyState } from '../../../../../redux-types.ts';
+import { selectChainNativeToken } from '../../../selectors/tokens.ts';
 import {
   selectBridgeDepositTokenForChainId,
   selectBridgeXTokenForChainId,
-} from '../../../selectors/bridge';
-import type { TokenErc20, TokenNative } from '../../../entities/token';
-import type { Step } from '../../../reducers/wallet/stepper';
+} from '../../../selectors/bridge.ts';
+import type { TokenErc20, TokenNative } from '../../../entities/token.ts';
+import type { Step } from '../../../reducers/wallet/stepper.ts';
 import type { TFunction } from 'react-i18next';
-import { walletActions } from '../../../actions/wallet-actions';
+import { walletActions } from '../../../actions/wallet-actions.ts';
 import { BigNumber } from 'bignumber.js';
-import { selectWalletAddress } from '../../../selectors/wallet';
-import { isFiniteNumber } from '../../../../../helpers/number';
+import { selectWalletAddress } from '../../../selectors/wallet.ts';
+import { isFiniteNumber } from '../../../../../helpers/number.ts';
 import {
   featureFlag_simulateAllBridgeRateLimit,
   featureFlag_simulateBridgeRateLimit,
-} from '../../../utils/feature-flags';
-import { fetchContract } from '../../rpc-contract/viem-contract';
+} from '../../../utils/feature-flags.ts';
+import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import type { Address } from 'abitype';
 
 export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
   implements IBridgeProvider<T>
 {
-  readonly id: T['id'];
+  abstract readonly id: T['id'];
 
   async fetchQuote(
     config: T,

@@ -1,50 +1,46 @@
 import { memo } from 'react';
-import { formatTokenDisplay, formatTokenDisplayCondensed } from '../../helpers/format';
-import { Tooltip } from '../Tooltip';
-import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
+import { formatTokenDisplay, formatTokenDisplayCondensed } from '../../helpers/format.ts';
+import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent.tsx';
 import type { BigNumber } from 'bignumber.js';
-import type { TokenEntity } from '../../features/data/entities/token';
-import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
-
-const useStyles = makeStyles(styles);
+import type { TokenEntity } from '../../features/data/entities/token.ts';
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
+import { DivWithTooltip } from '../Tooltip/DivWithTooltip.tsx';
 
 export type TokenAmountProps = {
   amount: BigNumber;
   decimals: number;
-  className?: string;
+  css?: CssStyles;
   onClick?: () => void;
   disableTooltip?: boolean;
 };
-export const TokenAmount = memo<TokenAmountProps>(function TokenAmount({
+export const TokenAmount = memo(function TokenAmount({
   amount,
   decimals,
-  className,
+  css: cssProp,
   onClick,
   disableTooltip,
-}) {
-  const classes = useStyles();
+}: TokenAmountProps) {
   const fullAmount = formatTokenDisplay(amount, decimals);
   const shortAmount = formatTokenDisplayCondensed(amount, decimals);
   const needTooltip = shortAmount.length < fullAmount.length;
 
   return needTooltip ? (
     disableTooltip ? (
-      <span onClick={onClick} className={clsx(className, { [classes.withOnClick]: onClick })}>
+      <span onClick={onClick} className={css(cssProp, onClick && styles.withOnClick)}>
         {shortAmount}
       </span>
     ) : (
-      <Tooltip
-        onTriggerClick={onClick}
-        triggerClass={clsx(classes.withTooltip, className, { [classes.withOnClick]: onClick })}
-        content={<BasicTooltipContent title={fullAmount} />}
+      <DivWithTooltip
+        onClick={onClick}
+        className={css(styles.withTooltip, onClick && styles.withOnClick, cssProp)}
+        tooltip={<BasicTooltipContent title={fullAmount} />}
       >
         {shortAmount}
-      </Tooltip>
+      </DivWithTooltip>
     )
   ) : (
-    <span onClick={onClick} className={clsx(className, { [classes.withOnClick]: onClick })}>
+    <span onClick={onClick} className={css(cssProp, onClick && styles.withOnClick)}>
       {fullAmount}
     </span>
   );
@@ -54,8 +50,9 @@ export type TokenAmountFromEntityProps = Omit<TokenAmountProps, 'decimals'> & {
   token: TokenEntity;
 };
 
-export const TokenAmountFromEntity = memo<TokenAmountFromEntityProps>(
-  function TokenAmountFromEntity({ token, ...rest }) {
-    return <TokenAmount decimals={token.decimals} {...rest} />;
-  }
-);
+export const TokenAmountFromEntity = memo(function TokenAmountFromEntity({
+  token,
+  ...rest
+}: TokenAmountFromEntityProps) {
+  return <TokenAmount decimals={token.decimals} {...rest} />;
+});

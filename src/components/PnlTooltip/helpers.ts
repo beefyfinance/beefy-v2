@@ -2,7 +2,7 @@ import {
   isUserClmPnl,
   type UserClmPnl,
   type UserVaultPnl,
-} from '../../features/data/selectors/analytics-types';
+} from '../../features/data/selectors/analytics-types.ts';
 
 export function showClmPnlTooltip(userPnl: UserVaultPnl): userPnl is UserClmPnl {
   if (isUserClmPnl(userPnl)) {

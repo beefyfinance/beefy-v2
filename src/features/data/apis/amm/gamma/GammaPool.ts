@@ -1,11 +1,11 @@
-import type { GammaHypervisorData, IGammaPool } from '../types';
-import type { ChainEntity } from '../../../entities/chain';
-import type { AmmConfigGamma } from '../../config-types';
+import type { GammaHypervisorData, IGammaPool } from '../types.ts';
+import type { ChainEntity } from '../../../entities/chain.ts';
+import type { AmmConfigGamma } from '../../config-types.ts';
 import { BigNumber } from 'bignumber.js';
-import { GammaHypervisorAbi } from '../../../../../config/abi/GammaHypervisorAbi';
-import { GammaProxyAbi } from '../../../../../config/abi/GammaProxyAbi';
-import { TickMath } from './TickMath';
-import type { TokenAmount } from '../../transact/transact-types';
+import { GammaHypervisorAbi } from '../../../../../config/abi/GammaHypervisorAbi.ts';
+import { GammaProxyAbi } from '../../../../../config/abi/GammaProxyAbi.ts';
+import { TickMath } from './TickMath.ts';
+import type { TokenAmount } from '../../transact/transact-types.ts';
 import {
   BIG_ZERO,
   bigNumberToBigInt,
@@ -14,14 +14,14 @@ import {
   fromWeiString,
   toWei,
   toWeiString,
-} from '../../../../../helpers/big-number';
-import type { ZapStep, ZapStepRequest, ZapStepResponse } from '../../transact/zap/types';
-import { slipAllBy } from '../../transact/helpers/amounts';
-import { getInsertIndex } from '../../transact/helpers/zap';
-import { isFulfilledResult } from '../../../../../helpers/promises';
-import { onlyOneTokenAmount } from '../../transact/helpers/options';
+} from '../../../../../helpers/big-number.ts';
+import type { ZapStep, ZapStepRequest, ZapStepResponse } from '../../transact/zap/types.ts';
+import { slipAllBy } from '../../transact/helpers/amounts.ts';
+import { getInsertIndex } from '../../transact/helpers/zap.ts';
+import { isFulfilledResult } from '../../../../../helpers/promises.ts';
+import { onlyOneTokenAmount } from '../../transact/helpers/options.ts';
 import { encodeFunctionData, type Abi, type Address } from 'viem';
-import { fetchContract } from '../../rpc-contract/viem-contract';
+import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 
 export class GammaPool implements IGammaPool {
   public readonly type = 'gamma';

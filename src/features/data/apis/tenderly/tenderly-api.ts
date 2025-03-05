@@ -1,4 +1,4 @@
-import type { TenderlyCredentials } from '../../actions/tenderly';
+import type { TenderlyCredentials } from '../../actions/tenderly.ts';
 import type {
   TenderlySimulateBundleResponse,
   TenderlySimulateRequest,
@@ -6,10 +6,10 @@ import type {
   TenderlySimulation,
   TenderlySimulationsRequest,
   TenderlySimulationsResult,
-} from './types';
-import { getJson, postJson } from '../../../../helpers/http';
-import type { FetchParams } from '../../../../helpers/http/types';
-import { errorToTenderlyError, TenderlyInvalidResponseFormatError } from './errors';
+} from './types.ts';
+import { getJson, postJson } from '../../../../helpers/http/http.ts';
+import type { FetchParams } from '../../../../helpers/http/types.ts';
+import { errorToTenderlyError, TenderlyInvalidResponseFormatError } from './errors.ts';
 
 export class TenderlyApi {
   private readonly baseUrl: string;

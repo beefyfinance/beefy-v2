@@ -1,37 +1,42 @@
-import type { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { memo } from 'react';
-import type { BeefyState } from '../../redux-types';
-import { selectVaultById } from '../../features/data/selectors/vaults';
+import type { BeefyState } from '../../redux-types.ts';
+import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import {
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
   selectUserVaultBalanceInUsdIncludingBoostsBridged,
   selectUserVaultBalanceNotInActiveBoostInDepositToken,
-} from '../../features/data/selectors/balance';
+} from '../../features/data/selectors/balance.ts';
 import {
   formatLargeUsd,
   formatTokenDisplay,
   formatTokenDisplayCondensed,
-} from '../../helpers/format';
-import { selectIsBalanceHidden, selectWalletAddress } from '../../features/data/selectors/wallet';
-import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat';
-import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip';
-import { selectTokenByAddress } from '../../features/data/selectors/tokens';
+} from '../../helpers/format.ts';
+import {
+  selectIsBalanceHidden,
+  selectWalletAddress,
+} from '../../features/data/selectors/wallet.ts';
+import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
+import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
+import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip.tsx';
+import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
 import {
   selectIsBalanceAvailableForChainUser,
   selectIsPricesAvailable,
-} from '../../features/data/selectors/data-loader';
-import { BIG_ZERO } from '../../helpers/big-number';
-import { useAppSelector } from '../../store';
+} from '../../features/data/selectors/data-loader.ts';
+import { BIG_ZERO } from '../../helpers/big-number.ts';
+import { useAppSelector } from '../../store.ts';
 import { type BigNumber } from 'bignumber.js';
-import type { TokenEntity } from '../../features/data/entities/token';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { ErrorOutline, InfoOutlined } from '@material-ui/icons';
-import clsx from 'clsx';
-import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
+import type { TokenEntity } from '../../features/data/entities/token.ts';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import ErrorOutline from '../../images/icons/mui/ErrorOutline.svg?react';
+import InfoOutlined from '../../images/icons/mui/InfoOutlined.svg?react';
+import { css } from '@repo/styles/css';
+import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type VaultDepositStatProps = {
   vaultId: VaultEntity['id'];
@@ -40,7 +45,9 @@ export type VaultDepositStatProps = {
 } & Omit<VaultValueStatProps, 'label' | 'tooltip' | 'value' | 'subValue' | 'loading'>;
 
 type SelectDataReturn =
-  | { loading: true }
+  | {
+      loading: true;
+    }
   | {
       loading: false;
       totalDeposit: BigNumber;
@@ -108,12 +115,12 @@ function selectData(
   };
 }
 
-export const VaultDepositStat = memo<VaultDepositStatProps>(function VaultDepositStat({
+export const VaultDepositStat = memo(function VaultDepositStat({
   vaultId,
   walletAddress,
   label = 'VaultStat-DEPOSITED',
   ...passthrough
-}) {
+}: VaultDepositStatProps) {
   const data = useAppSelector(state => selectData(state, vaultId, walletAddress));
   const classes = useStyles();
 
@@ -142,9 +149,7 @@ export const VaultDepositStat = memo<VaultDepositStatProps>(function VaultDeposi
         isNotEarning ? (
           <div className={classes.depositWithIcon}>
             <IconComponent
-              className={clsx(classes.depositIcon, {
-                [classes.depositIconNotEarning]: isNotEarning,
-              })}
+              className={css(styles.depositIcon, isNotEarning && styles.depositIconNotEarning)}
             />
             {depositFormattedCondensed}
           </div>

@@ -1,43 +1,62 @@
 import type { FC } from 'react';
 import { memo, useCallback } from 'react';
-import type { ItemInnerProps } from './ItemInner';
-import { ItemInner } from './ItemInner';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/styles';
-import { itemStyles } from './styles';
-import { ChevronRight } from '@material-ui/icons';
+import { css } from '@repo/styles/css';
+import ChevronRight from '../../images/icons/mui/ChevronRight.svg?react';
 
-const useStyles = makeStyles(itemStyles);
-
-type ItemProps = {
-  className?: string;
-  value: string;
-  onSelect: (value: string) => void;
-  EndAdornmentComponent?: FC<ItemInnerProps> | null;
-  ItemInnerComponent?: FC<ItemInnerProps>;
+export type ItemInnerProps<V extends string = string> = {
+  value: V;
 };
-export const Item = memo<ItemProps>(function Item({
+
+type ItemProps<TValue extends string = string> = {
+  value: TValue;
+  onSelect: (value: TValue) => void;
+  EndAdornmentComponent?: FC<ItemInnerProps<TValue>>;
+  ItemInnerComponent?: FC<ItemInnerProps<TValue>>;
+};
+
+export const Item = memo(function Item<TValue extends string = string>({
   value,
   onSelect,
-  ItemInnerComponent = ItemInner,
+  ItemInnerComponent,
   EndAdornmentComponent,
-  className,
-}) {
-  const classes = useStyles();
+}: ItemProps<TValue>) {
   const handleClick = useCallback(() => {
     onSelect(value);
   }, [value, onSelect]);
 
   return (
-    <button onClick={handleClick} className={clsx(classes.item, className)}>
-      <ItemInnerComponent value={value} />
-      <div className={classes.endAdornment}>
+    <button type="button" onClick={handleClick} className={buttonClass}>
+      {ItemInnerComponent ? <ItemInnerComponent value={value} /> : value}
+      <div className={endAdornmentClass}>
         {EndAdornmentComponent ? (
           <EndAdornmentComponent value={value} />
         ) : (
-          <ChevronRight className={clsx(classes.arrow)} />
+          <ChevronRight className={arrowClass} />
         )}
       </div>
     </button>
   );
+});
+
+const buttonClass = css({
+  textStyle: 'body.medium',
+  display: 'flex',
+  alignItems: 'center',
+  width: '100%',
+  color: 'text.dark',
+  padding: '0 var(--searchable-list-padding-size)',
+  '&:hover, &:focus-visible': {
+    '--arrow-color': 'white',
+    color: 'text.middle',
+  },
+});
+
+const arrowClass = css({
+  color: 'var(--arrow-color, text.middle)',
+  height: '24px',
+});
+
+const endAdornmentClass = css({
+  marginLeft: 'auto',
+  display: 'flex',
 });

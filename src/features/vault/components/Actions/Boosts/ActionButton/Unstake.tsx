@@ -1,12 +1,12 @@
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../../../../../../store';
-import { startStepperWithSteps } from '../../../../../data/actions/stepper';
-import { walletActions } from '../../../../../data/actions/wallet-actions';
-import type { Step } from '../../../../../data/reducers/wallet/stepper';
-import { ActionButton } from './ActionButton';
-import type { BoostPromoEntity } from '../../../../../data/entities/promo';
-import type { ChainEntity } from '../../../../../data/entities/chain';
+import { useAppDispatch } from '../../../../../../store.ts';
+import { startStepperWithSteps } from '../../../../../data/actions/stepper.ts';
+import { walletActions } from '../../../../../data/actions/wallet-actions.ts';
+import type { Step } from '../../../../../data/reducers/wallet/stepper.ts';
+import { ActionButton } from './ActionButton.tsx';
+import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
+import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 
 type UnstakeProps = {
   boostId: BoostPromoEntity['id'];

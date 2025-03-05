@@ -1,15 +1,15 @@
 import { BigNumber } from 'bignumber.js';
 import type {
   DatabarnPricesResponse,
-  IDatabarnApi,
   DatabarnPriceType,
   DatabarnTimeBucket,
   DatabarnTimelineEntry,
-} from './databarn-types';
-import type { VaultEntity } from '../../entities/vault';
-import type { ChainEntity } from '../../entities/chain';
-import { getJson } from '../../../../helpers/http';
-import { isFetchNotFoundError } from '../../../../helpers/http/errors';
+  IDatabarnApi,
+} from './databarn-types.ts';
+import type { VaultEntity } from '../../entities/vault.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
+import { getJson } from '../../../../helpers/http/http.ts';
+import { isFetchNotFoundError } from '../../../../helpers/http/errors.ts';
 
 export class DatabarnApi implements IDatabarnApi {
   private readonly databarnBase: string;

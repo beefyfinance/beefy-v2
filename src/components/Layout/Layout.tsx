@@ -1,8 +1,5 @@
 import { memo, type ReactNode } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-
-const useStyles = makeStyles(styles);
+import { layoutRecipe } from './styles.ts';
 
 export type LayoutProps = {
   header: ReactNode;
@@ -11,7 +8,7 @@ export type LayoutProps = {
 };
 
 export const Layout = memo<LayoutProps>(function Layout({ header, footer, children }) {
-  const classes = useStyles();
+  const classes = layoutRecipe();
 
   return (
     <div className={classes.wrapper}>

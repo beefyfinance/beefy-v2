@@ -1,7 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import type { PlatformEntity } from '../entities/platform';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { PlatformEntity } from '../entities/platform.ts';
 import { createCachedSelector } from 're-reselect';
+import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
 
 export const selectPlatformById = createCachedSelector(
   // get a tiny bit of the data
@@ -16,7 +17,7 @@ export const selectPlatformById = createCachedSelector(
     }
     return platform;
   }
-)((state: BeefyState, platformId: PlatformEntity['id']) => platformId);
+)((_state: BeefyState, platformId: PlatformEntity['id']) => platformId);
 
 export const selectPlatformByIdOrUndefined = createCachedSelector(
   // get a tiny bit of the data
@@ -27,7 +28,7 @@ export const selectPlatformByIdOrUndefined = createCachedSelector(
   (byId, platformId) => {
     return byId[platformId];
   }
-)((state: BeefyState, platformId: PlatformEntity['id']) => platformId);
+)((_state: BeefyState, platformId: PlatformEntity['id']) => platformId);
 
 export const selectAllPlatforms = createSelector(
   (state: BeefyState) => state.entities.platforms.allIds,
@@ -35,7 +36,7 @@ export const selectAllPlatforms = createSelector(
   (ids, byId) => ids.map(id => byId[id])
 );
 
-/** All active platforms (vault.status != eol) that are allowed to be in the filter */
+/** All active platforms (vault.status !== eol) that are allowed to be in the filter */
 export const selectFilterPlatforms = createSelector(
   (state: BeefyState) => state.entities.platforms.allIds,
   (state: BeefyState) => state.entities.platforms.activeIds,
@@ -46,5 +47,5 @@ export const selectFilterPlatforms = createSelector(
 /** All platforms with `type: 'alm'` exception conic which manages curve not CL */
 export const selectConcentratedLiquidityManagerPlatforms = createSelector(
   (state: BeefyState) => state.entities.platforms.byType.alm,
-  ids => ids?.filter(id => id !== 'conic') || []
+  ids => arrayOrStaticEmpty(ids?.filter(id => id !== 'conic'))
 );

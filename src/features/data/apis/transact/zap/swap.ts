@@ -1,11 +1,11 @@
-import type { ISwapAggregator } from '../swap/ISwapAggregator';
-import type { BeefyState } from '../../../../../redux-types';
-import { getTokenAddress } from '../helpers/zap';
-import type { ZapStepRequest, ZapStepResponse } from './types';
+import type { ISwapAggregator } from '../swap/ISwapAggregator.ts';
+import type { BeefyState } from '../../../../../redux-types.ts';
+import { getTokenAddress } from '../helpers/zap.ts';
+import type { ZapStepRequest, ZapStepResponse } from './types.ts';
 import { first } from 'lodash-es';
-import { isTokenNative } from '../../../entities/token';
-import type { QuoteResponse } from '../swap/ISwapProvider';
-import { QuoteChangedError } from '../strategies/error';
+import { isTokenNative } from '../../../entities/token.ts';
+import type { QuoteResponse } from '../swap/ISwapProvider.ts';
+import { QuoteChangedError } from '../strategies/error.ts';
 
 export type ZapAggregatorSwapRequest = ZapStepRequest & {
   providerId: string;

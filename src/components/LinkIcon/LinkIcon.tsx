@@ -1,12 +1,11 @@
-import type { FC } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import type { SvgIconComponent } from '@material-ui/icons';
+import type { FC, SVGProps } from 'react';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { styles } from './styles.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface LinkIconProps {
-  logo: string | SvgIconComponent;
+  logo: string | FC<SVGProps<SVGSVGElement>>;
   alt: string;
   href: string;
 }
@@ -16,7 +15,7 @@ export const LinkIcon: FC<LinkIconProps> = ({ href, logo, alt }) => {
   const IconComponent = typeof logo === 'string' ? 'img' : logo;
 
   return (
-    <a className={classes.link} href={href} target="_blank" rel="noopener noreferrer">
+    <a className={classes.link} href={href} target="_blank">
       {typeof logo === 'string' ? (
         <img alt={alt} className={classes.icon} src={logo} />
       ) : (

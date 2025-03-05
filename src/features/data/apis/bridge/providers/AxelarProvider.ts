@@ -1,23 +1,23 @@
-import type { BeefyAxelarBridgeConfig } from '../../config-types';
-import { CommonBridgeProvider } from './CommonBridgeProvider';
-import type { ChainEntity } from '../../../entities/chain';
-import type { InputTokenAmount, TokenAmount } from '../../transact/transact-types';
-import type { TokenErc20, TokenNative } from '../../../entities/token';
-import type { BeefyState } from '../../../../../redux-types';
-import { selectChainNativeToken } from '../../../selectors/tokens';
-import { fromWei } from '../../../../../helpers/big-number';
+import type { BeefyAxelarBridgeConfig } from '../../config-types.ts';
+import { CommonBridgeProvider } from './CommonBridgeProvider.ts';
+import type { ChainEntity } from '../../../entities/chain.ts';
+import type { InputTokenAmount, TokenAmount } from '../../transact/transact-types.ts';
+import type { TokenErc20, TokenNative } from '../../../entities/token.ts';
+import type { BeefyState } from '../../../../../redux-types.ts';
+import { selectChainNativeToken } from '../../../selectors/tokens.ts';
+import { fromWei } from '../../../../../helpers/big-number.ts';
 import { type BigNumber } from 'bignumber.js';
-import { estimateArbitrumSequencerGas } from '../helpers/arbitrum';
-import { getAxelarApi } from '../../axelar';
+import { estimateArbitrumSequencerGas } from '../helpers/arbitrum.ts';
+import { getAxelarApi } from '../../axelar/axelar.ts';
 
 export class AxelarProvider extends CommonBridgeProvider<BeefyAxelarBridgeConfig> {
-  public readonly id = 'axelar' as const;
+  public readonly id = 'axelar';
 
   protected async fetchBridgeFee(
     config: BeefyAxelarBridgeConfig,
     from: ChainEntity,
     to: ChainEntity,
-    input: InputTokenAmount<TokenErc20>,
+    _input: InputTokenAmount<TokenErc20>,
     state: BeefyState
   ): Promise<TokenAmount<TokenNative>> {
     const fromChain = config.chains[from.id];

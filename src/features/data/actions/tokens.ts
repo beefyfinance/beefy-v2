@@ -1,19 +1,24 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import type { ChainAddressBook } from '../apis/addressbook';
-import { getChainAddressBook } from '../apis/addressbook';
-import type { TokenAllowance } from '../apis/allowance/allowance-types';
-import type { FetchAllBalancesResult } from '../apis/balance/balance-types';
-import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
-import { getAllowanceApi, getBalanceApi, getBeefyApi, getContractDataApi } from '../apis/instances';
-import type { BoostPromoEntity } from '../entities/promo';
-import type { ChainEntity } from '../entities/chain';
-import type { CurrentCowcentratedRangeData, TokenEntity } from '../entities/token';
-import { isTokenErc20 } from '../entities/token';
-import { isGovVaultMulti, isGovVaultSingle, type VaultGov } from '../entities/vault';
-import { selectBoostById } from '../selectors/boosts';
-import { selectAllChains, selectChainById } from '../selectors/chains';
-import { selectGovVaultById } from '../selectors/vaults';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { ChainAddressBook } from '../apis/addressbook.ts';
+import { getChainAddressBook } from '../apis/addressbook.ts';
+import type { TokenAllowance } from '../apis/allowance/allowance-types.ts';
+import type { FetchAllBalancesResult } from '../apis/balance/balance-types.ts';
+import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types.ts';
+import {
+  getAllowanceApi,
+  getBalanceApi,
+  getBeefyApi,
+  getContractDataApi,
+} from '../apis/instances.ts';
+import type { BoostPromoEntity } from '../entities/promo.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { CurrentCowcentratedRangeData, TokenEntity } from '../entities/token.ts';
+import { isTokenErc20 } from '../entities/token.ts';
+import { isGovVaultMulti, isGovVaultSingle, type VaultGov } from '../entities/vault.ts';
+import { selectBoostById } from '../selectors/boosts.ts';
+import { selectAllChains, selectChainById } from '../selectors/chains.ts';
+import { selectGovVaultById } from '../selectors/vaults.ts';
 
 interface ActionParams {
   chainId: ChainEntity['id'];
@@ -27,7 +32,9 @@ export interface FetchAddressBookPayload {
 export const fetchAddressBookAction = createAsyncThunk<
   FetchAddressBookPayload,
   ActionParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('tokens/fetchAddressBookAction', async ({ chainId }, { getState }) => {
   const chain = selectChainById(getState(), chainId);
   const addressBook = await getChainAddressBook(chain);
@@ -37,7 +44,9 @@ export const fetchAddressBookAction = createAsyncThunk<
 export const fetchAllAddressBookAction = createAsyncThunk<
   FetchAddressBookPayload[],
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('tokens/fetchAllAddressBookAction', async (_, { getState }) => {
   const chains = selectAllChains(getState());
   if (chains.length <= 0) {
@@ -70,13 +79,18 @@ interface ReloadBalanceAllowanceRewardsFulfilledPayload {
   state: BeefyState; // TODO refactor to not include state
 }
 
-export type AllCurrentCowcentratedRangesPayload = Record<string, CurrentCowcentratedRangeData>;
+export type AllCurrentCowcentratedRangesPayload = Record<
+  string,
+  CurrentCowcentratedRangeData<string>
+>;
 
 // TODO: split this into more specialized actions to make them faster
 export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThunk<
   ReloadBalanceAllowanceRewardsFulfilledPayload,
   ReloadBalanceAllowanceRewardsParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'deposit/reloadBalanceAndAllowanceAndGovRewards',
   async ({ chainId, tokens, spenderAddress, govVaultId, boostId, walletAddress }, { getState }) => {
@@ -136,9 +150,11 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
 export const fetchAllCurrentCowcentratedRanges = createAsyncThunk<
   AllCurrentCowcentratedRangesPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('tokens/fetchAllCurrentCowcentratedRanges', async () => {
   const api = await getBeefyApi();
   const data = await api.getAllCowcentratedVaultRanges();
-  return Object.assign({}, ...Object.values(data));
+  return Object.assign({}, ...Object.values(data)) as AllCurrentCowcentratedRangesPayload;
 });

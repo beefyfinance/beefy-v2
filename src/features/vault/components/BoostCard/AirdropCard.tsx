@@ -1,7 +1,7 @@
 import { memo } from 'react';
-import type { AirdropPromoEntity } from '../../../data/entities/promo';
-import type { PromoCardProps } from './types';
-import { CampaignPromoCard, PartnersPromoCard } from './PromoCard';
+import type { AirdropPromoEntity } from '../../../data/entities/promo.ts';
+import type { PromoCardProps } from './types.ts';
+import { CampaignPromoCard, PartnersPromoCard } from './PromoCard.tsx';
 
 const AirdropCard = memo(function AirdropCard({ promo }: PromoCardProps<AirdropPromoEntity>) {
   if (promo.campaign) {
@@ -18,5 +18,5 @@ const AirdropCard = memo(function AirdropCard({ promo }: PromoCardProps<AirdropP
   }
 });
 
-// eslint-disable-next-line no-restricted-syntax
+// eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
 export default AirdropCard;

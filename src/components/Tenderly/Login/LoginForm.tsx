@@ -1,22 +1,26 @@
 import { type ChangeEventHandler, memo, type ReactNode, useCallback, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store.ts';
 import {
   selectTenderlyCredentialsOrUndefined,
   selectTenderlyStatus,
-} from '../../../features/data/selectors/tenderly';
-import { type TenderlyCredentials, tenderlyLogin } from '../../../features/data/actions/tenderly';
-import { InputBase, makeStyles } from '@material-ui/core';
-import { Button } from '../../Button';
-import { VerticalLayout } from '../Layout/VerticalLayout';
-import { ErrorMessage } from '../Error/ErrorMessage';
-import { styles } from './styles';
-import { ExternalLink } from '../Links/ExternalLink';
-import { HorizontalLayout } from '../Layout/HorizontalLayout';
-import { InfoOutlined } from '@material-ui/icons';
-import { AlertInfo } from '../../Alerts';
+} from '../../../features/data/selectors/tenderly.ts';
+import {
+  type TenderlyCredentials,
+  tenderlyLogin,
+} from '../../../features/data/actions/tenderly.ts';
+import { legacyMakeStyles } from '../../../helpers/mui.ts';
+import { Button } from '../../Button/Button.tsx';
+import { VerticalLayout } from '../Layout/VerticalLayout.tsx';
+import { ErrorMessage } from '../Error/ErrorMessage.tsx';
+import { styles } from './styles.ts';
+import { ExternalLink } from '../Links/ExternalLink.tsx';
+import { HorizontalLayout } from '../Layout/HorizontalLayout.tsx';
+import InfoOutlined from '../../../images/icons/mui/InfoOutlined.svg?react';
+import { AlertInfo } from '../../Alerts/Alerts.tsx';
 import logoUrl from '../logo.svg';
+import { BaseInput } from '../../Form/Input/BaseInput.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type CredentialInputProps = {
   type: 'text' | 'password';
@@ -26,10 +30,16 @@ type CredentialInputProps = {
   label: string;
   placeholder: string;
   help?: ReactNode;
-  helpLink?: string | { url: string; text: string; icon?: string };
+  helpLink?:
+    | string
+    | {
+        url: string;
+        text: string;
+        icon?: string;
+      };
 };
 
-const CredentialInput = memo<CredentialInputProps>(function CredentialInput({
+const CredentialInput = memo(function CredentialInput({
   type,
   field,
   credentials,
@@ -38,7 +48,7 @@ const CredentialInput = memo<CredentialInputProps>(function CredentialInput({
   placeholder,
   help,
   helpLink,
-}) {
+}: CredentialInputProps) {
   const classes = useStyles();
   const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     e => setCredentials(creds => ({ ...creds, [field]: e.target.value })),
@@ -47,10 +57,10 @@ const CredentialInput = memo<CredentialInputProps>(function CredentialInput({
   const hasHelp = !!help || !!helpLink;
 
   return (
-    <VerticalLayout className={classes.field} gap={8}>
+    <VerticalLayout css={styles.field} gap={8}>
       <div className={classes.label}>{label}</div>
       <div className={hasHelp ? classes.inputHelpHolder : classes.inputHolder}>
-        <InputBase
+        <BaseInput
           type={type}
           className={classes.input}
           value={credentials[field]}
@@ -58,13 +68,13 @@ const CredentialInput = memo<CredentialInputProps>(function CredentialInput({
           placeholder={placeholder}
         />
         {hasHelp ? (
-          <HorizontalLayout className={classes.help} gap={8}>
+          <HorizontalLayout css={styles.help} gap={8}>
             <InfoOutlined className={classes.helpIcon} />
             {help ? <div className={classes.helpText}>{help}</div> : null}
             {helpLink ? (
               <div className={classes.helpLink}>
                 <ExternalLink
-                  className={classes.helpLinkAnchor}
+                  css={styles.helpLinkAnchor}
                   href={typeof helpLink === 'string' ? helpLink : helpLink.url}
                   icon={true}
                 >

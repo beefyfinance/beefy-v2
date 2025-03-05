@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
-import type { BeefyState } from '../../../redux-types';
-import type { ChainEntity, ChainId } from '../entities/chain';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { ChainEntity, ChainId } from '../entities/chain.ts';
 
 function makeChainSelector(idsSelector: (state: BeefyState) => ChainEntity['id'][]) {
   return createSelector(

@@ -1,16 +1,16 @@
 import { memo, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import type { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types';
-import type { LineTogglesState } from '../LineToggles';
+import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
+import type { ApiTimeBucket } from '../../../../data/apis/beefy/beefy-data-api-types.ts';
+import type { LineTogglesState } from '../LineToggles/LineToggles.tsx';
 import { format, fromUnixTime } from 'date-fns';
 import { useTranslation } from 'react-i18next';
-import { getBucketParams } from '../utils';
-import { styles } from './styles';
-import clsx from 'clsx';
-import type { ChartDataPoint, ChartStat } from '../types';
-import type { RechartsTooltipProps } from '../../../../../helpers/graph/types';
+import { getBucketParams } from '../utils.ts';
+import { styles } from './styles.ts';
+import { css } from '@repo/styles/css';
+import type { ChartDataPoint, ChartStat } from '../types.ts';
+import type { RechartsTooltipProps } from '../../../../../helpers/graph/types.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type BaseTooltipProps<TStat extends ChartStat> = RechartsTooltipProps<
   'v',
@@ -92,17 +92,21 @@ export const TooltipContent = memo(function TooltipContent<TStat extends ChartSt
   );
 });
 
-type RangeIndicatorProps = { ranges: [number, number]; value: number };
-const RangeIndicator = memo<RangeIndicatorProps>(function RangeIndicator({ ranges, value }) {
-  const classes = useStyles();
-
+type RangeIndicatorProps = {
+  ranges: [number, number];
+  value: number;
+};
+const RangeIndicator = memo(function RangeIndicator({ ranges, value }: RangeIndicatorProps) {
   const isOnRange = useMemo(() => value >= ranges[0] && value <= ranges[1], [ranges, value]);
 
-  return <div className={clsx(classes.rangeIndicator, { [classes.onRange]: isOnRange })} />;
+  return <div className={css(styles.rangeIndicator, isOnRange && styles.onRange)} />;
 });
 
-type RangesProps = { ranges: [number, number]; valueFormatter: (value: number) => string };
-const Ranges = memo<RangesProps>(function Ranges({ ranges, valueFormatter }) {
+type RangesProps = {
+  ranges: [number, number];
+  valueFormatter: (value: number) => string;
+};
+const Ranges = memo(function Ranges({ ranges, valueFormatter }: RangesProps) {
   const classes = useStyles();
   const { t } = useTranslation();
 

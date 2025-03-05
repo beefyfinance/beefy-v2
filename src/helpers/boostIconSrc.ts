@@ -1,7 +1,8 @@
-import { createGlobLoader } from './globLoader';
+import { createGlobLoader } from './globLoader.ts';
 
 const pathToUrl = import.meta.glob<string>('../images/boosts/*.svg', {
-  as: 'url',
+  query: '?url',
+  import: 'default',
   eager: true,
 });
 const keyToUrl = createGlobLoader(pathToUrl);

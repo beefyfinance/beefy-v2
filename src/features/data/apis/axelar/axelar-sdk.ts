@@ -1,6 +1,6 @@
 import { BigNumber } from 'bignumber.js';
-import { BIG_ZERO, toWeiFromString } from '../../../../helpers/big-number';
-import type { ChainEntity } from '../../entities/chain';
+import { BIG_ZERO, toWeiFromString } from '../../../../helpers/big-number.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
 import type {
   AxelarChain,
   AxelarGasToken,
@@ -12,9 +12,9 @@ import type {
   L2Type,
   SourceToken,
   Token,
-} from './axelar-sdk-types';
-import { postJson } from '../../../../helpers/http';
-import { fetchContract } from '../rpc-contract/viem-contract';
+} from './axelar-sdk-types.ts';
+import { postJson } from '../../../../helpers/http/http.ts';
+import { fetchContract } from '../rpc-contract/viem-contract.ts';
 import type { Abi } from 'abitype';
 import type { Hex } from 'viem';
 

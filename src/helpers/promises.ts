@@ -1,4 +1,4 @@
-import { isDevelopment } from '../features/data/utils/feature-flags';
+import { isDevelopment } from '../features/data/utils/feature-flags.ts';
 
 export function isFulfilledResult<T>(
   result: PromiseSettledResult<T>
@@ -32,19 +32,4 @@ export async function allFulfilled<T>(promises: Promise<T>[]): Promise<T[]> {
 
 export function asyncMap<T, U>(array: T[], mapper: (item: T) => Promise<U>): Promise<U[]> {
   return Promise.all(array.map(mapper));
-}
-
-export class PromiseSettledAwaiter {
-  protected promises: Promise<unknown>[] = [];
-
-  add<T>(promise: Promise<T>): Promise<T> {
-    this.promises.push(promise);
-    return promise;
-  }
-
-  async wait(): Promise<PromiseSettledResult<Awaited<unknown>>[]> {
-    const promises = [...this.promises];
-    this.promises = [];
-    return await Promise.allSettled(promises);
-  }
 }

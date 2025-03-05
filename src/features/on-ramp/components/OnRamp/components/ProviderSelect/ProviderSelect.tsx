@@ -1,25 +1,27 @@
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectIsCheapestProviderSelected,
   selectQuoteProviders,
   selectSelectedQuoteOrUndefined,
-} from '../../../../../data/selectors/on-ramp';
-import clsx from 'clsx';
+} from '../../../../../data/selectors/on-ramp.ts';
+import { css } from '@repo/styles/css';
 import ContentLoader from 'react-content-loader';
-import { ProviderIcon } from '../ProviderIcon';
+import { ProviderIcon } from '../ProviderIcon/ProviderIcon.tsx';
 import { useTranslation } from 'react-i18next';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
-import { FormStep } from '../../../../../data/reducers/on-ramp-types';
-import { PROVIDERS } from '../../providers';
-import { ChevronRight } from '@material-ui/icons';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
+import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
+import { PROVIDERS } from '../../providers.tsx';
+import ChevronRight from '../../../../../../images/icons/mui/ChevronRight.svg?react';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-export type ProviderSelectProps = { pending: boolean };
-export const ProviderSelect = memo<ProviderSelectProps>(function ProviderSelect({ pending }) {
+export type ProviderSelectProps = {
+  pending: boolean;
+};
+export const ProviderSelect = memo(function ProviderSelect({ pending }: ProviderSelectProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const quote = useAppSelector(selectSelectedQuoteOrUndefined);
@@ -41,13 +43,11 @@ export const ProviderSelect = memo<ProviderSelectProps>(function ProviderSelect(
         {t(isCheapest ? 'OnRamp-BestRateVia' : 'OnRamp-SelectedRateVia')}
       </div>
       <button
+        type="button"
         onClick={canSwitchProvider ? handleClick : undefined}
-        className={clsx(
-          classes.button,
-          canSwitchProvider ? classes.clickable : classes.unclickable
-        )}
+        className={css(styles.button, canSwitchProvider ? styles.clickable : styles.unclickable)}
       >
-        <div className={clsx(classes.icon, pending ? classes.iconLoading : classes.iconProvider)}>
+        <div className={css(styles.icon, pending ? styles.iconLoading : styles.iconProvider)}>
           {quote && quote.provider ? <ProviderIcon provider={quote.provider} /> : null}
         </div>
         {pending ? (

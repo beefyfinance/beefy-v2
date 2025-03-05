@@ -1,13 +1,14 @@
 /**
  * We can't do the import.meta.glob in a function as its statically rewritten at compile time to imports
  *
- * @param pathToUrl result of import.meta.glob<T>(path, { as: 'url', eager: true })
+ * @param pathToUrl result of import.meta.glob<T>(path, { query: '?url',
+import: 'default', eager: true })
  * @param pathToKey function to generate key from asset path, default is filename w/out extension
  */
 export function createGlobLoader<T = string>(
   pathToUrl: Record<string, T>,
   pathToKey: (path: string) => string = filenameWithoutExt
-) {
+): (keys: string | string[]) => T | undefined {
   const keyToPath = Object.fromEntries(Object.keys(pathToUrl).map(path => [pathToKey(path), path]));
   const cache: Record<string, T> = {};
 

@@ -2,19 +2,19 @@ import { createSelector } from '@reduxjs/toolkit';
 import { createCachedSelector } from 're-reselect';
 import type {
   ByAddressByChainDataEntity,
+  ByAddressGlobalDataEntity,
   ByChainDataEntity,
   DataLoaderState,
-  ByAddressGlobalDataEntity,
   LoaderState,
   LoaderStateFulfilled,
   LoaderStateIdle,
   LoaderStatePending,
   LoaderStateRejected,
-} from '../reducers/data-loader-types';
-import type { BeefyState } from '../../../redux-types';
-import type { ChainEntity } from '../entities/chain';
-import { createCachedFactory } from '../utils/factory-utils';
-import type { VaultEntity } from '../entities/vault';
+} from '../reducers/data-loader-types.ts';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import { createCachedFactory } from '../utils/factory-utils.ts';
+import type { VaultEntity } from '../entities/vault.ts';
 
 // time since a loader was last dispatched before it is allowed to be dispatched again
 const DEFAULT_DISPATCHED_RECENT_SECONDS = 30;

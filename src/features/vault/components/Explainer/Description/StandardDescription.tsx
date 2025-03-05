@@ -1,8 +1,8 @@
 import { memo, useMemo } from 'react';
 import { Trans } from 'react-i18next';
-import { type VaultEntity, type VaultStandard } from '../../../../data/entities/vault';
-import { type CommonHelper, isStandardCommonHelper, useCommonHelper } from './common';
-import { DescriptionLink } from './DescriptionLink/DescriptionLink';
+import { type VaultEntity, type VaultStandard } from '../../../../data/entities/vault.ts';
+import { type CommonHelper, isStandardCommonHelper, useCommonHelper } from './common.tsx';
+import { DescriptionLink } from './DescriptionLink/DescriptionLink.tsx';
 
 type StandardHelper = CommonHelper<VaultStandard>;
 
@@ -43,9 +43,9 @@ export type StandardDescriptionProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const StandardDescription = memo<StandardDescriptionProps>(function StandardDescription({
+export const StandardDescription = memo(function StandardDescription({
   vaultId,
-}) {
+}: StandardDescriptionProps) {
   const { i18n } = useStandardHelper(vaultId);
   return <Trans {...i18n} />;
 });

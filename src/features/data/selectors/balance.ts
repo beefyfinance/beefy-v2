@@ -1,8 +1,8 @@
-import { mooAmountToOracleAmount } from '../utils/ppfs';
-import type { BeefyState } from '../../../redux-types';
-import type { BoostPromoEntity } from '../entities/promo';
-import type { ChainEntity } from '../entities/chain';
-import type { TokenEntity, TokenLpBreakdown } from '../entities/token';
+import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { BoostPromoEntity } from '../entities/promo.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { TokenEntity, TokenLpBreakdown } from '../entities/token.ts';
 import {
   isCowcentratedLikeVault,
   isCowcentratedVault,
@@ -12,25 +12,30 @@ import {
   isStandardVault,
   type VaultEntity,
   type VaultGov,
-} from '../entities/vault';
+} from '../entities/vault.ts';
 import {
   selectAllVaultBoostIds,
   selectBoostById,
   selectIsVaultPreStakedOrBoosted,
   selectVaultCurrentBoostId,
-} from './boosts';
+} from './boosts.ts';
 import { createCachedSelector } from 're-reselect';
-import { selectTokenByAddress, selectTokenPriceByAddress, selectTokensByChainId } from './tokens';
-import { selectAllCowcentratedVaults, selectGovVaultById, selectVaultById } from './vaults';
-import { selectWalletAddress } from './wallet';
-import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
+import {
+  selectTokenByAddress,
+  selectTokenPriceByAddress,
+  selectTokensByChainId,
+} from './tokens.ts';
+import { selectAllCowcentratedVaults, selectGovVaultById, selectVaultById } from './vaults.ts';
+import { selectWalletAddress } from './wallet.ts';
+import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import { BigNumber } from 'bignumber.js';
 import { createSelector } from '@reduxjs/toolkit';
-import { entries } from '../../../helpers/object';
-import type { UserLpBreakdownBalance } from './balance-types';
-import type { TokenAmount } from '../apis/transact/transact-types';
-import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils';
-import type { BoostReward } from '../apis/balance/balance-types';
+import { entries } from '../../../helpers/object.ts';
+import type { UserLpBreakdownBalance } from './balance-types.ts';
+import type { TokenAmount } from '../apis/transact/transact-types.ts';
+import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils.ts';
+import type { BoostReward } from '../apis/balance/balance-types.ts';
+import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (walletAddress) {
@@ -47,9 +52,9 @@ const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
 
 export const selectWalletBalanceByAddress = createCachedSelector(
   (state: BeefyState, _walletAddress: string) => state.user.balance.byAddress,
-  (state: BeefyState, walletAddress: string) => walletAddress.toLocaleLowerCase(),
+  (_state: BeefyState, walletAddress: string) => walletAddress.toLocaleLowerCase(),
   (balancesByAddress, walletAddress) => balancesByAddress[walletAddress] || undefined
-)((state: BeefyState, walletAddress: string) => walletAddress);
+)((_state: BeefyState, walletAddress: string) => walletAddress);
 
 export const selectAllTokenWhereUserCouldHaveBalance = createSelector(
   (state: BeefyState, chainId: ChainEntity['id']) => selectTokensByChainId(state, chainId),
@@ -62,7 +67,7 @@ export const selectHasWalletBalanceBeenFetched = (state: BeefyState, walletAddre
 
 export const selectUserDepositedVaultIds = (state: BeefyState, walletAddress?: string) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
-  return walletBalance?.depositedVaultIds || [];
+  return arrayOrStaticEmpty(walletBalance?.depositedVaultIds);
 };
 
 export const selectUserDepositedVaultIdsForAsset = (state: BeefyState, asset: string) => {

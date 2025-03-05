@@ -1,7 +1,11 @@
 // https://redux.js.org/usage/structuring-reducers/normalizing-state-shape#designing-a-normalized-state
 // we could use the npm package normalizr or the redux-toolkit createEntityAdapter
 // but I think it's too early/complex for now
-export type NormalizedEntity<T extends { id: string }> = {
+export type NormalizedEntity<
+  T extends {
+    id: string;
+  },
+> = {
   // Effectively an index of all entities
   byId: {
     -readonly [id in T['id']]?: T;

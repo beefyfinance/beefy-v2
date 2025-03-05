@@ -1,58 +1,59 @@
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
 import { memo } from 'react';
-import { AssetsImage } from '../../../../../../components/AssetsImage';
-import { formatLargeUsd } from '../../../../../../helpers/format';
-import type { BreakdownMode, CalculatedBreakdownData } from '../../types';
-import clsx from 'clsx';
+import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
+import { formatLargeUsd } from '../../../../../../helpers/format.ts';
+import type { BreakdownMode, CalculatedBreakdownData } from '../../types.ts';
+import { css, type CssStyles } from '@repo/styles/css';
 import { useTranslation } from 'react-i18next';
-import { TokenAmount } from '../../../../../../components/TokenAmount';
+import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type BreakdownTableProps = {
   mode: BreakdownMode;
   breakdown: CalculatedBreakdownData;
-  className?: string;
+  css?: CssStyles;
 };
-export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable({
+
+export const BreakdownTable = memo(function BreakdownTable({
   mode,
   breakdown,
-  className,
-}) {
+  css: cssProp,
+}: BreakdownTableProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const { chainId, assets, token } = breakdown;
-  const valueField = `${mode}Value`;
-  const amountField = `${mode}Amount`;
+  const valueField = `${mode}Value` as const;
+  const amountField = `${mode}Amount` as const;
 
   return (
-    <div className={clsx(classes.table, className)}>
-      <div className={clsx(classes.row, classes.header)}>
+    <div className={css(styles.table, cssProp)}>
+      <div className={css(styles.row, styles.header)}>
         <div className={classes.cell}>{t('Vault-LpBreakdown-Asset')}</div>
         <div className={classes.cell}>{t('Vault-LpBreakdown-TokenAmount')}</div>
         <div className={classes.cell}>{t('Vault-LpBreakdown-Value')}</div>
       </div>
       {assets.map(asset => (
         <div key={asset.address} className={classes.row}>
-          <div className={clsx(classes.cell, classes.asset)}>
-            <AssetsImage className={classes.icon} chainId={chainId} assetSymbols={[asset.symbol]} />{' '}
+          <div className={css(styles.cell, styles.asset)}>
+            <AssetsImage css={styles.icon} chainId={chainId} assetSymbols={[asset.symbol]} />{' '}
             {asset.symbol}
           </div>
           <div className={classes.cell}>
             <TokenAmount
               amount={asset[amountField]}
               decimals={asset.decimals}
-              className={classes.tokenAmount}
+              css={styles.tokenAmount}
             />
           </div>
           <div className={classes.cell}>{formatLargeUsd(asset[valueField])}</div>
         </div>
       ))}
-      <div className={clsx(classes.row, classes.footer)}>
-        <div className={clsx(classes.cell, classes.asset)}>
+      <div className={css(styles.row, styles.footer)}>
+        <div className={css(styles.cell, styles.asset)}>
           <AssetsImage
-            className={classes.icon}
+            css={styles.icon}
             chainId={chainId}
             assetSymbols={assets.map(asset => asset.symbol)}
           />{' '}
@@ -62,7 +63,7 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
           <TokenAmount
             amount={breakdown[amountField]}
             decimals={token.decimals}
-            className={classes.tokenAmount}
+            css={styles.tokenAmount}
           />
         </div>
         <div className={classes.cell}>{formatLargeUsd(breakdown[valueField])}</div>

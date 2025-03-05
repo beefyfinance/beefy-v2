@@ -1,43 +1,43 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  holder: {},
-  title: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.dark,
+export const styles = {
+  holder: css.raw({}),
+  title: css.raw({
+    textStyle: 'body',
+    color: 'text.dark',
     marginBottom: '8px',
-  },
-  routeHolder: {
+  }),
+  routeHolder: css.raw({
     borderRadius: '8px',
-    border: `solid 2px ${theme.palette.background.contentLight}`,
-    overflow: 'hidden' as const,
-  },
-  routeHeader: {
-    background: theme.palette.background.contentLight,
+    border: 'solid 2px {colors.background.content.light}',
+    overflow: 'hidden',
+  }),
+  routeHeader: css.raw({
+    background: 'background.content.light',
     padding: '8px 12px',
     display: 'flex',
     justifyContent: 'space-between',
-  },
-  routerHeaderClickable: {
+  }),
+  routerHeaderClickable: css.raw({
     cursor: 'pointer',
-  },
-  routeHeaderProvider: {},
-  routeContent: {
+  }),
+  routeHeaderProvider: css.raw({}),
+  routeContent: css.raw({
     borderRadius: '0px 0px 8px 8px',
     padding: '16px',
-  },
-  steps: {
-    ...theme.typography['body-lg'],
+  }),
+  steps: css.raw({
+    textStyle: 'body',
     display: 'grid',
     gridTemplateColumns: 'auto 1fr',
     gap: '12px 8px',
-  },
-  stepNumber: {
-    color: theme.palette.text.dark,
-    flexShrink: 0,
-    flexGrow: 0,
-  },
-  stepContent: {
-    color: theme.palette.text.middle,
-  },
-});
+  }),
+  stepNumber: css.raw({
+    color: 'text.dark',
+    flexShrink: '0',
+    flexGrow: '0',
+  }),
+  stepContent: css.raw({
+    color: 'text.middle',
+  }),
+};

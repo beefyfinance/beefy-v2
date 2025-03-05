@@ -1,17 +1,12 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
-
-const useStyles = makeStyles(styles);
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
 
 export type AmountLabelProps = {
   children: ReactNode;
-  className?: string;
+  css?: CssStyles;
 };
-export const AmountLabel = memo<AmountLabelProps>(function AmountLabel({ children, className }) {
-  const classes = useStyles();
-
-  return <div className={clsx(classes.label, className)}>{children}</div>;
+export const AmountLabel = memo(function AmountLabel({ children, css: cssProp }: AmountLabelProps) {
+  return <div className={css(styles.label, cssProp)}>{children}</div>;
 });

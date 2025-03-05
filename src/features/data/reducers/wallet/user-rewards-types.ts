@@ -1,5 +1,5 @@
 import type { Address } from 'viem';
-import type { ChainId } from '../../entities/chain';
+import type { ChainId } from '../../entities/chain.ts';
 import type { BigNumber } from 'bignumber.js';
 
 export type RewardToken = {

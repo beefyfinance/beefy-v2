@@ -1,13 +1,13 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { styles } from './styles';
-import { Debug } from './Debug';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { Debug } from './Debug.tsx';
 import { useTranslation } from 'react-i18next';
-import { PROVIDERS } from '../OnRamp/providers';
-import { featureFlag_debugOnRamp } from '../../../data/utils/feature-flags';
-import { getOnRampProviderLogo } from '../../../../helpers/onrampProviderSrc';
+import { PROVIDERS } from '../OnRamp/providers.tsx';
+import { featureFlag_debugOnRamp } from '../../../data/utils/feature-flags.ts';
+import { getOnRampProviderLogo } from '../../../../helpers/onrampProviderSrc.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const Introduction = memo(function Introduction() {
   const classes = useStyles();

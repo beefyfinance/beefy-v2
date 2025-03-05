@@ -1,4 +1,4 @@
-import type { PlatformConfig } from '../apis/config-types';
+import type { PlatformConfig } from '../apis/config-types.ts';
 
 /**
  * A platform is a project targeted by vaults

@@ -1,24 +1,27 @@
 import { useMemo } from 'react';
-import type { VaultEntity } from '../../../../data/entities/vault';
-import { useAppSelector } from '../../../../../store';
+import type { VaultEntity } from '../../../../data/entities/vault.ts';
+import { useAppSelector } from '../../../../../store.ts';
 import {
   selectUserDepositedTimelineByVaultId,
   selectUserFirstDepositDateByVaultId,
-} from '../../../../data/selectors/analytics';
-import { getInvestorTimeseries } from '../../../../../helpers/graph/timeseries';
+} from '../../../../data/selectors/analytics.ts';
+import { getInvestorTimeseries } from '../../../../../helpers/graph/timeseries.ts';
 import { differenceInHours, getUnixTime, isAfter } from 'date-fns';
 import { maxBy, minBy } from 'lodash-es';
-import { selectVaultById, selectVaultPricePerFullShare } from '../../../../data/selectors/vaults';
+import {
+  selectVaultById,
+  selectVaultPricePerFullShare,
+} from '../../../../data/selectors/vaults.ts';
 import {
   selectDepositTokenByVaultId,
   selectTokenPriceByAddress,
-} from '../../../../data/selectors/tokens';
-import { selectWalletAddress } from '../../../../data/selectors/wallet';
-import { isTimelineEntityStandard } from '../../../../data/entities/analytics';
-import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../../data/selectors/balance';
-import { useVaultIdToUnderlyingUsdPrices } from '../../../../data/hooks/historical';
-import { useVaultIdToShareToUnderlying } from '../../../../data/hooks/analytics';
-import type { GraphBucket } from '../../../../../helpers/graph/types';
+} from '../../../../data/selectors/tokens.ts';
+import { selectWalletAddress } from '../../../../data/selectors/wallet.ts';
+import { isTimelineEntityStandard } from '../../../../data/entities/analytics.ts';
+import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../../data/selectors/balance.ts';
+import { useVaultIdToUnderlyingUsdPrices } from '../../../../data/hooks/historical.tsx';
+import { useVaultIdToShareToUnderlying } from '../../../../data/hooks/analytics.tsx';
+import type { GraphBucket } from '../../../../../helpers/graph/types.ts';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], minUnderlying: 0, maxUnderlying: 0, minUsd: 0, maxUsd: 0 };

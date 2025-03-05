@@ -1,21 +1,21 @@
 import { Fragment, memo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { type UserClmPnl } from '../../features/data/selectors/analytics-types';
-import { formatLargeUsd } from '../../helpers/format';
-import { featureFlag_detailedTooltips } from '../../features/data/utils/feature-flags';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { type UserClmPnl } from '../../features/data/selectors/analytics-types.ts';
+import { formatLargeUsd } from '../../helpers/format.ts';
+import { featureFlag_detailedTooltips } from '../../features/data/utils/feature-flags.ts';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ClmPnlTooltipContentProps = {
   userPnl: UserClmPnl;
 };
 
-export const ClmPnlTooltipContent = memo<ClmPnlTooltipContentProps>(function ClmPnlTooltipContent({
+export const ClmPnlTooltipContent = memo(function ClmPnlTooltipContent({
   userPnl,
-}) {
+}: ClmPnlTooltipContentProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const { pnl, yields } = userPnl;
@@ -37,10 +37,12 @@ export const ClmPnlTooltipContent = memo<ClmPnlTooltipContentProps>(function Clm
             <div className={classes.valueBreakdown}>
               {yields.claimed.sources.map(source => (
                 <Fragment key={`${source.source}-${source.token.symbol}`}>
-                  <div className={classes.label}>
+                  <div className={css(styles.label, styles.valueBreakdownLabel)}>
                     {source.source} {source.token.symbol}
                   </div>
-                  <div className={classes.value}>{formatLargeUsd(source.usd)}</div>
+                  <div className={css(styles.value, styles.valueBreakdownValue)}>
+                    {formatLargeUsd(source.usd)}
+                  </div>
                 </Fragment>
               ))}
             </div>
@@ -57,19 +59,23 @@ export const ClmPnlTooltipContent = memo<ClmPnlTooltipContentProps>(function Clm
             <div className={classes.valueBreakdown}>
               {yields.pending.sources.map(source => (
                 <Fragment key={`${source.source}-${source.token.symbol}`}>
-                  <div className={classes.label}>
+                  <div className={css(styles.label, styles.valueBreakdownLabel)}>
                     {source.source} {source.token.symbol}
                   </div>
-                  <div className={classes.value}>{formatLargeUsd(source.usd)}</div>
+                  <div className={css(styles.value, styles.valueBreakdownValue)}>
+                    {formatLargeUsd(source.usd)}
+                  </div>
                 </Fragment>
               ))}
             </div>
           ) : null}
         </>
       ) : null}
-      <div className={clsx(classes.itemContainer, classes.total)}>
-        <div className={classes.label}>{t('Total PNL')}</div>
-        <div className={classes.value}>{formatLargeUsd(pnl.withClaimedPending.usd)}</div>
+      <div className={classes.itemContainer}>
+        <div className={css(styles.label, styles.totalLabel)}>{t('Total PNL')}</div>
+        <div className={css(styles.label, styles.totalValue)}>
+          {formatLargeUsd(pnl.withClaimedPending.usd)}
+        </div>
       </div>
     </div>
   );

@@ -1,13 +1,21 @@
-import { memo, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
-import type { InputBaseProps } from '@material-ui/core/InputBase/InputBase';
+import {
+  type ChangeEventHandler,
+  type FocusEventHandler,
+  memo,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
 import { BigNumber } from 'bignumber.js';
-import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { formatTokenInput, formatLargeUsd } from '../../../../../../helpers/format';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { formatLargeUsd, formatTokenInput } from '../../../../../../helpers/format.ts';
 
-export const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function isValidNumberInputString(value: string): boolean {
   const regex = new RegExp(`^[0-9]*\\.?[0-9]*$`);
@@ -36,33 +44,33 @@ export type AmountInputProps = {
   onChange?: (value: BigNumber, isMax: boolean) => void;
   error?: boolean;
   warning?: boolean;
-  className?: string;
+  css?: CssStyles;
   allowInputAboveBalance?: boolean;
   fullWidth?: boolean;
   price?: BigNumber;
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;
   disabled?: boolean;
-  errorClassName?: string;
-  warningClassName?: string;
+  errorCss?: CssStyles;
+  warningCss?: CssStyles;
 };
-export const AmountInput = memo<AmountInputProps>(function AmountInput({
+export const AmountInput = memo(function AmountInput({
   value,
   maxValue,
   onChange,
   tokenDecimals = 2,
   error = false,
   warning = false,
-  className,
+  css: cssProp,
   allowInputAboveBalance = false,
   fullWidth = false,
   price,
   endAdornment,
   startAdornment,
   disabled,
-  errorClassName = '',
-  warningClassName = '',
-}) {
+  errorCss,
+  warningCss,
+}: AmountInputProps) {
   const classes = useStyles();
   const [input, setInput] = useState(() => {
     return numberToString(value, tokenDecimals);
@@ -86,7 +94,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
     setValue(maxValue, true);
   }, [maxValue, setValue, tokenDecimals, setInput]);
 
-  const handleChange = useCallback<Exclude<InputBaseProps['onChange'], undefined>>(
+  const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     e => {
       const rawInput = e.target.value;
 
@@ -130,7 +138,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
     [allowInputAboveBalance, handleMax, maxValue, setValue]
   );
 
-  const handleBlur = useCallback<Exclude<InputBaseProps['onBlur'], undefined>>(
+  const handleBlur = useCallback<FocusEventHandler<HTMLInputElement>>(
     e => {
       const rawInput = e.target.value;
 
@@ -147,6 +155,7 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
     },
     [setInput, tokenDecimals]
   );
+
   useEffect(() => {
     if (!allowInputAboveBalance && maxValue && value.gt(maxValue)) {
       setInput(numberToString(maxValue, tokenDecimals));
@@ -158,18 +167,20 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
 
   return (
     <div
-      className={clsx(classes.inputContainer, className, {
-        [classes.fullWidth]: fullWidth,
-        [errorClassName]: error && errorClassName,
-        [warningClassName]: warning && warningClassName,
-        [classes.error]: error,
-        [classes.warning]: warning,
-      })}
+      className={css(
+        styles.inputContainer,
+        fullWidth && styles.fullWidth,
+        error && styles.error,
+        warning && styles.warning,
+        cssProp,
+        error && errorCss,
+        warning && warningCss
+      )}
     >
       {startAdornment && <div className={classes.startAdornment}>{startAdornment}</div>}
       <div className={classes.inputContent}>
         <input
-          className={clsx(classes.input, { [classes.inputWithPrice]: Boolean(price) })}
+          className={css(styles.input, Boolean(price) && styles.inputWithPrice)}
           value={input}
           onChange={handleChange}
           onBlur={handleBlur}

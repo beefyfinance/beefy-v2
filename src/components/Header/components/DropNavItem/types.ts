@@ -1,5 +1,6 @@
 import type { FC, FunctionComponent, SVGProps } from 'react';
-import type { BadgeComponent } from '../Badges/types';
+import type { BadgeComponent } from '../Badges/types.ts';
+import type { SvgProps } from '../../../../features/data/utils/types-utils.ts';
 
 type BaseNavItemProps = {
   title: string;
@@ -12,6 +13,11 @@ type BaseNavItemProps = {
 
 export type NavItemProps = BaseNavItemProps & {
   url: string;
+  mobile?: boolean;
+};
+
+export type NavItemInnerProps = Pick<NavItemProps, 'title' | 'Icon' | 'Badge'> & {
+  Arrow?: FunctionComponent<SvgProps<SVGSVGElement>>;
 };
 
 export type NavDropdownProps = BaseNavItemProps & {

@@ -1,4 +1,4 @@
-import type { ChainEntity } from '../../entities/chain';
+import type { ChainEntity } from '../../entities/chain.ts';
 
 export type ApiSupportedResponse = {
   countryCode: string;

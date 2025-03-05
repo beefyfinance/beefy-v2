@@ -4,24 +4,24 @@ import {
   bigNumberToBigInt,
   fromWei,
   toWeiFromTokenAmount,
-} from '../../../../../helpers/big-number';
-import type { BeefyStateFn } from '../../../../../redux-types';
+} from '../../../../../helpers/big-number.ts';
+import type { BeefyStateFn } from '../../../../../redux-types.ts';
 import {
   isTokenEqual,
   isTokenErc20,
   type TokenEntity,
   type TokenErc20,
-} from '../../../entities/token';
-import { isCowcentratedVault, type VaultCowcentrated } from '../../../entities/vault';
-import { TransactMode } from '../../../reducers/wallet/transact-types';
-import { selectTokenByAddress } from '../../../selectors/tokens';
+} from '../../../entities/token.ts';
+import { isCowcentratedVault, type VaultCowcentrated } from '../../../entities/vault.ts';
+import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
+import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import {
   createOptionId,
   createQuoteId,
   createSelectionId,
   onlyInputCount,
   onlyOneInput,
-} from '../helpers/options';
+} from '../helpers/options.ts';
 import {
   type CowcentratedVaultDepositOption,
   type CowcentratedVaultDepositQuote,
@@ -30,29 +30,29 @@ import {
   type InputTokenAmount,
   SelectionOrder,
   type TokenAmount,
-} from '../transact-types';
+} from '../transact-types.ts';
 import type {
   ICowcentratedVaultType,
   VaultDepositRequest,
   VaultDepositResponse,
   VaultWithdrawRequest,
   VaultWithdrawResponse,
-} from './IVaultType';
+} from './IVaultType.ts';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { Step } from '../../../reducers/wallet/stepper';
-import { walletActions } from '../../../actions/wallet-actions';
-import { selectChainById } from '../../../selectors/chains';
-import { BeefyCLMPool } from '../../beefy/beefy-clm-pool';
-import { selectVaultStrategyAddress } from '../../../selectors/vaults';
-import type { ZapStep } from '../zap/types';
-import { getInsertIndex } from '../helpers/zap';
-import { slipAllBy } from '../helpers/amounts';
-import { selectTransactSlippage } from '../../../selectors/transact';
-import { calculatePriceImpact } from '../helpers/quotes';
+import type { Step } from '../../../reducers/wallet/stepper.ts';
+import { walletActions } from '../../../actions/wallet-actions.ts';
+import { selectChainById } from '../../../selectors/chains.ts';
+import { BeefyCLMPool } from '../../beefy/beefy-clm-pool.ts';
+import { selectVaultStrategyAddress } from '../../../selectors/vaults.ts';
+import type { ZapStep } from '../zap/types.ts';
+import { getInsertIndex } from '../helpers/zap.ts';
+import { slipAllBy } from '../helpers/amounts.ts';
+import { selectTransactSlippage } from '../../../selectors/transact.ts';
+import { calculatePriceImpact } from '../helpers/quotes.ts';
 import {
   QuoteCowcentratedNoSingleSideError,
   QuoteCowcentratedNotCalmError,
-} from '../strategies/error';
+} from '../strategies/error.ts';
 import { encodeFunctionData, type Abi } from 'viem';
 
 export class CowcentratedVaultType implements ICowcentratedVaultType {

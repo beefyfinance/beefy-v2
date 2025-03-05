@@ -1,13 +1,11 @@
 import { memo } from 'react';
-import { ToggleButtons } from '../../../../components/ToggleButtons';
-import { makeStyles, useMediaQuery, type Theme } from '@material-ui/core';
-import { styles } from './styles';
-import { LabeledSelect } from '../../../../components/LabeledSelect';
-
-const useStyles = makeStyles(styles);
+import { ToggleButtons } from '../../../../components/ToggleButtons/ToggleButtons.tsx';
+import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { Select } from '../../../../components/Form/Select/Single/Select.tsx';
+import type { SelectItem } from '../../../../components/Form/Select/types.ts';
 
 export type StatSwitcherProps<T extends string = string> = {
-  options: Record<T, string>;
+  options: Array<SelectItem<T>>;
   stat: T;
   onChange: (newStat: T) => void;
 };
@@ -17,28 +15,11 @@ export const StatSwitcher = memo(function StatSwitcher<T extends string = string
   onChange,
   stat,
 }: StatSwitcherProps<T>) {
-  const classes = useStyles();
-  const mobileView = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+  const mobileView = useBreakpoint({ to: 'xs' });
 
-  return (
-    <>
-      {mobileView ? (
-        <>
-          <LabeledSelect
-            selectClass={classes.select}
-            options={options}
-            value={stat}
-            onChange={onChange}
-          />
-        </>
-      ) : (
-        <ToggleButtons
-          value={stat}
-          options={options}
-          onChange={onChange}
-          buttonsClass={classes.tabs}
-        />
-      )}
-    </>
+  return mobileView ? (
+    <Select options={options} selected={stat} onChange={onChange} />
+  ) : (
+    <ToggleButtons value={stat} options={options} onChange={onChange} variant="filter" />
   );
 });

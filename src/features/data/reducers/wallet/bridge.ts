@@ -6,17 +6,17 @@ import {
   performBridge,
   quoteBridgeForm,
   validateBridgeForm,
-} from '../../actions/bridge';
-import type { ChainEntity } from '../../entities/chain';
-import type { BeefyAnyBridgeConfig, BeefyBridgeIdToConfig } from '../../apis/config-types';
-import type { InputTokenAmount } from '../../apis/transact/transact-types';
-import { isTokenEqual, type TokenErc20 } from '../../entities/token';
-import { BIG_ZERO } from '../../../../helpers/big-number';
-import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types';
+} from '../../actions/bridge.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
+import type { BeefyAnyBridgeConfig, BeefyBridgeIdToConfig } from '../../apis/config-types.ts';
+import type { InputTokenAmount } from '../../apis/transact/transact-types.ts';
+import { isTokenEqual, type TokenErc20 } from '../../entities/token.ts';
+import { BIG_ZERO } from '../../../../helpers/big-number.ts';
+import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types.ts';
 import type { Draft } from 'immer';
 import { keyBy, pick } from 'lodash-es';
 import { type BigNumber } from 'bignumber.js';
-import { keys } from '../../../../helpers/object';
+import { keys } from '../../../../helpers/object.ts';
 
 export enum FormStep {
   Loading = 1,
@@ -43,7 +43,7 @@ export type BridgeValidateState = {
 
 export type BridgeQuoteState = {
   status: 'idle' | 'pending' | 'fulfilled' | 'rejected';
-  selected: string | undefined;
+  selected: BeefyAnyBridgeConfig['id'] | undefined;
   quotes: {
     allIds: IBridgeQuote<BeefyAnyBridgeConfig>['id'][];
     byId: Partial<
@@ -57,7 +57,11 @@ export type BridgeQuoteState = {
     >;
   };
   error: SerializedError | undefined;
-  limitError?: { current: BigNumber; max: BigNumber; canWait: boolean };
+  limitError?: {
+    current: BigNumber;
+    max: BigNumber;
+    canWait: boolean;
+  };
   requestId: string | undefined;
 };
 
@@ -66,8 +70,14 @@ export type BridgeConfirmState = {
   requestId?: string;
   error?: SerializedError;
   quote?: IBridgeQuote<BeefyAnyBridgeConfig>;
-  outgoing?: { hash: string; mined: boolean };
-  incoming?: { hash: string; mined: boolean };
+  outgoing?: {
+    hash: string;
+    mined: boolean;
+  };
+  incoming?: {
+    hash: string;
+    mined: boolean;
+  };
 };
 
 export type BridgesMap = {
@@ -134,7 +144,12 @@ export const bridgeSlice = createSlice({
   name: 'bridge',
   initialState: initialBridgeState,
   reducers: {
-    setStep(sliceState, action: PayloadAction<{ step: FormStep }>) {
+    setStep(
+      sliceState,
+      action: PayloadAction<{
+        step: FormStep;
+      }>
+    ) {
       if (!sliceState.form) {
         throw new Error(`Bridge form not initialized.`);
       }
@@ -154,7 +169,12 @@ export const bridgeSlice = createSlice({
 
       resetQuotes(sliceState);
     },
-    setFromChain(sliceState, action: PayloadAction<{ chainId: ChainEntity['id'] }>) {
+    setFromChain(
+      sliceState,
+      action: PayloadAction<{
+        chainId: ChainEntity['id'];
+      }>
+    ) {
       if (!sliceState.form) {
         throw new Error(`Bridge form not initialized.`);
       }
@@ -175,7 +195,12 @@ export const bridgeSlice = createSlice({
 
       resetQuotes(sliceState);
     },
-    setToChain(sliceState, action: PayloadAction<{ chainId: ChainEntity['id'] }>) {
+    setToChain(
+      sliceState,
+      action: PayloadAction<{
+        chainId: ChainEntity['id'];
+      }>
+    ) {
       if (!sliceState.form) {
         throw new Error(`Bridge form not initialized.`);
       }
@@ -251,7 +276,12 @@ export const bridgeSlice = createSlice({
         resetQuotes(sliceState);
       }
     },
-    selectQuote(sliceState, action: PayloadAction<{ quoteId: string }>) {
+    selectQuote(
+      sliceState,
+      action: PayloadAction<{
+        quoteId: BeefyAnyBridgeConfig['id'];
+      }>
+    ) {
       const { quoteId } = action.payload;
 
       if (quoteId in sliceState.quote.quotes.byId) {
@@ -277,26 +307,32 @@ export const bridgeSlice = createSlice({
       .addCase(fetchBridgeConfig.fulfilled, (sliceState, action) => {
         const { config } = action.payload;
         const allChains = keys(config.tokens);
-        const chainToBridges = allChains.reduce((allMap, fromChainId) => {
-          allMap[fromChainId] = allChains.reduce((chainMap, toChainId) => {
-            chainMap[toChainId] = config.bridges
-              .filter(bridge => {
-                const fromChain = bridge.chains[fromChainId];
-                const toChain = bridge.chains[toChainId];
-                return (
-                  fromChainId !== toChainId &&
-                  fromChain &&
-                  !fromChain.sendDisabled &&
-                  toChain &&
-                  !toChain.receiveDisabled
-                );
-              })
-              .map(bridge => bridge.id);
+        const chainToBridges = allChains.reduce(
+          (allMap, fromChainId) => {
+            allMap[fromChainId] = allChains.reduce(
+              (chainMap, toChainId) => {
+                chainMap[toChainId] = config.bridges
+                  .filter(bridge => {
+                    const fromChain = bridge.chains[fromChainId];
+                    const toChain = bridge.chains[toChainId];
+                    return (
+                      fromChainId !== toChainId &&
+                      fromChain &&
+                      !fromChain.sendDisabled &&
+                      toChain &&
+                      !toChain.receiveDisabled
+                    );
+                  })
+                  .map(bridge => bridge.id);
 
-            return chainMap;
-          }, {});
-          return allMap;
-        }, {});
+                return chainMap;
+              },
+              {} as Record<ChainEntity['id'], BeefyAnyBridgeConfig['id'][]>
+            );
+            return allMap;
+          },
+          {} as Record<ChainEntity['id'], Record<ChainEntity['id'], BeefyAnyBridgeConfig['id'][]>>
+        );
 
         sliceState.source = config.source.chainId;
         sliceState.tokens = config.tokens;
@@ -304,12 +340,15 @@ export const bridgeSlice = createSlice({
           allChains,
           chainToAddress: { ...config.tokens, [config.source.chainId]: config.source.address },
           chainToBridges,
-          chainToChain: allChains.reduce((allMap, chainId) => {
-            allMap[chainId] = allChains.filter(
-              otherChainId => chainToBridges[chainId]?.[otherChainId]?.length > 0
-            );
-            return allMap;
-          }, {}),
+          chainToChain: allChains.reduce(
+            (allMap, chainId) => {
+              allMap[chainId] = allChains.filter(
+                otherChainId => chainToBridges[chainId]?.[otherChainId]?.length > 0
+              );
+              return allMap;
+            },
+            {} as Record<ChainEntity['id'], ChainEntity['id'][]>
+          ),
         };
         sliceState.bridges = keyBy(config.bridges, 'id');
       })
@@ -409,10 +448,13 @@ function setQuotes(
   key: 'quotes' | 'limitedQuotes',
   quotes: IBridgeQuote<BeefyAnyBridgeConfig>[]
 ) {
-  sliceState.quote[key].byId = quotes.reduce((map, quote) => {
-    map[quote.id] = quote;
-    return map;
-  }, {});
+  sliceState.quote[key].byId = quotes.reduce(
+    (map, quote) => {
+      map[quote.id] = quote;
+      return map;
+    },
+    {} as Record<BeefyAnyBridgeConfig['id'], IBridgeQuote<BeefyAnyBridgeConfig>>
+  );
   sliceState.quote[key].allIds = quotes.map(quote => quote.id);
 }
 

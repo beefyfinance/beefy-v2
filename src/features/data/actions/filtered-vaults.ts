@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types.ts';
 import {
   isCowcentratedLikeVault,
   isGovVault,
@@ -8,13 +8,13 @@ import {
   isVaultRetired,
   shouldVaultShowInterest,
   type VaultEntity,
-} from '../entities/vault';
+} from '../entities/vault.ts';
 import {
   selectFilterOptions,
   selectFilterPlatformIdsForVault,
   selectVaultIsBoostedForFilter,
   selectVaultMatchesText,
-} from '../selectors/filtered-vaults';
+} from '../selectors/filtered-vaults.ts';
 import {
   selectAllVisibleVaultIds,
   selectIsVaultBlueChip,
@@ -22,26 +22,26 @@ import {
   selectIsVaultStable,
   selectVaultById,
   selectVaultIsPinned,
-} from '../selectors/vaults';
-import { selectActiveChainIds, selectAllChainIds } from '../selectors/chains';
-import { selectVaultSupportsZap } from '../selectors/zap';
+} from '../selectors/vaults.ts';
+import { selectActiveChainIds, selectAllChainIds } from '../selectors/chains.ts';
+import { selectVaultSupportsZap } from '../selectors/zap.ts';
 import {
   selectIsVaultPrestakedBoost,
   selectVaultsActiveBoostPeriodFinish,
-} from '../selectors/boosts';
-import { selectIsVaultIdSaved } from '../selectors/saved-vaults';
+} from '../selectors/boosts.ts';
+import { selectIsVaultIdSaved } from '../selectors/saved-vaults.ts';
 import {
   selectHasUserDepositInVault,
   selectUserBalanceOfToken,
   selectUserVaultBalanceInUsdIncludingBoostsBridged,
   selectUserVaultDepositTokenWalletBalanceInUsd,
-} from '../selectors/balance';
-import { simplifySearchText } from '../../../helpers/string';
-import type { FilteredVaultsState } from '../reducers/filtered-vaults';
+} from '../selectors/balance.ts';
+import { simplifySearchText } from '../../../helpers/string.ts';
+import type { FilteredVaultsState } from '../reducers/filtered-vaults.ts';
 import { orderBy, sortBy } from 'lodash-es';
-import type { TotalApy } from '../reducers/apy';
-import { selectVaultTotalApy } from '../selectors/apy';
-import { selectVaultTvl, selectVaultUnderlyingTvlUsd } from '../selectors/tvl';
+import type { TotalApy } from '../reducers/apy.ts';
+import { selectVaultTotalApy } from '../selectors/apy.ts';
+import { selectVaultTvl, selectVaultUnderlyingTvlUsd } from '../selectors/tvl.ts';
 
 export type RecalculateFilteredVaultsParams = {
   dataChanged?: boolean;
@@ -57,7 +57,9 @@ export type RecalculateFilteredVaultsPayload = {
 export const recalculateFilteredVaultsAction = createAsyncThunk<
   RecalculateFilteredVaultsPayload,
   RecalculateFilteredVaultsParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'filtered-vaults/recalculateFilteredVaults',
   async ({ filtersChanged, sortChanged, dataChanged }, { getState }) => {
@@ -78,9 +80,9 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
       const allVaults = selectAllVisibleVaultIds(state).map(id => selectVaultById(state, id));
 
       /*
-       @dev every filter that can be applied without using a selector should come first
-       then cheap selectors, then expensive selectors last
-      */
+           @dev every filter that can be applied without using a selector should come first
+           then cheap selectors, then expensive selectors last
+          */
       filteredVaults = allVaults.filter(vault => {
         // Chains
         if (!visibleChains.has(vault.chainId)) {
@@ -267,10 +269,10 @@ function applyDefaultSort(
       vault.status === 'eol'
         ? -3
         : vault.status === 'paused'
-        ? -2
-        : vaultsToPin.has(vault.id)
-        ? -1
-        : 1
+          ? -2
+          : vaultsToPin.has(vault.id)
+            ? -1
+            : 1
     ).map(v => v.id);
   }
 
@@ -279,7 +281,7 @@ function applyDefaultSort(
     vaultsToPin.has(vault.id)
       ? selectIsVaultPrestakedBoost(state, vault.id)
         ? -Number.MAX_SAFE_INTEGER
-        : -selectVaultsActiveBoostPeriodFinish(state, vault.id)
+        : -selectVaultsActiveBoostPeriodFinish(state, vault.id).getTime()
       : 1
   ).map(v => v.id);
 }
@@ -335,7 +337,7 @@ function applyTvlSort(
 }
 
 function applySafetyScoreSort(
-  state: BeefyState,
+  _state: BeefyState,
   vaults: VaultEntity[],
   filters: FilteredVaultsState
 ): VaultEntity['id'][] {

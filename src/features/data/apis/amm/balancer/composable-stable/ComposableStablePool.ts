@@ -1,7 +1,7 @@
-import { BalancerFeature, type IBalancerAllPool, type IBalancerSinglePool } from '../types';
+import { BalancerFeature, type IBalancerAllPool, type IBalancerSinglePool } from '../types.ts';
 import { BigNumber } from 'bignumber.js';
-import { BIG_ZERO, fromWei } from '../../../../../../helpers/big-number';
-import type { ChainEntity } from '../../../../entities/chain';
+import { BIG_ZERO, fromWei } from '../../../../../../helpers/big-number.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
 import {
   type ExitPoolRequest,
   type JoinPoolRequest,
@@ -9,21 +9,21 @@ import {
   type QueryExitPoolResponse,
   type QueryJoinPoolResponse,
   type VaultConfig,
-} from '../vault/types';
-import { BalancerComposableStablePoolAbi } from '../../../../../../config/abi/BalancerComposableStablePoolAbi';
-import { FixedPoint } from '../common/FixedPoint';
+} from '../vault/types.ts';
+import { BalancerComposableStablePoolAbi } from '../../../../../../config/abi/BalancerComposableStablePoolAbi.ts';
+import { FixedPoint } from '../common/FixedPoint.ts';
 import {
   type ExitPoolUserData,
   type JoinPoolUserData,
   PoolExitKind,
   PoolJoinKind,
-} from '../common/types';
+} from '../common/types.ts';
 import {
   poolExitKindToComposableStablePoolExitKind,
   poolJoinKindToComposableStablePoolJoinKind,
-} from './join-exit-kinds';
-import { SingleAllPool } from '../common/SingleAllPool';
-import { fetchContract } from '../../../rpc-contract/viem-contract';
+} from './join-exit-kinds.ts';
+import { SingleAllPool } from '../common/SingleAllPool.ts';
+import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
 
 const SUPPORTED_FEATURES = new Set<BalancerFeature>([
   BalancerFeature.AddRemoveAll,
@@ -37,8 +37,6 @@ export class ComposableStablePool
   implements IBalancerSinglePool, IBalancerAllPool
 {
   public readonly type = 'balancer';
-
-  protected readonly bptIndex: number;
 
   constructor(
     readonly chain: ChainEntity,
@@ -130,7 +128,7 @@ export class ComposableStablePool
    * For composable stable pools, the scaling factors include the token rate too
    */
   protected async getScalingFactors() {
-    const pool = await this.getPoolContract();
+    const pool = this.getPoolContract();
     const factors = await pool.read.getScalingFactors();
     return factors.map(f => new BigNumber(f.toString(10)));
   }

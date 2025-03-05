@@ -1,16 +1,16 @@
-import type { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types.ts';
 import {
   isCowcentratedLikeVault,
   isGovVault,
   isStandardVault,
   type VaultEntity,
-} from '../entities/vault';
-import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet';
-import type { TokenEntity } from '../entities/token';
+} from '../entities/vault.ts';
+import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet.ts';
+import type { TokenEntity } from '../entities/token.ts';
 import { type BigNumber } from 'bignumber.js';
-import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
-import { selectIsVaultStable, selectVaultById } from './vaults';
-import { selectAllVaultBoostIds } from './boosts';
+import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
+import { selectIsVaultStable, selectVaultById } from './vaults.ts';
+import { selectAllVaultBoostIds } from './boosts.ts';
 import {
   selectHasBreakdownDataForVault,
   selectIsTokenStable,
@@ -20,30 +20,30 @@ import {
   selectTokenPriceByTokenOracleId,
   selectVaultTokenSymbols,
   selectWrappedToNativeSymbolOrTokenSymbol,
-} from './tokens';
-import { isUserClmPnl, type PnlYieldSource, type UserVaultPnl } from './analytics-types';
-import { getTopNArray } from '../utils/array-utils';
+} from './tokens.ts';
+import { isUserClmPnl, type PnlYieldSource, type UserVaultPnl } from './analytics-types.ts';
+import { getTopNArray } from '../utils/array-utils.ts';
 import { cloneDeep, orderBy } from 'lodash-es';
-import { selectPlatformById } from './platforms';
-import { selectChainById } from './chains';
+import { selectPlatformById } from './platforms.ts';
+import { selectChainById } from './chains.ts';
 import {
   selectClmPnl,
   selectIsAnalyticsLoadedByAddress,
   selectStandardGovPnl,
   selectUserDepositedTimelineByVaultId,
   selectVaultPnl,
-} from './analytics';
-import type { ChainEntity } from '../entities/chain';
-import type { UserLpBreakdownBalanceAsset } from './balance-types';
+} from './analytics.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { UserLpBreakdownBalanceAsset } from './balance-types.ts';
 import {
   selectBoostUserRewardsInToken,
   selectGovVaultPendingRewardsWithPrice,
   selectUserDepositedVaultIds,
   selectUserLpBreakdownBalance,
   selectUserVaultBalanceInUsdIncludingBoostsBridged,
-} from './balance';
-import { selectIsUserBalanceAvailable } from './data-loader';
-import { selectYieldStatsByVaultId } from './apy';
+} from './balance.ts';
+import { selectIsUserBalanceAvailable } from './data-loader.ts';
+import { selectYieldStatsByVaultId } from './apy.ts';
 
 export enum DashboardDataStatus {
   Loading,
@@ -83,7 +83,9 @@ type UserRewardsStatusEntry = {
 
 export type UserRewards = {
   [status in UserRewardStatus]: UserRewardsStatusEntry;
-} & { all: UserRewardsStatusEntry };
+} & {
+  all: UserRewardsStatusEntry;
+};
 
 const emptyUserRewardsStatusEntry: UserRewardsStatusEntry = {
   has: false,
@@ -245,9 +247,13 @@ export const selectDashboardUserRewardsOrStatusByVaultId = (
   return status;
 };
 
-type DashboardUserExposureVaultEntry = { key: string; label: string; value: BigNumber };
+type DashboardUserExposureVaultEntry = {
+  key: string;
+  label: string;
+  value: BigNumber;
+};
 type DashboardUserExposureVaultFn<
-  T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry
+  T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 > = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
@@ -255,12 +261,12 @@ type DashboardUserExposureVaultFn<
   walletAddress: string
 ) => T[];
 type DashboardUserExposureEntry<
-  T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry
+  T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 > = T & {
   percentage: number;
 };
 type DashboardUserExposureSummarizer<
-  T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry
+  T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 > = (entries: DashboardUserExposureEntry<T>[]) => DashboardUserExposureEntry<T>[];
 type DashboardUserTokenExposureVaultEntry = DashboardUserExposureVaultEntry & {
   symbols: string[];
@@ -270,7 +276,7 @@ type DashboardUserChainExposureVaultEntry = DashboardUserExposureVaultEntry & {
   chainId: ChainEntity['id'] | 'others';
 };
 const getDashboardLpBreakdownScalingFactor = (
-  vaultId: string,
+  _vaultId: string,
   userVaultTvl: BigNumber,
   assets: UserLpBreakdownBalanceAsset[]
 ) => {
@@ -280,12 +286,12 @@ const getDashboardLpBreakdownScalingFactor = (
     if (assetValueTotal.gt(userVaultTvl.times(1.01))) {
       // If more than % out, warn in console, and let UI show over 100%
       /*console.warn(
-        `[${vaultId}] Total asset value (${assetValueTotal.toString(
-          10
-        )}) from user LP breakdown is >1% greater than user's total vault deposit (${userVaultTvl.toString(
-          10
-        )})`
-      );*/
+                    `[${vaultId}] Total asset value (${assetValueTotal.toString(
+                      10
+                    )}) from user LP breakdown is >1% greater than user's total vault deposit (${userVaultTvl.toString(
+                      10
+                    )})`
+                  );*/
     } else {
       // If less than % out, just scale user values down equally to not go over 100%
       scaleFactor = userVaultTvl.dividedBy(assetValueTotal);
@@ -294,7 +300,7 @@ const getDashboardLpBreakdownScalingFactor = (
   return scaleFactor;
 };
 const top6ByPercentageSummarizer = <
-  T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry
+  T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 >(
   entries: DashboardUserExposureEntry<T>[]
 ) =>
@@ -307,7 +313,7 @@ const top6ByPercentageSummarizer = <
 const stableVsOthersSummarizer = (entries: DashboardUserExposureEntry[]) =>
   orderBy(entries, 'key', 'desc');
 const selectDashboardUserExposure = <
-  T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry
+  T extends DashboardUserExposureVaultEntry = DashboardUserExposureVaultEntry,
 >(
   state: BeefyState,
   vaultFn: DashboardUserExposureVaultFn<T>,
@@ -331,14 +337,17 @@ const selectDashboardUserExposure = <
   const entries = vaultIds
     .map((vaultId, i) => vaultFn(state, vaultId, vaultDeposits[i], walletAddress))
     .flat();
-  const byKey = entries.reduce((acc, entry) => {
-    if (!acc[entry.key]) {
-      acc[entry.key] = entry;
-    } else {
-      acc[entry.key].value = acc[entry.key].value.plus(entry.value);
-    }
-    return acc;
-  }, {} as Record<DashboardUserExposureVaultEntry['key'], T>);
+  const byKey = entries.reduce(
+    (acc, entry) => {
+      if (!acc[entry.key]) {
+        acc[entry.key] = entry;
+      } else {
+        acc[entry.key].value = acc[entry.key].value.plus(entry.value);
+      }
+      return acc;
+    },
+    {} as Record<DashboardUserExposureVaultEntry['key'], T>
+  );
 
   const entriesWithPercentage = Object.values(byKey).map(entry => ({
     ...entry,

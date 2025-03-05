@@ -1,14 +1,14 @@
-import { createCachedFactory, createFactory } from '../features/data/utils/factory-utils';
+import { createCachedFactory, createFactory } from '../features/data/utils/factory-utils.ts';
 import type {
   TotalApyComponent,
   TotalApyDailyComponent,
   TotalApyKey,
   TotalApyYearlyComponent,
-} from '../features/data/reducers/apy';
-import { isCowcentratedGovVault, type VaultEntity } from '../features/data/entities/vault';
-import { fromKeysMapper } from './object';
-import { ucFirstLetter } from './string';
-import type { ApiApyDataAprComponents } from '../features/data/apis/beefy/beefy-api-types';
+} from '../features/data/reducers/apy.ts';
+import { isCowcentratedGovVault, type VaultEntity } from '../features/data/entities/vault.ts';
+import { fromKeysMapper } from './object.ts';
+import { ucFirstLetter } from './string.ts';
+import type { ApiApyDataAprComponents } from '../features/data/apis/beefy/beefy-api-types.ts';
 
 const DISPLAY_ORDER = ((i = 0) =>
   ({
@@ -23,7 +23,7 @@ const DISPLAY_ORDER = ((i = 0) =>
     composablePool: i++,
     boost: i++,
     merklBoost: i++,
-  } satisfies Record<TotalApyComponent, number>))();
+  }) satisfies Record<TotalApyComponent, number>)();
 
 /**
  * Components are the individual parts that make up `totalApy` in `TotalApy`

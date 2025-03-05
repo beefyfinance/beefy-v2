@@ -1,11 +1,11 @@
 import { type BigNumber } from 'bignumber.js';
-import type { DatabarnTimelineEntry } from '../apis/databarn/databarn-types';
-import type { Prettify, Rest, SnakeToCamelCase } from '../utils/types-utils';
-import type { ChainEntity } from './chain';
-import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
-import type { NonEmptyArray } from '../utils/array-utils';
-import type { VaultGovCowcentrated, VaultStandardCowcentrated } from './vault';
-import type { TimelineActionClassic, TimelineActionClm } from '../apis/clm/clm-api-types';
+import type { DatabarnTimelineEntry } from '../apis/databarn/databarn-types.ts';
+import type { Prettify, Rest, SnakeToCamelCase } from '../utils/types-utils.ts';
+import type { ChainEntity } from './chain.ts';
+import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
+import type { NonEmptyArray } from '../utils/array-utils.ts';
+import type { VaultGovCowcentrated, VaultStandardCowcentrated } from './vault.ts';
+import type { TimelineActionClassic, TimelineActionClm } from '../apis/clm/clm-api-types.ts';
 
 type TimelineConfigDatabarnSnake = {
   [K in keyof DatabarnTimelineEntry as SnakeToCamelCase<K>]: DatabarnTimelineEntry[K];
@@ -77,9 +77,17 @@ export type UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart = {
   /** total diff from all reward pools */
   rewardPoolDiff: BigNumber;
   /** details of each reward pool */
-  rewardPoolDetails: NonEmptyArray<{ address: string; balance: BigNumber; diff: BigNumber }>;
+  rewardPoolDetails: NonEmptyArray<{
+    address: string;
+    balance: BigNumber;
+    diff: BigNumber;
+  }>;
   /** reward details */
-  rewardPoolClaimedDetails: { address: string; rewardToUsd: BigNumber; claimedAmount: BigNumber }[];
+  rewardPoolClaimedDetails: {
+    address: string;
+    rewardToUsd: BigNumber;
+    claimedAmount: BigNumber;
+  }[];
   /** reward pool from which rewards were claimed */
   claimedRewardPool: string | undefined;
 };
@@ -129,7 +137,11 @@ export type TimelineEntryCowcentratedPool = {
   usdBalance: BigNumber;
   usdDiff: BigNumber;
   actions: TimelineActionClm[];
-  rewardPoolClaimedDetails: { address: string; rewardToUsd: BigNumber; claimedAmount: BigNumber }[];
+  rewardPoolClaimedDetails: {
+    address: string;
+    rewardToUsd: BigNumber;
+    claimedAmount: BigNumber;
+  }[];
 };
 
 type UnprocessedTimelineEntryCowcentratedVaultBasePart = {
@@ -171,7 +183,11 @@ export type UnprocessedTimelineEntryCowcentratedVaultWithRewardPoolsPart = {
   /** total diff from all reward pools */
   rewardPoolDiff: BigNumber;
   /** details of each reward pool */
-  rewardPoolDetails: NonEmptyArray<{ address: string; balance: BigNumber; diff: BigNumber }>;
+  rewardPoolDetails: NonEmptyArray<{
+    address: string;
+    balance: BigNumber;
+    diff: BigNumber;
+  }>;
 };
 
 export type UnprocessedTimelineEntryCowcentratedVaultWithoutRewardPool =
@@ -218,7 +234,11 @@ export type TimelineEntryCowcentratedVault = {
   usdBalance: BigNumber;
   usdDiff: BigNumber;
   actions: TimelineActionClassic[];
-  rewardPoolClaimedDetails: { address: string; rewardToUsd: BigNumber; claimedAmount: BigNumber }[];
+  rewardPoolClaimedDetails: {
+    address: string;
+    rewardToUsd: BigNumber;
+    claimedAmount: BigNumber;
+  }[];
 };
 
 export type AnyTimelineEntry =

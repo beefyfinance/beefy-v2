@@ -1,18 +1,18 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  sortColumns: {
+export const styles = {
+  sortColumns: css.raw({
     display: 'grid',
     width: '100%',
     columnGap: '24px',
     gridTemplateColumns: 'repeat(6, minmax(0, 1fr))',
-  },
-  sortDropdown: {
-    backgroundColor: theme.palette.background.searchInputBg,
-    [theme.breakpoints.up('md')]: {
+  }),
+  sortDropdown: css.raw({
+    backgroundColor: 'purpleDarkest',
+    md: {
       width: '200px',
       maxWidth: '100%',
       marginLeft: 'auto',
     },
-  },
-});
+  }),
+};

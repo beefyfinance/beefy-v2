@@ -4,8 +4,8 @@ import type {
   AmmEntityGamma,
   AmmEntitySolidly,
   AmmEntityUniswapV2,
-} from '../../../entities/zap';
-import type { CurveMethod } from './curve/types';
+} from '../../../entities/zap.ts';
+import type { CurveMethod } from './curve/types.ts';
 
 export type SwapAggregatorId = 'one-inch' | 'kyber' | 'odos';
 
@@ -105,5 +105,10 @@ export type ZapStrategyId = ZapStrategyConfig['strategyId'];
 export type AnyStrategyId = ZapStrategyId | 'vault';
 
 export type StrategyIdToConfig<TId extends ZapStrategyId = ZapStrategyId> = {
-  [K in TId]: Extract<ZapStrategyConfig, { strategyId: K }>;
+  [K in TId]: Extract<
+    ZapStrategyConfig,
+    {
+      strategyId: K;
+    }
+  >;
 }[TId];

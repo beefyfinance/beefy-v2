@@ -1,27 +1,35 @@
 import { isArray, isPlainObject, mapValues, orderBy } from 'lodash-es';
-import { BIG_ZERO } from '../../../helpers/big-number';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { type BigNumber } from 'bignumber.js';
-import type { KeysOfType } from './types-utils';
+import type { KeysOfType } from './types-utils.ts';
 
 // https://github.com/lodash/lodash/issues/1244#issuecomment-356676695
 export const mapValuesDeep = (
-  obj: unknown[] | object,
+  obj: unknown,
   fn: (val: unknown, key: string | number, obj: unknown) => unknown
-) =>
-  isArray(obj)
-    ? obj.map(item => mapValuesDeep(item, fn))
-    : mapValues(obj, (val, key) =>
-        isPlainObject(val) || isArray(val) ? mapValuesDeep(val, fn) : fn(val, key, obj)
-      );
+): unknown =>
+  typeof obj !== 'object'
+    ? obj
+    : isArray(obj)
+      ? obj.map((item: unknown): unknown => mapValuesDeep(item, fn))
+      : mapValues(obj, (val, key) =>
+          isPlainObject(val) || isArray(val) ? mapValuesDeep(val, fn) : fn(val, key, obj)
+        );
 
-export function createIdMap<T extends { id: string }>(
-  arr: T[],
-  getId: (item: T) => string = item => item.id
-) {
-  return arr.reduce((agg, item) => {
-    agg[getId(item)] = item;
-    return agg;
-  }, {} as { [id: string]: T });
+export function createIdMap<
+  T extends {
+    id: string;
+  },
+>(arr: T[], getId: (item: T) => string = item => item.id) {
+  return arr.reduce(
+    (agg, item) => {
+      agg[getId(item)] = item;
+      return agg;
+    },
+    {} as {
+      [id: string]: T;
+    }
+  );
 }
 
 //https://github.com/lodash/lodash/issues/2339#issuecomment-585615971

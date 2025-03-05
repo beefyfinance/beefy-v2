@@ -1,107 +1,59 @@
-import { memo, type ReactNode, useMemo } from 'react';
-import { DEFAULT_SIZE, styles } from './styles';
-import { makeStyles } from '@material-ui/core';
-import { getSingleAssetSrc } from '../../helpers/singleAssetSrc';
-import clsx from 'clsx';
-import type { ChainEntity } from '../../features/data/entities/chain';
+import { memo } from 'react';
+import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import missingAssetUrl from '../../images/single-assets/missing-asset.svg';
-
-const useStyles = makeStyles(styles);
-const maxSupportedAssets = 8;
+import { AssetArrangement } from './AssetArrangement.tsx';
+import { AssetImg } from './AssetImg.tsx';
+import { SymbolAssetImg } from './SymbolAssetImg.tsx';
+import { defaultSize, maxSupportedAssets } from './config.ts';
+import type { CssStyles } from '@repo/styles/css';
 
 type CommonProps = {
   size?: number;
-  className?: string;
+  css?: CssStyles;
 };
 
 export type AssetsImageProps = {
   chainId?: ChainEntity['id'] | undefined;
-  assetSymbols?: string[] | undefined;
+  assetSymbols: string[];
 } & CommonProps;
 
-export const AssetsImage = memo<AssetsImageProps>(function AssetsImage({
-  chainId,
-  assetSymbols,
-  className,
-  size = DEFAULT_SIZE,
-}) {
-  if (!assetSymbols || assetSymbols.length === 0) {
-    return <MissingAssetsImage size={size} className={className} />;
-  }
+export const AssetsImage = memo<AssetsImageProps>(
+  function AssetsImage({ chainId, assetSymbols, css, size = defaultSize }) {
+    if (!assetSymbols || assetSymbols.length === 0) {
+      return <MissingAssetsImage size={size} css={css} />;
+    }
 
-  return (
-    <Icon
-      count={Math.min(assetSymbols.length, maxSupportedAssets)}
-      size={size}
-      className={className}
-    >
-      {assetSymbols.slice(0, maxSupportedAssets).map(symbol => (
-        <Asset key={`${symbol}.${chainId}`} symbol={symbol} chainId={chainId} size={size} />
-      ))}
-    </Icon>
-  );
-});
+    return (
+      <AssetArrangement
+        count={Math.min(assetSymbols.length, maxSupportedAssets)}
+        size={size}
+        css={css}
+      >
+        {assetSymbols.slice(0, maxSupportedAssets).map(symbol => (
+          <SymbolAssetImg key={`${symbol}.${chainId}`} symbol={symbol} chainId={chainId} />
+        ))}
+      </AssetArrangement>
+    );
+  },
+  (prevProps, nextProps) => {
+    return (
+      prevProps.chainId === nextProps.chainId &&
+      prevProps.size === nextProps.size &&
+      prevProps.css === nextProps.css &&
+      prevProps.assetSymbols?.join() === nextProps.assetSymbols?.join()
+    );
+  }
+);
 
 export type MissingAssetsImageProps = CommonProps;
 
 export const MissingAssetsImage = memo<MissingAssetsImageProps>(function MissingAssetsImage({
   size,
-  className,
+  css,
 }) {
-  const classes = useStyles();
   return (
-    <Icon className={className} size={size} count={1}>
-      <img
-        src={missingAssetUrl}
-        alt=""
-        role="presentation"
-        className={clsx(classes.iconImg, className)}
-        width={size || DEFAULT_SIZE}
-        height={size || DEFAULT_SIZE}
-      />
-    </Icon>
-  );
-});
-
-type AssetProps = {
-  symbol: string;
-  chainId?: ChainEntity['id'];
-} & CommonProps;
-
-const Asset = memo<AssetProps>(function Icon({ symbol, chainId, size, className }) {
-  const classes = useStyles();
-  const src = useMemo(
-    () => getSingleAssetSrc(symbol, chainId) ?? missingAssetUrl,
-    [symbol, chainId]
-  );
-
-  return (
-    <img
-      src={src}
-      alt=""
-      role="presentation"
-      className={clsx(classes.iconImg, className)}
-      width={size || DEFAULT_SIZE}
-      height={size || DEFAULT_SIZE}
-    />
-  );
-});
-
-type IconProps = {
-  count: number;
-  children: ReactNode;
-} & CommonProps;
-
-const Icon = memo<IconProps>(function Icon({ children, count, size, className }) {
-  const classes = useStyles();
-  const style = useMemo(
-    () => (size && size !== DEFAULT_SIZE ? { width: size, height: size } : undefined),
-    [size]
-  );
-
-  return (
-    <div className={clsx(classes.icon, className)} data-count={count} style={style}>
-      {children}
-    </div>
+    <AssetArrangement css={css} size={size} count={1}>
+      <AssetImg src={missingAssetUrl} />
+    </AssetArrangement>
   );
 });

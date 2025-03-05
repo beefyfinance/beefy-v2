@@ -1,30 +1,33 @@
 import { memo, useMemo } from 'react';
-import { isCowcentratedLikeVault, type VaultEntity } from '../../../features/data/entities/vault';
+import {
+  isCowcentratedLikeVault,
+  type VaultEntity,
+} from '../../../features/data/entities/vault.ts';
 import {
   selectAllCowcentratedVaultsByChainId,
   selectVaultById,
-} from '../../../features/data/selectors/vaults';
-import type { BeefyState } from '../../../redux-types';
-import { isDefined } from '../../../features/data/utils/array-utils';
-import { useAppSelector } from '../../../store';
-import { InternalLink } from '../Links/Links';
-import { getIcon } from '../../../helpers/iconSrc';
+} from '../../../features/data/selectors/vaults.ts';
+import type { BeefyState } from '../../../redux-types.ts';
+import { isDefined } from '../../../features/data/utils/array-utils.ts';
+import { useAppSelector } from '../../../store.ts';
+import { getIcon } from '../../../helpers/iconSrc.ts';
 import { Trans, useTranslation } from 'react-i18next';
-import { ListJoin } from '../../ListJoin';
-import type { ChainEntity } from '../../../features/data/entities/chain';
+import { ListJoin } from '../../ListJoin.tsx';
+import type { ChainEntity } from '../../../features/data/entities/chain.ts';
 import {
   selectChainWrappedNativeToken,
   selectTokenByIdOrUndefined,
-} from '../../../features/data/selectors/tokens';
+} from '../../../features/data/selectors/tokens.ts';
 import {
   selectConcentratedLiquidityManagerPlatforms,
   selectPlatformById,
-} from '../../../features/data/selectors/platforms';
+} from '../../../features/data/selectors/platforms.ts';
 import { orderBy } from 'lodash-es';
-import { selectVaultTvl } from '../../../features/data/selectors/tvl';
-import { DismissibleBanner } from '../Banner/DismissibleBanner';
-import { selectVaultTotalApy } from '../../../features/data/selectors/apy';
-import { formatLargePercent } from '../../../helpers/format';
+import { selectVaultTvl } from '../../../features/data/selectors/tvl.ts';
+import { DismissibleBanner } from '../Banner/DismissibleBanner.tsx';
+import { selectVaultTotalApy } from '../../../features/data/selectors/apy.ts';
+import { formatLargePercent } from '../../../helpers/format.ts';
+import { InternalLink } from '../Links/InternalLink.tsx';
 
 type RetiredSuggestClmBannerProps = {
   vaultId: VaultEntity['id'];

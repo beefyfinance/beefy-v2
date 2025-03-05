@@ -1,35 +1,36 @@
 import { Fragment, memo } from 'react';
-import type { Theme } from '@material-ui/core';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
-import type { VaultEntity } from '../../../../../data/entities/vault';
-import { Transaction, TransactionMobile } from './components/Transaction';
-import { TransactionsFilter } from './components/TransactionsFilter';
-import { useSortedTransactionHistory } from './hook';
-import { TransactionTimelineSeparator } from './components/TransactionTimelineSeparator/TransactionTimelineSeparator';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import type { VaultEntity } from '../../../../../data/entities/vault.ts';
+import { Transaction, TransactionMobile } from './components/Transaction/Transaction.tsx';
+import { TransactionsFilter } from './components/TransactionsFilter/TransactionsFilter.tsx';
+import { useSortedTransactionHistory } from './hook.tsx';
+import { TransactionTimelineSeparator } from './components/TransactionTimelineSeparator/TransactionTimelineSeparator.tsx';
+import { css } from '@repo/styles/css';
+import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
 
 interface VaultTransactionsProps {
   vaultId: VaultEntity['id'];
   address: string;
 }
 
-const useStyles = makeStyles(() => ({
-  transactionsGrid: {
+const useStyles = legacyMakeStyles({
+  transactionsGrid: css.raw({
     display: 'grid',
     gridTemplateColumns: 'minmax(0, 1fr)',
     rowGap: '2px',
-  },
-}));
+  }),
+});
 
-export const VaultTransactions = memo<VaultTransactionsProps>(function VaultTransactions({
+export const VaultTransactions = memo(function VaultTransactions({
   vaultId,
   address,
-}) {
+}: VaultTransactionsProps) {
   const classes = useStyles();
   const { sortedTimeline, sortedOptions, handleSort } = useSortedTransactionHistory(
     vaultId,
     address
   );
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
+  const isMobile = useBreakpoint({ to: 'sm' });
   const TxComponent = isMobile ? TransactionMobile : Transaction;
 
   return (

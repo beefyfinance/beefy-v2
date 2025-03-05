@@ -1,26 +1,16 @@
-import { DEFAULT_SIZE } from '../AssetsImage/styles';
+import { css } from '@repo/styles/css';
 
-export const styles = () => ({
-  '@keyframes scrollBackground': {
-    '0%': {
-      backgroundPosition: '0 0',
-    },
-    '50%': {
-      backgroundPosition: '100% 0',
-    },
-    '100%': {
-      backgroundPosition: '0 0',
-    },
-  },
-  holder: {
-    backgroundImage: 'linear-gradient(90deg, #313759, #8585A6, #313759)',
+export const styles = {
+  holder: css.raw({
+    backgroundImage:
+      'linear-gradient(90deg, {colors.loaderPurple}, {colors.loaderPurpleHighlight}, {colors.loaderPurple})',
     backgroundSize: '300% 100%',
-    animationName: '$scrollBackground',
+    animationName: 'scrollBackground',
     animationDuration: '3s',
     animationIterationCount: 'infinite',
     animationTimingFunction: 'ease',
     borderRadius: '50%',
-    width: DEFAULT_SIZE,
-    height: DEFAULT_SIZE,
-  },
-});
+    width: '48px',
+    height: '48px',
+  }),
+};

@@ -1,16 +1,16 @@
-import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { css, type CssStyles } from '@repo/styles/css';
 import type { ReactNode } from 'react';
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { styles } from './styles';
+import { styles } from './styles.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type SortIconProps = {
   direction: 'none' | 'asc' | 'desc';
 };
-const SortIcon = memo<SortIconProps>(function SortIcon({ direction }) {
+const SortIcon = memo(function SortIcon({ direction }: SortIconProps) {
   const classes = useStyles();
 
   return (
@@ -27,23 +27,23 @@ const SortIcon = memo<SortIconProps>(function SortIcon({ direction }) {
   );
 });
 
-type SortColumnHeaderProps = {
+type SortColumnHeaderProps<TValue extends string = string> = {
   label: string;
-  sortKey: string;
+  sortKey: TValue;
   sorted: 'none' | 'asc' | 'desc';
-  onChange?: (field: string) => void;
+  onChange?: (field: TValue) => void;
   tooltip?: ReactNode;
-  className?: string;
+  css?: CssStyles;
 };
-export const SortColumnHeader = memo<SortColumnHeaderProps>(function SortColumnHeader({
+
+export const SortColumnHeader = memo(function SortColumnHeader<TValue extends string = string>({
   label,
   sortKey,
   sorted,
   onChange,
   tooltip,
-  className,
-}) {
-  const classes = useStyles();
+  css: cssProp,
+}: SortColumnHeaderProps<TValue>) {
   const { t } = useTranslation();
   const handleChange = useCallback(() => {
     if (onChange) {
@@ -52,7 +52,7 @@ export const SortColumnHeader = memo<SortColumnHeaderProps>(function SortColumnH
   }, [sortKey, onChange]);
 
   return (
-    <button className={clsx(classes.sortColumn, className)} onClick={handleChange}>
+    <button type="button" className={css(styles.sortColumn, cssProp)} onClick={handleChange}>
       {t(label)}
       {tooltip}
       <SortIcon direction={sorted} />

@@ -1,6 +1,6 @@
-import type { BeefyState } from '../../../redux-types';
-import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault';
-import { selectVaultById } from './vaults';
+import type { BeefyState } from '../../../redux-types.ts';
+import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault.ts';
+import { selectVaultById } from './vaults.ts';
 
 export const selectIsVaultQidao = (state: BeefyState, vaultId: VaultEntity['id']) => {
   return state.biz.partners.qidao.byVaultId[vaultId] !== undefined;

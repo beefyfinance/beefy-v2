@@ -1,4 +1,4 @@
-import type { Override } from '../utils/types-utils';
+import type { Override } from '../utils/types-utils.ts';
 import type {
   AirdropPromoConfig,
   BoostPromoConfig,
@@ -7,8 +7,8 @@ import type {
   PromoCampaignConfig,
   PromoPartnerConfig,
   PromoTokenRewardConfig,
-} from '../apis/promos/types';
-import type { ChainEntity } from './chain';
+} from '../apis/promos/types.ts';
+import type { ChainEntity } from './chain.ts';
 
 type PromoTokenReward = Override<
   PromoTokenRewardConfig,

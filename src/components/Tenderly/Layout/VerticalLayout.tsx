@@ -1,21 +1,21 @@
 import { memo, type ReactNode } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
-
-const useStyles = makeStyles(styles);
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
 
 export type VerticalLayoutProps = {
-  className?: string;
+  css?: CssStyles;
   gap?: number;
   children: ReactNode;
 };
 
-export const VerticalLayout = memo<VerticalLayoutProps>(function VerticalLayout({
-  className,
+export const VerticalLayout = memo(function VerticalLayout({
+  css: cssProp,
   gap,
   children,
-}) {
-  const classes = useStyles(gap === undefined ? undefined : { gap });
-  return <div className={clsx(classes.vertical, className)}>{children}</div>;
+}: VerticalLayoutProps) {
+  return (
+    <div className={css(styles.vertical, cssProp)} style={{ gap: `${gap}px` }}>
+      {children}
+    </div>
+  );
 });

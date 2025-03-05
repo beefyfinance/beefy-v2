@@ -1,10 +1,10 @@
-import type { InputTokenAmount } from '../transact/transact-types';
-import type { BeefyAnyBridgeConfig } from '../config-types';
-import type { ChainEntity } from '../../entities/chain';
-import type { BeefyState } from '../../../../redux-types';
-import type { IBridgeQuote } from './providers/provider-types';
-import type { TokenErc20 } from '../../entities/token';
-import type { Step } from '../../reducers/wallet/stepper';
+import type { InputTokenAmount } from '../transact/transact-types.ts';
+import type { BeefyAnyBridgeConfig } from '../config-types.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
+import type { BeefyState } from '../../../../redux-types.ts';
+import type { IBridgeQuote } from './providers/provider-types.ts';
+import type { TokenErc20 } from '../../entities/token.ts';
+import type { Step } from '../../reducers/wallet/stepper.ts';
 import type { TFunction } from 'react-i18next';
 
 export interface IBridgeApi {

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { NormalizedEntity } from '../utils/normalized-entity';
-import type { ProposalEntity } from '../entities/proposal';
-import { fetchActiveProposals, markAllProposalsRead } from '../actions/proposal';
+import type { NormalizedEntity } from '../utils/normalized-entity.ts';
+import type { ProposalEntity } from '../entities/proposal.ts';
+import { fetchActiveProposals, markAllProposalsRead } from '../actions/proposal.ts';
 import { keyBy, uniq } from 'lodash-es';
 
 export type ProposalsState = NormalizedEntity<ProposalEntity> & {
@@ -31,11 +31,14 @@ export const proposalsSlice = createSlice({
         sliceState.byId = keyBy(proposals, 'id');
         sliceState.allIds = proposals.map(p => p.id);
         sliceState.readIds = uniq([...sliceState.readIds, ...read]);
-        sliceState.bySpace = proposals.reduce((acc, proposal) => {
-          acc[proposal.space] ??= { allIds: [] };
-          acc[proposal.space].allIds.push(proposal.id);
-          return acc;
-        }, {});
+        sliceState.bySpace = proposals.reduce(
+          (acc, proposal) => {
+            acc[proposal.space] ??= { allIds: [] };
+            acc[proposal.space].allIds.push(proposal.id);
+            return acc;
+          },
+          {} as ProposalsState['bySpace']
+        );
       })
       .addCase(markAllProposalsRead.fulfilled, (sliceState, action) => {
         const { read } = action.payload;

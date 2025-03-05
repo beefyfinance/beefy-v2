@@ -1,16 +1,16 @@
-import { BalancerFeature, type IBalancerAllPool, type IBalancerSinglePool } from '../types';
-import type { ChainEntity } from '../../../../entities/chain';
-import type { PoolConfig, VaultConfig } from '../vault/types';
+import { BalancerFeature, type IBalancerAllPool, type IBalancerSinglePool } from '../types.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
+import type { PoolConfig, VaultConfig } from '../vault/types.ts';
 import { BigNumber } from 'bignumber.js';
-import { fromWei } from '../../../../../../helpers/big-number';
-import { BalancerWeightedPoolAbi } from '../../../../../../config/abi/BalancerWeightedPoolAbi';
-import { PoolExitKind, PoolJoinKind } from '../common/types';
+import { fromWei } from '../../../../../../helpers/big-number.ts';
+import { BalancerWeightedPoolAbi } from '../../../../../../config/abi/BalancerWeightedPoolAbi.ts';
+import { PoolExitKind, PoolJoinKind } from '../common/types.ts';
 import {
   poolExitKindToWeightedPoolExitKind,
   poolJoinKindToWeightedPoolJoinKind,
-} from './join-exit-kinds';
-import { SingleAllPool } from '../common/SingleAllPool';
-import { fetchContract } from '../../../rpc-contract/viem-contract';
+} from './join-exit-kinds.ts';
+import { SingleAllPool } from '../common/SingleAllPool.ts';
+import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
 
 const SUPPORTED_FEATURES = new Set<BalancerFeature>([
   BalancerFeature.AddRemoveAll,

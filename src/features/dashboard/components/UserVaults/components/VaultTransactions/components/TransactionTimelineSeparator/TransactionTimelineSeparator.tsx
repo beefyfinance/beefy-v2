@@ -1,14 +1,15 @@
 import { memo } from 'react';
-import { makeStyles, type Theme } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../../../helpers/mui.ts';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  separator: {
-    ...theme.typography['subline-sm'],
-    color: theme.palette.text.dark,
-    textAlign: 'center' as const,
+const useStyles = legacyMakeStyles({
+  separator: css.raw({
+    textStyle: 'subline.sm',
+    color: 'text.dark',
+    textAlign: 'center',
     padding: '4px',
-  },
-}));
+  }),
+});
 
 export const TransactionTimelineSeparator = memo(function TransactionTimelineSeparator() {
   const classes = useStyles();

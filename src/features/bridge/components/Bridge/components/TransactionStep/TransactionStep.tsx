@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { bridgeActions } from '../../../../../data/reducers/wallet/bridge';
-import { Step } from '../../../../../../components/Step';
-import { useAppDispatch } from '../../../../../../store';
-import { Transaction } from '../Transaction';
+import { bridgeActions } from '../../../../../data/reducers/wallet/bridge.ts';
+import { Step } from '../../../../../../components/Step/Step.tsx';
+import { useAppDispatch } from '../../../../../../store.ts';
+import { Transaction } from '../Transaction/Transaction.tsx';
 
 export const TransactionStep = () => {
   const { t } = useTranslation();

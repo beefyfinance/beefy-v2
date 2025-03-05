@@ -1,13 +1,13 @@
 import { memo, useEffect, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectFiatOrUndefined,
   selectInputAmount,
   selectInputModeOrUndefined,
   selectNetworkOrUndefined,
   selectTokenOrUndefined,
-} from '../../../../../data/selectors/on-ramp';
-import { validateOnRampForm } from '../../../../../data/actions/on-ramp';
+} from '../../../../../data/selectors/on-ramp.ts';
+import { validateOnRampForm } from '../../../../../data/actions/on-ramp.ts';
 import { debounce } from 'lodash-es';
 
 export const FormValidator = memo(function FormValidator() {
@@ -19,7 +19,10 @@ export const FormValidator = memo(function FormValidator() {
   const network = useAppSelector(selectNetworkOrUndefined);
 
   const debouncedValidate = useMemo(
-    () => debounce(() => dispatch(validateOnRampForm()), 150),
+    () =>
+      debounce(() => {
+        dispatch(validateOnRampForm());
+      }, 150),
     [dispatch]
   );
 

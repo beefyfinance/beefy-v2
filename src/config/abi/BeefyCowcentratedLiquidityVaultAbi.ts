@@ -1,4 +1,5 @@
 import type { Abi } from 'viem';
+
 export const BeefyCowcentratedLiquidityVaultAbi = [
   {
     inputs: [],

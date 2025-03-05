@@ -1,23 +1,24 @@
-import type { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { memo, type ReactNode } from 'react';
 import { connect } from 'react-redux';
-import type { BeefyState } from '../../redux-types';
+import type { BeefyState } from '../../redux-types.ts';
 import {
   formatLargeUsd,
   formatTokenDisplay,
   formatTokenDisplayCondensed,
-} from '../../helpers/format';
-import { VaultValueStat } from '../VaultValueStat';
+} from '../../helpers/format.ts';
+import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
 import {
   selectIsAnalyticsLoadedByAddress,
   selectUserDepositedTimelineByVaultId,
-} from '../../features/data/selectors/analytics';
-import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent';
-import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types';
+} from '../../features/data/selectors/analytics.ts';
+import { BasicTooltipContent } from '../Tooltip/BasicTooltipContent.tsx';
+import { isUserClmPnl, type UserVaultPnl } from '../../features/data/selectors/analytics-types.ts';
+import { type CssStyles } from '@repo/styles/css';
 
 export type VaultAtDepositStatProps = {
   vaultId: VaultEntity['id'];
-  className?: string;
+  css?: CssStyles;
   pnlData: UserVaultPnl;
   walletAddress: string;
 };
@@ -26,7 +27,7 @@ export const VaultAtDepositStat = memo(connect(mapStateToProps)(VaultValueStat))
 
 function mapStateToProps(
   state: BeefyState,
-  { vaultId, className, pnlData, walletAddress }: VaultAtDepositStatProps
+  { vaultId, css: cssProp, pnlData, walletAddress }: VaultAtDepositStatProps
 ) {
   const label = 'VaultStat-AtDeposit';
   const vaultTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
@@ -39,7 +40,7 @@ function mapStateToProps(
       subValue: null,
       blur: false,
       loading: false,
-      className: className ?? '',
+      css: cssProp,
     };
   }
 
@@ -50,7 +51,7 @@ function mapStateToProps(
       subValue: null,
       blur: false,
       loading: true,
-      className: className ?? '',
+      css: cssProp,
     };
   }
 
@@ -85,6 +86,6 @@ function mapStateToProps(
     loading: !isLoaded,
     boosted: false,
     tooltip,
-    className: className ?? '',
+    css: cssProp,
   };
 }

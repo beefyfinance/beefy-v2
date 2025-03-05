@@ -1,4 +1,4 @@
-import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number';
+import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { BigNumber } from 'bignumber.js';
 
 export class FixedPoint {

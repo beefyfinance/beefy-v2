@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import { getNameServicesApi } from '../apis/instances';
+import type { BeefyState } from '../../../redux-types.ts';
+import { getNameServicesApi } from '../apis/instances.ts';
 
 type ResolveFulfilledPayload = {
   address: string;

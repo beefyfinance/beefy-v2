@@ -1,10 +1,9 @@
-import { isCowcentratedLikeVault, type VaultEntity } from '../../entities/vault';
-import type { BeefyDispatchFn, BeefyStateFn, BeefyThunk } from '../../../../redux-types';
-import { fetchUserStellaSwapRewardsAction } from './stellaswap-user-rewards';
-import { fetchUserMerklRewardsAction } from './merkl-user-rewards';
-import { selectUserDepositedVaultIds } from '../../selectors/balance';
-import { selectVaultById } from '../../selectors/vaults';
-import { PromiseSettledAwaiter } from '../../../../helpers/promises';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../entities/vault.ts';
+import type { BeefyDispatchFn, BeefyStateFn, BeefyThunk } from '../../../../redux-types.ts';
+import { fetchUserStellaSwapRewardsAction } from './stellaswap-user-rewards.ts';
+import { fetchUserMerklRewardsAction } from './merkl-user-rewards.ts';
+import { selectUserDepositedVaultIds } from '../../selectors/balance.ts';
+import { selectVaultById } from '../../selectors/vaults.ts';
 
 function maybeHasStellaSwapRewards(vault: VaultEntity): boolean {
   return vault.chainId === 'moonbeam' && vault.platformId === 'stellaswap';
@@ -49,14 +48,17 @@ export function fetchUserOffChainRewardsForDepositedVaultsAction(walletAddress: 
       }
     }
 
-    const awaiter = new PromiseSettledAwaiter();
+    const promises: Promise<unknown>[] = [];
+
     if (fetchMerkl) {
-      awaiter.add(dispatch(fetchUserMerklRewardsAction({ walletAddress })));
+      promises.push(dispatch(fetchUserMerklRewardsAction({ walletAddress })));
     }
     if (fetchStellaSwap) {
-      awaiter.add(dispatch(fetchUserStellaSwapRewardsAction({ walletAddress })));
+      promises.push(dispatch(fetchUserStellaSwapRewardsAction({ walletAddress })));
     }
 
-    await awaiter.wait();
+    if (promises.length > 0) {
+      await Promise.allSettled(promises);
+    }
   };
 }

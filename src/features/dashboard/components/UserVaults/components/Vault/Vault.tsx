@@ -1,7 +1,6 @@
 import { memo, useCallback, useState } from 'react';
-import type { Theme } from '@material-ui/core';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
-import { styles } from './styles';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedLikeVault,
@@ -11,22 +10,23 @@ import {
   isVaultPaused,
   isVaultRetired,
   type VaultEntity,
-} from '../../../../../data/entities/vault';
-import { VaultIdentity } from '../../../../../../components/VaultIdentity';
-import { VaultDashboardStats } from '../../../../../../components/VaultStats/VaultDashboardStats';
-import { useAppSelector } from '../../../../../../store';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
-import clsx from 'clsx';
-import { MobileCollapseContent } from '../CollapseContent/MobileCollapseContent';
-import { DesktopCollapseContent } from '../CollapseContent/DesktopCollapseContent';
+} from '../../../../../data/entities/vault.ts';
+import { VaultIdentity } from '../../../../../../components/VaultIdentity/VaultIdentity.tsx';
+import { VaultDashboardStats } from '../../../../../../components/VaultStats/VaultDashboardStats.tsx';
+import { useAppSelector } from '../../../../../../store.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { css } from '@repo/styles/css';
+import { MobileCollapseContent } from '../CollapseContent/MobileCollapseContent/MobileCollapseContent.tsx';
+import { DesktopCollapseContent } from '../CollapseContent/DesktopCollapseContent/DesktopCollapseContent.tsx';
+import { useBreakpoint } from '../../../../../../components/MediaQueries/useBreakpoint.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type VaultProps = {
   vaultId: VaultEntity['id'];
   address: string;
 };
-export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
+export const Vault = memo(function Vault({ vaultId, address }: VaultProps) {
   const classes = useStyles();
   const [open, setOpen] = useState<boolean>(false);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -40,22 +40,22 @@ export const Vault = memo<VaultProps>(function Vault({ vaultId, address }) {
   const handleOpen = useCallback(() => {
     setOpen(o => !o);
   }, [setOpen]);
-  const mobileView = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
+  const mobileView = useBreakpoint({ to: 'sm' });
   const CollapseComponent = mobileView ? MobileCollapseContent : DesktopCollapseContent;
 
   return (
     <div className={classes.vaultRow}>
       <div
         onClick={handleOpen}
-        className={clsx({
-          [classes.vault]: true,
-          [classes.vaultEarnings]: isGov,
-          [classes.vaultClm]: isCowcentrated,
-          [classes.vaultClmPool]: isCowcentratedPool,
-          [classes.vaultCowcentratedVault]: isCowcentratedStandard,
-          [classes.vaultPaused]: isPaused,
-          [classes.vaultRetired]: isRetired,
-        })}
+        className={css(
+          styles.vault,
+          isGov && styles.vaultEarnings,
+          isCowcentrated && styles.vaultClm,
+          isCowcentratedPool && styles.vaultClmPool,
+          isCowcentratedStandard && styles.vaultCowcentratedVault,
+          isPaused && styles.vaultPaused,
+          isRetired && styles.vaultRetired
+        )}
       >
         <div className={classes.vaultInner}>
           <VaultIdentity isLink={true} vaultId={vaultId} />

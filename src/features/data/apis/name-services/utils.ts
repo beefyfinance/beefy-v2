@@ -1,7 +1,7 @@
 import { namehash, normalize } from 'viem/ens';
 import { type Address, getAddress, type Hash, isAddress } from 'viem';
-import { ZERO_ADDRESS } from '../../../../helpers/addresses';
-import type { ChainId } from '../../entities/chain';
+import { ZERO_ADDRESS } from '../../../../helpers/addresses.ts';
+import type { ChainId } from '../../entities/chain.ts';
 import { uniq } from 'lodash-es';
 
 export function hashDomain(domain: string): Hash {

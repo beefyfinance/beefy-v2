@@ -1,22 +1,34 @@
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
-import { type VaultEntity } from '../../features/data/entities/vault';
-import { selectTvlBreakdownByVaultId } from '../../features/data/selectors/tvl';
-import { selectVaultById } from '../../features/data/selectors/vaults';
-import { formatLargeUsd } from '../../helpers/format';
-import type { BeefyState } from '../../redux-types';
-import { ValueBlock } from '../ValueBlock/ValueBlock';
-import { BIG_ZERO } from '../../helpers/big-number';
-import { TvlShareTooltip } from '../VaultStats/VaultTvlStat';
+import { type VaultEntity } from '../../features/data/entities/vault.ts';
+import { selectTvlBreakdownByVaultId } from '../../features/data/selectors/tvl.ts';
+import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import { formatLargeUsd } from '../../helpers/format.ts';
+import type { BeefyState } from '../../redux-types.ts';
+import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
+import { BIG_ZERO } from '../../helpers/big-number.ts';
+import { TvlShareTooltip } from '../VaultStats/VaultTvlStat.tsx';
 import { type BigNumber } from 'bignumber.js';
-import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types';
+import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types.ts';
 import {
   selectIsContractDataLoadedOnChain,
   selectIsPricesAvailable,
-} from '../../features/data/selectors/data-loader';
+} from '../../features/data/selectors/data-loader.ts';
+import { useAppSelector } from '../../store.ts';
 
-const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
+type VaultTvlProps = {
+  vaultId: VaultEntity['id'];
+};
+
+type VaultTvlData = {
+  label: string;
+  vaultTvl: BigNumber;
+  underlyingTvl: BigNumber | null;
+  loading: boolean;
+  breakdown: TvlBreakdownUnderlying | null;
+};
+
+const selectVaultTvlData = (state: BeefyState, vaultId: VaultEntity['id']): VaultTvlData => {
   const label = 'VaultStat-TVL';
   const vault = selectVaultById(state, vaultId);
   const isLoaded =
@@ -50,40 +62,30 @@ const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntit
     loading: !isLoaded,
     breakdown,
   };
-})(
-  ({
-    label,
-    vaultTvl,
-    loading,
-    breakdown,
-    underlyingTvl,
-  }: {
-    label: string;
-    vaultTvl: BigNumber;
-    underlyingTvl: BigNumber;
-    loading: boolean;
-    breakdown: TvlBreakdownUnderlying;
-  }) => {
-    const { t } = useTranslation();
+};
 
-    const value = useMemo(() => {
-      return formatLargeUsd(vaultTvl);
-    }, [vaultTvl]);
+export const VaultTvl = memo(({ vaultId }: VaultTvlProps) => {
+  const { t } = useTranslation();
+  const { label, vaultTvl, loading, breakdown, underlyingTvl } = useAppSelector(state =>
+    selectVaultTvlData(state, vaultId)
+  );
 
-    const subValue = useMemo(() => {
-      return breakdown ? formatLargeUsd(underlyingTvl) : null;
-    }, [breakdown, underlyingTvl]);
+  const value = useMemo(() => {
+    return formatLargeUsd(vaultTvl);
+  }, [vaultTvl]);
 
-    return (
-      <ValueBlock
-        label={t(label)}
-        value={value}
-        blurred={false}
-        loading={loading}
-        usdValue={subValue}
-        tooltip={breakdown ? <TvlShareTooltip breakdown={breakdown} /> : undefined}
-      />
-    );
-  }
-);
-export const VaultTvl = memo(_VaultTvl);
+  const subValue = useMemo(() => {
+    return breakdown && underlyingTvl ? formatLargeUsd(underlyingTvl) : null;
+  }, [breakdown, underlyingTvl]);
+
+  return (
+    <ValueBlock
+      label={t(label)}
+      value={value}
+      blurred={false}
+      loading={loading}
+      usdValue={subValue}
+      tooltip={breakdown ? <TvlShareTooltip breakdown={breakdown} /> : undefined}
+    />
+  );
+});

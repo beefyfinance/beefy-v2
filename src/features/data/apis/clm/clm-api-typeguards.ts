@@ -3,7 +3,7 @@ import type {
   ClmPriceHistoryEntryClm,
   ClmTimelineEntryClassic,
   ClmTimelineEntryClm,
-} from './clm-api-types';
+} from './clm-api-types.ts';
 
 export function isClmTimelineEntryClassic(
   config: ClmTimelineEntryClm | ClmTimelineEntryClassic

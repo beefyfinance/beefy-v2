@@ -1,35 +1,36 @@
 import {
   tenderlySimulate,
   type TenderlySimulateConfig,
-} from '../../../features/data/actions/tenderly';
+} from '../../../features/data/actions/tenderly.ts';
 import { Fragment, memo, useCallback, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store.ts';
 import {
   selectTenderlyRequestOrUndefined,
   selectTenderlyStatus,
-} from '../../../features/data/selectors/tenderly';
-import { AlertError } from '../../Alerts';
-import { ToggleButtons } from '../../ToggleButtons';
-import { Button } from '../../Button';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { ExplorerAddressLink } from '../Links/ExplorerAddressLink';
-import { VerticalLayout } from '../Layout/VerticalLayout';
-import { ErrorMessage } from '../Error/ErrorMessage';
+} from '../../../features/data/selectors/tenderly.ts';
+import { AlertError } from '../../Alerts/Alerts.tsx';
+import { ToggleButtons } from '../../ToggleButtons/ToggleButtons.tsx';
+import { Button } from '../../Button/Button.tsx';
+import { legacyMakeStyles } from '../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { ExplorerAddressLink } from '../Links/ExplorerAddressLink.tsx';
+import { VerticalLayout } from '../Layout/VerticalLayout.tsx';
+import { ErrorMessage } from '../Error/ErrorMessage.tsx';
+import type { ToggleButtonItem } from '../../ToggleButtons/ToggleButtons.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-const simulationTypeOptions = {
-  full: 'Full',
-  quick: 'Quick',
-  abi: 'ABI',
-} as const satisfies Record<TenderlySimulateConfig['type'], string>;
+const simulationTypeOptions = [
+  { value: 'full', label: 'Full' },
+  { value: 'quick', label: 'Quick' },
+  { value: 'abi', label: 'ABI' },
+] as const satisfies Array<ToggleButtonItem<TenderlySimulateConfig['type']>>;
 
-const simulationSaveOptions = {
-  always: 'Always',
-  'if-fails': 'Reverts Only',
-  never: 'Never',
-} as const satisfies Record<TenderlySimulateConfig['save'], string>;
+const simulationSaveOptions = [
+  { value: 'always', label: 'Always' },
+  { value: 'if-fails', label: 'Reverts Only' },
+  { value: 'never', label: 'Never' },
+] as const satisfies Array<ToggleButtonItem<TenderlySimulateConfig['save']>>;
 
 export const RequestForm = memo(function RequestForm() {
   const dispatch = useAppDispatch();

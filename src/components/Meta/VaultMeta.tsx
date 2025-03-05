@@ -1,17 +1,17 @@
 import { memo } from 'react';
-import { type VaultEntity } from '../../features/data/entities/vault';
+import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../store';
-import { selectVaultById } from '../../features/data/selectors/vaults';
-import { selectChainById } from '../../features/data/selectors/chains';
-import { selectTokenByAddress } from '../../features/data/selectors/tokens';
-import { selectPlatformById } from '../../features/data/selectors/platforms';
-import { Meta } from './Meta';
+import { useAppSelector } from '../../store.ts';
+import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import { selectChainById } from '../../features/data/selectors/chains.ts';
+import { selectTokenByAddress } from '../../features/data/selectors/tokens.ts';
+import { selectPlatformById } from '../../features/data/selectors/platforms.ts';
+import { Meta } from './Meta.tsx';
 
 export type VaultMetaProps = {
   vaultId: VaultEntity['id'];
 };
-export const VaultMeta = memo<VaultMetaProps>(function VaultMeta({ vaultId }) {
+export const VaultMeta = memo(function VaultMeta({ vaultId }: VaultMetaProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));

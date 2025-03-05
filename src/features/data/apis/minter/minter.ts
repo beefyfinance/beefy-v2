@@ -1,10 +1,10 @@
-import type { ChainEntity } from '../../entities/chain';
-import type { FetchMinterReservesResult, IMinterApi } from './minter-types';
-import { MinterAbi } from '../../../../config/abi/MinterAbi';
+import type { ChainEntity } from '../../entities/chain.ts';
+import type { FetchMinterReservesResult, IMinterApi } from './minter-types.ts';
+import { MinterAbi } from '../../../../config/abi/MinterAbi.ts';
 import { BigNumber } from 'bignumber.js';
-import type { MinterEntity } from '../../entities/minter';
-import { ERC20Abi } from '../../../../config/abi/ERC20Abi';
-import { fetchContract } from '../rpc-contract/viem-contract';
+import type { MinterEntity } from '../../entities/minter.ts';
+import { ERC20Abi } from '../../../../config/abi/ERC20Abi.ts';
+import { fetchContract } from '../rpc-contract/viem-contract.ts';
 
 export class MinterApi implements IMinterApi {
   constructor(protected chain: ChainEntity) {}
@@ -24,9 +24,9 @@ export class MinterApi implements IMinterApi {
     const [totalSupply, reserves] = await Promise.all([
       tokenContract.read.totalSupply(),
       fetchReserves
-        ? (fetchContract(minter.burnerAddress!, MinterAbi, this.chain.id).read[
+        ? fetchContract(minter.burnerAddress!, MinterAbi, this.chain.id).read[
             minter.reserveBalanceMethod!
-          ]() as Promise<bigint>)
+          ]()
         : 0n,
     ]);
 

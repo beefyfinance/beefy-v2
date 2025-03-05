@@ -1,4 +1,4 @@
-import type { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types.ts';
 
 export const selectLastReadArticleId = (state: BeefyState) =>
   state.entities.articles.lastReadArticleId;

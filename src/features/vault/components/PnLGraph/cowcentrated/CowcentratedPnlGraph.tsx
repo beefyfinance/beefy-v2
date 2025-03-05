@@ -1,81 +1,86 @@
 import { type FC, memo, useEffect, useMemo, useState } from 'react';
-import { isCowcentratedStandardVault, type VaultEntity } from '../../../../data/entities/vault';
-import { Card, CardContent, CardHeader, CardTitle } from '../../Card';
+import { isCowcentratedStandardVault, type VaultEntity } from '../../../../data/entities/vault.ts';
+import { Card } from '../../Card/Card.tsx';
+import { CardContent } from '../../Card/CardContent.tsx';
+import { CardHeader } from '../../Card/CardHeader.tsx';
+import { CardTitle } from '../../Card/CardTitle.tsx';
 import { useTranslation } from 'react-i18next';
-import { StatSwitcher } from '../../StatSwitcher';
-import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
-import { OverviewGraphHeader } from './components/OverviewGraphHeader';
-import { useAppDispatch, useAppSelector } from '../../../../../store';
-import { selectCowcentratedLikeVaultById } from '../../../../data/selectors/vaults';
-import { selectHasBreakdownDataForVaultId } from '../../../../data/selectors/tokens';
+import { StatSwitcher } from '../../StatSwitcher/StatSwitcher.tsx';
+import { styles } from './styles.ts';
+import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
+import { OverviewGraphHeader } from './components/OverviewGraphHeader/OverviewGraphHeader.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../../store.ts';
+import { selectCowcentratedLikeVaultById } from '../../../../data/selectors/vaults.ts';
+import { selectHasBreakdownDataForVaultId } from '../../../../data/selectors/tokens.ts';
 import {
   selectIsAddressBookLoaded,
   selectIsContractDataLoadedOnChain,
-} from '../../../../data/selectors/data-loader';
-import { selectHasDataToShowGraphByVaultId } from '../../../../data/selectors/analytics';
-import { CLMOverviewGraph } from './components/OverviewGraph';
-import { useVaultPeriodsOverviewGraph } from './components/OverviewGraph/hooks';
-import { FeesFooter, OverviewFooter } from './components/Footers';
-import { FeesGraphHeader } from './components/FeesGraphHeader';
+} from '../../../../data/selectors/data-loader.ts';
+import { selectHasDataToShowGraphByVaultId } from '../../../../data/selectors/analytics.ts';
+import { CLMOverviewGraph } from './components/OverviewGraph/OverviewGraph.tsx';
+import { useVaultPeriodsOverviewGraph } from './components/OverviewGraph/hooks.tsx';
+import { FeesFooter, OverviewFooter } from './components/Footers/Footer.tsx';
+import { FeesGraphHeader } from './components/FeesGraphHeader/FeesGraphHeader.tsx';
 import {
   fetchClmHarvestsForUserVault,
   fetchClmPendingRewards,
-} from '../../../../data/actions/analytics';
-import { selectWalletAddress } from '../../../../data/selectors/wallet';
-import { CLMFeesGraph } from './components/FeesGraph';
-import { useVaultPeriodsFeesGraph } from './components/FeesGraph/hooks';
-import { ErrorBoundary } from '../../../../../components/ErrorBoundary/ErrorBoundary';
-import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData';
+} from '../../../../data/actions/analytics.ts';
+import { selectWalletAddress } from '../../../../data/selectors/wallet.ts';
+import { CLMFeesGraph } from './components/FeesGraph/FeesGraph.tsx';
+import { useVaultPeriodsFeesGraph } from './components/FeesGraph/hooks.tsx';
+import { ErrorBoundary } from '../../../../../components/ErrorBoundary/ErrorBoundary.tsx';
+import { GraphNoData } from '../../../../../components/GraphNoData/GraphNoData.tsx';
+import type { ToggleButtonItem } from '../../../../../components/ToggleButtons/ToggleButtons.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface CowcentratedPnlGraphLoaderProps {
   vaultId: VaultEntity['id'];
   address?: string;
 }
 
-export const CowcentratedPnlGraphLoader = memo<CowcentratedPnlGraphLoaderProps>(
-  function CowcentratedPnlGraphLoader({ vaultId, address }) {
-    const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
-    const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
+export const CowcentratedPnlGraphLoader = memo(function CowcentratedPnlGraphLoader({
+  vaultId,
+  address,
+}: CowcentratedPnlGraphLoaderProps) {
+  const walletAddress = useAppSelector(state => address || selectWalletAddress(state));
+  const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
 
-    const haveBreakdownData = useAppSelector(state =>
-      selectHasBreakdownDataForVaultId(state, vaultId)
-    );
-    const isContractDataLoaded = useAppSelector(state =>
-      selectIsContractDataLoadedOnChain(state, vault.chainId)
-    );
-    const hasData = useAppSelector(state =>
-      selectHasDataToShowGraphByVaultId(state, vaultId, walletAddress)
-    );
-    const isAddressBookLoaded = useAppSelector(state =>
-      selectIsAddressBookLoaded(state, vault.chainId)
-    );
+  const haveBreakdownData = useAppSelector(state =>
+    selectHasBreakdownDataForVaultId(state, vaultId)
+  );
+  const isContractDataLoaded = useAppSelector(state =>
+    selectIsContractDataLoadedOnChain(state, vault.chainId)
+  );
+  const hasData = useAppSelector(state =>
+    selectHasDataToShowGraphByVaultId(state, vaultId, walletAddress)
+  );
+  const isAddressBookLoaded = useAppSelector(state =>
+    selectIsAddressBookLoaded(state, vault.chainId)
+  );
 
-    if (
-      haveBreakdownData &&
-      isAddressBookLoaded &&
-      hasData &&
-      isContractDataLoaded &&
-      walletAddress
-    ) {
-      return <CowcentratedPnlGraph vaultId={vaultId} address={walletAddress} />;
-    }
-
-    return null;
+  if (
+    haveBreakdownData &&
+    isAddressBookLoaded &&
+    hasData &&
+    isContractDataLoaded &&
+    walletAddress
+  ) {
+    return <CowcentratedPnlGraph vaultId={vaultId} address={walletAddress} />;
   }
-);
+
+  return null;
+});
 
 interface CowcentratedPnlGraphProps {
   vaultId: VaultEntity['id'];
   address: string;
 }
 
-export const OverviewGraph = memo<CowcentratedPnlGraphProps>(function OverviewGraph({
+export const OverviewGraph = memo(function OverviewGraph({
   vaultId,
   address,
-}) {
+}: CowcentratedPnlGraphProps) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
   const labels = useVaultPeriodsOverviewGraph(vaultId, address);
@@ -83,7 +88,7 @@ export const OverviewGraph = memo<CowcentratedPnlGraphProps>(function OverviewGr
   const canShowGraph = labels.length > 0;
 
   return (
-    <CardContent className={classes.content}>
+    <CardContent css={styles.content}>
       <OverviewGraphHeader vaultId={vaultId} />
       <div className={classes.graphContainer}>
         {canShowGraph ? (
@@ -106,14 +111,14 @@ export const OverviewGraph = memo<CowcentratedPnlGraphProps>(function OverviewGr
   );
 });
 
-export const FeesGraph = memo<CowcentratedPnlGraphProps>(function FeesGraph({ vaultId, address }) {
+export const FeesGraph = memo(function FeesGraph({ vaultId, address }: CowcentratedPnlGraphProps) {
   const classes = useStyles();
   const labels = useVaultPeriodsFeesGraph(vaultId, address);
   const [period, setPeriod] = useState<number>(labels.length - 1);
   const canShowGraph = labels.length > 0;
 
   return (
-    <CardContent className={classes.content}>
+    <CardContent css={styles.content}>
       <FeesGraphHeader vaultId={vaultId} address={address} />
       <div className={classes.graphContainer}>
         {canShowGraph ? (
@@ -136,14 +141,13 @@ const chartToComponent = {
 
 type ChartType = keyof typeof chartToComponent;
 
-export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function CowcentratedPnlGraph({
+export const CowcentratedPnlGraph = memo(function CowcentratedPnlGraph({
   vaultId,
   address,
-}) {
+}: CowcentratedPnlGraphProps) {
   const dispatch = useAppDispatch();
   const [stat, setStat] = useState<ChartType>('overview');
   const { t } = useTranslation();
-  const classes = useStyles();
   const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
   const compounds = vault.strategyTypeId === 'compounds';
 
@@ -155,20 +159,23 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
   }, [dispatch, vaultId, address, compounds]);
 
   const options = useMemo(() => {
-    return {
-      overview: t('Graph-Overview'),
-      ...(compounds ? { fees: t('Graph-Fees') } : {}),
-    };
+    const opts: Array<ToggleButtonItem<ChartType>> = [
+      { value: 'overview', label: t('Graph-Overview') },
+    ];
+    if (compounds) {
+      opts.push({ value: 'fees', label: t('Graph-Fees') });
+    }
+    return opts;
   }, [t, compounds]);
 
   const GraphComponent = chartToComponent[stat];
 
   return (
-    <Card className={classes.card}>
-      <CardHeader className={classes.header}>
-        <CardTitle title={t('Graph-PositionPerformance')} />
+    <Card css={styles.card}>
+      <CardHeader css={styles.header}>
+        <CardTitle>{t('Graph-PositionPerformance')}</CardTitle>
         {Object.keys(options).length > 1 ? (
-          <StatSwitcher stat={stat} options={options} onChange={setStat as (v: string) => void} />
+          <StatSwitcher<ChartType> stat={stat} options={options} onChange={setStat} />
         ) : null}
       </CardHeader>
       <ErrorBoundary>
@@ -178,40 +185,41 @@ export const CowcentratedPnlGraph = memo<CowcentratedPnlGraphProps>(function Cow
   );
 });
 
-export const DashboardOverviewGraph = memo<CowcentratedPnlGraphProps>(
-  function DashboardOverviewGraph({ vaultId, address }) {
-    const classes = useStyles();
-    const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
-    const labels = useVaultPeriodsOverviewGraph(vaultId, address);
-    const [period, setPeriod] = useState<number>(labels.length - 1);
-    const canShowGraph = labels.length > 0;
-
-    return (
-      <div className={classes.dashboardPnlContainer}>
-        {canShowGraph ? (
-          <>
-            <CLMOverviewGraph address={address} period={period} vaultId={vaultId} />
-            <OverviewFooter
-              className={classes.footerDashboard}
-              tabsClassName={classes.tabsDashboard}
-              labels={labels}
-              period={period}
-              handlePeriod={setPeriod}
-              position={isCowcentratedStandardVault(vault)}
-            />
-          </>
-        ) : (
-          <GraphNoData reason="wait-collect" />
-        )}
-      </div>
-    );
-  }
-);
-
-export const DashboardFeesGraph = memo<CowcentratedPnlGraphProps>(function DashboardFeesGraph({
+export const DashboardOverviewGraph = memo(function DashboardOverviewGraph({
   vaultId,
   address,
-}) {
+}: CowcentratedPnlGraphProps) {
+  const classes = useStyles();
+  const vault = useAppSelector(state => selectCowcentratedLikeVaultById(state, vaultId));
+  const labels = useVaultPeriodsOverviewGraph(vaultId, address);
+  const [period, setPeriod] = useState<number>(labels.length - 1);
+  const canShowGraph = labels.length > 0;
+
+  return (
+    <div className={classes.dashboardPnlContainer}>
+      {canShowGraph ? (
+        <>
+          <CLMOverviewGraph address={address} period={period} vaultId={vaultId} />
+          <OverviewFooter
+            css={styles.footerDashboard}
+            tabsCss={styles.tabsDashboard}
+            labels={labels}
+            period={period}
+            handlePeriod={setPeriod}
+            position={isCowcentratedStandardVault(vault)}
+          />
+        </>
+      ) : (
+        <GraphNoData reason="wait-collect" />
+      )}
+    </div>
+  );
+});
+
+export const DashboardFeesGraph = memo(function DashboardFeesGraph({
+  vaultId,
+  address,
+}: CowcentratedPnlGraphProps) {
   const classes = useStyles();
   const labels = useVaultPeriodsFeesGraph(vaultId, address);
   const [period, setPeriod] = useState<number>(labels.length - 1);
@@ -223,8 +231,8 @@ export const DashboardFeesGraph = memo<CowcentratedPnlGraphProps>(function Dashb
         <>
           <CLMFeesGraph address={address} period={period} vaultId={vaultId} />
           <FeesFooter
-            className={classes.footerDashboard}
-            tabsClassName={classes.tabsDashboard}
+            css={styles.footerDashboard}
+            tabsCss={styles.tabsDashboard}
             labels={labels}
             vaultId={vaultId}
             period={period}

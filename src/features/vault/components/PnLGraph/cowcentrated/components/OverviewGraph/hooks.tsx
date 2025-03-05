@@ -1,34 +1,34 @@
 import { useMemo } from 'react';
-import { useAppSelector } from '../../../../../../../store';
+import { useAppSelector } from '../../../../../../../store.ts';
 import {
   isCowcentratedStandardVault,
   type VaultEntity,
-} from '../../../../../../data/entities/vault';
+} from '../../../../../../data/entities/vault.ts';
 import {
   selectCowcentratedLikeVaultDepositTokensWithPrices,
   selectDepositTokenByVaultId,
   selectTokenPriceByTokenOracleId,
-} from '../../../../../../data/selectors/tokens';
-import { selectWalletAddress } from '../../../../../../data/selectors/wallet';
-import { getClmInvestorTimeSeries } from '../../../../../../../helpers/graph/timeseries';
-import { isTimelineEntityCowcentrated } from '../../../../../../data/entities/analytics';
-import { useOracleIdToUsdPrices } from '../../../../../../data/hooks/historical';
-import { useVaultPeriods } from '../../../standard/hooks';
+} from '../../../../../../data/selectors/tokens.ts';
+import { selectWalletAddress } from '../../../../../../data/selectors/wallet.ts';
+import { getClmInvestorTimeSeries } from '../../../../../../../helpers/graph/timeseries.ts';
+import { isTimelineEntityCowcentrated } from '../../../../../../data/entities/analytics.ts';
+import { useOracleIdToUsdPrices } from '../../../../../../data/hooks/historical.tsx';
+import { useVaultPeriods } from '../../../standard/hooks.tsx';
 import {
   selectClmPnl,
   selectUserDepositedTimelineByVaultId,
-} from '../../../../../../data/selectors/analytics';
-import { maxOf, minOf } from '../../../../../../../helpers/collection';
-import type { GraphBucket } from '../../../../../../../helpers/graph/types';
+} from '../../../../../../data/selectors/analytics.ts';
+import { maxOf, minOf } from '../../../../../../../helpers/collection.ts';
+import type { GraphBucket } from '../../../../../../../helpers/graph/types.ts';
 import {
   selectCowcentratedLikeVaultById,
   selectStandardCowcentratedVaultById,
   selectVaultPricePerFullShare,
-} from '../../../../../../data/selectors/vaults';
+} from '../../../../../../data/selectors/vaults.ts';
 import {
   useVaultIdToClassicPriceHistory,
   useVaultIdToClmPriceHistory,
-} from '../../../../../../data/hooks/analytics';
+} from '../../../../../../data/hooks/analytics.tsx';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = {
@@ -94,7 +94,9 @@ function useCowcentratedPoolData(
   token1OracleId: string,
   timeBucket: GraphBucket
 ) {
+  // @ts-expect-error
   const _dummy1 = useMemo(() => clmId, [clmId]);
+  // @ts-expect-error
   const _dummy2 = useMemo(() => clmId, [clmId]);
   return useCowcentratedData(
     clmId,

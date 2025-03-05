@@ -7,21 +7,21 @@ import {
   transactFetchQuotes,
   transactInit,
   transactInitReady,
-} from '../../actions/transact';
+} from '../../actions/transact.ts';
 import {
   type QuoteOutputTokenAmountChange,
   type TransactOption,
   type TransactQuote,
-} from '../../apis/transact/transact-types';
+} from '../../apis/transact/transact-types.ts';
 import type { Draft } from 'immer';
-import { BIG_ZERO } from '../../../../helpers/big-number';
+import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import type {
   TransactOptions,
   TransactQuotes,
   TransactSelections,
   TransactState,
-} from './transact-types';
-import { TransactMode, TransactStatus, TransactStep } from './transact-types';
+} from './transact-types.ts';
+import { TransactMode, TransactStatus, TransactStep } from './transact-types.ts';
 
 const initialTransactTokens: TransactSelections = {
   allSelectionIds: [],
@@ -89,7 +89,10 @@ const transactSlice = createSlice({
     },
     selectSelection(
       sliceState,
-      action: PayloadAction<{ selectionId: string; resetInput: boolean }>
+      action: PayloadAction<{
+        selectionId: string;
+        resetInput: boolean;
+      }>
     ) {
       sliceState.selectedSelectionId = action.payload.selectionId;
       sliceState.step = TransactStep.Form;
@@ -100,7 +103,11 @@ const transactSlice = createSlice({
     },
     setInputAmount(
       sliceState,
-      action: PayloadAction<{ index: number; amount: BigNumber; max: boolean }>
+      action: PayloadAction<{
+        index: number;
+        amount: BigNumber;
+        max: boolean;
+      }>
     ) {
       const { index, amount, max } = action.payload;
       if (!sliceState.inputAmounts[index] || !sliceState.inputAmounts[index].isEqualTo(amount)) {
@@ -117,14 +124,22 @@ const transactSlice = createSlice({
     clearQuotes(sliceState) {
       resetQuotes(sliceState);
     },
-    confirmPending(sliceState, action: PayloadAction<{ requestId: string }>) {
+    confirmPending(
+      sliceState,
+      action: PayloadAction<{
+        requestId: string;
+      }>
+    ) {
       resetConfirm(sliceState);
       sliceState.confirm.status = TransactStatus.Pending;
       sliceState.confirm.requestId = action.payload.requestId;
     },
     confirmRejected(
       sliceState,
-      action: PayloadAction<{ requestId: string; error: SerializedError }>
+      action: PayloadAction<{
+        requestId: string;
+        error: SerializedError;
+      }>
     ) {
       if (sliceState.confirm.requestId === action.payload.requestId) {
         sliceState.confirm.status = TransactStatus.Rejected;
@@ -168,11 +183,21 @@ const transactSlice = createSlice({
         sliceState.selectedQuoteId = action.payload.newQuote.id;
       }
     },
-    selectQuote(sliceState, action: PayloadAction<{ quoteId: string }>) {
+    selectQuote(
+      sliceState,
+      action: PayloadAction<{
+        quoteId: string;
+      }>
+    ) {
       sliceState.selectedQuoteId = action.payload.quoteId;
       sliceState.step = TransactStep.Form;
     },
-    setSlippage(sliceState, action: PayloadAction<{ slippage: number }>) {
+    setSlippage(
+      sliceState,
+      action: PayloadAction<{
+        slippage: number;
+      }>
+    ) {
       sliceState.swapSlippage = action.payload.slippage;
     },
   },

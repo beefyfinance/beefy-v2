@@ -1,9 +1,9 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import type { ChainEntity } from '../entities/chain';
-import type { VaultEntity } from '../entities/vault';
-import { shouldVaultShowInterest } from '../entities/vault';
-import { selectVaultById } from './vaults';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import { shouldVaultShowInterest } from '../entities/vault.ts';
+import { selectVaultById } from './vaults.ts';
 import { createCachedSelector } from 're-reselect';
 import {
   createAddressChainDataSelector,
@@ -19,7 +19,8 @@ import {
   isLoaderRejected,
   shouldLoaderLoadOnce,
   shouldLoaderLoadRecent,
-} from './data-loader-helpers';
+} from './data-loader-helpers.ts';
+import { keys } from '../../../helpers/object.ts';
 
 export const selectIsChainConfigAvailable = createGlobalDataSelector(
   'chainConfig',
@@ -72,10 +73,10 @@ export const selectIsUserBalanceAvailable = createSelector(
     if (!configAvailable || !pricesAvailable || !walletAddress) {
       return false;
     }
-    for (const chainId in byChainId) {
+    for (const chainId of keys(byChainId)) {
       // if any chain has balance data, then balance data is available
       if (
-        hasLoaderFulfilledOnce(byChainId[chainId].contractData) &&
+        hasLoaderFulfilledOnce(byChainId[chainId]?.contractData) &&
         hasLoaderFulfilledOnce(byAddress[walletAddress]?.byChainId[chainId]?.balance)
       ) {
         return true;

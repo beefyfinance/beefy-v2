@@ -1,30 +1,46 @@
 import { addressBook } from 'blockchain-addressbook';
-import BigNumber from 'bignumber.js';
-import { isEmpty, isValidChecksumAddress, maybeChecksumAddress, sleep } from './common/utils';
-import { getVaultsIntegrity } from './common/exclude';
+import { BigNumber } from 'bignumber.js';
+import { isValidChecksumAddress, maybeChecksumAddress } from './common/utils.ts';
+import { getVaultsIntegrity } from './common/exclude.ts';
 import {
+  type AddressBookChainId,
   addressBookToAppId,
   chainIds,
+  type ChainMap,
   excludeChains,
   excludedChainIds,
   getPromosForChain,
   getVaultsForChain,
-} from './common/config';
-import { getStrategyIds } from './common/strategies';
-import { StratAbi } from '../src/config/abi/StrategyAbi';
-import { StandardVaultAbi } from '../src/config/abi/StandardVaultAbi';
+} from './common/config.ts';
+import { getStrategyIds } from './common/strategies.ts';
+import { StratAbi } from '../src/config/abi/StrategyAbi.ts';
+import { StandardVaultAbi } from '../src/config/abi/StandardVaultAbi.ts';
 import platforms from '../src/config/platforms.json';
 import partners from '../src/config/promos/partners.json';
 import campaigns from '../src/config/promos/campaigns.json';
 import pointProviders from '../src/config/points.json';
-import type { PlatformType, VaultConfig } from '../src/features/data/apis/config-types';
-import partition from 'lodash/partition';
+import type { PlatformType, VaultConfig } from '../src/features/data/apis/config-types.ts';
+import { partition } from 'lodash-es';
 import i18keys from '../src/locales/en/main.json';
-import { fileExists } from './common/files';
-import { getViemClient } from './common/viem';
-import { Abi, Address, PublicClient, getContract } from 'viem';
+import { fileExists } from './common/files.ts';
+import { isEmpty } from '../src/helpers/utils.ts';
+import { keys } from '../src/helpers/object.ts';
+import { sleep } from '../src/features/data/utils/async-utils.ts';
+import { getViemClient } from './common/viem.ts';
+import {
+  type Abi,
+  type Address,
+  ContractFunctionExecutionError,
+  ContractFunctionRevertedError,
+  getAddress,
+  getContract,
+  type PublicClient,
+} from 'viem';
 
-const overrides = {
+const overrides: Record<
+  string,
+  { [K in keyof Omit<VaultConfigWithStrategyData, keyof VaultConfig>]?: undefined }
+> = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
   'bifi-maxi': { stratOwner: undefined }, // harvester 0xDe30
   'beltv2-4belt': { vaultOwner: undefined }, // moonpot deployer
@@ -47,29 +63,29 @@ const oldValidOwners = [
   addressBook.arbitrum.platforms.beefyfinance.devMultisig,
 ];
 
-const oldValidFeeRecipients = {
-  canto: '0xF09d213EE8a8B159C884b276b86E08E26B3bfF75',
-  kava: '0x07F29FE11FbC17876D9376E3CD6F2112e81feA6F',
-  moonriver: '0x617f12E04097F16e73934e84f35175a1B8196551',
+const oldValidFeeRecipients: ChainMap<Address[]> = {
+  canto: ['0xF09d213EE8a8B159C884b276b86E08E26B3bfF75'],
+  kava: ['0x07F29FE11FbC17876D9376E3CD6F2112e81feA6F'],
+  moonriver: ['0x617f12E04097F16e73934e84f35175a1B8196551'],
   moonbeam: [
     '0x00aec34489a7ade91a0507b6b9dbb0a50938b7c0',
     '0x3E7F60B442CEAE0FE5e48e07EB85Cfb1Ed60e81A',
   ],
 };
 
-const oldValidRewardPoolOwners = {
+const oldValidRewardPoolOwners: ChainMap<Address[]> = {
   polygon: [
     '0x7313533ed72D2678bFD9393480D0A30f9AC45c1f',
     '0x97bfa4b212A153E15dCafb799e733bc7d1b70E72',
   ],
-  kava: '0xF0d26842c3935A618e6980C53fDa3A2D10A02eb7',
-  metis: '0x2cC364255206A7e14bF59ADB1fc5770DbA48CB3f',
-  cronos: '0xF9eBb381dC153D0966B2BaEe776de2F400405755',
-  celo: '0x32C82EE8Fca98ce5114D2060c5715AEc714152FB',
-  canto: '0xeD7b88EDd899d578581DCcfce80F43D1F395b93f',
-  moonriver: '0xD5e8D34dE3B1A6fd54e87B5d4a857CBB762d0C8A',
-  moonbeam: '0x00AeC34489A7ADE91A0507B6b9dBb0a50938B7c0',
-  aurora: '0x9dA9f3C6c45F1160b53D395b0A982aEEE1D212fE',
+  kava: ['0xF0d26842c3935A618e6980C53fDa3A2D10A02eb7'],
+  metis: ['0x2cC364255206A7e14bF59ADB1fc5770DbA48CB3f'],
+  cronos: ['0xF9eBb381dC153D0966B2BaEe776de2F400405755'],
+  celo: ['0x32C82EE8Fca98ce5114D2060c5715AEc714152FB'],
+  canto: ['0xeD7b88EDd899d578581DCcfce80F43D1F395b93f'],
+  moonriver: ['0xD5e8D34dE3B1A6fd54e87B5d4a857CBB762d0C8A'],
+  moonbeam: ['0x00AeC34489A7ADE91A0507B6b9dBb0a50938B7c0'],
+  aurora: ['0x9dA9f3C6c45F1160b53D395b0A982aEEE1D212fE'],
   ethereum: [
     '0x1c9270ac5C42E51611d7b97b1004313D52c80293',
     '0x8237f3992526036787E8178Def36291Ab94638CD',
@@ -78,13 +94,13 @@ const oldValidRewardPoolOwners = {
     '0x48beD04cBC52B5676C04fa94be5786Cdc9f266f5',
     '0xc1464638B11b9BAac9525cf7bF2B4A52Ccbde885',
   ],
-  arbitrum: '0xFEd99885fE647dD44bEA2B375Bd8A81490bF6E0f',
+  arbitrum: ['0xFEd99885fE647dD44bEA2B375Bd8A81490bF6E0f'],
   bsc: ['0xAb4e8665E7b0E6D83B65b8FF6521E347ca93E4F8', '0x0000000000000000000000000000000000000000'],
-  fantom: '0x35F43b181957824f2b5C0EF9856F85c90fECb3c8',
+  fantom: ['0x35F43b181957824f2b5C0EF9856F85c90fECb3c8'],
   optimism: [
     '0xEDFBeC807304951785b581dB401fDf76b4bAd1b0',
     '0x3Cd5Ae887Ddf78c58c9C1a063EB343F942DbbcE8',
-    addressBook.optimism.platforms.beefyfinance.strategyOwner,
+    getAddress(addressBook.optimism.platforms.beefyfinance.strategyOwner),
   ],
 };
 
@@ -116,13 +132,17 @@ const excludedAbPools = [
   'gmx-arb-xrp-usdc',
   'gmx-arb-doge-usdc',
 ];
-const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddress'];
+const addressFields: Array<keyof VaultConfig> = [
+  'tokenAddress',
+  'earnedTokenAddress',
+  'earnContractAddress',
+];
 
 const validPlatformIds = platforms.map(platform => platform.id);
 const validStrategyIds = getStrategyIds();
 const validPointProviderIds = pointProviders.map(pointProvider => pointProvider.id);
 
-const oldFields = {
+const oldFields: Record<string, string> = {
   tokenDescription: 'Use addressbook',
   tokenDescriptionUrl: 'Use addressbook',
   pricePerFullShare: 'Not required',
@@ -140,10 +160,13 @@ const oldFields = {
   isGovVault: 'Use type: gov',
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Updates = Record<string, Record<string, any>>;
+
 const validatePools = async () => {
   let exitCode = 0;
-  let updates = {};
-  const uniquePoolId = new Set();
+  const updates: ChainMap<Updates> = {};
+  const uniquePoolId = new Set<string>();
 
   if (excludedChainIds.length > 0) {
     console.warn(`*** Excluded chains: ${excludedChainIds.join(', ')} ***`);
@@ -185,7 +208,7 @@ const validatePools = async () => {
       // console.log(`Excluded chain ${chainId} integrity check passed`);
     });
 
-    if (exitCode != 0) {
+    if (exitCode !== 0) {
       console.error('*** Excluded chain integrity check failed ***');
       console.error('If you removed a vault, update excludeChains in scripts/common/config.ts');
       return exitCode;
@@ -197,8 +220,8 @@ const validatePools = async () => {
     exitCode = platformExitCode;
   }
 
-  let promises = chainIds.map(chainId => validateSingleChain(chainId, uniquePoolId));
-  let results = await Promise.all(promises);
+  const promises = chainIds.map(chainId => validateSingleChain(chainId, uniquePoolId));
+  const results = await Promise.all(promises);
 
   exitCode = results.reduce((acum, cur) => (acum + cur.exitCode > 0 ? 1 : 0), exitCode);
   results.forEach(res => {
@@ -216,12 +239,17 @@ const validatePools = async () => {
   return exitCode;
 };
 
-const validateSingleChain = async (chainId, uniquePoolId) => {
-  let [pools, promos] = await Promise.all([getVaultsForChain(chainId), getPromosForChain(chainId)]);
+const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Set<string>) => {
+  const vaultsAndPromos = await Promise.all([
+    getVaultsForChain(chainId),
+    getPromosForChain(chainId),
+  ]);
+  let pools = vaultsAndPromos[0];
+  const promos = vaultsAndPromos[1];
 
   console.log(`Validating ${pools.length} pools in ${chainId}...`);
 
-  let updates: Record<string, Record<string, any>> = {};
+  let updates: Updates = {};
   let exitCode = 0;
 
   //Governance pools should be separately verified
@@ -236,7 +264,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   let activePools = 0;
 
   // Populate some extra data.
-  const viemClient = getViemClient(chainId);
+  const viemClient = getViemClient(addressBookToAppId(chainId));
   const poolsWithGovData = await populateGovData(chainId, govPools, viemClient);
   const poolsWithVaultData = await populateVaultsData(chainId, pools, viemClient);
   const poolsWithStrategyData = override(
@@ -389,7 +417,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     }
 
     addressFields.forEach(field => {
-      if (pool.hasOwnProperty(field) && !isValidChecksumAddress(pool[field])) {
+      if (field in pool && !isValidChecksumAddress(pool[field])) {
         const maybeValid = maybeChecksumAddress(pool[field]);
         console.error(
           `Error: ${pool.id} : ${field} requires checksum - ${
@@ -564,7 +592,12 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
 };
 
 // Validation helpers. These only log for now, could throw error if desired.
-const isKeeperCorrect = (pool, chain, chainKeeper, updates) => {
+const isKeeperCorrect = (
+  pool: VaultConfigWithStrategyData,
+  chain: AddressBookChainId,
+  chainKeeper: string,
+  updates: Updates
+) => {
   if (pool.status !== 'eol' && pool.keeper !== undefined && pool.keeper !== chainKeeper) {
     console.log(`Pool ${pool.id} should update keeper. From: ${pool.keeper} To: ${chainKeeper}`);
 
@@ -581,7 +614,12 @@ const isKeeperCorrect = (pool, chain, chainKeeper, updates) => {
   return updates;
 };
 
-const isStratOwnerCorrect = (pool, chain, owner, updates) => {
+const isStratOwnerCorrect = (
+  pool: VaultConfigWithStrategyData,
+  chain: AddressBookChainId,
+  owner: string,
+  updates: Updates
+) => {
   const validOwners = [...oldValidOwners, owner];
   if (pool.stratOwner !== undefined && !validOwners.includes(pool.stratOwner)) {
     console.log(`Pool ${pool.id} should update strat owner. From: ${pool.stratOwner} To: ${owner}`);
@@ -599,7 +637,12 @@ const isStratOwnerCorrect = (pool, chain, owner, updates) => {
   return updates;
 };
 
-const isVaultOwnerCorrect = (pool, chain, owner, updates) => {
+const isVaultOwnerCorrect = (
+  pool: VaultConfigWithStrategyData,
+  chain: AddressBookChainId,
+  owner: string,
+  updates: Updates
+) => {
   const validOwners = [...oldValidOwners, owner];
   if (pool.vaultOwner !== undefined && !validOwners.includes(pool.vaultOwner)) {
     console.log(`Pool ${pool.id} should update vault owner. From: ${pool.vaultOwner} To: ${owner}`);
@@ -617,7 +660,12 @@ const isVaultOwnerCorrect = (pool, chain, owner, updates) => {
   return updates;
 };
 
-const isRewardPoolOwnerCorrect = (pool, chain, owner, updates) => {
+const isRewardPoolOwnerCorrect = (
+  pool: VaultConfigWithGovData,
+  chain: AddressBookChainId,
+  owner: string,
+  updates: Updates
+) => {
   const validOwners: string[] = oldValidRewardPoolOwners[chain] || [];
   if (
     pool.rewardPoolOwner !== undefined &&
@@ -641,7 +689,12 @@ const isRewardPoolOwnerCorrect = (pool, chain, owner, updates) => {
   return updates;
 };
 
-const isBeefyFeeRecipientCorrect = (pool, chain, recipient, updates) => {
+const isBeefyFeeRecipientCorrect = (
+  pool: VaultConfigWithStrategyData,
+  chain: AddressBookChainId,
+  recipient: string,
+  updates: Updates
+) => {
   const validRecipients = oldValidFeeRecipients[chain] || [];
   if (
     pool.status === 'active' &&
@@ -656,17 +709,22 @@ const isBeefyFeeRecipientCorrect = (pool, chain, recipient, updates) => {
     if (!('beefyFeeRecipient' in updates)) updates['beefyFeeRecipient'] = {};
     if (!(chain in updates.beefyFeeRecipient)) updates.beefyFeeRecipient[chain] = {};
 
-    if (pool.stratOwner in updates.beefyFeeRecipient[chain]) {
+    if (pool.stratOwner && pool.stratOwner in updates.beefyFeeRecipient[chain]) {
       updates.beefyFeeRecipient[chain][pool.stratOwner].push(pool.strategy);
     } else {
-      updates.beefyFeeRecipient[chain][pool.stratOwner] = [pool.strategy];
+      updates.beefyFeeRecipient[chain]['undefined'] = [pool.strategy];
     }
   }
 
   return updates;
 };
 
-const isBeefyFeeConfigCorrect = (pool, chain, feeConfig, updates) => {
+const isBeefyFeeConfigCorrect = (
+  pool: VaultConfigWithStrategyData,
+  chain: AddressBookChainId,
+  feeConfig: string | undefined,
+  updates: Updates
+) => {
   if (
     pool.status === 'active' &&
     pool.beefyFeeConfig !== undefined &&
@@ -679,17 +737,21 @@ const isBeefyFeeConfigCorrect = (pool, chain, feeConfig, updates) => {
     if (!('beefyFeeConfig' in updates)) updates['beefyFeeConfig'] = {};
     if (!(chain in updates.beefyFeeConfig)) updates.beefyFeeConfig[chain] = {};
 
-    if (pool.stratOwner in updates.beefyFeeConfig[chain]) {
+    if (pool.stratOwner && pool.stratOwner in updates.beefyFeeConfig[chain]) {
       updates.beefyFeeConfig[chain][pool.stratOwner].push(pool.strategy);
     } else {
-      updates.beefyFeeConfig[chain][pool.stratOwner] = [pool.strategy];
+      updates.beefyFeeConfig[chain]['undefined'] = [pool.strategy];
     }
   }
 
   return updates;
 };
 
-const isHarvestOnDepositCorrect = (pool, chain, updates) => {
+const isHarvestOnDepositCorrect = (
+  pool: VaultConfigWithStrategyData,
+  chain: AddressBookChainId,
+  updates: Updates
+) => {
   if (
     pool.status === 'active' &&
     pool.harvestOnDeposit !== undefined &&
@@ -704,21 +766,21 @@ const isHarvestOnDepositCorrect = (pool, chain, updates) => {
     if (!('harvestOnDeposit' in updates)) updates['harvestOnDeposit'] = {};
     if (!(chain in updates.harvestOnDeposit)) updates.harvestOnDeposit[chain] = {};
 
-    if (pool.harvestOnDeposit in updates.harvestOnDeposit[chain]) {
+    if (pool.harvestOnDeposit && pool.harvestOnDeposit in updates.harvestOnDeposit[chain]) {
       updates.harvestOnDeposit[chain][pool.harvestOnDeposit].push(pool.harvestOnDeposit);
     } else {
-      updates.harvestOnDeposit[chain][pool.harvestOnDeposit] = [pool.harvestOnDeposit];
+      updates.harvestOnDeposit[chain]['undefined'] = [pool.harvestOnDeposit];
     }
   }
 
   return updates;
 };
 
-const checkPointsStructureIds = pool => {
+const checkPointsStructureIds = (pool: VaultConfig) => {
   let exitCode = 0;
 
   if (pool.pointStructureIds && pool.pointStructureIds.length > 0) {
-    const invalidPointStructureIds = pool.pointStructureIds!.filter(
+    const invalidPointStructureIds = pool.pointStructureIds.filter(
       p => !validPointProviderIds.includes(p)
     );
     if (invalidPointStructureIds.length > 0) {
@@ -813,7 +875,7 @@ type VaultConfigWithGovData = Omit<VaultConfig, 'type'> & {
   rewardPoolOwner: string | undefined;
 };
 const populateGovData = async (
-  chain,
+  chain: AddressBookChainId,
   pools: VaultConfig[],
   viemClient: PublicClient,
   retries = 5
@@ -839,7 +901,7 @@ const populateGovData = async (
       });
     } catch (e) {
       if (retries > 0) {
-        console.warn(`retrying populateGovData on ${chain} ${e.message}`);
+        console.warn(`retrying populateGovData on ${chain} ${e instanceof Error ? e.message : e}`);
         await sleep(1_000);
         return populateGovData(chain, pools, viemClient, retries - 1);
       }
@@ -1030,7 +1092,7 @@ const populateCowcentratedData = async (
       }));
     } catch (e) {
       if (retries > 0) {
-        console.warn(`retrying populateCowcentratedData ${e.message}`);
+        console.warn(`retrying populateCowcentratedData ${e instanceof Error ? e.message : e}`);
         await sleep(1_000);
         return populateCowcentratedData(chain, pools, viemClient, retries - 1);
       }
@@ -1043,12 +1105,12 @@ const populateCowcentratedData = async (
 
 type VaultConfigWithVaultData = Omit<VaultConfig, 'type'> & {
   type: NonNullable<VaultConfig['type']>;
-  strategy: string | undefined;
-  vaultOwner: string | undefined;
+  strategy: Address | undefined;
+  vaultOwner: Address | undefined;
   totalSupply: string | undefined;
 };
 const populateVaultsData = async (
-  chain,
+  chain: AddressBookChainId,
   pools: VaultConfig[],
   viemClient: PublicClient,
   retries = 5
@@ -1081,7 +1143,7 @@ const populateVaultsData = async (
       });
     } catch (e) {
       if (retries > 0) {
-        console.warn(`retrying populateVaultsData ${e.message}`);
+        console.warn(`retrying populateVaultsData ${e instanceof Error ? e.message : e}`);
         await sleep(1_000);
         return populateVaultsData(chain, pools, viemClient, retries - 1);
       }
@@ -1093,14 +1155,14 @@ const populateVaultsData = async (
 };
 
 type VaultConfigWithStrategyData = VaultConfigWithVaultData & {
-  keeper: string | undefined;
-  beefyFeeRecipient: string | undefined;
-  beefyFeeConfig: string | undefined;
-  stratOwner: string | undefined;
+  keeper: Address | undefined;
+  beefyFeeRecipient: Address | undefined;
+  beefyFeeConfig: Address | undefined;
+  stratOwner: Address | undefined;
   harvestOnDeposit: boolean | undefined;
 };
 const populateStrategyData = async (
-  chain,
+  chain: AddressBookChainId,
   pools: VaultConfigWithVaultData[],
   viemClient: PublicClient,
   retries = 5
@@ -1139,7 +1201,7 @@ const populateStrategyData = async (
     });
   } catch (e) {
     if (retries > 0) {
-      console.warn(`retrying populateStrategyData ${e.message}`);
+      console.warn(`retrying populateStrategyData ${e instanceof Error ? e.message : e}`);
       await sleep(1_000);
       return populateStrategyData(chain, pools, viemClient, retries - 1);
     }
@@ -1169,7 +1231,7 @@ async function validatePlatformTypes(): Promise<number> {
       `Details-Platform-Type-${type}`,
     ];
     for (const key of requiredKeys) {
-      if (!i18keys[key]) {
+      if (!(i18keys as Record<string, string>)[key]) {
         console.error(`Missing i18n key "${key}" for platform type "${type}"`);
         exitCode = 1;
       }
@@ -1216,25 +1278,23 @@ async function validatePlatformTypes(): Promise<number> {
   return exitCode;
 }
 
-function catchRevertErrorIntoUndefined(e) {
+function catchRevertErrorIntoUndefined(e: unknown) {
   if (
     e &&
-    e.shortMessage &&
-    typeof e.shortMessage === 'string' &&
-    e.shortMessage.endsWith('reverted.')
+    (e instanceof ContractFunctionRevertedError || e instanceof ContractFunctionExecutionError)
   ) {
     return undefined;
   }
   throw e;
 }
 
-const override = (pools: VaultConfigWithVaultData[]): VaultConfigWithVaultData[] => {
+const override = (pools: VaultConfigWithStrategyData[]): VaultConfigWithStrategyData[] => {
   Object.keys(overrides).forEach(id => {
     pools
       .filter(p => p.id.includes(id))
       .forEach(pool => {
         const override = overrides[id];
-        Object.keys(override).forEach(key => {
+        keys(override).forEach(key => {
           pool[key] = override[key];
         });
       });

@@ -1,29 +1,29 @@
 import { memo, useCallback, useMemo } from 'react';
-import type { VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { Trans, useTranslation } from 'react-i18next';
-import { RISKS } from '../../../../config/risk';
-import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
-import { useVaultHasRisks } from './hooks';
+import { UNSCORED_RISKS } from '../../../../config/risk.ts';
+import { styles } from './styles.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { css, type CssStyles } from '@repo/styles/css';
+import { useVaultHasRisks } from './hooks.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface NoSafuRisksProps {
   vaultId: VaultEntity['id'];
   isTitle: boolean;
-  className?: string;
+  css?: CssStyles;
 }
 
-export const NoSafuRisks = memo<NoSafuRisksProps>(function NoSafuRisks({
+export const NoSafuRisks = memo(function NoSafuRisks({
   vaultId,
   isTitle,
-  className,
-}) {
+  css: cssProp,
+}: NoSafuRisksProps) {
   const { vaultHasRisks, values, risk } = useVaultHasRisks(vaultId);
 
   if (vaultHasRisks && values && risk) {
-    return <WarningText className={className} isTitle={isTitle} values={values} risk={risk} />;
+    return <WarningText css={cssProp} isTitle={isTitle} values={values} risk={risk} />;
   }
 
   return null;
@@ -33,21 +33,21 @@ interface WarningTextProps {
   isTitle: boolean;
   risk: string;
   values: Record<string, string>;
-  className?: string;
+  css?: CssStyles;
 }
 
-const WarningText = memo<WarningTextProps>(function WarningText({
+const WarningText = memo(function WarningText({
   isTitle,
   risk,
   values,
-  className,
-}) {
+  css: cssProp,
+}: WarningTextProps) {
   const { t } = useTranslation('risks');
   const classes = useStyles();
 
   const i18Key = useMemo(() => {
-    if (RISKS[risk]) {
-      const riskObject = RISKS[risk];
+    if (UNSCORED_RISKS[risk]) {
+      const riskObject = UNSCORED_RISKS[risk];
       return isTitle ? riskObject.title : riskObject.explanation;
     }
   }, [isTitle, risk]);
@@ -60,7 +60,7 @@ const WarningText = memo<WarningTextProps>(function WarningText({
   }, []);
 
   return (
-    <div className={clsx(classes.container, className)}>
+    <div className={css(styles.container, cssProp)}>
       <Trans
         t={t}
         i18nKey={i18Key}

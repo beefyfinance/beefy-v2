@@ -1,9 +1,9 @@
-import type { ChainId } from '../entities/chain';
+import type { ChainId } from '../entities/chain.ts';
 import type {
   TenderlyCredentials,
   TenderlySimulatePayload,
   TenderlyTxCallRequest,
-} from '../actions/tenderly';
+} from '../actions/tenderly.ts';
 import type { SerializedError } from '@reduxjs/toolkit';
 
 type SimulateRequest = {

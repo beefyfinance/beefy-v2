@@ -3,19 +3,29 @@ Official frontend repo of Beefy, The Multichain Yield Optimizer - [app.beefy.com
 
 ## Quickstart
 
-`yarn start` - start the app in development mode - you may have to disable adblock for 127.0.0.1 if you get a white screen due to ADX.png
+### Dev
 
-`yarn tsc-watch` - checks types as you develop - you may not need this if your IDE does it for you
+`npm run start` - start the app in development mode - you may have to disable adblock for 127.0.0.1 if you get a white screen due to ADX.png
 
-`yarn validate` - validates vault config files
+`npm run tsc:watch` - checks types as you develop - you may not need this if your IDE does it for you
 
-`yarn build-only` - checks types and builds the app for production
+`npm run lint` - eslint checks
 
-`yarn build` - performs validate then build
+`npm run lint:fix` - eslint checks with fixes enabled
 
-`yarn preview` - start the app in production mode (after building)
+`npm run prettier` - prettier checks
 
-Please ensure `yarn build` completes successfully before submitting a PR.
+`npm run prettier:fix` - prettier checks with fixes enabled
+
+### Prod
+
+`npm run validate` - validates vault config files
+
+`npm run build` - performs validate then build
+
+`npm run preview` - start the app in production mode (after building)
+
+**Please ensure `npm run build` completes successfully before submitting a PR.**
 
 ## Contribute
 

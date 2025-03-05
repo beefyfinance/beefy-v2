@@ -1,32 +1,32 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../Card';
-import { BIG_ZERO } from '../../../../helpers/big-number';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { Card } from '../Card/Card.tsx';
+import { CardContent } from '../Card/CardContent.tsx';
+import { CardHeader } from '../Card/CardHeader.tsx';
+import { CardTitle } from '../Card/CardTitle.tsx';
+import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { useTranslation } from 'react-i18next';
-import { BreakdownTable } from './components/BreakdownTable';
-import type { BreakdownMode } from './types';
-import { ChartWithLegend } from './components/ChartWithLegend';
-import { useCalculatedBreakdown } from './hooks';
-import { useAppDispatch, useAppSelector } from '../../../../store';
-import { selectVaultById } from '../../../data/selectors/vaults';
+import { BreakdownTable } from './components/BreakdownTable/BreakdownTable.tsx';
+import type { BreakdownMode } from './types.ts';
+import { ChartWithLegend } from './components/ChartWithLegend/ChartWithLegend.tsx';
+import { useCalculatedBreakdown } from './hooks.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../store.ts';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
 import {
   selectHasBreakdownDataForVault,
   selectLpBreakdownForVault,
-} from '../../../data/selectors/tokens';
-import { isCowcentratedLikeVault, type VaultEntity } from '../../../data/entities/vault';
-import { selectShouldInitAddressBook } from '../../../data/selectors/data-loader';
-import { fetchAddressBookAction } from '../../../data/actions/tokens';
-import { StatSwitcher } from '../StatSwitcher';
-
-const useStyles = makeStyles(styles);
+} from '../../../data/selectors/tokens.ts';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../../data/entities/vault.ts';
+import { selectShouldInitAddressBook } from '../../../data/selectors/data-loader.ts';
+import { fetchAddressBookAction } from '../../../data/actions/tokens.ts';
+import { StatSwitcher } from '../StatSwitcher/StatSwitcher.tsx';
+import { styled } from '@repo/styles/jsx';
+import type { ToggleButtonItem } from '../../../../components/ToggleButtons/ToggleButtons.tsx';
 
 export type LiquidityPoolBreakdownProps = {
   vaultId: VaultEntity['id'];
 };
 export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
   function LiquidityPoolBreakdown({ vaultId }) {
-    const classes = useStyles();
     const { t } = useTranslation();
     const vault = useAppSelector(state => selectVaultById(state, vaultId));
     const breakdown = useAppSelector(state => selectLpBreakdownForVault(state, vault));
@@ -36,24 +36,25 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
     const [haveSwitchedTab, setHaveSwitchedTab] = useState(false);
     const isForCowcentrated = isCowcentratedLikeVault(vault);
 
-    const tabs: Partial<Record<BreakdownMode, string>> = useMemo(() => {
-      const map = {};
+    const tabs = useMemo(() => {
+      const options: Array<ToggleButtonItem<BreakdownMode>> = [];
       if (userBalance.gt(BIG_ZERO)) {
-        map['user'] = t('Vault-LpBreakdown-YourDeposit');
+        options.push({ value: 'user', label: t('Vault-LpBreakdown-YourDeposit') });
       }
-      map['one'] = t('Vault-LpBreakdown-1LP');
-      map['total'] = t(
-        isForCowcentrated ? 'Vault-LpBreakdown-ClmPool' : 'Vault-LpBreakdown-TotalPool'
-      );
+      options.push({ value: 'one', label: t('Vault-LpBreakdown-1LP') });
+      options.push({
+        value: 'total',
+        label: t(isForCowcentrated ? 'Vault-LpBreakdown-ClmPool' : 'Vault-LpBreakdown-TotalPool'),
+      });
       if (isForCowcentrated) {
-        map['underlying'] = t('Vault-LpBreakdown-Underlying');
+        options.push({ value: 'underlying', label: t('Vault-LpBreakdown-Underlying') });
       }
-      return map;
+      return options;
     }, [userBalance, t, isForCowcentrated]);
 
     const onTabChange = useCallback(
-      (newTab: string) => {
-        setTab(newTab as BreakdownMode);
+      (newTab: BreakdownMode) => {
+        setTab(newTab);
         setHaveSwitchedTab(true);
       },
       [setTab, setHaveSwitchedTab]
@@ -68,18 +69,28 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
 
     return (
       <Card>
-        <CardHeader className={classes.header}>
-          <CardTitle title={'LP Breakdown'} />
-          <StatSwitcher onChange={onTabChange} options={tabs} stat={tab} />
+        <CardHeader>
+          <CardTitle>{'LP Breakdown'}</CardTitle>
+          <StatSwitcher<BreakdownMode> onChange={onTabChange} options={tabs} stat={tab} />
         </CardHeader>
-        <CardContent disableDefaultClass={true} className={classes.layout}>
+        <StyledCardContent>
           <ChartWithLegend breakdown={calculatedBreakdown} tab={tab} />
           <BreakdownTable mode={tab} breakdown={calculatedBreakdown} />
-        </CardContent>
+        </StyledCardContent>
       </Card>
     );
   }
 );
+
+const StyledCardContent = styled(CardContent, {
+  base: {
+    padding: 0,
+    lg: {
+      display: 'grid',
+      gridTemplateColumns: '232fr 484fr',
+    },
+  },
+});
 
 type LiquidityPoolBreakdownLoaderProps = {
   vaultId: VaultEntity['id'];
