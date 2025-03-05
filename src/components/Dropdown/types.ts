@@ -21,8 +21,7 @@ export type DropdownOptions = {
   disabled?: boolean;
   autoWidth?: boolean;
   autoHeight?: boolean;
-  variant?: 'light' | 'dark';
-  padding?: 'none' | 'small' | 'normal' | 'large';
+  variant?: 'light' | 'dark' | 'button';
   layer?: 0 | 1 | 2;
 };
 
@@ -40,4 +39,4 @@ export type DropdownData<TRef extends ReferenceType = Element> = {
 } & UseInteractionsReturn &
   UseFloatingReturn<TRef> &
   Pick<DropdownOptions, 'variant'> &
-  Required<Pick<DropdownOptions, 'padding' | 'layer'>>;
+  Required<Pick<DropdownOptions, 'layer'>>;

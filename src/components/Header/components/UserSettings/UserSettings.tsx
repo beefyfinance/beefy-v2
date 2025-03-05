@@ -31,7 +31,6 @@ export const UserSettings = memo(function UserSettings({
   return (
     <DropdownProvider
       placement="bottom-end"
-      padding="none"
       autoWidth={false}
       open={isOpen}
       onChange={handleChange}

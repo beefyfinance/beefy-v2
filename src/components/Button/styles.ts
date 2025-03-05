@@ -29,7 +29,7 @@ export const buttonRecipe = cva({
   variants: {
     size: {
       sm: {
-        padding: '8px 16px',
+        padding: '6px 14px',
       },
       lg: {
         padding: '12px 24px',
@@ -76,7 +76,7 @@ export const buttonRecipe = cva({
       size: 'sm',
       borderless: false,
       css: {
-        padding: '6px 14px',
+        padding: '4px 12px',
       },
     },
     {

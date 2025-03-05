@@ -32,7 +32,7 @@ export const DropdownContent = memo(function DropdownContent(innerProps: Dropdow
 
 const DropdownOuter = styled('div', {
   base: {
-    colorPalette: 'dropdown',
+    colorPalette: 'dropdown.base',
     minWidth: '36px',
     maxWidth: 'min(calc(100vw - 32px), 440px)',
   },
@@ -43,6 +43,9 @@ const DropdownOuter = styled('div', {
       },
       dark: {
         colorPalette: 'dropdown.dark',
+      },
+      button: {
+        colorPalette: 'dropdown.button',
       },
     },
     layer: {
@@ -78,7 +81,6 @@ const DropdownInner = styled('div', {
     textAlign: 'left',
     display: 'flex',
     flexDirection: 'column',
-    gap: '12px',
     boxShadow: '0px 4px 8px 8px {colors.blacko20}',
   },
   variants: {
@@ -96,8 +98,23 @@ const DropdownInner = styled('div', {
         padding: '24px',
       },
     },
+    gap: {
+      none: {
+        gap: '0',
+      },
+      small: {
+        gap: '6px',
+      },
+      normal: {
+        gap: '12px',
+      },
+      large: {
+        gap: '18px',
+      },
+    },
   },
   defaultVariants: {
     padding: 'normal',
+    gap: 'normal',
   },
 });

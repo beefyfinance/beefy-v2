@@ -69,9 +69,10 @@ export function useTooltip<TRef extends ReferenceType = Element>({
     () => ({ width: arrowWidth, height: arrowHeight, ref: arrowRef }),
     [arrowWidth, arrowHeight, arrowRef]
   );
+  const baseGetReferenceProps = interactions.getReferenceProps;
   const getReferenceProps = useCallback(
     (userProps?: HTMLProps<Element>): Record<string, unknown> => {
-      return interactions.getReferenceProps({
+      return baseGetReferenceProps({
         ...(userProps || {}),
         onClick: e => {
           e.preventDefault();
@@ -79,7 +80,7 @@ export function useTooltip<TRef extends ReferenceType = Element>({
         },
       });
     },
-    [interactions]
+    [baseGetReferenceProps]
   );
 
   useEffect(() => {

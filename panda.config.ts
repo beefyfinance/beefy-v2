@@ -510,7 +510,7 @@ const config = buildConfig(
                 DEFAULT: { value: '{colors.whiteOff}' },
               },
             },
-            DEFAULT: {
+            base: {
               background: { value: '{colors.blackMarket1}' },
               text: {
                 DEFAULT: { value: '{colors.whiteOff}' },
@@ -518,6 +518,12 @@ const config = buildConfig(
             },
             dark: {
               background: { value: '{colors.eclipseElixir}' },
+              text: {
+                DEFAULT: { value: '{colors.whiteOff}' },
+              },
+            },
+            button: {
+              background: { value: '{colors.bayOfMany}' },
               text: {
                 DEFAULT: { value: '{colors.whiteOff}' },
               },
