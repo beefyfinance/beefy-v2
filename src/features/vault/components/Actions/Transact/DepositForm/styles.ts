@@ -27,6 +27,9 @@ export const styles = {
     textStyle: 'body.sm.medium',
     color: 'text.middle',
   }),
+  zapIcon: css.raw({
+    height: '12px',
+  }),
   inputs: css.raw({
     display: 'flex',
     flexDirection: 'column',
