@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { debounce } from 'lodash-es';
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
+import { css } from '@repo/styles/css';
 
 export const VaultsSearch = memo(function VaultsSearch() {
   const dispatch = useAppDispatch();
@@ -30,5 +31,13 @@ export const VaultsSearch = memo(function VaultsSearch() {
     }
   }, [searchText, setValue]);
 
-  return <SearchInput value={value} onValueChange={handleChange} focusOnSlash={true} />;
+  return (
+    <SearchInput className={input} value={value} onValueChange={handleChange} focusOnSlash={true} />
+  );
+});
+
+const input = css({
+  md: {
+    maxWidth: '75%',
+  },
 });
