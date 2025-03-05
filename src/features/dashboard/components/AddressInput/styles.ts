@@ -4,12 +4,10 @@ export const styles = {
   search: css.raw({
     color: 'text.middle',
     background: 'purpleDarkest',
-    borderRadius: '8px',
     '& .BaseInput-input': {
       width: '200px',
       maxWidth: '100%',
       transition: '0.2s ease-in-out',
-      padding: '8px 16px 8px 4px',
       color: 'text.middle',
       _focus: {
         color: 'text.light',
@@ -40,9 +38,6 @@ export const styles = {
     'button&': {
       cursor: 'pointer',
     },
-  }),
-  leftIcon: css.raw({
-    margin: '0 0 0 16px',
   }),
   activeIcon: css.raw({
     color: 'text.light',

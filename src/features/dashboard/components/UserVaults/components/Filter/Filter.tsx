@@ -4,6 +4,7 @@ import { SortColumnHeader } from '../../../../../../components/SortColumnHeader/
 import { styles } from './styles.ts';
 import type { SortedOptions } from '../../hook.tsx';
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
+import { css } from '@repo/styles/css';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -23,10 +24,21 @@ export const Filter = memo(function Filter({
   const classes = useStyles();
   return (
     <div className={classes.container}>
-      <SearchInput onValueChange={handleSearchText} value={searchText} />
+      <SearchInput
+        className={inputCss}
+        onValueChange={handleSearchText}
+        value={searchText}
+        focusOnSlash={true}
+      />
       <SortColumns sortOptions={sortOptions} handleSort={handleSort} />
     </div>
   );
+});
+
+const inputCss = css({
+  md: {
+    maxWidth: '75%',
+  },
 });
 
 const SORT_COLUMNS: {

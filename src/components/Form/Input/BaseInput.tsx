@@ -53,27 +53,23 @@ const recipe = sva({
   slots: ['root', 'input'],
   base: {
     root: {
-      '--input-border-width': '1px', // TODO move to theme tokens
       position: 'relative',
       display: 'flex',
       flexDirection: 'row',
       backgroundColor: 'purpleDarkest',
       color: 'text.middle',
-      gap: '8px',
+      gap: '4px',
       flexWrap: 'nowrap',
-      borderWidth: 'var(--input-border-width)',
       borderStyle: 'solid',
       borderColor: 'transparent',
       borderRadius: '8px',
-      paddingInline: 'calc(12px - var(--input-border-width))',
-      paddingBlock: '0',
+      paddingInline: '16px',
+      paddingBlock: '8px',
     },
     input: {
       textStyle: 'body.medium',
       backgroundColor: 'inherit',
       border: 'none',
-      paddingInline: '0',
-      paddingBlock: 'calc(8px - var(--input-border-width))',
       color: 'inherit',
       flexShrink: '1',
       flexGrow: '1',
@@ -136,6 +132,6 @@ const Adornments = styled('div', {
     flexShrink: '0',
     flexGrow: '0',
     paddingInline: '0',
-    paddingBlock: '8px',
+    color: 'text.dark',
   },
 });
