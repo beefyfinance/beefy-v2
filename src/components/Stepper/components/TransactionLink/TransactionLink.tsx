@@ -33,7 +33,7 @@ export function TransactionLink() {
 
   return (
     <a className={classes.redirectLinkSuccess} href={explorerTxUrl(chain, hash)} target="_blank">
-      {t('Transactn-View')} {<OpenInNewRoundedIcon color="#4DB258" fontSize="inherit" />}
+      {t('Transactn-View')} {<OpenInNewRoundedIcon />}
     </a>
   );
 }
