@@ -17,7 +17,7 @@ export const styles = {
   }),
   quotesTitle: css.raw({
     textStyle: 'subline.sm',
-    fontWeight: '700',
+    fontWeight: 'bold',
     color: 'text.dark',
   }),
 
@@ -70,7 +70,7 @@ export const styles = {
     filter: 'grayscale(100)',
   }),
   quoteProvider: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
     display: 'flex',
     gap: '8px',

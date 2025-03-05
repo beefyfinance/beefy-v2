@@ -2,7 +2,7 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   checkbox: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     display: 'flex',
     alignItems: 'center',
     color: 'text.middle',

@@ -30,7 +30,7 @@ const Layout = styled('div', {
   base: {
     display: 'flex',
     flexDirection: 'column',
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     zIndex: 'dropdown',
     border: '2px solid {colors.background.content.light}',
     borderRadius: '8px',

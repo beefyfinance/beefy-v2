@@ -59,7 +59,7 @@ const Tab = memo<TabProps>(function Tab({ value, label, onChange, selected, high
 
 const StyledButton = styled('button', {
   base: {
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     position: 'relative',
     flexBasis: '1px',
     flexGrow: 1,

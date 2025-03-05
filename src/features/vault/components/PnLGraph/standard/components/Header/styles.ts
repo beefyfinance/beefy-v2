@@ -21,8 +21,8 @@ export const styles = {
   }),
 
   label: css.raw({
-    textStyle: 'body.sm.med',
-    fontWeight: '700',
+    textStyle: 'body.sm.medium',
+    fontWeight: 'bold',
     color: 'text.dark',
     textTransform: 'uppercase',
   }),
@@ -30,14 +30,14 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     columnGap: '4px',
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
-    fontWeight: '500',
+    fontWeight: 'medium',
     '& span': {
       textDecoration: 'none',
       textStyle: 'subline.sm',
       color: 'text.dark',
-      fontWeight: '700',
+      fontWeight: 'bold',
     },
   }),
   greenValue: css.raw({
@@ -47,7 +47,7 @@ export const styles = {
     color: 'indicators.error',
   }),
   subValue: css.raw({
-    textStyle: 'body.sm.med',
+    textStyle: 'body.sm.medium',
     color: 'text.dark',
   }),
   withTooltip: css.raw({

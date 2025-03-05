@@ -19,7 +19,7 @@ export const styles = {
     textAlign: 'center',
   }),
   text: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
   }),
   button: css.raw({
     margin: '24px auto 0 auto',

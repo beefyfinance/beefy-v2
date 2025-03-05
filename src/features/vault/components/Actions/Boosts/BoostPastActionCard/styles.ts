@@ -6,7 +6,7 @@ export const styles = {
     display: 'flex',
   }),
   expiredBoostName: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.light',
   }),
   expiredBoostContainer: css.raw({
@@ -25,7 +25,7 @@ export const styles = {
     color: 'text.dark',
   }),
   value: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
     display: 'flex',
     gap: '4px',

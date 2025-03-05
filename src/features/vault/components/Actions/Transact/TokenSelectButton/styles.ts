@@ -31,7 +31,7 @@ export const styles = {
     fill: 'text.middle',
   }),
   select: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.lightest',
     display: 'flex',
     columnGap: '8px',
@@ -50,7 +50,7 @@ export const styles = {
     },
   }),
   breakLp: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.lightest',
     display: 'flex',
     gap: '4px',

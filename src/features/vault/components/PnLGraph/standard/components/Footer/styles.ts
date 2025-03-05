@@ -21,7 +21,7 @@ export const styles = {
     },
     //FIXME MUI2PANDA: Target MUI class
     '& .MuiTab-root': {
-      textStyle: 'body.sm.med',
+      textStyle: 'body.sm.medium',
       minHeight: '22px',
       padding: '0px',
     },

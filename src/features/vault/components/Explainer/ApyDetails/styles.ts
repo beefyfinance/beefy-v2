@@ -18,7 +18,7 @@ export const styles = {
     color: 'text.dark',
   }),
   apyValue: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
   }),
 };

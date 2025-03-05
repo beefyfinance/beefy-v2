@@ -8,7 +8,7 @@ export const styles = {
     gap: '16px',
   }),
   description: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
   }),
 };

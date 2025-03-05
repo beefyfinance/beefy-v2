@@ -15,7 +15,7 @@ export const styles = {
     },
   }),
   option: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.dark',
     whiteSpace: 'nowrap',
     '&:hover': {

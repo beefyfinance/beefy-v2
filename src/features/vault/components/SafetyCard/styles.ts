@@ -20,7 +20,7 @@ export const styles = {
     },
   }),
   risk: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
     marginRight: '8',
   }),
@@ -68,7 +68,7 @@ export const styles = {
     backgroundColor: 'background.content.light',
   }),
   titleClassName: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.light',
   }),
   up: css.raw({

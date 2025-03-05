@@ -39,7 +39,7 @@ export const styles = {
 
 export const itemStyles = {
   item: {
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     display: 'flex',
     alignItems: 'center',
     width: '100%',

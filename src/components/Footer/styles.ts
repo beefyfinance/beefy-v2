@@ -34,7 +34,7 @@ export const styles = {
     margin: '0 12px 12px 12px',
   }),
   navLink: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     display: 'block',
     textDecoration: 'none',
     color: 'text.middle',

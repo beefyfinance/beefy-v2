@@ -23,7 +23,7 @@ export const styles = {
   }),
   item: css.raw({
     textStyle: 'body',
-    fontWeight: '500',
+    fontWeight: 'medium',
     display: 'flex',
     alignItems: 'center',
     columnGap: '4px',

@@ -55,7 +55,7 @@ export const styles = {
     whiteSpace: 'nowrap',
   }),
   rewardValue: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     display: 'flex',
     gap: '4px',
     alignItems: 'center',

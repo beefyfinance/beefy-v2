@@ -150,17 +150,17 @@ const config = buildConfig(
       h1: {
         fontSize: '32px',
         lineHeight: '40px',
-        fontWeight: 500,
+        fontWeight: 'medium',
       },
       h2: {
         fontSize: '24px',
         lineHeight: '32px',
-        fontWeight: 500,
+        fontWeight: 'medium',
       },
       h3: {
         fontSize: '21px',
         lineHeight: '24px',
-        fontWeight: 500,
+        fontWeight: 'medium',
       },
       button: {
         color: 'inherit',
@@ -191,7 +191,7 @@ const config = buildConfig(
         },
       },
       input: {
-        textStyle: 'body.med',
+        textStyle: 'body.medium',
         margin: 0,
         display: 'block',
         minWidth: '20px',
@@ -411,6 +411,7 @@ const config = buildConfig(
         fontWeights: {
           normal: { value: 400 },
           medium: { value: 500 },
+          bold: { value: 700 },
         },
         letterSpacings: {
           subline: { value: '0.5px' },
@@ -661,20 +662,30 @@ const config = buildConfig(
         lineHeight: '{lineHeights.body}',
         fontWeight: '{fontWeights.normal}',
       },
-      'body.med': {
+      'body.medium': {
         fontSize: '{fontSizes.body}',
         lineHeight: '{lineHeights.body}',
         fontWeight: '{fontWeights.medium}',
+      },
+      'body.bold': {
+        fontSize: '{fontSizes.body}',
+        lineHeight: '{lineHeights.body}',
+        fontWeight: '{fontWeights.bold}',
       },
       'body.sm': {
         fontSize: '{fontSizes.body.sm}',
         lineHeight: '{lineHeights.body.sm}',
         fontWeight: '{fontWeights.normal}',
       },
-      'body.sm.med': {
+      'body.sm.medium': {
         fontSize: '{fontSizes.body.sm}',
         lineHeight: '{lineHeights.body.sm}',
         fontWeight: '{fontWeights.medium}',
+      },
+      'body.sm.bold': {
+        fontSize: '{fontSizes.body.sm}',
+        lineHeight: '{lineHeights.body.sm}',
+        fontWeight: '{fontWeights.bold}',
       },
       subline: {
         fontSize: '{fontSizes.subline}',

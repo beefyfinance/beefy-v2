@@ -33,7 +33,7 @@ export const ChainRpcItem = memo(function ChainRpcItem({
 
 const ChainIconName = styled('div', {
   base: {
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     display: 'flex',
     gap: '8px',
     color: 'text.middle',

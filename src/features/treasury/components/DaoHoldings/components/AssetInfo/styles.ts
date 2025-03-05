@@ -11,14 +11,14 @@ export const styles = {
     },
   }),
   assetFlex: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.light',
     display: 'flex',
     alignItems: 'center',
     columnGap: '8px',
   }),
   value: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
     display: 'flex',
     justifyContent: 'flex-end',

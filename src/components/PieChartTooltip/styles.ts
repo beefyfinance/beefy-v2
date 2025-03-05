@@ -25,7 +25,7 @@ export const styles = {
     width: '24px',
   }),
   title: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'var(--tooltip-title-color)',
     textTransform: 'uppercase',
     textOverflow: 'ellipsis',
@@ -42,7 +42,7 @@ export const styles = {
     color: 'var(--tooltip-value-color)',
   }),
   label: css.raw({
-    textStyle: 'body.sm.med',
+    textStyle: 'body.sm.medium',
     color: 'var(--tooltip-title-color)',
   }),
   triangle: css.raw({

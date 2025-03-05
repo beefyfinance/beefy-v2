@@ -11,7 +11,7 @@ export const styles = {
   label: css.raw({
     color: 'var(--tooltip-label-color)',
     '&:nth-last-child(2)': {
-      fontWeight: 'body.medium',
+      fontWeight: 'medium',
       color: 'var(--tooltip-title-color)',
     },
   }),
@@ -19,7 +19,7 @@ export const styles = {
     color: 'var(--tooltip-value-color)',
     textAlign: 'right',
     '&:last-child': {
-      fontWeight: 'body.medium',
+      fontWeight: 'medium',
       color: 'var(--tooltip-label-color)',
     },
   }),

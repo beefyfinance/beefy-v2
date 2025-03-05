@@ -8,7 +8,7 @@ export const Panel = styled('div', {
 
 export const PanelHeader = styled('div', {
   base: {
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.light',
     display: 'flex',
     alignItems: 'center',

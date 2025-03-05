@@ -36,7 +36,7 @@ export const styles = {
     padding: '16px',
   }),
   shareItem: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     whiteSpace: 'nowrap',
     display: 'flex',
     alignItems: 'center',

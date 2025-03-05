@@ -5,7 +5,7 @@ export type ButtonsVariantProps = StyledVariantProps<typeof Buttons>;
 
 export const Buttons = styled('div', {
   base: {
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     colorPalette: 'buttons.default',
     color: 'colorPalette.color',
     backgroundColor: 'colorPalette.background',
@@ -37,7 +37,7 @@ export const Buttons = styled('div', {
       },
       range: {
         colorPalette: 'buttons.range',
-        textStyle: 'body.sm.med',
+        textStyle: 'body.sm.medium',
         gap: '12px',
       },
     },

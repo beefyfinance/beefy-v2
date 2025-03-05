@@ -14,7 +14,7 @@ export const styles = {
     height: '24px',
     marginRight: '8px',
     '&:before': {
-      textStyle: 'body.sm.med',
+      textStyle: 'body.sm.medium',
       content: 'attr(data-count)',
       display: 'flex',
       justifyContent: 'center',

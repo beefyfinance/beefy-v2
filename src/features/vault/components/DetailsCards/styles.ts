@@ -25,7 +25,7 @@ export const styles = {
   }),
   assetIcon: css.raw({}),
   assetSymbol: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     flexGrow: '1',
   }),
   assetBridgePrice: css.raw({

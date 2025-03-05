@@ -22,6 +22,6 @@ export const styles = {
   }),
   notInBoost: css.raw({
     gridColumn: '1 / span 2',
-    fontWeight: 'body.medium',
+    fontWeight: 'medium',
   }),
 };

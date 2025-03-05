@@ -8,7 +8,7 @@ export const styles = {
   }),
   label: css.raw({
     textStyle: 'subline.sm',
-    fontWeight: '700',
+    fontWeight: 'bold',
     color: 'text.dark',
     flex: '1 1 40%',
   }),
@@ -19,7 +19,7 @@ export const styles = {
     borderRadius: '8px',
   }),
   btn: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     display: 'flex',
     padding: '0',
     margin: '0',

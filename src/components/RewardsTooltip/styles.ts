@@ -5,7 +5,7 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     columnGap: '4px',
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
   }),
   statuses: css.raw({
@@ -21,7 +21,7 @@ export const styles = {
   source: css.raw({}),
   sourceTitle: css.raw({
     textStyle: 'subline.sm',
-    fontWeight: '700',
+    fontWeight: 'bold',
     color: 'var(--tooltip-title-color)',
   }),
   rewards: css.raw({
@@ -30,12 +30,12 @@ export const styles = {
     rowGap: '4px',
   }),
   rewardsText: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'var(--tooltip-value-color)',
   }),
   usdPrice: css.raw({
     textStyle: 'subline.sm',
-    fontWeight: '700',
+    fontWeight: 'bold',
     color: 'var(--tooltip-label-color)',
   }),
 };

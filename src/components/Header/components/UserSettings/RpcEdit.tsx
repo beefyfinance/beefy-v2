@@ -83,7 +83,7 @@ const Top = styled('div', {
 
 const ChainInfo = styled('div', {
   base: {
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     display: 'flex',
     columnGap: '8px',
     color: 'text.middle',
@@ -108,7 +108,7 @@ const InputError = styled('div', {
 
 const Explainer = styled('div', {
   base: {
-    textStyle: 'body.sm.med',
+    textStyle: 'body.sm.medium',
     padding: '12px',
     backgroundColor: 'background.content.light',
     borderRadius: '8px',

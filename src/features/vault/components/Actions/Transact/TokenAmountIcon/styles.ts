@@ -15,7 +15,7 @@ export const styles = {
     flexDirection: 'column',
   }),
   amount: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
   }),
   value: css.raw({
@@ -29,7 +29,7 @@ export const styles = {
     gap: '8px',
   }),
   token: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
   }),
   icon: css.raw({

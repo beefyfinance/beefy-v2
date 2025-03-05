@@ -22,7 +22,7 @@ export const styles = {
     },
   }),
   title: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
     marginBottom: '24px',
   }),

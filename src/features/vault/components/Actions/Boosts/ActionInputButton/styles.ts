@@ -50,7 +50,7 @@ export const styles = {
   }),
   maxButton: css.raw({
     textStyle: 'subline.sm',
-    fontWeight: '700',
+    fontWeight: 'bold',
     padding: '2px 6px',
     borderRadius: '4px',
     marginRight: '6px',

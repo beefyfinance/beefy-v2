@@ -2,7 +2,7 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   button: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
     background: 'transparent',
     border: 'none',
