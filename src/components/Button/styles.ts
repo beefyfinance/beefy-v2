@@ -56,9 +56,12 @@ export const buttonRecipe = cva({
       default: {
         colorPalette: 'buttons.default',
       },
+      light: {
+        colorPalette: 'buttons.light',
+      },
       filter: {
         colorPalette: 'buttons.filter',
-        fontWeight: '500',
+        fontWeight: 'medium',
       },
       success: {
         colorPalette: 'buttons.success',

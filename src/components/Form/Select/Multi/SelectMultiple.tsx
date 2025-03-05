@@ -22,27 +22,11 @@ import { Option } from '../Option.tsx';
 import { isDefined } from '../../../../features/data/utils/array-utils.ts';
 import { SelectLabel } from '../SelectLabel.tsx';
 import { OptionLabel } from '../OptionLabel.tsx';
-import { SearchInput } from '../../Input/SearchInput.tsx';
+import { SearchField } from './SearchField.tsx';
 import { OptionBadge } from '../OptionBadge.tsx';
 import { OptionIcon } from '../OptionIcon.tsx';
 import { useMediaQuery } from '../../../MediaQueries/useMediaQuery.ts';
-
-function indexesFromValues<TItem extends SelectItem>(
-  options: TItem[],
-  selected: TItem['value'][]
-): number[] {
-  return mutateSortIndexes(
-    selected.map(value => options.findIndex(o => o.value === value)).filter(index => index >= 0)
-  );
-}
-
-function mutateSortIndexes(indexes: number[]): number[] {
-  return indexes.sort((a, b) => a - b);
-}
-
-function defaultSearchFunction<TItem extends SelectItem>(item: TItem, query: string): boolean {
-  return item.label.toLowerCase().includes(query.toLowerCase());
-}
+import { defaultSearchFunction, indexesFromValues } from './helpers.ts';
 
 export const SelectMultiple = memo(function Select<TItem extends SelectItem = SelectItem>({
   selected,
@@ -216,11 +200,11 @@ export const SelectMultiple = memo(function Select<TItem extends SelectItem = Se
               ref={refs.setFloating}
               layer={layer}
               header={
-                searchEnabled && <SearchInput value={searchText} onValueChange={setSearchText} />
+                searchEnabled && <SearchField value={searchText} onValueChange={setSearchText} />
               }
             >
               {noSearchMatches ? (
-                <>no matches</>
+                <>No matches.</>
               ) : (
                 options.map((item, index) =>
                   disabledIndexes?.includes(index) ? null : (

@@ -3,12 +3,12 @@ import { useDropdownContext } from './useDropdownContext.ts';
 import { FloatingArrow, FloatingPortal } from '@floating-ui/react';
 import { type HTMLStyledProps, styled } from '@repo/styles/jsx';
 
-type DropdownContentProps = {
+export type DropdownContentProps = {
   children: ReactNode;
 } & Omit<HTMLStyledProps<typeof DropdownInner>, 'children' | 'className'>;
 
 export const DropdownContent = memo(function DropdownContent(innerProps: DropdownContentProps) {
-  const { open, refs, floatingStyles, getFloatingProps, context, arrow, variant, size } =
+  const { open, refs, floatingStyles, getFloatingProps, context, arrow, variant } =
     useDropdownContext();
 
   if (!open) {
@@ -24,7 +24,7 @@ export const DropdownContent = memo(function DropdownContent(innerProps: Dropdow
         variant={variant}
       >
         {arrow && <DropdownArrow {...arrow} context={context} />}
-        <DropdownInner size={size} {...innerProps} />
+        <DropdownInner {...innerProps} />
       </DropdownOuter>
     </FloatingPortal>
   );
@@ -73,30 +73,31 @@ const DropdownInner = styled('div', {
     background: 'colorPalette.background',
     color: 'colorPalette.text',
     textStyle: 'body',
-    paddingBlock: '12px',
-    paddingInline: '16px',
     minWidth: '50px',
     borderRadius: '8px',
     textAlign: 'left',
     display: 'flex',
     flexDirection: 'column',
+    gap: '12px',
     boxShadow: '0px 4px 8px 8px {colors.blacko20}',
   },
   variants: {
-    size: {
+    padding: {
       none: {
-        paddingBlock: '0',
-        paddingInline: '0',
+        padding: '0',
       },
-      normal: {},
-      compact: {
-        textStyle: 'body.sm',
-        paddingBlock: '8px',
-        paddingInline: '8px',
+      small: {
+        padding: '8px',
+      },
+      normal: {
+        padding: '16px',
+      },
+      large: {
+        padding: '24px',
       },
     },
   },
   defaultVariants: {
-    size: 'normal',
+    padding: 'normal',
   },
 });

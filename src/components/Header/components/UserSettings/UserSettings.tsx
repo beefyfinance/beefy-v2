@@ -31,7 +31,7 @@ export const UserSettings = memo(function UserSettings({
   return (
     <DropdownProvider
       placement="bottom-end"
-      size="none"
+      padding="none"
       autoWidth={false}
       open={isOpen}
       onChange={handleChange}
@@ -41,7 +41,7 @@ export const UserSettings = memo(function UserSettings({
         <SettingsIcon height={24} width={24} />
       </SettingsButton>
       <LineSeparator />
-      <DropdownContent>
+      <DropdownContent padding="none">
         <RpcSettingsPanel handleClose={onClose} />
       </DropdownContent>
     </DropdownProvider>

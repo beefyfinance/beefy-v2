@@ -40,7 +40,7 @@ export const DropNavItem = memo<DropNavItemProps>(function DropNavItem({
           Arrow={isOpen ? UpArrow : DownArrow}
         />
       </DropdownNavButton>
-      <DropdownItems>
+      <DropdownItems padding="small">
         {items.map(item => {
           const NavItemComponent = item.Component ?? NavLinkItem;
           return (
@@ -61,11 +61,6 @@ export const DropNavItem = memo<DropNavItemProps>(function DropNavItem({
 
 const DropdownItems = styled(DropdownContent, {
   base: {
-    zIndex: 'dropdown',
-    display: 'flex',
-    flexDirection: 'column' as const,
-    rowGap: '12px',
-    padding: `8px`,
     borderWidth: '2px',
     borderStyle: 'solid',
     borderColor: 'background.content.dark',

@@ -2,8 +2,11 @@ import { defineConfig } from '@pandacss/dev';
 import { buildConfig } from './tools/styles/config-builder.ts';
 import { pluginStricterProperties } from './tools/styles/stricter-properties-plugin.ts';
 import { pluginMoreTypes } from './tools/styles/more-types-plugin.ts';
+import basePreset from '@pandacss/preset-base';
 
-// @dev some changes require running `npx panda codegen` after
+/**
+ * @dev some changes require running `npx panda codegen` after
+ */
 
 const isProduction = process.env['NODE_ENV'] === 'production';
 
@@ -27,6 +30,13 @@ const sansSerifFontStack = [
   .map(v => (v.includes(' ') ? `"${v}"` : v))
   .join(', ');
 
+// We only want to use (some of) the utilities and conditions from the base preset
+const {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- removing backdropFilter
+  utilities: { backdropFilter, ...baseUtilities },
+  conditions: baseConditions,
+} = basePreset;
+
 const config = buildConfig(
   // Base config
   {
@@ -45,8 +55,9 @@ const config = buildConfig(
     outdir: '.cache/styles',
     // Tell panda we are importing generated code from @styles/* rather than {outdir}/*
     importMap: '@repo/styles', // TODO when eslint-plugin-import with 'pathGroupOverrides' is released, change this to #/styles instead
-    // Base present only (excluding panda opinionated presets)
-    presets: ['@pandacss/preset-base'],
+    // Remove presets
+    presets: [],
+    eject: true,
     // Whether to use css reset
     preflight: true,
     // Where to look for your css declarations
@@ -57,6 +68,16 @@ const config = buildConfig(
     minify: isProduction,
     // Use lightningcss instead of postcss
     lightningcss: true,
+    // Browserslist for lightningcss
+    browserslist: isProduction
+      ? [
+          '>0.1% and fully supports es6-module and fully supports es6-module-dynamic-import',
+          'not dead',
+          'not op_mini all',
+        ]
+      : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
+    // Where css variables are defined
+    cssVarRoot: ':root',
     // Plugins
     plugins: [
       pluginMoreTypes(),
@@ -191,19 +212,32 @@ const config = buildConfig(
         flexShrink: '0',
         userSelect: 'none',
       },
-    },
-    // Extend condition helpers from preset-base
-    conditions: {
-      extend: {
-        // React Router sets aria-current="page" on the active link
-        // Floating UI sets aria-expanded="true" on the button when open
-        active: '&:is(:active, [data-active], [aria-current="page"], [aria-expanded="true"])',
+      '.scrollbar': {
+        '&::-webkit-scrollbar': {
+          width: '0.5rem',
+        },
+        '&::-webkit-scrollbar-thumb': {
+          backgroundColor: '{colors.scrollbar.thumb}',
+          borderRadius: '0.5rem',
+        },
+        '&::-webkit-scrollbar-track': {
+          backgroundColor: '{colors.scrollbar.track}',
+          borderRadius: '0',
+        },
+        '@supports not selector(::-webkit-scrollbar)': {
+          scrollbarWidth: 'thin',
+          scrollbarColor: '{colors.scrollbar.thumb} {colors.scrollbar.track}',
+        },
       },
     },
-    // Remove utilities from preset-base
-    utilities: {},
-    // Remove patterns from preset-base
-    patterns: {},
+    // Shorthands
+    utilities: baseUtilities,
+    conditions: {
+      ...baseConditions,
+      // React Router sets aria-current="page" on the active link
+      // Floating UI sets aria-expanded="true" on the button when open
+      active: '&:is(:active, [data-active], [aria-current="page"], [aria-expanded="true"])',
+    },
     // Theme variables
     theme: {
       breakpoints: {
@@ -412,6 +446,10 @@ const config = buildConfig(
               boost: { value: '{colors.orangeBoost}' },
               inactive: { value: '{colors.blackVelvet}' },
             },
+          },
+          scrollbar: {
+            thumb: { value: '{colors.eclipseElixir}' },
+            track: { value: 'transparent' },
           },
           tags: {
             clm: {

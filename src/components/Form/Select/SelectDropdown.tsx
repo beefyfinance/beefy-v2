@@ -19,7 +19,7 @@ export const SelectDropdown = memo(
     return (
       <Layout ref={ref} {...rest}>
         {header && <Header>{header}</Header>}
-        <ContentScrollable>{children}</ContentScrollable>
+        <ContentScrollable className={'scrollbar'}>{children}</ContentScrollable>
         {footer && <Footer>{footer}</Footer>}
       </Layout>
     );

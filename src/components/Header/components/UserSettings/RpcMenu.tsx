@@ -3,7 +3,7 @@ import { memo, useCallback } from 'react';
 import { useAppSelector } from '../../../../store.ts';
 import { selectAllChainIds } from '../../../../features/data/selectors/chains.ts';
 import { SearchableList } from '../../../SearchableList/SearchableList.tsx';
-import { ModifiedListItem, ModifiedListItemEndComponent } from './ListItems.tsx';
+import { ChainRpcItem, ChainRpcReset } from './RpcListItem.tsx';
 import { styled } from '@repo/styles/jsx';
 
 export interface RpcMenuProps {
@@ -25,8 +25,8 @@ export const RpcMenu = memo(function RpcMenu({ onSelect }: RpcMenuProps) {
       <SearchableList
         options={chainIds}
         onSelect={handleSelect}
-        ItemInnerComponent={ModifiedListItem}
-        EndComponent={ModifiedListItemEndComponent}
+        ItemInnerComponent={ChainRpcItem}
+        EndComponent={ChainRpcReset}
         size="sm"
         hideShadows={true}
       />
