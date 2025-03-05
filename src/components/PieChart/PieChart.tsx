@@ -4,6 +4,7 @@ import { PieChartTooltip } from '../PieChartTooltip/PieChartTooltip.tsx';
 import { CHART_COLORS } from '../../helpers/charts.ts';
 import type { PieChartProps } from './types.ts';
 import { useBreakpoint } from '../MediaQueries/useBreakpoint.ts';
+import { token } from '@repo/styles/tokens';
 
 export const PieChart = memo(function PieChart({ data, type, formatter }: PieChartProps) {
   const smUp = useBreakpoint({ from: 'sm' });
@@ -35,7 +36,7 @@ export const PieChart = memo(function PieChart({ data, type, formatter }: PieCha
         ))}
       </Pie>
       <Tooltip
-        wrapperStyle={{ outline: 'none' }}
+        wrapperStyle={{ outline: 'none', zIndex: token('zIndex.tooltip') }}
         content={<PieChartTooltip type={type} formatter={formatter} />}
       />
     </RechartsPieChart>

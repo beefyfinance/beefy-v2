@@ -23,6 +23,7 @@ import { XAxisTick } from '../../../../../../../components/XAxisTick/XAxisTick.t
 import { GraphNoData } from '../../../../../../../components/GraphNoData/GraphNoData.tsx';
 import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks.tsx';
 import { useBreakpoint } from '../../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { token } from '@repo/styles/tokens';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -114,7 +115,10 @@ export const Graph = memo(function Graph({ vaultId, period, address }: GraphProp
             ticks={usdAxis.ticks}
             mirror={true}
           />
-          <Tooltip wrapperStyle={{ outline: 'none' }} content={<PnLTooltip />} />
+          <Tooltip
+            wrapperStyle={{ outline: 'none', zIndex: token('zIndex.tooltip') }}
+            content={<PnLTooltip />}
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>

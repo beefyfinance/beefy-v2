@@ -22,6 +22,7 @@ import { OverviewTooltip, type OverviewTooltipProps } from '../Tooltips/Tooltips
 import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks.tsx';
 import { GraphNoData } from '../../../../../../../components/GraphNoData/GraphNoData.tsx';
 import { useBreakpoint } from '../../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { token } from '@repo/styles/tokens';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -133,7 +134,10 @@ export const CLMOverviewGraph = memo(function CLMOverviewGraph({
             ticks={usdAxis.ticks}
             mirror={true}
           />
-          <Tooltip wrapperStyle={{ outline: 'none' }} content={tooltipContentCreator} />
+          <Tooltip
+            wrapperStyle={{ outline: 'none', zIndex: token('zIndex.tooltip') }}
+            content={tooltipContentCreator}
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>

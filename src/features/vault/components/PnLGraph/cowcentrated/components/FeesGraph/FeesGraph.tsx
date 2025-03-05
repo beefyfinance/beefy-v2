@@ -23,6 +23,7 @@ import { LINE_COLORS } from '../../../../../../../helpers/charts.ts';
 import type { GraphBucket } from '../../../../../../../helpers/graph/types.ts';
 import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks.tsx';
 import { useBreakpoint } from '../../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { token } from '@repo/styles/tokens';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -105,7 +106,10 @@ export const CLMFeesGraph = memo(function CLMFeesGraph({
             ticks={usdAxis.ticks}
             mirror={true}
           />
-          <Tooltip wrapperStyle={{ outline: 'none' }} content={tooltipContentCreator} />
+          <Tooltip
+            wrapperStyle={{ outline: 'none', zIndex: token('zIndex.tooltip') }}
+            content={tooltipContentCreator}
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>
