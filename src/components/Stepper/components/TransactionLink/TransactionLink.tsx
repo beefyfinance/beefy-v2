@@ -6,6 +6,7 @@ import { styles } from './styles.ts';
 import { useAppSelector } from '../../../../store.ts';
 import { selectStepperChainId } from '../../../../features/data/selectors/stepper.ts';
 import { explorerTxUrl } from '../../../../helpers/url.ts';
+import { css } from '@repo/styles/css';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -33,7 +34,7 @@ export function TransactionLink() {
 
   return (
     <a className={classes.redirectLinkSuccess} href={explorerTxUrl(chain, hash)} target="_blank">
-      {t('Transactn-View')} {<OpenInNewRoundedIcon />}
+      {t('Transactn-View')} <OpenInNewRoundedIcon className={css({ fontSize: '16px' })} />
     </a>
   );
 }
