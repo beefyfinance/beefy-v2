@@ -68,6 +68,7 @@ export const OverviewFooter = memo(function OverviewFooter({
           onChange={handleChange}
           noBackground={true}
           noPadding={true}
+          noBorder={true}
           variant="range"
         />
       </div>

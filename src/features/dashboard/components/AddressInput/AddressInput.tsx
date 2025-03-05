@@ -183,7 +183,7 @@ const GoToDashboardButton = memo(function GoToDashboardButton({
     return (
       <Link
         onClick={handleClear}
-        className={css(styles.icon, styles.leftIcon, styles.activeIcon)}
+        className={css(styles.icon, styles.activeIcon)}
         aria-disabled={isValid}
         to={`/dashboard/${userInput}`}
       >
@@ -193,7 +193,7 @@ const GoToDashboardButton = memo(function GoToDashboardButton({
   }
 
   return (
-    <div className={css(styles.icon, styles.leftIcon, styles.disabledIcon)}>
+    <div className={css(styles.icon, styles.disabledIcon)}>
       <Search />
     </div>
   );

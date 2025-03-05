@@ -27,7 +27,12 @@ export const Introduction = memo(function Introduction() {
         <div className={classes.poweredByLabel}>{t('OnRamp-Intro-PoweredBy')}</div>
         <div className={classes.poweredByLogos}>
           {Object.entries(PROVIDERS).map(([key, provider]) => (
-            <img key={key} src={getOnRampProviderLogo(key)} alt={provider.title} height="32" />
+            <img
+              key={key}
+              src={getOnRampProviderLogo(key)}
+              alt={provider.title}
+              style={{ height: '32px' }}
+            />
           ))}
         </div>
       </div>

@@ -33,6 +33,7 @@ export const RangeSwitcher = memo(function RangeSwitcher({
       onChange={onChange}
       noBackground={true}
       noPadding={true}
+      noBorder={true}
       variant="range"
     />
   );

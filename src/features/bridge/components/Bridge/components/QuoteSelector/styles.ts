@@ -58,6 +58,7 @@ export const styles = {
     borderRadius: '8px',
     whiteSpace: 'nowrap',
     gap: '8px',
+    justifyContent: 'space-between',
   }),
   quoteButton: css.raw({
     cursor: 'pointer',

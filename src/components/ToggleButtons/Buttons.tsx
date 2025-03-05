@@ -47,6 +47,12 @@ export const Buttons = styled('div', {
         paddingInline: '8px',
       },
     },
+    noBorder: {
+      false: {},
+      true: {
+        borderWidth: '0px',
+      },
+    },
   },
   compoundVariants: [
     {
