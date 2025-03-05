@@ -12,7 +12,7 @@ export const styles = {
     color: 'text.dark',
   }),
   button: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',

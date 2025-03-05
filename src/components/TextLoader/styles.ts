@@ -14,7 +14,8 @@ export const styles = {
     position: 'relative',
   }),
   loader: css.raw({
-    backgroundImage: 'linear-gradient(90deg, extracted198, extracted2029, extracted198)',
+    backgroundImage:
+      'linear-gradient(90deg, {colors.loaderPurple}, {colors.loaderPurpleHighlight}, {colors.loaderPurple})',
     backgroundSize: '300% 100%',
     animationName: 'scrollBackground',
     animationDuration: '3s',

@@ -9,7 +9,7 @@ export const styles = {
     flexDirection: 'column',
   }),
   titleBar: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
     background: 'background.content.dark',
     padding: '24px',

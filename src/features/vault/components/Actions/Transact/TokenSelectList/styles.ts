@@ -61,7 +61,7 @@ export const styles = {
     textDecoration: 'none',
   }),
   buildLpContent: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
     display: 'flex',
     alignItems: 'center',

@@ -6,7 +6,7 @@ import { css } from '@repo/styles/css';
 const useStyles = legacyMakeStyles({
   label: css.raw({
     textStyle: 'subline.sm',
-    fontWeight: '700',
+    fontWeight: 'bold',
     color: 'text.dark',
     display: 'flex',
     alignItems: 'center',

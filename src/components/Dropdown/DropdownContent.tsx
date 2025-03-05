@@ -3,12 +3,12 @@ import { useDropdownContext } from './useDropdownContext.ts';
 import { FloatingArrow, FloatingPortal } from '@floating-ui/react';
 import { type HTMLStyledProps, styled } from '@repo/styles/jsx';
 
-type DropdownContentProps = {
+export type DropdownContentProps = {
   children: ReactNode;
 } & Omit<HTMLStyledProps<typeof DropdownInner>, 'children' | 'className'>;
 
 export const DropdownContent = memo(function DropdownContent(innerProps: DropdownContentProps) {
-  const { open, refs, floatingStyles, getFloatingProps, context, arrow, variant, size } =
+  const { open, refs, floatingStyles, getFloatingProps, context, arrow, variant } =
     useDropdownContext();
 
   if (!open) {
@@ -24,7 +24,7 @@ export const DropdownContent = memo(function DropdownContent(innerProps: Dropdow
         variant={variant}
       >
         {arrow && <DropdownArrow {...arrow} context={context} />}
-        <DropdownInner size={size} {...innerProps} />
+        <DropdownInner {...innerProps} />
       </DropdownOuter>
     </FloatingPortal>
   );
@@ -32,16 +32,20 @@ export const DropdownContent = memo(function DropdownContent(innerProps: Dropdow
 
 const DropdownOuter = styled('div', {
   base: {
+    colorPalette: 'dropdown.base',
     minWidth: '36px',
     maxWidth: 'min(calc(100vw - 32px), 440px)',
   },
   variants: {
     variant: {
       light: {
-        colorPalette: 'tooltip.light',
+        colorPalette: 'dropdown.light',
       },
       dark: {
-        colorPalette: 'tooltip.dark',
+        colorPalette: 'dropdown.dark',
+      },
+      button: {
+        colorPalette: 'dropdown.button',
       },
     },
     layer: {
@@ -57,7 +61,6 @@ const DropdownOuter = styled('div', {
     },
   },
   defaultVariants: {
-    variant: 'light',
     layer: 0,
   },
 });
@@ -73,8 +76,6 @@ const DropdownInner = styled('div', {
     background: 'colorPalette.background',
     color: 'colorPalette.text',
     textStyle: 'body',
-    paddingBlock: '12px',
-    paddingInline: '16px',
     minWidth: '50px',
     borderRadius: '8px',
     textAlign: 'left',
@@ -83,20 +84,37 @@ const DropdownInner = styled('div', {
     boxShadow: '0px 4px 8px 8px {colors.blacko20}',
   },
   variants: {
-    size: {
+    padding: {
       none: {
-        paddingBlock: '0',
-        paddingInline: '0',
+        padding: '0',
       },
-      normal: {},
-      compact: {
-        textStyle: 'body.sm',
-        paddingBlock: '8px',
-        paddingInline: '8px',
+      small: {
+        padding: '8px',
+      },
+      normal: {
+        padding: '16px',
+      },
+      large: {
+        padding: '24px',
+      },
+    },
+    gap: {
+      none: {
+        gap: '0',
+      },
+      small: {
+        gap: '6px',
+      },
+      normal: {
+        gap: '12px',
+      },
+      large: {
+        gap: '18px',
       },
     },
   },
   defaultVariants: {
-    size: 'normal',
+    padding: 'normal',
+    gap: 'normal',
   },
 });

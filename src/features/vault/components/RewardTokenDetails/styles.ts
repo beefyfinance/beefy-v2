@@ -10,7 +10,7 @@ export const styles = {
     padding: '16px',
   }),
   text: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.light',
     marginLeft: '8px',
   }),

@@ -3,7 +3,6 @@ import { useAppSelector } from '../../../../store.ts';
 import { selectVaultExistsById } from '../../../../features/data/selectors/vaults.ts';
 import { Tokens } from './Tokens.tsx';
 import { PricePerFullShare } from './PricePerFullShare.tsx';
-import { styled } from '@repo/styles/jsx';
 import { DropdownContent } from '../../../Dropdown/DropdownContent.tsx';
 
 type PricesDropdownProps = {
@@ -27,32 +26,9 @@ export const PricesDropdown = memo(function PricesDropdown({ setOpen }: PricesDr
   );
 
   return (
-    <Dropdown onClick={handleClick}>
+    <DropdownContent onClick={handleClick}>
       <Tokens />
       {vaultLoaded ? <PricePerFullShare /> : null}
-    </Dropdown>
+    </DropdownContent>
   );
-});
-
-const Dropdown = styled(DropdownContent, {
-  base: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px',
-  },
-  variants: {
-    dark: {
-      true: {
-        backgroundColor: 'tooltip.dark.background',
-        color: 'tooltip.dark.text',
-      },
-    },
-    compact: {
-      true: {
-        paddingInline: '8px', // todo token
-        paddingBlock: '8px', // todo token
-        borderRadius: '4px', // todo token
-      },
-    },
-  },
 });

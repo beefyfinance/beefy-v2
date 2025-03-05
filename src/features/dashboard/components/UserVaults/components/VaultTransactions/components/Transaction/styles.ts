@@ -2,7 +2,7 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   stat: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
@@ -35,7 +35,7 @@ export const styles = {
     color: 'text.middle',
   }),
   action: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
   }),
   actionMobile: css.raw({
@@ -84,7 +84,7 @@ export const styles = {
     gap: '4px',
   }),
   tokenIconAmount: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
     display: 'flex',
     gap: '4px',

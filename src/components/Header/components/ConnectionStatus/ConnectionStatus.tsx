@@ -1,7 +1,7 @@
 import { lazy, memo, Suspense, useCallback, useRef, useState } from 'react';
 import { styled } from '@repo/styles/jsx';
 import { NetworkStatus } from '../../../NetworkStatus/NetworkStatus.tsx';
-import { RpcModalTrigger } from '../RpcModal/RpcModal.tsx';
+import { UserSettings } from '../UserSettings/UserSettings.tsx';
 
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = lazy(() => import('../WalletContainer/WalletContainer.tsx'));
@@ -25,7 +25,7 @@ export const ConnectionStatus = memo(function ConnectionStatus() {
   return (
     <Holder ref={anchorEl}>
       <Icons>
-        <RpcModalTrigger
+        <UserSettings
           anchorEl={anchorEl}
           isOpen={open === 'rpc'}
           onOpen={handleOpenRpc}

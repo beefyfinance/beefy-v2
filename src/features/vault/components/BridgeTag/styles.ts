@@ -3,7 +3,7 @@ import { css } from '@repo/styles/css';
 export const styles = {
   tag: css.raw({
     textStyle: 'subline.sm',
-    fontWeight: '700',
+    fontWeight: 'bold',
     padding: '2px 8px',
     background: 'bayOfMany',
     color: 'text.middle',

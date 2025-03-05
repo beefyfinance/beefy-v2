@@ -46,7 +46,7 @@ export const styles = {
     },
   }),
   inputWithPrice: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
   }),
   error: css.raw({
     border: '1px solid {colors.indicators.error}',

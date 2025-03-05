@@ -4,7 +4,7 @@ export const bannerRecipe = sva({
   slots: ['banner', 'box', 'content', 'icon', 'text', 'cross'],
   base: {
     banner: {
-      textStyle: 'body.med',
+      textStyle: 'body.medium',
     },
     box: {
       borderRadius: '8px',

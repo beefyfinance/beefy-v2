@@ -21,7 +21,7 @@ export const BasicTooltipContent = memo(function BasicTooltipContent({
 
 const Title = styled('div', {
   base: {
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     fontSize: 'var(--tooltip-body-font-size, {fontSizes.body})',
     color: 'var(--tooltip-title-color, black)',
   },

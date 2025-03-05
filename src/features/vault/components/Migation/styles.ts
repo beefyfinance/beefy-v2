@@ -20,12 +20,12 @@ export const styles = {
   }),
   subTitle: css.raw({
     textStyle: 'subline',
-    fontWeight: '700',
+    fontWeight: 'bold',
     color: 'text.dark',
   }),
   title: css.raw({
     textStyle: 'h3',
-    fontWeight: '500',
+    fontWeight: 'medium',
     color: 'text.light',
   }),
   content: css.raw({

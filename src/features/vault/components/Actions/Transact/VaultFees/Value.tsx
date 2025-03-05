@@ -5,7 +5,7 @@ import { css } from '@repo/styles/css';
 
 const useStyles = legacyMakeStyles({
   value: css.raw({
-    textStyle: 'body.sm.med',
+    textStyle: 'body.sm.medium',
     color: 'text.middle',
     textAlign: 'right',
   }),

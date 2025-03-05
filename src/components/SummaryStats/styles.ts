@@ -45,11 +45,11 @@ export const styles = {
   }),
   title: css.raw({
     textStyle: 'subline',
-    fontWeight: '700',
+    fontWeight: 'bold',
     color: 'text.dark',
     smDown: {
       textStyle: 'body.sm',
-      fontWeight: '700',
+      fontWeight: 'bold',
       textTransform: 'uppercase',
       letterSpacing: '0.5px',
     },
@@ -58,7 +58,7 @@ export const styles = {
     textStyle: 'h1',
     color: 'text.middle',
     smDown: {
-      textStyle: 'body.med',
+      textStyle: 'body.medium',
     },
   }),
 };

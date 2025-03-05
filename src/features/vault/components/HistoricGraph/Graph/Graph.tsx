@@ -32,6 +32,7 @@ import { selectVaultById } from '../../../../data/selectors/vaults.ts';
 import { max as lodashMax } from 'lodash-es';
 import type { ChartStat } from '../types.ts';
 import { useBreakpoint } from '../../../../../components/MediaQueries/useBreakpoint.ts';
+import { token } from '@repo/styles/tokens';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -146,7 +147,10 @@ export const Graph = memo(function Graph<TStat extends ChartStat>({
             fillOpacity={isClm ? 0 : 100}
           />
           {isClm ? <Bar dataKey="ranges" fill="#6A71AE4C" /> : null}
-          <Tooltip content={tooltipContentCreator} wrapperStyle={{ outline: 'none' }} />
+          <Tooltip
+            content={tooltipContentCreator}
+            wrapperStyle={{ outline: 'none', zIndex: token('zIndex.tooltip') }}
+          />
           {!isClm && toggles.movingAverage ? (
             <Area dataKey="ma" stroke="#5C70D6" strokeWidth={1.5} fill="none" />
           ) : null}

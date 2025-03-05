@@ -7,7 +7,7 @@ export const styles = {
     marginBottom: '8px',
   }),
   error: css.raw({
-    textStyle: 'body.sm.med',
+    textStyle: 'body.sm.medium',
     color: 'indicators.error',
     marginTop: '8px',
   }),

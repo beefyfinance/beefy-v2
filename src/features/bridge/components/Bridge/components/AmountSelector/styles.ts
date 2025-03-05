@@ -8,7 +8,7 @@ export const styles = {
   }),
   label: css.raw({
     textStyle: 'subline.sm',
-    fontWeight: '700',
+    fontWeight: 'bold',
     color: 'text.dark',
     flex: '1 1 40%',
   }),
@@ -18,7 +18,7 @@ export const styles = {
     color: 'text.dark',
     '& span': {
       paddingLeft: '4px',
-      fontWeight: 'body.medium',
+      fontWeight: 'medium',
       color: 'text.middle',
     },
   }),

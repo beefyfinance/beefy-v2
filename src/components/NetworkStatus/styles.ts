@@ -75,7 +75,7 @@ export const styles = {
     padding: '0px',
   }),
   titleContainer: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.light',
     display: 'flex',
     alignItems: 'center',
@@ -108,7 +108,7 @@ export const styles = {
   }),
   contentTitle: css.raw({
     textStyle: 'subline.sm',
-    fontWeight: '700',
+    fontWeight: 'bold',
     color: 'text.dark',
   }),
   contentDetail: css.raw({

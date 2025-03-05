@@ -44,7 +44,7 @@ const slashCss = css({
   fontWeight: 'medium',
 });
 
-type SearchInputProps = Override<
+export type SearchInputProps = Override<
   Omit<BaseInputProps, 'fullWidth' | 'endAdornment'>,
   {
     onValueChange: (newValue: string) => void;

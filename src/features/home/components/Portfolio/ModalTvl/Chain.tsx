@@ -63,7 +63,7 @@ const Name = styled('div', {
 
 const Tvl = styled('div', {
   base: {
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
   },
 });

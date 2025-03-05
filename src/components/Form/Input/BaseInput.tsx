@@ -69,7 +69,7 @@ const recipe = sva({
       paddingBlock: '0',
     },
     input: {
-      textStyle: 'body.med',
+      textStyle: 'body.medium',
       backgroundColor: 'inherit',
       border: 'none',
       paddingInline: '0',

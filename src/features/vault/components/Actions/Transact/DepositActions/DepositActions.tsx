@@ -18,11 +18,10 @@ import { PriceImpactNotice } from '../PriceImpactNotice/PriceImpactNotice.tsx';
 import { MaxNativeNotice } from '../MaxNativeNotice/MaxNativeNotice.tsx';
 import { transactSteps } from '../../../../../data/actions/transact.ts';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
-import { css, type CssStyles } from '@repo/styles/css';
 import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
-import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
 import type { ActionButtonProps } from '../CommonActions/CommonActions.tsx';
+import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
 import { GlpDepositNotice } from '../GlpNotices/GlpNotices.tsx';
 import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
@@ -30,19 +29,16 @@ import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Bu
 
 const useStyles = legacyMakeStyles(styles);
 
-export type DepositActionsProps = {
-  css?: CssStyles;
-};
-export const DepositActions = memo(function DepositActions({ css: cssProp }: DepositActionsProps) {
+export const DepositActions = memo(function DepositActions() {
   const quoteStatus = useAppSelector(selectTransactQuoteStatus);
   const quote = useAppSelector(selectTransactSelectedQuoteOrUndefined);
   const option = quote ? quote.option : null;
 
   if (!option || !quote || quoteStatus !== TransactStatus.Fulfilled) {
-    return <ActionDepositDisabled css={cssProp} />;
+    return <ActionDepositDisabled />;
   }
 
-  return <ActionDeposit css={cssProp} quote={quote} option={option} />;
+  return <ActionDeposit quote={quote} option={option} />;
 });
 
 const ActionDepositDisabled = memo(function ActionDepositDisabled({
@@ -65,11 +61,7 @@ type ActionDepositProps = {
   option: TransactOption;
   quote: TransactQuote;
 } & ActionButtonProps;
-const ActionDeposit = memo(function ActionDeposit({
-  option,
-  quote,
-  css: cssProp,
-}: ActionDepositProps) {
+const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepositProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
@@ -98,7 +90,7 @@ const ActionDeposit = memo(function ActionDeposit({
   }, [dispatch, quote, t]);
 
   return (
-    <div className={css(styles.actions, cssProp)}>
+    <>
       {option.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
       <GlpDepositNotice vaultId={option.vaultId} onChange={setIsDisabledByGlpLock} />
       <PriceImpactNotice
@@ -124,6 +116,6 @@ const ActionDeposit = memo(function ActionDeposit({
         {import.meta.env.DEV ? <TenderlyTransactButton option={option} quote={quote} /> : null}
         <VaultFees />
       </div>
-    </div>
+    </>
   );
 });

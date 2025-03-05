@@ -19,7 +19,7 @@ export const styles = {
     borderRadius: '2px',
   }),
   label: css.raw({
-    textStyle: 'body.sm.med',
+    textStyle: 'body.sm.medium',
     color: 'text.middle',
     textTransform: 'uppercase',
     textOverflow: 'ellipsis',

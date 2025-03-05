@@ -31,7 +31,7 @@ export const styles = {
     flexShrink: '1',
   }),
   tokenAmount: css.raw({
-    fontWeight: 'body.medium',
+    fontWeight: 'medium',
     color: 'background.vaults.boost',
   }),
   link: css.raw({

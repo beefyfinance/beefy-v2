@@ -11,7 +11,7 @@ export const styles = {
     gap: '4px 8px',
   }),
   callHeader: css.raw({
-    fontWeight: 'body.medium',
+    fontWeight: 'medium',
   }),
   callData: css.raw({
     overflow: 'hidden',

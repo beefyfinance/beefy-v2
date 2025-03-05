@@ -28,7 +28,7 @@ const useStyles = legacyMakeStyles({
     columnGap: '4px',
   }),
   value: css.raw({
-    fontWeight: '500',
+    fontWeight: 'medium',
   }),
 });
 

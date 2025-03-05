@@ -63,10 +63,10 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
-    fontWeight: '700',
+    fontWeight: 'bold',
     backgroundColor: 'tags.clm.background',
     '& span': {
-      fontWeight: '500',
+      fontWeight: 'medium',
     },
   }),
   vaultTagClmIcon: css.raw({

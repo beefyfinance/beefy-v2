@@ -9,6 +9,7 @@ import {
   Links,
   styles,
   TitleContainer,
+  Image,
 } from './styles.ts';
 import { useAppSelector } from '../../../../store.ts';
 import { IconButtonLink } from '../../../../components/IconButtonLink/IconButtonLink.tsx';
@@ -19,7 +20,7 @@ import { memo } from 'react';
 import type { PlatformEntity } from '../../../data/entities/platform.ts';
 import { selectPlatformById } from '../../../data/selectors/platforms.ts';
 import { TagTooltip, TagWithTooltip } from '../BridgeTag/BridgeTag.tsx';
-import { getPlatformSrc, platformAssetExists } from '../../../../helpers/platformsSrc.ts';
+import { getPlatformSrc } from '../../../../helpers/platformsSrc.ts';
 import { css } from '@repo/styles/css';
 
 function PlatformCardDisplay({ platform }: { platform: PlatformEntity }) {
@@ -93,17 +94,7 @@ function PlatformCardComponent({ platformId }: { platformId: PlatformEntity['id'
 export const PlatformCard = memo(PlatformCardComponent);
 
 const PlatformImage = memo(function PlatformImage({ platformId }: { platformId: string }) {
-  return (
-    <>
-      {platformAssetExists(platformId) ? (
-        <img
-          src={getPlatformSrc(platformId)}
-          alt={platformId}
-          style={{ height: '24px', width: '24px' }}
-        />
-      ) : (
-        <></>
-      )}
-    </>
-  );
+  const src = getPlatformSrc(platformId);
+
+  return src && <Image src={getPlatformSrc(platformId)} alt={platformId} />;
 });

@@ -2,7 +2,7 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   rewards: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     display: 'grid',
     gridTemplateColumns: 'auto minmax(0, 1fr) auto',
     gap: '8px',

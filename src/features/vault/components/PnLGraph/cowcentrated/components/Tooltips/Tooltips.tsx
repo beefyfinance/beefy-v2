@@ -26,7 +26,7 @@ const useStyles = legacyMakeStyles({
     gap: '8px',
   }),
   value: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     display: 'flex',
     alignItems: 'center',
     gap: '4px',

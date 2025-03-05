@@ -145,11 +145,8 @@ export const ShareButton = memo(function ShareButton({
 
 const ShareDropdown = styled(DropdownContent, {
   base: {
-    display: 'flex',
-    flexDirection: 'column',
     alignItems: 'flex-start',
     gap: '16px',
-    padding: '16px',
   },
 });
 

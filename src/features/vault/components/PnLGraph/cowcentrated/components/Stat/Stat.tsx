@@ -27,13 +27,13 @@ const styles = {
     },
   }),
   label: css.raw({
-    textStyle: 'body.sm.med',
-    fontWeight: '700',
+    textStyle: 'body.sm.medium',
+    fontWeight: 'bold',
     color: 'text.dark',
     textTransform: 'uppercase',
   }),
   value: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -41,7 +41,7 @@ const styles = {
     color: 'text.lightest',
   }),
   subValue: css.raw({
-    textStyle: 'body.sm.med',
+    textStyle: 'body.sm.medium',
     color: 'text.light',
   }),
   lastValue: css.raw({

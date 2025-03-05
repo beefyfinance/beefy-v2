@@ -17,11 +17,11 @@ export const styles = {
     color: 'text.dark',
   }),
   apyValue: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
   }),
   oracleLink: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
     textDecoration: 'none',
     '&:hover': {

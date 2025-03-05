@@ -19,15 +19,15 @@ export const styles = {
   message: css.raw({
     color: 'blackMarket1',
     '& span': {
-      fontWeight: 'body.medium',
+      fontWeight: 'medium',
     },
   }),
   messageHighlight: css.raw({
     color: 'blackMarket1',
-    fontWeight: 'body.medium',
+    fontWeight: 'medium',
   }),
   friendlyMessage: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'blackMarket1',
     marginBottom: '16px',
   }),

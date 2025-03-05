@@ -73,6 +73,13 @@ export const Description = styled('div', {
   },
 });
 
+export const Image = styled('img', {
+  base: {
+    width: '24px',
+    height: '24px',
+  },
+});
+
 export const styles = {
   assetLinkText: css.raw({
     display: 'none',

@@ -31,8 +31,7 @@ export function useDropdown<TRef extends ReferenceType = Element>({
   offset = 4,
   openOnClick = true,
   closeOnClickAway = true,
-  variant = 'light',
-  size = 'normal',
+  variant = undefined,
   arrowEnabled = false,
   arrowWidth = 14,
   arrowHeight = 7,
@@ -101,9 +100,10 @@ export function useDropdown<TRef extends ReferenceType = Element>({
         : false,
     [arrowEnabled, arrowWidth, arrowHeight, arrowRef, arrowOffset]
   );
+  const baseGetReferenceProps = interactions.getReferenceProps;
   const getReferenceProps = useCallback(
     (userProps?: HTMLProps<Element>): Record<string, unknown> => {
-      return interactions.getReferenceProps({
+      return baseGetReferenceProps({
         ...(userProps || {}),
         onClick: e => {
           e.preventDefault();
@@ -111,7 +111,7 @@ export function useDropdown<TRef extends ReferenceType = Element>({
         },
       });
     },
-    [interactions]
+    [baseGetReferenceProps]
   );
 
   const referenceElement = reference?.current;
@@ -133,7 +133,6 @@ export function useDropdown<TRef extends ReferenceType = Element>({
       open,
       setOpen: onOpenChange,
       variant,
-      size,
       arrow,
       ...interactions,
       getReferenceProps,
@@ -141,17 +140,6 @@ export function useDropdown<TRef extends ReferenceType = Element>({
       layer,
       manualReference: !!reference,
     }),
-    [
-      open,
-      onOpenChange,
-      variant,
-      size,
-      arrow,
-      interactions,
-      data,
-      getReferenceProps,
-      layer,
-      reference,
-    ]
+    [open, onOpenChange, variant, arrow, data, interactions, getReferenceProps, layer, reference]
   );
 }

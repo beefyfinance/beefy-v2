@@ -18,7 +18,7 @@ export const styles = {
     '& div': {
       textStyle: 'subline.sm',
       color: 'text.dark',
-      fontWeight: '700',
+      fontWeight: 'bold',
     },
     lgDown: {
       padding: '16px',
@@ -29,7 +29,7 @@ export const styles = {
     padding: '8px 16px',
     textStyle: 'subline.sm',
     color: 'text.dark',
-    fontWeight: '700',
+    fontWeight: 'bold',
   }),
   sortColumn: css.raw({
     justifyContent: 'flex-start',

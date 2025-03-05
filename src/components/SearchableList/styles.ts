@@ -3,7 +3,7 @@ import { css } from '@repo/styles/css';
 export const styles = {
   searchableList: css.raw({
     display: 'grid',
-    gridTemplateColumns: 'auto',
+    gridTemplateColumns: 'minmax(0,1fr)',
     gridTemplateRows: 'auto minmax(0,1fr)',
     flexDirection: 'column',
     width: 'calc(100% + 48px)',
@@ -27,6 +27,7 @@ export const styles = {
     width: 'calc(100% + 24px)',
     height: 'calc(100% + 12px)',
     margin: '0 -12px -12px -12px',
+    rowGap: '16px',
   }),
   searchSM: css.raw({
     padding: '0 12px',
@@ -38,7 +39,7 @@ export const styles = {
 
 export const itemStyles = {
   item: {
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     display: 'flex',
     alignItems: 'center',
     width: '100%',

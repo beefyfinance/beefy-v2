@@ -11,7 +11,7 @@ export const styles = {
   }),
   label: css.raw({
     textStyle: 'subline.sm',
-    fontWeight: '700',
+    fontWeight: 'bold',
     color: 'inherit',
     flex: '1 1 40%',
   }),

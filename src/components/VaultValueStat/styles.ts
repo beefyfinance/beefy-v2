@@ -2,7 +2,7 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   value: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
     display: 'inline-flex',
     flexDirection: 'column',

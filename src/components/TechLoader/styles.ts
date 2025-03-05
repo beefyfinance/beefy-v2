@@ -20,6 +20,6 @@ export const styles = {
   }),
   image: css.raw({}),
   text: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
   }),
 };

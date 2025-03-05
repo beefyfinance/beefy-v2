@@ -8,7 +8,7 @@ export const styles = {
     textDecoration: 'line-through',
   }),
   value: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     margin: '0',
     padding: '0',
   }),

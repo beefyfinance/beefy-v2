@@ -2,7 +2,7 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   item: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     display: 'flex',
     flexWrap: 'nowrap',
     alignItems: 'center',
@@ -44,7 +44,7 @@ export const styles = {
     whiteSpace: 'nowrap',
   }),
   tag: css.raw({
-    textStyle: 'body.sm.med',
+    textStyle: 'body.sm.medium',
     color: 'text.middle',
     background: 'bayOfMany',
     padding: '2px 8px',

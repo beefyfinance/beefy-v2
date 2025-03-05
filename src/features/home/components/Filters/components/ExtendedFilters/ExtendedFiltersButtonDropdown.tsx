@@ -9,11 +9,11 @@ import { styled } from '@repo/styles/jsx';
 export const ExtendedFiltersButtonDropdown = memo(function ExtendedFiltersButtonDropdown() {
   const { t } = useTranslation();
   return (
-    <DropdownProvider variant="dark" placement="bottom-end" arrowEnabled={true}>
+    <DropdownProvider placement="bottom-end">
       <DropdownButtonTrigger variant="filter" size="sm">
         {t('Filter-Btn')}
       </DropdownButtonTrigger>
-      <FiltersDropdown>
+      <FiltersDropdown padding="large">
         <ExtendedFilters desktopView={true} />
       </FiltersDropdown>
     </DropdownProvider>

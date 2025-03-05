@@ -2,7 +2,7 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   value: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     margin: '0',
     padding: '0',
     whiteSpace: 'nowrap',

@@ -14,16 +14,15 @@ export type DropdownOptions = {
   offset?: number;
   openOnClick?: boolean;
   closeOnClickAway?: boolean;
-  variant?: 'light' | 'dark';
-  size?: 'normal' | 'compact' | 'none';
   arrowEnabled?: boolean;
   arrowWidth?: number;
   arrowHeight?: number;
   arrowOffset?: number;
   disabled?: boolean;
-  layer?: 0 | 1 | 2;
   autoWidth?: boolean;
   autoHeight?: boolean;
+  variant?: 'light' | 'dark' | 'button';
+  layer?: 0 | 1 | 2;
 };
 
 export type DropdownData<TRef extends ReferenceType = Element> = {
@@ -39,4 +38,5 @@ export type DropdownData<TRef extends ReferenceType = Element> = {
   manualReference: boolean;
 } & UseInteractionsReturn &
   UseFloatingReturn<TRef> &
-  Required<Pick<DropdownOptions, 'variant' | 'size' | 'layer'>>;
+  Pick<DropdownOptions, 'variant'> &
+  Required<Pick<DropdownOptions, 'layer'>>;

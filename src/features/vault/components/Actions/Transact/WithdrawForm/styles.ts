@@ -30,7 +30,7 @@ export const styles = {
     marginLeft: 'auto',
   }),
   availableLabelAmount: css.raw({
-    textStyle: 'body.sm.med',
+    textStyle: 'body.sm.medium',
     color: 'text.middle',
   }),
   inputs: css.raw({

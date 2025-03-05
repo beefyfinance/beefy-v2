@@ -43,11 +43,11 @@ export const styles = {
     color: 'var(--tooltip-value-color)',
   }),
   totalLabel: css.raw({
-    fontWeight: 'body.medium',
+    fontWeight: 'medium',
     color: 'var(--tooltip-title-color)',
   }),
   totalValue: css.raw({
-    fontWeight: 'body.medium',
+    fontWeight: 'medium',
     color: 'var(--tooltip-label-color)',
   }),
 };

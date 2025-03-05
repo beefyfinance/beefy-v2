@@ -17,7 +17,7 @@ export const styles = {
   }),
   quotesTitle: css.raw({
     textStyle: 'subline.sm',
-    fontWeight: '700',
+    fontWeight: 'bold',
     color: 'text.dark',
   }),
 
@@ -25,16 +25,16 @@ export const styles = {
     background: 'extracted2916',
   }),
   scrollableTopShadow: css.raw({
-    background: 'linear-gradient(0deg, extracted2615 0%, blacko49 100%)',
+    background: 'linear-gradient(0deg, {colors.extracted2615} 0%, {colors.blacko49} 100%)',
   }),
   scrollableBottomShadow: css.raw({
-    background: 'linear-gradient(180deg, extracted2615 0%, blacko49 100%)',
+    background: 'linear-gradient(180deg, {colors.extracted2615} 0%, {colors.blacko49} 100%)',
   }),
   scrollableLeftShadow: css.raw({
-    background: 'linear-gradient(270deg, extracted2615 0%, blacko49 100%)',
+    background: 'linear-gradient(270deg, {colors.extracted2615} 0%, {colors.blacko49} 100%)',
   }),
   scrollableRightShadow: css.raw({
-    background: 'linear-gradient(90deg, extracted2615 0%, blacko49 100%)',
+    background: 'linear-gradient(90deg, {colors.extracted2615} 0%, {colors.blacko49} 100%)',
   }),
   quotes: css.raw({
     display: 'grid',
@@ -70,7 +70,7 @@ export const styles = {
     filter: 'grayscale(100)',
   }),
   quoteProvider: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.middle',
     display: 'flex',
     gap: '8px',

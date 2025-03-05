@@ -15,8 +15,8 @@ export const styles = {
     position: 'relative',
   }),
   label: css.raw({
-    textStyle: 'body.sm.med',
-    fontWeight: '700',
+    textStyle: 'body.sm.medium',
+    fontWeight: 'bold',
     color: 'text.dark',
     textTransform: 'uppercase',
   }),
@@ -27,12 +27,12 @@ export const styles = {
     color: 'indicators.error',
   }),
   value: css.raw({
-    textStyle: 'body.med',
-    fontWeight: '500',
+    textStyle: 'body.medium',
+    fontWeight: 'medium',
     color: 'text.lightest',
     '& span': {
-      textStyle: 'body.sm.med',
-      fontWeight: '700',
+      textStyle: 'body.sm.medium',
+      fontWeight: 'bold',
       textTransform: 'uppercase',
       color: 'text.dark',
     },

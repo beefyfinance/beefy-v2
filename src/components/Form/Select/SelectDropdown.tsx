@@ -19,7 +19,7 @@ export const SelectDropdown = memo(
     return (
       <Layout ref={ref} {...rest}>
         {header && <Header>{header}</Header>}
-        <ContentScrollable>{children}</ContentScrollable>
+        <ContentScrollable className={'scrollbar'}>{children}</ContentScrollable>
         {footer && <Footer>{footer}</Footer>}
       </Layout>
     );
@@ -30,7 +30,7 @@ const Layout = styled('div', {
   base: {
     display: 'flex',
     flexDirection: 'column',
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     zIndex: 'dropdown',
     border: '2px solid {colors.background.content.light}',
     borderRadius: '8px',

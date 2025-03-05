@@ -14,7 +14,7 @@ export const styles = {
     justifyContent: 'center',
   }),
   buttonText: css.raw({
-    textStyle: 'body.sm.med',
+    textStyle: 'body.sm.medium',
   }),
   select: css.raw({
     width: '100%',

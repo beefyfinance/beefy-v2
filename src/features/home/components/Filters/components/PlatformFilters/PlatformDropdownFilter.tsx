@@ -51,6 +51,7 @@ export const PlatformDropdownFilter = memo(function PlatformDropdownFilter({
       selected={platformsIds}
       options={options}
       layer={1}
+      variant="light"
     />
   );
 });

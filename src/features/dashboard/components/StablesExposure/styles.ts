@@ -16,7 +16,7 @@ export const styles = {
     },
   }),
   title: css.raw({
-    textStyle: 'body.med',
+    textStyle: 'body.medium',
     color: 'text.light',
   }),
   bar: css.raw({
@@ -50,7 +50,7 @@ export const styles = {
     borderRadius: '2px',
   }),
   label: css.raw({
-    textStyle: 'body.sm.med',
+    textStyle: 'body.sm.medium',
     color: 'text.middle',
     textTransform: 'capitalize',
     '& span': {

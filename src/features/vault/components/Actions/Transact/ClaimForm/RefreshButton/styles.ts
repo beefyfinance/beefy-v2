@@ -5,7 +5,7 @@ export const refreshRecipe = sva({
   base: {
     container: {},
     button: {
-      textStyle: 'body.med',
+      textStyle: 'body.medium',
       color: 'text.dark',
       backgroundColor: 'transparent',
       border: 'none',
