@@ -94,13 +94,21 @@
     "lightningcss-linux-x64-gnu": "1.25.1"
   },
   "overrides": {
-    "@coinbase/wallet-sdk": "^4.3.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
-    "viem": "^2.23.6",
-    "rollup": "^4.34.8"
+    "@coinbase/wallet-sdk": "$@coinbase/wallet-sdk",
+    "react": "$react",
+    "react-dom": "$react-dom",
+    "viem": "$viem",
+    "@types/react": "$@types/react",
+    "@types/react-dom": "$@types/react-dom",
+    "rollup": "^4.34.8",
+    "esbuild": "^0.25.0",
+    "bnc-sdk": {
+      "crypto-es": "^2.1.0"
+    },
+    "@web3-onboard/core": {
+      "nanoid@4.0.2": "^5.1.2",
+      "svelte": "^4.2.19"
+    }
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
