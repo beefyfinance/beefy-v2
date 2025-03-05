@@ -32,6 +32,7 @@ import { transactActions } from '../../../../../data/reducers/wallet/transact.ts
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
+import { Actions } from '../Actions/Actions.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -101,7 +102,9 @@ export const DepositForm = memo(function DepositForm() {
       </div>
       <DepositBuyLinks css={styles.links} />
       <TransactQuote title={t('Transact-YouDeposit')} css={styles.quote} />
-      <DepositActions css={styles.actions} />
+      <Actions>
+        <DepositActions />
+      </Actions>
     </>
   );
 });

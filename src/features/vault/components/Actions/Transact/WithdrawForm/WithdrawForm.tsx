@@ -24,6 +24,7 @@ import zapIcon from '../../../../../../images/icons/zap.svg';
 import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice/WithdrawnInWalletNotice.tsx';
 import { useDispatch } from 'react-redux';
 import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
+import { Actions } from '../Actions/Actions.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -114,9 +115,9 @@ export const WithdrawForm = memo(function WithdrawForm() {
         <WithdrawTokenAmountInput />
       </div>
       <TransactQuote title={t('Transact-YouWithdraw')} css={styles.quote} />
-      <div className={classes.actions}>
+      <Actions>
         <WithdrawActions />
-      </div>
+      </Actions>
     </>
   );
 });

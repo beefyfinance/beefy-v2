@@ -11,7 +11,7 @@ import { memo } from 'react';
 import type { PlatformEntity } from '../../../data/entities/platform.ts';
 import { selectPlatformById } from '../../../data/selectors/platforms.ts';
 import { TagTooltip, TagWithTooltip } from '../BridgeTag/BridgeTag.tsx';
-import { getPlatformSrc, platformAssetExists } from '../../../../helpers/platformsSrc.ts';
+import { getPlatformSrc } from '../../../../helpers/platformsSrc.ts';
 import { css } from '@repo/styles/css';
 
 const useStyles = legacyMakeStyles(styles);
@@ -89,18 +89,16 @@ export const PlatformCard = memo(PlatformCardComponent);
 
 const PlatformImage = memo(function PlatformImage({ platformId }: { platformId: string }) {
   const classes = useStyles();
+  const src = getPlatformSrc(platformId);
+
   return (
-    <>
-      {platformAssetExists(platformId) ? (
-        <img
-          src={getPlatformSrc(platformId)}
-          alt={platformId}
-          height={24}
-          className={classes.assetIcon}
-        />
-      ) : (
-        <></>
-      )}
-    </>
+    src && (
+      <img
+        src={getPlatformSrc(platformId)}
+        alt={platformId}
+        height={24}
+        className={classes.assetIcon}
+      />
+    )
   );
 });

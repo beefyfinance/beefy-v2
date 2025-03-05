@@ -44,7 +44,4 @@ export const styles = {
   quote: css.raw({
     marginTop: '24px',
   }),
-  actions: css.raw({
-    marginTop: '24px',
-  }),
 };

@@ -11,6 +11,7 @@ export const styles = {
     columnGap: '8px',
     rowGap: '16px',
     flexWrap: 'wrap',
+    alignItems: 'center',
   }),
   assetIconSymbol: css.raw({
     display: 'flex',
@@ -23,7 +24,9 @@ export const styles = {
       flexGrow: '0',
     },
   }),
-  assetIcon: css.raw({}),
+  assetIcon: css.raw({
+    height: '24px',
+  }),
   assetSymbol: css.raw({
     textStyle: 'body.medium',
     flexGrow: '1',

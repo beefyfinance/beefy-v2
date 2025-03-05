@@ -38,9 +38,9 @@ export const styles = {
   stepFrom: css.raw({}),
   stepBridge: css.raw({
     paddingTop: '32px',
-    backgroundColor: 'extracted198',
+    backgroundColor: 'loaderPurple',
     '&::after': {
-      borderColor: 'extracted198 transparent transparent transparent',
+      borderColor: 'loaderPurple transparent transparent transparent',
     },
   }),
   stepTo: css.raw({

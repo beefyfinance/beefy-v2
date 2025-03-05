@@ -157,7 +157,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
   }, [dispatch, quote, t]);
 
   return (
-    <div className={classes.actions}>
+    <>
       {option.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
       <ScreamAvailableLiquidityNotice
         vaultId={option.vaultId}
@@ -182,7 +182,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
         {import.meta.env.DEV ? <TenderlyTransactButton option={option} quote={quote} /> : null}
         <WithdrawFees />
       </div>
-    </div>
+    </>
   );
 });
 
@@ -216,7 +216,7 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
   }, [dispatch, quote, t]);
 
   return (
-    <div className={classes.actions}>
+    <>
       {option.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
       <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
@@ -249,7 +249,7 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
         </ActionConnectSwitch>
         {import.meta.env.DEV ? <TenderlyTransactButton option={option} quote={quote} /> : null}
       </div>
-    </div>
+    </>
   );
 });
 
