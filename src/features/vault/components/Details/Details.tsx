@@ -24,16 +24,11 @@ type TabType = keyof typeof detailsToComponent;
 
 const styles = {
   header: css.raw({
+    flexDirection: 'column',
+    alignItems: 'flex-start',
     sm: {
-      display: 'flex',
       justifyContent: 'space-between',
-      alignItems: 'center',
-    },
-    smDown: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '8px',
-      padding: '16px',
+      flexDirection: 'row',
     },
   }),
   content: css.raw({

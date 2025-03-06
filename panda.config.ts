@@ -805,6 +805,21 @@ const config = buildConfig(
           color: '{colors.text.light}',
         },
       },
+      middle: {
+        base: {
+          color: '{colors.text.middle}',
+          background: '{colors.blackMarket1}',
+          border: 'none',
+        },
+        hover: {
+          background: '{colors.blackMarket1}',
+          color: '{colors.text.middle}',
+        },
+        active: {
+          background: '{colors.blackMarket1}',
+          color: '{colors.text.light}',
+        },
+      },
     },
     zIndex: {
       highlight: 100,
