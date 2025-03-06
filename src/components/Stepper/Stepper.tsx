@@ -14,7 +14,7 @@ import {
   SuccessContent,
   WaitingContent,
 } from './components/Content/Content.tsx';
-import { ProgressBar } from './components/PogressBar/ProgressBar.tsx';
+import { ProgressBar } from './components/ProgressBar/ProgressBar.tsx';
 import { styled } from '@repo/styles/jsx';
 
 const stepToComponent: Record<StepContent, FC> = {
@@ -81,6 +81,7 @@ const Inner = styled('div', {
 
 const Content = styled('div', {
   base: {
+    color: 'blackMarket1',
     backgroundColor: 'white',
     borderRadius: '0 0 4px 4px',
     padding: '12px 16px',

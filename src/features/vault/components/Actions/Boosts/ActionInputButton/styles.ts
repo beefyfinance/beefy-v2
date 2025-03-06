@@ -51,9 +51,8 @@ export const styles = {
   maxButton: css.raw({
     textStyle: 'subline.sm',
     fontWeight: 'bold',
-    padding: '2px 6px',
+    padding: '4px 8px',
     borderRadius: '4px',
-    marginRight: '6px',
     backgroundColor: 'bayOfMany',
     borderColor: 'transparent',
     '&:disabled': {

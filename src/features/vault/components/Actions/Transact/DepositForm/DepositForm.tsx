@@ -180,7 +180,9 @@ const DepositFormInput = memo(function DepositFormInput({
     <div className={classes.input}>
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
-          {showZapIcon ? <img src={zapIcon} alt="Zap" height={12} /> : null}
+          {showZapIcon ? (
+            <img src={zapIcon} alt="Zap" height={12} className={classes.zapIcon} />
+          ) : null}
           {selectLabel}
         </div>
         {tokenAvailable ? (

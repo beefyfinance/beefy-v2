@@ -124,7 +124,7 @@ export const NetworkStatus = memo(function NetworkStatus({
         </div>
         {isWalletConnected && <ActiveChain chainId={currentChainId} />}
       </DropdownButton>
-      <DropdownContent css={styles.dropdown}>
+      <DropdownContent css={styles.dropdown} gap="none">
         <div className={classes.titleContainer}>
           <div className={classes.title}>
             {isWalletConnected ? (

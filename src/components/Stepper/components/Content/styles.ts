@@ -5,7 +5,7 @@ export const styles = {
     backgroundColor: 'extracted1431o14',
   }),
   errorContent: css.raw({
-    backgroundColor: 'extracted1401',
+    backgroundColor: 'stepperErrorBackground',
   }),
   content: css.raw({
     marginTop: '12px',
@@ -17,19 +17,29 @@ export const styles = {
     gap: '16px',
   }),
   message: css.raw({
-    color: 'blackMarket1',
     '& span': {
       fontWeight: 'medium',
     },
   }),
+  errorMessage: css.raw({
+    '--colors-scrollbar-thumb': 'colors.stepperErrorBackground',
+    width: '100%',
+    maxHeight: 'min(calc(80vw), 300px)',
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    whiteSpace: 'pre-wrap',
+    wordBreak: 'break-word',
+    fontFamily: 'monospace',
+    backgroundColor: 'stepperErrorBackground',
+    padding: '4px',
+    borderRadius: '4px',
+    lineHeight: '1.1',
+  }),
   messageHighlight: css.raw({
-    color: 'blackMarket1',
     fontWeight: 'medium',
   }),
   friendlyMessage: css.raw({
     textStyle: 'body.medium',
-    color: 'blackMarket1',
-    marginBottom: '16px',
   }),
   closeBtn: css.raw({}),
   rememberContainer: css.raw({

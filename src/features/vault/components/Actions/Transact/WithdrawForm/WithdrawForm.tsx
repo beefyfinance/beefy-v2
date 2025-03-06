@@ -101,7 +101,9 @@ export const WithdrawForm = memo(function WithdrawForm() {
       <WithdrawnInWalletNotice css={styles.notice} />
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
-          {hasOptions ? <img src={zapIcon} alt="Zap" height={12} /> : null}
+          {hasOptions ? (
+            <img src={zapIcon} alt="Zap" height={12} className={classes.zapIcon} />
+          ) : null}
           {t(i18key)}
         </div>
         <div className={classes.availableLabel}>

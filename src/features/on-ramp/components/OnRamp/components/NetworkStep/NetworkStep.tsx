@@ -40,6 +40,7 @@ export const NetworkStep = memo(function NetworkStep() {
       title={t('OnRamp-NetworkStep-Title')}
       onBack={handleBack}
       titleAdornment={supported ? <TokenIconAdornment token={token} /> : undefined}
+      noPadding={supported}
     >
       {supported ? (
         <NetworkSelector fiat={fiat} token={token} />
