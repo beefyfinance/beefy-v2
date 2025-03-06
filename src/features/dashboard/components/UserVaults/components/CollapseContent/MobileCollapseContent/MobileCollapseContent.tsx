@@ -10,6 +10,7 @@ import { useChartOptions } from '../useChartOptions.ts';
 import { useMediaQuery } from '../../../../../../../components/MediaQueries/useMediaQuery.ts';
 import { Select } from '../../../../../../../components/Form/Select/Single/Select.tsx';
 import type { SelectItem } from '../../../../../../../components/Form/Select/types.ts';
+import { css } from '@repo/styles/css';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -39,7 +40,7 @@ export const MobileCollapseContent = memo(function MobileCollapseContent({
       <div className={classes.toggleContainer}>
         {useDropdown ? (
           <Select
-            // selectCss={styles.select}
+            className={css(styles.select)}
             options={options}
             selected={toggleTab}
             onChange={setToggleTab}

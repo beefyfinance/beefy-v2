@@ -19,5 +19,11 @@ export const styles = {
   select: css.raw({
     width: '100%',
     backgroundColor: 'background.content',
+    _hover: {
+      backgroundColor: 'background.content',
+    },
+    _active: {
+      backgroundColor: 'background.content',
+    },
   }),
 };

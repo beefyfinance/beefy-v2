@@ -193,6 +193,7 @@ export const Select = memo(function Select<TItem extends SelectItem = SelectItem
         LabelPrefixComponent={SelectedLabelPrefixComponent}
         LabelComponent={SelectedLabelComponent}
         {...variantProps}
+        borderless={true}
       />
       {isOpen && (
         <FloatingPortal>
