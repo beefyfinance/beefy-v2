@@ -6,6 +6,7 @@ import { css } from '@repo/styles/css';
 import { DropdownProvider } from '../../../../../components/Dropdown/DropdownProvider.tsx';
 import { DropdownButtonTrigger } from '../../../../../components/Dropdown/DropdownTrigger.tsx';
 import { DropdownContent } from '../../../../../components/Dropdown/DropdownContent.tsx';
+import { styled } from '@repo/styles/jsx';
 
 interface ContractsDropdownProps {
   links: {
@@ -13,6 +14,13 @@ interface ContractsDropdownProps {
     link: string;
   }[];
 }
+const DropdownTrigger = styled(DropdownButtonTrigger, {
+  base: {
+    paddingInline: '8px',
+    paddingBlock: '2px',
+    borderRadius: '4px',
+  },
+});
 
 export const ContractsDropdown = memo(function ContractsDropdown({
   links,
@@ -22,10 +30,10 @@ export const ContractsDropdown = memo(function ContractsDropdown({
 
   return (
     <DropdownProvider variant="button" placement="bottom-end" open={open} onChange={setOpen}>
-      <DropdownButtonTrigger size="sm" borderless={true}>
+      <DropdownTrigger borderless={true}>
         {t('Contracts')}
         <ExpandMore />
-      </DropdownButtonTrigger>
+      </DropdownTrigger>
       <DropdownContent padding="small" gap="small">
         {links.map(({ label, link }) => (
           <DropdownLink key={label} label={label} link={link} />
