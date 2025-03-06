@@ -225,6 +225,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       connect: {
         showSidebar: true,
         removeWhereIsMyWalletWarning: true,
+        autoConnectAllPreviousWallet: false,
+        autoConnectLastWallet: false,
       },
       wallets: this.getOnboardWalletInitializers(),
       theme: {
@@ -260,6 +262,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         mobile: {
           enabled: false,
         },
+      },
+      notify: {
+        enabled: false,
       },
     });
 

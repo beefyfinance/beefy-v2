@@ -10,10 +10,7 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     textDecoration: 'none',
-    marginTop: '16px',
     justifyContent: 'flex-start',
-    '& .mui-svg': {
-      marginLeft: '4px',
-    },
+    gap: '4px',
   }),
 };

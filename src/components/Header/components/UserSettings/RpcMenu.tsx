@@ -36,7 +36,6 @@ export const RpcMenu = memo(function RpcMenu({ onSelect }: RpcMenuProps) {
 
 const RpcList = styled('div', {
   base: {
-    padding: `${12 - 2}px`,
     height: '100%',
     width: '100%',
     color: 'text.light',

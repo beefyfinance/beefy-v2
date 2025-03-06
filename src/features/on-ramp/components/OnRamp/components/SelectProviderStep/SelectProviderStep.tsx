@@ -11,10 +11,10 @@ import {
 } from '../../../../../data/selectors/on-ramp.ts';
 import { useDispatch } from 'react-redux';
 import { SearchableList } from '../../../../../../components/SearchableList/SearchableList.tsx';
-import type { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner.tsx';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
 import { ProviderIcon } from '../ProviderIcon/ProviderIcon.tsx';
 import { PROVIDERS } from '../../providers.tsx';
+import type { ItemInnerProps } from '../../../../../../components/SearchableList/Item.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -28,7 +28,12 @@ export const SelectProviderStep = memo(function SelectProviderStep() {
   }, [dispatch]);
 
   return (
-    <Step stepType="onRamp" title={t('OnRamp-SelectProviderStep-Title')} onBack={handleBack}>
+    <Step
+      stepType="onRamp"
+      title={t('OnRamp-SelectProviderStep-Title')}
+      onBack={handleBack}
+      noPadding={true}
+    >
       <ProviderSelector />
     </Step>
   );

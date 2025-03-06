@@ -16,6 +16,7 @@ export const ProgressBar = memo(function ProgressBar() {
   const classes = useStyles();
   const showErrorBar = useAppSelector(selectErrorBar);
   const showSuccessBar = useAppSelector(selectSuccessBar);
+  const percent = !showErrorBar && !showSuccessBar ? progress : 100;
 
   return (
     <div className={classes.topBar}>
@@ -26,7 +27,7 @@ export const ProgressBar = memo(function ProgressBar() {
           showSuccessBar && styles.successBar,
           !showErrorBar && !showSuccessBar && styles.progressBar
         )}
-        style={{ width: `${progress}%` }}
+        style={{ width: `${percent}%` }}
       />
     </div>
   );

@@ -6,11 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import { selectAllFiat, selectLastStep } from '../../../../../data/selectors/on-ramp.ts';
 import { SearchableList } from '../../../../../../components/SearchableList/SearchableList.tsx';
-import type { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner.tsx';
 import { CurrencyFlag } from '../CurrencyFlag/CurrencyFlag.tsx';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
 import { setOnRampFiat } from '../../../../../data/actions/on-ramp.ts';
 import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
+import type { ItemInnerProps } from '../../../../../../components/SearchableList/Item.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -26,7 +26,7 @@ export const FiatStep = memo(function FiatStep() {
   }, [dispatch, lastStep]);
 
   return (
-    <Step stepType="onRamp" title={t('OnRamp-FiatStep-Title')} onBack={handleBack}>
+    <Step stepType="onRamp" title={t('OnRamp-FiatStep-Title')} onBack={handleBack} noPadding={true}>
       <FiatSelector />
     </Step>
   );

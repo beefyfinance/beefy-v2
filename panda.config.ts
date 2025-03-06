@@ -215,6 +215,7 @@ const config = buildConfig(
       '.scrollbar': {
         '&::-webkit-scrollbar': {
           width: '0.5rem',
+          height: '0.5rem',
         },
         '&::-webkit-scrollbar-thumb': {
           backgroundColor: '{colors.scrollbar.thumb}',
@@ -321,7 +322,7 @@ const config = buildConfig(
           extracted3636: { value: '#111111' },
           extracted1308: { value: '#e84525' },
           extracted1355: { value: '#edc389' },
-          extracted1401: { value: '#db323219' },
+          stepperErrorBackground: { value: '#db323219' },
           extracted1758: { value: '#d153470c' },
           extracted2298: { value: '#d9d9d9' },
           extracted2530: { value: '#c9cbce' },

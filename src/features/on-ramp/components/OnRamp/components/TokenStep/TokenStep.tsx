@@ -9,10 +9,10 @@ import {
   selectSupportedTokensForFiat,
 } from '../../../../../data/selectors/on-ramp.ts';
 import { SearchableList } from '../../../../../../components/SearchableList/SearchableList.tsx';
-import type { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner.tsx';
 import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
 import { FiatTitleAdornment } from '../FiatTitleAdornment/FiatTitleAdornment.tsx';
 import { setOnRampToken } from '../../../../../data/actions/on-ramp.ts';
+import type { ItemInnerProps } from '../../../../../../components/SearchableList/Item.tsx';
 
 export const TokenStep = memo(function TokenStep() {
   const { t } = useTranslation();
@@ -24,6 +24,7 @@ export const TokenStep = memo(function TokenStep() {
       stepType="onRamp"
       title={t('OnRamp-TokenStep-Title')}
       titleAdornment={supported ? <FiatTitleAdornment currencyCode={fiat} /> : undefined}
+      noPadding={supported}
     >
       {supported ? <TokenSelector fiat={fiat} /> : <FiatNotSupported fiat={fiat} />}
     </Step>

@@ -37,7 +37,12 @@ export const SelectToChainStep = memo(function SelectToChainStep() {
   }, [dispatch]);
 
   return (
-    <Step stepType="bridge" onBack={handleBack} title={t('Bridge-ToChainStep-Title')}>
+    <Step
+      stepType="bridge"
+      onBack={handleBack}
+      title={t('Bridge-ToChainStep-Title')}
+      noPadding={true}
+    >
       <ChainSelector />
     </Step>
   );
