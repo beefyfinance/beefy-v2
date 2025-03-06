@@ -1,7 +1,4 @@
-import {
-  NavLink as RouterNavLink,
-  type NavLinkProps as RouterNavLinkProps,
-} from 'react-router-dom';
+import { NavLink as RouterNavLink, type NavLinkProps as RouterNavLinkProps } from 'react-router';
 import { memo } from 'react';
 import { styled } from '@repo/styles/jsx';
 import { DropdownTrigger } from '../../../Dropdown/DropdownTrigger.tsx';

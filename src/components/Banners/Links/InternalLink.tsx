@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import type { InternalLinkProps } from './types.ts';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { baseClass } from './styles.ts';
 import { cx } from '@repo/styles/css';
 

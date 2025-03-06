@@ -9,7 +9,7 @@ import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { styles } from './styles.ts';
 import { VaultIcon } from './components/VaultIcon/VaultIcon.tsx';
 import { VaultTags } from './components/VaultTags/VaultTags.tsx';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { punctuationWrap } from '../../helpers/string.ts';
 import { getNetworkSrc } from '../../helpers/networkSrc.ts';
 import { selectVaultIsBoostedForFilter } from '../../features/data/selectors/filtered-vaults.ts';

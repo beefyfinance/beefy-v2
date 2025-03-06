@@ -1,7 +1,7 @@
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles.ts';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import image from '../../images/404image.svg';
 import { Button } from '../../components/Button/Button.tsx';
@@ -12,10 +12,10 @@ const useStyles = legacyMakeStyles(styles);
 const NotFoundPage = memo(() => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleOpen = useCallback(() => {
-    history.push(`/`);
+    navigate(`/`, { replace: true });
   }, [history]);
 
   return (

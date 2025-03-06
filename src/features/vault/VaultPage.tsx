@@ -1,7 +1,7 @@
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import type { PropsWithChildren } from 'react';
 import { lazy, memo } from 'react';
-import { Redirect, useParams } from 'react-router';
+import { Navigate, useParams } from 'react-router';
 import { styles } from './styles.ts';
 import { SafetyCard } from './components/SafetyCard/SafetyCard.tsx';
 import { PromoCardLoader } from './components/BoostCard/PromoCardLoader.tsx';
@@ -54,18 +54,18 @@ const VaultPage = memo(function VaultPage() {
     const poolId = getCowcentratedPool(vault);
     if (poolId) {
       return featureFlag_disableRedirect() ? (
-        <VaultContent vaultId={id} />
+        <VaultContent vaultId={vault.id} />
       ) : (
-        <Redirect to={`/vault/${poolId}`} />
+        <Navigate to={`/vault/${poolId}`} />
       );
     }
   }
 
   if (!vault || vault.hidden) {
-    return <VaultNotFound id={id} />;
+    return id ? <VaultNotFound id={id} /> : <NotFoundPage />;
   }
 
-  return <VaultContent vaultId={id} />;
+  return <VaultContent vaultId={vault.id} />;
 });
 
 type VaultNotFoundProps = PropsWithChildren<VaultUrlParams>;
@@ -73,7 +73,7 @@ const VaultNotFound = memo(function VaultNotFound({ id }: VaultNotFoundProps) {
   const maybeVaultId = useAppSelector(state => selectVaultIdIgnoreCase(state, id));
 
   if (maybeVaultId !== undefined) {
-    return <Redirect to={`/vault/${maybeVaultId}`} />;
+    return <Navigate to={`/vault/${maybeVaultId}`} />;
   }
 
   return <NotFoundPage />;

@@ -12,7 +12,7 @@ import {
   useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import { styles } from './styles.ts';
 import { css, type CssStyles } from '@repo/styles/css';
 import { isMaybeDomain, isValidAddress } from '../../../../helpers/addresses.ts';
@@ -38,7 +38,7 @@ export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?:
   const [hasFocus, setHasFocus] = useState<boolean>(false);
   const { t } = useTranslation();
   const anchorEl = useRef<HTMLInputElement | null>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +67,7 @@ export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?:
   const handleGoToDashboardOnEnterKey = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter' && isValid) {
-        history.push(`/dashboard/${userInput}`);
+        navigate(`/dashboard/${userInput}`);
         handleClear();
       }
     },
@@ -208,10 +208,10 @@ const ClearEnterButton = memo(function ClearButton({
   handleClear: () => void;
   isValid: boolean;
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleGoToDashboard = useCallback(() => {
-    history.push(`/dashboard/${userInput}`);
+    navigate(`/dashboard/${userInput}`);
     handleClear();
   }, [userInput, handleClear, history]);
 

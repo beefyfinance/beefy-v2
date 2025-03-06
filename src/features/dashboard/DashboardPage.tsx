@@ -13,7 +13,7 @@ import { UserExposure } from './components/UserExposure/UserExposure.tsx';
 import { UserVaults } from './components/UserVaults/UserVaults.tsx';
 import { styles } from './styles.ts';
 import { useInitDashboard } from './hooks.tsx';
-import { Redirect, useParams } from 'react-router';
+import { Navigate, useParams } from 'react-router';
 import { selectWalletAddressIfKnown } from '../data/selectors/wallet.ts';
 import { TechLoader } from '../../components/TechLoader/TechLoader.tsx';
 import { isMaybeDomain, isValidAddress } from '../../helpers/addresses.ts';
@@ -43,17 +43,17 @@ const DashboardFromUrl = memo(function DashboardFromWallet() {
     address: string;
   }>();
 
-  if (isValidAddress(addressOrDomain)) {
+  if (addressOrDomain && isValidAddress(addressOrDomain)) {
     return <DashboardForAddress address={addressOrDomain.toLocaleLowerCase()} />;
   }
 
-  if (isMaybeDomain(addressOrDomain)) {
+  if (addressOrDomain && isMaybeDomain(addressOrDomain)) {
     return <DashboardFromDomain domain={addressOrDomain} />;
   }
 
   return (
     <DashboardContainer>
-      {addressOrDomain.toLowerCase().startsWith('0x') ? <InvalidAddress /> : <InvalidDomain />}
+      {addressOrDomain?.toLowerCase().startsWith('0x') ? <InvalidAddress /> : <InvalidDomain />}
     </DashboardContainer>
   );
 });
@@ -62,7 +62,7 @@ const DashboardFromWallet = memo(function DashboardFromWallet() {
   const address = useAppSelector(state => selectWalletAddressIfKnown(state));
 
   if (address) {
-    return <Redirect to={`/dashboard/${address}`} />;
+    return <Navigate to={`/dashboard/${address}`} replace={true} />;
   }
 
   return (

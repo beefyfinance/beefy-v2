@@ -13,7 +13,7 @@ import { styles } from './styles.ts';
 import { selectVaultById } from '../../../data/selectors/vaults.ts';
 import { css } from '@repo/styles/css';
 import { useAppSelector } from '../../../../store.ts';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { VaultIdentity } from '../../../../components/VaultIdentity/VaultIdentity.tsx';
 import { VaultStats } from '../../../../components/VaultStats/VaultStats.tsx';
 

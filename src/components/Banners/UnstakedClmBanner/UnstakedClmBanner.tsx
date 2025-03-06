@@ -3,7 +3,7 @@ import { selectUserUnstakedClms } from '../../../features/data/selectors/balance
 import { useAppDispatch, useAppSelector } from '../../../store.ts';
 import { Trans, useTranslation } from 'react-i18next';
 import { filteredVaultsActions } from '../../../features/data/reducers/filtered-vaults.ts';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { ButtonLink } from '../Links/ButtonLink.tsx';
 import { UnstakedClmBannerVault } from './UnstakedClmBannerVault.tsx';
 import { ClmBanner } from './ClmBanner.tsx';
@@ -11,7 +11,7 @@ import { ClmBanner } from './ClmBanner.tsx';
 export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const unstakedIds = useAppSelector(selectUserUnstakedClms);
   const handleFilter = useCallback(() => {
     dispatch(filteredVaultsActions.reset());
@@ -22,8 +22,8 @@ export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
         value: true,
       })
     );
-    push('/');
-  }, [dispatch, push]);
+    navigate('/', { replace: true });
+  }, [dispatch, navigate]);
 
   if (!unstakedIds.length) {
     return null;

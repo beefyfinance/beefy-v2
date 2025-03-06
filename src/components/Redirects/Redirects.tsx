@@ -1,10 +1,10 @@
 import { memo, useEffect } from 'react';
 import { REDIRECTS } from '../../config/redirects.ts';
-import { matchPath, useHistory, useLocation } from 'react-router-dom';
+import { matchPath, useLocation, useNavigate } from 'react-router';
 import { routerMode } from '../Router/Router.tsx';
 
 export const Redirects = memo(function Redirects() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -13,31 +13,32 @@ export const Redirects = memo(function Redirects() {
       routerMode === 'browser' &&
       window.location.pathname === '/' &&
       window.location.hash &&
-      window.location.hash.substring(0, 2) === '#/'
+      window.location.hash.startsWith('#/')
     ) {
       const pathname = window.location.hash.substring(1);
       window.location.hash = '';
-      history.push(pathname);
+      navigate(pathname, { replace: true });
       return;
     }
 
     // Standard redirects
     for (const { to, from } of REDIRECTS) {
-      const match = matchPath(location.pathname, from);
-      if (match) {
-        const replacements: [string, string][] = Object.entries(match.params);
-        const redirectTo =
-          replacements.length === 0
-            ? to
-            : replacements.reduce(
-                (url, replacement) => url.replace(`:${replacement[0]}`, replacement[1]),
-                to
-              );
-        history.push(redirectTo);
-        return;
+      const patterns = Array.isArray(from) ? from : [from];
+
+      for (const pattern of patterns) {
+        const match = matchPath(pattern, location.pathname);
+        if (match) {
+          const replacements = Object.entries(match.params);
+          const redirectTo = replacements.reduce(
+            (url, [key, value]) => url.replace(`:${key}`, value || ''),
+            to
+          );
+          navigate(redirectTo, { replace: true });
+          return;
+        }
       }
     }
-  }, [location, history]);
+  }, [location, navigate]);
 
   return null;
 });

@@ -1,5 +1,5 @@
 import { lazy, memo, type ReactNode, Suspense, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router'; // Changed Switch to Routes
 import { Header } from './components/Header/Header.tsx';
 import { Footer } from './components/Footer/Footer.tsx';
 import { ScrollToTop } from './components/ScrollToTop/ScrollToTop.tsx';
@@ -50,48 +50,81 @@ export const App = memo(function App() {
           <DefaultMeta />
           <Redirects />
           <Layout header={<Header />} footer={<Footer />}>
-            <Switch>
-              <Route exact path="/">
-                <Boundaries>
-                  <HomePage />
-                </Boundaries>
-              </Route>
-              <Route strict sensitive exact path={['/:network/vault/:id', '/vault/:id']}>
-                <Boundaries>
-                  <VaultPage />
-                </Boundaries>
-              </Route>
-              <Route exact path="/onramp">
-                <Boundaries>
-                  <OnRampPage />
-                </Boundaries>
-              </Route>
-              <Route exact path="/bridge">
-                <Boundaries>
-                  <BridgePage />
-                </Boundaries>
-              </Route>
-              <Route strict exact path="/dashboard/:address">
-                <Boundaries>
-                  <DashboardPage mode={'url'} />
-                </Boundaries>
-              </Route>
-              <Route exact path="/dashboard">
-                <Boundaries>
-                  <DashboardPage mode={'wallet'} />
-                </Boundaries>
-              </Route>
-              <Route exact path="/treasury">
-                <Boundaries>
-                  <TreasuryPage />
-                </Boundaries>
-              </Route>
-              <Route>
-                <Boundaries>
-                  <NotFoundPage />
-                </Boundaries>
-              </Route>
-            </Switch>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Boundaries>
+                    <HomePage />
+                  </Boundaries>
+                }
+              />
+              <Route
+                path="/:network/vault/:id"
+                caseSensitive={true}
+                element={
+                  <Boundaries>
+                    <VaultPage />
+                  </Boundaries>
+                }
+              />
+              <Route
+                path="/vault/:id"
+                element={
+                  <Boundaries>
+                    <VaultPage />
+                  </Boundaries>
+                }
+              />
+              <Route
+                path="/onramp"
+                element={
+                  <Boundaries>
+                    <OnRampPage />
+                  </Boundaries>
+                }
+              />
+              <Route
+                path="/bridge"
+                element={
+                  <Boundaries>
+                    <BridgePage />
+                  </Boundaries>
+                }
+              />
+              <Route
+                path="/dashboard/:address"
+                element={
+                  <Boundaries>
+                    <DashboardPage mode={'url'} />
+                  </Boundaries>
+                }
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  <Boundaries>
+                    <DashboardPage mode={'wallet'} />
+                  </Boundaries>
+                }
+              />
+              <Route
+                path="/treasury"
+                element={
+                  <Boundaries>
+                    <TreasuryPage />
+                  </Boundaries>
+                }
+              />
+              <Route
+                path="*"
+                element={
+                  <Boundaries>
+                    <NotFoundPage />
+                  </Boundaries>
+                }
+              />
+            </Routes>
             <Stepper />
             <AddTokenToWallet />
           </Layout>
