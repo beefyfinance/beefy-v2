@@ -285,7 +285,7 @@
     "oracle": "tokens",
     "oracleId": "eUSD",
     "status": "active",
-    "createdAt": X1741185683,
+    "createdAt": 1741185683,
     "platformId": "morpho",
     "assets": ["eUSD"],
     "migrationIds": [],
