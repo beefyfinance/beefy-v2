@@ -40,10 +40,11 @@ export const MobileCollapseContent = memo(function MobileCollapseContent({
       <div className={classes.toggleContainer}>
         {useDropdown ? (
           <Select
-            className={css(styles.select)}
             options={options}
             selected={toggleTab}
             onChange={setToggleTab}
+            variant="light"
+            fullWidth={true}
           />
         ) : (
           <ToggleButtons<ToggleTabOptions>

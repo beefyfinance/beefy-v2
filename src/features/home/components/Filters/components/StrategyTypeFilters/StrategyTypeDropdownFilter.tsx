@@ -37,6 +37,7 @@ export const StrategyTypeDropdownFilter = memo(function StrategyTypeDropdownFilt
       onChange={handleChange}
       fullWidth={true}
       layer={layer}
+      variant="light"
     />
   );
 });

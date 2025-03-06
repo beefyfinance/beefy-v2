@@ -69,6 +69,9 @@ export const buttonRecipe = cva({
       boost: {
         colorPalette: 'buttons.boost',
       },
+      dark: {
+        colorPalette: 'buttons.dark',
+      },
     },
   },
   compoundVariants: [

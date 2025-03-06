@@ -790,6 +790,21 @@ const config = buildConfig(
           color: '{colors.text.light}',
         },
       },
+      dark: {
+        base: {
+          color: '{colors.text.middle}',
+          background: '{colors.purpleDarkest}',
+          border: 'none',
+        },
+        hover: {
+          background: '{colors.purpleDarkest}',
+          color: '{colors.text.middle}',
+        },
+        active: {
+          background: '{colors.purpleDarkest}',
+          color: '{colors.text.light}',
+        },
+      },
     },
     zIndex: {
       highlight: 100,
