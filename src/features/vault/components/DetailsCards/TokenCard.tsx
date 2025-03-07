@@ -1,4 +1,3 @@
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { useTranslation } from 'react-i18next';
 import { fetchAddressBookAction } from '../../../data/actions/tokens.ts';
 import type { ChainEntity } from '../../../data/entities/chain.ts';
@@ -10,7 +9,16 @@ import {
   selectShouldInitAddressBook,
 } from '../../../data/selectors/data-loader.ts';
 import { selectIsTokenLoaded, selectTokenById } from '../../../data/selectors/tokens.ts';
-import { styles } from './styles.ts';
+import {
+  AssetIconSymbol,
+  AssetsBridgePrice,
+  AssetSymbol,
+  Container,
+  Description,
+  Links,
+  styles,
+  TitleContainer,
+} from './styles.ts';
 import { useAppDispatch, useAppSelector } from '../../../../store.ts';
 import { AssetsImage } from '../../../../components/AssetsImage/AssetsImage.tsx';
 import { selectBridgeByIdIfKnown } from '../../../data/selectors/bridges.ts';
@@ -22,11 +30,9 @@ import Code from '../../../../images/icons/mui/Code.svg?react';
 import Link from '../../../../images/icons/mui/Link.svg?react';
 import DocsIcon from '../../../../images/icons/navigation/docs.svg?react';
 import { memo, useEffect } from 'react';
-
-const useStyles = legacyMakeStyles(styles);
+import { css } from '@repo/styles/css';
 
 function TokenCardDisplay({ token }: { token: TokenEntity }) {
-  const classes = useStyles();
   const { t } = useTranslation();
   const chain = useAppSelector(state => selectChainById(state, token.chainId));
   const isErc20 = isTokenErc20(token);
@@ -36,24 +42,18 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
   );
 
   return (
-    <div className={classes.container}>
-      <div className={classes.titleContainer}>
-        <div className={classes.assetIconSymbol}>
-          <AssetsImage
-            assetSymbols={[token.symbol]}
-            chainId={chain.id}
-            size={24}
-            css={styles.assetIcon}
-          />
-          <div className={classes.assetSymbol}>{token.symbol}</div>
-        </div>
-        <div className={classes.assetLinks}>
+    <Container>
+      <TitleContainer>
+        <AssetIconSymbol>
+          <AssetsImage assetSymbols={[token.symbol]} chainId={chain.id} size={24} />
+          <AssetSymbol>{token.symbol}</AssetSymbol>
+        </AssetIconSymbol>
+        <Links>
           {token.website && (
             <IconButtonLink
               Icon={Link}
               text={t('Token-Site')}
               href={token.website}
-              css={styles.assetWebsite}
               textCss={styles.assetLinkText}
             />
           )}
@@ -62,7 +62,6 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
               Icon={Code}
               href={explorerTokenUrl(chain, token.address)}
               text={t('Token-Contract')}
-              css={styles.assetContract}
               textCss={styles.assetLinkText}
             />
           )}
@@ -71,24 +70,23 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
               Icon={DocsIcon}
               href={token.documentation}
               text={t('Token-Docs')}
-              css={styles.assetDocumentation}
               textCss={styles.assetLinkText}
             />
           )}
-        </div>
-        <div className={classes.assetBridgePrice}>
+        </Links>
+        <AssetsBridgePrice>
           {isNative ? (
-            <NativeTag chain={chain} css={styles.assetBridge} />
+            <NativeTag chain={chain} />
           ) : bridge ? (
-            <BridgeTag bridge={bridge} chain={chain} css={styles.assetBridge} />
+            <BridgeTag bridge={bridge} chain={chain} />
           ) : null}
-          <PriceWithChange oracleId={token.oracleId} css={styles.assetPrice} />
-        </div>
-      </div>
-      <div className={classes.description}>
+          <PriceWithChange oracleId={token.oracleId} />
+        </AssetsBridgePrice>
+      </TitleContainer>
+      <Description className={css(!token.description && styles.descriptionPending)}>
         {token.description ? token.description : t('Token-NoDescrip')}
-      </div>
-    </div>
+      </Description>
+    </Container>
   );
 }
 

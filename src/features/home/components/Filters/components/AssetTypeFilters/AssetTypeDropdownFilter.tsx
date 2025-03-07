@@ -45,6 +45,7 @@ export const AssetTypeDropdownFilter = memo(function AssetTypeDropdownFilter({
       onChange={handleChange}
       fullWidth={true}
       layer={layer}
+      variant="light"
     />
   );
 });

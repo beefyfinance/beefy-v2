@@ -1,19 +1,25 @@
 import { css } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
 
-export const styles = {
-  container: css.raw({
-    backgroundColor: 'background.content.light',
+export const Container = styled('div', {
+  base: {
+    background: 'background.content.light',
     padding: '16px',
     borderRadius: '12px',
-  }),
-  titleContainer: css.raw({
+  },
+});
+
+export const TitleContainer = styled('div', {
+  base: {
     display: 'flex',
     columnGap: '8px',
     rowGap: '16px',
     flexWrap: 'wrap',
-    alignItems: 'center',
-  }),
-  assetIconSymbol: css.raw({
+  },
+});
+
+export const AssetIconSymbol = styled('div', {
+  base: {
     display: 'flex',
     flexWrap: 'nowrap',
     alignItems: 'center',
@@ -23,15 +29,30 @@ export const styles = {
       order: '1',
       flexGrow: '0',
     },
-  }),
-  assetIcon: css.raw({
-    height: '24px',
-  }),
-  assetSymbol: css.raw({
-    textStyle: 'body.medium',
+  },
+});
+
+export const AssetSymbol = styled('div', {
+  base: {
+    textStyle: 'body.med',
     flexGrow: '1',
-  }),
-  assetBridgePrice: css.raw({
+  },
+});
+
+export const Links = styled('div', {
+  base: {
+    display: 'flex',
+    flexWrap: 'nowrap',
+    alignItems: 'center',
+    gap: '8px',
+    sm: {
+      order: '3',
+    },
+  },
+});
+
+export const AssetsBridgePrice = styled('div', {
+  base: {
     display: 'flex',
     flexWrap: 'nowrap',
     alignItems: 'center',
@@ -40,32 +61,31 @@ export const styles = {
       flexGrow: '1',
       order: '2',
     },
-  }),
-  assetBridge: css.raw({}),
-  assetPrice: css.raw({}),
-  assetLinks: css.raw({
-    display: 'flex',
-    flexWrap: 'nowrap',
-    alignItems: 'center',
-    gap: '8px',
-    sm: {
-      order: '3',
-    },
-  }),
+  },
+});
+
+export const Description = styled('div', {
+  base: {
+    textStyle: 'body',
+    color: 'text.middle',
+    marginTop: '16px',
+    whiteSpace: 'pre-line',
+  },
+});
+
+export const Image = styled('img', {
+  base: {
+    width: '24px',
+    height: '24px',
+  },
+});
+
+export const styles = {
   assetLinkText: css.raw({
     display: 'none',
     lg: {
       display: 'inline',
     },
-  }),
-  assetWebsite: css.raw({}),
-  assetContract: css.raw({}),
-  assetDocumentation: css.raw({}),
-  description: css.raw({
-    textStyle: 'body',
-    color: 'text.middle',
-    marginTop: '16px',
-    whiteSpace: 'pre-line',
   }),
   descriptionPending: css.raw({
     fontStyle: 'italic',

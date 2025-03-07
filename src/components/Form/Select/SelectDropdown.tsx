@@ -41,6 +41,7 @@ const Layout = styled('div', {
     maxWidth: '100%',
     maxHeight: '100%',
     outline: 'none',
+    marginY: '4px',
   },
   variants: {
     layer: {

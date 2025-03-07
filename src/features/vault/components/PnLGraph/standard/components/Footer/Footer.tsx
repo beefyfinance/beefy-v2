@@ -40,6 +40,7 @@ export const Footer = memo(function Footer({
           onChange={handleChange}
           noBackground={true}
           noPadding={true}
+          noBorder={true}
           variant="range"
         />
       </div>

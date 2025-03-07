@@ -18,6 +18,7 @@ export type ToggleButtonsProps<
   /** set this to 'all' key */
   untoggleValue?: TValue | TUntoggle;
   noPadding?: boolean;
+  noBorder?: boolean;
 } & ButtonsVariantProps;
 
 export const ToggleButtons = memo(function ToggleButtons<
@@ -32,6 +33,7 @@ export const ToggleButtons = memo(function ToggleButtons<
   variant,
   noBackground,
   noPadding = false,
+  noBorder = false,
 }: ToggleButtonsProps<TValue, TUntoggle>) {
   const canUntoggle = untoggleValue !== undefined;
   const handleClick = useCallback(
@@ -46,7 +48,12 @@ export const ToggleButtons = memo(function ToggleButtons<
   );
 
   return (
-    <Buttons fullWidth={fullWidth} variant={variant} noBackground={noBackground ?? canUntoggle}>
+    <Buttons
+      fullWidth={fullWidth}
+      variant={variant}
+      noBackground={noBackground ?? canUntoggle}
+      noBorder={noBorder ?? canUntoggle}
+    >
       {options.map(({ value: optionValue, label }) => (
         <ToggleButton
           key={optionValue}

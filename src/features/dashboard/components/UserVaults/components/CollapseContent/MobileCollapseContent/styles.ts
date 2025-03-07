@@ -16,8 +16,4 @@ export const styles = {
   buttonText: css.raw({
     textStyle: 'body.sm.medium',
   }),
-  select: css.raw({
-    width: '100%',
-    backgroundColor: 'background.content',
-  }),
 };

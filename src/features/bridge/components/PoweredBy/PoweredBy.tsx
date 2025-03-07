@@ -23,11 +23,11 @@ export const PoweredBy = memo(function PoweredBy({ css: cssProp }: PoweredByProp
     <div className={css(styles.poweredBy, cssProp)}>
       <div className={classes.poweredByLabel}>{t('Bridge-Intro-PoweredBy')}</div>
       <div className={classes.poweredByLogos}>
-        <img src={logoLayerZero} alt={'LayerZero'} height="32" />
-        <img src={logoAxelar} alt={'Axelar'} height="24" />
-        <img src={logoChainlink} alt={'Chainlink'} height="32" />
-        <img src={logoOptimism} alt={'Optimism'} height="24" />
-        <img src={logoConnext} alt={'Connext'} height="24" />
+        <img src={logoLayerZero} alt={'LayerZero'} style={{ height: '32px' }} />
+        <img src={logoAxelar} alt={'Axelar'} style={{ height: '24px' }} />
+        <img src={logoChainlink} alt={'Chainlink'} style={{ height: '32px' }} />
+        <img src={logoOptimism} alt={'Optimism'} style={{ height: '24px' }} />
+        <img src={logoConnext} alt={'Connext'} style={{ height: '24px' }} />
       </div>
     </div>
   );

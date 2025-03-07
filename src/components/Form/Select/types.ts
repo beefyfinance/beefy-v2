@@ -12,6 +12,7 @@ export type SelectItem<TValue extends string = string> = {
 type CommonProps<TItem extends SelectItem = SelectItem> = Override<
   ButtonVariantProps,
   {
+    className?: string;
     labelPrefix?: string;
     unselectedLabel?: string;
     options: TItem[];
