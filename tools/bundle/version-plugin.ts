@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
+// eslint-disable-next-line no-restricted-syntax -- required for Vite plugin
 export default function (): Plugin {
   type BuildVersion = {
     content: string;

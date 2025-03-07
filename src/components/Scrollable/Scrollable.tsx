@@ -17,30 +17,6 @@ type DivProps = HtmlProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
 export type ScrollDirection = 'horizontal' | 'vertical';
 
-type ThumbProps = Override<
-  DivProps,
-  {
-    mode: ScrollDirection;
-    css?: CssStyles;
-  }
->;
-
-const Thumb = memo(
-  forwardRef<HTMLDivElement, ThumbProps>(function ({ mode, css: cssProp, ...props }, ref) {
-    return (
-      <div {...props} ref={ref} className={css(styles.thumb, styles[`${mode}Thumb`], cssProp)} />
-    );
-  })
-);
-
-function renderThumbHorizontal(props: DivProps) {
-  return <Thumb {...props} mode="horizontal" />;
-}
-
-function renderThumbVertical(props: DivProps) {
-  return <Thumb {...props} mode="vertical" />;
-}
-
 type TrackProps = Override<
   DivProps,
   {
@@ -107,25 +83,17 @@ export const Scrollable = memo(function Scrollable({
     },
     [setShadows]
   );
-  const thumbClassName = useMemo(() => css(thumbCss), [thumbCss]);
-  const handleRenderThumbHorizontal = useCallback(
-    (props: DivProps) => {
-      return renderThumbHorizontal({ ...props, className: cx(props.className, thumbClassName) });
-    },
-    [thumbClassName]
-  );
-  const handleRenderThumbVertical = useCallback(
-    (props: DivProps) => {
-      return renderThumbVertical({ ...props, className: cx(props.className, thumbClassName) });
-    },
+  const thumbClassName = useMemo(() => css(styles.thumb, thumbCss), [thumbCss]);
+  const handleRenderThumb = useCallback(
+    (props: DivProps) => <div {...props} className={cx(props.className, thumbClassName)} />,
     [thumbClassName]
   );
 
   return (
     <div className={css(styles.shadowContainer, cssProp)}>
       <ScrollContainer
-        renderThumbVertical={handleRenderThumbVertical}
-        renderThumbHorizontal={handleRenderThumbHorizontal}
+        renderThumbVertical={handleRenderThumb}
+        renderThumbHorizontal={handleRenderThumb}
         renderTrackVertical={renderTrackVertical}
         renderTrackHorizontal={renderTrackHorizontal}
         onUpdate={handleUpdate}

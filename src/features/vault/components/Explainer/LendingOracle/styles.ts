@@ -11,7 +11,6 @@ export const styles = {
     flexWrap: 'wrap',
     gap: '12px 32px',
   }),
-  apy: css.raw({}),
   apyLabel: css.raw({
     textStyle: 'subline.sm',
     color: 'text.dark',

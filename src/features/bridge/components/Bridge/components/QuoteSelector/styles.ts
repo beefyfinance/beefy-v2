@@ -20,7 +20,6 @@ export const styles = {
     fontWeight: 'bold',
     color: 'text.dark',
   }),
-
   scrollableThumb: css.raw({
     background: 'extracted2916',
   }),

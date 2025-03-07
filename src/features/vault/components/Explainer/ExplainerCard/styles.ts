@@ -7,7 +7,6 @@ export const styles = {
     alignItems: 'center',
     gap: '8px',
   }),
-  title: css.raw({}),
   actions: css.raw({
     display: 'flex',
     alignItems: 'center',

@@ -1,7 +1,6 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  holder: css.raw({}),
   title: css.raw({
     textStyle: 'body',
     color: 'text.dark',
@@ -21,7 +20,6 @@ export const styles = {
   routerHeaderClickable: css.raw({
     cursor: 'pointer',
   }),
-  routeHeaderProvider: css.raw({}),
   routeContent: css.raw({
     borderRadius: '0px 0px 8px 8px',
     padding: '16px',

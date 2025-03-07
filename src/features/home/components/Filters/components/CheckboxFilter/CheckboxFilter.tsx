@@ -7,7 +7,6 @@ import { selectFilterBoolean } from '../../../../../data/selectors/filtered-vaul
 import type { LabelledCheckboxProps } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
 import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
-import { css, type CssStyles } from '@repo/styles/css';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -16,13 +15,12 @@ export type CheckboxFilterProps = {
   filter: FilteredVaultBooleanKeys;
   label: string;
   icon?: ReactNode;
-  css?: CssStyles;
 };
+
 export const CheckboxFilter = memo(function CheckboxFilter({
   filter,
   label,
   icon,
-  css: cssProp,
 }: CheckboxFilterProps) {
   const dispatch = useAppDispatch();
   const classes = useStyles();
@@ -44,7 +42,6 @@ export const CheckboxFilter = memo(function CheckboxFilter({
       }
       onChange={handleChange}
       checked={value}
-      checkboxCss={css.raw(cssProp, styles.checkbox)}
     />
   );
 });

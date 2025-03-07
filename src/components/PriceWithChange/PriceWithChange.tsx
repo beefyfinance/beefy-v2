@@ -5,14 +5,11 @@ import { formatLargePercent, formatLargeUsd, formatUsd } from '../../helpers/for
 import { type BigNumber } from 'bignumber.js';
 import { fetchHistoricalPrices } from '../../features/data/actions/historical.ts';
 import { BIG_ZERO } from '../../helpers/big-number.ts';
-import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { css, type CssStyles } from '@repo/styles/css';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles.ts';
 import { DivWithTooltip } from '../Tooltip/DivWithTooltip.tsx';
-
-const useStyles = legacyMakeStyles(styles);
 
 export type PriceWithChangeProps = {
   oracleId: string;
@@ -58,11 +55,9 @@ type WithoutChangeProps = {
 };
 
 const WithoutChange = memo(function WithoutChange({ price, css: cssProp }: WithoutChangeProps) {
-  const classes = useStyles();
-
   return (
     <div className={css(styles.priceWithChange, cssProp)}>
-      <div className={classes.price}>{formatLargeUsd(price)}</div>
+      <div>{formatLargeUsd(price)}</div>
     </div>
   );
 });
@@ -80,7 +75,6 @@ const WithChange = memo(function WithChange({
   previousDate,
   css: cssProp,
 }: WithChangeProps) {
-  const classes = useStyles();
   const { t } = useTranslation();
   const diff = price.minus(previousPrice);
   const diffAbs = diff.abs();
@@ -97,11 +91,11 @@ const WithChange = memo(function WithChange({
       tooltip={tooltipContent}
       className={css(styles.priceWithChange, styles.tooltipTrigger, cssProp)}
     >
-      <div className={classes.price}>{formatUsd(price, price.gte(0.01) ? 2 : 4)}</div>
+      <div>{formatUsd(price, price.gte(0.01) ? 2 : 4)}</div>
       <div
         className={css(styles.change, isPositive && styles.positive, isNegative && styles.negative)}
       >
-        <div className={classes.changeValue}>
+        <div>
           {isPositive ? '+' : isNegative ? '-' : ''}
           {formatLargePercent(percentChange, 2)}
         </div>

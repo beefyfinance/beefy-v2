@@ -201,7 +201,6 @@ export const styles = {
     gap: '8px',
     flexDirection: 'column',
   }),
-  revertReason: css.raw({}),
   revertStack: css.raw({
     display: 'flex',
     gap: '4px',
@@ -248,7 +247,6 @@ export const styles = {
   pairDisplayKey: css.raw({
     color: 'extracted1355',
   }),
-  pairDisplayValue: css.raw({}),
   pairDisplayOdd: css.raw({
     background: 'background.content.dark',
     '& > .pairDisplayKey': {

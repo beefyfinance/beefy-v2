@@ -29,7 +29,7 @@ export const QuoteSelectStep = memo(function QuoteSelectStep() {
   );
 
   return (
-    <div className={classes.container}>
+    <div>
       <StepHeader onBack={handleBack}>{t('Transact-SelectProvider')}</StepHeader>
       <div className={classes.select}>
         <Scrollable css={styles.listContainer}>

@@ -1,7 +1,6 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  apysContainer: css.raw({}),
   apyTitle: css.raw({
     textStyle: 'h3',
     color: 'text.middle',
@@ -12,7 +11,6 @@ export const styles = {
     flexWrap: 'wrap',
     gap: '12px 32px',
   }),
-  apy: css.raw({}),
   apyLabel: css.raw({
     textStyle: 'subline.sm',
     color: 'text.dark',

@@ -19,7 +19,6 @@ export const styles = {
   textFlexStart: css.raw({
     textAlign: 'left',
   }),
-  txCurrent: css.raw({}),
   txPast: css.raw({
     opacity: '0.7',
   }),

@@ -10,8 +10,6 @@ export const styles = {
     borderRadius: '0 0 12px 12px',
     overflow: 'hidden',
   }),
-  withdraw: css.raw({}),
-  deposit: css.raw({}),
   search: css.raw({
     padding: '0 24px',
     margin: '0 0 24px 0',

@@ -94,7 +94,7 @@ const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) 
       <RetiredSuggestClmBanner vaultId={vaultId} />
       <VaultHeader vaultId={vaultId} />
       <VaultsStats vaultId={vaultId} />
-      <div className={classes.contentContainer}>
+      <div>
         <div className={classes.contentColumns}>
           <div className={classes.columnActions}>
             <Actions vaultId={vaultId} />

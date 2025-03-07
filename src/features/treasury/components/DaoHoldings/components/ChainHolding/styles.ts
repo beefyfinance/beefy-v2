@@ -14,7 +14,6 @@ export const styles = {
     alignItems: 'center',
     backgroundColor: 'background.content.light',
     borderRadius: '8px 8px 0px 0px',
-
     lgDown: {
       padding: '16px',
     },

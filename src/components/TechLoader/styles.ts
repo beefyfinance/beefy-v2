@@ -18,7 +18,6 @@ export const styles = {
     justifyContent: 'center',
     flex: '1 1 auto',
   }),
-  image: css.raw({}),
   text: css.raw({
     textStyle: 'body.medium',
   }),

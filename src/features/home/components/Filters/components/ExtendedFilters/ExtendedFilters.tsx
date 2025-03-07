@@ -27,11 +27,11 @@ export const ExtendedFilters = memo(function ExtendedFilters({
   return (
     <div className={classes.extendedFilters}>
       <ShownVaultsCount css={styles.shownVaultsCount} />
-      <CheckboxFilter css={styles.checkbox} filter="onlyBoosted" label={t('Filter-Boost')} />
-      <CheckboxFilter css={styles.checkbox} filter="onlyEarningPoints" label={t('Filter-Points')} />
-      <CheckboxFilter css={styles.checkbox} filter="onlyZappable" label={t('Filter-Zappable')} />
-      <CheckboxFilter css={styles.checkbox} filter="onlyRetired" label={t('Filter-Retired')} />
-      <CheckboxFilter css={styles.checkbox} filter="onlyPaused" label={t('Filter-Paused')} />
+      <CheckboxFilter filter="onlyBoosted" label={t('Filter-Boost')} />
+      <CheckboxFilter filter="onlyEarningPoints" label={t('Filter-Points')} />
+      <CheckboxFilter filter="onlyZappable" label={t('Filter-Zappable')} />
+      <CheckboxFilter filter="onlyRetired" label={t('Filter-Retired')} />
+      <CheckboxFilter filter="onlyPaused" label={t('Filter-Paused')} />
       <MinTvlFilter />
       {!desktopView ? (
         <>

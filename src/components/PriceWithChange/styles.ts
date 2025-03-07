@@ -22,7 +22,6 @@ export const styles = {
       cursor: 'pointer',
     },
   }),
-  price: css.raw({}),
   change: css.raw({
     display: 'inline-flex',
     alignItems: 'center',
@@ -32,7 +31,6 @@ export const styles = {
     fontSize: '0.8em',
     color: 'text.dark',
   }),
-  changeValue: css.raw({}),
   positive: css.raw({
     color: 'extracted3763',
   }),

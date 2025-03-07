@@ -173,12 +173,7 @@ export const Transaction = memo(function Transaction({ tx }: TransactionProps) {
   const { datetime, shareBalance, usdBalance, transactionHash } = tx;
 
   return (
-    <Row
-      css={css.raw(
-        tx.timeline === 'current' && styles.txCurrent,
-        tx.timeline === 'past' && styles.txPast
-      )}
-    >
+    <Row css={css.raw(tx.timeline === 'past' && styles.txPast)}>
       {/* Date */}
       <div className={css(styles.stat, styles.textFlexStart)}>
         <img
@@ -236,13 +231,7 @@ export const TransactionMobile = memo(function TransactionMobile({ tx }: Transac
   }, [shareBalance]);
 
   return (
-    <RowMobile
-      css={css.raw(
-        styles.gridMobile,
-        tx.timeline === 'current' && styles.txCurrent,
-        tx.timeline === 'past' && styles.txPast
-      )}
-    >
+    <RowMobile css={css.raw(styles.gridMobile, tx.timeline === 'past' && styles.txPast)}>
       <VaultNetwork css={styles.vaultNetwork} chainId={chainId} />
       <InfoGrid>
         {isStandard ? (

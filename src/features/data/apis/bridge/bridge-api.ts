@@ -32,7 +32,9 @@ export class BridgeApi implements IBridgeApi {
     receiver: string | undefined,
     state: BeefyState
   ): Promise<IBridgeQuote<T>> {
-    if (!providers[config.id]) throw new Error(`Unknown bridge provider: ${config.id}`);
+    if (!providers[config.id]) {
+      throw new Error(`Unknown bridge provider: ${config.id}`);
+    }
 
     // asserts the config->provider mapping is correct
     const provider = providers[config.id] as unknown as IBridgeProvider<T>;
@@ -44,7 +46,9 @@ export class BridgeApi implements IBridgeApi {
     t: TFunction,
     state: BeefyState
   ): Promise<Step> {
-    if (!providers[quote.id]) throw new Error(`Unknown bridge provider: ${quote.id}`);
+    if (!providers[quote.id]) {
+      throw new Error(`Unknown bridge provider: ${quote.id}`);
+    }
 
     // asserts the config->provider mapping is correct
     const provider: IBridgeProvider<BeefyAnyBridgeConfig> = providers[quote.id];

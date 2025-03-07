@@ -177,7 +177,7 @@ const DepositFormInput = memo(function DepositFormInput({
   const classes = useStyles();
 
   return (
-    <div className={classes.input}>
+    <div>
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
           {showZapIcon ? (

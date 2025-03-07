@@ -75,7 +75,6 @@ const LineToggle = memo(function LineToggle({
   return (
     <LabelledCheckbox
       iconCss={styles.toggleIcon}
-      checkboxCss={styles.toggleCheckbox}
       labelCss={styles.toggleLabel}
       checked={checked}
       onChange={handleChange}

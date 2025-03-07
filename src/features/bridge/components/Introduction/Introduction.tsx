@@ -16,7 +16,7 @@ export const Introduction = memo(function Introduction({ css: cssProp }: Introdu
   const { t } = useTranslation();
 
   return (
-    <div className={css(styles.introduction, cssProp)}>
+    <div className={css(cssProp)}>
       <h1 className={classes.title}>{t('Bridge-Intro-Title')}</h1>
       <div className={classes.text}>
         <Trans

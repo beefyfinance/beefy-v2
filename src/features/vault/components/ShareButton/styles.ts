@@ -18,7 +18,6 @@ export const styles = {
       padding: '10px',
     },
   }),
-  shareText: css.raw({}),
   shareIcon: css.raw({
     flexShrink: '0',
     flexGrow: '0',

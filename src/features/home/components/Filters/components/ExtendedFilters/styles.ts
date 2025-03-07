@@ -63,9 +63,6 @@ export const styles = {
   shownVaultsCount: css.raw({
     width: '100%',
   }),
-  checkbox: css.raw({
-    width: '100%',
-  }),
   select: css.raw({
     width: '100%',
     marginTop: '16px',

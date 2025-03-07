@@ -1,7 +1,5 @@
 import type { ComponentType } from 'react';
 import { memo, useEffect } from 'react';
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
 import { NetworkStep } from './components/NetworkStep/NetworkStep.tsx';
 import { TokenStep } from './components/TokenStep/TokenStep.tsx';
 import { useAppDispatch, useAppSelector } from '../../../../store.ts';
@@ -20,8 +18,6 @@ import {
 import { InjectProviderStep } from './components/InjectProviderStep/InjectProviderStep.tsx';
 import { SelectProviderStep } from './components/SelectProviderStep/SelectProviderStep.tsx';
 
-const useStyles = legacyMakeStyles(styles);
-
 const stepToComponent: Record<FormStep, ComponentType> = {
   [FormStep.UnsupportedCountry]: UnsupportedCountryStep,
   [FormStep.SelectToken]: TokenStep,
@@ -33,7 +29,6 @@ const stepToComponent: Record<FormStep, ComponentType> = {
 };
 
 export const OnRamp = memo(function OnRamp() {
-  const classes = useStyles();
   const step = useAppSelector(selectStep);
   const StepComponent = stepToComponent[step];
   const dispatch = useAppDispatch();
@@ -47,7 +42,7 @@ export const OnRamp = memo(function OnRamp() {
   }, [dispatch, shouldInit]);
 
   return (
-    <div className={classes.container}>
+    <div>
       {isLoaded ? (
         <>
           <FormValidator />

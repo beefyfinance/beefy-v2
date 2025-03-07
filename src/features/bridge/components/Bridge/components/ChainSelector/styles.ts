@@ -1,7 +1,6 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  group: css.raw({}),
   labels: css.raw({
     display: 'flex',
     marginBottom: '4px',

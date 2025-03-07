@@ -139,7 +139,7 @@ const StatusRewards = memo(function StatusRewards({ status, rewards }: StatusRew
   return (
     <div className={classes.sources}>
       {Array.from(grouped.entries(), ([source, rewards]) => (
-        <div className={classes.source} key={source}>
+        <div key={source}>
           <div className={classes.sourceTitle}>{getTitle(source)}</div>
           <div className={classes.rewards}>
             {rewards.map(reward => {

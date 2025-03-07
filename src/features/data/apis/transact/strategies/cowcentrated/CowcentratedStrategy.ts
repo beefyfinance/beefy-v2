@@ -856,7 +856,9 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     }
 
     for (const input of inputs) {
-      if (isTokenNative(input.token)) throw new Error('Invalid token');
+      if (isTokenNative(input.token)) {
+        throw new Error('Invalid token');
+      }
       if (!this.vaultType.depositTokens.find(token => isTokenEqual(token, input.token))) {
         throw new Error('Invalid token');
       }

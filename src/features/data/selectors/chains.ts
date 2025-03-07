@@ -16,7 +16,9 @@ export const selectChainById = createCachedSelector(
   state => state.entities.chains.byId,
   (chainId, byId): ChainEntity => {
     const chain = byId[chainId];
-    if (!chain) throw new Error(`Unknown chainId ${chainId}`);
+    if (!chain) {
+      throw new Error(`Unknown chainId ${chainId}`);
+    }
     return chain;
   }
 )((_, chainId) => chainId);

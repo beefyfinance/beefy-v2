@@ -14,7 +14,7 @@ export const Introduction = memo(function Introduction() {
   const { t } = useTranslation();
 
   return (
-    <div className={classes.container}>
+    <div>
       <h1 className={classes.title}>{t('OnRamp-Intro-Title')}</h1>
       <div className={classes.text}>
         {t('OnRamp-Intro-Text')

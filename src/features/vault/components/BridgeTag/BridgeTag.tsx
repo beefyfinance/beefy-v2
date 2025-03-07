@@ -103,8 +103,7 @@ export type TagTooltipProps = {
   content: ReactNode;
 };
 export const TagTooltip = memo(function BridgeTooltip({ content }: TagTooltipProps) {
-  const classes = useStyles();
-  return <div className={classes.tooltip}>{content}</div>;
+  return <div>{content}</div>;
 });
 
 type TagWithTooltipProps = {

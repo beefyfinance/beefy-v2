@@ -41,7 +41,6 @@ const useStyles = legacyMakeStyles({
   label: css.raw({
     color: 'text.dark',
   }),
-  timestamp: css.raw({}),
 });
 
 export type OverviewTooltipProps = RechartsTooltipProps<
@@ -70,7 +69,7 @@ export const OverviewTooltip = memo(function OverviewTooltip({
 
   return (
     <div className={classes.content}>
-      <div className={classes.timestamp}>{format(timestamp, 'MMM d, yyyy h:mm a')}</div>
+      <div>{format(timestamp, 'MMM d, yyyy h:mm a')}</div>
       <div className={classes.itemContainer}>
         <div className={classes.label}>{t('Graph-cowcentrated-overview-tooltip-position')}:</div>
         <div className={classes.value}>{formatTokenDisplayCondensed(underlying, 18)}</div>
@@ -125,7 +124,7 @@ export const FeesTooltip = memo(function FeesTooltip({
 
   return (
     <div className={classes.content}>
-      <div className={classes.timestamp}>{format(timestamp, 'MMM d, yyyy h:mm a')}</div>
+      <div>{format(timestamp, 'MMM d, yyyy h:mm a')}</div>
       {tokens.map((token, i) => (
         <div className={classes.itemContainer} key={token.id}>
           <div className={classes.label}>{token.symbol}:</div>

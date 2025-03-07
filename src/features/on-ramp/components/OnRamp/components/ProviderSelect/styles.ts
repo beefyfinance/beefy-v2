@@ -42,7 +42,6 @@ export const styles = {
   iconLoading: css.raw({
     background: 'whiteo11;',
   }),
-  iconProvider: css.raw({}),
   provider: css.raw({
     marginRight: '8px',
   }),

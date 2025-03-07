@@ -279,14 +279,14 @@ export const ZapRoute = memo(function ZapRoute({ quote, css: cssProp }: ZapRoute
   }
 
   return (
-    <div className={css(styles.holder, cssProp)}>
+    <div className={css(cssProp)}>
       <div className={classes.title}>{t('Transact-ZapRoute')}</div>
       <div className={classes.routeHolder}>
         <div
           className={css(styles.routeHeader, hasMultipleOptions && styles.routerHeaderClickable)}
           onClick={hasMultipleOptions ? handleSwitch : undefined}
         >
-          <QuoteTitle quote={quote} css={styles.routeHeaderProvider} />
+          <QuoteTitle quote={quote} />
           {hasMultipleOptions ? '>' : undefined}
         </div>
         <div className={classes.routeContent}>

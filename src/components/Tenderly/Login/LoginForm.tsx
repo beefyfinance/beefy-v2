@@ -57,9 +57,9 @@ const CredentialInput = memo(function CredentialInput({
   const hasHelp = !!help || !!helpLink;
 
   return (
-    <VerticalLayout css={styles.field} gap={8}>
+    <VerticalLayout gap={8}>
       <div className={classes.label}>{label}</div>
-      <div className={hasHelp ? classes.inputHelpHolder : classes.inputHolder}>
+      <div className={hasHelp ? classes.inputHelpHolder : undefined}>
         <BaseInput
           type={type}
           className={classes.input}
@@ -72,7 +72,7 @@ const CredentialInput = memo(function CredentialInput({
             <InfoOutlined className={classes.helpIcon} />
             {help ? <div className={classes.helpText}>{help}</div> : null}
             {helpLink ? (
-              <div className={classes.helpLink}>
+              <div>
                 <ExternalLink
                   css={styles.helpLinkAnchor}
                   href={typeof helpLink === 'string' ? helpLink : helpLink.url}

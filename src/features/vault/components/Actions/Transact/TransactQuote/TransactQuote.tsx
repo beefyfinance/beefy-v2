@@ -93,7 +93,7 @@ export const TransactQuote = memo(function TransactQuote({
   }
 
   return (
-    <div className={css(styles.container, cssProp)}>
+    <div className={css(cssProp)}>
       <QuoteTitleRefresh
         title={title}
         enableRefresh={status === TransactStatus.Fulfilled || status === TransactStatus.Rejected}
@@ -111,7 +111,7 @@ const QuoteIdle = memo(function QuoteIdle({ title, css: cssProp }: TransactQuote
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   return (
-    <div className={css(styles.container, styles.disabled, cssProp)}>
+    <div className={css(styles.disabled, cssProp)}>
       <QuoteTitleRefresh title={title} enableRefresh={true} />
       <div className={classes.tokenAmounts}>
         {isCowcentratedLikeVault(vault) ? (

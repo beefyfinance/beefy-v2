@@ -128,9 +128,7 @@ export const ShareButton = memo(function ShareButton({
   return (
     <DropdownProvider variant="dark" placement={placement || 'bottom-end'}>
       <ShareTrigger borderless={true} mobile={true}>
-        {!hideText && !mobileAlternative && (
-          <span className={classes.shareText}>{t('Vault-Share')}</span>
-        )}
+        {!hideText && !mobileAlternative && <span>{t('Vault-Share')}</span>}
         <ShareIcon className={classes.shareIcon} />
       </ShareTrigger>
       <ShareDropdown>
