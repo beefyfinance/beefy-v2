@@ -1,32 +1,32 @@
-import type { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types.ts';
 import { createSelector } from '@reduxjs/toolkit';
-import type { ChainEntity } from '../entities/chain';
+import type { ChainEntity } from '../entities/chain.ts';
 import { orderBy } from 'lodash-es';
-import { selectTokenPriceByAddress } from './tokens';
-import { selectWalletAddressIfKnown } from './wallet';
-import { selectUserBalanceOfToken, selectUserVaultBalanceInDepositToken } from './balance';
+import { selectTokenPriceByAddress } from './tokens.ts';
+import { selectWalletAddressIfKnown } from './wallet.ts';
+import { selectUserBalanceOfToken, selectUserVaultBalanceInDepositToken } from './balance.ts';
 import {
   type TokenAmount,
   type TransactOption,
   type TransactQuote,
-} from '../apis/transact/transact-types';
+} from '../apis/transact/transact-types.ts';
 import { BigNumber } from 'bignumber.js';
-import { TransactStatus } from '../reducers/wallet/transact-types';
-import { BIG_ZERO } from '../../../helpers/big-number';
-import { valueOrThrow } from '../utils/selector-utils';
+import { TransactStatus } from '../reducers/wallet/transact-types.ts';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { valueOrThrow } from '../utils/selector-utils.ts';
 import {
   selectVaultHasActiveGovRewards,
   selectVaultHasActiveMerklCampaigns,
   selectVaultHasActiveStellaSwapCampaigns,
-} from './rewards';
+} from './rewards.ts';
 import {
   selectConnectedUserHasGovRewardsForVault,
   selectConnectedUserHasMerklRewardsForVault,
   selectConnectedUserHasStellaSwapRewardsForVault,
-} from './user-rewards';
-import { selectVaultById } from './vaults';
-import { isSingleGovVault, type VaultEntity } from '../entities/vault';
-import { extractTagFromLpSymbol } from '../../../helpers/tokens';
+} from './user-rewards.ts';
+import { selectVaultById } from './vaults.ts';
+import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
+import { extractTagFromLpSymbol } from '../../../helpers/tokens.ts';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
@@ -80,7 +80,7 @@ export const selectTransactSelectedQuoteOrUndefined = createSelector(
 );
 
 export const selectTransactQuoteById = createSelector(
-  (state: BeefyState, quoteId: TransactQuote['id']) => quoteId,
+  (_state: BeefyState, quoteId: TransactQuote['id']) => quoteId,
   (state: BeefyState) => state.ui.transact.quotes.byQuoteId,
   (id, byQuoteId) => {
     const quote = byQuoteId[id];
@@ -102,7 +102,7 @@ export const selectTransactQuotes = createSelector(
 );
 
 export const selectTransactSelectionById = createSelector(
-  (state: BeefyState, selectionId: TransactOption['selectionId']) => selectionId,
+  (_state: BeefyState, selectionId: TransactOption['selectionId']) => selectionId,
   (state: BeefyState) => state.ui.transact.selections.bySelectionId,
   (selectionId, bySelectionId) => bySelectionId[selectionId] || undefined
 );
@@ -266,13 +266,13 @@ export const selectTransactDepositTokensForChainIdWithBalances = (
 };
 
 export const selectTransactOptionById = createSelector(
-  (state: BeefyState, optionId: string) => optionId,
+  (_state: BeefyState, optionId: string) => optionId,
   (state: BeefyState) => state.ui.transact.options.byOptionId,
   (optionId, byOptionId): TransactOption => byOptionId[optionId]
 );
 
 export const selectTransactOptionIdsForSelectionId = createSelector(
-  (state: BeefyState, selectionId: string) => selectionId,
+  (_state: BeefyState, selectionId: string) => selectionId,
   (state: BeefyState) => state.ui.transact.options.bySelectionId,
   (selectionId, bySelectionId) => bySelectionId[selectionId]
 );

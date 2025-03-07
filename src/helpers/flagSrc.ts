@@ -1,7 +1,8 @@
-import { createGlobLoader } from './globLoader';
+import { createGlobLoader } from './globLoader.ts';
 
-const pathToUrl = import.meta.glob('../images/currency-flags/*.png', {
-  as: 'url',
+const pathToUrl = import.meta.glob<string>('../images/currency-flags/*.png', {
+  query: '?url',
+  import: 'default',
   eager: true,
 });
 

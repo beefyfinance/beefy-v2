@@ -1,24 +1,24 @@
 import { memo, useCallback } from 'react';
-import type { NavItemProps } from '../DropNavItem/types';
-import { NavItem } from './NavItem';
-import { markAllProposalsRead } from '../../../../features/data/actions/proposal';
-import { useAppDispatch } from '../../../../store';
+import type { NavItemProps } from '../DropNavItem/types.ts';
+import { NavLinkItem } from './NavLinkItem.tsx';
+import { markAllProposalsRead } from '../../../../features/data/actions/proposal.ts';
+import { useAppDispatch } from '../../../../store.ts';
 import {
   UnreadMainProposalsCount,
   UnreadProfitProposalsCount,
-} from '../Badges/UnreadProposalsCount';
+} from '../Badges/UnreadProposalsCount.tsx';
 
 type ProposalsNavItemProps = NavItemProps & {
   space: string;
 };
 
-const ProposalsNavItem = memo<ProposalsNavItemProps>(function ProposalsNavItem({ space, ...rest }) {
+const ProposalsNavItem = memo(function ProposalsNavItem({ space, ...rest }: ProposalsNavItemProps) {
   const dispatch = useAppDispatch();
   const markRead = useCallback(() => {
     dispatch(markAllProposalsRead({ space }));
   }, [dispatch, space]);
 
-  return <NavItem {...rest} onClick={markRead} />;
+  return <NavLinkItem {...rest} onClick={markRead} />;
 });
 
 export const MainProposalsNavItem = memo<NavItemProps>(function MainProposalNavItem(props) {

@@ -1,6 +1,6 @@
 import type { Chain } from 'viem/chains';
-import type { ChainEntity } from '../../entities/chain';
-import type { ChainConfig } from '../config-types';
+import type { ChainEntity } from '../../entities/chain.ts';
+import type { ChainConfig } from '../config-types.ts';
 
 export function buildViemChain(chain: ChainEntity | ChainConfig): Chain {
   const id = 'networkChainId' in chain ? chain.networkChainId : chain.chainId;

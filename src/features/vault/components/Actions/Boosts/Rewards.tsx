@@ -1,15 +1,15 @@
-import type { BoostRewardContractData } from '../../../../data/apis/contract-data/contract-data-types';
+import type { BoostRewardContractData } from '../../../../data/apis/contract-data/contract-data-types.ts';
 import { type BigNumber } from 'bignumber.js';
 import { Fragment, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
-import { TokenImageFromEntity } from '../../../../../components/TokenImage/TokenImage';
-import { TokenAmount } from '../../../../../components/TokenAmount';
-import { StakeCountdown } from './StakeCountdown';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { css, type CssStyles } from '@repo/styles/css';
+import { TokenImageFromEntity } from '../../../../../components/TokenImage/TokenImage.tsx';
+import { TokenAmount } from '../../../../../components/TokenAmount/TokenAmount.tsx';
+import { StakeCountdown } from './StakeCountdown/StakeCountdown.tsx';
+import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type Reward = BoostRewardContractData & {
   pending: BigNumber;
@@ -20,29 +20,29 @@ export type RewardsProps = {
   isInBoost: boolean;
   rewards: Reward[];
   fadeInactive?: boolean;
-  className?: string;
+  css?: CssStyles;
 };
 
 export const Rewards = memo(function Rewards({
   isInBoost,
   rewards,
-  className,
+  css: cssProp,
   fadeInactive = true,
 }: RewardsProps) {
   const classes = useStyles();
   const { t } = useTranslation();
 
   return (
-    <div className={clsx(classes.rewards, fadeInactive && classes.rewardsFadeInactive, className)}>
+    <div className={css(styles.rewards, fadeInactive && styles.rewardsFadeInactive, cssProp)}>
       <div className={classes.rewardLabel}>{t('Boost-Rewards')}</div>
       <div className={classes.rewardLabel}>{t('Boost-Ends')}</div>
       {rewards.map(reward => (
         <Fragment key={reward.token.address}>
           <div
-            className={clsx(
-              classes.rewardValue,
-              reward.active && classes.rewardValueActive,
-              classes.rewardValueAmount
+            className={css(
+              styles.rewardValue,
+              reward.active && styles.rewardValueActive,
+              styles.rewardValueAmount
             )}
           >
             <TokenImageFromEntity token={reward.token} size={16} />
@@ -53,7 +53,7 @@ export const Rewards = memo(function Rewards({
               <span className={classes.rewardSymbol}>{reward.token.symbol}</span>
             </div>
           </div>
-          <div className={clsx(classes.rewardValue, reward.active && classes.rewardValueActive)}>
+          <div className={css(styles.rewardValue, reward.active && styles.rewardValueActive)}>
             {!reward.active ? (
               t('ENDED')
             ) : reward.isPreStake ? (

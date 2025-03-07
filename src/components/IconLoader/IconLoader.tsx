@@ -1,26 +1,21 @@
 import { memo } from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { DEFAULT_SIZE } from '../AssetsImage/styles';
-
-const useStyles = makeStyles(styles);
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
+import { defaultSize } from '../AssetsImage/config.ts';
 
 export type IconLoaderProps = {
   size?: number;
-  className?: string;
+  css?: CssStyles;
 };
 
 export const IconLoader = memo<IconLoaderProps>(function IconLoader({
-  size = DEFAULT_SIZE,
-  className,
+  size = defaultSize,
+  css: cssProp,
 }) {
-  const classes = useStyles();
-
   return (
     <div
-      className={clsx(classes.holder, className)}
-      style={size !== DEFAULT_SIZE ? { width: size, height: size } : undefined}
+      className={css(styles.holder, cssProp)}
+      style={size !== defaultSize ? { width: size, height: size } : undefined}
     />
   );
 });

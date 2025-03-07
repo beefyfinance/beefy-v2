@@ -1,43 +1,43 @@
 import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { selectFilterStrategyType } from '../../../../../data/selectors/filtered-vaults';
-import type { ToggleButtonsProps } from '../../../../../../components/ToggleButtons';
-import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
-import { LabeledSelect } from '../../../../../../components/LabeledSelect';
-import { TYPE_OPTIONS } from './type-options';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { selectFilterStrategyType } from '../../../../../data/selectors/filtered-vaults.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
+import { TYPE_OPTIONS } from './type-options.ts';
+import { Select } from '../../../../../../components/Form/Select/Single/Select.tsx';
+import { entries } from '../../../../../../helpers/object.ts';
+import type { StrategiesType } from '../../../../../data/reducers/filtered-vaults-types.ts';
 
 export type StrategyTypeDropdownFilterProps = {
-  className?: string;
+  layer?: 0 | 1 | 2;
 };
-export const StrategyTypeDropdownFilter = memo<StrategyTypeDropdownFilterProps>(
-  function StrategyTypeDropdownFilter({ className }) {
-    const { t } = useTranslation();
-    const dispatch = useAppDispatch();
-    const options: Record<string, string> = useMemo(
-      () => Object.fromEntries(Object.entries(TYPE_OPTIONS).map(([key, label]) => [key, t(label)])),
-      [t]
-    );
-    const value = useAppSelector(selectFilterStrategyType);
-    const handleChange = useCallback<ToggleButtonsProps['onChange']>(
-      value => {
-        dispatch(
-          filteredVaultsActions.setStrategyType(value as FilteredVaultsState['strategyType'])
-        );
-      },
-      [dispatch]
-    );
 
-    return (
-      <LabeledSelect
-        label={t('Filter-Strategy')}
-        value={value}
-        options={options}
-        onChange={handleChange}
-        selectClass={className}
-        fullWidth={true}
-      />
-    );
-  }
-);
+export const StrategyTypeDropdownFilter = memo(function StrategyTypeDropdownFilter({
+  layer = 0,
+}: StrategyTypeDropdownFilterProps) {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const options = useMemo(
+    () => entries(TYPE_OPTIONS).map(([key, label]) => ({ value: key, label: t(label) })),
+    [t]
+  );
+  const value = useAppSelector(selectFilterStrategyType);
+  const handleChange = useCallback(
+    (value: StrategiesType) => {
+      dispatch(filteredVaultsActions.setStrategyType(value));
+    },
+    [dispatch]
+  );
+
+  return (
+    <Select
+      labelPrefix={t('Filter-Strategy')}
+      selected={value}
+      options={options}
+      onChange={handleChange}
+      fullWidth={true}
+      layer={layer}
+      variant="light"
+    />
+  );
+});

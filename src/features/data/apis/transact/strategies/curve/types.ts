@@ -1,4 +1,4 @@
-import type { TokenEntity } from '../../../../entities/token';
+import type { TokenEntity } from '../../../../entities/token.ts';
 
 export type CurveMethodTypes =
   | 'fixed'

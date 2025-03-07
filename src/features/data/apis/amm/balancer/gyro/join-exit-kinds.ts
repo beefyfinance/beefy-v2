@@ -1,6 +1,6 @@
-import { PoolExitKind, PoolJoinKind } from '../common/types';
-import type { OptionalRecord } from '../../../../utils/types-utils';
-import { GyroPoolExitKind, GyroPoolJoinKind } from './types';
+import { PoolExitKind, PoolJoinKind } from '../common/types.ts';
+import type { OptionalRecord } from '../../../../utils/types-utils.ts';
+import { GyroPoolExitKind, GyroPoolJoinKind } from './types.ts';
 
 export const poolJoinKindToGyroPoolJoinKind: OptionalRecord<PoolJoinKind, GyroPoolJoinKind> = {
   [PoolJoinKind.ALL_TOKENS_IN_FOR_EXACT_BPT_OUT]: GyroPoolJoinKind.ALL_TOKENS_IN_FOR_EXACT_BPT_OUT,

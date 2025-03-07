@@ -1,22 +1,18 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  checkbox: {
-    color: theme.palette.text.dark,
-  },
-  largeTvlCheckbox: {
-    color: theme.palette.text.dark,
-    fontSize: theme.typography['body-sm'].fontSize,
-  },
-  labelIcon: {
+export const styles = {
+  largeTvlCheckbox: css.raw({
+    fontSize: 'body.sm',
+  }),
+  labelIcon: css.raw({
     '& img': {
       display: 'block',
     },
-  },
-  amountContainer: {
+  }),
+  amountContainer: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     alignItems: 'flex-end',
     gap: '8px',
-  },
-});
+  }),
+};

@@ -6,8 +6,8 @@ import {
   type TokenEntity,
   type TokenErc20,
   type TokenNative,
-} from '../../../../entities/token';
-import type { Step } from '../../../../reducers/wallet/stepper';
+} from '../../../../entities/token.ts';
+import type { Step } from '../../../../reducers/wallet/stepper.ts';
 import {
   type CurveDepositOption,
   type CurveDepositQuote,
@@ -26,9 +26,9 @@ import {
   type ZapQuoteStepSplit,
   type ZapQuoteStepSwap,
   type ZapQuoteStepSwapAggregator,
-} from '../../transact-types';
-import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy';
-import type { ChainEntity } from '../../../../entities/chain';
+} from '../../transact-types.ts';
+import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
 import {
   createOptionId,
   createQuoteId,
@@ -36,16 +36,16 @@ import {
   onlyOneInput,
   onlyOneToken,
   onlyOneTokenAmount,
-} from '../../helpers/options';
+} from '../../helpers/options.ts';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
   selectIsTokenLoaded,
   selectTokenByAddressOrUndefined,
   selectTokenPriceByTokenOracleId,
-} from '../../../../selectors/tokens';
-import { selectChainById } from '../../../../selectors/chains';
-import { TransactMode } from '../../../../reducers/wallet/transact-types';
+} from '../../../../selectors/tokens.ts';
+import { selectChainById } from '../../../../selectors/chains.ts';
+import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
 import { first, uniqBy } from 'lodash-es';
 import {
   BIG_ZERO,
@@ -53,34 +53,34 @@ import {
   fromWei,
   toWei,
   toWeiString,
-} from '../../../../../../helpers/big-number';
-import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes';
+} from '../../../../../../helpers/big-number.ts';
+import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes.ts';
 import { type BigNumber } from 'bignumber.js';
-import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
-import type { CurveMethod, CurveTokenOption } from './types';
-import type { QuoteResponse } from '../../swap/ISwapProvider';
+import type { BeefyState, BeefyThunk } from '../../../../../../redux-types.ts';
+import type { CurveMethod, CurveTokenOption } from './types.ts';
+import type { QuoteResponse } from '../../swap/ISwapProvider.ts';
 import type {
   OrderInput,
   OrderOutput,
   UserlessZapRequest,
   ZapStep,
   ZapStepResponse,
-} from '../../zap/types';
-import { fetchZapAggregatorSwap } from '../../zap/swap';
-import { selectTransactSlippage } from '../../../../selectors/transact';
-import { Balances } from '../../helpers/Balances';
-import { getTokenAddress, NO_RELAY } from '../../helpers/zap';
-import { slipBy } from '../../helpers/amounts';
-import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens';
-import { walletActions } from '../../../../actions/wallet-actions';
-import { isStandardVault, type VaultStandard } from '../../../../entities/vault';
-import { getVaultWithdrawnFromState } from '../../helpers/vault';
-import { buildTokenApproveTx } from '../../zap/approve';
-import { CurvePool } from './CurvePool';
-import { isFulfilledResult } from '../../../../../../helpers/promises';
-import { isDefined } from '../../../../utils/array-utils';
-import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
-import type { CurveStrategyConfig } from '../strategy-configs';
+} from '../../zap/types.ts';
+import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
+import { selectTransactSlippage } from '../../../../selectors/transact.ts';
+import { Balances } from '../../helpers/Balances.ts';
+import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
+import { slipBy } from '../../helpers/amounts.ts';
+import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
+import { walletActions } from '../../../../actions/wallet-actions.ts';
+import { isStandardVault, type VaultStandard } from '../../../../entities/vault.ts';
+import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
+import { buildTokenApproveTx } from '../../zap/approve.ts';
+import { CurvePool } from './CurvePool.ts';
+import { isFulfilledResult } from '../../../../../../helpers/promises.ts';
+import { isDefined } from '../../../../utils/array-utils.ts';
+import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType.ts';
+import type { CurveStrategyConfig } from '../strategy-configs.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -105,7 +105,7 @@ type WithdrawLiquidity = DepositLiquidity & {
   split: TokenAmount;
 };
 
-const strategyId = 'curve' as const;
+const strategyId = 'curve';
 type StrategyId = typeof strategyId;
 
 class CurveStrategyImpl implements IZapStrategy<StrategyId> {
@@ -121,7 +121,10 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
   protected readonly vault: VaultStandard;
   protected readonly vaultType: IStandardVaultType;
 
-  constructor(protected options: CurveStrategyConfig, protected helpers: ZapTransactHelpers) {
+  constructor(
+    protected options: CurveStrategyConfig,
+    protected helpers: ZapTransactHelpers
+  ) {
     const { vault, vaultType, getState } = this.helpers;
 
     if (!isStandardVault(vault)) {
@@ -170,7 +173,9 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
       price: BigNumber | undefined;
       token: TokenEntity | undefined;
     };
-    type CurveTokenOptionWithPrice = CurveTokenOption & { price: BigNumber };
+    type CurveTokenOptionWithPrice = CurveTokenOption & {
+      price: BigNumber;
+    };
 
     return uniqBy(
       methods
@@ -447,7 +452,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
   }
 
   protected async fetchZapBuild(
-    quoteStep: ZapQuoteStepBuild,
+    _quoteStep: ZapQuoteStepBuild,
     depositVia: CurveTokenOption,
     minInputAmount: BigNumber,
     zapHelpers: ZapHelpers,
@@ -854,7 +859,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
   }
 
   protected async fetchZapSplit(
-    quoteStep: ZapQuoteStepSplit,
+    _quoteStep: ZapQuoteStepSplit,
     inputs: TokenAmount[],
     via: CurveTokenOption,
     zapHelpers: ZapHelpers,

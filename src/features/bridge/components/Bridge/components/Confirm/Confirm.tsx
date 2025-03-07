@@ -1,36 +1,37 @@
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../../../../../../components/Button';
+import { Button } from '../../../../../../components/Button/Button.tsx';
 import {
   formatLargeUsd,
   formatTokenDisplay,
   formatTokenDisplayCondensed,
-} from '../../../../../../helpers/format';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
+} from '../../../../../../helpers/format.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet.ts';
 import {
   selectBridgeConfirmQuote,
   selectBridgeConfirmStatus,
-} from '../../../../../data/selectors/bridge';
-import { selectChainById } from '../../../../../data/selectors/chains';
+} from '../../../../../data/selectors/bridge.ts';
+import { selectChainById } from '../../../../../data/selectors/chains.ts';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
-} from '../../../../../data/selectors/wallet';
-import { styles } from './styles';
-import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
-import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
-import { performBridge } from '../../../../../data/actions/bridge';
-import { AlertError } from '../../../../../../components/Alerts';
-import { TechLoader } from '../../../../../../components/TechLoader';
-import clsx from 'clsx';
-import { getBridgeProviderLogo } from '../../../../../../helpers/bridgeProviderSrc';
-import { MonetizationOn, Timer } from '@material-ui/icons';
-import { formatMinutesDuration } from '../../../../../../helpers/date';
-import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
+} from '../../../../../data/selectors/wallet.ts';
+import { styles } from './styles.ts';
+import { getNetworkSrc } from '../../../../../../helpers/networkSrc.ts';
+import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
+import { performBridge } from '../../../../../data/actions/bridge.ts';
+import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
+import { TechLoader } from '../../../../../../components/TechLoader/TechLoader.tsx';
+import { css } from '@repo/styles/css';
+import { getBridgeProviderLogo } from '../../../../../../helpers/bridgeProviderSrc.ts';
+import MonetizationOn from '../../../../../../images/icons/mui/MonetizationOn.svg?react';
+import Timer from '../../../../../../images/icons/mui/Timer.svg?react';
+import { formatMinutesDuration } from '../../../../../../helpers/date.ts';
+import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 const ConfirmLoading = memo(function ConfirmLoading() {
   return <TechLoader />;
@@ -82,8 +83,8 @@ const ConfirmReady = memo(function ConfirmReady() {
   return (
     <>
       <div className={classes.steps}>
-        <div className={clsx(classes.step, classes.stepFrom)}>
-          <div className={classes.tokenAmount}>
+        <div className={css(styles.step)}>
+          <div>
             {t('Bridge-From-Send', {
               amount: formatTokenDisplay(quote.input.amount, quote.input.token.decimals),
               token: quote.input.token.symbol,
@@ -98,16 +99,17 @@ const ConfirmReady = memo(function ConfirmReady() {
               alt={fromChain.name}
               src={getNetworkSrc(fromChain.id)}
             />
-            <div className={classes.networkName}> {fromChain.name}</div>
+            <div> {fromChain.name}</div>
           </div>
         </div>
-        <div className={clsx(classes.step, classes.stepBridge)}>
+        <div className={css(styles.step, styles.stepBridge)}>
           <div className={classes.via}>{t('Bridge-Via')}</div>
           <div className={classes.provider}>
             <img
               src={getBridgeProviderLogo(quote.config.id)}
               alt={quote.config.title}
               height={24}
+              className={classes.providerLogo}
             />
           </div>
           <div className={classes.providerDetails}>
@@ -123,8 +125,8 @@ const ConfirmReady = memo(function ConfirmReady() {
             </div>
           </div>
         </div>
-        <div className={clsx(classes.step, classes.stepTo)}>
-          <div className={classes.tokenAmount}>
+        <div className={css(styles.step, styles.stepTo)}>
+          <div>
             {t('Bridge-To-Receive', {
               amount: formatTokenDisplay(quote.input.amount, quote.input.token.decimals),
               token: quote.input.token.symbol,
@@ -139,7 +141,7 @@ const ConfirmReady = memo(function ConfirmReady() {
               alt={toChain.name}
               src={getNetworkSrc(toChain.id)}
             />
-            <div className={classes.networkName}> {toChain.name}</div>
+            <div> {toChain.name}</div>
           </div>
           {quote.receiver ? (
             <>

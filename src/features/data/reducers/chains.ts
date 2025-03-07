@@ -3,17 +3,16 @@ import {
   fetchChainConfigs,
   restoreDefaultRpcsOnSingleChain,
   updateActiveRpc,
-} from '../actions/chains';
-import type { ChainEntity } from '../entities/chain';
-import type { NormalizedEntity } from '../utils/normalized-entity';
+} from '../actions/chains.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { NormalizedEntity } from '../utils/normalized-entity.ts';
 import { omit } from 'lodash-es';
 import type { Draft } from 'immer';
-import { djb2Hash } from '../utils/string-utils';
 
 type ActiveRpcConfig = {
-  hash: number;
   rpcs: string[];
 };
+
 /**
  * State containing Vault infos
  */
@@ -71,13 +70,15 @@ export const chainsSlice = createSlice({
         sliceState.chainIdByNetworkChainId[chain.networkChainId] = chain.id;
         sliceState.allIds.push(chain.id);
         sliceState[chain.eol && timestampNow > chain.eol ? 'eolIds' : 'activeIds'].push(chain.id);
+
         // If a custom RPC was set in local storage, use that instead of the default
         const rpcs = localRpcs[chain.id] || chain.rpc;
-        sliceState.activeRpcsByChainId[chain.id] = {
-          hash: djb2Hash(JSON.stringify(rpcs)),
-          rpcs,
-        };
+        sliceState.activeRpcsByChainId[chain.id] = { rpcs };
       }
+
+      sliceState.allIds = [...sliceState.allIds].sort((a, b) => a.localeCompare(b));
+      sliceState.activeIds = [...sliceState.activeIds].sort((a, b) => a.localeCompare(b));
+      sliceState.eolIds = [...sliceState.eolIds].sort((a, b) => a.localeCompare(b));
     });
 
     builder.addCase(updateActiveRpc, (sliceState, action) => {
@@ -85,11 +86,8 @@ export const chainsSlice = createSlice({
       if (!sliceState.activeRpcsByChainId[chainId]) {
         console.warn('Attempting to set an rpc on an unsupported chain');
       }
-      const updatedRpc = [rpcUrl];
-      sliceState.activeRpcsByChainId[chainId] = {
-        hash: djb2Hash(JSON.stringify(updatedRpc)),
-        rpcs: updatedRpc,
-      };
+      const updatedRpcs = [rpcUrl];
+      sliceState.activeRpcsByChainId[chainId] = { rpcs: updatedRpcs };
     });
 
     builder.addCase(restoreDefaultRpcsOnSingleChain, (sliceState, action) => {
@@ -97,11 +95,8 @@ export const chainsSlice = createSlice({
       if (!sliceState.byId[chainId]) {
         return console.warn('Attempting to restore default rpcs on an unsupported chain');
       }
-      const defaultChainRpc = sliceState.byId[chainId]!.rpc;
-      sliceState.activeRpcsByChainId[chainId] = {
-        hash: djb2Hash(JSON.stringify(defaultChainRpc)),
-        rpcs: defaultChainRpc,
-      };
+      const defaultChainRpcs = sliceState.byId[chainId].rpc;
+      sliceState.activeRpcsByChainId[chainId] = { rpcs: defaultChainRpcs };
     });
   },
 });

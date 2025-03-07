@@ -1,23 +1,25 @@
-import { makeStyles, useMediaQuery } from '@material-ui/core';
-import type { Theme } from '@material-ui/core';
-import type { CSSProperties, MutableRefObject } from 'react';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import type { CSSProperties } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { debounce } from 'lodash-es';
 import { useInView } from 'react-intersection-observer';
-import { Vault } from '../../../Vault';
-import type { VaultEntity } from '../../../../../data/entities/vault';
+import { Vault } from '../../../Vault/Vault.tsx';
+import type { VaultEntity } from '../../../../../data/entities/vault.ts';
+import { css } from '@repo/styles/css';
+import { useBreakpoints } from '../../../../../../components/MediaQueries/useBreakpoints.ts';
 
-const useStyles = makeStyles(() => ({
-  container: {
+const useStyles = legacyMakeStyles({
+  container: css.raw({
     display: 'grid',
     gridTemplateColumns: 'minmax(0, 1fr)',
-  },
-}));
+  }),
+});
 
 function useVaultHeightEstimate() {
-  const smUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'), { noSsr: true });
-  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'), { noSsr: true });
-  const lgUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
+  const breakpoints = useBreakpoints();
+  const smUp = breakpoints.sm;
+  const mdUp = breakpoints.md;
+  const lgUp = breakpoints.lg;
 
   return useMemo(() => {
     if (lgUp) {
@@ -52,15 +54,15 @@ function useVaultHeightEstimate() {
 type VirtualVaultsListProps = {
   vaultIds: VaultEntity['id'][];
 };
-export const VirtualVaultsList = memo<VirtualVaultsListProps>(function VirtualVaultsList({
+export const VirtualVaultsList = memo(function VirtualVaultsList({
   vaultIds,
-}) {
+}: VirtualVaultsListProps) {
   const classes = useStyles();
   const totalVaults = vaultIds.length;
   const minBatchSize = 10;
   const [renderCount, setRenderCount] = useState(minBatchSize);
-  const containerRef = useRef<HTMLDivElement>();
-  const bottomRef = useRef<HTMLDivElement>();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
   const vaultHeightEstimate = useVaultHeightEstimate();
   const renderVaultIds = useMemo(() => vaultIds.slice(0, renderCount), [vaultIds, renderCount]);
   const remainingVaults = useMemo(() => {
@@ -81,7 +83,7 @@ export const VirtualVaultsList = memo<VirtualVaultsListProps>(function VirtualVa
 
   // Render more vaults on intersection (won't trigger again until placeholder is {vaultHeightEstimate * 2}px off screen)
   const onIntersection = useCallback(
-    inView => {
+    (inView: boolean) => {
       if (inView && remainingVaults > 0 && bottomRef.current) {
         const batchSize =
           minBatchSize +
@@ -145,12 +147,12 @@ export const VirtualVaultsList = memo<VirtualVaultsListProps>(function VirtualVa
 
   return (
     <>
-      <div className={classes.container} ref={containerRef as MutableRefObject<HTMLDivElement>}>
+      <div className={classes.container} ref={containerRef}>
         {renderVaultIds.map(vaultId => (
           <Vault vaultId={vaultId} key={vaultId} />
         ))}
       </div>
-      <div ref={bottomRef as MutableRefObject<HTMLDivElement>} />
+      <div ref={bottomRef} />
       <div style={placeholderStyle} ref={placeholderRef} />
     </>
   );

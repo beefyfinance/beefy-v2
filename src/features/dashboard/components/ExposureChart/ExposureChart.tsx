@@ -1,16 +1,16 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { memo } from 'react';
-import { PieChart } from '../../../../components/PieChart/PieChart';
-import { ChartDetails } from '../ChartDetails';
-import { styles } from './styles';
-import type { ExposureDashboardChartProps } from './types';
+import { PieChart } from '../../../../components/PieChart/PieChart.tsx';
+import { ChartDetails } from '../ChartDetails/ChartDetails.tsx';
+import { styles } from './styles.ts';
+import type { ExposureDashboardChartProps } from './types.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-export const ExposureChart = memo<ExposureDashboardChartProps>(function ExposureChart({
+export const ExposureChart = memo(function ExposureChart({
   title,
   ...rest
-}) {
+}: ExposureDashboardChartProps) {
   const classes = useStyles();
 
   return (

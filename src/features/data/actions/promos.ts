@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getPromosApi } from '../apis/promos';
-import type { PromoCampaignEntity, PromoEntity, PromoPartnerEntity } from '../entities/promo';
-import type { PinnedConfig, PinnedConfigCondition, PromoConfig } from '../apis/promos/types';
-import type { VaultConfig } from '../apis/config-types';
-import type { BeefyState } from '../../../redux-types';
-import { selectAllVisibleVaultIds, selectVaultsPinnedConfigs } from '../selectors/vaults';
-import { selectVaultTotalApy } from '../selectors/apy';
-import { selectVaultCurrentBoostId } from '../selectors/boosts';
-import { selectVaultHasActiveOffchainCampaigns } from '../selectors/rewards';
-import { getUnixNow } from '../../../helpers/date';
+import { getPromosApi } from '../apis/promos/promos.ts';
+import type { PromoCampaignEntity, PromoEntity, PromoPartnerEntity } from '../entities/promo.ts';
+import type { PinnedConfig, PinnedConfigCondition, PromoConfig } from '../apis/promos/types.ts';
+import type { VaultConfig } from '../apis/config-types.ts';
+import type { BeefyState } from '../../../redux-types.ts';
+import { selectAllVisibleVaultIds, selectVaultsPinnedConfigs } from '../selectors/vaults.ts';
+import { selectVaultTotalApy } from '../selectors/apy.ts';
+import { selectVaultCurrentBoostId } from '../selectors/boosts.ts';
+import { selectVaultHasActiveOffchainCampaigns } from '../selectors/rewards.ts';
+import { getUnixNow } from '../../../helpers/date.ts';
 
 export type FulfilledInitPromosPayload = {
   promos: PromoEntity[];

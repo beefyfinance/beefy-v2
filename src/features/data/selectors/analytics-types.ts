@@ -1,5 +1,5 @@
 import type { BigNumber } from 'bignumber.js';
-import type { TokenEntity } from '../entities/token';
+import type { TokenEntity } from '../entities/token.ts';
 
 export type UserStandardPnl = {
   type: 'standard';

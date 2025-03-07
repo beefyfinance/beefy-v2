@@ -1,36 +1,36 @@
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectTransactForceSelection,
   selectTransactNumTokens,
   selectTransactOptionsMode,
   selectTransactSelected,
   selectTransactVaultId,
-} from '../../../../../data/selectors/transact';
-import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import clsx from 'clsx';
-import { ExpandMore } from '@material-ui/icons';
-import { TokenImage, TokensImage } from '../../../../../../components/TokenImage/TokenImage';
-import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/transact-types';
+} from '../../../../../data/selectors/transact.ts';
+import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
+import { css, type CssStyles } from '@repo/styles/css';
+import ExpandMore from '../../../../../../images/icons/mui/ExpandMore.svg?react';
+import { TokenImage, TokensImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
+import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
 import zapIcon from '../../../../../../images/icons/zap.svg';
 import { useTranslation } from 'react-i18next';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
-import type { TokenEntity } from '../../../../../data/entities/token';
-import { AssetsImage } from '../../../../../../components/AssetsImage';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import type { TokenEntity } from '../../../../../data/entities/token.ts';
+import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type TokenSelectButtonProps = {
   index: number;
-  className?: string;
+  css?: CssStyles;
 };
 
-export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSelectButton({
+export const TokenSelectButton = memo(function TokenSelectButton({
   index,
-  className,
-}) {
+  css: cssProp,
+}: TokenSelectButtonProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const classes = useStyles();
@@ -63,11 +63,12 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
 
   return (
     <button
+      type="button"
       onClick={canSwitchToTokenSelect ? handleClick : undefined}
-      className={clsx(classes.button, className, { [classes.buttonMore]: canSwitchToTokenSelect })}
+      className={css(styles.button, cssProp, canSwitchToTokenSelect && styles.buttonMore)}
     >
       {forceSelection ? (
-        <div className={clsx(classes.select, classes.forceSelection)}>
+        <div className={css(styles.select, styles.forceSelection)}>
           <div className={classes.zapIcon}>
             <img src={zapIcon} alt="zap" />
           </div>
@@ -79,7 +80,7 @@ export const TokenSelectButton = memo<TokenSelectButtonProps>(function TokenSele
         <div className={classes.select}>
           <TokensImage
             tokens={isMultiDeposit ? [selection.tokens[index]] : selection.tokens}
-            className={classes.iconAssets}
+            css={styles.iconAssets}
             size={24}
           />
           {tokenSymbol}

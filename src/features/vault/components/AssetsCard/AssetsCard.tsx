@@ -1,14 +1,14 @@
 import { memo } from 'react';
-import { useAppSelector } from '../../../../store';
-import type { VaultEntity } from '../../../data/entities/vault';
-import { selectVaultById } from '../../../data/selectors/vaults';
-import { TokenCard } from '../DetailsCards';
+import { useAppSelector } from '../../../../store.ts';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
+import { TokenCard } from '../DetailsCards/TokenCard.tsx';
 
 interface AssetsCardProps {
   vaultId: VaultEntity['id'];
 }
 
-export const AssetsCard = memo<AssetsCardProps>(function AssetsCard({ vaultId }) {
+export const AssetsCard = memo(function AssetsCard({ vaultId }: AssetsCardProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   return (

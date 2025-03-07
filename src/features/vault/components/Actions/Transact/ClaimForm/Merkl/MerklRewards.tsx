@@ -1,31 +1,32 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import ExpandLess from '../../../../../../../images/icons/mui/ExpandLess.svg?react';
+import ExpandMore from '../../../../../../../images/icons/mui/ExpandMore.svg?react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { groupBy, keyBy } from 'lodash-es';
-import { type VaultEntity } from '../../../../../../data/entities/vault';
+import { type VaultEntity } from '../../../../../../data/entities/vault.ts';
 import {
   selectUserMerklUnifiedRewardsForChain,
   selectUserMerklUnifiedRewardsForVault,
   type UnifiedReward,
-} from '../../../../../../data/selectors/user-rewards';
-import { useAppDispatch, useAppSelector } from '../../../../../../../store';
-import type { ChainEntity, ChainId } from '../../../../../../data/entities/chain';
-import { formatUsd } from '../../../../../../../helpers/format';
-import { BIG_ZERO } from '../../../../../../../helpers/big-number';
-import { Claim } from './Claim/Claim';
-import { styles } from './styles';
-import { RewardList } from '../RewardList/RewardList';
-import { Source } from '../Source/Source';
-import { isNonEmptyArray, type NonEmptyArray } from '../../../../../../data/utils/array-utils';
-import { selectChainById } from '../../../../../../data/selectors/chains';
-import { strictEntries } from '../../../../../../../helpers/object';
-import { selectMerklUserRewardsStatus } from '../../../../../../data/selectors/data-loader';
-import { fetchUserMerklRewardsAction } from '../../../../../../data/actions/user-rewards/merkl-user-rewards';
-import { AlertWarning } from '../../../../../../../components/Alerts';
-import { RefreshButton } from '../RefreshButton/RefreshButton';
+} from '../../../../../../data/selectors/user-rewards.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../../store.ts';
+import type { ChainEntity, ChainId } from '../../../../../../data/entities/chain.ts';
+import { formatUsd } from '../../../../../../../helpers/format.ts';
+import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
+import { Claim } from './Claim/Claim.tsx';
+import { styles } from './styles.ts';
+import { RewardList } from '../RewardList/RewardList.tsx';
+import { Source } from '../Source/Source.tsx';
+import { isNonEmptyArray, type NonEmptyArray } from '../../../../../../data/utils/array-utils.ts';
+import { selectChainById } from '../../../../../../data/selectors/chains.ts';
+import { strictEntries } from '../../../../../../../helpers/object.ts';
+import { selectMerklUserRewardsStatus } from '../../../../../../data/selectors/data-loader.ts';
+import { fetchUserMerklRewardsAction } from '../../../../../../data/actions/user-rewards/merkl-user-rewards.ts';
+import { AlertWarning } from '../../../../../../../components/Alerts/Alerts.tsx';
+import { RefreshButton } from '../RefreshButton/RefreshButton.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function useUserRewardsLoader(walletAddress: string, autoRefresh: boolean) {
   const dispatch = useAppDispatch();
@@ -59,12 +60,12 @@ type MerklRewardsProps = {
   deposited: boolean;
 };
 
-export const MerklRewards = memo<MerklRewardsProps>(function MerklRewards({
+export const MerklRewards = memo(function MerklRewards({
   vaultId,
   chainId,
   walletAddress,
   deposited,
-}) {
+}: MerklRewardsProps) {
   const { t } = useTranslation();
   const vaultRewards = useAppSelector(state =>
     selectUserMerklUnifiedRewardsForVault(state, vaultId, walletAddress)
@@ -109,12 +110,12 @@ type ClaimableRewardsProps = {
   deposited: boolean;
 };
 
-const ClaimableRewards = memo<ClaimableRewardsProps>(function ClaimableRewards({
+const ClaimableRewards = memo(function ClaimableRewards({
   vaultRewards,
   walletAddress,
   deposited,
   vaultChainId,
-}) {
+}: ClaimableRewardsProps) {
   const byChain = useMemo(
     () =>
       groupBy(vaultRewards, r => r.token.chainId) as Partial<
@@ -148,7 +149,7 @@ type ClaimableChainRewardsProps = {
   withRefresh?: boolean;
 };
 
-const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function ClaimableChainRewards({
+const ClaimableChainRewards = memo(function ClaimableChainRewards({
   chainId,
   vaultChainId,
   vaultRewards,
@@ -156,7 +157,7 @@ const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function Claimabl
   deposited,
   withChain,
   withRefresh,
-}) {
+}: ClaimableChainRewardsProps) {
   const { t } = useTranslation();
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const hasClaimable = useMemo(() => vaultRewards.some(r => r.amount.gt(BIG_ZERO)), [vaultRewards]);
@@ -184,11 +185,11 @@ type OtherRewardsProps = {
   walletAddress: string;
 };
 
-const OtherRewards = memo<OtherRewardsProps>(function OtherRewards({
+const OtherRewards = memo(function OtherRewards({
   chainId,
   vaultRewards,
   walletAddress,
-}) {
+}: OtherRewardsProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const [otherOpen, setOtherOpen] = useState<boolean>(false);
@@ -228,7 +229,7 @@ const OtherRewards = memo<OtherRewardsProps>(function OtherRewards({
 
   return (
     <div className={classes.otherRewards}>
-      <button onClick={onToggle} className={classes.otherRewardsToggle}>
+      <button type="button" onClick={onToggle} className={classes.otherRewardsToggle}>
         {t('Rewards-OtherRewards', { value: formatUsd(otherRewardsUsd) })}
         {otherOpen ? (
           <ExpandLess className={classes.otherRewardsToggleIcon} viewBox="5 7.59 16.43 9.41" />
@@ -239,7 +240,7 @@ const OtherRewards = memo<OtherRewardsProps>(function OtherRewards({
       {otherOpen ? (
         <RewardList
           chainId={chainId}
-          className={classes.otherRewardsList}
+          css={styles.otherRewardsList}
           rewards={otherRewards}
           deposited={false}
         />
@@ -252,20 +253,20 @@ type RewardsRefresherProps = {
   walletAddress: string;
 };
 
-const AutomaticUserRewardsRefresher = memo<RewardsRefresherProps>(
-  function AutomaticUserRewardsRefresher({ walletAddress }) {
-    const status = useUserRewardsLoader(walletAddress, true);
-    if (status.isError) {
-      return <AlertWarning>{'Failed to fetch user rewards from Merkl API.'}</AlertWarning>;
-    }
-
-    return null;
-  }
-);
-
-const UserRewardsRefreshButton = memo<RewardsRefresherProps>(function UserRewardsRefreshButton({
+const AutomaticUserRewardsRefresher = memo(function AutomaticUserRewardsRefresher({
   walletAddress,
-}) {
+}: RewardsRefresherProps) {
+  const status = useUserRewardsLoader(walletAddress, true);
+  if (status.isError) {
+    return <AlertWarning>{'Failed to fetch user rewards from Merkl API.'}</AlertWarning>;
+  }
+
+  return null;
+});
+
+const UserRewardsRefreshButton = memo(function UserRewardsRefreshButton({
+  walletAddress,
+}: RewardsRefresherProps) {
   const { t } = useTranslation();
   const status = useUserRewardsLoader(walletAddress, false);
   const canRefresh = status.canLoad && !!status.handleLoad;
@@ -279,15 +280,15 @@ const UserRewardsRefreshButton = memo<RewardsRefresherProps>(function UserReward
         status.isError
           ? 'Transact-Claim-Refresh-Merkl-Error'
           : status.isLoading
-          ? 'Transact-Claim-Refresh-Merkl-Loading'
-          : 'Transact-Claim-Refresh-Merkl-Loaded'
+            ? 'Transact-Claim-Refresh-Merkl-Loading'
+            : 'Transact-Claim-Refresh-Merkl-Loaded'
       )}
       text={
         status.isLoading
           ? undefined
           : canRefresh
-          ? t('Transact-Claim-Refresh')
-          : t('Transact-Claim-Refresh-Wait')
+            ? t('Transact-Claim-Refresh')
+            : t('Transact-Claim-Refresh-Wait')
       }
       status={status.isError ? 'error' : status.isLoading ? 'loading' : 'loaded'}
       disabled={!canRefresh}

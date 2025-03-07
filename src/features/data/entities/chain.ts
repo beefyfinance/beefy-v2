@@ -1,4 +1,4 @@
-import type { ChainConfig } from '../apis/config-types';
+import type { ChainConfig } from '../apis/config-types.ts';
 
 /**
  * The chain entity as you know it

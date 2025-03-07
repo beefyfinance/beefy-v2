@@ -2,7 +2,7 @@ import type {
   ChainExposurePayloadData,
   GenericExposurePayloadData,
   TokenExposurePayloadData,
-} from '../../../../components/PieChart/types';
+} from '../../../../components/PieChart/types.ts';
 
 type BaseExposureDashboardChartProps = {
   title?: string;

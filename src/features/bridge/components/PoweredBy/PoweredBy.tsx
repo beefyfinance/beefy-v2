@@ -1,33 +1,28 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { styles } from './styles';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
 import { useTranslation } from 'react-i18next';
 import logoAxelar from '../../../../images/bridge-providers/logos/axelar.svg';
 import logoLayerZero from '../../../../images/bridge-providers/logos/layer-zero.svg';
 import logoChainlink from '../../../../images/bridge-providers/logos/chainlink.svg';
 import logoOptimism from '../../../../images/bridge-providers/logos/optimism.svg';
 import logoConnext from '../../../../images/bridge-providers/logos/connext.svg';
-import clsx from 'clsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-export type PoweredByProps = {
-  className?: string;
-};
-
-export const PoweredBy = memo<PoweredByProps>(function PoweredBy({ className }) {
+export const PoweredBy = memo(function PoweredBy() {
   const classes = useStyles();
   const { t } = useTranslation();
 
   return (
-    <div className={clsx(classes.poweredBy, className)}>
+    <div>
       <div className={classes.poweredByLabel}>{t('Bridge-Intro-PoweredBy')}</div>
       <div className={classes.poweredByLogos}>
-        <img src={logoLayerZero} alt={'LayerZero'} height="32" />
-        <img src={logoAxelar} alt={'Axelar'} height="24" />
-        <img src={logoChainlink} alt={'Chainlink'} height="32" />
-        <img src={logoOptimism} alt={'Optimism'} height="24" />
-        <img src={logoConnext} alt={'Connext'} height="24" />
+        <img src={logoLayerZero} alt={'LayerZero'} style={{ height: '32px' }} />
+        <img src={logoAxelar} alt={'Axelar'} style={{ height: '24px' }} />
+        <img src={logoChainlink} alt={'Chainlink'} style={{ height: '32px' }} />
+        <img src={logoOptimism} alt={'Optimism'} style={{ height: '24px' }} />
+        <img src={logoConnext} alt={'Connext'} style={{ height: '24px' }} />
       </div>
     </div>
   );

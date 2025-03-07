@@ -1,23 +1,22 @@
 import { memo } from 'react';
-import { NotificationDot } from './NotificationDot';
-import type { BadgeComponentProps } from './types';
-import { useHaveUnreadArticle, useHaveUnreadProposal } from './hooks';
+import { NotificationDot } from './NotificationDot.tsx';
+import { useHaveUnreadArticle, useHaveUnreadProposal } from './hooks.tsx';
 
-export const UnreadDots = memo<BadgeComponentProps>(function UnreadDots(props) {
+export const UnreadDots = memo(function UnreadDots() {
   const haveUnreadArticle = useHaveUnreadArticle();
   const haveUnreadProposal = useHaveUnreadProposal();
 
-  return haveUnreadArticle || haveUnreadProposal ? <NotificationDot {...props} /> : null;
+  return haveUnreadArticle || haveUnreadProposal ? <NotificationDot /> : null;
 });
 
-export const UnreadArticleDot = memo<BadgeComponentProps>(function UnreadArticleDot(props) {
+export const UnreadArticleDot = memo(function UnreadArticleDot() {
   const haveUnreadArticle = useHaveUnreadArticle();
 
-  return haveUnreadArticle ? <NotificationDot {...props} /> : null;
+  return haveUnreadArticle ? <NotificationDot /> : null;
 });
 
-export const UnreadProposalDot = memo<BadgeComponentProps>(function UnreadProposalDot(props) {
+export const UnreadProposalDot = memo(function UnreadProposalDot() {
   const haveUnreadProposal = useHaveUnreadProposal();
 
-  return haveUnreadProposal ? <NotificationDot {...props} /> : null;
+  return haveUnreadProposal ? <NotificationDot /> : null;
 });

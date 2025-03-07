@@ -1,11 +1,11 @@
-import { useAppSelector } from '../../../../store';
-import { selectTokenByAddress } from '../../../data/selectors/tokens';
+import { useAppSelector } from '../../../../store.ts';
+import { selectTokenByAddress } from '../../../data/selectors/tokens.ts';
 import { useMemo } from 'react';
-import { BIG_ONE, BIG_ZERO } from '../../../../helpers/big-number';
-import type { CalculatedBreakdownData } from './types';
-import type { TokenLpBreakdown } from '../../../data/entities/token';
-import type { VaultEntity } from '../../../data/entities/vault';
-import { selectUserLpBreakdownBalance } from '../../../data/selectors/balance';
+import { BIG_ONE, BIG_ZERO } from '../../../../helpers/big-number.ts';
+import type { CalculatedBreakdownData } from './types.ts';
+import type { TokenLpBreakdown } from '../../../data/entities/token.ts';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
+import { selectUserLpBreakdownBalance } from '../../../data/selectors/balance.ts';
 
 export const chartColors = [
   '#D9E7F2',

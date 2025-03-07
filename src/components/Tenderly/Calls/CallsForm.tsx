@@ -1,8 +1,8 @@
 import { memo } from 'react';
-import { TechLoader } from '../../TechLoader';
-import { useAppSelector } from '../../../store';
-import { selectTenderlyStatus } from '../../../features/data/selectors/tenderly';
-import { ErrorMessage } from '../Error/ErrorMessage';
+import { TechLoader } from '../../TechLoader/TechLoader.tsx';
+import { useAppSelector } from '../../../store.ts';
+import { selectTenderlyStatus } from '../../../features/data/selectors/tenderly.ts';
+import { ErrorMessage } from '../Error/ErrorMessage.tsx';
 
 export const CallsForm = memo(function CallsForm() {
   const status = useAppSelector(selectTenderlyStatus);

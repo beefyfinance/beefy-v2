@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { selectShouldInitDashboardForUser } from '../data/selectors/data-loader';
-import { selectIsDashboardDataLoadedByAddress } from '../data/selectors/analytics';
-import { initDashboardByAddress } from '../data/actions/analytics';
+import { useAppDispatch, useAppSelector } from '../../store.ts';
+import { selectShouldInitDashboardForUser } from '../data/selectors/data-loader.ts';
+import { selectIsDashboardDataLoadedByAddress } from '../data/selectors/analytics.ts';
+import { initDashboardByAddress } from '../data/actions/analytics.ts';
 
 export function useInitDashboard(address: string) {
   const dispatch = useAppDispatch();

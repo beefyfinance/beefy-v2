@@ -1,22 +1,22 @@
 import { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
-import { CurrencyFlag } from '../CurrencyFlag';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
-import { FormStep } from '../../../../../data/reducers/on-ramp-types';
-import { useAppDispatch } from '../../../../../../store';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
+import { CurrencyFlag } from '../CurrencyFlag/CurrencyFlag.tsx';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
+import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
+import { useAppDispatch } from '../../../../../../store.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type FiatTitleAdornmentProps = {
   currencyCode: string;
-  className?: string;
+  css?: CssStyles;
 };
-export const FiatTitleAdornment = memo<FiatTitleAdornmentProps>(function TokenIconAdornment({
+export const FiatTitleAdornment = memo(function TokenIconAdornment({
   currencyCode,
-  className,
-}) {
+  css: cssProp,
+}: FiatTitleAdornmentProps) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
 
@@ -25,7 +25,7 @@ export const FiatTitleAdornment = memo<FiatTitleAdornmentProps>(function TokenIc
   }, [dispatch]);
 
   return (
-    <button className={clsx(classes.fiatAdornment, className)} onClick={handleClick}>
+    <button type="button" className={css(styles.fiatAdornment, cssProp)} onClick={handleClick}>
       <CurrencyFlag currencyCode={currencyCode} className={classes.flag} />
       {currencyCode}
     </button>

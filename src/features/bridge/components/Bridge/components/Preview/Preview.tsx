@@ -1,29 +1,29 @@
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useTranslation } from 'react-i18next';
-import { styles } from './styles';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { styles } from './styles.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
-} from '../../../../../data/selectors/wallet';
-import { selectChainById } from '../../../../../data/selectors/chains';
+} from '../../../../../data/selectors/wallet.ts';
+import { selectChainById } from '../../../../../data/selectors/chains.ts';
 import {
   selectBridgeDepositTokenForChainId,
   selectBridgeFormState,
   selectBridgeHasSelectedQuote,
-} from '../../../../../data/selectors/bridge';
-import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
-import { Button } from '../../../../../../components/Button';
-import { ChainSelector } from '../ChainSelector';
-import { AmountSelector } from '../AmountSelector';
-import { FormValidator } from '../FormValidator';
-import { QuoteSelector } from '../QuoteSelector';
-import { confirmBridgeForm } from '../../../../../data/actions/bridge';
-import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
-import { ReceiverSelector } from '../ReceiverSelector';
+} from '../../../../../data/selectors/bridge.ts';
+import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet.ts';
+import { Button } from '../../../../../../components/Button/Button.tsx';
+import { ChainSelector } from '../ChainSelector/ChainSelector.tsx';
+import { AmountSelector } from '../AmountSelector/AmountSelector.tsx';
+import { FormValidator } from '../FormValidator/FormValidator.tsx';
+import { QuoteSelector } from '../QuoteSelector/QuoteSelector.tsx';
+import { confirmBridgeForm } from '../../../../../data/actions/bridge.ts';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
+import { ReceiverSelector } from '../ReceiverSelector/ReceiverSelector.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function PreviewImpl() {
   const { t } = useTranslation();

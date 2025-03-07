@@ -1,13 +1,13 @@
 import { BigNumber } from 'bignumber.js';
-import { SolidlyPairAbi } from '../../../../../config/abi/SolidlyPairAbi';
-import type { ChainEntity } from '../../../entities/chain';
+import { SolidlyPairAbi } from '../../../../../config/abi/SolidlyPairAbi.ts';
+import type { ChainEntity } from '../../../entities/chain.ts';
 import {
   BIG_ONE,
   BIG_ZERO,
   bigNumberToBigInt,
   fromWei,
   toWei,
-} from '../../../../../helpers/big-number';
+} from '../../../../../helpers/big-number.ts';
 import type {
   AddLiquidityRatio,
   AddLiquidityResult,
@@ -15,16 +15,16 @@ import type {
   RemoveLiquidityResult,
   SwapFeeParams,
   SwapResult,
-} from '../types';
-import type { ZapStep, ZapStepRequest, ZapStepResponse } from '../../transact/zap/types';
-import type { TokenAmount } from '../../transact/transact-types';
-import { slipAllBy, slipBy } from '../../transact/helpers/amounts';
-import { isTokenNative, type TokenEntity } from '../../../entities/token';
-import { getInsertIndex } from '../../transact/helpers/zap';
-import type { AmmEntitySolidly } from '../../../entities/zap';
-import { onlyOneTokenAmount } from '../../transact/helpers/options';
+} from '../types.ts';
+import type { ZapStep, ZapStepRequest, ZapStepResponse } from '../../transact/zap/types.ts';
+import type { TokenAmount } from '../../transact/transact-types.ts';
+import { slipAllBy, slipBy } from '../../transact/helpers/amounts.ts';
+import { isTokenNative, type TokenEntity } from '../../../entities/token.ts';
+import { getInsertIndex } from '../../transact/helpers/zap.ts';
+import type { AmmEntitySolidly } from '../../../entities/zap.ts';
+import { onlyOneTokenAmount } from '../../transact/helpers/options.ts';
 import { encodeFunctionData, type Abi, type Address } from 'viem';
-import { fetchContract } from '../../rpc-contract/viem-contract';
+import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 
 export enum MetadataKeys {
   decimals0,

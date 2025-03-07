@@ -1,11 +1,17 @@
 import { BigNumber } from 'bignumber.js';
 import { isString } from 'lodash-es';
-import { fetchChainConfigs } from '../../actions/chains';
-import { fetchAllVaults } from '../../actions/vaults';
-import { mapValuesDeep } from '../../utils/array-utils';
-import { sleep } from '../../utils/async-utils';
-import { featureFlag_replayReduxActions } from '../../utils/feature-flags';
-import { store } from '../../../../store';
+import { fetchChainConfigs } from '../../actions/chains.ts';
+import { fetchAllVaults } from '../../actions/vaults.ts';
+import { mapValuesDeep } from '../../utils/array-utils.ts';
+import { sleep } from '../../utils/async-utils.ts';
+import { featureFlag_replayReduxActions } from '../../utils/feature-flags.ts';
+import { store } from '../../../../store.ts';
+import type { AnyAction } from '@reduxjs/toolkit';
+
+declare const window: {
+  __replay_action_log?: typeof replayReduxActions;
+} & Window &
+  typeof globalThis;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function replayReduxActions(actionsList: any[], delayMs: 200) {
@@ -32,13 +38,13 @@ export async function replayReduxActions(actionsList: any[], delayMs: 200) {
           return new Date(val.replace('__DATE__', ''));
         }
         return val;
-      });
-      await store.dispatch(unserializedAction);
+      }) as AnyAction;
+      store.dispatch(unserializedAction);
     }
     await sleep(delayMs);
   }
 }
 
-if (featureFlag_replayReduxActions()) {
-  globalThis.__replay_action_log = replayReduxActions;
+if (window && featureFlag_replayReduxActions()) {
+  window.__replay_action_log = replayReduxActions;
 }

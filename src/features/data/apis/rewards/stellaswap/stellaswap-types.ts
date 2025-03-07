@@ -53,7 +53,9 @@ export type StellaSwapPoolRewards = {
   positions: Array<unknown>;
 };
 
-export type StellaSwapRewardsResponse = StellaSwapResponse<{ pools: Array<StellaSwapPoolRewards> }>;
+export type StellaSwapRewardsResponse = StellaSwapResponse<{
+  pools: Array<StellaSwapPoolRewards>;
+}>;
 export type StellaSwapPoolRewardsResponse = StellaSwapResponse<StellaSwapPoolRewards>;
 
 export interface IStellaSwapRewardsApi {

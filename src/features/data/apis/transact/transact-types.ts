@@ -1,20 +1,20 @@
-import type { VaultEntity } from '../../entities/vault';
-import type { BeefyStateFn } from '../../../../redux-types';
+import type { VaultEntity } from '../../entities/vault.ts';
+import type { BeefyStateFn } from '../../../../redux-types.ts';
 import { type BigNumber } from 'bignumber.js';
-import type { ChainEntity } from '../../entities/chain';
-import type { TokenEntity, TokenErc20 } from '../../entities/token';
-import type { Step } from '../../reducers/wallet/stepper';
+import type { ChainEntity } from '../../entities/chain.ts';
+import type { TokenEntity, TokenErc20 } from '../../entities/token.ts';
+import type { Step } from '../../reducers/wallet/stepper.ts';
 import type { Namespace, TFunction } from 'react-i18next';
-import { TransactMode } from '../../reducers/wallet/transact-types';
-import type { QuoteResponse } from './swap/ISwapProvider';
+import { TransactMode } from '../../reducers/wallet/transact-types.ts';
+import type { QuoteResponse } from './swap/ISwapProvider.ts';
 import type {
   AmmEntitySolidly,
   AmmEntityUniswapLike,
   AmmEntityUniswapV2,
-} from '../../entities/zap';
-import type { PlatformEntity } from '../../entities/platform';
-import type { CurveTokenOption } from './strategies/curve/types';
-import type { ZapStrategyId } from './strategies/strategy-configs';
+} from '../../entities/zap.ts';
+import type { PlatformEntity } from '../../entities/platform.ts';
+import type { CurveTokenOption } from './strategies/curve/types.ts';
+import type { ZapStrategyId } from './strategies/strategy-configs.ts';
 
 export type TokenAmount<T extends TokenEntity = TokenEntity> = {
   amount: BigNumber;
@@ -179,15 +179,27 @@ export type SingleWithdrawOption = ZapBaseWithdrawOption & {
 export type CurveDepositOption = ZapBaseDepositOption & {
   strategyId: 'curve';
 } & (
-    | { via: 'direct'; viaToken: CurveTokenOption }
-    | { via: 'aggregator'; viaTokens: CurveTokenOption[] }
+    | {
+        via: 'direct';
+        viaToken: CurveTokenOption;
+      }
+    | {
+        via: 'aggregator';
+        viaTokens: CurveTokenOption[];
+      }
   );
 
 export type CurveWithdrawOption = ZapBaseWithdrawOption & {
   strategyId: 'curve';
 } & (
-    | { via: 'direct'; viaToken: CurveTokenOption }
-    | { via: 'aggregator'; viaTokens: CurveTokenOption[] }
+    | {
+        via: 'direct';
+        viaToken: CurveTokenOption;
+      }
+    | {
+        via: 'aggregator';
+        viaTokens: CurveTokenOption[];
+      }
   );
 
 export type BalancerOptionSingleDirectPart = {
@@ -518,11 +530,14 @@ export type SingleDepositQuote = BaseZapQuote<SingleDepositOption> & {
 
 export type UniswapLikePoolDepositQuote<T extends UniswapLikeDepositOption<AmmEntityUniswapLike>> =
   BaseZapQuote<T> & {
-    quote: { from: TokenAmount; to: TokenAmount };
+    quote: {
+      from: TokenAmount;
+      to: TokenAmount;
+    };
   };
 
 export type UniswapLikeAggregatorDepositQuote<
-  T extends UniswapLikeDepositOption<AmmEntityUniswapLike>
+  T extends UniswapLikeDepositOption<AmmEntityUniswapLike>,
 > = BaseZapQuote<T> & {
   lpQuotes: (QuoteResponse | undefined)[];
 };
@@ -595,15 +610,18 @@ export type CowcentratedZapWithdrawQuote = BaseZapQuote<CowcentratedZapWithdrawO
 export type SingleWithdrawQuote = BaseZapQuote<SingleWithdrawOption>;
 
 export type UniswapLikeBreakWithdrawQuote<
-  T extends UniswapLikeWithdrawOption<AmmEntityUniswapLike>
+  T extends UniswapLikeWithdrawOption<AmmEntityUniswapLike>,
 > = BaseZapQuote<T>;
 export type UniswapLikePoolWithdrawQuote<
-  T extends UniswapLikeWithdrawOption<AmmEntityUniswapLike>
+  T extends UniswapLikeWithdrawOption<AmmEntityUniswapLike>,
 > = BaseZapQuote<T> & {
-  quote: { from: TokenAmount; to: TokenAmount };
+  quote: {
+    from: TokenAmount;
+    to: TokenAmount;
+  };
 };
 export type UniswapLikeAggregatorWithdrawQuote<
-  T extends UniswapLikeWithdrawOption<AmmEntityUniswapLike>
+  T extends UniswapLikeWithdrawOption<AmmEntityUniswapLike>,
 > = BaseZapQuote<T> & {
   lpQuotes: QuoteResponse[];
 };
@@ -686,20 +704,28 @@ export type TransactQuote = DepositQuote | WithdrawQuote;
 
 export type ZapStrategyIdToDepositOption<T extends ZapStrategyId> = Extract<
   DepositOption,
-  { strategyId: T }
+  {
+    strategyId: T;
+  }
 >;
 export type ZapStrategyIdToWithdrawOption<T extends ZapStrategyId> = Extract<
   WithdrawOption,
-  { strategyId: T }
+  {
+    strategyId: T;
+  }
 >;
 export type ZapStrategyIdToDepositQuote<T extends ZapStrategyId> = Extract<
   ZapDepositQuote,
-  { strategyId: T }
+  {
+    strategyId: T;
+  }
 >;
 
 export type ZapStrategyIdToWithdrawQuote<T extends ZapStrategyId> = Extract<
   ZapWithdrawQuote,
-  { strategyId: T }
+  {
+    strategyId: T;
+  }
 >;
 
 export type QuoteOutputTokenAmountChange = TokenAmount & {

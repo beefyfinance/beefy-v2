@@ -1,23 +1,25 @@
 import { lazy, memo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { TransactState } from './TransactState';
-import { useAppSelector } from '../../../../../../store';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
-import { selectTokenByAddressOrUndefined } from '../../../../../data/selectors/tokens';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { TransactState } from './TransactState.tsx';
+import { useAppSelector } from '../../../../../../store.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { selectTokenByAddressOrUndefined } from '../../../../../data/selectors/tokens.ts';
 
-const CurveZap = lazy(() => import(`./CurveZap`).then(module => ({ default: module.CurveZap })));
+const CurveZap = lazy(() =>
+  import('./CurveZap.tsx').then(module => ({ default: module.CurveZap }))
+);
 const BalancerZap = lazy(() =>
-  import(`./BalancerZap`).then(module => ({ default: module.BalancerZap }))
+  import('./BalancerZap.tsx').then(module => ({ default: module.BalancerZap }))
 );
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type TransactDebuggerProps = {
   vaultId: string;
 };
 
-export const TransactDebugger = memo<TransactDebuggerProps>(function TransactDebugger({ vaultId }) {
+const TransactDebugger = memo(function TransactDebugger({ vaultId }: TransactDebuggerProps) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const depositToken = useAppSelector(state =>
@@ -36,3 +38,6 @@ export const TransactDebugger = memo<TransactDebuggerProps>(function TransactDeb
     </div>
   );
 });
+
+// eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
+export default TransactDebugger;

@@ -1,14 +1,14 @@
 import { BigNumber } from 'bignumber.js';
-import { toWei } from '../../../../../helpers/big-number';
-import type { InputTokenAmount } from '../transact-types';
-import type { VaultStandard } from '../../../entities/vault';
-import type { BeefyState } from '../../../../../redux-types';
-import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../selectors/tokens';
-import { selectUserBalanceOfToken } from '../../../selectors/balance';
-import { selectVaultPricePerFullShare } from '../../../selectors/vaults';
-import { selectFeesByVaultId } from '../../../selectors/fees';
-import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi';
-import { fetchContract } from '../../rpc-contract/viem-contract';
+import { toWei } from '../../../../../helpers/big-number.ts';
+import type { InputTokenAmount } from '../transact-types.ts';
+import type { VaultStandard } from '../../../entities/vault.ts';
+import type { BeefyState } from '../../../../../redux-types.ts';
+import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../selectors/tokens.ts';
+import { selectUserBalanceOfToken } from '../../../selectors/balance.ts';
+import { selectVaultPricePerFullShare } from '../../../selectors/vaults.ts';
+import { selectFeesByVaultId } from '../../../selectors/fees.ts';
+import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi.ts';
+import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import type { Address } from 'abitype';
 
 export function getVaultWithdrawnFromState(

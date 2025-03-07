@@ -3,7 +3,7 @@ import type {
   MarketMakerHoldingConfig,
   TokenHoldingConfig,
   VaultHoldingConfig,
-} from '../apis/config-types';
+} from '../apis/config-types.ts';
 
 type TreasuryHoldingConfigToEntity<T> = Omit<T, 'usdValue' | 'balance' | 'pricePerFullShare'> & {
   usdValue: BigNumber;

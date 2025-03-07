@@ -1,5 +1,24 @@
 import { createTransport, type Transport, type TransportConfig } from 'viem';
-import type { OnResponseFn } from 'viem/_types/clients/transports/fallback';
+
+// not exported from viem
+type OnResponseFn = (
+  args: {
+    method: string;
+    params: unknown[];
+    transport: ReturnType<Transport>;
+  } & (
+    | {
+        error?: undefined;
+        response: unknown;
+        status: 'success';
+      }
+    | {
+        error: Error;
+        response?: undefined;
+        status: 'error';
+      }
+  )
+) => void;
 
 type RankOptions = {
   /**
@@ -106,6 +125,7 @@ export function customFallback(
               return fetch(i + 1);
             }
           };
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return fetch();
         },
         retryCount,

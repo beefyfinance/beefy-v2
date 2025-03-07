@@ -1,9 +1,9 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { getConfigApi } from '../apis/instances';
-import type { ChainConfig } from '../apis/config-types';
-import type { ChainEntity, ChainId } from '../entities/chain';
-import { isObject } from 'lodash-es';
-import { rpcClientManager } from '../apis/rpc-contract/rpc-manager';
+import { getConfigApi } from '../apis/instances.ts';
+import type { ChainConfig } from '../apis/config-types.ts';
+import type { ChainEntity, ChainId } from '../entities/chain.ts';
+import { isObject, isPlainObject } from 'lodash-es';
+import { rpcClientManager } from '../apis/rpc-contract/rpc-manager.ts';
 
 export interface FulfilledPayload {
   chainConfigs: ChainConfig[];
@@ -36,7 +36,7 @@ const addLocalStoredRpcs = (chainId: ChainId, rpc: string) => {
   try {
     const readStorage = window?.localStorage.getItem('activeRpcsByChainId');
     const parsedValues = readStorage ? JSON.parse(readStorage) : {};
-    if (isObject(parsedValues)) {
+    if (isPlainObject(parsedValues)) {
       parsedValues[chainId] = [rpc];
       window?.localStorage.setItem('activeRpcsByChainId', JSON.stringify(parsedValues));
     }
@@ -49,7 +49,7 @@ const removeLocalStoredRpcs = (chainId: ChainId) => {
   try {
     const readStorage = window?.localStorage.getItem('activeRpcsByChainId');
     const parsedValues = readStorage ? JSON.parse(readStorage) : {};
-    if (isObject(parsedValues)) {
+    if (isPlainObject(parsedValues)) {
       if (parsedValues[chainId]) {
         delete parsedValues[chainId];
         window?.localStorage.setItem('activeRpcsByChainId', JSON.stringify(parsedValues));

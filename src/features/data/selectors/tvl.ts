@@ -1,14 +1,18 @@
-import { isCowcentratedLikeVault, isCowcentratedVault, type VaultEntity } from '../entities/vault';
-import type { BeefyState } from '../../../redux-types';
-import { BIG_ZERO } from '../../../helpers/big-number';
+import {
+  isCowcentratedLikeVault,
+  isCowcentratedVault,
+  type VaultEntity,
+} from '../entities/vault.ts';
+import type { BeefyState } from '../../../redux-types.ts';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import {
   selectLpBreakdownByOracleId,
   selectLpBreakdownForVault,
   selectTokenByAddress,
-} from './tokens';
-import { selectVaultById } from './vaults';
+} from './tokens.ts';
+import { selectVaultById } from './vaults.ts';
 import { BigNumber } from 'bignumber.js';
-import type { TvlBreakdown } from './tvl-types';
+import type { TvlBreakdown } from './tvl-types.ts';
 
 export const selectVaultTvl = (state: BeefyState, vaultId: VaultEntity['id']) =>
   state.biz.tvl.byVaultId[vaultId]?.tvl || BIG_ZERO;

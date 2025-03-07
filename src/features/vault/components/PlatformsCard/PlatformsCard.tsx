@@ -1,16 +1,16 @@
 import { memo } from 'react';
-import { useAppSelector } from '../../../../store';
-import type { VaultEntity } from '../../../data/entities/vault';
-import { selectVaultById } from '../../../data/selectors/vaults';
-import { PlatformCard } from '../DetailsCards';
-import { selectPlatformById } from '../../../data/selectors/platforms';
-import { selectTokenByAddress } from '../../../data/selectors/tokens';
+import { useAppSelector } from '../../../../store.ts';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
+import { PlatformCard } from '../DetailsCards/PlatformCard.tsx';
+import { selectPlatformById } from '../../../data/selectors/platforms.ts';
+import { selectTokenByAddress } from '../../../data/selectors/tokens.ts';
 
 interface PlatformsCardProps {
   vaultId: VaultEntity['id'];
 }
 
-export const PlatformsCard = memo<PlatformsCardProps>(function PlatformsCard({ vaultId }) {
+export const PlatformsCard = memo(function PlatformsCard({ vaultId }: PlatformsCardProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const platform = useAppSelector(state => selectPlatformById(state, vault.platformId));
   const depositToken = useAppSelector(state =>

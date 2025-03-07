@@ -1,15 +1,14 @@
-import type { Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
 import { memo } from 'react';
-import { SortColumnHeader } from '../../../../../../../../components/SortColumnHeader';
-import { InfoGrid } from '../InfoGrid';
-import { Row } from '../../../Row/Row';
-import type { SortedOptions } from '../../hook';
+import { SortColumnHeader } from '../../../../../../../../components/SortColumnHeader/SortColumnHeader.tsx';
+import { InfoGrid } from '../InfoGrid/InfoGrid.tsx';
+import { Row } from '../../../Row/Row.tsx';
+import type { SortedOptions } from '../../hook.tsx';
+import { css, type CssStyles } from '@repo/styles/css';
 
 const SORT_COLUMNS: {
   label: string;
-  sortKey: string;
-  className?: string;
+  sortKey: SortedOptions['sort'];
+  css?: CssStyles;
 }[] = [
   { label: 'Dashboard-Filter-Amount', sortKey: 'amount' },
   { label: 'Dashboard-Filter-Balance', sortKey: 'balance' },
@@ -17,39 +16,37 @@ const SORT_COLUMNS: {
   { label: 'Dashboard-Filter-UsdBalance', sortKey: 'usdBalance' },
 ];
 
-const useStyles = makeStyles((theme: Theme) => ({
-  filter: {
+const styles = {
+  filter: css.raw({
     borderRadius: '8px 8px 0px 0px',
-    [theme.breakpoints.down('sm')]: {
+    mdDown: {
       display: 'none',
     },
-  },
-  justifyStart: {
+  }),
+  justifyStart: css.raw({
     justifyContent: 'start',
-  },
-}));
+  }),
+};
 
 interface TransactionsFilterProps {
   sortOptions: SortedOptions;
-  handleSort: (field: string) => void;
+  handleSort: (field: SortedOptions['sort']) => void;
 }
 
-export const TransactionsFilter = memo<TransactionsFilterProps>(function SortColumns({
+export const TransactionsFilter = memo(function SortColumns({
   handleSort,
   sortOptions,
-}) {
-  const classes = useStyles();
-
+}: TransactionsFilterProps) {
   const { sort, sortDirection } = sortOptions;
 
   return (
-    <Row className={classes.filter}>
+    <Row css={styles.filter}>
       <SortColumnHeader
         label={'Dashboard-Filter-Date'}
         sortKey={'datetime'}
         sorted={sort === 'datetime' ? sortDirection : 'none'}
         onChange={handleSort}
-        className={classes.justifyStart}
+        css={styles.justifyStart}
       />
       <InfoGrid>
         {SORT_COLUMNS.map(({ label, sortKey }) => (

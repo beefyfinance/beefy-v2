@@ -1,16 +1,15 @@
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../../store';
-import { selectHasDataToShowGraphByVaultId } from '../../../../../data/selectors/analytics';
-import { isCowcentratedLikeVault, type VaultEntity } from '../../../../../data/entities/vault';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
+import { useAppSelector } from '../../../../../../store.ts';
+import { selectHasDataToShowGraphByVaultId } from '../../../../../data/selectors/analytics.ts';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../../../../data/entities/vault.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { useMemo } from 'react';
 import {
   DashboardFeesGraph,
   DashboardOverviewGraph,
-} from '../../../../../vault/components/PnLGraph/cowcentrated';
-import { DashboardPnLGraph } from '../../../../../vault/components/PnLGraph/standard/StandardPnLGraph';
-import type { ChartTypes } from './types';
-import type { OptionalRecord } from '../../../../../data/utils/types-utils';
+} from '../../../../../vault/components/PnLGraph/cowcentrated/CowcentratedPnlGraph.tsx';
+import { DashboardPnLGraph } from '../../../../../vault/components/PnLGraph/standard/StandardPnLGraph.tsx';
+import type { ChartTypes } from './types.ts';
 
 export function useChartOptions(vaultId: VaultEntity['id'], address: string) {
   const { t } = useTranslation();
@@ -26,14 +25,15 @@ export function useChartOptions(vaultId: VaultEntity['id'], address: string) {
       typeOfCharts === 'cowcentrated' ? DashboardOverviewGraph : DashboardPnLGraph;
     const CompoundsGraph = DashboardFeesGraph;
 
-    const availableCharts: OptionalRecord<ChartTypes, string> = {};
+    const availableCharts: Array<{ value: ChartTypes; label: string }> = [];
     if (hasAnalyticsData) {
-      availableCharts['positionChart'] = t('Dashboard-Chart');
       if (typeOfCharts === 'cowcentrated') {
-        availableCharts['positionChart'] = t('Dashboard-PositionChart');
+        availableCharts.push({ value: 'positionChart', label: t('Dashboard-PositionChart') });
         if (vault.strategyTypeId === 'compounds') {
-          availableCharts['compoundsChart'] = t('Dashboard-CompoundsChart');
+          availableCharts.push({ value: 'compoundsChart', label: t('Dashboard-CompoundsChart') });
         }
+      } else {
+        availableCharts.push({ value: 'positionChart', label: t('Dashboard-Chart') });
       }
     }
 

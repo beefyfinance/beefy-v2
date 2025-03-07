@@ -4,9 +4,9 @@ import type {
   StellaSwapPoolRewardsResponse,
   StellaSwapRewardsRequest,
   StellaSwapRewardsResponse,
-} from './stellaswap-types';
-import type { HttpHelper } from '../../../../../helpers/http/types';
-import { makeRateLimitedHttpHelper } from '../../../../../helpers/http';
+} from './stellaswap-types.ts';
+import type { HttpHelper } from '../../../../../helpers/http/types.ts';
+import { makeRateLimitedHttpHelper } from '../../../../../helpers/http/http.ts';
 
 export class StellaSwapRewardsApi implements IStellaSwapRewardsApi {
   private http: HttpHelper;

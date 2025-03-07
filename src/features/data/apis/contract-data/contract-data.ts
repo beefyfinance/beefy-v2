@@ -1,13 +1,13 @@
-import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi';
+import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi.ts';
 import type {
   VaultCowcentrated,
   VaultGov,
   VaultGovMulti,
   VaultStandard,
-} from '../../entities/vault';
-import type { ChainEntity } from '../../entities/chain';
+} from '../../entities/vault.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
 import { BigNumber } from 'bignumber.js';
-import type { BoostPromoEntity } from '../../entities/promo';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import { chunk, pick, sortBy } from 'lodash-es';
 import type {
   BoostContractData,
@@ -24,18 +24,18 @@ import type {
   RewardContractData,
   StandardVaultContractData,
   StandardVaultRawContractData,
-} from './contract-data-types';
+} from './contract-data-types.ts';
 import {
   featureFlag_getContractDataApiChunkSize,
   featureFlag_simulateLiveBoost,
-} from '../../utils/feature-flags';
-import type { BeefyState } from '../../../../redux-types';
-import { selectVaultById } from '../../selectors/vaults';
-import { selectTokenByAddress, selectTokenByAddressOrUndefined } from '../../selectors/tokens';
-import { isFiniteNumber } from '../../../../helpers/number';
-import { BIG_ZERO } from '../../../../helpers/big-number';
+} from '../../utils/feature-flags.ts';
+import type { BeefyState } from '../../../../redux-types.ts';
+import { selectVaultById } from '../../selectors/vaults.ts';
+import { selectTokenByAddress, selectTokenByAddressOrUndefined } from '../../selectors/tokens.ts';
+import { isFiniteNumber } from '../../../../helpers/number.ts';
+import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { addDays } from 'date-fns';
-import { fetchContract } from '../rpc-contract/viem-contract';
+import { fetchContract } from '../rpc-contract/viem-contract.ts';
 import type { Address } from 'abitype';
 
 export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi {

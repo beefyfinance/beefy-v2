@@ -1,24 +1,25 @@
-import { makeStyles, useMediaQuery } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import type { PropsWithChildren } from 'react';
 import { memo, useMemo } from 'react';
-import { AssetsImage } from '../../../../../../components/AssetsImage';
-import { Tooltip } from '../../../../../../components/Tooltip';
-import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
-import { formatLargeUsd } from '../../../../../../helpers/format';
-import { useAppSelector } from '../../../../../../store';
-import type { ChainEntity } from '../../../../../data/entities/chain';
+import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
+import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent.tsx';
+import { formatLargeUsd } from '../../../../../../helpers/format.ts';
+import { useAppSelector } from '../../../../../../store.ts';
+import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import {
   isVaultHoldingEntity,
   type MarketMakerHoldingEntity,
   type TreasuryHoldingEntity,
-} from '../../../../../data/entities/treasury';
-import type { VaultEntity } from '../../../../../data/entities/vault';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
-import { styles } from './styles';
-import { TokenImage } from '../../../../../../components/TokenImage/TokenImage';
-import { selectVaultTokenSymbols } from '../../../../../data/selectors/tokens';
+} from '../../../../../data/entities/treasury.ts';
+import type { VaultEntity } from '../../../../../data/entities/vault.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { styles } from './styles.ts';
+import { TokenImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
+import { selectVaultTokenSymbols } from '../../../../../data/selectors/tokens.ts';
+import { useMediaQuery } from '../../../../../../components/MediaQueries/useMediaQuery.ts';
+import { DivWithTooltip } from '../../../../../../components/Tooltip/DivWithTooltip.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface AssetInfoProps {
   chainId: ChainEntity['id'];
@@ -29,7 +30,7 @@ interface MMAssetInfoProps {
   holding: MarketMakerHoldingEntity;
 }
 
-export const AssetInfo = memo<AssetInfoProps>(function AssetInfo({ chainId, token }) {
+export const AssetInfo = memo(function AssetInfo({ chainId, token }: AssetInfoProps) {
   const isV3 = useMemo(() => {
     return token.assetType === 'concLiquidity' && token.oracleType === 'lps';
   }, [token.assetType, token.oracleType]);
@@ -76,7 +77,7 @@ type AssetContainerProps = PropsWithChildren<{
   token: TreasuryHoldingEntity;
 }>;
 
-const AssetContainer = memo<AssetContainerProps>(function AssetContainer({ token, children }) {
+const AssetContainer = memo(function AssetContainer({ token, children }: AssetContainerProps) {
   const classes = useStyles();
   return (
     <div className={classes.asset}>
@@ -93,7 +94,7 @@ interface VaultNameProps {
   vaultId: VaultEntity['id'];
 }
 
-export const VaultIdentity = memo<VaultNameProps>(function VaultIdentity({ vaultId }) {
+export const VaultIdentity = memo(function VaultIdentity({ vaultId }: VaultNameProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const vaultTokenSymbols = useAppSelector(state => selectVaultTokenSymbols(state, vault.id));
 
@@ -111,7 +112,7 @@ interface LPidentityProps {
   regexType: 'lp' | 'v3';
 }
 
-export const LPidentity = memo<LPidentityProps>(function LPidentity({ chainId, name, regexType }) {
+export const LPidentity = memo(function LPidentity({ chainId, name, regexType }: LPidentityProps) {
   // THIS REGEX WILL MATCH space + any chars/nothing  + "LP", for example BIFI-ETH JLP will return BIFI-ETH
   const regex: RegExp = useMemo(() => {
     if (regexType === 'lp') {
@@ -135,13 +136,15 @@ interface AssetNameProps {
   name: string;
 }
 
-export const AssetName = memo<AssetNameProps>(function AssetName({ name }) {
-  const isMobile = useMediaQuery('(max-width: 600px)', { noSsr: true });
+export const AssetName = memo(function AssetName({ name }: AssetNameProps) {
+  const isMobile = useMediaQuery('(max-width: 600px)', false);
   const needTooltip = isMobile && name.length > 12;
 
   if (needTooltip) {
     return (
-      <Tooltip content={<BasicTooltipContent title={name} />}>{`${name.slice(0, 8)}...`}</Tooltip>
+      <DivWithTooltip tooltip={<BasicTooltipContent title={name} />}>
+        {`${name.slice(0, 8)}...`}
+      </DivWithTooltip>
     );
   }
 
@@ -149,7 +152,7 @@ export const AssetName = memo<AssetNameProps>(function AssetName({ name }) {
 });
 
 // MM Assets
-export const AssetInfoMM = memo<MMAssetInfoProps>(function AssetInfoMM({ holding }) {
+export const AssetInfoMM = memo(function AssetInfoMM({ holding }: MMAssetInfoProps) {
   return (
     <MMAssetContainer holding={holding}>
       <>
@@ -164,10 +167,10 @@ type MMAssetContainerProps = PropsWithChildren<{
   holding: MarketMakerHoldingEntity;
 }>;
 
-const MMAssetContainer = memo<MMAssetContainerProps>(function AssetContainer({
+const MMAssetContainer = memo(function AssetContainer({
   holding,
   children,
-}) {
+}: MMAssetContainerProps) {
   const classes = useStyles();
   return (
     <div className={classes.asset}>

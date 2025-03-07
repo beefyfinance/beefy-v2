@@ -1,12 +1,12 @@
-import { type CurveTokenOption, getMethodSignaturesForType } from './types';
-import { getInsertIndex, getTokenAddress } from '../../helpers/zap';
+import { type CurveTokenOption, getMethodSignaturesForType } from './types.ts';
+import { getInsertIndex, getTokenAddress } from '../../helpers/zap.ts';
 import { type BigNumber } from 'bignumber.js';
-import type { TokenAmount } from '../../transact-types';
-import { fromWeiString, toWeiString } from '../../../../../../helpers/big-number';
-import type { ChainEntity } from '../../../../entities/chain';
-import { isTokenNative, type TokenEntity } from '../../../../entities/token';
-import type { ZapStep } from '../../zap/types';
-import { fetchContract } from '../../../rpc-contract/viem-contract';
+import type { TokenAmount } from '../../transact-types.ts';
+import { fromWeiString, toWeiString } from '../../../../../../helpers/big-number.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
+import { isTokenNative, type TokenEntity } from '../../../../entities/token.ts';
+import type { ZapStep } from '../../zap/types.ts';
+import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
 import { encodeFunctionData, type Abi, type Address } from 'viem';
 
 export class CurvePool {

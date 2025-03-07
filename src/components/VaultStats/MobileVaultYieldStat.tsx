@@ -1,24 +1,25 @@
-import { type VaultEntity } from '../../features/data/entities/vault';
+import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { memo } from 'react';
-import { formatLargeUsd } from '../../helpers/format';
-import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat';
-import { useAppSelector } from '../../store';
+import { formatLargeUsd } from '../../helpers/format.ts';
+import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
+import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
+import { useAppSelector } from '../../store.ts';
 import {
   DashboardDataStatus,
   selectDashboardUserRewardsOrStatusByVaultId,
-} from '../../features/data/selectors/dashboard';
-import { RewardsTooltipContent } from '../RewardsTooltip/RewardsTooltip';
+} from '../../features/data/selectors/dashboard.ts';
+import { RewardsTooltipContent } from '../RewardsTooltip/RewardsTooltip.tsx';
 
 export type MobileVaultYieldStatProps = {
   vaultId: VaultEntity['id'];
   walletAddress: string;
 } & Omit<VaultValueStatProps, 'label' | 'tooltip' | 'value' | 'subValue' | 'loading'>;
 
-export const MobileVaultYieldStat = memo<MobileVaultYieldStatProps>(function MobileVaultYieldStat({
+export const MobileVaultYieldStat = memo(function MobileVaultYieldStat({
   vaultId,
   walletAddress,
   ...passthrough
-}) {
+}: MobileVaultYieldStatProps) {
   const label = 'VaultStat-Yield';
   const data = useAppSelector(state =>
     selectDashboardUserRewardsOrStatusByVaultId(state, vaultId, walletAddress)

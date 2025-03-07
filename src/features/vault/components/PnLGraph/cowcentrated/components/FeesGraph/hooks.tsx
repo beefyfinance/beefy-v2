@@ -1,16 +1,16 @@
 import { useMemo } from 'react';
-import { useAppSelector } from '../../../../../../../store';
-import type { VaultEntity } from '../../../../../../data/entities/vault';
+import { useAppSelector } from '../../../../../../../store.ts';
+import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
 import {
   selectUserClmHarvestTimelineByVaultId,
   selectUserFirstDepositDateByVaultId,
-} from '../../../../../../data/selectors/analytics';
-import { selectWalletAddress } from '../../../../../../data/selectors/wallet';
+} from '../../../../../../data/selectors/analytics.ts';
+import { selectWalletAddress } from '../../../../../../data/selectors/wallet.ts';
 import { maxBy, minBy } from 'lodash-es';
-import { getClmInvestorFeesTimeSeries } from '../../../../../../../helpers/graph/timeseries';
+import { getClmInvestorFeesTimeSeries } from '../../../../../../../helpers/graph/timeseries.ts';
 import { differenceInHours } from 'date-fns';
 
-import type { GraphBucket } from '../../../../../../../helpers/graph/types';
+import type { GraphBucket } from '../../../../../../../helpers/graph/types.ts';
 
 // Same object reference for empty chart data
 export const NO_CHART_DATA = { data: [], tokens: [], minUsd: 0, maxUsd: 0 };

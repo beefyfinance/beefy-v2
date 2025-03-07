@@ -1,10 +1,10 @@
 import { memo, useMemo } from 'react';
 import { Trans } from 'react-i18next';
-import { type VaultEntity, type VaultGov } from '../../../../data/entities/vault';
-import { type CommonHelper, isGovCommonHelper, useCommonHelper } from './common';
-import { selectGovVaultEarnedTokens } from '../../../../data/selectors/tokens';
-import { useAppSelector } from '../../../../../store';
-import type { TokenEntity } from '../../../../data/entities/token';
+import { type VaultEntity, type VaultGov } from '../../../../data/entities/vault.ts';
+import { type CommonHelper, isGovCommonHelper, useCommonHelper } from './common.tsx';
+import { selectGovVaultEarnedTokens } from '../../../../data/selectors/tokens.ts';
+import { useAppSelector } from '../../../../../store.ts';
+import type { TokenEntity } from '../../../../data/entities/token.ts';
 
 type GovHelper = CommonHelper<VaultGov> & {
   earnedTokens: TokenEntity[];
@@ -20,10 +20,10 @@ function useGovHelper(vaultId: VaultEntity['id']): GovHelper {
     selectGovVaultEarnedTokens(state, helper.vault.chainId, helper.vault.id)
   );
   return useMemo(() => {
-    const newValues = {
+    const newValues: Record<string, string> = {
       earnedToken: earnedTokens[0].symbol,
     };
-    for (const i in earnedTokens) {
+    for (let i = 0; i < earnedTokens.length; ++i) {
       newValues[`earnedToken${i}`] = earnedTokens[i].symbol;
     }
 
@@ -45,7 +45,7 @@ export type GovDescriptionProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const GovDescription = memo<GovDescriptionProps>(function GovDescription({ vaultId }) {
+export const GovDescription = memo(function GovDescription({ vaultId }: GovDescriptionProps) {
   const { i18n } = useGovHelper(vaultId);
   return <Trans {...i18n} />;
 });

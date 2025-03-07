@@ -1,14 +1,14 @@
-import type { Migrator, MigratorUnstakeProps } from '../migration-types';
-import type { VaultEntity } from '../../../entities/vault';
+import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
+import type { VaultEntity } from '../../../entities/vault.ts';
 import { type BigNumber } from 'bignumber.js';
-import type { BeefyState } from '../../../../../redux-types';
-import { ERC20Abi } from '../../../../../config/abi/ERC20Abi';
-import { buildExecute, buildFetchBalance } from '../utils';
-import { ZERO_ADDRESS } from '../../../../../helpers/addresses';
-import type { ChainEntity } from '../../../entities/chain';
-import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
+import type { BeefyState } from '../../../../../redux-types.ts';
+import { ERC20Abi } from '../../../../../config/abi/ERC20Abi.ts';
+import { buildExecute, buildFetchBalance } from '../utils.ts';
+import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
+import type { ChainEntity } from '../../../entities/chain.ts';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Abi, Address } from 'abitype';
-import { getWalletConnectionApi } from '../../instances';
+import { getWalletConnectionApi } from '../../instances.ts';
 import type { Hash } from 'viem';
 
 const id = 'l2-convex';
@@ -21,12 +21,12 @@ const crvFactory = (chainId: ChainEntity['id']) =>
 
 async function getStakingAddress(vault: VaultEntity, _: BeefyState): Promise<string> {
   const factory = fetchContract(crvFactory(vault.chainId) as Address, CurveAbi, vault.chainId);
-  const gaugeAddress = await factory.read.get_gauge_from_lp_token([
+  const gaugeAddress = (await factory.read.get_gauge_from_lp_token([
     vault.depositTokenAddress as Address,
-  ]);
-  if (gaugeAddress == ZERO_ADDRESS) return gaugeAddress;
+  ])) as string;
+  if (gaugeAddress === ZERO_ADDRESS) return gaugeAddress;
   const gaugeContract = fetchContract(gaugeAddress, CurveAbi, vault.chainId);
-  return gaugeContract.read.rewards_receiver([convexVoterProxy]);
+  return gaugeContract.read.rewards_receiver([convexVoterProxy]) as Promise<string>;
 }
 
 async function getBalance(
@@ -35,7 +35,7 @@ async function getBalance(
   state: BeefyState
 ): Promise<string> {
   const stakingAddress = await getStakingAddress(vault, state);
-  if (stakingAddress == ZERO_ADDRESS) return '0';
+  if (stakingAddress === ZERO_ADDRESS) return '0';
   const stakingContract = fetchContract(stakingAddress, ERC20Abi, vault.chainId);
   const walletBalance = await stakingContract.read.balanceOf([walletAddress as Address]);
   return walletBalance.toString(10);

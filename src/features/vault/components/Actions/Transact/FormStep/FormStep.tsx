@@ -1,25 +1,21 @@
 import { type ComponentType, lazy, memo, Suspense, useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
-  selectTransactShouldShowClaims,
   selectTransactMode,
-  selectTransactVaultId,
+  selectTransactShouldShowClaims,
   selectTransactShouldShowClaimsNotification,
-} from '../../../../../data/selectors/transact';
-import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import { CardsTabs } from '../../../Card/CardTabs';
-import { transactFetchOptions } from '../../../../../data/actions/transact';
-import { TransactMode } from '../../../../../data/reducers/wallet/transact-types';
-import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
+  selectTransactVaultId,
+} from '../../../../../data/selectors/transact.ts';
+import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
+import { CardHeaderTabs } from '../../../Card/CardHeaderTabs.tsx';
+import { transactFetchOptions } from '../../../../../data/actions/transact.ts';
+import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
 
-const useStyles = makeStyles(styles);
-
-const DepositFormLoader = lazy(() => import('../DepositForm'));
-const ClaimFormLoader = lazy(() => import('../ClaimForm'));
-const WithdrawFormLoader = lazy(() => import('../WithdrawForm'));
+const DepositFormLoader = lazy(() => import('../DepositForm/DepositForm.tsx'));
+const ClaimFormLoader = lazy(() => import('../ClaimForm/ClaimForm.tsx'));
+const WithdrawFormLoader = lazy(() => import('../WithdrawForm/WithdrawForm.tsx'));
 
 const modeToComponent: Record<TransactMode, ComponentType> = {
   [TransactMode.Deposit]: DepositFormLoader,
@@ -30,7 +26,6 @@ const modeToComponent: Record<TransactMode, ComponentType> = {
 export const FormStep = memo(function FormStep() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const classes = useStyles();
   const mode = useAppSelector(selectTransactMode);
   const vaultId = useAppSelector(selectTransactVaultId);
   const showClaim = useAppSelector(state => selectTransactShouldShowClaims(state, vaultId));
@@ -39,18 +34,16 @@ export const FormStep = memo(function FormStep() {
   );
   const Component = modeToComponent[mode];
   const handleModeChange = useCallback(
-    (mode: string) => {
-      dispatch(transactActions.switchMode(TransactMode[mode]));
+    (newMode: string) => {
+      dispatch(transactActions.switchMode(parseInt(newMode)));
     },
     [dispatch]
   );
   const modeOptions = useMemo(
     () => [
-      { value: TransactMode[TransactMode.Deposit], label: t('Transact-Deposit') },
-      ...(showClaim
-        ? [{ value: TransactMode[TransactMode.Claim], label: t('Transact-Claim') }]
-        : []),
-      { value: TransactMode[TransactMode.Withdraw], label: t('Transact-Withdraw') },
+      { value: TransactMode.Deposit.toString(), label: t('Transact-Deposit') },
+      ...(showClaim ? [{ value: TransactMode.Claim.toString(), label: t('Transact-Claim') }] : []),
+      { value: TransactMode.Withdraw.toString(), label: t('Transact-Withdraw') },
     ],
     [t, showClaim]
   );
@@ -61,12 +54,12 @@ export const FormStep = memo(function FormStep() {
   }, [dispatch, mode, vaultId]);
 
   return (
-    <div className={classes.container}>
-      <CardsTabs
-        selected={TransactMode[mode]}
+    <div>
+      <CardHeaderTabs
+        selected={mode.toString()}
         options={modeOptions}
         onChange={handleModeChange}
-        highlight={highlightClaim ? TransactMode[TransactMode.Claim] : undefined}
+        highlight={highlightClaim ? TransactMode.Claim.toString() : undefined}
       />
       <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} />}>
         <Component />

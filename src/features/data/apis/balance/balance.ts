@@ -1,14 +1,14 @@
-import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi';
+import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi.ts';
 import {
   isGovVaultSingle,
   type VaultGov,
   type VaultGovCowcentrated,
   type VaultGovMulti,
   type VaultGovSingle,
-} from '../../entities/vault';
-import type { ChainEntity } from '../../entities/chain';
+} from '../../entities/vault.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
 import { BigNumber } from 'bignumber.js';
-import type { BoostPromoEntity } from '../../entities/promo';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
 import { chunk, partition, pick } from 'lodash-es';
 import type {
   BoostBalance,
@@ -19,21 +19,21 @@ import type {
   GovVaultSingleBalanceContractData,
   IBalanceApi,
   TokenBalance,
-} from './balance-types';
-import type { TokenEntity, TokenErc20, TokenNative } from '../../entities/token';
-import { isTokenErc20, isTokenNative } from '../../entities/token';
-import { featureFlag_getBalanceApiChunkSize } from '../../utils/feature-flags';
-import type { BeefyState } from '../../../../redux-types';
+} from './balance-types.ts';
+import type { TokenEntity, TokenErc20, TokenNative } from '../../entities/token.ts';
+import { isTokenErc20, isTokenNative } from '../../entities/token.ts';
+import { featureFlag_getBalanceApiChunkSize } from '../../utils/feature-flags.ts';
+import type { BeefyState } from '../../../../redux-types.ts';
 import {
   selectBoostBalanceTokenEntity,
   selectGovVaultBalanceTokenEntity,
   selectGovVaultRewardsTokenEntity,
-} from '../../selectors/balance';
-import { selectTokenByAddress } from '../../selectors/tokens';
-import { BIG_ZERO, fromWeiString, isFiniteBigNumber } from '../../../../helpers/big-number';
-import { isDefined } from '../../utils/array-utils';
-import { rpcClientManager } from '../rpc-contract/rpc-manager';
-import { fetchContract } from '../rpc-contract/viem-contract';
+} from '../../selectors/balance.ts';
+import { selectTokenByAddress } from '../../selectors/tokens.ts';
+import { BIG_ZERO, fromWeiString, isFiniteBigNumber } from '../../../../helpers/big-number.ts';
+import { isDefined } from '../../utils/array-utils.ts';
+import { rpcClientManager } from '../rpc-contract/rpc-manager.ts';
+import { fetchContract } from '../rpc-contract/viem-contract.ts';
 import type { Address } from 'abitype';
 
 export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {

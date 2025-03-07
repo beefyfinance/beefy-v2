@@ -1,4 +1,4 @@
-import type { TokenAmount } from '../transact-types';
+import type { TokenAmount } from '../transact-types.ts';
 
 export type ZapStepRequest = {
   inputs: TokenAmount[];

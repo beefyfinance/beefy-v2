@@ -1,12 +1,12 @@
-import { getJson, postJson, postText } from '../../../../helpers/http';
+import { getJson, postJson, postText } from '../../../../helpers/http/http.ts';
 import type {
-  IOnRampApi,
   ApiQuoteRequest,
   ApiQuoteResponse,
   ApiSupportedResponse,
   ApiUrlRequest,
   ApiUrlResponse,
-} from './on-ramp-types';
+  IOnRampApi,
+} from './on-ramp-types.ts';
 
 export class OnRampApi implements IOnRampApi {
   public api: string;

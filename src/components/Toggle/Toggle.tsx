@@ -1,26 +1,26 @@
 import type { ChangeEventHandler, ReactNode } from 'react';
 import { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ToggleProps = {
   checked: boolean;
   onChange: (checked: boolean) => void;
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;
-  className?: string;
+  css?: CssStyles;
 };
 
-export const Toggle = memo<ToggleProps>(function Toggle({
+export const Toggle = memo(function Toggle({
   checked,
   onChange,
   startAdornment,
   endAdornment,
-  className,
-}) {
+  css: cssProp,
+}: ToggleProps) {
   const classes = useStyles();
   const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     e => {
@@ -30,7 +30,7 @@ export const Toggle = memo<ToggleProps>(function Toggle({
   );
 
   return (
-    <label className={clsx(classes.label, className)}>
+    <label className={css(styles.label, cssProp)}>
       {startAdornment ?? null}
       <input
         type="checkbox"
@@ -40,7 +40,7 @@ export const Toggle = memo<ToggleProps>(function Toggle({
         className={classes.input}
       />
       <div className={classes.channel}>
-        <div className={clsx(classes.dot, { [classes.dotChecked]: checked })} />
+        <div className={css(styles.dot, checked && styles.dotChecked)} />
       </div>
       {endAdornment ?? null}
     </label>

@@ -11,7 +11,9 @@ export type TenderlyStateOverride = {
   };
 };
 
-export type TenderlyAccessListEntry = { address: string };
+export type TenderlyAccessListEntry = {
+  address: string;
+};
 export type TenderlyAccessList = TenderlyAccessListEntry[];
 
 export type TenderlySimulation = {
@@ -35,7 +37,6 @@ export type TenderlySimulation = {
   block_header: TenderlyBlockHeader;
   state_overrides: Record<string, TenderlyStateOverride>;
   created_at: string;
-  // more
 };
 
 export type TenderlySimulationsResult = {

@@ -1,21 +1,25 @@
-import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { selectFilteredVaults } from '../../../../../data/selectors/filtered-vaults';
-import { NoResults } from '../NoResults';
-import { VirtualVaultsList } from '../VirtualVaultsList';
-import { styles } from './styles';
-import { useAppSelector } from '../../../../../../store';
-
-const useStyles = makeStyles(styles);
+import { memo, useDeferredValue } from 'react';
+import { selectFilteredVaults } from '../../../../../data/selectors/filtered-vaults.ts';
+import { NoResults } from '../NoResults/NoResults.tsx';
+import { VirtualVaultsList } from '../VirtualVaultsList/VirtualVaultsList.tsx';
+import { useAppSelector } from '../../../../../../store.ts';
+import { css } from '@repo/styles/css';
 
 export const VaultsList = memo(function VaultsList() {
   const vaultIds = useAppSelector(selectFilteredVaults);
-  const classes = useStyles();
+  const deferredVaultIds = useDeferredValue(vaultIds);
 
   return (
-    <div className={classes.vaultsList}>
-      {vaultIds.length === 0 ? <NoResults /> : null}
-      <VirtualVaultsList vaultIds={vaultIds} />
+    <div className={listClass}>
+      {deferredVaultIds.length === 0 ? (
+        <NoResults />
+      ) : (
+        <VirtualVaultsList vaultIds={deferredVaultIds} />
+      )}
     </div>
   );
+});
+
+const listClass = css({
+  borderTop: 'solid 2px {colors.background.content.dark}',
 });

@@ -1,6 +1,6 @@
 import { type BigNumber } from 'bignumber.js';
-import type { ZapStepRequest, ZapStepResponse } from '../transact/zap/types';
-import type { TokenAmount } from '../transact/transact-types';
+import type { ZapStepRequest, ZapStepResponse } from '../transact/zap/types.ts';
+import type { TokenAmount } from '../transact/transact-types.ts';
 
 export type SwapResult = {
   amountIn: BigNumber;

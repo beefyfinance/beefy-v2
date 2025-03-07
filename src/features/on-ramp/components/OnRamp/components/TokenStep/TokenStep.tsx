@@ -1,21 +1,18 @@
 import { memo, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { styles } from './styles';
-import { Step } from '../../../../../../components/Step';
+import { styles } from './styles.ts';
+import { Step } from '../../../../../../components/Step/Step.tsx';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectFiat,
   selectIsFiatSupported,
   selectSupportedTokensForFiat,
-} from '../../../../../data/selectors/on-ramp';
-import { SearchableList } from '../../../../../../components/SearchableList';
-import type { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
-import { AssetsImage } from '../../../../../../components/AssetsImage';
-import { FiatTitleAdornment } from '../FiatTitleAdornment';
-import { setOnRampToken } from '../../../../../data/actions/on-ramp';
-
-const useStyles = makeStyles(styles);
+} from '../../../../../data/selectors/on-ramp.ts';
+import { SearchableList } from '../../../../../../components/SearchableList/SearchableList.tsx';
+import { AssetsImage } from '../../../../../../components/AssetsImage/AssetsImage.tsx';
+import { FiatTitleAdornment } from '../FiatTitleAdornment/FiatTitleAdornment.tsx';
+import { setOnRampToken } from '../../../../../data/actions/on-ramp.ts';
+import type { ItemInnerProps } from '../../../../../../components/SearchableList/Item.tsx';
 
 export const TokenStep = memo(function TokenStep() {
   const { t } = useTranslation();
@@ -27,18 +24,18 @@ export const TokenStep = memo(function TokenStep() {
       stepType="onRamp"
       title={t('OnRamp-TokenStep-Title')}
       titleAdornment={supported ? <FiatTitleAdornment currencyCode={fiat} /> : undefined}
+      noPadding={supported}
     >
       {supported ? <TokenSelector fiat={fiat} /> : <FiatNotSupported fiat={fiat} />}
     </Step>
   );
 });
 
-const FiatNotSupported = memo<{ fiat: string }>(function FiatNotSupported({ fiat }) {
+const FiatNotSupported = memo(function FiatNotSupported({ fiat }: { fiat: string }) {
   return <div>{fiat} not supported</div>;
 });
 
-const ListItem = memo<ItemInnerProps>(function ListItem({ value }) {
-  const classes = useStyles();
+const ListItem = memo(function ListItem({ value }: ItemInnerProps) {
   const assetIds = useMemo(() => [value], [value]);
   return (
     <>
@@ -46,14 +43,14 @@ const ListItem = memo<ItemInnerProps>(function ListItem({ value }) {
         chainId={undefined}
         assetSymbols={assetIds}
         size={24}
-        className={classes.listItemIcon}
+        css={styles.listItemIcon}
       />
       {value}
     </>
   );
 });
 
-const TokenSelector = memo<{ fiat: string }>(function TokenSelector({ fiat }) {
+const TokenSelector = memo(function TokenSelector({ fiat }: { fiat: string }) {
   const tokens = useAppSelector(state => selectSupportedTokensForFiat(state, fiat));
   const sortedTokens = useMemo(() => [...tokens].sort((a, b) => a.localeCompare(b)), [tokens]);
 

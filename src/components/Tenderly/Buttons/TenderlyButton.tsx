@@ -1,14 +1,11 @@
 import { memo } from 'react';
-import { tenderlyChains } from '../config';
-import { Button } from '../../Button';
-import type { ChainId } from '../../../features/data/entities/chain';
-import { useAppSelector } from '../../../store';
-import { selectTenderlyMode } from '../../../features/data/selectors/tenderly';
+import { tenderlyChains } from '../config.ts';
+import { Button } from '../../Button/Button.tsx';
+import type { ChainId } from '../../../features/data/entities/chain.ts';
+import { useAppSelector } from '../../../store.ts';
+import { selectTenderlyMode } from '../../../features/data/selectors/tenderly.ts';
 import logoUrl from '../logo.svg';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-
-const useStyles = makeStyles(styles);
+import { styles } from './styles.ts';
 
 export type TenderlyButtonProps = {
   chainId: ChainId;
@@ -16,12 +13,11 @@ export type TenderlyButtonProps = {
   disabled?: boolean;
 };
 
-export const TenderlyButton = memo<TenderlyButtonProps>(function TenderlyButton({
+export const TenderlyButton = memo(function TenderlyButton({
   chainId,
   onClick,
   disabled,
-}) {
-  const classes = useStyles();
+}: TenderlyButtonProps) {
   const status = useAppSelector(selectTenderlyMode);
 
   if (tenderlyChains.has(chainId)) {
@@ -31,7 +27,7 @@ export const TenderlyButton = memo<TenderlyButtonProps>(function TenderlyButton(
         fullWidth={true}
         onClick={onClick}
         disabled={status !== 'closed' || disabled}
-        className={classes.button}
+        css={styles.button}
       >
         <img src={logoUrl} alt="" width={24} height={24} />
         Tenderly Simulation

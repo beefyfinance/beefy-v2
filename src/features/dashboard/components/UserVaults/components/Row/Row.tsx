@@ -1,36 +1,32 @@
-import type { Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import type { PropsWithChildren } from 'react';
 import { memo } from 'react';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  rowContainer: {
+const styles = {
+  rowContainer: css.raw({
     display: 'grid',
-    backgroundColor: theme.palette.background.contentPrimary,
+    backgroundColor: 'background.content',
     padding: '16px',
     gridTemplateColumns: 'minmax(0, 30fr) minmax(0, 70fr)',
     columnGap: '16px',
-    [theme.breakpoints.down('sm')]: {
+    mdDown: {
       gridTemplateColumns: 'repeat(2,minmax(0, 50fr))',
     },
-  },
-  rowMobileContainer: {
+  }),
+  rowMobileContainer: css.raw({
     padding: '16px',
-    backgroundColor: theme.palette.background.contentDark,
-  },
-}));
+    backgroundColor: 'background.content.dark',
+  }),
+};
 
 type RowGapProps = PropsWithChildren<{
-  className?: string;
+  css?: CssStyles;
 }>;
 
-export const Row = memo<RowGapProps>(function Row({ children, className }) {
-  const classes = useStyles();
-  return <div className={clsx(classes.rowContainer, className)}>{children}</div>;
+export const Row = memo(function Row({ children, css: cssProp }: RowGapProps) {
+  return <div className={css(styles.rowContainer, cssProp)}>{children}</div>;
 });
 
-export const RowMobile = memo<RowGapProps>(function RowMobile({ children, className }) {
-  const classes = useStyles();
-  return <div className={clsx(classes.rowMobileContainer, className)}>{children}</div>;
+export const RowMobile = memo(function RowMobile({ children, css: cssProp }: RowGapProps) {
+  return <div className={css(styles.rowMobileContainer, cssProp)}>{children}</div>;
 });

@@ -1,10 +1,10 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
 import type { ReactNode } from 'react';
 import { memo } from 'react';
-import { styles } from './styles';
-import { Container } from '../Container/Container';
+import { styles } from './styles.ts';
+import { Container } from '../Container/Container.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface SectionProps {
   title?: string;
@@ -12,7 +12,7 @@ interface SectionProps {
   children: ReactNode;
 }
 
-export const Section = memo<SectionProps>(function Section({ title, subTitle, children }) {
+export const Section = memo(function Section({ title, subTitle, children }: SectionProps) {
   const classes = useStyles();
   return (
     <div className={classes.sectionContainer}>

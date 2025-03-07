@@ -1,18 +1,18 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SummaryStats } from '../../../../components/SummaryStats';
-import { formatLargeUsd } from '../../../../helpers/format';
-import { styles } from './styles';
-import { ReactComponent as WalletIcon } from '../../../../images/icons/wallet.svg';
-import { ReactComponent as VaultIcon } from '../../../../images/icons/vault.svg';
-import { ReactComponent as DailyIcon } from '../../../../images/icons/daily-yield.svg';
-import { ReactComponent as BifiIcon } from '../../../../images/icons/bifi.svg';
-import { useAppSelector } from '../../../../store';
-import { selectTreasuryStats } from '../../../data/selectors/treasury';
-import { Container } from '../../../../components/Container/Container';
+import { SummaryStats } from '../../../../components/SummaryStats/SummaryStats.tsx';
+import { formatLargeUsd } from '../../../../helpers/format.ts';
+import { styles } from './styles.ts';
+import WalletIcon from '../../../../images/icons/wallet.svg?react';
+import VaultIcon from '../../../../images/icons/vault.svg?react';
+import DailyIcon from '../../../../images/icons/daily-yield.svg?react';
+import BifiIcon from '../../../../images/icons/bifi.svg?react';
+import { useAppSelector } from '../../../../store.ts';
+import { selectTreasuryStats } from '../../../data/selectors/treasury.ts';
+import { Container } from '../../../../components/Container/Container.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const DaoSummary = memo(function DaoSummary() {
   const { t } = useTranslation();

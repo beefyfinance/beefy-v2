@@ -4,23 +4,23 @@ import type {
   MigratorUnstakeProps,
   MigratorExecuteProps,
   MigratorUpdateProps,
-} from '../migration-types';
-import type { VaultEntity } from '../../../entities/vault';
+} from '../migration-types.ts';
+import type { VaultEntity } from '../../../entities/vault.ts';
 import { BigNumber } from 'bignumber.js';
-import type { BeefyState } from '../../../../../redux-types';
-import { selectVaultById } from '../../../selectors/vaults';
-import { getWalletConnectionApi } from '../../instances';
-import { selectTokenByAddress } from '../../../selectors/tokens';
-import { selectUserBalanceToMigrateByVaultId } from '../../../selectors/migration';
-import { ConicLpTokenStakerAbi } from '../../../../../config/abi/ConicLpTokenStakerAbi';
-import type { Step } from '../../../reducers/wallet/stepper';
-import { walletActions } from '../../../actions/wallet-actions';
-import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number';
-import { startStepperWithSteps } from '../../../actions/stepper';
-import { isTokenErc20 } from '../../../entities/token';
-import { selectAllowanceByTokenAddress } from '../../../selectors/allowances';
-import type { ConicMigrationUpdateFulfilledPayload } from './types';
-import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
+import type { BeefyState } from '../../../../../redux-types.ts';
+import { selectVaultById } from '../../../selectors/vaults.ts';
+import { getWalletConnectionApi } from '../../instances.ts';
+import { selectTokenByAddress } from '../../../selectors/tokens.ts';
+import { selectUserBalanceToMigrateByVaultId } from '../../../selectors/migration.ts';
+import { ConicLpTokenStakerAbi } from '../../../../../config/abi/ConicLpTokenStakerAbi.ts';
+import type { Step } from '../../../reducers/wallet/stepper.ts';
+import { walletActions } from '../../../actions/wallet-actions.ts';
+import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number.ts';
+import { startStepperWithSteps } from '../../../actions/stepper.ts';
+import { isTokenErc20 } from '../../../entities/token.ts';
+import { selectAllowanceByTokenAddress } from '../../../selectors/allowances.ts';
+import type { ConicMigrationUpdateFulfilledPayload } from './types.ts';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Address } from 'abitype';
 import type { Hash } from 'viem';
 
@@ -29,7 +29,9 @@ const CONIC_LP_TOKEN_STAKER = '0xA5241560306298efb9ed80b87427e664FFff0CF9';
 export const fetchConicStakedBalance = createAsyncThunk<
   ConicMigrationUpdateFulfilledPayload,
   MigratorUpdateProps,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('migration/ethereum-conic/update', async ({ vaultId, walletAddress }, { getState }) => {
   const state = getState();
   const vault = selectVaultById(state, vaultId);
@@ -75,7 +77,9 @@ async function unstakeCall(
 export const executeConicAction = createAsyncThunk<
   void,
   MigratorExecuteProps,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'migration/ethereum-conic/execute',
   async ({ vaultId, t, migrationId }, { getState, dispatch }) => {

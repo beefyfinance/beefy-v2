@@ -1,6 +1,6 @@
-import type { TokenAmount } from '../transact-types';
+import type { TokenAmount } from '../transact-types.ts';
 import { BigNumber } from 'bignumber.js';
-import { toWei } from '../../../../../helpers/big-number';
+import { toWei } from '../../../../../helpers/big-number.ts';
 import { groupBy } from 'lodash-es';
 
 export function tokenAmountToWei(tokenAmount: TokenAmount): BigNumber {

@@ -1,6 +1,6 @@
 import { type BigNumber } from 'bignumber.js';
-import type { ZapStep } from '../../transact/zap/types';
-import type { QueryExitPoolResponse, QueryJoinPoolResponse } from './vault/types';
+import type { ZapStep } from '../../transact/zap/types.ts';
+import type { QueryExitPoolResponse, QueryJoinPoolResponse } from './vault/types.ts';
 
 export enum BalancerFeature {
   /** Add/Remove liquidity using only 1 token of the pool */

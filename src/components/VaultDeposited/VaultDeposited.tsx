@@ -1,28 +1,38 @@
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import type { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken,
   selectUserVaultBalanceInUsdIncludingBoostsBridged,
-} from '../../features/data/selectors/balance';
-import { selectVaultById } from '../../features/data/selectors/vaults';
-import { selectIsBalanceHidden, selectWalletAddress } from '../../features/data/selectors/wallet';
-import { formatLargeUsd } from '../../helpers/format';
-import type { BeefyState } from '../../redux-types';
-import { ValueBlock } from '../ValueBlock/ValueBlock';
-import type { TokenEntity } from '../../features/data/entities/token';
+} from '../../features/data/selectors/balance.ts';
+import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import {
+  selectIsBalanceHidden,
+  selectWalletAddress,
+} from '../../features/data/selectors/wallet.ts';
+import { formatLargeUsd } from '../../helpers/format.ts';
+import type { BeefyState } from '../../redux-types.ts';
+import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
+import type { TokenEntity } from '../../features/data/entities/token.ts';
 import { type BigNumber } from 'bignumber.js';
-import { TokenAmountFromEntity } from '../TokenAmount';
-import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip';
+import { TokenAmountFromEntity } from '../TokenAmount/TokenAmount.tsx';
+import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip.tsx';
 import {
   selectIsBalanceAvailableForChainUser,
   selectIsPricesAvailable,
-} from '../../features/data/selectors/data-loader';
+} from '../../features/data/selectors/data-loader.ts';
 import { memo } from 'react';
 
 const _VaultDeposited = connect(
-  (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
+  (
+    state: BeefyState,
+    {
+      vaultId,
+    }: {
+      vaultId: VaultEntity['id'];
+    }
+  ) => {
     const vault = selectVaultById(state, vaultId);
     const walletAddress = selectWalletAddress(state);
     const isLoaded =
@@ -50,39 +60,37 @@ const _VaultDeposited = connect(
       loading: !!walletAddress && !isLoaded,
     };
   }
-)(
-  ({
-    vaultId,
-    hasDeposit,
-    hasDisplacedDeposit,
-    deposit,
-    depositUsd,
-    depositToken,
-    blurred,
-    loading,
-  }: {
-    vaultId: VaultEntity['id'];
-    hasDeposit: boolean;
-    hasDisplacedDeposit: boolean;
-    deposit: BigNumber;
-    depositUsd: string;
-    depositToken: TokenEntity;
-    blurred: boolean;
-    loading: boolean;
-  }) => {
-    const { t } = useTranslation();
+)(({
+  vaultId,
+  hasDeposit,
+  hasDisplacedDeposit,
+  deposit,
+  depositUsd,
+  depositToken,
+  blurred,
+  loading,
+}: {
+  vaultId: VaultEntity['id'];
+  hasDeposit: boolean;
+  hasDisplacedDeposit: boolean;
+  deposit: BigNumber;
+  depositUsd: string;
+  depositToken: TokenEntity;
+  blurred: boolean;
+  loading: boolean;
+}) => {
+  const { t } = useTranslation();
 
-    return (
-      <ValueBlock
-        label={t('Vault-deposited')}
-        value={<TokenAmountFromEntity amount={deposit} token={depositToken} />}
-        usdValue={hasDeposit ? depositUsd : null}
-        tooltip={hasDisplacedDeposit ? <VaultDepositedTooltip vaultId={vaultId} /> : undefined}
-        blurred={blurred}
-        loading={loading}
-      />
-    );
-  }
-);
+  return (
+    <ValueBlock
+      label={t('Vault-deposited')}
+      value={<TokenAmountFromEntity amount={deposit} token={depositToken} />}
+      usdValue={hasDeposit ? depositUsd : null}
+      tooltip={hasDisplacedDeposit ? <VaultDepositedTooltip vaultId={vaultId} /> : undefined}
+      blurred={blurred}
+      loading={loading}
+    />
+  );
+});
 
 export const VaultDeposited = memo(_VaultDeposited);

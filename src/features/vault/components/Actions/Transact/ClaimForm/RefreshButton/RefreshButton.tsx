@@ -1,12 +1,9 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { Refresh, ErrorOutline } from '@material-ui/icons';
-import { styles } from './styles';
-import { Tooltip, TRIGGERS } from '../../../../../../../components/Tooltip';
-import { BasicTooltipContent } from '../../../../../../../components/Tooltip/BasicTooltipContent';
-import clsx from 'clsx';
-
-const useStyles = makeStyles(styles);
+import Refresh from '../../../../../../../images/icons/mui/Refresh.svg?react';
+import ErrorOutline from '../../../../../../../images/icons/mui/ErrorOutline.svg?react';
+import { refreshRecipe } from './styles.ts';
+import { BasicTooltipContent } from '../../../../../../../components/Tooltip/BasicTooltipContent.tsx';
+import { DivWithTooltip } from '../../../../../../../components/Tooltip/DivWithTooltip.tsx';
 
 type RefreshButtonProps = {
   title: string;
@@ -16,39 +13,28 @@ type RefreshButtonProps = {
   onClick?: () => void;
 };
 
-export const RefreshButton = memo<RefreshButtonProps>(function RefreshButton({
+export const RefreshButton = memo(function RefreshButton({
   title,
   text,
   status,
   onClick,
   disabled,
-}) {
-  const classes = useStyles();
+}: RefreshButtonProps) {
   const isDisabled = disabled === undefined ? !onClick : disabled;
   const canLoad = !isDisabled && !!onClick;
+  const classes = refreshRecipe({ status, canLoad });
 
   return (
-    <div
-      className={clsx(classes.tooltipTrigger, {
-        [classes.loading]: status === 'loading',
-        [classes.loaded]: status === 'loaded',
-        [classes.error]: status === 'error',
-        [classes.canLoad]: canLoad,
-      })}
-    >
-      <Tooltip
-        content={<BasicTooltipContent title={title} content={text} />}
-        triggers={TRIGGERS.HOVER | (isDisabled ? TRIGGERS.CLICK : 0)}
-        triggerClass={classes.tooltipTrigger}
-      >
-        <button disabled={isDisabled} onClick={onClick} className={clsx(classes.button)}>
+    <div className={classes.container}>
+      <DivWithTooltip tooltip={<BasicTooltipContent title={title} content={text} />}>
+        <button type="button" disabled={isDisabled} onClick={onClick} className={classes.button}>
           {status === 'error' && !canLoad ? (
             <ErrorOutline className={classes.icon} />
           ) : (
             <Refresh className={classes.icon} />
           )}
         </button>
-      </Tooltip>
+      </DivWithTooltip>
     </div>
   );
 });

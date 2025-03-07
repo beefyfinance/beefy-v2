@@ -1,31 +1,31 @@
 import { Fragment, memo, useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { useAppSelector, useAppStore } from '../../../../../../store';
-import { styles } from './styles';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
-import { isStandardVault, type VaultStandard } from '../../../../../data/entities/vault';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppSelector, useAppStore } from '../../../../../../store.ts';
+import { styles } from './styles.ts';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
+import { isStandardVault, type VaultStandard } from '../../../../../data/entities/vault.ts';
 import {
   selectTokenByAddressOrUndefined,
   selectTokenPriceByTokenOracleId,
-} from '../../../../../data/selectors/tokens';
-import type { ISwapAggregator } from '../../../../../data/apis/transact/swap/ISwapAggregator';
-import { isTokenEqual, type TokenEntity } from '../../../../../data/entities/token';
-import { getSwapAggregator } from '../../../../../data/apis/instances';
+} from '../../../../../data/selectors/tokens.ts';
+import type { ISwapAggregator } from '../../../../../data/apis/transact/swap/ISwapAggregator.ts';
+import { isTokenEqual, type TokenEntity } from '../../../../../data/entities/token.ts';
+import { getSwapAggregator } from '../../../../../data/apis/instances.ts';
 import { uniqBy } from 'lodash-es';
-import { formatLargeUsd } from '../../../../../../helpers/format';
-import { BIG_ZERO } from '../../../../../../helpers/big-number';
+import { formatLargeUsd } from '../../../../../../helpers/format.ts';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import {
   selectIsAddressBookLoaded,
   selectIsZapLoaded,
-} from '../../../../../data/selectors/data-loader';
-import type { CurveStrategyConfig } from '../../../../../data/apis/transact/strategies/strategy-configs';
+} from '../../../../../data/selectors/data-loader.ts';
+import type { CurveStrategyConfig } from '../../../../../data/apis/transact/strategies/strategy-configs.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type CurveZapProps = {
   vaultId: string;
 };
-export const CurveZap = memo<CurveZapProps>(function CurveZap({ vaultId }) {
+export const CurveZap = memo(function CurveZap({ vaultId }: CurveZapProps) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const zap = isStandardVault(vault)
@@ -55,7 +55,7 @@ type ZapProps = {
   zap: CurveStrategyConfig;
 };
 
-const ZapLoader = memo<ZapLoaderProps>(function ZapLoader({ vault, zap }) {
+const ZapLoader = memo(function ZapLoader({ vault, zap }: ZapLoaderProps) {
   const store = useAppStore();
   const swapLoaded = useAppSelector(
     state => selectIsZapLoaded(state) && selectIsAddressBookLoaded(state, vault.chainId)
@@ -105,7 +105,7 @@ const ZapLoader = memo<ZapLoaderProps>(function ZapLoader({ vault, zap }) {
   return <div>Loading curve zap debugger...</div>;
 });
 
-const Zap = memo<ZapProps>(function Zap({ aggregatorSupportedTokens, vault, zap }) {
+const Zap = memo(function Zap({ aggregatorSupportedTokens, vault, zap }: ZapProps) {
   const classes = useStyles();
   const methods = useAppSelector(state =>
     zap.methods.map(method => ({

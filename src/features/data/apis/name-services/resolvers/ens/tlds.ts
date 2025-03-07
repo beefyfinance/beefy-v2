@@ -1,4 +1,4 @@
-import type { ChainId } from '../../../../entities/chain';
+import type { ChainId } from '../../../../entities/chain.ts';
 
 export const tldToChain = {
   eth: ['ethereum'],

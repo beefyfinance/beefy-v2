@@ -1,11 +1,11 @@
 import { memo, useEffect, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
-  selectBridgeFormState,
   selectBridgeDepositTokenForChainId,
-} from '../../../../../data/selectors/bridge';
-import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
-import { validateBridgeForm } from '../../../../../data/actions/bridge';
+  selectBridgeFormState,
+} from '../../../../../data/selectors/bridge.ts';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
+import { validateBridgeForm } from '../../../../../data/actions/bridge.ts';
 import { debounce } from 'lodash-es';
 
 export const FormValidator = memo(function FormValidator() {
@@ -19,13 +19,24 @@ export const FormValidator = memo(function FormValidator() {
   );
   const inputAmount = input.amount;
   const debouncedValidate = useMemo(
-    () => debounce(() => dispatch(validateBridgeForm()), 250),
+    () =>
+      debounce(() => {
+        dispatch(validateBridgeForm());
+      }, 250),
     [dispatch]
   );
 
   useEffect(() => {
     debouncedValidate();
-  }, [debouncedValidate, fromToken, toToken, inputAmount, userBalance, receiverIsDifferent, receiverAddress]);
+  }, [
+    debouncedValidate,
+    fromToken,
+    toToken,
+    inputAmount,
+    userBalance,
+    receiverIsDifferent,
+    receiverAddress,
+  ]);
 
   return null;
 });

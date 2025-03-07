@@ -1,17 +1,12 @@
 import { memo } from 'react';
+import { AssetsImage } from '../../AssetsImage/AssetsImage.tsx';
+import { DismissibleBanner } from '../Banner/DismissibleBanner.tsx';
+import { ExternalLink } from '../Links/ExternalLink.tsx';
 
-import { selectUserDepositedVaultIdsForAsset } from '../../../features/data/selectors/balance';
-import { useAppSelector } from '../../../store';
-import { AssetsImage } from '../../AssetsImage';
-import { selectVaultById } from '../../../features/data/selectors/vaults';
-import type { VaultEntity } from '../../../features/data/entities/vault';
-import { ExternalLink } from '../Links/Links';
-import { DismissibleBanner } from '../Banner/DismissibleBanner';
-
-const BusdBanner = memo(function BusdBanner() {
+export const BusdBanner = memo(function BusdBanner() {
   return (
     <DismissibleBanner
-      id={'busd-eol'}
+      id={'busd-retirement'}
       icon={<AssetsImage chainId={'bsc'} assetSymbols={['BUSD']} size={24} />}
       text={
         <>
@@ -26,17 +21,4 @@ const BusdBanner = memo(function BusdBanner() {
       }
     />
   );
-});
-
-export const BusdBannerHome = memo(function BusdBannerHome() {
-  const vaultIds = useAppSelector(state => selectUserDepositedVaultIdsForAsset(state, 'BUSD'));
-  return vaultIds.length ? <BusdBanner /> : null;
-});
-
-export type BusdBannerVaultProps = {
-  vaultId: VaultEntity['id'];
-};
-export const BusdBannerVault = memo<BusdBannerVaultProps>(function BusdBannerVault({ vaultId }) {
-  const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  return vault.assetIds.includes('BUSD') ? <BusdBanner /> : null;
 });

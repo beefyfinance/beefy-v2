@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useResizeDetector } from 'react-resize-detector';
 
-export function useIsOverflowingHorizontally() {
+export function useIsOverflowingHorizontally<T extends HTMLElement>() {
   const [isOverflowing, setIsOverflowing] = useState(false);
-  const { width, ref } = useResizeDetector();
+  const { width, ref } = useResizeDetector<T>();
 
   useEffect(() => {
     if (!ref.current) return;

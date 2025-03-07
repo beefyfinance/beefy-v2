@@ -1,4 +1,4 @@
-import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy';
+import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy.ts';
 import {
   type ConicDepositOption,
   type ConicDepositQuote,
@@ -10,7 +10,7 @@ import {
   SelectionOrder,
   type TokenAmount,
   type ZapQuoteStep,
-} from '../../transact-types';
+} from '../../transact-types.ts';
 import {
   isTokenEqual,
   isTokenErc20,
@@ -18,7 +18,7 @@ import {
   type TokenEntity,
   type TokenErc20,
   type TokenNative,
-} from '../../../../entities/token';
+} from '../../../../entities/token.ts';
 import {
   createOptionId,
   createQuoteId,
@@ -27,8 +27,8 @@ import {
   onlyOneInput,
   onlyOneToken,
   onlyOneTokenAmount,
-} from '../../helpers/options';
-import { TransactMode } from '../../../../reducers/wallet/transact-types';
+} from '../../helpers/options.ts';
+import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
@@ -36,42 +36,42 @@ import {
   selectIsTokenLoaded,
   selectTokenByAddress,
   selectTokenById,
-} from '../../../../selectors/tokens';
-import type { Step } from '../../../../reducers/wallet/stepper';
+} from '../../../../selectors/tokens.ts';
+import type { Step } from '../../../../reducers/wallet/stepper.ts';
 import {
   BIG_ZERO,
   bigNumberToBigInt,
   fromWei,
   fromWeiString,
   toWeiString,
-} from '../../../../../../helpers/big-number';
+} from '../../../../../../helpers/big-number.ts';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { BeefyThunk } from '../../../../../../redux-types';
-import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes';
-import { isStandardVault, type VaultStandard } from '../../../../entities/vault';
-import { getVaultWithdrawnFromState } from '../../helpers/vault';
-import { ZapAbi } from '../../../../../../config/abi/ZapAbi';
+import type { BeefyThunk } from '../../../../../../redux-types.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
+import { isStandardVault, type VaultStandard } from '../../../../entities/vault.ts';
+import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
+import { ZapAbi } from '../../../../../../config/abi/ZapAbi.ts';
 import {
   includeWrappedAndNative,
   nativeAndWrappedAreSame,
   nativeToWNative,
   pickTokens,
   wnativeToNative,
-} from '../../helpers/tokens';
-import { selectTransactSlippage } from '../../../../selectors/transact';
-import { walletActions } from '../../../../actions/wallet-actions';
-import { getTokenAddress, NO_RELAY } from '../../helpers/zap';
-import type { OrderInput, OrderOutput, UserlessZapRequest, ZapStep } from '../../zap/types';
+} from '../../helpers/tokens.ts';
+import { selectTransactSlippage } from '../../../../selectors/transact.ts';
+import { walletActions } from '../../../../actions/wallet-actions.ts';
+import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
+import type { OrderInput, OrderOutput, UserlessZapRequest, ZapStep } from '../../zap/types.ts';
 import { first, uniqBy } from 'lodash-es';
-import { slipBy } from '../../helpers/amounts';
-import { fetchZapAggregatorSwap } from '../../zap/swap';
-import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
-import type { ConicStrategyConfig } from '../strategy-configs';
-import { fetchContract } from '../../../rpc-contract/viem-contract';
+import { slipBy } from '../../helpers/amounts.ts';
+import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
+import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType.ts';
+import type { ConicStrategyConfig } from '../strategy-configs.ts';
+import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
 import type { Abi, Address } from 'abitype';
 import { encodeFunctionData, getAbiItem } from 'viem';
 
-const strategyId = 'conic' as const;
+const strategyId = 'conic';
 type StrategyId = typeof strategyId;
 
 class ConicStrategyImp implements IZapStrategy<StrategyId> {
@@ -86,7 +86,10 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
   protected readonly vault: VaultStandard;
   protected readonly vaultType: IStandardVaultType;
 
-  constructor(protected options: ConicStrategyConfig, protected helpers: ZapTransactHelpers) {
+  constructor(
+    protected options: ConicStrategyConfig,
+    protected helpers: ZapTransactHelpers
+  ) {
     const { vault, vaultType, getState } = this.helpers;
 
     if (!isStandardVault(vault)) {

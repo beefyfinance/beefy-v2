@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import { useAppSelector } from '../../../../store';
-import { selectCanQuote, selectHaveQuote } from '../../../data/selectors/on-ramp';
+import { useAppSelector } from '../../../../store.ts';
+import { selectCanQuote, selectHaveQuote } from '../../../data/selectors/on-ramp.ts';
 
 export const Debug = memo(function Debug() {
   const quote = useAppSelector(state => state.ui.onRamp.quote);

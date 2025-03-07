@@ -1,5 +1,5 @@
 export type GlpLikeConfig = {
-  managerMethod: string; // 'glpManager' | 'mvlpManager'
+  managerMethod: 'glpManager' | 'mvlpManager' | 'klpManager';
 };
 
 export type UnlockTimeResult = {

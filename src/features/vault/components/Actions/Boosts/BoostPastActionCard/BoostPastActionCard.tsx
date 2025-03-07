@@ -1,24 +1,24 @@
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../../store';
-import type { BoostPromoEntity } from '../../../../../data/entities/promo';
+import { useAppSelector } from '../../../../../../store.ts';
+import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
 import {
   selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
-} from '../../../../../data/selectors/balance';
-import { styles } from './styles';
-import { selectStandardVaultById } from '../../../../../data/selectors/vaults';
-import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
-import { selectBoostById } from '../../../../../data/selectors/boosts';
-import { BIG_ZERO } from '../../../../../../helpers/big-number';
-import { type Reward, Rewards } from '../Rewards';
-import { Claim } from '../ActionButton/Claim';
-import { TokenAmount } from '../../../../../../components/TokenAmount';
-import { Unstake } from '../ActionButton/Unstake';
-import { ActionConnectSwitch } from '../ActionConnectSwitch';
+} from '../../../../../data/selectors/balance.ts';
+import { styles } from './styles.ts';
+import { selectStandardVaultById } from '../../../../../data/selectors/vaults.ts';
+import { selectTokenByAddress } from '../../../../../data/selectors/tokens.ts';
+import { selectBoostById } from '../../../../../data/selectors/boosts.ts';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { type Reward, Rewards } from '../Rewards.tsx';
+import { Claim } from '../ActionButton/Claim.tsx';
+import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { Unstake } from '../ActionButton/Unstake.tsx';
+import { ActionConnectSwitch } from '../ActionConnectSwitch.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface BoostPastCardActionCardProps {
   boostId: BoostPromoEntity['id'];
@@ -70,12 +70,7 @@ export const BoostPastActionCard = memo(function BoostPastActionCard({
         </div>
       </div>
       {canClaim && (
-        <Rewards
-          isInBoost={true}
-          rewards={rewards}
-          className={classes.pastRewards}
-          fadeInactive={false}
-        />
+        <Rewards isInBoost={true} rewards={rewards} css={styles.pastRewards} fadeInactive={false} />
       )}
       {canClaim || canUnstake ? (
         <ActionConnectSwitch chainId={vault.chainId}>

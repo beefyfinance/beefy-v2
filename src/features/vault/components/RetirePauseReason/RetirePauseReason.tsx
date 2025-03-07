@@ -1,26 +1,27 @@
 import { memo, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { AlertWarning } from '../../../../components/Alerts';
-import { isGovVault, type VaultEntity } from '../../../data/entities/vault';
-import { selectVaultById } from '../../../data/selectors/vaults';
-import { useAppSelector } from '../../../../store';
+import { AlertWarning } from '../../../../components/Alerts/Alerts.tsx';
+import { isGovVault, type VaultEntity } from '../../../data/entities/vault.ts';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
+import { useAppSelector } from '../../../../store.ts';
+import { type CssStyles } from '@repo/styles/css';
 
 export type RetirePauseReasonProps = {
   vaultId: VaultEntity['id'];
-  className?: string;
+  css?: CssStyles;
 };
 
-const ScreamTx = {
+const ScreamTx: Record<string, string> = {
   'scream-tusd':
-    'https://ftmscan.com/tx/0x28a3991946cba505a406e912c2544ede2c19c1fde8b425451e229bd3ae5b8df2 ',
+    'https://ftmscan.com/tx/0x28a3991946cba505a406e912c2544ede2c19c1fde8b425451e229bd3ae5b8df2',
   'scream-frax':
     'https://ftmscan.com/tx/0x6bcb68dd92e1500e82a7f22ea7c17858a68c065eb4b4402d273885ccc8a6dc0f',
 };
 
-export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePauseReason({
+export const RetirePauseReason = memo(function RetirePauseReason({
   vaultId,
-  className,
-}) {
+  css: cssProp,
+}: RetirePauseReasonProps) {
   const { t, i18n } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
@@ -58,7 +59,7 @@ export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePau
                 }}
               />
             );
-          } else if (reasonCode === 'scream') {
+          } else if (reasonCode === 'scream' && ScreamTx[vaultId]) {
             return (
               <Trans
                 t={t}
@@ -103,5 +104,5 @@ export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePau
     return null;
   }, [vault, t, i18n, vaultId]);
 
-  return message ? <AlertWarning className={className}>{message}</AlertWarning> : null;
+  return message ? <AlertWarning css={cssProp}>{message}</AlertWarning> : null;
 });

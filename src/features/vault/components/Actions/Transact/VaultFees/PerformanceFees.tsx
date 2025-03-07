@@ -1,12 +1,15 @@
-import type { VaultFee } from '../../../../../data/reducers/fees';
+import type { VaultFee } from '../../../../../data/reducers/fees.ts';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatPercent } from '../../../../../../helpers/format';
-import { InterestTooltipContent } from '../../../../../../components/InterestTooltipContent';
+import { formatPercent } from '../../../../../../helpers/format.ts';
+import { InterestTooltipContent } from '../../../../../../components/InterestTooltipContent/InterestTooltipContent.tsx';
 import { BigNumber } from 'bignumber.js';
-import { isFiniteNumber } from '../../../../../../helpers/number';
+import { isFiniteNumber } from '../../../../../../helpers/number.ts';
+import { entries } from '../../../../../../helpers/object.ts';
 
-export type PerformanceFeesProps = { fees: VaultFee };
+export type PerformanceFeesProps = {
+  fees: VaultFee;
+};
 
 const performanceFeeLabels = {
   stakers: 'Transact-Fee-Holder',
@@ -14,9 +17,9 @@ const performanceFeeLabels = {
   strategist: 'Transact-Fee-Developers',
   call: 'Transact-Fee-HarvestFee',
 };
-export const PerformanceFees = memo<PerformanceFeesProps>(function PerformanceFees({ fees }) {
+export const PerformanceFees = memo(function PerformanceFees({ fees }: PerformanceFeesProps) {
   const { t } = useTranslation();
-  const rows = Object.entries(performanceFeeLabels)
+  const rows = entries(performanceFeeLabels)
     .filter(([key]) => key in fees)
     .map(([key, label]) => ({
       label: t(label),

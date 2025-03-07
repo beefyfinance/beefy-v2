@@ -1,33 +1,33 @@
-import { makeStyles } from '@material-ui/core';
-import { HelpOutline } from '@material-ui/icons';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { type BigNumber } from 'bignumber.js';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import type { ReactNode } from 'react';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Tooltip } from '../../../../../../../components/Tooltip';
-import { BasicTooltipContent } from '../../../../../../../components/Tooltip/BasicTooltipContent';
+import { IconWithTooltip } from '../../../../../../../components/Tooltip/IconWithTooltip.tsx';
+import { BasicTooltipContent } from '../../../../../../../components/Tooltip/BasicTooltipContent.tsx';
 import {
-  formatLargeUsd,
-  formatTokenDisplayCondensed,
-  formatTokenDisplay,
   formatLargePercent,
+  formatLargeUsd,
   formatPositiveOrNegative,
-} from '../../../../../../../helpers/format';
-import { useAppSelector } from '../../../../../../../store';
-import type { VaultEntity } from '../../../../../../data/entities/vault';
-import { selectStandardGovPnl } from '../../../../../../data/selectors/analytics';
+  formatTokenDisplay,
+  formatTokenDisplayCondensed,
+} from '../../../../../../../helpers/format.ts';
+import { useAppSelector } from '../../../../../../../store.ts';
+import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
+import { selectStandardGovPnl } from '../../../../../../data/selectors/analytics.ts';
 
-import { styles } from './styles';
-import { BIG_ZERO } from '../../../../../../../helpers/big-number';
+import { styles } from './styles.ts';
+import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
+import { DivWithTooltip } from '../../../../../../../components/Tooltip/DivWithTooltip.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface HeaderProps {
   vaultId: VaultEntity['id'];
 }
 
-export const Header = memo<HeaderProps>(function Header({ vaultId }) {
+export const Header = memo(function Header({ vaultId }: HeaderProps) {
   const { t } = useTranslation();
 
   const {
@@ -69,7 +69,7 @@ export const Header = memo<HeaderProps>(function Header({ vaultId }) {
         <SharesValue
           amount={totalYield}
           decimals={tokenDecimals}
-          className={classes.greenValue}
+          css={styles.greenValue}
           percentage={yieldPercentage}
         />
       </HeaderItem>
@@ -79,9 +79,9 @@ export const Header = memo<HeaderProps>(function Header({ vaultId }) {
         subValue={formatLargePercent(pnlPercentage)}
       >
         <div
-          className={clsx(
-            classes.value,
-            totalPnlUsd.gt(BIG_ZERO) ? classes.greenValue : classes.redValue
+          className={css(
+            styles.value,
+            totalPnlUsd.gt(BIG_ZERO) ? styles.greenValue : styles.redValue
           )}
         >
           {formatPositiveOrNegative(totalPnlUsd, formatLargeUsd(totalPnlUsd))}{' '}
@@ -94,28 +94,26 @@ export const Header = memo<HeaderProps>(function Header({ vaultId }) {
 interface HeaderItemProps {
   label: string;
   border?: boolean;
-  className?: string;
+  css?: CssStyles;
   children: ReactNode;
   tooltipText: string;
   subValue?: string;
 }
 
-const HeaderItem = memo<HeaderItemProps>(function HeaderItem({
+const HeaderItem = memo(function HeaderItem({
   label,
-  className,
+  css: cssProp,
   tooltipText,
   children,
   subValue,
-}) {
+}: HeaderItemProps) {
   const classes = useStyles();
 
   return (
-    <div className={clsx(classes.itemContainer, className)}>
+    <div className={css(styles.itemContainer, cssProp)}>
       <div className={classes.labelContainer}>
         <div className={classes.label}>{label}</div>
-        <Tooltip triggerClass={classes.center} content={tooltipText}>
-          <HelpOutline />
-        </Tooltip>
+        <IconWithTooltip tooltip={tooltipText} iconCss={styles.center} />
       </div>
       {children}
       {subValue && <div className={classes.subValue}>{subValue}</div>}
@@ -124,29 +122,27 @@ const HeaderItem = memo<HeaderItemProps>(function HeaderItem({
 });
 
 interface SharesValueProps {
-  className?: string;
+  css?: CssStyles;
   percentage?: BigNumber;
   amount: BigNumber;
   decimals: number;
 }
 
-const SharesValue = memo<SharesValueProps>(function SharesValue({
-  className,
+const SharesValue = memo(function SharesValue({
+  css: cssProp,
   percentage,
   amount,
   decimals,
-}) {
-  const classes = useStyles();
-
+}: SharesValueProps) {
   const fullAmount = formatTokenDisplay(amount, decimals);
   const shortAmount = formatTokenDisplayCondensed(amount, decimals);
 
   return (
-    <Tooltip content={<BasicTooltipContent title={fullAmount} />}>
-      <div className={clsx(classes.value, className)}>
-        <div className={clsx(classes.withTooltip, classes.textOverflow)}>{shortAmount}</div>
+    <DivWithTooltip tooltip={<BasicTooltipContent title={fullAmount} />}>
+      <div className={css(styles.value, cssProp)}>
+        <div className={css(styles.withTooltip, styles.textOverflow)}>{shortAmount}</div>
         {percentage && <span>({formatLargePercent(percentage)})</span>}
       </div>
-    </Tooltip>
+    </DivWithTooltip>
   );
 });

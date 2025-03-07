@@ -2,9 +2,9 @@ import type {
   TenderlyCallTrace,
   TenderlySimulateResponse,
   TenderlySimulateResponseContract,
-} from '../../../features/data/apis/tenderly/types';
-import { StackEntry } from './StackEntry';
-import { formatAddressShort } from '../../../helpers/format';
+} from '../../../features/data/apis/tenderly/types.ts';
+import { StackEntry } from './StackEntry.ts';
+import { formatAddressShort } from '../../../helpers/format.ts';
 
 export class TenderlySimulateResponseProcessor {
   private readonly contracts: Record<string, TenderlySimulateResponseContract>;
@@ -21,7 +21,10 @@ export class TenderlySimulateResponseProcessor {
       const walk = (
         trace: TenderlyCallTrace,
         stack: Array<StackEntry>,
-        reverts: Array<{ error: string; stack: StackEntry[] }>
+        reverts: Array<{
+          error: string;
+          stack: StackEntry[];
+        }>
       ) => {
         const lastStack = stack[stack.length - 1];
 
@@ -55,13 +58,16 @@ export class TenderlySimulateResponseProcessor {
   protected getContracts(
     contracts: TenderlySimulateResponseContract[]
   ): Record<string, TenderlySimulateResponseContract> {
-    const byAddress = contracts.reduce((acc, c) => {
-      acc[c.address.toLowerCase()] = {
-        ...c,
-        contract_name: c.contract_name || formatAddressShort(c.address),
-      };
-      return acc;
-    }, {});
+    const byAddress = contracts.reduce(
+      (acc, c) => {
+        acc[c.address.toLowerCase()] = {
+          ...c,
+          contract_name: c.contract_name || formatAddressShort(c.address),
+        };
+        return acc;
+      },
+      {} as Record<string, TenderlySimulateResponseContract>
+    );
     const proxies = contracts.filter(c => c.standard === 'eip1167');
     for (const proxy of proxies) {
       const implementation = contracts.find(
@@ -70,11 +76,11 @@ export class TenderlySimulateResponseProcessor {
           !c.standard &&
           c.address.toLowerCase() !== proxy.address.toLowerCase()
       );
-      byAddress[proxy.address.toLowerCase()]!.contract_name = `${
-        byAddress[proxy.address.toLowerCase()]
+      byAddress[proxy.address.toLowerCase()].contract_name = `${
+        byAddress[proxy.address.toLowerCase()].contract_name
       } (proxy)`;
       if (implementation) {
-        byAddress[implementation.address.toLowerCase()]!.contract_name = `${
+        byAddress[implementation.address.toLowerCase()].contract_name = `${
           implementation.contract_name ||
           proxy.contract_name ||
           formatAddressShort(implementation.address)

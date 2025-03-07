@@ -1,9 +1,9 @@
 import { memo } from 'react';
-import type { PromoCardProps } from './types';
-import { CampaignPromoCard, PartnersPromoCard } from './PromoCard';
-import { useAppSelector } from '../../../../store';
-import { selectBoostActiveRewardTokens } from '../../../data/selectors/boosts';
-import type { BoostPromoEntity } from '../../../data/entities/promo';
+import type { PromoCardProps } from './types.ts';
+import { CampaignPromoCard, PartnersPromoCard } from './PromoCard.tsx';
+import { useAppSelector } from '../../../../store.ts';
+import { selectBoostActiveRewardTokens } from '../../../data/selectors/boosts.ts';
+import type { BoostPromoEntity } from '../../../data/entities/promo.ts';
 
 const BoostCard = memo(function BoostCard({ promo }: PromoCardProps<BoostPromoEntity>) {
   const rewards = useAppSelector(state => selectBoostActiveRewardTokens(state, promo.id));
@@ -22,5 +22,5 @@ const BoostCard = memo(function BoostCard({ promo }: PromoCardProps<BoostPromoEn
   }
 });
 
-// eslint-disable-next-line no-restricted-syntax
+// eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
 export default BoostCard;

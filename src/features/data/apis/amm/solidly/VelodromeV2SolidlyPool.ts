@@ -1,13 +1,13 @@
 import { BigNumber } from 'bignumber.js';
-import type { SwapFeeParams } from '../types';
-import type { PairData, PairDataResponse } from './SolidlyPool';
-import { SolidlyPool } from './SolidlyPool';
-import { VelodromeV2PairAbi } from '../../../../../config/abi/VelodromeV2PairAbi';
-import type { ZapStep } from '../../transact/zap/types';
-import { getInsertIndex } from '../../transact/helpers/zap';
+import type { SwapFeeParams } from '../types.ts';
+import type { PairData, PairDataResponse } from './SolidlyPool.ts';
+import { SolidlyPool } from './SolidlyPool.ts';
+import { VelodromeV2PairAbi } from '../../../../../config/abi/VelodromeV2PairAbi.ts';
+import type { ZapStep } from '../../transact/zap/types.ts';
+import { getInsertIndex } from '../../transact/helpers/zap.ts';
 import { encodeFunctionData, type Abi, type Address } from 'viem';
-import { fetchContract } from '../../rpc-contract/viem-contract';
-import { bigNumberToBigInt } from '../../../../../helpers/big-number';
+import { fetchContract } from '../../rpc-contract/viem-contract.ts';
+import { bigNumberToBigInt } from '../../../../../helpers/big-number.ts';
 
 export type FactoryDataResponse = {
   fee: string;
@@ -105,7 +105,10 @@ export class VelodromeV2SolidlyPool extends SolidlyPool {
   protected buildZapSwapTx(
     amountIn: BigNumber,
     amountOutMin: BigNumber,
-    routes: { from: string; to: string }[],
+    routes: {
+      from: string;
+      to: string;
+    }[],
     to: string,
     deadline: number,
     insertBalance: boolean

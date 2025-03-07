@@ -1,6 +1,6 @@
-import { mapValuesDeep } from '../../utils/array-utils';
-import { featureFlag_simulateBeefyApiError } from '../../utils/feature-flags';
-import type { TreasuryCompleteBreakdownConfig } from '../config-types';
+import { mapValuesDeep } from '../../utils/array-utils.ts';
+import { featureFlag_simulateBeefyApiError } from '../../utils/feature-flags.ts';
+import type { TreasuryCompleteBreakdownConfig } from '../config-types.ts';
 import type {
   AllCowcentratedVaultRangesResponse,
   ApyFeeData,
@@ -12,8 +12,8 @@ import type {
   BeefyOffChainRewardsCampaign,
   BeefySnapshotActiveResponse,
   ZapAggregatorTokenSupportResponse,
-} from './beefy-api-types';
-import { getJson } from '../../../../helpers/http';
+} from './beefy-api-types.ts';
+import { getJson } from '../../../../helpers/http/http.ts';
 
 export const API_URL = import.meta.env.VITE_API_URL || 'https://api.beefy.finance';
 export const API_ZAP_URL = import.meta.env.VITE_API_ZAP_URL || `${API_URL}/zap`;
@@ -92,7 +92,7 @@ export class BeefyAPI {
         return parseFloat(val);
       }
       return val;
-    });
+    }) as BeefyAPIApyBreakdownResponse;
   }
 
   /**

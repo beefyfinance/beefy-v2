@@ -2,15 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import { type BigNumber } from 'bignumber.js';
 import type { Draft } from 'immer';
 import { sortBy } from 'lodash-es';
-import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults';
-import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
-import type { ChainEntity } from '../entities/chain';
-import { isStandardVault, type VaultEntity } from '../entities/vault';
-import type { NormalizedEntity } from '../utils/normalized-entity';
-import { fromKeysBy, pushOrSet } from '../../../helpers/object';
-import { BIG_ZERO } from '../../../helpers/big-number';
+import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
+import { fetchAllVaults, fetchVaultsLastHarvests } from '../actions/vaults.ts';
+import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import { isStandardVault, type VaultEntity } from '../entities/vault.ts';
+import type { NormalizedEntity } from '../utils/normalized-entity.ts';
+import { fromKeysBy, pushOrSet } from '../../../helpers/object.ts';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
 
 /**
  * State containing Vault infos

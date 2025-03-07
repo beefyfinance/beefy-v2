@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { type AsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   fetchClmHarvestsForVaultsOfUserOnChain,
   fetchClmPendingRewards,
@@ -8,22 +8,21 @@ import {
   fetchWalletTimeline,
   recalculateClmPoolHarvestsForUserVaultId,
   recalculateClmVaultHarvestsForUserVaultId,
-} from '../actions/analytics';
-import type { VaultEntity } from '../entities/vault';
+} from '../actions/analytics.ts';
+import type { VaultEntity } from '../entities/vault.ts';
 import type { Draft } from 'immer';
 import { BigNumber } from 'bignumber.js';
-import type { ApiClassicHarvestRow, ApiClmHarvestRow } from '../apis/clm/clm-api-types';
+import type { ApiClassicHarvestRow, ApiClmHarvestRow } from '../apis/clm/clm-api-types.ts';
 import { fromUnixTime } from 'date-fns';
 import { orderBy, uniqBy } from 'lodash-es';
-import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types';
+import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types.ts';
 import {
   getDataApiBucket,
   getDataApiBucketIntervalKey,
-} from '../apis/beefy/beefy-data-api-helpers';
-import type { AnalyticsState, ClassicHarvest, ClmHarvest } from './analytics-types';
-import type { AsyncThunk } from '@reduxjs/toolkit/src/createAsyncThunk';
-import type { GraphBucket } from '../../../helpers/graph/types';
-import type { BeefyMetaThunkConfig } from '../../../redux-types';
+} from '../apis/beefy/beefy-data-api-helpers.ts';
+import type { AnalyticsState, ClassicHarvest, ClmHarvest } from './analytics-types.ts';
+import type { GraphBucket } from '../../../helpers/graph/types.ts';
+import type { BeefyMetaThunkConfig } from '../../../redux-types.ts';
 
 const initialState: AnalyticsState = {
   classicHarvests: {
@@ -66,7 +65,9 @@ export const analyticsSlice = createSlice({
           vaultId: VaultEntity['id'];
           timeBucket: GraphBucket;
         },
-        BeefyMetaThunkConfig<{ since: number }>
+        BeefyMetaThunkConfig<{
+          since: number;
+        }>
       >
     ) {
       builder

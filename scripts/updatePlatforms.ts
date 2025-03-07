@@ -17,7 +17,7 @@ const csvPath = path.resolve(__dirname, './platforms.csv');
 
 function loadPlatforms(): Platform[] {
   const platformsData = fs.readFileSync(platformsPath, 'utf-8');
-  return JSON.parse(platformsData);
+  return JSON.parse(platformsData) as Platform[];
 }
 
 function savePlatforms(platforms: Platform[]) {

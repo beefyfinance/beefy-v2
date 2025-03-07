@@ -1,32 +1,10 @@
-import type { GlpLikeConfig, UnlockTimeResult } from './types';
-import type { ChainEntity } from '../../../../../data/entities/chain';
+import type { GlpLikeConfig, UnlockTimeResult } from './types.ts';
+import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { BigNumber } from 'bignumber.js';
-import { fetchContract } from '../../../../../data/apis/rpc-contract/viem-contract';
+import { fetchContract } from '../../../../../data/apis/rpc-contract/viem-contract.ts';
 import type { Abi, Address } from 'abitype';
-
-const stakedAbiCache: Record<string, Abi> = {};
-
-function getStakedAbi(config: GlpLikeConfig): Abi {
-  if (!(config.managerMethod in stakedAbiCache)) {
-    stakedAbiCache[config.managerMethod] = [
-      {
-        inputs: [],
-        name: config.managerMethod,
-        outputs: [
-          {
-            internalType: 'address',
-            name: '',
-            type: 'address',
-          },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    ] as const satisfies Abi;
-  }
-
-  return stakedAbiCache[config.managerMethod];
-}
+import { readContract } from 'viem/actions';
+import { rpcClientManager } from '../../../../../data/apis/rpc-contract/rpc-manager.ts';
 
 const managerAbi = [
   {
@@ -69,9 +47,26 @@ export async function getUnlockTime(
   chain: ChainEntity,
   config: GlpLikeConfig
 ): Promise<UnlockTimeResult> {
-  const stakedContract = fetchContract(depositTokenAddress, getStakedAbi(config), chain.id);
-  // dynamic abi screws up with type inference so we make it explicit
-  const manager = (await stakedContract.read[config.managerMethod]()) as Address;
+  const chainClients = rpcClientManager.getClients(chain.id);
+  const manager = await readContract(chainClients.batchCallClient, {
+    address: depositTokenAddress as Address,
+    functionName: config.managerMethod,
+    abi: [
+      {
+        inputs: [],
+        name: config.managerMethod,
+        outputs: [
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      } as const,
+    ] as const,
+  });
 
   const managerContract = fetchContract(manager, managerAbi, chain.id);
   const [lastAddedAtResult, cooldownDurationResult] = await Promise.all([

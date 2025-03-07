@@ -1,30 +1,28 @@
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CardTitle } from '../../Card';
-import { StandardDescription } from '../Description/StandardDescription';
-import { selectVaultTotalApyOrUndefined } from '../../../../data/selectors/apy';
-import { shouldVaultShowInterest, type VaultEntity } from '../../../../data/entities/vault';
+import { CardTitle } from '../../Card/CardTitle.tsx';
+import { StandardDescription } from '../Description/StandardDescription.tsx';
+import { selectVaultTotalApyOrUndefined } from '../../../../data/selectors/apy.ts';
+import { shouldVaultShowInterest, type VaultEntity } from '../../../../data/entities/vault.ts';
 import {
   selectStandardVaultById,
   selectVaultStrategyAddressOrUndefined,
-} from '../../../../data/selectors/vaults';
-import { selectChainById } from '../../../../data/selectors/chains';
-import { useAppSelector } from '../../../../../store';
-import { explorerAddressUrl } from '../../../../../helpers/url';
-import { ApyDetails } from '../ApyDetails/ApyDetails';
-import { LendingOracle } from '../LendingOracle/LendingOracle';
-import { ExplainerCard } from '../ExplainerCard/ExplainerCard';
-import { getApyLabelsTypeForVault } from '../../../../../helpers/apy';
-import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../data/selectors/boosts';
+} from '../../../../data/selectors/vaults.ts';
+import { selectChainById } from '../../../../data/selectors/chains.ts';
+import { useAppSelector } from '../../../../../store.ts';
+import { explorerAddressUrl } from '../../../../../helpers/url.ts';
+import { ApyDetails } from '../ApyDetails/ApyDetails.tsx';
+import { LendingOracle } from '../LendingOracle/LendingOracle.tsx';
+import { ExplainerCard } from '../ExplainerCard/ExplainerCard.tsx';
+import { getApyLabelsTypeForVault } from '../../../../../helpers/apy.ts';
+import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../data/selectors/boosts.ts';
 
 type StandardExplainerProps = {
   vaultId: VaultEntity['id'];
   underlyingId?: VaultEntity['id'];
 };
 
-export const StandardExplainer = memo<StandardExplainerProps>(function StandardExplainer({
-  vaultId,
-}) {
+const StandardExplainer = memo(function StandardExplainer({ vaultId }: StandardExplainerProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectStandardVaultById(state, vaultId));
   const boost = useAppSelector(state => selectCurrentBoostByVaultIdOrUndefined(state, vaultId));
@@ -37,7 +35,10 @@ export const StandardExplainer = memo<StandardExplainerProps>(function StandardE
   const showLendingOracle = !!vault.lendingOracle;
 
   const links = useMemo(() => {
-    const urls: { link: string; label: string }[] = [];
+    const urls: {
+      link: string;
+      label: string;
+    }[] = [];
     if (strategyAddress) {
       urls.push({
         link: explorerAddressUrl(chain, strategyAddress),
@@ -59,7 +60,7 @@ export const StandardExplainer = memo<StandardExplainerProps>(function StandardE
 
   return (
     <ExplainerCard
-      title={<CardTitle title={t('Vault-Strategy')} />}
+      title={<CardTitle>{t('Vault-Strategy')}</CardTitle>}
       links={links}
       description={<StandardDescription vaultId={vaultId} />}
       details={
@@ -73,3 +74,6 @@ export const StandardExplainer = memo<StandardExplainerProps>(function StandardE
     />
   );
 });
+
+// eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
+export default StandardExplainer;

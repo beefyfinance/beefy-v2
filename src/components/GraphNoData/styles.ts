@@ -1,7 +1,7 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (_theme: Theme) => ({
-  container: {
+export const styles = {
+  container: css.raw({
     padding: '16px',
-  },
-});
+  }),
+};
