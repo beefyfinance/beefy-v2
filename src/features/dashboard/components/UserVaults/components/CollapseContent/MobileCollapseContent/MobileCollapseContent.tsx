@@ -50,6 +50,7 @@ export const MobileCollapseContent = memo(function MobileCollapseContent({
             value={toggleTab}
             onChange={setToggleTab}
             options={options}
+            variant="filter"
           />
         )}
       </div>
