@@ -9,6 +9,7 @@ import type {
 } from '@pandacss/types';
 import { defineTextStyles } from '@pandacss/dev';
 import { defaults, mapValues } from 'lodash-es';
+import { setColorOpacity } from './utils/color.ts';
 
 export type ButtonColors = { color: string; background: string; border: string };
 export type Button = {
@@ -16,6 +17,12 @@ export type Button = {
   hover?: Partial<ButtonColors>;
   active?: Partial<ButtonColors>;
   disabled?: Partial<ButtonColors>;
+};
+
+type PrimarySecondary<T = string> = { primary: T; secondary?: T };
+
+export type Network = PrimarySecondary & {
+  header?: number | string | PrimarySecondary<number | string>;
 };
 
 const zIndexStride = 1000;
@@ -94,6 +101,7 @@ export type BuilderConfig = {
   buttons?: Record<string, Button>;
   zIndex?: Record<string, number>;
   textStyles?: Record<string, TextStyle>;
+  networks?: Record<string, Network>;
 };
 
 function addTextStyles(config: Config, textStyles: Record<string, TextStyle>): Config {
@@ -129,6 +137,86 @@ function addTextStyles(config: Config, textStyles: Record<string, TextStyle>): C
   return config;
 }
 
+function addNetworks(
+  config: Config,
+  networks: Record<string, Network>,
+  defaultHeaderOpacity: number = 1
+): Config {
+  const chainIds = Object.keys(networks).sort();
+  const tokens: SemanticTokens['colors'] = {};
+
+  for (const chainId of chainIds) {
+    const network = networks[chainId];
+
+    tokens[chainId] = {
+      primary: buildValue(network.primary, `The primary color of the ${chainId} network`),
+    };
+
+    if (network.secondary) {
+      tokens[chainId].secondary = buildValue(
+        network.secondary,
+        `The secondary color of the ${chainId} network`
+      );
+    }
+
+    let primaryColor: string = setColorOpacity(network.primary, defaultHeaderOpacity);
+    let secondaryColor: string | undefined = network.secondary
+      ? setColorOpacity(network.secondary, defaultHeaderOpacity)
+      : undefined;
+
+    if (typeof network.header !== 'undefined') {
+      const primaryColorOrOpacity =
+        typeof network.header === 'object' ? network.header.primary : network.header;
+      primaryColor =
+        typeof primaryColorOrOpacity === 'number'
+          ? setColorOpacity(network.primary, primaryColorOrOpacity)
+          : primaryColorOrOpacity;
+
+      const secondaryColorOrOpacity =
+        typeof network.header === 'object' ? network.header.secondary : undefined;
+
+      if (typeof secondaryColorOrOpacity !== 'undefined') {
+        if (typeof secondaryColorOrOpacity === 'number') {
+          if (!network.secondary) {
+            throw new Error(
+              `Secondary color is not defined for the ${chainId} network, but opacity is set for header.secondary`
+            );
+          }
+          secondaryColor = setColorOpacity(network.secondary, secondaryColorOrOpacity);
+        } else {
+          secondaryColor = secondaryColorOrOpacity;
+        }
+      }
+    }
+
+    tokens[chainId].header = {
+      primary: buildValue(primaryColor, `The primary color of the ${chainId} network header`),
+    };
+    if (secondaryColor) {
+      tokens[chainId].header.secondary = buildValue(
+        secondaryColor,
+        `The secondary color of the ${chainId} network header`
+      );
+    }
+  }
+
+  config.theme ??= {};
+  config.theme.semanticTokens ??= {};
+  config.theme.semanticTokens.colors ??= {};
+  config.theme.semanticTokens.colors.network = tokens;
+
+  // Output all color palettes to the stylesheet, allowing us to apply these dynamically
+  config.staticCss ??= {};
+  config.staticCss.css ??= [];
+  config.staticCss.css.push({
+    properties: {
+      colorPalette: chainIds.map(chainId => `network.${chainId}`),
+    },
+  });
+
+  return config;
+}
+
 /** @dev mutates the config */
 export function buildConfig(config: Config, builderConfig: BuilderConfig): Config {
   if (builderConfig.buttons) {
@@ -139,6 +227,9 @@ export function buildConfig(config: Config, builderConfig: BuilderConfig): Confi
   }
   if (builderConfig.textStyles) {
     addTextStyles(config, builderConfig.textStyles);
+  }
+  if (builderConfig.networks) {
+    addNetworks(config, builderConfig.networks);
   }
   return config;
 }

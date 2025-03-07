@@ -32,13 +32,19 @@ interface MMHoldingProps {
 
 export const ChainHolding = memo(function ChainHolding({ chainId }: ChainHoldingProps) {
   const totalUsd = useAppSelector(state => selectTreasuryBalanceByChainId(state, chainId));
-
   const classes = useStyles();
   const chain = useAppSelector(state => selectChainById(state, chainId));
 
   return (
     <div className={classes.container}>
-      <div className={css(styles.title, styles[`headerNetwork-${chainId}`])}>
+      <div
+        className={css(
+          { colorPalette: `network.${chainId}` },
+          styles.title,
+          styles.headerNetwork,
+          chain?.brand?.header === 'gradient' && styles.headerNetworkGradient
+        )}
+      >
         <div className={classes.nameContainer}>
           <img className={classes.icon} src={getNetworkSrc(chainId)} alt={chainId} />
           <div className={classes.chainName}>{chain.name}</div>
@@ -55,7 +61,9 @@ export const MMHolding = memo(function MMHolding({ mmId }: MMHoldingProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const totalUsd = useAppSelector(state => selectTreasuryBalanceByMMId(state, mmId));
-  const brandHeaderStyles = (styles as Record<string, SystemStyleObject>)[`headerMM-${mmId}`];
+  const brandHeaderStyles = (styles as Record<string, SystemStyleObject>)[
+    `headerMM-${mmId.toLowerCase()}`
+  ];
 
   return (
     <div className={classes.container}>

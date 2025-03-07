@@ -753,6 +753,10 @@ export const config = {
       baseSafetyMargin: 0.1,
     },
     stableCoins: ['USDCe', 'scUSD', 'mooSiloSonicUSDCe', 'USDT', 'frxUSD'],
+    brand: {
+      icon: 'gradient',
+      header: 'gradient',
+    },
   },
   berachain: {
     name: 'Berachain',
