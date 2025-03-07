@@ -1,12 +1,6 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  header: css.raw({
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    gap: '8px',
-  }),
   actions: css.raw({
     display: 'flex',
     alignItems: 'center',

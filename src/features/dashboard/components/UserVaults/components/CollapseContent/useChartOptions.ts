@@ -27,12 +27,13 @@ export function useChartOptions(vaultId: VaultEntity['id'], address: string) {
 
     const availableCharts: Array<{ value: ChartTypes; label: string }> = [];
     if (hasAnalyticsData) {
-      availableCharts.push({ value: 'positionChart', label: t('Dashboard-Chart') });
       if (typeOfCharts === 'cowcentrated') {
         availableCharts.push({ value: 'positionChart', label: t('Dashboard-PositionChart') });
         if (vault.strategyTypeId === 'compounds') {
           availableCharts.push({ value: 'compoundsChart', label: t('Dashboard-CompoundsChart') });
         }
+      } else {
+        availableCharts.push({ value: 'positionChart', label: t('Dashboard-Chart') });
       }
     }
 

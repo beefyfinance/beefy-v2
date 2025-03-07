@@ -191,7 +191,6 @@ export type ChainConfig = {
   multicallAddress: string;
   multicall3Address: Address;
   appMulticallContractAddress: string;
-  providerName: string;
   native: {
     symbol: string;
     oracleId: string;
@@ -200,6 +199,10 @@ export type ChainConfig = {
   gas: GasConfig;
   stableCoins: string[];
   new?: boolean;
+  brand?: {
+    icon?: 'solid' | 'gradient';
+    header?: 'solid' | 'gradient';
+  };
 };
 
 export interface AmmConfigBase {

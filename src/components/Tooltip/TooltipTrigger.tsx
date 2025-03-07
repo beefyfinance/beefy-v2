@@ -4,6 +4,7 @@ import { useTooltipContext } from './useTooltipContext.ts';
 
 type HtmlTag = keyof ReactHTML;
 
+// TODO fix ref
 function createTooltipTrigger<T extends HtmlTag>(tag: T) {
   const Component = function TooltipTrigger({ ref, ...props }: ComponentProps<T>) {
     const { getReferenceProps, refs } = useTooltipContext();

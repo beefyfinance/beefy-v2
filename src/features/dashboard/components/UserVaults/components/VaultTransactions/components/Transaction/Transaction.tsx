@@ -61,8 +61,8 @@ const StandardAmountStat = memo(function StandardAmountStat({
   return (
     <TokenAmount
       css={css.raw(
-        underlyingDiff.gt(BIG_ZERO) ? styles.textGreen : styles.textRed,
-        mobile ? styles.statMobile : styles.stat
+        mobile ? styles.statMobile : styles.stat,
+        underlyingDiff.gt(BIG_ZERO) ? styles.textGreen : styles.textRed
       )}
       amount={underlyingDiff}
       decimals={depositToken.decimals}
