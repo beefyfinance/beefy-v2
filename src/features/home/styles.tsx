@@ -7,5 +7,6 @@ export const styles = (theme: Theme) => ({
   vaultContainer: {
     paddingTop: '32px',
     paddingBottom: '32px',
+    [theme.breakpoints.down('sm')]: { padding: '20px 12px' },
   },
 });

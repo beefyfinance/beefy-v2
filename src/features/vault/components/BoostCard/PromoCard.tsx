@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '24px',
     borderRadius: '12px 12px 0 0',
     backgroundColor: theme.palette.background.contentDark,
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px',
+    },
   },
   boostedBy: {
     ...theme.typography['h2'],
