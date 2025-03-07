@@ -146,7 +146,7 @@ const Actions = memo(function Actions({ connectedAction }: ActionProps) {
         )}
       </div>
       <Divider />
-      <AddressInput css={styles.search} />
+      <AddressInput />
     </div>
   );
 });
