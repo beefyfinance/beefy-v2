@@ -23,14 +23,6 @@ const detailsToComponent = {
 type TabType = keyof typeof detailsToComponent;
 
 const styles = {
-  header: css.raw({
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    sm: {
-      justifyContent: 'space-between',
-      flexDirection: 'row',
-    },
-  }),
   content: css.raw({
     gap: '16px',
   }),
@@ -59,7 +51,7 @@ export const Details = memo(function Details({ vaultId }: DetailsProps) {
 
   return (
     <Card>
-      <CardHeader css={styles.header}>
+      <CardHeader>
         <CardTitle>Details</CardTitle>
         <StatSwitcher<TabType> onChange={onTabChange} options={tabs} stat={tab} />
       </CardHeader>

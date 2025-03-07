@@ -68,7 +68,7 @@ export const StandardPnLGraph = memo(function StandardPnLGraph({
 
   return (
     <Card css={styles.card}>
-      <CardHeader css={styles.header}>
+      <CardHeader>
         <CardTitle>{t('Graph-PositionPerformance')}</CardTitle>
         {options.length > 1 ? (
           <StatSwitcher<ChartType> stat={stat} options={options} onChange={setStat} />

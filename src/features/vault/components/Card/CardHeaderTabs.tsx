@@ -35,6 +35,9 @@ const StyledCardHeader = styled(CardHeader, {
   base: {
     padding: '0',
     gap: '0',
+    sm: {
+      padding: '0',
+    },
   },
 });
 

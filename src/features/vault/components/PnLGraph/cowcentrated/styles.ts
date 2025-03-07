@@ -1,14 +1,6 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  header: css.raw({
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    sm: {
-      justifyContent: 'space-between',
-      flexDirection: 'row',
-    },
-  }),
   card: css.raw({
     backgroundColor: 'transparent',
     display: 'flex',

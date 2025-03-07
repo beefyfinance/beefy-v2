@@ -8,6 +8,7 @@ export const CardHeader = styled('div', {
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     padding: '16px',
     gap: '8px',
     width: '100%',

@@ -2,7 +2,7 @@ import type { TooltipOptions } from './types.ts';
 import { forwardRef, memo, type MouseEventHandler, type ReactNode } from 'react';
 import { TooltipProvider } from './TooltipProvider.tsx';
 import { TooltipContent } from './TooltipContent.tsx';
-import { TooltipTrigger } from './TooltipTrigger.tsx';
+import { TooltipTrigger } from './TooltipTrigger.ts';
 
 export type DivWithTooltipProps = TooltipOptions & {
   tooltip: ReactNode;

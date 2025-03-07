@@ -25,7 +25,7 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
 
   return (
     <Card id="SafetyCard">
-      <CardHeader css={styles.header}>
+      <CardHeader>
         <div className={classes.safetyLabel}>{t('Safety-Score1')}</div>
       </CardHeader>
       <CardContent>
