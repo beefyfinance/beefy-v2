@@ -1,20 +1,26 @@
-import { type ComponentProps, createElement, memo, type ReactHTML, type Ref } from 'react';
+import {
+  type ComponentProps,
+  createElement,
+  forwardRef,
+  memo,
+  type ReactHTML,
+  type Ref,
+} from 'react';
 import { useMergeRefs } from '@floating-ui/react';
 import { useTooltipContext } from './useTooltipContext.ts';
 
 type HtmlTag = keyof ReactHTML;
 
-// TODO fix ref
 function createTooltipTrigger<T extends HtmlTag>(tag: T) {
-  const Component = function TooltipTrigger({ ref, ...props }: ComponentProps<T>) {
+  const Component = function TooltipTrigger(props: ComponentProps<T>, ref: Ref<HTMLElement>) {
     const { getReferenceProps, refs } = useTooltipContext();
-    const mergedRef = useMergeRefs([refs.setReference, ref as Ref<HTMLElement>]);
+    const mergedRef = useMergeRefs([refs.setReference, ref]);
     return createElement(tag, { ...getReferenceProps(props), ref: mergedRef });
   };
 
   Component.displayName = `TooltipTrigger.${tag}`;
 
-  return memo(Component);
+  return memo(forwardRef(Component));
 }
 
 type TooltipTriggerFactory = {
