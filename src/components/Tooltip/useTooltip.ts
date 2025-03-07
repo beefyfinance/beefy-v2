@@ -27,6 +27,7 @@ export function useTooltip<TRef extends ReferenceType = Element>({
   arrowWidth = 14,
   arrowHeight = 7,
   disabled = false,
+  layer = 0,
 }: TooltipOptions = {}): TooltipData<TRef> {
   const [open, setOpen] = useState(false);
   const arrowRef = useRef<SVGSVGElement | null>(null);
@@ -99,7 +100,8 @@ export function useTooltip<TRef extends ReferenceType = Element>({
       ...interactions,
       getReferenceProps,
       ...data,
+      layer,
     }),
-    [open, setOpen, variant, size, arrow, interactions, data, getReferenceProps]
+    [open, setOpen, variant, size, arrow, interactions, data, getReferenceProps, layer]
   );
 }

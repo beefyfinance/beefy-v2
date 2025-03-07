@@ -8,7 +8,7 @@ export type DropdownContentProps = {
 } & Omit<HTMLStyledProps<typeof DropdownInner>, 'children' | 'className'>;
 
 export const DropdownContent = memo(function DropdownContent(innerProps: DropdownContentProps) {
-  const { open, refs, floatingStyles, getFloatingProps, context, arrow, variant } =
+  const { open, refs, floatingStyles, getFloatingProps, context, arrow, variant, layer } =
     useDropdownContext();
 
   if (!open) {
@@ -22,6 +22,7 @@ export const DropdownContent = memo(function DropdownContent(innerProps: Dropdow
         {...getFloatingProps()}
         style={floatingStyles}
         variant={variant}
+        layer={layer}
       >
         {arrow && <DropdownArrow {...arrow} context={context} />}
         <DropdownInner {...innerProps} />
