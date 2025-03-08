@@ -2568,10 +2568,10 @@ bl@^4.1.0:
     inherits "^2.0.4"
     readable-stream "^3.4.0"
 
-blockchain-addressbook@^0.51.12:
-  version "0.51.12"
-  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.51.12.tgz#2d23c17dc48ebf5a84c422d29988b0c2c3bfaf31"
-  integrity sha512-Oixk9//ja5JXYw+hZYbBvUjDn0TZpY8cFq5+7XNhK3GemO0jiWwQQoftbFqv71MhKgZnDE5tRGmmTNHAB82YFg==
+blockchain-addressbook@^0.51.13:
+  version "0.51.13"
+  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.51.13.tgz#d80d1c276c32d2d381e81d9941fde1b35b1a7d81"
+  integrity sha512-GF/H6fVTdiDGwCIJnAdBe8LNVyaN4Y3qhcVSrVlPIaHQPeeYsebX89AcqzyfJAll8PGCGDzPTLYJpMkEYpBTDA==
 
 bn.js@^4.11.9:
   version "4.12.0"
