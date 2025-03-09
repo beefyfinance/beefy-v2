@@ -1,14 +1,7 @@
-import {
-  type DetailedHTMLProps,
-  forwardRef,
-  type HTMLAttributes,
-  memo,
-  type Ref,
-  useMemo,
-} from 'react';
+import { forwardRef, memo, type Ref, useMemo } from 'react';
 import { Vault } from '../../../Vault/Vault.tsx';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
-import { Virtuoso } from 'react-virtuoso';
+import { type Components, type ListProps, Virtuoso } from 'react-virtuoso';
 import { css } from '@repo/styles/css';
 import { useBreakpoints } from '../../../../../../components/MediaQueries/useBreakpoints.ts';
 
@@ -21,21 +14,24 @@ function useVaultHeightEstimate() {
   }
 
   if (breakpoints.md) {
-    // 171 = last normal vault
+    // 171 = normal vault
     // 191 = boosted vault
-    return 173;
+    return 171;
   }
 
   if (breakpoints.sm) {
-    // 242 = last normal vault
+    // 242 = normal vault
     // 280 = boosted vault
-    return 244;
+    return 242;
   }
 
   // at 375w
-  // 310 = last normal vault
-  // 336 = two line title
-  return 312;
+  // 306 = normal vault w/out underlying tvl and deposited $ value
+  // 324 = normal vault w/ underlying tvl or deposited $ value
+  // 344 = normal vault w/ underlying tvl and deposited $ value
+  // +20px if boosted
+  // +24px if two line title
+  return 324;
 }
 
 function itemRenderer(_index: number, vaultId: VaultEntity['id']) {
@@ -47,15 +43,12 @@ function itemKey(_index: number, vaultId: VaultEntity['id']) {
 }
 
 const StyledList = memo(
-  forwardRef(function (
-    props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-    ref: Ref<HTMLDivElement>
-  ) {
+  forwardRef(function (props: ListProps, ref: Ref<HTMLDivElement>) {
     return <div ref={ref} {...props} className={listClass} />;
   })
 );
 
-const components = {
+const components: Components<string> = {
   List: StyledList,
 };
 
@@ -91,6 +84,4 @@ const listClass = css({
   width: '100%',
   gap: '2px',
   background: 'background.content.dark',
-  borderRadius: '8px',
-  overflow: 'hidden',
 });

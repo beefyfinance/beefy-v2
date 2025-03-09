@@ -45,7 +45,7 @@ export const VaultDashboardStats = memo(function VaultStats({ vaultId, address }
         <div className={css(styles.column, styles.columnDashboard, styles.hideSm)}>
           <VaultYieldRewardsStat showLabel={false} vaultId={vaultId} walletAddress={address} />
         </div>
-        <div className={classes.column}>
+        <div className={css(styles.column, styles.columnDashboard)}>
           <VaultPnlStat
             walletAddress={address}
             pnlData={pnlData}

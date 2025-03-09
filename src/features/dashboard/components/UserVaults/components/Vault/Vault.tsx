@@ -44,7 +44,7 @@ export const Vault = memo(function Vault({ vaultId, address }: VaultProps) {
   const CollapseComponent = mobileView ? MobileCollapseContent : DesktopCollapseContent;
 
   return (
-    <div className={classes.vaultRow}>
+    <div>
       <div
         onClick={handleOpen}
         className={css(

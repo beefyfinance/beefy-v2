@@ -3,16 +3,19 @@ import { css } from '@repo/styles/css';
 export const styles = {
   container: css.raw({
     backgroundColor: 'background.content.dark',
-    borderRadius: '8px 8px 0px 0px',
     padding: '16px',
     display: 'grid',
     width: '100%',
     columnGap: '8px',
     backgroundClip: 'padding-box',
-    borderBottom: 'solid 2px {colors.background.content.dark}',
-    gridTemplateColumns: 'minmax(0, 40fr) minmax(0, 60fr)',
-    mdDown: {
-      gridTemplateColumns: 'minmax(0, 60fr) minmax(0, 40fr)',
+    gridTemplateColumns: 'minmax(0, 60fr) minmax(0, 40fr)',
+    md: {
+      gridTemplateColumns: 'minmax(0, 40fr) minmax(0, 60fr)',
+    },
+    lg: {
+      position: 'sticky',
+      top: 0,
+      zIndex: 1,
     },
   }),
   sortColumns: css.raw({

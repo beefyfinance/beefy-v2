@@ -7,7 +7,6 @@ export const styles = {
     rowGap: '16px',
     backgroundColor: 'background.content.dark',
     padding: '16px 24px',
-    marginTop: '2px',
     lgDown: {
       padding: '16px',
     },
@@ -17,5 +16,6 @@ export const styles = {
     backgroundColor: 'background.content.dark',
     display: 'flex',
     justifyContent: 'center',
+    borderBottom: '2px solid {colors.purpleDarkest}',
   }),
 };
