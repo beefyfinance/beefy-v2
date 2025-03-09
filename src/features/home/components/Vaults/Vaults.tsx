@@ -1,18 +1,20 @@
 import { memo } from 'react';
-import { legacyMakeStyles } from '../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
 import { VaultsHeader } from './components/VaultsHeader/VaultsHeader.tsx';
 import { VaultsList } from './components/VaultsList/VaultsList.tsx';
-
-const useStyles = legacyMakeStyles(styles);
+import { css } from '@repo/styles/css';
 
 export const Vaults = memo(function Vaults() {
-  const classes = useStyles();
-
   return (
-    <div className={classes.vaults}>
+    <div className={vaultsClass}>
       <VaultsHeader />
       <VaultsList />
     </div>
   );
+});
+
+const vaultsClass = css({
+  marginTop: '32px',
+  borderRadius: '12px',
+  border: 'solid 2px {colors.background.content.dark}',
+  contain: 'paint',
 });

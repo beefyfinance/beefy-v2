@@ -22,13 +22,14 @@ const headerCss = css({
   padding: '16px',
   gridTemplateColumns: '1fr',
   alignItems: 'center',
-  borderTopLeftRadius: '8px',
-  borderTopRightRadius: '8px',
   backgroundClip: 'padding-box',
   sm: {
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
   },
   lg: {
     gridTemplateColumns: 'minmax(0, 40fr) minmax(0, 60fr)',
+    position: 'sticky',
+    top: 0,
+    zIndex: 1,
   },
 });
