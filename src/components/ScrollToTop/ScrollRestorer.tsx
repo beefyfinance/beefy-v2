@@ -33,6 +33,8 @@ export const ScrollRestorer = memo(function ScrollRestorer() {
             const savedScroll = state.current.lastScroll.get(location.pathname);
             console.debug(`Restoring scroll state of ${location.pathname}`, savedScroll);
             window.scrollTo(0, state.current.lastScroll.get(location.pathname) ?? 0);
+          } else {
+            window.scrollTo(0, 0);
           }
         }
 
