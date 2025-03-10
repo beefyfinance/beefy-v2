@@ -12,7 +12,7 @@ export const MainMenu = memo(function MainMenu() {
   return (
     <>
       <NavLinkItem title={'Header-Vaults'} url="/" Icon={VaultsIcon} />
-      <NavLinkItem exact={false} title={'Header-Dashboard'} url="/dashboard" Icon={DashboardIcon} />
+      <NavLinkItem title={'Header-Dashboard'} url="/dashboard" Icon={DashboardIcon} />
       <DropNavItem
         title={'Header-Dao'}
         Icon={DaoIcon}

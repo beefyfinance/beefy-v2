@@ -3,6 +3,7 @@ import { memo } from 'react';
 import { styled } from '@repo/styles/jsx';
 import { DropdownTrigger } from '../../../Dropdown/DropdownTrigger.tsx';
 import { cva } from '@repo/styles/css';
+import type { ReactNode } from 'react';
 
 const navItemStyles = {
   base: {
@@ -60,9 +61,8 @@ export const DropdownNavButton = styled(DropdownTrigger.button, navLinkRecipe, {
 
 type NavLinkProps = {
   onClick?: RouterNavLinkProps['onClick'];
-  exact: RouterNavLinkProps['exact'];
   to: RouterNavLinkProps['to'];
-  children: RouterNavLinkProps['children'];
+  children: ReactNode;
   mobile?: boolean;
 };
 
