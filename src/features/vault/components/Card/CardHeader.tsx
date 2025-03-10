@@ -5,10 +5,15 @@ export const CardHeader = styled('div', {
     backgroundColor: 'background.content.dark',
     borderTopRadius: '12px',
     display: 'flex',
-    alignItems: 'center',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: '24px',
+    alignItems: 'center',
+    padding: '16px',
     gap: '8px',
     width: '100%',
+    sm: {
+      padding: '24px',
+    },
   },
 });

@@ -24,7 +24,7 @@ export const MobileMenu = memo(function MobileMenu() {
         <MenuIcon fontSize="inherit" />
         <UnreadDots />
       </MenuButton>
-      <Drawer scrollable={true} open={mobileOpen} onClose={handleDrawerToggle}>
+      <Drawer scrollable={false} open={mobileOpen} onClose={handleDrawerToggle}>
         <Sidebar>
           <Header>
             <Prices />
@@ -76,9 +76,9 @@ const MenuButton = styled('button', {
 const Sidebar = styled('div', {
   base: {
     backgroundColor: 'background.header',
-    height: 'max-content',
     minHeight: '100vh',
     width: '320px',
+    overflowY: 'auto',
   },
 });
 

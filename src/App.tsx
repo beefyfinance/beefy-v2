@@ -2,7 +2,7 @@ import { lazy, memo, type ReactNode, Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router'; // Changed Switch to Routes
 import { Header } from './components/Header/Header.tsx';
 import { Footer } from './components/Footer/Footer.tsx';
-import { ScrollToTop } from './components/ScrollToTop/ScrollToTop.tsx';
+import { ScrollRestorer } from './components/ScrollToTop/ScrollRestorer.tsx';
 import { initAppData } from './features/data/actions/scenarios.ts';
 import { store } from './store.ts';
 import { FullscreenTechLoader } from './components/TechLoader/TechLoader.tsx';
@@ -46,7 +46,7 @@ export const App = memo(function App() {
     <BreakpointProvider>
       <HelmetProvider>
         <Router>
-          <ScrollToTop />
+          <ScrollRestorer />
           <DefaultMeta />
           <Redirects />
           <Layout header={<Header />} footer={<Footer />}>

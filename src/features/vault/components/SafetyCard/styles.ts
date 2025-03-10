@@ -1,9 +1,6 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  header: css.raw({
-    display: 'flex',
-  }),
   riskList: css.raw({
     marginBottom: '32px',
   }),

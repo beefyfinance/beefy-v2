@@ -15,6 +15,7 @@ export type TooltipOptions = {
   hoverCloseDelay?: number;
   openOnFocus?: boolean;
   variant?: 'light' | 'dark';
+  layer?: 0 | 1 | 2;
   size?: 'normal' | 'compact';
   arrowWidth?: number;
   arrowHeight?: number;
@@ -31,4 +32,4 @@ export type TooltipData<TRef extends ReferenceType = Element> = {
   };
 } & UseInteractionsReturn &
   UseFloatingReturn<TRef> &
-  Required<Pick<TooltipOptions, 'variant' | 'size'>>;
+  Required<Pick<TooltipOptions, 'variant' | 'size' | 'layer'>>;

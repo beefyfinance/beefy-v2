@@ -1,12 +1,10 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  field: css.raw({}),
   label: css.raw({
     textStyle: 'subline.sm',
     lineHeight: '1em',
   }),
-  inputHolder: css.raw({}),
   inputHelpHolder: css.raw({
     background: 'background.content.light',
     borderRadius: '8px',
@@ -40,7 +38,6 @@ export const styles = {
   helpText: css.raw({
     flex: '1 1 auto',
   }),
-  helpLink: css.raw({}),
   helpLinkIcon: css.raw({
     width: '16',
     height: '16',

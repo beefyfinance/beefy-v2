@@ -14,7 +14,6 @@ import type { PartnersState } from './features/data/reducers/partners.ts';
 import type { PlatformsState } from './features/data/reducers/platforms.ts';
 import type { TokensState } from './features/data/reducers/tokens.ts';
 import type { TvlState } from './features/data/reducers/tvl.ts';
-import type { UIThemeState } from './features/data/reducers/ui-theme.ts';
 import type { VaultsState } from './features/data/reducers/vaults.ts';
 import type { WalletState } from './features/data/reducers/wallet/wallet.ts';
 import type { AllowanceState } from './features/data/reducers/wallet/allowance.ts';
@@ -44,6 +43,7 @@ import type { TenderlyState } from './features/data/reducers/tenderly-types.ts';
 import type { AnalyticsState } from './features/data/reducers/analytics-types.ts';
 import type { RewardsState } from './features/data/reducers/rewards-types.ts';
 import type { PromosState } from './features/data/reducers/promos.ts';
+import type { VaultsListState } from './features/data/reducers/vaults-list.ts';
 
 export interface BeefyState {
   entities: {
@@ -79,7 +79,7 @@ export interface BeefyState {
   ui: {
     dataLoader: DataLoaderState;
     filteredVaults: FilteredVaultsState;
-    theme: UIThemeState;
+    vaultsList: VaultsListState;
     transact: TransactState;
     bridge: BridgeState;
     onRamp: OnRampTypes;

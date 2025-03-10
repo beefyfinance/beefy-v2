@@ -6,9 +6,6 @@ export const styles = {
     flexDirection: 'column',
     gap: '4px',
   }),
-  checkbox: css.raw({
-    color: 'text.dark',
-  }),
   label: css.raw({
     textStyle: 'subline.sm',
     fontWeight: 'bold',

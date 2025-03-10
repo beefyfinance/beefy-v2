@@ -24,7 +24,6 @@ export const styles = {
     height: '16px',
     display: 'block',
   }),
-  tooltip: css.raw({}),
   link: css.raw({
     color: 'var(--tooltip-link-color)',
     textDecoration: 'underline',

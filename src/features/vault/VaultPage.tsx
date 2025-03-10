@@ -33,6 +33,7 @@ import { Details } from './components/Details/Details.tsx';
 import { RetiredSuggestClmBanner } from '../../components/Banners/RetiredSuggestClmBanner/RetiredSuggestClmBanner.tsx';
 import { Hidden } from '../../components/MediaQueries/Hidden.tsx';
 import { UnstakedClmBannerVault } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBannerVault.tsx';
+import { css } from '@repo/styles/css';
 
 const useStyles = legacyMakeStyles(styles);
 const NotFoundPage = lazy(() => import('../../features/pagenotfound/NotFoundPage.tsx'));
@@ -87,14 +88,14 @@ const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) 
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
 
   return (
-    <Container maxWidth="lg" css={styles.page}>
+    <Container maxWidth="lg" className={css(styles.page)}>
       <VaultMeta vaultId={vaultId} />
       <BusdBannerVault vaultId={vaultId} />
       <UnstakedClmBannerVault vaultId={vaultId} fromVault={true} />
       <RetiredSuggestClmBanner vaultId={vaultId} />
       <VaultHeader vaultId={vaultId} />
       <VaultsStats vaultId={vaultId} />
-      <div className={classes.contentContainer}>
+      <div>
         <div className={classes.contentColumns}>
           <div className={classes.columnActions}>
             <Actions vaultId={vaultId} />

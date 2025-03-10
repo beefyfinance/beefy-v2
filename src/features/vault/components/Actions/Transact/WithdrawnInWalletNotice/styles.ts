@@ -1,7 +1,6 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  introduction: css.raw({}),
   title: css.raw({
     textStyle: 'h1',
     fontSize: '45px',

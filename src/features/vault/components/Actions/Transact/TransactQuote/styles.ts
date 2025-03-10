@@ -1,7 +1,6 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  container: css.raw({}),
   divider: css.raw({
     marginBottom: '16px',
   }),

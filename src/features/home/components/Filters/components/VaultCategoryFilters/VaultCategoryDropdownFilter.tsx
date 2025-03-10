@@ -47,6 +47,7 @@ export const VaultCategoryDropdownFilter = memo(function VaultCategoryDropdownFi
       onChange={handleChange}
       fullWidth={true}
       layer={layer}
+      variant="light"
     />
   );
 });

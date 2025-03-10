@@ -81,7 +81,7 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
   );
 
   return (
-    <div className={css(styles.container, styles.deposit, cssProp)}>
+    <div className={css(styles.container, cssProp)}>
       <div className={classes.search}>
         <SearchInput value={search} onValueChange={setSearch} />
       </div>

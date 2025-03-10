@@ -38,7 +38,6 @@ export const styles = {
       width: '24px',
     },
   }),
-  icon: css.raw({}),
   contentContainer: css.raw({
     display: 'flex',
     flexDirection: 'column',

@@ -37,14 +37,12 @@ export const styles = {
     alignItems: 'center',
     gap: '4px',
   }),
-  excessSlippage: css.raw({}),
   warning: css.raw({
     color: 'indicators.warning',
   }),
   danger: css.raw({
     color: 'indicators.error',
   }),
-  icon: css.raw({}),
   selector: css.raw({
     border: '2px solid bayOfMany',
     borderRadius: '8px',

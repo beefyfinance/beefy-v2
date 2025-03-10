@@ -127,6 +127,7 @@ export const SelectMultiple = memo(function Select<TItem extends SelectItem = Se
     loop: true,
     virtual: searchEnabled && !isTouch,
     disabledIndices: disabledIndexes,
+    enabled: !isTouch,
   });
   const click = useClick(context, { event: 'mousedown' });
   const dismiss = useDismiss(context);
@@ -193,7 +194,7 @@ export const SelectMultiple = memo(function Select<TItem extends SelectItem = Se
       />
       {isOpen && (
         <FloatingPortal>
-          <FloatingFocusManager context={context} modal={false}>
+          <FloatingFocusManager context={context} modal={false} disabled={isTouch}>
             <SelectDropdown
               {...getFloatingProps()}
               style={floatingStyles}

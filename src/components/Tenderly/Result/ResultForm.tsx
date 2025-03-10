@@ -107,7 +107,7 @@ const PairDisplay = memo(function PairDisplay({ input, depth }: PairDisplayProps
       {input.map(([key, value], i) => (
         <Fragment key={key || i}>
           <div className={cx('pairDisplayKey', classes.pairDisplayKey)}>{key}</div>
-          <div className={classes.pairDisplayValue}>
+          <div>
             <UnknownDisplay input={value} depth={depth + 1} />
           </div>
         </Fragment>
@@ -259,7 +259,7 @@ const Revert = memo(function Revert({ baseUrl, chainId, error, stack }: RevertPr
 
   return (
     <div className={classes.revert}>
-      <div className={classes.revertReason}>
+      <div>
         <AlertError>{error}</AlertError>
       </div>
       <div className={classes.revertStack}>

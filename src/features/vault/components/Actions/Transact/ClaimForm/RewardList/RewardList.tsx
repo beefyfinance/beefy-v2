@@ -77,7 +77,7 @@ export const RewardList = memo(function RewardList({
               </>
             ) : null}
           </div>
-          <div className={classes.value}>
+          <div>
             {r.active && r.amount.isZero() && r.apr
               ? formatPercent(r.apr)
               : !r.amount.isZero() && r.price

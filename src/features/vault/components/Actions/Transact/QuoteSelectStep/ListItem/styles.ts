@@ -25,7 +25,6 @@ export const styles = {
   provider: css.raw({
     marginRight: 'auto',
   }),
-  output: css.raw({}),
   arrow: css.raw({
     marginLeft: '12px',
     color: 'text.middle',

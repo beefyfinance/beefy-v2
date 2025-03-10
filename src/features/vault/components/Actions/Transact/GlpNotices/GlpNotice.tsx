@@ -1,4 +1,3 @@
-import { styles } from './styles.ts';
 import { memo, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useAsync } from '../../../../../../helpers/useAsync.ts';
@@ -65,7 +64,7 @@ export const GlpNotice = memo(function GlpNotice({
   }
 
   return (
-    <AlertComponent css={styles.alert}>
+    <AlertComponent>
       <p>
         {t(noticeKey, {
           cooldown: formatDistanceStrict(new Date(0), new Date(unlockInfo.cooldownDuration)),

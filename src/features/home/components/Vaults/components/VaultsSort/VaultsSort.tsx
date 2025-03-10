@@ -99,7 +99,7 @@ const SortDropdown = memo(function SortDropdown() {
       options={options}
       borderless={true}
       fullWidth={true}
-      /*selectCss={styles.sortDropdown}*/
+      variant="dark"
     />
   );
 });

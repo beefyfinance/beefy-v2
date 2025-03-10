@@ -9,8 +9,8 @@ import {
 import { css, type CssStyles } from '@repo/styles/css';
 import { useTranslation } from 'react-i18next';
 import { bridgeActions } from '../../../../../data/reducers/wallet/bridge.ts';
-import { AmountInput } from '../../../../../vault/components/Actions/Transact/AmountInput/AmountInput.tsx';
 import type { AmountInputProps } from '../../../../../vault/components/Actions/Transact/AmountInput/AmountInput.tsx';
+import { AmountInput } from '../../../../../vault/components/Actions/Transact/AmountInput/AmountInput.tsx';
 import { formatTokenDisplayCondensed } from '../../../../../../helpers/format.ts';
 import { BigNumber } from 'bignumber.js';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
@@ -62,7 +62,7 @@ export const AmountSelector = memo(function AmountSelector({ css: cssProp }: Amo
   }, [input.amount, userBalance]);
 
   return (
-    <div className={css(styles.group, cssProp)}>
+    <div className={css(cssProp)}>
       <div className={classes.labels}>
         <div className={classes.label}>{t('AMOUNT')}</div>
         <div onClick={handleMax} className={classes.balance}>

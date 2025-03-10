@@ -90,7 +90,6 @@ export const styles = {
       opacity: '0.4',
     },
   }),
-  inputLogo: css.raw({}),
   balances: css.raw({
     display: 'flex',
     justifyContent: 'space-between',

@@ -35,7 +35,6 @@ export const styles = {
     flexDirection: 'column',
     rowGap: '24px',
   }),
-  input: css.raw({}),
   amount: css.raw({
     display: 'flex',
     flexWrap: 'nowrap',

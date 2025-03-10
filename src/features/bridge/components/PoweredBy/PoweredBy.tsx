@@ -7,20 +7,15 @@ import logoLayerZero from '../../../../images/bridge-providers/logos/layer-zero.
 import logoChainlink from '../../../../images/bridge-providers/logos/chainlink.svg';
 import logoOptimism from '../../../../images/bridge-providers/logos/optimism.svg';
 import logoConnext from '../../../../images/bridge-providers/logos/connext.svg';
-import { css, type CssStyles } from '@repo/styles/css';
 
 const useStyles = legacyMakeStyles(styles);
 
-export type PoweredByProps = {
-  css?: CssStyles;
-};
-
-export const PoweredBy = memo(function PoweredBy({ css: cssProp }: PoweredByProps) {
+export const PoweredBy = memo(function PoweredBy() {
   const classes = useStyles();
   const { t } = useTranslation();
 
   return (
-    <div className={css(styles.poweredBy, cssProp)}>
+    <div>
       <div className={classes.poweredByLabel}>{t('Bridge-Intro-PoweredBy')}</div>
       <div className={classes.poweredByLogos}>
         <img src={logoLayerZero} alt={'LayerZero'} style={{ height: '32px' }} />

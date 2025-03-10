@@ -41,7 +41,6 @@ export const styles = {
   friendlyMessage: css.raw({
     textStyle: 'body.medium',
   }),
-  closeBtn: css.raw({}),
   rememberContainer: css.raw({
     marginTop: '16px',
   }),

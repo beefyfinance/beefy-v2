@@ -74,7 +74,6 @@ export const styles = {
     height: '16',
     display: 'block',
   }),
-  vaultTagClmText: css.raw({}),
   vaultTagClmTextAutoHide: css.raw({
     mdDown: {
       display: 'none',

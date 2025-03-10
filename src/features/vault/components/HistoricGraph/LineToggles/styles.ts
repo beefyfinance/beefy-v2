@@ -6,7 +6,6 @@ export const styles = {
     gap: '8px 16px',
     flexWrap: 'wrap',
   }),
-  toggleCheckbox: css.raw({}),
   toggleIcon: css.raw({
     fontSize: '20px',
     width: '20px',

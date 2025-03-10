@@ -157,7 +157,6 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
             {!hideLabel && (
               <div
                 className={css(
-                  styles.vaultTagClmText,
                   hideFee === undefined && hideLabel === undefined && styles.vaultTagClmTextAutoHide
                 )}
               >

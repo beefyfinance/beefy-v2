@@ -8,6 +8,7 @@ import type { ChartTypes, VaultCollapseContentProps } from '../types.ts';
 import { styles } from './styles.ts';
 import { ErrorBoundary } from '../../../../../../../components/ErrorBoundary/ErrorBoundary.tsx';
 import { useChartOptions } from '../useChartOptions.ts';
+import type { SelectItem } from '../../../../../../../components/Form/Select/types.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -22,22 +23,20 @@ export const DesktopCollapseContent = memo(function DesktopCollapseContent({
   const [toggleTab, setToggleTab] = useState<ToggleTabOptions>('txHistory');
   const { PositionGraph, CompoundsGraph, availableCharts } = useChartOptions(vaultId, address);
 
-  const options = useMemo(
-    () => ({
-      txHistory: t('Dashboard-TransactionHistory'),
-      ...availableCharts,
-    }),
+  const options = useMemo<Array<SelectItem<ToggleTabOptions>>>(
+    () => [{ value: 'txHistory', label: t('Dashboard-TransactionHistory') }, ...availableCharts],
     [availableCharts, t]
   );
 
   return (
     <>
-      {'positionChart' in options ? (
+      {options.length > 1 ? (
         <div className={classes.toggleContainer}>
-          <ToggleButtons
+          <ToggleButtons<ToggleTabOptions>
             value={toggleTab}
-            onChange={setToggleTab as (v: string) => void}
+            onChange={setToggleTab}
             options={options}
+            variant="filter"
           />
         </div>
       ) : null}

@@ -1,11 +1,7 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  checkbox: css.raw({
-    color: 'text.dark',
-  }),
   largeTvlCheckbox: css.raw({
-    color: 'text.dark',
     fontSize: 'body.sm',
   }),
   labelIcon: css.raw({

@@ -19,7 +19,6 @@ export const styles = {
       padding: '16px',
     },
   }),
-
   label: css.raw({
     textStyle: 'body.sm.medium',
     fontWeight: 'bold',

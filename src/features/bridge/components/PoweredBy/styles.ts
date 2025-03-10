@@ -1,7 +1,6 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  poweredBy: css.raw({}),
   poweredByLabel: css.raw({
     textStyle: 'subline.sm',
     color: 'text.dark',

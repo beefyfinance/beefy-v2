@@ -35,7 +35,6 @@ export const styles = {
       zIndex: 1,
     },
   }),
-  stepFrom: css.raw({}),
   stepBridge: css.raw({
     paddingTop: '32px',
     backgroundColor: 'bayOfMany',
@@ -50,7 +49,6 @@ export const styles = {
       content: 'none',
     },
   }),
-  tokenAmount: css.raw({}),
   via: css.raw({
     color: 'text.dark',
   }),
@@ -62,10 +60,12 @@ export const styles = {
   networkIcon: css.raw({
     display: 'block',
   }),
-  networkName: css.raw({}),
   provider: css.raw({
     marginTop: '8px',
     marginBottom: '8px',
+  }),
+  providerLogo: css.raw({
+    height: '24px',
   }),
   providerDetails: css.raw({
     display: 'flex',

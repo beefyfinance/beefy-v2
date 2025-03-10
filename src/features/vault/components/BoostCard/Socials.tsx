@@ -14,9 +14,6 @@ const socialsCss = css({
   flexWrap: 'wrap' as const,
   rowGap: '8px',
   columnGap: '8px',
-  mdDown: {
-    marginLeft: 'auto',
-  },
 });
 
 export type SocialsProps = {

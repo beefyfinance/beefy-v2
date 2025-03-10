@@ -47,7 +47,6 @@ export const ReceiverSelector = memo(function ReceiverSelector({
   return (
     <div className={css(styles.group, cssProp)}>
       <LabelledCheckbox
-        checkboxCss={styles.checkbox}
         labelCss={styles.label}
         iconCss={styles.check}
         checkedIconCss={styles.checkedIcon}

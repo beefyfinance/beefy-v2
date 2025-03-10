@@ -8,7 +8,7 @@ type TooltipContentProps = {
 };
 
 export const TooltipContent = memo(function TooltipContent({ children }: TooltipContentProps) {
-  const { open, refs, floatingStyles, getFloatingProps, context, arrow, variant, size } =
+  const { open, refs, floatingStyles, getFloatingProps, context, arrow, variant, layer, size } =
     useTooltipContext();
 
   if (!open) {
@@ -22,6 +22,7 @@ export const TooltipContent = memo(function TooltipContent({ children }: Tooltip
         {...getFloatingProps()}
         style={floatingStyles}
         variant={variant}
+        layer={layer}
       >
         <TooltipArrow {...arrow} context={context} />
         <TooltipInner size={size}>{children}</TooltipInner>
@@ -42,6 +43,17 @@ const TooltipOuter = styled('div', {
       },
       dark: {
         colorPalette: 'tooltip.dark',
+      },
+    },
+    layer: {
+      0: {
+        zIndex: 'dropdown',
+      },
+      1: {
+        zIndex: 'layer1.dropdown',
+      },
+      2: {
+        zIndex: 'layer2.dropdown',
       },
     },
   },

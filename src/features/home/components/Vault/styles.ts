@@ -6,15 +6,9 @@ export const styles = {
     position: 'relative',
     color: 'text.dark',
     background: 'background.vaults.standard',
-    borderBottom: 'solid 2px {colors.background.content.dark}',
     padding: '24px',
     textDecoration: 'none',
-    '&:last-child': {
-      borderBottom: '0',
-      borderBottomLeftRadius: '8px',
-      borderBottomRightRadius: '8px',
-      backgroundClip: 'padding-box',
-    },
+    minHeight: '100px',
   }),
   vaultEarnings: css.raw({
     backgroundColor: 'background.vaults.gov',

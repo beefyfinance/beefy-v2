@@ -13,6 +13,7 @@ export const Prices = memo(function Prices() {
       placement="bottom-end"
       variant="dark"
       arrowEnabled={true}
+      layer={1}
     >
       <PricesButton />
       {open && <PricesDropdown setOpen={setOpen} />}

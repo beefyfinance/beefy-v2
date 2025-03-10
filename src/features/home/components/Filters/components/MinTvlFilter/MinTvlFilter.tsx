@@ -69,12 +69,7 @@ export const MinTvlFilter = memo(function MinTvlFilter() {
 
   return (
     <>
-      <LabelledCheckbox
-        label={t('Filter-MinTvl')}
-        onChange={handleShowToggle}
-        checked={show}
-        checkboxCss={styles.checkbox}
-      />
+      <LabelledCheckbox label={t('Filter-MinTvl')} onChange={handleShowToggle} checked={show} />
       {show && (
         <div className={classes.amountContainer}>
           <AmountInputWithSlider
@@ -89,7 +84,7 @@ export const MinTvlFilter = memo(function MinTvlFilter() {
             label={t('Filter-MinTvlLarge')}
             onChange={handleShowLargeToggle}
             checked={showLarge}
-            checkboxCss={styles.largeTvlCheckbox}
+            iconCss={styles.largeTvlCheckbox}
           />
         </div>
       )}

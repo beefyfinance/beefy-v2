@@ -18,7 +18,6 @@ export const styles = {
     flexDirection: 'column',
     rowGap: '8px',
   }),
-  source: css.raw({}),
   sourceTitle: css.raw({
     textStyle: 'subline.sm',
     fontWeight: 'bold',

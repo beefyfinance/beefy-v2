@@ -1,7 +1,6 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
-  container: css.raw({}),
   select: css.raw({
     padding: '24px 0 0 0',
     height: '400px', // TODO

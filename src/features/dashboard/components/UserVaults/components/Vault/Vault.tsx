@@ -36,7 +36,6 @@ export const Vault = memo(function Vault({ vaultId, address }: VaultProps) {
   const isCowcentratedStandard = isCowcentratedStandardVault(vault); // cowcentrated vault
   const isCowcentrated = isCowcentratedVault(vault); // naked clm
   const isGov = !isCowcentratedLikeVault(vault) && isGovVault(vault); // gov but not cowcentrated pool
-
   const handleOpen = useCallback(() => {
     setOpen(o => !o);
   }, [setOpen]);

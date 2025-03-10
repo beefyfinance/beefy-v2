@@ -36,7 +36,7 @@ export const LendingOracle = memo(function LendingOracle({ vaultId }: LendingOra
     <div>
       <div className={classes.apyTitle}>{t('Details')}</div>
       <div className={classes.apys}>
-        <div className={classes.apy}>
+        <div>
           <div className={classes.apyLabel}>{t('Oracle')}</div>
           {vault.lendingOracle.address ? (
             <a
@@ -51,7 +51,7 @@ export const LendingOracle = memo(function LendingOracle({ vaultId }: LendingOra
           )}
         </div>
         {vault.lendingOracle.loops && (
-          <div className={classes.apy}>
+          <div>
             <div className={classes.apyLabel}>{t('Loops')}</div>
             <div className={classes.apyValue}>{vault.lendingOracle.loops}</div>
           </div>

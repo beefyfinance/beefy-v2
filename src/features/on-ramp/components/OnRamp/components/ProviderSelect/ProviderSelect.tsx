@@ -47,7 +47,7 @@ export const ProviderSelect = memo(function ProviderSelect({ pending }: Provider
         onClick={canSwitchProvider ? handleClick : undefined}
         className={css(styles.button, canSwitchProvider ? styles.clickable : styles.unclickable)}
       >
-        <div className={css(styles.icon, pending ? styles.iconLoading : styles.iconProvider)}>
+        <div className={css(styles.icon, pending && styles.iconLoading)}>
           {quote && quote.provider ? <ProviderIcon provider={quote.provider} /> : null}
         </div>
         {pending ? (

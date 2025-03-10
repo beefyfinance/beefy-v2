@@ -17,7 +17,6 @@ import {
   userCategoryTransform,
 } from './filtered-vaults.ts';
 import { platformsSlice } from './platforms.ts';
-import { uiThemeSlice } from './ui-theme.ts';
 import { partnersSlice } from './partners.ts';
 import { zapsSlice } from './zaps.ts';
 import { walletActionsReducer } from './wallet/wallet-action.ts';
@@ -44,6 +43,7 @@ import { tenderlyReducer } from './tenderly.ts';
 import { promosReducer } from './promos.ts';
 import type { TenderlyState } from './tenderly-types.ts';
 import type { Reducer } from '@reduxjs/toolkit';
+import { vaultsListReducer } from './vaults-list.ts';
 
 const entitiesReducer = combineReducers({
   chains: chainsSlice.reducer,
@@ -91,7 +91,7 @@ const uiReducer = combineReducers({
     },
     filteredVaultsSlice.reducer
   ),
-  theme: persistReducer({ key: 'theme', storage }, uiThemeSlice.reducer),
+  vaultsList: vaultsListReducer,
   transact: transactReducer,
   bridge: bridgeSlice.reducer,
   savedVaults: persistReducer({ key: 'savedVaults', storage }, savedVaultsSlice.reducer),

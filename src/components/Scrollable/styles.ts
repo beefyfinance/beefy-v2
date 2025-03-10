@@ -9,8 +9,6 @@ export const styles = {
     borderRadius: '4',
     zIndex: 10,
   }),
-  horizontalThumb: css.raw({}),
-  verticalThumb: css.raw({}),
   track: css.raw({
     borderRadius: '4',
   }),

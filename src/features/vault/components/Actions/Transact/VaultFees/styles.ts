@@ -8,7 +8,7 @@ export const styles = {
   }),
   transactionFees: css.raw({
     display: 'grid',
-    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+    gridTemplateColumns: 'minmax(max-content, 1fr) minmax(min-content, 1fr)',
     gap: '4px',
   }),
   performanceFees: css.raw({

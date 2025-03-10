@@ -53,7 +53,14 @@ export const VaultNetwork = memo(function VaultNetwork({
   const chain = useAppSelector(state => selectChainById(state, chainId));
 
   return (
-    <div className={css(styles.vaultNetwork, cssProp, styles[`vaultNetwork-${chainId}`])}>
+    <div
+      className={css(
+        { colorPalette: `network.${chainId}` },
+        styles.vaultNetwork,
+        chain?.brand?.icon === 'gradient' && styles.vaultNetworkGradient,
+        cssProp
+      )}
+    >
       <img alt={chain.name} src={getNetworkSrc(chainId)} width={24} height={24} />
     </div>
   );

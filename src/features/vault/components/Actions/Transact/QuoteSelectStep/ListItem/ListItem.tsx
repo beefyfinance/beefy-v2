@@ -31,7 +31,7 @@ export const ListItem = memo(function ListItem({ quoteId, css: cssProp, onSelect
   return (
     <button type="button" className={css(styles.item, cssProp)} onClick={handleClick}>
       <QuoteTitle quote={quote} css={styles.provider} />
-      <div className={classes.output}>
+      <div>
         <ListJoin items={outputs} />
       </div>
       <ChevronRight className={cx('item-arrow', classes.arrow)} />

@@ -59,7 +59,7 @@ export const ChainSelector = memo(function ChainSelector({ css: cssProp }: Chain
   const { from, to } = useAppSelector(selectBridgeFormState);
 
   return (
-    <div className={css(styles.group, cssProp)}>
+    <div className={css(cssProp)}>
       <div className={classes.labels}>
         <div className={classes.label}>{t('FROM')}</div>
         <div className={classes.label}>{t('TO')}</div>

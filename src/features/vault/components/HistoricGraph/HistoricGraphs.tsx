@@ -47,7 +47,7 @@ export const HistoricGraphs = memo(function HistoricGraphs({ vaultId }: Historic
 
   return (
     <Card css={styles.container}>
-      <CardHeader css={styles.header}>
+      <CardHeader>
         <CardTitle>{t('Graph-RateHist')}</CardTitle>
         <StatSwitcher<ChartStat> stat={stat} options={options} onChange={setStat} />
       </CardHeader>

@@ -2,14 +2,7 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   vaultRow: css.raw({
-    borderBottom: 'solid 2px {colors.background.content.dark}',
-    '&:last-child': {
-      borderBottom: '0',
-      borderBottomLeftRadius: '8px',
-      borderBottomRightRadius: '8px',
-      backgroundClip: 'padding-box',
-      overflow: 'hidden',
-    },
+    minHeight: '102px',
   }),
   vault: css.raw({
     display: 'grid',

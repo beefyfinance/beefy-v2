@@ -37,7 +37,9 @@ export const styles = {
     textAlign: 'center',
   }),
   actionsContainer: css.raw({
-    display: 'grid',
+    display: 'flex',
+    flexDirection: 'column',
+    maxWidth: '100%',
     gap: '12px',
   }),
   dividerContainer: css.raw({

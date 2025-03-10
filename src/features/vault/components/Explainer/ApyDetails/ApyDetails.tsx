@@ -39,10 +39,10 @@ export const ApyDetails = memo(function ApyDetails({
   const labels = getApyLabelsForType(type);
 
   return (
-    <div className={css(styles.apysContainer, cssProp)}>
+    <div className={css(cssProp)}>
       <div className={classes.apyTitle}>{t(labels.breakdown)}</div>
       <div className={classes.apys}>
-        <div className={classes.apy}>
+        <div>
           <div className={classes.apyLabel}>
             {t(isBoosted ? labels.boostedTotalApy : labels.totalApy)}
           </div>
@@ -53,7 +53,7 @@ export const ApyDetails = memo(function ApyDetails({
         {yearly.map(key => (
           <Fragment key={key}>
             {values[key] ? (
-              <div className={classes.apy}>
+              <div>
                 <div className={classes.apyLabel}>{t(labels[key])}</div>
                 <div className={classes.apyValue}>{formatted[key]}</div>
               </div>

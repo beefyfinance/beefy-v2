@@ -19,7 +19,6 @@ export const styles = {
       transition: 'color 0.1s',
     },
   }),
-  text: css.raw({}),
   icon: css.raw({
     padding: '4px 0',
     height: '24px',

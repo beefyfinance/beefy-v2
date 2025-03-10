@@ -21,9 +21,6 @@ export const Button = styled('button', {
     noBackground: {
       false: {
         paddingInline: '16px',
-        _hover: {
-          backgroundColor: 'colorPalette.hover.background',
-        },
       },
       true: {},
     },
@@ -51,6 +48,15 @@ export const Button = styled('button', {
       noBackground: false,
       css: {
         backgroundColor: 'colorPalette.active.background',
+      },
+    },
+    {
+      active: false,
+      noBackground: false,
+      css: {
+        _hover: {
+          backgroundColor: 'colorPalette.hover.background',
+        },
       },
     },
   ],

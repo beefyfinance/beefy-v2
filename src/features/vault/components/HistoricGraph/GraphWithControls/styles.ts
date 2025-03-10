@@ -22,7 +22,6 @@ export const styles = {
       padding: '8px 16px',
     },
   }),
-
   legend: css.raw({
     display: 'flex',
     gap: '24px',

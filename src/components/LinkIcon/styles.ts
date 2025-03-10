@@ -18,7 +18,6 @@ export const styles = {
       transition: 'color 0.1s',
     },
   }),
-  icon: css.raw({}),
   svgIcon: css.raw({
     width: '16px',
     height: '16px',

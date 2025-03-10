@@ -17,5 +17,4 @@ export const styles = {
     display: 'inline-flex',
     gap: '4px',
   }),
-  value: css.raw({}),
 };

@@ -250,7 +250,7 @@ export const ZapSlippage = memo(function ZapSlippage({ css: cssProp }: ZapSlippa
             ) : null}
             {formatPercent(slippage, 1)}
           </div>
-          <Icon className={classes.icon} />
+          <Icon />
         </div>
       </button>
       {open ? (

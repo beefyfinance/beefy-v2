@@ -83,8 +83,8 @@ const ConfirmReady = memo(function ConfirmReady() {
   return (
     <>
       <div className={classes.steps}>
-        <div className={css(styles.step, styles.stepFrom)}>
-          <div className={classes.tokenAmount}>
+        <div className={css(styles.step)}>
+          <div>
             {t('Bridge-From-Send', {
               amount: formatTokenDisplay(quote.input.amount, quote.input.token.decimals),
               token: quote.input.token.symbol,
@@ -99,7 +99,7 @@ const ConfirmReady = memo(function ConfirmReady() {
               alt={fromChain.name}
               src={getNetworkSrc(fromChain.id)}
             />
-            <div className={classes.networkName}> {fromChain.name}</div>
+            <div> {fromChain.name}</div>
           </div>
         </div>
         <div className={css(styles.step, styles.stepBridge)}>
@@ -109,6 +109,7 @@ const ConfirmReady = memo(function ConfirmReady() {
               src={getBridgeProviderLogo(quote.config.id)}
               alt={quote.config.title}
               height={24}
+              className={classes.providerLogo}
             />
           </div>
           <div className={classes.providerDetails}>
@@ -125,7 +126,7 @@ const ConfirmReady = memo(function ConfirmReady() {
           </div>
         </div>
         <div className={css(styles.step, styles.stepTo)}>
-          <div className={classes.tokenAmount}>
+          <div>
             {t('Bridge-To-Receive', {
               amount: formatTokenDisplay(quote.input.amount, quote.input.token.decimals),
               token: quote.input.token.symbol,
@@ -140,7 +141,7 @@ const ConfirmReady = memo(function ConfirmReady() {
               alt={toChain.name}
               src={getNetworkSrc(toChain.id)}
             />
-            <div className={classes.networkName}> {toChain.name}</div>
+            <div> {toChain.name}</div>
           </div>
           {quote.receiver ? (
             <>

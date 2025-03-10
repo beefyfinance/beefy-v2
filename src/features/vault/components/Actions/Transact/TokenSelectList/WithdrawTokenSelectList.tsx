@@ -64,7 +64,7 @@ export const WithdrawTokenSelectList = memo(function WithdrawTokenSelectList({
   );
 
   return (
-    <div className={css(styles.container, styles.withdraw, cssProp)}>
+    <div className={css(styles.container, cssProp)}>
       <div className={classes.search}>
         <SearchInput value={search} onValueChange={setSearch} />
       </div>

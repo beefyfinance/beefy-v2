@@ -7,7 +7,6 @@ export const styles = {
     gap: '24px',
     paddingBlock: '32px',
   }),
-  contentContainer: css.raw({}),
   contentColumns: css.raw({
     display: 'grid',
     gridTemplateColumns: '100%',

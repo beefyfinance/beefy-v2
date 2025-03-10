@@ -15,7 +15,6 @@ export const styles = {
     color: 'var(--tooltip-title-color)',
     textAlign: 'right',
   }),
-  amount: css.raw({}),
   value: css.raw({
     textStyle: 'subline.sm',
     display: 'none',

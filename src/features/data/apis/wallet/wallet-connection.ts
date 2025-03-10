@@ -263,9 +263,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
           enabled: false,
         },
       },
-      notify: {
-        enabled: false,
-      },
     });
 
     this.subscribeToOnboardEvents(onboard);

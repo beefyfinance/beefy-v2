@@ -26,7 +26,7 @@ export const IconButtonLink = memo(function IconButtonLink({
   return (
     <a className={css(styles.link, cssProp)} href={href} target="_blank" title={text}>
       <Icon className={css(styles.icon, iconCss)} />
-      <span className={css(styles.text, textCss)}>{text}</span>
+      <span className={css(textCss)}>{text}</span>
     </a>
   );
 });

@@ -42,7 +42,7 @@ const EntryDisplay = memo(function VaultEntry({
     <>
       <div className={classes.label}>{label}</div>
       <div className={classes.details}>
-        <div className={classes.amount}>
+        <div>
           <TokenAmount amount={entry.amount} decimals={depositToken.decimals} />
         </div>
         <div className={classes.value}>{formatLargeUsd(value)}</div>

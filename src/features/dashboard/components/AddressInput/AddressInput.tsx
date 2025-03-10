@@ -172,12 +172,13 @@ const GoToDashboardButton = memo(function GoToDashboardButton({
 }: GoToDashboardButtonProps) {
   const classes = useStyles();
 
-  if (domainResolving && inputMode === 'domain')
+  if (domainResolving && inputMode === 'domain') {
     return (
       <div className={classes.flex}>
         <CircularProgress size={23} className={css(styles.loader, styles.disabledIcon)} />
       </div>
     );
+  }
 
   if (isValid) {
     return (
