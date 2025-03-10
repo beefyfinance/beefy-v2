@@ -17,7 +17,7 @@ export const Redirects = memo(function Redirects() {
     ) {
       const pathname = window.location.hash.substring(1);
       window.location.hash = '';
-      navigate(pathname, { replace: true });
+      navigate(pathname);
       return;
     }
 
@@ -33,7 +33,7 @@ export const Redirects = memo(function Redirects() {
             (url, [key, value]) => url.replace(`:${key}`, value || ''),
             to
           );
-          navigate(redirectTo, { replace: true });
+          navigate(redirectTo);
           return;
         }
       }

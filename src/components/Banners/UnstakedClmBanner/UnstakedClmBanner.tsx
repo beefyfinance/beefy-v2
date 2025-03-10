@@ -22,7 +22,7 @@ export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
         value: true,
       })
     );
-    navigate('/', { replace: true });
+    navigate('/');
   }, [dispatch, navigate]);
 
   if (!unstakedIds.length) {

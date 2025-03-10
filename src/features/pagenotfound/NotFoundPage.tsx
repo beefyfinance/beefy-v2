@@ -15,7 +15,7 @@ const NotFoundPage = memo(() => {
   const navigate = useNavigate();
 
   const handleOpen = useCallback(() => {
-    navigate(`/`, { replace: true });
+    navigate(`/`);
   }, [history]);
 
   return (
