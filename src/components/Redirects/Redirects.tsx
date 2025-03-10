@@ -1,6 +1,7 @@
+// Redirects component
 import { memo, useEffect } from 'react';
 import { REDIRECTS } from '../../config/redirects.ts';
-import { matchPath, useLocation, useNavigate } from 'react-router';
+import { matchPath, useNavigate, useLocation } from 'react-router';
 import { routerMode } from '../Router/Router.tsx';
 
 export const Redirects = memo(function Redirects() {
@@ -13,11 +14,11 @@ export const Redirects = memo(function Redirects() {
       routerMode === 'browser' &&
       window.location.pathname === '/' &&
       window.location.hash &&
-      window.location.hash.startsWith('#/')
+      window.location.hash.substring(0, 2) === '#/'
     ) {
       const pathname = window.location.hash.substring(1);
       window.location.hash = '';
-      navigate(pathname);
+      navigate(pathname, { replace: true });
       return;
     }
 
@@ -26,14 +27,17 @@ export const Redirects = memo(function Redirects() {
       const patterns = Array.isArray(from) ? from : [from];
 
       for (const pattern of patterns) {
-        const match = matchPath(pattern, location.pathname);
+        const normalizedPattern =
+          typeof pattern === 'string' ? { path: pattern, end: true } : pattern;
+
+        const match = matchPath(normalizedPattern, location.pathname);
         if (match) {
           const replacements = Object.entries(match.params);
           const redirectTo = replacements.reduce(
             (url, [key, value]) => url.replace(`:${key}`, value || ''),
             to
           );
-          navigate(redirectTo);
+          navigate(redirectTo, { replace: true });
           return;
         }
       }

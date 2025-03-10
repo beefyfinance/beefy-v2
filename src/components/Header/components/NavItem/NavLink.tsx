@@ -61,9 +61,11 @@ export const DropdownNavButton = styled(DropdownTrigger.button, navLinkRecipe, {
 
 type NavLinkProps = {
   onClick?: RouterNavLinkProps['onClick'];
+
   to: RouterNavLinkProps['to'];
   children: ReactNode;
   mobile?: boolean;
+  end?: boolean;
 };
 
 export const NavLink = memo<NavLinkProps>(function NavLink({
