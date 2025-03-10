@@ -17,7 +17,7 @@ import {
 } from 'react-virtuoso';
 import { useAppSelector } from '../../../../store.ts';
 import { selectLastViewedDashboardVaultId } from '../../../data/selectors/vaults-list.ts';
-import { useHistory } from 'react-router-dom';
+import { useNavigationType } from 'react-router';
 
 export type UserVaultsProps = {
   address: string;
@@ -92,9 +92,10 @@ const increaseViewportBy = { top: 150, bottom: 150 };
 export const VirtualList = memo(function VirtualList({ vaultIds, address }: VirtualListProps) {
   const context = useMemo(() => ({ address }), [address]);
   const lastVaultId = useAppSelector(selectLastViewedDashboardVaultId);
-  const { action } = useHistory();
+  const navigationType = useNavigationType(); // Updated hook usage
   const initialTopMostItemIndex = useMemo((): FlatIndexLocationWithAlign | undefined => {
-    if (action === 'POP' && lastVaultId !== undefined) {
+    if (navigationType === 'POP' && lastVaultId !== undefined) {
+      // Updated condition
       const index = vaultIds.indexOf(lastVaultId);
       return index === -1
         ? undefined
@@ -103,7 +104,7 @@ export const VirtualList = memo(function VirtualList({ vaultIds, address }: Virt
             align: 'center',
           };
     }
-  }, [lastVaultId, vaultIds, action]);
+  }, [lastVaultId, vaultIds, navigationType]); // Updated dependency
 
   return (
     <Virtuoso

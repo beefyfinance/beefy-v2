@@ -1,46 +1,53 @@
 import { memo, useEffect, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigationType } from 'react-router';
 import { useAppDispatch } from '../../store.ts';
 import { setDashboardLast, setVaultsLast } from '../../features/data/reducers/vaults-list.ts';
 
 export const ScrollRestorer = memo(function ScrollRestorer() {
-  const history = useHistory();
+  const location = useLocation();
+  const navigationType = useNavigationType();
   const dispatch = useAppDispatch();
   const state = useRef({
-    lastPath: '/',
+    lastPath: location.pathname,
     lastScroll: new Map<string, number>(),
   });
 
-  useEffect(
-    () =>
-      history.listen((location, action) => {
-        if (action === 'PUSH' || action === 'REPLACE') {
-          console.debug(`Saving scroll state of ${state.current.lastPath}`, window.scrollY);
-          state.current.lastScroll.set(state.current.lastPath, window.scrollY);
-          console.debug('Scrolling to top of new page');
-          window.scrollTo(0, 0);
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const prevPath = state.current.lastPath;
 
-          if (location.pathname.startsWith('/vault/')) {
-            const vaultId = location.pathname.split('/').slice(2, 3).join('');
-            if (state.current.lastPath === '/') {
-              dispatch(setVaultsLast(vaultId));
-            } else if (state.current.lastPath.startsWith('/dashboard/')) {
-              dispatch(setDashboardLast(vaultId));
-            }
-          }
-        } else if (action === 'POP') {
-          if (location.pathname !== '/' && !location.pathname.startsWith('/dashboard/')) {
-            const savedScroll = state.current.lastScroll.get(location.pathname);
-            console.debug(`Restoring scroll state of ${location.pathname}`, savedScroll);
-            window.scrollTo(0, state.current.lastScroll.get(location.pathname) ?? 0);
+    // Handle navigation types
+    switch (navigationType) {
+      case 'PUSH':
+      case 'REPLACE':
+        console.debug(`Saving scroll state of ${prevPath}`, window.scrollY);
+        state.current.lastScroll.set(prevPath, window.scrollY);
+        console.debug('Scrolling to top of new page');
+        window.scrollTo(0, 0);
+
+        // Handle vault-specific logic
+        if (currentPath.startsWith('/vault/')) {
+          const vaultId = currentPath.split('/')[2];
+          if (prevPath === '/') {
+            dispatch(setVaultsLast(vaultId));
+          } else if (prevPath.startsWith('/dashboard/')) {
+            dispatch(setDashboardLast(vaultId));
           }
         }
+        break;
 
-        console.debug('Updating lastPath to', location.pathname);
-        state.current.lastPath = location.pathname;
-      }),
-    [history, state, dispatch]
-  );
+      case 'POP':
+        if (currentPath !== '/' && !currentPath.startsWith('/dashboard/')) {
+          const savedScroll = state.current.lastScroll.get(currentPath) ?? 0;
+          console.debug(`Restoring scroll state of ${currentPath}`, savedScroll);
+          window.scrollTo(0, savedScroll);
+        }
+        break;
+    }
+
+    console.debug('Updating lastPath to', currentPath);
+    state.current.lastPath = currentPath;
+  }, [location, navigationType, dispatch]);
 
   return null;
 });
