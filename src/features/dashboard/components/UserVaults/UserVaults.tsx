@@ -93,16 +93,17 @@ export const VirtualList = memo(function VirtualList({ vaultIds, address }: Virt
   const context = useMemo(() => ({ address }), [address]);
   const lastVaultId = useAppSelector(selectLastViewedDashboardVaultId);
   const { action } = useHistory();
-  const initialTopMostItemIndex = useMemo((): FlatIndexLocationWithAlign | undefined => {
+  const initialTopMostItemIndex = useMemo((): FlatIndexLocationWithAlign | number => {
     if (action === 'POP' && lastVaultId !== undefined) {
       const index = vaultIds.indexOf(lastVaultId);
-      return index === -1
-        ? undefined
-        : {
-            index,
-            align: 'center',
-          };
+      if (index >= 0) {
+        return {
+          index,
+          align: 'center',
+        };
+      }
     }
+    return 0;
   }, [lastVaultId, vaultIds, action]);
 
   return (

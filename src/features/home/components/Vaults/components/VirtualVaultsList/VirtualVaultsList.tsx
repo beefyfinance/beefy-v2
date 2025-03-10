@@ -75,16 +75,17 @@ export const VirtualVaultsList = memo(function VirtualVaultsList({
     () => ({ top: defaultItemHeight * 2, bottom: defaultItemHeight * 4 }),
     [defaultItemHeight]
   );
-  const initialTopMostItemIndex = useMemo((): FlatIndexLocationWithAlign | undefined => {
+  const initialTopMostItemIndex = useMemo((): FlatIndexLocationWithAlign | number => {
     if (action === 'POP' && lastVaultId !== undefined) {
       const index = vaultIds.indexOf(lastVaultId);
-      return index === -1
-        ? undefined
-        : {
-            index,
-            align: 'center',
-          };
+      if (index >= 0) {
+        return {
+          index,
+          align: 'center',
+        };
+      }
     }
+    return 0;
   }, [lastVaultId, vaultIds, action]);
   const holderStyles = useMemo(
     () => ({
