@@ -97,12 +97,12 @@ export const VirtualList = memo(function VirtualList({ vaultIds, address }: Virt
     if (navigationType === 'POP' && lastVaultId !== undefined) {
       // Updated condition
       const index = vaultIds.indexOf(lastVaultId);
-      return index === -1
-        ? undefined
-        : {
-            index,
-            align: 'center',
-          };
+      if (index >= 0) {
+        return {
+          index,
+          align: 'center',
+        };
+      }
     }
   }, [lastVaultId, vaultIds, navigationType]); // Updated dependency
 

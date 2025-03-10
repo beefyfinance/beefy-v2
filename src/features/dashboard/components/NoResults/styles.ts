@@ -66,6 +66,7 @@ export const styles = {
   center: css.raw({
     display: 'flex',
     justifyContent: 'center',
+    textAlign: 'center',
   }),
   search: css.raw({
     backgroundColor: 'purpleDarkest',

@@ -29,9 +29,10 @@ const ChainButton = memo(function ChainButton({ id, selected, onChange }: ChainB
     <ButtonWithTooltip
       openOnClick={false}
       tooltip={chain.name}
-      placement="top-start"
+      placement="top"
       onClick={handleChange}
       className={css(styles.button, selected && styles.selected)}
+      variant="dark"
     >
       {chain.new ? <NewBadge css={styles.badge} /> : null}
       <Icon

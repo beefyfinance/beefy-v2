@@ -12,6 +12,7 @@ import { useBreakpoints } from '../../../../../../components/MediaQueries/useBre
 import { useAppSelector } from '../../../../../../store.ts';
 import { selectLastViewedVaultsVaultId } from '../../../../../data/selectors/vaults-list.ts';
 import { useNavigationType } from 'react-router';
+import { token } from '@repo/styles/tokens';
 
 function useVaultHeightEstimate() {
   const breakpoints = useBreakpoints();
@@ -78,27 +79,43 @@ export const VirtualVaultsList = memo(function VirtualVaultsList({
     if (navigationType === 'POP' && lastVaultId !== undefined) {
       // Updated condition
       const index = vaultIds.indexOf(lastVaultId);
-      return index === -1
-        ? undefined
-        : {
-            index,
-            align: 'center',
-          };
+      if (index >= 0) {
+        return {
+          index,
+          align: 'center',
+        };
+      }
     }
   }, [lastVaultId, vaultIds, navigationType]); // Updated dependency
 
-  return (
-    <Virtuoso
-      data={vaultIds}
-      itemContent={itemRenderer}
-      computeItemKey={itemKey}
-      defaultItemHeight={defaultItemHeight}
-      increaseViewportBy={increaseViewportBy}
-      useWindowScroll={true}
-      components={components}
-      initialTopMostItemIndex={initialTopMostItemIndex}
-    />
+  const holderStyles = useMemo(
+    () => ({
+      backgroundSize: `100% ${defaultItemHeight}px`,
+      backgroundImage: `linear-gradient(180deg, ${token('colors.background.vaults.standard')} 0px, ${token('colors.background.vaults.standard')} ${defaultItemHeight}px, ${token('colors.background.content.dark')} ${defaultItemHeight + 2}px, ${token('colors.background.content.dark')} ${defaultItemHeight + 2}px)`,
+    }),
+    [defaultItemHeight]
   );
+  return (
+    <div className={holderClass} style={holderStyles}>
+      <Virtuoso
+        data={vaultIds}
+        itemContent={itemRenderer}
+        computeItemKey={itemKey}
+        defaultItemHeight={defaultItemHeight}
+        increaseViewportBy={increaseViewportBy}
+        useWindowScroll={true}
+        components={components}
+        initialTopMostItemIndex={initialTopMostItemIndex}
+      />
+    </div>
+  );
+});
+
+const holderClass = css({
+  backgroundImage:
+    'linear-gradient(180deg, {colors.background.vaults.standard} 0%, {colors.background.vaults.standard} 98%, {colors.background.content.dark} 98%, {colors.background.content.dark} 100%)',
+  backgroundSize: '100% 100px',
+  backgroundRepeat: 'repeat-y',
 });
 
 const listClass = css({
@@ -106,5 +123,5 @@ const listClass = css({
   gridTemplateColumns: '100%',
   width: '100%',
   gap: '2px',
-  background: 'background.content.dark',
+  backgroundColor: 'background.content.dark',
 });
