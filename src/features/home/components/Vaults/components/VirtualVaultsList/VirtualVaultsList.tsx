@@ -89,7 +89,7 @@ export const VirtualVaultsList = memo(function VirtualVaultsList({
   const holderStyles = useMemo(
     () => ({
       backgroundSize: `100% ${defaultItemHeight}px`,
-      backgroundImage: `linear-gradient(180deg, ${token('colors.background.vaults.standard')} 0px, ${token('colors.background.vaults.standard')} ${defaultItemHeight - 2}px, ${token('colors.background.content.dark')} ${defaultItemHeight - 2}px, ${token('colors.background.content.dark')} ${defaultItemHeight}px)`,
+      backgroundImage: `linear-gradient(180deg, ${token('colors.background.vaults.standard')} 0px, ${token('colors.background.vaults.standard')} ${defaultItemHeight}px, ${token('colors.background.content.dark')} ${defaultItemHeight + 2}px, ${token('colors.background.content.dark')} ${defaultItemHeight + 2}px)`,
     }),
     [defaultItemHeight]
   );
