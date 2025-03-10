@@ -1,7 +1,7 @@
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import type { PropsWithChildren } from 'react';
 import { lazy, memo } from 'react';
-import { Redirect, useParams } from 'react-router';
+import { Redirect, useParams } from 'react-router-dom';
 import { styles } from './styles.ts';
 import { SafetyCard } from './components/SafetyCard/SafetyCard.tsx';
 import { PromoCardLoader } from './components/BoostCard/PromoCardLoader.tsx';

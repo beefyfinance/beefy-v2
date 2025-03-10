@@ -1,6 +1,9 @@
 import { css } from '@repo/styles/css';
 
 export const styles = {
+  vaultRow: css.raw({
+    minHeight: '102px',
+  }),
   vault: css.raw({
     display: 'grid',
     position: 'relative',

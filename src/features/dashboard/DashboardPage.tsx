@@ -13,7 +13,7 @@ import { UserExposure } from './components/UserExposure/UserExposure.tsx';
 import { UserVaults } from './components/UserVaults/UserVaults.tsx';
 import { styles } from './styles.ts';
 import { useInitDashboard } from './hooks.tsx';
-import { Redirect, useParams } from 'react-router';
+import { Redirect, useParams } from 'react-router-dom';
 import { selectWalletAddressIfKnown } from '../data/selectors/wallet.ts';
 import { TechLoader } from '../../components/TechLoader/TechLoader.tsx';
 import { isMaybeDomain, isValidAddress } from '../../helpers/addresses.ts';

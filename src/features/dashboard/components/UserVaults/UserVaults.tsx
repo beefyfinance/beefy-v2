@@ -8,7 +8,16 @@ import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { NoVaults } from './components/NoVaults/NoVaults.tsx';
 import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
 import { css } from '@repo/styles/css';
-import { type Components, type ContextProp, type ListProps, Virtuoso } from 'react-virtuoso';
+import {
+  type Components,
+  type ContextProp,
+  type FlatIndexLocationWithAlign,
+  type ListProps,
+  Virtuoso,
+} from 'react-virtuoso';
+import { useAppSelector } from '../../../../store.ts';
+import { selectLastViewedDashboardVaultId } from '../../../data/selectors/vaults-list.ts';
+import { useHistory } from 'react-router-dom';
 
 export type UserVaultsProps = {
   address: string;
@@ -82,6 +91,19 @@ const increaseViewportBy = { top: 150, bottom: 150 };
 
 export const VirtualList = memo(function VirtualList({ vaultIds, address }: VirtualListProps) {
   const context = useMemo(() => ({ address }), [address]);
+  const lastVaultId = useAppSelector(selectLastViewedDashboardVaultId);
+  const { action } = useHistory();
+  const initialTopMostItemIndex = useMemo((): FlatIndexLocationWithAlign | undefined => {
+    if (action === 'POP' && lastVaultId !== undefined) {
+      const index = vaultIds.indexOf(lastVaultId);
+      return index === -1
+        ? undefined
+        : {
+            index,
+            align: 'center',
+          };
+    }
+  }, [lastVaultId, vaultIds, action]);
 
   return (
     <Virtuoso
@@ -92,6 +114,7 @@ export const VirtualList = memo(function VirtualList({ vaultIds, address }: Virt
       useWindowScroll={true}
       components={components}
       context={context}
+      initialTopMostItemIndex={initialTopMostItemIndex}
     />
   );
 });

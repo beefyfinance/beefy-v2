@@ -1,4 +1,4 @@
-import type { RouteProps } from 'react-router';
+import type { RouteProps } from 'react-router-dom';
 
 export type RedirectType = {
   from: string | string[] | RouteProps;
