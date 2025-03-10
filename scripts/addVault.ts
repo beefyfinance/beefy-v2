@@ -76,13 +76,13 @@ async function vaultData(chain, vaultAddress, id) {
 
   let addLiquidityUrl =
     provider === 'pendle'
-      ? `https://app.pendle.finance/trade/pools/${params.want}/zap/in?chain=${chain}`
+      ? `https://app.pendle.finance/trade/pools/${want}/zap/in?chain=${chain}`
       : provider === 'swapx'
       ? 'https://swapx.fi/earn'
       : 'XXX';
   let removeLiquidityUrl =
     provider === 'pendle'
-      ? `https://app.pendle.finance/trade/pools/${params.want}/zap/out?chain=${chain}`
+      ? `https://app.pendle.finance/trade/pools/${want}/zap/out?chain=${chain}`
       : provider === 'swapx'
       ? 'https://swapx.fi/earn?ownerType=my-positions&filter=my-lp'
       : 'XXX';
