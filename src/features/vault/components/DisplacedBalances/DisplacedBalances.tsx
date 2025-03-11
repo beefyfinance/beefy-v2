@@ -20,7 +20,7 @@ import { groupBy } from 'lodash-es';
 import { css } from '@repo/styles/css';
 import { selectBoostById } from '../../../data/selectors/boosts.ts';
 import { selectChainById } from '../../../data/selectors/chains.ts';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 const useStyles = legacyMakeStyles(styles);
 

@@ -10,11 +10,11 @@ export const NavLinkItem = memo<NavItemProps>(function NavLinkItem({
   Icon,
   Badge,
   onClick,
-  exact = true,
+  end = true,
   mobile = false,
 }) {
   return (
-    <NavLink exact={exact} key={url} to={url} onClick={onClick} mobile={mobile}>
+    <NavLink end={end} key={url} to={url} onClick={onClick} mobile={mobile}>
       <NavItemInner
         title={title}
         Icon={Icon}

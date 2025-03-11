@@ -1,6 +1,6 @@
 import headerLogoDesktop from '../../../../images/bifi-logos/header-logo.svg';
 import headerLogoMobile from '../../../../images/bifi-logos/header-logo-notext.svg';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { memo } from 'react';
 import { css } from '@repo/styles/css';
 

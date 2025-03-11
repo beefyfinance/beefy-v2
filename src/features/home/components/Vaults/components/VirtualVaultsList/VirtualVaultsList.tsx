@@ -11,7 +11,7 @@ import { css } from '@repo/styles/css';
 import { useBreakpoints } from '../../../../../../components/MediaQueries/useBreakpoints.ts';
 import { useAppSelector } from '../../../../../../store.ts';
 import { selectLastViewedVaultsVaultId } from '../../../../../data/selectors/vaults-list.ts';
-import { useHistory } from 'react-router-dom';
+import { useNavigationType } from 'react-router';
 import { token } from '@repo/styles/tokens';
 
 function useVaultHeightEstimate() {
@@ -69,14 +69,15 @@ export const VirtualVaultsList = memo(function VirtualVaultsList({
   vaultIds,
 }: VirtualVaultsListProps) {
   const lastVaultId = useAppSelector(selectLastViewedVaultsVaultId);
-  const { action } = useHistory();
+  const navigationType = useNavigationType(); // Updated hook usage
   const defaultItemHeight = useVaultHeightEstimate();
   const increaseViewportBy = useMemo(
     () => ({ top: defaultItemHeight * 2, bottom: defaultItemHeight * 4 }),
     [defaultItemHeight]
   );
-  const initialTopMostItemIndex = useMemo((): FlatIndexLocationWithAlign | number => {
-    if (action === 'POP' && lastVaultId !== undefined) {
+  const initialTopMostItemIndex = useMemo((): FlatIndexLocationWithAlign | undefined => {
+    if (navigationType === 'POP' && lastVaultId !== undefined) {
+      // Updated condition
       const index = vaultIds.indexOf(lastVaultId);
       if (index >= 0) {
         return {
@@ -85,8 +86,8 @@ export const VirtualVaultsList = memo(function VirtualVaultsList({
         };
       }
     }
-    return 0;
-  }, [lastVaultId, vaultIds, action]);
+  }, [lastVaultId, vaultIds, navigationType]); // Updated dependency
+
   const holderStyles = useMemo(
     () => ({
       backgroundSize: `100% ${defaultItemHeight}px`,
@@ -94,7 +95,6 @@ export const VirtualVaultsList = memo(function VirtualVaultsList({
     }),
     [defaultItemHeight]
   );
-
   return (
     <div className={holderClass} style={holderStyles}>
       <Virtuoso

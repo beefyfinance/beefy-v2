@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import { styles } from './styles.ts';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { css, type CssStyles } from '@repo/styles/css';
 
 const useStyles = legacyMakeStyles(styles);
