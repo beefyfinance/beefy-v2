@@ -13,7 +13,7 @@ export const Highlight = styled('span', {
     right: '0',
     transform: 'translate(50%, -50%)',
     pointerEvents: 'none',
-    zIndex: 10,
+    zIndex: 'highlight',
   },
 });
 

@@ -22,7 +22,7 @@ export const styles = {
     '&:hover, &:focus-visible': {
       color: 'text.middle',
       '& .item-arrow': {
-        color: 'white',
+        color: 'text.lightest',
       },
     },
   }),

@@ -17,8 +17,7 @@ export const styles = {
   }),
   iconButton: css.raw({
     padding: '0',
-    //FIXME MUI2PANDA: Target MUI class
-    '& .MuiSvgIcon-root': {
+    '& .mui-icon': {
       fill: 'text.dark',
     },
     '&:hover': {

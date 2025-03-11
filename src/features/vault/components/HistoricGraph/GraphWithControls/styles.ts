@@ -41,6 +41,6 @@ export const styles = {
   range: css.raw({
     height: '12px',
     width: '12px',
-    backgroundColor: 'extracted2922',
+    backgroundColor: 'graphLegendRange',
   }),
 };

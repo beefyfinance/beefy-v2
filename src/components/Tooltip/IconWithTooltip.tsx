@@ -33,7 +33,7 @@ type IconProps = {
 };
 
 const iconStyles = css.raw({
-  color: 'var(--tooltip-icon-color, inherit)',
+  color: 'inherit',
   fontSize: 'var(--tooltip-icon-size, 20px)',
   width: 'var(--tooltip-icon-size, 20px)',
   height: 'var(--tooltip-icon-size, 20px)',

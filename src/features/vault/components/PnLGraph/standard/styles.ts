@@ -27,12 +27,6 @@ export const styles = {
       borderRadius: '0px',
     },
   }),
-  tabsDashboard: css.raw({
-    //FIXME MUI2PANDA: Target MUI class
-    '& .MuiTab-root': {
-      textStyle: 'subline.sm',
-    },
-  }),
   footerDashboard: css.raw({
     borderTop: '2px solid {colors.bayOfMany}',
   }),

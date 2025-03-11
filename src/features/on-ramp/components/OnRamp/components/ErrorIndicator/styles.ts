@@ -14,7 +14,7 @@ export const styles = {
     width: '64px',
     height: '64px',
     borderRadius: '50%',
-    background: 'extracted583',
+    background: 'alertErrorbackground',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

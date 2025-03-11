@@ -81,10 +81,10 @@ export const stackRecipe = sva({
       display: 'flex',
     },
     stackTo: {
-      color: 'extracted1885',
+      color: 'tenderlyStackToText',
     },
     stackFunc: {
-      color: 'extracted2568',
+      color: 'tenderlyStackFuncText',
     },
     stackFuncAccessor: {
       color: 'text.middle',
@@ -105,16 +105,16 @@ export const stackRecipe = sva({
       gap: '4px',
     },
     stackPairName: {
-      color: 'extracted1355',
+      color: 'tenderlyStackPairName',
     },
     stackTag: {
       textStyle: 'subline.sm',
       flex: '0 0 auto',
       padding: '1px 4px',
       display: 'block',
-      backgroundColor: 'extracted3759o11',
-      border: '1px solid extracted3759o11',
-      color: 'extracted3759',
+      backgroundColor: 'tenderlyStackTagBackground',
+      border: '1px solid tenderlyStackTagBackground',
+      color: 'tenderlyStackTagText',
       width: '54',
       textAlign: 'center',
       '&:hover': {
@@ -131,7 +131,7 @@ export const stackRecipe = sva({
       width: '100%',
       padding: '4px 8px',
       '& strong': {
-        color: 'extracted556',
+        color: 'tenderlyStackSourceStrongText',
       },
     },
   },
@@ -139,41 +139,41 @@ export const stackRecipe = sva({
     type: {
       revert: {
         stackTag: {
-          backgroundColor: 'extracted2805o11',
-          border: '1px solid extracted2805o11',
-          color: 'extracted556',
+          backgroundColor: 'tenderlyRevertStackTagBackground',
+          border: '1px solid tenderlyRevertStackTagBackground',
+          color: 'tenderlyStackSourceStrongText',
           '&:hover': {
-            borderColor: 'extracted2805',
+            borderColor: 'tenderlyRevertStackTagBorder',
           },
         },
       },
       call: {
         stackTag: {
-          backgroundColor: 'extracted1757o11',
-          border: '1px solid extracted1757o11',
-          color: 'extracted1757',
+          backgroundColor: 'tenderlyCallStackTagBackground',
+          border: '1px solid tenderlyCallStackTagBackground',
+          color: 'tenderlyCallStackTagText',
           '&:hover': {
-            borderColor: 'extracted1757',
+            borderColor: 'tenderlyCallStackTagText',
           },
         },
       },
       delegatecall: {
         stackTag: {
-          backgroundColor: 'extracted1757o11',
-          border: '1px solid extracted1757o11',
-          color: 'extracted1757',
+          backgroundColor: 'tenderlyCallStackTagBackground',
+          border: '1px solid tenderlyCallStackTagBackground',
+          color: 'tenderlyCallStackTagText',
           '&:hover': {
-            borderColor: 'extracted1757',
+            borderColor: 'tenderlyCallStackTagText',
           },
         },
       },
       jumpdest: {
         stackTag: {
-          backgroundColor: 'extracted282o11',
-          border: '1px solid extracted282o11',
-          color: 'extracted2833',
+          backgroundColor: 'tenderlyJumpDestStackTagBackground',
+          border: '1px solid tenderlyJumpDestStackTagBackground',
+          color: 'tenderlyJumpDestStackTagText',
           '&:hover': {
-            borderColor: 'extracted282',
+            borderColor: 'tenderlyJumpDestStackTagBorder',
           },
         },
       },
@@ -245,12 +245,12 @@ export const styles = {
     padding: '4px 8px',
   }),
   pairDisplayKey: css.raw({
-    color: 'extracted1355',
+    color: 'tenderlyStackPairName',
   }),
   pairDisplayOdd: css.raw({
     background: 'background.content.dark',
     '& > .pairDisplayKey': {
-      color: 'extracted516',
+      color: 'tenderlyPairDisplayAltText',
     },
   }),
   calls: css.raw({

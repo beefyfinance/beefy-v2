@@ -40,7 +40,7 @@ export const styles = {
     marginRight: '8px',
   }),
   iconLoading: css.raw({
-    background: 'whiteo11;',
+    background: 'onRampIconLoading',
   }),
   provider: css.raw({
     marginRight: '8px',

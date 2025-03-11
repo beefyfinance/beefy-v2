@@ -7,7 +7,7 @@ export const styles = {
     marginRight: '8px',
   }),
   listItemIconPlaceholder: css.raw({
-    backgroundColor: 'magenta',
+    backgroundColor: 'missingNetworkIconBackground',
     border: 'solid 2px black',
     borderRadius: '100%',
   }),

@@ -14,20 +14,4 @@ export const styles = {
       padding: '8px 16px',
     },
   }),
-  tabsContainer: css.raw({
-    //FIXME MUI2PANDA: Target MUI class
-    '& .MuiTabs-root': {
-      minHeight: '24px',
-    },
-    //FIXME MUI2PANDA: Target MUI class
-    '& .MuiTab-root': {
-      textStyle: 'body.sm.medium',
-      minHeight: '22px',
-      padding: '0px',
-    },
-    //FIXME MUI2PANDA: Target MUI class
-    '& .MuiTabs-flexContainer': {
-      gap: '12px',
-    },
-  }),
 };

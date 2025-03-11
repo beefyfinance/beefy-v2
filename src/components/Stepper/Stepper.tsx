@@ -81,7 +81,7 @@ const Inner = styled('div', {
 
 const Content = styled('div', {
   base: {
-    color: 'blackMarket1',
+    color: 'blackMarket',
     backgroundColor: 'white',
     borderRadius: '0 0 4px 4px',
     padding: '12px 16px',

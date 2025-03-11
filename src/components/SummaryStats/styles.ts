@@ -26,7 +26,7 @@ export const styles = {
   }),
   iconContainer: css.raw({
     borderRadius: '130px',
-    backgroundColor: 'blackMarket2',
+    backgroundColor: 'dashboardSummaryIconBackground',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

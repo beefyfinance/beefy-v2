@@ -34,7 +34,7 @@ export const styles = {
     alignItems: 'center',
   }),
   titleWhite: css.raw({
-    color: 'white',
+    color: 'text.lightest',
   }),
   titleTooltipTrigger: css.raw({
     color: 'text.middle',

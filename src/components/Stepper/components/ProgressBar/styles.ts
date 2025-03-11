@@ -4,7 +4,7 @@ export const styles = {
   topBar: css.raw({
     height: '10px',
     borderRadius: '4px 4px 0 0',
-    backgroundColor: 'grayLight',
+    backgroundColor: 'modalProgressBarBackground',
     flexShrink: '0',
     flexGrow: '0',
   }),

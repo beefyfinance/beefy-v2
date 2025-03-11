@@ -11,7 +11,7 @@ export const OptionButton = styled('button', {
     justifyContent: 'flex-start',
     textAlign: 'left',
     '&:hover': {
-      backgroundColor: 'whiteo15',
+      backgroundColor: 'selectOptionActiveBackground',
     },
     '&:active': {
       backgroundColor: 'transparent',
@@ -21,7 +21,7 @@ export const OptionButton = styled('button', {
   variants: {
     active: {
       true: {
-        backgroundColor: 'whiteo15',
+        backgroundColor: 'selectOptionActiveBackground',
       },
     },
     selected: {

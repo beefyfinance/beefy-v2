@@ -25,7 +25,7 @@ export const styles = {
     display: 'block',
   }),
   link: css.raw({
-    color: 'var(--tooltip-link-color)',
+    color: 'colorPalette.text.link',
     textDecoration: 'underline',
   }),
 };

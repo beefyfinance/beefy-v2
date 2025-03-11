@@ -52,9 +52,8 @@ export const styles = {
     backgroundColor: 'bayOfMany',
     padding: '12px 24px',
     borderRadius: '8px',
-    //FIXME MUI2PANDA: Target MUI class
-    '&.Mui-disabled': {
-      backgroundColor: 'whiteo20',
+    _disabled: {
+      backgroundColor: 'minterButtonDisabledBackground',
     },
   }),
   info: css.raw({

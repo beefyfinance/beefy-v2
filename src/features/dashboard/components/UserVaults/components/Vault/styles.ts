@@ -7,7 +7,7 @@ export const styles = {
   vault: css.raw({
     display: 'grid',
     position: 'relative',
-    color: 'extracted676',
+    color: 'dashboardVaultText',
     background: 'background.content',
     padding: '24px 16px',
     textDecoration: 'none',
@@ -28,7 +28,7 @@ export const styles = {
     backgroundColor: 'background.vaults.gov',
   }),
   vaultPaused: css.raw({
-    backgroundColor: 'extracted1758',
+    backgroundColor: 'vaultPausedBackground',
   }),
   vaultClm: css.raw({
     backgroundColor: 'background.vaults.clm',

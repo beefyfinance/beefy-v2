@@ -30,11 +30,11 @@ const tokenPriceRecipe = cva({
     mode: {
       current: {
         transform: 'rotateX(0deg)',
-        zIndex: 2,
+        zIndex: '[2]',
       },
       next: {
         transform: 'rotateX(90deg)',
-        zIndex: 1,
+        zIndex: '[1]',
       },
       hidden: {
         transform: 'rotateX(90deg)',

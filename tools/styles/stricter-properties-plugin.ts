@@ -7,11 +7,14 @@ import type {
 import type { PandaContext } from '@pandacss/node';
 
 export type StricterPropertiesOptions = {
-  [K in keyof CssProperties]?: {
-    removeReact?: boolean;
-    removeAny?: boolean;
-    add?: string[];
-  };
+  [K in keyof CssProperties]?:
+    | string
+    | {
+        removeReact?: boolean;
+        removeAny?: boolean;
+        addEscapeHatch?: boolean;
+        add?: string[];
+      };
 };
 
 export const pluginStricterProperties = (options: StricterPropertiesOptions): PandaPlugin => {
@@ -55,18 +58,32 @@ export const transformPropTypes = (
       // Skip complicated types for now (WithEscapeHatch, OnlyKnown etc)
       if (value.includes('<')) return match;
 
-      let types = value.split('|').map(t => t.trim());
-      if (changes.removeReact) {
-        types = types.filter(t => !t.includes('CssProperties['));
-      }
-      if (changes.removeAny) {
-        types = types.filter(t => t !== 'AnyString');
-      }
-      if (changes.add) {
-        types.push(...changes.add);
+      if (typeof changes === 'string') {
+        return `${prop}?: ConditionalValue<${changes}>`;
       }
 
-      return `${prop}?: ConditionalValue<${types.join(' | ')}>`;
+      const removeAny = changes.removeAny === undefined ? true : changes.removeAny;
+      const removeReact = changes.removeReact === undefined ? true : changes.removeReact;
+      const addEscapeHatch = changes.addEscapeHatch === undefined ? false : changes.addEscapeHatch;
+      const add = changes.add;
+
+      let types = value.split('|').map(t => t.trim());
+      if (removeReact) {
+        types = types.filter(t => !t.includes('CssProperties['));
+      }
+      if (removeAny) {
+        types = types.filter(t => t !== 'AnyString');
+      }
+      if (add) {
+        types.push(...add);
+      }
+
+      let type = types.join(' | ');
+      if (addEscapeHatch) {
+        type = `WithEscapeHatch<${type}>`;
+      }
+
+      return `${prop}?: ConditionalValue<${type}>`;
     }
   );
 

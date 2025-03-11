@@ -12,7 +12,7 @@ export const alertRecipe = sva({
       borderRadius: '8px',
       padding: '16px',
       alignItems: 'flex-start',
-      backgroundColor: 'extracted3438',
+      backgroundColor: 'alertBaseBackground',
     },
     icon: {
       width: '24px',
@@ -41,26 +41,26 @@ export const alertRecipe = sva({
     variant: {
       warning: {
         alert: {
-          backgroundColor: 'orangeWarningo14',
+          backgroundColor: 'alert.warning.background',
         },
         icon: {
-          fill: 'alert.warning',
+          fill: 'alert.warning.icon',
         },
       },
       error: {
         alert: {
-          backgroundColor: 'extracted583',
+          backgroundColor: 'alert.error.background',
         },
         icon: {
-          fill: 'alert.error',
+          fill: 'alert.error.icon',
         },
       },
       info: {
         alert: {
-          backgroundColor: 'cornflowero13',
+          backgroundColor: 'alert.info.background',
         },
         icon: {
-          fill: 'alert.info',
+          fill: 'alert.info.icon',
         },
       },
     },

@@ -53,7 +53,7 @@ export const styles = {
     cursor: 'pointer',
     textAlign: 'left',
     '&:hover, &:focus-visible': {
-      color: 'white',
+      color: 'text.lightest',
     },
   }),
 };

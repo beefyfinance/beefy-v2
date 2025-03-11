@@ -21,7 +21,7 @@ const useStyles = legacyMakeStyles({
   }),
   discounted: css.raw({
     color: 'text.light',
-    background: 'extracted1431',
+    background: 'zapDiscountedFeesBackground',
     padding: '0 4px',
     borderRadius: '4px',
     marginRight: '10px',

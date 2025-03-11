@@ -42,7 +42,7 @@ export const styles = {
   usdReferenceLine: css.raw({
     height: '2px',
     width: '12px',
-    backgroundColor: 'extracted3604',
+    backgroundColor: 'graphLegendUsd',
     borderRadius: '4px',
   }),
   token1ReferenceLine: css.raw({
@@ -56,21 +56,5 @@ export const styles = {
     width: '12px',
     backgroundColor: 'text.dark',
     borderRadius: '4px',
-  }),
-  tabsContainer: css.raw({
-    //FIXME MUI2PANDA: Target MUI class
-    '& .MuiTabs-root': {
-      minHeight: '24px',
-    },
-    //FIXME MUI2PANDA: Target MUI class
-    '& .MuiTab-root': {
-      textStyle: 'body.sm.medium',
-      minHeight: '22px',
-      padding: '0px',
-    },
-    //FIXME MUI2PANDA: Target MUI class
-    '& .MuiTabs-flexContainer': {
-      gap: '12px',
-    },
   }),
 };

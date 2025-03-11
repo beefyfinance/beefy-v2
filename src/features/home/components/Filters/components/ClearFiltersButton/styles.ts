@@ -25,7 +25,7 @@ export const styles = {
       width: '20px',
       height: '20px',
       borderRadius: '50%',
-      color: 'white',
+      color: 'text.lightest',
     },
   }),
 };

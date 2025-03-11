@@ -110,7 +110,6 @@ export const DashboardPnLGraph = memo(function DashboardPnLGraph({
       <Graph address={address} period={period} vaultId={vaultId} />
       <Footer
         css={styles.footerDashboard}
-        tabsCss={styles.tabsDashboard}
         labels={labels}
         vaultId={vaultId}
         period={period}

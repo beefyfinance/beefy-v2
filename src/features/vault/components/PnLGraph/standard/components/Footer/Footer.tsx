@@ -9,7 +9,6 @@ interface FooterProps {
   handlePeriod: (period: number) => void;
   vaultId: VaultEntity['id'];
   labels: string[];
-  tabsCss?: CssStyles;
   css?: CssStyles;
 }
 
@@ -17,7 +16,6 @@ export const Footer = memo(function Footer({
   period,
   handlePeriod,
   labels,
-  tabsCss,
   css: cssProp,
 }: FooterProps) {
   const options = useMemo(
@@ -33,17 +31,15 @@ export const Footer = memo(function Footer({
 
   return (
     <div className={css(styles.footer, cssProp)}>
-      <div className={css(styles.tabsContainer, tabsCss)}>
-        <ToggleButtons
-          value={period.toString()}
-          options={options}
-          onChange={handleChange}
-          noBackground={true}
-          noPadding={true}
-          noBorder={true}
-          variant="range"
-        />
-      </div>
+      <ToggleButtons
+        value={period.toString()}
+        options={options}
+        onChange={handleChange}
+        noBackground={true}
+        noPadding={true}
+        noBorder={true}
+        variant="range"
+      />
     </div>
   );
 });

@@ -15,7 +15,6 @@ interface CommonFooterProps {
   handlePeriod: (period: number) => void;
   labels: string[];
   css?: CssStyles;
-  tabsCss?: CssStyles;
 }
 
 interface OverviewFooterProps extends CommonFooterProps {
@@ -27,7 +26,6 @@ export const OverviewFooter = memo(function OverviewFooter({
   handlePeriod,
   labels,
   css: cssProp,
-  tabsCss,
   position,
 }: OverviewFooterProps) {
   const classes = useStyles();
@@ -61,17 +59,16 @@ export const OverviewFooter = memo(function OverviewFooter({
           {t('HOLD Value')}
         </div>
       </div>
-      <div className={css(styles.tabsContainer, tabsCss)}>
-        <ToggleButtons
-          value={period.toString()}
-          options={options}
-          onChange={handleChange}
-          noBackground={true}
-          noPadding={true}
-          noBorder={true}
-          variant="range"
-        />
-      </div>
+
+      <ToggleButtons
+        value={period.toString()}
+        options={options}
+        onChange={handleChange}
+        noBackground={true}
+        noPadding={true}
+        noBorder={true}
+        variant="range"
+      />
     </div>
   );
 });
@@ -84,7 +81,6 @@ export const FeesFooter = memo(function Footer({
   period,
   handlePeriod,
   labels,
-  tabsCss,
   vaultId,
   css: cssProp,
 }: FooterProps) {
@@ -115,16 +111,14 @@ export const FeesFooter = memo(function Footer({
           {token1.symbol}
         </div>
       </div>
-      <div className={css(styles.tabsContainer, tabsCss)}>
-        <ToggleButtons
-          value={period.toString()}
-          options={options}
-          onChange={handleChange}
-          noBackground={true}
-          noPadding={true}
-          variant="range"
-        />
-      </div>
+      <ToggleButtons
+        value={period.toString()}
+        options={options}
+        onChange={handleChange}
+        noBackground={true}
+        noPadding={true}
+        variant="range"
+      />
     </div>
   );
 });

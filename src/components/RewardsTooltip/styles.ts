@@ -21,7 +21,7 @@ export const styles = {
   sourceTitle: css.raw({
     textStyle: 'subline.sm',
     fontWeight: 'bold',
-    color: 'var(--tooltip-title-color)',
+    color: 'colorPalette.text.title',
   }),
   rewards: css.raw({
     display: 'flex',
@@ -30,11 +30,11 @@ export const styles = {
   }),
   rewardsText: css.raw({
     textStyle: 'body.medium',
-    color: 'var(--tooltip-value-color)',
+    color: 'colorPalette.text.item',
   }),
   usdPrice: css.raw({
     textStyle: 'subline.sm',
     fontWeight: 'bold',
-    color: 'var(--tooltip-label-color)',
+    color: 'colorPalette.text.label',
   }),
 };

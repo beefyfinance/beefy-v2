@@ -23,7 +23,7 @@ const iconRecipe = cva({
     selected: {
       false: {
         '& .bg': {
-          fill: 'extracted790',
+          fill: 'chainIconUnselectedBackground',
         },
         '& .fg': {
           fill: 'background.body',

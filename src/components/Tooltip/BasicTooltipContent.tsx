@@ -22,15 +22,13 @@ export const BasicTooltipContent = memo(function BasicTooltipContent({
 const Title = styled('div', {
   base: {
     textStyle: 'body.medium',
-    fontSize: 'var(--tooltip-body-font-size, {fontSizes.body})',
-    color: 'var(--tooltip-title-color, black)',
+    color: 'colorPalette.text.title',
   },
 });
 
 const Text = styled('div', {
   base: {
     textStyle: 'body',
-    fontSize: 'var(--tooltip-body-font-size, {fontSizes.body})',
-    color: 'var(--tooltip-content-color, black)',
+    color: 'colorPalette.text.content',
   },
 });

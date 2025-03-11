@@ -12,15 +12,6 @@ export const styles = {
     height: '16px',
     width: '16px',
   }),
-  dropdown: css.raw({
-    display: 'flex',
-    flexDirection: 'column',
-    rowGap: '12px',
-    padding: '6px',
-    border: '2px solid extracted271',
-    backgroundColor: 'extracted3248',
-    borderRadius: '4px',
-  }),
   item: css.raw({
     textStyle: 'body',
     fontWeight: 'medium',

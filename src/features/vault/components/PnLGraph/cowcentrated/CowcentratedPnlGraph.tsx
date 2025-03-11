@@ -202,7 +202,6 @@ export const DashboardOverviewGraph = memo(function DashboardOverviewGraph({
           <CLMOverviewGraph address={address} period={period} vaultId={vaultId} />
           <OverviewFooter
             css={styles.footerDashboard}
-            tabsCss={styles.tabsDashboard}
             labels={labels}
             period={period}
             handlePeriod={setPeriod}
@@ -232,7 +231,6 @@ export const DashboardFeesGraph = memo(function DashboardFeesGraph({
           <CLMFeesGraph address={address} period={period} vaultId={vaultId} />
           <FeesFooter
             css={styles.footerDashboard}
-            tabsCss={styles.tabsDashboard}
             labels={labels}
             vaultId={vaultId}
             period={period}

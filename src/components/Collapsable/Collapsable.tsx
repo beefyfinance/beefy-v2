@@ -115,7 +115,7 @@ const headerRecipe = cva({
       light: {},
       primary: {},
       card: {
-        backgroundColor: 'background.contentDark',
+        backgroundColor: 'background.content.dark',
         padding: '24px',
       },
     },

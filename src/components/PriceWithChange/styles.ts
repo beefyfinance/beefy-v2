@@ -32,9 +32,9 @@ export const styles = {
     color: 'text.dark',
   }),
   positive: css.raw({
-    color: 'extracted3763',
+    color: 'changePositive',
   }),
   negative: css.raw({
-    color: 'extracted1308',
+    color: 'changeNegative',
   }),
 };

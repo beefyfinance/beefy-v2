@@ -68,13 +68,13 @@ export const styles = {
       'linear-gradient(to right, {colors.text.light} 0%,{colors.text.light} var(--value),{colors.background.content.light} var(--value), {colors.background.content.light} 100%)',
   }),
   errorRange: css.raw({
-    background: '{colors.redOrangeo48}',
+    background: '{colors.transactErrorBackground}',
     '&::-webkit-slider-thumb': {
       background: 'indicators.error',
     },
   }),
   warningRange: css.raw({
-    background: '{colors.orangeWarningo48}',
+    background: '{colors.transactWarningBackground}',
     '&::-webkit-slider-thumb': {
       background: 'indicators.warning',
     },

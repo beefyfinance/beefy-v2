@@ -37,7 +37,7 @@ export const styles = {
   }),
   unselectedIcon: css.raw({
     '& .bg': {
-      fill: 'extracted790',
+      fill: 'chainIconUnselectedBackground',
     },
     '& .fg': {
       fill: 'background.body',

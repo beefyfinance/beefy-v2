@@ -10,7 +10,7 @@ export const styles = {
     backgroundColor: 'background.content',
     borderRadius: '8px',
     padding: '24px',
-    boxShadow: '0px 4px 24px 24px extracted2015, 0px 2px 8px extracted778',
+    boxShadow: '0px 4px 24px 24px filtersBoxShadowTransparent, 0px 2px 8px filtersBoxShadowSolid',
   }),
   sidebar: css.raw({
     backgroundColor: 'background.content',
@@ -18,7 +18,7 @@ export const styles = {
     maxWidth: 'calc(100vw - 32px)',
     borderTopLeftRadius: '16px',
     borderBottomLeftRadius: '16px',
-    boxShadow: '0px 4px 24px 24px extracted2015, 0px 2px 8px extracted946',
+    boxShadow: '0px 4px 24px 24px filtersBoxShadowTransparent, 0px 2px 8px filtersBoxShadowSolid',
   }),
   sidebarHeader: css.raw({
     textStyle: 'h2',

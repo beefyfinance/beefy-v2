@@ -10,7 +10,7 @@ export const styles = {
     height: '100%',
     overflow: 'auto',
     whiteSpace: 'pre-wrap',
-    backgroundColor: 'extracted3636',
+    backgroundColor: 'transactDebuggerBackground',
     '@media (min-width: 2000px)': {
       display: 'flex',
       flexDirection: 'column',
@@ -19,7 +19,7 @@ export const styles = {
   }),
   item: css.raw({
     '&:nth-child(2n)': {
-      background: 'extracted2201',
+      background: 'transactDebuggerItemAltBackground',
     },
   }),
   grid: css.raw({

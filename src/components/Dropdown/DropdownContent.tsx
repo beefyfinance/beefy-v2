@@ -82,7 +82,7 @@ const DropdownInner = styled('div', {
     textAlign: 'left',
     display: 'flex',
     flexDirection: 'column',
-    boxShadow: '0px 4px 8px 8px {colors.blacko20}',
+    boxShadow: '0px 4px 8px 8px {colors.tooltipDropdownBoxShadow}',
   },
   variants: {
     padding: {

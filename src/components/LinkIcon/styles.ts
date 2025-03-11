@@ -14,7 +14,7 @@ export const styles = {
     height: '28px',
     '&:hover': {
       color: 'text.light',
-      backgroundColor: 'extracted3658',
+      backgroundColor: 'linkIconHoverBackground',
       transition: 'color 0.1s',
     },
   }),

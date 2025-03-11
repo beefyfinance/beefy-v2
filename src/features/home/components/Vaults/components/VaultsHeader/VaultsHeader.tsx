@@ -30,6 +30,6 @@ const headerCss = css({
     gridTemplateColumns: 'minmax(0, 40fr) minmax(0, 60fr)',
     position: 'sticky',
     top: 0,
-    zIndex: 1,
+    zIndex: '[1]',
   },
 });

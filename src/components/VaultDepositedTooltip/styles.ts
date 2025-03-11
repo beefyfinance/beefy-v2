@@ -9,10 +9,10 @@ export const styles = {
     gridTemplateColumns: '1fr auto',
   }),
   label: css.raw({
-    color: 'var(--tooltip-title-color)',
+    color: 'colorPalette.text.title',
   }),
   details: css.raw({
-    color: 'var(--tooltip-title-color)',
+    color: 'colorPalette.text.title',
     textAlign: 'right',
   }),
   value: css.raw({

@@ -21,19 +21,19 @@ export const styles = {
     color: 'text.dark',
   }),
   scrollableThumb: css.raw({
-    background: 'extracted2916',
+    background: 'bridgeQuoteSelectorScrollThumb',
   }),
   scrollableTopShadow: css.raw({
-    background: 'linear-gradient(0deg, {colors.extracted2615} 0%, {colors.blacko49} 100%)',
+    background: 'linear-gradient(0deg, transparent 0%, {colors.scrollableShadowSolid} 100%)',
   }),
   scrollableBottomShadow: css.raw({
-    background: 'linear-gradient(180deg, {colors.extracted2615} 0%, {colors.blacko49} 100%)',
+    background: 'linear-gradient(180deg, transparent 0%, {colors.scrollableShadowSolid} 100%)',
   }),
   scrollableLeftShadow: css.raw({
-    background: 'linear-gradient(270deg, {colors.extracted2615} 0%, {colors.blacko49} 100%)',
+    background: 'linear-gradient(270deg, transparent 0%, {colors.scrollableShadowSolid} 100%)',
   }),
   scrollableRightShadow: css.raw({
-    background: 'linear-gradient(90deg, {colors.extracted2615} 0%, {colors.blacko49} 100%)',
+    background: 'linear-gradient(90deg, transparent 0%, {colors.scrollableShadowSolid} 100%)',
   }),
   quotes: css.raw({
     display: 'grid',
@@ -62,7 +62,7 @@ export const styles = {
   quoteButton: css.raw({
     cursor: 'pointer',
     '&:hover, &:focus-visible': {
-      color: 'white',
+      color: 'text.lightest',
     },
   }),
   quoteLimited: css.raw({
@@ -128,7 +128,7 @@ export const styles = {
     cursor: 'default',
     pointerEvents: 'none',
     '&:hover, &:focus-visible': {
-      background: 'extracted263',
+      background: 'birdgeQuoteButtonSelectedHoverBackground',
     },
   }),
 };

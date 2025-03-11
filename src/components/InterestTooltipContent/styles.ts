@@ -9,18 +9,18 @@ export const styles = {
     gridTemplateColumns: '1fr auto',
   }),
   label: css.raw({
-    color: 'var(--tooltip-label-color)',
+    color: 'colorPalette.text.label',
     '&:nth-last-child(2)': {
       fontWeight: 'medium',
-      color: 'var(--tooltip-title-color)',
+      color: 'colorPalette.text.title',
     },
   }),
   value: css.raw({
-    color: 'var(--tooltip-value-color)',
+    color: 'colorPalette.text.item',
     textAlign: 'right',
     '&:last-child': {
       fontWeight: 'medium',
-      color: 'var(--tooltip-label-color)',
+      color: 'colorPalette.text.label',
     },
   }),
 };

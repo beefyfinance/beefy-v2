@@ -2,7 +2,7 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   successContent: css.raw({
-    backgroundColor: 'extracted1431o14',
+    backgroundColor: 'stepperSuccessBackground',
   }),
   errorContent: css.raw({
     backgroundColor: 'stepperErrorBackground',

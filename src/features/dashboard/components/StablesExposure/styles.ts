@@ -22,14 +22,14 @@ export const styles = {
   bar: css.raw({
     height: '12px',
     width: '100%',
-    backgroundColor: 'extracted3194',
+    backgroundColor: 'exposureOther',
     borderRadius: '80px',
   }),
   stableBar: css.raw({
     height: '100%',
     borderRadius: '80px 0px 0px 80px',
     borderRight: '2px solid {background.content}',
-    backgroundColor: 'extracted1689',
+    backgroundColor: 'exposureStable',
   }),
   stableBarComplete: css.raw({
     borderRadius: '80px',

@@ -70,10 +70,10 @@ const useLastHarvestStyles = legacyMakeStyles({
     gridTemplateColumns: '1fr auto',
   }),
   label: css.raw({
-    color: 'var(--tooltip-label-color)',
+    color: 'colorPalette.text.label',
   }),
   value: css.raw({
-    color: 'var(--tooltip-value-color)',
+    color: 'colorPalette.text.item',
     textAlign: 'right',
   }),
 });

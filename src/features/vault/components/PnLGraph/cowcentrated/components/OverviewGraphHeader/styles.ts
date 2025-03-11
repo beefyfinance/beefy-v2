@@ -27,11 +27,11 @@ export const styles = {
   }),
   label: css.raw({
     textStyle: 'body.sm',
-    color: 'var(--tooltip-label-color)',
+    color: 'colorPalette.text.label',
   }),
   value: css.raw({
     textStyle: 'subline.sm',
-    color: 'var(--tooltip-value-color)',
+    color: 'colorPalette.text.item',
     textAlign: 'right',
   }),
   tooltip: css.raw({

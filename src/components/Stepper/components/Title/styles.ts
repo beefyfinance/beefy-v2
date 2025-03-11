@@ -3,7 +3,7 @@ import { css } from '@repo/styles/css';
 export const styles = {
   title: css.raw({
     textStyle: 'body.medium',
-    color: 'blackMarket1',
+    color: 'blackMarket',
     display: 'flex',
     alignItems: 'center',
   }),

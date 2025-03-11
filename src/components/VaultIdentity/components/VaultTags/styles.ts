@@ -89,7 +89,7 @@ export const styles = {
     height: '8px',
     width: '1px',
     borderRadius: '8px',
-    backgroundColor: 'extracted2298o28',
+    backgroundColor: 'vaultTagDividerBackground',
   }),
   flexWrap: css.raw({
     flexWrap: 'wrap',

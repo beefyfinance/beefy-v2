@@ -65,7 +65,7 @@ export const styles = {
     padding: '8px 8px',
     justifyContent: 'flex-start',
     '&:hover': {
-      color: 'white',
+      color: 'text.lightest',
     },
   }),
   icon: css.raw({

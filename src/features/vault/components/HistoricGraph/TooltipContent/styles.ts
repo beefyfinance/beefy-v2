@@ -6,7 +6,7 @@ export const styles = {
     color: 'text.lightest',
     padding: '12px 16px',
     minWidth: '250px',
-    background: 'extracted668',
+    background: 'graphTooltipBackground',
     borderRadius: '8px',
     textAlign: 'left',
   }),

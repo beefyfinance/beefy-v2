@@ -31,15 +31,15 @@ export const styles = {
       height: '0',
       borderStyle: 'solid',
       borderWidth: '20px 40px 0 40px',
-      borderColor: '{colors.background.content.light} transparent transparent transparent',
-      zIndex: 1,
+      borderColor: '[{colors.background.content.light} transparent transparent transparent]',
+      zIndex: '[1]',
     },
   }),
   stepBridge: css.raw({
     paddingTop: '32px',
     backgroundColor: 'bayOfMany',
     '&::after': {
-      borderColor: '{colors.bayOfMany} transparent transparent transparent',
+      borderColor: '[{colors.bayOfMany} transparent transparent transparent]',
     },
   }),
   stepTo: css.raw({
