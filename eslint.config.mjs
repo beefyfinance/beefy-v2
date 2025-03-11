@@ -122,7 +122,7 @@ export default tseslint.config(
         'error',
         {
           allowForKnownSafeCalls: [
-            { from: 'file', name: ['ThunkDispatch', 'BeefyDispatchFn'] },
+            { from: 'file', name: ['ThunkDispatch', 'BeefyDispatchFn', 'NavigateFunction'] },
           ],
         },
       ],

@@ -4,6 +4,7 @@ import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity, TokenErc20 } from '../entities/token.ts';
 import { isTokenErc20 } from '../entities/token.ts';
 import {
+  getCowcentratedPool,
   isCowcentratedGovVault,
   isCowcentratedLikeVault,
   isCowcentratedStandardVault,
@@ -35,6 +36,8 @@ import { selectPlatformById } from './platforms.ts';
 import type { PlatformEntity } from '../entities/platform.ts';
 import { arrayOrStaticEmpty, valueOrThrow } from '../utils/selector-utils.ts';
 import { selectVaultUnderlyingTvlUsd } from './tvl.ts';
+import { selectIsConfigAvailable } from './data-loader.ts';
+import { featureFlag_disableRedirect } from '../utils/feature-flags.ts';
 
 export const selectAllVaultIdsIncludingHidden = (state: BeefyState) => state.entities.vaults.allIds;
 export const selectAllVisibleVaultIds = (state: BeefyState) => state.entities.vaults.allVisibleIds;
@@ -127,11 +130,19 @@ export const selectCowcentratedVaultDepositTokenAddresses = createCachedSelector
 export const selectVaultExistsById = (state: BeefyState, vaultId: VaultEntity['id']) =>
   !!state.entities.vaults.byId[vaultId];
 
-export const selectVaultIdIgnoreCase = createSelector(
-  selectAllVisibleVaultIds,
-  (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId.toLowerCase(),
-  (allIds, vaultIdLowercase): VaultEntity['id'] | undefined =>
-    allIds.find(id => id.toLowerCase() === vaultIdLowercase)
+export const selectVaultByIdCaseInsensitiveOrUndefined = createSelector(
+  (_state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  selectAllVaultIdsIncludingHidden,
+  (state: BeefyState) => state.entities.vaults.byId,
+  (vaultId, allIds, byId): VaultEntity | undefined => {
+    const exactMatch = byId[vaultId];
+    if (exactMatch) {
+      return exactMatch;
+    }
+    const vaultIdLowercase = vaultId.toLowerCase();
+    const matchingId = allIds.find(id => id.toLowerCase() === vaultIdLowercase);
+    return matchingId ? byId[matchingId] : undefined;
+  }
 );
 
 export const selectGovVaultById = (state: BeefyState, vaultId: VaultEntity['id']): VaultGov => {
@@ -489,3 +500,35 @@ export const selectVaultsPinnedConfigs = (state: BeefyState) =>
 
 export const selectVaultIsPinned = (state: BeefyState, vaultId: VaultEntity['id']) =>
   state.entities.promos.pinned.byId[vaultId] || false;
+
+export const selectVaultIdForVaultPage = createSelector(
+  (_state: BeefyState, vaultId: string | undefined) => vaultId,
+  (state: BeefyState, _vaultId: string | undefined) => selectIsConfigAvailable(state),
+  (state: BeefyState, vaultId: string | undefined) =>
+    vaultId ? selectVaultByIdCaseInsensitiveOrUndefined(state, vaultId) : undefined,
+  (vaultId, isLoaded, vault): string => {
+    if (!vaultId) {
+      return 'not-found';
+    }
+    if (!isLoaded) {
+      return 'loading';
+    }
+    if (!vault) {
+      return 'not-found';
+    }
+    if (vault.hidden && isCowcentratedVault(vault)) {
+      if (featureFlag_disableRedirect()) {
+        return vault.id;
+      }
+
+      const poolId = getCowcentratedPool(vault);
+      if (poolId) {
+        return poolId;
+      }
+    }
+    if (vault.hidden) {
+      return 'not-found';
+    }
+    return vault.id;
+  }
+);

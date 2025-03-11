@@ -71,7 +71,7 @@ export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?:
         handleClear();
       }
     },
-    [userInput, handleClear, history, isValid]
+    [userInput, handleClear, navigate, isValid]
   );
 
   const handleFocus = useCallback(() => {
@@ -214,7 +214,7 @@ const ClearEnterButton = memo(function ClearButton({
   const handleGoToDashboard = useCallback(() => {
     navigate(`/dashboard/${userInput}`);
     handleClear();
-  }, [userInput, handleClear, history]);
+  }, [userInput, handleClear, navigate]);
 
   if (isValid) {
     return (

@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef } from 'react';
-import { useLocation, useNavigationType } from 'react-router';
+import { NavigationType, useLocation, useNavigationType } from 'react-router';
 import { useAppDispatch } from '../../store.ts';
 import { setDashboardLast, setVaultsLast } from '../../features/data/reducers/vaults-list.ts';
 
@@ -18,8 +18,8 @@ export const ScrollRestorer = memo(function ScrollRestorer() {
 
     // Handle navigation types
     switch (navigationType) {
-      case 'PUSH':
-      case 'REPLACE':
+      case NavigationType.Push:
+      case NavigationType.Replace: {
         console.debug(`Saving scroll state of ${prevPath}`, window.scrollY);
         state.current.lastScroll.set(prevPath, window.scrollY);
         console.debug('Scrolling to top of new page');
@@ -35,14 +35,15 @@ export const ScrollRestorer = memo(function ScrollRestorer() {
           }
         }
         break;
-
-      case 'POP':
+      }
+      case NavigationType.Pop: {
         if (currentPath !== '/' && !currentPath.startsWith('/dashboard/')) {
           const savedScroll = state.current.lastScroll.get(currentPath) ?? 0;
           console.debug(`Restoring scroll state of ${currentPath}`, savedScroll);
           window.scrollTo(0, savedScroll);
         }
         break;
+      }
     }
 
     console.debug('Updating lastPath to', currentPath);

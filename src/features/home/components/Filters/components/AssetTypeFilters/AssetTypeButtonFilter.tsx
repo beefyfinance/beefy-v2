@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, type ReactNode, useCallback, useMemo } from 'react';
 import {
   MultiToggleButton,
   MultiToggleButtons,
@@ -46,7 +46,7 @@ export const AssetTypeButtonFilter = memo(function AssetTypeButtonFilter() {
 const CategoryToggleButton = memo<MultiToggleButtonProps<VaultAssetType>>(
   function CategoryToggleButton(props) {
     const { value, label: originalLabel } = props;
-    const label = useMemo(() => {
+    const label = useMemo((): ReactNode => {
       const option = TYPE_OPTIONS[value];
       if (option && option.highlight) {
         return (

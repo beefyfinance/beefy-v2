@@ -3,6 +3,6 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./.cache/tsc/scripts.tsbuildinfo"
   },
-  "include": ["src", "scripts"],
+  "include": ["src", "scripts", "tools"],
   "exclude": ["node_modules"]
 }

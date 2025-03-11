@@ -11,7 +11,7 @@ import { css } from '@repo/styles/css';
 import { useBreakpoints } from '../../../../../../components/MediaQueries/useBreakpoints.ts';
 import { useAppSelector } from '../../../../../../store.ts';
 import { selectLastViewedVaultsVaultId } from '../../../../../data/selectors/vaults-list.ts';
-import { useNavigationType } from 'react-router';
+import { useNavigationType, NavigationType } from 'react-router';
 import { token } from '@repo/styles/tokens';
 
 function useVaultHeightEstimate() {
@@ -76,7 +76,7 @@ export const VirtualVaultsList = memo(function VirtualVaultsList({
     [defaultItemHeight]
   );
   const initialTopMostItemIndex = useMemo((): FlatIndexLocationWithAlign | undefined => {
-    if (navigationType === 'POP' && lastVaultId !== undefined) {
+    if (navigationType === NavigationType.Pop && lastVaultId !== undefined) {
       // Updated condition
       const index = vaultIds.indexOf(lastVaultId);
       if (index >= 0) {

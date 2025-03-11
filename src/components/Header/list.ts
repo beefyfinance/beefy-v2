@@ -60,7 +60,7 @@ export const MobileList: NavConfig[] = [
     title: 'Header-Dashboard',
     Icon: DashboardIcon,
     url: '/dashboard',
-    exact: false,
+    end: false,
   },
   { title: 'Header-Dao', Icon: DaoIcon, items: DaoNavItems },
   { title: 'Header-Resources', Icon: ResourcesIcon, items: ResourcesNavItems },

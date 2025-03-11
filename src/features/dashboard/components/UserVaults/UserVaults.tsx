@@ -17,7 +17,7 @@ import {
 } from 'react-virtuoso';
 import { useAppSelector } from '../../../../store.ts';
 import { selectLastViewedDashboardVaultId } from '../../../data/selectors/vaults-list.ts';
-import { useNavigationType } from 'react-router';
+import { useNavigationType, NavigationType } from 'react-router';
 
 export type UserVaultsProps = {
   address: string;
@@ -94,7 +94,7 @@ export const VirtualList = memo(function VirtualList({ vaultIds, address }: Virt
   const lastVaultId = useAppSelector(selectLastViewedDashboardVaultId);
   const navigationType = useNavigationType(); // Updated hook usage
   const initialTopMostItemIndex = useMemo((): FlatIndexLocationWithAlign | undefined => {
-    if (navigationType === 'POP' && lastVaultId !== undefined) {
+    if (navigationType === NavigationType.Pop && lastVaultId !== undefined) {
       // Updated condition
       const index = vaultIds.indexOf(lastVaultId);
       if (index >= 0) {

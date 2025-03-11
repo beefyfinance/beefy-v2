@@ -3,7 +3,6 @@ import { styled } from '@repo/styles/jsx';
 export const Container = styled('div', {
   base: {
     width: '100%',
-    display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto',
     paddingInline: '16px',

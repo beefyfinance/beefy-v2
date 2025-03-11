@@ -16,7 +16,7 @@ const NotFoundPage = memo(() => {
 
   const handleOpen = useCallback(() => {
     navigate(`/`);
-  }, [history]);
+  }, [navigate]);
 
   return (
     <Container maxWidth="lg">

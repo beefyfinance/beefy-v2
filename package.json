@@ -14,7 +14,7 @@
     "build": "cross-env-shell NODE_ENV=production \"echo 'DO NOT disable validation on build, fix underlying issue' && npm run validate && panda codegen && tsc --project tsconfig.app.json && vite build\"",
     "build:skip-validate": "cross-env-shell NODE_ENV=production \"panda codegen && tsc --project tsconfig.app.json && vite build\"",
     "preview": "cross-env NODE_ENV=production vite preview",
-    "clean": "node ./scripts/clean.js",
+    "clean": "cross-env-shell NODE_ENV=development \"node ./scripts/clean.js && panda codegen\"",
     "validate": "vite-node ./scripts/validatePools.ts",
     "creationdate": "vite-node ./scripts/getPoolCreationTimestamp.ts",
     "launchpool": "vite-node ./scripts/launchpool.ts",
@@ -134,8 +134,5 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.4"
-  },
-  "lint-staged": {
-    "src/**/*.{ts,tsx,json}": "prettier --write"
   }
 }
