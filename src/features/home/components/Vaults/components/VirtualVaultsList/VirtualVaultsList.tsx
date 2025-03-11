@@ -75,7 +75,7 @@ export const VirtualVaultsList = memo(function VirtualVaultsList({
     () => ({ top: defaultItemHeight * 2, bottom: defaultItemHeight * 4 }),
     [defaultItemHeight]
   );
-  const initialTopMostItemIndex = useMemo((): FlatIndexLocationWithAlign | undefined => {
+  const initialTopMostItemIndex = useMemo((): FlatIndexLocationWithAlign | number => {
     if (navigationType === NavigationType.Pop && lastVaultId !== undefined) {
       // Updated condition
       const index = vaultIds.indexOf(lastVaultId);
@@ -86,6 +86,7 @@ export const VirtualVaultsList = memo(function VirtualVaultsList({
         };
       }
     }
+    return 0;
   }, [lastVaultId, vaultIds, navigationType]); // Updated dependency
 
   const holderStyles = useMemo(

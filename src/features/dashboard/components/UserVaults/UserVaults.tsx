@@ -93,7 +93,7 @@ export const VirtualList = memo(function VirtualList({ vaultIds, address }: Virt
   const context = useMemo(() => ({ address }), [address]);
   const lastVaultId = useAppSelector(selectLastViewedDashboardVaultId);
   const navigationType = useNavigationType(); // Updated hook usage
-  const initialTopMostItemIndex = useMemo((): FlatIndexLocationWithAlign | undefined => {
+  const initialTopMostItemIndex = useMemo((): FlatIndexLocationWithAlign | number => {
     if (navigationType === NavigationType.Pop && lastVaultId !== undefined) {
       // Updated condition
       const index = vaultIds.indexOf(lastVaultId);
@@ -104,6 +104,7 @@ export const VirtualList = memo(function VirtualList({ vaultIds, address }: Virt
         };
       }
     }
+    return 0;
   }, [lastVaultId, vaultIds, navigationType]); // Updated dependency
 
   return (
