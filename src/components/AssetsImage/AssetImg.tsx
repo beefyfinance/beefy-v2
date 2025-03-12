@@ -6,6 +6,7 @@ const baseClass = css({
   height: '100%',
   objectFit: 'contain',
   display: 'block',
+  borderRadius: '100%',
 });
 
 type AssetImgProps = {
