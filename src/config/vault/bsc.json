@@ -25725,7 +25725,7 @@
     "platformId": "valas",
     "assets": ["BTCB"],
     "risks": [
-      "COMPLEXITY_MEDIUM",
+      "COMPLEXITY_MID",
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_LARGE",
@@ -25760,7 +25760,7 @@
     "platformId": "valas",
     "assets": ["ETH"],
     "risks": [
-      "COMPLEXITY_MEDIUM",
+      "COMPLEXITY_MID",
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_LARGE",
@@ -25795,7 +25795,7 @@
     "platformId": "valas",
     "assets": ["BUSD"],
     "risks": [
-      "COMPLEXITY_MEDIUM",
+      "COMPLEXITY_MID",
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_LARGE",
@@ -25830,7 +25830,7 @@
     "platformId": "valas",
     "assets": ["USDT"],
     "risks": [
-      "COMPLEXITY_MEDIUM",
+      "COMPLEXITY_MID",
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_LARGE",
@@ -25865,7 +25865,7 @@
     "platformId": "valas",
     "assets": ["USDC"],
     "risks": [
-      "COMPLEXITY_MEDIUM",
+      "COMPLEXITY_MID",
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_LARGE",
@@ -25900,7 +25900,7 @@
     "platformId": "valas",
     "assets": ["DAI"],
     "risks": [
-      "COMPLEXITY_MEDIUM",
+      "COMPLEXITY_MID",
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_LARGE",

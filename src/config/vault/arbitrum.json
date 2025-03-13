@@ -7432,7 +7432,7 @@
     "retiredAt": 1737899656,
     "platformId": "uniswap",
     "assets": ["wUSDM", "wstETH"],
-    "risks": ["IL_LARGE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "compounds",
     "network": "arbitrum",
     "zaps": [
