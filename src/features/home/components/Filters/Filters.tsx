@@ -62,8 +62,10 @@ const Layout = styled('div', {
   base: {
     display: 'flex',
     flexWrap: 'wrap',
-    rowGap: '16px',
-    columnGap: '16px',
+    gap: '12px',
+    sm: {
+      gap: '16px',
+    },
   },
 });
 

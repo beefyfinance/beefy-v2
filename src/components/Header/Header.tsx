@@ -57,15 +57,15 @@ export const Header = memo(function Header() {
 const HeaderContainer = styled(Container, {
   base: {
     textStyle: 'body.medium',
-    paddingBlock: '18px',
+    padding: '4px 20px 4px 12px',
+    minHeight: '56px',
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
     columnGap: '12px',
     justifyContent: 'space-between',
     sm: {
-      paddingBlock: '22px',
-      columnGap: '12px',
+      paddingBlock: '12px',
     },
   },
 });
