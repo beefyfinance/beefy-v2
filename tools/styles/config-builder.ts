@@ -104,6 +104,12 @@ export type BuilderConfig = {
   networks?: Record<string, Network>;
 };
 
+function isTokenTextStyle(
+  obj: Recursive<Token<TextStyle>> | Token<TextStyle>
+): obj is Token<TextStyle> {
+  return 'value' in obj;
+}
+
 function addTextStyles(config: Config, textStyles: Record<string, TextStyle>): Config {
   config.theme ??= {};
 
@@ -120,9 +126,9 @@ function addTextStyles(config: Config, textStyles: Record<string, TextStyle>): C
     for (let i = 0; i < parts.length; i++) {
       const part = parts[i];
       const child = parent[part];
-      if (child && child.value) {
-        (child as Recursive<Token<Text>>)['DEFAULT'] = { value: child.value };
-        parent = child as TextStyles;
+      if (child && isTokenTextStyle(child)) {
+        parent = child as unknown as TextStyles;
+        parent['DEFAULT'] = { value: child.value };
         delete parent.value;
       } else if (i === parts.length - 1) {
         parent[part] = { value: textStyles[key] };
