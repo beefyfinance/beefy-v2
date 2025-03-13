@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FormStep, bridgeActions } from '../../../../../data/reducers/wallet/bridge';
-import { Confirm } from '../Confirm';
-import { Step } from '../../../../../../components/Step';
+import { bridgeActions, FormStep } from '../../../../../data/reducers/wallet/bridge.ts';
+import { Confirm } from '../Confirm/Confirm.tsx';
+import { Step } from '../../../../../../components/Step/Step.tsx';
 
-import { useAppDispatch } from '../../../../../../store';
+import { useAppDispatch } from '../../../../../../store.ts';
 
 export const ConfirmStep = () => {
   const { t } = useTranslation();

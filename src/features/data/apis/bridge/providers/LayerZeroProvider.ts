@@ -1,6 +1,6 @@
-import type { BeefyLayerZeroBridgeConfig } from '../../config-types';
-import { CommonBridgeProvider } from './CommonBridgeProvider';
+import type { BeefyLayerZeroBridgeConfig } from '../../config-types.ts';
+import { CommonBridgeProvider } from './CommonBridgeProvider.ts';
 
 export class LayerZeroProvider extends CommonBridgeProvider<BeefyLayerZeroBridgeConfig> {
-  public readonly id = 'layer-zero' as const;
+  public readonly id = 'layer-zero';
 }

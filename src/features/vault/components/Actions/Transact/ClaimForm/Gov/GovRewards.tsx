@@ -1,12 +1,12 @@
 import { memo, useMemo } from 'react';
-import { type VaultEntity } from '../../../../../../data/entities/vault';
-import type { ChainEntity } from '../../../../../../data/entities/chain';
-import { useAppSelector } from '../../../../../../../store';
-import { BIG_ZERO } from '../../../../../../../helpers/big-number';
-import { selectUserGovVaultUnifiedRewards } from '../../../../../../data/selectors/user-rewards';
-import { Claim } from './Claim/Claim';
-import { RewardList } from '../RewardList/RewardList';
-import { Source } from '../Source/Source';
+import { type VaultEntity } from '../../../../../../data/entities/vault.ts';
+import type { ChainEntity } from '../../../../../../data/entities/chain.ts';
+import { useAppSelector } from '../../../../../../../store.ts';
+import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
+import { selectUserGovVaultUnifiedRewards } from '../../../../../../data/selectors/user-rewards.ts';
+import { Claim } from './Claim/Claim.tsx';
+import { RewardList } from '../RewardList/RewardList.tsx';
+import { Source } from '../Source/Source.tsx';
 import { useTranslation } from 'react-i18next';
 
 type GovRewardsProps = {
@@ -16,12 +16,12 @@ type GovRewardsProps = {
   deposited: boolean;
 };
 
-export const GovRewards = memo<GovRewardsProps>(function GovRewards({
+export const GovRewards = memo(function GovRewards({
   vaultId,
   chainId,
   walletAddress,
   deposited,
-}) {
+}: GovRewardsProps) {
   const { t } = useTranslation();
   const vaultRewards = useAppSelector(state =>
     selectUserGovVaultUnifiedRewards(state, vaultId, walletAddress)

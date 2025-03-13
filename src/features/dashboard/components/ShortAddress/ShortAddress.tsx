@@ -1,39 +1,33 @@
-import { memo, type MouseEventHandler, useCallback, useEffect, useMemo, useState } from 'react';
-import type { Theme } from '@material-ui/core';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
-import { formatAddressShort, formatDomain } from '../../../../helpers/format';
-import { Tooltip } from '../../../../components/Tooltip';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { formatAddressShort, formatDomain } from '../../../../helpers/format.ts';
 import { useTranslation } from 'react-i18next';
-import { styles } from './styles';
+import { styles } from './styles.ts';
+import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
+import { DivWithTooltip } from '../../../../components/Tooltip/DivWithTooltip.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ShortAddressProps = {
   address: string;
   addressLabel?: string;
 };
 
-export const ShortAddress = memo<ShortAddressProps>(function ShortAddress({
+export const ShortAddress = memo(function ShortAddress({
   address,
   addressLabel,
-}) {
+}: ShortAddressProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const [showCopied, setShowCopied] = useState<boolean>(false);
-  const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'), { noSsr: true });
+  const mdUp = useBreakpoint({ from: 'sm' });
 
-  const handleCopyAddressToClipboard = useCallback<MouseEventHandler<HTMLDivElement>>(
-    e => {
-      if (e) {
-        e.preventDefault();
-      }
-      navigator.clipboard
-        .writeText(address)
-        .then(() => setShowCopied(true))
-        .catch(e => console.error(e));
-    },
-    [address, setShowCopied]
-  );
+  const handleCopyAddressToClipboard = useCallback(() => {
+    navigator.clipboard
+      .writeText(address)
+      .then(() => setShowCopied(true))
+      .catch(e => console.error(e));
+  }, [address, setShowCopied]);
 
   const shortAddressLabel = useMemo(() => {
     if (addressLabel) {
@@ -54,14 +48,11 @@ export const ShortAddress = memo<ShortAddressProps>(function ShortAddress({
 
   if (address) {
     return (
-      <Tooltip
-        onTriggerClick={handleCopyAddressToClipboard}
-        propagateTriggerClick={false}
-        contentClass={classes.longAddress}
-        triggerClass={classes.triggerClass}
-        tooltipClass={classes.tooltipContent}
+      <DivWithTooltip
+        onClick={handleCopyAddressToClipboard}
+        className={classes.triggerClass}
         children={<div className={classes.shortAddress}>{`(${shortAddressLabel})`}</div>}
-        content={showCopied ? t('Clipboard-Copied') : address}
+        tooltip={showCopied ? t('Clipboard-Copied') : address}
       />
     );
   }

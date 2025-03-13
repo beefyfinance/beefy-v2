@@ -1,25 +1,25 @@
 import { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { styles } from './styles';
-import clsx from 'clsx';
-import { ReactComponent as SwitchIcon } from '../../../../../../images/switcher.svg';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
-import { useAppDispatch } from '../../../../../../store';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
+import SwitchIcon from '../../../../../../images/switcher.svg?react';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
+import { useAppDispatch } from '../../../../../../store.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type InputSwitcherProps = {
-  className?: string;
+  css?: CssStyles;
 };
 
-export const InputSwitcher = memo<InputSwitcherProps>(function InputSwitcher({ className }) {
+export const InputSwitcher = memo(function InputSwitcher({ css: cssProp }: InputSwitcherProps) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const setInputMode = useCallback(() => dispatch(onRampFormActions.toggleInputMode()), [dispatch]);
 
   return (
-    <div className={clsx(classes.switcher, className)}>
-      <button onClick={setInputMode} className={classes.button}>
+    <div className={css(styles.switcher, cssProp)}>
+      <button type="button" onClick={setInputMode} className={classes.button}>
         <SwitchIcon className={classes.icon} />
       </button>
     </div>

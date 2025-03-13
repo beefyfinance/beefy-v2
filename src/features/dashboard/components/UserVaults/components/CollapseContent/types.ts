@@ -1,4 +1,4 @@
-import type { VaultEntity } from '../../../../../data/entities/vault';
+import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 
 export type VaultCollapseContentProps = {
   vaultId: VaultEntity['id'];

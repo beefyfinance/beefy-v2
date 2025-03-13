@@ -1,18 +1,20 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { VaultsHeader } from './components/VaultsHeader';
-import { VaultsList } from './components/VaultsList';
-
-const useStyles = makeStyles(styles);
+import { VaultsHeader } from './components/VaultsHeader/VaultsHeader.tsx';
+import { VaultsList } from './components/VaultsList/VaultsList.tsx';
+import { css } from '@repo/styles/css';
 
 export const Vaults = memo(function Vaults() {
-  const classes = useStyles();
-
   return (
-    <div className={classes.vaults}>
+    <div className={vaultsClass}>
       <VaultsHeader />
       <VaultsList />
     </div>
   );
+});
+
+const vaultsClass = css({
+  marginTop: '32px',
+  borderRadius: '12px',
+  border: 'solid 2px {colors.background.content.dark}',
+  contain: 'paint',
 });

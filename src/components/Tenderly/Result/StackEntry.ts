@@ -1,7 +1,7 @@
 import type {
   TenderlyCallTrace,
   TenderlySimulateResponseContract,
-} from '../../../features/data/apis/tenderly/types';
+} from '../../../features/data/apis/tenderly/types.ts';
 
 export class StackEntry {
   constructor(
@@ -106,7 +106,7 @@ export class StackEntry {
       ? Object.fromEntries(trace.decoded_input.map(d => [d.soltype.name, d.value]))
       : undefined;
 
-    const output = trace.output && trace.output != '0x' ? trace.output : undefined;
+    const output = trace.output && trace.output !== '0x' ? trace.output : undefined;
     const outputLabels = trace.decoded_output?.length
       ? Object.fromEntries(trace.decoded_output.map(d => [d.soltype.name, d.value]))
       : undefined;
@@ -125,7 +125,7 @@ export class StackEntry {
     };
   }
 
-  getType() {
+  getType(): StackEntryType {
     const trace = this.trace;
 
     if (trace.error_op === 'REVERT' && trace.calls === null) {
@@ -140,6 +140,11 @@ export class StackEntry {
     } else if (callType === 'jumpdest') {
       return { type: callType, label: 'JUMP' };
     }
-    return { type: callType, label: callType.toUpperCase() };
+    return { type: 'other', label: callType.toUpperCase() };
   }
 }
+
+type StackEntryType = {
+  type: 'revert' | 'call' | 'delegatecall' | 'jumpdest' | 'unknown' | 'other';
+  label: string;
+};

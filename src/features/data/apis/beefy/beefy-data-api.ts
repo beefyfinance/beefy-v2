@@ -1,15 +1,15 @@
 import type {
   ApiChartData,
-  IBeefyDataApi,
+  ApiCowcentratedChartData,
   ApiRanges,
   ApiStat,
   ApiTimeBucket,
-  ApiCowcentratedChartData,
-} from './beefy-data-api-types';
-import type { VaultEntity } from '../../entities/vault';
-import type { TokenEntity } from '../../entities/token';
-import type { ChainEntity } from '../../entities/chain';
-import { getJson } from '../../../../helpers/http';
+  IBeefyDataApi,
+} from './beefy-data-api-types.ts';
+import type { VaultEntity } from '../../entities/vault.ts';
+import type { TokenEntity } from '../../entities/token.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
+import { getJson } from '../../../../helpers/http/http.ts';
 
 export class BeefyDataApi implements IBeefyDataApi {
   private readonly version = 'v2';

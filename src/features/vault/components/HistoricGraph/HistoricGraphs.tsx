@@ -1,26 +1,25 @@
-import type { VaultEntity } from '../../../data/entities/vault';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../store';
-import { selectVaultById } from '../../../data/selectors/vaults';
-import { selectTokenByAddress } from '../../../data/selectors/tokens';
-import { selectHistoricalAvailableCharts } from '../../../data/selectors/historical';
-import { Card, CardContent, CardHeader, CardTitle } from '../Card';
-import { StatSwitcher } from '../StatSwitcher';
-import { GraphWithControls } from './GraphWithControls';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { getDefaultStat } from './utils';
-import { CurrentCowcentratedRangeIfAvailable } from './CurrentCowcentratedRange';
-import type { ChartStat } from './types';
-
-const useStyles = makeStyles(styles);
+import { useAppSelector } from '../../../../store.ts';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
+import { selectTokenByAddress } from '../../../data/selectors/tokens.ts';
+import { selectHistoricalAvailableCharts } from '../../../data/selectors/historical.ts';
+import { Card } from '../Card/Card.tsx';
+import { CardContent } from '../Card/CardContent.tsx';
+import { CardHeader } from '../Card/CardHeader.tsx';
+import { CardTitle } from '../Card/CardTitle.tsx';
+import { StatSwitcher } from '../StatSwitcher/StatSwitcher.tsx';
+import { GraphWithControls } from './GraphWithControls/GraphWithControls.tsx';
+import { styles } from './styles.ts';
+import { getDefaultStat } from './utils.ts';
+import { CurrentCowcentratedRangeIfAvailable } from './CurrentCowcentratedRange/CurrentCowcentratedRange.tsx';
+import type { ChartStat } from './types.ts';
 
 type HistoricGraphsProps = {
   vaultId: VaultEntity['id'];
 };
-export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs({ vaultId }) {
-  const classes = useStyles();
+export const HistoricGraphs = memo(function HistoricGraphs({ vaultId }: HistoricGraphsProps) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const { oracleId } = useAppSelector(state =>
@@ -31,11 +30,14 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
   );
   const [stat, setStat] = useState<ChartStat>(() => getDefaultStat(availableStats));
 
-  const options: Record<string, string> = useMemo(() => {
-    return Object.fromEntries(
-      availableStats.map(stat => [stat, t([`Graph-${stat}`, `Graph-${vault.type}-${stat}`])])
-    );
-  }, [availableStats, t, vault.type]);
+  const options = useMemo(
+    () =>
+      availableStats.map(stat => ({
+        value: stat,
+        label: t([`Graph-${stat}`, `Graph-${vault.type}-${stat}`]),
+      })),
+    [availableStats, t, vault.type]
+  );
 
   const [inverted, setInverted] = useState(false);
 
@@ -44,12 +46,12 @@ export const HistoricGraphs = memo<HistoricGraphsProps>(function HistoricGraphs(
   }, []);
 
   return (
-    <Card className={classes.container}>
-      <CardHeader className={classes.header}>
-        <CardTitle title={t('Graph-RateHist')} />
+    <Card css={styles.container}>
+      <CardHeader>
+        <CardTitle>{t('Graph-RateHist')}</CardTitle>
         <StatSwitcher<ChartStat> stat={stat} options={options} onChange={setStat} />
       </CardHeader>
-      <CardContent className={classes.content}>
+      <CardContent css={styles.content}>
         {stat === 'clm' && (
           <CurrentCowcentratedRangeIfAvailable
             inverted={inverted}

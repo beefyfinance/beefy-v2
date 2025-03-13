@@ -1,22 +1,22 @@
 import { memo, useEffect } from 'react';
-import type { VaultEntity } from '../../../data/entities/vault';
-import { useAppDispatch, useAppSelector } from '../../../../store';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
+import { useAppDispatch, useAppSelector } from '../../../../store.ts';
 import {
   selectHistoricalHasAnyChart,
   selectHistoricalRangesStatus,
-} from '../../../data/selectors/historical';
-import { fetchHistoricalRanges } from '../../../data/actions/historical';
-import { HistoricGraphs } from './HistoricGraphs';
-import { fetchAllCurrentCowcentratedRanges } from '../../../data/actions/tokens';
-import { selectShouldLoadAllCurrentCowcentratedRanges } from '../../../data/selectors/data-loader';
+} from '../../../data/selectors/historical.ts';
+import { fetchHistoricalRanges } from '../../../data/actions/historical.ts';
+import { HistoricGraphs } from './HistoricGraphs.tsx';
+import { fetchAllCurrentCowcentratedRanges } from '../../../data/actions/tokens.ts';
+import { selectShouldLoadAllCurrentCowcentratedRanges } from '../../../data/selectors/data-loader.ts';
 
 export type HistoricGraphsLoaderProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const HistoricGraphsLoader = memo<HistoricGraphsLoaderProps>(function HistoricGraphsLoader({
+export const HistoricGraphsLoader = memo(function HistoricGraphsLoader({
   vaultId,
-}) {
+}: HistoricGraphsLoaderProps) {
   const dispatch = useAppDispatch();
   const rangesStatus = useAppSelector(state => selectHistoricalRangesStatus(state, vaultId));
   const hasAnyChart = useAppSelector(state => selectHistoricalHasAnyChart(state, vaultId));

@@ -1,6 +1,6 @@
-import type { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types.ts';
 
-import type { TenderlyState } from '../reducers/tenderly-types';
+import type { TenderlyState } from '../reducers/tenderly-types.ts';
 
 const withTenderly = <T>(
   state: BeefyState,

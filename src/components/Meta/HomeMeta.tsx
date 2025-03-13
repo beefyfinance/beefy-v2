@@ -1,3 +1,3 @@
-import { DefaultMeta } from './DefaultMeta';
+import { DefaultMeta } from './DefaultMeta.tsx';
 
 export const HomeMeta = DefaultMeta;

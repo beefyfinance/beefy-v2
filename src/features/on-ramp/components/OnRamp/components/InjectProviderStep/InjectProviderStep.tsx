@@ -1,12 +1,12 @@
 import { memo, useCallback } from 'react';
-import { Step } from '../../../../../../components/Step';
+import { Step } from '../../../../../../components/Step/Step.tsx';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { selectSelectedQuote } from '../../../../../data/selectors/on-ramp';
-import { FormStep } from '../../../../../data/reducers/on-ramp-types';
-import { PROVIDERS } from '../../providers';
-import { ProviderFrame } from './ProviderFrame';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { selectSelectedQuote } from '../../../../../data/selectors/on-ramp.ts';
+import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
+import { PROVIDERS } from '../../providers.tsx';
+import { ProviderFrame } from './ProviderFrame.tsx';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
 
 export const InjectProviderStep = memo(function InjectProviderStep() {
   const quote = useAppSelector(selectSelectedQuote);
@@ -19,8 +19,10 @@ export const InjectProviderStep = memo(function InjectProviderStep() {
   return <ProviderNotSupported provider={quote.provider} />;
 });
 
-const ProviderNotSupported = memo<{ provider: string }>(function ProviderNotSupported({
+const ProviderNotSupported = memo(function ProviderNotSupported({
   provider,
+}: {
+  provider: string;
 }) {
   const { t } = useTranslation();
 
@@ -41,7 +43,7 @@ const ProviderNotSupported = memo<{ provider: string }>(function ProviderNotSupp
   );
 });
 
-const Provider = memo<{ provider: string }>(function Provider({ provider }) {
+const Provider = memo(function Provider({ provider }: { provider: string }) {
   const { title } = PROVIDERS[provider];
 
   const dispatch = useAppDispatch();

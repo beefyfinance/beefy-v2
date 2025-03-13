@@ -1,5 +1,5 @@
-import type { VaultConfig } from '../../src/features/data/apis/config-types';
-import { sortKeys } from './utils';
+import type { VaultConfig } from '../../src/features/data/apis/config-types.ts';
+import { sortKeys } from './utils.ts';
 
 const FIELD_ORDER = [
   'id',
@@ -47,10 +47,13 @@ const FIELD_ORDER = [
   'pointStructureIds',
   'network',
   'zaps',
-].reduce((fields: {}, field, i) => {
-  fields[field] = i + 1;
-  return fields;
-}, {});
+].reduce(
+  (fields, field, i) => {
+    fields[field] = i + 1;
+    return fields;
+  },
+  {} as Record<string, number>
+);
 
 function compareFieldKey(a: string, b: string) {
   const aOrder = FIELD_ORDER[a] || Number.MAX_SAFE_INTEGER;

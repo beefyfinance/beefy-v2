@@ -1,10 +1,10 @@
-import { CircularProgress, InputBase, makeStyles } from '@material-ui/core';
-import { CloseRounded, Search } from '@material-ui/icons';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import CloseRounded from '../../../../images/icons/mui/CloseRounded.svg?react';
+import Search from '../../../../images/icons/mui/Search.svg?react';
 import {
   type ChangeEvent,
   type KeyboardEvent,
   memo,
-  type MutableRefObject,
   useCallback,
   useEffect,
   useMemo,
@@ -12,22 +12,24 @@ import {
   useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory } from 'react-router-dom';
-import { styles } from './styles';
-import clsx from 'clsx';
-import { isMaybeDomain, isValidAddress } from '../../../../helpers/addresses';
-import { FloatingError } from './FloatingError';
-import { useResolveDomain } from '../../../data/hooks/resolver';
+import { Link, useNavigate } from 'react-router';
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
+import { isMaybeDomain, isValidAddress } from '../../../../helpers/addresses.ts';
+import { FloatingError } from './FloatingError/FloatingError.tsx';
+import { useResolveDomain } from '../../../data/hooks/resolver.tsx';
 import {
   isFulfilledStatus,
   isPendingStatus,
   isRejectedStatus,
-} from '../../../data/reducers/wallet/resolver-types';
-import { ReactComponent as EnterIcon } from '../../../../images/icons/enter.svg';
+} from '../../../data/reducers/wallet/resolver-types.ts';
+import { BaseInput } from '../../../../components/Form/Input/BaseInput.tsx';
+import { CircularProgress } from '../../../../components/CircularProgress/CircularProgress.tsx';
+import EnterIcon from '../../../../images/icons/enter.svg?react';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-export const AddressInput = memo(function AddressInput({ className }: { className?: string }) {
+export const AddressInput = memo(function AddressInput({ css: cssProp }: { css?: CssStyles }) {
   const [userInput, setUserInput] = useState<string>('');
   const [inputMode, setInputMode] = useState<'address' | 'domain'>('address');
   const resolverStatus = useResolveDomain(inputMode === 'domain' ? userInput : '');
@@ -35,9 +37,8 @@ export const AddressInput = memo(function AddressInput({ className }: { classNam
   const [isDomainResolving, setIsDomainResolving] = useState<boolean>(false);
   const [hasFocus, setHasFocus] = useState<boolean>(false);
   const { t } = useTranslation();
-  const classes = useStyles();
-  const anchorEl = useRef<HTMLInputElement>();
-  const history = useHistory();
+  const anchorEl = useRef<HTMLInputElement | null>(null);
+  const navigate = useNavigate();
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -64,13 +65,13 @@ export const AddressInput = memo(function AddressInput({ className }: { classNam
   const isValid = useMemo(() => isAddressValid || isDomainValid, [isAddressValid, isDomainValid]);
 
   const handleGoToDashboardOnEnterKey = useCallback(
-    (e: KeyboardEvent<HTMLDivElement>) => {
+    (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter' && isValid) {
-        history.push(`/dashboard/${userInput}`);
+        navigate(`/dashboard/${userInput}`);
         handleClear();
       }
     },
-    [userInput, handleClear, history, isValid]
+    [userInput, handleClear, navigate, isValid]
   );
 
   const handleFocus = useCallback(() => {
@@ -109,15 +110,19 @@ export const AddressInput = memo(function AddressInput({ className }: { classNam
 
   return (
     <>
-      <InputBase
+      <BaseInput
         ref={anchorEl}
-        className={clsx(classes.search, className, { [classes.active]: userInput.length !== 0 })}
+        className={css(
+          styles.search,
+          cssProp,
+          (userInput.length !== 0 || hasFocus) && styles.active
+        )}
         value={userInput}
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
         fullWidth={true}
-        onKeyPress={handleGoToDashboardOnEnterKey}
+        onKeyDown={handleGoToDashboardOnEnterKey}
         startAdornment={
           <GoToDashboardButton
             domainResolving={isDomainResolving}
@@ -139,7 +144,7 @@ export const AddressInput = memo(function AddressInput({ className }: { classNam
       !isFulfilledStatus(resolverStatus) ? (
         <FloatingError
           userInput={userInput}
-          anchorRef={anchorEl as MutableRefObject<HTMLInputElement>}
+          anchorRef={anchorEl}
           inputMode={inputMode}
           isAddressValid={isAddressValid}
           isDomainValid={isDomainValid}
@@ -158,32 +163,28 @@ interface GoToDashboardButtonProps {
   inputMode: 'address' | 'domain';
 }
 
-const GoToDashboardButton = memo<GoToDashboardButtonProps>(function GoToDashboardButton({
+const GoToDashboardButton = memo(function GoToDashboardButton({
   isValid,
   userInput,
   handleClear,
   domainResolving,
   inputMode,
-}) {
+}: GoToDashboardButtonProps) {
   const classes = useStyles();
 
-  if (domainResolving && inputMode === 'domain')
+  if (domainResolving && inputMode === 'domain') {
     return (
       <div className={classes.flex}>
-        <CircularProgress
-          disableShrink={true}
-          thickness={4}
-          size={23}
-          className={clsx(classes.loader, classes.disabledIcon)}
-        />
+        <CircularProgress size={23} className={css(styles.loader, styles.disabledIcon)} />
       </div>
     );
+  }
 
   if (isValid) {
     return (
       <Link
         onClick={handleClear}
-        className={clsx(classes.icon, classes.leftIcon, classes.activeIcon)}
+        className={css(styles.icon, styles.activeIcon)}
         aria-disabled={isValid}
         to={`/dashboard/${userInput}`}
       >
@@ -193,7 +194,7 @@ const GoToDashboardButton = memo<GoToDashboardButtonProps>(function GoToDashboar
   }
 
   return (
-    <div className={clsx(classes.icon, classes.leftIcon, classes.disabledIcon)}>
+    <div className={css(styles.icon, styles.disabledIcon)}>
       <Search />
     </div>
   );
@@ -208,19 +209,19 @@ const ClearEnterButton = memo(function ClearButton({
   handleClear: () => void;
   isValid: boolean;
 }) {
-  const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleGoToDashboard = useCallback(() => {
-    history.push(`/dashboard/${userInput}`);
+    navigate(`/dashboard/${userInput}`);
     handleClear();
-  }, [userInput, handleClear, history]);
+  }, [userInput, handleClear, navigate]);
 
   if (isValid) {
     return (
       <button
+        type="button"
         onClick={handleGoToDashboard}
-        className={clsx(classes.icon, classes.enterButton, classes.activeIcon)}
+        className={css(styles.icon, styles.enterButton, styles.activeIcon)}
       >
         <EnterIcon />
       </button>
@@ -229,7 +230,7 @@ const ClearEnterButton = memo(function ClearButton({
 
   if (userInput.length !== 0) {
     return (
-      <button onClick={handleClear} className={clsx(classes.icon, classes.activeIcon)}>
+      <button type="button" onClick={handleClear} className={css(styles.icon, styles.activeIcon)}>
         <CloseRounded />
       </button>
     );

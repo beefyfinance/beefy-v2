@@ -1,10 +1,10 @@
 import { type Address } from 'viem';
-import { getAllChainsFromTldToChain, normalizeAddress } from './utils';
-import type { ChainId } from '../../entities/chain';
-import type { Resolver } from './types';
-import { resolvers } from './resolvers';
-import { isFulfilledResult } from '../../../../helpers/promises';
-import { isDefined } from '../../utils/array-utils';
+import { getAllChainsFromTldToChain, normalizeAddress } from './utils.ts';
+import type { ChainId } from '../../entities/chain.ts';
+import type { Resolver } from './types.ts';
+import { resolvers } from './resolvers/resolvers.ts';
+import { isFulfilledResult } from '../../../../helpers/promises.ts';
+import { isDefined } from '../../utils/array-utils.ts';
 
 export class NameServicesApi {
   /** Get the domain for an address */
@@ -18,7 +18,10 @@ export class NameServicesApi {
       return undefined;
     }
 
-    const lookups: { resolver: Resolver; chainId: ChainId }[] = [];
+    const lookups: {
+      resolver: Resolver;
+      chainId: ChainId;
+    }[] = [];
 
     for (const resolver of resolvers) {
       const chainIds = getAllChainsFromTldToChain(await resolver.tldToChain());
@@ -52,7 +55,10 @@ export class NameServicesApi {
       return undefined;
     }
 
-    const lookups: { resolver: Resolver; chainId: ChainId }[] = [];
+    const lookups: {
+      resolver: Resolver;
+      chainId: ChainId;
+    }[] = [];
 
     for (const resolver of resolvers) {
       const tldToChain = await resolver.tldToChain();

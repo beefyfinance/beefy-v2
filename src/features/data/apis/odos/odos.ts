@@ -1,16 +1,16 @@
-import { postJson } from '../../../../helpers/http';
-import { isFetchResponseError } from '../../../../helpers/http/errors';
-import type { ChainEntity } from '../../entities/chain';
-import { API_ZAP_URL } from '../beefy/beefy-api';
-import type { ChainConfig } from '../config-types';
-import { getErrorMessageFromResponse } from '../transact/helpers/fetch';
+import { postJson } from '../../../../helpers/http/http.ts';
+import { isFetchResponseError } from '../../../../helpers/http/errors.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
+import { API_ZAP_URL } from '../beefy/beefy-api.ts';
+import type { ChainConfig } from '../config-types.ts';
+import { getErrorMessageFromResponse } from '../transact/helpers/fetch.ts';
 import type {
   IOdosApi,
   QuoteRequest,
   QuoteResponse,
   SwapRequest,
   SwapResponse,
-} from './odos-types';
+} from './odos-types.ts';
 
 export const supportedChainIds: ChainConfig['id'][] = [
   'ethereum',

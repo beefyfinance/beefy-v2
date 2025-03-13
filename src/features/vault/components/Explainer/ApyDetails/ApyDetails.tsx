@@ -1,26 +1,30 @@
 import { Fragment, memo, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { formatTotalApy } from '../../../../../helpers/format';
-import { StatLoader } from '../../../../../components/StatLoader';
+import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { formatTotalApy } from '../../../../../helpers/format.ts';
+import { StatLoader } from '../../../../../components/StatLoader/StatLoader.tsx';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
+import { css, type CssStyles } from '@repo/styles/css';
 import {
   type ApyLabelsType,
   getApyComponents,
   getApyLabelsForType,
-} from '../../../../../helpers/apy';
-import type { TotalApy } from '../../../../data/reducers/apy';
+} from '../../../../../helpers/apy.ts';
+import type { TotalApy } from '../../../../data/reducers/apy.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type ApyDetailsProps = {
   values: TotalApy;
   type: ApyLabelsType;
-  className?: string;
+  css?: CssStyles;
 };
 
-export const ApyDetails = memo<ApyDetailsProps>(function ApyDetails({ values, type, className }) {
+export const ApyDetails = memo(function ApyDetails({
+  values,
+  type,
+  css: cssProp,
+}: ApyDetailsProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const formatted = useMemo(() => formatTotalApy(values, <StatLoader />), [values]);
@@ -35,10 +39,10 @@ export const ApyDetails = memo<ApyDetailsProps>(function ApyDetails({ values, ty
   const labels = getApyLabelsForType(type);
 
   return (
-    <div className={clsx(classes.apysContainer, className)}>
+    <div className={css(cssProp)}>
       <div className={classes.apyTitle}>{t(labels.breakdown)}</div>
       <div className={classes.apys}>
-        <div className={classes.apy}>
+        <div>
           <div className={classes.apyLabel}>
             {t(isBoosted ? labels.boostedTotalApy : labels.totalApy)}
           </div>
@@ -49,7 +53,7 @@ export const ApyDetails = memo<ApyDetailsProps>(function ApyDetails({ values, ty
         {yearly.map(key => (
           <Fragment key={key}>
             {values[key] ? (
-              <div className={classes.apy}>
+              <div>
                 <div className={classes.apyLabel}>{t(labels[key])}</div>
                 <div className={classes.apyValue}>{formatted[key]}</div>
               </div>

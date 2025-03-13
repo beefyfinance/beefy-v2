@@ -1,4 +1,4 @@
-import { addressBookToAppId } from './config';
+import { addressBookToAppId } from './config.ts';
 import { createHash } from 'node:crypto';
 
 export async function getVaultsIntegrity(chainId: string) {
@@ -16,6 +16,8 @@ export async function getVaultsIntegrity(chainId: string) {
       hash,
     };
   } catch (e) {
-    throw new Error(`Failed to get vaults integrity for chain ${chainId}: ${e.message}`);
+    throw new Error(
+      `Failed to get vaults integrity for chain ${chainId}: ${e instanceof Error ? e.message : e}`
+    );
   }
 }

@@ -1,8 +1,10 @@
 import { createPublicClient, http } from 'viem';
-import { createCachedFactory } from '../../src/features/data/utils/factory-utils';
-import { AppChainId, ChainConfig, chainRpcs, getChain } from './config';
+import { createCachedFactory } from '../../src/features/data/utils/factory-utils.ts';
+import { type AppChainId, getChainRpc, getChain } from './config.ts';
+import type { ChainConfig } from '../../src/features/data/apis/config-types.ts';
 
 function createViemClient(chainId: AppChainId, chain: ChainConfig) {
+  const rpcUrl = getChainRpc(chainId);
   return createPublicClient({
     batch: {
       multicall: {
@@ -19,8 +21,8 @@ function createViemClient(chainId: AppChainId, chain: ChainConfig) {
         symbol: chain.native.symbol,
       },
       rpcUrls: {
-        public: { http: [chainRpcs[chainId]] },
-        default: { http: [chainRpcs[chainId]] },
+        public: { http: [rpcUrl] },
+        default: { http: [rpcUrl] },
       },
       blockExplorers: {
         default: { name: `${chain.name} Explorer`, url: chain.explorerUrl },
@@ -31,7 +33,7 @@ function createViemClient(chainId: AppChainId, chain: ChainConfig) {
         },
       },
     },
-    transport: http(chainRpcs[chainId], {
+    transport: http(rpcUrl, {
       retryCount: 5,
       retryDelay: 800,
     }),

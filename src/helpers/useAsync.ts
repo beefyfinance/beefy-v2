@@ -5,7 +5,7 @@ import { miniSerializeError } from '@reduxjs/toolkit';
 type AsyncStatus = 'idle' | 'pending' | 'success' | 'error';
 
 type AsyncReturnType<T> = {
-  execute: () => Promise<void>;
+  execute: () => void;
   status: AsyncStatus;
   value: T | null;
   error: SerializedError | null;
@@ -23,7 +23,7 @@ export function useAsync<T>(
   const execute = useCallback(() => {
     setStatus('pending');
     setError(null);
-    return asyncFunction()
+    asyncFunction()
       .then(response => {
         setValue(response);
         setStatus('success');

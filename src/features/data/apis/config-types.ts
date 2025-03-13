@@ -1,12 +1,12 @@
-import type { VaultEntity } from '../entities/vault';
-import type { ChainEntity } from '../entities/chain';
-import type { TokenEntity } from '../entities/token';
-import type { PlatformEntity } from '../entities/platform';
-import type { ZapFee } from './transact/transact-types';
-import type { ChangeTypeOfKeys } from '../utils/types-utils';
+import type { VaultEntity } from '../entities/vault.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { TokenEntity } from '../entities/token.ts';
+import type { PlatformEntity } from '../entities/platform.ts';
+import type { ZapFee } from './transact/transact-types.ts';
+import type { ChangeTypeOfKeys } from '../utils/types-utils.ts';
 import { type BigNumber } from 'bignumber.js';
 import type { Address } from 'viem';
-import type { ZapStrategyConfig } from './transact/strategies/strategy-configs';
+import type { ZapStrategyConfig } from './transact/strategies/strategy-configs.ts';
 
 export interface VaultConfig {
   id: string;
@@ -62,7 +62,11 @@ export interface VaultConfig {
   /** Map of chain->address of bridged receipt tokens */
   bridged?: Record<ChainEntity['id'], string>;
   /* Oracle can be ChainLink | Pyth, then the oracle address*/
-  lendingOracle?: { provider: string; address?: string; loops?: number };
+  lendingOracle?: {
+    provider: string;
+    address?: string;
+    loops?: number;
+  };
   pointStructureIds?: string[];
   feeTier?: string;
   /** tmp: exclude from being loaded */
@@ -187,11 +191,18 @@ export type ChainConfig = {
   multicallAddress: string;
   multicall3Address: Address;
   appMulticallContractAddress: string;
-  providerName: string;
-  native: { symbol: string; oracleId: string; decimals: number };
+  native: {
+    symbol: string;
+    oracleId: string;
+    decimals: number;
+  };
   gas: GasConfig;
   stableCoins: string[];
   new?: boolean;
+  brand?: {
+    icon?: 'solid' | 'gradient';
+    header?: 'solid' | 'gradient';
+  };
 };
 
 export interface AmmConfigBase {
@@ -315,7 +326,7 @@ export interface MinterConfig {
   depositToken: MinterConfigToken;
   mintedToken: MinterConfigToken;
   canBurn: false | 'reserves' | 'supply';
-  reserveBalanceMethod?: string;
+  reserveBalanceMethod?: 'withdrawableBalance' | 'balanceOfWant';
   vaultIds: string[];
   canZapInWithOneInch?: boolean;
 }
@@ -488,7 +499,9 @@ export type BeefyAnyBridgeConfig =
 
 export type BeefyBridgeIdToConfig<T extends BeefyAnyBridgeConfig['id']> = Extract<
   BeefyAnyBridgeConfig,
-  { id: T }
+  {
+    id: T;
+  }
 >;
 
 export type BeefyBridgeConfig = Readonly<{

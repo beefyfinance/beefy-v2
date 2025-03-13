@@ -1,22 +1,23 @@
-import type { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { memo } from 'react';
 import { connect } from 'react-redux';
-import type { BeefyState } from '../../redux-types';
-import { formatLargeUsd } from '../../helpers/format';
+import type { BeefyState } from '../../redux-types.ts';
+import { formatLargeUsd } from '../../helpers/format.ts';
 import {
   selectIsVaultApyAvailable,
   selectVaultShouldShowInterest,
-} from '../../features/data/selectors/data-loader';
+} from '../../features/data/selectors/data-loader.ts';
 import {
   selectDidAPIReturnValuesForVault,
   selectYieldStatsByVaultId,
-} from '../../features/data/selectors/apy';
-import { VaultValueStat } from '../VaultValueStat';
+} from '../../features/data/selectors/apy.ts';
+import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
+import { type CssStyles } from '@repo/styles/css';
 
 export type VaultDailyUsdStatProps = {
   vaultId: VaultEntity['id'];
-  className?: string;
-  triggerClassName?: string;
+  css?: CssStyles;
+  triggerCss?: CssStyles;
   walletAddress?: string;
 };
 
@@ -24,7 +25,7 @@ export const VaultDailyUsdStat = memo(connect(mapStateToProps)(VaultValueStat));
 
 function mapStateToProps(
   state: BeefyState,
-  { vaultId, className, triggerClassName, walletAddress }: VaultDailyUsdStatProps
+  { vaultId, css: cssProp, triggerCss, walletAddress }: VaultDailyUsdStatProps
 ) {
   const label = 'Dashboard-Filter-DailyYield';
 
@@ -36,7 +37,7 @@ function mapStateToProps(
       subValue: null,
       blur: false,
       loading: false,
-      className: className ?? '',
+      css: cssProp,
     };
   }
 
@@ -48,7 +49,7 @@ function mapStateToProps(
       subValue: null,
       blur: false,
       loading: true,
-      className: className ?? '',
+      css: cssProp,
     };
   }
 
@@ -60,7 +61,7 @@ function mapStateToProps(
       subValue: null,
       blur: false,
       loading: false,
-      className: className ?? '',
+      css: cssProp,
     };
   }
 
@@ -74,7 +75,7 @@ function mapStateToProps(
     loading: !isLoaded,
     boosted: false,
     tooltip: null,
-    className: className ?? '',
-    triggerClassName: triggerClassName ?? '',
+    css: cssProp,
+    triggerCss,
   };
 }

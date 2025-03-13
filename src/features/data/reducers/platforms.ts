@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { Draft } from 'immer';
-import type { PlatformEntity } from '../entities/platform';
-import type { NormalizedEntity } from '../utils/normalized-entity';
-import { fetchPlatforms } from '../actions/platforms';
-import { fetchAllVaults } from '../actions/vaults';
-import type { PlatformConfig, VaultConfig } from '../apis/config-types';
+import type { PlatformEntity } from '../entities/platform.ts';
+import type { NormalizedEntity } from '../utils/normalized-entity.ts';
+import { fetchPlatforms } from '../actions/platforms.ts';
+import { fetchAllVaults } from '../actions/vaults.ts';
+import type { PlatformConfig, VaultConfig } from '../apis/config-types.ts';
 
 /**
  * State containing Vault infos

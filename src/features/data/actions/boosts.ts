@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import type { TokenAllowance } from '../apis/allowance/allowance-types';
-import type { FetchAllBalancesResult } from '../apis/balance/balance-types';
-import { getAllowanceApi, getBalanceApi } from '../apis/instances';
-import type { BoostPromoEntity } from '../entities/promo';
-import { selectBoostById } from '../selectors/boosts';
-import { selectChainById } from '../selectors/chains';
-import { selectErc20TokenByAddress } from '../selectors/tokens';
-import { selectVaultById } from '../selectors/vaults';
-import { isGovVault } from '../entities/vault';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { TokenAllowance } from '../apis/allowance/allowance-types.ts';
+import type { FetchAllBalancesResult } from '../apis/balance/balance-types.ts';
+import { getAllowanceApi, getBalanceApi } from '../apis/instances.ts';
+import type { BoostPromoEntity } from '../entities/promo.ts';
+import { selectBoostById } from '../selectors/boosts.ts';
+import { selectChainById } from '../selectors/chains.ts';
+import { selectErc20TokenByAddress } from '../selectors/tokens.ts';
+import { selectVaultById } from '../selectors/vaults.ts';
+import { isGovVault } from '../entities/vault.ts';
 
 interface InitBoostFormParams {
   boostId: BoostPromoEntity['id'];
@@ -25,7 +25,9 @@ interface InitBoostFormPayload {
 export const initiateBoostForm = createAsyncThunk<
   InitBoostFormPayload,
   InitBoostFormParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('boosts/initBoostForm', async ({ boostId, walletAddress }, { getState }) => {
   const boost = selectBoostById(getState(), boostId);
   const vault = selectVaultById(getState(), boost.vaultId);

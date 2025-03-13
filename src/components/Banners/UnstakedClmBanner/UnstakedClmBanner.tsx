@@ -1,40 +1,17 @@
-import { memo, useCallback, useMemo } from 'react';
-import {
-  selectUserIsUnstakedForVaultId,
-  selectUserUnstakedClms,
-} from '../../../features/data/selectors/balance';
-import { useAppDispatch, useAppSelector } from '../../../store';
-import { Banner, type BannerProps } from '../Banner';
+import { memo, useCallback } from 'react';
+import { selectUserUnstakedClms } from '../../../features/data/selectors/balance.ts';
+import { useAppDispatch, useAppSelector } from '../../../store.ts';
 import { Trans, useTranslation } from 'react-i18next';
-import clmIcon from '../../../images/icons/clm.svg';
-import {
-  isCowcentratedLikeVault,
-  isCowcentratedVault,
-  type VaultCowcentratedLike,
-  type VaultEntity,
-} from '../../../features/data/entities/vault';
-import { ButtonLink, InternalLink } from '../Links/Links';
-import { filteredVaultsActions } from '../../../features/data/reducers/filtered-vaults';
-import { selectTokenByAddress } from '../../../features/data/selectors/tokens';
-import type { Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
-import { selectVaultById } from '../../../features/data/selectors/vaults';
-import { ClmVaultBanner } from '../ClmVaultBanner/ClmVaultBanner';
-import { useHistory } from 'react-router-dom';
-import { Container } from '../../Container/Container';
-
-const variant: BannerProps['variant'] = 'warning';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  clmUnstakedBannerContainer: {
-    backgroundColor: theme.palette.background.footerHeader,
-  },
-}));
+import { filteredVaultsActions } from '../../../features/data/reducers/filtered-vaults.ts';
+import { useNavigate } from 'react-router';
+import { ButtonLink } from '../Links/ButtonLink.tsx';
+import { UnstakedClmBannerVault } from './UnstakedClmBannerVault.tsx';
+import { ClmBanner } from './ClmBanner.tsx';
 
 export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const unstakedIds = useAppSelector(selectUserUnstakedClms);
   const handleFilter = useCallback(() => {
     dispatch(filteredVaultsActions.reset());
@@ -45,8 +22,8 @@ export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
         value: true,
       })
     );
-    push('/');
-  }, [dispatch, push]);
+    navigate('/');
+  }, [dispatch, navigate]);
 
   if (!unstakedIds.length) {
     return null;
@@ -57,9 +34,7 @@ export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
   }
 
   return (
-    <Banner
-      variant={variant}
-      icon={<img src={clmIcon} alt="" />}
+    <ClmBanner
       text={
         <Trans
           t={t}
@@ -73,110 +48,3 @@ export const UnstakedClmBanner = memo(function UnstakedClmBanner() {
     />
   );
 });
-
-export type UnstakedClmBannerVaultProps = {
-  vaultId: VaultEntity['id'];
-  fromVault?: boolean;
-};
-
-export const UnstakedClmBannerVault = memo<UnstakedClmBannerVaultProps>(
-  function UnstakedClmBannerVault({ vaultId, fromVault }) {
-    const shouldStake = useAppSelector(state => selectUserIsUnstakedForVaultId(state, vaultId));
-    const vault = useAppSelector(state => selectVaultById(state, vaultId));
-
-    if (!isCowcentratedLikeVault(vault)) {
-      return null;
-    }
-
-    if (shouldStake) {
-      return <UnstakedClmBannerVaultImpl vault={vault} fromVault={fromVault || false} />;
-    }
-
-    if (fromVault) {
-      return <ClmVaultBanner vaultId={vaultId} />;
-    }
-
-    return null;
-  }
-);
-
-export type UnstakedClmBannerVaultImplProps = {
-  vault: VaultCowcentratedLike;
-  fromVault: boolean;
-};
-
-const UnstakedClmBannerVaultImpl = memo<UnstakedClmBannerVaultImplProps>(
-  function UnstakedClmBannerVaultImpl({ vault, fromVault }) {
-    const { t } = useTranslation();
-    const depositToken = useAppSelector(state =>
-      selectTokenByAddress(
-        state,
-        vault.chainId,
-        isCowcentratedVault(vault) ? vault.contractAddress : vault.depositTokenAddress
-      )
-    );
-    const availableTypes =
-      vault.cowcentratedIds.pool && vault.cowcentratedIds.vault
-        ? 'both'
-        : vault.cowcentratedIds.pool
-        ? 'gov'
-        : 'standard';
-    const thisType = vault.type;
-    const endOfKey = !fromVault
-      ? `link-${availableTypes}`
-      : `this-${thisType}${availableTypes === 'both' ? '-both' : ''}`;
-
-    const components = useMemo(() => {
-      return {
-        GovLink: vault.cowcentratedIds.pool ? (
-          <InternalLink to={`/vault/${vault.cowcentratedIds.pool}`} />
-        ) : (
-          <span />
-        ),
-        VaultLink: vault.cowcentratedIds.vault ? (
-          <InternalLink to={`/vault/${vault.cowcentratedIds.vault}`} />
-        ) : (
-          <span />
-        ),
-      };
-    }, [vault.cowcentratedIds.pool, vault.cowcentratedIds.vault]);
-
-    return (
-      <Banner
-        variant={variant}
-        icon={<img src={clmIcon} alt="" width={24} height={24} />}
-        text={
-          <Trans
-            t={t}
-            i18nKey={`Banner-UnstakedClm-${endOfKey}`}
-            values={{ token: depositToken.symbol }}
-            components={components}
-          />
-        }
-      />
-    );
-  }
-);
-
-interface UnstakedClmBannerDashboardProps {
-  address: string;
-}
-
-export const UnstakedClmBannerDashboard = memo<UnstakedClmBannerDashboardProps>(
-  function UnstakedClmBannerDashboard({ address }) {
-    const classes = useStyles();
-    const unstakedIds = useAppSelector(state => selectUserUnstakedClms(state, address));
-
-    if (!unstakedIds.length) {
-      return null;
-    }
-
-    return (
-      <div className={classes.clmUnstakedBannerContainer}>
-        <Container maxWidth="lg">
-          <UnstakedClmBanner />
-        </Container>
-      </div>
-    );
-  }
-);

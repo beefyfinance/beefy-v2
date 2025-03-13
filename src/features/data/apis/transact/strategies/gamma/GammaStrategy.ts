@@ -1,4 +1,4 @@
-import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy';
+import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy.ts';
 import {
   type GammaDepositOption,
   type GammaDepositQuote,
@@ -18,11 +18,11 @@ import {
   type ZapQuoteStepSplit,
   type ZapQuoteStepSwap,
   type ZapQuoteStepSwapAggregator,
-} from '../../transact-types';
+} from '../../transact-types.ts';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { Step } from '../../../../reducers/wallet/stepper';
-import type { TokenEntity, TokenErc20, TokenNative } from '../../../../entities/token';
-import { isTokenEqual, isTokenErc20 } from '../../../../entities/token';
+import type { Step } from '../../../../reducers/wallet/stepper.ts';
+import type { TokenEntity, TokenErc20, TokenNative } from '../../../../entities/token.ts';
+import { isTokenEqual, isTokenErc20 } from '../../../../entities/token.ts';
 import {
   createOptionId,
   createQuoteId,
@@ -31,16 +31,16 @@ import {
   onlyOneInput,
   onlyOneToken,
   onlyOneTokenAmount,
-} from '../../helpers/options';
+} from '../../helpers/options.ts';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
   selectIsTokenLoaded,
   selectTokenById,
   selectTokenPriceByTokenOracleId,
-} from '../../../../selectors/tokens';
-import { allTokensAreDistinct, pickTokens, tokensToLp } from '../../helpers/tokens';
-import { TransactMode } from '../../../../reducers/wallet/transact-types';
+} from '../../../../selectors/tokens.ts';
+import { allTokensAreDistinct, pickTokens, tokensToLp } from '../../helpers/tokens.ts';
+import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
 import { first, uniqBy } from 'lodash-es';
 import {
   BIG_ZERO,
@@ -48,42 +48,42 @@ import {
   fromWei,
   toWei,
   toWeiString,
-} from '../../../../../../helpers/big-number';
-import { selectChainById } from '../../../../selectors/chains';
+} from '../../../../../../helpers/big-number.ts';
+import { selectChainById } from '../../../../selectors/chains.ts';
 import { BigNumber } from 'bignumber.js';
-import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
-import type { QuoteRequest } from '../../swap/ISwapProvider';
+import type { BeefyState, BeefyThunk } from '../../../../../../redux-types.ts';
+import type { QuoteRequest } from '../../swap/ISwapProvider.ts';
 import {
   calculatePriceImpact,
   highestFeeOrZero,
   totalValueOfTokenAmounts,
   ZERO_FEE,
-} from '../../helpers/quotes';
-import { selectTransactSlippage } from '../../../../selectors/transact';
+} from '../../helpers/quotes.ts';
+import { selectTransactSlippage } from '../../../../selectors/transact.ts';
 import type {
   OrderInput,
   OrderOutput,
   UserlessZapRequest,
   ZapStep,
   ZapStepResponse,
-} from '../../zap/types';
-import { Balances } from '../../helpers/Balances';
-import { getTokenAddress, NO_RELAY } from '../../helpers/zap';
-import { mergeTokenAmounts, slipBy } from '../../helpers/amounts';
-import { walletActions } from '../../../../actions/wallet-actions';
-import { fetchZapAggregatorSwap } from '../../zap/swap';
-import type { ChainEntity } from '../../../../entities/chain';
-import type { IGammaPool } from '../../../amm/types';
-import { GammaPool } from '../../../amm/gamma/GammaPool';
-import { selectAmmById } from '../../../../selectors/zap';
-import { type AmmEntityGamma, isGammaAmm } from '../../../../entities/zap';
-import { isStandardVault, type VaultStandard } from '../../../../entities/vault';
-import { getVaultWithdrawnFromState } from '../../helpers/vault';
-import { selectVaultStrategyAddress } from '../../../../selectors/vaults';
-import { QuoteChangedError } from '../error';
-import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
-import type { GammaStrategyConfig } from '../strategy-configs';
-import { tokenInList } from '../../../../../../helpers/tokens';
+} from '../../zap/types.ts';
+import { Balances } from '../../helpers/Balances.ts';
+import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
+import { mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
+import { walletActions } from '../../../../actions/wallet-actions.ts';
+import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
+import type { IGammaPool } from '../../../amm/types.ts';
+import { GammaPool } from '../../../amm/gamma/GammaPool.ts';
+import { selectAmmById } from '../../../../selectors/zap.ts';
+import { type AmmEntityGamma, isGammaAmm } from '../../../../entities/zap.ts';
+import { isStandardVault, type VaultStandard } from '../../../../entities/vault.ts';
+import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
+import { selectVaultStrategyAddress } from '../../../../selectors/vaults.ts';
+import { QuoteChangedError } from '../error.ts';
+import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType.ts';
+import type { GammaStrategyConfig } from '../strategy-configs.ts';
+import { tokenInList } from '../../../../../../helpers/tokens.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -93,7 +93,7 @@ type ZapHelpers = {
 
 type PartialWithdrawQuote = Pick<GammaWithdrawQuote, 'steps' | 'outputs' | 'fee' | 'returned'>;
 
-const strategyId = 'gamma' as const;
+const strategyId = 'gamma';
 type StrategyId = typeof strategyId;
 
 class GammaStrategyImpl implements IZapStrategy<StrategyId> {
@@ -111,7 +111,10 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
   protected readonly vault: VaultStandard;
   protected readonly vaultType: IStandardVaultType;
 
-  constructor(protected options: GammaStrategyConfig, protected helpers: ZapTransactHelpers) {
+  constructor(
+    protected options: GammaStrategyConfig,
+    protected helpers: ZapTransactHelpers
+  ) {
     const { vault, vaultType, getState } = this.helpers;
 
     if (!isStandardVault(vault)) {
@@ -214,7 +217,11 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
   async quoteAddLiquidity(
     depositToken: TokenEntity,
     inputs: TokenAmount[]
-  ): Promise<{ liquidity: TokenAmount; used: TokenAmount[]; unused: TokenAmount[] }> {
+  ): Promise<{
+    liquidity: TokenAmount;
+    used: TokenAmount[];
+    unused: TokenAmount[];
+  }> {
     const { priceRatio, totalAmounts, totalSupply } = this.pool.getHypervisorData();
     const optimal = await this.pool.getOptimalAddLiquidity(inputs);
     if (!optimal.every(({ amount }, i) => amount.lte(inputs[i].amount))) {
@@ -455,7 +462,7 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
   }
 
   protected async fetchZapBuild(
-    quoteStep: ZapQuoteStepBuild,
+    _quoteStep: ZapQuoteStepBuild,
     minInputs: TokenAmount[],
     zapHelpers: ZapHelpers
   ): Promise<ZapStepResponse> {
@@ -493,7 +500,7 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
       }
 
       // Swaps
-      if (swapQuotes.length == 0 || swapQuotes.length > 2) {
+      if (swapQuotes.length === 0 || swapQuotes.length > 2) {
         throw new Error('Invalid swap quote');
       }
       const insertBalance = allTokensAreDistinct(

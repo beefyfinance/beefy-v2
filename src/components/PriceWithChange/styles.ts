@@ -1,46 +1,40 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  priceWithChange: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
+export const styles = {
+  priceWithChange: css.raw({
+    textStyle: 'subline.sm',
+    fontWeight: 'bold',
     padding: '4px 8px',
-    background: theme.palette.background.buttons.button,
-    color: theme.palette.text.middle,
+    background: 'bayOfMany',
+    color: 'text.middle',
     display: 'inline-flex',
     alignItems: 'center',
-    flexWrap: 'nowrap' as const,
-    whiteSpace: 'nowrap' as const,
+    flexWrap: 'nowrap',
+    whiteSpace: 'nowrap',
     gap: '4px',
     borderRadius: '4px',
-    userSelect: 'none' as const,
-  },
-  tooltipTrigger: {
+    userSelect: 'none',
+  }),
+  tooltipTrigger: css.raw({
     cursor: 'pointer',
     '&:hover': {
-      background: theme.palette.background.buttons.buttonHover,
+      background: 'blueJewel',
       cursor: 'pointer',
     },
-  },
-  price: {},
-  change: {
+  }),
+  change: css.raw({
     display: 'inline-flex',
     alignItems: 'center',
-    flexWrap: 'nowrap' as const,
-    whiteSpace: 'nowrap' as const,
+    flexWrap: 'nowrap',
+    whiteSpace: 'nowrap',
     gap: '2px',
     fontSize: '0.8em',
-    color: theme.palette.text.dark,
-  },
-  changeValue: {},
-  positive: {
-    '& $change': {
-      color: '#509658',
-    },
-  },
-  negative: {
-    '& $change': {
-      color: '#E84525',
-    },
-  },
-});
+    color: 'text.dark',
+  }),
+  positive: css.raw({
+    color: 'changePositive',
+  }),
+  negative: css.raw({
+    color: 'changeNegative',
+  }),
+};

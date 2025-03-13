@@ -1,25 +1,25 @@
 import { memo, useMemo } from 'react';
-import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
-import type { VaultEntity } from '../../features/data/entities/vault';
-import { Tooltip } from '../Tooltip';
-import { AssetsImage } from '../AssetsImage';
-import { useAppSelector } from '../../store';
+import { styles } from './styles.ts';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
+import { AssetsImage } from '../AssetsImage/AssetsImage.tsx';
+import { useAppSelector } from '../../store.ts';
 import { useTranslation } from 'react-i18next';
-import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format';
+import { formatLargeUsd, formatTokenDisplayCondensed } from '../../helpers/format.ts';
 import {
   selectDashboardUserRewardsByVaultId,
   type UserReward,
   type UserRewards,
   type UserRewardSource,
   type UserRewardStatus,
-} from '../../features/data/selectors/dashboard';
+} from '../../features/data/selectors/dashboard.ts';
 import { uniq } from 'lodash-es';
-import { getMostCommon, isDefined } from '../../features/data/utils/array-utils';
-import { ucFirstLetter } from '../../helpers/string';
-import { groupByMap } from '../../helpers/collection';
+import { getMostCommon, isDefined } from '../../features/data/utils/array-utils.ts';
+import { ucFirstLetter } from '../../helpers/string.ts';
+import { groupByMap } from '../../helpers/collection.ts';
+import { AsTooltip } from '../Tooltip/AsTooltip.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type PendingRewardsIconWithTooltipForVaultProps = {
   vaultId: VaultEntity['id'];
@@ -27,12 +27,12 @@ export type PendingRewardsIconWithTooltipForVaultProps = {
   walletAddress?: string;
 };
 
-export const PendingRewardsIconWithTooltipForVault =
-  memo<PendingRewardsIconWithTooltipForVaultProps>(function PendingRewardsIconWithTooltipForVault({
+export const PendingRewardsIconWithTooltipForVault = memo(
+  function PendingRewardsIconWithTooltipForVault({
     vaultId,
     walletAddress,
     ...rest
-  }) {
+  }: PendingRewardsIconWithTooltipForVaultProps) {
     const rewards = useAppSelector(state =>
       selectDashboardUserRewardsByVaultId(state, vaultId, walletAddress)
     );
@@ -42,41 +42,43 @@ export const PendingRewardsIconWithTooltipForVault =
     }
 
     return <PendingRewardsIconWithTooltip rewards={rewards} {...rest} />;
-  });
+  }
+);
 
 type PendingRewardsIconWithTooltipProps = {
   rewards: UserRewards;
   size?: number;
 };
 
-export const PendingRewardsIconWithTooltip = memo<PendingRewardsIconWithTooltipProps>(
-  function PendingRewardsIconWithTooltip({ rewards, size = 20 }) {
-    const classes = useStyles();
-    const { pending } = rewards;
-    const tokens = useMemo(
-      () =>
-        pending.has
-          ? {
-              chainId: getMostCommon(pending.rewards.map(r => r.token.chainId)),
-              symbols: uniq(pending.rewards.map(r => r.token.symbol)),
-            }
-          : undefined,
-      [pending]
-    );
+export const PendingRewardsIconWithTooltip = memo(function PendingRewardsIconWithTooltip({
+  rewards,
+  size = 20,
+}: PendingRewardsIconWithTooltipProps) {
+  const classes = useStyles();
+  const { pending } = rewards;
+  const tokens = useMemo(
+    () =>
+      pending.has
+        ? {
+            chainId: getMostCommon(pending.rewards.map(r => r.token.chainId)),
+            symbols: uniq(pending.rewards.map(r => r.token.symbol)),
+          }
+        : undefined,
+    [pending]
+  );
 
-    if (!tokens) {
-      return null;
-    }
-
-    return (
-      <Tooltip content={<StatusRewards status={'pending'} rewards={pending.rewards} />}>
-        <div className={classes.container}>
-          <AssetsImage chainId={tokens.chainId} size={size || 20} assetSymbols={tokens.symbols} />
-        </div>
-      </Tooltip>
-    );
+  if (!tokens) {
+    return null;
   }
-);
+
+  return (
+    <AsTooltip content={<StatusRewards status={'pending'} rewards={pending.rewards} />}>
+      <div className={classes.container}>
+        <AssetsImage chainId={tokens.chainId} size={size || 20} assetSymbols={tokens.symbols} />
+      </div>
+    </AsTooltip>
+  );
+});
 
 export type RewardsTooltipContentProps = {
   rewards: UserRewards;
@@ -84,41 +86,44 @@ export type RewardsTooltipContentProps = {
   [status in UserRewardStatus]?: boolean;
 };
 
-export const RewardsTooltipContent = memo<RewardsTooltipContentProps>(
-  function RewardsTooltipContent({ rewards, pending, claimed, compounded }) {
-    const classes = useStyles();
-    const statusRewards = useMemo(
-      () =>
-        [
-          ['compounded', compounded] as const,
-          ['claimed', claimed] as const,
-          ['pending', pending] as const,
-        ]
-          .map(([status, wanted]) =>
-            !!wanted && rewards[status]?.has
-              ? ([status, rewards[status].rewards] as const)
-              : undefined
-          )
-          .filter(isDefined),
-      [rewards, pending, claimed, compounded]
-    );
+export const RewardsTooltipContent = memo(function RewardsTooltipContent({
+  rewards,
+  pending,
+  claimed,
+  compounded,
+}: RewardsTooltipContentProps) {
+  const classes = useStyles();
+  const statusRewards = useMemo(
+    () =>
+      [
+        ['compounded', compounded] as const,
+        ['claimed', claimed] as const,
+        ['pending', pending] as const,
+      ]
+        .map(([status, wanted]) =>
+          !!wanted && rewards[status]?.has
+            ? ([status, rewards[status].rewards] as const)
+            : undefined
+        )
+        .filter(isDefined),
+    [rewards, pending, claimed, compounded]
+  );
 
-    return (
-      <div className={classes.statuses}>
-        {statusRewards.map(([status, rewards]) => (
-          <StatusRewards status={status} rewards={rewards} key={status} />
-        ))}
-      </div>
-    );
-  }
-);
+  return (
+    <div className={classes.statuses}>
+      {statusRewards.map(([status, rewards]) => (
+        <StatusRewards status={status} rewards={rewards} key={status} />
+      ))}
+    </div>
+  );
+});
 
 type StatusRewardsProps = {
   status: UserRewardStatus;
   rewards: UserReward[];
 };
 
-const StatusRewards = memo<StatusRewardsProps>(function StatusRewards({ status, rewards }) {
+const StatusRewards = memo(function StatusRewards({ status, rewards }: StatusRewardsProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const grouped = useMemo(() => groupByMap(rewards, r => r.source), [rewards]);
@@ -134,7 +139,7 @@ const StatusRewards = memo<StatusRewardsProps>(function StatusRewards({ status, 
   return (
     <div className={classes.sources}>
       {Array.from(grouped.entries(), ([source, rewards]) => (
-        <div className={classes.source} key={source}>
+        <div key={source}>
           <div className={classes.sourceTitle}>{getTitle(source)}</div>
           <div className={classes.rewards}>
             {rewards.map(reward => {

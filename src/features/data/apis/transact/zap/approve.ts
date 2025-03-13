@@ -1,8 +1,8 @@
 import type { BigNumber } from 'bignumber.js';
-import type { ZapStep } from './types';
-import { getInsertIndex } from '../helpers/zap';
+import type { ZapStep } from './types.ts';
+import { getInsertIndex } from '../helpers/zap.ts';
 import { encodeFunctionData, type Abi, type Address } from 'viem';
-import { bigNumberToBigInt } from '../../../../../helpers/big-number';
+import { bigNumberToBigInt } from '../../../../../helpers/big-number.ts';
 
 export function buildTokenApproveTx(
   token: string,

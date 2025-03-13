@@ -1,13 +1,12 @@
-import type { VaultEntity } from '../../features/data/entities/vault';
+import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import { memo } from 'react';
 import { connect } from 'react-redux';
-import type { BeefyState } from '../../redux-types';
-import { selectVaultById } from '../../features/data/selectors/vaults';
-import { VaultValueStat } from '../VaultValueStat';
-import type { SafetyScoreProps } from '../SafetyScore';
-import { SafetyScore } from '../SafetyScore';
-import { useMediaQuery } from '@material-ui/core';
-import type { Theme } from '@material-ui/core';
+import type { BeefyState } from '../../redux-types.ts';
+import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
+import type { SafetyScoreProps } from '../SafetyScore/SafetyScore.tsx';
+import { SafetyScore } from '../SafetyScore/SafetyScore.tsx';
+import { useBreakpoint } from '../MediaQueries/useBreakpoint.ts';
 
 export type VaultSafetyStatProps = {
   vaultId: VaultEntity['id'];
@@ -28,8 +27,10 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultSafetyStatProps) {
   };
 }
 
-type StatSafetyScoreProps = { score: SafetyScoreProps['score'] };
-const StatSafetyScore = memo<StatSafetyScoreProps>(function SafetyTooltip({ score }) {
-  const alignRight = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'), { noSsr: true });
+type StatSafetyScoreProps = {
+  score: SafetyScoreProps['score'];
+};
+const StatSafetyScore = memo(function SafetyTooltip({ score }: StatSafetyScoreProps) {
+  const alignRight = useBreakpoint({ from: 'lg' });
   return <SafetyScore score={score} size="sm" align={alignRight ? 'right' : 'left'} />;
 });

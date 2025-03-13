@@ -1,9 +1,9 @@
-import type { StakeInputProps } from './StakeInput';
+import type { StakeInputProps } from './StakeInput.tsx';
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../../../../../../store';
-import { ActionInputButton, type ActionInputButtonProps } from './ActionInputButton';
-import { startUnstakeBoostSteps } from '../../../../../data/actions/wallet-actions';
+import { useAppDispatch } from '../../../../../../store.ts';
+import { ActionInputButton, type ActionInputButtonProps } from './ActionInputButton.tsx';
+import { startUnstakeBoostSteps } from '../../../../../data/actions/wallet-actions.ts';
 
 type UnstakeInputProps = StakeInputProps;
 

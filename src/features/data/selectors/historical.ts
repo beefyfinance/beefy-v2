@@ -1,12 +1,12 @@
-import type { BeefyState } from '../../../redux-types';
-import type { VaultEntity } from '../entities/vault';
-import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
-import type { TokenEntity } from '../entities/token';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
+import type { TokenEntity } from '../entities/token.ts';
 import { createSelector } from '@reduxjs/toolkit';
-import { selectVaultShouldShowInterest } from './data-loader';
-import { allDataApiBuckets } from '../apis/beefy/beefy-data-api-helpers';
-import { fromKeys } from '../../../helpers/object';
-import type { ChartApiPoint, ChartStat } from '../../vault/components/HistoricGraph/types';
+import { selectVaultShouldShowInterest } from './data-loader.ts';
+import { allDataApiBuckets } from '../apis/beefy/beefy-data-api-helpers.ts';
+import { fromKeys } from '../../../helpers/object.ts';
+import type { ChartApiPoint, ChartStat } from '../../vault/components/HistoricGraph/types.ts';
 
 const unavailableBuckets = fromKeys(allDataApiBuckets, false);
 
@@ -49,7 +49,7 @@ export function selectHistoricalHasCowcentratedRanges(
 }
 
 export const selectHistoricalAvailableCharts = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id'], oracleId: TokenEntity['oracleId']) =>
+  (state: BeefyState, _vaultId: VaultEntity['id'], oracleId: TokenEntity['oracleId']) =>
     selectHistoricalHasPriceChart(state, oracleId),
   selectHistoricalHasApyChart,
   selectHistoricalHasTvlChart,

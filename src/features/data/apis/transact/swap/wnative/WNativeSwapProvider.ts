@@ -1,24 +1,24 @@
-import type { BeefyState } from '../../../../../../redux-types';
+import type { BeefyState } from '../../../../../../redux-types.ts';
 import type {
   ISwapProvider,
   QuoteRequest,
   QuoteResponse,
   SwapRequest,
   SwapResponse,
-} from '../ISwapProvider';
-import type { ChainEntity } from '../../../../entities/chain';
-import type { TokenEntity } from '../../../../entities/token';
-import { isTokenNative } from '../../../../entities/token';
+} from '../ISwapProvider.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
+import type { TokenEntity } from '../../../../entities/token.ts';
+import { isTokenNative } from '../../../../entities/token.ts';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
-} from '../../../../selectors/tokens';
-import { toWeiString } from '../../../../../../helpers/big-number';
-import type { VaultEntity } from '../../../../entities/vault';
-import { getInsertIndex } from '../../helpers/zap';
-import { nativeAndWrappedAreSame } from '../../helpers/tokens';
-import { ZERO_FEE } from '../../helpers/quotes';
-import { selectAllChainIds } from '../../../../selectors/chains';
+} from '../../../../selectors/tokens.ts';
+import { toWeiString } from '../../../../../../helpers/big-number.ts';
+import type { VaultEntity } from '../../../../entities/vault.ts';
+import { getInsertIndex } from '../../helpers/zap.ts';
+import { nativeAndWrappedAreSame } from '../../helpers/tokens.ts';
+import { ZERO_FEE } from '../../helpers/quotes.ts';
+import { selectAllChainIds } from '../../../../selectors/chains.ts';
 import { encodeFunctionData, type Abi } from 'viem';
 
 export class WNativeSwapProvider implements ISwapProvider {
@@ -64,7 +64,7 @@ export class WNativeSwapProvider implements ISwapProvider {
   }
 
   async getSupportedTokens(
-    vaultId: VaultEntity['id'],
+    _vaultId: VaultEntity['id'],
     chainId: ChainEntity['id'],
     state: BeefyState
   ): Promise<TokenEntity[]> {

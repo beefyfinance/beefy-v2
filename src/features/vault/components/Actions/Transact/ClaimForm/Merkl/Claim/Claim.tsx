@@ -1,29 +1,26 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import type { ChainEntity } from '../../../../../../../data/entities/chain';
+import type { ChainEntity } from '../../../../../../../data/entities/chain.ts';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../../../../../../../../components/Button';
-import { ActionConnectSwitch } from '../../../CommonActions';
-import { useAppDispatch, useAppSelector } from '../../../../../../../../store';
-import { walletActions } from '../../../../../../../data/actions/wallet-actions';
-import { startStepperWithSteps } from '../../../../../../../data/actions/stepper';
-import { selectFetchMerklRewardsLastDispatched } from '../../../../../../../data/selectors/data-loader';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { selectChainById } from '../../../../../../../data/selectors/chains';
-import { selectIsStepperStepping } from '../../../../../../../data/selectors/stepper';
-import { TenderlyMerklClaimButton } from '../../../../../../../../components/Tenderly/Buttons/TenderlyMerklClaimButton';
-import { TimeCountdown } from '../../TimeCountdown/TimeCountdown';
+import { Button } from '../../../../../../../../components/Button/Button.tsx';
+import { ActionConnectSwitch } from '../../../CommonActions/CommonActions.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../../../../../store.ts';
+import { walletActions } from '../../../../../../../data/actions/wallet-actions.ts';
+import { startStepperWithSteps } from '../../../../../../../data/actions/stepper.ts';
+import { selectFetchMerklRewardsLastDispatched } from '../../../../../../../data/selectors/data-loader.ts';
+import { styles } from './styles.ts';
+import { selectChainById } from '../../../../../../../data/selectors/chains.ts';
+import { selectIsStepperStepping } from '../../../../../../../data/selectors/stepper.ts';
+import { TenderlyMerklClaimButton } from '../../../../../../../../components/Tenderly/Buttons/TenderlyMerklClaimButton.tsx';
+import { TimeCountdown } from '../../TimeCountdown/TimeCountdown.tsx';
 
-const useStyles = makeStyles(styles);
-const MERKL_MIN_TIME_BETWEEN_REQUESTS_MS = 15_000;
+const MERKL_MIN_TIME_BETWEEN_REQUESTS_MS = 15000;
 
 type ClaimProps = {
   chainId: ChainEntity['id'];
   withChain?: boolean;
 };
 
-export const Claim = memo<ClaimProps>(function Claim({ chainId, withChain }) {
-  const classes = useStyles();
+export const Claim = memo(function Claim({ chainId, withChain }: ClaimProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const chain = useAppSelector(state => selectChainById(state, chainId));
@@ -68,7 +65,7 @@ export const Claim = memo<ClaimProps>(function Claim({ chainId, withChain }) {
           variant="success"
           onClick={handleClaim}
           disabled={disable}
-          className={classes.claim}
+          css={styles.claim}
         >
           {!isStepping && shouldWait ? (
             <TimeCountdown until={lastDispatched + MERKL_MIN_TIME_BETWEEN_REQUESTS_MS} />

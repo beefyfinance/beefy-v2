@@ -1,8 +1,8 @@
-import type { ChainEntity } from '../../entities/chain';
+import type { ChainEntity } from '../../entities/chain.ts';
 import { find, sample, uniq } from 'lodash-es';
-import type { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types';
-import { maybeHexToNumber } from '../../../../helpers/format';
-import type { OnboardAPI } from '@web3-onboard/core';
+import type { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types.ts';
+import { maybeHexToNumber } from '../../../../helpers/format.ts';
+import type { EIP1193Provider, OnboardAPI } from '@web3-onboard/core';
 import Onboard from '@web3-onboard/core';
 import createInjectedWallets from '@web3-onboard/injected-wallets';
 import standardInjectedWallets from '@web3-onboard/injected-wallets/dist/wallets';
@@ -13,16 +13,22 @@ import createTrustDesktopModule from '@web3-onboard/trust';
 import type { ConnectOptions } from '@web3-onboard/core/dist/types';
 import type { WalletInit } from '@web3-onboard/common';
 import { createEIP1193Provider } from '@web3-onboard/common';
-import { customInjectedWallets } from './custom-injected-wallets';
+import { customInjectedWallets } from './custom-injected-wallets.ts';
 import appIcon from '../../../../images/bifi-logos/header-logo-notext.svg';
 import appLogo from '../../../../images/bifi-logos/header-logo.svg';
-import { getNetworkSrc } from '../../../../helpers/networkSrc';
-import { featureFlag_walletConnectChainId } from '../../utils/feature-flags';
-import type { WalletHelpers } from '@web3-onboard/common/dist/types';
+import { getNetworkSrc } from '../../../../helpers/networkSrc.ts';
+import { featureFlag_walletConnectChainId } from '../../utils/feature-flags.ts';
+import type { ChainListener, WalletHelpers } from '@web3-onboard/common/dist/types';
 import type { WalletConnectOptions } from '@web3-onboard/walletconnect/dist/types';
-import { isDefined } from '../../utils/array-utils';
+import { isDefined } from '../../utils/array-utils.ts';
 import fireblocksLogo from '../../../../images/wallets/fireblocks.svg?url';
-import { createWalletClient, custom, isHex, numberToHex, type EIP1193Provider } from 'viem';
+import type { InjectedNameSpace } from '@web3-onboard/injected-wallets/dist/types';
+import { createWalletClient, custom, isHex, numberToHex } from 'viem';
+
+declare const window: {
+  [K in InjectedNameSpace]?: unknown;
+} & Window &
+  typeof globalThis;
 
 const walletConnectImages: Record<string, string> = {
   '5864e2ced7c293ed18ac35e0db085c09ed567d67346ccb6f58a0327a75137489': fireblocksLogo,
@@ -149,7 +155,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   private static createCDCWalletModule(): WalletInit {
     return () => ({
       label: 'CDC Connect',
-      getIcon: async () => (await import(`../../../../images/wallets/crypto.png`)).default,
+      getIcon: async () => (await import('../../../../images/wallets/crypto.png')).default,
       getInterface: async ({ chains }) => {
         const { DeFiWeb3Connector } = await import('@deficonnect/web3-connector');
         const cronosChainId = 25;
@@ -187,23 +193,18 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         // Patch non-conforming events
         const originalOn = patchedProvider.on.bind(patchedProvider);
         patchedProvider.on = (event, listener) => {
-          // call original handler with modified value
-          originalOn(event, value => {
-            // chainId: Dec->Hex
-            if (event === 'chainChanged') {
-              listener(
+          if (event === 'chainChanged') {
+            originalOn(event, value => {
+              // call original handler with modified value -- chainId: Dec->Hex
+              (listener as ChainListener)(
                 isHex(value, { strict: true })
                   ? value
                   : `0x${parseInt(value + '', 10).toString(16)}`
               );
-              return;
-            }
-            // rest
-            listener(value);
-          });
-
-          // return this
-          return patchedProvider;
+            });
+          } else {
+            originalOn(event as never, listener as never);
+          }
         };
 
         // DeFiConnectorProvider type is missing EventEmitter type
@@ -224,6 +225,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       connect: {
         showSidebar: true,
         removeWhereIsMyWalletWarning: true,
+        autoConnectAllPreviousWallet: false,
+        autoConnectLastWallet: false,
       },
       wallets: this.getOnboardWalletInitializers(),
       theme: {

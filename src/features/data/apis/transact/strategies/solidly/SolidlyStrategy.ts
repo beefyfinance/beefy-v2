@@ -1,9 +1,9 @@
-import type { IZapStrategy, IZapStrategyStatic } from '../IStrategy';
-import { UniswapLikeStrategy } from '../UniswapLikeStrategy';
-import type { AmmEntity, AmmEntitySolidly } from '../../../../entities/zap';
-import type { SolidlyStrategyConfig } from '../strategy-configs';
+import type { IZapStrategy, IZapStrategyStatic } from '../IStrategy.ts';
+import { UniswapLikeStrategy } from '../UniswapLikeStrategy.ts';
+import type { AmmEntity, AmmEntitySolidly } from '../../../../entities/zap.ts';
+import type { SolidlyStrategyConfig } from '../strategy-configs.ts';
 
-const strategyId = 'solidly' as const;
+const strategyId = 'solidly';
 type StrategyId = typeof strategyId;
 
 class SolidlyStrategyImpl

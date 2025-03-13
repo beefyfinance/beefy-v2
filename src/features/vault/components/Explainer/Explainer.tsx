@@ -2,20 +2,20 @@ import {
   isCowcentratedLikeVault,
   isStandardVault,
   type VaultEntity,
-} from '../../../data/entities/vault';
+} from '../../../data/entities/vault.ts';
 import { lazy, memo } from 'react';
-import { useAppSelector } from '../../../../store';
-import { selectVaultById } from '../../../data/selectors/vaults';
+import { useAppSelector } from '../../../../store.ts';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
 
-const StandardExplainer = lazy(() => import(`./Standard`));
-const GovExplainer = lazy(() => import(`./Gov`));
-const CowcentratedExplainer = lazy(() => import(`./Cowcentrated`));
+const StandardExplainer = lazy(() => import('./Standard/StandardExplainer.tsx'));
+const GovExplainer = lazy(() => import('./Gov/GovExplainer.tsx'));
+const CowcentratedExplainer = lazy(() => import('./Cowcentrated/CowcentratedExplainer.tsx'));
 
 export type ExplainerProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const Explainer = memo<ExplainerProps>(function Explainer({ vaultId }) {
+export const Explainer = memo(function Explainer({ vaultId }: ExplainerProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   if (isCowcentratedLikeVault(vault)) {

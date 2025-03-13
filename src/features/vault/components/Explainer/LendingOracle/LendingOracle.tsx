@@ -1,14 +1,14 @@
 import { memo } from 'react';
-import { isStandardVault, type VaultEntity } from '../../../../data/entities/vault';
+import { isStandardVault, type VaultEntity } from '../../../../data/entities/vault.ts';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../store';
-import { selectVaultById } from '../../../../data/selectors/vaults';
-import { selectChainById } from '../../../../data/selectors/chains';
-import { explorerAddressUrl } from '../../../../../helpers/url';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { useAppSelector } from '../../../../../store.ts';
+import { selectVaultById } from '../../../../data/selectors/vaults.ts';
+import { selectChainById } from '../../../../data/selectors/chains.ts';
+import { explorerAddressUrl } from '../../../../../helpers/url.ts';
+import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 const oraclesMapToText: Record<string, string> = {
   chainlink: 'Chainlink',
@@ -22,7 +22,7 @@ export type LendingOracleProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const LendingOracle = memo<LendingOracleProps>(function LendingOracle({ vaultId }) {
+export const LendingOracle = memo(function LendingOracle({ vaultId }: LendingOracleProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -36,13 +36,12 @@ export const LendingOracle = memo<LendingOracleProps>(function LendingOracle({ v
     <div>
       <div className={classes.apyTitle}>{t('Details')}</div>
       <div className={classes.apys}>
-        <div className={classes.apy}>
+        <div>
           <div className={classes.apyLabel}>{t('Oracle')}</div>
           {vault.lendingOracle.address ? (
             <a
               className={classes.oracleLink}
               target="_blank"
-              rel="noopener noreferrer"
               href={explorerAddressUrl(chain, vault.lendingOracle.address)}
             >
               {oraclesMapToText[vault.lendingOracle.provider]}
@@ -52,7 +51,7 @@ export const LendingOracle = memo<LendingOracleProps>(function LendingOracle({ v
           )}
         </div>
         {vault.lendingOracle.loops && (
-          <div className={classes.apy}>
+          <div>
             <div className={classes.apyLabel}>{t('Loops')}</div>
             <div className={classes.apyValue}>{vault.lendingOracle.loops}</div>
           </div>

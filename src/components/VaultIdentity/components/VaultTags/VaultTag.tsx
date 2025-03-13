@@ -1,23 +1,23 @@
-import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
+import { styles } from './styles.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import type { ReactNode } from 'react';
 import { forwardRef, memo } from 'react';
-import clsx from 'clsx';
-import type { TooltipProps } from '../../../Tooltip';
-import { Tooltip } from '../../../Tooltip';
+import { css, type CssStyles } from '@repo/styles/css';
+import { DivWithTooltip, type DivWithTooltipProps } from '../../../Tooltip/DivWithTooltip.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type VaultTagProps = {
-  className?: string;
+  css?: CssStyles;
   icon?: ReactNode;
   text: ReactNode;
 };
+
 export const VaultTag = memo(
-  forwardRef<HTMLDivElement, VaultTagProps>(function VaultTag({ icon, text, className }, ref) {
+  forwardRef<HTMLDivElement, VaultTagProps>(function VaultTag({ icon, text, css: cssProp }, ref) {
     const classes = useStyles();
     return (
-      <div className={clsx(classes.vaultTag, className)} ref={ref}>
+      <div className={css(styles.vaultTag, cssProp)} ref={ref}>
         {icon ? <div className={classes.vaultTagIcon}>{icon}</div> : null}
         {text ? <div className={classes.vaultTagText}>{text}</div> : null}
       </div>
@@ -25,19 +25,20 @@ export const VaultTag = memo(
   })
 );
 
-export type VaultTagWithTooltipProps = VaultTagProps & Omit<TooltipProps, 'children'>;
+export type VaultTagWithTooltipProps = VaultTagProps &
+  Omit<DivWithTooltipProps, 'children' | 'className'>;
 
 export const VaultTagWithTooltip = memo(
   forwardRef<HTMLDivElement, VaultTagWithTooltipProps>(function VaultTagWithTooltip(
-    { icon, text, className, triggerClass, ...rest },
+    { icon, text, css: cssProp, ...rest },
     ref
   ) {
     const classes = useStyles();
     return (
-      <Tooltip triggerClass={clsx(classes.vaultTag, className, triggerClass)} ref={ref} {...rest}>
+      <DivWithTooltip className={css(styles.vaultTag, cssProp)} ref={ref} {...rest}>
         {icon ? <div className={classes.vaultTagIcon}>{icon}</div> : null}
         {text ? <div className={classes.vaultTagText}>{text}</div> : null}
-      </Tooltip>
+      </DivWithTooltip>
     );
   })
 );

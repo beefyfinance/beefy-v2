@@ -5,8 +5,8 @@ import {
   type TokenEntity,
   type TokenErc20,
   type TokenNative,
-} from '../../../../entities/token';
-import type { Step } from '../../../../reducers/wallet/stepper';
+} from '../../../../entities/token.ts';
+import type { Step } from '../../../../reducers/wallet/stepper.ts';
 import {
   type BalancerDepositOption,
   type BalancerDepositOptionAllAggregator,
@@ -30,24 +30,24 @@ import {
   type ZapQuoteStepBuild,
   type ZapQuoteStepSwap,
   type ZapQuoteStepSwapAggregator,
-} from '../../transact-types';
-import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy';
-import type { ChainEntity } from '../../../../entities/chain';
+} from '../../transact-types.ts';
+import type { IZapStrategy, IZapStrategyStatic, ZapTransactHelpers } from '../IStrategy.ts';
+import type { ChainEntity } from '../../../../entities/chain.ts';
 import {
   createOptionId,
   createQuoteId,
   createSelectionId,
   onlyOneInput,
   onlyOneTokenAmount,
-} from '../../helpers/options';
+} from '../../helpers/options.ts';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
   selectTokenByAddressOrUndefined,
   selectTokenPriceByTokenOracleId,
-} from '../../../../selectors/tokens';
-import { selectChainById } from '../../../../selectors/chains';
-import { TransactMode } from '../../../../reducers/wallet/transact-types';
+} from '../../../../selectors/tokens.ts';
+import { selectChainById } from '../../../../selectors/chains.ts';
+import { TransactMode } from '../../../../reducers/wallet/transact-types.ts';
 import { first, orderBy, uniqBy } from 'lodash-es';
 import {
   BIG_ZERO,
@@ -56,53 +56,56 @@ import {
   fromWeiToTokenAmount,
   toWeiFromTokenAmount,
   toWeiString,
-} from '../../../../../../helpers/big-number';
+} from '../../../../../../helpers/big-number.ts';
 import {
   calculatePriceImpact,
   highestFeeOrZero,
   totalValueOfTokenAmounts,
-} from '../../helpers/quotes';
+} from '../../helpers/quotes.ts';
 import { BigNumber } from 'bignumber.js';
-import type { BeefyState, BeefyThunk } from '../../../../../../redux-types';
-import type { QuoteRequest, QuoteResponse } from '../../swap/ISwapProvider';
+import type { BeefyState, BeefyThunk } from '../../../../../../redux-types.ts';
+import type { QuoteRequest, QuoteResponse } from '../../swap/ISwapProvider.ts';
 import type {
   OrderInput,
   OrderOutput,
   UserlessZapRequest,
   ZapStep,
   ZapStepResponse,
-} from '../../zap/types';
-import { fetchZapAggregatorSwap } from '../../zap/swap';
-import { selectTransactSlippage } from '../../../../selectors/transact';
-import { Balances } from '../../helpers/Balances';
-import { getTokenAddress, NO_RELAY } from '../../helpers/zap';
-import { mergeTokenAmounts, slipBy, slipTokenAmountBy } from '../../helpers/amounts';
-import { allTokensAreDistinct, includeWrappedAndNative, pickTokens } from '../../helpers/tokens';
-import { walletActions } from '../../../../actions/wallet-actions';
-import { isStandardVault, type VaultStandard } from '../../../../entities/vault';
-import { getVaultWithdrawnFromState } from '../../helpers/vault';
-import { isDefined } from '../../../../utils/array-utils';
-import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType';
-import type { BalancerStrategyConfig } from '../strategy-configs';
-import { type AmmEntityBalancer, isBalancerAmm } from '../../../../entities/zap';
-import { selectAmmById } from '../../../../selectors/zap';
-import { createFactory } from '../../../../utils/factory-utils';
-import type { PoolConfig, VaultConfig } from '../../../amm/balancer/vault/types';
-import { GyroPool } from '../../../amm/balancer/gyro/GyroPool';
-import { WeightedPool } from '../../../amm/balancer/weighted/WeightedPool';
-import { MetaStablePool } from '../../../amm/balancer/meta-stable/MetaStablePool';
-import { BalancerFeature } from '../../../amm/balancer/types';
-import { ComposableStablePool } from '../../../amm/balancer/composable-stable/ComposableStablePool';
-import { isFulfilledResult } from '../../../../../../helpers/promises';
-import { tokenInList } from '../../../../../../helpers/tokens';
-import { isBalancerAllPool, isBalancerSinglePool } from '../../../amm/balancer/common/type-guards';
+} from '../../zap/types.ts';
+import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
+import { selectTransactSlippage } from '../../../../selectors/transact.ts';
+import { Balances } from '../../helpers/Balances.ts';
+import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
+import { mergeTokenAmounts, slipBy, slipTokenAmountBy } from '../../helpers/amounts.ts';
+import { allTokensAreDistinct, includeWrappedAndNative, pickTokens } from '../../helpers/tokens.ts';
+import { walletActions } from '../../../../actions/wallet-actions.ts';
+import { isStandardVault, type VaultStandard } from '../../../../entities/vault.ts';
+import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
+import { isDefined } from '../../../../utils/array-utils.ts';
+import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType.ts';
+import type { BalancerStrategyConfig } from '../strategy-configs.ts';
+import { type AmmEntityBalancer, isBalancerAmm } from '../../../../entities/zap.ts';
+import { selectAmmById } from '../../../../selectors/zap.ts';
+import { createFactory } from '../../../../utils/factory-utils.ts';
+import type { PoolConfig, VaultConfig } from '../../../amm/balancer/vault/types.ts';
+import { GyroPool } from '../../../amm/balancer/gyro/GyroPool.ts';
+import { WeightedPool } from '../../../amm/balancer/weighted/WeightedPool.ts';
+import { MetaStablePool } from '../../../amm/balancer/meta-stable/MetaStablePool.ts';
+import { BalancerFeature } from '../../../amm/balancer/types.ts';
+import { ComposableStablePool } from '../../../amm/balancer/composable-stable/ComposableStablePool.ts';
+import { isFulfilledResult } from '../../../../../../helpers/promises.ts';
+import { tokenInList } from '../../../../../../helpers/tokens.ts';
+import {
+  isBalancerAllPool,
+  isBalancerSinglePool,
+} from '../../../amm/balancer/common/type-guards.ts';
 
 type ZapHelpers = {
   slippage: number;
   state: BeefyState;
 };
 
-const strategyId = 'balancer' as const;
+const strategyId = 'balancer';
 type StrategyId = typeof strategyId;
 
 /**
@@ -124,7 +127,10 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
   protected readonly singleTokenOptions: TokenEntity[];
   protected readonly allTokenOptions: TokenEntity[];
 
-  constructor(protected options: BalancerStrategyConfig, protected helpers: ZapTransactHelpers) {
+  constructor(
+    protected options: BalancerStrategyConfig,
+    protected helpers: ZapTransactHelpers
+  ) {
     const { vault, vaultType, getState } = this.helpers;
 
     if (!isStandardVault(vault)) {
@@ -244,8 +250,8 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
       return [];
     }
 
-    const via = 'aggregator' as const;
-    const type = 'all' as const;
+    const via = 'aggregator';
+    const type = 'all';
     const outputs = [this.vaultType.depositToken];
 
     const supportedAggregatorTokens = await this.aggregatorTokensCanSwapToAllOf(
@@ -283,7 +289,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
       return [];
     }
 
-    const type = 'single' as const;
+    const type = 'single';
     const outputs = [this.vaultType.depositToken];
 
     const baseOptions = this.singleTokenOptions.map(viaToken => {
@@ -516,9 +522,12 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     return withLiquidity[0];
   }
 
-  protected async getSwapAmounts(
-    input: TokenAmount
-  ): Promise<Array<{ from: TokenAmount; to: TokenEntity }>> {
+  protected async getSwapAmounts(input: TokenAmount): Promise<
+    Array<{
+      from: TokenAmount;
+      to: TokenEntity;
+    }>
+  > {
     const pool = this.getPool();
     const ratios = await pool.getSwapRatios();
     console.debug('ratios', ratios.toString());
@@ -544,9 +553,11 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     }));
   }
 
-  protected async quoteAddLiquidity(
-    inputs: TokenAmount[]
-  ): Promise<{ liquidity: TokenAmount; usedInput: TokenAmount[]; unusedInput: TokenAmount[] }> {
+  protected async quoteAddLiquidity(inputs: TokenAmount[]): Promise<{
+    liquidity: TokenAmount;
+    usedInput: TokenAmount[];
+    unusedInput: TokenAmount[];
+  }> {
     const pool = this.getPool();
     const inputAmountsWei = inputs.map(input => toWeiFromTokenAmount(input));
     const result = await pool.quoteAddLiquidity(inputAmountsWei);
@@ -726,9 +737,9 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
   }
 
   protected async fetchZapBuild(
-    quoteStep: ZapQuoteStepBuild,
+    _quoteStep: ZapQuoteStepBuild,
     minInputs: TokenAmount[],
-    option: BalancerDepositOption,
+    _option: BalancerDepositOption,
     zapHelpers: ZapHelpers
   ): Promise<ZapStepResponse> {
     const { liquidity, usedInput, unusedInput } = await this.quoteAddLiquidity(minInputs);
@@ -900,7 +911,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
       return [];
     }
 
-    const type = 'all' as const;
+    const type = 'all';
     const inputs = [this.vaultType.depositToken];
 
     const breakSelectionId = createSelectionId(this.vault.chainId, this.poolTokens);
@@ -956,7 +967,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
       return [];
     }
 
-    const type = 'single' as const;
+    const type = 'single';
     const inputs = [this.vaultType.depositToken];
 
     const baseOptions = this.singleTokenOptions.map(viaToken => {
@@ -1022,9 +1033,10 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     return [...singleOptions, ...allOptions];
   }
 
-  protected async quoteRemoveLiquidity(
-    input: TokenAmount
-  ): Promise<{ liquidity: TokenAmount; outputs: TokenAmount[] }> {
+  protected async quoteRemoveLiquidity(input: TokenAmount): Promise<{
+    liquidity: TokenAmount;
+    outputs: TokenAmount[];
+  }> {
     const pool = this.getPool();
     const inputAmountWei = toWeiFromTokenAmount(input);
     const result = await pool.quoteRemoveLiquidity(inputAmountWei);
@@ -1038,7 +1050,10 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
   protected async quoteRemoveLiquidityOneToken(
     input: TokenAmount,
     wantedToken: TokenEntity
-  ): Promise<{ liquidity: TokenAmount; outputs: TokenAmount[] }> {
+  ): Promise<{
+    liquidity: TokenAmount;
+    outputs: TokenAmount[];
+  }> {
     const pool = this.getPool();
     if (!isBalancerSinglePool(pool)) {
       throw new Error('BalancerStrategy: Pool does not support removing liquidity to one token');
@@ -1112,7 +1127,10 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     // Withdraw liquidity
     let breakSets: Array<{
       input: TokenAmount;
-      liquidity: { input: TokenAmount; outputs: TokenAmount[] };
+      liquidity: {
+        input: TokenAmount;
+        outputs: TokenAmount[];
+      };
     }>;
     if (option.type === 'single' && option.via === 'aggregator') {
       breakSets = await this.fetchWithdrawLiquiditySingleAggregator(input, option);
@@ -1165,7 +1183,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
         const swaps = liquidity.outputs.map((output, i) => ({
           input: output,
           quote: quotes[i],
-          output: quotes[i] ? { token: quotes[i]!.toToken, amount: quotes[i]!.toAmount } : output,
+          output: quotes[i] ? { token: quotes[i].toToken, amount: quotes[i].toAmount } : output,
         }));
 
         return {
@@ -1553,18 +1571,21 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     );
 
     const inputTokens = new Map<string, TokenEntity>();
-    const inputTokenToWanted = tokens.reduce((acc, wantedToken, i) => {
-      for (const sourceToken of tokenSupport.tokens[i]) {
-        if (isTokenEqual(sourceToken, wantedToken)) {
-          continue;
+    const inputTokenToWanted = tokens.reduce(
+      (acc, wantedToken, i) => {
+        for (const sourceToken of tokenSupport.tokens[i]) {
+          if (isTokenEqual(sourceToken, wantedToken)) {
+            continue;
+          }
+          acc[sourceToken.address] ??= [];
+          acc[sourceToken.address].push(wantedToken);
+          inputTokens.set(sourceToken.address, sourceToken);
         }
-        acc[sourceToken.address] ??= [];
-        acc[sourceToken.address].push(wantedToken);
-        inputTokens.set(sourceToken.address, sourceToken);
-      }
 
-      return acc;
-    }, {} as Record<string, TokenEntity[]>);
+        return acc;
+      },
+      {} as Record<string, TokenEntity[]>
+    );
 
     return { inputTokens: Array.from(inputTokens.values()), inputTokenToWanted };
   }

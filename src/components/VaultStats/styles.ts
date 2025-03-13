@@ -1,96 +1,96 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  vaultStats: {
+export const styles = {
+  vaultStats: css.raw({
     display: 'flex',
-    flexGrow: 0,
-    flexShrink: 0,
-    flexDirection: 'column' as const,
-    justifyContent: 'center' as const,
-  },
-  row: {
+    flexGrow: '0',
+    flexShrink: '0',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  }),
+  row: css.raw({
     display: 'grid',
     width: '100%',
     columnGap: '24px',
     rowGap: '24px',
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-    [theme.breakpoints.up('sm')]: {
+    sm: {
       gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
     },
-    [theme.breakpoints.up('md')]: {
+    md: {
       gridTemplateColumns: 'repeat(6, minmax(0, 1fr))',
     },
-  },
-  column: {
+  }),
+  column: css.raw({
     width: '100%',
-    [theme.breakpoints.up('lg')]: {
-      textAlign: 'right' as const,
+    lg: {
+      textAlign: 'right',
     },
-  },
-  valueWithIcon: {
-    flexDirection: 'row' as const,
+  }),
+  valueWithIcon: css.raw({
+    flexDirection: 'row',
     columnGap: '4px',
     alignItems: 'center',
-  },
-  columnFlex: {
+  }),
+  columnFlex: css.raw({
     display: 'flex',
     justifyContent: 'flex-end',
     columnGap: '4px',
-    [theme.breakpoints.up('lg')]: {
-      textAlign: 'right' as const,
+    lg: {
+      textAlign: 'right',
     },
-  },
-  hideMd: {
+  }),
+  hideMd: css.raw({
     display: 'none',
-    [theme.breakpoints.up('lg')]: {
+    lg: {
       display: 'block',
     },
-  },
-  hideSm: {
+  }),
+  hideSm: css.raw({
     display: 'none',
-    [theme.breakpoints.up('md')]: {
+    md: {
       display: 'block',
     },
-  },
-  textGreen: {
-    color: theme.palette.primary.main,
-  },
-  rowDashboard: {
+  }),
+  textGreen: css.raw({
+    color: 'green',
+  }),
+  rowDashboard: css.raw({
     display: 'grid',
     width: '100%',
     gridTemplateColumns: 'minmax(0, 1fr)',
     columnGap: '8px',
-    '& $column': {
-      marginLeft: 'auto',
-      textAlign: 'right' as const,
-    },
-    [theme.breakpoints.up('md')]: {
+    md: {
       gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
     },
-    [theme.breakpoints.up('lg')]: {
+    lg: {
       gridTemplateColumns: 'repeat(6, minmax(0, 1fr))',
     },
+  }),
+  columnDashboard: {
+    marginLeft: 'auto',
+    textAlign: 'right',
   },
-  textOverflow: {
+  textOverflow: css.raw({
     overflow: 'hidden',
-    whiteSpace: 'nowrap' as const,
+    whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
-  },
-  tooltipTrigger: {
+  }),
+  tooltipTrigger: css.raw({
     display: 'inline',
-  },
-  depositWithIcon: {
+  }),
+  depositWithIcon: css.raw({
     display: 'flex',
     gap: '4px',
     justifyContent: 'flex-end',
     alignItems: 'center',
-  },
-  depositIcon: {
+  }),
+  depositIcon: css.raw({
     width: '20px',
     height: '20px',
     color: 'inherit',
-  },
-  depositIconNotEarning: {
-    color: theme.palette.background.buttons.boost,
-  },
-});
+  }),
+  depositIconNotEarning: css.raw({
+    color: 'orangeBoost',
+  }),
+};

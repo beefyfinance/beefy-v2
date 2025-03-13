@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
+import type { BeefyState } from '../../../redux-types.ts';
+import { featureFlag_walletAddressOverride } from '../utils/feature-flags.ts';
 
 export const selectWalletAddress = createSelector(
   (state: BeefyState) => state.user.wallet.address,

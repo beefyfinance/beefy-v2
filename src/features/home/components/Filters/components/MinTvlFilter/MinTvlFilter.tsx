@@ -1,23 +1,23 @@
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { memo, useCallback, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectFilterBigNumber,
   selectFilterBoolean,
-} from '../../../../../data/selectors/filtered-vaults';
-import { AmountInputWithSlider } from '../../../../../vault/components/Actions/Transact/AmountInputWithSlider';
-import { selectMaximumUnderlyingVaultTvl } from '../../../../../data/selectors/vaults';
-import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number';
+} from '../../../../../data/selectors/filtered-vaults.ts';
+import { AmountInputWithSlider } from '../../../../../vault/components/Actions/Transact/AmountInputWithSlider/AmountInputWithSlider.tsx';
+import { selectMaximumUnderlyingVaultTvl } from '../../../../../data/selectors/vaults.ts';
+import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { BigNumber } from 'bignumber.js';
-import { formatLargeUsd } from '../../../../../../helpers/format';
-import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox';
-import { styles } from './styles';
-import { makeStyles } from '@material-ui/core';
+import { formatLargeUsd } from '../../../../../../helpers/format.ts';
+import { LabelledCheckbox } from '../../../../../../components/LabelledCheckbox/LabelledCheckbox.tsx';
+import { styles } from './styles.ts';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { useTranslation } from 'react-i18next';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-const DEFAULT_MAX_TVL = new BigNumber(3_000_000);
+const DEFAULT_MAX_TVL = new BigNumber(3000000);
 
 export const MinTvlFilter = memo(function MinTvlFilter() {
   const { t } = useTranslation();
@@ -69,12 +69,7 @@ export const MinTvlFilter = memo(function MinTvlFilter() {
 
   return (
     <>
-      <LabelledCheckbox
-        label={t('Filter-MinTvl')}
-        onChange={handleShowToggle}
-        checked={show}
-        checkboxClass={classes.checkbox}
-      />
+      <LabelledCheckbox label={t('Filter-MinTvl')} onChange={handleShowToggle} checked={show} />
       {show && (
         <div className={classes.amountContainer}>
           <AmountInputWithSlider
@@ -89,7 +84,7 @@ export const MinTvlFilter = memo(function MinTvlFilter() {
             label={t('Filter-MinTvlLarge')}
             onChange={handleShowLargeToggle}
             checked={showLarge}
-            checkboxClass={classes.largeTvlCheckbox}
+            iconCss={styles.largeTvlCheckbox}
           />
         </div>
       )}

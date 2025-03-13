@@ -1,32 +1,32 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import type { FetchAllBalancesResult } from '../apis/balance/balance-types';
-import { getBalanceApi } from '../apis/instances';
-import type { ChainEntity } from '../entities/chain';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { FetchAllBalancesResult } from '../apis/balance/balance-types.ts';
+import { getBalanceApi } from '../apis/instances.ts';
+import type { ChainEntity } from '../entities/chain.ts';
 import {
   selectAllTokenWhereUserCouldHaveBalance,
   selectUserDepositedVaultIds,
   selectUserVaultBalanceInShareTokenIncludingBoostsBridged,
-} from '../selectors/balance';
-import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
-import { selectChainById } from '../selectors/chains';
+} from '../selectors/balance.ts';
+import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts.ts';
+import { selectChainById } from '../selectors/chains.ts';
 import {
   selectCowcentratedLikeVaultDepositTokens,
   selectTokenByAddress,
-} from '../selectors/tokens';
-import { selectAllGovVaultsByChainId, selectAllVisibleVaultIds } from '../selectors/vaults';
-import { selectWalletAddress } from '../selectors/wallet';
-import type { TokenEntity } from '../entities/token';
+} from '../selectors/tokens.ts';
+import { selectAllGovVaultsByChainId, selectAllVisibleVaultIds } from '../selectors/vaults.ts';
+import { selectWalletAddress } from '../selectors/wallet.ts';
+import type { TokenEntity } from '../entities/token.ts';
 import {
   isCowcentratedLikeVault,
   isCowcentratedVault,
   isGovVault,
   type VaultEntity,
   type VaultGov,
-} from '../entities/vault';
-import { uniqueTokens } from '../../../helpers/tokens';
-import { BIG_ZERO } from '../../../helpers/big-number';
-import type { BoostPromoEntity } from '../entities/promo';
+} from '../entities/vault.ts';
+import { uniqueTokens } from '../../../helpers/tokens.ts';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import type { BoostPromoEntity } from '../entities/promo.ts';
 
 export interface FetchAllBalanceActionParams {
   chainId: ChainEntity['id'];
@@ -44,7 +44,9 @@ export interface FetchAllBalanceFulfilledPayload {
 export const fetchAllBalanceAction = createAsyncThunk<
   FetchAllBalanceFulfilledPayload,
   FetchAllBalanceActionParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('balance/fetchAllBalanceAction', async ({ chainId, walletAddress }, { getState }) => {
   const state = getState();
   const chain = selectChainById(state, chainId);
@@ -78,7 +80,9 @@ export type FetchBalanceParams = {
 export const fetchBalanceAction = createAsyncThunk<
   FetchAllBalanceFulfilledPayload,
   FetchBalanceParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'balance/fetchBalanceAction',
   async ({ chainId, tokens: requestedTokens = [], vaults = [] }, { getState }) => {
@@ -143,7 +147,9 @@ export type RecalculateDepositedVaultsPayload = {
 export const recalculateDepositedVaultsAction = createAsyncThunk<
   RecalculateDepositedVaultsPayload,
   RecalculateDepositedVaultsParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('balance/recalculateDepositedVaultsAction', async ({ walletAddress }, { getState }) => {
   const state = getState();
   const allVaultIds = selectAllVisibleVaultIds(state);

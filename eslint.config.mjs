@@ -1,57 +1,72 @@
 import js from '@eslint/js';
-import ts from 'typescript-eslint';
-import reactPlugin from 'eslint-plugin-react';
-import importPlugin from 'eslint-plugin-import';
-import prettierConfigPlugin from 'eslint-config-prettier';
-import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import tseslint from 'typescript-eslint';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactX from 'eslint-plugin-react-x';
+import reactDom from 'eslint-plugin-react-dom';
+import globals from 'globals';
+import noBarrelFiles from 'eslint-plugin-no-barrel-files';
+import imports from 'eslint-plugin-import';
 
-export default ts.config(
+export default tseslint.config(
   {
-    files: ['src/**/*.{ts,tsx}'],
-    extends: [
-      // recommended rules for JavaScript
-      js.configs.recommended,
-      // recommended rules for TypeScript, overrides some of the recommended rules for JavaScript
-      ...ts.configs.recommended,
-      // recommended rules for React
-      reactPlugin.configs.flat.recommended,
-      // supports (ES6+) import/ export syntax (e.g. query strings
-      importPlugin.flatConfigs.recommended,
-      // disables rules that conflict with Prettier formatting
-      prettierConfigPlugin,
+    ignores: [
+      '.git/',
+      '.github/',
+      '.idea/',
+      '.vscode/',
+      '.cache/',
+      'build/',
+      'node_modules/',
+      'public/',
     ],
-    plugins: {
-      // JSX parsing
-      react: reactPlugin,
-      // ensure all hook dependencies are listed in the dependency array
-      'react-hooks': reactHooksPlugin,
-    },
+  },
+  {
+    extends: [js.configs.recommended, ...tseslint.configs.recommendedTypeChecked],
+    files: ['**/*.{ts,tsx}'],
     languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
       parserOptions: {
-        projectService: true,
+        project: ['./tsconfig.node.json', './tsconfig.app.json', './tsconfig.scripts.json'],
+        tsconfigRootDir: import.meta.dirname,
       },
     },
-    settings: {
-      paths: ['src'],
-      files: ['src/**/*.{ts,tsx}'],
-      react: {
-        version: '18.3.1',
-      },
-      'import/parsers': {
-        '@typescript-eslint/parser': ['.ts', '.tsx'],
-      },
-      'import/resolver': {
-        node: {
-          paths: ['src'],
-          extensions: ['.ts', '.tsx'],
-        },
-        typescript: {
-          project: './tsconfig.json',
-        },
-      },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+      'react-x': reactX,
+      'react-dom': reactDom,
+      'no-barrel-files': noBarrelFiles,
+      'import': imports,
     },
     rules: {
-      ...reactHooksPlugin.configs.recommended.rules,
+      ...reactHooks.configs.recommended.rules,
+      ...reactX.configs['recommended-typescript'].rules,
+      ...reactDom.configs.recommended.rules,
+      // so react-refresh can work (without having to refresh whole page)
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+      // faster dev build/refresh
+      'no-barrel-files/no-barrel-files': 'error',
+      // faster dev build/refresh
+      'import/extensions': [
+        'error',
+        'ignorePackages',
+        {
+          checkTypeImports: true,
+          pathGroupOverrides: [
+            {
+              pattern: '#/styles/**/*',
+              patternOptions: { nocomment: true },
+              action: 'ignore',
+            },
+          ],
+        },
+      ],
+      // you can disable this inline if exporting as default for React.lazy
       'no-restricted-syntax': [
         'error',
         {
@@ -77,6 +92,10 @@ export default ts.config(
               importNames: ['default'],
               message: 'Use named imports only for bignumber.js',
             },
+            {
+              name: '@floating-ui/react-dom',
+              message: 'Use @floating-ui/react instead',
+            },
           ],
           patterns: [
             {
@@ -99,30 +118,29 @@ export default ts.config(
         },
       ],
       '@typescript-eslint/no-non-null-assertion': 'off',
-      'react/jsx-no-target-blank': [
+      '@typescript-eslint/no-floating-promises': [
         'error',
         {
-          allowReferrer: true,
+          allowForKnownSafeCalls: [
+            { from: 'file', name: ['ThunkDispatch', 'BeefyDispatchFn', 'NavigateFunction'] },
+          ],
         },
       ],
-      'react/display-name': 'warn',
-      'react/prop-types': 'off',
-      'react/react-in-jsx-scope': 'off',
-      'react/no-children-prop': 'off',
+      '@typescript-eslint/restrict-template-expressions': 'off',
+      '@typescript-eslint/require-await': 'off', // Some interfaces require a promise to be returned, didn't want to wrap them all in Promise.resolve
+      '@typescript-eslint/unbound-method': 'off', // Breaks destructuring of RTK APIs
+      '@typescript-eslint/no-unsafe-member-access': 'off', // TODO try to enable this after viem migration
+      '@typescript-eslint/no-unsafe-call': 'off', // TODO try to enable this after viem migration
+      '@typescript-eslint/no-unsafe-assignment': 'off', // TODO try to enable this after viem migration
+      '@typescript-eslint/no-unsafe-argument': 'off', // TODO try to enable this after viem migration
+      'react-dom/no-missing-iframe-sandbox': 'off', // TODO investigate what each onramp provider needs
+      'react-dom/no-unsafe-target-blank': 'off', // noopener is implicit now when target="_blank"
+      'react-x/no-array-index-key': 'off', // sometimes there is no alternative
+      // 'react-x/display-name': 'warn',
+      // 'react-x/prop-types': 'off',
+      // 'react-x/react-in-jsx-scope': 'off',
+      // 'react-x/no-children-prop': 'off',
       'react-hooks/exhaustive-deps': 'warn',
     },
   },
-  {
-    ignores: [
-      '.git/',
-      '.github/',
-      '.idea/',
-      '.vscode/',
-      'build/',
-      'node_modules/',
-      'public/',
-      'scripts/',
-      '*.*',
-    ],
-  }
 );

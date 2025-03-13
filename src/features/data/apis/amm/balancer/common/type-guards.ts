@@ -1,4 +1,4 @@
-import { BalancerFeature, type IBalancerAllPool, type IBalancerSinglePool } from '../types';
+import { BalancerFeature, type IBalancerAllPool, type IBalancerSinglePool } from '../types.ts';
 
 export function isBalancerSinglePool(
   pool: IBalancerSinglePool | IBalancerAllPool

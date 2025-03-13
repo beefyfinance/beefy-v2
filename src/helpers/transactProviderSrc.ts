@@ -1,7 +1,8 @@
-import { createGlobLoader } from './globLoader';
+import { createGlobLoader } from './globLoader.ts';
 
-const pathToUrl = import.meta.glob('../images/transact-providers/*.svg', {
-  as: 'url',
+const pathToUrl = import.meta.glob<string>('../images/transact-providers/*.svg', {
+  query: '?url',
+  import: 'default',
   eager: true,
 });
 

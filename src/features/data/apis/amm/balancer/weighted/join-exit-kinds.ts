@@ -1,6 +1,6 @@
-import { PoolExitKind, PoolJoinKind } from '../common/types';
-import type { OptionalRecord } from '../../../../utils/types-utils';
-import { WeightedPoolExitKind, WeightedPoolJoinKind } from './types';
+import { PoolExitKind, PoolJoinKind } from '../common/types.ts';
+import type { OptionalRecord } from '../../../../utils/types-utils.ts';
+import { WeightedPoolExitKind, WeightedPoolJoinKind } from './types.ts';
 
 export const poolJoinKindToWeightedPoolJoinKind: OptionalRecord<
   PoolJoinKind,

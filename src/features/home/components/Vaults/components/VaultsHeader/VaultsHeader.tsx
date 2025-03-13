@@ -1,18 +1,35 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { VaultsSearch } from '../VaultsSearch';
-import { VaultsSort } from '../VaultsSort';
-
-const useStyles = makeStyles(styles);
+import { VaultsSearch } from '../VaultsSearch/VaultsSearch.tsx';
+import { VaultsSort } from '../VaultsSort/VaultsSort.tsx';
+import { css } from '@repo/styles/css';
 
 export const VaultsHeader = memo(function VaultsHeader() {
-  const classes = useStyles();
-
   return (
-    <div className={classes.header}>
-      <VaultsSearch className={classes.searchWidth} />
+    <div className={headerCss}>
+      <VaultsSearch />
       <VaultsSort />
     </div>
   );
+});
+
+const headerCss = css({
+  display: 'grid',
+  columnGap: '24px',
+  rowGap: '16px',
+  width: '100%',
+  color: 'text.dark',
+  background: 'background.content.dark',
+  padding: '16px',
+  gridTemplateColumns: '1fr',
+  alignItems: 'center',
+  backgroundClip: 'padding-box',
+  sm: {
+    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+  },
+  lg: {
+    gridTemplateColumns: 'minmax(0, 40fr) minmax(0, 60fr)',
+    position: 'sticky',
+    top: 0,
+    zIndex: '[1]',
+  },
 });

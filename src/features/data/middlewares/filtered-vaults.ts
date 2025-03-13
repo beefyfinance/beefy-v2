@@ -1,32 +1,32 @@
-import type { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types.ts';
 import { createListenerMiddleware, isAnyOf, isFulfilled } from '@reduxjs/toolkit';
 import {
   fetchAllBalanceAction,
   fetchBalanceAction,
   recalculateDepositedVaultsAction,
-} from '../actions/balance';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { fetchAllVaults } from '../actions/vaults';
-import { fetchAllPricesAction } from '../actions/prices';
-import { fetchApyAction } from '../actions/apy';
-import { fetchPlatforms } from '../actions/platforms';
-import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import { calculateZapAvailabilityAction } from '../actions/zap';
-import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults';
-import { filteredVaultsActions } from '../reducers/filtered-vaults';
+} from '../actions/balance.ts';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
+import { fetchAllVaults } from '../actions/vaults.ts';
+import { fetchAllPricesAction } from '../actions/prices.ts';
+import { fetchApyAction } from '../actions/apy.ts';
+import { fetchPlatforms } from '../actions/platforms.ts';
+import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
+import { calculateZapAvailabilityAction } from '../actions/zap.ts';
+import { recalculateFilteredVaultsAction } from '../actions/filtered-vaults.ts';
+import { filteredVaultsActions } from '../reducers/filtered-vaults.ts';
 import type { RehydrateAction } from 'redux-persist/es/types';
 import { REHYDRATE } from 'redux-persist/es/constants';
-import { fetchChainConfigs } from '../actions/chains';
-import { selectIsConfigAvailable } from '../selectors/data-loader';
+import { fetchChainConfigs } from '../actions/chains.ts';
+import { selectIsConfigAvailable } from '../selectors/data-loader.ts';
 import {
   accountHasChanged,
   chainHasChanged,
   chainHasChangedToUnsupported,
   userDidConnect,
   walletHasDisconnected,
-} from '../reducers/wallet/wallet';
-import { selectWalletAddress } from '../selectors/wallet';
-import { initPromos, promosRecalculatePinned } from '../actions/promos';
+} from '../reducers/wallet/wallet.ts';
+import { selectWalletAddress } from '../selectors/wallet.ts';
+import { initPromos, promosRecalculatePinned } from '../actions/promos.ts';
 
 const filteredVaultsListener = createListenerMiddleware<BeefyState>();
 
@@ -86,7 +86,7 @@ const hasWalletChanged = isAnyOf(
  */
 filteredVaultsListener.startListening({
   matcher: hasDataLoaded,
-  effect: async (action, { dispatch, condition, cancelActiveListeners, unsubscribe }) => {
+  effect: async (_action, { dispatch, condition, cancelActiveListeners, unsubscribe }) => {
     // Stop listening for this
     unsubscribe();
     cancelActiveListeners();
@@ -108,7 +108,7 @@ function listenForChanges() {
    */
   filteredVaultsListener.startListening({
     matcher: hasDataChanged,
-    effect: async (action, { dispatch, delay, cancelActiveListeners }) => {
+    effect: async (_action, { dispatch, delay, cancelActiveListeners }) => {
       // Debounce a long time to give other chain data time to load
       cancelActiveListeners();
       await delay(500);
@@ -125,7 +125,7 @@ function listenForChanges() {
   filteredVaultsListener.startListening({
     matcher: hasWalletChanged,
     effect: async (
-      action,
+      _action,
       { dispatch, delay, cancelActiveListeners, getState, getOriginalState }
     ) => {
       const hasWalletChanged =

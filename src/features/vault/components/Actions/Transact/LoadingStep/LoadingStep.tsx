@@ -1,10 +1,10 @@
 import { memo } from 'react';
-import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
+import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const LoadingStep = memo(function LoadingStep() {
   const { t } = useTranslation();

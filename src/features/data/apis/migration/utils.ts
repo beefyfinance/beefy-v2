@@ -4,17 +4,17 @@ import type {
   MigratorUnstakeProps,
   MigratorExecuteProps,
   MigratorUpdateProps,
-} from './migration-types';
-import type { BeefyState } from '../../../../redux-types';
-import { selectVaultById } from '../../selectors/vaults';
-import { selectTokenByAddress } from '../../selectors/tokens';
-import { selectUserBalanceToMigrateByVaultId } from '../../selectors/migration';
-import type { Step } from '../../reducers/wallet/stepper';
-import { walletActions } from '../../actions/wallet-actions';
-import { startStepperWithSteps } from '../../actions/stepper';
-import { isTokenErc20 } from '../../entities/token';
-import { selectAllowanceByTokenAddress } from '../../selectors/allowances';
-import type { VaultEntity } from '../../entities/vault';
+} from './migration-types.ts';
+import type { BeefyState } from '../../../../redux-types.ts';
+import { selectVaultById } from '../../selectors/vaults.ts';
+import { selectTokenByAddress } from '../../selectors/tokens.ts';
+import { selectUserBalanceToMigrateByVaultId } from '../../selectors/migration.ts';
+import type { Step } from '../../reducers/wallet/stepper.ts';
+import { walletActions } from '../../actions/wallet-actions.ts';
+import { startStepperWithSteps } from '../../actions/stepper.ts';
+import { isTokenErc20 } from '../../entities/token.ts';
+import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
+import type { VaultEntity } from '../../entities/vault.ts';
 import { BigNumber } from 'bignumber.js';
 import type { Hash } from 'viem';
 
@@ -44,7 +44,6 @@ export function buildExecute(
     vault: VaultEntity,
     amount: BigNumber,
     state: BeefyState
-    //  // / / / // // ss eslint-disable-next-line
   ) => Promise<(args: MigratorUnstakeProps) => Promise<Hash>>
 ) {
   return createAsyncThunk<void, MigratorExecuteProps, { state: BeefyState }>(

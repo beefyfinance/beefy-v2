@@ -1,7 +1,7 @@
 import { BigNumber } from 'bignumber.js';
 import { mapValues } from 'lodash-es';
-import type { TokenAmount } from '../features/data/apis/transact/transact-types';
-import type { TokenEntity } from '../features/data/entities/token';
+import type { TokenAmount } from '../features/data/apis/transact/transact-types.ts';
+import type { TokenEntity } from '../features/data/entities/token.ts';
 
 export type BigNumberish = BigNumber.Value;
 
@@ -128,7 +128,7 @@ export function fromWeiToTokenAmount(value: BigNumber, token: TokenEntity): Toke
  * e.g. "BN(123.567)"
  * Use only for debugging
  */
-export function bigNumberToStringDeep(input: unknown) {
+export function bigNumberToStringDeep(input: unknown): unknown {
   if (input && typeof input === 'object') {
     if (input instanceof Date) {
       return input;

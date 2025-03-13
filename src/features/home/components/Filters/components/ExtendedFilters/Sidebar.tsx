@@ -1,12 +1,10 @@
-import { memo, useMemo } from 'react';
-import { Drawer, makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { ExtendedFilters } from './ExtendedFilters';
+import { memo } from 'react';
+import { ExtendedFilters } from './ExtendedFilters.tsx';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../../../../../../components/Button';
-import { CloseOutlined } from '@material-ui/icons';
-
-const useStyles = makeStyles(styles);
+import { Button } from '../../../../../../components/Button/Button.tsx';
+import CloseOutlined from '../../../../../../images/icons/mui/CloseOutlined.svg?react';
+import { Drawer } from '../../../../../../components/Modal/Drawer.tsx';
+import { styled } from '@repo/styles/jsx';
 
 export type SidebarProps = {
   open: boolean;
@@ -15,30 +13,80 @@ export type SidebarProps = {
 
 export const Sidebar = memo<SidebarProps>(function Sidebar({ open, onClose }) {
   const { t } = useTranslation();
-  const classes = useStyles();
-  const drawerClasses = useMemo(
-    () => ({
-      paper: classes.sidebar,
-    }),
-    [classes]
-  );
 
   return (
-    <Drawer anchor="right" open={open} onClose={onClose} classes={drawerClasses}>
-      <div className={classes.sidebarHeader}>
-        <div className={classes.sidebarHeaderTitle}>{t('Filter-Filters')}</div>
-        <button onClick={onClose} className={classes.sidebarHeaderClose}>
-          <CloseOutlined />
-        </button>
-      </div>
-      <div className={classes.sidebarMain}>
-        <ExtendedFilters desktopView={false} />
-      </div>
-      <div className={classes.sidebarFooter}>
-        <Button fullWidth={true} borderless={true} onClick={onClose} variant="success">
-          {t('Filter-Close')}
-        </Button>
-      </div>
+    <Drawer scrollable={false} open={open} onClose={onClose}>
+      <Layout>
+        <Header>
+          <Title>{t('Filter-Filters')}</Title>
+          <CloseIconButton onClick={onClose}>
+            <CloseOutlined />
+          </CloseIconButton>
+        </Header>
+        <Main>
+          <ExtendedFilters desktopView={false} />
+        </Main>
+        <Footer>
+          <Button fullWidth={true} borderless={true} onClick={onClose} variant="success">
+            {t('Filter-Close')}
+          </Button>
+        </Footer>
+      </Layout>
     </Drawer>
   );
+});
+
+const Layout = styled('div', {
+  base: {
+    backgroundColor: 'background.content',
+    height: '100vh',
+    maxHeight: '100%',
+    width: '320px',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+});
+
+const Header = styled('div', {
+  base: {
+    textStyle: 'h2',
+    backgroundColor: 'background.content.dark',
+    color: 'text.light',
+    padding: '24px',
+    flexGrow: 0,
+    flexShrink: 0,
+    display: 'flex',
+    alignItems: 'center',
+  },
+});
+
+const Title = styled('div', {
+  base: {
+    marginRight: '24px',
+  },
+});
+
+const CloseIconButton = styled('button', {
+  base: {
+    marginLeft: 'auto',
+    color: 'text.dark',
+  },
+});
+
+const Main = styled('div', {
+  base: {
+    padding: '24px',
+    flexGrow: 1,
+    flexShrink: 1,
+    minHeight: 0,
+    overflowY: 'auto',
+  },
+});
+
+const Footer = styled('div', {
+  base: {
+    padding: '24px',
+    flexGrow: 0,
+    flexShrink: 0,
+  },
 });

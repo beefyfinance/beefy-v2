@@ -1,40 +1,48 @@
-import { makeStyles } from '@material-ui/core';
-import { memo } from 'react';
-import { BasicTabs } from '../../../../../../../components/Tabs/BasicTabs';
-import type { VaultEntity } from '../../../../../../data/entities/vault';
-import { styles } from './styles';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
+import { memo, useCallback, useMemo } from 'react';
+import type { VaultEntity } from '../../../../../../data/entities/vault.ts';
+import { styles } from './styles.ts';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
-import { useAppSelector } from '../../../../../../../store';
-import { selectCowcentratedLikeVaultDepositTokens } from '../../../../../../data/selectors/tokens';
+import { css, type CssStyles } from '@repo/styles/css';
+import { useAppSelector } from '../../../../../../../store.ts';
+import { selectCowcentratedLikeVaultDepositTokens } from '../../../../../../data/selectors/tokens.ts';
+import { ToggleButtons } from '../../../../../../../components/ToggleButtons/ToggleButtons.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface CommonFooterProps {
   period: number;
   handlePeriod: (period: number) => void;
   labels: string[];
-  className?: string;
-  tabsClassName?: string;
+  css?: CssStyles;
 }
 
 interface OverviewFooterProps extends CommonFooterProps {
   position: boolean;
 }
 
-export const OverviewFooter = memo<OverviewFooterProps>(function OverviewFooter({
+export const OverviewFooter = memo(function OverviewFooter({
   period,
   handlePeriod,
   labels,
-  className,
-  tabsClassName,
+  css: cssProp,
   position,
-}) {
+}: OverviewFooterProps) {
   const classes = useStyles();
   const { t } = useTranslation();
+  const options = useMemo(
+    () => labels.map((label, index) => ({ value: index.toString(), label })),
+    [labels]
+  );
+  const handleChange = useCallback(
+    (newValue: string) => {
+      handlePeriod(Number(newValue));
+    },
+    [handlePeriod]
+  );
 
   return (
-    <div className={clsx(classes.footer, className)}>
+    <div className={css(styles.footer, cssProp)}>
       <div className={classes.legendContainer}>
         {position ? (
           <div className={classes.legendItem}>
@@ -51,13 +59,16 @@ export const OverviewFooter = memo<OverviewFooterProps>(function OverviewFooter(
           {t('HOLD Value')}
         </div>
       </div>
-      <div className={clsx(classes.tabsContainer, tabsClassName)}>
-        <BasicTabs
-          onChange={(newValue: number) => handlePeriod(newValue)}
-          labels={labels}
-          value={period}
-        />
-      </div>
+
+      <ToggleButtons
+        value={period.toString()}
+        options={options}
+        onChange={handleChange}
+        noBackground={true}
+        noPadding={true}
+        noBorder={true}
+        variant="range"
+      />
     </div>
   );
 });
@@ -66,21 +77,30 @@ type FooterProps = CommonFooterProps & {
   vaultId: VaultEntity['id'];
 };
 
-export const FeesFooter = memo<FooterProps>(function Footer({
+export const FeesFooter = memo(function Footer({
   period,
   handlePeriod,
   labels,
-  tabsClassName,
   vaultId,
-  className,
-}) {
+  css: cssProp,
+}: FooterProps) {
   const classes = useStyles();
   const [token0, token1] = useAppSelector(state =>
     selectCowcentratedLikeVaultDepositTokens(state, vaultId)
   );
+  const options = useMemo(
+    () => labels.map((label, index) => ({ value: index.toString(), label })),
+    [labels]
+  );
+  const handleChange = useCallback(
+    (newValue: string) => {
+      handlePeriod(Number(newValue));
+    },
+    [handlePeriod]
+  );
 
   return (
-    <div className={clsx(classes.footer, className)}>
+    <div className={css(styles.footer, cssProp)}>
       <div className={classes.legendContainer}>
         <div className={classes.legendItem}>
           <div className={classes.usdReferenceLine} />
@@ -91,13 +111,14 @@ export const FeesFooter = memo<FooterProps>(function Footer({
           {token1.symbol}
         </div>
       </div>
-      <div className={clsx(classes.tabsContainer, tabsClassName)}>
-        <BasicTabs
-          onChange={(newValue: number) => handlePeriod(newValue)}
-          labels={labels}
-          value={period}
-        />
-      </div>
+      <ToggleButtons
+        value={period.toString()}
+        options={options}
+        onChange={handleChange}
+        noBackground={true}
+        noPadding={true}
+        variant="range"
+      />
     </div>
   );
 });

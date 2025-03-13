@@ -1,6 +1,6 @@
-import type { BeefyChainlinkBridgeConfig } from '../../config-types';
-import { CommonBridgeProvider } from './CommonBridgeProvider';
+import type { BeefyChainlinkBridgeConfig } from '../../config-types.ts';
+import { CommonBridgeProvider } from './CommonBridgeProvider.ts';
 
 export class ChainlinkProvider extends CommonBridgeProvider<BeefyChainlinkBridgeConfig> {
-  public readonly id = 'chainlink' as const;
+  public readonly id = 'chainlink';
 }

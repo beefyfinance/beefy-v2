@@ -1,17 +1,17 @@
 // To run: yarn launchpool bsc <0x12312312> CafeSwap
 import { promises as fs } from 'fs';
 
-import { getVaultsForChain } from './common/config';
-import { BoostAbi } from '../src/config/abi/BoostAbi';
-import { ERC20Abi } from '../src/config/abi/ERC20Abi';
-import partners from '../src/config/boost/partners.json';
-import { getViemClient } from './common/viem';
-import { getContract } from 'viem';
+import { addressBookToAppId, type AppChainId, getVaultsForChain } from './common/config.ts';
+import { BoostAbi } from '../src/config/abi/BoostAbi.ts';
+import { ERC20Abi } from '../src/config/abi/ERC20Abi.ts';
+import partners from '../src/config/promos/partners.json';
+import { getViemClient } from './common/viem.ts';
+import { getContract, type Address, getAddress } from 'viem';
 
 const partnersFile = './src/config/boost/partners.json';
 let boostsFile = './src/config/boost/$chain.json';
 
-async function boostParams(chain, boostAddress) {
+async function boostParams(chain: AppChainId, boostAddress: Address) {
   const viemClient = getViemClient(chain);
   const boostContract = getContract({
     abi: BoostAbi,
@@ -44,8 +44,8 @@ async function boostParams(chain, boostAddress) {
 }
 
 async function generateLaunchpool() {
-  const chain = process.argv[2];
-  const boostAddress = process.argv[3];
+  const chain = addressBookToAppId(process.argv[2]);
+  const boostAddress = getAddress(process.argv[3]);
   const partner = process.argv[4];
   const partnerId = partner.toLowerCase();
   boostsFile = boostsFile.replace('$chain', chain);
@@ -95,6 +95,9 @@ async function generateLaunchpool() {
     console.log('\nTODO update text and links in partners.json');
   }
 }
+
+console.error('This script needs updated to support the new promos config.');
+process.exit(-1);
 
 generateLaunchpool().catch(err => {
   console.error(err);

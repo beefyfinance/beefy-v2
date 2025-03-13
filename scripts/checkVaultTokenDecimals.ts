@@ -1,9 +1,10 @@
-import { appToAddressBookId, getVaultsForChain } from './common/config';
-import { saveJson } from './common/files';
-import { allChainIds, AppChainId } from './common/chains';
-import { sortVaultKeys } from './common/vault-fields';
-import { Abi, Address, getContract } from 'viem';
-import { getViemClient } from './common/viem';
+import { getVaultsForChain } from './common/config.ts';
+import { saveJson } from './common/files.ts';
+import { allChainIds, type AppChainId } from './common/chains.ts';
+import { sortVaultKeys } from './common/vault-fields.ts';
+import { type Abi, type Address, getContract } from 'viem';
+import { getViemClient } from './common/viem.ts';
+import type { VaultConfig } from '../src/features/data/apis/config-types.ts';
 
 const decimalsAbi = [
   {
@@ -29,7 +30,6 @@ async function fetchDecimalsForTokens(
 ): Promise<Record<string, number>> {
   const viemClient = getViemClient(chainId);
   const uniqAddresses = Array.from(new Set(tokenAddresses.map(a => a.toLowerCase())));
-  const abChain = appToAddressBookId(chainId);
   const results = await Promise.all(
     uniqAddresses.map(address => {
       const contract = getContract({
@@ -46,35 +46,49 @@ async function fetchDecimalsForTokens(
 
 async function getModifiedConfig(chainId: AppChainId) {
   const vaults = await getVaultsForChain(chainId);
+  const checkVault = (
+    vault: VaultConfig
+  ): vault is Omit<VaultConfig, 'tokenAddress'> & { tokenAddress: string } =>
+    !!vault.tokenAddress && vault.type !== 'cowcentrated';
   const decimalsByAddress = await fetchDecimalsForTokens(
-    vaults.filter(vault => !!vault.tokenAddress).map(vault => vault.tokenAddress!),
+    vaults.filter(checkVault).map(vault => vault.tokenAddress),
     chainId
   );
 
   return Promise.all(
     vaults.map(async vault => {
-      if (vault.tokenAddress) {
-        const existing = vault.tokenDecimals;
-        const expected = decimalsByAddress[vault.tokenAddress.toLowerCase()];
-
-        if (existing !== expected) {
-          console.log(
-            `Changing tokenDecimals of vault ${vault.id} on ${vault.network} from ${existing} to ${expected}...`
-          );
-          vault = { ...vault, tokenDecimals: expected };
-        }
+      if (!checkVault(vault)) {
+        return vault;
+      }
+      const existing = vault.tokenDecimals;
+      const expected = decimalsByAddress[vault.tokenAddress.toLowerCase()];
+      if (!expected || isNaN(expected)) {
+        console.error(`Failed to fetch decimals for token ${vault.tokenAddress} on ${chainId}`);
+        return vault;
       }
 
-      return sortVaultKeys(vault);
+      if (existing === expected) {
+        return vault;
+      }
+
+      console.log(
+        `Changing tokenDecimals of vault ${vault.id} on ${vault.network} from ${existing} to ${expected}...`
+      );
+      return sortVaultKeys({ ...vault, tokenDecimals: expected });
     })
   );
 }
 
 async function start() {
-  const modified = await Promise.all(allChainIds.map(getModifiedConfig));
+  const modified = await Promise.allSettled(allChainIds.map(getModifiedConfig));
 
   for (let i = 0; i < allChainIds.length; i++) {
-    await saveJson(`./src/config/vault/${allChainIds[i]}.json`, modified[i], true);
+    const result = modified[i];
+    if (result.status === 'rejected') {
+      console.error(`Failed to fetch decimals for chain ${allChainIds[i]}:`, result.reason);
+      continue;
+    }
+    await saveJson(`./src/config/vault/${allChainIds[i]}.json`, result.value, 'prettier');
   }
 }
 

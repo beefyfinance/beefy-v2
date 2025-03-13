@@ -1,4 +1,4 @@
-import type { ChainId } from '../../../../entities/chain';
+import type { ChainId } from '../../../../entities/chain.ts';
 
 // https://api.unstoppabledomains.com/resolve/supported_tlds
 // UD TLDs can be registered on ethereum or polygon

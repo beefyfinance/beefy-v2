@@ -1,14 +1,14 @@
-import type { BeefyState } from '../../../redux-types';
+import type { BeefyState } from '../../../redux-types.ts';
 import { createListenerMiddleware, isFulfilled } from '@reduxjs/toolkit';
 import {
   fetchAllBalanceAction,
   fetchBalanceAction,
   recalculateDepositedVaultsAction,
-} from '../actions/balance';
-import { initiateBoostForm } from '../actions/boosts';
-import { initiateMinterForm } from '../actions/minters';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { createWalletDebouncer } from '../../../helpers/middleware';
+} from '../actions/balance.ts';
+import { initiateBoostForm } from '../actions/boosts.ts';
+import { initiateMinterForm } from '../actions/minters.ts';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
+import { createWalletDebouncer } from '../../../helpers/middleware.ts';
 
 const balanceListener = createListenerMiddleware<BeefyState>();
 

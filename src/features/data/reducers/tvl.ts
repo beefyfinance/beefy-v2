@@ -1,19 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { type BigNumber } from 'bignumber.js';
-import { mooAmountToOracleAmount } from '../utils/ppfs';
+import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import type { Draft } from 'immer';
-import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import type { BoostPromoEntity } from '../entities/promo';
-import { isStandardVault, type VaultCowcentrated, type VaultEntity } from '../entities/vault';
-import { selectBoostById } from '../selectors/boosts';
-import { selectTokenByAddress, selectTokenPriceByAddress } from '../selectors/tokens';
-import { selectVaultById } from '../selectors/vaults';
-import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
-import type { BeefyState } from '../../../redux-types';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import type { ChainEntity } from '../entities/chain';
-import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
-import { selectActiveChainIds } from '../selectors/chains';
+import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
+import type { BoostPromoEntity } from '../entities/promo.ts';
+import { isStandardVault, type VaultCowcentrated, type VaultEntity } from '../entities/vault.ts';
+import { selectBoostById } from '../selectors/boosts.ts';
+import { selectTokenByAddress, selectTokenPriceByAddress } from '../selectors/tokens.ts';
+import { selectVaultById } from '../selectors/vaults.ts';
+import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types.ts';
+import type { BeefyState } from '../../../redux-types.ts';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
+import { selectActiveChainIds } from '../selectors/chains.ts';
 
 /**
  * State containing APY infos indexed by vault id
@@ -154,7 +154,9 @@ function addContractDataToState(
   }
 
   // create an index of ppfs for boost tvl usage
-  const ppfsPerVaultId: { [vaultId: VaultEntity['id']]: BigNumber } = {};
+  const ppfsPerVaultId: {
+    [vaultId: VaultEntity['id']]: BigNumber;
+  } = {};
   for (const vault of contractData.standardVaults) {
     ppfsPerVaultId[vault.id] = vault.pricePerFullShare;
   }
@@ -203,14 +205,14 @@ function addContractDataToState(
   }
 
   const activeChainIds = selectActiveChainIds(state);
-  const byChaindIdTotals = {};
+  const byChaindIdTotals: Draft<TvlState['byChaindId']> = {};
   let totalTvl = BIG_ZERO;
   for (const [vaultId, vaultTvl] of Object.entries(sliceState.byVaultId)) {
     const vault = selectVaultById(state, vaultId);
 
-    byChaindIdTotals[vault.chainId] = byChaindIdTotals[vault.chainId]
-      ? byChaindIdTotals[vault.chainId].plus(vaultTvl.tvl)
-      : vaultTvl.tvl;
+    byChaindIdTotals[vault.chainId] = (byChaindIdTotals[vault.chainId] || BIG_ZERO).plus(
+      vaultTvl.tvl
+    );
 
     // Only include active chains in total
     if (activeChainIds.includes(vault.chainId)) {

@@ -1,8 +1,8 @@
-import type { PairData as BasePairData } from './UniswapV2Pool';
-import { UniswapV2Pool } from './UniswapV2Pool';
+import type { PairData as BasePairData } from './UniswapV2Pool.ts';
+import { UniswapV2Pool } from './UniswapV2Pool.ts';
 import { BigNumber } from 'bignumber.js';
-import type { SwapFeeParams } from '../types';
-import { fetchContract } from '../../rpc-contract/viem-contract';
+import type { SwapFeeParams } from '../types.ts';
+import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import type { Abi } from 'abitype';
 
 type PairData = BasePairData & {

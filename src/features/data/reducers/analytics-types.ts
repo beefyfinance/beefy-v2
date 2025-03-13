@@ -1,13 +1,13 @@
 import type { BigNumber } from 'bignumber.js';
-import type { VaultEntity } from '../entities/vault';
+import type { VaultEntity } from '../entities/vault.ts';
 import type {
   ClmPriceHistoryEntryClassic,
   ClmPriceHistoryEntryClm,
-} from '../apis/clm/clm-api-types';
-import type { AnyTimelineEntity } from '../entities/analytics';
-import type { ClmUserHarvestsTimeline } from '../actions/analytics';
-import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types';
-import type { DatabarnProductPriceRow } from '../apis/databarn/databarn-types';
+} from '../apis/clm/clm-api-types.ts';
+import type { AnyTimelineEntity } from '../entities/analytics.ts';
+import type { ClmUserHarvestsTimeline } from '../actions/analytics.ts';
+import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types.ts';
+import type { DatabarnProductPriceRow } from '../apis/databarn/databarn-types.ts';
 
 type StatusType = 'idle' | 'pending' | 'fulfilled' | 'rejected';
 

@@ -1,9 +1,9 @@
 import { type AnyAction, createSlice, type Draft } from '@reduxjs/toolkit';
-import type { VaultEntity } from '../../entities/vault';
+import type { VaultEntity } from '../../entities/vault.ts';
 import { type BigNumber } from 'bignumber.js';
-import { fetchAllMigrators } from '../../actions/migrator';
-import type { CommonMigrationUpdateFulfilledAction } from '../../apis/migration/migration-types';
-import type { BaseMigrationConfig } from '../../apis/config-types';
+import { fetchAllMigrators } from '../../actions/migrator.ts';
+import type { CommonMigrationUpdateFulfilledAction } from '../../apis/migration/migration-types.ts';
+import type { BaseMigrationConfig } from '../../apis/config-types.ts';
 
 export type MigrationConfig = BaseMigrationConfig;
 
@@ -35,7 +35,7 @@ function isCommonMigrationUpdateFulfilledAction(
   action: AnyAction
 ): action is CommonMigrationUpdateFulfilledAction {
   const migrationId = action.payload?.migrationId || undefined;
-  return migrationId && action.type === `migration/${migrationId}/update/fulfilled`;
+  return !!migrationId && action.type === `migration/${migrationId}/update/fulfilled`;
 }
 
 export const migrationSlice = createSlice({

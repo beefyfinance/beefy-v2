@@ -1,25 +1,28 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../../redux-types';
-import { getMerklRewardsApi } from '../../apis/instances';
-import type { ChainEntity } from '../../entities/chain';
-import { selectAllChainIds, selectChainByNetworkChainId } from '../../selectors/chains';
-import { selectVaultByAddressOrUndefined } from '../../selectors/vaults';
-import { selectMerklRewardsForUserShouldLoad } from '../../selectors/data-loader';
+import type { BeefyState } from '../../../../redux-types.ts';
+import { getMerklRewardsApi } from '../../apis/instances.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
+import { selectAllChainIds, selectChainByNetworkChainId } from '../../selectors/chains.ts';
+import { selectVaultByAddressOrUndefined } from '../../selectors/vaults.ts';
+import { selectMerklRewardsForUserShouldLoad } from '../../selectors/data-loader.ts';
 import { type Address, getAddress } from 'viem';
 import {
   getCowcentratedPool,
   isCowcentratedLikeVault,
   isCowcentratedVault,
   type VaultEntity,
-} from '../../entities/vault';
-import { isDefined } from '../../utils/array-utils';
-import { fromWeiString } from '../../../../helpers/big-number';
-import { pushOrSet } from '../../../../helpers/object';
-import type { MerklTokenReward, MerklVaultReward } from '../../reducers/wallet/user-rewards-types';
+} from '../../entities/vault.ts';
+import { isDefined } from '../../utils/array-utils.ts';
+import { fromWeiString } from '../../../../helpers/big-number.ts';
+import { pushOrSet } from '../../../../helpers/object.ts';
+import type {
+  MerklTokenReward,
+  MerklVaultReward,
+} from '../../reducers/wallet/user-rewards-types.ts';
 import type {
   FetchUserMerklRewardsActionParams,
   FetchUserMerklRewardsFulfilledPayload,
-} from './merkl-user-rewards-types';
+} from './merkl-user-rewards-types.ts';
 
 // ChainId -> Merkl Distributor contract address
 // https://app.merkl.xyz/status
@@ -46,9 +49,12 @@ export const MERKL_SUPPORTED_CHAINS: Partial<Record<ChainEntity['id'], Address>>
   sonic: '0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae',
 };
 
-function parseReasonId(
-  reasonId: string
-): { type: VaultEntity['type']; address: string } | undefined {
+function parseReasonId(reasonId: string):
+  | {
+      type: VaultEntity['type'];
+      address: string;
+    }
+  | undefined {
   const parts = reasonId.trim().split('_');
   if (parts.length !== 2) {
     return undefined;
@@ -87,7 +93,9 @@ function addVaultRewardToExisting(existing: MerklVaultReward, next: MerklVaultRe
 export const fetchUserMerklRewardsAction = createAsyncThunk<
   FetchUserMerklRewardsFulfilledPayload,
   FetchUserMerklRewardsActionParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >(
   'rewards/fetchUserMerklRewardsAction',
   async ({ walletAddress }, { getState }) => {

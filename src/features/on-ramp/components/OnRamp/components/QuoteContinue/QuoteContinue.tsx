@@ -1,22 +1,18 @@
 import { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
-import { Button } from '../../../../../../components/Button';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { selectCanQuote, selectHaveQuote } from '../../../../../data/selectors/on-ramp';
-import { QuoteBest } from '../QuoteBest';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
-import { FormStep } from '../../../../../data/reducers/on-ramp-types';
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
+import { Button } from '../../../../../../components/Button/Button.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { selectCanQuote, selectHaveQuote } from '../../../../../data/selectors/on-ramp.ts';
+import { QuoteBest } from '../QuoteBest/QuoteBest.tsx';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
+import { FormStep } from '../../../../../data/reducers/on-ramp-types.ts';
 import { useTranslation } from 'react-i18next';
 
-const useStyles = makeStyles(styles);
-
 export type QuoteContinueProps = {
-  className?: string;
+  css?: CssStyles;
 };
-export const QuoteContinue = memo<QuoteContinueProps>(function QuoteContinue({ className }) {
-  const classes = useStyles();
+export const QuoteContinue = memo(function QuoteContinue({ css: cssProp }: QuoteContinueProps) {
   const canQuote = useAppSelector(selectCanQuote);
   const haveQuote = useAppSelector(selectHaveQuote);
   const dispatch = useAppDispatch();
@@ -27,7 +23,7 @@ export const QuoteContinue = memo<QuoteContinueProps>(function QuoteContinue({ c
   }, [dispatch]);
 
   return (
-    <div className={clsx(classes.container, className)}>
+    <div className={css(styles.container, cssProp)}>
       {canQuote ? <QuoteBest /> : null}
       <Button
         variant="success"

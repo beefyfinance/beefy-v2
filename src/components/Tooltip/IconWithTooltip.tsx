@@ -1,35 +1,63 @@
-import { type CSSProperties, memo, useMemo } from 'react';
-import type { TooltipProps } from './Tooltip';
-import { Tooltip } from './Tooltip';
-import type { SvgIconComponent } from '@material-ui/icons';
-import { HelpOutline } from '@material-ui/icons';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { type CSSProperties, type FC, memo, type ReactNode, type SVGProps, useMemo } from 'react';
+import HelpOutline from '../../images/icons/mui/HelpOutline.svg?react';
+import { css, type CssStyles } from '@repo/styles/css';
+import { TooltipProvider } from './TooltipProvider.tsx';
+import { TooltipContent } from './TooltipContent.tsx';
+import { useTooltipContext } from './useTooltipContext.ts';
+import type { TooltipOptions } from './types.ts';
 
-const useStyles = makeStyles(styles);
+export type IconWithTooltipProps = Partial<IconProps> &
+  TooltipOptions & {
+    tooltip: ReactNode;
+  };
 
-export type IconWithTooltipProps = {
-  Icon?: SvgIconComponent;
-  iconClassName?: string;
-  iconSize?: number;
-} & Omit<TooltipProps, 'children'>;
-
-export const IconWithTooltip = memo<IconWithTooltipProps>(function IconWithTooltip({
+export const IconWithTooltip = memo(function IconWithTooltip({
   Icon = HelpOutline,
-  iconClassName,
+  iconCss,
   iconSize = 20,
+  tooltip,
   ...rest
-}) {
-  const classes = useStyles();
-  const styles = useMemo(
-    () => ({ '--tooltip-icon-size': `${iconSize}px` } as CSSProperties),
+}: IconWithTooltipProps) {
+  return (
+    <TooltipProvider {...rest}>
+      <TooltipIcon Icon={Icon} iconCss={iconCss} iconSize={iconSize} />
+      <TooltipContent>{tooltip}</TooltipContent>
+    </TooltipProvider>
+  );
+});
+
+type IconProps = {
+  Icon: FC<SVGProps<SVGSVGElement>>;
+  iconCss: CssStyles;
+  iconSize: number;
+};
+
+const iconStyles = css.raw({
+  color: 'inherit',
+  fontSize: 'var(--tooltip-icon-size, 20px)',
+  width: 'var(--tooltip-icon-size, 20px)',
+  height: 'var(--tooltip-icon-size, 20px)',
+});
+
+const TooltipIcon = memo(function TooltipIcon({
+  Icon = HelpOutline,
+  iconCss,
+  iconSize = 20,
+}: IconProps) {
+  const { getReferenceProps, refs } = useTooltipContext();
+  const style = useMemo(
+    () =>
+      ({
+        '--tooltip-icon-size': `${iconSize}px`,
+      }) as CSSProperties,
     [iconSize]
   );
-
   return (
-    <Tooltip {...rest}>
-      <Icon className={clsx(classes.icon, iconClassName)} style={styles} />
-    </Tooltip>
+    <Icon
+      {...getReferenceProps()}
+      ref={refs.setReference}
+      className={css(iconStyles, iconCss)}
+      style={style}
+    />
   );
 });

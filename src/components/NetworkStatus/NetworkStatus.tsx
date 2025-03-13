@@ -1,31 +1,38 @@
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { css, cx } from '@repo/styles/css';
 import { isEqual, sortedUniq, uniq } from 'lodash-es';
 import { memo, type RefObject, useCallback } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import type { ChainEntity } from '../../features/data/entities/chain';
-import { dataLoaderActions } from '../../features/data/reducers/data-loader';
-import type { BeefyState } from '../../redux-types';
-import { styles } from './styles';
-import { Floating } from '../Floating';
-import { useAppDispatch, useAppSelector } from '../../store';
-import CloseIcon from '@material-ui/icons/Close';
-import type { DataLoaderState, LoaderState } from '../../features/data/reducers/data-loader-types';
+import type { ChainEntity } from '../../features/data/entities/chain.ts';
+import { dataLoaderActions } from '../../features/data/reducers/data-loader.ts';
+import type { BeefyState } from '../../redux-types.ts';
+import { styles } from './styles.ts';
+import { useAppDispatch, useAppSelector } from '../../store.ts';
+import CloseIcon from '../../images/icons/mui/Close.svg?react';
+import type {
+  DataLoaderState,
+  LoaderState,
+} from '../../features/data/reducers/data-loader-types.ts';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
   selectWalletAddressIfKnown,
-} from '../../features/data/selectors/wallet';
-import { selectChainById, selectEolChainIds } from '../../features/data/selectors/chains';
-import { getNetworkSrc } from '../../helpers/networkSrc';
+} from '../../features/data/selectors/wallet.ts';
+import { selectChainById, selectEolChainIds } from '../../features/data/selectors/chains.ts';
+import { getNetworkSrc } from '../../helpers/networkSrc.ts';
 import iconUnsupportedChain from '../../images/icons/navigation/unsuported-chain.svg';
-import { entries } from '../../helpers/object';
+import { entries } from '../../helpers/object.ts';
 import {
   isLoaderPending,
   isLoaderRejected,
-} from '../../features/data/selectors/data-loader-helpers';
+} from '../../features/data/selectors/data-loader-helpers.ts';
+import { styled } from '@repo/styles/jsx';
+import { DropdownTrigger } from '../Dropdown/DropdownTrigger.tsx';
+import { DropdownProvider } from '../Dropdown/DropdownProvider.tsx';
+import { DropdownContent } from '../Dropdown/DropdownContent.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
+
 const ActiveChain = ({ chainId }: { chainId: ChainEntity['id'] | null }) => {
   const classes = useStyles();
 
@@ -71,11 +78,16 @@ export const NetworkStatus = memo(function NetworkStatus({
       onOpen();
     }
   }, [open, handleClose, onOpen]);
+  const setOpen = useCallback(
+    (shouldOpen: boolean) =>
+      dispatch(shouldOpen ? dataLoaderActions.openIndicator() : dataLoaderActions.closeIndicator()),
+    [dispatch]
+  );
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const currentChainId = useAppSelector(selectCurrentChainId);
 
-  const rpcErrors = useNetStatus(findChainIdMatching, isLoaderRejected);
-  const rpcPending = useNetStatus(findChainIdMatching, isLoaderPending);
+  const rpcErrors = useNetStatus<ChainEntity['id'][]>(findChainIdMatching, isLoaderRejected);
+  const rpcPending = useNetStatus<ChainEntity['id'][]>(findChainIdMatching, isLoaderPending);
   const beefyErrors = useNetStatus(findBeefyApiMatching, isLoaderRejected);
   const beefyPending = useNetStatus(findBeefyApiMatching, isLoaderPending);
   const configErrors = useNetStatus(findConfigMatching, isLoaderRejected);
@@ -85,33 +97,34 @@ export const NetworkStatus = memo(function NetworkStatus({
   const hasAnyLoading =
     rpcPending.length > 0 || beefyPending.length > 0 || configPending.length > 0;
 
-  const colorClasses = {
-    success: !hasAnyError && !hasAnyLoading,
-    warning: hasAnyError,
-    loading: hasAnyLoading,
-    notLoading: !hasAnyLoading,
-  };
-  const pulseClassName = clsx(classes.pulseCircle, colorClasses);
+  const colorClasses = cx(
+    !hasAnyError && !hasAnyLoading && 'success',
+    hasAnyError && 'warning',
+    hasAnyLoading && 'loading',
+    !hasAnyLoading && 'notLoading'
+  );
+  const pulseClassName = cx(classes.pulseCircle, colorClasses);
 
   return (
-    <>
-      <button className={classes.container} onClick={handleToggle}>
-        <div className={clsx(classes.circle, colorClasses)}>
-          <div className={pulseClassName} />
-          <div className={pulseClassName} />
-          <div className={pulseClassName} />
-          <div className={pulseClassName} />
+    <DropdownProvider
+      open={open}
+      onChange={setOpen}
+      variant="dark"
+      placement="bottom-end"
+      reference={anchorEl}
+    >
+      <DropdownButton onClick={handleToggle}>
+        <div className={classes.circleOuter}>
+          <div className={cx(classes.circle, colorClasses)}>
+            <div className={pulseClassName} />
+            <div className={pulseClassName} />
+            <div className={pulseClassName} />
+            <div className={pulseClassName} />
+          </div>
         </div>
         {isWalletConnected && <ActiveChain chainId={currentChainId} />}
-      </button>
-      <Floating
-        open={open}
-        placement="bottom-end"
-        anchorEl={anchorEl}
-        className={classes.dropdown}
-        display="flex"
-        autoWidth={false}
-      >
+      </DropdownButton>
+      <DropdownContent css={styles.dropdown} gap="none">
         <div className={classes.titleContainer}>
           <div className={classes.title}>
             {isWalletConnected ? (
@@ -132,43 +145,59 @@ export const NetworkStatus = memo(function NetworkStatus({
         </div>
         <div className={classes.content}>
           <div className={classes.contentTitle}>{t('NetworkStatus-Status')}</div>
-          {hasAnyError ? (
-            <>
-              {rpcErrors.map(chainId => (
-                <div className={classes.popoverLine} key={chainId}>
-                  <div className={clsx([classes.circle, 'warning', 'circle'])} />
-                  <div>{t('NetworkStatus-RpcError', { chain: chainsById[chainId].name })}</div>
+          <div className={classes.contentDetail}>
+            {hasAnyError ? (
+              <>
+                {rpcErrors.map(chainId => (
+                  <div className={classes.popoverLine} key={chainId}>
+                    <div className={cx(classes.circle, 'warning', 'circle')} />
+                    <div>{t('NetworkStatus-RpcError', { chain: chainsById[chainId]!.name })}</div>
+                  </div>
+                ))}
+                {(beefyErrors.length > 0 || configErrors.length > 0) && (
+                  <div className={classes.popoverLine}>
+                    <div className={cx(classes.circle, 'warning', 'circle')} />
+                    <div>{t('NetworkStatus-BeefyError')}</div>
+                  </div>
+                )}
+                <div className={css(styles.popoverLine, styles.popoverHelpText)}>
+                  {t('NetworkStatus-HelpText-Error')}
                 </div>
-              ))}
-              {(beefyErrors.length > 0 || configErrors.length > 0) && (
+              </>
+            ) : hasAnyLoading ? (
+              <>
                 <div className={classes.popoverLine}>
-                  <div className={clsx([classes.circle, 'warning', 'circle'])} />
-                  <div>{t('NetworkStatus-BeefyError')}</div>
+                  <div className={cx(classes.circle, 'loading', 'circle')} />
+                  {t('NetworkStatus-Title-Loading')}
                 </div>
-              )}
-              <div className={clsx(classes.popoverLine, classes.popoverHelpText)}>
-                {t('NetworkStatus-HelpText-Error')}
-              </div>
-            </>
-          ) : hasAnyLoading ? (
-            <>
-              <div className={classes.popoverLine}>
-                <div className={clsx([classes.circle, 'loading', 'circle'])} />
-                {t('NetworkStatus-Title-Loading')}
-              </div>
-            </>
-          ) : (
-            <>
-              <div className={classes.popoverLine}>
-                <div className={clsx([classes.circle, 'success', 'circle'])} />
-                {t('NetworkStatus-Title-OK')}
-              </div>
-            </>
-          )}
+              </>
+            ) : (
+              <>
+                <div className={classes.popoverLine}>
+                  <div className={cx(classes.circle, 'success', 'circle')} />
+                  {t('NetworkStatus-Title-OK')}
+                </div>
+              </>
+            )}
+          </div>
         </div>
-      </Floating>
-    </>
+      </DropdownContent>
+    </DropdownProvider>
   );
+});
+
+const DropdownButton = styled(DropdownTrigger.button, {
+  base: {
+    height: '40px',
+    border: 'none',
+    borderRadius: '8px',
+    columnGap: '8px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    backgroundColor: 'transparent',
+  },
 });
 
 const ConnectedChain = memo(function ConnectedChain({ chainId }: { chainId: ChainEntity['id'] }) {
@@ -183,10 +212,13 @@ const ConnectedChain = memo(function ConnectedChain({ chainId }: { chainId: Chai
 
 function useNetStatus<
   R extends string[],
-  S extends (state: BeefyState, matcher: (state: LoaderState) => boolean) => R,
-  M extends (state: LoaderState) => boolean
+  S extends (state: BeefyState, matcher: (state: LoaderState) => boolean) => R = (
+    state: BeefyState,
+    matcher: (state: LoaderState) => boolean
+  ) => R,
+  M extends (state: LoaderState) => boolean = (state: LoaderState) => boolean,
 >(selector: S, matcher: M) {
-  return useAppSelector(
+  return useAppSelector<R>(
     state => selector(state, matcher),
     // since we are returning a new array each time we select
     // use a comparator to avoid useless re-renders

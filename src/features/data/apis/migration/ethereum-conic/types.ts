@@ -1,6 +1,6 @@
 import { type BigNumber } from 'bignumber.js';
-import type { BaseMigrationConfig } from '../../config-types';
-import type { CommonMigrationUpdateFulfilledPayload } from '../migration-types';
+import type { BaseMigrationConfig } from '../../config-types.ts';
+import type { CommonMigrationUpdateFulfilledPayload } from '../migration-types.ts';
 
 export type ConicMigrationConfig = BaseMigrationConfig;
 

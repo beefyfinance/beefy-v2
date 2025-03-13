@@ -1,58 +1,58 @@
-import type { TFunction, Namespace } from 'react-i18next';
-import type { BeefyThunk } from '../../../../../../redux-types';
-import type { Step } from '../../../../reducers/wallet/stepper';
+import type { Namespace, TFunction } from 'react-i18next';
+import type { BeefyThunk } from '../../../../../../redux-types.ts';
+import type { Step } from '../../../../reducers/wallet/stepper.ts';
 import type {
-  InputTokenAmount,
   CowcentratedVaultDepositOption,
   CowcentratedVaultDepositQuote,
-  ZapQuoteStep,
-  DepositQuote,
-  ZapStrategyIdToDepositQuote,
-  DepositOption,
-  ZapStrategyIdToDepositOption,
-  VaultComposerDepositOption,
-  VaultComposerZapDepositQuote,
   CowcentratedVaultWithdrawOption,
-  VaultComposerWithdrawOption,
-  VaultComposerZapWithdrawQuote,
   CowcentratedVaultWithdrawQuote,
+  DepositOption,
+  DepositQuote,
+  InputTokenAmount,
+  VaultComposerDepositOption,
+  VaultComposerWithdrawOption,
+  VaultComposerZapDepositQuote,
+  VaultComposerZapWithdrawQuote,
   WithdrawOption,
+  WithdrawQuote,
+  ZapQuoteStep,
+  ZapStrategyIdToDepositOption,
+  ZapStrategyIdToDepositQuote,
   ZapStrategyIdToWithdrawOption,
   ZapStrategyIdToWithdrawQuote,
-  WithdrawQuote,
-} from '../../transact-types';
+} from '../../transact-types.ts';
 import type {
   AnyComposableStrategy,
   IComposableStrategy,
   IComposerStrategy,
   IComposerStrategyStatic,
   ZapTransactHelpers,
-} from '../IStrategy';
-import type { VaultComposerStrategyConfig } from '../strategy-configs';
+} from '../IStrategy.ts';
+import type { VaultComposerStrategyConfig } from '../strategy-configs.ts';
 import {
   isCowcentratedStandardVault,
   type VaultStandardCowcentrated,
-} from '../../../../entities/vault';
+} from '../../../../entities/vault.ts';
 import {
-  isCowcentratedVaultType,
   type ICowcentratedVaultType,
-  type IStandardVaultType,
+  isCowcentratedVaultType,
   isStandardVaultType,
-} from '../../vaults/IVaultType';
-import type { TokenEntity, TokenErc20 } from '../../../../entities/token';
-import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../../selectors/tokens';
-import { ZERO_FEE, calculatePriceImpact } from '../../helpers/quotes';
-import { selectTransactSlippage } from '../../../../selectors/transact';
-import type { OrderInput, OrderOutput, UserlessZapRequest, ZapStep } from '../../zap/types';
-import { pickTokens } from '../../helpers/tokens';
-import { toWeiString } from '../../../../../../helpers/big-number';
-import { slipBy } from '../../helpers/amounts';
+  type IStandardVaultType,
+} from '../../vaults/IVaultType.ts';
+import type { TokenEntity, TokenErc20 } from '../../../../entities/token.ts';
+import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../../selectors/tokens.ts';
+import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
+import { selectTransactSlippage } from '../../../../selectors/transact.ts';
+import type { OrderInput, OrderOutput, UserlessZapRequest, ZapStep } from '../../zap/types.ts';
+import { pickTokens } from '../../helpers/tokens.ts';
+import { toWeiString } from '../../../../../../helpers/big-number.ts';
+import { slipBy } from '../../helpers/amounts.ts';
 import { uniqBy } from 'lodash-es';
-import { walletActions } from '../../../../actions/wallet-actions';
-import { NO_RELAY } from '../../helpers/zap';
-import { onlyOneInput } from '../../helpers/options';
+import { walletActions } from '../../../../actions/wallet-actions.ts';
+import { NO_RELAY } from '../../helpers/zap.ts';
+import { onlyOneInput } from '../../helpers/options.ts';
 
-const strategyId = 'vault-composer' as const;
+const strategyId = 'vault-composer';
 type StrategyId = typeof strategyId;
 
 class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
@@ -211,7 +211,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
 
   async fetchDepositStep(
     quote: VaultComposerZapDepositQuote,
-    t: TFunction<Namespace, undefined>
+    t: TFunction<Namespace>
   ): Promise<Step> {
     const { underlyingQuote } = quote;
 
@@ -460,7 +460,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
 
   async fetchWithdrawStep(
     quote: VaultComposerZapWithdrawQuote,
-    t: TFunction<Namespace, undefined>
+    t: TFunction<Namespace>
   ): Promise<Step> {
     const { underlyingQuote } = quote;
 

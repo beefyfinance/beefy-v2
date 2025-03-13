@@ -1,13 +1,13 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { styles } from './styles.ts';
 import { useTranslation } from 'react-i18next';
-import { ReactComponent as IconGithub } from '../../images/socials/github.svg';
-import { ReactComponent as IconTelegram } from '../../images/socials/telegram.svg';
-import { ReactComponent as IconDiscord } from '../../images/socials/discord.svg';
-import { ReactComponent as IconTwitter } from '../../images/socials/twitter.svg';
-import { ReactComponent as IconReddit } from '../../images/socials/reddit.svg';
-import { ReactComponent as IconDebank } from '../../images/socials/debank.svg';
+import IconGithub from '../../images/socials/github.svg?react';
+import IconTelegram from '../../images/socials/telegram.svg?react';
+import IconDiscord from '../../images/socials/discord.svg?react';
+import IconTwitter from '../../images/socials/twitter.svg?react';
+import IconReddit from '../../images/socials/reddit.svg?react';
+import IconDebank from '../../images/socials/debank.svg?react';
 
 // Re-using header translations, allowing overwrite with footer specific ones
 const navLinks = [
@@ -70,7 +70,7 @@ const socialLinks = [
   },
 ];
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export const Footer = memo(function Footer() {
   const classes = useStyles();
@@ -81,7 +81,7 @@ export const Footer = memo(function Footer() {
       <ul className={classes.nav}>
         {navLinks.map(({ title, path }) => (
           <li key={path} className={classes.navItem}>
-            <a href={path} target="_blank" rel="noopener" className={classes.navLink}>
+            <a href={path} target="_blank" className={classes.navLink}>
               {t(title)}
             </a>
           </li>
@@ -90,13 +90,7 @@ export const Footer = memo(function Footer() {
       <ul className={classes.nav}>
         {socialLinks.map(({ title, path, Icon }) => (
           <li key={path} className={classes.navItem}>
-            <a
-              href={path}
-              target="_blank"
-              rel="noopener"
-              className={classes.navLink}
-              title={t(title)}
-            >
+            <a href={path} target="_blank" className={classes.navLink} title={t(title)}>
               <Icon />
             </a>
           </li>

@@ -1,5 +1,5 @@
 import { memo, useMemo } from 'react';
-import { useAppSelector } from '../../../store';
+import { useAppSelector } from '../../../store.ts';
 import { Trans, useTranslation } from 'react-i18next';
 import clmIcon from '../../../images/icons/clm.svg';
 import {
@@ -7,11 +7,11 @@ import {
   type VaultEntity,
   type VaultGovCowcentrated,
   type VaultStandardCowcentrated,
-} from '../../../features/data/entities/vault';
-import { InternalLink } from '../Links/Links';
-import { selectVaultById } from '../../../features/data/selectors/vaults';
-import { selectHasUserDepositInVault } from '../../../features/data/selectors/balance';
-import { DismissibleBanner } from '../Banner/DismissibleBanner';
+} from '../../../features/data/entities/vault.ts';
+import { selectVaultById } from '../../../features/data/selectors/vaults.ts';
+import { selectHasUserDepositInVault } from '../../../features/data/selectors/balance.ts';
+import { DismissibleBanner } from '../Banner/DismissibleBanner.tsx';
+import { InternalLink } from '../Links/InternalLink.tsx';
 
 export type ClmVaultBannerProps = {
   vaultId: VaultEntity['id'];
@@ -47,7 +47,7 @@ const ClmVaultBannerImpl = memo<ClmVaultBannerImplProps>(function ClmVaultBanner
 
   return (
     <DismissibleBanner
-      id={`clm-pool-vault.${pool.id}`}
+      id={`clm-vault.${pool.id}`}
       icon={<img src={clmIcon} alt="" width={24} height={24} />}
       text={
         <Trans

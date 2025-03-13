@@ -1,31 +1,41 @@
-import { makeStyles } from '@material-ui/core';
-import { memo } from 'react';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatLargePercent } from '../../../../helpers/format';
-import { useAppSelector } from '../../../../store';
-import { styles } from './styles';
-import { selectDashboardUserStablecoinsExposure } from '../../../data/selectors/dashboard';
+import { formatLargePercent } from '../../../../helpers/format.ts';
+import { useAppSelector } from '../../../../store.ts';
+import { styles } from './styles.ts';
+import { selectDashboardUserStablecoinsExposure } from '../../../data/selectors/dashboard.ts';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface StablesExposureProps {
   address: string;
 }
 
-export const StablesExposure = memo<StablesExposureProps>(function StablesExposure({ address }) {
+export const StablesExposure = memo(function StablesExposure({ address }: StablesExposureProps) {
   const { t } = useTranslation();
+  const classes = useStyles();
   const stablecoinsExposureData = useAppSelector(state =>
     selectDashboardUserStablecoinsExposure(state, address)
   );
   const stablePercentage = stablecoinsExposureData.filter(item => item.key === 'stable');
-  const classes = useStyles({
-    stablesPercentage: formatLargePercent(stablePercentage[0]?.percentage, 0, '0%'),
-  });
+  const percentage = Math.min(Math.max(0, (stablePercentage[0]?.percentage || 0) * 100), 100);
+  const stableBarStyle = useMemo(
+    () => ({
+      width: `${percentage.toFixed(1)}%`,
+    }),
+    [percentage]
+  );
+
   return (
     <div className={classes.container}>
       <div className={classes.title}>{t('Exposure-Stables')}</div>
       <div className={classes.bar}>
-        <div className={classes.stableBar} />
+        <div
+          className={css(styles.stableBar, percentage >= 100 && styles.stableBarComplete)}
+          style={stableBarStyle}
+        />
       </div>
       <div className={classes.legendContainer}>
         {stablecoinsExposureData.map(item => {

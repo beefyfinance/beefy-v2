@@ -1,5 +1,5 @@
 import { memo, useCallback } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectFiat,
   selectFiatTokenMinMaxFiat,
@@ -8,29 +8,30 @@ import {
   selectNetwork,
   selectOutputAmount,
   selectToken,
-} from '../../../../../data/selectors/on-ramp';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
-import { AmountInput } from '../AmountInput';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { FiatAmountAdornment } from '../FiatAmountAdornment';
-import { AmountOutput } from '../AmountOutput';
-import { AmountLabel } from '../AmountLabel';
+} from '../../../../../data/selectors/on-ramp.ts';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp.ts';
+import { AmountInput } from '../AmountInput/AmountInput.tsx';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { FiatAmountAdornment } from '../FiatAmountAdornment/FiatAmountAdornment.tsx';
+import { AmountOutput } from '../AmountOutput/AmountOutput.tsx';
+import { AmountLabel } from '../AmountLabel/AmountLabel.tsx';
 import { useTranslation } from 'react-i18next';
-import { InputError } from '../../../../../data/reducers/on-ramp-types';
+import { InputError } from '../../../../../data/reducers/on-ramp-types.ts';
+import { css, type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type OutOfRangeErrorProps = {
   currency: string;
   min: number;
   max: number;
 };
-const OutOfRangeError = memo<OutOfRangeErrorProps>(function OutOfRangeError({
+const OutOfRangeError = memo(function OutOfRangeError({
   currency,
   min,
   max,
-}) {
+}: OutOfRangeErrorProps) {
   const classes = useStyles();
   const { t } = useTranslation();
   const key = 'OnRamp-' + (max === Number.MAX_VALUE ? 'RangeErrorMin' : 'RangeErrorMinMax');
@@ -49,7 +50,7 @@ const OutOfRangeError = memo<OutOfRangeErrorProps>(function OutOfRangeError({
 type FiatAmountInputProps = {
   fiat: string;
 };
-const FiatAmountInput = memo<FiatAmountInputProps>(function FiatAmountInput({ fiat }) {
+const FiatAmountInput = memo(function FiatAmountInput({ fiat }: FiatAmountInputProps) {
   const dispatch = useAppDispatch();
 
   const inputValue = useAppSelector(selectInputAmount);
@@ -83,7 +84,7 @@ const FiatAmountInput = memo<FiatAmountInputProps>(function FiatAmountInput({ fi
 type FiatAmountOutputProps = {
   fiat: string;
 };
-const FiatAmountOutput = memo<FiatAmountOutputProps>(function FiatAmountOutput({ fiat }) {
+const FiatAmountOutput = memo(function FiatAmountOutput({ fiat }: FiatAmountOutputProps) {
   const outputValue = useAppSelector(selectOutputAmount);
 
   return (
@@ -97,16 +98,15 @@ const FiatAmountOutput = memo<FiatAmountOutputProps>(function FiatAmountOutput({
 
 export type FiatAmountProps = {
   isInput: boolean;
-  className?: string;
+  css?: CssStyles;
 };
-export const FiatAmount = memo<FiatAmountProps>(function FiatAmount({ isInput, className }) {
+export const FiatAmount = memo(function FiatAmount({ isInput, css: cssProp }: FiatAmountProps) {
   const { t } = useTranslation();
-  const classes = useStyles();
   const fiat = useAppSelector(selectFiat);
 
   return (
-    <div className={className}>
-      <AmountLabel className={classes.label}>{t('OnRamp-YouPay')}</AmountLabel>
+    <div className={css(cssProp)}>
+      <AmountLabel css={styles.label}>{t('OnRamp-YouPay')}</AmountLabel>
       {isInput ? <FiatAmountInput fiat={fiat} /> : <FiatAmountOutput fiat={fiat} />}
     </div>
   );

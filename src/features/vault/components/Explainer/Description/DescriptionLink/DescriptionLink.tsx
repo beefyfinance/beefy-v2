@@ -1,25 +1,20 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
-import { styles } from './styles';
-
-const useStyles = makeStyles(styles);
+import { css, type CssStyles } from '@repo/styles/css';
+import { styles } from './styles.ts';
 
 export type DescriptionLinkProps = {
   href: string;
   label: string;
-  className?: string;
+  css?: CssStyles;
 };
 
-export const DescriptionLink = memo<DescriptionLinkProps>(function DescriptionLink({
+export const DescriptionLink = memo(function DescriptionLink({
   href,
   label,
-  className,
-}) {
-  const classes = useStyles();
-
+  css: cssProp,
+}: DescriptionLinkProps) {
   return (
-    <a className={clsx(classes.link, className)} target="_blank" rel="noopener" href={href}>
+    <a className={css(styles.link, cssProp)} target="_blank" href={href}>
       {label}
     </a>
   );

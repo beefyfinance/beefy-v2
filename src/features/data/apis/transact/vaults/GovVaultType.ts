@@ -1,22 +1,23 @@
-import { isGovVault, isGovVaultCowcentrated, type VaultGov } from '../../../entities/vault';
-import type { BeefyState, BeefyStateFn } from '../../../../../redux-types';
-import { selectTokenByAddress } from '../../../selectors/tokens';
+import { isGovVault, isGovVaultCowcentrated, type VaultGov } from '../../../entities/vault.ts';
+import type { BeefyState, BeefyStateFn } from '../../../../../redux-types.ts';
+import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import type {
   IGovVaultType,
   VaultDepositRequest,
   VaultDepositResponse,
   VaultWithdrawRequest,
   VaultWithdrawResponse,
-} from './IVaultType';
+} from './IVaultType.ts';
 import {
   createOptionId,
   createQuoteId,
   createSelectionId,
   onlyInputCount,
   onlyOneInput,
-} from '../helpers/options';
-import { TransactMode } from '../../../reducers/wallet/transact-types';
+} from '../helpers/options.ts';
+import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
 import {
+  type AllowanceTokenAmount,
   type GovVaultDepositOption,
   type GovVaultDepositQuote,
   type GovVaultWithdrawOption,
@@ -25,18 +26,18 @@ import {
   SelectionOrder,
   type TokenAmount,
   type TransactQuote,
-} from '../transact-types';
-import type { TokenEntity } from '../../../entities/token';
-import { isTokenEqual, isTokenErc20 } from '../../../entities/token';
+} from '../transact-types.ts';
+import type { TokenEntity } from '../../../entities/token.ts';
+import { isTokenEqual, isTokenErc20 } from '../../../entities/token.ts';
 import { first } from 'lodash-es';
-import { BIG_ZERO } from '../../../../../helpers/big-number';
-import { selectFeesByVaultId } from '../../../selectors/fees';
+import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
+import { selectFeesByVaultId } from '../../../selectors/fees.ts';
 import { BigNumber } from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { Step } from '../../../reducers/wallet/stepper';
-import { walletActions } from '../../../actions/wallet-actions';
-import { selectGovVaultPendingRewards } from '../../../selectors/balance';
-import { selectWalletAddress } from '../../../selectors/wallet';
+import type { Step } from '../../../reducers/wallet/stepper.ts';
+import { walletActions } from '../../../actions/wallet-actions.ts';
+import { selectGovVaultPendingRewards } from '../../../selectors/balance.ts';
+import { selectWalletAddress } from '../../../selectors/wallet.ts';
 
 export class GovVaultType implements IGovVaultType {
   public readonly id = 'gov';
@@ -184,7 +185,7 @@ export class GovVaultType implements IGovVaultType {
 
     const state = this.getState();
     const isWithdrawAll = input.max;
-    const allowances = [];
+    const allowances: AllowanceTokenAmount[] = [];
     const fee = this.calculateWithdrawFee(input, state);
     const withdrawAmountAfterFee = input.amount.minus(fee);
     const outputs = [

@@ -1,39 +1,39 @@
 import { createCachedSelector } from 're-reselect';
-import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number';
-import { ClmPnl, PnL } from '../../../helpers/pnl';
-import type { BeefyState } from '../../../redux-types';
-import type { DatabarnProductPriceRow } from '../apis/databarn/databarn-types';
+import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
+import { ClmPnl, PnL } from '../../../helpers/pnl.ts';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { DatabarnProductPriceRow } from '../apis/databarn/databarn-types.ts';
 import {
   isCowcentratedLikeVault,
   isCowcentratedStandardVault,
   type VaultEntity,
-} from '../entities/vault';
+} from '../entities/vault.ts';
 import {
   selectCowcentratedLikeVaultDepositTokens,
   selectCowcentratedLikeVaultDepositTokensWithPrices,
   selectLpBreakdownForVault,
   selectTokenByAddress,
   selectTokenPriceByAddress,
-} from './tokens';
+} from './tokens.ts';
 import {
   selectCowcentratedLikeVaultById,
   selectVaultById,
   selectVaultPricePerFullShare,
-} from './vaults';
+} from './vaults.ts';
 import {
   selectGovVaultPendingRewardsWithPrice,
   selectUserDepositedVaultIds,
   selectUserLpBreakdownBalance,
   selectUserVaultBalanceInShareTokenIncludingBoostsBridged,
-} from './balance';
-import { selectWalletAddress } from './wallet';
-import { selectIsConfigAvailable } from './data-loader';
+} from './balance.ts';
+import { selectWalletAddress } from './wallet.ts';
+import { selectIsConfigAvailable } from './data-loader.ts';
 import {
   type AnyTimelineEntity,
   type AnyTimelineEntry,
   isTimelineEntityCowcentrated,
   isTimelineEntityStandard,
-} from '../entities/analytics';
+} from '../entities/analytics.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import {
   type AmountUsd,
@@ -45,25 +45,25 @@ import {
   type UserGovPnl,
   type UserStandardPnl,
   type UserVaultPnl,
-} from './analytics-types';
-import { selectFeesByVaultId } from './fees';
+} from './analytics-types.ts';
+import { selectFeesByVaultId } from './fees.ts';
 import { BigNumber } from 'bignumber.js';
 import {
   createAddressDataSelector,
   hasLoaderFulfilledOnce,
   isLoaderIdle,
-} from './data-loader-helpers';
-import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types';
-import type { AnalyticsIntervalData, AnalyticsState } from '../reducers/analytics-types';
+} from './data-loader-helpers.ts';
+import type { ApiTimeBucketInterval } from '../apis/beefy/beefy-data-api-types.ts';
+import type { AnalyticsIntervalData, AnalyticsState } from '../reducers/analytics-types.ts';
 import type {
   ClmPriceHistoryEntryClassic,
   ClmPriceHistoryEntryClm,
-} from '../apis/clm/clm-api-types';
-import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils';
+} from '../apis/clm/clm-api-types.ts';
+import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils.ts';
 import {
   selectUserMerklRewardsForVault,
   selectUserStellaSwapRewardsForVault,
-} from './user-rewards';
+} from './user-rewards.ts';
 
 export const selectUserAnalytics = createSelector(
   (state: BeefyState, address?: string) => address || selectWalletAddress(state),
@@ -80,7 +80,7 @@ export const selectUserAnalytics = createSelector(
 export const selectUserDepositedTimelineByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], address?: string) =>
     selectUserAnalytics(state, address),
-  (state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId,
+  (_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId,
   (userAnalytics, vaultId): undefined | AnyTimelineEntity => {
     if (!userAnalytics) {
       return undefined;
@@ -238,7 +238,11 @@ export const selectStandardGovPnl = (
   };
 };
 
-function withDiff<T extends TokenEntryNow>(entry: T): T & { diff: AmountUsd } {
+function withDiff<T extends TokenEntryNow>(
+  entry: T
+): T & {
+  diff: AmountUsd;
+} {
   return {
     ...entry,
     diff: {
@@ -602,7 +606,7 @@ export const selectHasDataToShowGraphByVaultId = createCachedSelector(
     );
   }
 )(
-  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+  (_state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
     `${walletAddress}-${vaultId}`
 );
 
@@ -637,7 +641,7 @@ export const selectUserClmHarvestTimelineByVaultId = createCachedSelector(
 export const selectUserClmVaultHarvestTimelineByVaultId = createCachedSelector(
   (state: BeefyState, _vaultId: VaultEntity['id'], address?: string) =>
     selectUserAnalytics(state, address),
-  (state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId,
+  (_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId,
   (userAnalytics, vaultId) => {
     if (!userAnalytics) {
       return undefined;

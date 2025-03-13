@@ -1,39 +1,38 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import clsx from 'clsx';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import { css, type CssStyles } from '@repo/styles/css';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type SafetyScoreProps = {
   score: number;
   size: 'sm' | 'md';
   align?: 'left' | 'right';
-  className?: string;
+  css?: CssStyles;
 };
 
-export const SafetyScore = memo<SafetyScoreProps>(function SafetyScore({
+export const SafetyScore = memo(function SafetyScore({
   score,
   size = 'sm',
   align = 'left',
-  className,
-}) {
+  css: cssProp,
+}: SafetyScoreProps) {
   const classes = useStyles();
 
   return (
     <div
-      className={clsx(classes.container, className, {
-        [classes.withSizeMedium]: size === 'md',
-        [classes.withScoreHigh]: score > 7.5,
-        [classes.withScoreMed]: score >= 6.4 && score <= 7.5,
-        [classes.withScoreLow]: score > 0 && score <= 6.4,
-        [classes.withRightAlign]: align === 'right',
-      })}
+      className={css(
+        styles.container,
+        cssProp,
+        size === 'md' && styles.withSizeMedium,
+        align === 'right' && styles.withRightAlign
+      )}
     >
       <div className={classes.barsContainer}>
-        <div className={clsx(classes.bar, classes.sm)} />
-        <div className={clsx(classes.bar, classes.md)} />
-        <div className={clsx(classes.bar, classes.lg)} />
+        <div className={css(styles.bar, styles.sm, styles.green)} />
+        <div className={css(styles.bar, styles.md, score >= 6.4 && styles.green)} />
+        <div className={css(styles.bar, styles.lg, score >= 7.5 && styles.green)} />
       </div>
     </div>
   );

@@ -9,18 +9,18 @@ import type {
   ZapStrategyIdToDepositQuote,
   ZapStrategyIdToWithdrawOption,
   ZapStrategyIdToWithdrawQuote,
-} from '../transact-types';
-import type { VaultTypeFromVault } from '../vaults/IVaultType';
-import type { ISwapAggregator } from '../swap/ISwapAggregator';
-import type { VaultEntity } from '../../../entities/vault';
-import type { BeefyState } from '../../../../../redux-types';
-import type { ZapEntity } from '../../../entities/zap';
-import type { Step } from '../../../reducers/wallet/stepper';
+} from '../transact-types.ts';
+import type { VaultTypeFromVault } from '../vaults/IVaultType.ts';
+import type { ISwapAggregator } from '../swap/ISwapAggregator.ts';
+import type { VaultEntity } from '../../../entities/vault.ts';
+import type { BeefyState } from '../../../../../redux-types.ts';
+import type { ZapEntity } from '../../../entities/zap.ts';
+import type { Step } from '../../../reducers/wallet/stepper.ts';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { UserlessZapRequest } from '../zap/types';
-import type { TokenEntity } from '../../../entities/token';
-import type { Balances } from '../helpers/Balances';
-import type { AnyStrategyId, StrategyIdToConfig, ZapStrategyId } from './strategy-configs';
+import type { UserlessZapRequest } from '../zap/types.ts';
+import type { TokenEntity } from '../../../entities/token.ts';
+import type { Balances } from '../helpers/Balances.ts';
+import type { AnyStrategyId, StrategyIdToConfig, ZapStrategyId } from './strategy-configs.ts';
 
 export interface IStrategy<TId extends AnyStrategyId = AnyStrategyId> {
   readonly id: TId;
@@ -98,14 +98,14 @@ export type AnyComposableStrategy<TId extends ZapStrategyId = ZapStrategyId> = {
 export interface IZapStrategyStatic<TId extends ZapStrategyId = ZapStrategyId> {
   readonly id: TId;
 
-  new (options: StrategyIdToConfig<TId>, helpers: TransactHelpers): IZapStrategy<TId>;
+  new (options: StrategyIdToConfig<TId>, helpers: ZapTransactHelpers): IZapStrategy<TId>;
 }
 
 export interface IComposableStrategyStatic<TId extends ZapStrategyId = ZapStrategyId> {
   readonly id: TId;
   readonly composable: true;
 
-  new (options: StrategyIdToConfig<TId>, helpers: TransactHelpers): IComposableStrategy<TId>;
+  new (options: StrategyIdToConfig<TId>, helpers: ZapTransactHelpers): IComposableStrategy<TId>;
 }
 
 export type AnyComposableStrategyStatic<TId extends ZapStrategyId = ZapStrategyId> = {
@@ -118,7 +118,7 @@ export interface IComposerStrategyStatic<TId extends ZapStrategyId = ZapStrategy
 
   new (
     options: StrategyIdToConfig<TId>,
-    helpers: TransactHelpers,
+    helpers: ZapTransactHelpers,
     underlying: AnyComposableStrategy
   ): IComposerStrategy<TId>;
 }

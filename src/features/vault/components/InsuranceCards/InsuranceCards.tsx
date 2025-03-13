@@ -1,31 +1,24 @@
-import { makeStyles } from '@material-ui/styles';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Collapsable } from '../../../../components/Collapsable';
-import { useAppSelector } from '../../../../store';
-import type { VaultEntity } from '../../../data/entities/vault';
-import { selectIsVaultNexus } from '../../../data/selectors/partners';
-import { OpenCoverCard } from '../OpenCoverCard';
-import { NexusCard } from '../NexusCard';
-import { styles } from './styles';
+import { useAppSelector } from '../../../../store.ts';
+import type { VaultEntity } from '../../../data/entities/vault.ts';
+import { selectIsVaultNexus } from '../../../data/selectors/partners.ts';
+import { OpenCoverCard } from '../OpenCoverCard/OpenCoverCard.tsx';
+import { NexusCard } from '../NexusCard/NexusCard.tsx';
+import { PartnerCards } from '../PartnerCard/PartnerCards.tsx';
 
-const useStyles = makeStyles(styles);
-
-interface InsuraceCardProps {
+interface InsuranceCardsProps {
   vaultId: VaultEntity['id'];
 }
 
-export const InsuranceCards = memo<InsuraceCardProps>(function InsuranceCards({ vaultId }) {
+export const InsuranceCards = memo<InsuranceCardsProps>(function InsuranceCards({ vaultId }) {
   const { t } = useTranslation();
-  const classes = useStyles();
   const isNexus = useAppSelector(state => selectIsVaultNexus(state, vaultId));
 
   return (
-    <div className={classes.container}>
-      <Collapsable openByDefault={true} titleClassName={classes.title} title={t('Insurance')}>
-        {isNexus && <NexusCard />}
-        <OpenCoverCard />
-      </Collapsable>
-    </div>
+    <PartnerCards title={t('Insurance')} openByDefault={true}>
+      {isNexus && <NexusCard />}
+      <OpenCoverCard />
+    </PartnerCards>
   );
 });

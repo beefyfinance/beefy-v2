@@ -1,27 +1,31 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { BeefyState } from '../../../redux-types';
-import type { MinterConfig } from '../apis/config-types';
-import { getAllowanceApi, getBalanceApi, getConfigApi, getMintersApi } from '../apis/instances';
-import type { ChainEntity } from '../entities/chain';
-import type { FetchAllBalancesResult } from '../apis/balance/balance-types';
-import type { TokenAllowance } from '../apis/allowance/allowance-types';
-import { selectMinterById } from '../selectors/minters';
-import { selectChainById } from '../selectors/chains';
-import { selectTokenByAddress } from '../selectors/tokens';
-import type { MinterEntity } from '../entities/minter';
-import { isTokenErc20 } from '../entities/token';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { MinterConfig } from '../apis/config-types.ts';
+import { getAllowanceApi, getBalanceApi, getConfigApi, getMintersApi } from '../apis/instances.ts';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { FetchAllBalancesResult } from '../apis/balance/balance-types.ts';
+import type { TokenAllowance } from '../apis/allowance/allowance-types.ts';
+import { selectMinterById } from '../selectors/minters.ts';
+import { selectChainById } from '../selectors/chains.ts';
+import { selectTokenByAddress } from '../selectors/tokens.ts';
+import type { MinterEntity } from '../entities/minter.ts';
+import { isTokenErc20 } from '../entities/token.ts';
 import { type BigNumber } from 'bignumber.js';
-import type { FetchMinterReservesResult } from '../apis/minter/minter-types';
+import type { FetchMinterReservesResult } from '../apis/minter/minter-types.ts';
 
 export interface FulfilledAllMintersPayload {
-  byChainId: { [chainId in ChainEntity['id']]?: MinterConfig[] };
+  byChainId: {
+    [chainId in ChainEntity['id']]?: MinterConfig[];
+  };
   state: BeefyState;
 }
 
 export const fetchAllMinters = createAsyncThunk<
   FulfilledAllMintersPayload,
   void,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('minters/fetchAllMinters', async (_, { getState }) => {
   const api = await getConfigApi();
   const minters = await api.fetchAllMinters();
@@ -50,7 +54,9 @@ interface InitMinterFormPayload {
 export const initiateMinterForm = createAsyncThunk<
   InitMinterFormPayload,
   InitMinterFormParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('minters/initMinterForm', async ({ minterId, walletAddress }, { getState }) => {
   const minter = selectMinterById(getState(), minterId);
   const chain = selectChainById(getState(), minter.chainId);
@@ -112,7 +118,9 @@ export type ReloadReservesFulfilledPayload = FetchMinterReservesResult;
 export const reloadReserves = createAsyncThunk<
   ReloadReservesFulfilledPayload,
   ReloadReservesParams,
-  { state: BeefyState }
+  {
+    state: BeefyState;
+  }
 >('minters/reloadReserves', async ({ chainId, minterId }, { getState }) => {
   const state = getState();
   const chain = selectChainById(state, chainId);

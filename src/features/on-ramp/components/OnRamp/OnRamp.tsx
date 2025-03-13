@@ -1,26 +1,22 @@
 import type { ComponentType } from 'react';
 import { memo, useEffect } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { styles } from './styles';
-import { NetworkStep } from './components/NetworkStep';
-import { TokenStep } from './components/TokenStep';
-import { useAppDispatch, useAppSelector } from '../../../../store';
-import { LoadingStep } from '../../../../components/LoadingStep';
-import { fetchOnRampSupportedProviders } from '../../../data/actions/on-ramp';
-import { AmountStep } from './components/AmountStep';
-import { FiatStep } from './components/FiatStep';
-import { FormValidator } from './components/FormValidator';
-import { UnsupportedCountryStep } from './components/UnsupportedCountryStep';
-import { FormStep } from '../../../data/reducers/on-ramp-types';
+import { NetworkStep } from './components/NetworkStep/NetworkStep.tsx';
+import { TokenStep } from './components/TokenStep/TokenStep.tsx';
+import { useAppDispatch, useAppSelector } from '../../../../store.ts';
+import { LoadingStep } from '../../../../components/LoadingStep/LoadingStep.tsx';
+import { fetchOnRampSupportedProviders } from '../../../data/actions/on-ramp.ts';
+import { AmountStep } from './components/AmountStep/AmountStep.tsx';
+import { FiatStep } from './components/FiatStep/FiatStep.tsx';
+import { FormValidator } from './components/FormValidator/FormValidator.tsx';
+import { UnsupportedCountryStep } from './components/UnsupportedCountryStep/UnsupportedCountryStep.tsx';
+import { FormStep } from '../../../data/reducers/on-ramp-types.ts';
 import {
   selectIsOnRampLoaded,
   selectShouldInitOnRamp,
   selectStep,
-} from '../../../data/selectors/on-ramp';
-import { InjectProviderStep } from './components/InjectProviderStep';
-import { SelectProviderStep } from './components/SelectProviderStep';
-
-const useStyles = makeStyles(styles);
+} from '../../../data/selectors/on-ramp.ts';
+import { InjectProviderStep } from './components/InjectProviderStep/InjectProviderStep.tsx';
+import { SelectProviderStep } from './components/SelectProviderStep/SelectProviderStep.tsx';
 
 const stepToComponent: Record<FormStep, ComponentType> = {
   [FormStep.UnsupportedCountry]: UnsupportedCountryStep,
@@ -33,7 +29,6 @@ const stepToComponent: Record<FormStep, ComponentType> = {
 };
 
 export const OnRamp = memo(function OnRamp() {
-  const classes = useStyles();
   const step = useAppSelector(selectStep);
   const StepComponent = stepToComponent[step];
   const dispatch = useAppDispatch();
@@ -47,7 +42,7 @@ export const OnRamp = memo(function OnRamp() {
   }, [dispatch, shouldInit]);
 
   return (
-    <div className={classes.container}>
+    <div>
       {isLoaded ? (
         <>
           <FormValidator />

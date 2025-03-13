@@ -1,12 +1,17 @@
-import { type VaultEntity } from '../../features/data/entities/vault';
+import { type VaultEntity } from '../../features/data/entities/vault.ts';
 import { memo, useMemo } from 'react';
-import { selectVaultById } from '../../features/data/selectors/vaults';
-import { type FormattedTotalApy, formatTotalApy } from '../../helpers/format';
-import { VaultValueStat, type VaultValueStatProps } from '../VaultValueStat';
-import { selectApyVaultUIData } from '../../features/data/selectors/apy';
-import { useAppSelector } from '../../store';
-import { InterestTooltipContent } from '../InterestTooltipContent';
-import { getApyComponents, getApyLabelsForType, getApyLabelsTypeForVault } from '../../helpers/apy';
+import { selectVaultById } from '../../features/data/selectors/vaults.ts';
+import { type FormattedTotalApy, formatTotalApy } from '../../helpers/format.ts';
+import { VaultValueStat } from '../VaultValueStat/VaultValueStat.tsx';
+import type { VaultValueStatProps } from '../VaultValueStat/VaultValueStat.tsx';
+import { selectApyVaultUIData } from '../../features/data/selectors/apy.ts';
+import { useAppSelector } from '../../store.ts';
+import { InterestTooltipContent } from '../InterestTooltipContent/InterestTooltipContent.tsx';
+import {
+  getApyComponents,
+  getApyLabelsForType,
+  getApyLabelsTypeForVault,
+} from '../../helpers/apy.ts';
 import { useTranslation } from 'react-i18next';
 
 export type VaultApyStatProps = Omit<
@@ -17,11 +22,11 @@ export type VaultApyStatProps = Omit<
   type: 'yearly' | 'daily';
 };
 
-export const VaultApyStat = memo<VaultApyStatProps>(function VaultApyStat({
+export const VaultApyStat = memo(function VaultApyStat({
   vaultId,
   type,
   ...rest
-}) {
+}: VaultApyStatProps) {
   const { t } = useTranslation();
   const data = useAppSelector(state => selectApyVaultUIData(state, vaultId));
   const label =
@@ -33,7 +38,7 @@ export const VaultApyStat = memo<VaultApyStatProps>(function VaultApyStat({
   const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';
   const boostedTotalKey = type === 'daily' ? 'boostedTotalDaily' : 'boostedTotalApy';
 
-  if (data.status == 'loading') {
+  if (data.status === 'loading') {
     return <VaultValueStat label={label} value="-" blur={false} loading={true} {...rest} />;
   }
 
@@ -58,8 +63,8 @@ export const VaultApyStat = memo<VaultApyStatProps>(function VaultApyStat({
         data.boosted === 'prestake'
           ? t('PRE-STAKE')
           : data.boosted === 'active'
-          ? formatted[boostedTotalKey]
-          : formatted[totalKey]
+            ? formatted[boostedTotalKey]
+            : formatted[totalKey]
       }
       subValue={isBoosted ? formatted[totalKey] : undefined}
       tooltip={
@@ -80,12 +85,12 @@ type ApyTooltipContentProps = {
   rates: FormattedTotalApy;
 };
 
-export const ApyTooltipContent = memo<ApyTooltipContentProps>(function ApyTooltipContent({
+export const ApyTooltipContent = memo(function ApyTooltipContent({
   vaultId,
   type,
   isBoosted,
   rates,
-}) {
+}: ApyTooltipContentProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const rows = useMemo(() => {
     const labels = getApyLabelsForType(getApyLabelsTypeForVault(vault, rates.totalType));
@@ -94,7 +99,11 @@ export const ApyTooltipContent = memo<ApyTooltipContentProps>(function ApyToolti
     const totalKey = type === 'daily' ? 'totalDaily' : 'totalApy';
     const boostedTotalKey = type === 'daily' ? 'boostedTotalDaily' : 'boostedTotalApy';
 
-    const items: { label: string | string[]; value: string; last?: boolean }[] = components
+    const items: {
+      label: string | string[];
+      value: string;
+      last?: boolean;
+    }[] = components
       .filter(key => key in rates)
       .map(key => ({
         label: labels[key],
@@ -103,7 +112,7 @@ export const ApyTooltipContent = memo<ApyTooltipContentProps>(function ApyToolti
 
     items.push({
       label: labels[totalKey],
-      value: isBoosted ? rates[boostedTotalKey] ?? '?' : rates[totalKey],
+      value: isBoosted ? (rates[boostedTotalKey] ?? '?') : rates[totalKey],
       last: true,
     });
 

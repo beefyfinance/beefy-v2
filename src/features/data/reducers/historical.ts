@@ -1,4 +1,4 @@
-import type { ApiChartData, ApiRange, ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
+import type { ApiChartData, ApiRange, ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
 import type { SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import {
@@ -7,7 +7,7 @@ import {
   fetchHistoricalPrices,
   fetchHistoricalRanges,
   fetchHistoricalTvls,
-} from '../actions/historical';
+} from '../actions/historical.ts';
 import { fromUnixTime, getUnixTime, isAfter, isBefore, sub } from 'date-fns';
 import type {
   AnyChartData,
@@ -15,14 +15,14 @@ import type {
   HistoricalTimeBucketStateKeys,
   TimeBucketsState,
   TimeBucketState,
-} from './historical-types';
+} from './historical-types.ts';
 import type { Draft } from 'immer';
 import {
   allDataApiBuckets,
   getDataApiBucket,
   getDataApiBucketsShorterThan,
-} from '../apis/beefy/beefy-data-api-helpers';
-import { fromKeys, fromKeysBy } from '../../../helpers/object';
+} from '../apis/beefy/beefy-data-api-helpers.ts';
+import { fromKeys, fromKeysBy } from '../../../helpers/object.ts';
 
 const initialState: HistoricalState = {
   ranges: {
@@ -145,11 +145,14 @@ function getOrCreateTimeBucketFor(
   oracleOrVaultIdOrVaultAddress: string,
   state: Draft<HistoricalState>
 ): Draft<TimeBucketsState> {
-  const subKey = key === 'prices' ? 'byOracleId' : 'byVaultId';
-  if (!state[key][subKey][oracleOrVaultIdOrVaultAddress]) {
-    state[key][subKey][oracleOrVaultIdOrVaultAddress] = initialTimeBucketsState();
+  const subState = key === 'prices' ? state.prices.byOracleId : state[key].byVaultId;
+  if (!subState) {
+    throw new Error(`Invalid key ${key} / not initialized`);
   }
-  return state[key][subKey][oracleOrVaultIdOrVaultAddress];
+
+  subState[oracleOrVaultIdOrVaultAddress] ??= initialTimeBucketsState();
+
+  return subState[oracleOrVaultIdOrVaultAddress];
 }
 
 function getOrCreateTimeBucketBucket(

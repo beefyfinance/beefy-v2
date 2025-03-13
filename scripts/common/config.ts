@@ -1,29 +1,39 @@
-import { sample } from 'lodash';
+import { sample } from 'lodash-es';
 import { ChainId } from 'blockchain-addressbook';
-import { config } from '../../src/config/config';
+import { chains, config } from '../../src/config/config.ts';
 import type {
   AmmConfig,
+  ChainConfig,
   MinterConfig,
   VaultConfig,
-} from '../../src/features/data/apis/config-types';
-import { PromoConfig } from '../../src/features/data/apis/promos/types';
-import { fileExists } from './files';
+} from '../../src/features/data/apis/config-types.ts';
+import type { PromoConfig } from '../../src/features/data/apis/promos/types.ts';
+import { fileExists } from './files.ts';
 
 /** Harmony->One to match addressbook */
-const chainConfigs = Object.fromEntries(
-  Object.entries(config).map(([chainId, chainConfig]) => [appToAddressBookId(chainId), chainConfig])
+const chainConfigs = chains.reduce(
+  (acc, id) => {
+    acc[appToAddressBookId(id)] = {
+      id,
+      ...config[id],
+    };
+    return acc;
+  },
+  {} as Record<AddressBookChainId, ChainConfig>
 );
 
 export type AddressBookChainId = keyof typeof ChainId;
 export type AppChainId = keyof typeof config;
-export type ChainConfig = (typeof chainConfigs)[keyof typeof chainConfigs];
+
+export type ChainMap<T> = Partial<Record<AddressBookChainId, T>>;
+export type AppChainMap<T> = Partial<Record<AppChainId, T>>;
 
 /**
  * What chains to exclude from chainIds array and thus any validation
  * Use `yarn makeExcludeConfig chain` to generate the hash
  * Key must be the addressbook/api chain id, not app chain id (i.e. use one over harmony)
  * */
-export const excludeChains: Record<string, { count: number; hash: string }> = {
+export const excludeChains: ChainMap<{ count: number; hash: string }> = {
   heco: {
     count: 35,
     hash: 'ccab3fea9945e6474f803946d72001a04245fb2556f340ebee7a65af61be4773',
@@ -78,18 +88,19 @@ export const excludeChains: Record<string, { count: number; hash: string }> = {
   },
 };
 
-export const excludedChainIds = Object.keys(excludeChains);
-export const allChainIds: string[] = Object.keys(chainConfigs);
-export const chainIds: string[] = allChainIds.filter(chainId => !(chainId in excludeChains));
-export const chainRpcs: Record<string, string> = Object.fromEntries(
-  allChainIds.map(chainId => [
-    chainId,
-    process.env[`${addressBookToAppId(chainId).toUpperCase()}_RPC`] ||
-      sample(chainConfigs[chainId].rpc)!,
-  ])
-);
+export const excludedChainIds = Object.keys(excludeChains) as AddressBookChainId[];
+export const allChainIds = Object.keys(chainConfigs) as AddressBookChainId[];
+export const chainIds = allChainIds.filter(chainId => !(chainId in excludeChains));
 
-const vaultsByChainId = {};
+const chainRpcs = allChainIds.reduce(
+  (acc, chainId) => {
+    acc[chainId] =
+      process.env[`${addressBookToAppId(chainId).toUpperCase()}_RPC`] ||
+      sample(chainConfigs[chainId].rpc)!;
+    return acc;
+  },
+  {} as Record<AddressBookChainId, string>
+);
 
 export function getChain(chainId: string): ChainConfig {
   const addressBookId = appToAddressBookId(chainId);
@@ -98,6 +109,10 @@ export function getChain(chainId: string): ChainConfig {
     throw new Error(`No config for chain ${chainId}`);
   }
   return config;
+}
+
+export function getChainRpc(chainId: string): string {
+  return chainRpcs[appToAddressBookId(chainId)];
 }
 
 export async function getAllVaultConfigsByChainId(): Promise<{ [chainId: string]: VaultConfig[] }> {
@@ -109,17 +124,21 @@ export async function getAllVaultConfigsByChainId(): Promise<{ [chainId: string]
   return vaults;
 }
 
+const vaultsByChainId: AppChainMap<VaultConfig[]> = {};
+
 export async function getVaultsForChain(chainId: string): Promise<VaultConfig[]> {
   const id = addressBookToAppId(chainId);
+  const vaults = vaultsByChainId[id];
 
-  if (!(id in vaultsByChainId)) {
-    vaultsByChainId[id] = (await import(`../../src/config/vault/${id}.json`)).default;
+  if (vaults) {
+    return vaults;
   }
 
-  return vaultsByChainId[id];
+  return (vaultsByChainId[id] = (await import(`../../src/config/vault/${id}.json`))
+    .default as VaultConfig[]);
 }
 
-const promosByChainId = {};
+const promosByChainId: AppChainMap<PromoConfig[]> = {};
 
 export async function getPromosForChain(chainId: string): Promise<PromoConfig[]> {
   const id = addressBookToAppId(chainId);
@@ -133,10 +152,10 @@ export async function getPromosForChain(chainId: string): Promise<PromoConfig[]>
     }
   }
 
-  return promosByChainId[id];
+  return promosByChainId[id]!;
 }
 
-const ammsByChainId = {};
+const ammsByChainId: AppChainMap<AmmConfig[]> = {};
 
 export async function getAmmsForChain(chainId: string): Promise<AmmConfig[]> {
   const id = addressBookToAppId(chainId);
@@ -145,10 +164,10 @@ export async function getAmmsForChain(chainId: string): Promise<AmmConfig[]> {
     ammsByChainId[id] = (await import(`../../src/config/zap/amm/${id}.json`)).default;
   }
 
-  return ammsByChainId[id];
+  return ammsByChainId[id]!;
 }
 
-const mintersByChainId = {};
+const mintersByChainId: AppChainMap<MinterConfig[]> = {};
 
 export async function getMintersForChain(chainId: string): Promise<MinterConfig[]> {
   const id = addressBookToAppId(chainId);
@@ -157,7 +176,7 @@ export async function getMintersForChain(chainId: string): Promise<MinterConfig[
     mintersByChainId[id] = (await import(`../../src/config/minters/${id}.tsx`)).minters;
   }
 
-  return mintersByChainId[id];
+  return mintersByChainId[id]!;
 }
 
 export function appToAddressBookId(chainId: string): AddressBookChainId {

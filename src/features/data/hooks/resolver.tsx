@@ -1,8 +1,8 @@
-import { useAppDispatch, useAppSelector } from '../../../store';
-import { selectAddressResolution, selectDomainResolution } from '../selectors/resolver';
+import { useAppDispatch, useAppSelector } from '../../../store.ts';
+import { selectAddressResolution, selectDomainResolution } from '../selectors/resolver.ts';
 import { useEffect } from 'react';
-import { isIdleStatus } from '../reducers/wallet/resolver-types';
-import { resolveAddressToDomain, resolveDomainToAddress } from '../actions/resolver';
+import { isIdleStatus } from '../reducers/wallet/resolver-types.ts';
+import { resolveAddressToDomain, resolveDomainToAddress } from '../actions/resolver.ts';
 
 export function useResolveDomain(domain: string) {
   const dispatch = useAppDispatch();

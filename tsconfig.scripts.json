@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./.cache/tsc/scripts.tsbuildinfo"
+  },
+  "include": ["src", "scripts", "tools"],
+  "exclude": ["node_modules"]
+}

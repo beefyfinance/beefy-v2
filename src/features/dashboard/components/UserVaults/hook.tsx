@@ -1,13 +1,13 @@
 import { orderBy } from 'lodash-es';
 import { useCallback, useMemo, useState } from 'react';
-import { useAppSelector } from '../../../../store';
-import { selectUserDashboardFilteredVaults } from '../../../data/selectors/filtered-vaults';
-import { isUserClmPnl } from '../../../data/selectors/analytics-types';
-import { isVaultActive } from '../../../data/entities/vault';
+import { useAppSelector } from '../../../../store.ts';
+import { selectUserDashboardFilteredVaults } from '../../../data/selectors/filtered-vaults.ts';
+import { isUserClmPnl } from '../../../data/selectors/analytics-types.ts';
+import { isVaultActive } from '../../../data/entities/vault.ts';
 import {
   selectDashboardUserVaultsDailyYield,
   selectDashboardUserVaultsPnl,
-} from '../../../data/selectors/dashboard';
+} from '../../../data/selectors/dashboard.ts';
 
 export type SortedOptions = {
   sort: 'atDeposit' | 'now' | 'yield' | 'pnl' | 'apy' | 'dailyYield' | 'default';
@@ -22,12 +22,6 @@ export function useSortedDashboardVaults(address: string) {
     sort: 'now',
   });
 
-  const handleSearchText = useCallback(e => setSearchText(e.target.value), [setSearchText]);
-
-  const handleClearText = useCallback(() => {
-    setSearchText('');
-  }, [setSearchText]);
-
   const filteredVaults = useAppSelector(state =>
     selectUserDashboardFilteredVaults(state, searchText, address)
   );
@@ -41,64 +35,66 @@ export function useSortedDashboardVaults(address: string) {
   );
 
   const sortedFilteredVaults = useMemo(() => {
-    return sortedOptions.sort === 'default'
-      ? filteredVaults
-      : orderBy(
-          filteredVaults,
-          vault => {
-            const vaultPnl = userVaultsPnl[vault.id];
-            const apy = apyByVaultId[vault.id];
-            const vaultDailyYield = userVaultsDailyYield[vault.id];
+    return (
+      sortedOptions.sort === 'default'
+        ? filteredVaults
+        : orderBy(
+            filteredVaults,
+            vault => {
+              const vaultPnl = userVaultsPnl[vault.id];
+              const apy = apyByVaultId[vault.id];
+              const vaultDailyYield = userVaultsDailyYield[vault.id];
 
-            switch (sortedOptions.sort) {
-              case 'atDeposit': {
-                if (isUserClmPnl(vaultPnl)) {
-                  return vaultPnl.underlying.entry.usd.toNumber();
+              switch (sortedOptions.sort) {
+                case 'atDeposit': {
+                  if (isUserClmPnl(vaultPnl)) {
+                    return vaultPnl.underlying.entry.usd.toNumber();
+                  }
+                  return vaultPnl.usdBalanceAtDeposit.toNumber();
                 }
-                return vaultPnl.usdBalanceAtDeposit.toNumber();
+                case 'now': {
+                  if (isUserClmPnl(vaultPnl)) {
+                    return vaultPnl.underlying.now.usd.toNumber();
+                  }
+                  return vaultPnl.depositUsd.toNumber();
+                }
+                case 'yield': {
+                  if (isUserClmPnl(vaultPnl)) {
+                    return vaultPnl.yields.usd.toNumber();
+                  }
+                  return vaultPnl.totalYieldUsd.toNumber();
+                }
+                case 'pnl': {
+                  if (isUserClmPnl(vaultPnl)) {
+                    return vaultPnl.pnl.withClaimedPending.usd.toNumber();
+                  }
+                  return vaultPnl.totalPnlUsd.toNumber();
+                }
+                case 'apy': {
+                  if (!isVaultActive(vault) || !apy) {
+                    return -1;
+                  }
+                  if (apy.boostedTotalApy !== undefined) {
+                    return apy.boostedTotalApy;
+                  } else if (apy.totalApy !== undefined) {
+                    return apy.totalApy;
+                  } else if (apy.vaultApr !== undefined) {
+                    return apy.vaultApr;
+                  } else {
+                    throw new Error('Apy type not supported');
+                  }
+                }
+                case 'dailyYield': {
+                  if (!isVaultActive(vault) || !vaultDailyYield) {
+                    return -1;
+                  }
+                  return vaultDailyYield.toNumber();
+                }
               }
-              case 'now': {
-                if (isUserClmPnl(vaultPnl)) {
-                  return vaultPnl.underlying.now.usd.toNumber();
-                }
-                return vaultPnl.depositUsd.toNumber();
-              }
-              case 'yield': {
-                if (isUserClmPnl(vaultPnl)) {
-                  return vaultPnl.yields.usd.toNumber();
-                }
-                return vaultPnl.totalYieldUsd.toNumber();
-              }
-              case 'pnl': {
-                if (isUserClmPnl(vaultPnl)) {
-                  return vaultPnl.pnl.withClaimedPending.usd.toNumber();
-                }
-                return vaultPnl.totalPnlUsd.toNumber();
-              }
-              case 'apy': {
-                if (!isVaultActive(vault) || !apy) {
-                  return -1;
-                }
-                if (apy.boostedTotalApy !== undefined) {
-                  return apy.boostedTotalApy;
-                } else if (apy.totalApy !== undefined) {
-                  return apy.totalApy;
-                } else if (apy.vaultApr !== undefined) {
-                  return apy.vaultApr;
-                } else {
-                  throw new Error('Apy type not supported');
-                }
-              }
-              case 'dailyYield': {
-                if (!isVaultActive(vault) || !vaultDailyYield) {
-                  return -1;
-                }
-                return vaultDailyYield.toNumber();
-              }
-            }
-          },
-          sortedOptions.sortDirection
-        );
+            },
+            sortedOptions.sortDirection
+          )
+    ).map(vault => vault.id);
   }, [
     sortedOptions.sortDirection,
     sortedOptions.sort,
@@ -126,8 +122,7 @@ export function useSortedDashboardVaults(address: string) {
     sortedFilteredVaults,
     sortedOptions,
     handleSort,
-    handleSearchText,
     searchText,
-    handleClearText,
+    setSearchText,
   };
 }

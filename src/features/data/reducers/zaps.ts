@@ -1,17 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { ChainEntity } from '../entities/chain';
-import type { AmmEntity, SwapAggregatorEntity, ZapEntity } from '../entities/zap';
-import type { VaultEntity } from '../entities/vault';
-import type { TokenEntity } from '../entities/token';
+import type { ChainEntity } from '../entities/chain.ts';
+import type { AmmEntity, SwapAggregatorEntity, ZapEntity } from '../entities/zap.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import type { TokenEntity } from '../entities/token.ts';
 import {
   calculateZapAvailabilityAction,
   fetchZapAggregatorTokenSupportAction,
   fetchZapAmmsAction,
   fetchZapConfigsAction,
   fetchZapSwapAggregatorsAction,
-} from '../actions/zap';
-import { fetchAllVaults } from '../actions/vaults';
-import { isNonEmptyArray } from '../utils/array-utils';
+} from '../actions/zap.ts';
+import { fetchAllVaults } from '../actions/vaults.ts';
+import { isNonEmptyArray } from '../utils/array-utils.ts';
+import { entries } from '../../../helpers/object.ts';
 
 export type ZapsState = {
   /**
@@ -164,15 +165,22 @@ export const zapsSlice = createSlice({
         // Start with any vault with a zap config being available
         sliceState.vaults.byId = Object.values(action.payload.byChainId)
           .flat()
-          .reduce((acc, vault) => {
-            if (isNonEmptyArray(vault.entity.zaps)) {
-              acc[vault.entity.id] = true;
-            }
-            return acc;
-          }, {} as Record<VaultEntity['id'], boolean>);
+          .reduce(
+            (acc, vault) => {
+              if (isNonEmptyArray(vault.entity.zaps)) {
+                acc[vault.entity.id] = true;
+              }
+              return acc;
+            },
+            {} as Record<VaultEntity['id'], boolean>
+          );
       })
       .addCase(fetchZapAmmsAction.fulfilled, (sliceState, action) => {
-        for (const [chainId, amms] of Object.entries(action.payload.byChainId)) {
+        for (const [chainId, amms] of entries(action.payload.byChainId)) {
+          if (!amms) {
+            continue;
+          }
+
           sliceState.amms.byChainId[chainId] = amms;
 
           for (const amm of amms) {
@@ -185,10 +193,12 @@ export const zapsSlice = createSlice({
         }
       })
       .addCase(fetchZapAggregatorTokenSupportAction.fulfilled, (sliceState, action) => {
-        for (const [chainId, swapSupport] of Object.entries(action.payload)) {
-          if (!sliceState.swaps.byChainId[chainId]) {
-            sliceState.swaps.byChainId[chainId] = { byProvider: {}, byAddress: {} };
+        for (const [chainId, swapSupport] of entries(action.payload)) {
+          if (!swapSupport) {
+            continue;
           }
+
+          sliceState.swaps.byChainId[chainId] ??= { byProvider: {}, byAddress: {} };
 
           sliceState.swaps.byChainId[chainId].byProvider = Object.entries(swapSupport).reduce(
             (acc, [address, providers]) => {
@@ -222,10 +232,13 @@ export const zapsSlice = createSlice({
       })
       .addCase(calculateZapAvailabilityAction.fulfilled, (sliceState, action) => {
         // Later we have data to know if a vault actually supports zaps (i.e. a swap aggregator is available for its tokens)
-        sliceState.vaults.byId = action.payload.vaultIds.reduce((acc, vaultId) => {
-          acc[vaultId] = true;
-          return acc;
-        }, {} as Record<VaultEntity['id'], boolean>);
+        sliceState.vaults.byId = action.payload.vaultIds.reduce(
+          (acc, vaultId) => {
+            acc[vaultId] = true;
+            return acc;
+          },
+          {} as Record<VaultEntity['id'], boolean>
+        );
       });
   },
 });

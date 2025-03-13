@@ -3,9 +3,9 @@ import type {
   ApiCowcentratedChartData,
   ApiRanges,
   ApiTimeBucket,
-} from '../apis/beefy/beefy-data-api-types';
-import type { VaultEntity } from '../entities/vault';
-import type { TokenEntity } from '../entities/token';
+} from '../apis/beefy/beefy-data-api-types.ts';
+import type { VaultEntity } from '../entities/vault.ts';
+import type { TokenEntity } from '../entities/token.ts';
 import type { SerializedError } from '@reduxjs/toolkit';
 
 type LoadingStatus = 'idle' | 'pending' | 'rejected' | 'fulfilled';

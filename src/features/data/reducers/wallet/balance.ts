@@ -6,23 +6,23 @@ import {
   type FetchAllBalanceFulfilledPayload,
   fetchBalanceAction,
   recalculateDepositedVaultsAction,
-} from '../../actions/balance';
-import { initiateBoostForm } from '../../actions/boosts';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
+} from '../../actions/balance.ts';
+import { initiateBoostForm } from '../../actions/boosts.ts';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens.ts';
 import type {
   BoostBalance,
   BoostReward,
   GovVaultBalance,
   GovVaultReward,
   TokenBalance,
-} from '../../apis/balance/balance-types';
-import type { BoostPromoEntity } from '../../entities/promo';
-import type { ChainEntity } from '../../entities/chain';
-import type { TokenEntity } from '../../entities/token';
-import type { VaultEntity } from '../../entities/vault';
-import { initiateMinterForm } from '../../actions/minters';
-import { selectMinterById } from '../../selectors/minters';
-import { BIG_ZERO } from '../../../../helpers/big-number';
+} from '../../apis/balance/balance-types.ts';
+import type { BoostPromoEntity } from '../../entities/promo.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
+import type { TokenEntity } from '../../entities/token.ts';
+import type { VaultEntity } from '../../entities/vault.ts';
+import { initiateMinterForm } from '../../actions/minters.ts';
+import { selectMinterById } from '../../selectors/minters.ts';
+import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 
 /**
  * State containing user balances state

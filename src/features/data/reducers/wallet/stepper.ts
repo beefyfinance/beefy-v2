@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction, ThunkAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { type BigNumber } from 'bignumber.js';
-import { startStepper } from '../../actions/stepper';
-import type { ChainEntity } from '../../entities/chain';
-import type { TokenEntity } from '../../entities/token';
-import type { VaultEntity } from '../../entities/vault';
+import { startStepper } from '../../actions/stepper.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
+import type { TokenEntity } from '../../entities/token.ts';
+import type { VaultEntity } from '../../entities/vault.ts';
 
 export enum StepContent {
   StartTx = 1,
@@ -40,7 +40,10 @@ export type Step = {
   extraInfo?: {
     vaultId?: VaultEntity['id'];
     zap?: boolean;
-    rewards?: { token: TokenEntity; amount: BigNumber };
+    rewards?: {
+      token: TokenEntity;
+      amount: BigNumber;
+    };
   };
 };
 
@@ -67,23 +70,53 @@ export const stepperSlice = createSlice({
     reset() {
       return initialStepperStater;
     },
-    addStep(sliceState, action: PayloadAction<{ step: Step }>) {
+    addStep(
+      sliceState,
+      action: PayloadAction<{
+        step: Step;
+      }>
+    ) {
       sliceState.items.push(action.payload.step);
     },
-    updateCurrentStep(sliceState, action: PayloadAction<{ pending: boolean }>) {
+    updateCurrentStep(
+      sliceState,
+      action: PayloadAction<{
+        pending: boolean;
+      }>
+    ) {
       const { pending } = action.payload;
       sliceState.items[sliceState.currentStep].pending = pending;
     },
-    updateCurrentStepIndex(sliceState, action: PayloadAction<{ stepIndex: number }>) {
+    updateCurrentStepIndex(
+      sliceState,
+      action: PayloadAction<{
+        stepIndex: number;
+      }>
+    ) {
       sliceState.currentStep = action.payload.stepIndex;
     },
-    setModal(sliceState, action: PayloadAction<{ modal: boolean }>) {
+    setModal(
+      sliceState,
+      action: PayloadAction<{
+        modal: boolean;
+      }>
+    ) {
       sliceState.modal = action.payload.modal;
     },
-    setChainId(sliceState, action: PayloadAction<{ chainId: ChainEntity['id'] }>) {
+    setChainId(
+      sliceState,
+      action: PayloadAction<{
+        chainId: ChainEntity['id'];
+      }>
+    ) {
       sliceState.chainId = action.payload.chainId;
     },
-    setStepContent(sliceState, action: PayloadAction<{ stepContent: StepContent }>) {
+    setStepContent(
+      sliceState,
+      action: PayloadAction<{
+        stepContent: StepContent;
+      }>
+    ) {
       sliceState.stepContent = action.payload.stepContent;
     },
   },

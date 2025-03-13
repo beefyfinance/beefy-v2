@@ -1,48 +1,50 @@
 import { memo } from 'react';
-import { useAppSelector } from '../../../../store';
-import { selectBoostCampaignById, selectBoostPartnerById } from '../../../data/selectors/boosts';
-import { makeStyles, type Theme } from '@material-ui/core';
-import type { PromoSocials } from '../../../data/apis/promos/types';
-import type { TokenEntity } from '../../../data/entities/token';
+import { useAppSelector } from '../../../../store.ts';
+import { selectBoostCampaignById, selectBoostPartnerById } from '../../../data/selectors/boosts.ts';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import type { PromoSocials } from '../../../data/apis/promos/types.ts';
+import type { TokenEntity } from '../../../data/entities/token.ts';
 import { useTranslation } from 'react-i18next';
-import { Socials } from './Socials';
-import { CardContent } from '../Card';
-import { RewardTokenDetails } from '../RewardTokenDetails';
-import { Partner } from './Partner';
+import { Socials } from './Socials.tsx';
+import { CardContent } from '../Card/CardContent.tsx';
+import { RewardTokenDetails } from '../RewardTokenDetails/RewardTokenDetails.tsx';
+import { Partner } from './Partner.tsx';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  header: {
+const useStyles = legacyMakeStyles({
+  header: css.raw({
     display: 'flex',
-    flexWrap: 'wrap' as const,
+    flexWrap: 'wrap',
     gap: '16px',
     padding: '24px',
     borderRadius: '12px 12px 0 0',
-    backgroundColor: theme.palette.background.contentDark,
-  },
-  boostedBy: {
-    ...theme.typography['h2'],
-    margin: 0,
-    color: theme.palette.background.vaults.boost,
-    flexGrow: 1,
+    backgroundColor: 'background.content.dark',
+  }),
+  boostedBy: css.raw({
+    textStyle: 'h2',
+    margin: '0',
+    color: 'background.vaults.boost',
+    flexGrow: '1',
     '& span': {
-      color: theme.palette.text.light,
+      color: 'text.light',
     },
-  },
-  campaignTitle: {
-    ...theme.typography['h3'],
-  },
-  campaignText: {
-    color: theme.palette.text.middle,
-  },
-  partners: {
+  }),
+  campaignTitle: css.raw({
+    textStyle: 'h3',
+  }),
+  campaignText: css.raw({
+    color: 'text.middle',
+  }),
+  partners: css.raw({
     display: 'flex',
     flexDirection: 'column' as const,
     gap: '16px',
-  },
-  content: {
+  }),
+  content: css.raw({
     rowGap: '16px',
-  },
-}));
+    backgroundColor: 'background.content',
+  }),
+});
 
 export type CampaignPromoCardProps = Omit<
   PromoCardProps,

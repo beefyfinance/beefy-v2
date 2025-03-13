@@ -1,17 +1,17 @@
 import { memo } from 'react';
-import type { BasicTooltipContentProps } from './BasicTooltipContent';
-import { BasicTooltipContent } from './BasicTooltipContent';
-import { IconWithTooltip, type IconWithTooltipProps } from './IconWithTooltip';
+import type { BasicTooltipContentProps } from './BasicTooltipContent.tsx';
+import { BasicTooltipContent } from './BasicTooltipContent.tsx';
+import { IconWithTooltip, type IconWithTooltipProps } from './IconWithTooltip.tsx';
 
 export type IconWithBasicTooltipProps = BasicTooltipContentProps &
-  Omit<IconWithTooltipProps, 'title' | 'content'>;
+  Omit<IconWithTooltipProps, 'title' | 'tooltip'>;
 
-export const IconWithBasicTooltip = memo<IconWithBasicTooltipProps>(function IconWithBasicTooltip({
+export const IconWithBasicTooltip = memo(function IconWithBasicTooltip({
   title,
   content,
   ...rest
-}) {
+}: IconWithBasicTooltipProps) {
   return (
-    <IconWithTooltip content={<BasicTooltipContent title={title} content={content} />} {...rest} />
+    <IconWithTooltip tooltip={<BasicTooltipContent title={title} content={content} />} {...rest} />
   );
 });

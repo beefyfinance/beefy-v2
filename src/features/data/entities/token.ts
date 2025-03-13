@@ -1,7 +1,7 @@
-import type { ChainEntity } from './chain';
-import type { PlatformEntity } from './platform';
+import type { ChainEntity } from './chain.ts';
+import type { PlatformEntity } from './platform.ts';
 import { type BigNumber } from 'bignumber.js';
-import type { LpData } from '../apis/beefy/beefy-api-types';
+import type { LpData } from '../apis/beefy/beefy-api-types.ts';
 
 /**
  * A token can be anything erc20-like
@@ -74,8 +74,8 @@ export function isTokenEqual(tokenA: TokenEntity, tokenB: TokenEntity): boolean 
 
 export type TokenLpBreakdown = LpData;
 
-export type CurrentCowcentratedRangeData = {
-  currentPrice: BigNumber;
-  priceRangeMin: BigNumber;
-  priceRangeMax: BigNumber;
+export type CurrentCowcentratedRangeData<T = BigNumber> = {
+  currentPrice: T;
+  priceRangeMin: T;
+  priceRangeMax: T;
 };

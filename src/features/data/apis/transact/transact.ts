@@ -6,11 +6,11 @@ import {
   type TransactQuote,
   type WithdrawOption,
   type WithdrawQuote,
-} from './transact-types';
+} from './transact-types.ts';
 import { partition, uniq } from 'lodash-es';
-import { isCowcentratedLikeVault, type VaultEntity } from '../../entities/vault';
-import type { BeefyStateFn } from '../../../../redux-types';
-import { selectVaultById, selectVaultUnderlyingVault } from '../../selectors/vaults';
+import { isCowcentratedLikeVault, type VaultEntity } from '../../entities/vault.ts';
+import type { BeefyStateFn } from '../../../../redux-types.ts';
+import { selectVaultById, selectVaultUnderlyingVault } from '../../selectors/vaults.ts';
 import {
   type AnyComposableStrategy,
   type IComposableStrategyStatic,
@@ -20,11 +20,11 @@ import {
   type IZapStrategyStatic,
   type TransactHelpers,
   type ZapTransactHelpers,
-} from './strategies/IStrategy';
-import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises';
+} from './strategies/IStrategy.ts';
+import { allFulfilled, isFulfilledResult } from '../../../../helpers/promises.ts';
 import type { Namespace, TFunction } from 'react-i18next';
-import type { Step } from '../../reducers/wallet/stepper';
-import { type VaultTypeFromVault } from './vaults/IVaultType';
+import type { Step } from '../../reducers/wallet/stepper.ts';
+import { type VaultTypeFromVault } from './vaults/IVaultType.ts';
 import {
   type AnyZapStrategyStatic,
   type ComposableStrategyId,
@@ -34,18 +34,18 @@ import {
   isComposerStrategyStatic,
   type StrategyIdToStatic,
   strategyLoadersById,
-} from './strategies';
-import { getVaultTypeBuilder } from './vaults';
-import { VaultStrategy } from './strategies/vault/VaultStrategy';
-import { selectSwapAggregatorsExistForChain, selectZapByChainId } from '../../selectors/zap';
-import { getSwapAggregator } from '../instances';
-import { isDefined } from '../../utils/array-utils';
+} from './strategies/strategies.ts';
+import { getVaultTypeBuilder } from './vaults/vaults.ts';
+import { VaultStrategy } from './strategies/vault/VaultStrategy.ts';
+import { selectSwapAggregatorsExistForChain, selectZapByChainId } from '../../selectors/zap.ts';
+import { getSwapAggregator } from '../instances.ts';
+import { isDefined } from '../../utils/array-utils.ts';
 import type {
   AnyStrategyId,
   StrategyIdToConfig,
   ZapStrategyConfig,
   ZapStrategyId,
-} from './strategies/strategy-configs';
+} from './strategies/strategy-configs.ts';
 
 type StrategyConstructorWithOptions<TId extends ZapStrategyId = ZapStrategyId> = {
   [K in TId]: {
@@ -393,7 +393,9 @@ export class TransactApi implements ITransactApi {
     return strategies.filter(isDefined);
   }
 
-  private async getZapStrategyConstructorsForVault(helpers: TransactHelpers) {
+  private async getZapStrategyConstructorsForVault(
+    helpers: TransactHelpers
+  ): Promise<GenericStrategyConstructorWithOptions[]> {
     const { vault } = helpers;
 
     if (!vault.zaps || vault.zaps.length === 0) {
@@ -429,7 +431,11 @@ export class TransactApi implements ITransactApi {
             return undefined;
           }
 
-          return { id: ctor.id, ctor, options: zapConfig as StrategyIdToConfig<typeof ctor.id> };
+          return {
+            id: ctor.id,
+            ctor,
+            options: zapConfig as StrategyIdToConfig<typeof ctor.id>,
+          } satisfies GenericStrategyConstructorWithOptions;
         } catch (err: unknown) {
           console.error(`Vault ${vault.id} failed to load strategy "${zapConfig.strategyId}"`, err);
           return undefined;
@@ -453,7 +459,7 @@ export class TransactApi implements ITransactApi {
 
     if (isComposerStrategyStatic(ctor)) {
       const underlyingStrategy = await this.getComposableStrategyForZap(helpers);
-      const genericCtor: IComposerStrategyStatic = ctor;
+      const genericCtor = ctor as IComposerStrategyStatic;
       return new genericCtor(
         strategyConfig as StrategyIdToConfig<ComposerStrategyId>,
         helpers,
@@ -462,12 +468,12 @@ export class TransactApi implements ITransactApi {
     }
 
     if (isComposableStrategyStatic(ctor)) {
-      const genericCtor: IComposableStrategyStatic = ctor;
+      const genericCtor = ctor as IComposableStrategyStatic;
       return new genericCtor(strategyConfig, helpers);
     }
 
     if (isBasicZapStrategyStatic(ctor)) {
-      const genericCtor: IZapStrategyStatic = ctor;
+      const genericCtor = ctor as IZapStrategyStatic;
       return new genericCtor(strategyConfig, helpers);
     }
 
@@ -502,10 +508,10 @@ export class TransactApi implements ITransactApi {
       );
     }
 
-    const ctor: new (
+    const ctor = underlyingStrategy.ctor as new (
       options: ZapStrategyConfig,
       helpers: ZapTransactHelpers
-    ) => AnyComposableStrategy = underlyingStrategy.ctor;
+    ) => AnyComposableStrategy;
     const options = underlyingStrategy.options;
     return new ctor(options, underlyingHelpers);
   }

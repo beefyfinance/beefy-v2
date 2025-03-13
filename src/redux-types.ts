@@ -7,44 +7,43 @@ import type {
   ThunkDispatch,
   ThunkMiddleware,
 } from '@reduxjs/toolkit';
-import type { ApyState } from './features/data/reducers/apy';
-import type { ChainsState } from './features/data/reducers/chains';
-import type { FilteredVaultsState } from './features/data/reducers/filtered-vaults';
-import type { PartnersState } from './features/data/reducers/partners';
-import type { PlatformsState } from './features/data/reducers/platforms';
-import type { TokensState } from './features/data/reducers/tokens';
-import type { TvlState } from './features/data/reducers/tvl';
-import type { UIThemeState } from './features/data/reducers/ui-theme';
-import type { VaultsState } from './features/data/reducers/vaults';
-import type { WalletState } from './features/data/reducers/wallet/wallet';
-import type { AllowanceState } from './features/data/reducers/wallet/allowance';
-import type { BalanceState } from './features/data/reducers/wallet/balance';
-import type { WalletActionsState } from './features/data/reducers/wallet/wallet-action';
-import type { ZapsState } from './features/data/reducers/zaps';
-import type { MintersState } from './features/data/reducers/minters';
+import type { ApyState } from './features/data/reducers/apy.ts';
+import type { ChainsState } from './features/data/reducers/chains.ts';
+import type { FilteredVaultsState } from './features/data/reducers/filtered-vaults.ts';
+import type { PartnersState } from './features/data/reducers/partners.ts';
+import type { PlatformsState } from './features/data/reducers/platforms.ts';
+import type { TokensState } from './features/data/reducers/tokens.ts';
+import type { TvlState } from './features/data/reducers/tvl.ts';
+import type { VaultsState } from './features/data/reducers/vaults.ts';
+import type { WalletState } from './features/data/reducers/wallet/wallet.ts';
+import type { AllowanceState } from './features/data/reducers/wallet/allowance.ts';
+import type { BalanceState } from './features/data/reducers/wallet/balance.ts';
+import type { WalletActionsState } from './features/data/reducers/wallet/wallet-action.ts';
+import type { ZapsState } from './features/data/reducers/zaps.ts';
+import type { MintersState } from './features/data/reducers/minters.ts';
 import type { Action } from 'redux';
-import type { BridgeState } from './features/data/reducers/wallet/bridge';
-import type { OnRampTypes } from './features/data/reducers/on-ramp-types';
-import type { DataLoaderState } from './features/data/reducers/data-loader-types';
-import type { FeesState } from './features/data/reducers/fees';
-import type { StepperState } from './features/data/reducers/wallet/stepper';
-import type { TransactState } from './features/data/reducers/wallet/transact-types';
-import type { TreasuryState } from './features/data/reducers/treasury';
-import type { ProposalsState } from './features/data/reducers/proposals';
-import type { HistoricalState } from './features/data/reducers/historical-types';
-import type { SavedVaultsState } from './features/data/reducers/saved-vaults';
-import type { ResolverState } from './features/data/reducers/wallet/resolver-types';
-import type { BridgesState } from './features/data/reducers/bridges';
-import type { MigrationState } from './features/data/reducers/wallet/migration';
-import type { TooltipsState } from './features/data/reducers/tooltips';
-import type { AddToWalletState } from './features/data/reducers/add-to-wallet';
-import type { ArticlesState } from './features/data/reducers/articles';
-import type { UserRewardsState } from './features/data/reducers/wallet/user-rewards-types';
-import type { VersionState } from './features/data/reducers/ui-version';
-import type { TenderlyState } from './features/data/reducers/tenderly-types';
-import type { AnalyticsState } from './features/data/reducers/analytics-types';
-import type { RewardsState } from './features/data/reducers/rewards-types';
-import type { PromosState } from './features/data/reducers/promos';
+import type { BridgeState } from './features/data/reducers/wallet/bridge.ts';
+import type { OnRampTypes } from './features/data/reducers/on-ramp-types.ts';
+import type { DataLoaderState } from './features/data/reducers/data-loader-types.ts';
+import type { FeesState } from './features/data/reducers/fees.ts';
+import type { StepperState } from './features/data/reducers/wallet/stepper.ts';
+import type { TransactState } from './features/data/reducers/wallet/transact-types.ts';
+import type { TreasuryState } from './features/data/reducers/treasury.ts';
+import type { ProposalsState } from './features/data/reducers/proposals.ts';
+import type { HistoricalState } from './features/data/reducers/historical-types.ts';
+import type { SavedVaultsState } from './features/data/reducers/saved-vaults.ts';
+import type { ResolverState } from './features/data/reducers/wallet/resolver-types.ts';
+import type { BridgesState } from './features/data/reducers/bridges.ts';
+import type { MigrationState } from './features/data/reducers/wallet/migration.ts';
+import type { AddToWalletState } from './features/data/reducers/add-to-wallet.ts';
+import type { ArticlesState } from './features/data/reducers/articles.ts';
+import type { UserRewardsState } from './features/data/reducers/wallet/user-rewards-types.ts';
+import type { VersionState } from './features/data/reducers/ui-version.ts';
+import type { TenderlyState } from './features/data/reducers/tenderly-types.ts';
+import type { AnalyticsState } from './features/data/reducers/analytics-types.ts';
+import type { RewardsState } from './features/data/reducers/rewards-types.ts';
+import type { PromosState } from './features/data/reducers/promos.ts';
+import type { VaultsListState } from './features/data/reducers/vaults-list.ts';
 
 export interface BeefyState {
   entities: {
@@ -80,14 +79,13 @@ export interface BeefyState {
   ui: {
     dataLoader: DataLoaderState;
     filteredVaults: FilteredVaultsState;
-    theme: UIThemeState;
+    vaultsList: VaultsListState;
     transact: TransactState;
     bridge: BridgeState;
     onRamp: OnRampTypes;
     stepperState: StepperState;
     treasury: TreasuryState;
     savedVaults: SavedVaultsState;
-    tooltips: TooltipsState;
     addToWallet: AddToWalletState;
     version: VersionState;
     tenderly?: TenderlyState;
@@ -101,7 +99,7 @@ export type BeefyStore = EnhancedStore<
   MiddlewareArray<[ThunkMiddleware<CombinedState<BeefyState>, AnyAction, undefined>, ...any[]]>
 >;
 
-export type BeefyThunk<ReturnType = void> = ThunkAction<
+export type BeefyThunk<ReturnType = unknown> = ThunkAction<
   ReturnType,
   BeefyState,
   unknown,

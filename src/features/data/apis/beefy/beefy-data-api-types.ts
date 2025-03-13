@@ -1,6 +1,7 @@
-import type { VaultEntity } from '../../entities/vault';
-import type { TokenEntity } from '../../entities/token';
-import type { ChainEntity } from '../../entities/chain';
+import type { VaultEntity } from '../../entities/vault.ts';
+import type { TokenEntity } from '../../entities/token.ts';
+import type { ChainEntity } from '../../entities/chain.ts';
+import type { Duration } from 'date-fns';
 
 export type ApiTimeBucketInterval = '1h' | '1d';
 export type ApiTimeBucketRange = '1d' | '1w' | '1M' | '1Y' | 'all';

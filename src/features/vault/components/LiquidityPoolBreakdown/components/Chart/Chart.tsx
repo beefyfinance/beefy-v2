@@ -1,30 +1,36 @@
-import { makeStyles } from '@material-ui/core';
-import { memo, useCallback, useMemo, useState } from 'react';
-import type { CalculatedAsset } from '../../types';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { memo, type ReactElement, type SVGProps, useCallback, useMemo, useState } from 'react';
+import type { CalculatedAsset } from '../../types.ts';
 import type { PieProps } from 'recharts';
 import { Cell, Pie, PieChart, Sector } from 'recharts';
-import { styles } from './styles';
-import { formatLargePercent } from '../../../../../../helpers/format';
+import { styles } from './styles.ts';
+import { formatLargePercent } from '../../../../../../helpers/format.ts';
+import type { PieSectorDataItem } from 'recharts/types/polar/Pie';
+import type { Override } from '../../../../../data/utils/types-utils.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
-type ActiveShapeProps = {
-  cx: number;
-  cy: number;
-  midAngle: number;
-  innerRadius: number;
-  outerRadius: number;
-  startAngle: number;
-  endAngle: number;
-  fill: string;
-  stroke: string;
-  strokeWidth: number;
-  payload: CalculatedAsset;
-  percent: number;
-  value: number;
-  dataKey: 'percent' | 'underlyingPercent';
-};
-const ActiveShape = function ({
+type ActiveShapeProps = Override<
+  PieSectorDataItem,
+  {
+    // cx: number;
+    // cy: number;
+    // midAngle: number;
+    // innerRadius: number;
+    // outerRadius: number;
+    // startAngle: number;
+    // endAngle: number;
+    // fill: string;
+    // stroke: string;
+    // strokeWidth: number;
+    payload?: CalculatedAsset;
+    // percent: number;
+    // value: number;
+    dataKey: 'percent' | 'underlyingPercent';
+  }
+>;
+
+const ActiveShapeComponent = function ({
   cx,
   cy,
   innerRadius,
@@ -39,17 +45,21 @@ const ActiveShape = function ({
 }: ActiveShapeProps) {
   return (
     <g>
-      <text x={cx} y={cy} dy={-8} textAnchor="middle" alignmentBaseline="middle" fill="#D0D0DA">
-        {payload.symbol}
-      </text>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" alignmentBaseline="middle" fill="#D0D0DA">
-        {formatLargePercent(payload[dataKey])}
-      </text>
+      {payload && (
+        <>
+          <text x={cx} y={cy} dy={-8} textAnchor="middle" alignmentBaseline="middle" fill="#D0D0DA">
+            {payload.symbol}
+          </text>
+          <text x={cx} y={cy} dy={8} textAnchor="middle" alignmentBaseline="middle" fill="#D0D0DA">
+            {formatLargePercent(payload[dataKey])}
+          </text>
+        </>
+      )}
       <Sector
         cx={cx}
         cy={cy}
-        innerRadius={innerRadius - 2}
-        outerRadius={outerRadius + 2}
+        innerRadius={(innerRadius || 50) - 2}
+        outerRadius={(outerRadius || 80) + 2}
         startAngle={startAngle}
         endAngle={endAngle}
         fill={fill}
@@ -64,7 +74,7 @@ export type ChartProps = {
   assets: CalculatedAsset[];
   isUnderlying?: boolean;
 };
-export const Chart = memo<ChartProps>(function Chart({ assets, isUnderlying }) {
+export const Chart = memo(function Chart({ assets, isUnderlying }: ChartProps) {
   const classes = useStyles();
   const [activeIndex, setActiveIndex] = useState<undefined | number>(undefined);
   const onPieEnter = useCallback<Exclude<PieProps['onMouseEnter'], undefined>>(
@@ -79,9 +89,10 @@ export const Chart = memo<ChartProps>(function Chart({ assets, isUnderlying }) {
 
   const dataKey = useMemo(() => (isUnderlying ? 'underlyingPercent' : 'percent'), [isUnderlying]);
 
-  const activeShapeConstructor = useCallback(
-    (props: ActiveShapeProps) => {
-      return <ActiveShape {...props} dataKey={dataKey} />;
+  const ActiveShapeConstructor = useCallback(
+    // eslint-disable-next-line react-x/no-nested-components
+    (props: PieSectorDataItem): ReactElement<SVGProps<SVGElement>> => {
+      return <ActiveShapeComponent {...props} dataKey={dataKey} />;
     },
     [dataKey]
   );
@@ -102,7 +113,7 @@ export const Chart = memo<ChartProps>(function Chart({ assets, isUnderlying }) {
           endAngle={450}
           onMouseEnter={onPieEnter}
           onMouseLeave={onPieLeave}
-          activeShape={props => activeShapeConstructor(props)}
+          activeShape={ActiveShapeConstructor}
           activeIndex={activeIndex}
         >
           {assets.map(asset => (

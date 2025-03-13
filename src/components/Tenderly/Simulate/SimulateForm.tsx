@@ -1,11 +1,11 @@
 import { memo, useCallback } from 'react';
-import { TechLoader } from '../../TechLoader';
-import { useAppDispatch, useAppSelector } from '../../../store';
-import { selectTenderlyStatus } from '../../../features/data/selectors/tenderly';
-import { Button } from '../../Button';
-import { tenderlyOpenLogin } from '../../../features/data/reducers/tenderly';
-import { VerticalLayout } from '../Layout/VerticalLayout';
-import { ErrorMessage } from '../Error/ErrorMessage';
+import { TechLoader } from '../../TechLoader/TechLoader.tsx';
+import { useAppDispatch, useAppSelector } from '../../../store.ts';
+import { selectTenderlyStatus } from '../../../features/data/selectors/tenderly.ts';
+import { Button } from '../../Button/Button.tsx';
+import { tenderlyOpenLogin } from '../../../features/data/reducers/tenderly.ts';
+import { VerticalLayout } from '../Layout/VerticalLayout.tsx';
+import { ErrorMessage } from '../Error/ErrorMessage.tsx';
 
 export const SimulateForm = memo(function CallsForm() {
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ export const SimulateForm = memo(function CallsForm() {
   return (
     <VerticalLayout>
       <ErrorMessage />
-      <Button variant={'light'} onClick={handleEditCredentials}>
+      <Button variant={'default'} onClick={handleEditCredentials}>
         Edit Credentials
       </Button>
     </VerticalLayout>

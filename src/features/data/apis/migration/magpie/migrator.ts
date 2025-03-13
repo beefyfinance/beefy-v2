@@ -1,18 +1,19 @@
-import type { Migrator, MigratorUnstakeProps } from '../migration-types';
-import type { VaultEntity } from '../../../entities/vault';
+import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
+import type { VaultEntity } from '../../../entities/vault.ts';
 import type { BigNumber } from 'bignumber.js';
-import type { BeefyState } from '../../../../../redux-types';
-import { selectTokenByAddress } from '../../../selectors/tokens';
-import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number';
-import { buildExecute, buildFetchBalance } from '../utils';
-import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract';
+import type { BeefyState } from '../../../../../redux-types.ts';
+import { selectTokenByAddress } from '../../../selectors/tokens.ts';
+import { bigNumberToBigInt, toWei } from '../../../../../helpers/big-number.ts';
+import { buildExecute, buildFetchBalance } from '../utils.ts';
+import { fetchContract, fetchWalletContract } from '../../rpc-contract/viem-contract.ts';
 import type { Abi, Address } from 'abitype';
-import { getWalletConnectionApi } from '../../instances';
+import { getWalletConnectionApi } from '../../instances.ts';
 import type { Hash } from 'viem';
+import type { ChainEntity } from '../../../entities/chain.ts';
 
 const id = 'magpie';
 
-const poolHelpers = {
+const poolHelpers: Partial<Record<ChainEntity['id'], string>> = {
   ethereum: '0x1C1Fb35334290b5ff1bF7B4c09130885b10Fc0f4',
   arbitrum: '0xc06a5d3014b9124Bf215287980305Af2f793eB30',
 };

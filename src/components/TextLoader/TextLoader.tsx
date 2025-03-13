@@ -1,20 +1,20 @@
 import { memo } from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { css, type CssStyles } from '@repo/styles/css';
+import { legacyMakeStyles } from '../../helpers/mui.ts';
+import { styles } from './styles.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 export type TextLoaderProps = {
   placeholder: string;
-  className?: string;
+  css?: CssStyles;
 };
 
-export const TextLoader = memo<TextLoaderProps>(function TextLoader({ placeholder, className }) {
+export const TextLoader = memo(function TextLoader({ placeholder, css: cssProp }: TextLoaderProps) {
   const classes = useStyles();
 
   return (
-    <span className={clsx(classes.holder, className)}>
+    <span className={css(styles.holder, cssProp)}>
       <span className={classes.placeholder}>{placeholder}</span>
       <span className={classes.loader} />
     </span>

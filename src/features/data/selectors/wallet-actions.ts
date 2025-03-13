@@ -1,9 +1,9 @@
 import { type BigNumber } from 'bignumber.js';
-import type { BeefyState } from '../../../redux-types';
-import type { BoostPromoEntity } from '../entities/promo';
-import { selectAllowanceByTokenAddress } from './allowances';
-import { selectTokenByAddress } from './tokens';
-import { selectStandardVaultById } from './vaults';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { BoostPromoEntity } from '../entities/promo.ts';
+import { selectAllowanceByTokenAddress } from './allowances.ts';
+import { selectTokenByAddress } from './tokens.ts';
+import { selectStandardVaultById } from './vaults.ts';
 
 export const selectIsApprovalNeededForBoostStaking = (
   state: BeefyState,

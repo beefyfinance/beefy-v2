@@ -1,44 +1,38 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  vault: {
+export const styles = {
+  vault: css.raw({
     display: 'block',
-    position: 'relative' as const,
-    color: theme.palette.text.dark,
-    background: theme.palette.background.vaults.default,
-    borderBottom: `solid 2px ${theme.palette.background.contentDark}`,
+    position: 'relative',
+    color: 'text.dark',
+    background: 'background.vaults.standard',
     padding: '24px',
     textDecoration: 'none',
-    '&:last-child': {
-      borderBottom: 0,
-      borderBottomLeftRadius: '8px',
-      borderBottomRightRadius: '8px',
-      backgroundClip: 'padding-box',
-    },
-  },
-  vaultEarnings: {
-    backgroundColor: theme.palette.background.vaults.gov,
-  },
-  vaultCowcentrated: {
-    backgroundColor: theme.palette.background.vaults.clm,
-  },
-  vaultCowcentratedPool: {
-    backgroundColor: theme.palette.background.vaults.clmPool,
-  },
-  vaultCowcentratedVault: {
-    backgroundColor: theme.palette.background.vaults.clmVault,
-  },
-  vaultRetired: {
-    backgroundColor: theme.palette.background.vaults.inactive,
-  },
-  vaultInner: {
+    minHeight: '100px',
+  }),
+  vaultEarnings: css.raw({
+    backgroundColor: 'background.vaults.gov',
+  }),
+  vaultCowcentrated: css.raw({
+    backgroundColor: 'background.vaults.clm',
+  }),
+  vaultCowcentratedPool: css.raw({
+    backgroundColor: 'background.vaults.clm.pool',
+  }),
+  vaultCowcentratedVault: css.raw({
+    backgroundColor: 'background.vaults.clm.vault',
+  }),
+  vaultRetired: css.raw({
+    backgroundColor: 'background.vaults.inactive',
+  }),
+  vaultInner: css.raw({
     display: 'grid',
     gridTemplateColumns: '1fr',
     columnGap: '24px',
     rowGap: '24px',
     width: '100%',
-    [theme.breakpoints.up('lg')]: {
+    lg: {
       gridTemplateColumns: 'minmax(0, 40fr) minmax(0, 60fr)',
     },
-  },
-});
+  }),
+};

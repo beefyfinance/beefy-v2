@@ -1,4 +1,4 @@
-import type { VaultCategoryType } from '../../../../../data/reducers/filtered-vaults-types';
+import type { VaultCategoryType } from '../../../../../data/reducers/filtered-vaults-types.ts';
 
 export type VaultCategory = {
   i18nKey: string;
@@ -7,8 +7,8 @@ export type VaultCategory = {
 
 type VaultCategoryWithoutAll = Exclude<VaultCategoryType, 'all'>;
 
-export const CATEGORY_OPTIONS: Record<VaultCategoryWithoutAll, VaultCategory> = {
+export const CATEGORY_OPTIONS = {
   stable: { i18nKey: 'Filter-CategoryStable' },
   bluechip: { i18nKey: 'Filter-CategoryBlue' },
   correlated: { i18nKey: 'Filter-CategoryCorrelated' },
-};
+} as const satisfies Record<VaultCategoryWithoutAll, VaultCategory>;

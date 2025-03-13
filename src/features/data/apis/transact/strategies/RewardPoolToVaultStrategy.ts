@@ -1,5 +1,5 @@
-import type { TFunction, Namespace } from 'react-i18next';
-import { isTokenEqual, type TokenErc20 } from '../../../entities/token';
+import type { Namespace, TFunction } from 'react-i18next';
+import { isTokenEqual, type TokenErc20 } from '../../../entities/token.ts';
 import {
   getCowcentratedPool,
   getCowcentratedVault,
@@ -11,57 +11,67 @@ import {
   type VaultEntity,
   type VaultGovCowcentrated,
   type VaultStandardCowcentrated,
-} from '../../../entities/vault';
-import type { Step } from '../../../reducers/wallet/stepper';
+} from '../../../entities/vault.ts';
+import type { Step } from '../../../reducers/wallet/stepper.ts';
 import {
   selectGovVaultById,
   selectVaultByAddress,
   selectVaultById,
-} from '../../../selectors/vaults';
+} from '../../../selectors/vaults.ts';
 import {
-  isZapQuoteStepUnstake,
   type InputTokenAmount,
+  isZapQuoteStepDeposit,
+  isZapQuoteStepStake,
+  isZapQuoteStepUnstake,
+  isZapQuoteStepWithdraw,
   type RewardPoolToVaultDepositOption,
   type RewardPoolToVaultDepositQuote,
   type RewardPoolToVaultWithdrawOption,
-  type ZapQuoteStep,
-  isZapQuoteStepDeposit,
-  type ZapQuoteStepUnstake,
-  isZapQuoteStepWithdraw,
-  isZapQuoteStepStake,
-  type TokenAmount,
   SelectionOrder,
-} from '../transact-types';
+  type TokenAmount,
+  type ZapQuoteStep,
+  type ZapQuoteStepUnstake,
+} from '../transact-types.ts';
 import {
-  isStandardVaultType,
   type IGovVaultType,
-  type IStandardVaultType,
   isGovVaultType,
-} from '../vaults/IVaultType';
-import type { IZapStrategy, ZapTransactHelpers } from './IStrategy';
-import type { RewardPoolToVaultStrategyConfig } from './strategy-configs';
-import { getVaultTypeBuilder } from '../vaults';
-import { createOptionId, createQuoteId, createSelectionId, onlyOneInput } from '../helpers/options';
-import { selectErc20TokenByAddress } from '../../../selectors/tokens';
-import { TransactMode } from '../../../reducers/wallet/transact-types';
-import { BIG_ZERO, bigNumberToBigInt, toWei, toWeiString } from '../../../../../helpers/big-number';
-import { selectChainById } from '../../../selectors/chains';
-import { ZERO_FEE } from '../helpers/quotes';
-import type { BeefyState, BeefyThunk } from '../../../../../redux-types';
-import { walletActions } from '../../../actions/wallet-actions';
-import type { ChainEntity } from '../../../entities/chain';
-import { NO_RELAY, getInsertIndex } from '../helpers/zap';
+  isStandardVaultType,
+  type IStandardVaultType,
+} from '../vaults/IVaultType.ts';
+import type { IZapStrategy, ZapTransactHelpers } from './IStrategy.ts';
+import type { RewardPoolToVaultStrategyConfig } from './strategy-configs.ts';
+import { getVaultTypeBuilder } from '../vaults/vaults.ts';
+import {
+  createOptionId,
+  createQuoteId,
+  createSelectionId,
+  onlyOneInput,
+} from '../helpers/options.ts';
+import { selectErc20TokenByAddress } from '../../../selectors/tokens.ts';
+import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
+import {
+  BIG_ZERO,
+  bigNumberToBigInt,
+  toWei,
+  toWeiString,
+} from '../../../../../helpers/big-number.ts';
+import { selectChainById } from '../../../selectors/chains.ts';
+import { ZERO_FEE } from '../helpers/quotes.ts';
+import type { BeefyState, BeefyThunk } from '../../../../../redux-types.ts';
+import { walletActions } from '../../../actions/wallet-actions.ts';
+import type { ChainEntity } from '../../../entities/chain.ts';
+import { getInsertIndex, NO_RELAY } from '../helpers/zap.ts';
 import type {
   OrderOutput,
   UserlessZapRequest,
   ZapStep,
   ZapStepRequest,
   ZapStepResponse,
-} from '../zap/types';
+} from '../zap/types.ts';
 import { type BigNumber } from 'bignumber.js';
-import { selectTransactSlippage } from '../../../selectors/transact';
+import { selectTransactSlippage } from '../../../selectors/transact.ts';
 import { uniqBy } from 'lodash-es';
-import { slipBy } from '../helpers/amounts';
+import { slipBy } from '../helpers/amounts.ts';
 import { encodeFunctionData, type Abi } from 'viem';
 
 type ZapHelpers = {
@@ -70,7 +80,7 @@ type ZapHelpers = {
   state: BeefyState;
 };
 
-const strategyId = 'reward-pool-to-vault' as const;
+const strategyId = 'reward-pool-to-vault';
 type StrategyId = typeof strategyId;
 
 /** @dev this handles vault to pool too */
@@ -80,14 +90,14 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
 
   protected readonly mainVault: VaultEntity;
   protected readonly vault: VaultStandardCowcentrated;
-  protected vaultType: IStandardVaultType;
+  protected vaultType: IStandardVaultType | undefined;
   protected readonly vaultShareToken: TokenErc20;
 
   //shared by both the vault and the reward pool
   protected readonly depositToken: TokenErc20; //////
 
   protected readonly rewardPool: VaultGovCowcentrated;
-  protected rewardPoolType: IGovVaultType;
+  protected rewardPoolType: IGovVaultType | undefined;
   protected readonly rewardPoolShareToken: TokenErc20;
 
   constructor(
@@ -174,16 +184,18 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
         standardVault.chainId,
         standardVault.contractAddress
       );
+    } else {
+      throw new Error('invalid vault pair');
     }
   }
 
   protected async connectSecondVaultEntity() {
     const { getState } = this.helpers;
     if (!this.rewardPoolType) {
-      const builder = await getVaultTypeBuilder(this.rewardPool);
+      const builder = getVaultTypeBuilder(this.rewardPool);
       this.rewardPoolType = await builder(this.rewardPool, getState);
     } else {
-      const builder = await getVaultTypeBuilder(this.vault);
+      const builder = getVaultTypeBuilder(this.vault);
       this.vaultType = await builder(this.vault, getState);
     }
   }
@@ -205,7 +217,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
           selectionOrder: SelectionOrder.VaultToVault,
           selectionHideIfZeroBalance: true,
           inputs,
-          wantedOutputs: [this.rewardPoolType.depositToken],
+          wantedOutputs: [this.rewardPoolType!.depositToken], // assuming connectSecondVaultEntity was called
           mode: TransactMode.Deposit,
         },
       ] as const satisfies RewardPoolToVaultDepositOption[];
@@ -226,7 +238,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
           selectionOrder: SelectionOrder.VaultToVault,
           selectionHideIfZeroBalance: true,
           inputs,
-          wantedOutputs: [this.vaultType.depositToken],
+          wantedOutputs: [this.vaultType!.depositToken], // assuming connectSecondVaultEntity was called
           mode: TransactMode.Deposit,
         },
       ] as const satisfies RewardPoolToVaultDepositOption[];
@@ -260,7 +272,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
         type: 'unstake',
         outputs: [
           {
-            token: this.rewardPoolType.depositToken,
+            token: this.rewardPoolType!.depositToken, // assuming connectSecondVaultEntity was called
             amount: input.amount,
           },
         ],
@@ -276,7 +288,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
       },
     ];
 
-    const depositQuote = await this.vaultType.fetchDepositQuote(
+    const depositQuote = await this.vaultType!.fetchDepositQuote(
       [
         {
           token: this.depositToken,
@@ -285,7 +297,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
         },
       ],
       option
-    );
+    ); // assuming connectSecondVaultEntity was called
 
     return {
       id: createQuoteId(option.id),
@@ -317,7 +329,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
     }
     const { zap } = this.helpers;
 
-    const vaultWithdrawQuote = await this.vaultType.fetchWithdrawQuote(
+    const vaultWithdrawQuote = await this.vaultType!.fetchWithdrawQuote(
       [
         {
           token: this.depositToken,
@@ -329,14 +341,14 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
         ...option,
         mode: TransactMode.Withdraw,
       }
-    );
+    ); // assuming connectSecondVaultEntity was called
 
     const zapSteps: ZapQuoteStep[] = [
       {
         type: 'withdraw',
         outputs: [
           {
-            token: this.rewardPoolType.depositToken,
+            token: this.rewardPoolType!.depositToken, // assuming connectSecondVaultEntity was called
             amount: vaultWithdrawQuote.outputs[0].amount,
           },
         ],
@@ -379,7 +391,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
 
   async fetchDepositStep(
     quote: RewardPoolToVaultDepositQuote,
-    t: TFunction<Namespace, undefined>
+    t: TFunction<Namespace>
   ): Promise<Step> {
     await this.connectSecondVaultEntity();
 
@@ -390,7 +402,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
 
   async fetchRewardPoolToVaultDepositStep(
     quote: RewardPoolToVaultDepositQuote,
-    t: TFunction<Namespace, undefined>
+    t: TFunction<Namespace>
   ): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = this.helpers.getState();
@@ -407,9 +419,9 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
       }
 
       const unstakeZap = await this.fetchZapUnstakeStep(unstakeStep, zapHelpers);
-      const depositZap = await this.vaultType.fetchZapDeposit({
+      const depositZap = await this.vaultType!.fetchZapDeposit({
         inputs: depositStep.inputs.map(i => ({ ...i, max: true })),
-      });
+      }); // assuming connectSecondVaultEntity was called
 
       const dustOutputs: OrderOutput[] = unstakeZap.outputs.map(output => ({
         token: output.token.address,
@@ -460,7 +472,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
 
   protected async fetchVaultToRewardPoolDepositStep(
     quote: RewardPoolToVaultDepositQuote,
-    t: TFunction<Namespace, undefined>
+    t: TFunction<Namespace>
   ): Promise<Step> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = this.helpers.getState();
@@ -477,9 +489,9 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
         throw new Error('Quote missing stake step');
       }
 
-      const withdrawZap = await this.vaultType.fetchZapWithdraw({
+      const withdrawZap = await this.vaultType!.fetchZapWithdraw({
         inputs: quote.inputs.map(i => ({ ...i, token: this.depositToken })),
-      });
+      }); // assuming connectSecondVaultEntity was called
       const stakeZap = await this.fetchZapStakeStep(withdrawZap.outputs, zapHelpers);
 
       const dustOutputs: OrderOutput[] = withdrawZap.outputs.map(output => ({
@@ -541,7 +553,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
     throw new Error('Method not implemented.');
   }
 
-  async fetchWithdrawStep(_quote: never, _t: TFunction<Namespace, undefined>): Promise<Step> {
+  async fetchWithdrawStep(_quote: never, _t: TFunction<Namespace>): Promise<Step> {
     throw new Error('Method not implemented.');
   }
 

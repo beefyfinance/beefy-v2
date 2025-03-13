@@ -1,49 +1,40 @@
 import { memo, useCallback, useMemo } from 'react';
-import type { ToggleButtonsProps } from '../../../../../../components/ToggleButtons';
-import { ToggleButtons } from '../../../../../../components/ToggleButtons';
+import { ToggleButtons } from '../../../../../../components/ToggleButtons/ToggleButtons.tsx';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { selectFilterStrategyType } from '../../../../../data/selectors/filtered-vaults';
-import type { FilteredVaultsState } from '../../../../../data/reducers/filtered-vaults';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
-import { TYPE_OPTIONS } from './type-options';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { selectFilterStrategyType } from '../../../../../data/selectors/filtered-vaults.ts';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
+import { TYPE_OPTIONS } from './type-options.ts';
+import { entries } from '../../../../../../helpers/object.ts';
+import type { StrategiesType } from '../../../../../data/reducers/filtered-vaults-types.ts';
 
-export type StrategyTypeButtonFilterProps = {
-  className?: string;
-};
-export const StrategyTypeButtonFilter = memo<StrategyTypeButtonFilterProps>(
-  function StrategyTypeButtonFilter({ className }) {
-    const { t } = useTranslation();
-    const dispatch = useAppDispatch();
-    const allKey = 'all';
-    const options: Record<string, string> = useMemo(
-      () =>
-        Object.fromEntries(
-          Object.entries(TYPE_OPTIONS)
-            .filter(([key]) => key !== allKey)
-            .map(([key, label]) => [key, t(label)])
-        ),
-      [t]
-    );
-    const value = useAppSelector(selectFilterStrategyType);
-    const handleChange = useCallback<ToggleButtonsProps['onChange']>(
-      value => {
-        dispatch(
-          filteredVaultsActions.setStrategyType(value as FilteredVaultsState['strategyType'])
-        );
-      },
-      [dispatch]
-    );
+export const StrategyTypeButtonFilter = memo(function StrategyTypeButtonFilter() {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const allKey = 'all';
+  const options = useMemo(
+    () =>
+      entries(TYPE_OPTIONS)
+        .filter(([key]) => key !== allKey)
+        .map(([key, label]) => ({ value: key, label: t(label) })),
+    [t]
+  );
+  const value = useAppSelector(selectFilterStrategyType);
+  const handleChange = useCallback(
+    (value: StrategiesType) => {
+      dispatch(filteredVaultsActions.setStrategyType(value));
+    },
+    [dispatch]
+  );
 
-    return (
-      <ToggleButtons
-        value={value}
-        options={options}
-        onChange={handleChange}
-        buttonsClass={className}
-        fullWidth={false}
-        untoggleValue={allKey}
-      />
-    );
-  }
-);
+  return (
+    <ToggleButtons
+      value={value}
+      options={options}
+      onChange={handleChange}
+      fullWidth={false}
+      untoggleValue={allKey}
+      variant="filter"
+    />
+  );
+});

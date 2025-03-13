@@ -1,24 +1,24 @@
 import { memo, useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { groupBy } from 'lodash-es';
-import { type VaultEntity } from '../../../../../../data/entities/vault';
+import { type VaultEntity } from '../../../../../../data/entities/vault.ts';
 import {
   selectUserStellaSwapUnifiedRewardsForVault,
   type UnifiedReward,
-} from '../../../../../../data/selectors/user-rewards';
-import { useAppDispatch, useAppSelector } from '../../../../../../../store';
-import type { ChainEntity, ChainId } from '../../../../../../data/entities/chain';
-import { BIG_ZERO } from '../../../../../../../helpers/big-number';
-import { Claim } from './Claim/Claim';
-import { RewardList } from '../RewardList/RewardList';
-import { Source } from '../Source/Source';
-import { isNonEmptyArray, type NonEmptyArray } from '../../../../../../data/utils/array-utils';
-import { selectChainById } from '../../../../../../data/selectors/chains';
-import { strictEntries } from '../../../../../../../helpers/object';
-import { AlertWarning } from '../../../../../../../components/Alerts';
-import { RefreshButton } from '../RefreshButton/RefreshButton';
-import { fetchUserStellaSwapRewardsAction } from '../../../../../../data/actions/user-rewards/stellaswap-user-rewards';
-import { selectStellaSwapUserRewardsStatus } from '../../../../../../data/selectors/data-loader';
+} from '../../../../../../data/selectors/user-rewards.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../../store.ts';
+import type { ChainEntity, ChainId } from '../../../../../../data/entities/chain.ts';
+import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
+import { Claim } from './Claim/Claim.tsx';
+import { RewardList } from '../RewardList/RewardList.tsx';
+import { Source } from '../Source/Source.tsx';
+import { isNonEmptyArray, type NonEmptyArray } from '../../../../../../data/utils/array-utils.ts';
+import { selectChainById } from '../../../../../../data/selectors/chains.ts';
+import { strictEntries } from '../../../../../../../helpers/object.ts';
+import { AlertWarning } from '../../../../../../../components/Alerts/Alerts.tsx';
+import { RefreshButton } from '../RefreshButton/RefreshButton.tsx';
+import { fetchUserStellaSwapRewardsAction } from '../../../../../../data/actions/user-rewards/stellaswap-user-rewards.ts';
+import { selectStellaSwapUserRewardsStatus } from '../../../../../../data/selectors/data-loader.ts';
 
 function useUserRewardsLoader(walletAddress: string, autoRefresh: boolean) {
   const dispatch = useAppDispatch();
@@ -52,12 +52,12 @@ type StellaSwapRewardsProps = {
   deposited: boolean;
 };
 
-export const StellaSwapRewards = memo<StellaSwapRewardsProps>(function StellaSwapRewards({
+export const StellaSwapRewards = memo(function StellaSwapRewards({
   vaultId,
   chainId,
   walletAddress,
   deposited,
-}) {
+}: StellaSwapRewardsProps) {
   const { t } = useTranslation();
   const vaultRewards = useAppSelector(state =>
     selectUserStellaSwapUnifiedRewardsForVault(state, vaultId, walletAddress)
@@ -104,13 +104,13 @@ type ClaimableRewardsProps = {
   deposited: boolean;
 };
 
-const ClaimableRewards = memo<ClaimableRewardsProps>(function ClaimableRewards({
+const ClaimableRewards = memo(function ClaimableRewards({
   vaultId,
   vaultRewards,
   walletAddress,
   deposited,
   vaultChainId,
-}) {
+}: ClaimableRewardsProps) {
   const byChain = useMemo(
     () =>
       groupBy(vaultRewards, r => r.token.chainId) as Partial<
@@ -146,7 +146,7 @@ type ClaimableChainRewardsProps = {
   withRefresh?: boolean;
 };
 
-const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function ClaimableChainRewards({
+const ClaimableChainRewards = memo(function ClaimableChainRewards({
   chainId,
   vaultId,
   vaultChainId,
@@ -155,7 +155,7 @@ const ClaimableChainRewards = memo<ClaimableChainRewardsProps>(function Claimabl
   deposited,
   withChain,
   withRefresh,
-}) {
+}: ClaimableChainRewardsProps) {
   const { t } = useTranslation();
   const chain = useAppSelector(state => selectChainById(state, chainId));
   const hasClaimable = useMemo(() => vaultRewards.some(r => r.amount.gt(BIG_ZERO)), [vaultRewards]);
@@ -185,20 +185,20 @@ type RewardsRefresherProps = {
   walletAddress: string;
 };
 
-const AutomaticUserRewardsRefresher = memo<RewardsRefresherProps>(
-  function AutomaticUserRewardsRefresher({ walletAddress }) {
-    const status = useUserRewardsLoader(walletAddress, true);
-    if (status.isError) {
-      return <AlertWarning>{'Failed to fetch user rewards from StellaSwap API.'}</AlertWarning>;
-    }
-
-    return null;
-  }
-);
-
-const UserRewardsRefreshButton = memo<RewardsRefresherProps>(function UserRewardsRefreshButton({
+const AutomaticUserRewardsRefresher = memo(function AutomaticUserRewardsRefresher({
   walletAddress,
-}) {
+}: RewardsRefresherProps) {
+  const status = useUserRewardsLoader(walletAddress, true);
+  if (status.isError) {
+    return <AlertWarning>{'Failed to fetch user rewards from StellaSwap API.'}</AlertWarning>;
+  }
+
+  return null;
+});
+
+const UserRewardsRefreshButton = memo(function UserRewardsRefreshButton({
+  walletAddress,
+}: RewardsRefresherProps) {
   const { t } = useTranslation();
   const status = useUserRewardsLoader(walletAddress, false);
   const canRefresh = status.canLoad && !!status.handleLoad;
@@ -212,15 +212,15 @@ const UserRewardsRefreshButton = memo<RewardsRefresherProps>(function UserReward
         status.isError
           ? 'Transact-Claim-Refresh-StellaSwap-Error'
           : status.isLoading
-          ? 'Transact-Claim-Refresh-StellaSwap-Loading'
-          : 'Transact-Claim-Refresh-StellaSwap-Loaded'
+            ? 'Transact-Claim-Refresh-StellaSwap-Loading'
+            : 'Transact-Claim-Refresh-StellaSwap-Loaded'
       )}
       text={
         status.isLoading
           ? undefined
           : canRefresh
-          ? t('Transact-Claim-Refresh')
-          : t('Transact-Claim-Refresh-Wait')
+            ? t('Transact-Claim-Refresh')
+            : t('Transact-Claim-Refresh-Wait')
       }
       status={status.isError ? 'error' : status.isLoading ? 'loading' : 'loaded'}
       disabled={!canRefresh}

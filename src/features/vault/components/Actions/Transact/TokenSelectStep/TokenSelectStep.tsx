@@ -1,21 +1,17 @@
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { transactActions } from '../../../../../data/reducers/wallet/transact';
-import { StepHeader } from '../StepHeader';
-import { DepositTokenSelectList } from '../TokenSelectList';
-import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/transact-types';
-import { selectTransactMode } from '../../../../../data/selectors/transact';
-import { WithdrawTokenSelectList } from '../TokenSelectList/WithdrawTokenSelectList';
-
-const useStyles = makeStyles(styles);
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
+import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
+import { StepHeader } from '../StepHeader/StepHeader.tsx';
+import { DepositTokenSelectList } from '../TokenSelectList/DepositTokenSelectList.tsx';
+import { TransactMode, TransactStep } from '../../../../../data/reducers/wallet/transact-types.ts';
+import { selectTransactMode } from '../../../../../data/selectors/transact.ts';
+import { WithdrawTokenSelectList } from '../TokenSelectList/WithdrawTokenSelectList.tsx';
 
 export const TokenSelectStep = memo(function TokenSelectStep() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const classes = useStyles();
+
   const mode = useAppSelector(selectTransactMode);
 
   const handleBack = useCallback(() => {
@@ -23,7 +19,7 @@ export const TokenSelectStep = memo(function TokenSelectStep() {
   }, [dispatch]);
 
   return (
-    <div className={classes.container}>
+    <div>
       <StepHeader onBack={handleBack}>{t('Transact-SelectToken')}</StepHeader>
       {mode === TransactMode.Deposit ? <DepositTokenSelectList /> : <WithdrawTokenSelectList />}
     </div>

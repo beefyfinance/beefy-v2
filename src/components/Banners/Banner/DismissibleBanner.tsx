@@ -1,10 +1,7 @@
 import { memo, useCallback } from 'react';
-import { Banner, type BannerProps } from './Banner';
-import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean';
-
-export type DismissibleBannerProps = Exclude<BannerProps, 'onClose'> & {
-  id: string;
-};
+import type { DismissibleBannerProps } from './types.ts';
+import { Banner } from './Banner.tsx';
+import { useLocalStorageBoolean } from '../../../helpers/useLocalStorageBoolean.tsx';
 
 export const DismissibleBanner = memo<DismissibleBannerProps>(function DismissibleBanner({
   id,

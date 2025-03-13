@@ -1,28 +1,28 @@
 import type { PropsWithChildren } from 'react';
 import { memo, useCallback } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectFilterUserCategory,
   selectHasActiveFilterExcludingUserCategoryAndSort,
-} from '../../../../../data/selectors/filtered-vaults';
-import { styles } from './styles';
-import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet';
+} from '../../../../../data/selectors/filtered-vaults.ts';
+import { styles } from './styles.ts';
+import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet.ts';
 import { useTranslation } from 'react-i18next';
-import { selectIsUserBalanceAvailable } from '../../../../../data/selectors/data-loader';
-import { askForWalletConnection, doDisconnectWallet } from '../../../../../data/actions/wallet';
-import { Button } from '../../../../../../components/Button';
-import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
-import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
+import { selectIsUserBalanceAvailable } from '../../../../../data/selectors/data-loader.ts';
+import { askForWalletConnection, doDisconnectWallet } from '../../../../../data/actions/wallet.ts';
+import { Button } from '../../../../../../components/Button/Button.tsx';
+import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
+import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type MessageProps = PropsWithChildren<{
   title: string;
   text: string;
 }>;
 
-const Message = memo<MessageProps>(function Message({ title, text, children }) {
+const Message = memo(function Message({ title, text, children }: MessageProps) {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -35,7 +35,7 @@ const Message = memo<MessageProps>(function Message({ title, text, children }) {
   );
 });
 
-const NotConnectedMessage = memo<MessageProps>(function NotConnectedMessage({ title, text }) {
+const NotConnectedMessage = memo(function NotConnectedMessage({ title, text }: MessageProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const walletAddress = useAppSelector(selectWalletAddressIfKnown);
@@ -56,7 +56,7 @@ const NotConnectedMessage = memo<MessageProps>(function NotConnectedMessage({ ti
   );
 });
 
-const NotDepositedMessage = memo<MessageProps>(function NotDepositedMessage({ title, text }) {
+const NotDepositedMessage = memo(function NotDepositedMessage({ title, text }: MessageProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const handleViewAll = useCallback(() => {

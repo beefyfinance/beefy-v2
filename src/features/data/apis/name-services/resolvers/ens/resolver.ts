@@ -1,18 +1,18 @@
-import type { ChainId } from '../../../../entities/chain';
-import { ZERO_ADDRESS } from '../../../../../../helpers/addresses';
-import { normalizeAddress, normalizeAndHashDomain } from '../../utils';
+import type { ChainId } from '../../../../entities/chain.ts';
+import { ZERO_ADDRESS } from '../../../../../../helpers/addresses.ts';
+import { normalizeAddress, normalizeAndHashDomain } from '../../utils.ts';
 import type { Abi, Address, Hash } from 'viem';
-import type { AllChainsFromTldToChain } from '../../types';
-import type { tldToChain } from './tlds';
-import { fetchContract } from '../../../rpc-contract/viem-contract';
+import type { AllChainsFromTldToChain } from '../../types.ts';
+import type { tldToChain } from './tlds.ts';
+import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
 
-const registryAddresses: Record<AllChainsFromTldToChain<typeof tldToChain>, Address> = {
+const registryAddresses: Partial<Record<ChainId, Address>> = {
   ethereum: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-};
+} satisfies Record<AllChainsFromTldToChain<typeof tldToChain>, Address>;
 
-const reverseRecordsAddresses: Record<AllChainsFromTldToChain<typeof tldToChain>, Address> = {
+const reverseRecordsAddresses: Partial<Record<ChainId, Address>> = {
   ethereum: '0x3671aE578E63FdF66ad4F3E12CC0c0d71Ac7510C',
-};
+} satisfies Record<AllChainsFromTldToChain<typeof tldToChain>, Address>;
 
 const registryAbi = [
   {

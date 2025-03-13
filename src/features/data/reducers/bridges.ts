@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { Draft } from 'immer';
-import type { BridgeEntity } from '../entities/bridge';
-import type { NormalizedEntity } from '../utils/normalized-entity';
-import { fetchBridges } from '../actions/bridges';
-import type { BridgeConfig } from '../apis/config-types';
+import type { BridgeEntity } from '../entities/bridge.ts';
+import type { NormalizedEntity } from '../utils/normalized-entity.ts';
+import { fetchBridges } from '../actions/bridges.ts';
+import type { BridgeConfig } from '../apis/config-types.ts';
 
 export type BridgesState = NormalizedEntity<BridgeEntity>;
 

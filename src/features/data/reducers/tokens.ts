@@ -1,39 +1,39 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { BigNumber } from 'bignumber.js';
 import type { Draft } from 'immer';
-import { fetchChainConfigs } from '../actions/chains';
-import { fetchAllPricesAction } from '../actions/prices';
-import type { FetchAddressBookPayload } from '../actions/tokens';
+import { fetchChainConfigs } from '../actions/chains.ts';
+import { fetchAllPricesAction } from '../actions/prices.ts';
+import type { FetchAddressBookPayload } from '../actions/tokens.ts';
 import {
   fetchAddressBookAction,
   fetchAllAddressBookAction,
   fetchAllCurrentCowcentratedRanges,
-} from '../actions/tokens';
-import { fetchAllVaults } from '../actions/vaults';
-import type { ChainEntity } from '../entities/chain';
+} from '../actions/tokens.ts';
+import { fetchAllVaults } from '../actions/vaults.ts';
+import type { ChainEntity } from '../entities/chain.ts';
 import type {
   CurrentCowcentratedRangeData,
   TokenEntity,
   TokenErc20,
   TokenLpBreakdown,
   TokenNative,
-} from '../entities/token';
-import { isTokenErc20, isTokenNative } from '../entities/token';
-import { getDepositTokenFromLegacyVaultConfig } from '../utils/config-hacks';
-import { fetchAllMinters } from '../actions/minters';
-import type { MinterConfig, VaultConfig } from '../apis/config-types';
-import { isNativeAlternativeAddress } from '../../../helpers/addresses';
-import { fetchBridgeConfig } from '../actions/bridge';
-import { entries } from '../../../helpers/object';
-import type { LpData } from '../apis/beefy/beefy-api-types';
+} from '../entities/token.ts';
+import { isTokenErc20, isTokenNative } from '../entities/token.ts';
+import { getDepositTokenFromLegacyVaultConfig } from '../utils/config-hacks.ts';
+import { fetchAllMinters } from '../actions/minters.ts';
+import type { MinterConfig, VaultConfig } from '../apis/config-types.ts';
+import { isNativeAlternativeAddress } from '../../../helpers/addresses.ts';
+import { fetchBridgeConfig } from '../actions/bridge.ts';
+import { entries } from '../../../helpers/object.ts';
+import type { LpData } from '../apis/beefy/beefy-api-types.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedStandardVault,
   isCowcentratedVault,
   type VaultEntity,
-} from '../entities/vault';
-import { initPromos } from '../actions/promos';
-import type { PromoTokenRewardConfig } from '../apis/promos/types';
+} from '../entities/vault.ts';
+import { initPromos } from '../actions/promos.ts';
+import type { PromoTokenRewardConfig } from '../apis/promos/types.ts';
 
 /**
  * State containing Vault infos
@@ -502,10 +502,10 @@ function addVaultToState(sliceState: Draft<TokensState>, config: VaultConfig, en
     const receiptTokenSymbol = isCowcentratedVault(entity)
       ? `${entity.names.short} CLM`
       : isCowcentratedGovVault(entity)
-      ? `${entity.names.short} rCLM`
-      : isCowcentratedStandardVault(entity)
-      ? `${entity.names.short} mooCLM`
-      : config.earnedToken;
+        ? `${entity.names.short} rCLM`
+        : isCowcentratedStandardVault(entity)
+          ? `${entity.names.short} mooCLM`
+          : config.earnedToken;
 
     const receiptToken: TokenErc20 = {
       type: 'erc20',

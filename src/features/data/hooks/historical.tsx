@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import type { TokenEntity } from '../entities/token';
-import { useAppDispatch, useAppSelector } from '../../../store';
+import type { TokenEntity } from '../entities/token.ts';
+import { useAppDispatch, useAppSelector } from '../../../store.ts';
 import {
   selectHistoricalBucketAlreadyFulfilled,
   selectHistoricalBucketHasData,
@@ -8,14 +8,14 @@ import {
   selectHistoricalPriceBucketAlreadyFulfilled,
   selectHistoricalPriceBucketData,
   selectHistoricalPriceBucketStatus,
-} from '../selectors/historical';
-import { fetchHistoricalPrices, fetchHistoricalStat } from '../actions/historical';
-import { type VaultEntity } from '../entities/vault';
-import { selectVaultById } from '../selectors/vaults';
-import { selectTokenByAddress } from '../selectors/tokens';
-import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types';
-import type { ChartStat } from '../../vault/components/HistoricGraph/types';
-import type { GraphBucket } from '../../../helpers/graph/types';
+} from '../selectors/historical.ts';
+import { fetchHistoricalPrices, fetchHistoricalStat } from '../actions/historical.ts';
+import { type VaultEntity } from '../entities/vault.ts';
+import { selectVaultById } from '../selectors/vaults.ts';
+import { selectTokenByAddress } from '../selectors/tokens.ts';
+import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
+import type { ChartStat } from '../../vault/components/HistoricGraph/types.ts';
+import type { GraphBucket } from '../../../helpers/graph/types.ts';
 
 export function useOracleIdToUsdPrices(oracleId: TokenEntity['oracleId'], bucket: GraphBucket) {
   const dispatch = useAppDispatch();
@@ -33,10 +33,9 @@ export function useOracleIdToUsdPrices(oracleId: TokenEntity['oracleId'], bucket
       if (status === 'idle') {
         dispatch(fetchHistoricalPrices({ oracleId, bucket }));
       } else if (status === 'rejected') {
-        const handle = setTimeout(
-          () => dispatch(fetchHistoricalPrices({ oracleId, bucket })),
-          15000
-        );
+        const handle = setTimeout(() => {
+          dispatch(fetchHistoricalPrices({ oracleId, bucket }));
+        }, 15000);
         return () => clearTimeout(handle);
       }
     }

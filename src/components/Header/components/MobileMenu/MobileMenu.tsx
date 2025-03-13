@@ -1,53 +1,109 @@
-import { Fragment, memo, useState } from 'react';
-import { Divider, Drawer, makeStyles } from '@material-ui/core';
-import { Close, Menu } from '@material-ui/icons';
-import { styles } from './styles';
-// import { BifiPrice } from '../BifiPrice';
-import { NavItemMobile } from '../NavItem';
-import { useTranslation } from 'react-i18next';
-import { MobileList } from '../../list';
-import type { NavConfig, NavDropdownConfig } from '../DropNavItem/types';
-import { isNavDropdownConfig } from '../DropNavItem/types';
-import clsx from 'clsx';
-import { Prices } from '../Prices';
-import { UnreadDots } from '../Badges/UnreadDots';
-
-const useStyles = makeStyles(styles);
+import { Fragment, memo, useCallback, useState } from 'react';
+import CloseIcon from '../../../../images/icons/mui/Close.svg?react';
+import MenuIcon from '../../../../images/icons/mui/Menu.svg?react';
+import { NavLinkItem } from '../NavItem/NavLinkItem.tsx';
+import { MobileList } from '../../list.ts';
+import type { NavConfig, NavDropdownConfig } from '../DropNavItem/types.ts';
+import { isNavDropdownConfig } from '../DropNavItem/types.ts';
+import { Prices } from '../Prices/Prices.tsx';
+import { UnreadDots } from '../Badges/UnreadDots.tsx';
+import { Drawer } from '../../../Modal/Drawer.tsx';
+import { styled } from '@repo/styles/jsx';
+import { NavItemInner } from '../NavItem/NavItemInner.tsx';
+import { NavItem } from '../NavItem/NavLink.tsx';
 
 export const MobileMenu = memo(function MobileMenu() {
-  const classes = useStyles();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  const handleDrawerToggle = useCallback(() => {
+    setMobileOpen(open => !open);
+  }, [setMobileOpen]);
+
   return (
-    <div>
-      <button aria-label="menu" onClick={handleDrawerToggle} className={classes.toggleDrawer}>
-        <Menu fontSize="inherit" className={classes.toggleDrawerIcon} />
+    <>
+      <MenuButton aria-label="menu" onClick={handleDrawerToggle}>
+        <MenuIcon fontSize="inherit" />
         <UnreadDots />
-      </button>
-      <Drawer className={classes.bg} anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
-        <div className={classes.menuContainer}>
-          <div className={classes.head}>
-            <div className={classes.flex}>
-              <Prices />
-            </div>
-            <Close className={classes.cross} onClick={handleDrawerToggle} />
-          </div>
-          <Divider className={classes.divider} />
+      </MenuButton>
+      <Drawer scrollable={false} open={mobileOpen} onClose={handleDrawerToggle}>
+        <Sidebar>
+          <Header>
+            <Prices />
+            <CloseButton onClick={handleDrawerToggle}>
+              <CloseIcon />
+            </CloseButton>
+          </Header>
+          <Divider />
           {MobileList.map(item => {
             return (
               <Fragment key={item.title}>
                 <MobileItem item={item} onClick={handleDrawerToggle} />
-                <Divider className={classes.divider} />
+                <Divider />
               </Fragment>
             );
           })}
-        </div>
+        </Sidebar>
       </Drawer>
-    </div>
+    </>
   );
 });
+
+const Divider = styled('hr', {
+  base: {
+    height: '2px',
+    backgroundColor: 'background.content.dark',
+    display: 'block',
+    margin: 0,
+    padding: 0,
+    border: 'none',
+  },
+});
+
+const MenuButton = styled('button', {
+  base: {
+    background: 'transparent',
+    padding: '0',
+    border: 0,
+    boxShadow: 'none',
+    color: 'text.light',
+    fontSize: '30px',
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+const Sidebar = styled('div', {
+  base: {
+    backgroundColor: 'background.header',
+    minHeight: '100vh',
+    width: '320px',
+    overflowY: 'auto',
+  },
+});
+
+const Header = styled('div', {
+  base: {
+    padding: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+  },
+});
+
+const CloseButton = styled(
+  'button',
+  {
+    base: {
+      marginLeft: 'auto',
+      color: 'text.middle',
+      _hover: {
+        color: 'text.light',
+      },
+    },
+  },
+  { defaultProps: { type: 'button' } }
+);
 
 type MobileItemProps = {
   item: NavConfig;
@@ -67,7 +123,7 @@ const MobileItem = memo<MobileItemProps>(function MobileItem({ item, onClick }) 
     );
   }
 
-  const NavComponent = item.MobileComponent ?? NavItemMobile;
+  const NavComponent = item.MobileComponent ?? NavLinkItem;
   return (
     <NavComponent
       onClick={onClick}
@@ -75,7 +131,8 @@ const MobileItem = memo<MobileItemProps>(function MobileItem({ item, onClick }) 
       url={item.url}
       Badge={item.Badge}
       Icon={item.Icon}
-      exact={item.exact}
+      end={item.end}
+      mobile={true}
     />
   );
 });
@@ -89,33 +146,37 @@ export const DropMobile = memo<DropMobileProps>(function DropMobile({
   onClick,
   Badge,
 }) {
-  const classes = useStyles();
-  const { t } = useTranslation();
   return (
-    <div className={classes.itemsContainer}>
-      <div className={classes.itemTitle}>
-        <Icon />
-        <div className={clsx(classes.title, { [classes.titleWithBadge]: !!Badge })}>
-          {t(title)}
-          {Badge ? <Badge /> : null}
-        </div>
-      </div>
-      <div>
+    <>
+      <NavItem mobile={true}>
+        <NavItemInner title={title} Icon={Icon} Badge={Badge} />
+      </NavItem>
+      <SubItems>
         {items.map(item => {
-          const NavComponent = item.MobileComponent ?? NavItemMobile;
+          const NavComponent = item.MobileComponent ?? NavLinkItem;
           return (
             <NavComponent
               key={item.title}
               onClick={onClick}
-              className={classes.customPadding}
               title={item.title}
               url={item.url}
               Icon={item.Icon}
               Badge={item.Badge}
+              mobile={true}
             />
           );
         })}
-      </div>
-    </div>
+      </SubItems>
+    </>
   );
+});
+
+const SubItems = styled('div', {
+  base: {
+    paddingLeft: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: '-8px',
+    paddingBottom: '8px',
+  },
 });

@@ -1,22 +1,24 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
-import type { Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  label: {
-    ...theme.typography['subline-sm'],
-    fontWeight: 700,
-    color: theme.palette.text.dark,
+const useStyles = legacyMakeStyles({
+  label: css.raw({
+    textStyle: 'subline.sm',
+    fontWeight: 'bold',
+    color: 'text.dark',
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
-  },
-}));
+  }),
+});
 
-export type LabelProps = { children: ReactNode };
+export type LabelProps = {
+  children: ReactNode;
+};
 
-export const Label = memo<LabelProps>(function Label({ children }) {
+export const Label = memo(function Label({ children }: LabelProps) {
   const classes = useStyles();
   return <div className={classes.label}>{children}</div>;
 });

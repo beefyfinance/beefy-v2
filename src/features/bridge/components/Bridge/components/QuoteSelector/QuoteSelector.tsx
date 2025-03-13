@@ -1,6 +1,6 @@
 import { memo, type ReactNode, useCallback, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectBridgeConfigById,
   selectBridgeFormState,
@@ -12,29 +12,31 @@ import {
   selectBridgeQuoteIds,
   selectBridgeQuoteSelectedId,
   selectBridgeQuoteStatus,
-} from '../../../../../data/selectors/bridge';
-import { formatLargeUsd, formatTokenDisplayCondensed } from '../../../../../../helpers/format';
-import { bridgeActions } from '../../../../../data/reducers/wallet/bridge';
-import clsx from 'clsx';
-import { getBridgeProviderIcon } from '../../../../../../helpers/bridgeProviderSrc';
-import { Lock, MonetizationOn, Timer } from '@material-ui/icons';
-import { styles } from './styles';
-import { TextLoader } from '../../../../../../components/TextLoader';
-import type { BeefyAnyBridgeConfig } from '../../../../../data/apis/config-types';
-import { AlertError } from '../../../../../../components/Alerts';
+} from '../../../../../data/selectors/bridge.ts';
+import { formatLargeUsd, formatTokenDisplayCondensed } from '../../../../../../helpers/format.ts';
+import { bridgeActions } from '../../../../../data/reducers/wallet/bridge.ts';
+import { css, type CssStyles } from '@repo/styles/css';
+import { getBridgeProviderIcon } from '../../../../../../helpers/bridgeProviderSrc.ts';
+import Lock from '../../../../../../images/icons/mui/Lock.svg?react';
+import MonetizationOn from '../../../../../../images/icons/mui/MonetizationOn.svg?react';
+import Timer from '../../../../../../images/icons/mui/Timer.svg?react';
+import { styles } from './styles.ts';
+import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
+import type { BeefyAnyBridgeConfig } from '../../../../../data/apis/config-types.ts';
+import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { useTranslation } from 'react-i18next';
-import { formatMinutesDuration } from '../../../../../../helpers/date';
-import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
+import { formatMinutesDuration } from '../../../../../../helpers/date.ts';
+import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens.ts';
 import { BigNumber } from 'bignumber.js';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type QuoteLimitedProps = {
-  quoteId: string;
-  className?: string;
+  quoteId: BeefyAnyBridgeConfig['id'];
+  css?: CssStyles;
 };
 
-const QuoteLimited = memo<QuoteLimitedProps>(function QuoteLimited({ quoteId }) {
+const QuoteLimited = memo(function QuoteLimited({ quoteId }: QuoteLimitedProps) {
   const { t } = useTranslation();
   const classes = useStyles();
   const quote = useAppSelector(state => selectBridgeLimitedQuoteById(state, quoteId));
@@ -48,12 +50,7 @@ const QuoteLimited = memo<QuoteLimitedProps>(function QuoteLimited({ quoteId }) 
   }, [quote.limits.from, quote.limits.to]);
 
   return (
-    <div
-      className={clsx({
-        [classes.quote]: true,
-        [classes.quoteLimited]: true,
-      })}
-    >
+    <div className={css(styles.quote, styles.quoteLimited)}>
       <div className={classes.quoteProvider}>
         <img
           src={providerIcon}
@@ -75,14 +72,13 @@ const QuoteLimited = memo<QuoteLimitedProps>(function QuoteLimited({ quoteId }) 
 });
 
 type QuoteButtonProps = {
-  quoteId: string;
+  quoteId: BeefyAnyBridgeConfig['id'];
   selected: boolean;
-  className?: string;
+  css?: CssStyles;
 };
 
-const QuoteButton = memo<QuoteButtonProps>(function QuoteButton({ quoteId, selected }) {
+const QuoteButton = memo(function QuoteButton({ quoteId, selected }: QuoteButtonProps) {
   const dispatch = useAppDispatch();
-  const classes = useStyles();
   const quote = useAppSelector(state => selectBridgeQuoteById(state, quoteId));
   const handleClick = useCallback(() => {
     if (selected) {
@@ -103,12 +99,9 @@ const QuoteButton = memo<QuoteButtonProps>(function QuoteButton({ quoteId, selec
 
   return (
     <button
+      type="button"
       onClick={handleClick}
-      className={clsx({
-        [classes.quote]: true,
-        [classes.quoteButton]: true,
-        [classes.quoteButtonSelected]: selected,
-      })}
+      className={css(styles.quote, styles.quoteButton, selected && styles.quoteButtonSelected)}
     >
       <QuoteButtonInner
         providerId={quote.config.id}
@@ -129,11 +122,11 @@ type QuoteButtonInnerProps = {
   fee: ReactNode;
   time: ReactNode;
 };
-const QuoteButtonInner = memo<QuoteButtonInnerProps>(function QuoteButtonInner({
+const QuoteButtonInner = memo(function QuoteButtonInner({
   providerId,
   fee,
   time,
-}) {
+}: QuoteButtonInnerProps) {
   const classes = useStyles();
   const config = useAppSelector(state => selectBridgeConfigById(state, providerId));
   const providerIcon = useMemo(() => {
@@ -167,9 +160,9 @@ const QuoteButtonInner = memo<QuoteButtonInnerProps>(function QuoteButtonInner({
 type LoadingQuoteButtonProps = {
   providerId: BeefyAnyBridgeConfig['id'];
 };
-const LoadingQuoteButton = memo<LoadingQuoteButtonProps>(function LoadingQuoteButton({
+const LoadingQuoteButton = memo(function LoadingQuoteButton({
   providerId,
-}) {
+}: LoadingQuoteButtonProps) {
   const classes = useStyles();
 
   return (
@@ -245,7 +238,7 @@ type QuotesHolderProps = {
   status: 'fulfilled' | 'pending';
 };
 
-const QuotesHolder = memo<QuotesHolderProps>(function QuotesHolder({ status }) {
+const QuotesHolder = memo(function QuotesHolder({ status }: QuotesHolderProps) {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -258,11 +251,10 @@ const QuotesHolder = memo<QuotesHolderProps>(function QuotesHolder({ status }) {
 });
 
 type QuoteSelectorProps = {
-  className?: string;
+  css?: CssStyles;
 };
 
-export const QuoteSelector = memo<QuoteSelectorProps>(function QuoteSelector({ className }) {
-  const classes = useStyles();
+export const QuoteSelector = memo(function QuoteSelector({ css: cssProp }: QuoteSelectorProps) {
   const status = useAppSelector(selectBridgeQuoteStatus);
 
   if (status === 'idle') {
@@ -270,7 +262,7 @@ export const QuoteSelector = memo<QuoteSelectorProps>(function QuoteSelector({ c
   }
 
   return (
-    <div className={clsx(classes.container, className)}>
+    <div className={css(styles.container, cssProp)}>
       {status === 'rejected' ? <QuotesError /> : <QuotesHolder status={status} />}
     </div>
   );

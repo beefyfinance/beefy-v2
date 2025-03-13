@@ -1,27 +1,27 @@
-import type { Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  container: {
+const useStyles = legacyMakeStyles({
+  container: css.raw({
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     rowGap: '4px',
     padding: '24px',
-    background: theme.palette.background.contentPrimary,
+    background: 'background.content',
     borderRadius: '0px 0px 8px 8px',
     marginTop: '2px',
-  },
-  title: {
-    ...theme.typography['h3'],
-    color: theme.palette.text.middle,
-  },
-  text: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.middle,
-  },
-}));
+  }),
+  title: css.raw({
+    textStyle: 'h3',
+    color: 'text.middle',
+  }),
+  text: css.raw({
+    textStyle: 'body',
+    color: 'text.middle',
+  }),
+});
 
 export const NoVaults = memo(function NoVaults() {
   const classes = useStyles();

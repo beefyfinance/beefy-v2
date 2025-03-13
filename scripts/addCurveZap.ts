@@ -1,22 +1,23 @@
-import { ArgumentConfig, parse } from 'ts-command-line-args';
+import { type ArgumentConfig, parse } from 'ts-command-line-args';
 import {
-  AppChainId,
   addressBookToAppId,
   appToAddressBookId,
   getChain,
   getVaultsForChain,
-} from './common/config';
-import { sortVaultKeys } from './common/vault-fields';
-import { fileReadable, loadJson, saveJson } from './common/files';
-import type { VaultConfig } from '../src/features/data/apis/config-types';
+  type ChainMap,
+} from './common/config.ts';
+import { sortVaultKeys } from './common/vault-fields.ts';
+import { fileReadable, loadJson, saveJson } from './common/files.ts';
+import type { VaultConfig } from '../src/features/data/apis/config-types.ts';
 import { mkdir } from 'node:fs/promises';
 import * as path from 'node:path';
-import { isNonEmptyArray, NonEmptyArray, sleep } from './common/utils';
-import type { CurveStrategyConfig } from '../src/features/data/apis/transact/strategies/strategy-configs';
-import type { CurveMethodTypes } from '../src/features/data/apis/transact/strategies/curve/types';
-import { Abi, Address, getAddress, getContract } from 'viem';
-import { getViemClient } from './common/viem';
-import { isFulfilledResult } from '../src/helpers/promises';
+import { isNonEmptyArray, type NonEmptyArray } from './common/utils.ts';
+import type { CurveStrategyConfig } from '../src/features/data/apis/transact/strategies/strategy-configs.ts';
+import type { CurveMethodTypes } from '../src/features/data/apis/transact/strategies/curve/types.ts';
+import { type Abi, type Address, getAddress, getContract } from 'viem';
+import { getViemClient } from './common/viem.ts';
+import { sleep } from '../src/features/data/utils/async-utils.ts';
+import { isFulfilledResult } from '../src/helpers/promises.ts';
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const EEEE_ADDRESS = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
@@ -115,25 +116,6 @@ type ChainPoolCoins = {
   underlyingCoins: string[];
 };
 
-type ChainPoolCoinsResponse = {
-  coin0: string | undefined;
-  coin1: string | undefined;
-  coin2: string | undefined;
-  coin3: string | undefined;
-  coin4: string | undefined;
-  coin5: string | undefined;
-  coin6: string | undefined;
-  coin7: string | undefined;
-  underlyingCoin0: string | undefined;
-  underlyingCoin1: string | undefined;
-  underlyingCoin2: string | undefined;
-  underlyingCoin3: string | undefined;
-  underlyingCoin4: string | undefined;
-  underlyingCoin5: string | undefined;
-  underlyingCoin6: string | undefined;
-  underlyingCoin7: string | undefined;
-};
-
 type CurveApiPoolWithChain = CurveApiPoolWithMetadata & {
   onChain: {
     poolCoins: ChainPoolCoins;
@@ -141,15 +123,14 @@ type CurveApiPoolWithChain = CurveApiPoolWithMetadata & {
   };
 };
 
-const cacheBasePath = path.join(__dirname, '.cache');
-const cacheCurvePath = path.join(cacheBasePath, 'curve');
-const cacheCurveApiPath = path.join(cacheCurvePath, 'api');
+const cacheBasePath = path.join(__dirname, '..', '.cache', 'scripts', 'curve');
+const cacheCurveApiPath = path.join(cacheBasePath, 'api');
 const cryptoPoolsIgnoreZap = new Set([
   '0x960ea3e3C7FB317332d990873d354E18d7645590', // disabled as may be exploitable, and zap only handles eth
   '0xD51a44d3FaE010294C616388b506AcdA1bfAAE46', // zap only handles eth
 ]);
 
-const chainIdToCurveChainId = {
+const chainIdToCurveChainId: ChainMap<string> = {
   arbitrum: 'arbitrum',
   aurora: 'aurora',
   avax: 'avalanche',
@@ -199,13 +180,9 @@ async function getVault(chainId: string, vaultId: string) {
   return vault;
 }
 
-function fixAddress(address: string, chainId: string): string {
+function fixAddress(address: string): string {
   const checksummed = getAddress(address);
   if (checksummed === EEEE_ADDRESS) {
-    // const wnative = addressBook[chainId].tokens['WNATIVE'];
-    // if (!wnative) {
-    //   throw new Error(`No WNative token found for chain ${chainId}`);
-    // }
     return 'native';
   }
 
@@ -213,13 +190,13 @@ function fixAddress(address: string, chainId: string): string {
 }
 
 /** fix address checksums */
-function fixAddresses(pool: CurveApiPool, chainId: string): CurveApiPool {
+function fixAddresses(pool: CurveApiPool): CurveApiPool {
   if (pool.coins?.length) {
     pool.coins = pool.coins
       .filter(coin => coin.address !== ZERO_ADDRESS)
       .map(coin => ({
         ...coin,
-        address: fixAddress(coin.address, chainId),
+        address: fixAddress(coin.address),
       }));
   }
 
@@ -228,15 +205,15 @@ function fixAddresses(pool: CurveApiPool, chainId: string): CurveApiPool {
       .filter(coin => coin.address !== ZERO_ADDRESS)
       .map(coin => ({
         ...coin,
-        address: fixAddress(coin.address, chainId),
+        address: fixAddress(coin.address),
       }));
   }
 
-  pool.address = fixAddress(pool.address, chainId);
-  pool.lpTokenAddress = fixAddress(pool.lpTokenAddress, chainId);
+  pool.address = fixAddress(pool.address);
+  pool.lpTokenAddress = fixAddress(pool.lpTokenAddress);
 
   if (pool.basePoolAddress) {
-    pool.basePoolAddress = fixAddress(pool.basePoolAddress, chainId);
+    pool.basePoolAddress = fixAddress(pool.basePoolAddress);
   }
 
   return pool;
@@ -259,7 +236,7 @@ function fixMetaPool(
       if (!pool.zapAddress) {
         console.warn(`Normalizing ${pool.id} with 1 base pool and no zap address`);
       }
-      const basePool = fixMetaPool(withBasePools[0]!.basePool!, allPools);
+      const basePool = fixMetaPool(withBasePools[0].basePool!, allPools);
 
       pool.isMetaPool = true;
       pool.coins = pool.coins.map(coin => ({
@@ -312,7 +289,8 @@ async function fetchCurvePools(
   endpoint: string,
   quiet: boolean = false
 ): Promise<CurveApiPoolWithMetadata[]> {
-  const curveChainId = chainIdToCurveChainId[chainId];
+  const abChainId = appToAddressBookId(chainId);
+  const curveChainId = chainIdToCurveChainId[abChainId];
   if (!curveChainId) {
     throw new Error(`No curve chain id found for chain ${chainId}`);
   }
@@ -332,7 +310,7 @@ async function fetchCurvePools(
 
   const timestamp = new Date();
   return body.data.poolData
-    .map(pool => fixAddresses(pool, chainId))
+    .map(pool => fixAddresses(pool))
     .map(pool => ({
       ...pool,
       metadata: {
@@ -363,7 +341,8 @@ export async function getCurvePools(
     return apiPoolsCache.get(chainId)!;
   }
 
-  const curveChainId = chainIdToCurveChainId[chainId];
+  const abChainId = appToAddressBookId(chainId);
+  const curveChainId = chainIdToCurveChainId[abChainId];
   if (!curveChainId) {
     throw new Error(`No curve chain id found for chain ${chainId}`);
   }
@@ -415,7 +394,7 @@ export async function getApiPool(
 }
 
 async function fetchCoins(poolOrZapAddress: string, chainId: string): Promise<ChainPoolCoins> {
-  const viemClient = getViemClient(chainId as AppChainId);
+  const viemClient = getViemClient(addressBookToAppId(chainId));
   const poolContract = getContract({
     address: poolOrZapAddress as Address,
     abi: [
@@ -497,13 +476,13 @@ async function fetchCoins(poolOrZapAddress: string, chainId: string): Promise<Ch
 
   return {
     coins: [coin0, coin1, coin2, coin3, coin4, coin5, coin6, coin7]
+      .filter(isFulfilledResult)
       .filter(
         coinResult =>
-          coinResult.status === 'fulfilled' &&
           coinResult.value !== '0x' &&
           coinResult.value !== '0x0000000000000000000000000000000000000000'
       )
-      .map((coinResult: PromiseFulfilledResult<`0x${string}`>) => coinResult.value),
+      .map(coinResult => coinResult.value),
     underlyingCoins: [
       underlyingCoin0,
       underlyingCoin1,
@@ -514,13 +493,13 @@ async function fetchCoins(poolOrZapAddress: string, chainId: string): Promise<Ch
       underlyingCoin6,
       underlyingCoin7,
     ]
+      .filter(isFulfilledResult)
       .filter(
         coinResult =>
-          coinResult.status === 'fulfilled' &&
           coinResult.value !== '0x' &&
           coinResult.value !== '0x0000000000000000000000000000000000000000'
       )
-      .map((coinResult: PromiseFulfilledResult<`0x${string}`>) => coinResult.value),
+      .map(coinResult => coinResult.value),
   };
 }
 
@@ -621,7 +600,7 @@ async function isDepositFlagNeededFixed(
   coins: number,
   chainId: string
 ): Promise<boolean> {
-  const viemClient = getViemClient(chainId as AppChainId);
+  const viemClient = getViemClient(addressBookToAppId(chainId));
   const poolContract = getContract({
     address: pool as Address,
     abi: [
@@ -675,7 +654,7 @@ async function isDepositFlagNeededFixed(
 
   await sleep(1000); // avoid rate limit
 
-  if (no.status === 'rejected' && yes.status == 'rejected') {
+  if (no.status === 'rejected' && yes.status === 'rejected') {
     throw new Error(`Neither calc_token_amount nor calc_token_amount(bool) found on ${pool}`);
   }
 
@@ -909,7 +888,7 @@ async function cryptoToZap(pool: CurveApiPoolWithChain): Promise<CurveMethods[]>
       }
 
       if (pool.onChain.zapCoins?.underlyingCoins?.length) {
-        underlyingCoins = pool.onChain.zapCoins?.underlyingCoins!;
+        underlyingCoins = pool.onChain.zapCoins?.underlyingCoins;
       } else if (basePool.onChain.poolCoins.underlyingCoins?.length) {
         underlyingCoins = pool.coins.flatMap(coin =>
           coin.isBasePoolLpToken ? basePool.onChain.poolCoins.underlyingCoins : [coin.address]
@@ -1020,6 +999,10 @@ export async function discoverCurveZap(args: RunArgs) {
   }
 
   const pool = await getPool(chainId, vault.tokenAddress!, args.update ?? false);
+  if (cryptoPoolsIgnoreZap.has(pool.address)) {
+    throw new Error(`Pool ${pool.id} with address ${pool.address} is not supported`);
+  }
+
   if (!args.quiet) {
     console.log('Pool id:', pool.id);
     console.log('Pool name:', pool.name);

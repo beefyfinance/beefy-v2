@@ -1,13 +1,17 @@
-import type { BeefyState } from '../../../redux-types';
-import type { VaultEntity } from '../entities/vault';
+import type { BeefyState } from '../../../redux-types.ts';
+import type { VaultEntity } from '../entities/vault.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { getUnixTime, isAfter } from 'date-fns';
-import { selectVaultRawTvl } from './tvl';
-import { BIG_ZERO } from '../../../helpers/big-number';
-import type { MerklRewardsCampaign, StellaSwapRewardsCampaign } from '../reducers/rewards-types';
+import { selectVaultRawTvl } from './tvl.ts';
+import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import type { MerklRewardsCampaign, StellaSwapRewardsCampaign } from '../reducers/rewards-types.ts';
 
-export type MerklRewardsCampaignWithApr = MerklRewardsCampaign & { apr: number };
-export type StellaSwapRewardsCampaignWithApr = StellaSwapRewardsCampaign & { apr: number };
+export type MerklRewardsCampaignWithApr = MerklRewardsCampaign & {
+  apr: number;
+};
+export type StellaSwapRewardsCampaignWithApr = StellaSwapRewardsCampaign & {
+  apr: number;
+};
 
 export const selectVaultActiveMerklCampaigns = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) =>

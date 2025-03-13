@@ -2,22 +2,12 @@ import { defineConfig, type Plugin } from 'vite';
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import RollupNodePolyFillPlugin from 'rollup-plugin-polyfill-node';
 import react from '@vitejs/plugin-react';
-import svgrPlugin from 'vite-plugin-svgr';
-import eslint from 'vite-plugin-eslint';
 import { visualizer } from 'rollup-plugin-visualizer';
-import * as path from 'node:path';
-import versionPlugin from './version-plugin';
+import versionPlugin from './tools/bundle/version-plugin.ts';
+import tsconfigPaths from 'vite-tsconfig-paths';
+import { muiCompatSvgrPlugin, standardSvgrPlugin } from './tools/bundle/svgr.ts';
 
 const optionalPlugins: Plugin[] = [];
-
-if (process.env.NODE_ENV === 'development') {
-  optionalPlugins.push(
-    eslint({
-      failOnError: false,
-      failOnWarning: false,
-    })
-  );
-}
 
 if (process.env.ANALYZE_BUNDLE) {
   optionalPlugins.push(
@@ -25,23 +15,27 @@ if (process.env.ANALYZE_BUNDLE) {
       template: 'treemap', // or treemap/sunburst
       open: true,
       gzipSize: true,
-      brotliSize: true,
-      filename: 'analyze.html',
+      brotliSize: false,
+      filename: 'analyze-bundle.html',
+      projectRoot: import.meta.dirname.replaceAll('\\', '/'),
     })
   );
 }
 
 // https://vitejs.dev/config/
+// eslint-disable-next-line no-restricted-syntax -- required for Vite
 export default defineConfig({
   server: {
     open: true,
   },
   plugins: [
+    tsconfigPaths({
+      loose: true,
+      projects: ['./tsconfig.app.json', './tsconfig.scripts.json'],
+    }),
     react(),
-    {
-      ...svgrPlugin(),
-      enforce: 'post',
-    },
+    standardSvgrPlugin(),
+    muiCompatSvgrPlugin(),
     versionPlugin(),
     ...optionalPlugins,
   ],
@@ -68,32 +62,16 @@ export default defineConfig({
         entryFileNames: 'assets/js/entry-[name]-[hash].js',
         chunkFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash][extname]',
-        manualChunks: id => {
-          if (id.includes('@material-ui')) {
-            return 'material-ui';
-          }
-          if (id.includes('node_modules/lodash')) {
-            return 'lodash';
-          }
-        },
       },
       treeshake: {
         manualPureFunctions: [
           'memo',
           'lazy',
-          'createTheme',
-          'makeStyles',
+          'legacyMakeStyles',
           'createAsyncThunk',
           'createSlice',
           'createSelector',
           'createCachedSelector',
-          'createFactory',
-          'createCachedFactory',
-          'createDependencyFactory',
-          'createDependencyInitializerFactory',
-          'createDependencyFactoryWithCacheByChain',
-          'configureStore',
-          'persistStore',
           'createHasLoaderFulfilledRecentlyEvaluator',
           'createHasLoaderDispatchedRecentlyEvaluator',
           'createShouldLoaderLoadOnceEvaluator',
@@ -103,24 +81,15 @@ export default defineConfig({
           'createAddressDataSelector',
           'createAddressChainDataSelector',
           'createAddressVaultDataSelector',
+          'styled',
+          'sva',
+          'cva',
+          'css',
+          'createTooltipTriggerFactory',
+          'createDropdownTriggerFactory',
         ],
       },
       plugins: [RollupNodePolyFillPlugin()],
     },
-  },
-  resolve: {
-    preserveSymlinks: true,
-    alias: [
-      {
-        find: /crypto-addr-codec/,
-        replacement: path.resolve(
-          __dirname,
-          'node_modules',
-          'crypto-addr-codec',
-          'dist',
-          'index.js'
-        ),
-      },
-    ],
   },
 });

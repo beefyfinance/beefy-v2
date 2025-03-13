@@ -3,7 +3,7 @@ import {
   type VaultCowcentratedLike,
   type VaultEntity,
   type VaultNames,
-} from '../entities/vault';
+} from '../entities/vault.ts';
 
 const typeToSuffix: Record<VaultEntity['type'], string> = {
   standard: 'Vault',

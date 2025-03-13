@@ -1,17 +1,21 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-import { isGovVault, isGovVaultCowcentrated, type VaultEntity } from '../../../data/entities/vault';
-import { selectVaultById } from '../../../data/selectors/vaults';
-import { ApyStats } from '../../../../components/ApyStats';
-import { VaultTvl } from '../../../../components/VaultTvl/VaultTvl';
-import { VaultDeposited } from '../../../../components/VaultDeposited/VaultDeposited';
-import { GovVaultRewards } from '../../../../components/GovVaultRewards/GovVaultRewards';
-import { useAppSelector } from '../../../../store';
-import clsx from 'clsx';
-import { LastHarvest } from '../../../../components/LastHarvest/LastHarvest';
+import { legacyMakeStyles } from '../../../../helpers/mui.ts';
+import { styles } from './styles.ts';
+import {
+  isGovVault,
+  isGovVaultCowcentrated,
+  type VaultEntity,
+} from '../../../data/entities/vault.ts';
+import { selectVaultById } from '../../../data/selectors/vaults.ts';
+import { ApyStats } from '../../../../components/ApyStats/ApyStats.tsx';
+import { VaultTvl } from '../../../../components/VaultTvl/VaultTvl.tsx';
+import { VaultDeposited } from '../../../../components/VaultDeposited/VaultDeposited.tsx';
+import { GovVaultRewards } from '../../../../components/GovVaultRewards/GovVaultRewards.tsx';
+import { useAppSelector } from '../../../../store.ts';
+import { css } from '@repo/styles/css';
+import { LastHarvest } from '../../../../components/LastHarvest/LastHarvest.tsx';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();
@@ -19,7 +23,7 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
 
   return (
     <div className={classes.boxes}>
-      <div className={clsx(classes.stats, classes.statsInterest)}>
+      <div className={css(styles.stats, styles.statsInterest)}>
         <div className={classes.stat}>
           <VaultTvl vaultId={vaultId} />
         </div>
@@ -30,7 +34,7 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
           <ApyStats type="daily" vaultId={vaultId} />
         </div>
       </div>
-      <div className={clsx(classes.stats, classes.statsDeposit)}>
+      <div className={css(styles.stats, styles.statsDeposit)}>
         <div className={classes.stat}>
           <VaultDeposited vaultId={vaultId} />
         </div>

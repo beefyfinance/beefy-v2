@@ -1,26 +1,20 @@
-import { makeStyles, type Theme } from '@material-ui/core';
 import { memo } from 'react';
-import { LinkIcon } from '../../../../components/LinkIcon';
-import { Link } from '@material-ui/icons';
+import { LinkIcon } from '../../../../components/LinkIcon/LinkIcon.tsx';
 import Twitter from '../../../../images/icons/twitter.svg';
 import Telegram from '../../../../images/icons/telegram.svg';
 import Discord from '../../../../images/icons/discord.svg';
-import type { PromoSocials } from '../../../data/apis/promos/types';
-import { LinkButton } from '../../../../components/LinkButton';
+import type { PromoSocials } from '../../../data/apis/promos/types.ts';
+import { LinkButton } from '../../../../components/LinkButton/LinkButton.tsx';
+import Link from '../../../../images/icons/mui/Link.svg?react';
+import { css } from '@repo/styles/css';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  socials: {
-    display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'wrap' as const,
-    rowGap: '8px',
-    columnGap: '8px',
-    marginLeft: 'auto',
-    [theme.breakpoints.down('sm')]: {
-      marginLeft: '0',
-    },
-  },
-}));
+const socialsCss = css({
+  display: 'flex',
+  alignItems: 'center',
+  flexWrap: 'wrap' as const,
+  rowGap: '8px',
+  columnGap: '8px',
+});
 
 export type SocialsProps = {
   website?: string;
@@ -29,14 +23,12 @@ export type SocialsProps = {
 };
 
 export const Socials = memo(function Socials({ website, websiteLabel, socials }: SocialsProps) {
-  const classes = useStyles();
-
   if (!website && !socials?.twitter && !socials?.telegram && !socials?.discord) {
     return null;
   }
 
   return (
-    <div className={classes.socials}>
+    <div className={socialsCss}>
       {website &&
         (websiteLabel ? (
           <LinkButton href={website} text={websiteLabel} />

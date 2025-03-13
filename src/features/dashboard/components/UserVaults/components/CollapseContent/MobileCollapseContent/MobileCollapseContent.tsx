@@ -1,63 +1,68 @@
 import { memo, useMemo, useState } from 'react';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
 import { useTranslation } from 'react-i18next';
-import { VaultDashboardMobileStats } from './components/VaultDashboardMobileStats';
-import { VaultTransactions } from '../../VaultTransactions';
-import type { VaultCollapseContentProps } from '../types';
-import { styles } from './styles';
-import { LabeledSelect } from '../../../../../../../components/LabeledSelect';
-import { ToggleButtons } from '../../../../../../../components/ToggleButtons';
-import { useChartOptions } from '../useChartOptions';
+import { VaultDashboardMobileStats } from './components/VaultDashboardMobileStats/VaultDashboardMobileStats.tsx';
+import { VaultTransactions } from '../../VaultTransactions/VaultTransactions.tsx';
+import type { VaultCollapseContentProps } from '../types.ts';
+import { styles } from './styles.ts';
+import { ToggleButtons } from '../../../../../../../components/ToggleButtons/ToggleButtons.tsx';
+import { useChartOptions } from '../useChartOptions.ts';
+import { useMediaQuery } from '../../../../../../../components/MediaQueries/useMediaQuery.ts';
+import { Select } from '../../../../../../../components/Form/Select/Single/Select.tsx';
+import type { SelectItem } from '../../../../../../../components/Form/Select/types.ts';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 type ToggleTabOptions = 'stats' | 'txHistory' | 'positionChart' | 'compoundsChart';
 
-export const MobileCollapseContent = memo<VaultCollapseContentProps>(
-  function MobileCollapseContent({ vaultId, address }) {
-    const classes = useStyles();
-    const { t } = useTranslation();
-    const [toggleTab, setToggleTab] = useState<ToggleTabOptions>('stats');
-    const useDropdown = useMediaQuery('(max-width: 700px)', { noSsr: true });
-    const { PositionGraph, CompoundsGraph, availableCharts } = useChartOptions(vaultId, address);
+export const MobileCollapseContent = memo(function MobileCollapseContent({
+  vaultId,
+  address,
+}: VaultCollapseContentProps) {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const [toggleTab, setToggleTab] = useState<ToggleTabOptions>('stats');
+  const useDropdown = useMediaQuery('(max-width: 700px)', false);
+  const { PositionGraph, CompoundsGraph, availableCharts } = useChartOptions(vaultId, address);
 
-    const options = useMemo(
-      () => ({
-        stats: t('Dashboard-VaultData'),
-        txHistory: t('Dashboard-TransactionHistory'),
-        ...availableCharts,
-      }),
-      [availableCharts, t]
-    );
+  const options = useMemo<Array<SelectItem<ToggleTabOptions>>>(
+    () => [
+      { value: 'stats', label: t('Dashboard-VaultData') },
+      { value: 'txHistory', label: t('Dashboard-TransactionHistory') },
+      ...availableCharts,
+    ],
+    [availableCharts, t]
+  );
 
-    return (
-      <div className={classes.container}>
-        <div className={classes.toggleContainer}>
-          {useDropdown ? (
-            <LabeledSelect
-              selectClass={classes.select}
-              options={options}
-              value={toggleTab}
-              onChange={setToggleTab as (v: string) => void}
-            />
-          ) : (
-            <ToggleButtons
-              value={toggleTab}
-              onChange={setToggleTab as (v: string) => void}
-              options={options}
-            />
-          )}
-        </div>
-        {toggleTab === 'stats' ? (
-          <VaultDashboardMobileStats address={address} vaultId={vaultId} />
-        ) : toggleTab === 'txHistory' ? (
-          <VaultTransactions address={address} vaultId={vaultId} />
-        ) : toggleTab === 'positionChart' ? (
-          <PositionGraph address={address} vaultId={vaultId} />
-        ) : toggleTab === 'compoundsChart' ? (
-          <CompoundsGraph address={address} vaultId={vaultId} />
-        ) : null}
+  return (
+    <div className={classes.container}>
+      <div className={classes.toggleContainer}>
+        {useDropdown ? (
+          <Select
+            options={options}
+            selected={toggleTab}
+            onChange={setToggleTab}
+            variant="light"
+            fullWidth={true}
+          />
+        ) : (
+          <ToggleButtons<ToggleTabOptions>
+            value={toggleTab}
+            onChange={setToggleTab}
+            options={options}
+            variant="filter"
+          />
+        )}
       </div>
-    );
-  }
-);
+      {toggleTab === 'stats' ? (
+        <VaultDashboardMobileStats address={address} vaultId={vaultId} />
+      ) : toggleTab === 'txHistory' ? (
+        <VaultTransactions address={address} vaultId={vaultId} />
+      ) : toggleTab === 'positionChart' ? (
+        <PositionGraph address={address} vaultId={vaultId} />
+      ) : toggleTab === 'compoundsChart' ? (
+        <CompoundsGraph address={address} vaultId={vaultId} />
+      ) : null}
+    </div>
+  );
+});

@@ -1,14 +1,8 @@
-import type { Theme } from '@material-ui/core';
+import { css } from '@repo/styles/css';
 
-export const styles = (theme: Theme) => ({
-  actions: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: '24px',
-    width: '100%',
-  },
-  feesContainer: {
-    background: theme.palette.background.contentLight,
+export const styles = {
+  feesContainer: css.raw({
+    background: 'background.content.light',
     borderRadius: '8px',
-  },
-});
+  }),
+};

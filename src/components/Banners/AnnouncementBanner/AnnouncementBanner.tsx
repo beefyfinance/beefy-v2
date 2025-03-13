@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import clm from '../../../images/icons/clm.svg';
-import { ExternalLink } from '../Links/Links';
-import { DismissibleBanner } from '../Banner/DismissibleBanner';
+import { DismissibleBanner } from '../Banner/DismissibleBanner.tsx';
+import { ExternalLink } from '../Links/ExternalLink.tsx';
 
 export const AnnouncementBanner = memo(function AnnouncementBanner() {
   return (

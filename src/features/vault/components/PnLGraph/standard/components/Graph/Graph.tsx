@@ -8,23 +8,24 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { usePnLChartData } from '../../hooks';
-import { PnLTooltip } from '../PnLTooltip';
-import type { Theme } from '@material-ui/core';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
-import { GraphLoader } from '../../../../GraphLoader';
+import { usePnLChartData } from '../../hooks.tsx';
+import { PnLTooltip } from '../PnLTooltip/PnLTooltip.tsx';
+import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
+import { GraphLoader } from '../../../../GraphLoader/Loader.tsx';
 import {
   GRAPH_TIME_BUCKETS,
   makeUnderlyingTickFormatter,
   makeUsdTickFormatter,
-} from '../../../../../../../helpers/graph/graph';
-import { Legend } from '../Legend';
-import { styles } from './styles';
-import { XAxisTick } from '../../../../../../../components/XAxisTick';
-import { GraphNoData } from '../../../../../../../components/GraphNoData/GraphNoData';
-import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks';
+} from '../../../../../../../helpers/graph/graph.ts';
+import { Legend } from '../Legend/Legend.tsx';
+import { styles } from './styles.ts';
+import { XAxisTick } from '../../../../../../../components/XAxisTick/XAxisTick.tsx';
+import { GraphNoData } from '../../../../../../../components/GraphNoData/GraphNoData.tsx';
+import { useXAxis, useYAxis } from '../../../../../../../helpers/graph/hooks.tsx';
+import { useBreakpoint } from '../../../../../../../components/MediaQueries/useBreakpoint.ts';
+import { token } from '@repo/styles/tokens';
 
-const useStyles = makeStyles(styles);
+const useStyles = legacyMakeStyles(styles);
 
 interface GraphProps {
   vaultId: string;
@@ -32,9 +33,9 @@ interface GraphProps {
   address?: string;
 }
 
-export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address }) {
+export const Graph = memo(function Graph({ vaultId, period, address }: GraphProps) {
   const classes = useStyles();
-  const xsDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('xs'), { noSsr: true });
+  const xsDown = useBreakpoint({ to: 'xs' });
   const chartMargin = useMemo(() => {
     const xMargin = xsDown ? 16 : 24;
     return { top: 14, right: xMargin, bottom: 0, left: xMargin };
@@ -114,7 +115,10 @@ export const Graph = memo<GraphProps>(function Graph({ vaultId, period, address 
             ticks={usdAxis.ticks}
             mirror={true}
           />
-          <Tooltip wrapperStyle={{ outline: 'none' }} content={<PnLTooltip />} />
+          <Tooltip
+            wrapperStyle={{ outline: 'none', zIndex: token('zIndex.tooltip') }}
+            content={<PnLTooltip />}
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>
