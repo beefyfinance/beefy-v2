@@ -27,15 +27,15 @@ function forwardKillSignals(child: ChildProcess) {
 /**
  * Current process environment variables with optional overrides
  */
-export function overrideEnv(overrides?: NodeJS.ProcessEnv) {
-  return { ...process.env, ...overrides };
+export function overrideEnv(overrides?: NodeJS.ProcessEnv, base: NodeJS.ProcessEnv = process.env) {
+  return { ...base, ...overrides };
 }
 
 /**
  * Current process environment variables with optional default variables to be set if missing
  */
-export function defaultEnv(defaults?: NodeJS.ProcessEnv) {
-  return { ...defaults, ...process.env };
+export function defaultEnv(defaults?: NodeJS.ProcessEnv, base: NodeJS.ProcessEnv = process.env) {
+  return { ...defaults, ...base };
 }
 
 type RunArgs = {
@@ -85,6 +85,9 @@ export async function runAll(
   }
 
   const timers = new Timers(timing);
+  const abortController = new AbortController();
+  process.on('SIGINT', () => abortController.abort());
+
   let returnCode = 0;
   for (const command of filtered) {
     const commandName = `$ ${command.cmd} ${command.args?.join(' ') || ''}`.trim();
@@ -93,6 +96,12 @@ export async function runAll(
     timers.start(commandName);
     const code = await run(command);
     timers.stop(commandName);
+
+    if (abortController.signal.aborted) {
+      console.error('Aborted');
+      returnCode = 1;
+      break;
+    }
 
     if (code !== 0) {
       returnCode = code;

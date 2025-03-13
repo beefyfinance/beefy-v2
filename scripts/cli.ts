@@ -6,12 +6,20 @@ import { overrideEnv, runAll } from './common/process.ts';
  * (i.e. that works on windows too)
  */
 
+function productionEnv() {
+  return overrideEnv({ NODE_ENV: 'production' });
+}
+
+function developmentEnv() {
+  return overrideEnv({ NODE_ENV: 'development' });
+}
+
 async function build() {
   const skipValidate = process.argv.includes('--skip-validate');
 
   console.log('DO NOT disable validation on build, fix underlying issue');
 
-  const env = overrideEnv({ NODE_ENV: 'production' });
+  const env = productionEnv();
   const code = await runAll(
     [
       !skipValidate && { cmd: 'npm', args: ['run', 'validate'], env },
@@ -27,7 +35,7 @@ async function build() {
 }
 
 async function dev() {
-  const env = overrideEnv({ NODE_ENV: 'development' });
+  const env = developmentEnv();
   return await runAll([
     { cmd: 'panda', args: ['codegen'], env },
     { cmd: 'vite', args: ['dev'], env },
@@ -35,7 +43,7 @@ async function dev() {
 }
 
 async function analyzeBundle() {
-  const env = overrideEnv({ ANALYZE_BUNDLE: 'true', NODE_ENV: 'production' });
+  const env = overrideEnv({ ANALYZE_BUNDLE: 'true' }, productionEnv());
   return await runAll([
     { cmd: 'panda', args: ['codegen'], env },
     { cmd: 'tsc', args: ['--project', 'tsconfig.app.json'], env },
