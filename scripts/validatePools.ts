@@ -36,6 +36,7 @@ import {
   getContract,
   type PublicClient,
 } from 'viem';
+import { SCORED_RISKS } from '../src/config/risk.ts';
 
 const overrides: Record<
   string,
@@ -55,6 +56,7 @@ const overrides: Record<
   'aero-cow-eurc-cbbtc-vault': { harvestOnDeposit: undefined },
   'pendle-eqb-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
   'pendle-arb-dwbtc-26jun25': { harvestOnDeposit: undefined },
+  'compound-base-eth': { harvestOnDeposit: undefined }, // temp disabled while waiting for rewards to refill
 };
 
 const oldValidOwners = [
@@ -141,6 +143,7 @@ const addressFields: Array<keyof VaultConfig> = [
 const validPlatformIds = platforms.map(platform => platform.id);
 const validStrategyIds = getStrategyIds();
 const validPointProviderIds = pointProviders.map(pointProvider => pointProvider.id);
+const validRisks = new Set(Object.keys(SCORED_RISKS));
 
 const oldFields: Record<string, string> = {
   tokenDescription: 'Use addressbook',
@@ -315,6 +318,10 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
       console.error(
         `Error: ${pool.id} : platformId ${pool.platformId} not present in platforms.json`
       );
+      exitCode = 1;
+    }
+
+    if (!checkRisks(pool, pool.type === 'standard')) {
       exitCode = 1;
     }
 
@@ -774,6 +781,21 @@ const isHarvestOnDepositCorrect = (
   }
 
   return updates;
+};
+
+const checkRisks = (pool: VaultConfig, allowMissingEol: boolean = false) => {
+  if (!pool.risks || pool.risks.length === 0) {
+    if (!(allowMissingEol && pool.status === 'eol')) {
+      console.error(`Error: ${pool.id} : risks missing`);
+      return false;
+    }
+  } else if (pool.risks.some(risk => !validRisks.has(risk))) {
+    const invalidRisks = pool.risks.filter(risk => !validRisks.has(risk));
+    console.error(`Error: ${pool.id} : risks invalid - ${invalidRisks.join(', ')}`);
+    return false;
+  }
+
+  return true;
 };
 
 const checkPointsStructureIds = (pool: VaultConfig) => {
