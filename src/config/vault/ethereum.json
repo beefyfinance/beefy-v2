@@ -2531,14 +2531,7 @@
     "createdAt": 1710340502,
     "platformId": "aura",
     "assets": ["ezETH", "weETH", "rswETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "NO_TIMELOCK"
-    ],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x848a5564158d84b8a8fb68ab5d004fae11619a5400000000000000000000066a/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x848a5564158d84b8a8fb68ab5d004fae11619a5400000000000000000000066a/remove-liquidity",
@@ -2688,14 +2681,7 @@
     "createdAt": 1707663390,
     "platformId": "aura",
     "assets": ["weETH", "rETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_NONE",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "NO_TIMELOCK"
-    ],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x05ff47afada98a98982113758878f9a8b9fdda0a000000000000000000000645/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x05ff47afada98a98982113758878f9a8b9fdda0a000000000000000000000645/remove-liquidity",
@@ -2733,14 +2719,7 @@
     "createdAt": 1707663390,
     "platformId": "aura",
     "assets": ["ezETH", "ETH"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_NONE",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "NO_TIMELOCK"
-    ],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp-locked",
     "addLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x596192bb6e41802428ac943d2f1476c1af25cc0e000000000000000000000659/add-liquidity",
     "removeLiquidityUrl": "https://balancer.fi/pools/ethereum/v2/0x596192bb6e41802428ac943d2f1476c1af25cc0e000000000000000000000659/remove-liquidity",
