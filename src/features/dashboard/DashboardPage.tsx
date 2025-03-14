@@ -2,7 +2,6 @@ import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { memo, type ReactNode } from 'react';
 import { useAppSelector } from '../../store.ts';
 import { selectUserDepositedVaultIds } from '../data/selectors/balance.ts';
-import { DepositSummary } from './components/DepositSummary/DepositSummary.tsx';
 import {
   InvalidAddress,
   InvalidDomain,
@@ -22,6 +21,8 @@ import { useTranslation } from 'react-i18next';
 import { useResolveDomain } from '../data/hooks/resolver.tsx';
 import { DashboardMeta } from '../../components/Meta/DashboardMeta.tsx';
 import { UnstakedClmBannerDashboard } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBannerDashboard.tsx';
+import { DepositSummary, DepositSummaryPlaceholder } from './components/DepositSummary.tsx';
+import { Header } from './components/Header.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -120,7 +121,9 @@ const DashboardForAddress = memo(function DashboardForAddress({
     <DashboardContainer>
       <DashboardMeta wallet={addressLabel || address} />
       <UnstakedClmBannerDashboard address={address} />
-      <DepositSummary address={address} addressLabel={addressLabel} />
+      <Header address={address} addressLabel={addressLabel}>
+        {loading ? <DepositSummaryPlaceholder /> : <DepositSummary address={address} />}
+      </Header>
       {loading ? (
         <TechLoader />
       ) : userVaults.length > 0 ? (
