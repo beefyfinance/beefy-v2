@@ -232,8 +232,10 @@ const validatePools = async () => {
       updates[res.chainId] = res.updates;
     }
   });
+
   // Helpful data structures to correct addresses.
-  console.log('Required updates.', JSON.stringify(updates));
+  console.log('Required updates:', JSON.stringify(updates));
+  console.log('Valid:', exitCode === 0 && Object.keys(updates).length === 0);
 
   if (excludedChainIds.length > 0) {
     console.warn(`*** Excluded chains: ${excludedChainIds.join(', ')} ***`);
@@ -1298,6 +1300,7 @@ async function validatePlatformTypes(): Promise<number> {
       // Platform image must exist if platform has a type
       const possiblePaths = [
         `./src/images/platforms/${platform.id}.svg`,
+        `./src/images/platforms/${platform.id}.webp`,
         `./src/images/platforms/${platform.id}.png`,
       ];
       let found = false;
