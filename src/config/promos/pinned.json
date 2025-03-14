@@ -1,10 +1,8 @@
 [
   {
     "id": [
-      "swapx-usdc.e-scusd",
-      "pendle-eqb-base-susdz-27mar25",
-      "aerodrome-usdc-mai",
-      "velodrome-v2-wbtc-tbtc"
+      "velodrome-v2-hai-lusd",
+      "aerodrome-cow-wsteth-wrseth-rp"
     ],
     "conditions": [
       {
