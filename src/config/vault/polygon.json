@@ -1,5 +1,80 @@
 [
   {
+    "id": "morpho-compound-weth",
+    "name": "Compound WETH",
+    "token": "WETH",
+    "tokenAddress": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    "tokenDecimals": 18,
+    "earnContractAddress": "0xF9BE54A67cdB878bA088907a463a877A084B9af9",
+    "earnedToken": "mooMorphoCompoundWETH",
+    "earnedTokenAddress": "0xF9BE54A67cdB878bA088907a463a877A084B9af9",
+    "oracle": "tokens",
+    "oracleId": "ETH",
+    "status": "active",
+    "createdAt": 1741890013,
+    "platformId": "morpho",
+    "assets": ["ETH"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-compound-usdc",
+    "name": "Compound USDC",
+    "token": "USDC",
+    "tokenAddress": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x28deaAE15B3649B7ab0bB3292D9dc1D0337387F6",
+    "earnedToken": "mooMorphoCompoundUSDC",
+    "earnedTokenAddress": "0x28deaAE15B3649B7ab0bB3292D9dc1D0337387F6",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1741890013,
+    "platformId": "morpho",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "morpho-compound-usdt",
+    "name": "Compound USDT",
+    "token": "USDT",
+    "tokenAddress": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x9B9f0B8d068BE4209111755272354F807379EdAF",
+    "earnedToken": "mooMorphoCompoundUSDT",
+    "earnedTokenAddress": "0x9B9f0B8d068BE4209111755272354F807379EdAF",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1741890013,
+    "platformId": "morpho",
+    "assets": ["USDT"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "polygon",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "compound-polygon-usdt",
     "name": "USDT",
     "type": "standard",
@@ -11645,7 +11720,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "MCAP_LOW",
+      "MCAP_MICRO",
       "IL_HIGH",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
@@ -11727,7 +11802,7 @@
       "BATTLE_TESTED",
       "IL_HIGH",
       "ALGO_STABLE",
-      "MCAP_LOW",
+      "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
       "CONTRACTS_VERIFIED",
@@ -13379,7 +13454,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_LOW",
+      "MCAP_SMALL",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
