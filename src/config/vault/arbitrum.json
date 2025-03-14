@@ -565,6 +565,7 @@
     ],
     "strategyTypeId": "lendingNoBorrow",
     "network": "arbitrum",
+    "pointStructureIds": ["silo-points"],
     "zaps": [
       {
         "strategyId": "single"

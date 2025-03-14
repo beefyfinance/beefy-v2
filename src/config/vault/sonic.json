@@ -1491,7 +1491,7 @@
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lendingNoBorrow",
     "network": "sonic",
-    "pointStructureIds": ["sonic-points"],
+    "pointStructureIds": ["sonic-points", "silo-points"],
     "zaps": [
       {
         "strategyId": "single"

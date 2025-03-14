@@ -824,6 +824,19 @@ const checkPointsStructureIds = (pool: VaultConfig) => {
             pool.assets?.some(a => eligibility.tokens.includes(a))) ??
             false
         );
+      } else if (eligibility.type === 'platform') {
+        if (!('platformId' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.platformId missing`);
+        }
+        if (!('liveAfter' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.liveAfter missing`);
+        }
+
+        shouldHaveProviderArr.push(
+          eligibility.platformId === pool.platformId &&
+            (pool.retiredAt === undefined ||
+              new Date(eligibility.liveAfter) < new Date(pool.retiredAt * 1000))
+        );
       } else if (eligibility.type === 'token-holding') {
         if (!('tokens' in eligibility)) {
           throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
@@ -847,6 +860,10 @@ const checkPointsStructureIds = (pool: VaultConfig) => {
         shouldHaveProviderArr.push(regex.test(earnedToken));
       } else if (eligibility.type === 'vault-whitelist') {
         shouldHaveProviderArr.push(hasProvider);
+      } else {
+        throw new Error(
+          `Error: ${pointProvider.id} : eligibility.type ${eligibility.type} not implemented, please implement.`
+        );
       }
     }
 
