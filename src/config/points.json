@@ -1016,6 +1016,9 @@
         "type": "platform",
         "platformId": "silo",
         "liveAfter": "2025-03-01"
+      },
+      {
+        "type": "vault-whitelist"
       }
     ],
     "accounting": [
