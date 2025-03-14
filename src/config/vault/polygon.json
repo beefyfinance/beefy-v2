@@ -11720,7 +11720,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "MCAP_LOW",
+      "MCAP_MICRO",
       "IL_HIGH",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
@@ -11802,7 +11802,7 @@
       "BATTLE_TESTED",
       "IL_HIGH",
       "ALGO_STABLE",
-      "MCAP_LOW",
+      "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
       "CONTRACTS_VERIFIED",
@@ -13454,7 +13454,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_LOW",
+      "MCAP_SMALL",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
