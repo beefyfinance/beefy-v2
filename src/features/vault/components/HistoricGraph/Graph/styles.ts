@@ -3,9 +3,6 @@ import { css } from '@repo/styles/css';
 export const styles = {
   chartContainer: css.raw({
     padding: '16px 0px',
-    lgDown: {
-      padding: '16px 0px',
-    },
   }),
   graph: css.raw({
     '& text': {
@@ -34,7 +31,10 @@ export const styles = {
   }),
   cowcentratedStat: css.raw({
     backgroundColor: 'background.content',
-    padding: '16px 24px',
+    padding: '16px',
+    sm: {
+      padding: '16px 24px',
+    },
   }),
   label: css.raw({
     textStyle: 'body.sm.medium',

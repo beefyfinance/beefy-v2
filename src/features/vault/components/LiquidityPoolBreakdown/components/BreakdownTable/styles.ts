@@ -24,12 +24,15 @@ export const styles = {
     backgroundColor: 'background.content',
     display: 'grid',
     gridTemplateColumns: '35fr 35fr 30fr',
-    padding: '16px 24px',
+    padding: '16px',
     borderBottom: 'solid 2px {colors.bayOfMany}',
     alignItems: 'center',
     columnGap: '16px',
     '&:last-child': {
       borderBottom: '0',
+    },
+    sm: {
+      padding: '16px 24px',
     },
   }),
   header: css.raw({

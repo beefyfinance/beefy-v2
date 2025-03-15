@@ -2,12 +2,13 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   holder: css.raw({
-    padding: '24px',
+    padding: '16px',
     display: 'flex',
     columnGap: '24px',
     alignItems: 'center',
     sm: {
       columnGap: '48px',
+      padding: '24px',
     },
     lg: {
       flexDirection: 'column',

@@ -2,10 +2,13 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   container: css.raw({
-    padding: '24px',
+    padding: '16px',
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
+    sm: {
+      padding: '24px',
+    },
   }),
   description: css.raw({
     textStyle: 'body.medium',

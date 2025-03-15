@@ -40,17 +40,12 @@ const collapseRecipe = cva({
     flexDirection: 'column',
     gap: '16px',
     borderRadius: '12px',
+    padding: '16px',
+    md: {
+      padding: '24px',
+    },
   },
   variants: {
-    padding: {
-      none: {},
-      sm: {
-        padding: '16px',
-      },
-      md: {
-        padding: '24px',
-      },
-    },
     variant: {
       transparent: {},
       light: {
@@ -67,7 +62,6 @@ const collapseRecipe = cva({
   },
   defaultVariants: {
     variant: 'transparent',
-    padding: 'md',
   },
 });
 

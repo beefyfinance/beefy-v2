@@ -11,8 +11,11 @@ export const styles = {
   }),
   cowcentratedStat: css.raw({
     backgroundColor: 'background.content',
-    padding: '16px 24px',
+    padding: '16px',
     position: 'relative',
+    sm: {
+      padding: '16px 24px',
+    },
   }),
   label: css.raw({
     textStyle: 'body.sm.medium',

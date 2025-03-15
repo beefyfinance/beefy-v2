@@ -4,14 +4,19 @@ export const styles = {
   page: css.raw({
     display: 'flex',
     flexDirection: 'column',
-    gap: '24px',
+    gap: '16px',
     paddingBlock: '32px',
+    sm: {
+      gap: '24px',
+    },
   }),
   contentColumns: css.raw({
     display: 'grid',
     gridTemplateColumns: '100%',
-    rowGap: '24px',
-    columnGap: '24px',
+    gap: '12px',
+    sm: {
+      gap: '24px',
+    },
     md: {
       display: 'grid',
       gridTemplateColumns: 'minmax(0,666fr) minmax(0,333fr)',
@@ -21,9 +26,12 @@ export const styles = {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    rowGap: '24px',
+    rowGap: '12px',
     '& > :first-child': {
       marginTop: '0',
+    },
+    sm: {
+      rowGap: '24px',
     },
     md: {
       order: '1',
@@ -33,7 +41,10 @@ export const styles = {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    rowGap: '24px',
+    rowGap: '12px',
+    sm: {
+      rowGap: '24px',
+    },
     md: {
       marginTop: '0',
     },

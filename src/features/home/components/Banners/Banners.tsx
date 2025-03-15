@@ -17,7 +17,10 @@ const BannerList = styled('div', {
   base: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '24px',
+    gap: '12px',
+    sm: {
+      gap: '24px',
+    },
     '& > :last-child': {
       marginBottom: '24px',
     },

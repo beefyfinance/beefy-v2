@@ -5,6 +5,9 @@ export const CardContent = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     borderBottomRadius: '12px',
-    padding: '24px',
+    padding: '16px',
+    sm: {
+      padding: '24px',
+    },
   },
 });

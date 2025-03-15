@@ -16,9 +16,12 @@ const useStyles = legacyMakeStyles({
     display: 'flex',
     flexWrap: 'wrap',
     gap: '16px',
-    padding: '24px',
     borderRadius: '12px 12px 0 0',
     backgroundColor: 'background.content.dark',
+    padding: '16px',
+    sm: {
+      padding: '24px',
+    },
   }),
   boostedBy: css.raw({
     textStyle: 'h2',

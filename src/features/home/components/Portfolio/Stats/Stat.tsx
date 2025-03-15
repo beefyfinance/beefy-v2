@@ -19,7 +19,7 @@ export const Stat = memo<StatProps>(function UserStat({
   blurred = false,
 }) {
   return (
-    <div>
+    <StatContainer>
       <Label>
         {label}{' '}
         {onInfo && (
@@ -31,8 +31,17 @@ export const Stat = memo<StatProps>(function UserStat({
       <Value blurred={!loading && blurred}>
         {loading ? <StatLoader /> : blurred ? '$100' : value}
       </Value>
-    </div>
+    </StatContainer>
   );
+});
+
+const StatContainer = styled('div', {
+  base: {
+    minWidth: '140px',
+    sm: {
+      minWidth: 'auto',
+    },
+  },
 });
 
 const Label = styled('div', {

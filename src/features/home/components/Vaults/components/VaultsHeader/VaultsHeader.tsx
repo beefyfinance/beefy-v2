@@ -15,7 +15,7 @@ export const VaultsHeader = memo(function VaultsHeader() {
 const headerCss = css({
   display: 'grid',
   columnGap: '24px',
-  rowGap: '16px',
+  rowGap: '12px',
   width: '100%',
   color: 'text.dark',
   background: 'background.content.dark',
@@ -25,6 +25,7 @@ const headerCss = css({
   backgroundClip: 'padding-box',
   sm: {
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+    rowGap: '16px',
   },
   lg: {
     gridTemplateColumns: 'minmax(0, 40fr) minmax(0, 60fr)',

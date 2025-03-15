@@ -46,12 +46,14 @@ const VisibilityToggle = memo(function VisibilityToggle() {
 const Stats = styled('div', {
   base: {
     paddingTop: '16px',
-    paddingBottom: '40px',
+    paddingBottom: '32px',
     display: 'grid',
     gridTemplateColumns: '100%',
-    gap: '32px',
+    gap: '24px',
     md: {
       gridTemplateColumns: '583fr 417fr',
+      paddingBottom: '40px',
+      gap: '32px',
     },
   },
 });
