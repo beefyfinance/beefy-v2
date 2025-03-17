@@ -1,6 +1,6 @@
 import { Fragment, memo, useCallback, useState } from 'react';
 import CloseIcon from '../../../../images/icons/mui/Close.svg?react';
-import MenuIcon from '../../../../images/icons/mui/Menu.svg?react';
+import MenuIcon from '../../../../images/icons/Menu.svg?react';
 import { NavLinkItem } from '../NavItem/NavLinkItem.tsx';
 import { MobileList } from '../../list.ts';
 import type { NavConfig, NavDropdownConfig } from '../DropNavItem/types.ts';

@@ -49,7 +49,10 @@ const Header = styled('div', {
 
 const Content = styled('div', {
   base: {
-    paddingBlock: '32px',
+    paddingBlock: '20px',
+    sm: {
+      paddingBlock: '32px',
+    },
   },
 });
 
