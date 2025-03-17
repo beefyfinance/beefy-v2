@@ -65,7 +65,7 @@ const HeaderContainer = styled(Container, {
     justifyContent: 'space-between',
     sm: {
       minHeight: 'auto',
-      paddingBlock: '12px',
+      paddingBlock: '22px',
     },
   },
 });
