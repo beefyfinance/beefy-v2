@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { UserStats } from './Stats/UserStats.tsx';
 import { VaultsStats } from './Stats/VaultsStats.tsx';
-import VisibilityOffOutlinedIcon from '../../../../images/icons/mui/VisibilityOffOutlined.svg?react';
-import VisibilityOutlinedIcon from '../../../../images/icons/mui/VisibilityOutlined.svg?react';
+import VisibilityOffOutlinedIcon from '../../../../images/icons/eyeOff.svg?react';
+import VisibilityOutlinedIcon from '../../../../images/icons/eyeOn.svg?react';
 import { selectIsBalanceHidden } from '../../../data/selectors/wallet.ts';
 import { setToggleHideBalance } from '../../../data/reducers/wallet/wallet.ts';
 import { useAppDispatch, useAppSelector } from '../../../../store.ts';
@@ -95,6 +95,6 @@ const Title = styled('div', {
 
 const ToggleButton = styled('button', {
   base: {
-    color: 'green',
+    color: 'text.middle',
   },
 });

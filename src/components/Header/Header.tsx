@@ -58,11 +58,10 @@ const HeaderContainer = styled(Container, {
   base: {
     textStyle: 'body.medium',
     padding: '4px 20px 4px 12px',
-    minHeight: '56px',
+    minHeight: '64px',
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
-    columnGap: '12px',
     justifyContent: 'space-between',
     sm: {
       paddingBlock: '12px',
