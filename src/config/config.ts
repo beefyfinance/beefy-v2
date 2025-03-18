@@ -4,7 +4,7 @@ export const config = {
   ethereum: {
     name: 'Ethereum',
     chainId: 1,
-    rpc: ['https://eth.llamarpc.com', 'https://eth.drpc.org', 'https://rpc.ankr.com/eth'],
+    rpc: ['https://eth.llamarpc.com', 'https://eth.drpc.org'],
     explorerUrl: 'https://etherscan.io',
     multicallAddress: '0x9dA9f3C6c45F1160b53D395b0A982aEEE1D212fE',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -326,7 +326,6 @@ export const config = {
       'https://1rpc.io/avax/c',
       'https://avalanche.drpc.org',
       'https://avalanche-c-chain-rpc.publicnode.com',
-      'https://rpc.ankr.com/avalanche',
     ],
     explorerUrl: 'https://cchain.explorer.avax.network',
     multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
