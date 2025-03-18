@@ -1,10 +1,14 @@
-import { createPublicClient, http } from 'viem';
+import { createPublicClient } from 'viem';
 import { createCachedFactory } from '../../src/features/data/utils/factory-utils.ts';
-import { type AppChainId, getChainRpc, getChain } from './config.ts';
+import { type AppChainId, getChain, getChainRpc } from './config.ts';
 import type { ChainConfig } from '../../src/features/data/apis/config-types.ts';
+import { uniq } from 'lodash-es';
+import { makeCustomFallbackTransport } from '../../src/features/data/apis/viem/transports/transports.ts';
 
 function createViemClient(chainId: AppChainId, chain: ChainConfig) {
-  const rpcUrl = getChainRpc(chainId);
+  const primaryRpcUrl = getChainRpc(chainId);
+  const rpcUrls = uniq([primaryRpcUrl, ...chain.rpc]);
+
   return createPublicClient({
     batch: {
       multicall: {
@@ -21,8 +25,8 @@ function createViemClient(chainId: AppChainId, chain: ChainConfig) {
         symbol: chain.native.symbol,
       },
       rpcUrls: {
-        public: { http: [rpcUrl] },
-        default: { http: [rpcUrl] },
+        public: { http: [primaryRpcUrl] },
+        default: { http: [primaryRpcUrl] },
       },
       blockExplorers: {
         default: { name: `${chain.name} Explorer`, url: chain.explorerUrl },
@@ -33,10 +37,7 @@ function createViemClient(chainId: AppChainId, chain: ChainConfig) {
         },
       },
     },
-    transport: http(rpcUrl, {
-      retryCount: 5,
-      retryDelay: 800,
-    }),
+    transport: makeCustomFallbackTransport(rpcUrls, 5),
   });
 }
 
