@@ -1,7 +1,7 @@
 import type { ChainEntity } from '../../../../features/data/entities/chain.ts';
-import bifiIcon from '../../../../images/single-assets/BIFI.png';
+import bifiIcon from '../../../../images/single-assets/BIFI.svg';
 import ethIcon from '../../../../images/networks/ethereum.svg';
-import mooIcon from '../../../../images/single-assets/mooBIFI.png';
+import mooIcon from '../../../../images/single-assets/mooBIFI.svg';
 import opIcon from '../../../../images/networks/optimism.svg';
 import baseIcon from '../../../../images/networks/base.svg';
 import sonicIcon from '../../../../images/networks/sonic.svg';
