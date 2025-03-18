@@ -85,6 +85,9 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
 const StyledCardContent = styled(CardContent, {
   base: {
     padding: 0,
+    sm: {
+      padding: 0,
+    },
     lg: {
       display: 'grid',
       gridTemplateColumns: '232fr 484fr',

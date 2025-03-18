@@ -2,20 +2,26 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   containerBoost: css.raw({
-    padding: '24px',
+    padding: '16px',
     borderRadius: '12px',
     backgroundColor: 'background.content',
     display: 'flex',
     flexDirection: 'column',
     rowGap: '16px',
+    sm: {
+      padding: '24px',
+    },
   }),
   containerExpired: css.raw({
     display: 'flex',
     flexDirection: 'column',
     rowGap: '16px',
-    padding: '24px',
+    padding: '16px',
     backgroundColor: 'background.content',
     borderRadius: '12px',
+    sm: {
+      padding: '24px',
+    },
   }),
   containerExpiredBoosts: css.raw({
     display: 'flex',

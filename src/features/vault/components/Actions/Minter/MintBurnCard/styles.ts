@@ -39,7 +39,10 @@ export const styles = {
     flexDirection: 'column',
     backgroundColor: 'background.content',
     borderRadius: '0 0 12px 12px',
-    padding: '24px',
+    padding: '16px',
+    sm: {
+      padding: '24px',
+    },
   }),
   logo: css.raw({
     height: '50px',

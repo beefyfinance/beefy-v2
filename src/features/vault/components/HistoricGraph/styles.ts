@@ -7,6 +7,9 @@ export const styles = {
     gap: '1px',
     padding: '0',
     backgroundColor: 'transparent',
+    sm: {
+      padding: 0,
+    },
   }),
   container: css.raw({
     backgroundColor: 'transparent',
