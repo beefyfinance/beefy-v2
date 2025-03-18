@@ -1,5 +1,5 @@
 import { legacyMakeStyles } from '../../helpers/mui.ts';
-import { type FC, memo } from 'react';
+import { type FC, memo, type ReactNode } from 'react';
 import { styles } from './styles.ts';
 
 const useStyles = legacyMakeStyles(styles);
@@ -7,7 +7,7 @@ const useStyles = legacyMakeStyles(styles);
 interface SummaryStatProps {
   title: string;
   Icon: FC;
-  value: string;
+  value: string | ReactNode;
 }
 
 const SummaryStat = memo(function SummaryStat({ title, Icon, value }: SummaryStatProps) {
