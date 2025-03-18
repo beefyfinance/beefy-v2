@@ -68,7 +68,7 @@
     "migrationIds": ["sonic-swapx"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://swapx.fi/earn",
+    "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=staked+sonic+usd+sonic+usd&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
@@ -92,7 +92,7 @@
     "migrationIds": ["sonic-swapx"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=wstkscusd+scusd&ownerType=pools&filter=conc-liquidity",
+    "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=staked+sonic+usd+sonic+usd&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic"
@@ -778,7 +778,7 @@
     "migrationIds": ["sonic-swapx"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://swapx.fi/earn",
+    "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&search=weth+s&ownerType=pools&filter=conc-liquidity",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic"
@@ -1460,7 +1460,7 @@
     "migrationIds": ["sonic-swapx"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
-    "addLiquidityUrl": "https://swapx.fi/earn",
+    "addLiquidityUrl": "https://swapx.fi/earn?orderBy=totalValueLockedUSD&orderDirection=desc&orderByCore=totalValueLockedUSD&orderDirectionCore=desc&ownerType=pools&filter=classic-stable&search=usdc.e+scusd",
     "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
     "pointStructureIds": ["sonic-points", "rings"],
     "network": "sonic",
