@@ -13,6 +13,9 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '1px',
+    sm: {
+      padding: 0,
+    },
   }),
   graphContainer: css.raw({
     backgroundColor: 'background.content',
