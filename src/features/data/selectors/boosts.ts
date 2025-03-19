@@ -141,16 +141,6 @@ export const selectPastBoostIdsWithUserBalance = (
   return boostIds;
 };
 
-export const selectShouldDisplayVaultBoost = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const activeOrPrestakeIds = selectPreStakeOrActiveBoostIds(state, vaultId);
-  if (activeOrPrestakeIds.length > 0) {
-    return true;
-  }
-
-  // OR, there is an expired boost which the user is still staked in
-  return selectPastBoostIdsWithUserBalance(state, vaultId).length > 0;
-};
-
 export const selectVaultsActiveBoostPeriodFinish = (
   state: BeefyState,
   vaultId: BoostPromoEntity['id']

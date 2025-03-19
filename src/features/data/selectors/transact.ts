@@ -27,6 +27,8 @@ import {
 import { selectVaultById } from './vaults.ts';
 import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
 import { extractTagFromLpSymbol } from '../../../helpers/tokens.ts';
+import { selectPastBoostIdsWithUserBalance } from './boosts.ts';
+import { selectPreStakeOrActiveBoostIds } from './boosts.ts';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
@@ -350,3 +352,13 @@ export const selectTransactShouldShowClaimsNotification = createSelector(
     );
   }
 );
+
+export const selectTransactShouldShowBoost = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const activeOrPrestakeIds = selectPreStakeOrActiveBoostIds(state, vaultId);
+  if (activeOrPrestakeIds.length > 0) {
+    return true;
+  }
+
+  // OR, there is an expired boost which the user is still staked in
+  return selectPastBoostIdsWithUserBalance(state, vaultId).length > 0;
+};

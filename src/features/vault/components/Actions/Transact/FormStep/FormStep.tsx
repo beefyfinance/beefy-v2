@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectTransactMode,
+  selectTransactShouldShowBoost,
   selectTransactShouldShowClaims,
   selectTransactShouldShowClaimsNotification,
   selectTransactVaultId,
@@ -16,11 +17,13 @@ import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/
 const DepositFormLoader = lazy(() => import('../DepositForm/DepositForm.tsx'));
 const ClaimFormLoader = lazy(() => import('../ClaimForm/ClaimForm.tsx'));
 const WithdrawFormLoader = lazy(() => import('../WithdrawForm/WithdrawForm.tsx'));
+const BoostFormLoader = lazy(() => import('../BoostForm/BoostForm.tsx'));
 
 const modeToComponent: Record<TransactMode, ComponentType> = {
   [TransactMode.Deposit]: DepositFormLoader,
   [TransactMode.Claim]: ClaimFormLoader,
   [TransactMode.Withdraw]: WithdrawFormLoader,
+  [TransactMode.Boost]: BoostFormLoader,
 };
 
 export const FormStep = memo(function FormStep() {
@@ -29,6 +32,7 @@ export const FormStep = memo(function FormStep() {
   const mode = useAppSelector(selectTransactMode);
   const vaultId = useAppSelector(selectTransactVaultId);
   const showClaim = useAppSelector(state => selectTransactShouldShowClaims(state, vaultId));
+  const showBoost = useAppSelector(state => selectTransactShouldShowBoost(state, vaultId));
   const highlightClaim = useAppSelector(state =>
     selectTransactShouldShowClaimsNotification(state, vaultId)
   );
@@ -43,10 +47,13 @@ export const FormStep = memo(function FormStep() {
     () => [
       { value: TransactMode.Deposit.toString(), label: t('Transact-Deposit') },
       ...(showClaim ? [{ value: TransactMode.Claim.toString(), label: t('Transact-Claim') }] : []),
+      ...(showBoost ? [{ value: TransactMode.Boost.toString(), label: t('Transact-Boost') }] : []),
       { value: TransactMode.Withdraw.toString(), label: t('Transact-Withdraw') },
     ],
-    [t, showClaim]
+    [t, showClaim, showBoost]
   );
+
+  const highlight = highlightClaim ? TransactMode.Claim.toString() : undefined;
 
   useEffect(() => {
     // only dispatches if vaultId or mode changes
@@ -59,7 +66,7 @@ export const FormStep = memo(function FormStep() {
         selected={mode.toString()}
         options={modeOptions}
         onChange={handleModeChange}
-        highlight={highlightClaim ? TransactMode.Claim.toString() : undefined}
+        highlight={highlight}
       />
       <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} />}>
         <Component />
