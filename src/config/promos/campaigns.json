@@ -108,5 +108,17 @@
       "discord": "https://chat.safe.global/",
       "twitter": "https://x.com/safe"
     }
+  },
+  "degen-boost": {
+    "title": "Beefy × Degen",
+    "tag": {
+      "text": "Boost"
+    },
+    "description": "Beefy is teaming up with Degen to reward liquidity providers who deposit in this CLM Pool with 1.5M $DEGEN in daily rewards, in addition to trading fees.",
+    "learn": "https://paragraph.xyz/@degentokenbase/degen-beefy-rewards",
+    "social": {
+      "telegram": "https://t.me/degentokenbase",
+      "twitter": "https://x.com/degentokenbase"
+    }
   }
 }
