@@ -1,7 +1,7 @@
 [
     {
     "id": "pool_uniswap-cow-weth-degen-rp",
-    "title": "Beefy",
+    "title": "Degen",
     "vaultId": "uniswap-cow-weth-degen-rp",
     "type": "pool",
     "campaign": "degen-boost",
