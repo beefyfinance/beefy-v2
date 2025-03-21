@@ -71,10 +71,10 @@ const config = buildConfig(
     // Browserslist for lightningcss
     browserslist: isProduction
       ? [
-          '>0.1% and fully supports es6-module and fully supports es6-module-dynamic-import',
-          'not dead',
-          'not op_mini all',
-        ]
+        '>0.1% and fully supports es6-module and fully supports es6-module-dynamic-import',
+        'not dead',
+        'not op_mini all',
+      ]
       : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
@@ -247,6 +247,8 @@ const config = buildConfig(
             light: { value: '#f5f5f5' },
             middle: { value: '#d0d0da' },
             dark: { value: '#999cb3' },
+            black: { value: '#111321' },
+            notification: { value: "#F8DFA9" }
           },
           modal: { backdrop: { value: '#ffffff33' } },
           alertBaseBackground: { value: '#f5f5ff14' },
@@ -263,6 +265,7 @@ const config = buildConfig(
           changeNegative: { value: '#e84525' },
           changePositive: { value: '#509658' },
           contentBackgroundLight: { value: '#2d3153', description: 'contentLight' },
+          contentBackgroundLightNotification: { value: '#B17F4966', description: 'Notification bg' },
           cornflower: { value: '#5c70d6', description: 'tag.points + indicators.info' },
           dashboardSummaryIconBackground: {
             value: '#232644',
@@ -384,6 +387,8 @@ const config = buildConfig(
               DEFAULT: { value: '{colors.blackMarket}' },
               dark: { value: '{colors.eclipseElixir}' },
               light: { value: '{colors.contentBackgroundLight}' },
+              gray: { value: '{colors.text.dark}' },
+              notification: { value: '{colors.contentBackgroundLightNotification}' },
             },
             vaults: {
               standard: { value: '{colors.blackMarket}' },

@@ -78,6 +78,15 @@ export const selectVaultCurrentBoostIdWithStatus = createCachedSelector(
   }
 )((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
+export const selectUserHasPastBoostAndActiveBoost = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectPastBoostIdsWithUserBalance(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
+  (pastBoostIds, activeBoostIds, prestakeBoostIds) =>
+    pastBoostIds.length > 0 && (activeBoostIds.length > 0 || prestakeBoostIds.length > 0)
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
 export const selectIsVaultPrestakedBoost = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
   prestakeBoostIds => prestakeBoostIds.length > 0
@@ -139,16 +148,6 @@ export const selectPastBoostIdsWithUserBalance = (
     }
   }
   return boostIds;
-};
-
-export const selectShouldDisplayVaultBoost = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const activeOrPrestakeIds = selectPreStakeOrActiveBoostIds(state, vaultId);
-  if (activeOrPrestakeIds.length > 0) {
-    return true;
-  }
-
-  // OR, there is an expired boost which the user is still staked in
-  return selectPastBoostIdsWithUserBalance(state, vaultId).length > 0;
 };
 
 export const selectVaultsActiveBoostPeriodFinish = (

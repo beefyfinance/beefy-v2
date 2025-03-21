@@ -33,6 +33,12 @@ import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { Actions } from '../Actions/Actions.tsx';
+import { styled } from '@repo/styles/jsx';
+import { selectIsVaultPreStakedOrBoosted } from '../../../../../data/selectors/boosts.ts';
+import {
+  selectUserVaultBalanceInDepositToken,
+  selectUserVaultBalanceInShareTokenInCurrentBoost,
+} from '../../../../../data/selectors/balance.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -68,7 +74,6 @@ const TokenInWallet = memo(function TokenInWallet({ token, index }: TokenInWalle
 
 const DepositFormLoader = memo(function DepositFormLoader() {
   const { t } = useTranslation();
-  const classes = useStyles();
   const status = useAppSelector(selectTransactOptionsStatus);
   const error = useAppSelector(selectTransactOptionsError);
   const vaultId = useAppSelector(selectTransactVaultId);
@@ -77,18 +82,59 @@ const DepositFormLoader = memo(function DepositFormLoader() {
   const isError = status === TransactStatus.Rejected;
 
   return (
-    <div className={classes.container}>
+    <>
       {!isVaultActive(vault) ? (
-        <RetirePauseReason vaultId={vaultId} />
+        <Container>
+          <RetirePauseReason vaultId={vaultId} />
+        </Container>
       ) : isLoading ? (
-        <LoadingIndicator text={t('Transact-Loading')} />
+        <Container>
+          <LoadingIndicator text={t('Transact-Loading')} />
+        </Container>
       ) : isError ? (
-        <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
+        <Container>
+          <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
+        </Container>
       ) : (
-        <DepositForm />
+        <Deposit />
       )}
+    </>
+  );
+});
+
+export const Deposit = memo(function Deposit() {
+  return (
+    <div>
+      <Container>
+        <DepositForm />
+      </Container>
+      <BoostPromotion />
     </div>
   );
+});
+
+export const BoostPromotion = memo(function BoostPromotion() {
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const hasActiveBoost = useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId));
+  const userDeposit = useAppSelector(state => selectUserVaultBalanceInDepositToken(state, vaultId));
+  const userDepositInBoost = useAppSelector(state =>
+    selectUserVaultBalanceInShareTokenInCurrentBoost(state, vaultId)
+  );
+
+  // Case 3:  no active boost or user has deposited all in boost
+  if (!hasActiveBoost || (userDeposit.isZero() && userDepositInBoost.gt(BIG_ZERO))) {
+    return null;
+  }
+
+  // Case 2: User has deposits but not in boost or partial boost
+  if (userDepositInBoost.gt(BIG_ZERO) && !userDeposit.isZero()) {
+    return <BoostPromotionContainer>Boost Deposit to get extra rewards!</BoostPromotionContainer>;
+  }
+
+  // Case 1: User has no deposits in the vault
+  if (userDeposit.isZero()) {
+    return <BoostPromotionContainer>Make a Deposit to Boost this Position</BoostPromotionContainer>;
+  }
 });
 
 export const DepositForm = memo(function DepositForm() {
@@ -196,6 +242,30 @@ const DepositFormInput = memo(function DepositFormInput({
       </div>
     </div>
   );
+});
+
+const Container = styled('div', {
+  base: {
+    padding: '16px',
+    sm: {
+      padding: '24px',
+    },
+  },
+});
+
+const BoostPromotionContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '4px 16px',
+    color: 'text.black',
+    background: '#F1D48C',
+    borderRadius: '0px 0px 12px 12px',
+    sm: {
+      padding: '4px 24px',
+    },
+  },
 });
 
 // eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()

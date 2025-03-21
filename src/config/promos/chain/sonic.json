@@ -1,5 +1,28 @@
 [
   {
+    "id": "moo_shadow-cow-sonic-usdc.e-moobifi-vault",
+    "title": "Beefy",
+    "vaultId": "shadow-cow-sonic-usdc.e-moobifi-vault",
+    "assets": ["mooBIFI", "S"],
+    "tokenAddress": "0xAFFcd41595f83918A3cF360C5909C577E8F74b77",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x798967a0e78d2D7d9F5F38600Ac390a6E5AAcB99",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "smooBIFI"
+      }
+    ]
+  },
+  {
     "id": "moo_shadow-cow-sonic-ws-weth-vault",
     "title": "Beefy",
     "vaultId": "shadow-cow-sonic-ws-weth-vault",

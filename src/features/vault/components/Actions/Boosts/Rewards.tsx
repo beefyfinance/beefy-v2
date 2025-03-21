@@ -1,15 +1,14 @@
 import type { BoostRewardContractData } from '../../../../data/apis/contract-data/contract-data-types.ts';
 import { type BigNumber } from 'bignumber.js';
-import { Fragment, memo } from 'react';
+import { Fragment, memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { css, type CssStyles } from '@repo/styles/css';
 import { TokenImageFromEntity } from '../../../../../components/TokenImage/TokenImage.tsx';
 import { TokenAmount } from '../../../../../components/TokenAmount/TokenAmount.tsx';
-import { StakeCountdown } from './StakeCountdown/StakeCountdown.tsx';
-import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
-import { styles } from './styles.ts';
-
-const useStyles = legacyMakeStyles(styles);
+import { styled } from '@repo/styles/jsx';
+import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
+import { useAppSelector } from '../../../../../store.ts';
+import { selectTokenPriceByAddress } from '../../../../data/selectors/tokens.ts';
+import { formatLargeUsd } from '../../../../../helpers/format.ts';
 
 export type Reward = BoostRewardContractData & {
   pending: BigNumber;
@@ -19,53 +18,74 @@ export type Reward = BoostRewardContractData & {
 export type RewardsProps = {
   isInBoost: boolean;
   rewards: Reward[];
-  fadeInactive?: boolean;
-  css?: CssStyles;
 };
 
-export const Rewards = memo(function Rewards({
-  isInBoost,
-  rewards,
-  css: cssProp,
-  fadeInactive = true,
-}: RewardsProps) {
-  const classes = useStyles();
+export const Rewards = memo(function Rewards({ isInBoost, rewards }: RewardsProps) {
   const { t } = useTranslation();
 
+  console.log(rewards);
+
   return (
-    <div className={css(styles.rewards, fadeInactive && styles.rewardsFadeInactive, cssProp)}>
-      <div className={classes.rewardLabel}>{t('Boost-Rewards')}</div>
-      <div className={classes.rewardLabel}>{t('Boost-Ends')}</div>
+    <>
       {rewards.map(reward => (
         <Fragment key={reward.token.address}>
-          <div
-            className={css(
-              styles.rewardValue,
-              reward.active && styles.rewardValueActive,
-              styles.rewardValueAmount
-            )}
-          >
-            <TokenImageFromEntity token={reward.token} size={16} />
-            <div className={classes.rewardEllipsis}>
+          <Value>
+            <Label>{t('Boost-Rewards')}</Label>
+            <Amount>
               {isInBoost && (
                 <TokenAmount amount={reward.pending} decimals={reward.token.decimals} />
               )}
-              <span className={classes.rewardSymbol}>{reward.token.symbol}</span>
-            </div>
-          </div>
-          <div className={css(styles.rewardValue, reward.active && styles.rewardValueActive)}>
-            {!reward.active ? (
-              t('ENDED')
-            ) : reward.isPreStake ? (
-              t('PRE-STAKE')
-            ) : reward.periodFinish ? (
-              <StakeCountdown periodFinish={reward.periodFinish} />
-            ) : (
-              '-'
-            )}
-          </div>
+              {reward.token.symbol}
+              <TokenImageFromEntity token={reward.token} size={16} />
+
+              <Reward reward={reward} />
+            </Amount>
+          </Value>
         </Fragment>
       ))}
-    </div>
+    </>
   );
+});
+
+const Reward = memo(function Reward({ reward }: { reward: Reward }) {
+  const { token, pending } = reward;
+
+  const price = useAppSelector(state =>
+    selectTokenPriceByAddress(state, token.chainId, token.address)
+  );
+
+  const pendingUsd = useMemo(() => formatLargeUsd(pending.multipliedBy(price)), [pending, price]);
+
+  return <RewardOrApy>{pending.gt(BIG_ZERO) ? pendingUsd : ''}</RewardOrApy>;
+});
+
+const Value = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+  },
+});
+
+const Label = styled('div', {
+  base: {
+    textStyle: 'subline.sm',
+    color: 'text.dark',
+  },
+});
+
+const Amount = styled('div', {
+  base: {
+    display: 'flex',
+    gap: '4px',
+    alignItems: 'center',
+    textStyle: 'body.medium',
+    color: 'text.middle',
+  },
+});
+
+const RewardOrApy = styled('div', {
+  base: {
+    marginLeft: 'auto',
+  },
 });
