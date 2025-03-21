@@ -8,13 +8,16 @@ const BoostFormLoader = memo(function BoostFormLoader() {
   const vaultId = useAppSelector(selectTransactVaultId);
   return (
     <Container>
-      <Boosts vaultId={vaultId} />;
+      <Boosts vaultId={vaultId} />
     </Container>
   );
 });
 
 const Container = styled('div', {
   base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
     padding: '16px',
     sm: {
       padding: '24px',

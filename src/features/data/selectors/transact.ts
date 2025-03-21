@@ -27,8 +27,10 @@ import {
 import { selectVaultById } from './vaults.ts';
 import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
 import { extractTagFromLpSymbol } from '../../../helpers/tokens.ts';
-import { selectPastBoostIdsWithUserBalance } from './boosts.ts';
+import { selectAllVaultBoostIds, selectPastBoostIdsWithUserBalance } from './boosts.ts';
 import { selectPreStakeOrActiveBoostIds } from './boosts.ts';
+import { selectBoostUserRewardsInToken } from './balance.ts';
+import type { BoostReward } from '../apis/balance/balance-types.ts';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
@@ -361,4 +363,22 @@ export const selectTransactShouldShowBoost = (state: BeefyState, vaultId: VaultE
 
   // OR, there is an expired boost which the user is still staked in
   return selectPastBoostIdsWithUserBalance(state, vaultId).length > 0;
+};
+
+export const selectTransactShouldShowBoostNotification = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+): boolean => {
+  const boostIds = selectAllVaultBoostIds(state, vaultId);
+
+  // Check each boost for claimable rewards
+  for (const boostId of boostIds) {
+    const userRewards = selectBoostUserRewardsInToken(state, boostId, walletAddress);
+    if (userRewards.some((reward: BoostReward) => reward.amount.gt(BIG_ZERO))) {
+      return true;
+    }
+  }
+
+  return false;
 };

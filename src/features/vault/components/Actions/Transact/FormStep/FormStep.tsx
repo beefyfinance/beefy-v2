@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectTransactMode,
   selectTransactShouldShowBoost,
+  selectTransactShouldShowBoostNotification,
   selectTransactShouldShowClaims,
   selectTransactShouldShowClaimsNotification,
   selectTransactVaultId,
@@ -36,6 +37,9 @@ export const FormStep = memo(function FormStep() {
   const highlightClaim = useAppSelector(state =>
     selectTransactShouldShowClaimsNotification(state, vaultId)
   );
+  const highlightBoost = useAppSelector(state =>
+    selectTransactShouldShowBoostNotification(state, vaultId)
+  );
   const Component = modeToComponent[mode];
   const handleModeChange = useCallback(
     (newMode: string) => {
@@ -53,7 +57,13 @@ export const FormStep = memo(function FormStep() {
     [t, showClaim, showBoost]
   );
 
-  const highlight = highlightClaim ? TransactMode.Claim.toString() : undefined;
+  const highlight = useMemo(() => {
+    return highlightBoost
+      ? TransactMode.Boost.toString()
+      : highlightClaim
+        ? TransactMode.Claim.toString()
+        : undefined;
+  }, [highlightBoost, highlightClaim]);
 
   useEffect(() => {
     // only dispatches if vaultId or mode changes

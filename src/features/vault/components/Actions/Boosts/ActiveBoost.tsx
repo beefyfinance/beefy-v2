@@ -1,13 +1,6 @@
 import { memo, useMemo, useState } from 'react';
-import { legacyMakeStyles } from '../../../../../helpers/mui.ts';
-import { Trans, useTranslation } from 'react-i18next';
-import { styles } from './styles.ts';
 import { selectVaultById } from '../../../../data/selectors/vaults.ts';
-import {
-  selectBoostActiveRewards,
-  selectBoostById,
-  selectBoostContractState,
-} from '../../../../data/selectors/boosts.ts';
+import { selectBoostActiveRewards, selectBoostById } from '../../../../data/selectors/boosts.ts';
 import type { BoostPromoEntity } from '../../../../data/entities/promo.ts';
 import {
   selectBoostUserBalanceInToken,
@@ -15,7 +8,6 @@ import {
   selectUserBalanceOfToken,
 } from '../../../../data/selectors/balance.ts';
 import { useAppSelector } from '../../../../../store.ts';
-import { IconWithBasicTooltip } from '../../../../../components/Tooltip/IconWithBasicTooltip.tsx';
 import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
 import { ActionConnectSwitch } from './ActionConnectSwitch.tsx';
 import { type Reward, Rewards } from './Rewards.tsx';
@@ -23,13 +15,18 @@ import { Claim } from './ActionButton/Claim.tsx';
 import { Unstake } from './ActionButton/Unstake.tsx';
 import { StakeInput } from './ActionInputButton/StakeInput.tsx';
 import { UnstakeInput } from './ActionInputButton/UnstakeInput.tsx';
-
-const useStyles = legacyMakeStyles(styles);
-
-export function ActiveBoost({ boostId }: { boostId: BoostPromoEntity['id'] }) {
+import { styled } from '@repo/styles/jsx';
+import { BoostStaked } from './BoostStaked/BoostStaked.tsx';
+import { StakeCountdown } from './StakeCountdown/StakeCountdown.tsx';
+import { useTranslation } from 'react-i18next';
+export const ActiveBoost = memo(function ActiveBoost({
+  boostId,
+}: {
+  boostId: BoostPromoEntity['id'];
+}) {
+  const { t } = useTranslation();
   const boost = useAppSelector(state => selectBoostById(state, boostId));
   const vault = useAppSelector(state => selectVaultById(state, boost.vaultId));
-  const data = useAppSelector(state => selectBoostContractState(state, boost.id));
   const activeRewards = useAppSelector(state => selectBoostActiveRewards(state, boost.id));
   const userRewards = useAppSelector(state => selectBoostUserRewardsInToken(state, boost.id));
   const [rewards, canClaim] = useMemo(() => {
@@ -67,13 +64,25 @@ export function ActiveBoost({ boostId }: { boostId: BoostPromoEntity['id'] }) {
   const canStake = balanceInWallet.gt(BIG_ZERO);
   const balanceInBoost = useAppSelector(state => selectBoostUserBalanceInToken(state, boost.id));
   const canUnstake = balanceInBoost.gt(BIG_ZERO);
-  const classes = useStyles();
   const [open, toggleOpen] = useAccordion<'stake' | 'unstake'>();
 
   return (
-    <div className={classes.containerBoost}>
-      <Title upcoming={data.isPreStake} />
-      <Rewards isInBoost={canUnstake} rewards={rewards} />
+    <BoostActionContainer>
+      <CardBoostContainer>
+        <BoostCountdown>
+          {rewards.map(reward => {
+            return reward.isPreStake ? (
+              t('PRE-STAKE')
+            ) : reward.periodFinish ? (
+              <StakeCountdown periodFinish={reward.periodFinish} />
+            ) : (
+              '-'
+            );
+          })}
+        </BoostCountdown>
+        {canUnstake && <BoostStaked boostId={boostId} />}
+        <Rewards isInBoost={canUnstake} rewards={rewards} />
+      </CardBoostContainer>
       <ActionConnectSwitch chainId={boost.chainId}>
         {canStake && (
           <StakeInput
@@ -103,34 +112,44 @@ export function ActiveBoost({ boostId }: { boostId: BoostPromoEntity['id'] }) {
           </>
         )}
       </ActionConnectSwitch>
-    </div>
+    </BoostActionContainer>
   );
-}
+});
 
-type TitleProps = {
-  upcoming?: boolean;
-};
+const BoostActionContainer = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+  },
+});
 
-const Title = memo(function Title({ upcoming }: TitleProps) {
-  const { t } = useTranslation();
-  const classes = useStyles();
-  return (
-    <div className={classes.title}>
-      <span>
-        <Trans
-          t={t}
-          i18nKey="Boost-Title"
-          values={{ title: t(upcoming ? 'Boost-Upcoming' : 'Boost-Active') }}
-          components={{ white: <span className={classes.titleWhite} /> }}
-        />
-      </span>
-      <IconWithBasicTooltip
-        title={t('Boost-WhatIs')}
-        content={t('Boost-Explain')}
-        iconCss={styles.titleTooltipTrigger}
-      />
-    </div>
-  );
+const CardBoostContainer = styled('div', {
+  base: {
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+    background: 'background.content.light',
+    borderRadius: '8px',
+    padding: '16px',
+  },
+});
+
+const BoostCountdown = styled('div', {
+  base: {
+    position: 'absolute',
+    top: '0',
+    right: '0',
+    textStyle: 'subline.sm',
+    color: 'text.notification',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: 'background.content.notification',
+    borderRadius: '0px 8px 0px 8px',
+    padding: '2px 8px',
+  },
 });
 
 function useAccordion<T extends string>(initialState: T | undefined = undefined) {
