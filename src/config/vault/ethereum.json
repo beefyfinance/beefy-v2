@@ -5993,66 +5993,6 @@
     ]
   },
   {
-    "id": "convex-frax",
-    "name": "FRAX/DAI/USDC/USDT",
-    "type": "standard",
-    "token": "FRAX3CRV",
-    "tokenAddress": "0xd632f22692FaC7611d2AA1C0D552930D43CAEd3B",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnedToken": "mooConvexFrax3Crv",
-    "earnedTokenAddress": "0xe6aB93d1c253d16733d52dD40b4929a6a04b2B08",
-    "earnContractAddress": "0xe6aB93d1c253d16733d52dD40b4929a6a04b2B08",
-    "oracle": "lps",
-    "oracleId": "convex-frax",
-    "status": "eol",
-    "retiredAt": 1724851479,
-    "retireReason": "rewards",
-    "createdAt": 1667828508,
-    "platformId": "convex",
-    "assets": ["FRAX", "DAI", "USDC", "USDT"],
-    "migrationIds": ["ethereum-convex", "ethereum-curve"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "PARTIAL_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/frax/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/frax/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/frax/withdraw",
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0xd632f22692FaC7611d2AA1C0D552930D43CAEd3B",
-        "methods": [
-          {
-            "type": "fixed-deposit-int128",
-            "target": "0xd632f22692FaC7611d2AA1C0D552930D43CAEd3B",
-            "coins": [
-              "0x853d955aCEf822Db058eb8505911ED77F175b99e",
-              "0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490"
-            ]
-          },
-          {
-            "type": "pool-fixed-deposit",
-            "target": "0xA79828DF1850E8a3A3064576f380D90aECDD3359",
-            "coins": [
-              "0x853d955aCEf822Db058eb8505911ED77F175b99e",
-              "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "0xdAC17F958D2ee523a2206206994597C13D831ec7"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "stargate-eth-usdc",
     "name": "USDC LP",
     "type": "standard",
