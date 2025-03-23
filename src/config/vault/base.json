@@ -1,5 +1,92 @@
 [
   {
+    "id": "aerodrome-weth-moxie",
+    "name": "MOXIE-WETH vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/MOXIE",
+    "tokenAddress": "0xc02Dc3a9b6eaD739C56CDEa716D8fEC4Ffe4C799",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseWETH-MOXIE",
+    "earnedTokenAddress": "0xa06beac219a4634a1BF2617B1AFfEB75Ab0ddA97",
+    "earnContractAddress": "0xa06beac219a4634a1BF2617B1AFfEB75Ab0ddA97",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-moxie",
+    "status": "active",
+    "createdAt": 1742690126,
+    "platformId": "aerodrome",
+    "assets": ["MOXIE", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x8C9037D1Ef5c6D1f6816278C7AAF5491d24CD527&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-weth-kta",
+    "name": "KTA-WETH vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/KTA",
+    "tokenAddress": "0xd9eDC75a3a797Ec92Ca370F19051BAbebfb2edEe",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseWETH-KTA",
+    "earnedTokenAddress": "0x572756d2775B73AcebF7Ab2a3d2EF366D4E5A60B",
+    "earnContractAddress": "0x572756d2775B73AcebF7Ab2a3d2EF366D4E5A60B",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-kta",
+    "status": "active",
+    "createdAt": 1742690126,
+    "platformId": "aerodrome",
+    "assets": ["KTA", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xc0634090F2Fe6c6d75e61Be2b949464aBB498973&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-weth-mor",
+    "name": "MOR-WETH vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/MOR",
+    "tokenAddress": "0x1eB79B7111fC98BBcbe79dd8043c2C98bc5698bd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseWETH-MOR",
+    "earnedTokenAddress": "0x8C472a68fdbF63321b0197f7491d61ddb21D8Ab8",
+    "earnContractAddress": "0x8C472a68fdbF63321b0197f7491d61ddb21D8Ab8",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-mor",
+    "status": "active",
+    "createdAt": 1742690126,
+    "platformId": "aerodrome",
+    "assets": ["MOR", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x7431aDa8a591C955a994a21710752EF9b882b8e3&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-drb-weth-rp",
     "name": "DRB-WETH Reward Pool",
     "type": "gov",
