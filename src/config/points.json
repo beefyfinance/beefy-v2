@@ -60,8 +60,7 @@
     ],
     "eligibility": [
       {
-        "type": "token-holding",
-        "tokens": ["USD0++", "USD0"]
+        "type": "vault-whitelist"
       }
     ]
   },
