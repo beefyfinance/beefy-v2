@@ -20,9 +20,7 @@ export const ScrollRestorer = memo(function ScrollRestorer() {
     switch (navigationType) {
       case NavigationType.Push:
       case NavigationType.Replace: {
-        console.debug(`Saving scroll state of ${prevPath}`, window.scrollY);
         state.current.lastScroll.set(prevPath, window.scrollY);
-        console.debug('Scrolling to top of new page');
         window.scrollTo(0, 0);
 
         // Handle vault-specific logic
@@ -39,14 +37,12 @@ export const ScrollRestorer = memo(function ScrollRestorer() {
       case NavigationType.Pop: {
         if (currentPath !== '/' && !currentPath.startsWith('/dashboard/')) {
           const savedScroll = state.current.lastScroll.get(currentPath) ?? 0;
-          console.debug(`Restoring scroll state of ${currentPath}`, savedScroll);
           window.scrollTo(0, savedScroll);
         }
         break;
       }
     }
 
-    console.debug('Updating lastPath to', currentPath);
     state.current.lastPath = currentPath;
   }, [location, navigationType, dispatch]);
 

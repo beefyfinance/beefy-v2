@@ -13,7 +13,10 @@ export const styles = {
     columnGap: '16px',
     backgroundColor: 'background.content.dark',
     borderRadius: '12px 12px 0px 0px ',
-    padding: '24px',
+    padding: '16px',
+    sm: {
+      padding: '24px',
+    },
   }),
   icon: css.raw({
     height: '48px',
@@ -32,7 +35,10 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    padding: '24px',
+    padding: '16px',
     rowGap: '16px',
+    sm: {
+      padding: '24px',
+    },
   }),
 };

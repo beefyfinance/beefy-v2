@@ -2,7 +2,10 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   container: css.raw({
-    padding: '24px',
+    padding: '16px',
+    sm: {
+      padding: '24px',
+    },
   }),
   stakedInBoost: css.raw({
     marginBottom: '24px',

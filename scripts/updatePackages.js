@@ -27,7 +27,7 @@ async function execJson(command) {
 }
 
 async function dedupeDependencies() {
-  await execString('npm dedupe');
+  await execString('npm dedupe --no-audit');
 }
 
 async function cleanInstall() {
@@ -35,7 +35,7 @@ async function cleanInstall() {
 }
 
 async function install() {
-  await execString('npm install');
+  await execString('npm install --no-audit');
 }
 
 // Force these packages to be on same version as in direct dependencies

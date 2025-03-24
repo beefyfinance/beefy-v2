@@ -1,4 +1,20 @@
 [
+    {
+    "id": "pool_uniswap-cow-weth-degen-rp",
+    "title": "Degen",
+    "vaultId": "uniswap-cow-weth-degen-rp",
+    "type": "pool",
+    "campaign": "degen-boost",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
+        "symbol": "DEGEN",
+        "decimals": 18,
+        "oracleId": "DEGEN"
+      }
+    ]
+  },
   {
     "id": "moo_aerodrome-weth-vvv",
     "title": "Beefy",

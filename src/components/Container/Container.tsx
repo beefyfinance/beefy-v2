@@ -5,7 +5,7 @@ export const Container = styled('div', {
     width: '100%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    paddingInline: '16px',
+    paddingInline: '12px',
     sm: {
       paddingInline: '24px',
     },

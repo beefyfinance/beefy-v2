@@ -232,8 +232,10 @@ const validatePools = async () => {
       updates[res.chainId] = res.updates;
     }
   });
+
   // Helpful data structures to correct addresses.
-  console.log('Required updates.', JSON.stringify(updates));
+  console.log('Required updates:', JSON.stringify(updates));
+  console.log('Valid:', exitCode === 0 && Object.keys(updates).length === 0);
 
   if (excludedChainIds.length > 0) {
     console.warn(`*** Excluded chains: ${excludedChainIds.join(', ')} ***`);
@@ -845,6 +847,19 @@ const checkPointsStructureIds = (pool: VaultConfig) => {
             pool.assets?.some(a => eligibility.tokens.includes(a))) ??
             false
         );
+      } else if (eligibility.type === 'platform') {
+        if (!('platformId' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.platformId missing`);
+        }
+        if (!('liveAfter' in eligibility)) {
+          throw new Error(`Error: ${pointProvider.id} : eligibility.liveAfter missing`);
+        }
+
+        shouldHaveProviderArr.push(
+          eligibility.platformId === pool.platformId &&
+            (pool.retiredAt === undefined ||
+              new Date(eligibility.liveAfter) < new Date(pool.retiredAt * 1000))
+        );
       } else if (eligibility.type === 'token-holding') {
         if (!('tokens' in eligibility)) {
           throw new Error(`Error: ${pointProvider.id} : eligibility.tokens missing`);
@@ -868,6 +883,10 @@ const checkPointsStructureIds = (pool: VaultConfig) => {
         shouldHaveProviderArr.push(regex.test(earnedToken));
       } else if (eligibility.type === 'vault-whitelist') {
         shouldHaveProviderArr.push(hasProvider);
+      } else {
+        throw new Error(
+          `Error: ${pointProvider.id} : eligibility.type ${eligibility.type} not implemented, please implement.`
+        );
       }
     }
 
@@ -1281,6 +1300,7 @@ async function validatePlatformTypes(): Promise<number> {
       // Platform image must exist if platform has a type
       const possiblePaths = [
         `./src/images/platforms/${platform.id}.svg`,
+        `./src/images/platforms/${platform.id}.webp`,
         `./src/images/platforms/${platform.id}.png`,
       ];
       let found = false;

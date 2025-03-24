@@ -4788,38 +4788,6 @@
     ]
   },
   {
-    "id": "dystopia-wmatic-dyst",
-    "name": "DYST-MATIC vLP",
-    "type": "standard",
-    "token": "DYST-MATIC vLP",
-    "tokenAddress": "0x1e08A5B6A1694bC1A65395db6f4c506498DAA349",
-    "tokenDecimals": 18,
-    "tokenProviderId": "dystopia",
-    "earnedToken": "mooDystopiaDYST-MATIC",
-    "earnedTokenAddress": "0xa5529E47C3086D93bB59aB99ca2B20d0Ee2EFcAe",
-    "earnContractAddress": "0xa5529E47C3086D93bB59aB99ca2B20d0Ee2EFcAe",
-    "oracle": "lps",
-    "oracleId": "dystopia-wmatic-dyst",
-    "status": "eol",
-    "createdAt": 1661039365,
-    "retireReason": "tvl",
-    "retiredAt": 1670263732,
-    "platformId": "dystopia",
-    "assets": ["DYST", "MATIC"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "lp",
-    "buyTokenUrl": "https://www.dystopia.exchange/swap",
-    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x1e08a5b6a1694bc1a65395db6f4c506498daa349",
-    "removeLiquidityUrl": "https://www.dystopia.exchange/liquidity/0x1e08a5b6a1694bc1a65395db6f4c506498daa349",
-    "network": "polygon",
-    "zaps": [
-      {
-        "strategyId": "solidly",
-        "ammId": "polygon-dystopia"
-      }
-    ]
-  },
-  {
     "id": "curve-matic-stmatic",
     "name": "stMATIC-MATIC",
     "type": "standard",

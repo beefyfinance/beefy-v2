@@ -60,8 +60,7 @@
     ],
     "eligibility": [
       {
-        "type": "token-holding",
-        "tokens": ["USD0++", "USD0"]
+        "type": "vault-whitelist"
       }
     ]
   },
@@ -981,6 +980,44 @@
       {
         "type": "on-chain-lp",
         "chain": "lisk"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-lrt-subgraph",
+        "role": "Raw indexing of blockchain data, computes time weighted balances",
+        "url": "https://github.com/beefyfinance/lrt-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "lisk-points",
+        "role": "Distribution of rewards",
+        "type": "airdrop",
+        "url": "TODO"
+      }
+    ]
+  },
+  {
+    "id": "silo-points",
+    "docs": "TODO",
+    "points": [
+      {
+        "id": "silo-points",
+        "name": "Silo Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "platform",
+        "platformId": "silo",
+        "liveAfter": "2025-03-01"
+      },
+      {
+        "type": "vault-whitelist"
       }
     ],
     "accounting": [

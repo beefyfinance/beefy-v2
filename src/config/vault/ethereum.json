@@ -1,5 +1,101 @@
 [
   {
+    "id": "pendle-eqb-usd0++-26jun25",
+    "name": "USD0++ 26Jun25",
+    "type": "standard",
+    "token": "USD0++_26JUN25",
+    "tokenAddress": "0x048680F64d6DFf1748ba6D9a01F578433787e24B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0x0c01c637a6Fbe99eFa81898DC2196C36bc6A22dA",
+    "earnedToken": "mooEqb-USD0++_26JUN25",
+    "earnedTokenAddress": "0x0c01c637a6Fbe99eFa81898DC2196C36bc6A22dA",
+    "oracle": "lps",
+    "oracleId": "pendle-usd0++-26jun25",
+    "status": "active",
+    "createdAt": 1742808462,
+    "platformId": "equilibria",
+    "assets": ["USD0++"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x048680F64d6DFf1748ba6D9a01F578433787e24B/zap/in?chain=ethereum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x048680F64d6DFf1748ba6D9a01F578433787e24B/zap/out?chain=ethereum",
+    "network": "ethereum"
+  },
+  {
+    "id": "pendle-usd0++-26jun25",
+    "name": "USD0++ 26Jun25",
+    "type": "standard",
+    "token": "USD0++_26JUN25",
+    "tokenAddress": "0x048680F64d6DFf1748ba6D9a01F578433787e24B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0x949456A7ACcb996d92a63169b1307C89b5D67B9c",
+    "earnedToken": "mooPenpie-USD0++_26JUN25",
+    "earnedTokenAddress": "0x949456A7ACcb996d92a63169b1307C89b5D67B9c",
+    "oracle": "lps",
+    "oracleId": "pendle-usd0++-26jun25",
+    "status": "active",
+    "createdAt": 1742808453,
+    "platformId": "magpie",
+    "assets": ["USD0++"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x048680F64d6DFf1748ba6D9a01F578433787e24B/zap/in?chain=ethereum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x048680F64d6DFf1748ba6D9a01F578433787e24B/zap/out?chain=ethereum",
+    "network": "ethereum"
+  },
+  {
+    "id": "pendle-usd0++-24apr25",
+    "name": "USD0++ 24Apr25",
+    "type": "standard",
+    "token": "USD0++_24APR25",
+    "tokenAddress": "0x81f3a11dB1DE16f4F9ba8Bf46B71D2B168c64899",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0x5B14b69eDc64A0fa36F822AbC7a9E96ADc05eCb9",
+    "earnedToken": "mooPenpie-USD0++_24APR25",
+    "earnedTokenAddress": "0x5B14b69eDc64A0fa36F822AbC7a9E96ADc05eCb9",
+    "oracle": "lps",
+    "oracleId": "pendle-usd0++-24apr25",
+    "status": "active",
+    "createdAt": 1742795211,
+    "platformId": "magpie",
+    "assets": ["USD0++"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x81f3a11dB1DE16f4F9ba8Bf46B71D2B168c64899/zap/in?chain=ethereum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x81f3a11dB1DE16f4F9ba8Bf46B71D2B168c64899/zap/out?chain=ethereum",
+    "network": "ethereum"
+  },
+  {
+    "id": "pendle-eqb-usd0++-24apr25",
+    "name": "USD0++ 24Apr25",
+    "type": "standard",
+    "token": "USD0++_24APR25",
+    "tokenAddress": "0x81f3a11dB1DE16f4F9ba8Bf46B71D2B168c64899",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pendle",
+    "earnContractAddress": "0x947D4dA9b496F1cB3Fe99B7A6c0795D494e017ea",
+    "earnedToken": "mooEqb-USD0++_24APR25",
+    "earnedTokenAddress": "0x947D4dA9b496F1cB3Fe99B7A6c0795D494e017ea",
+    "oracle": "lps",
+    "oracleId": "pendle-usd0++-24apr25",
+    "status": "active",
+    "createdAt": 1742795212,
+    "platformId": "equilibria",
+    "assets": ["USD0++"],
+    "migrationIds": ["magpie"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.pendle.finance/trade/pools/0x81f3a11dB1DE16f4F9ba8Bf46B71D2B168c64899/zap/in?chain=ethereum",
+    "removeLiquidityUrl": "https://app.pendle.finance/trade/pools/0x81f3a11dB1DE16f4F9ba8Bf46B71D2B168c64899/zap/out?chain=ethereum",
+    "network": "ethereum"
+  },
+  {
     "id": "balancerv3-ethereum-waethlidowsteth-waethlidoweth",
     "name": "wstETH/WETH LP",
     "type": "standard",
@@ -5986,66 +6082,6 @@
             "coins": [
               "0x853d955aCEf822Db058eb8505911ED77F175b99e",
               "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "convex-frax",
-    "name": "FRAX/DAI/USDC/USDT",
-    "type": "standard",
-    "token": "FRAX3CRV",
-    "tokenAddress": "0xd632f22692FaC7611d2AA1C0D552930D43CAEd3B",
-    "tokenDecimals": 18,
-    "tokenProviderId": "curve",
-    "earnedToken": "mooConvexFrax3Crv",
-    "earnedTokenAddress": "0xe6aB93d1c253d16733d52dD40b4929a6a04b2B08",
-    "earnContractAddress": "0xe6aB93d1c253d16733d52dD40b4929a6a04b2B08",
-    "oracle": "lps",
-    "oracleId": "convex-frax",
-    "status": "eol",
-    "retiredAt": 1724851479,
-    "retireReason": "rewards",
-    "createdAt": 1667828508,
-    "platformId": "convex",
-    "assets": ["FRAX", "DAI", "USDC", "USDT"],
-    "migrationIds": ["ethereum-convex", "ethereum-curve"],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "PARTIAL_COLLAT_ALGO_STABLECOIN"
-    ],
-    "strategyTypeId": "multi-lp",
-    "buyTokenUrl": "https://curve.fi/#/ethereum/pools/frax/swap",
-    "addLiquidityUrl": "https://curve.fi/#/ethereum/pools/frax/deposit",
-    "removeLiquidityUrl": "https://curve.fi/#/ethereum/pools/frax/withdraw",
-    "network": "ethereum",
-    "zaps": [
-      {
-        "strategyId": "curve",
-        "poolAddress": "0xd632f22692FaC7611d2AA1C0D552930D43CAEd3B",
-        "methods": [
-          {
-            "type": "fixed-deposit-int128",
-            "target": "0xd632f22692FaC7611d2AA1C0D552930D43CAEd3B",
-            "coins": [
-              "0x853d955aCEf822Db058eb8505911ED77F175b99e",
-              "0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490"
-            ]
-          },
-          {
-            "type": "pool-fixed-deposit",
-            "target": "0xA79828DF1850E8a3A3064576f380D90aECDD3359",
-            "coins": [
-              "0x853d955aCEf822Db058eb8505911ED77F175b99e",
-              "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-              "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              "0xdAC17F958D2ee523a2206206994597C13D831ec7"
             ]
           }
         ]

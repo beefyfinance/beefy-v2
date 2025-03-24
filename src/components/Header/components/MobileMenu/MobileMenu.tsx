@@ -1,6 +1,6 @@
 import { Fragment, memo, useCallback, useState } from 'react';
 import CloseIcon from '../../../../images/icons/mui/Close.svg?react';
-import MenuIcon from '../../../../images/icons/mui/Menu.svg?react';
+import MenuIcon from '../../../../images/icons/Menu.svg?react';
 import { NavLinkItem } from '../NavItem/NavLinkItem.tsx';
 import { MobileList } from '../../list.ts';
 import type { NavConfig, NavDropdownConfig } from '../DropNavItem/types.ts';
@@ -21,7 +21,7 @@ export const MobileMenu = memo(function MobileMenu() {
   return (
     <>
       <MenuButton aria-label="menu" onClick={handleDrawerToggle}>
-        <MenuIcon fontSize="inherit" />
+        <MenuIcon fontSize="inherit" style={{ height: '32px', width: '32px' }} />
         <UnreadDots />
       </MenuButton>
       <Drawer scrollable={false} open={mobileOpen} onClose={handleDrawerToggle}>

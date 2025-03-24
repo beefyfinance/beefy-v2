@@ -4,8 +4,10 @@ export const styles = {
   boxes: css.raw({
     display: 'grid',
     gridTemplateColumns: '100%',
-    rowGap: '24px',
-    columnGap: '24px',
+    gap: '12px',
+    sm: {
+      gap: '24px',
+    },
     lg: {
       display: 'grid',
       gridTemplateColumns: 'minmax(0,666fr) minmax(0,333fr)',
