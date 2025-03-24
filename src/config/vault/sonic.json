@@ -1,5 +1,27 @@
 [
   {
+    "id": "aavev3-sonic-usdc.e",
+    "name": "USDC.e",
+    "type": "standard",
+    "token": "USDC.e",
+    "tokenAddress": "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x3eb55e7a434dcA52a064276444c0fE8BF628aadA",
+    "earnedToken": "mooAaveUSDC.e",
+    "earnedTokenAddress": "0x3eb55e7a434dcA52a064276444c0fE8BF628aadA",
+    "oracle": "tokens",
+    "oracleId": "USDCe",
+    "status": "active",
+    "createdAt": 1742795210,
+    "platformId": "aave",
+    "assets": ["USDCe"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic"
+  },
+  {
     "id": "beets-sonic-silo-super-sonic",
     "name": "Silo Super Sonic",
     "type": "standard",
