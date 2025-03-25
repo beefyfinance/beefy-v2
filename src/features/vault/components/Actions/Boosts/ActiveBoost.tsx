@@ -16,9 +16,8 @@ import { Unstake } from './ActionButton/Unstake.tsx';
 import { StakeInput } from './ActionInputButton/StakeInput.tsx';
 import { UnstakeInput } from './ActionInputButton/UnstakeInput.tsx';
 import { styled } from '@repo/styles/jsx';
-import { BoostStaked } from './BoostStaked/BoostStaked.tsx';
 import { StakeCountdown } from './StakeCountdown/StakeCountdown.tsx';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 export const ActiveBoost = memo(function ActiveBoost({
   boostId,
 }: {
@@ -74,14 +73,17 @@ export const ActiveBoost = memo(function ActiveBoost({
             return reward.isPreStake ? (
               t('PRE-STAKE')
             ) : reward.periodFinish ? (
-              <StakeCountdown periodFinish={reward.periodFinish} />
+              <Trans
+                t={t}
+                i18nKey="Boost-Ends"
+                components={{ countdown: <StakeCountdown periodFinish={reward.periodFinish} /> }}
+              />
             ) : (
               '-'
             );
           })}
         </BoostCountdown>
-        {canUnstake && <BoostStaked boostId={boostId} />}
-        <Rewards isInBoost={canUnstake} rewards={rewards} />
+        <Rewards isInBoost={canUnstake} rewards={rewards} boostId={boostId} />
       </CardBoostContainer>
       <ActionConnectSwitch chainId={boost.chainId}>
         {canStake && (
@@ -142,6 +144,7 @@ const BoostCountdown = styled('div', {
     top: '0',
     right: '0',
     textStyle: 'subline.sm',
+    textTransform: 'capitalize',
     color: 'text.notification',
     display: 'flex',
     alignItems: 'center',

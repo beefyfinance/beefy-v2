@@ -190,9 +190,6 @@ export const DisplacedBalancesImpl = memo(function DisplacedBalancesImpl({
 
   return (
     <div className={classes.container}>
-      {entries.boost ? (
-        <Entries entries={entries.boost} depositToken={breakdown.depositToken} />
-      ) : null}
       {entries.bridged ? (
         <Entries entries={entries.bridged} depositToken={breakdown.depositToken} />
       ) : null}

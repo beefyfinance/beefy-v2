@@ -284,3 +284,7 @@ export function selectApyVaultUIData(
     boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
   };
 }
+
+export const selectBoostApr = (state: BeefyState, boostId: string): number => {
+  return state.biz.apy.rawApy.byBoostId[boostId]?.apr || 0;
+};

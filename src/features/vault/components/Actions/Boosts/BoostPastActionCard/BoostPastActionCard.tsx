@@ -53,7 +53,7 @@ export const BoostPastActionCard = memo(function BoostPastActionCard({
       <CardBoostContainer>
         <BoostEnded>{t('Boost ended')}</BoostEnded>
         <BoostStaked boostId={boostId} />
-        {canClaim && <Rewards isInBoost={true} rewards={rewards} />}
+        {canClaim && <Rewards isInBoost={true} rewards={rewards} boostId={boostId} />}
       </CardBoostContainer>
       {canClaim || canUnstake ? (
         <ActionConnectSwitch chainId={vault.chainId}>
@@ -71,6 +71,7 @@ const BoostEnded = styled('div', {
     top: '0',
     right: '0',
     textStyle: 'subline.sm',
+    textTransform: 'capitalize',
     color: 'text.black',
     display: 'flex',
     alignItems: 'center',

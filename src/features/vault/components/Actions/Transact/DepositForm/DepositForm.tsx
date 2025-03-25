@@ -19,7 +19,10 @@ import { DepositBuyLinks } from '../DepositBuyLinks/DepositBuyLinks.tsx';
 import { DepositActions } from '../DepositActions/DepositActions.tsx';
 import { TransactQuote } from '../TransactQuote/TransactQuote.tsx';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
-import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
+import {
+  TransactMode,
+  TransactStatus,
+} from '../../../../../data/reducers/wallet/transact-types.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { RetirePauseReason } from '../../../RetirePauseReason/RetirePauseReason.tsx';
 import {
@@ -39,6 +42,8 @@ import {
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInShareTokenInCurrentBoost,
 } from '../../../../../data/selectors/balance.ts';
+import { useDispatch } from 'react-redux';
+import { cva } from '@repo/styles/css';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -120,6 +125,11 @@ export const BoostPromotion = memo(function BoostPromotion() {
   const userDepositInBoost = useAppSelector(state =>
     selectUserVaultBalanceInShareTokenInCurrentBoost(state, vaultId)
   );
+  const dispatch = useDispatch();
+
+  const handleTab = useCallback(() => {
+    dispatch(transactActions.switchMode(TransactMode.Boost));
+  }, [dispatch]);
 
   // Case 3:  no active boost or user has deposited all in boost
   if (!hasActiveBoost || (userDeposit.isZero() && userDepositInBoost.gt(BIG_ZERO))) {
@@ -133,7 +143,11 @@ export const BoostPromotion = memo(function BoostPromotion() {
 
   // Case 1: User has no deposits in the vault
   if (userDeposit.isZero()) {
-    return <BoostPromotionContainer>Make a Deposit to Boost this Position</BoostPromotionContainer>;
+    return (
+      <BoostPromotionContainer onClick={handleTab} button={true}>
+        {`Make a Deposit to Boost this Position >`}
+      </BoostPromotionContainer>
+    );
   }
 });
 
@@ -253,20 +267,33 @@ const Container = styled('div', {
   },
 });
 
-const BoostPromotionContainer = styled('div', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '4px 16px',
-    color: 'text.black',
-    background: '#F1D48C',
-    borderRadius: '0px 0px 12px 12px',
-    sm: {
-      padding: '4px 24px',
+const BoostPromotionContainer = styled(
+  'div',
+  cva({
+    base: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textStyle: 'body.medium',
+      padding: '4px 16px',
+      color: 'text.black',
+      background: 'background.content.boost',
+      borderRadius: '0px 0px 12px 12px',
+      sm: {
+        padding: '4px 24px',
+      },
     },
-  },
-});
+    variants: {
+      button: {
+        true: {
+          '&:hover': {
+            cursor: 'pointer',
+          },
+        },
+      },
+    },
+  })
+);
 
 // eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
 export default DepositFormLoader;

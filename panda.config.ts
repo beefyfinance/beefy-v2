@@ -342,6 +342,7 @@ const config = buildConfig(
           vaultTagDividerBackground: { value: '#D9D9D949' },
           white: { value: '#ffffff' },
           zapDiscountedFeesBackground: { value: '#59a662' },
+          newBoostBackground: { value: '#F1D48C' },
         },
         sizes: {
           defaultAssetsImageSize: { value: '48px' },
@@ -389,6 +390,7 @@ const config = buildConfig(
               light: { value: '{colors.contentBackgroundLight}' },
               gray: { value: '{colors.text.dark}' },
               notification: { value: '{colors.contentBackgroundLightNotification}' },
+              boost: { value: '{colors.newBoostBackground}' },
             },
             vaults: {
               standard: { value: '{colors.blackMarket}' },
