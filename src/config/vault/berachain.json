@@ -1,5 +1,41 @@
 [
   {
+    "id": "beraswap-ibera-wbera",
+    "name": "iBERA/WBERA LP",
+    "type": "standard",
+    "token": "iBERA/WBERA LP",
+    "tokenAddress": "0x62C030B29a6Fef1B32677499e4a1F1852a8808c0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "bex",
+    "earnContractAddress": "0x7d3b4317F7b9d3B677163E3543fafa694Ad8BD06",
+    "earnedToken": "mooBeraswapBerachainiBGT",
+    "earnedTokenAddress": "0x7d3b4317F7b9d3B677163E3543fafa694Ad8BD06",
+    "oracle": "lps",
+    "oracleId": "beraswap-ibgt-wbera",
+    "status": "active",
+    "createdAt": 1742949740,
+    "platformId": "infrared",
+    "assets": ["iBERA", "WBERA"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://hub.berachain.com/pools/0x62c030b29a6fef1b32677499e4a1f1852a8808c00000000000000000000000c6/deposit/",
+    "network": "berachain",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "berachain-beraswap",
+        "poolId": "0x62c030b29a6fef1b32677499e4a1f1852a8808c00000000000000000000000c6",
+        "poolType": "composable-stable",
+        "tokens": [
+          "0x6969696969696969696969696969696969696969",
+          "0x9b6761bf2397Bb5a6624a856cC84A3A14Dcd3fe5"
+        ],
+        "bptIndex": 0,
+        "hasNestedPool": false
+      }
+    ]
+  },
+  {
     "id": "infrared-ibgt",
     "name": "iBGT",
     "type": "standard",
