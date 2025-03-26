@@ -172,14 +172,13 @@ interface DisplacedBalancesProps {
   vaultId: VaultEntity['id'];
 }
 
-type TypeToArrayMap = {
+export type TypeToArrayMap = {
   [T in UserVaultBalanceBreakdownEntry as T['type']]: T[];
 };
 
 export const DisplacedBalancesImpl = memo(function DisplacedBalancesImpl({
   vaultId,
 }: DisplacedBalancesProps) {
-  const classes = useStyles();
   const breakdown = useAppSelector(state =>
     selectVaultUserBalanceInDepositTokenBreakdown(state, vaultId)
   );
@@ -188,11 +187,9 @@ export const DisplacedBalancesImpl = memo(function DisplacedBalancesImpl({
     [breakdown.entries]
   );
 
-  return (
-    <div className={classes.container}>
-      {entries.bridged ? (
-        <Entries entries={entries.bridged} depositToken={breakdown.depositToken} />
-      ) : null}
-    </div>
-  );
+  if (entries.bridged) {
+    return <Entries entries={entries.bridged} depositToken={breakdown.depositToken} />;
+  }
+
+  return null;
 });

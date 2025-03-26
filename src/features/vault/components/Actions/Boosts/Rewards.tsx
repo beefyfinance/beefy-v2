@@ -37,7 +37,7 @@ export const Rewards = memo(function Rewards({ isInBoost, rewards, boostId }: Re
                 <TokenAmount amount={reward.pending} decimals={reward.token.decimals} />
               )}
               {reward.token.symbol}
-              <TokenImageFromEntity token={reward.token} size={16} />
+              <TokenImageFromEntity token={reward.token} size={24} />
 
               <Reward reward={reward} boostId={boostId} />
             </Amount>
@@ -68,7 +68,11 @@ const Reward = memo(function Reward({
 
   return (
     <RewardOrApy>
-      {pending.gt(BIG_ZERO) ? pendingUsd : t('Boost-APR', { apr: formatLargePercent(boostApy) })}
+      {pending.gt(BIG_ZERO)
+        ? pendingUsd
+        : boostApy !== 0
+          ? t('Boost-APR', { apr: formatLargePercent(boostApy) })
+          : null}
     </RewardOrApy>
   );
 });

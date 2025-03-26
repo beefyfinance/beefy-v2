@@ -144,7 +144,7 @@ const BoostCountdown = styled('div', {
     top: '0',
     right: '0',
     textStyle: 'subline.sm',
-    textTransform: 'capitalize',
+    textTransform: 'none',
     color: 'text.notification',
     display: 'flex',
     alignItems: 'center',

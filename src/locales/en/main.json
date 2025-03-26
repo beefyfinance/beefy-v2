@@ -860,5 +860,9 @@
   "RpcModal-InputPlaceholder": "Enter the RPC URL",
   "RpcModal-InvalidRpc": "Please insert a valid RPC",
   "RpcModal-EmptyList": "You can modify Beefy’s default RPC for each chain. Once modified, it will be used for the connection until it is removed.",
-  "Boost-APR": "Boost APR: {{apr}}"
+  "Boost-APR": "Boost APR: {{apr}}",
+  "Boost-Deposit-Notice-1": "Make a deposit to get extra",
+  "Boost-Deposit-Notice-2": "Boost your deposit to get extra",
+  "Boost-Deposit-Rewards": "<Token/> {{symbol}} rewards",
+  "Boost-Unstake-Notice": "<Icon/> staked in the boost, unstake it first "
 }

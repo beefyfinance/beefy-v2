@@ -71,7 +71,7 @@ const BoostEnded = styled('div', {
     top: '0',
     right: '0',
     textStyle: 'subline.sm',
-    textTransform: 'capitalize',
+    textTransform: 'none',
     color: 'text.black',
     display: 'flex',
     alignItems: 'center',

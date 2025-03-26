@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { styles } from './styles.ts';
 import { useAppSelector } from '../../../../../../store.ts';
@@ -11,8 +11,8 @@ import {
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import {
-  selectBoostUserBalanceInToken,
   selectUserVaultBalanceInDepositTokenWithToken,
+  selectVaultUserBalanceInDepositTokenBreakdown,
 } from '../../../../../data/selectors/balance.ts';
 import { errorToString } from '../../../../../../helpers/format.ts';
 import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
@@ -35,14 +35,15 @@ import { useDispatch } from 'react-redux';
 import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
 import { styled } from '@repo/styles/jsx';
-import {
-  selectBoostById,
-  selectVaultCurrentBoostIdWithStatus,
-} from '../../../../../data/selectors/boosts.ts';
-import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
 import { selectStandardVaultById } from '../../../../../data/selectors/vaults.ts';
 import { VaultIcon } from '../../../../../../components/VaultIdentity/components/VaultIcon/VaultIcon.tsx';
 import { selectErc20TokenByAddress } from '../../../../../data/selectors/tokens.ts';
+import { groupBy } from 'lodash-es';
+import type { TypeToArrayMap } from '../../../DisplacedBalances/DisplacedBalances.tsx';
+import type { VaultEntity } from '../../../../../data/entities/vault.ts';
+import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
+import { type BigNumber } from 'bignumber.js';
+import ChevronRight from '../../../../../../images/icons/chevron-right.svg?react';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -116,21 +117,41 @@ export const Withdraw = memo(function Withdraw() {
 
 const WithdrawBoostNotice = memo(function WithdrawBoostNotice() {
   const vaultId = useAppSelector(selectTransactVaultId);
-  const boost = useAppSelector(state => selectVaultCurrentBoostIdWithStatus(state, vaultId));
-  if (boost?.status === 'active') {
-    return <BoostBalance boostId={boost.id} />;
+  const breakdown = useAppSelector(state =>
+    selectVaultUserBalanceInDepositTokenBreakdown(state, vaultId)
+  );
+
+  const entries = useMemo(
+    () => groupBy(breakdown.entries, 'type') as TypeToArrayMap,
+    [breakdown.entries]
+  );
+
+  const boostsBalance = useMemo(() => {
+    if (entries.boost) {
+      return entries.boost.reduce((acc, curr) => acc.plus(curr.amount), BIG_ZERO);
+    }
+
+    return BIG_ZERO;
+  }, [entries.boost]);
+
+  if (boostsBalance.gt(BIG_ZERO)) {
+    return <BoostBalance balance={boostsBalance} vaultId={vaultId} />;
   }
 
   return null;
 });
 
-const BoostBalance = memo(function BoostBalance({ boostId }: { boostId: BoostPromoEntity['id'] }) {
+const BoostBalance = memo(function BoostBalance({
+  balance,
+  vaultId,
+}: {
+  balance: BigNumber;
+  vaultId: VaultEntity['id'];
+}) {
   const { t } = useTranslation();
-  const boost = useAppSelector(state => selectBoostById(state, boostId));
-  const vault = useAppSelector(state => selectStandardVaultById(state, boost.vaultId));
-  const balanceInBoost = useAppSelector(state => selectBoostUserBalanceInToken(state, boostId));
+  const vault = useAppSelector(state => selectStandardVaultById(state, vaultId));
   const mooToken = useAppSelector(state =>
-    selectErc20TokenByAddress(state, boost.chainId, vault.receiptTokenAddress)
+    selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress)
   );
   const dispatch = useDispatch();
 
@@ -138,18 +159,20 @@ const BoostBalance = memo(function BoostBalance({ boostId }: { boostId: BoostPro
     dispatch(transactActions.switchMode(TransactMode.Boost));
   }, [dispatch]);
 
-  if (balanceInBoost.isZero()) {
-    return null;
-  }
-
   return (
     <WithdrawBoostContainer onClick={handleTab}>
       <FlexContainer>
-        <TokenAmount amount={balanceInBoost} decimals={mooToken.decimals} /> {mooToken.symbol}
+        <TokenAmount amount={balance} decimals={mooToken.decimals} /> {mooToken.symbol}
       </FlexContainer>
       <FlexContainer>
-        <VaultIcon vaultId={vault.id} size={24} />
-        {t(`staked in ${boost.tag.text}, unstake it first >`)}
+        <Trans
+          t={t}
+          i18nKey="Boost-Unstake-Notice"
+          components={{
+            Icon: <VaultIcon vaultId={vault.id} size={24} />,
+          }}
+        />
+        <ChevronRight />
       </FlexContainer>
     </WithdrawBoostContainer>
   );

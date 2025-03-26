@@ -1,5 +1,5 @@
 import { memo, type ReactNode, useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { styles } from './styles.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
@@ -37,13 +37,16 @@ import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.t
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { Actions } from '../Actions/Actions.tsx';
 import { styled } from '@repo/styles/jsx';
-import { selectIsVaultPreStakedOrBoosted } from '../../../../../data/selectors/boosts.ts';
+import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../../data/selectors/boosts.ts';
 import {
   selectUserVaultBalanceInDepositToken,
   selectUserVaultBalanceInShareTokenInCurrentBoost,
 } from '../../../../../data/selectors/balance.ts';
 import { useDispatch } from 'react-redux';
 import { cva } from '@repo/styles/css';
+import ChevronRight from '../../../../../../images/icons/chevron-right.svg?react';
+import { selectIsWalletConnected } from '../../../../../data/selectors/wallet.ts';
+import { TokenImageFromEntity } from '../../../../../../components/TokenImage/TokenImage.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -120,35 +123,62 @@ export const Deposit = memo(function Deposit() {
 
 export const BoostPromotion = memo(function BoostPromotion() {
   const vaultId = useAppSelector(selectTransactVaultId);
-  const hasActiveBoost = useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId));
-  const userDeposit = useAppSelector(state => selectUserVaultBalanceInDepositToken(state, vaultId));
+  const { t } = useTranslation();
+
+  const boost = useAppSelector(state => selectCurrentBoostByVaultIdOrUndefined(state, vaultId));
+  const userDepositInVault = useAppSelector(state =>
+    selectUserVaultBalanceInDepositToken(state, vaultId)
+  );
   const userDepositInBoost = useAppSelector(state =>
     selectUserVaultBalanceInShareTokenInCurrentBoost(state, vaultId)
   );
   const dispatch = useDispatch();
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
 
   const handleTab = useCallback(() => {
     dispatch(transactActions.switchMode(TransactMode.Boost));
   }, [dispatch]);
 
-  // Case 3:  no active boost or user has deposited all in boost
-  if (!hasActiveBoost || (userDeposit.isZero() && userDepositInBoost.gt(BIG_ZERO))) {
+  // Case 1:  no active boost or user deposited all in boost
+  if (
+    !boost ||
+    (isWalletConnected && userDepositInBoost.gt(BIG_ZERO) && userDepositInVault.isZero())
+  ) {
     return null;
   }
 
-  // Case 2: User has deposits but not in boost or partial boost
-  if (userDepositInBoost.gt(BIG_ZERO) && !userDeposit.isZero()) {
-    return <BoostPromotionContainer>Boost Deposit to get extra rewards!</BoostPromotionContainer>;
-  }
+  //TODO: Handle multiple rewards
+  const rewardToken = boost?.rewards[0];
 
-  // Case 1: User has no deposits in the vault
-  if (userDeposit.isZero()) {
+  // Case 2: User has deposits but not in boost or partial boost
+  if (!userDepositInVault.isZero()) {
     return (
       <BoostPromotionContainer onClick={handleTab} button={true}>
-        {`Make a Deposit to Boost this Position >`}
+        <FlexContainer>{t('Boost-Deposit-Notice-2')}</FlexContainer>
+        <FlexContainer>
+          <Trans
+            i18nKey="Boost-Deposit-Rewards"
+            components={{ Token: <TokenImageFromEntity token={rewardToken} size={20} /> }}
+            values={{ symbol: rewardToken.symbol }}
+          />
+          <ChevronRight />
+        </FlexContainer>
       </BoostPromotionContainer>
     );
   }
+
+  return (
+    <BoostPromotionContainer>
+      {t('Boost-Deposit-Notice-1')}
+      <FlexContainer>
+        <Trans
+          i18nKey="Boost-Deposit-Rewards"
+          components={{ Token: <TokenImageFromEntity token={rewardToken} size={20} /> }}
+          values={{ symbol: rewardToken.symbol }}
+        />
+      </FlexContainer>
+    </BoostPromotionContainer>
+  );
 });
 
 export const DepositForm = memo(function DepositForm() {
@@ -272,11 +302,13 @@ const BoostPromotionContainer = styled(
   cva({
     base: {
       display: 'flex',
+      flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
       textStyle: 'body.medium',
       padding: '4px 16px',
       color: 'text.black',
+      gap: '4px',
       background: 'background.content.boost',
       borderRadius: '0px 0px 12px 12px',
       sm: {
@@ -294,6 +326,14 @@ const BoostPromotionContainer = styled(
     },
   })
 );
+
+const FlexContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+  },
+});
 
 // eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
 export default DepositFormLoader;
