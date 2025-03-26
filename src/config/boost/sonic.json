@@ -1,5 +1,25 @@
 [
   {
+    "id": "moo_beetsv3-sonic-beefyusdce-scusd",
+    "poolId": "beetsv3-sonic-beefyusdce-scusd",
+    "name": "Beefy",
+    "tagText": "DAO Boost",
+    "assets": ["mooSiloSonicUSDCe", "scUSD"],
+    "tokenAddress": "0x0aD8162B686af063073EABbEA9bC6FdA2D8184A4",
+    "earnedToken": "mooBIFI",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+    "earnContractAddress": "0x8b8F62E4239eb61d53afb07eA7789Cd6b1b7b6a1",
+    "version": 2,
+    "earnedOracle": "tokens",
+    "earnedOracleId": "smooBIFI",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "campaign": "dao-rewards",
+    "partners": []
+  },
+  {
     "id": "moo_shadow-cow-sonic-ws-weth-vault",
     "poolId": "shadow-cow-sonic-ws-weth-vault",
     "name": "Beefy",
