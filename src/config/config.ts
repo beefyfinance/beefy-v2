@@ -755,7 +755,16 @@ export const config = {
       priorityMinimum: '1000000000',
       baseSafetyMargin: 0.1,
     },
-    stableCoins: ['USDCe', 'scUSD', 'stkscUSD', 'wstkscUSD', 'mooSiloSonicUSDCe', 'USDT', 'frxUSD'],
+    stableCoins: [
+      'USDCe',
+      'scUSD',
+      'stkscUSD',
+      'wstkscUSD',
+      'bUSDCe-20',
+      'mooSiloSonicUSDCe',
+      'USDT',
+      'frxUSD',
+    ],
     brand: {
       icon: 'gradient',
       header: 'gradient',
