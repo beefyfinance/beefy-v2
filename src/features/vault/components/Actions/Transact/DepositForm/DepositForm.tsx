@@ -154,15 +154,13 @@ export const BoostPromotion = memo(function BoostPromotion() {
   if (!userDepositInVault.isZero()) {
     return (
       <BoostPromotionContainer onClick={handleTab} button={true}>
-        <FlexContainer>{t('Boost-Deposit-Notice-2')}</FlexContainer>
-        <FlexContainer>
-          <Trans
-            i18nKey="Boost-Deposit-Rewards"
-            components={{ Token: <TokenImageFromEntity token={rewardToken} size={20} /> }}
-            values={{ symbol: rewardToken.symbol }}
-          />
-          <ChevronRight />
-        </FlexContainer>
+        {t('Boost-Deposit-Notice-2')}
+        <Trans
+          i18nKey="Boost-Deposit-Rewards"
+          components={{ Token: <TokenImageFromEntity token={rewardToken} size={20} /> }}
+          values={{ symbol: rewardToken.symbol }}
+        />
+        <ChevronRight />
       </BoostPromotionContainer>
     );
   }
@@ -170,13 +168,12 @@ export const BoostPromotion = memo(function BoostPromotion() {
   return (
     <BoostPromotionContainer>
       {t('Boost-Deposit-Notice-1')}
-      <FlexContainer>
-        <Trans
-          i18nKey="Boost-Deposit-Rewards"
-          components={{ Token: <TokenImageFromEntity token={rewardToken} size={20} /> }}
-          values={{ symbol: rewardToken.symbol }}
-        />
-      </FlexContainer>
+
+      <Trans
+        i18nKey="Boost-Deposit-Rewards"
+        components={{ Token: <TokenImageFromEntity token={rewardToken} size={20} /> }}
+        values={{ symbol: rewardToken.symbol }}
+      />
     </BoostPromotionContainer>
   );
 });
@@ -302,7 +299,6 @@ const BoostPromotionContainer = styled(
   cva({
     base: {
       display: 'flex',
-      flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
       textStyle: 'body.medium',
@@ -326,14 +322,6 @@ const BoostPromotionContainer = styled(
     },
   })
 );
-
-const FlexContainer = styled('div', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '4px',
-  },
-});
 
 // eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
 export default DepositFormLoader;
