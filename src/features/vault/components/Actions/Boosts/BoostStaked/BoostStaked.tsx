@@ -1,8 +1,11 @@
 import { memo } from 'react';
 import { styled } from '@repo/styles/jsx';
-import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
+import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { VaultIcon } from '../../../../../../components/VaultIdentity/components/VaultIcon/VaultIcon.tsx';
-import { selectTokenByAddress } from '../../../../../data/selectors/tokens.ts';
+import {
+  selectErc20TokenByAddress,
+  selectTokenByAddress,
+} from '../../../../../data/selectors/tokens.ts';
 import { selectStandardVaultById } from '../../../../../data/selectors/vaults.ts';
 import { selectBoostUserBalanceInToken } from '../../../../../data/selectors/balance.ts';
 import { useAppSelector } from '../../../../../../store.ts';
@@ -19,6 +22,9 @@ export const BoostStaked = memo(function BoostStaked({
   const boost = useAppSelector(state => selectBoostById(state, boostId));
   const vault = useAppSelector(state => selectStandardVaultById(state, boost.vaultId));
   const boostBalance = useAppSelector(state => selectBoostUserBalanceInToken(state, boost.id));
+  const mooToken = useAppSelector(state =>
+    selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress)
+  );
   const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
@@ -26,7 +32,7 @@ export const BoostStaked = memo(function BoostStaked({
     <Value>
       <Label>{t('Staked')}</Label>
       <Amount>
-        <TokenAmountFromEntity amount={boostBalance} token={depositToken} />
+        <TokenAmount amount={boostBalance} decimals={mooToken.decimals} />
         {depositToken.symbol}
         <VaultIcon size={24} vaultId={vault.id} />
       </Amount>
