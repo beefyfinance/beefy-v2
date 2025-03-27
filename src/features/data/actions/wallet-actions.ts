@@ -998,19 +998,30 @@ const stakeBoost = (boostId: BoostPromoEntity['id'], amount: BigNumber) => {
 export const startUnstakeBoostSteps = (
   boostId: BoostPromoEntity['id'],
   t: TFunction,
-  amount: BigNumber
+  amount: BigNumber,
+  max: boolean
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     const state = getState();
     const boost = selectBoostById(state, boostId);
     const steps: Step[] = [];
 
-    steps.push({
-      step: 'boost-unstake',
-      message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
-      action: walletActions.unstakeBoost(boost.id, amount),
-      pending: false,
-    });
+    // If user is withdrawing all their assets, UI won't allow to claim individually later on, so claim as well
+    if (max) {
+      steps.push({
+        step: 'boost-claim-unstake',
+        message: t('Vault-TxnConfirm', { type: t('Claim-Unstake-noun') }),
+        action: walletActions.exitBoost(boost.id),
+        pending: false,
+      });
+    } else {
+      steps.push({
+        step: 'boost-unstake',
+        message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+        action: walletActions.unstakeBoost(boost.id, amount),
+        pending: false,
+      });
+    }
 
     dispatch(startStepperWithSteps(steps, boost.chainId));
   });
