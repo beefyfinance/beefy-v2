@@ -298,7 +298,7 @@
   "Boost-Balance": "{{mooToken}} balance",
   "Boost-Balance-Staked": "Staked {{mooToken}}",
   "Boost-Rewards": "Rewards",
-  "Boost-Button-Stake": "Boost Vault",
+  "Boost-Button-Stake": "Boost",
   "Boost-Button-Claim": "Claim Rewards",
   "Boost-Button-Claim-Unstake": "Claim & Unstake",
   "Boost-Button-Unstake": "Unstake",
@@ -863,6 +863,6 @@
   "Boost-APR": "Boost APR: {{apr}}",
   "Boost-Deposit-Notice-1": "Make a deposit to get extra",
   "Boost-Deposit-Notice-2": "Boost your deposit to get extra",
-  "Boost-Deposit-Rewards": "<Token/> {{symbol}} rewards",
+  "Boost-Deposit-Rewards": "<Token/> {{symbol}}",
   "Boost-Unstake-Notice": "<Icon/> staked in the boost, unstake it first "
 }

@@ -90,7 +90,12 @@ export const ActionInputButton = memo(function ActionInputButton({
         </button>
         <div className={classes.text}>{title}</div>
         <div className={classes.balance}>
-          {balanceLabel} <TokenAmount amount={balance} decimals={mooToken.decimals} />
+          {balanceLabel}{' '}
+          <TokenAmount
+            amount={balance}
+            decimals={mooToken.decimals}
+            css={{ color: 'text.light' }}
+          />
         </div>
       </div>
       <Collapse in={open}>

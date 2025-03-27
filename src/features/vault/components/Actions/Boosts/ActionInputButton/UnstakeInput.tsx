@@ -16,8 +16,8 @@ export const UnstakeInput = memo(function UnstakeInput({
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const handleUnstake = useCallback<ActionInputButtonProps['onSubmit']>(
-    (amount, max) => {
-      dispatch(startUnstakeBoostSteps(boostId, t, amount, max));
+    amount => {
+      dispatch(startUnstakeBoostSteps(boostId, t, amount));
     },
     [t, boostId, dispatch]
   );
