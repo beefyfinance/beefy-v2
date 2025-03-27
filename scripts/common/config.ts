@@ -8,7 +8,6 @@ import type {
   VaultConfig,
 } from '../../src/features/data/apis/config-types.ts';
 import type { PromoConfig } from '../../src/features/data/apis/promos/types.ts';
-import { fileExists } from './files.ts';
 
 /** Harmony->One to match addressbook */
 const chainConfigs = chains.reduce(
@@ -138,15 +137,18 @@ export async function getVaultsForChain(chainId: string): Promise<VaultConfig[]>
     .default as VaultConfig[]);
 }
 
+const promosImporters = import.meta.glob<PromoConfig[]>('../../src/config/promos/chain/*.json', {
+  import: 'default',
+});
 const promosByChainId: AppChainMap<PromoConfig[]> = {};
 
 export async function getPromosForChain(chainId: string): Promise<PromoConfig[]> {
   const id = addressBookToAppId(chainId);
 
   if (!(id in promosByChainId)) {
-    const path = `../../src/config/promos/chain/${id}.json`;
-    if (await fileExists(path)) {
-      promosByChainId[id] = (await import(path)).default;
+    const importer = promosImporters[`../../src/config/promos/chain/${id}.json`];
+    if (importer) {
+      promosByChainId[id] = await importer();
     } else {
       promosByChainId[id] = [];
     }

@@ -1,8 +1,6 @@
 [
   {
-    "id": [
-      "uniswap-cow-weth-degen-rp"
-    ],
+    "id": ["beetsv3-sonic-beefyusdce-scusd", "aero-cow-weth-moobifi-vault", "aerodrome-usdc-mai"],
     "conditions": [
       {
         "type": "boosted"

@@ -250,6 +250,7 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
     getPromosForChain(chainId),
   ]);
   let pools = vaultsAndPromos[0];
+  const poolIds = new Set(pools.map(pool => pool.id));
   const promos = vaultsAndPromos[1];
 
   console.log(`Validating ${pools.length} pools in ${chainId}...`);
@@ -261,7 +262,6 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
   const [govPools, vaultPools] = partition(pools, pool => pool.type === 'gov');
   pools = vaultPools;
 
-  const poolIds = new Set(pools.map(pool => pool.id));
   const uniqueEarnedToken = new Set();
   const uniqueEarnedTokenAddress = new Set();
   const uniqueOracleId = new Set();
@@ -472,11 +472,13 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
   });
 
   // Boosts
+  console.log(`Validating ${promos.length} promos in ${chainId}...`);
   const seenPromoIds = new Set();
   promos.forEach(promo => {
     if (seenPromoIds.has(promo.id)) {
       console.error(`Error: Promo ${promo.id}: Promo id duplicated: ${promo.id}`);
       exitCode = 1;
+      return;
     }
     seenPromoIds.add(promo.id);
 
@@ -524,9 +526,9 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
         const abToken = addressBook[chainId].tokenAddressMap[reward.address];
         if (!abToken) {
           // TODO need to tidy up old boosts before we can make this error
-          console.warn(
-            `Warn: Promo ${promo.id}: Earned token ${reward.symbol} not in addressbook at ${reward.address}`
-          );
+          // console.warn(
+          //   `Warn: Promo ${promo.id}: Earned token ${reward.symbol} not in addressbook at ${reward.address}`
+          // );
           // exitCode = 1;
           //return;
           continue;

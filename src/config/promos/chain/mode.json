@@ -16,23 +16,5 @@
         "chainId": "optimism"
       }
     ]
-  },
-  {
-    "id": "merkl_kim-cow-mode-weth-mode-rp",
-    "title": "Beefy x Optimism Governance Fund",
-    "vaultId": "kim-cow-mode-weth-mode-rp",
-    "type": "offchain",
-    "campaign": "offchain-mode-grant",
-    "campaignType": "mode-grant",
-    "rewards": [
-      {
-        "type": "token",
-        "address": "0x4200000000000000000000000000000000000042",
-        "symbol": "OP",
-        "decimals": 18,
-        "oracleId": "OP",
-        "chainId": "optimism"
-      }
-    ]
   }
 ]
