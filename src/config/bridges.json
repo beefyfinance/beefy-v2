@@ -257,5 +257,11 @@
     "name": "Chainlink CCIP",
     "tagName": "Chainlink CCIP",
     "website": "https://chain.link/cross-chain"
+  },
+  {
+    "id": "idrx",
+    "name": "IDRX",
+    "tagName": "IDRX",
+    "website": "https://home.idrx.co/"
   }
 ]

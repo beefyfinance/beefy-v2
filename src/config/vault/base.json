@@ -1,5 +1,70 @@
 [
   {
+    "id": "aerodrome-ytryb-usdc",
+    "name": "yTRYB-USDC vLP",
+    "type": "standard",
+    "token": "vAMM-yTRYB/USDC",
+    "tokenAddress": "0xE63296472be7Fcb0160B1f65D12E1a7774BA1069",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseyTRYB-USDC",
+    "earnedTokenAddress": "0xeE69E2335bbE415438AC6E91acc57348524f24c9",
+    "earnContractAddress": "0xeE69E2335bbE415438AC6E91acc57348524f24c9",
+    "oracle": "lps",
+    "oracleId": "aerodrome-ytryb-usdc",
+    "status": "active",
+    "createdAt": 1743001154,
+    "platformId": "aerodrome",
+    "assets": ["yTRYB", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x1A9Be8a692De04bCB7cE5cDDD03afCA97D732c62&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-idrx-usdc",
+    "name": "IDRX-USDC vLP",
+    "type": "standard",
+    "token": "vAMM-IDRX/USDC",
+    "tokenAddress": "0xE22C335Bc83f4013930768c450a5E50318DEe2DB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseIDRX-USDC",
+    "earnedTokenAddress": "0xcF178FDcDD7a0293dA6e76c558fe930dD79351d4",
+    "earnContractAddress": "0xcF178FDcDD7a0293dA6e76c558fe930dD79351d4",
+    "oracle": "lps",
+    "oracleId": "aerodrome-idrx-usdc",
+    "status": "active",
+    "createdAt": 1743001154,
+    "platformId": "aerodrome",
+    "assets": ["IDRX", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x18Bc5bcC660cf2B9cE3cd51a404aFe1a0cBD3C22&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-cow-base-cadc-usdc-vault",
     "name": "CADC-USDC",
     "type": "standard",
