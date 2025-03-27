@@ -370,6 +370,12 @@ export const selectTransactShouldShowBoostNotification = (
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ): boolean => {
+  //check if active boost
+  const activeOrPrestakeIds = selectPreStakeOrActiveBoostIds(state, vaultId);
+  if (activeOrPrestakeIds.length > 0) {
+    return true;
+  }
+
   const boostIds = selectAllVaultBoostIds(state, vaultId);
 
   // Check each boost for claimable rewards
