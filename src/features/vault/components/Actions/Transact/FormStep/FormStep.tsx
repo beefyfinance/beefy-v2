@@ -14,6 +14,7 @@ import { CardHeaderTabs } from '../../../Card/CardHeaderTabs.tsx';
 import { transactFetchOptions } from '../../../../../data/actions/transact.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
+import { selectUserHasDepositedInActiveBoost } from '../../../../../data/selectors/boosts.ts';
 
 const DepositFormLoader = lazy(() => import('../DepositForm/DepositForm.tsx'));
 const ClaimFormLoader = lazy(() => import('../ClaimForm/ClaimForm.tsx'));
@@ -40,6 +41,10 @@ export const FormStep = memo(function FormStep() {
   const highlightBoost = useAppSelector(state =>
     selectTransactShouldShowBoostNotification(state, vaultId)
   );
+  const hasDepositedInActiveBoost = useAppSelector(state =>
+    selectUserHasDepositedInActiveBoost(state, vaultId)
+  );
+
   const Component = modeToComponent[mode];
   const handleModeChange = useCallback(
     (newMode: string) => {
@@ -65,6 +70,16 @@ export const FormStep = memo(function FormStep() {
         : undefined;
   }, [highlightBoost, highlightClaim]);
 
+  const highLightClassName = useMemo(() => {
+    return highlight === TransactMode.Claim.toString()
+      ? 'success'
+      : highlight === TransactMode.Boost.toString()
+        ? hasDepositedInActiveBoost
+          ? 'success'
+          : 'warning'
+        : 'notLoading';
+  }, [hasDepositedInActiveBoost, highlight]);
+
   useEffect(() => {
     // only dispatches if vaultId or mode changes
     dispatch(transactFetchOptions({ vaultId, mode }));
@@ -77,6 +92,7 @@ export const FormStep = memo(function FormStep() {
         options={modeOptions}
         onChange={handleModeChange}
         highlight={highlight}
+        highlightColor={highLightClassName}
       />
       <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} />}>
         <Component />

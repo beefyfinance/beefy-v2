@@ -1,7 +1,11 @@
 import type { BeefyState } from '../../../redux-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { VaultEntity } from '../entities/vault.ts';
-import { selectBoostUserBalanceInToken, selectBoostUserRewardsInToken } from './balance.ts';
+import {
+  selectBoostUserBalanceInToken,
+  selectBoostUserRewardsInToken,
+  selectUserVaultBalanceInShareTokenInCurrentBoost,
+} from './balance.ts';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { BeefyOffChainRewardsCampaignType } from '../apis/beefy/beefy-api-types.ts';
@@ -226,3 +230,16 @@ export const selectBoostActiveRewardTokens = createCachedSelector(
       )
     )
 )((_state: BeefyState, boostId: BoostPromoEntity['id']) => boostId);
+
+export const selectUserHasDepositedInActiveBoost = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) =>
+    selectActiveVaultBoostIds(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareTokenInCurrentBoost(state, vaultId, maybeWalletAddress),
+  (activeBoostIds, balanceInCurrentBoost) => {
+    if (activeBoostIds.length === 0) {
+      return false;
+    }
+    return balanceInCurrentBoost.gt(BIG_ZERO);
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
