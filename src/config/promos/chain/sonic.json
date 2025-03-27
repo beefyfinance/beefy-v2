@@ -1,5 +1,28 @@
 [
   {
+    "id": "moo_beetsv3-sonic-beefyusdce-scusd2",
+    "title": "Beefy",
+    "vaultId": "beetsv3-sonic-beefyusdce-scusd",
+    "assets": ["mooSiloSonicUSDCe", "scUSD"],
+    "tokenAddress": "0x0aD8162B686af063073EABbEA9bC6FdA2D8184A4",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x8b8F62E4239eb61d53afb07eA7789Cd6b1b7b6a1",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "smooBIFI"
+      }
+    ]
+  },
+  {
     "id": "moo_shadow-cow-sonic-ws-weth-vault",
     "title": "Beefy",
     "vaultId": "shadow-cow-sonic-ws-weth-vault",
