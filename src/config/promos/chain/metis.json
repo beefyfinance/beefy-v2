@@ -13,7 +13,7 @@
         "address": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
         "symbol": "Metis",
         "decimals": 18,
-        "oracleId": "METIS"
+        "oracleId": "WMETIS"
       }
     ]
   }
