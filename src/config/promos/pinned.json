@@ -1,9 +1,340 @@
 [
   {
-    "id": ["beetsv3-sonic-beefyusdce-scusd", "aero-cow-weth-moobifi-vault", "aerodrome-usdc-mai"],
+    "id": [
+      "aerodrome-usdc-mai",
+      "curve-poly-mai-usdc.e",
+      "velodrome-v2-weth-moobifi"
+    ],
     "conditions": [
       {
         "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743271200,
+        "to": 1743292800
+      }
+    ]
+  },
+  {
+    "id": [
+      "beetsv3-sonic-beefyusdce-scusd",
+      "aerodrome-cow-wsteth-wrseth-rp",
+      "uniswap-cow-weth-degen-rp"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743292800,
+        "to": 1743314400
+      }
+    ]
+  },
+  {
+    "id": [
+      "aero-cow-weth-moobifi-vault",
+      "aerodrome-weth-qi",
+      "curve-poly-mai-usdc.e"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743314400,
+        "to": 1743336000
+      }
+    ]
+  },
+  {
+    "id": [
+      "uniswap-cow-weth-degen-rp",
+      "velodrome-v2-weth-moobifi",
+      "aerodrome-usdc-mai"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743336000,
+        "to": 1743357600
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-cow-wsteth-wrseth-rp",
+      "beetsv3-sonic-beefyusdce-scusd",
+      "aerodrome-weth-qi"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743357600,
+        "to": 1743379200
+      }
+    ]
+  },
+  {
+    "id": [
+      "aero-cow-weth-moobifi-vault",
+      "curve-poly-mai-usdc.e",
+      "uniswap-cow-weth-degen-rp"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743379200,
+        "to": 1743400800
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-usdc-mai",
+      "velodrome-v2-weth-moobifi",
+      "aerodrome-cow-wsteth-wrseth-rp"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743400800,
+        "to": 1743422400
+      }
+    ]
+  },
+  {
+    "id": [
+      "beetsv3-sonic-beefyusdce-scusd",
+      "aerodrome-weth-qi",
+      "aero-cow-weth-moobifi-vault"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743422400,
+        "to": 1743444000
+      }
+    ]
+  },
+  {
+    "id": [
+      "uniswap-cow-weth-degen-rp",
+      "curve-poly-mai-usdc.e",
+      "velodrome-v2-weth-moobifi"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743444000,
+        "to": 1743465600
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-usdc-mai",
+      "aerodrome-cow-wsteth-wrseth-rp",
+      "aerodrome-weth-qi"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743465600,
+        "to": 1743487200
+      }
+    ]
+  },
+  {
+    "id": [
+      "beetsv3-sonic-beefyusdce-scusd",
+      "aero-cow-weth-moobifi-vault",
+      "uniswap-cow-weth-degen-rp"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743487200,
+        "to": 1743508800
+      }
+    ]
+  },
+  {
+    "id": [
+      "curve-poly-mai-usdc.e",
+      "velodrome-v2-weth-moobifi",
+      "aerodrome-weth-qi"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743508800,
+        "to": 1743530400
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-usdc-mai",
+      "beetsv3-sonic-beefyusdce-scusd",
+      "aero-cow-weth-moobifi-vault"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743530400,
+        "to": 1743552000
+      }
+    ]
+  },
+  {
+    "id": [
+      "uniswap-cow-weth-degen-rp",
+      "aerodrome-cow-wsteth-wrseth-rp",
+      "curve-poly-mai-usdc.e"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743552000,
+        "to": 1743573600
+      }
+    ]
+  },
+  {
+    "id": [
+      "velodrome-v2-weth-moobifi",
+      "aerodrome-weth-qi",
+      "beetsv3-sonic-beefyusdce-scusd"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743573600,
+        "to": 1743595200
+      }
+    ]
+  },
+  {
+    "id": [
+      "aero-cow-weth-moobifi-vault",
+      "aerodrome-usdc-mai",
+      "uniswap-cow-weth-degen-rp"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743595200,
+        "to": 1743616800
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-cow-wsteth-wrseth-rp",
+      "curve-poly-mai-usdc.e",
+      "velodrome-v2-weth-moobifi"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743616800,
+        "to": 1743638400
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-weth-qi",
+      "beetsv3-sonic-beefyusdce-scusd",
+      "aerodrome-usdc-mai"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743638400,
+        "to": 1743660000
+      }
+    ]
+  },
+  {
+    "id": [
+      "uniswap-cow-weth-degen-rp",
+      "aero-cow-weth-moobifi-vault",
+      "aerodrome-cow-wsteth-wrseth-rp"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743660000,
+        "to": 1743681600
+      }
+    ]
+  },
+  {
+    "id": [
+      "curve-poly-mai-usdc.e",
+      "velodrome-v2-weth-moobifi",
+      "aerodrome-weth-qi"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743681600
       }
     ]
   }
