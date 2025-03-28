@@ -1,5 +1,5 @@
 import { memo, type ReactNode, useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { styles } from './styles.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
@@ -19,7 +19,10 @@ import { DepositBuyLinks } from '../DepositBuyLinks/DepositBuyLinks.tsx';
 import { DepositActions } from '../DepositActions/DepositActions.tsx';
 import { TransactQuote } from '../TransactQuote/TransactQuote.tsx';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
-import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
+import {
+  TransactMode,
+  TransactStatus,
+} from '../../../../../data/reducers/wallet/transact-types.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { RetirePauseReason } from '../../../RetirePauseReason/RetirePauseReason.tsx';
 import {
@@ -33,6 +36,17 @@ import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { Actions } from '../Actions/Actions.tsx';
+import { styled } from '@repo/styles/jsx';
+import { selectCurrentBoostByVaultIdOrUndefined } from '../../../../../data/selectors/boosts.ts';
+import {
+  selectUserVaultBalanceInDepositToken,
+  selectUserVaultBalanceInShareTokenInCurrentBoost,
+} from '../../../../../data/selectors/balance.ts';
+import { useDispatch } from 'react-redux';
+import { cva } from '@repo/styles/css';
+import ChevronRight from '../../../../../../images/icons/chevron-right.svg?react';
+import { selectIsWalletConnected } from '../../../../../data/selectors/wallet.ts';
+import { TokenImageFromEntity } from '../../../../../../components/TokenImage/TokenImage.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -68,7 +82,6 @@ const TokenInWallet = memo(function TokenInWallet({ token, index }: TokenInWalle
 
 const DepositFormLoader = memo(function DepositFormLoader() {
   const { t } = useTranslation();
-  const classes = useStyles();
   const status = useAppSelector(selectTransactOptionsStatus);
   const error = useAppSelector(selectTransactOptionsError);
   const vaultId = useAppSelector(selectTransactVaultId);
@@ -77,17 +90,91 @@ const DepositFormLoader = memo(function DepositFormLoader() {
   const isError = status === TransactStatus.Rejected;
 
   return (
-    <div className={classes.container}>
+    <>
       {!isVaultActive(vault) ? (
-        <RetirePauseReason vaultId={vaultId} />
+        <Container>
+          <RetirePauseReason vaultId={vaultId} />
+        </Container>
       ) : isLoading ? (
-        <LoadingIndicator text={t('Transact-Loading')} />
+        <Container>
+          <LoadingIndicator text={t('Transact-Loading')} />
+        </Container>
       ) : isError ? (
-        <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
+        <Container>
+          <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
+        </Container>
       ) : (
-        <DepositForm />
+        <Deposit />
       )}
+    </>
+  );
+});
+
+export const Deposit = memo(function Deposit() {
+  return (
+    <div>
+      <Container>
+        <DepositForm />
+      </Container>
+      <BoostPromotion />
     </div>
+  );
+});
+
+export const BoostPromotion = memo(function BoostPromotion() {
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const { t } = useTranslation();
+
+  const boost = useAppSelector(state => selectCurrentBoostByVaultIdOrUndefined(state, vaultId));
+  const userDepositInVault = useAppSelector(state =>
+    selectUserVaultBalanceInDepositToken(state, vaultId)
+  );
+  const userDepositInBoost = useAppSelector(state =>
+    selectUserVaultBalanceInShareTokenInCurrentBoost(state, vaultId)
+  );
+  const dispatch = useDispatch();
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+
+  const handleTab = useCallback(() => {
+    dispatch(transactActions.switchMode(TransactMode.Boost));
+  }, [dispatch]);
+
+  // Case 1:  no active boost or user deposited all in boost
+  if (
+    !boost ||
+    (isWalletConnected && userDepositInBoost.gt(BIG_ZERO) && userDepositInVault.isZero())
+  ) {
+    return null;
+  }
+
+  //TODO: Handle multiple rewards
+  const rewardToken = boost?.rewards[0];
+
+  // Case 2: User has deposits but not in boost or partial boost
+  if (!userDepositInVault.isZero()) {
+    return (
+      <BoostPromotionContainer onClick={handleTab} button={true}>
+        {t('Boost-Deposit-Notice-2')}
+        <Trans
+          i18nKey="Boost-Deposit-Rewards"
+          components={{ Token: <TokenImageFromEntity token={rewardToken} size={20} /> }}
+          values={{ symbol: rewardToken.symbol }}
+        />
+        <ChevronRight />
+      </BoostPromotionContainer>
+    );
+  }
+
+  return (
+    <BoostPromotionContainer>
+      {t('Boost-Deposit-Notice-1')}
+
+      <Trans
+        i18nKey="Boost-Deposit-Rewards"
+        components={{ Token: <TokenImageFromEntity token={rewardToken} size={20} /> }}
+        values={{ symbol: rewardToken.symbol }}
+      />
+    </BoostPromotionContainer>
   );
 });
 
@@ -197,6 +284,44 @@ const DepositFormInput = memo(function DepositFormInput({
     </div>
   );
 });
+
+const Container = styled('div', {
+  base: {
+    padding: '16px',
+    sm: {
+      padding: '24px',
+    },
+  },
+});
+
+const BoostPromotionContainer = styled(
+  'div',
+  cva({
+    base: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textStyle: 'body.medium',
+      padding: '4px 16px',
+      color: 'text.black',
+      gap: '4px',
+      background: 'background.content.boost',
+      borderRadius: '0px 0px 12px 12px',
+      sm: {
+        padding: '4px 24px',
+      },
+    },
+    variants: {
+      button: {
+        true: {
+          '&:hover': {
+            cursor: 'pointer',
+          },
+        },
+      },
+    },
+  })
+);
 
 // eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()
 export default DepositFormLoader;

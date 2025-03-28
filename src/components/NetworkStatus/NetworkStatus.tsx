@@ -30,6 +30,7 @@ import { styled } from '@repo/styles/jsx';
 import { DropdownTrigger } from '../Dropdown/DropdownTrigger.tsx';
 import { DropdownProvider } from '../Dropdown/DropdownProvider.tsx';
 import { DropdownContent } from '../Dropdown/DropdownContent.tsx';
+import { PulseHighlight } from '../../features/vault/components/PulseHighlight/PulseHighlight.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -103,7 +104,6 @@ export const NetworkStatus = memo(function NetworkStatus({
     hasAnyLoading && 'loading',
     !hasAnyLoading && 'notLoading'
   );
-  const pulseClassName = cx(classes.pulseCircle, colorClasses);
 
   return (
     <DropdownProvider
@@ -114,14 +114,7 @@ export const NetworkStatus = memo(function NetworkStatus({
       reference={anchorEl}
     >
       <DropdownButton onClick={handleToggle}>
-        <div className={classes.circleOuter}>
-          <div className={cx(classes.circle, colorClasses)}>
-            <div className={pulseClassName} />
-            <div className={pulseClassName} />
-            <div className={pulseClassName} />
-            <div className={pulseClassName} />
-          </div>
-        </div>
+        <PulseHighlight colorClassName={colorClasses} size={12} />
         {isWalletConnected && <ActiveChain chainId={currentChainId} />}
       </DropdownButton>
       <DropdownContent css={styles.dropdown} gap="none">

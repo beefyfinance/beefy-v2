@@ -1,7 +1,11 @@
 import type { BeefyState } from '../../../redux-types.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { VaultEntity } from '../entities/vault.ts';
-import { selectBoostUserBalanceInToken, selectBoostUserRewardsInToken } from './balance.ts';
+import {
+  selectBoostUserBalanceInToken,
+  selectBoostUserRewardsInToken,
+  selectUserVaultBalanceInShareTokenInCurrentBoost,
+} from './balance.ts';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { BeefyOffChainRewardsCampaignType } from '../apis/beefy/beefy-api-types.ts';
@@ -78,6 +82,15 @@ export const selectVaultCurrentBoostIdWithStatus = createCachedSelector(
   }
 )((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
+export const selectUserHasPastBoostAndActiveBoost = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectPastBoostIdsWithUserBalance(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
+  (pastBoostIds, activeBoostIds, prestakeBoostIds) =>
+    pastBoostIds.length > 0 && (activeBoostIds.length > 0 || prestakeBoostIds.length > 0)
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
 export const selectIsVaultPrestakedBoost = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
   prestakeBoostIds => prestakeBoostIds.length > 0
@@ -139,16 +152,6 @@ export const selectPastBoostIdsWithUserBalance = (
     }
   }
   return boostIds;
-};
-
-export const selectShouldDisplayVaultBoost = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const activeOrPrestakeIds = selectPreStakeOrActiveBoostIds(state, vaultId);
-  if (activeOrPrestakeIds.length > 0) {
-    return true;
-  }
-
-  // OR, there is an expired boost which the user is still staked in
-  return selectPastBoostIdsWithUserBalance(state, vaultId).length > 0;
 };
 
 export const selectVaultsActiveBoostPeriodFinish = (
@@ -227,3 +230,16 @@ export const selectBoostActiveRewardTokens = createCachedSelector(
       )
     )
 )((_state: BeefyState, boostId: BoostPromoEntity['id']) => boostId);
+
+export const selectUserHasDepositedInActiveBoost = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) =>
+    selectActiveVaultBoostIds(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareTokenInCurrentBoost(state, vaultId, maybeWalletAddress),
+  (activeBoostIds, balanceInCurrentBoost) => {
+    if (activeBoostIds.length === 0) {
+      return false;
+    }
+    return balanceInCurrentBoost.gt(BIG_ZERO);
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);

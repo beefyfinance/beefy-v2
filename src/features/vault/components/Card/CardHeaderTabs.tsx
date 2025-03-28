@@ -1,12 +1,14 @@
 import { memo, useCallback } from 'react';
 import { CardHeader } from './CardHeader.tsx';
 import { styled } from '@repo/styles/jsx';
+import { PulseHighlight, type PulseHighlightProps } from '../PulseHighlight/PulseHighlight.tsx';
 
 export type CardHeaderTabsProps = {
   selected: string;
   options: { value: string; label: string }[];
   onChange: (value: string) => void;
   highlight?: string;
+  highlightColor?: PulseHighlightProps['colorClassName'];
 };
 
 export const CardHeaderTabs = memo<CardHeaderTabsProps>(function CardHeaderTabs({
@@ -14,6 +16,7 @@ export const CardHeaderTabs = memo<CardHeaderTabsProps>(function CardHeaderTabs(
   options,
   onChange,
   highlight,
+  highlightColor,
 }) {
   return (
     <StyledCardHeader>
@@ -25,6 +28,7 @@ export const CardHeaderTabs = memo<CardHeaderTabsProps>(function CardHeaderTabs(
           onChange={onChange}
           selected={selected === value}
           highlight={highlight === value}
+          highlightColor={highlightColor}
         />
       ))}
     </StyledCardHeader>
@@ -47,15 +51,23 @@ type TabProps = {
   onChange: (selected: string) => void;
   selected: boolean;
   highlight?: boolean;
+  highlightColor?: PulseHighlightProps['colorClassName'];
 };
-const Tab = memo<TabProps>(function Tab({ value, label, onChange, selected, highlight }) {
+const Tab = memo<TabProps>(function Tab({
+  value,
+  label,
+  onChange,
+  selected,
+  highlight,
+  highlightColor = 'warning',
+}) {
   const handleClick = useCallback(() => {
     onChange(value);
   }, [value, onChange]);
 
   return (
-    <StyledButton selected={selected} highlighted={highlight} onClick={handleClick}>
-      {label}
+    <StyledButton selected={selected} onClick={handleClick}>
+      {label} {highlight && <PulseHighlight colorClassName={highlightColor} innerCircles={1} />}
     </StyledButton>
   );
 });
@@ -69,6 +81,9 @@ const StyledButton = styled('button', {
     flexShrink: 0,
     color: 'text.dark',
     paddingBlock: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
     _hover: {
       color: 'text.middle',
     },
@@ -96,21 +111,6 @@ const StyledButton = styled('button', {
         pointerEvents: 'none',
         '&::before': {
           backgroundColor: 'text.dark',
-        },
-      },
-    },
-    highlighted: {
-      true: {
-        '&::after': {
-          content: '""',
-          display: 'block',
-          backgroundColor: 'indicators.error',
-          padding: '0',
-          borderRadius: '100%',
-          height: '8px',
-          width: '8px',
-          pointerEvents: 'none',
-          transform: 'translate(0, -0.4em)',
         },
       },
     },

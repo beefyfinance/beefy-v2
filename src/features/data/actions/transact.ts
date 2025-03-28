@@ -84,8 +84,8 @@ export const transactFetchOptions = createAsyncThunk<
 >(
   'transact/fetchOptions',
   async ({ vaultId, mode }, { getState, dispatch }) => {
-    if (mode === TransactMode.Claim) {
-      throw new Error(`Claim mode not supported.`);
+    if (mode === TransactMode.Claim || mode === TransactMode.Boost) {
+      throw new Error(`Claim or Boost mode not supported.`);
     }
 
     const api = await getTransactApi();
