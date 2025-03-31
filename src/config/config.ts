@@ -788,7 +788,7 @@ export const config = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['HONEY', 'USDCe', 'BYUSD'],
+    stableCoins: ['HONEY', 'USDCe', 'BYUSD', 'USDbr'],
   },
   aurora: {
     name: 'Aurora',
