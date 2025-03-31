@@ -560,6 +560,10 @@ export const config = {
       'msUSD',
       'Bold',
       'USR',
+      'BRZ',
+      'CADC',
+      'yTRB',
+      'IDRX',
     ],
   },
   gnosis: {
