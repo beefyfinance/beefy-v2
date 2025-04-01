@@ -96,6 +96,7 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
         >
           <div className={classes.buttons}>
             <ActionWithdrawDisabled />
+
             <div className={classes.feesContainer}>
               {showClaim ? <ActionClaim vault={vault} /> : null}
               <WithdrawFees />
@@ -117,9 +118,11 @@ const ActionWithdrawDisabled = memo(function ActionWithdrawDisabled({
 
   return (
     <div className={classes.feesContainer}>
-      <Button variant="success" disabled={true} fullWidth={true} borderless={true} css={cssProp}>
-        {t('Transact-Withdraw')}
-      </Button>
+      <ActionConnectSwitch chainId={vault.chainId}>
+        <Button variant="success" disabled={true} fullWidth={true} borderless={true} css={cssProp}>
+          {t('Transact-Withdraw')}
+        </Button>
+      </ActionConnectSwitch>
       {!isGovVault(vault) && <WithdrawFees />}
     </div>
   );
