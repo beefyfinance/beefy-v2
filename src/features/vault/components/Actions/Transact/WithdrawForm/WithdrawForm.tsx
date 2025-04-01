@@ -37,13 +37,17 @@ import { Actions } from '../Actions/Actions.tsx';
 import { styled } from '@repo/styles/jsx';
 import { selectStandardVaultById } from '../../../../../data/selectors/vaults.ts';
 import { VaultIcon } from '../../../../../../components/VaultIdentity/components/VaultIcon/VaultIcon.tsx';
-import { selectErc20TokenByAddress } from '../../../../../data/selectors/tokens.ts';
+import {
+  selectErc20TokenByAddress,
+  selectTokenByAddress,
+} from '../../../../../data/selectors/tokens.ts';
 import { groupBy } from 'lodash-es';
 import type { TypeToArrayMap } from '../../../DisplacedBalances/DisplacedBalances.tsx';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { type BigNumber } from 'bignumber.js';
 import ChevronRight from '../../../../../../images/icons/chevron-right.svg?react';
+import { symbolToLabelAndTag } from '../../../../../../helpers/tokens.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -153,16 +157,30 @@ const BoostBalance = memo(function BoostBalance({
   const mooToken = useAppSelector(state =>
     selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress)
   );
+  const depositToken = useAppSelector(state =>
+    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
+  );
   const dispatch = useDispatch();
 
   const handleTab = useCallback(() => {
     dispatch(transactActions.switchMode(TransactMode.Boost));
   }, [dispatch]);
 
+  const vaultSymbol = useMemo(() => {
+    const symbol = symbolToLabelAndTag(depositToken.symbol);
+
+    console.log(symbol);
+    if (symbol.tag) {
+      return symbol.tag;
+    }
+
+    return depositToken.symbol;
+  }, [depositToken.symbol]);
+
   return (
     <WithdrawBoostContainer onClick={handleTab}>
       <FlexContainer>
-        <TokenAmount amount={balance} decimals={mooToken.decimals} /> {mooToken.symbol}
+        <TokenAmount amount={balance} decimals={mooToken.decimals} /> {vaultSymbol}
       </FlexContainer>
       <FlexContainer>
         <Trans
@@ -236,13 +254,13 @@ const WithdrawBoostContainer = styled('button', {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '4px 16px',
+    padding: '6px 16px 8px 16px',
     color: 'text.black',
     background: 'background.content.boost',
     borderRadius: '0px 0px 12px 12px',
     width: '100%',
     sm: {
-      padding: '4px 24px',
+      padding: '6px 24px 8px 24px',
     },
   },
 });

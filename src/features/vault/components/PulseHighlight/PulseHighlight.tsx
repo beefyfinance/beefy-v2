@@ -57,7 +57,7 @@ const PulseCircle = styled('div', {
     borderRadius: '50%',
     position: 'absolute',
     opacity: '0',
-    animation: 'loadingPulse 4s infinite cubic-bezier(.36, .11, .89, .32)',
+    animation: 'loadingPulse 1s infinite ease-out',
     '&.loading': {
       backgroundColor: 'indicators.loading',
     },

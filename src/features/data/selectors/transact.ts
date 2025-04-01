@@ -4,7 +4,11 @@ import type { ChainEntity } from '../entities/chain.ts';
 import { orderBy } from 'lodash-es';
 import { selectTokenPriceByAddress } from './tokens.ts';
 import { selectWalletAddressIfKnown } from './wallet.ts';
-import { selectUserBalanceOfToken, selectUserVaultBalanceInDepositToken } from './balance.ts';
+import {
+  selectUserBalanceOfToken,
+  selectUserVaultBalanceInDepositToken,
+  selectUserVaultBalanceInShareTokenIncludingBoostsBridged,
+} from './balance.ts';
 import {
   type TokenAmount,
   type TransactOption,
@@ -370,9 +374,10 @@ export const selectTransactShouldShowBoostNotification = (
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ): boolean => {
-  //check if active boost
-  const activeOrPrestakeIds = selectPreStakeOrActiveBoostIds(state, vaultId);
-  if (activeOrPrestakeIds.length > 0) {
+  const hasDepositedInVaultIncludingBoostsBridged =
+    selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vaultId, walletAddress);
+
+  if (hasDepositedInVaultIncludingBoostsBridged) {
     return true;
   }
 

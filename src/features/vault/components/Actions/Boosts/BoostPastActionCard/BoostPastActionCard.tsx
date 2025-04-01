@@ -70,7 +70,7 @@ const BoostEnded = styled('div', {
     position: 'absolute',
     top: '0',
     right: '0',
-    textStyle: 'subline.sm',
+    textStyle: 'body.sm',
     textTransform: 'none',
     color: 'text.black',
     display: 'flex',

@@ -19,13 +19,13 @@ import { selectUserHasDepositedInActiveBoost } from '../../../../../data/selecto
 const DepositFormLoader = lazy(() => import('../DepositForm/DepositForm.tsx'));
 const ClaimFormLoader = lazy(() => import('../ClaimForm/ClaimForm.tsx'));
 const WithdrawFormLoader = lazy(() => import('../WithdrawForm/WithdrawForm.tsx'));
-const BoostFormLoader = lazy(() => import('../BoostForm/BoostForm.tsx'));
+const BoostForm = lazy(() => import('../../Boosts/Boosts.tsx'));
 
 const modeToComponent: Record<TransactMode, ComponentType> = {
   [TransactMode.Deposit]: DepositFormLoader,
   [TransactMode.Claim]: ClaimFormLoader,
   [TransactMode.Withdraw]: WithdrawFormLoader,
-  [TransactMode.Boost]: BoostFormLoader,
+  [TransactMode.Boost]: BoostForm,
 };
 
 export const FormStep = memo(function FormStep() {

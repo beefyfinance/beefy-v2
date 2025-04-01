@@ -400,7 +400,7 @@ const config = buildConfig(
                 pool: { value: '{colors.vaultClmPoolBackground}' },
                 vault: { value: '{colors.vaultClmVaultBackground}' },
               },
-              boost: { value: '{colors.orangeBoost}' },
+              boost: { value: '{colors.newBoostBackground}' },
               inactive: { value: '{colors.vaultInactiveVaultbackground}' },
             },
           },
@@ -674,13 +674,16 @@ const config = buildConfig(
       },
       boost: {
         base: {
-          color: '{colors.text.light}',
-          background: '{colors.orangeBoost}',
-          border: '{colors.orangeBoost}',
+          color: '{colors.text.black}',
+          background: '{colors.newBoostBackground}',
+          border: '{colors.newBoostBackground}',
         },
         hover: {
           background: '{colors.orangeBoostLight}',
           border: '{colors.orangeBoostLight}',
+        },
+        disabled: {
+          color: '{colors.text.black}',
         },
       },
       filter: {

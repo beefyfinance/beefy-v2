@@ -34,7 +34,7 @@ export const Claim = memo(function Claim({ boostId, chainId, disabled }: ClaimPr
   }, [dispatch, boostId, chainId, t]);
 
   return (
-    <ActionButton disabled={disabled} onClick={handleClick}>
+    <ActionButton disabled={disabled} onClick={handleClick} variant={'success'}>
       {t('Boost-Button-Claim')}
     </ActionButton>
   );

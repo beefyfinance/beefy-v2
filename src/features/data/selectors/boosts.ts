@@ -82,15 +82,6 @@ export const selectVaultCurrentBoostIdWithStatus = createCachedSelector(
   }
 )((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectUserHasPastBoostAndActiveBoost = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) =>
-    selectPastBoostIdsWithUserBalance(state, vaultId),
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
-  (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
-  (pastBoostIds, activeBoostIds, prestakeBoostIds) =>
-    pastBoostIds.length > 0 && (activeBoostIds.length > 0 || prestakeBoostIds.length > 0)
-)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
-
 export const selectIsVaultPrestakedBoost = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
   prestakeBoostIds => prestakeBoostIds.length > 0
@@ -232,14 +223,9 @@ export const selectBoostActiveRewardTokens = createCachedSelector(
 )((_state: BeefyState, boostId: BoostPromoEntity['id']) => boostId);
 
 export const selectUserHasDepositedInActiveBoost = createCachedSelector(
-  (state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) =>
-    selectActiveVaultBoostIds(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
     selectUserVaultBalanceInShareTokenInCurrentBoost(state, vaultId, maybeWalletAddress),
-  (activeBoostIds, balanceInCurrentBoost) => {
-    if (activeBoostIds.length === 0) {
-      return false;
-    }
+  balanceInCurrentBoost => {
     return balanceInCurrentBoost.gt(BIG_ZERO);
   }
 )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);

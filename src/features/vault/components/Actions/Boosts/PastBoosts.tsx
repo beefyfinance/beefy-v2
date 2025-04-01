@@ -9,10 +9,6 @@ export function PastBoosts({ vaultId }: { vaultId: BoostPromoEntity['id'] }) {
     selectPastBoostIdsWithUserBalance(state, vaultId)
   );
 
-  if (pastBoostsWithUserBalance.length <= 0) {
-    return <></>;
-  }
-
   return (
     <ExpiredBoostContainer>
       {pastBoostsWithUserBalance.map(boostId => (

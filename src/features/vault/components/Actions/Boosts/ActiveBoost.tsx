@@ -18,6 +18,7 @@ import { UnstakeInput } from './ActionInputButton/UnstakeInput.tsx';
 import { styled } from '@repo/styles/jsx';
 import { StakeCountdown } from './StakeCountdown/StakeCountdown.tsx';
 import { Trans, useTranslation } from 'react-i18next';
+import { sortBy } from 'lodash-es';
 export const ActiveBoost = memo(function ActiveBoost({
   boostId,
 }: {
@@ -63,25 +64,26 @@ export const ActiveBoost = memo(function ActiveBoost({
   const canStake = balanceInWallet.gt(BIG_ZERO);
   const balanceInBoost = useAppSelector(state => selectBoostUserBalanceInToken(state, boost.id));
   const canUnstake = balanceInBoost.gt(BIG_ZERO);
-  const [open, toggleOpen] = useAccordion<'stake' | 'unstake'>();
+  const [open, toggleOpen] = useAccordion<'stake' | 'unstake'>(canStake ? 'stake' : undefined);
+
+  const reward = useMemo(() => {
+    // get the longest period finish
+    return sortBy(rewards, 'periodFinish').reverse()[0];
+  }, [rewards]);
 
   return (
     <BoostActionContainer>
       <CardBoostContainer>
         <BoostCountdown>
-          {rewards.map(reward => {
-            return reward.isPreStake ? (
-              t('PRE-STAKE')
-            ) : reward.periodFinish ? (
-              <Trans
-                t={t}
-                i18nKey="Boost-Ends"
-                components={{ countdown: <StakeCountdown periodFinish={reward.periodFinish} /> }}
-              />
-            ) : (
-              '-'
-            );
-          })}
+          {reward.periodFinish ? (
+            <Trans
+              t={t}
+              i18nKey="Boost-Ends"
+              components={{ countdown: <StakeCountdown periodFinish={reward.periodFinish} /> }}
+            />
+          ) : (
+            '-'
+          )}
         </BoostCountdown>
         <Rewards isInBoost={canUnstake} rewards={rewards} boostId={boostId} />
       </CardBoostContainer>
@@ -143,7 +145,7 @@ const BoostCountdown = styled('div', {
     position: 'absolute',
     top: '0',
     right: '0',
-    textStyle: 'subline.sm',
+    textStyle: 'body.sm',
     textTransform: 'none',
     color: 'text.notification',
     display: 'flex',
