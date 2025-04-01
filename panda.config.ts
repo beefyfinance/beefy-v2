@@ -241,6 +241,13 @@ const config = buildConfig(
         fonts: {
           body: { value: sansSerifFontStack },
         },
+        gradients: {
+          boost: {
+            value:
+              'linear-gradient(348.15deg, rgba(255, 255, 255, 0) -166.22%, rgba(255, 255, 255, 0.7) 113.41%), linear-gradient(0deg, #FFD54F, #FFD54F)',
+            description: 'tag.boost',
+          },
+        },
         colors: {
           text: {
             lightest: { value: '#fff' },
@@ -248,7 +255,7 @@ const config = buildConfig(
             middle: { value: '#d0d0da' },
             dark: { value: '#999cb3' },
             black: { value: '#111321' },
-            notification: { value: "#F8DFA9" }
+            notification: { value: '#F8DFA9' },
           },
           modal: { backdrop: { value: '#ffffff33' } },
           alertBaseBackground: { value: '#f5f5ff14' },
@@ -265,7 +272,10 @@ const config = buildConfig(
           changeNegative: { value: '#e84525' },
           changePositive: { value: '#509658' },
           contentBackgroundLight: { value: '#2d3153', description: 'contentLight' },
-          contentBackgroundLightNotification: { value: '#B17F4966', description: 'Notification bg' },
+          contentBackgroundLightNotification: {
+            value: '#B17F4966',
+            description: 'Notification bg',
+          },
           cornflower: { value: '#5c70d6', description: 'tag.points + indicators.info' },
           dashboardSummaryIconBackground: {
             value: '#232644',
@@ -308,7 +318,6 @@ const config = buildConfig(
           selectOptionActiveBackground: { value: '#ffffff28' },
           stepperErrorBackground: { value: '#db323219' },
           stepperSuccessBackground: { value: '#59a66226' },
-          tagBoostBackground: { value: '#775744', description: 'tag.boost' },
           tagClmBackground: { value: '#0052CC', description: 'tag.clm' },
           tagPausedBackground: { value: '#564a46', description: 'tag.paused' },
           tagPlatformClmBackground: { value: '#38428f', description: 'tag.platformClm' },
@@ -416,7 +425,7 @@ const config = buildConfig(
             earnings: { background: { value: '{colors.cornflower}' } },
             retired: { background: { value: '{colors.tagRetiredBackground}' } },
             paused: { background: { value: '{colors.tagPausedBackground}' } },
-            boost: { background: { value: '{colors.tagBoostBackground}' } },
+            boost: { background: { value: '{gradients.boost}' } },
             platform: {
               gov: { background: { value: '{colors.tagPlatformGovBackground}' } },
               clm: { background: { value: '{colors.tagPlatformClmBackground}' } },

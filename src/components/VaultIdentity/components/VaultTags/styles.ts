@@ -14,6 +14,7 @@ export const styles = {
   }),
   vaultTag: css.raw({
     textStyle: 'subline.sm',
+    fontWeight: 600,
     color: 'text.middle',
     backgroundColor: 'bayOfMany',
     padding: '2px 8px',
@@ -38,7 +39,8 @@ export const styles = {
     minWidth: '0',
   }),
   vaultTagBoost: css.raw({
-    backgroundColor: 'tags.boost.background',
+    background: 'tags.boost.background',
+    color: 'text.black',
   }),
   vaultTagBoostIcon: css.raw({
     width: '12px',
@@ -93,5 +95,8 @@ export const styles = {
   }),
   flexWrap: css.raw({
     flexWrap: 'wrap',
+  }),
+  inverted: css.raw({
+    flexDirection: 'row-reverse',
   }),
 };

@@ -41,6 +41,7 @@ import {
 } from '../../../../features/data/selectors/promos.ts';
 import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
 import { useMediaQuery } from '../../../MediaQueries/useMediaQuery.ts';
+import { getIconSrc } from '../../../../helpers/getIconSrc.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -53,7 +54,10 @@ const VaultPromoTag = memo(function VaultBoostTag({ promoId, onlyIcon }: VaultPr
   const promo = useAppSelector(state => selectPromoById(state, promoId));
   const { isOverflowing, ref } = useIsOverflowingHorizontally<HTMLDivElement>();
   const { tag } = promo;
-  const iconSrc = useMemo(() => (tag.icon ? getBoostIconSrc(tag.icon) : undefined), [tag]);
+  const iconSrc = useMemo(
+    () => (tag.icon ? getBoostIconSrc(tag.icon) : getIconSrc('boost')),
+    [tag]
+  );
 
   return (
     <VaultTagWithTooltip
@@ -62,12 +66,9 @@ const VaultPromoTag = memo(function VaultBoostTag({ promoId, onlyIcon }: VaultPr
       disabled={!isOverflowing && !onlyIcon}
       css={styles.vaultTagBoost}
       ref={ref}
+      order="text-icon"
       icon={
-        iconSrc ? (
-          <img src={iconSrc} alt="" className={classes.vaultTagBoostIcon} width={12} height={12} />
-        ) : (
-          <>{'\uD83D\uDD25'}</>
-        )
+        <img src={iconSrc} alt="" className={classes.vaultTagBoostIcon} width={12} height={12} />
       }
       text={!onlyIcon && tag.text}
     />

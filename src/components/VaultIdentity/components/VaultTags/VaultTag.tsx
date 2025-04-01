@@ -11,6 +11,7 @@ export type VaultTagProps = {
   css?: CssStyles;
   icon?: ReactNode;
   text: ReactNode;
+  order?: 'icon-text' | 'text-icon';
 };
 
 export const VaultTag = memo(
@@ -30,12 +31,17 @@ export type VaultTagWithTooltipProps = VaultTagProps &
 
 export const VaultTagWithTooltip = memo(
   forwardRef<HTMLDivElement, VaultTagWithTooltipProps>(function VaultTagWithTooltip(
-    { icon, text, css: cssProp, ...rest },
+    { icon, text, css: cssProp, order = 'icon-text', ...rest },
     ref
   ) {
     const classes = useStyles();
+
     return (
-      <DivWithTooltip className={css(styles.vaultTag, cssProp)} ref={ref} {...rest}>
+      <DivWithTooltip
+        className={css(styles.vaultTag, cssProp, order === 'text-icon' && styles.inverted)}
+        ref={ref}
+        {...rest}
+      >
         {icon ? <div className={classes.vaultTagIcon}>{icon}</div> : null}
         {text ? <div className={classes.vaultTagText}>{text}</div> : null}
       </DivWithTooltip>

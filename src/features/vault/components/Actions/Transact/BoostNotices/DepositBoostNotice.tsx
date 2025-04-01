@@ -15,9 +15,9 @@ import { TokenImageFromEntity } from '../../../../../../components/TokenImage/To
 import ChevronRight from '../../../../../../images/icons/chevron-right.svg?react';
 import { css } from '@repo/styles/css';
 import { styled } from '@repo/styles/jsx';
+import type { PromoReward } from '../../../../../data/entities/promo.ts';
 
 export const DepositBoostPromotion = memo(function DepositBoostPromotion() {
-  const { t } = useTranslation();
   const vaultId = useAppSelector(selectTransactVaultId);
 
   const boost = useAppSelector(state => selectCurrentBoostByVaultIdOrUndefined(state, vaultId));
@@ -42,10 +42,93 @@ export const DepositBoostPromotion = memo(function DepositBoostPromotion() {
     return null;
   }
 
-  //TODO: Handle multiple rewards
-  const rewardToken = boost?.rewards[0];
+  //current limitations supports max 2 rewards
+  if (boost.rewards.length > 1) {
+    return (
+      <DoubleRewardsBoostPromotion
+        rewardTokens={[boost.rewards[0], boost.rewards[0]]}
+        handleTab={handleTab}
+      />
+    );
+  } else {
+    return <SingleRewardBoostPromotion rewardToken={boost.rewards[0]} handleTab={handleTab} />;
+  }
+});
 
-  // Case 2: User has deposits but not in boost or partial boost
+const DoubleRewardsBoostPromotion = memo(function DoubleRewardsBoostPromotion({
+  rewardTokens,
+  handleTab,
+}: {
+  rewardTokens: PromoReward[];
+  handleTab: () => void;
+}) {
+  const { t } = useTranslation();
+  const vaultId = useAppSelector(selectTransactVaultId);
+
+  const userDepositInVault = useAppSelector(state =>
+    selectUserVaultBalanceInDepositToken(state, vaultId)
+  );
+
+  if (!userDepositInVault.isZero()) {
+    return (
+      <BoostPromotionContainer>
+        <BoostPromotionButton onClick={handleTab}>
+          {t('Boost-Deposit-Notice-2-double')}{' '}
+          <FlexContainer>
+            <Trans
+              i18nKey="Boost-Deposit-Rewards-double"
+              components={{
+                Token1: <TokenImageFromEntity token={rewardTokens[0]} size={20} />,
+                Token2: <TokenImageFromEntity token={rewardTokens[1]} size={20} />,
+              }}
+              values={{ symbol1: rewardTokens[0].symbol, symbol2: rewardTokens[1].symbol }}
+              css={styles.text}
+            />
+            <ChevronRight
+              preserveAspectRatio="xMaxYMid"
+              className={css({
+                ...styles.text,
+                width: '12px', // svg is 6x9
+              })}
+            />
+          </FlexContainer>
+        </BoostPromotionButton>
+      </BoostPromotionContainer>
+    );
+  }
+
+  return (
+    <BoostPromotionContainer double={true}>
+      {t('Boost-Deposit-Notice-1-double')}{' '}
+      <FlexContainer>
+        <Trans
+          i18nKey="Boost-Deposit-Rewards-double"
+          components={{
+            Token1: <TokenImageFromEntity token={rewardTokens[0]} size={20} />,
+            Token2: <TokenImageFromEntity token={rewardTokens[1]} size={20} />,
+          }}
+          values={{ symbol1: rewardTokens[0].symbol, symbol2: rewardTokens[1].symbol }}
+          css={styles.text}
+        />
+      </FlexContainer>
+    </BoostPromotionContainer>
+  );
+});
+
+const SingleRewardBoostPromotion = memo(function SingleRewardBoostPromotion({
+  rewardToken,
+  handleTab,
+}: {
+  rewardToken: PromoReward;
+  handleTab: () => void;
+}) {
+  const { t } = useTranslation();
+  const vaultId = useAppSelector(selectTransactVaultId);
+
+  const userDepositInVault = useAppSelector(state =>
+    selectUserVaultBalanceInDepositToken(state, vaultId)
+  );
+
   if (!userDepositInVault.isZero()) {
     return (
       <BoostPromotionContainer>
@@ -108,6 +191,13 @@ const BoostPromotionContainer = styled('div', {
       padding: '6px 24px 8px 24px',
     },
   },
+  variants: {
+    double: {
+      true: {
+        flexDirection: 'column',
+      },
+    },
+  },
 });
 
 const BoostPromotionButton = styled('button', {
@@ -115,5 +205,15 @@ const BoostPromotionButton = styled('button', {
     display: 'block',
     whiteSpace: 'wrap',
     width: '100%',
+  },
+});
+
+const FlexContainer = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    whiteSpace: 'nowrap',
+    justifyContent: 'center',
   },
 });
