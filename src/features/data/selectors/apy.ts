@@ -26,6 +26,7 @@ import { isEmpty } from '../../../helpers/utils.ts';
 import { selectWalletAddress } from './wallet.ts';
 import { first } from 'lodash-es';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
+import type { BoostPromoEntity } from '../entities/promo.ts';
 
 const EMPTY_TOTAL_APY: TotalApy = {
   totalApy: 0,
@@ -39,6 +40,10 @@ export const selectVaultTotalApyOrUndefined = (
   vaultId: VaultEntity['id']
 ): Readonly<TotalApy> | undefined => {
   return state.biz.apy.totalApy.byVaultId[vaultId] || undefined;
+};
+
+export const selectBoostAprByRewardToken = (state: BeefyState, boostId: BoostPromoEntity['id']) => {
+  return state.biz.apy.rawApy.byBoostId[boostId]?.aprByRewardToken || [];
 };
 
 export const selectVaultTotalApy = (
@@ -175,8 +180,9 @@ export const selectYieldStatsByVaultId = (
     if (activeBoostId) {
       const sharesInBoost = selectBoostUserBalanceInToken(state, activeBoostId, walletAddress);
       if (sharesInBoost.gt(BIG_ZERO)) {
-        const tokensInBoost = shareData.shareToken
-          ? mooAmountToOracleAmount(
+        const tokensInBoost =
+          shareData.shareToken ?
+            mooAmountToOracleAmount(
               shareData.shareToken,
               shareData.depositToken,
               shareData.ppfs,
