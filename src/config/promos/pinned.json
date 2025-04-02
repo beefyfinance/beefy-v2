@@ -1,9 +1,9 @@
 [
   {
     "id": [
-      "aerodrome-usdc-mai",
-      "curve-poly-mai-usdc.e",
-      "velodrome-v2-weth-moobifi"
+      "aerodrome-tbtc-cbbtc",
+      "aerodrome-tbtc-weth",
+      "aerodrome-tbtc-usdc"
     ],
     "conditions": [
       {
@@ -11,50 +11,16 @@
       },
       {
         "type": "time",
-        "from": 1743184800,
-        "to": 1743206400
-      }
-    ]
-  },
-  {
-    "id": [
-      "beetsv3-sonic-beefyusdce-scusd",
-      "aerodrome-cow-wsteth-wrseth-rp",
-      "uniswap-cow-weth-degen-rp"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1743206400,
-        "to": 1743228000
-      }
-    ]
-  },
-  {
-    "id": [
-      "aero-cow-weth-moobifi-vault",
-      "aerodrome-weth-qi",
-      "curve-poly-mai-usdc.e"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1743228000,
-        "to": 1743249600
+        "from": 1743591600,
+        "to": 1743613200
       }
     ]
   },
   {
     "id": [
       "uniswap-cow-weth-degen-rp",
-      "velodrome-v2-weth-moobifi",
-      "aerodrome-usdc-mai"
+      "aerodrome-tbtc-cbbtc",
+      "aerodrome-tbtc-weth"
     ],
     "conditions": [
       {
@@ -62,185 +28,15 @@
       },
       {
         "type": "time",
-        "from": 1743249600,
-        "to": 1743271200
+        "from": 1743613200,
+        "to": 1743634800
       }
     ]
   },
   {
     "id": [
-      "aerodrome-cow-wsteth-wrseth-rp",
-      "beetsv3-sonic-beefyusdce-scusd",
-      "aerodrome-weth-qi"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1743271200,
-        "to": 1743292800
-      }
-    ]
-  },
-  {
-    "id": [
-      "aero-cow-weth-moobifi-vault",
-      "curve-poly-mai-usdc.e",
-      "uniswap-cow-weth-degen-rp"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1743292800,
-        "to": 1743314400
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-usdc-mai",
-      "velodrome-v2-weth-moobifi",
-      "aerodrome-cow-wsteth-wrseth-rp"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1743314400,
-        "to": 1743336000
-      }
-    ]
-  },
-  {
-    "id": [
-      "beetsv3-sonic-beefyusdce-scusd",
-      "aerodrome-weth-qi",
-      "aero-cow-weth-moobifi-vault"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1743336000,
-        "to": 1743357600
-      }
-    ]
-  },
-  {
-    "id": [
+      "aerodrome-tbtc-usdc",
       "uniswap-cow-weth-degen-rp",
-      "curve-poly-mai-usdc.e",
-      "velodrome-v2-weth-moobifi"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1743357600,
-        "to": 1743379200
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-usdc-mai",
-      "aerodrome-cow-wsteth-wrseth-rp",
-      "aerodrome-weth-qi"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1743379200,
-        "to": 1743400800
-      }
-    ]
-  },
-  {
-    "id": [
-      "beetsv3-sonic-beefyusdce-scusd",
-      "aero-cow-weth-moobifi-vault",
-      "uniswap-cow-weth-degen-rp"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1743400800,
-        "to": 1743422400
-      }
-    ]
-  },
-  {
-    "id": [
-      "curve-poly-mai-usdc.e",
-      "velodrome-v2-weth-moobifi",
-      "aerodrome-weth-qi"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1743422400,
-        "to": 1743444000
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-usdc-mai",
-      "beetsv3-sonic-beefyusdce-scusd",
-      "aero-cow-weth-moobifi-vault"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1743444000,
-        "to": 1743465600
-      }
-    ]
-  },
-  {
-    "id": [
-      "uniswap-cow-weth-degen-rp",
-      "aerodrome-cow-wsteth-wrseth-rp",
-      "curve-poly-mai-usdc.e"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1743465600,
-        "to": 1743487200
-      }
-    ]
-  },
-  {
-    "id": [
-      "velodrome-v2-weth-moobifi",
-      "aerodrome-weth-qi",
       "beetsv3-sonic-beefyusdce-scusd"
     ],
     "conditions": [
@@ -249,16 +45,16 @@
       },
       {
         "type": "time",
-        "from": 1743487200,
-        "to": 1743508800
+        "from": 1743634800,
+        "to": 1743656400
       }
     ]
   },
   {
     "id": [
+      "aerodrome-tbtc-cbbtc",
       "aero-cow-weth-moobifi-vault",
-      "aerodrome-usdc-mai",
-      "uniswap-cow-weth-degen-rp"
+      "aerodrome-tbtc-weth"
     ],
     "conditions": [
       {
@@ -266,32 +62,15 @@
       },
       {
         "type": "time",
-        "from": 1743508800,
-        "to": 1743530400
+        "from": 1743656400,
+        "to": 1743678000
       }
     ]
   },
   {
     "id": [
-      "aerodrome-cow-wsteth-wrseth-rp",
-      "curve-poly-mai-usdc.e",
-      "velodrome-v2-weth-moobifi"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1743530400,
-        "to": 1743552000
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-weth-qi",
-      "beetsv3-sonic-beefyusdce-scusd",
+      "aerodrome-tbtc-usdc",
+      "uniswap-cow-weth-degen-rp",
       "aerodrome-usdc-mai"
     ],
     "conditions": [
@@ -300,15 +79,134 @@
       },
       {
         "type": "time",
-        "from": 1743552000,
-        "to": 1743573600
+        "from": 1743678000,
+        "to": 1743699600
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-tbtc-cbbtc",
+      "aerodrome-cow-wsteth-wrseth-rp",
+      "aerodrome-tbtc-weth"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743699600,
+        "to": 1743721200
       }
     ]
   },
   {
     "id": [
       "uniswap-cow-weth-degen-rp",
-      "aero-cow-weth-moobifi-vault",
+      "aerodrome-tbtc-usdc",
+      "curve-poly-mai-usdc.e"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743721200,
+        "to": 1743742800
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-tbtc-cbbtc",
+      "aerodrome-weth-qi",
+      "aerodrome-tbtc-weth"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743742800,
+        "to": 1743764400
+      }
+    ]
+  },
+  {
+    "id": [
+      "uniswap-cow-weth-degen-rp",
+      "aerodrome-tbtc-usdc",
+      "velodrome-v2-weth-moobifi"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743764400,
+        "to": 1743786000
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-tbtc-cbbtc",
+      "beetsv3-sonic-beefyusdce-scusd",
+      "aerodrome-tbtc-weth"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743786000,
+        "to": 1743807600
+      }
+    ]
+  },
+  {
+    "id": [
+      "uniswap-cow-weth-degen-rp",
+      "aerodrome-tbtc-usdc",
+      "aero-cow-weth-moobifi-vault"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743807600,
+        "to": 1743829200
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-tbtc-cbbtc",
+      "aerodrome-usdc-mai",
+      "aerodrome-tbtc-weth"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743829200,
+        "to": 1743850800
+      }
+    ]
+  },
+  {
+    "id": [
+      "uniswap-cow-weth-degen-rp",
+      "aerodrome-tbtc-usdc",
       "aerodrome-cow-wsteth-wrseth-rp"
     ],
     "conditions": [
@@ -317,15 +215,32 @@
       },
       {
         "type": "time",
-        "from": 1743573600,
-        "to": 1743595200
+        "from": 1743850800,
+        "to": 1743872400
       }
     ]
   },
   {
     "id": [
+      "aerodrome-tbtc-cbbtc",
       "curve-poly-mai-usdc.e",
-      "velodrome-v2-weth-moobifi",
+      "aerodrome-tbtc-weth"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743872400,
+        "to": 1743894000
+      }
+    ]
+  },
+  {
+    "id": [
+      "uniswap-cow-weth-degen-rp",
+      "aerodrome-tbtc-usdc",
       "aerodrome-weth-qi"
     ],
     "conditions": [
@@ -334,16 +249,16 @@
       },
       {
         "type": "time",
-        "from": 1743595200,
-        "to": 1743616800
+        "from": 1743894000,
+        "to": 1743915600
       }
     ]
   },
   {
     "id": [
-      "beetsv3-sonic-beefyusdce-scusd",
-      "aerodrome-usdc-mai",
-      "uniswap-cow-weth-degen-rp"
+      "aerodrome-tbtc-cbbtc",
+      "velodrome-v2-weth-moobifi",
+      "aerodrome-tbtc-weth"
     ],
     "conditions": [
       {
@@ -351,14 +266,133 @@
       },
       {
         "type": "time",
-        "from": 1743616800,
-        "to": 1743638400
+        "from": 1743915600,
+        "to": 1743937200
       }
     ]
   },
   {
     "id": [
+      "uniswap-cow-weth-degen-rp",
+      "aerodrome-tbtc-usdc",
+      "beetsv3-sonic-beefyusdce-scusd"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743937200,
+        "to": 1743958800
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-tbtc-cbbtc",
       "aero-cow-weth-moobifi-vault",
+      "aerodrome-tbtc-weth"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743958800,
+        "to": 1743980400
+      }
+    ]
+  },
+  {
+    "id": [
+      "uniswap-cow-weth-degen-rp",
+      "aerodrome-tbtc-usdc",
+      "aerodrome-usdc-mai"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1743980400,
+        "to": 1744002000
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-tbtc-cbbtc",
+      "aerodrome-cow-wsteth-wrseth-rp",
+      "curve-poly-mai-usdc.e"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1744002000,
+        "to": 1744023600
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-tbtc-weth",
+      "beetsv3-sonic-beefyusdce-scusd",
+      "aerodrome-weth-qi"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1744023600,
+        "to": 1744045200
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-tbtc-usdc",
+      "velodrome-v2-weth-moobifi",
+      "aero-cow-weth-moobifi-vault"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1744045200,
+        "to": 1744066800
+      }
+    ]
+  },
+  {
+    "id": [
+      "aerodrome-tbtc-cbbtc",
+      "aerodrome-usdc-mai",
+      "curve-poly-mai-usdc.e"
+    ],
+    "conditions": [
+      {
+        "type": "boosted"
+      },
+      {
+        "type": "time",
+        "from": 1744066800,
+        "to": 1744088400
+      }
+    ]
+  },
+  {
+    "id": [
+      "uniswap-cow-weth-degen-rp",
       "aerodrome-cow-wsteth-wrseth-rp",
       "velodrome-v2-weth-moobifi"
     ],
@@ -368,41 +402,7 @@
       },
       {
         "type": "time",
-        "from": 1743638400,
-        "to": 1743660000
-      }
-    ]
-  },
-  {
-    "id": [
-      "aerodrome-weth-qi",
-      "curve-poly-mai-usdc.e",
-      "beetsv3-sonic-beefyusdce-scusd"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1743660000,
-        "to": 1743681600
-      }
-    ]
-  },
-  {
-    "id": [
-      "uniswap-cow-weth-degen-rp",
-      "aerodrome-usdc-mai",
-      "aero-cow-weth-moobifi-vault"
-    ],
-    "conditions": [
-      {
-        "type": "boosted"
-      },
-      {
-        "type": "time",
-        "from": 1743681600
+        "from": 1744088400
       }
     ]
   }
