@@ -31,7 +31,7 @@ export interface ActionInputButtonProps {
   title: string;
   balanceLabel: string;
   buttonLabel: string;
-  buttonVariant?: 'default' | 'success';
+  buttonVariant?: 'default' | 'boost';
 }
 
 export const ActionInputButton = memo(function ActionInputButton({
@@ -43,7 +43,7 @@ export const ActionInputButton = memo(function ActionInputButton({
   title,
   balanceLabel,
   buttonLabel,
-  buttonVariant = 'success',
+  buttonVariant = 'boost',
 }: ActionInputButtonProps) {
   const classes = useStyles();
   const dispatch = useAppDispatch();

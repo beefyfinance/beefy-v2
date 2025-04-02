@@ -6,6 +6,7 @@ export type PulseHighlightProps = {
   size?: number;
   variant?: 'loading' | 'success' | 'warning';
   hidePulse?: boolean;
+  animation?: 'indicator' | 'pulse';
 };
 
 export const PulseHighlight = memo<PulseHighlightProps>(function PulseHighlight({
@@ -13,6 +14,7 @@ export const PulseHighlight = memo<PulseHighlightProps>(function PulseHighlight(
   innerCircles = 4,
   size = 8,
   hidePulse = false,
+  animation = 'indicator',
 }) {
   return (
     <CircleOuter>
@@ -23,6 +25,7 @@ export const PulseHighlight = memo<PulseHighlightProps>(function PulseHighlight(
             variant={variant}
             key={index}
             hidePulse={hidePulse}
+            animation={animation}
           />
         ))}
       </Circle>
@@ -67,7 +70,6 @@ const PulseCircle = styled('div', {
     borderRadius: '50%',
     position: 'absolute',
     opacity: '0',
-    animation: 'loadingPulse 1s infinite ease-out',
     '&:nth-child(1)': {
       animationDelay: '0s',
     },
@@ -82,6 +84,14 @@ const PulseCircle = styled('div', {
     },
   },
   variants: {
+    animation: {
+      indicator: {
+        animation: 'loadingPulse 1s infinite ease-out',
+      },
+      pulse: {
+        animation: 'loadingPulse 4s infinite cubic-bezier(.36, .11, .89, .32)',
+      },
+    },
     hidePulse: {
       true: {
         display: 'none',

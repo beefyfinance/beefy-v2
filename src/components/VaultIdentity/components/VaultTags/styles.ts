@@ -31,6 +31,9 @@ export const styles = {
   }),
   vaultTagIcon: css.raw({
     flex: '0 0 auto',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   }),
   vaultTagText: css.raw({
     flexShrink: '1',

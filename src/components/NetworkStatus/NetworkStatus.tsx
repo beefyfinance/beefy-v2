@@ -99,7 +99,10 @@ export const NetworkStatus = memo(function NetworkStatus({
     rpcPending.length > 0 || beefyPending.length > 0 || configPending.length > 0;
 
   const variant = useMemo(
-    () => (!hasAnyError && !hasAnyLoading ? 'success' : hasAnyError ? 'warning' : 'loading'),
+    () =>
+      !hasAnyError && !hasAnyLoading ? 'success'
+      : hasAnyError ? 'warning'
+      : 'loading',
     [hasAnyError, hasAnyLoading]
   );
 
@@ -114,32 +117,28 @@ export const NetworkStatus = memo(function NetworkStatus({
       reference={anchorEl}
     >
       <DropdownButton onClick={handleToggle}>
-        <PulseHighlight variant={variant} size={12} hidePulse={hidePulse} />
+        <PulseHighlight variant={variant} size={10} hidePulse={hidePulse} animation="pulse" />
         {isWalletConnected && <ActiveChain chainId={currentChainId} />}
       </DropdownButton>
       <DropdownContent css={styles.dropdown} gap="none">
         <div className={classes.titleContainer}>
           <div className={classes.title}>
-            {isWalletConnected ? (
-              currentChainId ? (
+            {isWalletConnected ?
+              currentChainId ?
                 <Trans
                   t={t}
                   i18nKey="NetworkStatus-Connected-To"
                   components={{ chain: <ConnectedChain chainId={currentChainId} /> }}
                 />
-              ) : (
-                t('Network-Unsupported')
-              )
-            ) : (
-              t('NetworkStatus-NoWallet')
-            )}
+              : t('Network-Unsupported')
+            : t('NetworkStatus-NoWallet')}
           </div>
           <CloseIcon onClick={handleClose} className={classes.cross} />
         </div>
         <div className={classes.content}>
           <div className={classes.contentTitle}>{t('NetworkStatus-Status')}</div>
           <div className={classes.contentDetail}>
-            {hasAnyError ? (
+            {hasAnyError ?
               <>
                 {rpcErrors.map(chainId => (
                   <div className={classes.popoverLine} key={chainId}>
@@ -157,21 +156,20 @@ export const NetworkStatus = memo(function NetworkStatus({
                   {t('NetworkStatus-HelpText-Error')}
                 </div>
               </>
-            ) : hasAnyLoading ? (
+            : hasAnyLoading ?
               <>
                 <div className={classes.popoverLine}>
                   <div className={cx(classes.circle, 'loading', 'circle')} />
                   {t('NetworkStatus-Title-Loading')}
                 </div>
               </>
-            ) : (
-              <>
+            : <>
                 <div className={classes.popoverLine}>
                   <div className={cx(classes.circle, 'success', 'circle')} />
                   {t('NetworkStatus-Title-OK')}
                 </div>
               </>
-            )}
+            }
           </div>
         </div>
       </DropdownContent>
