@@ -40,7 +40,7 @@ export const styles = {
   }),
   vaultTagBoost: css.raw({
     background: 'tags.boost.background',
-    color: 'text.black',
+    color: 'background.content',
   }),
   vaultTagBoostIcon: css.raw({
     width: '12px',

@@ -46,7 +46,7 @@ export const DepositBoostPromotion = memo(function DepositBoostPromotion() {
   if (boost.rewards.length > 1) {
     return (
       <DoubleRewardsBoostPromotion
-        rewardTokens={[boost.rewards[0], boost.rewards[0]]}
+        rewardTokens={[boost.rewards[0], boost.rewards[1]]}
         handleTab={handleTab}
       />
     );
@@ -158,12 +158,14 @@ const SingleRewardBoostPromotion = memo(function SingleRewardBoostPromotion({
   return (
     <BoostPromotionContainer>
       {t('Boost-Deposit-Notice-1')}{' '}
-      <Trans
-        i18nKey="Boost-Deposit-Rewards"
-        components={{ Token: <TokenImageFromEntity token={rewardToken} size={20} /> }}
-        values={{ symbol: rewardToken.symbol }}
-        css={styles.text}
-      />
+      <FlexContainer>
+        <Trans
+          i18nKey="Boost-Deposit-Rewards"
+          components={{ Token: <TokenImageFromEntity token={rewardToken} size={20} /> }}
+          values={{ symbol: rewardToken.symbol }}
+          css={styles.text}
+        />
+      </FlexContainer>
     </BoostPromotionContainer>
   );
 });
@@ -172,6 +174,7 @@ const styles = {
   text: css.raw({
     display: 'inline-flex',
     verticalAlign: 'middle',
+    whiteSpace: 'nowrap',
   }),
 };
 

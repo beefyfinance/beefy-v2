@@ -35,6 +35,7 @@ export const UnstakeInput = memo(function UnstakeInput({
       title={t('Boost-Button-Unstake')}
       balanceLabel={t('Available')}
       buttonLabel={t('Boost-Button-Unstake')}
+      buttonVariant="default"
     />
   );
 });
