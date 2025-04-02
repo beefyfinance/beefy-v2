@@ -35,39 +35,31 @@ async function vaultData(chain: AppChainId, vaultAddress: Address, id: string): 
     tokenContract.read.decimals(),
   ]);
 
-  let provider = mooToken.startsWith('mooCurveLend')
-    ? 'curve-lend'
-    : mooToken.startsWith('mooCurve') || mooToken.startsWith('mooConvex')
-      ? 'curve'
-      : mooToken.startsWith('mooCake')
-        ? 'pancakeswap'
-        : mooToken.startsWith('mooThena')
-          ? 'thena'
-          : mooToken.startsWith('mooSwapX')
-            ? 'swapx'
-            : id.substring(0, id.indexOf('-'));
-  let platform = mooToken.startsWith('mooConvex')
-    ? 'convex'
-    : provider === 'swapx'
-      ? 'ichi'
-      : provider === 'kodiak'
-        ? 'infrared'
-        : provider;
+  let provider =
+    mooToken.startsWith('mooCurveLend') ? 'curve-lend'
+    : mooToken.startsWith('mooCurve') || mooToken.startsWith('mooConvex') ? 'curve'
+    : mooToken.startsWith('mooCake') ? 'pancakeswap'
+    : mooToken.startsWith('mooThena') ? 'thena'
+    : mooToken.startsWith('mooSwapX') ? 'swapx'
+    : id.substring(0, id.indexOf('-'));
+  let platform =
+    mooToken.startsWith('mooConvex') ? 'convex'
+    : provider === 'swapx' ? 'ichi'
+    : provider === 'kodiak' ? 'infrared'
+    : provider;
   if (provider === 'pendle') {
     platform = 'magpie';
     if (id.startsWith('pendle-eqb')) platform = 'equilibria';
   }
   if (platform === 'equilibria') provider = 'pendle';
   const migrationIds =
-    ['curve', 'curve-lend'].includes(provider) && chain === 'ethereum'
-      ? ['ethereum-convex', 'ethereum-curve']
-      : ['curve', 'curve-lend'].includes(provider)
-        ? ['l2-convex', 'l2-curve']
-        : ['pendle'].includes(provider)
-          ? ['magpie']
-          : provider === 'swapx'
-            ? ['sonic-swapx']
-            : [];
+    ['curve', 'curve-lend'].includes(provider) && chain === 'ethereum' ?
+      ['ethereum-convex', 'ethereum-curve']
+    : ['curve', 'curve-lend'].includes(provider) ? ['l2-convex', 'l2-curve']
+    : ['pendle'].includes(provider) ? ['magpie']
+    : provider === 'swapx' ? ['sonic-swapx']
+    : provider === 'kodiak' ? ['bera-infrared', 'bera-kodiak']
+    : [];
 
   let tokenName = tokenSymbol.slice(tokenSymbol.lastIndexOf(' ') + 1);
   let token = tokenSymbol;
@@ -79,21 +71,15 @@ async function vaultData(chain: AppChainId, vaultAddress: Address, id: string): 
   if (id.startsWith('pendle-eqb')) oracleId = id.replace('pendle-eqb', 'pendle');
 
   const addLiquidityUrl =
-    provider === 'pendle'
-      ? `https://app.pendle.finance/trade/pools/${want}/zap/in?chain=${chain}`
-      : provider === 'swapx'
-        ? 'https://swapx.fi/earn'
-        : provider === 'kodiak'
-          ? `https://app.kodiak.finance/#/liquidity/pools/${want}`
-          : 'XXX';
+    provider === 'pendle' ? `https://app.pendle.finance/trade/pools/${want}/zap/in?chain=${chain}`
+    : provider === 'swapx' ? 'https://swapx.fi/earn'
+    : provider === 'kodiak' ? `https://app.kodiak.finance/#/liquidity/pools/${want}`
+    : 'XXX';
   const removeLiquidityUrl =
-    provider === 'pendle'
-      ? `https://app.pendle.finance/trade/pools/${want}/zap/out?chain=${chain}`
-      : provider === 'swapx'
-        ? 'https://swapx.fi/earn?ownerType=my-positions&filter=my-lp'
-        : provider === 'kodiak'
-          ? `https://app.kodiak.finance/#/liquidity/pools/${want}`
-          : 'XXX';
+    provider === 'pendle' ? `https://app.pendle.finance/trade/pools/${want}/zap/out?chain=${chain}`
+    : provider === 'swapx' ? 'https://swapx.fi/earn?ownerType=my-positions&filter=my-lp'
+    : provider === 'kodiak' ? `https://app.kodiak.finance/#/liquidity/pools/${want}`
+    : 'XXX';
 
   const points = chain === 'sonic' ? ['sonic-points'] : [];
 
