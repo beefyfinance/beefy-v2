@@ -14,6 +14,7 @@ const useStyles = legacyMakeStyles(styles);
 export type Reward = BoostRewardContractData & {
   pending: BigNumber;
   active: boolean;
+  apr: number;
 };
 
 export type RewardsProps = {
@@ -54,15 +55,13 @@ export const Rewards = memo(function Rewards({
             </div>
           </div>
           <div className={css(styles.rewardValue, reward.active && styles.rewardValueActive)}>
-            {!reward.active ? (
+            {!reward.active ?
               t('ENDED')
-            ) : reward.isPreStake ? (
+            : reward.isPreStake ?
               t('PRE-STAKE')
-            ) : reward.periodFinish ? (
+            : reward.periodFinish ?
               <StakeCountdown periodFinish={reward.periodFinish} />
-            ) : (
-              '-'
-            )}
+            : '-'}
           </div>
         </Fragment>
       ))}

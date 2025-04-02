@@ -23,6 +23,7 @@ import { Claim } from './ActionButton/Claim.tsx';
 import { Unstake } from './ActionButton/Unstake.tsx';
 import { StakeInput } from './ActionInputButton/StakeInput.tsx';
 import { UnstakeInput } from './ActionInputButton/UnstakeInput.tsx';
+import { selectBoostAprByRewardToken } from '../../../../data/selectors/apy.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -32,6 +33,7 @@ export function ActiveBoost({ boostId }: { boostId: BoostPromoEntity['id'] }) {
   const data = useAppSelector(state => selectBoostContractState(state, boost.id));
   const activeRewards = useAppSelector(state => selectBoostActiveRewards(state, boost.id));
   const userRewards = useAppSelector(state => selectBoostUserRewardsInToken(state, boost.id));
+  const aprByRewardToken = useAppSelector(state => selectBoostAprByRewardToken(state, boost.id));
   const [rewards, canClaim] = useMemo(() => {
     let hasPendingRewards = false;
     const allRewards: Reward[] = activeRewards.map(reward => {
@@ -40,6 +42,7 @@ export function ActiveBoost({ boostId }: { boostId: BoostPromoEntity['id'] }) {
         ...reward,
         active: true,
         pending: userReward?.amount || BIG_ZERO,
+        apr: aprByRewardToken.find(r => r.rewardToken === reward.token.address)?.apr || 0,
       };
     });
     for (const userReward of userRewards) {
@@ -54,13 +57,14 @@ export function ActiveBoost({ boostId }: { boostId: BoostPromoEntity['id'] }) {
             periodFinish: undefined,
             rewardRate: BIG_ZERO,
             active: false,
+            apr: aprByRewardToken.find(r => r.rewardToken === userReward.token.address)?.apr || 0,
           } satisfies Reward);
         }
       }
     }
 
     return [allRewards, hasPendingRewards];
-  }, [activeRewards, userRewards]);
+  }, [activeRewards, userRewards, aprByRewardToken]);
   const balanceInWallet = useAppSelector(state =>
     selectUserBalanceOfToken(state, boost.chainId, vault.contractAddress)
   );
