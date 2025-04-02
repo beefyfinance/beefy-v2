@@ -77,7 +77,7 @@ export const FormStep = memo(function FormStep() {
         ? hasDepositedInActiveBoost
           ? 'success'
           : 'warning'
-        : 'notLoading';
+        : 'loading';
   }, [hasDepositedInActiveBoost, highlight]);
 
   useEffect(() => {
@@ -92,7 +92,7 @@ export const FormStep = memo(function FormStep() {
         options={modeOptions}
         onChange={handleModeChange}
         highlight={highlight}
-        highlightColor={highLightClassName}
+        variant={highLightClassName}
       />
       <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} />}>
         <Component />

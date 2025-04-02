@@ -1,7 +1,7 @@
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { css, cx } from '@repo/styles/css';
 import { isEqual, sortedUniq, uniq } from 'lodash-es';
-import { memo, type RefObject, useCallback } from 'react';
+import { memo, type RefObject, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader.ts';
@@ -98,12 +98,12 @@ export const NetworkStatus = memo(function NetworkStatus({
   const hasAnyLoading =
     rpcPending.length > 0 || beefyPending.length > 0 || configPending.length > 0;
 
-  const colorClasses = cx(
-    !hasAnyError && !hasAnyLoading && 'success',
-    hasAnyError && 'warning',
-    hasAnyLoading && 'loading',
-    !hasAnyLoading && 'notLoading'
+  const variant = useMemo(
+    () => (!hasAnyError && !hasAnyLoading ? 'success' : hasAnyError ? 'warning' : 'loading'),
+    [hasAnyError, hasAnyLoading]
   );
+
+  const hidePulse = useMemo(() => !hasAnyError && !hasAnyLoading, [hasAnyError, hasAnyLoading]);
 
   return (
     <DropdownProvider
@@ -114,7 +114,7 @@ export const NetworkStatus = memo(function NetworkStatus({
       reference={anchorEl}
     >
       <DropdownButton onClick={handleToggle}>
-        <PulseHighlight colorClassName={colorClasses} size={12} />
+        <PulseHighlight variant={variant} size={12} hidePulse={hidePulse} />
         {isWalletConnected && <ActiveChain chainId={currentChainId} />}
       </DropdownButton>
       <DropdownContent css={styles.dropdown} gap="none">

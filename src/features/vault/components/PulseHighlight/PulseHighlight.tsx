@@ -2,24 +2,27 @@ import { styled } from '@repo/styles/jsx';
 import { memo } from 'react';
 
 export type PulseHighlightProps = {
-  colorClassName: string;
   innerCircles?: number;
   size?: number;
+  variant?: 'loading' | 'success' | 'warning';
+  hidePulse?: boolean;
 };
 
 export const PulseHighlight = memo<PulseHighlightProps>(function PulseHighlight({
-  colorClassName,
+  variant = 'loading',
   innerCircles = 4,
   size = 8,
+  hidePulse = false,
 }) {
   return (
     <CircleOuter>
-      <Circle style={{ width: size, height: size }} className={colorClassName}>
+      <Circle style={{ width: size, height: size }} variant={variant}>
         {Array.from({ length: innerCircles }).map((_, index) => (
           <PulseCircle
             style={{ width: size, height: size }}
-            className={colorClassName}
+            variant={variant}
             key={index}
+            hidePulse={hidePulse}
           />
         ))}
       </Circle>
@@ -40,15 +43,22 @@ const Circle = styled('div', {
   base: {
     borderRadius: '30px',
     position: 'relative',
-    '&.loading': {
-      backgroundColor: 'indicators.loading',
+  },
+  variants: {
+    variant: {
+      loading: {
+        backgroundColor: 'indicators.loading',
+      },
+      success: {
+        backgroundColor: 'indicators.success',
+      },
+      warning: {
+        backgroundColor: 'indicators.warning',
+      },
     },
-    '&.success': {
-      backgroundColor: 'indicators.success',
-    },
-    '&.warning': {
-      backgroundColor: 'indicators.warning',
-    },
+  },
+  defaultVariants: {
+    variant: 'loading',
   },
 });
 
@@ -58,18 +68,6 @@ const PulseCircle = styled('div', {
     position: 'absolute',
     opacity: '0',
     animation: 'loadingPulse 1s infinite ease-out',
-    '&.loading': {
-      backgroundColor: 'indicators.loading',
-    },
-    '&.success': {
-      backgroundColor: 'indicators.success',
-    },
-    '&.warning': {
-      backgroundColor: 'indicators.warning',
-    },
-    '&.notLoading': {
-      display: 'none',
-    },
     '&:nth-child(1)': {
       animationDelay: '0s',
     },
@@ -82,5 +80,26 @@ const PulseCircle = styled('div', {
     '&:nth-child(4)': {
       animationDelay: '3s',
     },
+  },
+  variants: {
+    hidePulse: {
+      true: {
+        display: 'none',
+      },
+    },
+    variant: {
+      loading: {
+        backgroundColor: 'indicators.loading',
+      },
+      success: {
+        backgroundColor: 'indicators.success',
+      },
+      warning: {
+        backgroundColor: 'indicators.warning',
+      },
+    },
+  },
+  defaultVariants: {
+    variant: 'loading',
   },
 });

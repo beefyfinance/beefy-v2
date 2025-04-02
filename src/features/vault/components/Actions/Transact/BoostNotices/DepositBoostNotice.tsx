@@ -71,7 +71,7 @@ const DoubleRewardsBoostPromotion = memo(function DoubleRewardsBoostPromotion({
 
   if (!userDepositInVault.isZero()) {
     return (
-      <BoostPromotionContainer>
+      <BoostPromotionContainer hover={true}>
         <BoostPromotionButton onClick={handleTab}>
           {t('Boost-Deposit-Notice-2-double')}{' '}
           <FlexContainer>
@@ -131,7 +131,7 @@ const SingleRewardBoostPromotion = memo(function SingleRewardBoostPromotion({
 
   if (!userDepositInVault.isZero()) {
     return (
-      <BoostPromotionContainer>
+      <BoostPromotionContainer hover={true}>
         <BoostPromotionButton onClick={handleTab}>
           {t('Boost-Deposit-Notice-2')}{' '}
           <span className={css({ whiteSpace: 'nowrap' })}>
@@ -197,6 +197,14 @@ const BoostPromotionContainer = styled('div', {
         flexDirection: 'column',
       },
     },
+    hover: {
+      true: {
+        '&:hover': {
+          cursor: 'pointer',
+          background: 'buttons.boost.active.background',
+        },
+      },
+    },
   },
 });
 
@@ -205,6 +213,8 @@ const BoostPromotionButton = styled('button', {
     display: 'block',
     whiteSpace: 'wrap',
     width: '100%',
+    border: 'none',
+    padding: '0',
   },
 });
 

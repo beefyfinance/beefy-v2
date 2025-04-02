@@ -100,11 +100,14 @@ const WithdrawBoostContainer = styled('button', {
     justifyContent: 'center',
     padding: '6px 16px 8px 16px',
     color: 'text.black',
-    background: 'background.content.boost',
+    background: 'buttons.boost.background',
     borderRadius: '0px 0px 12px 12px',
     width: '100%',
     sm: {
       padding: '6px 24px 8px 24px',
+    },
+    '&:hover': {
+      background: 'buttons.boost.active.background',
     },
   },
 });

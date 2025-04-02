@@ -8,7 +8,7 @@ export type CardHeaderTabsProps = {
   options: { value: string; label: string }[];
   onChange: (value: string) => void;
   highlight?: string;
-  highlightColor?: PulseHighlightProps['colorClassName'];
+  variant?: PulseHighlightProps['variant'];
 };
 
 export const CardHeaderTabs = memo<CardHeaderTabsProps>(function CardHeaderTabs({
@@ -16,7 +16,7 @@ export const CardHeaderTabs = memo<CardHeaderTabsProps>(function CardHeaderTabs(
   options,
   onChange,
   highlight,
-  highlightColor,
+  variant,
 }) {
   return (
     <StyledCardHeader>
@@ -28,7 +28,7 @@ export const CardHeaderTabs = memo<CardHeaderTabsProps>(function CardHeaderTabs(
           onChange={onChange}
           selected={selected === value}
           highlight={highlight === value}
-          highlightColor={highlightColor}
+          variant={variant}
         />
       ))}
     </StyledCardHeader>
@@ -51,7 +51,7 @@ type TabProps = {
   onChange: (selected: string) => void;
   selected: boolean;
   highlight?: boolean;
-  highlightColor?: PulseHighlightProps['colorClassName'];
+  variant?: PulseHighlightProps['variant'];
 };
 const Tab = memo<TabProps>(function Tab({
   value,
@@ -59,7 +59,7 @@ const Tab = memo<TabProps>(function Tab({
   onChange,
   selected,
   highlight,
-  highlightColor = 'warning',
+  variant = 'warning',
 }) {
   const handleClick = useCallback(() => {
     onChange(value);
@@ -67,7 +67,7 @@ const Tab = memo<TabProps>(function Tab({
 
   return (
     <StyledButton selected={selected} onClick={handleClick}>
-      {label} {highlight && <PulseHighlight colorClassName={highlightColor} innerCircles={1} />}
+      {label} {highlight && <PulseHighlight variant={variant} innerCircles={1} />}
     </StyledButton>
   );
 });

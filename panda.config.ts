@@ -308,8 +308,8 @@ const config = buildConfig(
           modalProgressBarBackground: { value: '#e5e5e5', description: 'txsModal.bgLine' },
           mtPellerin: { value: '#121212' },
           onRampIconLoading: { value: '#ffffff1e' },
-          orangeBoost: { value: '#db8332', description: 'boost button bg + vaults boost' },
-          orangeBoostLight: { value: '#e5a66b', description: 'boost button bg hover' },
+          orangeBoost: { value: '#ECCC7D', description: 'boost button bg + vaults boost' },
+          orangeBoostLight: { value: '#F8DFA9', description: 'boost button bg hover' },
           orangeWarning: { value: '#d19847', description: 'indicators.warning' },
           purpleDarkest: { value: '#121421', description: 'app bg + search input bg' },
           red: { value: '#dc2c10', description: 'txsModal.error' },
@@ -497,6 +497,7 @@ const config = buildConfig(
             },
             button: {
               background: { value: '{colors.bayOfMany}' },
+
               text: {
                 DEFAULT: { value: '{colors.text.light}' },
               },
@@ -758,6 +759,7 @@ const config = buildConfig(
         },
       },
     },
+
     zIndex: {
       thumb: 10,
       highlight: 100,
