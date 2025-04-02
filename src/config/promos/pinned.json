@@ -1,6 +1,13 @@
 [
   {
-    "id": ["beetsv3-sonic-beefyusdce-scusd", "aero-cow-weth-moobifi-vault", "aerodrome-usdc-mai"],
+    "id": [
+      "beetsv3-sonic-beefyusdce-scusd",
+      "aero-cow-weth-moobifi-vault",
+      "aerodrome-usdc-mai",
+      "aerodrome-tbtc-cbbtc",
+      "aerodrome-tbtc-weth",
+      "aerodrome-tbtc-usdc"
+    ],
     "conditions": [
       {
         "type": "boosted"
