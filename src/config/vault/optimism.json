@@ -1,9 +1,9 @@
 [
   {
     "id": "velodrome-v2-weth-over",
-    "name": "WETH-OVER sLP V2",
+    "name": "WETH-OVER vLP V2",
     "type": "standard",
-    "token": "sAMMV2-WETH/OVER",
+    "token": "vAMMV2-WETH/OVER",
     "tokenAddress": "0x1EaA860dca29a5124F665F7d80AffED92e877681",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
