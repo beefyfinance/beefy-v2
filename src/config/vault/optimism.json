@@ -1,5 +1,35 @@
 [
   {
+    "id": "velodrome-v2-weth-over",
+    "name": "WETH-OVER sLP V2",
+    "type": "standard",
+    "token": "sAMMV2-WETH/OVER",
+    "tokenAddress": "0x1EaA860dca29a5124F665F7d80AffED92e877681",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloV2WETH-OVER",
+    "earnedTokenAddress": "0xA2B1c8C30e97A14115538E56e57d78171c8881ef",
+    "earnContractAddress": "0xA2B1c8C30e97A14115538E56e57d78171c8881ef",
+    "oracle": "lps",
+    "oracleId": "velodrome-v2-weth-over",
+    "status": "active",
+    "createdAt": 1743652306,
+    "platformId": "velodrome",
+    "assets": ["WETH", "OVER"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "buyTokenUrl": "https://velodrome.finance/swap?from=0x4200000000000000000000000000000000000006&to=0xedF38688b27036816A50185cAA430D5479e1C63e&chain0=10&chain1=10",
+    "addLiquidityUrl": "https://velodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0xedF38688b27036816A50185cAA430D5479e1C63e&type=-1&chain=10&factory=0xF1046053aa5682b4F9a81b5481394DA16BE5FF5a",
+    "removeLiquidityUrl": "https://velodrome.finance/withdraw?pool=0x1EaA860dca29a5124F665F7d80AffED92e877681",
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "optimism-velodrome-v2"
+      }
+    ]
+  },
+  {
     "id": "velodrome-v2-bold-lusd",
     "name": "Bold-LUSD sLP V2",
     "type": "standard",
