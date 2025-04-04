@@ -23,11 +23,6 @@ export const styles = {
       padding: '24px',
     },
   }),
-  containerExpiredBoosts: css.raw({
-    display: 'flex',
-    flexDirection: 'column',
-    rowGap: '16px',
-  }),
   boostImg: css.raw({
     width: '30',
     height: '30',

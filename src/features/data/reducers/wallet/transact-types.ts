@@ -20,6 +20,7 @@ export enum TransactMode {
   Deposit,
   Withdraw,
   Claim,
+  Boost,
 }
 
 export enum TransactStatus {

@@ -71,10 +71,10 @@ const config = buildConfig(
     // Browserslist for lightningcss
     browserslist: isProduction
       ? [
-          '>0.1% and fully supports es6-module and fully supports es6-module-dynamic-import',
-          'not dead',
-          'not op_mini all',
-        ]
+        '>0.1% and fully supports es6-module and fully supports es6-module-dynamic-import',
+        'not dead',
+        'not op_mini all',
+      ]
       : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
@@ -241,12 +241,21 @@ const config = buildConfig(
         fonts: {
           body: { value: sansSerifFontStack },
         },
+        gradients: {
+          boost: {
+            value:
+              'linear-gradient(348.15deg, rgba(255, 255, 255, 0) -166.22%, rgba(255, 255, 255, 0.7) 113.41%), linear-gradient(0deg, #FFD54F, #FFD54F)',
+            description: 'tag.boost',
+          },
+        },
         colors: {
           text: {
             lightest: { value: '#fff' },
             light: { value: '#f5f5f5' },
             middle: { value: '#d0d0da' },
             dark: { value: '#999cb3' },
+            black: { value: '#111321' },
+            notification: { value: '#F8DFA9' },
           },
           modal: { backdrop: { value: '#ffffff33' } },
           alertBaseBackground: { value: '#f5f5ff14' },
@@ -263,6 +272,10 @@ const config = buildConfig(
           changeNegative: { value: '#e84525' },
           changePositive: { value: '#509658' },
           contentBackgroundLight: { value: '#2d3153', description: 'contentLight' },
+          contentBackgroundLightNotification: {
+            value: '#B17F4966',
+            description: 'Notification bg',
+          },
           cornflower: { value: '#5c70d6', description: 'tag.points + indicators.info' },
           dashboardSummaryIconBackground: {
             value: '#232644',
@@ -295,8 +308,8 @@ const config = buildConfig(
           modalProgressBarBackground: { value: '#e5e5e5', description: 'txsModal.bgLine' },
           mtPellerin: { value: '#121212' },
           onRampIconLoading: { value: '#ffffff1e' },
-          orangeBoost: { value: '#db8332', description: 'boost button bg + vaults boost' },
-          orangeBoostLight: { value: '#e5a66b', description: 'boost button bg hover' },
+          orangeBoost: { value: '#ECCC7D', description: 'boost button bg + vaults boost' },
+          orangeBoostLight: { value: '#F8DFA9', description: 'boost button bg hover' },
           orangeWarning: { value: '#d19847', description: 'indicators.warning' },
           purpleDarkest: { value: '#121421', description: 'app bg + search input bg' },
           red: { value: '#dc2c10', description: 'txsModal.error' },
@@ -305,7 +318,6 @@ const config = buildConfig(
           selectOptionActiveBackground: { value: '#ffffff28' },
           stepperErrorBackground: { value: '#db323219' },
           stepperSuccessBackground: { value: '#59a66226' },
-          tagBoostBackground: { value: '#775744', description: 'tag.boost' },
           tagClmBackground: { value: '#0052CC', description: 'tag.clm' },
           tagPausedBackground: { value: '#564a46', description: 'tag.paused' },
           tagPlatformClmBackground: { value: '#38428f', description: 'tag.platformClm' },
@@ -339,6 +351,7 @@ const config = buildConfig(
           vaultTagDividerBackground: { value: '#D9D9D949' },
           white: { value: '#ffffff' },
           zapDiscountedFeesBackground: { value: '#59a662' },
+          newBoostBackground: { value: '#F1D48C' },
         },
         sizes: {
           defaultAssetsImageSize: { value: '48px' },
@@ -384,6 +397,9 @@ const config = buildConfig(
               DEFAULT: { value: '{colors.blackMarket}' },
               dark: { value: '{colors.eclipseElixir}' },
               light: { value: '{colors.contentBackgroundLight}' },
+              gray: { value: '{colors.text.dark}' },
+              notification: { value: '{colors.contentBackgroundLightNotification}' },
+              boost: { value: '{colors.newBoostBackground}' },
             },
             vaults: {
               standard: { value: '{colors.blackMarket}' },
@@ -393,7 +409,7 @@ const config = buildConfig(
                 pool: { value: '{colors.vaultClmPoolBackground}' },
                 vault: { value: '{colors.vaultClmVaultBackground}' },
               },
-              boost: { value: '{colors.orangeBoost}' },
+              boost: { value: '{colors.newBoostBackground}' },
               inactive: { value: '{colors.vaultInactiveVaultbackground}' },
             },
           },
@@ -409,7 +425,7 @@ const config = buildConfig(
             earnings: { background: { value: '{colors.cornflower}' } },
             retired: { background: { value: '{colors.tagRetiredBackground}' } },
             paused: { background: { value: '{colors.tagPausedBackground}' } },
-            boost: { background: { value: '{colors.tagBoostBackground}' } },
+            boost: { background: { value: '{gradients.boost}' } },
             platform: {
               gov: { background: { value: '{colors.tagPlatformGovBackground}' } },
               clm: { background: { value: '{colors.tagPlatformClmBackground}' } },
@@ -481,6 +497,7 @@ const config = buildConfig(
             },
             button: {
               background: { value: '{colors.bayOfMany}' },
+
               text: {
                 DEFAULT: { value: '{colors.text.light}' },
               },
@@ -667,13 +684,16 @@ const config = buildConfig(
       },
       boost: {
         base: {
-          color: '{colors.text.light}',
-          background: '{colors.orangeBoost}',
-          border: '{colors.orangeBoost}',
+          color: '{colors.text.black}',
+          background: '{colors.newBoostBackground}',
+          border: '{colors.newBoostBackground}',
         },
         hover: {
           background: '{colors.orangeBoostLight}',
           border: '{colors.orangeBoostLight}',
+        },
+        disabled: {
+          color: '{colors.text.black}',
         },
       },
       filter: {
@@ -739,6 +759,7 @@ const config = buildConfig(
         },
       },
     },
+
     zIndex: {
       thumb: 10,
       highlight: 100,

@@ -4,7 +4,11 @@ import type { ChainEntity } from '../entities/chain.ts';
 import { orderBy } from 'lodash-es';
 import { selectTokenPriceByAddress } from './tokens.ts';
 import { selectWalletAddressIfKnown } from './wallet.ts';
-import { selectUserBalanceOfToken, selectUserVaultBalanceInDepositToken } from './balance.ts';
+import {
+  selectUserBalanceOfToken,
+  selectUserVaultBalanceInDepositToken,
+  selectUserVaultBalanceInShareTokenIncludingBoostsBridged,
+} from './balance.ts';
 import {
   type TokenAmount,
   type TransactOption,
@@ -27,6 +31,10 @@ import {
 import { selectVaultById } from './vaults.ts';
 import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
 import { extractTagFromLpSymbol } from '../../../helpers/tokens.ts';
+import { selectAllVaultBoostIds, selectPastBoostIdsWithUserBalance } from './boosts.ts';
+import { selectPreStakeOrActiveBoostIds } from './boosts.ts';
+import { selectBoostUserRewardsInToken } from './balance.ts';
+import type { BoostReward } from '../apis/balance/balance-types.ts';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
@@ -350,3 +358,38 @@ export const selectTransactShouldShowClaimsNotification = createSelector(
     );
   }
 );
+
+export const selectTransactShouldShowBoost = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const activeOrPrestakeIds = selectPreStakeOrActiveBoostIds(state, vaultId);
+  if (activeOrPrestakeIds.length > 0) {
+    return true;
+  }
+
+  // OR, there is an expired boost which the user is still staked in
+  return selectPastBoostIdsWithUserBalance(state, vaultId).length > 0;
+};
+
+export const selectTransactShouldShowBoostNotification = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+): boolean => {
+  const hasDepositedInVaultIncludingBoostsBridged =
+    selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vaultId, walletAddress);
+
+  if (hasDepositedInVaultIncludingBoostsBridged) {
+    return true;
+  }
+
+  const boostIds = selectAllVaultBoostIds(state, vaultId);
+
+  // Check each boost for claimable rewards
+  for (const boostId of boostIds) {
+    const userRewards = selectBoostUserRewardsInToken(state, boostId, walletAddress);
+    if (userRewards.some((reward: BoostReward) => reward.amount.gt(BIG_ZERO))) {
+      return true;
+    }
+  }
+
+  return false;
+};
