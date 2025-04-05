@@ -157,7 +157,7 @@
   },
   {
     "id": "uniswap-cow-gnosis-usdc.e-sdai-rp",
-    "name": "USDC.e-sDAI Reward Pool",
+    "name": "sDAI-USDC.e Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapGnosissDAI-USDCe",
@@ -178,8 +178,8 @@
     "createdAt": 1743878000,
     "platformId": "uniswap",
     "assets": [
-      "USDC.e",
-      "sDAI"
+      "sDAI",
+      "USDC.e"
     ],
     "risks": [],
     "strategyTypeId": "pool",
@@ -195,7 +195,7 @@
   },
   {
     "id": "uniswap-cow-gnosis-usdc.e-sdai",
-    "name": "USDC.e-sDAI",
+    "name": "sDAI-USDC.e",
     "token": "USDC.e-sDAI uniswap",
     "tokenAddress": "0x5a2Fb66e66b2aF7F1c2F71c6c695492FaAB2E587",
     "tokenDecimals": 18,
@@ -213,8 +213,8 @@
     "createdAt": 1743878000,
     "platformId": "beefy",
     "assets": [
-      "USDC.e",
-      "sDAI"
+      "sDAI",
+      "USDC.e"
     ],
     "risks": [
       "COMPLEXITY_LOW",
