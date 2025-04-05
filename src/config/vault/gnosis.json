@@ -61,7 +61,7 @@
       "sDAI"
     ],
     "risks": [
-      "COMPLEXITY_MEDIUM",
+      "COMPLEXITY_LOW",
       "IL_HIGH",
       "MCAP_SMALL",
       "AUDIT",
@@ -139,7 +139,7 @@
       "sDAI"
     ],
     "risks": [
-      "COMPLEXITY_MEDIUM",
+      "COMPLEXITY_LOW",
       "IL_HIGH",
       "MCAP_SMALL",
       "AUDIT",
@@ -179,7 +179,7 @@
     "platformId": "uniswap",
     "assets": [
       "sDAI",
-      "USDC.e"
+      "gUSDCe"
     ],
     "risks": [],
     "strategyTypeId": "pool",
@@ -214,7 +214,7 @@
     "platformId": "beefy",
     "assets": [
       "sDAI",
-      "USDC.e"
+      "gUSDCe"
     ],
     "risks": [
       "COMPLEXITY_LOW",
@@ -338,7 +338,7 @@
     "createdAt": 1743878000,
     "platformId": "uniswap",
     "assets": [
-      "USDC.e",
+      "gUSDCe",
       "WXDAI"
     ],
     "risks": [],
@@ -373,7 +373,7 @@
     "createdAt": 1743878000,
     "platformId": "beefy",
     "assets": [
-      "USDC.e",
+      "gUSDCe",
       "WXDAI"
     ],
     "risks": [
@@ -701,7 +701,7 @@
     "status": "active",
     "createdAt": 1722694393,
     "platformId": "aura",
-    "assets": ["USDCe", "USDT", "sDAI"],
+    "assets": ["gUSDCe", "USDT", "sDAI"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
