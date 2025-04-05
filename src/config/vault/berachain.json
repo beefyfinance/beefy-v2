@@ -179,7 +179,7 @@
     "earnedToken": "mooBeraswapBerachainiBGT",
     "earnedTokenAddress": "0x7d3b4317F7b9d3B677163E3543fafa694Ad8BD06",
     "oracle": "lps",
-    "oracleId": "beraswap-ibgt-wbera",
+    "oracleId": "beraswap-ibera-wbera",
     "status": "active",
     "createdAt": 1742949740,
     "platformId": "infrared",
