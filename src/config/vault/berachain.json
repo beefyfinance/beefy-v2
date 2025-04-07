@@ -19,6 +19,7 @@
     "migrationIds": ["bera-infrared", "bera-kodiak"],
     "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "multi-lp",
+    "pointStructureIds": ["infrared"],
     "addLiquidityUrl": "https://app.kodiak.finance/#/liquidity/pools/0x4a254B11810B8EBb63C5468E438FC561Cb1bB1da",
     "removeLiquidityUrl": "https://app.kodiak.finance/#/liquidity/pools/0x4a254B11810B8EBb63C5468E438FC561Cb1bB1da",
     "network": "berachain"
