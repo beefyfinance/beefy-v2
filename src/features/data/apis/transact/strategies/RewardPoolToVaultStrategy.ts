@@ -58,7 +58,6 @@ import {
 import { selectChainById } from '../../../selectors/chains.ts';
 import { ZERO_FEE } from '../helpers/quotes.ts';
 import type { BeefyState, BeefyThunk } from '../../../../../redux-types.ts';
-import { walletActions } from '../../../actions/wallet-actions.ts';
 import type { ChainEntity } from '../../../entities/chain.ts';
 import { getInsertIndex, NO_RELAY } from '../helpers/zap.ts';
 import type {
@@ -73,6 +72,7 @@ import { selectTransactSlippage } from '../../../selectors/transact.ts';
 import { uniqBy } from 'lodash-es';
 import { slipBy } from '../helpers/amounts.ts';
 import { encodeFunctionData, type Abi } from 'viem';
+import { zapExecuteOrder } from '../../../actions/wallet/zap.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -452,11 +452,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
 
       const expectedTokens = quote.outputs.map(output => output.token);
 
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };
@@ -523,11 +519,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
 
       const expectedTokens = quote.outputs.map(output => output.token);
 
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };

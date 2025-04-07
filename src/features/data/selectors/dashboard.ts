@@ -40,7 +40,7 @@ import {
   selectGovVaultPendingRewardsWithPrice,
   selectUserDepositedVaultIds,
   selectUserLpBreakdownBalance,
-  selectUserVaultBalanceInUsdIncludingBoostsBridged,
+  selectUserVaultBalanceInUsdIncludingDisplaced,
 } from './balance.ts';
 import { selectIsUserBalanceAvailable } from './data-loader.ts';
 import { selectYieldStatsByVaultId } from './apy.ts';
@@ -331,7 +331,7 @@ const selectDashboardUserExposure = <
   }
 
   const vaultDeposits = vaultIds.map(vaultId =>
-    selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vaultId, walletAddress)
+    selectUserVaultBalanceInUsdIncludingDisplaced(state, vaultId, walletAddress)
   );
   const totalDeposits = vaultDeposits.reduce((acc, deposit) => acc.plus(deposit), BIG_ZERO);
   const entries = vaultIds

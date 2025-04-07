@@ -31,8 +31,8 @@ export function XAxisTick({
     index === 0
       ? 'start'
       : index === visibleTicksCount - 1 && rest.x > rest.width - halfMaxTickTextWidth
-      ? 'end'
-      : 'middle';
+        ? 'end'
+        : 'middle';
   const textProps = omit(rest, ['ref']);
 
   return (

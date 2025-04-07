@@ -70,7 +70,6 @@ import type {
 import { Balances } from '../../helpers/Balances.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import { mergeTokenAmounts, slipBy } from '../../helpers/amounts.ts';
-import { walletActions } from '../../../../actions/wallet-actions.ts';
 import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
 import type { IGammaPool } from '../../../amm/types.ts';
@@ -84,6 +83,7 @@ import { QuoteChangedError } from '../error.ts';
 import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType.ts';
 import type { GammaStrategyConfig } from '../strategy-configs.ts';
 import { tokenInList } from '../../../../../../helpers/tokens.ts';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -601,11 +601,7 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
       };
 
       const expectedTokens = vaultDeposit.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };
@@ -1029,11 +1025,7 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
       };
 
       const expectedTokens = quote.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };

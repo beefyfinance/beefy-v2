@@ -6,6 +6,7 @@ import type { DatabarnProductPriceRow } from '../apis/databarn/databarn-types.ts
 import {
   isCowcentratedLikeVault,
   isCowcentratedStandardVault,
+  isErc4626Vault,
   type VaultEntity,
 } from '../entities/vault.ts';
 import {
@@ -24,7 +25,7 @@ import {
   selectGovVaultPendingRewardsWithPrice,
   selectUserDepositedVaultIds,
   selectUserLpBreakdownBalance,
-  selectUserVaultBalanceInShareTokenIncludingBoostsBridged,
+  selectUserVaultBalanceInShareTokenIncludingDisplaced,
 } from './balance.ts';
 import { selectWalletAddress } from './wallet.ts';
 import { selectIsConfigAvailable } from './data-loader.ts';
@@ -179,8 +180,8 @@ export const selectStandardGovPnl = (
   walletAddress?: string
 ): UserStandardPnl | UserGovPnl => {
   const vault = selectVaultById(state, vaultId);
-  if (isCowcentratedLikeVault(vault)) {
-    throw new Error('This function should not be called for cowcentrated vaults');
+  if (isCowcentratedLikeVault(vault) || isErc4626Vault(vault)) {
+    throw new Error('This function should not be called for cowcentrated/erc4626 vaults');
   }
 
   const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
@@ -286,7 +287,7 @@ export const selectClmPnl = (
   const vault = selectCowcentratedLikeVaultById(state, vaultId);
   const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
   const shareToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
-  const sharesNow = selectUserVaultBalanceInShareTokenIncludingBoostsBridged(
+  const sharesNow = selectUserVaultBalanceInShareTokenIncludingDisplaced(
     state,
     vaultId,
     walletAddress
@@ -688,7 +689,7 @@ export const selectClmAutocompoundedPendingFeesByVaultId = (
     totalPending: BIG_ZERO,
   };
   const pendingRewards = selectClmPendingRewardsByVaultId(state, vaultId);
-  const currentMooTokenBalance = selectUserVaultBalanceInShareTokenIncludingBoostsBridged(
+  const currentMooTokenBalance = selectUserVaultBalanceInShareTokenIncludingDisplaced(
     state,
     vaultId,
     walletAddress

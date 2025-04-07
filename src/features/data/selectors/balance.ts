@@ -5,10 +5,9 @@ import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity, TokenLpBreakdown } from '../entities/token.ts';
 import {
   isCowcentratedLikeVault,
-  isCowcentratedVault,
+  isErc4626Vault,
   isGovVault,
-  isGovVaultMulti,
-  isGovVaultSingle,
+  isSingleGovVault,
   isStandardVault,
   type VaultEntity,
   type VaultGov,
@@ -32,10 +31,14 @@ import { BigNumber } from 'bignumber.js';
 import { createSelector } from '@reduxjs/toolkit';
 import { entries } from '../../../helpers/object.ts';
 import type { UserLpBreakdownBalance } from './balance-types.ts';
-import type { TokenAmount } from '../apis/transact/transact-types.ts';
 import { getCowcentratedAddressFromCowcentratedLikeVault } from '../utils/vault-utils.ts';
 import type { BoostReward } from '../apis/balance/balance-types.ts';
-import { arrayOrStaticEmpty } from '../utils/selector-utils.ts';
+import {
+  arrayOrStaticEmpty,
+  bigNumberOrStaticZero,
+  valueOrThrow,
+} from '../utils/selector-utils.ts';
+import { getUnixNow } from '../../../helpers/date.ts';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (walletAddress) {
@@ -112,112 +115,148 @@ export const selectUserVaultBalanceInShareToken = (
 
   const vault = selectVaultById(state, vaultId);
 
-  if (isGovVault(vault)) {
-    if (isGovVaultSingle(vault)) {
-      return selectGovVaultUserStakedBalanceInDepositToken(state, vaultId, walletAddress);
-    } else if (isGovVaultMulti(vault)) {
-      return selectUserBalanceOfToken(
-        state,
-        vault.chainId,
-        vault.receiptTokenAddress,
-        walletAddress
-      );
-    }
+  // Vaults without a receipt token (/non ERC-20 vaults)
+  if (isSingleGovVault(vault)) {
+    // Gov vaults have no shares, only deposit tokens
+    return selectGovVaultUserStakedBalanceInDepositToken(state, vaultId, walletAddress);
   }
 
-  if (isStandardVault(vault) || isCowcentratedVault(vault)) {
-    return selectUserBalanceOfToken(state, vault.chainId, vault.receiptTokenAddress, walletAddress);
-  }
-
-  throw new Error(`Unsupported vault type for ${vaultId}`);
+  return selectUserBalanceOfToken(state, vault.chainId, vault.receiptTokenAddress, walletAddress);
 };
 
 /**
  * Only includes shares deposited in boosts
  */
-export const selectUserVaultBalanceInShareTokenInBoosts = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  maybeWalletAddress?: string
-) => {
-  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
-  if (!walletAddress) {
-    return BIG_ZERO;
-  }
+export const selectUserVaultBalanceInShareTokenInBoosts = createSelector(
+  (state: BeefyState, _vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    _selectWalletBalance(state, maybeWalletAddress)?.tokenAmount.byBoostId,
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectAllVaultBoostIds(state, vaultId),
+  (byBoostId, boostIds) => {
+    if (!byBoostId) {
+      return BIG_ZERO;
+    }
 
-  // all deposits in boost (even those expired)
-  let shares = BIG_ZERO;
-  const boostIds = selectAllVaultBoostIds(state, vaultId);
-  for (const boostId of boostIds) {
-    shares = shares.plus(selectBoostUserBalanceInToken(state, boostId, walletAddress));
+    return bigNumberOrStaticZero(
+      boostIds.reduce((acc, boostId) => {
+        return acc.plus(byBoostId[boostId]?.balance || BIG_ZERO);
+      }, BIG_ZERO)
+    );
   }
-
-  return shares;
-};
+);
 
 /**
  * Only includes shares deposited in current boost
  */
-export const selectUserVaultBalanceInShareTokenInCurrentBoost = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  maybeWalletAddress?: string
-) => {
-  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
-  if (!walletAddress) {
-    return BIG_ZERO;
-  }
+export const selectUserVaultBalanceInShareTokenInCurrentBoost = createSelector(
+  (state: BeefyState, _vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    _selectWalletBalance(state, maybeWalletAddress)?.tokenAmount.byBoostId,
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultCurrentBoostId(state, vaultId),
+  (byBoostId, boostId) => {
+    if (!byBoostId || !boostId) {
+      return BIG_ZERO;
+    }
 
-  const boostId = selectVaultCurrentBoostId(state, vaultId);
-  return boostId ? selectBoostUserBalanceInToken(state, boostId, walletAddress) : BIG_ZERO;
-};
+    return bigNumberOrStaticZero(byBoostId[boostId]?.balance);
+  }
+);
 
 /**
  * Only includes shares bridged to another chain
  */
-export const selectUserVaultBalanceInShareTokenInBridged = (
+export const selectUserVaultBalanceInShareTokenInBridged = createSelector(
+  (state: BeefyState, _vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    _selectWalletBalance(state, maybeWalletAddress)?.tokenAmount.byChainId,
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  (byChainId, vault) => {
+    if (!byChainId || !isStandardVault(vault) || !vault.bridged) {
+      return BIG_ZERO;
+    }
+
+    return bigNumberOrStaticZero(
+      entries(vault.bridged).reduce((acc, [chainId, tokenAddress]) => {
+        return acc.plus(
+          byChainId[chainId]?.byTokenAddress[tokenAddress.toLowerCase()]?.balance || BIG_ZERO
+        );
+      }, BIG_ZERO)
+    );
+  }
+);
+
+export const selectUserVaultPendingWithdrawalOrUndefined = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   maybeWalletAddress?: string
 ) => {
-  const walletAddress = maybeWalletAddress || selectWalletAddress(state);
-  if (!walletAddress) {
-    return BIG_ZERO;
-  }
-
-  const vault = selectVaultById(state, vaultId);
-  if (!isStandardVault(vault) || !vault.bridged) {
-    return BIG_ZERO;
-  }
-
-  let shares = BIG_ZERO;
-  for (const [chainId, tokenAddress] of entries(vault.bridged)) {
-    shares = shares.plus(selectUserBalanceOfToken(state, chainId, tokenAddress, walletAddress));
-  }
-
-  return shares;
+  return (
+    _selectWalletBalance(state, maybeWalletAddress)?.tokenAmount.byVaultId[vaultId]
+      ?.pendingWithdrawals || undefined
+  );
 };
+
+export const selectUserVaultPendingWithdrawal = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  maybeWalletAddress?: string
+) => {
+  return valueOrThrow(
+    selectUserVaultPendingWithdrawalOrUndefined(state, vaultId, maybeWalletAddress)
+  );
+};
+
+export const selectAddressHasVaultPendingWithdrawal = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+    selectUserVaultPendingWithdrawalOrUndefined(state, vaultId, walletAddress),
+  // only recalculate after 30s if requests state hasn't changed
+  (_state: BeefyState) => Math.trunc(Date.now() / 30_000) * 30,
+  (pending, _roundedTimestamp): 'claimable' | 'pending' | false => {
+    if (!pending || !pending.requests.length) {
+      return false;
+    }
+    const now = getUnixNow();
+    return pending.requests.some(request => request.claimableTimestamp >= now)
+      ? 'claimable'
+      : 'pending';
+  }
+);
+
+/**
+ * Only includes shares pending withdrawal
+ */
+export const selectUserVaultBalanceInShareTokenPendingWithdrawal = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultPendingWithdrawalOrUndefined(state, vaultId, maybeWalletAddress)?.shares,
+  shares => bigNumberOrStaticZero(shares)
+);
 
 export const selectVaultSharesToDepositTokenData = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     state.entities.vaults.contractData.byVaultId[vaultId]?.pricePerFullShare,
-  (state: BeefyState, _vaultId: VaultEntity['id']) => state.entities.tokens.byChainId,
-  (vault, ppfs, tokensByChainId) => {
-    const depositToken =
-      tokensByChainId[vault.chainId]?.byAddress[vault.depositTokenAddress.toLowerCase()];
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+    return state.entities.tokens.byChainId[vault.chainId]?.byAddress[
+      vault.depositTokenAddress.toLowerCase()
+    ];
+  },
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+    return !isSingleGovVault(vault)
+      ? state.entities.tokens.byChainId[vault.chainId]?.byAddress[
+          vault.receiptTokenAddress.toLowerCase()
+        ]
+      : undefined;
+  },
+  (vault, ppfs, depositToken, shareToken) => {
     if (!depositToken) {
       throw new Error(`Deposit token not found for ${vault.id}`);
     }
 
     // only standard vaults have ppfs
-    if (isStandardVault(vault)) {
+    if (isStandardVault(vault) || isErc4626Vault(vault)) {
       if (!ppfs) {
         // TODO find what is asking for balances before ppfs loaded
         console.debug(`Price per full share not found for ${vault.id}`);
       }
-      const shareToken =
-        tokensByChainId[vault.chainId]?.byAddress[vault.receiptTokenAddress.toLowerCase()];
       if (!shareToken) {
         throw new Error(`Share token not found for ${vault.id}`);
       }
@@ -235,62 +274,78 @@ export const selectVaultSharesToDepositTokenData = createCachedSelector(
   }
 )((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-type UserBalanceSelector = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  maybeWalletAddress?: string
-) => BigNumber;
-type UserBalanceWithTokenSelector = (
-  state: BeefyState,
-  vaultId: VaultEntity['id'],
-  maybeWalletAddress?: string
-) => TokenAmount;
-
 /**
- * Total shares including boosts and bridged tokens
+ * Total shares including boosts, bridged and pending withdrawal
  * (For gov vaults this will be in deposit token since there are no shares)
  */
-export const selectUserVaultBalanceInShareTokenIncludingBoostsBridged: UserBalanceSelector =
-  createCachedSelector(
-    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectUserVaultBalanceInShareTokenInBridged(state, vaultId, maybeWalletAddress),
-    (...balances) => balances.reduce((acc, balance) => acc.plus(balance), BIG_ZERO)
-  )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
+export const selectUserVaultBalanceInShareTokenIncludingDisplaced = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareTokenInBridged(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareTokenPendingWithdrawal(state, vaultId, maybeWalletAddress),
+  (...balances) => {
+    return bigNumberOrStaticZero(balances.reduce((acc, balance) => acc.plus(balance), BIG_ZERO));
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
  * Total not in active boost
  */
-export const selectUserVaultBalanceNotInActiveBoostInShareToken: UserBalanceSelector =
-  createCachedSelector(
-    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectUserVaultBalanceInShareTokenInBridged(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectUserVaultBalanceInShareTokenInCurrentBoost(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id']) =>
-      selectIsVaultPreStakedOrBoosted(state, vaultId),
-    (inVault, inBoosts, inBridge, inCurrentBoost, isBoosted) => {
-      if (isBoosted) {
-        return inVault.plus(inBoosts).plus(inBridge).minus(inCurrentBoost);
-      }
-
-      return BIG_ZERO;
+export const selectUserVaultBalanceNotInActiveBoostInShareToken = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareTokenInBridged(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareTokenPendingWithdrawal(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareTokenInCurrentBoost(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectIsVaultPreStakedOrBoosted(state, vaultId),
+  (inVault, inBoosts, inBridge, pendingWithdrawal, inCurrentBoost, isBoosted) => {
+    if (isBoosted) {
+      return bigNumberOrStaticZero(
+        inVault.plus(inBoosts).plus(pendingWithdrawal).plus(inBridge).minus(inCurrentBoost)
+      );
     }
-  )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
+
+    return BIG_ZERO;
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
  * Balance converted to deposit token, excluding in boosts and bridged tokens
  */
-export const selectUserVaultBalanceInDepositToken: UserBalanceSelector = createCachedSelector(
+export const selectUserVaultBalanceInDepositToken = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
     selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectVaultSharesToDepositTokenData(state, vaultId),
+  (shares, shareData) =>
+    bigNumberOrStaticZero(
+      shareData.shareToken
+        ? mooAmountToOracleAmount(
+            shareData.shareToken,
+            shareData.depositToken,
+            shareData.ppfs,
+            shares
+          )
+        : shares
+    )
+)((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
+
+/**
+ * Total not in active boost, converted to deposit token
+ */
+export const selectUserVaultBalanceNotInActiveBoostInDepositToken = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceNotInActiveBoostInShareToken(state, vaultId, maybeWalletAddress),
   (state: BeefyState, vaultId: VaultEntity['id']) =>
     selectVaultSharesToDepositTokenData(state, vaultId),
   (shares, shareData) =>
@@ -305,15 +360,15 @@ export const selectUserVaultBalanceInDepositToken: UserBalanceSelector = createC
 )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
- * Total not in active boost, converted to deposit token
+ * Balance converted to deposit token, including in boosts, bridged and pending withdrawal
  */
-export const selectUserVaultBalanceNotInActiveBoostInDepositToken: UserBalanceSelector =
-  createCachedSelector(
-    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectUserVaultBalanceNotInActiveBoostInShareToken(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id']) =>
-      selectVaultSharesToDepositTokenData(state, vaultId),
-    (shares, shareData) =>
+export const selectUserVaultBalanceInDepositTokenIncludingDisplaced = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareTokenIncludingDisplaced(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectVaultSharesToDepositTokenData(state, vaultId),
+  (shares, shareData) =>
+    bigNumberOrStaticZero(
       shareData.shareToken
         ? mooAmountToOracleAmount(
             shareData.shareToken,
@@ -322,73 +377,56 @@ export const selectUserVaultBalanceNotInActiveBoostInDepositToken: UserBalanceSe
             shares
           )
         : shares
-  )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
-
-/**
- * Balance converted to deposit token, including in boosts and bridged tokens
- */
-export const selectUserVaultBalanceInDepositTokenIncludingBoostsBridged: UserBalanceSelector =
-  createCachedSelector(
-    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id']) =>
-      selectVaultSharesToDepositTokenData(state, vaultId),
-    (shares, shareData) =>
-      shareData.shareToken
-        ? mooAmountToOracleAmount(
-            shareData.shareToken,
-            shareData.depositToken,
-            shareData.ppfs,
-            shares
-          )
-        : shares
-  )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
+    )
+)((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
  * Balance converted to deposit token, excluding in boosts and bridged tokens
  * @returns {TokenAmount} token: deposit token, amount: balance in deposit token
  */
-export const selectUserVaultBalanceInDepositTokenWithToken: UserBalanceWithTokenSelector =
-  createCachedSelector(
-    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id']) =>
-      selectVaultSharesToDepositTokenData(state, vaultId),
-    (shares, shareData) => ({
-      token: shareData.depositToken,
-      amount: shareData.shareToken
+export const selectUserVaultBalanceInDepositTokenWithToken = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareToken(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectVaultSharesToDepositTokenData(state, vaultId),
+  (shares, shareData) => ({
+    token: shareData.depositToken,
+    amount: bigNumberOrStaticZero(
+      shareData.shareToken
         ? mooAmountToOracleAmount(
             shareData.shareToken,
             shareData.depositToken,
             shareData.ppfs,
             shares
           )
-        : shares,
-    })
-  )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
+        : shares
+    ),
+  })
+)((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 /**
- * Balance converted to deposit token, including in boosts and bridged tokens
+ * Balance converted to deposit token, including in boosts, bridged and pending withdrawal
  * @returns {TokenAmount} token: deposit token, amount: balance in deposit token
  */
-export const selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken: UserBalanceWithTokenSelector =
-  createCachedSelector(
-    (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
-      selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vaultId, maybeWalletAddress),
-    (state: BeefyState, vaultId: VaultEntity['id']) =>
-      selectVaultSharesToDepositTokenData(state, vaultId),
-    (shares, shareData) => ({
-      token: shareData.depositToken,
-      amount: shareData.shareToken
+export const selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareTokenIncludingDisplaced(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectVaultSharesToDepositTokenData(state, vaultId),
+  (shares, shareData) => ({
+    token: shareData.depositToken,
+    amount: bigNumberOrStaticZero(
+      shareData.shareToken
         ? mooAmountToOracleAmount(
             shareData.shareToken,
             shareData.depositToken,
             shareData.ppfs,
             shares
           )
-        : shares,
-    })
-  )((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
+        : shares
+    ),
+  })
+)((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
 
 export type UserVaultBalanceBreakdownVault = {
   type: 'vault';
@@ -408,11 +446,18 @@ export type UserVaultBalanceBreakdownBridged = {
   amount: BigNumber;
   chainId: ChainEntity['id'];
 };
+export type UserVaultBalanceBreakdownPendingWithdrawal = {
+  type: 'pending-withdrawal';
+  id: string;
+  amount: BigNumber;
+  vaultId: VaultEntity['id'];
+};
 
 export type UserVaultBalanceBreakdownEntry =
   | UserVaultBalanceBreakdownVault
   | UserVaultBalanceBreakdownBoost
-  | UserVaultBalanceBreakdownBridged;
+  | UserVaultBalanceBreakdownBridged
+  | UserVaultBalanceBreakdownPendingWithdrawal;
 
 export type UserVaultBalanceBreakdown = {
   depositToken: TokenEntity;
@@ -442,12 +487,34 @@ export const selectVaultUserBalanceInDepositTokenBreakdown = (
   }
 
   // gov vaults do not have balances elsewhere
-  if (isGovVault(vault)) {
+  if (isGovVault(vault) || !shareData.shareToken) {
     return balances;
   }
 
+  // only erc4626 vaults may have pending withdrawals
+  if (isErc4626Vault(vault)) {
+    const pendingWithdrawal = selectUserVaultBalanceInShareTokenPendingWithdrawal(
+      state,
+      vaultId,
+      walletAddress
+    );
+    if (pendingWithdrawal.gt(BIG_ZERO)) {
+      balances.entries.push({
+        type: 'pending-withdrawal',
+        id: `pending-withdrawal-${vaultId}`,
+        vaultId,
+        amount: mooAmountToOracleAmount(
+          shareData.shareToken,
+          shareData.depositToken,
+          shareData.ppfs,
+          pendingWithdrawal
+        ),
+      });
+    }
+  }
+
   // only standard vaults have boosts or bridged balances
-  if (!isStandardVault(vault) || !shareData.shareToken) {
+  if (!isStandardVault(vault)) {
     return balances;
   }
 
@@ -529,14 +596,14 @@ export const selectBoostUserRewardsInToken = (
 /**
  * Vault balance converted to USD, including in boosts and bridged tokens
  */
-export const selectUserVaultBalanceInUsdIncludingBoostsBridged = (
+export const selectUserVaultBalanceInUsdIncludingDisplaced = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ) => {
   const vault = selectVaultById(state, vaultId);
   const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const vaultTokenDeposit = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(
+  const vaultTokenDeposit = selectUserVaultBalanceInDepositTokenIncludingDisplaced(
     state,
     vaultId,
     walletAddress
@@ -691,7 +758,7 @@ export const selectUserLpBreakdownBalance = (
       ? new BigNumber(breakdown.underlyingLiquidity || 0)
       : BIG_ZERO;
 
-  const userBalanceDecimal = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(
+  const userBalanceDecimal = selectUserVaultBalanceInDepositTokenIncludingDisplaced(
     state,
     vault.id,
     walletAddress

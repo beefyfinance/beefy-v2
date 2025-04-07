@@ -18,7 +18,6 @@ import {
 import type { TokenErc20, TokenNative } from '../../../entities/token.ts';
 import type { Step } from '../../../reducers/wallet/stepper.ts';
 import type { TFunction } from 'react-i18next';
-import { walletActions } from '../../../actions/wallet-actions.ts';
 import { BigNumber } from 'bignumber.js';
 import { selectWalletAddress } from '../../../selectors/wallet.ts';
 import { isFiniteNumber } from '../../../../../helpers/number.ts';
@@ -28,6 +27,7 @@ import {
 } from '../../../utils/feature-flags.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import type { Address } from 'abitype';
+import { bridgeViaCommonInterface } from '../../../actions/wallet/bridge.ts';
 
 export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
   implements IBridgeProvider<T>
@@ -196,7 +196,7 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
     return {
       step: 'bridge',
       message: t('Vault-TxnConfirm', { type: t('Bridge-noun') }),
-      action: walletActions.bridgeViaCommonInterface(quote),
+      action: bridgeViaCommonInterface(quote),
       pending: false,
     };
   }

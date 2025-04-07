@@ -72,7 +72,6 @@ import { Balances } from '../../helpers/Balances.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import { slipBy } from '../../helpers/amounts.ts';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
-import { walletActions } from '../../../../actions/wallet-actions.ts';
 import { isStandardVault, type VaultStandard } from '../../../../entities/vault.ts';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { buildTokenApproveTx } from '../../zap/approve.ts';
@@ -81,6 +80,7 @@ import { isFulfilledResult } from '../../../../../../helpers/promises.ts';
 import { isDefined } from '../../../../utils/array-utils.ts';
 import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType.ts';
 import type { CurveStrategyConfig } from '../strategy-configs.ts';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -600,11 +600,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
       };
 
       const expectedTokens = vaultDeposit.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };
@@ -1026,11 +1022,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
       };
 
       const expectedTokens = quote.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };

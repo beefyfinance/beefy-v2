@@ -27,11 +27,11 @@ import type { IBridgeQuote } from '../apis/bridge/providers/provider-types.ts';
 import { fetchAllowanceAction } from './allowance.ts';
 import { selectAllowanceByTokenAddress } from '../selectors/allowances.ts';
 import type { Step } from '../reducers/wallet/stepper.ts';
-import { walletActions } from './wallet-actions.ts';
 import type { Namespace, TFunction } from 'react-i18next';
 import { startStepperWithSteps } from './stepper.ts';
 import { BigNumber } from 'bignumber.js';
 import { isAddress } from 'viem';
+import { approve } from './wallet/approval.ts';
 
 function getLimits(quotes: IBridgeQuote<BeefyAnyBridgeConfig>[]) {
   const current = BigNumber.max(
@@ -327,7 +327,7 @@ export const performBridge = createAsyncThunk<
       steps.push({
         step: 'approve',
         message: t('Vault-ApproveMsg'),
-        action: walletActions.approval(
+        action: approve(
           quote.allowance.token,
           quote.allowance.spenderAddress,
           quote.allowance.amount

@@ -78,7 +78,6 @@ import { Balances } from '../../helpers/Balances.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import { mergeTokenAmounts, slipBy, slipTokenAmountBy } from '../../helpers/amounts.ts';
 import { allTokensAreDistinct, includeWrappedAndNative, pickTokens } from '../../helpers/tokens.ts';
-import { walletActions } from '../../../../actions/wallet-actions.ts';
 import { isStandardVault, type VaultStandard } from '../../../../entities/vault.ts';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { isDefined } from '../../../../utils/array-utils.ts';
@@ -99,6 +98,7 @@ import {
   isBalancerAllPool,
   isBalancerSinglePool,
 } from '../../../amm/balancer/common/type-guards.ts';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
 type ZapHelpers = {
   slippage: number;
@@ -888,11 +888,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
       };
 
       const expectedTokens = vaultDeposit.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };
@@ -1518,11 +1514,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
       };
 
       const expectedTokens = quote.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };

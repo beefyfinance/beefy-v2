@@ -2,11 +2,11 @@ import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../../../../../store.ts';
 import { startStepperWithSteps } from '../../../../../data/actions/stepper.ts';
-import { walletActions } from '../../../../../data/actions/wallet-actions.ts';
 import type { Step } from '../../../../../data/reducers/wallet/stepper.ts';
 import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
 import { ActionButton } from './ActionButton.tsx';
+import { claimBoost } from '../../../../../data/actions/wallet/boost.ts';
 
 type ClaimProps = {
   boostId: BoostPromoEntity['id'];
@@ -24,7 +24,7 @@ export const Claim = memo(function Claim({ boostId, chainId, disabled }: ClaimPr
           {
             step: 'boost-claim',
             message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
-            action: walletActions.claimBoost(boostId),
+            action: claimBoost(boostId),
             pending: false,
           } satisfies Step,
         ],

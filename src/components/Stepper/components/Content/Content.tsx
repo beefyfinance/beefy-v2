@@ -18,7 +18,6 @@ import { formatTokenDisplayCondensed } from '../../../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../../../store.ts';
 import { Button } from '../../../Button/Button.tsx';
 import { TransactionLink } from '../TransactionLink/TransactionLink.tsx';
-import { walletActions } from '../../../../features/data/actions/wallet-actions.ts';
 import { styles } from './styles.ts';
 import { Title } from '../Title/Title.tsx';
 import { ListJoin } from '../../../ListJoin.tsx';
@@ -33,6 +32,7 @@ import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import { explorerTxUrl } from '../../../../helpers/url.ts';
 import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { CircularProgress } from '../../../CircularProgress/CircularProgress.tsx';
+import { resetWallet } from '../../../../features/data/actions/wallet/common.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -137,7 +137,7 @@ export const CloseButton = memo(function CloseButton() {
 
   const handleClose = useCallback(() => {
     dispatch(stepperActions.reset());
-    dispatch(walletActions.resetWallet());
+    dispatch(resetWallet());
   }, [dispatch]);
 
   return (

@@ -28,6 +28,11 @@ export const buttonRecipe = cva({
   },
   variants: {
     size: {
+      xs: {
+        padding: '3px 9px',
+        borderRadius: '4px',
+        textStyle: 'body.sm.medium',
+      },
       sm: {
         padding: '8px 16px',
       },
@@ -78,6 +83,13 @@ export const buttonRecipe = cva({
     },
   },
   compoundVariants: [
+    {
+      size: 'xs',
+      borderless: false,
+      css: {
+        padding: '1px 7px',
+      },
+    },
     {
       size: 'sm',
       borderless: false,

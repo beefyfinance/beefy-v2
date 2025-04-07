@@ -84,7 +84,7 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
   contractData: {
     byVaultId: {
       [vaultId: VaultEntity['id']]: {
-        strategyAddress: string;
+        strategyAddress?: string;
         pricePerFullShare?: BigNumber | null;
         balances?: BigNumber[];
       };
@@ -119,6 +119,9 @@ export const initialVaultsState: VaultsState = {
       allIds: [],
     },
     cowcentrated: {
+      allIds: [],
+    },
+    erc4626: {
       allIds: [],
     },
   },
@@ -216,6 +219,26 @@ function addContractDataToState(
       sliceState.contractData.byVaultId[vaultId].strategyAddress = cowVaultContractData.strategy;
     }
   }
+
+  for (const vaultContractData of contractData.erc4626Vaults) {
+    const vaultId = vaultContractData.id;
+
+    // only update it if needed
+    if (sliceState.contractData.byVaultId[vaultId] === undefined) {
+      sliceState.contractData.byVaultId[vaultId] = {
+        pricePerFullShare: vaultContractData.pricePerFullShare,
+      };
+    }
+
+    if (
+      !sliceState.contractData.byVaultId[vaultId].pricePerFullShare?.isEqualTo(
+        vaultContractData.pricePerFullShare
+      )
+    ) {
+      sliceState.contractData.byVaultId[vaultId].pricePerFullShare =
+        vaultContractData.pricePerFullShare;
+    }
+  }
 }
 
 function createVaultsChainState(): VaultsState['byChainId'][ChainEntity['id']] {
@@ -234,6 +257,11 @@ function createVaultsChainState(): VaultsState['byChainId'][ChainEntity['id']] {
         byDepositTokenAddress: {},
       },
       cowcentrated: {
+        allIds: [],
+        byAddress: {},
+        byDepositTokenAddress: {},
+      },
+      erc4626: {
         allIds: [],
         byAddress: {},
         byDepositTokenAddress: {},
@@ -267,6 +295,9 @@ function rebuildVaultsState(sliceState: Draft<VaultsState>) {
       allIds: [],
     },
     cowcentrated: {
+      allIds: [],
+    },
+    erc4626: {
       allIds: [],
     },
   };

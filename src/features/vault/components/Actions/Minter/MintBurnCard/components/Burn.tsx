@@ -20,7 +20,6 @@ import {
   askForNetworkChange,
   askForWalletConnection,
 } from '../../../../../../data/actions/wallet.ts';
-import { walletActions } from '../../../../../../data/actions/wallet-actions.ts';
 import type { MinterCardParams } from '../../MinterCard.tsx';
 import {
   selectMinterById,
@@ -40,6 +39,8 @@ import { isTokenErc20 } from '../../../../../../data/entities/token.ts';
 import { useInputForm } from '../../../../../../data/hooks/input.tsx';
 import { AmountInput } from '../../../Transact/AmountInput/AmountInput.tsx';
 import { Button } from '../../../../../../../components/Button/Button.tsx';
+import { burnWithdraw } from '../../../../../../data/actions/wallet/minters.ts';
+import { approve } from '../../../../../../data/actions/wallet/approval.ts';
 
 const useStyles = legacyMakeStyles(styles);
 export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) {
@@ -119,7 +120,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           step: {
             step: 'approve',
             message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(mintedToken, minter.burnerAddress!, formData.amount),
+            action: approve(mintedToken, minter.burnerAddress!, formData.amount),
             pending: false,
           },
         })
@@ -130,7 +131,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         step: {
           step: 'burn',
           message: t('Vault-TxnConfirm', { type: t('Burn') }),
-          action: walletActions.burnWithdraw(
+          action: burnWithdraw(
             vault.chainId,
             minter.burnerAddress!,
             depositToken,

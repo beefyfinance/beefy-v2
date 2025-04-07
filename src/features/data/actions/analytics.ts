@@ -37,7 +37,7 @@ import {
   selectStandardCowcentratedVaultById,
   selectVaultByAddressOrUndefined,
   selectVaultById,
-  selectVaultStrategyAddressOrUndefined,
+  selectVaultStrategyAddress,
 } from '../selectors/vaults.ts';
 import { selectCowcentratedLikeVaultDepositTokens } from '../selectors/tokens.ts';
 import { groupBy, keyBy, mapValues, omitBy, partition, pick, sortBy, values } from 'lodash-es';
@@ -1263,10 +1263,7 @@ export const fetchClmPendingRewards = createAsyncThunk<
   const state = getState();
   const vault = selectCowcentratedLikeVaultById(state, vaultId);
   const [token0, token1] = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
-  const clmStrategyAddress = selectVaultStrategyAddressOrUndefined(
-    state,
-    vault.cowcentratedIds.clm
-  );
+  const clmStrategyAddress = selectVaultStrategyAddress(state, vault.cowcentratedIds.clm);
   const chain = selectChainById(state, vault.chainId);
   const api = await getClmApi();
 

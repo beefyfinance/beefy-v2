@@ -12,6 +12,8 @@ import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../action
 import type {
   BoostBalance,
   BoostReward,
+  Erc4626PendingBalance,
+  Erc4626PendingBalanceRequest,
   GovVaultBalance,
   GovVaultReward,
   TokenBalance,
@@ -74,6 +76,15 @@ export interface BalanceState {
             rewards: GovVaultReward[];
           };
         };
+
+        byVaultId: {
+          [vaultId: VaultEntity['id']]: {
+            pendingWithdrawals: {
+              shares: BigNumber;
+              requests: Erc4626PendingBalanceRequest[];
+            };
+          };
+        };
       };
     };
   };
@@ -111,6 +122,7 @@ export const balanceSlice = createSlice({
       addTokenBalanceToState(walletState, boost.chainId, balance.tokens);
       addGovVaultBalanceToState(walletState, balance.govVaults);
       addBoostBalanceToState(walletState, balance.boosts);
+      addVaultPendingToState(walletState, balance.erc4626Pending);
     });
 
     builder.addCase(initiateMinterForm.fulfilled, (sliceState, action) => {
@@ -138,6 +150,7 @@ export const balanceSlice = createSlice({
         addTokenBalanceToState(walletState, chainId, balance.tokens);
         addGovVaultBalanceToState(walletState, balance.govVaults);
         addBoostBalanceToState(walletState, balance.boosts);
+        addVaultPendingToState(walletState, balance.erc4626Pending);
       }
     );
 
@@ -162,6 +175,7 @@ function getWalletState(sliceState: Draft<BalanceState>, walletAddress: string) 
         byChainId: {},
         byBoostId: {},
         byGovVaultId: {},
+        byVaultId: {},
       },
     };
   }
@@ -181,6 +195,7 @@ function addBalancesToState(
   addTokenBalanceToState(walletState, chainId, balance.tokens);
   addBoostBalanceToState(walletState, balance.boosts);
   addGovVaultBalanceToState(walletState, balance.govVaults);
+  addVaultPendingToState(walletState, balance.erc4626Pending);
 }
 
 function addTokenBalanceToState(
@@ -268,6 +283,42 @@ function addBoostBalanceToState(
       walletState.tokenAmount.byBoostId[boostId] = {
         rewards: boostBalance.rewards,
         balance: boostBalance.balance,
+      };
+    }
+  }
+}
+
+function addVaultPendingToState(
+  walletState: Draft<BalanceState['byAddress']['0xABC']>,
+  erc4626Pending: Erc4626PendingBalance[]
+) {
+  for (const vaultPending of erc4626Pending) {
+    // we only have async withdraw for now
+    if (vaultPending.type !== 'withdraw') {
+      continue;
+    }
+
+    const vaultId = vaultPending.vaultId;
+
+    // only update data if necessary
+    const stateForVault = walletState.tokenAmount.byVaultId[vaultId]?.pendingWithdrawals;
+    if (
+      // state isn't already there and if it's there, only if amount differ
+      stateForVault === undefined ||
+      !stateForVault.shares.isEqualTo(vaultPending.shares) ||
+      stateForVault.requests.length !== vaultPending.requests.length ||
+      stateForVault.requests.some(
+        (request, i) =>
+          !request.shares.isEqualTo(vaultPending.requests[i].shares) ||
+          request.id !== vaultPending.requests[i].id
+      )
+    ) {
+      walletState.tokenAmount.byVaultId[vaultId] ??= {
+        pendingWithdrawals: { shares: BIG_ZERO, requests: [] },
+      };
+      walletState.tokenAmount.byVaultId[vaultId].pendingWithdrawals = {
+        shares: vaultPending.shares,
+        requests: vaultPending.requests,
       };
     }
   }

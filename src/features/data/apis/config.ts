@@ -18,6 +18,7 @@ import { mapValues } from 'lodash-es';
 import type { MigrationConfig } from '../reducers/wallet/migration.ts';
 import { entries, keys } from '../../../helpers/object.ts';
 import { getMigratorConfig, getMinterConfig } from '../../../helpers/getConfig.ts';
+import { featureFlag_sonicTestnet } from '../utils/feature-flags.ts';
 
 /**
  * A class to access beefy configuration
@@ -25,7 +26,20 @@ import { getMigratorConfig, getMinterConfig } from '../../../helpers/getConfig.t
  */
 export class ConfigAPI {
   public async fetchChainConfigs(): Promise<ChainConfig[]> {
-    return entries(chainConfigs).map(([id, chain]) => ({ id, ...chain }));
+    const configs = entries(chainConfigs).map(([id, chain]) => ({ id, ...chain }));
+
+    // TODO beSonic remove
+    const sonicTestnet = featureFlag_sonicTestnet();
+    if (sonicTestnet) {
+      const chain = configs.find(c => c.id === 'sonic');
+      if (chain) {
+        for (const [key, value] of Object.entries(sonicTestnet.chain)) {
+          (chain as unknown as Record<typeof key, typeof value>)[key] = value;
+        }
+      }
+    }
+
+    return configs;
   }
 
   public async fetchPartnersConfig(): Promise<PartnersConfig> {
@@ -77,6 +91,17 @@ export class ConfigAPI {
         ])
       )
     );
+
+    // TODO beSonic remove
+    const sonicTestnet = featureFlag_sonicTestnet();
+    if (sonicTestnet) {
+      const vault = vaultsByChainId['sonic']?.find(v => v.id === 'beefy-besonic');
+      if (vault) {
+        for (const [key, value] of Object.entries(sonicTestnet.vault)) {
+          (vault as unknown as Record<typeof key, typeof value>)[key] = value;
+        }
+      }
+    }
 
     return mapValues(vaultsByChainId, vaults => vaults.filter(v => !v.hidden));
   }

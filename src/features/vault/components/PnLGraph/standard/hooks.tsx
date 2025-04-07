@@ -18,7 +18,7 @@ import {
 } from '../../../../data/selectors/tokens.ts';
 import { selectWalletAddress } from '../../../../data/selectors/wallet.ts';
 import { isTimelineEntityStandard } from '../../../../data/entities/analytics.ts';
-import { selectUserVaultBalanceInShareTokenIncludingBoostsBridged } from '../../../../data/selectors/balance.ts';
+import { selectUserVaultBalanceInShareTokenIncludingDisplaced } from '../../../../data/selectors/balance.ts';
 import { useVaultIdToUnderlyingUsdPrices } from '../../../../data/hooks/historical.tsx';
 import { useVaultIdToShareToUnderlying } from '../../../../data/hooks/analytics.tsx';
 import type { GraphBucket } from '../../../../../helpers/graph/types.ts';
@@ -44,7 +44,7 @@ export const usePnLChartData = (
     selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const currentMooTokenBalance = useAppSelector(state =>
-    selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vault.id, walletAddress)
+    selectUserVaultBalanceInShareTokenIncludingDisplaced(state, vault.id, walletAddress)
   );
   const {
     data: sharesToUnderlying,

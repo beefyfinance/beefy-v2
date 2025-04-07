@@ -51,7 +51,6 @@ import { selectFeesByVaultId } from '../../../selectors/fees.ts';
 import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi.ts';
 import { BigNumber } from 'bignumber.js';
 import { getInsertIndex, getTokenAddress } from '../helpers/zap.ts';
-import { walletActions } from '../../../actions/wallet-actions.ts';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../reducers/wallet/stepper.ts';
 import { getVaultWithdrawnFromContract, getVaultWithdrawnFromState } from '../helpers/vault.ts';
@@ -59,6 +58,7 @@ import { selectWalletAddressOrThrow } from '../../../selectors/wallet.ts';
 import type { ZapStep } from '../zap/types.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import { encodeFunctionData } from 'viem';
+import { deposit, withdraw } from '../../../actions/wallet/standard.ts';
 
 export class StandardVaultType implements IStandardVaultType {
   public readonly id = 'standard';
@@ -301,7 +301,7 @@ export class StandardVaultType implements IStandardVaultType {
     return {
       step: 'deposit',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-      action: walletActions.deposit(this.vault, input.amount, input.max),
+      action: deposit(this.vault, input.amount, input.max),
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };
@@ -370,7 +370,7 @@ export class StandardVaultType implements IStandardVaultType {
     return {
       step: 'withdraw',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-      action: walletActions.withdraw(this.vault, input.amount, input.max),
+      action: withdraw(this.vault, input.amount, input.max),
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };

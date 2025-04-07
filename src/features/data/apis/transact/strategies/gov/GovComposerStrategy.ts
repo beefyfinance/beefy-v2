@@ -42,7 +42,6 @@ import {
 import { isTokenEqual, type TokenEntity, type TokenErc20 } from '../../../../entities/token.ts';
 import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../../selectors/tokens.ts';
 import type { BeefyState, BeefyThunk } from '../../../../../../redux-types.ts';
-import { walletActions } from '../../../../actions/wallet-actions.ts';
 import { selectChainById } from '../../../../selectors/chains.ts';
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
@@ -65,6 +64,7 @@ import { pickTokens } from '../../helpers/tokens.ts';
 import { uniqBy } from 'lodash-es';
 import type { Abi } from 'abitype';
 import { encodeFunctionData } from 'viem';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -298,11 +298,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
 
         const expectedTokens = quote.outputs.map(output => output.token);
 
-        const walletAction = walletActions.zapExecuteOrder(
-          this.vault.id,
-          zapRequest,
-          expectedTokens
-        );
+        const walletAction = zapExecuteOrder(this.vault.id, zapRequest, expectedTokens);
         return walletAction(dispatch, getState, extraArgument);
       } else {
         if (!this.isMatchingDepositQuote(underlyingQuote)) {
@@ -344,11 +340,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
         );
 
         const expectedTokens = stakeZap.outputs.map(output => output.token);
-        const walletAction = walletActions.zapExecuteOrder(
-          this.vault.id,
-          zapRequest,
-          expectedTokens
-        );
+        const walletAction = zapExecuteOrder(this.vault.id, zapRequest, expectedTokens);
         return walletAction(dispatch, getState, extraArgument);
       }
     };
@@ -635,11 +627,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
           steps,
         };
 
-        const walletAction = walletActions.zapExecuteOrder(
-          this.vault.id,
-          zapRequest,
-          expectedTokens
-        );
+        const walletAction = zapExecuteOrder(this.vault.id, zapRequest, expectedTokens);
         return walletAction(dispatch, getState, extraArgument);
       } else {
         if (!this.isMatchingWithdrawQuote(underlyingQuote)) {
@@ -660,11 +648,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
           minOutputAmount: '0',
         });
 
-        const walletAction = walletActions.zapExecuteOrder(
-          this.vault.id,
-          zapRequest,
-          expectedTokens
-        );
+        const walletAction = zapExecuteOrder(this.vault.id, zapRequest, expectedTokens);
         return walletAction(dispatch, getState, extraArgument);
       }
     };

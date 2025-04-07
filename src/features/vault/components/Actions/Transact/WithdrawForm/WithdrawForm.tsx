@@ -25,6 +25,7 @@ import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice/WithdrawnInW
 import { useDispatch } from 'react-redux';
 import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
+import { WithdrawQueueLoader } from './WithdrawQueue/WithdrawQueueLoader.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -99,6 +100,7 @@ export const WithdrawForm = memo(function WithdrawForm() {
   return (
     <>
       <WithdrawnInWalletNotice css={styles.notice} />
+      <WithdrawQueueLoader />
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
           {hasOptions ? (

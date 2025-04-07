@@ -96,6 +96,10 @@ export function toWei(value: BigNumber, decimals: number): BigNumber {
   return value.shiftedBy(decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
 }
 
+export function toWeiBigInt(value: BigNumber, decimals: number): bigint {
+  return BigInt(value.shiftedBy(decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR).toString(10));
+}
+
 export function toWeiFromString(value: string, decimals: number): BigNumber {
   return toWei(new BigNumber(value), decimals);
 }
@@ -114,6 +118,10 @@ export function fromWei(value: BigNumber, decimals: number): BigNumber {
 
 export function fromWeiString(value: string, decimals: number): BigNumber {
   return fromWei(new BigNumber(value), decimals);
+}
+
+export function fromWeiBigInt(value: bigint, decimals: number): BigNumber {
+  return fromWeiString(value.toString(), decimals);
 }
 
 export function fromWeiToTokenAmount(value: BigNumber, token: TokenEntity): TokenAmount {

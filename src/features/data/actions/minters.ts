@@ -78,12 +78,10 @@ export const initiateMinterForm = createAsyncThunk<
   const balanceRes: FetchAllBalancesResult = walletAddress
     ? await balanceApi.fetchAllBalances(
         getState(),
-        [depositToken, mintedToken],
-        [],
-        [],
+        { tokens: [depositToken, mintedToken] },
         walletAddress
       )
-    : { tokens: [], govVaults: [], boosts: [] };
+    : { tokens: [], govVaults: [], boosts: [], erc4626Pending: [] };
 
   const allowanceRes =
     walletAddress && spenderAddress && isTokenErc20(depositToken)

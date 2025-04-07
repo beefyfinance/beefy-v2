@@ -42,7 +42,6 @@ import { first, uniqBy } from 'lodash-es';
 import { BIG_ZERO, fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
 import { calculatePriceImpact, ZERO_FEE } from '../../helpers/quotes.ts';
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
-import { walletActions } from '../../../../actions/wallet-actions.ts';
 import type {
   OrderInput,
   OrderOutput,
@@ -66,6 +65,7 @@ import type { ChainEntity } from '../../../../entities/chain.ts';
 import { selectChainById } from '../../../../selectors/chains.ts';
 import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType.ts';
 import type { SingleStrategyConfig } from '../strategy-configs.ts';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -306,11 +306,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
       };
 
       const expectedTokens = vaultDeposit.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };
@@ -565,11 +561,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
       };
 
       const expectedTokens = quote.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };

@@ -131,6 +131,7 @@
   "VaultStat-Deposited-vault-cowcentrated": "CLM",
   "VaultStat-Deposited-boost": "{{boost}} Boost",
   "VaultStat-Deposited-bridged": "Bridged to {{chain}}",
+  "VaultStat-Deposited-pending-withdrawal": "Pending Withdrawal",
   "VaultStat-Deposited-NotInActiveBoost": "You are missing out on Boost rewards",
   "VaultStat-Tooltip-Autocompounded": "Autocompounded Fees",
   "VaultTag-LowRisk": "Low Risk",
@@ -548,6 +549,14 @@
   "Stepper-withdraw-Success-Title": "Withdraw Success",
   "Stepper-withdraw-Success-Content": "You have successfully withdrawn {{amount}} {{token}} from the vault",
 
+  "Stepper-request-withdraw-Building-Content": "Building request withdrawal transaction...",
+  "Stepper-request-withdraw-Success-Title": "Request Withdrawal Success",
+  "Stepper-request-withdraw-Success-Content": "You have successfully requested {{amount}} {{token}} to be withdrawn from the vault",
+
+  "Stepper-fulfill-request-withdraw-Building-Content": "Building withdraw transaction...",
+  "Stepper-fulfill-request-withdraw-Success-Title": "Withdraw Success",
+  "Stepper-fulfill-request-withdraw-Success-Content": "You have successfully withdrawn {{amount}} {{token}} from the vault",
+
   "Stepper-claim-withdraw-Building-Content": "Building withdraw transaction...",
   "Stepper-claim-withdraw-Success-Title": "Claim & Withdraw Confirmed",
   "Stepper-claim-withdraw-Success-Content": "You have successfully withdrawn {{amount}} {{token}} and claimed {{rewards}} {{rewardToken}} from the Earnings Pool",
@@ -628,6 +637,8 @@
   "Transact-DepositAll": "Deposit All",
   "Transact-Withdraw": "Withdraw",
   "Transact-WithdrawAll": "Withdraw All",
+  "Transact-RequestWithdraw": "Request Withdrawal",
+  "Transact-WithdrawRequests": "Withdrawal requests",
   "Transact-Claim": "Claim",
   "Transact-Claim-Description-gov": "This pool distributes reward for the stakers. These rewards can be claimed manually below.",
   "Transact-Claim-Description-gov-merkl": "Merkl rewards are distributed several times per day and are claimed along with all other available rewards from Merkl.",

@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../../../components/Button/Button.tsx';
 import { ActionConnectSwitch } from '../../../CommonActions/CommonActions.tsx';
 import { useAppDispatch, useAppSelector } from '../../../../../../../../store.ts';
-import { walletActions } from '../../../../../../../data/actions/wallet-actions.ts';
 import { startStepperWithSteps } from '../../../../../../../data/actions/stepper.ts';
 import type { VaultGov } from '../../../../../../../data/entities/vault.ts';
 import { selectGovVaultById } from '../../../../../../../data/selectors/vaults.ts';
 import { selectIsStepperStepping } from '../../../../../../../data/selectors/stepper.ts';
+import { claimGovVault } from '../../../../../../../data/actions/wallet/gov.ts';
 
 type ClaimProps = {
   vaultId: VaultGov['id'];
@@ -26,7 +26,7 @@ export const Claim = memo(function Claim({ vaultId }: ClaimProps) {
           {
             step: 'claim-gov',
             message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
-            action: walletActions.claimGovVault(vault),
+            action: claimGovVault(vault),
             pending: false,
           },
         ],

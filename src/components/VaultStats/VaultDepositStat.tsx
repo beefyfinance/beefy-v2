@@ -4,8 +4,8 @@ import type { BeefyState } from '../../redux-types.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import {
   selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
-  selectUserVaultBalanceInUsdIncludingBoostsBridged,
+  selectUserVaultBalanceInDepositTokenIncludingDisplaced,
+  selectUserVaultBalanceInUsdIncludingDisplaced,
   selectUserVaultBalanceNotInActiveBoostInDepositToken,
 } from '../../features/data/selectors/balance.ts';
 import {
@@ -81,7 +81,7 @@ function selectData(
     return { loading: true };
   }
 
-  const totalDeposit = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(
+  const totalDeposit = selectUserVaultBalanceInDepositTokenIncludingDisplaced(
     state,
     vault.id,
     walletAddress
@@ -97,7 +97,7 @@ function selectData(
     walletAddress
   );
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-  const totalDepositUsd = selectUserVaultBalanceInUsdIncludingBoostsBridged(
+  const totalDepositUsd = selectUserVaultBalanceInUsdIncludingDisplaced(
     state,
     vaultId,
     walletAddress

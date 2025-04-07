@@ -59,7 +59,6 @@ import {
   wnativeToNative,
 } from '../../helpers/tokens.ts';
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
-import { walletActions } from '../../../../actions/wallet-actions.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { OrderInput, OrderOutput, UserlessZapRequest, ZapStep } from '../../zap/types.ts';
 import { first, uniqBy } from 'lodash-es';
@@ -70,6 +69,7 @@ import type { ConicStrategyConfig } from '../strategy-configs.ts';
 import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
 import type { Abi, Address } from 'abitype';
 import { encodeFunctionData, getAbiItem } from 'viem';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
 const strategyId = 'conic';
 type StrategyId = typeof strategyId;
@@ -285,11 +285,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
       };
 
       const expectedTokens = [shareToken];
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
       return walletAction(dispatch, getState, extraArgument);
     };
 
@@ -551,11 +547,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
       };
 
       const expectedTokens = quote.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };

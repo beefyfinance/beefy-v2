@@ -71,7 +71,6 @@ import type {
 import { getTokenAddress, NO_RELAY } from '../helpers/zap.ts';
 import type { ChainEntity } from '../../../entities/chain.ts';
 import { fetchZapAggregatorSwap } from '../zap/swap.ts';
-import { walletActions } from '../../../actions/wallet-actions.ts';
 import { Balances } from '../helpers/Balances.ts';
 import { isStandardVault, type VaultStandard } from '../../../entities/vault.ts';
 import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
@@ -84,6 +83,7 @@ import { type AmmEntityUniswapLike, isUniswapLikeAmm } from '../../../entities/z
 import { isStandardVaultType, type IStandardVaultType } from '../vaults/IVaultType.ts';
 import type { UniswapLikeStrategyConfig } from './strategy-configs.ts';
 import { tokenInList } from '../../../../../helpers/tokens.ts';
+import { zapExecuteOrder } from '../../../actions/wallet/zap.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -812,11 +812,7 @@ export abstract class UniswapLikeStrategy<
       };
 
       const expectedTokens = vaultDeposit.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };
@@ -1267,11 +1263,7 @@ export abstract class UniswapLikeStrategy<
       };
 
       const expectedTokens = quote.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };

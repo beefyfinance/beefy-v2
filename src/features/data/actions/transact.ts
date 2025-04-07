@@ -41,7 +41,6 @@ import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../reducers/wallet/stepper.ts';
 import { stepperActions } from '../reducers/wallet/stepper.ts';
 import { selectAllowanceByTokenAddress } from '../selectors/allowances.ts';
-import { walletActions } from './wallet-actions.ts';
 import { startStepperWithSteps } from './stepper.ts';
 import { TransactMode, TransactStatus } from '../reducers/wallet/transact-types.ts';
 import { selectTokenByAddress } from '../selectors/tokens.ts';
@@ -53,6 +52,8 @@ import type { Action } from 'redux';
 import { selectWalletAddress } from '../selectors/wallet.ts';
 import { isSerializableError, serializeError } from '../apis/transact/strategies/error.ts';
 import type { SerializedError } from '../apis/transact/strategies/error-types.ts';
+import { approve } from './wallet/approval.ts';
+import { claimGovVault } from './wallet/gov.ts';
 
 export type TransactInitArgs = {
   vaultId: VaultEntity['id'];
@@ -329,10 +330,15 @@ export async function getTransactSteps(
       );
 
       if (allowance.lt(allowanceTokenAmount.amount)) {
+        console.log(
+          allowanceTokenAmount.token.symbol,
+          allowanceTokenAmount.amount.toString(10),
+          allowance.toString(10)
+        );
         steps.push({
           step: 'approve',
           message: t('Vault-ApproveMsg'),
-          action: walletActions.approval(
+          action: approve(
             allowanceTokenAmount.token,
             allowanceTokenAmount.spenderAddress,
             allowanceTokenAmount.amount
@@ -387,7 +393,7 @@ export function transactStepsClaimGov(
           {
             step: 'claim-gov',
             message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
-            action: walletActions.claimGovVault(vault),
+            action: claimGovVault(vault),
             pending: false,
           },
         ],

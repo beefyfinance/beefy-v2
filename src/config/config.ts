@@ -743,7 +743,7 @@ export const config = {
     name: 'Sonic',
     chainId: 146,
     rpc: ['https://rpc.soniclabs.com'],
-    explorerUrl: 'https://sonicscan.org/',
+    explorerUrl: 'https://sonicscan.org',
     multicallAddress: '0x0D17eE2ed4e67b626B43C3695586E5aE6a039949',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
     appMulticallContractAddress: '0xA73b677308327970808B30D2562DbA613207e41A',

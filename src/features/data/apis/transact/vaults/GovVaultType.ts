@@ -35,9 +35,9 @@ import { selectFeesByVaultId } from '../../../selectors/fees.ts';
 import { BigNumber } from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../reducers/wallet/stepper.ts';
-import { walletActions } from '../../../actions/wallet-actions.ts';
 import { selectGovVaultPendingRewards } from '../../../selectors/balance.ts';
 import { selectWalletAddress } from '../../../selectors/wallet.ts';
+import { exitGovVault, stakeGovVault, unstakeGovVault } from '../../../actions/wallet/gov.ts';
 
 export class GovVaultType implements IGovVaultType {
   public readonly id = 'gov';
@@ -146,7 +146,7 @@ export class GovVaultType implements IGovVaultType {
     return {
       step: 'deposit-gov',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-      action: walletActions.stakeGovVault(this.vault, input.amount),
+      action: stakeGovVault(this.vault, input.amount),
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };
@@ -233,7 +233,7 @@ export class GovVaultType implements IGovVaultType {
       return {
         step: 'claim-withdraw',
         message: t('Vault-TxnConfirm', { type: t('Claim-Withdraw-noun') }),
-        action: walletActions.exitGovVault(this.vault),
+        action: exitGovVault(this.vault),
         pending: false,
         extraInfo: {
           rewards: pendingRewards.length ? pendingRewards[0] : undefined, // TODO support multiple earned tokens [empty = ok, length checked]
@@ -245,7 +245,7 @@ export class GovVaultType implements IGovVaultType {
     return {
       step: 'withdraw',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-      action: walletActions.unstakeGovVault(this.vault, input.amount),
+      action: unstakeGovVault(this.vault, input.amount),
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };

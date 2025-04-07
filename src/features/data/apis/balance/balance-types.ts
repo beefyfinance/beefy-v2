@@ -2,15 +2,13 @@ import { type BigNumber } from 'bignumber.js';
 import type { BeefyState } from '../../../../redux-types.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity } from '../../entities/token.ts';
-import type { VaultEntity, VaultGov } from '../../entities/vault.ts';
+import type { VaultEntity, VaultErc4626, VaultGov } from '../../entities/vault.ts';
 import type { Address } from 'abitype';
 
 export interface IBalanceApi {
   fetchAllBalances(
     state: BeefyState,
-    tokens: TokenEntity[],
-    govVaults: VaultGov[],
-    boosts: BoostPromoEntity[],
+    entities: FetchAllBalancesEntities,
     walletAddress: string
   ): Promise<FetchAllBalancesResult>;
 }
@@ -60,8 +58,35 @@ export interface BoostBalance {
   rewards: BoostReward[];
 }
 
+export interface Erc4626PendingBalanceRequest {
+  id: bigint;
+  shares: BigNumber;
+  assets: BigNumber;
+  requestTimestamp: number;
+  claimableTimestamp: number;
+  emergency: boolean;
+  withdrawalIds: bigint[];
+  validatorIds: bigint[];
+}
+
+export interface Erc4626PendingBalance<T extends 'deposit' | 'withdraw' = 'deposit' | 'withdraw'> {
+  vaultId: VaultErc4626['id'];
+  type: T;
+  shares: BigNumber;
+  assets: BigNumber;
+  requests: Erc4626PendingBalanceRequest[];
+}
+
 export interface FetchAllBalancesResult {
   tokens: TokenBalance[];
   govVaults: GovVaultBalance[];
   boosts: BoostBalance[];
+  erc4626Pending: Erc4626PendingBalance[];
+}
+
+export interface FetchAllBalancesEntities {
+  tokens?: TokenEntity[];
+  govVaults?: VaultGov[];
+  boosts?: BoostPromoEntity[];
+  erc4626Vaults?: VaultErc4626[];
 }

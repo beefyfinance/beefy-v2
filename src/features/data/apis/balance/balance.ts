@@ -1,7 +1,8 @@
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi.ts';
 import {
+  isErc4626AsyncWithdrawVault,
   isGovVaultSingle,
-  type VaultGov,
+  type VaultErc4626AsyncWithdraw,
   type VaultGovCowcentrated,
   type VaultGovMulti,
   type VaultGovSingle,
@@ -13,6 +14,9 @@ import { chunk, partition, pick } from 'lodash-es';
 import type {
   BoostBalance,
   BoostBalanceContractData,
+  Erc4626PendingBalance,
+  Erc4626PendingBalanceRequest,
+  FetchAllBalancesEntities,
   FetchAllBalancesResult,
   GovVaultBalance,
   GovVaultMultiBalanceContractData,
@@ -30,22 +34,29 @@ import {
   selectGovVaultRewardsTokenEntity,
 } from '../../selectors/balance.ts';
 import { selectTokenByAddress } from '../../selectors/tokens.ts';
-import { BIG_ZERO, fromWeiString, isFiniteBigNumber } from '../../../../helpers/big-number.ts';
+import {
+  BIG_ZERO,
+  fromWeiBigInt,
+  fromWeiString,
+  isFiniteBigNumber,
+} from '../../../../helpers/big-number.ts';
 import { isDefined } from '../../utils/array-utils.ts';
 import { rpcClientManager } from '../rpc-contract/rpc-manager.ts';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
 import type { Address } from 'abitype';
+import { getAddress, type PublicClient } from 'viem';
+import { Erc4626VaultAbi } from '../../../../config/abi/Erc4626VaultAbi.ts';
+import { readContract } from 'viem/actions';
 
 export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   constructor(protected chain: T) {}
 
   public async fetchAllBalances(
     state: BeefyState,
-    tokens: TokenEntity[],
-    govVaults: VaultGov[],
-    boosts: BoostPromoEntity[],
-    walletAddress: string
+    { tokens = [], govVaults = [], boosts = [], erc4626Vaults = [] }: FetchAllBalancesEntities,
+    _walletAddress: string
   ): Promise<FetchAllBalancesResult> {
+    const walletAddress = getAddress(_walletAddress);
     const client = rpcClientManager.getBatchClient(this.chain.id);
     const appMulticallContract = fetchContract(
       this.chain.appMulticallContractAddress,
@@ -76,37 +87,44 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     const boostAndGovVaultV1Requests = boostAndGovVaultV1Batches.map(batch =>
       appMulticallContract.read.getBoostOrGovBalance([
         batch.map(boostOrGovVault => boostOrGovVault.contractAddress as Address),
-        walletAddress as Address,
+        walletAddress,
       ])
     );
 
     const boostAndGovVaultV2Requests = boostAndGovVaultsV2Batches.map(batch =>
       appMulticallContract.read.getGovVaultMultiBalance([
         batch.map(gov => gov.contractAddress as Address),
-        walletAddress as Address,
+        walletAddress,
       ])
     );
 
     const erc20TokensRequests = erc20TokensBatches.map(batch =>
       appMulticallContract.read.getTokenBalances([
         batch.map(token => token.address as Address),
-        walletAddress as Address,
+        walletAddress,
       ])
     );
 
-    const nativeTokenRequest = client.getBalance({ address: walletAddress as Address });
+    const nativeTokenRequest = client.getBalance({ address: walletAddress });
 
-    const [govV1Results, govV2Results, erc20Results, nativeResults] = await Promise.all([
-      Promise.all(boostAndGovVaultV1Requests),
-      Promise.all(boostAndGovVaultV2Requests),
-      Promise.all(erc20TokensRequests),
-      nativeTokenRequest,
-    ]);
+    const erc4626AsyncWithdrawRequests = erc4626Vaults
+      .filter(isErc4626AsyncWithdrawVault)
+      .map(vault => this.erc4626PendingWithdrawals(state, client, vault, walletAddress));
+
+    const [govV1Results, govV2Results, erc20Results, nativeResults, erc4626PendingWithdrawResults] =
+      await Promise.all([
+        Promise.all(boostAndGovVaultV1Requests),
+        Promise.all(boostAndGovVaultV2Requests),
+        Promise.all(erc20TokensRequests),
+        nativeTokenRequest,
+        Promise.all(erc4626AsyncWithdrawRequests),
+      ]);
 
     const res: FetchAllBalancesResult = {
       tokens: [],
       govVaults: [],
       boosts: [],
+      erc4626Pending: erc4626PendingWithdrawResults,
     };
 
     let boostOrGovV1ArrayIndex = 0; // We need to track if we are on a boost or a gov vault
@@ -169,6 +187,66 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
     }
 
     return res;
+  }
+
+  protected async erc4626PendingWithdrawals(
+    state: BeefyState,
+    client: PublicClient,
+    vault: VaultErc4626AsyncWithdraw,
+    walletAddress: Address
+  ) {
+    const contractAddress = getAddress(vault.contractAddress);
+    const shareToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+
+    const [pending, withdrawDurationBigInt] = await Promise.all([
+      readContract(client, {
+        address: contractAddress,
+        abi: Erc4626VaultAbi,
+        functionName: 'userPendingRedeemRequests',
+        args: [walletAddress],
+      }),
+      readContract(client, {
+        address: contractAddress,
+        abi: Erc4626VaultAbi,
+        functionName: 'withdrawDuration',
+        args: [],
+      }),
+    ]);
+
+    const withdrawDuration = Number(withdrawDurationBigInt.toString(10));
+
+    const requests = pending
+      .map(
+        ({ requestId, assets, shares, requestTimestamp, emergency, withdrawalIds, validatorIds }) =>
+          ({
+            id: requestId,
+            shares: fromWeiBigInt(shares, shareToken.decimals),
+            assets: fromWeiBigInt(assets, depositToken.decimals),
+            requestTimestamp: requestTimestamp,
+            claimableTimestamp: requestTimestamp + withdrawDuration,
+            emergency: emergency,
+            withdrawalIds: [...withdrawalIds],
+            validatorIds: [...validatorIds],
+          }) satisfies Erc4626PendingBalanceRequest
+      )
+      .sort((a, b) => a.claimableTimestamp - b.claimableTimestamp);
+
+    const totals = requests.reduce(
+      (acc, request) => {
+        acc.shares = acc.shares.plus(request.shares);
+        acc.assets = acc.assets.plus(request.assets);
+        return acc;
+      },
+      { shares: BIG_ZERO, assets: BIG_ZERO }
+    );
+
+    return {
+      vaultId: vault.id,
+      type: 'withdraw',
+      ...totals,
+      requests,
+    } satisfies Erc4626PendingBalance;
   }
 
   protected erc20TokenFormatter(result: bigint, token: TokenEntity): TokenBalance {

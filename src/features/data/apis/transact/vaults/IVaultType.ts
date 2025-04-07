@@ -1,6 +1,7 @@
 import type {
   VaultCowcentrated,
   VaultEntity,
+  VaultErc4626,
   VaultGov,
   VaultStandard,
 } from '../../../entities/vault.ts';
@@ -74,7 +75,18 @@ export interface ICowcentratedVaultType extends IVaultType {
   readonly shareToken: TokenErc20;
 }
 
-export type VaultType = IStandardVaultType | IGovVaultType | ICowcentratedVaultType;
+export interface IErc4626VaultType extends IVaultType {
+  readonly id: 'erc4626';
+  readonly vault: VaultErc4626;
+  readonly depositToken: TokenEntity;
+  readonly shareToken: TokenErc20;
+}
+
+export type VaultType =
+  | IStandardVaultType
+  | IGovVaultType
+  | ICowcentratedVaultType
+  | IErc4626VaultType;
 
 export type VaultTypeFromVault<T extends VaultEntity> = Extract<
   VaultType,

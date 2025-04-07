@@ -20,6 +20,8 @@ export type Step = {
     | 'deposit'
     | 'deposit-gov'
     | 'withdraw'
+    | 'request-withdraw' // erc4626 async
+    | 'fulfill-request-withdraw' // erc4626 async
     | 'claim-withdraw' // gov
     | 'claim-gov' // gov
     | 'mint'

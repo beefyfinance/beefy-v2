@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
   selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken,
-  selectUserVaultBalanceInUsdIncludingBoostsBridged,
+  selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken,
+  selectUserVaultBalanceInUsdIncludingDisplaced,
 } from '../../features/data/selectors/balance.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import {
@@ -41,11 +41,11 @@ const _VaultDeposited = connect(
       selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress);
 
     const { amount: deposit, token: depositToken } =
-      selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken(state, vault.id);
+      selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken(state, vault.id);
     const baseDeposit = selectUserVaultBalanceInDepositToken(state, vault.id);
     const hasDeposit = deposit.gt(0);
     const depositUsd = formatLargeUsd(
-      selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vaultId)
+      selectUserVaultBalanceInUsdIncludingDisplaced(state, vaultId)
     );
     const blurred = selectIsBalanceHidden(state);
 

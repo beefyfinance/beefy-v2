@@ -1,6 +1,8 @@
 import type { ChainEntity } from '../entities/chain.ts';
 import { clamp } from '../../../helpers/number.ts';
 import { createFactory } from './factory-utils.ts';
+import { getUnixNow } from '../../../helpers/date.ts';
+import { mapValues } from 'lodash-es';
 
 const DEFAULT_CHUNK_SIZE = 468;
 const DEFAULT_CHUNK_SIZE_BY_CHAIN: Record<string, number> = {
@@ -307,3 +309,49 @@ export function featureFlag_simulateLiveBoost(boostId: string): boolean {
   const boostIds = getSimulateLiveBoosts();
   return boostIds.has(boostId);
 }
+
+export const featureFlag_sonicTestnet = createFactory(() => {
+  const defaults = {
+    chain: {
+      name: 'Tenderly Sonic',
+      chainId: 7357146,
+      rpc: ['https://virtual.sonic.rpc.tenderly.co/eeda950c-05b3-41a3-836a-957dd5c926c5'],
+      explorerTxUrlTemplate:
+        'https://dashboard.tenderly.co/explorer/vnet/eeda950c-05b3-41a3-836a-957dd5c926c5/tx/{hash}',
+      appMulticallContractAddress: '0xAEA188D7f5f6FaC1a6E705Cd93DCE02C115249f0',
+    },
+    vault: {
+      name: 'Tenderly beSonic',
+      tokenAddress: '0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38',
+      earnContractAddress: '0xe8907Ee7aB0Cc37115A8d01E13b0D5F79c40Fe5a',
+      earnedTokenAddress: '0xe8907Ee7aB0Cc37115A8d01E13b0D5F79c40Fe5a',
+      createdAt: getUnixNow(),
+    },
+  };
+
+  if (import.meta.env.VITE_SONIC_TESTNET) {
+    return defaults;
+  }
+
+  const params = getSearchParams();
+  if (!params.has('__sonic_testnet')) {
+    return false;
+  }
+
+  const config = params.get('__sonic_testnet');
+  const decoded = config && JSON.parse(config);
+  if (!decoded) {
+    return defaults;
+  }
+
+  return mapValues(defaults, (settings, key) =>
+    mapValues(settings, (value, k) => {
+      const override = decoded[key]?.[k];
+      if (override === undefined) {
+        return value;
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return override;
+    })
+  ) as typeof defaults;
+});
