@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../redux-types.ts';
 import { formatTokenDisplayCondensed } from '../../../helpers/format.ts';
 import { isTokenErc20 } from '../entities/token.ts';
@@ -289,9 +289,9 @@ export function selectZapReturned(state: BeefyState) {
   const tokenAmounts: TokenAmount[] = returnEvents
     .map(e => {
       const token =
-        e.args.token === ZERO_ADDRESS
-          ? native
-          : selectTokenByAddressOrUndefined(state, vault.chainId, e.args.token);
+        e.args.token === ZERO_ADDRESS ?
+          native
+        : selectTokenByAddressOrUndefined(state, vault.chainId, e.args.token);
 
       return {
         amount: token ? fromWeiString(e.args.amount.toString(10), token.decimals) : BIG_ZERO,

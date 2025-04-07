@@ -1,6 +1,6 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { createCachedSelector } from 're-reselect';
-import { BIG_ZERO, isFiniteBigNumber } from '../../../helpers/big-number.ts';
+import { BIG_ZERO, compareBigNumber, isFiniteBigNumber } from '../../../helpers/big-number.ts';
 import type { BeefyState } from '../../../redux-types.ts';
 import type { ChainEntity, ChainId } from '../entities/chain.ts';
 import type { TokenHoldingEntity, TreasuryHoldingEntity } from '../entities/treasury.ts';
@@ -92,7 +92,7 @@ export const selectTreasurySorted = function (state: BeefyState) {
 
   return [...treasuryPerChain, ...treasuryPerMM]
     .filter(chain => chain.categoryCount > 0)
-    .sort((a, b) => b.usdTotal.comparedTo(a.usdTotal));
+    .sort((a, b) => compareBigNumber(b.usdTotal, a.usdTotal));
 };
 
 export const selectTreasuryHoldingsByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
@@ -244,8 +244,9 @@ export const selectTreasuryStats = (state: BeefyState) => {
             }
 
             if (isTokenHoldingEntity(token) && token.usdValue.gt(10)) {
-              const symbol = token.symbol
-                ? selectWrappedToNativeSymbolOrTokenSymbol(state, token.symbol)
+              const symbol =
+                token.symbol ?
+                  selectWrappedToNativeSymbolOrTokenSymbol(state, token.symbol)
                 : token.name;
               holdingAssets.add(symbol);
             }
@@ -347,8 +348,9 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
               if (selectIsTokenStable(state, chainId, token.oracleId)) {
                 totals['stables'] = (totals['stables'] || BIG_ZERO).plus(tokenBalanceUsd);
               } else {
-                const assetId = token.symbol
-                  ? selectWrappedToNativeSymbolOrTokenSymbol(state, token.symbol)
+                const assetId =
+                  token.symbol ?
+                    selectWrappedToNativeSymbolOrTokenSymbol(state, token.symbol)
                   : token.name;
                 totals[assetId] = (totals[assetId] || BIG_ZERO).plus(tokenBalanceUsd);
               }
@@ -368,8 +370,9 @@ export const selectTreasuryTokensExposure = (state: BeefyState) => {
           if (selectIsTokenStable(state, 'ethereum', holding.oracleId)) {
             exposure['stables'] = (exposure['stables'] || BIG_ZERO).plus(holding.usdValue);
           } else {
-            const assetId = holding.symbol
-              ? selectWrappedToNativeSymbolOrTokenSymbol(state, holding.symbol)
+            const assetId =
+              holding.symbol ?
+                selectWrappedToNativeSymbolOrTokenSymbol(state, holding.symbol)
               : holding.name;
             exposure[assetId] = (exposure[assetId] || BIG_ZERO).plus(holding.usdValue);
           }

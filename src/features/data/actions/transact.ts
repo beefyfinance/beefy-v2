@@ -32,11 +32,11 @@ import {
   isWithdrawOption,
   isWithdrawQuote,
 } from '../apis/transact/transact-types.ts';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { BIG_ZERO, compareBigNumber } from '../../../helpers/big-number.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import { isTokenEqual, isTokenErc20 } from '../entities/token.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../reducers/wallet/stepper.ts';
 import { stepperActions } from '../reducers/wallet/stepper.ts';
@@ -231,7 +231,7 @@ export const transactFetchQuotes = createAsyncThunk<
     quotes.sort((a, b) => {
       const valueA = selectTokenAmountsTotalValue(state, a.outputs);
       const valueB = selectTokenAmountsTotalValue(state, b.outputs);
-      return valueB.comparedTo(valueA);
+      return compareBigNumber(valueB, valueA);
     });
 
     // update allowances

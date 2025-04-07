@@ -1,5 +1,5 @@
 import { addressBook } from 'blockchain-addressbook';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { isValidChecksumAddress, maybeChecksumAddress } from './common/utils.ts';
 import { getVaultsIntegrity } from './common/exclude.ts';
 import {
@@ -251,6 +251,7 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
     getPromosForChain(chainId),
   ]);
   const allVaults = vaultsAndPromos[0];
+  const poolIds = new Set(allVaults.map(pool => pool.id));
   const promos = vaultsAndPromos[1];
 
   console.log(`Validating ${allVaults.length} vaults in ${chainId}...`);
@@ -259,8 +260,7 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
   let exitCode = 0;
 
   //Governance pools should be separately verified
-  const [govPools, nonGovVaults] = partition(allVaults, v => v.type === 'gov');
-  const poolIds = new Set(nonGovVaults.map(pool => pool.id));
+  const [govPools, nonGovVaults] = partition(allVaults, pool => pool.type === 'gov');
   const uniqueEarnedToken = new Set();
   const uniqueEarnedTokenAddress = new Set();
   const uniqueOracleId = new Set();
@@ -471,11 +471,13 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
   });
 
   // Boosts
+  console.log(`Validating ${promos.length} promos in ${chainId}...`);
   const seenPromoIds = new Set();
   promos.forEach(promo => {
     if (seenPromoIds.has(promo.id)) {
       console.error(`Error: Promo ${promo.id}: Promo id duplicated: ${promo.id}`);
       exitCode = 1;
+      return;
     }
     seenPromoIds.add(promo.id);
 
@@ -523,9 +525,9 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
         const abToken = addressBook[chainId].tokenAddressMap[reward.address];
         if (!abToken) {
           // TODO need to tidy up old boosts before we can make this error
-          console.warn(
-            `Warn: Promo ${promo.id}: Earned token ${reward.symbol} not in addressbook at ${reward.address}`
-          );
+          // console.warn(
+          //   `Warn: Promo ${promo.id}: Earned token ${reward.symbol} not in addressbook at ${reward.address}`
+          // );
           // exitCode = 1;
           //return;
           continue;
@@ -1165,9 +1167,9 @@ const populateVaultsData = async (
             address: pool.earnContractAddress as Address,
           });
           return await Promise.all([
-            pool.type === 'erc4626'
-              ? Promise.resolve(pool.earnContractAddress as Address)
-              : await vaultContract.read.strategy(),
+            pool.type === 'erc4626' ?
+              Promise.resolve(pool.earnContractAddress as Address)
+            : await vaultContract.read.strategy(),
             vaultContract.read.owner().catch(e => catchRevertErrorIntoUndefined(e)),
             vaultContract.read.totalSupply(),
           ]);

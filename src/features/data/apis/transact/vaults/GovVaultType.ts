@@ -32,7 +32,7 @@ import { isTokenEqual, isTokenErc20 } from '../../../entities/token.ts';
 import { first } from 'lodash-es';
 import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
 import { selectFeesByVaultId } from '../../../selectors/fees.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../reducers/wallet/stepper.ts';
 import { selectGovVaultPendingRewards } from '../../../selectors/balance.ts';
@@ -59,8 +59,8 @@ export class GovVaultType implements IGovVaultType {
   protected calculateDepositFee(input: TokenAmount, state: BeefyState): BigNumber {
     const fees = selectFeesByVaultId(state, this.vault.id);
     const depositFeePercent = fees?.deposit || 0;
-    return depositFeePercent > 0
-      ? input.amount
+    return depositFeePercent > 0 ?
+        input.amount
           .multipliedBy(depositFeePercent)
           .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR)
       : BIG_ZERO;
@@ -69,8 +69,8 @@ export class GovVaultType implements IGovVaultType {
   protected calculateWithdrawFee(input: TokenAmount, state: BeefyState): BigNumber {
     const fees = selectFeesByVaultId(state, this.vault.id);
     const withdrawFeePercent = fees?.withdraw || 0;
-    return withdrawFeePercent > 0
-      ? input.amount
+    return withdrawFeePercent > 0 ?
+        input.amount
           .multipliedBy(withdrawFeePercent)
           .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR)
       : BIG_ZERO;
@@ -115,8 +115,9 @@ export class GovVaultType implements IGovVaultType {
       amount: input.amount.minus(fee),
     };
 
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,

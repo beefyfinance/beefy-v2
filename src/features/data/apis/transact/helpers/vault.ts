@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { toWei } from '../../../../../helpers/big-number.ts';
 import type { InputTokenAmount } from '../transact-types.ts';
 import type { VaultStandard } from '../../../entities/vault.ts';

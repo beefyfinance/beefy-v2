@@ -16,7 +16,7 @@ import {
   type UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart,
   type UnprocessedTimelineEntryStandard,
 } from '../entities/analytics.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type {
   DatabarnProductPriceRow,
   DatabarnTimeBucket,
@@ -224,16 +224,16 @@ function handleDatabarnTimeline(
 
         tx.shareBalance = prevTx.shareBalance.plus(tx.shareDiff);
 
-        const underlyingPerShare = tx.shareDiff.isZero()
-          ? BIG_ZERO
+        const underlyingPerShare =
+          tx.shareDiff.isZero() ?
+            BIG_ZERO
           : tx.underlyingDiff.dividedBy(tx.shareDiff).absoluteValue();
         tx.underlyingBalance = tx.shareBalance.multipliedBy(underlyingPerShare);
 
         // usd can be null if price was missing
         if (tx.usdDiff) {
-          const shareToUsd = tx.shareDiff.isZero()
-            ? BIG_ZERO
-            : tx.usdDiff.dividedBy(tx.shareDiff).absoluteValue();
+          const shareToUsd =
+            tx.shareDiff.isZero() ? BIG_ZERO : tx.usdDiff.dividedBy(tx.shareDiff).absoluteValue();
           tx.usdBalance = tx.shareBalance.multipliedBy(shareToUsd);
         } else {
           tx.usdBalance = prevTx.usdBalance;
@@ -256,19 +256,22 @@ function handleCowcentratedPoolTimeline(
     vaultTxs.flatMap(tx => {
       if (tx.hasRewardPool) {
         // share:underlying is 1:1 for pools (not vaults)
-        const underlying0PerShare = tx.shareBalance.isZero()
-          ? tx.shareDiff.isZero()
-            ? BIG_ZERO
+        const underlying0PerShare =
+          tx.shareBalance.isZero() ?
+            tx.shareDiff.isZero() ?
+              BIG_ZERO
             : tx.underlying0Diff.dividedBy(tx.shareDiff)
           : tx.underlying0Balance.dividedBy(tx.shareBalance);
-        const underlying1PerShare = tx.shareBalance.isZero()
-          ? tx.shareDiff.isZero()
-            ? BIG_ZERO
+        const underlying1PerShare =
+          tx.shareBalance.isZero() ?
+            tx.shareDiff.isZero() ?
+              BIG_ZERO
             : tx.underlying1Diff.dividedBy(tx.shareDiff)
           : tx.underlying1Balance.dividedBy(tx.shareBalance);
-        const shareToUsd = tx.shareBalance.isZero()
-          ? tx.shareDiff.isZero()
-            ? BIG_ZERO
+        const shareToUsd =
+          tx.shareBalance.isZero() ?
+            tx.shareDiff.isZero() ?
+              BIG_ZERO
             : tx.usdDiff.dividedBy(tx.shareDiff)
           : tx.usdBalance.dividedBy(tx.shareBalance);
 
@@ -326,9 +329,9 @@ function handleCowcentratedPoolTimeline(
               vaultId: pool.id,
 
               rewardPoolClaimedDetails:
-                tx.claimedRewardPool?.toLowerCase() === rp.address.toLowerCase()
-                  ? tx.rewardPoolClaimedDetails
-                  : [],
+                tx.claimedRewardPool?.toLowerCase() === rp.address.toLowerCase() ?
+                  tx.rewardPoolClaimedDetails
+                : [],
             };
           })
           .filter(isDefined);
@@ -444,8 +447,9 @@ export const fetchWalletTimeline = createAsyncThunk<
     }
 
     const databarnTimeline = isFulfilledResult(databarnResult) ? databarnResult.value : [];
-    const [classicTimeline, clmTimeline] = isFulfilledResult(clmResult)
-      ? partition(clmResult.value, isClmTimelineEntryClassic)
+    const [classicTimeline, clmTimeline] =
+      isFulfilledResult(clmResult) ?
+        partition(clmResult.value, isClmTimelineEntryClassic)
       : [[], []];
     const state = getState();
 
@@ -466,8 +470,9 @@ export const fetchWalletTimeline = createAsyncThunk<
           shareToUnderlyingPrice: new BigNumber(row.share_to_underlying_price),
           underlyingBalance: new BigNumber(row.underlying_balance),
           underlyingDiff: new BigNumber(row.underlying_diff),
-          underlyingToUsdPrice: isFiniteNumber(row.underlying_to_usd_price)
-            ? new BigNumber(row.underlying_to_usd_price)
+          underlyingToUsdPrice:
+            isFiniteNumber(row.underlying_to_usd_price) ?
+              new BigNumber(row.underlying_to_usd_price)
             : null,
           usdBalance: isFiniteNumber(row.usd_balance) ? new BigNumber(row.usd_balance) : null,
           usdDiff: isFiniteNumber(row.usd_diff) ? new BigNumber(row.usd_diff) : null,
@@ -480,8 +485,9 @@ export const fetchWalletTimeline = createAsyncThunk<
       clmTimeline.map((row): UnprocessedTimelineEntryCowcentratedPool => {
         const rewardPoolDetails:
           | UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart['rewardPoolDetails'][0][]
-          | undefined = isNonEmptyArray(row.reward_pool_details)
-          ? row.reward_pool_details.map(rp => ({
+          | undefined =
+          isNonEmptyArray(row.reward_pool_details) ?
+            row.reward_pool_details.map(rp => ({
               address: rp.reward_pool_address,
               balance: new BigNumber(rp.reward_pool_balance),
               diff: new BigNumber(rp.reward_pool_diff),
@@ -490,20 +496,20 @@ export const fetchWalletTimeline = createAsyncThunk<
         const rewardPoolParts:
           | UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart
           | UnprocessedTimelineEntryCowcentratedWithoutRewardPoolPart =
-          row.reward_pool_total && row.reward_pool_details && isNonEmptyArray(rewardPoolDetails)
-            ? {
-                hasRewardPool: true,
-                rewardPoolBalance: new BigNumber(row.reward_pool_total.reward_pool_balance || 0),
-                rewardPoolDiff: new BigNumber(row.reward_pool_total.reward_pool_diff || 0),
-                rewardPoolDetails,
-                rewardPoolClaimedDetails: row.reward_pool_claim_details.map(claim => ({
-                  address: claim.reward_address,
-                  rewardToUsd: new BigNumber(claim.reward_to_usd),
-                  claimedAmount: new BigNumber(claim.claimed_amount),
-                })),
-                claimedRewardPool: row.claimed_reward_pool,
-              }
-            : { hasRewardPool: false };
+          row.reward_pool_total && row.reward_pool_details && isNonEmptyArray(rewardPoolDetails) ?
+            {
+              hasRewardPool: true,
+              rewardPoolBalance: new BigNumber(row.reward_pool_total.reward_pool_balance || 0),
+              rewardPoolDiff: new BigNumber(row.reward_pool_total.reward_pool_diff || 0),
+              rewardPoolDetails,
+              rewardPoolClaimedDetails: row.reward_pool_claim_details.map(claim => ({
+                address: claim.reward_address,
+                rewardToUsd: new BigNumber(claim.reward_to_usd),
+                claimedAmount: new BigNumber(claim.claimed_amount),
+              })),
+              claimedRewardPool: row.claimed_reward_pool,
+            }
+          : { hasRewardPool: false };
 
         return {
           type: 'cowcentrated',
@@ -546,8 +552,9 @@ export const fetchWalletTimeline = createAsyncThunk<
       classicTimeline.map((row): UnprocessedTimelineEntryCowcentratedVault => {
         const rewardPoolDetails:
           | UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart['rewardPoolDetails'][0][]
-          | undefined = isNonEmptyArray(row.reward_pool_details)
-          ? row.reward_pool_details.map(rp => ({
+          | undefined =
+          isNonEmptyArray(row.reward_pool_details) ?
+            row.reward_pool_details.map(rp => ({
               address: rp.reward_pool_address,
               balance: new BigNumber(rp.reward_pool_balance),
               diff: new BigNumber(rp.reward_pool_diff),
@@ -556,16 +563,16 @@ export const fetchWalletTimeline = createAsyncThunk<
         const rewardPoolParts:
           | UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart
           | UnprocessedTimelineEntryCowcentratedWithoutRewardPoolPart =
-          row.reward_pool_total && row.reward_pool_details && isNonEmptyArray(rewardPoolDetails)
-            ? {
-                hasRewardPool: true,
-                rewardPoolBalance: new BigNumber(row.reward_pool_total.reward_pool_balance || 0),
-                rewardPoolDiff: new BigNumber(row.reward_pool_total.reward_pool_diff || 0),
-                rewardPoolDetails,
-                rewardPoolClaimedDetails: [],
-                claimedRewardPool: undefined,
-              }
-            : { hasRewardPool: false };
+          row.reward_pool_total && row.reward_pool_details && isNonEmptyArray(rewardPoolDetails) ?
+            {
+              hasRewardPool: true,
+              rewardPoolBalance: new BigNumber(row.reward_pool_total.reward_pool_balance || 0),
+              rewardPoolDiff: new BigNumber(row.reward_pool_total.reward_pool_diff || 0),
+              rewardPoolDetails,
+              rewardPoolClaimedDetails: [],
+              claimedRewardPool: undefined,
+            }
+          : { hasRewardPool: false };
 
         return {
           type: 'classic',
@@ -1086,11 +1093,11 @@ export const recalculateClmPoolHarvestsForUserVaultId = createAsyncThunk<
         amounts,
         amountsUsd,
         totalUsd,
-        cumulativeAmounts: previous
-          ? amounts.map((a, i) => a.plus(previous.cumulativeAmounts[i]))
-          : amounts,
-        cumulativeAmountsUsd: previous
-          ? amountsUsd.map((a, i) => a.plus(previous.cumulativeAmountsUsd[i]))
+        cumulativeAmounts:
+          previous ? amounts.map((a, i) => a.plus(previous.cumulativeAmounts[i])) : amounts,
+        cumulativeAmountsUsd:
+          previous ?
+            amountsUsd.map((a, i) => a.plus(previous.cumulativeAmountsUsd[i]))
           : amountsUsd,
         cumulativeTotalUsd: previous ? previous.cumulativeTotalUsd.plus(totalUsd) : totalUsd,
       });
@@ -1224,11 +1231,11 @@ export const recalculateClmVaultHarvestsForUserVaultId = createAsyncThunk<
           amounts,
           amountsUsd,
           totalUsd,
-          cumulativeAmounts: previous
-            ? amounts.map((a, i) => a.plus(previous.cumulativeAmounts[i]))
-            : amounts,
-          cumulativeAmountsUsd: previous
-            ? amountsUsd.map((a, i) => a.plus(previous.cumulativeAmountsUsd[i]))
+          cumulativeAmounts:
+            previous ? amounts.map((a, i) => a.plus(previous.cumulativeAmounts[i])) : amounts,
+          cumulativeAmountsUsd:
+            previous ?
+              amountsUsd.map((a, i) => a.plus(previous.cumulativeAmountsUsd[i]))
             : amountsUsd,
           cumulativeTotalUsd: previous ? previous.cumulativeTotalUsd.plus(totalUsd) : totalUsd,
         });

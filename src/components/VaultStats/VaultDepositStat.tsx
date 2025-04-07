@@ -27,7 +27,7 @@ import {
 } from '../../features/data/selectors/data-loader.ts';
 import { BIG_ZERO } from '../../helpers/big-number.ts';
 import { useAppSelector } from '../../store.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { styles } from './styles.ts';
@@ -146,26 +146,22 @@ export const VaultDepositStat = memo(function VaultDepositStat({
     <VaultValueStat
       label={label}
       value={
-        isNotEarning ? (
+        isNotEarning ?
           <div className={classes.depositWithIcon}>
             <IconComponent
               className={css(styles.depositIcon, isNotEarning && styles.depositIconNotEarning)}
             />
             {depositFormattedCondensed}
           </div>
-        ) : (
-          depositFormattedCondensed
-        )
+        : depositFormattedCondensed
       }
       subValue={formatLargeUsd(data.totalDepositUsd)}
       blur={data.hideBalance}
       loading={false}
       tooltip={
-        hasDisplacedDeposit ? (
+        hasDisplacedDeposit ?
           <VaultDepositedTooltip vaultId={vaultId} walletAddress={walletAddress} />
-        ) : (
-          <BasicTooltipContent title={depositFormattedFull} />
-        )
+        : <BasicTooltipContent title={depositFormattedFull} />
       }
       {...passthrough}
     />

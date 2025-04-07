@@ -74,7 +74,7 @@ import { fetchZapAggregatorSwap } from '../zap/swap.ts';
 import { Balances } from '../helpers/Balances.ts';
 import { isStandardVault, type VaultStandard } from '../../../entities/vault.ts';
 import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { slipBy, tokenAmountToWei } from '../helpers/amounts.ts';
 import type { IUniswapLikePool } from '../../amm/types.ts';
 import { QuoteChangedError } from './error.ts';
@@ -208,8 +208,9 @@ export abstract class UniswapLikeStrategy<
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: tokenInList(token, tokensWithNativeWrapped)
-          ? SelectionOrder.TokenOfPool
+        selectionOrder:
+          tokenInList(token, tokensWithNativeWrapped) ?
+            SelectionOrder.TokenOfPool
           : SelectionOrder.Other,
         inputs,
         wantedOutputs: outputs,
@@ -253,8 +254,9 @@ export abstract class UniswapLikeStrategy<
     const pool = await getUniswapLikePool(option.depositToken.address, this.amm, chain); // TODO we can maybe make pools immutable and share 1 pool between all quotes
 
     // Token allowances
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,
@@ -397,8 +399,9 @@ export abstract class UniswapLikeStrategy<
     const pool = await getUniswapLikePool(depositToken.address, this.amm, chain);
 
     // Token allowances
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,
@@ -416,14 +419,14 @@ export abstract class UniswapLikeStrategy<
 
     // Swap quotes
     const quoteRequestsPerLpToken: (QuoteRequest | undefined)[] = lpTokens.map((lpTokenN, i) =>
-      isTokenEqual(lpTokenN, input.token)
-        ? undefined
-        : {
-            vaultId: this.vault.id,
-            fromToken: input.token,
-            fromAmount: swapInAmounts[i],
-            toToken: lpTokenN,
-          }
+      isTokenEqual(lpTokenN, input.token) ? undefined : (
+        {
+          vaultId: this.vault.id,
+          fromToken: input.token,
+          fromAmount: swapInAmounts[i],
+          toToken: lpTokenN,
+        }
+      )
     );
 
     const quotesPerLpToken = await Promise.all(
@@ -868,8 +871,9 @@ export abstract class UniswapLikeStrategy<
           vaultId: this.vault.id,
           chainId: this.vault.chainId,
           selectionId,
-          selectionOrder: tokenInList(token, tokensWithNativeWrapped)
-            ? SelectionOrder.TokenOfPool
+          selectionOrder:
+            tokenInList(token, tokensWithNativeWrapped) ?
+              SelectionOrder.TokenOfPool
             : SelectionOrder.Other,
           inputs,
           wantedOutputs: outputs,

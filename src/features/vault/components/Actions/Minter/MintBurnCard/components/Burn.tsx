@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { CardContent } from '../../../../Card/CardContent.tsx';
 import { AssetsImage } from '../../../../../../../components/AssetsImage/AssetsImage.tsx';
 import { styles } from '../styles.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { formatTokenDisplayCondensed } from '../../../../../../../helpers/format.ts';
 import { selectVaultById } from '../../../../../../data/selectors/vaults.ts';
 import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance.ts';
@@ -163,7 +163,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           }
         )}
       </div>
-      {minter.canBurn === 'reserves' ? (
+      {minter.canBurn === 'reserves' ?
         <div className={classes.boxReserves}>
           <div className={classes.reservesText}>
             {t('reserves', { token: minter.depositToken.symbol })}
@@ -173,7 +173,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
             {reserves.shiftedBy(-depositToken.decimals).toFixed(2)} {depositToken.symbol}
           </div>
         </div>
-      ) : null}
+      : null}
       <div className={classes.inputContainer}>
         <div className={classes.balances}>
           <div className={classes.label}>
@@ -230,13 +230,12 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         />
       </div>
       <>
-        {isWalletConnected ? (
-          !isWalletOnVaultChain ? (
+        {isWalletConnected ?
+          !isWalletOnVaultChain ?
             <Button onClick={handleNetworkChange} className={classes.btn}>
               {t('Network-Change', { network: chain.name.toUpperCase() })}
             </Button>
-          ) : (
-            <Button
+          : <Button
               disabled={
                 formData.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) ||
                 formData.amount.isLessThanOrEqualTo(0) ||
@@ -247,12 +246,11 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
             >
               {t('action', { action: t('burn'), token: minter.mintedToken.symbol })}
             </Button>
-          )
-        ) : (
-          <Button onClick={handleConnectWallet} className={classes.btn}>
+
+        : <Button onClick={handleConnectWallet} className={classes.btn}>
             {t('Network-ConnectWallet')}
           </Button>
-        )}
+        }
       </>
       {formData.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) && (
         <AlertWarning css={styles.noReserves}>

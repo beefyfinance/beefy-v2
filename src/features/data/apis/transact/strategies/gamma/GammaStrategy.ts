@@ -50,7 +50,7 @@ import {
   toWeiString,
 } from '../../../../../../helpers/big-number.ts';
 import { selectChainById } from '../../../../selectors/chains.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { BeefyState, BeefyThunk } from '../../../../../../redux-types.ts';
 import type { QuoteRequest } from '../../swap/ISwapProvider.ts';
 import {
@@ -175,9 +175,8 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: tokenInList(token, this.lpTokens)
-          ? SelectionOrder.TokenOfPool
-          : SelectionOrder.Other,
+        selectionOrder:
+          tokenInList(token, this.lpTokens) ? SelectionOrder.TokenOfPool : SelectionOrder.Other,
         inputs,
         wantedOutputs: outputs,
         mode: TransactMode.Deposit,
@@ -265,8 +264,9 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
     }
 
     // Token allowances
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,
@@ -290,14 +290,14 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
     // Swap quotes
     // Skip swaps if input token is one of the lp tokens, or if position is out of range, and we need to swap 0 of that token
     const quoteRequestsPerLpToken: (QuoteRequest | undefined)[] = lpTokens.map((lpTokenN, i) =>
-      isTokenEqual(lpTokenN, input.token) || swapInAmounts[i].lte(BIG_ZERO)
-        ? undefined
-        : {
-            vaultId: this.vault.id,
-            fromToken: input.token,
-            fromAmount: swapInAmounts[i],
-            toToken: lpTokenN,
-          }
+      isTokenEqual(lpTokenN, input.token) || swapInAmounts[i].lte(BIG_ZERO) ?
+        undefined
+      : {
+          vaultId: this.vault.id,
+          fromToken: input.token,
+          fromAmount: swapInAmounts[i],
+          toToken: lpTokenN,
+        }
     );
 
     const quotesPerLpToken = await Promise.all(
@@ -644,9 +644,8 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
           vaultId: this.vault.id,
           chainId: this.vault.chainId,
           selectionId,
-          selectionOrder: tokenInList(token, this.lpTokens)
-            ? SelectionOrder.TokenOfPool
-            : SelectionOrder.Other,
+          selectionOrder:
+            tokenInList(token, this.lpTokens) ? SelectionOrder.TokenOfPool : SelectionOrder.Other,
           inputs,
           wantedOutputs: outputs,
           mode: TransactMode.Withdraw,
@@ -698,9 +697,8 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
 
     // Common: Break LP
     const strategyAddress = selectVaultStrategyAddress(state, this.vault.id);
-    const tokenHolders: [string, ...string[]] = this.options.tokenHolder
-      ? [this.options.tokenHolder, strategyAddress]
-      : [strategyAddress];
+    const tokenHolders: [string, ...string[]] =
+      this.options.tokenHolder ? [this.options.tokenHolder, strategyAddress] : [strategyAddress];
     const [amount0, amount1] = await this.pool.quoteRemoveLiquidity(
       withdrawnAmountAfterFeeWei,
       tokenHolders
@@ -857,9 +855,8 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
     const state = getState();
 
     const strategyAddress = selectVaultStrategyAddress(state, this.vault.id);
-    const tokenHolders: [string, ...string[]] = this.options.tokenHolder
-      ? [this.options.tokenHolder, strategyAddress]
-      : [strategyAddress];
+    const tokenHolders: [string, ...string[]] =
+      this.options.tokenHolder ? [this.options.tokenHolder, strategyAddress] : [strategyAddress];
     const withdrawnAmountAfterFeeWei = toWei(inputs[0].amount, inputs[0].token.decimals);
     const [amount0, amount1] = await this.pool.quoteRemoveLiquidity(
       withdrawnAmountAfterFeeWei,

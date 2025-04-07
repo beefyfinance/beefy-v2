@@ -1,4 +1,4 @@
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 
 // https://docs.balancer.fi/reference/joins-and-exits/pool-joins.html#userdata
 export enum PoolJoinKind {

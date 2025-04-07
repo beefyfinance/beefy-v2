@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { Draft } from 'immer';
 import { sortBy } from 'lodash-es';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';

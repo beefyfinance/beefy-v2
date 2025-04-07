@@ -1,6 +1,6 @@
 import type { ChainEntity } from '../../entities/chain.ts';
 import { isTokenNative, type TokenEntity } from '../../entities/token.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { MinterEntity } from '../../entities/minter.ts';
 import {
   bindTransactionEvents,
@@ -81,8 +81,8 @@ export const mintDeposit = (
 
         // mint is better
         if (shouldMint) {
-          return isNative
-            ? contract.write.depositNative(['0x', true], {
+          return isNative ?
+              contract.write.depositNative(['0x', true], {
                 ...args,
                 value: BigInt(amountInWeiString),
               })
@@ -90,13 +90,13 @@ export const mintDeposit = (
         }
 
         // swap after max slippage is better
-        return isNative
-          ? contract.write.depositNative([swapData.tx.data as `0x${string}`, false], {
+        return isNative ?
+            contract.write.depositNative([swapData.tx.data as `0x${string}`, false], {
               ...args,
               value: BigInt(amountInWeiString),
             })
-          : // contract.methods.depositNative(swapData.tx.data, false)
-            contract.write.deposit(
+            // contract.methods.depositNative(swapData.tx.data, false)
+          : contract.write.deposit(
               [BigInt(amountInWeiString), swapData.tx.data as `0x${string}`, false],
               args
             );

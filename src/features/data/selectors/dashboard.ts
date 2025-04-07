@@ -7,7 +7,7 @@ import {
 } from '../entities/vault.ts';
 import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet.ts';
 import type { TokenEntity } from '../entities/token.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import { selectIsVaultStable, selectVaultById } from './vaults.ts';
 import { selectAllVaultBoostIds } from './boosts.ts';

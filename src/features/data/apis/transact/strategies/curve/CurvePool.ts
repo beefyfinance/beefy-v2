@@ -1,6 +1,6 @@
 import { type CurveTokenOption, getMethodSignaturesForType } from './types.ts';
 import { getInsertIndex, getTokenAddress } from '../../helpers/zap.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { TokenAmount } from '../../transact-types.ts';
 import { fromWeiString, toWeiString } from '../../../../../../helpers/big-number.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
@@ -106,8 +106,9 @@ export class CurvePool {
         abi: methodAbi,
         args: methodParams,
       }),
-      tokens: insertBalance
-        ? [
+      tokens:
+        insertBalance ?
+          [
             {
               token: getTokenAddress(this.option.token),
               index: tokenIndexes[this.option.index],
@@ -262,8 +263,9 @@ export class CurvePool {
         abi: methodAbi,
         args: methodParams,
       }),
-      tokens: insertBalance
-        ? [
+      tokens:
+        insertBalance ?
+          [
             {
               token: this.depositToken.address,
               index: this.typeToRemoveLiquidityTokenIndex(this.option.type),

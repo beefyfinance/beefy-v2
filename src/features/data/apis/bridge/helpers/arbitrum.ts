@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { ChainEntity } from '../../../entities/chain.ts';
 import { ArbitrumNodeInterfaceAbi } from '../../../../../config/abi/ArbitrumNodeInterfaceAbi.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';

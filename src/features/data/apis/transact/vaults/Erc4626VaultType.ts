@@ -43,7 +43,7 @@ import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
 import { first } from 'lodash-es';
 import { BIG_ZERO, fromWei } from '../../../../../helpers/big-number.ts';
 import { selectFeesByVaultId } from '../../../selectors/fees.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../reducers/wallet/stepper.ts';
 import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
@@ -77,8 +77,8 @@ export class Erc4626VaultType implements IErc4626VaultType {
   protected calculateDepositFee(input: TokenAmount, state: BeefyState): BigNumber {
     const fees = selectFeesByVaultId(state, this.vault.id);
     const depositFeePercent = fees?.deposit || 0;
-    return depositFeePercent > 0
-      ? input.amount
+    return depositFeePercent > 0 ?
+        input.amount
           .multipliedBy(depositFeePercent)
           .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR)
       : BIG_ZERO;

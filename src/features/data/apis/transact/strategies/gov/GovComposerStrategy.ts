@@ -53,7 +53,7 @@ import type {
   ZapStepRequest,
   ZapStepResponse,
 } from '../../zap/types.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { getInsertIndex, NO_RELAY } from '../../helpers/zap.ts';
 import { bigNumberToBigInt, toWei, toWeiString } from '../../../../../../helpers/big-number.ts';
 import { slipBy } from '../../helpers/amounts.ts';

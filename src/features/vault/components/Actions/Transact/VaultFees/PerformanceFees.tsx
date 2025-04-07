@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatPercent } from '../../../../../../helpers/format.ts';
 import { InterestTooltipContent } from '../../../../../../components/InterestTooltipContent/InterestTooltipContent.tsx';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { isFiniteNumber } from '../../../../../../helpers/number.ts';
 import { entries } from '../../../../../../helpers/object.ts';
 

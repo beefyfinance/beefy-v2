@@ -67,7 +67,7 @@ import type {
   ZapStepRequest,
   ZapStepResponse,
 } from '../zap/types.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { selectTransactSlippage } from '../../../selectors/transact.ts';
 import { uniqBy } from 'lodash-es';
 import { slipBy } from '../helpers/amounts.ts';
@@ -395,8 +395,8 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
   ): Promise<Step> {
     await this.connectSecondVaultEntity();
 
-    return isCowcentratedStandardVault(this.mainVault)
-      ? this.fetchRewardPoolToVaultDepositStep(quote, t)
+    return isCowcentratedStandardVault(this.mainVault) ?
+        this.fetchRewardPoolToVaultDepositStep(quote, t)
       : this.fetchVaultToRewardPoolDepositStep(quote, t);
   }
 

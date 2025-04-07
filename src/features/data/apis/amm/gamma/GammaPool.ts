@@ -1,7 +1,7 @@
 import type { GammaHypervisorData, IGammaPool } from '../types.ts';
 import type { ChainEntity } from '../../../entities/chain.ts';
 import type { AmmConfigGamma } from '../../config-types.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { GammaHypervisorAbi } from '../../../../../config/abi/GammaHypervisorAbi.ts';
 import { GammaProxyAbi } from '../../../../../config/abi/GammaProxyAbi.ts';
 import { TickMath } from './TickMath.ts';
@@ -262,8 +262,9 @@ export class GammaPool implements IGammaPool {
         ] as const satisfies Abi,
         args: [spender as Address, bigNumberToBigInt(amountWei)],
       }),
-      tokens: insertBalance
-        ? [
+      tokens:
+        insertBalance ?
+          [
             {
               token,
               index: getInsertIndex(1), // this has side effect of approving the token to spend itself

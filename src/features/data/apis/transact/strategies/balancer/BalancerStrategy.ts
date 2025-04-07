@@ -52,6 +52,7 @@ import { first, orderBy, uniqBy } from 'lodash-es';
 import {
   BIG_ZERO,
   bigNumberToStringDeep,
+  compareBigNumber,
   fromWei,
   fromWeiToTokenAmount,
   toWeiFromTokenAmount,
@@ -62,7 +63,7 @@ import {
   highestFeeOrZero,
   totalValueOfTokenAmounts,
 } from '../../helpers/quotes.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { BeefyState, BeefyThunk } from '../../../../../../redux-types.ts';
 import type { QuoteRequest, QuoteResponse } from '../../swap/ISwapProvider.ts';
 import type {
@@ -270,8 +271,9 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: tokenInList(token, this.poolTokensincludingWrappedNative)
-          ? SelectionOrder.TokenOfPool
+        selectionOrder:
+          tokenInList(token, this.poolTokensincludingWrappedNative) ?
+            SelectionOrder.TokenOfPool
           : SelectionOrder.Other,
         inputs,
         wantedOutputs: outputs,
@@ -333,8 +335,9 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: tokenInList(token, this.poolTokensincludingWrappedNative)
-          ? SelectionOrder.TokenOfPool
+        selectionOrder:
+          tokenInList(token, this.poolTokensincludingWrappedNative) ?
+            SelectionOrder.TokenOfPool
           : SelectionOrder.Other,
         inputs,
         wantedOutputs: outputs,
@@ -402,8 +405,9 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     // Token allowances
     const { zap, getState } = this.helpers;
     const state = getState();
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,
@@ -516,7 +520,7 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     );
 
     // sort by most liquidity
-    withLiquidity.sort((a, b) => b.output.amount.comparedTo(a.output.amount));
+    withLiquidity.sort((a, b) => compareBigNumber(b.output.amount, a.output.amount));
 
     // the one which gives the most liquidity
     return withLiquidity[0];
@@ -538,9 +542,9 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     const inputAmountWei = toWeiFromTokenAmount(input);
     const lastIndex = ratios.length - 1;
     const swapAmounts = ratios.map((ratio, i) =>
-      i === lastIndex
-        ? BIG_ZERO
-        : inputAmountWei.multipliedBy(ratio).integerValue(BigNumber.ROUND_FLOOR)
+      i === lastIndex ? BIG_ZERO : (
+        inputAmountWei.multipliedBy(ratio).integerValue(BigNumber.ROUND_FLOOR)
+      )
     );
     swapAmounts[swapAmounts.length - 1] = swapAmounts.reduce(
       (acc, amount) => acc.minus(amount),
@@ -592,14 +596,14 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     // Swap quotes
     const quoteRequestsPerLpToken: (QuoteRequest | undefined)[] = swapInAmounts.map(
       ({ from, to }) =>
-        isTokenEqual(from.token, to)
-          ? undefined
-          : {
-              vaultId: this.vault.id,
-              fromToken: from.token,
-              fromAmount: from.amount,
-              toToken: to,
-            }
+        isTokenEqual(from.token, to) ? undefined : (
+          {
+            vaultId: this.vault.id,
+            fromToken: from.token,
+            fromAmount: from.amount,
+            toToken: to,
+          }
+        )
     );
 
     const quotesPerLpToken = await Promise.all(
@@ -744,8 +748,9 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
   ): Promise<ZapStepResponse> {
     const { liquidity, usedInput, unusedInput } = await this.quoteAddLiquidity(minInputs);
     const pool = this.getPool();
-    const minLiquidity = pool.supportsFeature(BalancerFeature.AddSlippage)
-      ? slipTokenAmountBy(liquidity, zapHelpers.slippage)
+    const minLiquidity =
+      pool.supportsFeature(BalancerFeature.AddSlippage) ?
+        slipTokenAmountBy(liquidity, zapHelpers.slippage)
       : liquidity;
 
     return {
@@ -942,8 +947,9 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: tokenInList(token, this.poolTokensincludingWrappedNative)
-          ? SelectionOrder.TokenOfPool
+        selectionOrder:
+          tokenInList(token, this.poolTokensincludingWrappedNative) ?
+            SelectionOrder.TokenOfPool
           : SelectionOrder.Other,
         inputs,
         wantedOutputs: outputs,
@@ -1007,8 +1013,9 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: tokenInList(token, this.poolTokensincludingWrappedNative)
-          ? SelectionOrder.TokenOfPool
+        selectionOrder:
+          tokenInList(token, this.poolTokensincludingWrappedNative) ?
+            SelectionOrder.TokenOfPool
           : SelectionOrder.Other,
         inputs,
         wantedOutputs: outputs,
@@ -1318,8 +1325,9 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     const input = onlyOneTokenAmount(inputs);
     const { outputs } = await this.quoteRemoveLiquidity(input);
     const pool = this.getPool();
-    const minOutputs = pool.supportsFeature(BalancerFeature.RemoveSlippage)
-      ? outputs.map(output => slipTokenAmountBy(output, slippage))
+    const minOutputs =
+      pool.supportsFeature(BalancerFeature.RemoveSlippage) ?
+        outputs.map(output => slipTokenAmountBy(output, slippage))
       : outputs;
 
     return {
@@ -1356,8 +1364,9 @@ class BalancerStrategyImpl implements IZapStrategy<StrategyId> {
     const { slippage } = zapHelpers;
     const input = onlyOneTokenAmount(inputs);
     const { outputs } = await this.quoteRemoveLiquidityOneToken(input, viaToken);
-    const minOutputs = pool.supportsFeature(BalancerFeature.RemoveSlippage)
-      ? outputs.map(output => slipTokenAmountBy(output, slippage))
+    const minOutputs =
+      pool.supportsFeature(BalancerFeature.RemoveSlippage) ?
+        outputs.map(output => slipTokenAmountBy(output, slippage))
       : outputs;
     const minOutput = minOutputs[viaTokenIndex];
     if (!minOutput) {

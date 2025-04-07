@@ -4,7 +4,7 @@ import type { TokenEntity } from '../entities/token.ts';
 import type { PlatformEntity } from '../entities/platform.ts';
 import type { ZapFee } from './transact/transact-types.ts';
 import type { ChangeTypeOfKeys } from '../utils/types-utils.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { Address } from 'viem';
 import type { ZapStrategyConfig } from './transact/strategies/strategy-configs.ts';
 

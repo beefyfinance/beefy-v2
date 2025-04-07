@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { SwapFeeParams } from '../types.ts';
 import { SolidlyPool } from './SolidlyPool.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';

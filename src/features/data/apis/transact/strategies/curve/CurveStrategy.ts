@@ -50,12 +50,13 @@ import { first, uniqBy } from 'lodash-es';
 import {
   BIG_ZERO,
   bigNumberToStringDeep,
+  compareBigNumber,
   fromWei,
   toWei,
   toWeiString,
 } from '../../../../../../helpers/big-number.ts';
 import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { BeefyState, BeefyThunk } from '../../../../../../redux-types.ts';
 import type { CurveMethod, CurveTokenOption } from './types.ts';
 import type { QuoteResponse } from '../../swap/ISwapProvider.ts';
@@ -319,7 +320,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
     );
 
     // sort by most liquidity
-    withLiquidity.sort((a, b) => b.output.amount.comparedTo(a.output.amount));
+    withLiquidity.sort((a, b) => compareBigNumber(b.output.amount, a.output.amount));
 
     // Get the one which gives the most liquidity
     return withLiquidity[0];
@@ -348,8 +349,9 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
     }
 
     // Token allowances
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,
@@ -731,7 +733,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
     );
 
     // sort by most output
-    withSwaps.sort((a, b) => b.output.amount.comparedTo(a.output.amount));
+    withSwaps.sort((a, b) => compareBigNumber(b.output.amount, a.output.amount));
 
     // Get the one which gives the most output
     return withSwaps[0];

@@ -19,7 +19,7 @@ import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import type { Address } from 'abitype';
 import { BIG_ZERO, bigNumberToBigInt } from '../../../../helpers/big-number.ts';
 import type { TFunction } from 'react-i18next';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { Step } from '../../reducers/wallet/stepper.ts';
 import { startStepperWithSteps } from '../stepper.ts';
 import { selectBoostUserBalanceInToken } from '../../selectors/balance.ts';
@@ -104,8 +104,9 @@ export const exitBoost = (boostId: BoostPromoEntity['id']) => {
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
-    const transaction = boostAmount.gt(0)
-      ? contract.write.exit({
+    const transaction =
+      boostAmount.gt(0) ?
+        contract.write.exit({
           account: address as Address,
           ...gasPrices,
           chain: publicClient.chain,

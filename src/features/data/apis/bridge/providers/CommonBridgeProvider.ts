@@ -18,7 +18,7 @@ import {
 import type { TokenErc20, TokenNative } from '../../../entities/token.ts';
 import type { Step } from '../../../reducers/wallet/stepper.ts';
 import type { TFunction } from 'react-i18next';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { selectWalletAddress } from '../../../selectors/wallet.ts';
 import { isFiniteNumber } from '../../../../../helpers/number.ts';
 import {

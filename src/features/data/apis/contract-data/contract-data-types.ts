@@ -1,6 +1,6 @@
 import type { BeefyState } from '../../../../redux-types.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import {
   type VaultCowcentrated,
   type VaultErc4626,

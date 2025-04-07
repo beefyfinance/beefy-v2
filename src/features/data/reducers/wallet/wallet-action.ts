@@ -1,4 +1,4 @@
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { TokenEntity } from '../../entities/token.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types.ts';

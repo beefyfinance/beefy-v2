@@ -12,7 +12,7 @@ import type {
 } from '../vault/types.ts';
 import { BIG_ONE, BIG_ZERO, bigNumberToStringDeep } from '../../../../../../helpers/big-number.ts';
 import type { ZapStep } from '../../../transact/zap/types.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { CommonPool } from './CommonPool.ts';
 import {
   type ExitPoolUserData,

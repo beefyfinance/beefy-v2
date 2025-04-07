@@ -1,6 +1,6 @@
 import type { ChainEntity } from '../../../../entities/chain.ts';
 import type { PoolConfig, VaultConfig } from '../vault/types.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { BalancerMetaStablePoolAbi } from '../../../../../../config/abi/BalancerMetaStablePoolAbi.ts';
 import { BIG_ZERO, fromWei } from '../../../../../../helpers/big-number.ts';
 import { FixedPoint } from '../common/FixedPoint.ts';

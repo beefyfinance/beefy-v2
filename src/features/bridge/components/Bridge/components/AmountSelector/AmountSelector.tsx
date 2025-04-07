@@ -12,7 +12,7 @@ import { bridgeActions } from '../../../../../data/reducers/wallet/bridge.ts';
 import type { AmountInputProps } from '../../../../../vault/components/Actions/Transact/AmountInput/AmountInput.tsx';
 import { AmountInput } from '../../../../../vault/components/Actions/Transact/AmountInput/AmountInput.tsx';
 import { formatTokenDisplayCondensed } from '../../../../../../helpers/format.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance.ts';
 import { selectTokenPriceByTokenOracleId } from '../../../../../data/selectors/tokens.ts';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';

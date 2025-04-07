@@ -6,7 +6,7 @@ import type { TokenErc20, TokenNative } from '../../../entities/token.ts';
 import type { BeefyState } from '../../../../../redux-types.ts';
 import { selectChainNativeToken } from '../../../selectors/tokens.ts';
 import { fromWei } from '../../../../../helpers/big-number.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { estimateArbitrumSequencerGas } from '../helpers/arbitrum.ts';
 import { getAxelarApi } from '../../axelar/axelar.ts';
 

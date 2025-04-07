@@ -10,7 +10,7 @@ import type {
 import type { VaultEntity } from '../../entities/vault.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
 import { type Abi } from 'viem';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi.ts';
 import { getUnixTime, roundToNearestMinutes } from 'date-fns';
 import { getJson } from '../../../../helpers/http/http.ts';

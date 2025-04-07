@@ -8,7 +8,7 @@ import type { BeefyState } from '../../redux-types.ts';
 import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
 import { BIG_ZERO } from '../../helpers/big-number.ts';
 import { TvlShareTooltip } from '../VaultStats/VaultTvlStat.tsx';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { TvlBreakdownUnderlying } from '../../features/data/selectors/tvl-types.ts';
 import {
   selectIsContractDataLoadedOnChain,

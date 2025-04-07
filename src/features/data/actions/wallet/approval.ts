@@ -1,5 +1,5 @@
 import type { TokenErc20 } from '../../entities/token.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { bindTransactionEvents, captureWalletErrors, txStart, txWallet } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import { getWalletConnectionApi } from '../../apis/instances.ts';

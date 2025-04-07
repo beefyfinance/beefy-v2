@@ -1,5 +1,5 @@
 import type { BoostPromoEntity } from '../../../../../data/entities/promo.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../../../../../store.ts';

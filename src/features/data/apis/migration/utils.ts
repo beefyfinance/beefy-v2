@@ -14,7 +14,7 @@ import { startStepperWithSteps } from '../../actions/stepper.ts';
 import { isTokenErc20 } from '../../entities/token.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { Hash } from 'viem';
 import { fromWeiString } from '../../../../helpers/big-number.ts';
 import { migrateUnstake } from '../../actions/wallet/migrate.ts';

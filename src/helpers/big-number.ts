@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { mapValues } from 'lodash-es';
 import type { TokenAmount } from '../features/data/apis/transact/transact-types.ts';
 import type { TokenEntity } from '../features/data/entities/token.ts';
@@ -161,7 +161,8 @@ export function isFiniteBigNumber(value: unknown): value is BigNumber {
 }
 
 export function compareBigNumber(a: BigNumber, b: BigNumber): number {
-  return a.comparedTo(b);
+  const result = a.comparedTo(b);
+  return result === null ? 0 : result;
 }
 
 export function orderByBigNumber<T>(
@@ -170,8 +171,8 @@ export function orderByBigNumber<T>(
   direction: 'asc' | 'desc' = 'asc'
 ): T[] {
   return [...items].sort(
-    direction === 'asc'
-      ? (a, b) => compareBigNumber(extractor(a), extractor(b))
-      : (a, b) => compareBigNumber(extractor(b), extractor(a))
+    direction === 'asc' ?
+      (a, b) => compareBigNumber(extractor(a), extractor(b))
+    : (a, b) => compareBigNumber(extractor(b), extractor(a))
   );
 }

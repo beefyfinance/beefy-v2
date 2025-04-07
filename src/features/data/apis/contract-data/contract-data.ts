@@ -8,7 +8,7 @@ import type {
   VaultStandardCowcentrated,
 } from '../../entities/vault.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import { chunk, pick, sortBy } from 'lodash-es';
 import type {
@@ -387,11 +387,11 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     // ending soonest, ending furthest, ended recently, ended furthest, never active
     const sortedRewards = sortBy(rewards, ({ periodFinish }) =>
-      periodFinish
-        ? periodFinish.getTime() > now.getTime()
-          ? Number.MIN_SAFE_INTEGER + periodFinish.getTime()
-          : -periodFinish.getTime()
-        : Number.MAX_SAFE_INTEGER
+      periodFinish ?
+        periodFinish.getTime() > now.getTime() ?
+          Number.MIN_SAFE_INTEGER + periodFinish.getTime()
+        : -periodFinish.getTime()
+      : Number.MAX_SAFE_INTEGER
     );
 
     return {

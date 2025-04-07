@@ -4,7 +4,7 @@ import type { PoolConfig, VaultConfig } from '../vault/types.ts';
 import { createFactory } from '../../../../utils/factory-utils.ts';
 import { Vault } from '../vault/Vault.ts';
 import { checkAddressOrder } from '../../../../../../helpers/tokens.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { FixedPoint } from './FixedPoint.ts';
 import type { GetContractReturnType } from 'viem';
 

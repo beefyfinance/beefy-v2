@@ -16,6 +16,96 @@
     ]
   },
   {
+    "id": "moo_aerodrome-tbtc-usdc-thresholdbeefy",
+    "title": "Threshold & Beefy",
+    "vaultId": "aerodrome-tbtc-usdc",
+    "assets": ["tBTC", "USDC"],
+    "tokenAddress": "0xC3a5b142a144135D900FC5Ef2Bb7E92a3bcB46F1",
+    "type": "boost",
+    "version": 2,
+    "campaign": "threshold-boost",
+    "contractAddress": "0x174FE81B9Ecc0EDd99E0E150fB6260051B306D1A",
+    "tag": {
+      "text": "Threshold & Beefy Boost"
+    },
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      },
+      {
+        "type": "token",
+        "address": "0x26f3901aC8a79c50fb0d8289C74f0d09AdC42E29",
+        "symbol": "T",
+        "decimals": 18,
+        "oracleId": "T"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-tbtc-weth-thresholdbeefy",
+    "title": "Threshold & Beefy",
+    "vaultId": "aerodrome-tbtc-weth",
+    "assets": ["tBTC", "WETH"],
+    "tokenAddress": "0x366E0CD6c5b8906e456432B0c8Fb62557E68282f",
+    "type": "boost",
+    "version": 2,
+    "campaign": "threshold-boost",
+    "contractAddress": "0xc38DCb8d2B1475C78A110E68A6319B1f48e8dfE9",
+    "tag": {
+      "text": "Threshold & Beefy Boost"
+    },
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      },
+      {
+        "type": "token",
+        "address": "0x26f3901aC8a79c50fb0d8289C74f0d09AdC42E29",
+        "symbol": "T",
+        "decimals": 18,
+        "oracleId": "T"
+      }
+    ]
+  },
+  {
+    "id": "moo_aerodrome-tbtc-cbbtc-thresholdbeefy",
+    "title": "Threshold & Beefy",
+    "vaultId": "aerodrome-tbtc-cbbtc",
+    "assets": ["tBTC", "cbBTC"],
+    "tokenAddress": "0x64AF54612646CcE0657374226e38B82B8001E674",
+    "type": "boost",
+    "version": 2,
+    "campaign": "threshold-boost",
+    "contractAddress": "0xCD241A97aC92C3415fEfbe6f3d61A27b2C30acE7",
+    "tag": {
+      "text": "Threshold & Beefy Boost"
+    },
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+        "symbol": "mooBIFI",
+        "decimals": 18,
+        "oracleId": "basemooBIFI"
+      },
+      {
+        "type": "token",
+        "address": "0x26f3901aC8a79c50fb0d8289C74f0d09AdC42E29",
+        "symbol": "T",
+        "decimals": 18,
+        "oracleId": "T"
+      }
+    ]
+  },
+  {
     "id": "moo_aerodrome-weth-vvv",
     "title": "Beefy",
     "vaultId": "aerodrome-weth-vvv",

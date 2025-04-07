@@ -20,7 +20,7 @@ import { selectChainById } from '../../selectors/chains.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import type { Address } from 'abitype';
 import { selectTokenByAddress } from '../../selectors/tokens.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 
 export const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -186,8 +186,9 @@ export const exitGovVault = (vault: VaultGov) => {
     const gasPrices = await getGasPriceOptions(chain);
 
     txWallet(dispatch);
-    const transaction = balanceAmount.gt(0)
-      ? contract.write.exit({
+    const transaction =
+      balanceAmount.gt(0) ?
+        contract.write.exit({
           account: address as Address,
           ...gasPrices,
           chain: publicClient.chain,

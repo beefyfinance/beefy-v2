@@ -1,5 +1,5 @@
 import type { VaultEntity, VaultStandard } from '../../entities/vault.ts';
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import {
   bindTransactionEvents,
   captureWalletErrors,

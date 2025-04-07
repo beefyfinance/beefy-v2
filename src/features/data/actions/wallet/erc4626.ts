@@ -3,7 +3,7 @@ import {
   isErc4626Vault,
   type VaultEntity,
 } from '../../entities/vault.ts';
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import {
   captureWalletErrors,
   selectVaultTokensToRefresh,
@@ -110,7 +110,10 @@ export const requestRedeem = (vault: VaultEntity, oracleAmount: BigNumber, max: 
       contract.read.convertToShares([wantedAssets]),
       contract.read.balanceOf([account]),
     ]);
-    const redeemShares = max ? maxShares : wantedShares > maxShares ? maxShares : wantedShares;
+    const redeemShares =
+      max ? maxShares
+      : wantedShares > maxShares ? maxShares
+      : wantedShares;
 
     const chain = selectChainById(state, vault.chainId);
     const gasPrices = await getGasPriceOptions(chain);

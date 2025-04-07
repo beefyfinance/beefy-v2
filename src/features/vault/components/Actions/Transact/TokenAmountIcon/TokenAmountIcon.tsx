@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { memo, useMemo } from 'react';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { useAppSelector } from '../../../../../../store.ts';
 import {

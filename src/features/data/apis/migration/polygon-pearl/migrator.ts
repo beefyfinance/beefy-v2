@@ -7,7 +7,7 @@ import type {
   MigratorUpdateProps,
 } from '../migration-types.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types.ts';
 import { selectVaultById } from '../../../selectors/vaults.ts';
 import { getWalletConnectionApi } from '../../instances.ts';

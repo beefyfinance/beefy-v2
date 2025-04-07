@@ -15,7 +15,7 @@ import { formatLargeUsd } from '../../helpers/format.ts';
 import type { BeefyState } from '../../redux-types.ts';
 import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { TokenAmountFromEntity } from '../TokenAmount/TokenAmount.tsx';
 import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip.tsx';
 import {

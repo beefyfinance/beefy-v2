@@ -1,6 +1,6 @@
 import type { VaultErc4626 } from '../../../../../data/entities/vault.ts';
 import type { TokenErc20 } from '../../../../../data/entities/token.ts';
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { Erc4626PendingBalanceRequest } from '../../../../../data/apis/balance/balance-types.ts';
 import { styled } from '@repo/styles/jsx';
 import { memo, useCallback, useMemo } from 'react';

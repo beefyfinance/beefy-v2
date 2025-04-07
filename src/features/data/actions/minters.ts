@@ -10,7 +10,7 @@ import { selectChainById } from '../selectors/chains.ts';
 import { selectTokenByAddress } from '../selectors/tokens.ts';
 import type { MinterEntity } from '../entities/minter.ts';
 import { isTokenErc20 } from '../entities/token.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { FetchMinterReservesResult } from '../apis/minter/minter-types.ts';
 
 export interface FulfilledAllMintersPayload {
@@ -75,8 +75,9 @@ export const initiateMinterForm = createAsyncThunk<
   const allowanceApi = await getAllowanceApi(chain);
   const mintersApi = await getMintersApi(chain);
 
-  const balanceRes: FetchAllBalancesResult = walletAddress
-    ? await balanceApi.fetchAllBalances(
+  const balanceRes: FetchAllBalancesResult =
+    walletAddress ?
+      await balanceApi.fetchAllBalances(
         getState(),
         { tokens: [depositToken, mintedToken] },
         walletAddress
@@ -84,14 +85,14 @@ export const initiateMinterForm = createAsyncThunk<
     : { tokens: [], govVaults: [], boosts: [], erc4626Pending: [] };
 
   const allowanceRes =
-    walletAddress && spenderAddress && isTokenErc20(depositToken)
-      ? await allowanceApi.fetchTokensAllowance(
-          getState(),
-          [depositToken],
-          walletAddress,
-          spenderAddress
-        )
-      : [];
+    walletAddress && spenderAddress && isTokenErc20(depositToken) ?
+      await allowanceApi.fetchTokensAllowance(
+        getState(),
+        [depositToken],
+        walletAddress,
+        spenderAddress
+      )
+    : [];
 
   const reservesRes = await mintersApi.fetchMinterReserves(minter);
 

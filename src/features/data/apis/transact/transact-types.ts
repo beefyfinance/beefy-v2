@@ -1,6 +1,6 @@
 import type { VaultEntity } from '../../entities/vault.ts';
 import type { BeefyStateFn } from '../../../../redux-types.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { TokenEntity, TokenErc20 } from '../../entities/token.ts';
 import type { Step } from '../../reducers/wallet/stepper.ts';

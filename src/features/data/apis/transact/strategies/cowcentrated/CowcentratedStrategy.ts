@@ -63,7 +63,7 @@ import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
 import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
 import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import { mergeTokenAmounts, slipAllBy, slipBy } from '../../helpers/amounts.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { isCowcentratedVault, type VaultCowcentrated } from '../../../../entities/vault.ts';
 import { type ICowcentratedVaultType, isCowcentratedVaultType } from '../../vaults/IVaultType.ts';
 import type { CowcentratedStrategyConfig } from '../strategy-configs.ts';
@@ -576,8 +576,9 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     const ratios = await clmPool.getDepositRatioData(input, inputPrice, token1Price);
 
     // Token allowances
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,
@@ -595,14 +596,14 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     // Swap quotes
     const quoteRequestsPerLpToken: (QuoteRequest | undefined)[] = this.vaultType.depositTokens.map(
       (lpTokenN, i) =>
-        isTokenEqual(lpTokenN, input.token) || swapInAmounts[i].lte(BIG_ZERO)
-          ? undefined
-          : {
-              vaultId: this.vault.id,
-              fromToken: input.token,
-              fromAmount: swapInAmounts[i],
-              toToken: lpTokenN,
-            }
+        isTokenEqual(lpTokenN, input.token) || swapInAmounts[i].lte(BIG_ZERO) ?
+          undefined
+        : {
+            vaultId: this.vault.id,
+            fromToken: input.token,
+            fromAmount: swapInAmounts[i],
+            toToken: lpTokenN,
+          }
     );
 
     const quotesPerLpToken = await Promise.all(

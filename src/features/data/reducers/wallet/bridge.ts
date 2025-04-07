@@ -15,7 +15,7 @@ import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types.ts';
 import type { Draft } from 'immer';
 import { keyBy, pick } from 'lodash-es';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { keys } from '../../../../helpers/object.ts';
 
 export enum FormStep {

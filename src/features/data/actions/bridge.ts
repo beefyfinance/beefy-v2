@@ -29,7 +29,7 @@ import { selectAllowanceByTokenAddress } from '../selectors/allowances.ts';
 import type { Step } from '../reducers/wallet/stepper.ts';
 import type { Namespace, TFunction } from 'react-i18next';
 import { startStepperWithSteps } from './stepper.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { isAddress } from 'viem';
 import { approve } from './wallet/approval.ts';
 
