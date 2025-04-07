@@ -315,15 +315,15 @@ export const featureFlag_sonicTestnet = createFactory(() => {
     chain: {
       name: 'Tenderly Sonic',
       chainId: 7357146,
-      rpc: ['https://virtual.sonic.rpc.tenderly.co/eeda950c-05b3-41a3-836a-957dd5c926c5'],
+      rpc: ['https://virtual.sonic.rpc.tenderly.co/3b61d997-049b-4e8d-b69c-c63344c5596c'],
       explorerTxUrlTemplate:
-        'https://dashboard.tenderly.co/explorer/vnet/eeda950c-05b3-41a3-836a-957dd5c926c5/tx/{hash}',
+        'https://dashboard.tenderly.co/explorer/vnet/3b61d997-049b-4e8d-b69c-c63344c5596c/tx/{hash}',
+      gas: {
+        type: 'standard',
+      },
     },
     vault: {
       name: 'Tenderly beSonic',
-      tokenAddress: '0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38',
-      earnContractAddress: '0xe8907Ee7aB0Cc37115A8d01E13b0D5F79c40Fe5a',
-      earnedTokenAddress: '0xe8907Ee7aB0Cc37115A8d01E13b0D5F79c40Fe5a',
       createdAt: getUnixNow(),
     },
   };
