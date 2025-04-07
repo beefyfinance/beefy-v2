@@ -433,6 +433,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     // Step 1: Withdraw from CLM
     const vaultWithdrawn = await this.vaultType.fetchZapWithdraw({
       inputs: quote.inputs,
+      from: this.helpers.zap.router,
     });
     steps.push(vaultWithdrawn.zap);
 

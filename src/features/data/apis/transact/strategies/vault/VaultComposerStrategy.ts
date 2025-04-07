@@ -222,6 +222,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       if (quote.underlyingQuote.strategyId === 'vault') {
         const depositZap = await this.underlyingVaultType.fetchZapDeposit({
           inputs: underlyingQuote.inputs,
+          from: this.helpers.zap.router,
         });
 
         const vaultDepositZap = await this.vaultType.fetchZapDeposit({
@@ -232,6 +233,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
               max: true, // but we call depositAll
             },
           ],
+          from: this.helpers.zap.router,
         });
 
         const dustOutputs: OrderOutput[] = pickTokens(
@@ -285,6 +287,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
               max: true, // but we call depositAll
             },
           ],
+          from: this.helpers.zap.router,
         });
 
         zapRequest.steps.push(vaultDepositZap.zap);
@@ -462,11 +465,13 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
 
       const vaultWithdrawZap = await this.vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
+        from: this.helpers.zap.router,
       });
 
       if (quote.subStrategy === 'vault') {
         const cowWithdraw = await this.underlyingVaultType.fetchZapWithdraw({
           inputs: underlyingQuote.inputs,
+          from: this.helpers.zap.router,
         });
 
         const steps: ZapStep[] = [];

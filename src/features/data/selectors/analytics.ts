@@ -528,6 +528,22 @@ export const selectClmPnl = (
   };
 };
 
+const TEMP_EMPTY_PNL: UserVaultPnl = {
+  type: 'standard',
+  totalYield: BIG_ZERO,
+  totalYieldUsd: BIG_ZERO,
+  totalPnlUsd: BIG_ZERO,
+  deposit: BIG_ZERO,
+  depositUsd: BIG_ZERO,
+  usdBalanceAtDeposit: BIG_ZERO,
+  balanceAtDeposit: BIG_ZERO,
+  yieldPercentage: BIG_ZERO,
+  pnlPercentage: BIG_ZERO,
+  tokenDecimals: 18,
+  oraclePrice: BIG_ZERO,
+  oraclePriceAtDeposit: BIG_ZERO,
+};
+
 export const selectVaultPnl = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
@@ -536,6 +552,9 @@ export const selectVaultPnl = (
   const vault = selectVaultById(state, vaultId);
   if (isCowcentratedLikeVault(vault)) {
     return selectClmPnl(state, vaultId, walletAddress);
+  }
+  if (isErc4626Vault(vault)) {
+    return TEMP_EMPTY_PNL; // TODO beSonic - implement PnL for erc4626 vaults
   }
   return selectStandardGovPnl(state, vaultId, walletAddress);
 };

@@ -252,6 +252,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       if (quote.underlyingQuote.strategyId === 'vault') {
         const depositZap = await this.underlyingVaultType.fetchZapDeposit({
           inputs: underlyingQuote.inputs,
+          from: this.helpers.zap.router,
         });
 
         const stakeZap = await this.fetchZapStakeStep(
@@ -587,6 +588,7 @@ class GovComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       if (quote.subStrategy === 'vault') {
         const vaultWithdraw = await this.underlyingVaultType.fetchZapWithdraw({
           inputs: underlyingQuote.inputs,
+          from: this.helpers.zap.router,
         });
 
         const steps: ZapStep[] = [];

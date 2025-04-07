@@ -38,7 +38,7 @@ import type { BeefyState } from '../../../../redux-types.ts';
 import { selectVaultById } from '../../selectors/vaults.ts';
 import { selectTokenByAddress, selectTokenByAddressOrUndefined } from '../../selectors/tokens.ts';
 import { isFiniteNumber } from '../../../../helpers/number.ts';
-import { BIG_ZERO, fromWeiBigInt } from '../../../../helpers/big-number.ts';
+import { BIG_ZERO, fromWei } from '../../../../helpers/big-number.ts';
 import { addDays } from 'date-fns';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
 import type { Address } from 'abitype';
@@ -190,9 +190,9 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     return {
       id: standardVault.id,
-      balance: fromWeiBigInt(result.balance, depositToken.decimals),
+      balance: fromWei(result.balance, depositToken.decimals),
       /** always 18 decimals for PPFS */
-      pricePerFullShare: fromWeiBigInt(result.pricePerFullShare, mooToken.decimals),
+      pricePerFullShare: fromWei(result.pricePerFullShare, mooToken.decimals),
       strategy: result.strategy,
       paused: result.paused,
     } satisfies StandardVaultContractData;
@@ -209,8 +209,8 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     console.debug(erc4626Vault.id, result, mooToken, depositToken);
     return {
       id: erc4626Vault.id,
-      balance: fromWeiBigInt(result.balance, depositToken.decimals),
-      pricePerFullShare: fromWeiBigInt(result.pricePerFullShare, mooToken.decimals),
+      balance: fromWei(result.balance, depositToken.decimals),
+      pricePerFullShare: fromWei(result.pricePerFullShare, mooToken.decimals),
       paused: result.paused,
     } satisfies Erc4626VaultContractData;
   }
@@ -224,7 +224,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const token = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     return {
       id: govVault.id,
-      totalSupply: fromWeiBigInt(result.totalSupply, token.decimals),
+      totalSupply: fromWei(result.totalSupply, token.decimals),
     } satisfies GovVaultContractData;
   }
 
@@ -255,7 +255,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
       rewards.push({
         token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
-        rewardRate: fromWeiBigInt(rate, rewardToken.decimals),
+        rewardRate: fromWei(rate, rewardToken.decimals),
         periodFinish: this.periodFinishToDate(periodFinish?.toString(10))!,
         index,
       });
@@ -263,7 +263,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
     return {
       id: govVault.id,
-      totalSupply: fromWeiBigInt(result.totalSupply, token.decimals),
+      totalSupply: fromWei(result.totalSupply, token.decimals),
       rewards,
     };
   }
@@ -279,8 +279,8 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     return {
       id: cowVault.id,
       balances: [
-        fromWeiBigInt(result.token0Balance, tokens[0].decimals),
-        fromWeiBigInt(result.token1Balance, tokens[1].decimals),
+        fromWei(result.token0Balance, tokens[0].decimals),
+        fromWei(result.token1Balance, tokens[1].decimals),
       ],
       strategy: result.strategy,
       paused: result.paused,
@@ -305,11 +305,11 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       id: boost.id,
       periodFinish,
       isPreStake: result.isPreStake,
-      totalSupply: fromWeiBigInt(result.totalSupply, depositToken.decimals),
+      totalSupply: fromWei(result.totalSupply, depositToken.decimals),
       rewards: [
         {
           token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
-          rewardRate: fromWeiBigInt(result.rewardRate, earnedToken.decimals),
+          rewardRate: fromWei(result.rewardRate, earnedToken.decimals),
           periodFinish,
           isPreStake: result.isPreStake,
           index: 0,
@@ -348,7 +348,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
       rewards.push({
         token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
-        rewardRate: fromWeiBigInt(rate, rewardToken.decimals),
+        rewardRate: fromWei(rate, rewardToken.decimals),
         periodFinish: this.periodFinishToDate(periodFinish?.toString(10)),
         isPreStake: false,
         index,
@@ -396,7 +396,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
     return {
       id: boost.id,
-      totalSupply: fromWeiBigInt(result.totalSupply, depositToken.decimals),
+      totalSupply: fromWei(result.totalSupply, depositToken.decimals),
       isPreStake: sortedRewards[0].isPreStake,
       periodFinish: sortedRewards[0].periodFinish,
       rewards: sortedRewards,

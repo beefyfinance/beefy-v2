@@ -19,8 +19,14 @@
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "besonic",
+    "pointStructureIds": ["sonic-points"],
     "network": "sonic",
-    "pointStructureIds": ["sonic-points"]
+    "zaps": [
+      {
+        "strategyId": "single",
+        "disableWithdraw": true
+      }
+    ]
   },
   {
     "id": "swapx-ichi-busdc.e-20-wstkscusd",

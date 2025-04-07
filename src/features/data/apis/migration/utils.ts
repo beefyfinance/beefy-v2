@@ -16,7 +16,7 @@ import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
 import type BigNumber from 'bignumber.js';
 import type { Hash } from 'viem';
-import { fromWeiString } from '../../../../helpers/big-number.ts';
+import { fromWei } from '../../../../helpers/big-number.ts';
 import { migrateUnstake } from '../../actions/wallet/migrate.ts';
 import { approve } from '../../actions/wallet/approval.ts';
 import { deposit } from '../../actions/wallet/standard.ts';
@@ -35,7 +35,7 @@ export function buildFetchBalance(
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     const balance = await fetchBalance(vault, walletAddress, state);
-    const fixedBalance = fromWeiString(balance, depositToken.decimals);
+    const fixedBalance = fromWei(balance, depositToken.decimals);
     console.debug(id, vault.id, fixedBalance.toNumber());
     return { vaultId, walletAddress, balance: fixedBalance, migrationId: id };
   });

@@ -543,6 +543,7 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
             max: true, // but we call depositAll
           },
         ],
+        from: this.helpers.zap.router,
       });
       steps.push(vaultDeposit.zap);
 
@@ -926,6 +927,7 @@ class GammaStrategyImpl implements IZapStrategy<StrategyId> {
       // Step 1. Withdraw from vault
       const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
+        from: this.helpers.zap.router,
       });
       if (vaultWithdraw.outputs.length !== 1) {
         throw new Error('Withdraw output count mismatch');

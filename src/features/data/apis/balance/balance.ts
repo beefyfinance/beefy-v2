@@ -34,12 +34,7 @@ import {
   selectGovVaultRewardsTokenEntity,
 } from '../../selectors/balance.ts';
 import { selectTokenByAddress } from '../../selectors/tokens.ts';
-import {
-  BIG_ZERO,
-  fromWeiBigInt,
-  fromWeiString,
-  isFiniteBigNumber,
-} from '../../../../helpers/big-number.ts';
+import { BIG_ZERO, fromWei, isFiniteBigNumber } from '../../../../helpers/big-number.ts';
 import { isDefined } from '../../utils/array-utils.ts';
 import { rpcClientManager } from '../rpc-contract/rpc-manager.ts';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
@@ -221,8 +216,8 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
         ({ requestId, assets, shares, requestTimestamp, emergency, withdrawalIds, validatorIds }) =>
           ({
             id: requestId,
-            shares: fromWeiBigInt(shares, shareToken.decimals),
-            assets: fromWeiBigInt(assets, depositToken.decimals),
+            shares: fromWei(shares, shareToken.decimals),
+            assets: fromWei(assets, depositToken.decimals),
             requestTimestamp: requestTimestamp,
             claimableTimestamp: requestTimestamp + withdrawDuration,
             emergency: emergency,
@@ -272,8 +267,8 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   ): GovVaultBalance {
     const balanceToken = selectGovVaultBalanceTokenEntity(state, govVault.id);
     const rewardsToken = selectGovVaultRewardsTokenEntity(state, govVault.id);
-    const balance = fromWeiString(result.balance.toString(10), balanceToken.decimals);
-    const rewards = fromWeiString(result.rewards.toString(10), rewardsToken.decimals);
+    const balance = fromWei(result.balance.toString(10), balanceToken.decimals);
+    const rewards = fromWei(result.rewards.toString(10), rewardsToken.decimals);
     return {
       vaultId: govVault.id,
       balance: balance,
@@ -299,10 +294,10 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     const balanceToken = selectBoostBalanceTokenEntity(state, boost.id);
     const earnedToken = selectTokenByAddress(state, firstReward.chainId, firstReward.address);
-    const balance = fromWeiString(result.balance.toString(10), balanceToken.decimals);
+    const balance = fromWei(result.balance.toString(10), balanceToken.decimals);
     const reward = {
       token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
-      amount: fromWeiString(result.rewards.toString(10), earnedToken.decimals),
+      amount: fromWei(result.rewards.toString(10), earnedToken.decimals),
       index: 0,
     };
 
@@ -334,10 +329,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
           return undefined;
         }
 
-        const amount = fromWeiString(
-          result.rewards[index]?.toString(10) || '0',
-          rewardToken.decimals
-        );
+        const amount = fromWei(result.rewards[index]?.toString(10) || '0', rewardToken.decimals);
 
         return {
           token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
@@ -349,7 +341,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     return {
       vaultId: govVault.id,
-      balance: fromWeiString(result.balance.toString(10), balanceToken.decimals),
+      balance: fromWei(result.balance.toString(10), balanceToken.decimals),
       rewards,
     };
   }
@@ -372,10 +364,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
           return undefined;
         }
 
-        const amount = fromWeiString(
-          result.rewards[index]?.toString(10) || '0',
-          rewardToken.decimals
-        );
+        const amount = fromWei(result.rewards[index]?.toString(10) || '0', rewardToken.decimals);
 
         return {
           token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
@@ -403,7 +392,7 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     return {
       boostId: boost.id,
-      balance: fromWeiString(result.balance.toString(10), balanceToken.decimals),
+      balance: fromWei(result.balance.toString(10), balanceToken.decimals),
       rewards,
     };
   }

@@ -11,7 +11,6 @@ import {
   bigNumberToBigInt,
   bigNumberToStringDeep,
   fromWei,
-  fromWeiString,
   toWei,
   toWeiString,
 } from '../../../../../helpers/big-number.ts';
@@ -138,13 +137,13 @@ export class GammaPool implements IGammaPool {
     ]);
 
     const neededToken0AmountsForInput1 = {
-      min: fromWeiString(outputToken0AmountsMinWei.toString(10), inputs[0].token.decimals),
-      max: fromWeiString(outputToken0AmountsMaxWei.toString(10), inputs[0].token.decimals),
+      min: fromWei(outputToken0AmountsMinWei.toString(10), inputs[0].token.decimals),
+      max: fromWei(outputToken0AmountsMaxWei.toString(10), inputs[0].token.decimals),
     };
 
     const neededToken1AmountsForInput0 = {
-      min: fromWeiString(outputToken1AmountsMinWei.toString(10), inputs[1].token.decimals),
-      max: fromWeiString(outputToken1AmountsMaxWei.toString(10), inputs[1].token.decimals),
+      min: fromWei(outputToken1AmountsMinWei.toString(10), inputs[1].token.decimals),
+      max: fromWei(outputToken1AmountsMaxWei.toString(10), inputs[1].token.decimals),
     };
 
     // inputs are within range, we can use as-is

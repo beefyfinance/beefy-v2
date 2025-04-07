@@ -757,6 +757,7 @@ export abstract class UniswapLikeStrategy<
             max: true, // but we call depositAll
           },
         ],
+        from: this.helpers.zap.router,
       });
       steps.push(vaultDeposit.zap);
 
@@ -1176,6 +1177,7 @@ export abstract class UniswapLikeStrategy<
       // Step 1. Withdraw from vault
       const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
+        from: this.helpers.zap.router,
       });
       if (vaultWithdraw.outputs.length !== 1) {
         throw new Error('Withdraw output count mismatch');

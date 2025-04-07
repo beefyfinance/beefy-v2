@@ -22,6 +22,7 @@ import type { Namespace, TFunction } from 'react-i18next';
 
 export type VaultDepositRequest = {
   inputs: InputTokenAmount[];
+  from: string;
 };
 
 export type VaultDepositResponse = {
@@ -110,4 +111,8 @@ export function isGovVaultType(vaultType: VaultType): vaultType is IGovVaultType
 
 export function isCowcentratedVaultType(vaultType: VaultType): vaultType is ICowcentratedVaultType {
   return vaultType.id === 'cowcentrated';
+}
+
+export function isErc4626VaultType(vaultType: VaultType): vaultType is IErc4626VaultType {
+  return vaultType.id === 'erc4626';
 }

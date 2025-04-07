@@ -12,7 +12,7 @@ import { isTokenNative } from '../../../../entities/token.ts';
 import { selectSupportedSwapTokensForChainAggregatorHavingPrice } from '../../../../selectors/tokens.ts';
 import { getKyberSwapApi } from '../../../instances.ts';
 import { selectAllChainIds, selectChainById } from '../../../../selectors/chains.ts';
-import { fromWeiString, toWeiString } from '../../../../../../helpers/big-number.ts';
+import { fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
 import { EEEE_ADDRESS } from '../../../../../../helpers/addresses.ts';
 import { selectSwapAggregatorForChainType } from '../../../../selectors/zap.ts';
 import type { KyberSwapSwapConfig } from '../../../config-types.ts';
@@ -61,7 +61,7 @@ export class KyberSwapProvider implements ISwapProvider {
       fromToken: request.fromToken,
       fromAmount: request.fromAmount,
       toToken: request.toToken,
-      toAmount: fromWeiString(quote.routeSummary.amountOut, request.toToken.decimals),
+      toAmount: fromWei(quote.routeSummary.amountOut, request.toToken.decimals),
       fee: config.fee,
       extra: quote.routeSummary,
     };
@@ -98,9 +98,9 @@ export class KyberSwapProvider implements ISwapProvider {
       fromToken: quote.fromToken,
       fromAmount: quote.fromAmount,
       toToken: quote.toToken,
-      toAmount: fromWeiString(swap.amountOut, quote.toToken.decimals),
+      toAmount: fromWei(swap.amountOut, quote.toToken.decimals),
       toAmountMin: slipBy(
-        fromWeiString(swap.amountOut, quote.toToken.decimals),
+        fromWei(swap.amountOut, quote.toToken.decimals),
         reducedSlippage,
         quote.toToken.decimals
       ),
@@ -134,8 +134,8 @@ export class KyberSwapProvider implements ISwapProvider {
       chainId,
       'kyber'
     );
-    return config.blockedTokens.length
-      ? possibleTokens.filter(token => !config.blockedTokens.includes(token.id))
+    return config.blockedTokens.length ?
+        possibleTokens.filter(token => !config.blockedTokens.includes(token.id))
       : possibleTokens;
   }
 

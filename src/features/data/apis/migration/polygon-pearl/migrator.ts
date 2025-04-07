@@ -16,7 +16,7 @@ import { selectUserBalanceToMigrateByVaultId } from '../../../selectors/migratio
 import { SolidlyGaugeAbi } from '../../../../../config/abi/SolidlyGaugeAbi.ts';
 import { SolidlyVoterAbi } from '../../../../../config/abi/SolidlyVoterAbi.ts';
 import type { Step } from '../../../reducers/wallet/stepper.ts';
-import { bigNumberToBigInt, fromWeiBigInt, toWei } from '../../../../../helpers/big-number.ts';
+import { bigNumberToBigInt, fromWei, toWei } from '../../../../../helpers/big-number.ts';
 import { startStepperWithSteps } from '../../../actions/stepper.ts';
 import { isTokenErc20 } from '../../../entities/token.ts';
 import { selectAllowanceByTokenAddress } from '../../../selectors/allowances.ts';
@@ -44,7 +44,7 @@ export const fetchPearlStakedBalance = createAsyncThunk<
   const gaugeContract = fetchContract(gaugeAddress, SolidlyGaugeAbi, vault.chainId);
   const balance = await gaugeContract.read.balanceOf([walletAddress as Address]);
 
-  const fixedBalance = fromWeiBigInt(balance, depositToken.decimals);
+  const fixedBalance = fromWei(balance, depositToken.decimals);
 
   return { vaultId, walletAddress, balance: fixedBalance, migrationId: 'polygon-pearl' };
 });

@@ -112,19 +112,13 @@ export function toWeiString(value: BigNumber, decimals: number): string {
   return toWei(value, decimals).toString(10);
 }
 
-export function fromWei(value: BigNumber, decimals: number): BigNumber {
-  return value.shiftedBy(-decimals).decimalPlaces(decimals, BigNumber.ROUND_FLOOR);
+export function fromWei(value: BigNumber.Value, decimals: number): BigNumber {
+  return (isBigNumber(value) ? value : new BigNumber(value))
+    .shiftedBy(-decimals)
+    .decimalPlaces(decimals, BigNumber.ROUND_FLOOR);
 }
 
-export function fromWeiString(value: string, decimals: number): BigNumber {
-  return fromWei(new BigNumber(value), decimals);
-}
-
-export function fromWeiBigInt(value: bigint, decimals: number): BigNumber {
-  return fromWeiString(value.toString(), decimals);
-}
-
-export function fromWeiToTokenAmount(value: BigNumber, token: TokenEntity): TokenAmount {
+export function fromWeiToTokenAmount(value: BigNumber.Value, token: TokenEntity): TokenAmount {
   return {
     token,
     amount: fromWei(value, token.decimals),

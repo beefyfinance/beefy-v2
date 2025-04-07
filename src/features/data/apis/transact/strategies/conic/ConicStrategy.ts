@@ -42,7 +42,6 @@ import {
   BIG_ZERO,
   bigNumberToBigInt,
   fromWei,
-  fromWeiString,
   toWeiString,
 } from '../../../../../../helpers/big-number.ts';
 import type { Namespace, TFunction } from 'react-i18next';
@@ -157,8 +156,9 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
     }
 
     // Token Allowances
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,
@@ -177,7 +177,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
     ]);
 
     const lpToken = this.vaultType.depositToken;
-    const swapAmountOut = fromWeiString(swapAmountOutResult.toString(10), lpToken.decimals);
+    const swapAmountOut = fromWei(swapAmountOutResult.toString(10), lpToken.decimals);
     const outputs: TokenAmount[] = [{ token: lpToken, amount: swapAmountOut }];
     const returned: TokenAmount[] = [];
 
@@ -220,8 +220,9 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
         output.token.decimals
       );
       const isNative = isTokenNative(input.token);
-      const data = isNative
-        ? this.encodeBeefInETHCall(this.vault.contractAddress, amountOutMin)
+      const data =
+        isNative ?
+          this.encodeBeefInETHCall(this.vault.contractAddress, amountOutMin)
         : this.encodeBeefInCall(
             this.vault.contractAddress,
             amountOutMin,
@@ -356,7 +357,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
       poolOutputToken.address as Address,
       bigNumberToBigInt(sharesToWithdrawWei),
     ]);
-    const swapAmountOut = fromWeiString(swapAmountOutResult.toString(10), desiredToken.decimals);
+    const swapAmountOut = fromWei(swapAmountOutResult.toString(10), desiredToken.decimals);
 
     const steps: ZapQuoteStep[] = [
       {
@@ -442,6 +443,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
       // Pretend to withdraw from vault, to get the correct number of shares
       const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
+        from: this.helpers.zap.router,
       });
       const sharesToWithdraw = onlyOneTokenAmount(vaultWithdraw.inputs);
 

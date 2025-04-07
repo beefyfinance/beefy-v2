@@ -14,7 +14,7 @@ import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectUserBalanceToMigrateByVaultId } from '../../../selectors/migration.ts';
 import { ConicLpTokenStakerAbi } from '../../../../../config/abi/ConicLpTokenStakerAbi.ts';
 import type { Step } from '../../../reducers/wallet/stepper.ts';
-import { bigNumberToBigInt, fromWeiBigInt, toWei } from '../../../../../helpers/big-number.ts';
+import { bigNumberToBigInt, fromWei, toWei } from '../../../../../helpers/big-number.ts';
 import { startStepperWithSteps } from '../../../actions/stepper.ts';
 import { isTokenErc20 } from '../../../entities/token.ts';
 import { selectAllowanceByTokenAddress } from '../../../selectors/allowances.ts';
@@ -52,7 +52,7 @@ export const fetchConicStakedBalance = createAsyncThunk<
     walletAddress as Address,
   ]);
 
-  const fixedBalance = fromWeiBigInt(balance, depositToken.decimals);
+  const fixedBalance = fromWei(balance, depositToken.decimals);
 
   return { vaultId, walletAddress, balance: fixedBalance, migrationId: 'ethereum-conic' };
 });

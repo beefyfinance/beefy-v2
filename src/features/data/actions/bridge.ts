@@ -19,7 +19,7 @@ import {
 } from '../selectors/bridge.ts';
 import type { BridgeFormState } from '../reducers/wallet/bridge.ts';
 import { FormStep } from '../reducers/wallet/bridge.ts';
-import { BIG_ONE, BIG_ZERO, fromWeiString } from '../../../helpers/big-number.ts';
+import { BIG_ONE, BIG_ZERO, fromWei } from '../../../helpers/big-number.ts';
 import { selectChainById } from '../selectors/chains.ts';
 import { orderBy, partition } from 'lodash-es';
 import { isFulfilledResult } from '../../../helpers/promises.ts';
@@ -144,7 +144,7 @@ export const validateBridgeForm = createAsyncThunk<
   const { from, input, receiverIsDifferent, receiverAddress } = selectBridgeFormState(state);
   const fromToken = selectBridgeDepositTokenForChainId(state, from);
 
-  const minAmount = fromWeiString('1000', fromToken.decimals);
+  const minAmount = fromWei('1000', fromToken.decimals);
   if (input.amount.lt(minAmount)) {
     throw new Error(`Minimum amount is ${minAmount} ${fromToken.symbol}`);
   }

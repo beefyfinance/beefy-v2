@@ -1,5 +1,3 @@
-// @ts-nocheck FIXME beSonic
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   isErc4626AsyncWithdrawVault,
   isErc4626Vault,
@@ -17,9 +15,9 @@ import type {
 import {
   isTokenEqual,
   isTokenErc20,
+  isTokenNative,
   type TokenEntity,
   type TokenErc20,
-  type TokenNative,
 } from '../../../entities/token.ts';
 import {
   createOptionId,
@@ -41,7 +39,7 @@ import {
 } from '../transact-types.ts';
 import { TransactMode } from '../../../reducers/wallet/transact-types.ts';
 import { first } from 'lodash-es';
-import { BIG_ZERO, fromWei } from '../../../../../helpers/big-number.ts';
+import { BIG_ZERO, fromWei, toWei, toWeiBigInt } from '../../../../../helpers/big-number.ts';
 import { selectFeesByVaultId } from '../../../selectors/fees.ts';
 import BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
@@ -49,6 +47,10 @@ import type { Step } from '../../../reducers/wallet/stepper.ts';
 import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
 import type { ZapStep } from '../zap/types.ts';
 import { deposit, requestRedeem } from '../../../actions/wallet/erc4626.ts';
+import { fetchContract } from '../../rpc-contract/viem-contract.ts';
+import { encodeFunctionData, getAddress } from 'viem';
+import { getInsertIndex, getTokenAddress } from '../helpers/zap.ts';
+import { Erc4626VaultAbi } from '../../../../../config/abi/Erc4626VaultAbi.ts';
 
 export class Erc4626VaultType implements IErc4626VaultType {
   public readonly id = 'erc4626';
@@ -85,24 +87,73 @@ export class Erc4626VaultType implements IErc4626VaultType {
   }
 
   async fetchZapDeposit(request: VaultDepositRequest): Promise<VaultDepositResponse> {
-    throw new Error('Not implemented');
+    onlyInputCount(request.inputs, 1);
+
+    const input = first(request.inputs)!; // we checked length above
+    if (!isTokenEqual(input.token, this.depositToken)) {
+      throw new Error('Input token is not the deposit token');
+    }
+    if (isTokenNative(input.token)) {
+      throw new Error('ERC4626 does not support native token deposits');
+    }
+
+    const state = this.getState();
+    const vaultContract = fetchContract(
+      this.vault.contractAddress,
+      Erc4626VaultAbi,
+      this.vault.chainId
+    );
+    const ppfsRaw = await vaultContract.read.getPricePerFullShare();
+    const ppfs = new BigNumber(ppfsRaw.toString(10));
+    const depositFee = this.calculateDepositFee(input, state);
+    const inputWeiAfterFee = toWei(input.amount.minus(depositFee), input.token.decimals);
+    const expectedShares = inputWeiAfterFee
+      .shiftedBy(this.shareToken.decimals)
+      .dividedToIntegerBy(ppfs);
+
+    const outputs = [
+      {
+        token: this.shareToken,
+        amount: fromWei(expectedShares, this.shareToken.decimals),
+      },
+    ];
+
+    return {
+      inputs: request.inputs,
+      outputs,
+      minOutputs: outputs,
+      zap: this.fetchErc20ZapDeposit(
+        this.vault.contractAddress,
+        request.from,
+        input.token,
+        input.amount,
+        input.max
+      ),
+    };
   }
 
   protected fetchErc20ZapDeposit(
     vaultAddress: string,
+    fromAddress: string,
     depositToken: TokenErc20,
     depositAmount: BigNumber,
-    depositAll: boolean
+    _depositAll: boolean
   ): ZapStep {
-    throw new Error('Not implemented');
-  }
-
-  protected fetchNativeZapDeposit(
-    vaultAddress: string,
-    depositToken: TokenNative,
-    depositAmount: BigNumber
-  ): ZapStep {
-    throw new Error('Not implemented');
+    return {
+      target: vaultAddress,
+      value: '0',
+      data: encodeFunctionData({
+        abi: Erc4626VaultAbi,
+        functionName: 'deposit',
+        args: [toWeiBigInt(depositAmount, depositToken.decimals), getAddress(fromAddress)],
+      }),
+      tokens: [
+        {
+          token: getTokenAddress(depositToken),
+          index: getInsertIndex(0),
+        },
+      ],
+    };
   }
 
   async fetchDepositOption(): Promise<Erc4626VaultDepositOption> {
@@ -260,25 +311,7 @@ export class Erc4626VaultType implements IErc4626VaultType {
     throw new Error('Sync withdraw not implemented');
   }
 
-  async fetchZapWithdraw(request: VaultWithdrawRequest): Promise<VaultWithdrawResponse> {
-    throw new Error('Not implemented');
-  }
-
-  protected fetchNativeZapWithdraw(
-    vaultAddress: string,
-    shareToken: TokenErc20,
-    sharesToWithdrawWei: BigNumber,
-    withdrawAll: boolean
-  ): ZapStep {
-    throw new Error('Not implemented');
-  }
-
-  protected fetchErc20ZapWithdraw(
-    vaultAddress: string,
-    shareToken: TokenErc20,
-    sharesToWithdrawWei: BigNumber,
-    withdrawAll: boolean
-  ): ZapStep {
-    throw new Error('Not implemented');
+  async fetchZapWithdraw(_request: VaultWithdrawRequest): Promise<VaultWithdrawResponse> {
+    throw new Error('Zap withdraw not implemented');
   }
 }

@@ -421,6 +421,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
       const unstakeZap = await this.fetchZapUnstakeStep(unstakeStep, zapHelpers);
       const depositZap = await this.vaultType!.fetchZapDeposit({
         inputs: depositStep.inputs.map(i => ({ ...i, max: true })),
+        from: this.helpers.zap.router,
       }); // assuming connectSecondVaultEntity was called
 
       const dustOutputs: OrderOutput[] = unstakeZap.outputs.map(output => ({
@@ -487,6 +488,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
 
       const withdrawZap = await this.vaultType!.fetchZapWithdraw({
         inputs: quote.inputs.map(i => ({ ...i, token: this.depositToken })),
+        from: this.helpers.zap.router,
       }); // assuming connectSecondVaultEntity was called
       const stakeZap = await this.fetchZapStakeStep(withdrawZap.outputs, zapHelpers);
 

@@ -53,7 +53,13 @@ import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { Step } from '../../../../reducers/wallet/stepper.ts';
 import type { Namespace, TFunction } from 'react-i18next';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
-import { isStandardVault, type VaultStandard } from '../../../../entities/vault.ts';
+import {
+  isErc4626AsyncWithdrawVault,
+  isErc4626Vault,
+  isStandardVault,
+  type VaultErc4626,
+  type VaultStandard,
+} from '../../../../entities/vault.ts';
 import { slipBy } from '../../helpers/amounts.ts';
 import { nativeAndWrappedAreSame, pickTokens } from '../../helpers/tokens.ts';
 import {
@@ -63,7 +69,12 @@ import {
 import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
 import { selectChainById } from '../../../../selectors/chains.ts';
-import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType.ts';
+import {
+  type IErc4626VaultType,
+  isErc4626VaultType,
+  isStandardVaultType,
+  type IStandardVaultType,
+} from '../../vaults/IVaultType.ts';
 import type { SingleStrategyConfig } from '../strategy-configs.ts';
 import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
@@ -83,8 +94,8 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
 
   protected readonly wnative: TokenErc20;
   protected readonly native: TokenNative;
-  protected readonly vault: VaultStandard;
-  protected readonly vaultType: IStandardVaultType;
+  protected readonly vault: VaultStandard | VaultErc4626;
+  protected readonly vaultType: IStandardVaultType | IErc4626VaultType;
 
   public getHelpers(): ZapTransactHelpers {
     return this.helpers;
@@ -97,11 +108,11 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     // Make sure zap was configured correctly for this vault
     const { vault, vaultType, getState } = this.helpers;
 
-    if (!isStandardVault(vault)) {
-      throw new Error('Vault is not a standard vault');
+    if (!isStandardVault(vault) && !isErc4626Vault(vault)) {
+      throw new Error('Vault is not a standard/erc4626 vault');
     }
-    if (!isStandardVaultType(vaultType)) {
-      throw new Error('Vault type is not standard');
+    if (!isStandardVaultType(vaultType) && !isErc4626VaultType(vaultType)) {
+      throw new Error('Vault type is not standard/erc4626');
     }
 
     onlyAssetCount(vault, 1);
@@ -112,6 +123,14 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     this.vaultType = vaultType;
     this.native = selectChainNativeToken(state, vault.chainId);
     this.wnative = selectChainWrappedNativeToken(state, vault.chainId);
+  }
+
+  isDepositDisabled(): boolean {
+    return !!this.options.disableDeposit;
+  }
+
+  isWithdrawDisabled(): boolean {
+    return !!this.options.disableWithdraw || isErc4626AsyncWithdrawVault(this.vault);
   }
 
   async aggregatorTokenSupport() {
@@ -129,6 +148,10 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
   }
 
   async fetchDepositOptions(): Promise<SingleDepositOption[]> {
+    if (this.isDepositDisabled()) {
+      return [];
+    }
+
     const supportedAggregatorTokens = await this.aggregatorTokenSupport();
     const tokens = supportedAggregatorTokens.filter(
       token => !isTokenEqual(token, this.vaultType.depositToken)
@@ -157,6 +180,10 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     inputs: InputTokenAmount[],
     option: SingleDepositOption
   ): Promise<SingleDepositQuote> {
+    if (this.isDepositDisabled()) {
+      throw new Error('Deposit zap is disabled');
+    }
+
     const { swapAggregator, zap, getState } = this.helpers;
 
     // Input
@@ -166,8 +193,9 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     }
 
     // Token Allowances
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,
@@ -228,6 +256,10 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
   }
 
   async fetchDepositStep(quote: SingleDepositQuote, t: TFunction<Namespace>): Promise<Step> {
+    if (this.isDepositDisabled()) {
+      throw new Error('Deposit zap is disabled');
+    }
+
     const { zap, swapAggregator } = this.helpers;
 
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
@@ -268,6 +300,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
             max: true, // but we call depositAll
           },
         ],
+        from: this.helpers.zap.router,
       });
 
       steps.push(vaultDeposit.zap);
@@ -321,6 +354,10 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
   }
 
   async fetchWithdrawOptions(): Promise<SingleWithdrawOption[]> {
+    if (this.isWithdrawDisabled()) {
+      return [];
+    }
+
     const supportedAggregatorTokens = await this.aggregatorTokenSupport();
     const tokens = supportedAggregatorTokens.filter(
       token => !isTokenEqual(token, this.vaultType.depositToken)
@@ -349,7 +386,12 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
     inputs: InputTokenAmount[],
     option: SingleWithdrawOption
   ): Promise<SingleWithdrawQuote> {
-    const { vault, swapAggregator, zap, getState } = this.helpers;
+    if (this.isWithdrawDisabled()) {
+      throw new Error('Withdraw zap is disabled');
+    }
+
+    const { swapAggregator, zap, getState } = this.helpers;
+    const vault = this.vault;
     if (!isStandardVault(vault)) {
       throw new Error('Vault is not standard');
     }
@@ -473,6 +515,10 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
   }
 
   async fetchWithdrawStep(quote: SingleWithdrawQuote, t: TFunction<Namespace>): Promise<Step> {
+    if (this.isWithdrawDisabled()) {
+      throw new Error('Withdraw zap is disabled');
+    }
+
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const state = getState();
       const chain = selectChainById(state, this.vault.chainId);
@@ -490,6 +536,7 @@ class SingleStrategyImpl implements IComposableStrategy<StrategyId> {
       // Step 1. Withdraw from vault
       const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
+        from: this.helpers.zap.router,
       });
       if (vaultWithdraw.outputs.length !== 1) {
         throw new Error('Withdraw output count mismatch');

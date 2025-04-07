@@ -17,7 +17,7 @@ import { selectChainById } from '../../selectors/chains.ts';
 import { selectErc20TokenByAddress, selectTokenByAddress } from '../../selectors/tokens.ts';
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
-import { fromWeiBigInt, toWeiBigInt } from '../../../../helpers/big-number.ts';
+import { fromWei, toWeiBigInt } from '../../../../helpers/big-number.ts';
 import { getAddress } from 'viem';
 import { isTokenErc20 } from '../../entities/token.ts';
 import { Erc4626VaultAbi } from '../../../../config/abi/Erc4626VaultAbi.ts';
@@ -194,7 +194,7 @@ export const fulfillRedeem = (vaultId: VaultEntity['id'], requestId: bigint) => 
 
       if (result < expectedAssets) {
         throw new Error(
-          `Simulation resulted in ${formatTokenDisplay(fromWeiBigInt(result, depositToken.decimals), depositToken.decimals)} wS, expected ${formatTokenDisplay(request.assets, depositToken.decimals)}`
+          `Simulation resulted in ${formatTokenDisplay(fromWei(result, depositToken.decimals), depositToken.decimals)} wS, expected ${formatTokenDisplay(request.assets, depositToken.decimals)}`
         );
       }
 
