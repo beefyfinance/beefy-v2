@@ -318,7 +318,6 @@ export const featureFlag_sonicTestnet = createFactory(() => {
       rpc: ['https://virtual.sonic.rpc.tenderly.co/eeda950c-05b3-41a3-836a-957dd5c926c5'],
       explorerTxUrlTemplate:
         'https://dashboard.tenderly.co/explorer/vnet/eeda950c-05b3-41a3-836a-957dd5c926c5/tx/{hash}',
-      appMulticallContractAddress: '0xAEA188D7f5f6FaC1a6E705Cd93DCE02C115249f0',
     },
     vault: {
       name: 'Tenderly beSonic',
