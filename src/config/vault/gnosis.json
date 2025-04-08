@@ -11,9 +11,7 @@
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
-    "earnedTokenDecimals": [
-      18
-    ],
+    "earnedTokenDecimals": [18],
     "earnedToken": "rCowUniswapGnosisbCSPX-sDAI",
     "earnContractAddress": "0xEFe7a711e7C794D3C8934C243631720dBec522Eb",
     "oracle": "lps",
@@ -21,10 +19,7 @@
     "status": "active",
     "createdAt": 1743878000,
     "platformId": "uniswap",
-    "assets": [
-      "bCSPX",
-      "sDAI"
-    ],
+    "assets": ["bCSPX", "sDAI"],
     "risks": [],
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -56,17 +51,8 @@
     "status": "active",
     "createdAt": 1743878000,
     "platformId": "beefy",
-    "assets": [
-      "bCSPX",
-      "sDAI"
-    ],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_HIGH",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "assets": ["bCSPX", "sDAI"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "gnosis",
     "type": "cowcentrated",
@@ -86,12 +72,10 @@
     "tokenAddress": "0xdC5cF03C6AaF579a64E3e367fd6447e3ae312165",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
-    "earnedTokens": [],
+    "earnedTokens": "",
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
-    "earnedTokenDecimals": [
-      18
-    ],
+    "earnedTokenDecimals": [18],
     "earnedToken": "rCowUniswapGnosiswbTSLA-sDAI",
     "earnContractAddress": "0xa651c7c43a53328284747C89c56Ef5fB15A7161d",
     "oracle": "lps",
@@ -99,10 +83,7 @@
     "status": "active",
     "createdAt": 1743878000,
     "platformId": "uniswap",
-    "assets": [
-      "wbTSLA",
-      "sDAI"
-    ],
+    "assets": ["wbTSLA", "sDAI"],
     "risks": [],
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -134,17 +115,8 @@
     "status": "active",
     "createdAt": 1743878000,
     "platformId": "beefy",
-    "assets": [
-      "wbTSLA",
-      "sDAI"
-    ],
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_HIGH",
-      "MCAP_SMALL",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "assets": ["wbTSLA", "sDAI"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "pool",
     "network": "gnosis",
     "type": "cowcentrated",
@@ -157,7 +129,7 @@
   },
   {
     "id": "uniswap-cow-gnosis-usdc.e-sdai-rp",
-    "name": "sDAI-USDC.e Reward Pool",
+    "name": "USDC.e-sDAI Reward Pool",
     "type": "gov",
     "version": 2,
     "token": "cowUniswapGnosissDAI-USDCe",
@@ -167,9 +139,7 @@
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
-    "earnedTokenDecimals": [
-      18
-    ],
+    "earnedTokenDecimals": [18],
     "earnedToken": "rCowUniswapGnosissDAI-USDCe",
     "earnContractAddress": "0x5f1b787F702910262CC2f820A63b0C474d9B0F80",
     "oracle": "lps",
@@ -177,10 +147,7 @@
     "status": "active",
     "createdAt": 1743878000,
     "platformId": "uniswap",
-    "assets": [
-      "sDAI",
-      "gUSDCe"
-    ],
+    "assets": ["USDCe", "sDAI"],
     "risks": [],
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -195,7 +162,7 @@
   },
   {
     "id": "uniswap-cow-gnosis-usdc.e-sdai",
-    "name": "sDAI-USDC.e",
+    "name": "USDC.e-sDAI",
     "token": "USDC.e-sDAI uniswap",
     "tokenAddress": "0x5a2Fb66e66b2aF7F1c2F71c6c695492FaAB2E587",
     "tokenDecimals": 18,
@@ -212,10 +179,7 @@
     "status": "active",
     "createdAt": 1743878000,
     "platformId": "beefy",
-    "assets": [
-      "sDAI",
-      "gUSDCe"
-    ],
+    "assets": ["USDCe", "sDAI"],
     "risks": [
       "COMPLEXITY_LOW",
       "IL_LOW",
@@ -247,9 +211,7 @@
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
-    "earnedTokenDecimals": [
-      18
-    ],
+    "earnedTokenDecimals": [18],
     "earnedToken": "rCowUniswapGnosiswstETH-WETH",
     "earnContractAddress": "0x267b2D785576D595b33De861aE48eA94cFD257c7",
     "oracle": "lps",
@@ -257,10 +219,7 @@
     "status": "active",
     "createdAt": 1743878000,
     "platformId": "uniswap",
-    "assets": [
-      "WETH",
-      "wstETH"
-    ],
+    "assets": ["WETH", "wstETH"],
     "risks": [],
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -292,10 +251,7 @@
     "status": "active",
     "createdAt": 1743878000,
     "platformId": "beefy",
-    "assets": [
-      "WETH",
-      "wstETH"
-    ],
+    "assets": ["WETH", "wstETH"],
     "risks": [
       "COMPLEXITY_LOW",
       "IL_LOW",
@@ -327,9 +283,7 @@
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
-    "earnedTokenDecimals": [
-      18
-    ],
+    "earnedTokenDecimals": [18],
     "earnedToken": "rCowUniswapGnosisUSDCe-WXDAI",
     "earnContractAddress": "0xaD3DCDCF0C01D838CBC43C67961365281d6cAD96",
     "oracle": "lps",
@@ -337,10 +291,7 @@
     "status": "active",
     "createdAt": 1743878000,
     "platformId": "uniswap",
-    "assets": [
-      "gUSDCe",
-      "WXDAI"
-    ],
+    "assets": ["USDCe", "WXDAI"],
     "risks": [],
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -372,10 +323,7 @@
     "status": "active",
     "createdAt": 1743878000,
     "platformId": "beefy",
-    "assets": [
-      "gUSDCe",
-      "WXDAI"
-    ],
+    "assets": ["USDCe", "WXDAI"],
     "risks": [
       "COMPLEXITY_LOW",
       "IL_LOW",
@@ -407,9 +355,7 @@
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
-    "earnedTokenDecimals": [
-      18
-    ],
+    "earnedTokenDecimals": [18],
     "earnedToken": "rCowUniswapGnosissDAI-wstETH",
     "earnContractAddress": "0xD56941F8d19b013ddB89a118fdD9B0AC7e481b55",
     "oracle": "lps",
@@ -417,10 +363,7 @@
     "status": "active",
     "createdAt": 1743878000,
     "platformId": "uniswap",
-    "assets": [
-      "wstETH",
-      "sDAI"
-    ],
+    "assets": ["wstETH", "sDAI"],
     "risks": [],
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -452,10 +395,7 @@
     "status": "active",
     "createdAt": 1743878000,
     "platformId": "beefy",
-    "assets": [
-      "wstETH",
-      "sDAI"
-    ],
+    "assets": ["wstETH", "sDAI"],
     "risks": [
       "COMPLEXITY_LOW",
       "IL_HIGH",
@@ -487,9 +427,7 @@
     "earnedTokens": [],
     "earnedTokenAddresses": [],
     "earnedOracleIds": [],
-    "earnedTokenDecimals": [
-      18
-    ],
+    "earnedTokenDecimals": [18],
     "earnedToken": "rCowUniswapGnosisGNO-wstETH",
     "earnContractAddress": "0x56F130Cc51cE0CA96454f44BF66f1299C89ccAe7",
     "oracle": "lps",
@@ -497,10 +435,7 @@
     "status": "active",
     "createdAt": 1743878000,
     "platformId": "uniswap",
-    "assets": [
-      "wstETH",
-      "GNO"
-    ],
+    "assets": ["wstETH", "GNO"],
     "risks": [],
     "strategyTypeId": "pool",
     "network": "gnosis",
@@ -532,10 +467,7 @@
     "status": "active",
     "createdAt": 1743878000,
     "platformId": "beefy",
-    "assets": [
-      "wstETH",
-      "GNO"
-    ],
+    "assets": ["wstETH", "GNO"],
     "risks": [
       "COMPLEXITY_LOW",
       "IL_HIGH",
@@ -701,7 +633,7 @@
     "status": "active",
     "createdAt": 1722694393,
     "platformId": "aura",
-    "assets": ["gUSDCe", "USDT", "sDAI"],
+    "assets": ["USDCe", "USDT", "sDAI"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
