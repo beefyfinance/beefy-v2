@@ -26,6 +26,7 @@ import { useDispatch } from 'react-redux';
 import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
 import { WithdrawQueueLoader } from '../WithdrawQueue/WithdrawQueueLoader.tsx';
+import { FormFooter } from '../FormFooter/FormFooter.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -121,6 +122,7 @@ export const WithdrawForm = memo(function WithdrawForm() {
       <Actions>
         <WithdrawActions />
       </Actions>
+      <FormFooter />
     </>
   );
 });

@@ -724,6 +724,7 @@
   "Transact-Notice-NotEnough": "Amount exceeds available balance",
   "Transact-Notice-WithdrawnInWallet": "You have <amount/> {{token}} in your wallet. You can remove liquidity on the <platformLink>underlying platform</platformLink>.",
   "Transact-Notice-CowcentratedNoSingleSideAllowed": "This position can't accept single-sided {{inputToken}} deposits right now. Try adding {{neededToken}} or both tokens simultaneously instead.",
+  "Transact-Notice-BeSonicWithdrawTime": "Withdrawals are available 14 days after the request.",
   "Transact-Fee-Deposit": "Deposit fee",
   "Transact-Fee-Deposit-Explainer": "Charged by underlying provider, not Beefy.",
   "Transact-Fee-Withdraw": "Withdrawal fee",
