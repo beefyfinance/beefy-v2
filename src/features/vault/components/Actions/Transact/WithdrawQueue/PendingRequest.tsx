@@ -7,7 +7,7 @@ import { memo, useCallback, useMemo } from 'react';
 import { formatLargeUsd } from '../../../../../../helpers/format.ts';
 import { TokenAmountFromEntity } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { Countdown } from './Countdown.tsx';
-import { Button } from '../../../../../../components/Button/Button.tsx';
+import { WithdrawButton } from './WithdrawButton.tsx';
 
 type PendingRequestProps = {
   vaultId: VaultErc4626['id'];
@@ -43,9 +43,7 @@ export const PendingRequest = memo(function PendingRequest({
       </Amount>
       <Actions>
         <Countdown until={request.claimableTimestamp}>
-          <Button variant="success" size="xs" onClick={handleWithdraw}>
-            Withdraw
-          </Button>
+          <WithdrawButton chainId={depositToken.chainId} onClick={handleWithdraw} />
         </Countdown>
       </Actions>
     </Layout>
@@ -65,7 +63,7 @@ const Layout = styled('div', {
 
 const Amount = styled('div', {
   base: {
-    maxWidth: '60%',
+    maxWidth: '50%',
   },
 });
 
@@ -85,6 +83,6 @@ const Value = styled('div', {
 
 const Actions = styled('div', {
   base: {
-    maxWidth: '40%',
+    maxWidth: '50%',
   },
 });

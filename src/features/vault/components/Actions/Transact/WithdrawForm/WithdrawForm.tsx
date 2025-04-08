@@ -25,7 +25,7 @@ import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice/WithdrawnInW
 import { useDispatch } from 'react-redux';
 import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
-import { WithdrawQueueLoader } from './WithdrawQueue/WithdrawQueueLoader.tsx';
+import { WithdrawQueueLoader } from '../WithdrawQueue/WithdrawQueueLoader.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -72,13 +72,11 @@ const WithdrawFormLoader = memo(function WithdrawFormLoader() {
 
   return (
     <div className={classes.container}>
-      {isLoading ? (
+      {isLoading ?
         <LoadingIndicator text={t('Transact-Loading')} />
-      ) : isError ? (
+      : isError ?
         <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
-      ) : (
-        <WithdrawForm />
-      )}
+      : <WithdrawForm />}
     </div>
   );
 });
@@ -90,11 +88,12 @@ export const WithdrawForm = memo(function WithdrawForm() {
   const forceSelection = useAppSelector(selectTransactForceSelection);
 
   const i18key = useMemo(() => {
-    return hasOptions
-      ? forceSelection
-        ? 'Transact-SelectToken'
+    return (
+      hasOptions ?
+        forceSelection ? 'Transact-SelectToken'
         : 'Transact-SelectAmount'
-      : 'Transact-Withdraw';
+      : 'Transact-Withdraw'
+    );
   }, [forceSelection, hasOptions]);
 
   return (
@@ -103,9 +102,9 @@ export const WithdrawForm = memo(function WithdrawForm() {
       <WithdrawQueueLoader />
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
-          {hasOptions ? (
+          {hasOptions ?
             <img src={zapIcon} alt="Zap" height={12} className={classes.zapIcon} />
-          ) : null}
+          : null}
           {t(i18key)}
         </div>
         <div className={classes.availableLabel}>
