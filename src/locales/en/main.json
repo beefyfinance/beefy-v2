@@ -736,6 +736,7 @@
   "Transact-Fee-Treasury": "Beefy Treasury",
   "Transact-Fee-Developers": "Vault Developers",
   "Transact-Fee-HarvestFee": "Harvest Fee",
+  "Transact-Fee-Liquidity": "Liquidity Fee",
   "Transact-Fee-TotalFee": "Total Performance Fee",
   "Transact-SwapProvider-one-inch": "1inch",
   "Transact-SwapProvider-kyber": "KyberSwap",

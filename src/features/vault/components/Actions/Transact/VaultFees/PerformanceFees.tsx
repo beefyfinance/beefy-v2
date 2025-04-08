@@ -16,7 +16,9 @@ const performanceFeeLabels = {
   treasury: 'Transact-Fee-Treasury',
   strategist: 'Transact-Fee-Developers',
   call: 'Transact-Fee-HarvestFee',
+  liquidity: 'Transact-Fee-Liquidity',
 };
+
 export const PerformanceFees = memo(function PerformanceFees({ fees }: PerformanceFeesProps) {
   const { t } = useTranslation();
   const rows = entries(performanceFeeLabels)
