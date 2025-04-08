@@ -196,7 +196,7 @@ export type UnprocessedTimelineEntryCowcentratedVaultWithoutRewardPool =
 export type UnprocessedTimelineEntryCowcentratedVaultWithRewardPools =
   UnprocessedTimelineEntryCowcentratedVaultBasePart &
     UnprocessedTimelineEntryCowcentratedVaultWithRewardPoolsPart;
-export type UnprocessedTimelineEntryCowcentratedVault =
+export type UnprocessedTimelineEntryClassicVault =
   | UnprocessedTimelineEntryCowcentratedVaultWithoutRewardPool
   | UnprocessedTimelineEntryCowcentratedVaultWithRewardPools;
 

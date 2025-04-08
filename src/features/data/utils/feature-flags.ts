@@ -328,7 +328,8 @@ export const featureFlag_sonicTestnet = createFactory(() => {
     },
   };
 
-  if (import.meta.env.VITE_SONIC_TESTNET) {
+  if (import.meta.env.VITE_SONIC_TESTNET === 'true') {
+    //x
     return defaults;
   }
 

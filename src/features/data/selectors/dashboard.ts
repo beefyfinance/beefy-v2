@@ -1,6 +1,7 @@
 import type { BeefyState } from '../../../redux-types.ts';
 import {
   isCowcentratedLikeVault,
+  isErc4626Vault,
   isGovVault,
   isStandardVault,
   type VaultEntity,
@@ -144,7 +145,7 @@ export const selectDashboardUserRewardsByVaultId = (
         });
       }
     }
-  } else if (isStandardVault(vault)) {
+  } else if (isStandardVault(vault) || isErc4626Vault(vault)) {
     const pnl = selectStandardGovPnl(state, vaultId, walletAddress);
     if (pnl.totalYield.gt(BIG_ZERO)) {
       rewards.push({
@@ -210,7 +211,7 @@ const selectDashboardYieldRewardDataAvailableByVaultId = (
   }
 
   const vault = selectVaultById(state, vaultId);
-  if (isCowcentratedLikeVault(vault) || isStandardVault(vault)) {
+  if (isCowcentratedLikeVault(vault) || isStandardVault(vault) || isErc4626Vault(vault)) {
     if (!selectIsAnalyticsLoadedByAddress(state, walletAddress)) {
       return DashboardDataStatus.Loading;
     }

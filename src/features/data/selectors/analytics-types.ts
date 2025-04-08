@@ -21,6 +21,10 @@ export type UserGovPnl = {
   type: 'gov';
 } & Omit<UserStandardPnl, 'type'>;
 
+export type UserErc4626Pnl = {
+  type: 'erc4626';
+} & Omit<UserStandardPnl, 'type'>;
+
 export type AmountUsd = {
   amount: BigNumber;
   usd: BigNumber;
@@ -96,7 +100,7 @@ export type UserClmPnl = {
   pnl: PnlBreakdown;
 };
 
-export type UserVaultPnl = UserStandardPnl | UserGovPnl | UserClmPnl;
+export type UserVaultPnl = UserStandardPnl | UserGovPnl | UserClmPnl | UserErc4626Pnl;
 
 export function isUserStandardPnl(pnl: UserVaultPnl): pnl is UserStandardPnl {
   return pnl.type === 'standard';

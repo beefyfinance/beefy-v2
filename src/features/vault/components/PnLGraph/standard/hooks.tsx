@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { VaultEntity } from '../../../../data/entities/vault.ts';
+import { type VaultEntity } from '../../../../data/entities/vault.ts';
 import { useAppSelector } from '../../../../../store.ts';
 import {
   selectUserDepositedTimelineByVaultId,
