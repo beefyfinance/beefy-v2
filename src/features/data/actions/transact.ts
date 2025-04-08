@@ -330,11 +330,6 @@ export async function getTransactSteps(
       );
 
       if (allowance.lt(allowanceTokenAmount.amount)) {
-        console.log(
-          allowanceTokenAmount.token.symbol,
-          allowanceTokenAmount.amount.toString(10),
-          allowance.toString(10)
-        );
         steps.push({
           step: 'approve',
           message: t('Vault-ApproveMsg'),

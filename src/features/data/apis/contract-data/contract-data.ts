@@ -206,7 +206,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const vault = selectVaultById(state, erc4626Vault.id);
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
-    console.debug(erc4626Vault.id, result, mooToken, depositToken);
+
     return {
       id: erc4626Vault.id,
       balance: fromWei(result.balance, depositToken.decimals),

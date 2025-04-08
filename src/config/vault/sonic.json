@@ -17,7 +17,7 @@
     "platformId": "beefy",
     "assets": ["WS"],
     "migrationIds": [],
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "besonic",
     "pointStructureIds": ["sonic-points"],
     "network": "sonic",

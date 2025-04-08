@@ -1,8 +1,6 @@
 import type { ChainEntity } from '../entities/chain.ts';
 import { clamp } from '../../../helpers/number.ts';
 import { createFactory } from './factory-utils.ts';
-import { getUnixNow } from '../../../helpers/date.ts';
-import { mapValues } from 'lodash-es';
 
 const DEFAULT_CHUNK_SIZE = 468;
 const DEFAULT_CHUNK_SIZE_BY_CHAIN: Record<string, number> = {
@@ -309,49 +307,3 @@ export function featureFlag_simulateLiveBoost(boostId: string): boolean {
   const boostIds = getSimulateLiveBoosts();
   return boostIds.has(boostId);
 }
-
-export const featureFlag_sonicTestnet = createFactory(() => {
-  const defaults = {
-    chain: {
-      name: 'Tenderly Sonic',
-      chainId: 7357146,
-      rpc: ['https://virtual.sonic.rpc.tenderly.co/3b61d997-049b-4e8d-b69c-c63344c5596c'],
-      explorerTxUrlTemplate:
-        'https://dashboard.tenderly.co/explorer/vnet/3b61d997-049b-4e8d-b69c-c63344c5596c/tx/{hash}',
-      gas: {
-        type: 'standard',
-      },
-    },
-    vault: {
-      name: 'Tenderly beSonic',
-      createdAt: getUnixNow(),
-    },
-  };
-
-  if (import.meta.env.VITE_SONIC_TESTNET === 'true') {
-    //x
-    return defaults;
-  }
-
-  const params = getSearchParams();
-  if (!params.has('__sonic_testnet')) {
-    return false;
-  }
-
-  const config = params.get('__sonic_testnet');
-  const decoded = config && JSON.parse(config);
-  if (!decoded) {
-    return defaults;
-  }
-
-  return mapValues(defaults, (settings, key) =>
-    mapValues(settings, (value, k) => {
-      const override = decoded[key]?.[k];
-      if (override === undefined) {
-        return value;
-      }
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return override;
-    })
-  ) as typeof defaults;
-});
