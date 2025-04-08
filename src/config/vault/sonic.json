@@ -1,7 +1,7 @@
 [
   {
     "id": "beefy-besonic",
-    "name": "beSonic",
+    "name": "beS",
     "type": "erc4626",
     "subType": "erc7540:withdraw",
     "token": "WS",
