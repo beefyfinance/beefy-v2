@@ -573,7 +573,7 @@ export const config = {
     explorerUrl: 'https://gnosisscan.io',
     multicallAddress: '0x2840463Ea288c26B66E24f92E8C704e1aB6b095c',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0x70Ed6174d8425332F7D9AD2d26C86902977307c0',
+    appMulticallContractAddress: '0xdAaD0085e5D301Cb5721466e600606AB5158862b',
     native: { symbol: 'XDAI', oracleId: 'WXDAI', decimals: 18 },
     gas: {
       type: 'standard',
