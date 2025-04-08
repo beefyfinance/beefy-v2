@@ -541,6 +541,10 @@
   "Stepper-deposit-Success-Title": "Deposit Confirmed",
   "Stepper-deposit-Success-Content": "You have successfully deposited {{amount}} {{token}} in the vault",
 
+  "Stepper-deposit-erc4626-Building-Content": "Building deposit transaction...",
+  "Stepper-deposit-erc4626-Success-Title": "Deposit Confirmed",
+  "Stepper-deposit-erc4626-Success-Content": "You have successfully deposited {{amount}} {{token}} in the vault",
+
   "Stepper-deposit-gov-Building-Content": "Building deposit transaction...",
   "Stepper-deposit-gov-Success-Title": "Deposit Confirmed",
   "Stepper-deposit-gov-Success-Content": "You have successfully deposited {{amount}} {{token}} in the Earnings Pool",
@@ -549,12 +553,12 @@
   "Stepper-withdraw-Success-Title": "Withdraw Success",
   "Stepper-withdraw-Success-Content": "You have successfully withdrawn {{amount}} {{token}} from the vault",
 
-  "Stepper-request-withdraw-Building-Content": "Building request withdrawal transaction...",
-  "Stepper-request-withdraw-Success-Title": "Request Withdrawal Success",
-  "Stepper-request-withdraw-Success-Content": "You have successfully requested {{amount}} {{token}} to be withdrawn from the vault",
+  "Stepper-request-withdraw-Building-Content": "Building withdrawal request transaction...",
+  "Stepper-request-withdraw-Success-Title": "Withdrawal request successful",
+  "Stepper-request-withdraw-Success-Content": "You have successfully requested the withdrawal of {{amount}} {{token}}. It will be available in 14 days.",
 
-  "Stepper-fulfill-request-withdraw-Building-Content": "Building withdraw transaction...",
-  "Stepper-fulfill-request-withdraw-Success-Title": "Withdraw Success",
+  "Stepper-fulfill-request-withdraw-Building-Content": "Building withdrawal transaction...",
+  "Stepper-fulfill-request-withdraw-Success-Title": "Withdrawal successful",
   "Stepper-fulfill-request-withdraw-Success-Content": "You have successfully withdrawn {{amount}} {{token}} from the vault",
 
   "Stepper-claim-withdraw-Building-Content": "Building withdraw transaction...",

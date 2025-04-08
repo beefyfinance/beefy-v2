@@ -226,7 +226,7 @@ export class Erc4626VaultType implements IErc4626VaultType {
     const input = first(quote.inputs)!; // we checked length above
 
     return {
-      step: 'deposit',
+      step: 'deposit-erc4626',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
       action: deposit(this.vault, input.amount),
       pending: false,
