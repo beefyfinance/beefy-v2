@@ -1,6 +1,6 @@
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { EIP1559GasConfig, GasConfig, StandardGasConfig } from '../config-types.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import {
   averageBigNumbers,
   BIG_MAX_UINT256,
@@ -31,7 +31,11 @@ export type EIP1559GasPrice = {
 export type GasPricing = StandardGasPrice | EIP1559GasPrice;
 
 function clamp(value: BigNumber, min: BigNumber, max: BigNumber): BigNumber {
-  return value.isLessThan(min) ? min : value.isGreaterThan(max) ? max : value;
+  return (
+    value.isLessThan(min) ? min
+    : value.isGreaterThan(max) ? max
+    : value
+  );
 }
 
 function multiplyAndClamp(
@@ -103,23 +107,23 @@ export class EIP1559GasPricer implements IGasPricer {
     this.baseMaximum =
       'baseMaximum' in gas && gas.baseMaximum ? new BigNumber(gas.baseMaximum) : BIG_MAX_UINT256;
     this.baseSafetyMultiplier = BIG_ONE.plus(
-      'baseSafetyMargin' in gas && gas.baseSafetyMargin
-        ? new BigNumber(gas.baseSafetyMargin)
-        : BIG_ZERO
+      'baseSafetyMargin' in gas && gas.baseSafetyMargin ?
+        new BigNumber(gas.baseSafetyMargin)
+      : BIG_ZERO
     );
 
     this.priorityMinimum =
-      'priorityMinimum' in gas && gas.priorityMinimum
-        ? new BigNumber(gas.priorityMinimum)
-        : BIG_ZERO;
+      'priorityMinimum' in gas && gas.priorityMinimum ?
+        new BigNumber(gas.priorityMinimum)
+      : BIG_ZERO;
     this.priorityMaximum =
-      'priorityMaximum' in gas && gas.priorityMaximum
-        ? new BigNumber(gas.priorityMaximum)
-        : BIG_MAX_UINT256;
+      'priorityMaximum' in gas && gas.priorityMaximum ?
+        new BigNumber(gas.priorityMaximum)
+      : BIG_MAX_UINT256;
     this.prioritySafetyMultiplier = BIG_ONE.plus(
-      'prioritySafetyMargin' in gas && gas.prioritySafetyMargin
-        ? new BigNumber(gas.prioritySafetyMargin)
-        : BIG_ZERO
+      'prioritySafetyMargin' in gas && gas.prioritySafetyMargin ?
+        new BigNumber(gas.prioritySafetyMargin)
+      : BIG_ZERO
     );
   }
 

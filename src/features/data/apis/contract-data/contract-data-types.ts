@@ -1,11 +1,12 @@
 import type { BeefyState } from '../../../../redux-types.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
-import { type BigNumber } from 'bignumber.js';
-import type {
-  VaultCowcentrated,
-  VaultGov,
-  VaultGovMulti,
-  VaultStandard,
+import type BigNumber from 'bignumber.js';
+import {
+  type VaultCowcentrated,
+  type VaultErc4626,
+  type VaultGov,
+  type VaultGovMulti,
+  type VaultStandard,
 } from '../../entities/vault.ts';
 import type { TokenEntity } from '../../entities/token.ts';
 import type { Address } from 'abitype';
@@ -13,12 +14,7 @@ import type { Address } from 'abitype';
 export interface IContractDataApi {
   fetchAllContractData(
     state: BeefyState,
-    standardVaults: VaultStandard[],
-    govVaults: VaultGov[],
-    govVaultsMulti: VaultGovMulti[],
-    cowVaults: VaultCowcentrated[],
-    boosts: BoostPromoEntity[],
-    boostsMulti: BoostPromoEntity[]
+    entities: FetchAllContractDataEntities
   ): Promise<FetchAllContractDataResult>;
 }
 
@@ -64,6 +60,12 @@ export interface StandardVaultRawContractData {
   paused: boolean;
 }
 
+export interface Erc4626VaultRawContractData {
+  balance: bigint;
+  pricePerFullShare: bigint;
+  paused: boolean;
+}
+
 export interface StandardVaultContractData {
   id: string;
 
@@ -85,12 +87,20 @@ export interface StandardVaultContractData {
   paused: boolean;
 }
 
+export interface Erc4626VaultContractData {
+  id: string;
+  balance: BigNumber;
+  pricePerFullShare: BigNumber;
+  paused: boolean;
+}
+
 export interface CowVaultRawContractData {
   token0Balance: bigint;
   token1Balance: bigint;
   strategy: Address;
   paused: boolean;
 }
+
 export interface CowVaultContractData {
   id: string;
   balances: BigNumber[];
@@ -113,10 +123,21 @@ export interface BoostContractData {
   rewards: BoostRewardContractData[];
 }
 
+export interface FetchAllContractDataEntities {
+  standardVaults?: VaultStandard[];
+  erc4626Vaults?: VaultErc4626[];
+  cowVaults?: VaultCowcentrated[];
+  govVaults?: VaultGov[];
+  govVaultsMulti?: VaultGovMulti[];
+  boosts?: BoostPromoEntity[];
+  boostsMulti?: BoostPromoEntity[];
+}
+
 export interface FetchAllContractDataResult {
   boosts: BoostContractData[];
   standardVaults: StandardVaultContractData[];
   govVaults: GovVaultContractData[];
   govVaultsMulti: GovVaultMultiContractData[];
   cowVaults: CowVaultContractData[];
+  erc4626Vaults: Erc4626VaultContractData[];
 }

@@ -32,12 +32,12 @@ import { isTokenEqual, isTokenErc20 } from '../../../entities/token.ts';
 import { first } from 'lodash-es';
 import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
 import { selectFeesByVaultId } from '../../../selectors/fees.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../reducers/wallet/stepper.ts';
-import { walletActions } from '../../../actions/wallet-actions.ts';
 import { selectGovVaultPendingRewards } from '../../../selectors/balance.ts';
 import { selectWalletAddress } from '../../../selectors/wallet.ts';
+import { exitGovVault, stakeGovVault, unstakeGovVault } from '../../../actions/wallet/gov.ts';
 
 export class GovVaultType implements IGovVaultType {
   public readonly id = 'gov';
@@ -59,8 +59,8 @@ export class GovVaultType implements IGovVaultType {
   protected calculateDepositFee(input: TokenAmount, state: BeefyState): BigNumber {
     const fees = selectFeesByVaultId(state, this.vault.id);
     const depositFeePercent = fees?.deposit || 0;
-    return depositFeePercent > 0
-      ? input.amount
+    return depositFeePercent > 0 ?
+        input.amount
           .multipliedBy(depositFeePercent)
           .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR)
       : BIG_ZERO;
@@ -69,8 +69,8 @@ export class GovVaultType implements IGovVaultType {
   protected calculateWithdrawFee(input: TokenAmount, state: BeefyState): BigNumber {
     const fees = selectFeesByVaultId(state, this.vault.id);
     const withdrawFeePercent = fees?.withdraw || 0;
-    return withdrawFeePercent > 0
-      ? input.amount
+    return withdrawFeePercent > 0 ?
+        input.amount
           .multipliedBy(withdrawFeePercent)
           .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR)
       : BIG_ZERO;
@@ -115,8 +115,9 @@ export class GovVaultType implements IGovVaultType {
       amount: input.amount.minus(fee),
     };
 
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,
@@ -146,7 +147,7 @@ export class GovVaultType implements IGovVaultType {
     return {
       step: 'deposit-gov',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-      action: walletActions.stakeGovVault(this.vault, input.amount),
+      action: stakeGovVault(this.vault, input.amount),
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };
@@ -233,7 +234,7 @@ export class GovVaultType implements IGovVaultType {
       return {
         step: 'claim-withdraw',
         message: t('Vault-TxnConfirm', { type: t('Claim-Withdraw-noun') }),
-        action: walletActions.exitGovVault(this.vault),
+        action: exitGovVault(this.vault),
         pending: false,
         extraInfo: {
           rewards: pendingRewards.length ? pendingRewards[0] : undefined, // TODO support multiple earned tokens [empty = ok, length checked]
@@ -245,7 +246,7 @@ export class GovVaultType implements IGovVaultType {
     return {
       step: 'withdraw',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-      action: walletActions.unstakeGovVault(this.vault, input.amount),
+      action: unstakeGovVault(this.vault, input.amount),
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };

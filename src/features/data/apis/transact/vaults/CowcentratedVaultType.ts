@@ -1,4 +1,4 @@
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import {
   BIG_ZERO,
   bigNumberToBigInt,
@@ -40,7 +40,6 @@ import type {
 } from './IVaultType.ts';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../reducers/wallet/stepper.ts';
-import { walletActions } from '../../../actions/wallet-actions.ts';
 import { selectChainById } from '../../../selectors/chains.ts';
 import { BeefyCLMPool } from '../../beefy/beefy-clm-pool.ts';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults.ts';
@@ -54,6 +53,7 @@ import {
   QuoteCowcentratedNotCalmError,
 } from '../strategies/error.ts';
 import { encodeFunctionData, type Abi } from 'viem';
+import { v3Deposit, v3Withdraw } from '../../../actions/wallet/cowcentrated.ts';
 
 export class CowcentratedVaultType implements ICowcentratedVaultType {
   public readonly id = 'cowcentrated';
@@ -192,7 +192,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     return {
       step: 'deposit',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-      action: walletActions.v3Deposit(this.vault, quote.inputs[0].amount, quote.inputs[1].amount),
+      action: v3Deposit(this.vault, quote.inputs[0].amount, quote.inputs[1].amount),
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };
@@ -274,7 +274,7 @@ export class CowcentratedVaultType implements ICowcentratedVaultType {
     return {
       step: 'withdraw',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-      action: walletActions.v3Withdraw(this.vault, input.amount, input.max ?? false),
+      action: v3Withdraw(this.vault, input.amount, input.max ?? false),
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };

@@ -20,7 +20,6 @@ import { transactSteps } from '../../../../../data/actions/transact.ts';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice.tsx';
 import { ConfirmNotice } from '../ConfirmNotice/ConfirmNotice.tsx';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
-import type { ActionButtonProps } from '../CommonActions/CommonActions.tsx';
 import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
 import { GlpDepositNotice } from '../GlpNotices/GlpNotices.tsx';
 import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
@@ -41,15 +40,13 @@ export const DepositActions = memo(function DepositActions() {
   return <ActionDeposit quote={quote} option={option} />;
 });
 
-const ActionDepositDisabled = memo(function ActionDepositDisabled({
-  css: cssProp,
-}: ActionButtonProps) {
+const ActionDepositDisabled = memo(function ActionDepositDisabled() {
   const { t } = useTranslation();
   const classes = useStyles();
 
   return (
     <div className={classes.feesContainer}>
-      <Button variant="success" disabled={true} fullWidth={true} borderless={true} css={cssProp}>
+      <Button variant="success" disabled={true} fullWidth={true} borderless={true}>
         {t('Transact-Deposit')}
       </Button>
       <VaultFees />
@@ -60,7 +57,7 @@ const ActionDepositDisabled = memo(function ActionDepositDisabled({
 type ActionDepositProps = {
   option: TransactOption;
   quote: TransactQuote;
-} & ActionButtonProps;
+};
 const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepositProps) {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -91,7 +88,9 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
 
   return (
     <>
-      {option.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
+      {option.chainId === 'emerald' ?
+        <EmeraldGasNotice />
+      : null}
       <GlpDepositNotice vaultId={option.vaultId} onChange={setIsDisabledByGlpLock} />
       <PriceImpactNotice
         quote={quote}
@@ -113,7 +112,9 @@ const ActionDeposit = memo(function ActionDeposit({ option, quote }: ActionDepos
             {t(isMaxAll && !isCowDepositQuote ? 'Transact-DepositAll' : 'Transact-Deposit')}
           </Button>
         </ActionConnectSwitch>
-        {import.meta.env.DEV ? <TenderlyTransactButton option={option} quote={quote} /> : null}
+        {import.meta.env.DEV ?
+          <TenderlyTransactButton option={option} quote={quote} />
+        : null}
         <VaultFees />
       </div>
     </>

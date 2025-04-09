@@ -1,5 +1,8 @@
 export class FriendlyError extends Error {
-  constructor(message: string, protected innerError: Error) {
+  constructor(
+    message: string,
+    protected innerError: Error
+  ) {
     super(message);
   }
 

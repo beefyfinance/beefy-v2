@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from './big-number.ts';
 
 interface PnlTransaction {

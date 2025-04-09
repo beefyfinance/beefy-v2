@@ -1,4 +1,4 @@
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { first } from 'lodash-es';
 import type { PayloadAction, SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
@@ -289,8 +289,9 @@ const transactSlice = createSlice({
 });
 
 function clearInputs(sliceState: Draft<TransactState>) {
-  const selection = sliceState.selectedSelectionId
-    ? sliceState.selections.bySelectionId[sliceState.selectedSelectionId]
+  const selection =
+    sliceState.selectedSelectionId ?
+      sliceState.selections.bySelectionId[sliceState.selectedSelectionId]
     : undefined;
   if (selection) {
     sliceState.inputAmounts = selection.tokens.map(() => BIG_ZERO);

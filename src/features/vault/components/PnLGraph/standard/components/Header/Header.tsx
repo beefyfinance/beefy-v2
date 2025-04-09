@@ -1,5 +1,5 @@
 import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { css, type CssStyles } from '@repo/styles/css';
 import type { ReactNode } from 'react';
 import { memo } from 'react';

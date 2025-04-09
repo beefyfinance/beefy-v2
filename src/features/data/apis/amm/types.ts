@@ -1,4 +1,4 @@
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { ZapStepRequest, ZapStepResponse } from '../transact/zap/types.ts';
 import type { TokenAmount } from '../transact/transact-types.ts';
 

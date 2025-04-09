@@ -12,7 +12,7 @@ import { isTokenNative } from '../../../../entities/token.ts';
 import { selectSupportedSwapTokensForChainAggregatorHavingPrice } from '../../../../selectors/tokens.ts';
 import { getOneInchApi } from '../../../instances.ts';
 import { selectAllChainIds, selectChainById } from '../../../../selectors/chains.ts';
-import { fromWeiString, toWeiString } from '../../../../../../helpers/big-number.ts';
+import { fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
 import { EEEE_ADDRESS } from '../../../../../../helpers/addresses.ts';
 import { selectSwapAggregatorForChainType } from '../../../../selectors/zap.ts';
 import type { OneInchSwapConfig } from '../../../config-types.ts';
@@ -54,7 +54,7 @@ export class OneInchSwapProvider implements ISwapProvider {
       fromToken: request.fromToken,
       fromAmount: request.fromAmount,
       toToken: request.toToken,
-      toAmount: fromWeiString(quote.dstAmount, request.toToken.decimals),
+      toAmount: fromWei(quote.dstAmount, request.toToken.decimals),
       fee: config.fee,
     };
   }
@@ -82,9 +82,9 @@ export class OneInchSwapProvider implements ISwapProvider {
       fromToken: quote.fromToken,
       fromAmount: quote.fromAmount,
       toToken: quote.toToken,
-      toAmount: fromWeiString(swap.dstAmount, quote.toToken.decimals),
+      toAmount: fromWei(swap.dstAmount, quote.toToken.decimals),
       toAmountMin: slipBy(
-        fromWeiString(swap.dstAmount, quote.toToken.decimals),
+        fromWei(swap.dstAmount, quote.toToken.decimals),
         slippage,
         quote.toToken.decimals
       ),
@@ -118,8 +118,8 @@ export class OneInchSwapProvider implements ISwapProvider {
       chainId,
       'one-inch'
     );
-    return config.blockedTokens.length
-      ? possibleTokens.filter(token => !config.blockedTokens.includes(token.id))
+    return config.blockedTokens.length ?
+        possibleTokens.filter(token => !config.blockedTokens.includes(token.id))
       : possibleTokens;
   }
 

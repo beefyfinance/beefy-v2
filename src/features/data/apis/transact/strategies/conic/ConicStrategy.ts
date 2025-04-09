@@ -42,7 +42,6 @@ import {
   BIG_ZERO,
   bigNumberToBigInt,
   fromWei,
-  fromWeiString,
   toWeiString,
 } from '../../../../../../helpers/big-number.ts';
 import type { Namespace, TFunction } from 'react-i18next';
@@ -59,7 +58,6 @@ import {
   wnativeToNative,
 } from '../../helpers/tokens.ts';
 import { selectTransactSlippage } from '../../../../selectors/transact.ts';
-import { walletActions } from '../../../../actions/wallet-actions.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import type { OrderInput, OrderOutput, UserlessZapRequest, ZapStep } from '../../zap/types.ts';
 import { first, uniqBy } from 'lodash-es';
@@ -70,6 +68,7 @@ import type { ConicStrategyConfig } from '../strategy-configs.ts';
 import { fetchContract } from '../../../rpc-contract/viem-contract.ts';
 import type { Abi, Address } from 'abitype';
 import { encodeFunctionData, getAbiItem } from 'viem';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
 const strategyId = 'conic';
 type StrategyId = typeof strategyId;
@@ -157,8 +156,9 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
     }
 
     // Token Allowances
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,
@@ -177,7 +177,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
     ]);
 
     const lpToken = this.vaultType.depositToken;
-    const swapAmountOut = fromWeiString(swapAmountOutResult.toString(10), lpToken.decimals);
+    const swapAmountOut = fromWei(swapAmountOutResult.toString(10), lpToken.decimals);
     const outputs: TokenAmount[] = [{ token: lpToken, amount: swapAmountOut }];
     const returned: TokenAmount[] = [];
 
@@ -220,8 +220,9 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
         output.token.decimals
       );
       const isNative = isTokenNative(input.token);
-      const data = isNative
-        ? this.encodeBeefInETHCall(this.vault.contractAddress, amountOutMin)
+      const data =
+        isNative ?
+          this.encodeBeefInETHCall(this.vault.contractAddress, amountOutMin)
         : this.encodeBeefInCall(
             this.vault.contractAddress,
             amountOutMin,
@@ -285,11 +286,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
       };
 
       const expectedTokens = [shareToken];
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
       return walletAction(dispatch, getState, extraArgument);
     };
 
@@ -360,7 +357,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
       poolOutputToken.address as Address,
       bigNumberToBigInt(sharesToWithdrawWei),
     ]);
-    const swapAmountOut = fromWeiString(swapAmountOutResult.toString(10), desiredToken.decimals);
+    const swapAmountOut = fromWei(swapAmountOutResult.toString(10), desiredToken.decimals);
 
     const steps: ZapQuoteStep[] = [
       {
@@ -446,6 +443,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
       // Pretend to withdraw from vault, to get the correct number of shares
       const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
+        from: this.helpers.zap.router,
       });
       const sharesToWithdraw = onlyOneTokenAmount(vaultWithdraw.inputs);
 
@@ -551,11 +549,7 @@ class ConicStrategyImp implements IZapStrategy<StrategyId> {
       };
 
       const expectedTokens = quote.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };

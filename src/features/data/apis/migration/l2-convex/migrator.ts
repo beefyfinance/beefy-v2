@@ -1,6 +1,6 @@
 import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types.ts';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi.ts';
 import { buildExecute, buildFetchBalance } from '../utils.ts';
@@ -15,9 +15,9 @@ const id = 'l2-convex';
 
 const convexVoterProxy = '0x989AEb4d175e16225E39E87d0D97A3360524AD80';
 const crvFactory = (chainId: ChainEntity['id']) =>
-  chainId === 'fraxtal'
-    ? '0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c'
-    : '0xabC000d88f23Bb45525E447528DBF656A9D55bf5';
+  chainId === 'fraxtal' ?
+    '0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c'
+  : '0xabC000d88f23Bb45525E447528DBF656A9D55bf5';
 
 async function getStakingAddress(vault: VaultEntity, _: BeefyState): Promise<string> {
   const factory = fetchContract(crvFactory(vault.chainId) as Address, CurveAbi, vault.chainId);

@@ -1,7 +1,7 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { toWei } from '../../../../../helpers/big-number.ts';
 import type { InputTokenAmount } from '../transact-types.ts';
-import type { VaultStandard } from '../../../entities/vault.ts';
+import type { VaultErc4626, VaultStandard } from '../../../entities/vault.ts';
 import type { BeefyState } from '../../../../../redux-types.ts';
 import { selectErc20TokenByAddress, selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { selectUserBalanceOfToken } from '../../../selectors/balance.ts';
@@ -13,7 +13,7 @@ import type { Address } from 'abitype';
 
 export function getVaultWithdrawnFromState(
   userInput: InputTokenAmount,
-  vault: VaultStandard,
+  vault: VaultStandard | VaultErc4626,
   state: BeefyState,
   userAddress?: string
 ) {

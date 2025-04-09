@@ -32,16 +32,15 @@ import {
   isWithdrawOption,
   isWithdrawQuote,
 } from '../apis/transact/transact-types.ts';
-import { BIG_ZERO } from '../../../helpers/big-number.ts';
+import { BIG_ZERO, compareBigNumber } from '../../../helpers/big-number.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import { isTokenEqual, isTokenErc20 } from '../entities/token.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../reducers/wallet/stepper.ts';
 import { stepperActions } from '../reducers/wallet/stepper.ts';
 import { selectAllowanceByTokenAddress } from '../selectors/allowances.ts';
-import { walletActions } from './wallet-actions.ts';
 import { startStepperWithSteps } from './stepper.ts';
 import { TransactMode, TransactStatus } from '../reducers/wallet/transact-types.ts';
 import { selectTokenByAddress } from '../selectors/tokens.ts';
@@ -53,6 +52,8 @@ import type { Action } from 'redux';
 import { selectWalletAddress } from '../selectors/wallet.ts';
 import { isSerializableError, serializeError } from '../apis/transact/strategies/error.ts';
 import type { SerializedError } from '../apis/transact/strategies/error-types.ts';
+import { approve } from './wallet/approval.ts';
+import { claimGovVault } from './wallet/gov.ts';
 
 export type TransactInitArgs = {
   vaultId: VaultEntity['id'];
@@ -230,7 +231,7 @@ export const transactFetchQuotes = createAsyncThunk<
     quotes.sort((a, b) => {
       const valueA = selectTokenAmountsTotalValue(state, a.outputs);
       const valueB = selectTokenAmountsTotalValue(state, b.outputs);
-      return valueB.comparedTo(valueA);
+      return compareBigNumber(valueB, valueA);
     });
 
     // update allowances
@@ -332,7 +333,7 @@ export async function getTransactSteps(
         steps.push({
           step: 'approve',
           message: t('Vault-ApproveMsg'),
-          action: walletActions.approval(
+          action: approve(
             allowanceTokenAmount.token,
             allowanceTokenAmount.spenderAddress,
             allowanceTokenAmount.amount
@@ -387,7 +388,7 @@ export function transactStepsClaimGov(
           {
             step: 'claim-gov',
             message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
-            action: walletActions.claimGovVault(vault),
+            action: claimGovVault(vault),
             pending: false,
           },
         ],

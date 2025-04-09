@@ -1,11 +1,11 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../redux-types.ts';
 import { formatTokenDisplayCondensed } from '../../../helpers/format.ts';
 import { isTokenErc20 } from '../entities/token.ts';
 import { type Step, StepContent } from '../reducers/wallet/stepper.ts';
 import type { TokenAmount } from '../apis/transact/transact-types.ts';
 import { selectChainNativeToken, selectTokenByAddressOrUndefined } from './tokens.ts';
-import { BIG_ZERO, fromWei, fromWeiString } from '../../../helpers/big-number.ts';
+import { BIG_ZERO, fromWei } from '../../../helpers/big-number.ts';
 import { selectVaultById } from './vaults.ts';
 import { ZERO_ADDRESS } from '../../../helpers/addresses.ts';
 import {
@@ -17,7 +17,7 @@ import {
   isZapAdditionalData,
   type WalletActionsSuccessState,
 } from '../reducers/wallet/wallet-action.ts';
-import { getAddress, type Abi, parseEventLogs } from 'viem';
+import { type Abi, getAddress, parseEventLogs } from 'viem';
 import { selectBoostById } from './boosts.ts';
 import { isDefined } from '../utils/array-utils.ts';
 
@@ -176,7 +176,7 @@ export function selectBoostClaimed(state: BeefyState) {
       if (!token) {
         return undefined;
       }
-      const amount = fromWeiString(e.args.value.toString(), token.decimals);
+      const amount = fromWei(e.args.value.toString(), token.decimals);
       if (amount.lte(BIG_ZERO)) {
         return undefined;
       }
@@ -289,12 +289,12 @@ export function selectZapReturned(state: BeefyState) {
   const tokenAmounts: TokenAmount[] = returnEvents
     .map(e => {
       const token =
-        e.args.token === ZERO_ADDRESS
-          ? native
-          : selectTokenByAddressOrUndefined(state, vault.chainId, e.args.token);
+        e.args.token === ZERO_ADDRESS ?
+          native
+        : selectTokenByAddressOrUndefined(state, vault.chainId, e.args.token);
 
       return {
-        amount: token ? fromWeiString(e.args.amount.toString(10), token.decimals) : BIG_ZERO,
+        amount: token ? fromWei(e.args.amount.toString(10), token.decimals) : BIG_ZERO,
         token,
       };
     })

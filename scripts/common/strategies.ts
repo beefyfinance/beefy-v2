@@ -1,11 +1,11 @@
 import riskStrings from '../../src/locales/en/risks.json';
 
 let strategyIdsCache:
-  | { standard: Set<string>; gov: Set<string>; cowcentrated: Set<string> }
+  | { standard: Set<string>; gov: Set<string>; cowcentrated: Set<string>; erc4626: Set<string> }
   | undefined;
 
 const regex =
-  /^StrategyDescription-(?:(?<type>gov|cowcentrated|standard)-)?(?:(?<subtype>gov|cowcentrated|standard)-)?(?<id>.+)$/;
+  /^StrategyDescription-(?:(?<type>gov|cowcentrated|standard|erc4626)-)?(?:(?<subtype>gov|cowcentrated|standard|erc4626)-)?(?<id>.+)$/;
 
 export function getStrategyIds() {
   if (!strategyIdsCache) {
@@ -24,7 +24,8 @@ export function getStrategyIds() {
         const type = (match.groups?.subtype || match.groups?.type || 'standard') as
           | 'standard'
           | 'gov'
-          | 'cowcentrated';
+          | 'cowcentrated'
+          | 'erc4626';
         acc[type].add(id);
         return acc;
       },
@@ -32,6 +33,7 @@ export function getStrategyIds() {
         standard: new Set<string>(),
         gov: new Set<string>(),
         cowcentrated: new Set<string>(),
+        erc4626: new Set<string>(),
       }
     );
   }

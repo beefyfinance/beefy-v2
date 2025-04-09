@@ -1,4 +1,4 @@
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { ZapStep } from '../../transact/zap/types.ts';
 import { getInsertIndex } from '../../transact/helpers/zap.ts';
 import { VelodromeV2SolidlyPool } from './VelodromeV2SolidlyPool.ts';

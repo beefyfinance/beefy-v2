@@ -12,7 +12,7 @@ import { Scrollable } from '../../../../../../components/Scrollable/Scrollable.t
 import type { ListItemProps } from './components/ListItem/ListItem.tsx';
 import { ListItem } from './components/ListItem/ListItem.tsx';
 import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { ToggleProps } from '../../../../../../components/Toggle/Toggle.tsx';
 import { Toggle } from '../../../../../../components/Toggle/Toggle.tsx';
 import { css, type CssStyles } from '@repo/styles/css';
@@ -98,7 +98,7 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
       {/*hasMultipleChains ? <div className={classes.chainSelector}>TODO {selectedChain}</div> : null*/}
       <Scrollable css={styles.listContainer}>
         <div className={classes.list}>
-          {filteredOptionsForChain.length ? (
+          {filteredOptionsForChain.length ?
             filteredOptionsForChain.map(option => (
               <ListItem
                 key={option.id}
@@ -111,9 +111,7 @@ export const DepositTokenSelectList = memo(function DepositTokenSelectList({
                 onSelect={handleTokenSelect}
               />
             ))
-          ) : (
-            <div className={classes.noResults}>{t('Transact-TokenSelect-NoResults')}</div>
-          )}
+          : <div className={classes.noResults}>{t('Transact-TokenSelect-NoResults')}</div>}
         </div>
       </Scrollable>
       {filteredOptionsForChain?.length > 1 && <BuildLpManually vaultId={vaultId} />}

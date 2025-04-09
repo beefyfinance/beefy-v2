@@ -1,9 +1,11 @@
 import {
   isCowcentratedLikeVault,
+  isErc4626Vault,
   isGovVault,
   isStandardVault,
   type VaultCowcentratedLike,
   type VaultEntity,
+  type VaultErc4626,
   type VaultGov,
   type VaultStandard,
 } from '../../../../data/entities/vault.ts';
@@ -101,4 +103,8 @@ export function isStandardCommonHelper(
   helper: CommonHelper
 ): helper is CommonHelper<VaultStandard> {
   return isStandardVault(helper.vault);
+}
+
+export function isErc4626Helper(helper: CommonHelper): helper is CommonHelper<VaultErc4626> {
+  return isErc4626Vault(helper.vault);
 }

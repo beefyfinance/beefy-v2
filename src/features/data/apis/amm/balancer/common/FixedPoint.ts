@@ -1,5 +1,5 @@
 import { BIG_ONE, BIG_ZERO } from '../../../../../../helpers/big-number.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 
 export class FixedPoint {
   public static readonly ONE = BIG_ONE.shiftedBy(18);

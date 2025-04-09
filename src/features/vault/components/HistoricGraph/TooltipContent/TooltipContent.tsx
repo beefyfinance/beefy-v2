@@ -24,7 +24,7 @@ export type ExtraTooltipContentProps<TStat extends ChartStat> = {
   toggles: LineTogglesState;
   valueFormatter: (value: number) => string;
   avg: number;
-  vaultType: 'standard' | 'gov' | 'cowcentrated';
+  vaultType: 'standard' | 'gov' | 'cowcentrated' | 'erc4626';
 };
 
 export type TooltipContentProps<TStat extends ChartStat> = BaseTooltipProps<TStat> &

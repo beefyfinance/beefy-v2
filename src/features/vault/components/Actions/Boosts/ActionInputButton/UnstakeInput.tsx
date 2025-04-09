@@ -3,7 +3,8 @@ import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../../../../../store.ts';
 import { ActionInputButton, type ActionInputButtonProps } from './ActionInputButton.tsx';
-import { startUnstakeBoostSteps } from '../../../../../data/actions/wallet-actions.ts';
+
+import { startUnstakeBoostSteps } from '../../../../../data/actions/wallet/boost.ts';
 
 type UnstakeInputProps = StakeInputProps;
 

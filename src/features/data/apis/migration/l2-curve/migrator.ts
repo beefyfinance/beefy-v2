@@ -1,6 +1,6 @@
 import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types.ts';
 import { selectTokenByAddress } from '../../../selectors/tokens.ts';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi.ts';
@@ -16,9 +16,9 @@ import type { Hash } from 'viem';
 const id = 'l2-curve';
 
 const crvFactory = (chainId: ChainEntity['id']) =>
-  chainId === 'fraxtal'
-    ? '0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c'
-    : '0xabC000d88f23Bb45525E447528DBF656A9D55bf5';
+  chainId === 'fraxtal' ?
+    '0xeF672bD94913CB6f1d2812a6e18c1fFdEd8eFf5c'
+  : '0xabC000d88f23Bb45525E447528DBF656A9D55bf5';
 
 const override: Record<string, string> = {
   'spell-mim-crv': '0x6d2070b13929Df15B13D96cFC509C574168988Cd',

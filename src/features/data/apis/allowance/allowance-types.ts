@@ -1,4 +1,4 @@
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../redux-types.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { TokenEntity, TokenErc20 } from '../../entities/token.ts';

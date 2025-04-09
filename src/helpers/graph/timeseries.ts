@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { fromUnixTime, getUnixTime, isAfter, isBefore, isEqual, max, subDays } from 'date-fns';
 import { pick, sortBy, sortedUniq } from 'lodash-es';
 import type { DatabarnProductPriceRow } from '../../features/data/apis/databarn/databarn-types.ts';
@@ -381,9 +381,9 @@ class ClmInvestorOverviewTimeSeriesGenerator {
         ...this.historicalVaultData.map(p => ({
           t: p.timestamp,
           v:
-            p.totalSupply === '0'
-              ? BIG_ONE
-              : new BigNumber(p.totalUnderlyingAmount).dividedBy(p.totalSupply),
+            p.totalSupply === '0' ?
+              BIG_ONE
+            : new BigNumber(p.totalUnderlyingAmount).dividedBy(p.totalSupply),
         }))
       );
     }
@@ -409,9 +409,9 @@ class ClmInvestorOverviewTimeSeriesGenerator {
         this.historicalClmData.map(p => ({
           t: p.timestamp,
           v:
-            p.totalSupply === '0'
-              ? BIG_ZERO
-              : new BigNumber(p[`totalAmount${i}`]).dividedBy(p.totalSupply),
+            p.totalSupply === '0' ?
+              BIG_ZERO
+            : new BigNumber(p[`totalAmount${i}`]).dividedBy(p.totalSupply),
         }))
       );
 
@@ -420,11 +420,11 @@ class ClmInvestorOverviewTimeSeriesGenerator {
         ...this.historicalVaultData.map(p => ({
           t: p.timestamp,
           v:
-            p.totalUnderlyingSupply === '0'
-              ? BIG_ZERO
-              : new BigNumber(p.totalUnderlyingBreakdown[i].amount).dividedBy(
-                  p.totalUnderlyingSupply
-                ),
+            p.totalUnderlyingSupply === '0' ?
+              BIG_ZERO
+            : new BigNumber(p.totalUnderlyingBreakdown[i].amount).dividedBy(
+                p.totalUnderlyingSupply
+              ),
         }))
       );
     }

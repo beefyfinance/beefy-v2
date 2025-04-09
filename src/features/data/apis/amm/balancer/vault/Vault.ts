@@ -20,7 +20,7 @@ import {
   type VaultConfig,
 } from './types.ts';
 import { ZERO_ADDRESS } from '../../../../../../helpers/addresses.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { BalancerVaultAbi } from '../../../../../../config/abi/BalancerVaultAbi.ts';
 import { createCachedFactory, createFactory } from '../../../../utils/factory-utils.ts';
 import { BalancerQueriesAbi } from '../../../../../../config/abi/BalancerQueriesAbi.ts';
@@ -367,8 +367,9 @@ export class Vault {
       target: this.config.vaultAddress,
       value: '0',
       data: this.encodeSwap(request.swap),
-      tokens: request.insertBalance
-        ? [{ token: request.swap.singleSwap.assetIn, index: amountInIndex }]
+      tokens:
+        request.insertBalance ?
+          [{ token: request.swap.singleSwap.assetIn, index: amountInIndex }]
         : [],
     };
   }

@@ -6,7 +6,7 @@ import type { ChainEntity } from '../entities/chain.ts';
 import {
   selectAllTokenWhereUserCouldHaveBalance,
   selectUserDepositedVaultIds,
-  selectUserVaultBalanceInShareTokenIncludingBoostsBridged,
+  selectUserVaultBalanceInShareTokenIncludingDisplaced,
 } from '../selectors/balance.ts';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts.ts';
 import { selectChainById } from '../selectors/chains.ts';
@@ -14,14 +14,20 @@ import {
   selectCowcentratedLikeVaultDepositTokens,
   selectTokenByAddress,
 } from '../selectors/tokens.ts';
-import { selectAllGovVaultsByChainId, selectAllVisibleVaultIds } from '../selectors/vaults.ts';
+import {
+  selectAllErc4626VaultsByChainId,
+  selectAllGovVaultsByChainId,
+  selectAllVisibleVaultIds,
+} from '../selectors/vaults.ts';
 import { selectWalletAddress } from '../selectors/wallet.ts';
 import type { TokenEntity } from '../entities/token.ts';
 import {
   isCowcentratedLikeVault,
   isCowcentratedVault,
+  isErc4626Vault,
   isGovVault,
   type VaultEntity,
+  type VaultErc4626,
   type VaultGov,
 } from '../entities/vault.ts';
 import { uniqueTokens } from '../../../helpers/tokens.ts';
@@ -61,8 +67,13 @@ export const fetchAllBalanceAction = createAsyncThunk<
     selectBoostById(state, boostId)
   );
   const govVaults = selectAllGovVaultsByChainId(state, chain.id);
+  const erc4626Vaults: VaultErc4626[] = selectAllErc4626VaultsByChainId(state, chain.id);
 
-  const data = await api.fetchAllBalances(getState(), tokens, govVaults, boosts, walletAddress);
+  const data = await api.fetchAllBalances(
+    getState(),
+    { tokens, govVaults, boosts, erc4626Vaults },
+    walletAddress
+  );
   return {
     chainId,
     walletAddress,
@@ -97,6 +108,7 @@ export const fetchBalanceAction = createAsyncThunk<
     const tokens = requestedTokens;
     const govVaults: VaultGov[] = [];
     const boosts: BoostPromoEntity[] = [];
+    const erc4626Vaults: VaultErc4626[] = [];
 
     if (vaults.length) {
       for (const vault of vaults) {
@@ -111,6 +123,9 @@ export const fetchBalanceAction = createAsyncThunk<
           if (!isCowcentratedVault(vault)) {
             tokens.push(selectTokenByAddress(state, chain.id, vault.depositTokenAddress));
           }
+          if (isErc4626Vault(vault)) {
+            erc4626Vaults.push(vault);
+          }
           tokens.push(selectTokenByAddress(state, chain.id, vault.receiptTokenAddress));
         }
       }
@@ -118,9 +133,12 @@ export const fetchBalanceAction = createAsyncThunk<
 
     const data = await api.fetchAllBalances(
       getState(),
-      uniqueTokens(tokens),
-      govVaults,
-      boosts,
+      {
+        tokens: uniqueTokens(tokens),
+        govVaults,
+        boosts,
+        erc4626Vaults,
+      },
       walletAddress
     );
 
@@ -156,7 +174,7 @@ export const recalculateDepositedVaultsAction = createAsyncThunk<
   const depositedIds: VaultEntity['id'][] = [];
 
   for (const vaultId of allVaultIds) {
-    const balance = selectUserVaultBalanceInShareTokenIncludingBoostsBridged(
+    const balance = selectUserVaultBalanceInShareTokenIncludingDisplaced(
       state,
       vaultId,
       walletAddress
