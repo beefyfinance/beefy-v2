@@ -1,5 +1,32 @@
 [
   {
+    "id": "morpho-gauntlet-usdc",
+    "name": "Gauntlet USDC Frontier",
+    "type": "standard",
+    "token": "USDC",
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "tokenDecimals": 6,
+    "tokenProviderId": "morpho",
+    "earnContractAddress": "0x16F06dE7F077A95684DBAeEdD15A5808c3E13cD0",
+    "earnedToken": "mooMorphoGauntletUSDCFrontier",
+    "earnedTokenAddress": "0x16F06dE7F077A95684DBAeEdD15A5808c3E13cD0",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1744107759,
+    "platformId": "morpho",
+    "assets": ["USDC"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "ethereum",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "pendle-eqb-usd0++-26jun25",
     "name": "USD0++ 26Jun25",
     "type": "standard",

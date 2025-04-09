@@ -1,6 +1,7 @@
 import type {
   VaultCowcentrated,
   VaultEntity,
+  VaultErc4626,
   VaultGov,
   VaultStandard,
 } from '../../../entities/vault.ts';
@@ -21,6 +22,7 @@ import type { Namespace, TFunction } from 'react-i18next';
 
 export type VaultDepositRequest = {
   inputs: InputTokenAmount[];
+  from: string;
 };
 
 export type VaultDepositResponse = {
@@ -74,7 +76,18 @@ export interface ICowcentratedVaultType extends IVaultType {
   readonly shareToken: TokenErc20;
 }
 
-export type VaultType = IStandardVaultType | IGovVaultType | ICowcentratedVaultType;
+export interface IErc4626VaultType extends IVaultType {
+  readonly id: 'erc4626';
+  readonly vault: VaultErc4626;
+  readonly depositToken: TokenEntity;
+  readonly shareToken: TokenErc20;
+}
+
+export type VaultType =
+  | IStandardVaultType
+  | IGovVaultType
+  | ICowcentratedVaultType
+  | IErc4626VaultType;
 
 export type VaultTypeFromVault<T extends VaultEntity> = Extract<
   VaultType,
@@ -98,4 +111,8 @@ export function isGovVaultType(vaultType: VaultType): vaultType is IGovVaultType
 
 export function isCowcentratedVaultType(vaultType: VaultType): vaultType is ICowcentratedVaultType {
   return vaultType.id === 'cowcentrated';
+}
+
+export function isErc4626VaultType(vaultType: VaultType): vaultType is IErc4626VaultType {
+  return vaultType.id === 'erc4626';
 }

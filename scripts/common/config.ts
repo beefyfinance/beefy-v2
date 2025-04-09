@@ -87,8 +87,10 @@ export const excludeChains: ChainMap<{ count: number; hash: string }> = {
   },
 };
 
-export const excludedChainIds = Object.keys(excludeChains) as AddressBookChainId[];
 export const allChainIds = Object.keys(chainConfigs) as AddressBookChainId[];
+export const excludedChainIds = (Object.keys(excludeChains) as AddressBookChainId[]).filter(
+  k => !!chainConfigs[k]
+);
 export const chainIds = allChainIds.filter(chainId => !(chainId in excludeChains));
 
 const chainRpcs = allChainIds.reduce(
@@ -193,7 +195,7 @@ export function appToAddressBookId(chainId: string): AddressBookChainId {
 
 export function addressBookToAppId(chainId: string): AppChainId {
   if (chainId === 'one') {
-    return 'harmony';
+    return 'harmony' as AppChainId;
   }
   if (chainId in config) {
     return chainId as AppChainId;

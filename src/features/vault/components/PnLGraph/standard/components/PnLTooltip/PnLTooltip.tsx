@@ -1,5 +1,5 @@
 import { legacyMakeStyles } from '../../../../../../../helpers/mui.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { format } from 'date-fns';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';

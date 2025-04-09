@@ -15,7 +15,7 @@ import { isLoaderFulfilled } from '../../../../../data/selectors/data-loader-hel
 import { initiateBoostForm } from '../../../../../data/actions/boosts.ts';
 import { AmountInput } from '../../Transact/AmountInput/AmountInput.tsx';
 import { useInputForm } from '../../../../../data/hooks/input.tsx';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { ActionButton } from '../ActionButton/ActionButton.tsx';
 import { Collapse } from '../../../../../../components/Collapse/Collapse.tsx';
@@ -86,7 +86,9 @@ export const ActionInputButton = memo(function ActionInputButton({
     <div className={classes.container}>
       <div className={classes.title} onClick={onToggle}>
         <button type="button" className={classes.iconButton}>
-          {open ? <ExpandLess /> : <ExpandMore />}
+          {open ?
+            <ExpandLess />
+          : <ExpandMore />}
         </button>
         <div className={classes.text}>{title}</div>
         <div className={classes.balance}>

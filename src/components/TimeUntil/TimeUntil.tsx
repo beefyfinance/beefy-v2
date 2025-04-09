@@ -1,32 +1,53 @@
-import { memo, useEffect, useState } from 'react';
-import { formatTimeUntil } from '../../helpers/date.ts';
-import { isDate } from 'date-fns';
+import { memo, type ReactNode, useEffect, useState } from 'react';
+import { formatTimeUntil, type FormatTimeUntilOptions } from '../../helpers/date.ts';
+import { isAfter, isDate } from 'date-fns';
 
 export type CountdownProps = {
   time: Date;
-  maxParts?: number;
-  minParts?: number;
-};
+  renderFuture?: (formatted: string) => ReactNode;
+  renderPast?: ReactNode | (() => ReactNode);
+} & FormatTimeUntilOptions;
+
 export const Countdown = memo(function Countdown({
   time,
-  minParts = 3,
-  maxParts = 3,
+  renderFuture,
+  renderPast,
+  ...timeUntilOptions
 }: CountdownProps) {
-  const [formatted, setFormatted] = useState(() => formatTimeUntil(time, maxParts, minParts));
+  const [status, setStatus] = useState<'past' | 'future'>(() =>
+    isAfter(timeUntilOptions.from || new Date(), time) ? 'past' : 'future'
+  );
+  const [formatted, setFormatted] = useState(() => formatTimeUntil(time, timeUntilOptions));
 
   useEffect(() => {
-    const handle = setInterval(() => {
-      setFormatted(formatTimeUntil(time, maxParts, minParts));
-    }, 1000);
-    return () => clearInterval(handle);
-  }, [time, setFormatted, minParts, maxParts]);
+    if (status === 'past') {
+      return;
+    }
 
-  return <>{formatted}</>;
+    const handle = setInterval(() => {
+      const now = timeUntilOptions.from || new Date();
+      setFormatted(formatTimeUntil(time, { ...timeUntilOptions, from: now }));
+
+      if (isAfter(now, time)) {
+        setStatus('past');
+        clearInterval(handle);
+      }
+    }, 1000);
+
+    return () => clearInterval(handle);
+  }, [time, setFormatted, timeUntilOptions, status, setStatus]);
+
+  if (status === 'future' || !renderPast) {
+    return <>{renderFuture ? renderFuture(formatted) : formatted}</>;
+  }
+
+  return typeof renderPast === 'function' ? renderPast() : renderPast;
 });
 
 export type TimeUntilProps = {
   time?: Date;
 } & Omit<CountdownProps, 'time'>;
+
 export const TimeUntil = memo(function TimeUntil({ time, ...rest }: TimeUntilProps) {
   if (time && isDate(time)) {
     return <Countdown time={time} {...rest} />;

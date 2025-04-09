@@ -6,7 +6,7 @@ import {
   selectAllCowcentratedVaults,
   selectGovCowcentratedVaultById,
 } from '../../selectors/vaults.ts';
-import { fromWeiString } from '../../../../helpers/big-number.ts';
+import { fromWei } from '../../../../helpers/big-number.ts';
 import type {
   FetchUserStellaSwapRewardsActionParams,
   FetchUserStellaSwapRewardsFulfilledPayload,
@@ -68,8 +68,8 @@ export const fetchUserStellaSwapRewardsAction = createAsyncThunk<
         const reward = {
           position: rewardToken.position,
           proofs: rewardToken.proofs,
-          accumulated: fromWeiString(rewardToken.amount, rewardDecimals),
-          unclaimed: fromWeiString(rewardToken.pending, rewardDecimals),
+          accumulated: fromWei(rewardToken.amount, rewardDecimals),
+          unclaimed: fromWei(rewardToken.pending, rewardDecimals),
           isNative: rewardToken.isNative,
           claimContractAddress: poolData.rewarder,
           token: {

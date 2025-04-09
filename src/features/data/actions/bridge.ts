@@ -19,7 +19,7 @@ import {
 } from '../selectors/bridge.ts';
 import type { BridgeFormState } from '../reducers/wallet/bridge.ts';
 import { FormStep } from '../reducers/wallet/bridge.ts';
-import { BIG_ONE, BIG_ZERO, fromWeiString } from '../../../helpers/big-number.ts';
+import { BIG_ONE, BIG_ZERO, fromWei } from '../../../helpers/big-number.ts';
 import { selectChainById } from '../selectors/chains.ts';
 import { orderBy, partition } from 'lodash-es';
 import { isFulfilledResult } from '../../../helpers/promises.ts';
@@ -27,11 +27,11 @@ import type { IBridgeQuote } from '../apis/bridge/providers/provider-types.ts';
 import { fetchAllowanceAction } from './allowance.ts';
 import { selectAllowanceByTokenAddress } from '../selectors/allowances.ts';
 import type { Step } from '../reducers/wallet/stepper.ts';
-import { walletActions } from './wallet-actions.ts';
 import type { Namespace, TFunction } from 'react-i18next';
 import { startStepperWithSteps } from './stepper.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { isAddress } from 'viem';
+import { approve } from './wallet/approval.ts';
 
 function getLimits(quotes: IBridgeQuote<BeefyAnyBridgeConfig>[]) {
   const current = BigNumber.max(
@@ -144,7 +144,7 @@ export const validateBridgeForm = createAsyncThunk<
   const { from, input, receiverIsDifferent, receiverAddress } = selectBridgeFormState(state);
   const fromToken = selectBridgeDepositTokenForChainId(state, from);
 
-  const minAmount = fromWeiString('1000', fromToken.decimals);
+  const minAmount = fromWei('1000', fromToken.decimals);
   if (input.amount.lt(minAmount)) {
     throw new Error(`Minimum amount is ${minAmount} ${fromToken.symbol}`);
   }
@@ -327,7 +327,7 @@ export const performBridge = createAsyncThunk<
       steps.push({
         step: 'approve',
         message: t('Vault-ApproveMsg'),
-        action: walletActions.approval(
+        action: approve(
           quote.allowance.token,
           quote.allowance.spenderAddress,
           quote.allowance.amount

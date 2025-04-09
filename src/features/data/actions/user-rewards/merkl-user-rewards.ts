@@ -13,7 +13,7 @@ import {
   type VaultEntity,
 } from '../../entities/vault.ts';
 import { isDefined } from '../../utils/array-utils.ts';
-import { fromWeiString } from '../../../../helpers/big-number.ts';
+import { fromWei } from '../../../../helpers/big-number.ts';
 import { pushOrSet } from '../../../../helpers/object.ts';
 import type {
   MerklTokenReward,
@@ -145,11 +145,11 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
             .map(chainId => selectVaultByAddressOrUndefined(state, chainId, reason.address))
             .filter(isDefined)
             .filter(v =>
-              isCowcentratedLikeVault(v)
-                ? v.type === reason.type &&
-                  reasonData.mainParameter.toLowerCase() === v.poolAddress.toLowerCase()
-                : v.type === reason.type &&
-                  reasonData.mainParameter.toLowerCase() === v.contractAddress.toLowerCase()
+              isCowcentratedLikeVault(v) ?
+                v.type === reason.type &&
+                reasonData.mainParameter.toLowerCase() === v.poolAddress.toLowerCase()
+              : v.type === reason.type &&
+                reasonData.mainParameter.toLowerCase() === v.contractAddress.toLowerCase()
             );
 
           if (vaults.length === 0) {
@@ -178,8 +178,8 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
               address: getAddress(reasonData.token),
               chainId: claimChain.id,
             },
-            accumulated: fromWeiString(reasonData.accumulated, reasonData.decimals),
-            unclaimed: fromWeiString(reasonData.unclaimed, reasonData.decimals),
+            accumulated: fromWei(reasonData.accumulated, reasonData.decimals),
+            unclaimed: fromWei(reasonData.unclaimed, reasonData.decimals),
           };
 
           // Add reward to the vault
@@ -208,8 +208,8 @@ export const fetchUserMerklRewardsAction = createAsyncThunk<
             decimals: token.decimals,
             chainId: claimChain.id,
           },
-          accumulated: fromWeiString(token.accumulated, token.decimals),
-          unclaimed: fromWeiString(token.unclaimed, token.decimals),
+          accumulated: fromWei(token.accumulated, token.decimals),
+          unclaimed: fromWei(token.unclaimed, token.decimals),
           proof: token.proof,
         });
       }

@@ -16,7 +16,7 @@ import {
 } from './vaults.ts';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
 import { orderBy } from 'lodash-es';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { fromUnixTime, sub } from 'date-fns';
 
 import {

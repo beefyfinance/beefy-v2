@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import type { VaultEntity } from '../../features/data/entities/vault.ts';
 import {
   selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken,
-  selectUserVaultBalanceInUsdIncludingBoostsBridged,
+  selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken,
+  selectUserVaultBalanceInUsdIncludingDisplaced,
 } from '../../features/data/selectors/balance.ts';
 import { selectVaultById } from '../../features/data/selectors/vaults.ts';
 import {
@@ -15,7 +15,7 @@ import { formatLargeUsd } from '../../helpers/format.ts';
 import type { BeefyState } from '../../redux-types.ts';
 import { ValueBlock } from '../ValueBlock/ValueBlock.tsx';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { TokenAmountFromEntity } from '../TokenAmount/TokenAmount.tsx';
 import { VaultDepositedTooltip } from '../VaultDepositedTooltip/VaultDepositedTooltip.tsx';
 import {
@@ -41,11 +41,11 @@ const _VaultDeposited = connect(
       selectIsBalanceAvailableForChainUser(state, vault.chainId, walletAddress);
 
     const { amount: deposit, token: depositToken } =
-      selectUserVaultBalanceInDepositTokenIncludingBoostsBridgedWithToken(state, vault.id);
+      selectUserVaultBalanceInDepositTokenIncludingDisplacedWithToken(state, vault.id);
     const baseDeposit = selectUserVaultBalanceInDepositToken(state, vault.id);
     const hasDeposit = deposit.gt(0);
     const depositUsd = formatLargeUsd(
-      selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vaultId)
+      selectUserVaultBalanceInUsdIncludingDisplaced(state, vaultId)
     );
     const blurred = selectIsBalanceHidden(state);
 

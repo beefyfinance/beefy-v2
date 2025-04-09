@@ -4,12 +4,11 @@ import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { useAppSelector } from '../../../../store.ts';
 import {
-  selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
   selectVaultUserBalanceInDepositTokenBreakdown,
   type UserVaultBalanceBreakdownBoost,
   type UserVaultBalanceBreakdownBridged,
   type UserVaultBalanceBreakdownEntry,
+  type UserVaultBalanceBreakdownPendingWithdrawal,
   type UserVaultBalanceBreakdownVault,
 } from '../../../data/selectors/balance.ts';
 import type { TokenEntity } from '../../../data/entities/token.ts';
@@ -23,6 +22,9 @@ import { selectChainById } from '../../../data/selectors/chains.ts';
 import { Link } from 'react-router';
 
 const useStyles = legacyMakeStyles(styles);
+const typesToShow = ['boost', 'bridged'] as const satisfies Array<
+  UserVaultBalanceBreakdownEntry['type']
+>;
 
 type EntryProps<T extends UserVaultBalanceBreakdownEntry = UserVaultBalanceBreakdownEntry> = {
   entry: T;
@@ -127,14 +129,19 @@ const BridgedEntries = memo(function BridgedEntries({
   );
 });
 
-type TypeToComponentMap = Omit<
+type TypesToShow = (typeof typesToShow)[number];
+type TypeToComponentMap = Pick<
   {
     [T in UserVaultBalanceBreakdownEntry['type']]: FC<
       EntriesProps<Extract<UserVaultBalanceBreakdownEntry, { type: T }>>
     >;
   },
-  'vault'
+  TypesToShow
 >;
+type EntriesToShow = Extract<UserVaultBalanceBreakdownEntry, { type: TypesToShow }>;
+type TypeToArrayMap = {
+  [T in TypesToShow]: Extract<EntriesToShow, { type: T }>[];
+};
 
 const typeToComponent: TypeToComponentMap = {
   boost: BoostEntries,
@@ -144,7 +151,12 @@ const typeToComponent: TypeToComponentMap = {
 const Entries = memo(function Entries({
   entries,
   depositToken,
-}: EntriesProps<Exclude<UserVaultBalanceBreakdownEntry, UserVaultBalanceBreakdownVault>>) {
+}: EntriesProps<
+  Exclude<
+    UserVaultBalanceBreakdownEntry,
+    UserVaultBalanceBreakdownVault | UserVaultBalanceBreakdownPendingWithdrawal
+  >
+>) {
   const Component = typeToComponent[entries[0].type] as FC<EntriesProps>;
   return <Component entries={entries} depositToken={depositToken} />;
 });
@@ -156,46 +168,38 @@ interface DisplacedBalancesProps {
 export const DisplacedBalances = memo(function DisplacedBalances({
   vaultId,
 }: DisplacedBalancesProps) {
-  const total = useAppSelector(state =>
-    selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(state, vaultId)
-  );
-  const vaultOnly = useAppSelector(state => selectUserVaultBalanceInDepositToken(state, vaultId));
-
-  if (vaultOnly.gte(total)) {
-    return null;
-  }
-
-  return <DisplacedBalancesImpl vaultId={vaultId} />;
-});
-
-interface DisplacedBalancesProps {
-  vaultId: VaultEntity['id'];
-}
-
-type TypeToArrayMap = {
-  [T in UserVaultBalanceBreakdownEntry as T['type']]: T[];
-};
-
-export const DisplacedBalancesImpl = memo(function DisplacedBalancesImpl({
-  vaultId,
-}: DisplacedBalancesProps) {
-  const classes = useStyles();
   const breakdown = useAppSelector(state =>
     selectVaultUserBalanceInDepositTokenBreakdown(state, vaultId)
   );
-  const entries = useMemo(
-    () => groupBy(breakdown.entries, 'type') as TypeToArrayMap,
-    [breakdown.entries]
-  );
+  const entriesToShow = useMemo(() => {
+    return breakdown.entries.filter((entry): entry is EntriesToShow =>
+      typesToShow.some(type => type === entry.type)
+    );
+  }, [breakdown.entries]);
+
+  if (entriesToShow.length === 0) {
+    return null;
+  }
+
+  return <DisplacedBalancesList entries={entriesToShow} depositToken={breakdown.depositToken} />;
+});
+
+interface DisplacedBalancesListProps {
+  entries: EntriesToShow[];
+  depositToken: TokenEntity;
+}
+
+const DisplacedBalancesList = memo(function DisplacedBalancesList({
+  entries,
+  depositToken,
+}: DisplacedBalancesListProps) {
+  const classes = useStyles();
+  const byType = useMemo(() => groupBy(entries, 'type') as TypeToArrayMap, [entries]);
 
   return (
     <div className={classes.container}>
-      {entries.boost ? (
-        <Entries entries={entries.boost} depositToken={breakdown.depositToken} />
-      ) : null}
-      {entries.bridged ? (
-        <Entries entries={entries.bridged} depositToken={breakdown.depositToken} />
-      ) : null}
+      {byType.boost ? <Entries entries={byType.boost} depositToken={depositToken} /> : null}
+      {byType.bridged ? <Entries entries={byType.bridged} depositToken={depositToken} /> : null}
     </div>
   );
 });

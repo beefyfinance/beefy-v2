@@ -15,10 +15,16 @@ import type { BoostPromoEntity } from '../entities/promo.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { CurrentCowcentratedRangeData, TokenEntity } from '../entities/token.ts';
 import { isTokenErc20 } from '../entities/token.ts';
-import { isGovVaultMulti, isGovVaultSingle, type VaultGov } from '../entities/vault.ts';
+import {
+  isErc4626Vault,
+  isGovVaultMulti,
+  isGovVaultSingle,
+  type VaultEntity,
+  type VaultGov,
+} from '../entities/vault.ts';
 import { selectBoostById } from '../selectors/boosts.ts';
 import { selectAllChains, selectChainById } from '../selectors/chains.ts';
-import { selectGovVaultById } from '../selectors/vaults.ts';
+import { selectGovVaultById, selectVaultById } from '../selectors/vaults.ts';
 
 interface ActionParams {
   chainId: ChainEntity['id'];
@@ -66,6 +72,7 @@ interface ReloadBalanceAllowanceRewardsParams {
   spenderAddress: string;
   govVaultId?: VaultGov['id'];
   boostId?: BoostPromoEntity['id'];
+  vaultId?: VaultEntity['id'];
   walletAddress: string;
 }
 
@@ -93,7 +100,10 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
   }
 >(
   'deposit/reloadBalanceAndAllowanceAndGovRewards',
-  async ({ chainId, tokens, spenderAddress, govVaultId, boostId, walletAddress }, { getState }) => {
+  async (
+    { chainId, tokens, spenderAddress, govVaultId, boostId, vaultId, walletAddress },
+    { getState }
+  ) => {
     const chain = selectChainById(getState(), chainId);
 
     const govVault = govVaultId ? selectGovVaultById(getState(), govVaultId) : null;
@@ -104,12 +114,18 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
     const boostSingle = boost && boost.version === 1 ? boost : null;
     const boostMulti = boost && boost.version >= 2 ? boost : null;
 
+    const vault = vaultId ? selectVaultById(getState(), vaultId) : null;
+    const erc4626Vault = vault && isErc4626Vault(vault) ? vault : null;
+
     const balanceApi = await getBalanceApi(chain);
     const balanceRes = await balanceApi.fetchAllBalances(
       getState(),
-      tokens,
-      govVault ? [govVault] : [],
-      boost ? [boost] : [],
+      {
+        tokens,
+        govVaults: govVault ? [govVault] : [],
+        boosts: boost ? [boost] : [],
+        erc4626Vaults: erc4626Vault ? [erc4626Vault] : [],
+      },
       walletAddress
     );
 
@@ -124,16 +140,21 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
 
     const contractDataApi = await getContractDataApi(chain);
     const contractData: FetchAllContractDataResult = govVault
-      ? await contractDataApi.fetchAllContractData(
-          getState(),
-          [],
-          govVaultSingle ? [govVaultSingle] : [],
-          govVaultMulti ? [govVaultMulti] : [],
-          [],
-          boostSingle ? [boostSingle] : [],
-          boostMulti ? [boostMulti] : []
-        )
-      : { boosts: [], govVaults: [], govVaultsMulti: [], standardVaults: [], cowVaults: [] };
+      ? await contractDataApi.fetchAllContractData(getState(), {
+          govVaults: govVaultSingle ? [govVaultSingle] : [],
+          govVaultsMulti: govVaultMulti ? [govVaultMulti] : [],
+          boosts: boostSingle ? [boostSingle] : [],
+          boostsMulti: boostMulti ? [boostMulti] : [],
+          erc4626Vaults: erc4626Vault ? [erc4626Vault] : [],
+        })
+      : {
+          boosts: [],
+          govVaults: [],
+          govVaultsMulti: [],
+          standardVaults: [],
+          cowVaults: [],
+          erc4626Vaults: [],
+        };
 
     return {
       walletAddress,

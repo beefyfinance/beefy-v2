@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchTreasury } from '../actions/treasury.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { MarketMakerHoldingEntity, TreasuryHoldingEntity } from '../entities/treasury.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { TreasuryHoldingConfig } from '../apis/config-types.ts';
 import { isVaultHoldingConfig } from '../apis/config-types.ts';
 import { selectIsTokenLoadedOnChain } from '../selectors/tokens.ts';

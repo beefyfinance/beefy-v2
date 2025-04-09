@@ -5,7 +5,7 @@ import { formatTokenDisplayCondensed } from '../../../../../../../../helpers/for
 import type { ChainEntity } from '../../../../../../../data/entities/chain.ts';
 import { css, type CssStyles, cx } from '@repo/styles/css';
 import type { TokenEntity } from '../../../../../../../data/entities/token.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { TokensImage } from '../../../../../../../../components/TokenImage/TokenImage.tsx';
 import { ListJoin } from '../../../../../../../../components/ListJoin.tsx';
 import ChevronRight from '../../../../../../../../images/icons/chevron-right.svg?react';
@@ -42,12 +42,14 @@ export const ListItem = memo(function ListItem({
         <div className={classes.symbol}>
           <ListJoin items={tokenSymbols} />
         </div>
-        {tag ? <div className={classes.tag}>{tag}</div> : null}
+        {tag ?
+          <div className={classes.tag}>{tag}</div>
+        : null}
       </div>
       <div className={css(styles.side, styles.right)}>
-        {balance ? (
+        {balance ?
           <div className={classes.balance}>{formatTokenDisplayCondensed(balance, decimals, 8)}</div>
-        ) : null}
+        : null}
         <ChevronRight className={cx('item-arrow', classes.arrow)} />
       </div>
     </button>

@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { UniswapV2FactoryAbi } from '../../../../../config/abi/UniswapV2FactoryAbi.ts';
 import { UniswapV2PairAbi } from '../../../../../config/abi/UniswapV2PairAbi.ts';
 import type { ChainEntity } from '../../../entities/chain.ts';

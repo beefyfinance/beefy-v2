@@ -1,4 +1,4 @@
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { ZapStep } from './types.ts';
 import { getInsertIndex } from '../helpers/zap.ts';
 import { encodeFunctionData, type Abi, type Address } from 'viem';
@@ -33,8 +33,9 @@ export function buildTokenApproveTx(
       ] as const satisfies Abi,
       args: [spender as Address, bigNumberToBigInt(amountWei)],
     }),
-    tokens: insertBalance
-      ? [
+    tokens:
+      insertBalance ?
+        [
           {
             token,
             index: getInsertIndex(1), // this has side effect of approving the token to spend itself

@@ -282,7 +282,6 @@ const config = buildConfig(
           graphLegendRange: { value: '#3f446e' },
           graphLegendUsd: { value: '#606fcf' },
           graphTooltipBackground: { value: '#1b1d32' },
-          green: { value: '#4db258', description: 'primary main + indicators.success' },
           greenDark: { value: '#004708', description: 'primary dark' },
           greenLight: { value: '#68be71', description: 'primary light' },
           headerFooterBackground: { value: '#020203', description: 'footer header' },
@@ -299,7 +298,6 @@ const config = buildConfig(
           orangeBoostLight: { value: '#e5a66b', description: 'boost button bg hover' },
           orangeWarning: { value: '#d19847', description: 'indicators.warning' },
           purpleDarkest: { value: '#121421', description: 'app bg + search input bg' },
-          red: { value: '#dc2c10', description: 'txsModal.error' },
           redError: { value: '#da5932', description: 'indicators.error' },
           scrollableShadowSolid: { value: '#0000007f' },
           selectOptionActiveBackground: { value: '#ffffff28' },
@@ -337,8 +335,199 @@ const config = buildConfig(
           vaultInactiveVaultbackground: { value: '#242032', description: 'vaults inactive' },
           vaultPausedBackground: { value: '#d153470c' },
           vaultTagDividerBackground: { value: '#D9D9D949' },
-          white: { value: '#ffffff' },
           zapDiscountedFeesBackground: { value: '#59a662' },
+          gold: {
+            '10': {
+              value: '#f7f3e3',
+            },
+            '20': {
+              value: '#f7e9ca',
+            },
+            '30': {
+              value: '#f8dfa9',
+            },
+            '40': {
+              value: '#f3d894',
+            },
+            '50': {
+              value: '#eccc7d',
+            },
+            '60': {
+              value: '#e3bd63',
+            },
+            '70': {
+              value: '#d7a861',
+            },
+            '80': {
+              DEFAULT: { value: '#b17f49' },
+              '40': {
+                value: '#B17F4966',
+              },
+            },
+            '90': {
+              value: '#865c3b',
+            },
+            '100': {
+              value: '#5f412e',
+            },
+          },
+          green: {
+            DEFAULT: { value: '#4db258', description: 'primary main + indicators.success' },
+            '10': {
+              value: '#e3faeb',
+            },
+            '20': {
+              value: '#baf0ca',
+            },
+            '30': {
+              value: '#95e2a8',
+            },
+            '40': {
+              DEFAULT: {
+                value: '#72d286',
+              },
+              '12': {
+                value: '#72D2861E',
+              },
+            },
+            '50': {
+              value: '#53be64',
+            },
+            '60': {
+              value: '#449a4d',
+            },
+            '70': {
+              value: '#368a4d',
+            },
+            '80': {
+              DEFAULT: {
+                value: '#2a784c',
+              },
+              '40': {
+                value: '#2A784C66',
+              },
+            },
+            '90': {
+              value: '#1f6549',
+            },
+            '100': {
+              value: '#155042',
+            },
+          },
+          darkblue: {
+            '40': {
+              value: '#3f4574',
+            },
+            '50': {
+              value: '#363b63',
+            },
+            '60': {
+              value: '#2d3153',
+            },
+            '70': {
+              value: '#242842',
+            },
+            '80': {
+              value: '#1c1e32',
+            },
+            '90': {
+              value: '#111321',
+            },
+            '100': {
+              DEFAULT: {
+                value: '#020203',
+              },
+              '64': {
+                value: '#020203A3',
+              },
+            },
+          },
+          red: {
+            DEFAULT: { value: '#dc2c10', description: 'txsModal.error' },
+            '10': {
+              value: '#ffe9e3',
+            },
+            '20': {
+              value: '#ffd5c8',
+            },
+            '30': {
+              value: '#ffc1ae',
+            },
+            '40': {
+              value: '#ffa98f',
+            },
+            '50': {
+              value: '#ff9269',
+            },
+            '60': {
+              value: '#ee784c',
+            },
+            '70': {
+              value: '#e66e42',
+            },
+            '80': {
+              DEFAULT: {
+                value: '#df6539',
+              },
+              '40': {
+                value: '#DF653966',
+              },
+            },
+            '90': {
+              value: '#d85c30',
+            },
+            '100': {
+              value: '#cf5024',
+            },
+          },
+          white: {
+            DEFAULT: { value: '#ffffff' },
+            '70': {
+              DEFAULT: {
+                value: '#999cb3',
+              },
+              '4': {
+                value: '#999CB30A',
+              },
+              '24': {
+                value: '#999CB33D',
+              },
+              '64': {
+                value: '#999CB3A3',
+              },
+            },
+            '80': {
+              value: '#bcbecd',
+            },
+            '90': {
+              DEFAULT: {
+                value: '#d0d0da',
+              },
+              '4': {
+                value: '#D0D0DA0A',
+              },
+              '24': {
+                value: '#D0D0DA3D',
+              },
+              '64': {
+                value: '#D0D0DAA3',
+              },
+            },
+            '100': {
+              DEFAULT: {
+                value: '#f5f5ff',
+              },
+              '4': {
+                value: '#F5F5FF0A',
+              },
+              '24': {
+                value: '#F5F5FF3D',
+              },
+              '64': {
+                value: '#F5F5FFA3',
+              },
+            },
+          },
         },
         sizes: {
           defaultAssetsImageSize: { value: '48px' },
@@ -435,6 +624,16 @@ const config = buildConfig(
             success: { value: '{colors.green}' },
             error: { value: '{colors.redError}' },
             info: { value: '{colors.cornflower}' },
+          },
+          notification: {
+            confirmation: {
+              primary: { value: '{colors.green.40}' },
+              background: { value: '{colors.green.80.40}' },
+            },
+            teaser: {
+              primary: { value: '{colors.gold.40}' },
+              background: { value: '{colors.gold.80.40}' },
+            },
           },
           tooltip: {
             light: {

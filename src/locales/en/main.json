@@ -131,6 +131,7 @@
   "VaultStat-Deposited-vault-cowcentrated": "CLM",
   "VaultStat-Deposited-boost": "{{boost}} Boost",
   "VaultStat-Deposited-bridged": "Bridged to {{chain}}",
+  "VaultStat-Deposited-pending-withdrawal": "Pending Withdrawal",
   "VaultStat-Deposited-NotInActiveBoost": "You are missing out on Boost rewards",
   "VaultStat-Tooltip-Autocompounded": "Autocompounded Fees",
   "VaultTag-LowRisk": "Low Risk",
@@ -540,6 +541,10 @@
   "Stepper-deposit-Success-Title": "Deposit Confirmed",
   "Stepper-deposit-Success-Content": "You have successfully deposited {{amount}} {{token}} in the vault",
 
+  "Stepper-deposit-erc4626-Building-Content": "Building deposit transaction...",
+  "Stepper-deposit-erc4626-Success-Title": "Deposit Confirmed",
+  "Stepper-deposit-erc4626-Success-Content": "You have successfully deposited {{amount}} {{token}} in the vault",
+
   "Stepper-deposit-gov-Building-Content": "Building deposit transaction...",
   "Stepper-deposit-gov-Success-Title": "Deposit Confirmed",
   "Stepper-deposit-gov-Success-Content": "You have successfully deposited {{amount}} {{token}} in the Earnings Pool",
@@ -547,6 +552,14 @@
   "Stepper-withdraw-Building-Content": "Building withdraw transaction...",
   "Stepper-withdraw-Success-Title": "Withdraw Success",
   "Stepper-withdraw-Success-Content": "You have successfully withdrawn {{amount}} {{token}} from the vault",
+
+  "Stepper-request-withdraw-Building-Content": "Building withdrawal request transaction...",
+  "Stepper-request-withdraw-Success-Title": "Withdrawal request successful",
+  "Stepper-request-withdraw-Success-Content": "You have successfully requested the withdrawal of {{amount}} {{token}}. It will be available in 14 days.",
+
+  "Stepper-fulfill-request-withdraw-Building-Content": "Building withdrawal transaction...",
+  "Stepper-fulfill-request-withdraw-Success-Title": "Withdrawal successful",
+  "Stepper-fulfill-request-withdraw-Success-Content": "You have successfully withdrawn {{amount}} {{token}} from the vault",
 
   "Stepper-claim-withdraw-Building-Content": "Building withdraw transaction...",
   "Stepper-claim-withdraw-Success-Title": "Claim & Withdraw Confirmed",
@@ -628,6 +641,8 @@
   "Transact-DepositAll": "Deposit All",
   "Transact-Withdraw": "Withdraw",
   "Transact-WithdrawAll": "Withdraw All",
+  "Transact-RequestWithdraw": "Request Withdrawal",
+  "Transact-WithdrawRequests": "Withdrawal requests",
   "Transact-Claim": "Claim",
   "Transact-Claim-Description-gov": "This pool distributes reward for the stakers. These rewards can be claimed manually below.",
   "Transact-Claim-Description-gov-merkl": "Merkl rewards are distributed several times per day and are claimed along with all other available rewards from Merkl.",
@@ -709,6 +724,7 @@
   "Transact-Notice-NotEnough": "Amount exceeds available balance",
   "Transact-Notice-WithdrawnInWallet": "You have <amount/> {{token}} in your wallet. You can remove liquidity on the <platformLink>underlying platform</platformLink>.",
   "Transact-Notice-CowcentratedNoSingleSideAllowed": "This position can't accept single-sided {{inputToken}} deposits right now. Try adding {{neededToken}} or both tokens simultaneously instead.",
+  "Transact-Notice-BeSonicWithdrawTime": "Withdrawals are available 14 days after the request.",
   "Transact-Fee-Deposit": "Deposit fee",
   "Transact-Fee-Deposit-Explainer": "Charged by underlying provider, not Beefy.",
   "Transact-Fee-Withdraw": "Withdrawal fee",
@@ -721,6 +737,7 @@
   "Transact-Fee-Treasury": "Beefy Treasury",
   "Transact-Fee-Developers": "Vault Developers",
   "Transact-Fee-HarvestFee": "Harvest Fee",
+  "Transact-Fee-Liquidity": "Liquidity Fee",
   "Transact-Fee-TotalFee": "Total Performance Fee",
   "Transact-SwapProvider-one-inch": "1inch",
   "Transact-SwapProvider-kyber": "KyberSwap",

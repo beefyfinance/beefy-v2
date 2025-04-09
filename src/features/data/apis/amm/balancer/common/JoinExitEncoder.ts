@@ -5,7 +5,7 @@ import {
   PoolJoinKind,
 } from './types.ts';
 import { encodeAbiParameters, type Hex } from 'viem';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 
 function bigNumberToBigInt(bn: BigNumber): bigint {
   return BigInt(bn.toString(10));

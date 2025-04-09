@@ -1,5 +1,5 @@
 import { Fragment, memo, useMemo } from 'react';
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { TokenEntity } from '../../../../../../data/entities/token.ts';
 import {
   formatPercent,
@@ -52,13 +52,13 @@ export const RewardList = memo(function RewardList({
             <TokenImageFromEntity token={r.token} size={24} />
           </div>
           <div className={classes.amount}>
-            {r.active && r.amount.isZero()
-              ? deposited
-                ? 'Earning'
-                : 'Earn'
-              : formatTokenDisplayCondensed(r.amount, r.token.decimals)}
+            {r.active && r.amount.isZero() ?
+              deposited ?
+                'Earning'
+              : 'Earn'
+            : formatTokenDisplayCondensed(r.amount, r.token.decimals)}
             {` ${r.token.symbol}`}
-            {r.token.chainId !== chainId ? (
+            {r.token.chainId !== chainId ?
               <>
                 {' '}
                 on{' '}
@@ -75,14 +75,14 @@ export const RewardList = memo(function RewardList({
                   />
                 </DivWithTooltip>
               </>
-            ) : null}
+            : null}
           </div>
           <div>
-            {r.active && r.amount.isZero() && r.apr
-              ? formatPercent(r.apr)
-              : !r.amount.isZero() && r.price
-                ? formatUsd(r.price.multipliedBy(r.amount))
-                : '-'}
+            {r.active && r.amount.isZero() && r.apr ?
+              formatPercent(r.apr)
+            : !r.amount.isZero() && r.price ?
+              formatUsd(r.price.multipliedBy(r.amount))
+            : '-'}
           </div>
         </Fragment>
       ))}

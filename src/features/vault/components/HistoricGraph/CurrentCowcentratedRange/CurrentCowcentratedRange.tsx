@@ -11,7 +11,7 @@ import type { VaultEntity } from '../../../../data/entities/vault.ts';
 import { styles } from './styles.ts';
 import { BIG_ONE, BIG_ZERO } from '../../../../../helpers/big-number.ts';
 import type { CurrentCowcentratedRangeData } from '../../../../data/entities/token.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { Button } from '../../../../../components/Button/Button.tsx';
 import SwapIcon from '../../../../../images/icons/swap.svg?react';
 import { useBreakpoint } from '../../../../../components/MediaQueries/useBreakpoint.ts';

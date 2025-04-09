@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { isBigNumber } from './big-number.ts';
 import { cloneDeepWith, defaults as defaultsShallow, defaultsDeep } from 'lodash-es';
 import type { KeysOfUnion } from '../features/data/utils/types-utils.ts';
@@ -97,8 +97,9 @@ export function typedDefaults<T extends object>(
 }
 
 // @dev does not handle arrays, Maps, Sets etc
-type DeepPartial<T> = T extends object
-  ? {
+type DeepPartial<T> =
+  T extends object ?
+    {
       [P in keyof T]?: DeepPartial<T[P]>;
     }
   : T;

@@ -30,7 +30,7 @@ import {
 } from '../../../../../../../data/selectors/tokens.ts';
 import { TokenImage } from '../../../../../../../../components/TokenImage/TokenImage.tsx';
 import type { TokenEntity } from '../../../../../../../data/entities/token.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -79,16 +79,14 @@ const CowcentratedAmountStat = memo(function CowcentratedAmountStat({
   const [token0, token1] = useAppSelector(state =>
     selectCowcentratedLikeVaultDepositTokens(state, tx.vaultId)
   );
-  const variant0 = underlying0Diff.isZero()
-    ? 'neutral'
-    : underlying0Diff.gt(BIG_ZERO)
-      ? 'positive'
-      : 'negative';
-  const variant1 = underlying1Diff.isZero()
-    ? 'neutral'
-    : underlying1Diff.gt(BIG_ZERO)
-      ? 'positive'
-      : 'negative';
+  const variant0 =
+    underlying0Diff.isZero() ? 'neutral'
+    : underlying0Diff.gt(BIG_ZERO) ? 'positive'
+    : 'negative';
+  const variant1 =
+    underlying1Diff.isZero() ? 'neutral'
+    : underlying1Diff.gt(BIG_ZERO) ? 'positive'
+    : 'negative';
 
   return (
     <div className={classes.cowcentratedTokenAmounts}>
@@ -183,7 +181,7 @@ export const Transaction = memo(function Transaction({ tx }: TransactionProps) {
           height={24}
           className={classes.network}
         />
-        {transactionHash ? (
+        {transactionHash ?
           <a
             href={explorerTxUrl(chain, transactionHash)}
             target={'_blank'}
@@ -192,18 +190,20 @@ export const Transaction = memo(function Transaction({ tx }: TransactionProps) {
           >
             {formatISO9075(datetime)}
           </a>
-        ) : (
-          formatISO9075(datetime)
-        )}
+        : formatISO9075(datetime)}
       </div>
       <InfoGrid>
         {/*Amount */}
         <div className={classes.column}>
-          {isStandard ? <StandardAmountStat tx={tx} /> : <CowcentratedAmountStat tx={tx} />}
+          {isStandard ?
+            <StandardAmountStat tx={tx} />
+          : <CowcentratedAmountStat tx={tx} />}
         </div>
         {/*Balance */}
         <div className={classes.column}>
-          {isStandard ? <StandardBalanceStat tx={tx} /> : <CowcentratedBalanceStat tx={tx} />}
+          {isStandard ?
+            <StandardBalanceStat tx={tx} />
+          : <CowcentratedBalanceStat tx={tx} />}
         </div>
         {/*MooTokenBal */}
         <div className={classes.column}>
@@ -234,14 +234,12 @@ export const TransactionMobile = memo(function TransactionMobile({ tx }: Transac
     <RowMobile css={css.raw(styles.gridMobile, tx.timeline === 'past' && styles.txPast)}>
       <VaultNetwork css={styles.vaultNetwork} chainId={chainId} />
       <InfoGrid>
-        {isStandard ? (
+        {isStandard ?
           <StandardAmountStat tx={tx} mobile />
-        ) : (
-          <CowcentratedAmountStat tx={tx} mobile />
-        )}
+        : <CowcentratedAmountStat tx={tx} mobile />}
         {/* Date */}
         <div className={classes.statMobile}>
-          {transactionHash ? (
+          {transactionHash ?
             <a
               href={explorerTxUrl(chain, transactionHash)}
               target={'_blank'}
@@ -250,9 +248,7 @@ export const TransactionMobile = memo(function TransactionMobile({ tx }: Transac
             >
               {formatISO9075(datetime, { representation: 'date' })}
             </a>
-          ) : (
-            formatISO9075(datetime, { representation: 'date' })
-          )}
+          : formatISO9075(datetime, { representation: 'date' })}
         </div>
         <div className={css(styles.statMobile, styles.textDark)}>
           {formatISO9075(datetime, { representation: 'time' })}
@@ -263,11 +259,9 @@ export const TransactionMobile = memo(function TransactionMobile({ tx }: Transac
           valueCss={styles.textOverflow}
           label={t('Dashboard-Filter-Balance')}
           value={
-            isStandard ? (
+            isStandard ?
               <StandardBalanceStat tx={tx} mobile />
-            ) : (
-              <CowcentratedBalanceStat tx={tx} mobile />
-            )
+            : <CowcentratedBalanceStat tx={tx} mobile />
           }
         />
         <MobileStat
