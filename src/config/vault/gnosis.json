@@ -8,9 +8,7 @@
     "tokenAddress": "0x69E857CCF70324969748f7cF176F5912f7013BA6",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
-    "earnedTokens": [],
     "earnedTokenAddresses": [],
-    "earnedOracleIds": [],
     "earnedTokenDecimals": [18],
     "earnedToken": "rCowUniswapGnosisbCSPX-sDAI",
     "earnContractAddress": "0xEFe7a711e7C794D3C8934C243631720dBec522Eb",
@@ -26,9 +24,6 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -72,9 +67,7 @@
     "tokenAddress": "0xdC5cF03C6AaF579a64E3e367fd6447e3ae312165",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
-    "earnedTokens": "",
     "earnedTokenAddresses": [],
-    "earnedOracleIds": [],
     "earnedTokenDecimals": [18],
     "earnedToken": "rCowUniswapGnosiswbTSLA-sDAI",
     "earnContractAddress": "0xa651c7c43a53328284747C89c56Ef5fB15A7161d",
@@ -90,9 +83,6 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -136,9 +126,7 @@
     "tokenAddress": "0xde675EFa57d38d19429e56cF5f1114A7F9E26f8E",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
-    "earnedTokens": [],
     "earnedTokenAddresses": [],
-    "earnedOracleIds": [],
     "earnedTokenDecimals": [18],
     "earnedToken": "rCowUniswapGnosissDAI-USDCe",
     "earnContractAddress": "0x5f1b787F702910262CC2f820A63b0C474d9B0F80",
@@ -154,9 +142,6 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -208,9 +193,7 @@
     "tokenAddress": "0x8bC032a7d63BA3420C941aC82b96b1D21C83Cc76",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
-    "earnedTokens": [],
     "earnedTokenAddresses": [],
-    "earnedOracleIds": [],
     "earnedTokenDecimals": [18],
     "earnedToken": "rCowUniswapGnosiswstETH-WETH",
     "earnContractAddress": "0x267b2D785576D595b33De861aE48eA94cFD257c7",
@@ -226,9 +209,6 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -280,9 +260,7 @@
     "tokenAddress": "0xDcfd113031dCd122d004021fBd48de867E616C49",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
-    "earnedTokens": [],
     "earnedTokenAddresses": [],
-    "earnedOracleIds": [],
     "earnedTokenDecimals": [18],
     "earnedToken": "rCowUniswapGnosisUSDCe-WXDAI",
     "earnContractAddress": "0xaD3DCDCF0C01D838CBC43C67961365281d6cAD96",
@@ -298,9 +276,6 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -352,9 +327,7 @@
     "tokenAddress": "0x7740eDe700D96CE8A7EeD17C06AB82A6ec556eAe",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
-    "earnedTokens": [],
     "earnedTokenAddresses": [],
-    "earnedOracleIds": [],
     "earnedTokenDecimals": [18],
     "earnedToken": "rCowUniswapGnosissDAI-wstETH",
     "earnContractAddress": "0xD56941F8d19b013ddB89a118fdD9B0AC7e481b55",
@@ -370,9 +343,6 @@
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -424,12 +394,10 @@
     "tokenAddress": "0x2DE9aF4E68c0980e84c5B54Ce677FA4368b299F2",
     "tokenDecimals": 18,
     "tokenProviderId": "uniswap",
-    "earnedTokens": [],
-    "earnedTokenAddresses": [],
-    "earnedOracleIds": [],
-    "earnedTokenDecimals": [18],
-    "earnedToken": "rCowUniswapGnosisGNO-wstETH",
     "earnContractAddress": "0x56F130Cc51cE0CA96454f44BF66f1299C89ccAe7",
+    "earnedToken": "rCowUniswapGnosisGNO-wstETH",
+    "earnedTokenDecimals": [18],
+    "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "uniswap-cow-gnosis-wsteth-gno",
     "status": "active",
@@ -437,14 +405,11 @@
     "platformId": "uniswap",
     "assets": ["wstETH", "GNO"],
     "risks": [],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "gnosis",
     "zaps": [
       {
         "strategyId": "gov-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
       }
     ]
   },
@@ -477,7 +442,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "strategyTypeId": "pool",
+    "strategyTypeId": "compounds",
     "network": "gnosis",
     "type": "cowcentrated",
     "feeTier": "0.05",
