@@ -19,6 +19,7 @@ import { styled } from '@repo/styles/jsx';
 import { StakeCountdown } from './StakeCountdown/StakeCountdown.tsx';
 import { Trans, useTranslation } from 'react-i18next';
 import { sortBy } from 'lodash-es';
+import { selectBoostAprByRewardToken } from '../../../../data/selectors/apy.ts';
 export const ActiveBoost = memo(function ActiveBoost({
   boostId,
 }: {
@@ -29,6 +30,7 @@ export const ActiveBoost = memo(function ActiveBoost({
   const vault = useAppSelector(state => selectVaultById(state, boost.vaultId));
   const activeRewards = useAppSelector(state => selectBoostActiveRewards(state, boost.id));
   const userRewards = useAppSelector(state => selectBoostUserRewardsInToken(state, boost.id));
+  const aprByRewardToken = useAppSelector(state => selectBoostAprByRewardToken(state, boost.id));
   const [rewards, canClaim] = useMemo(() => {
     let hasPendingRewards = false;
     const allRewards: Reward[] = activeRewards.map(reward => {
@@ -37,6 +39,7 @@ export const ActiveBoost = memo(function ActiveBoost({
         ...reward,
         active: true,
         pending: userReward?.amount || BIG_ZERO,
+        apr: aprByRewardToken.find(r => r.rewardToken === reward.token.address)?.apr || 0,
       };
     });
     for (const userReward of userRewards) {
@@ -51,13 +54,14 @@ export const ActiveBoost = memo(function ActiveBoost({
             periodFinish: undefined,
             rewardRate: BIG_ZERO,
             active: false,
+            apr: aprByRewardToken.find(r => r.rewardToken === userReward.token.address)?.apr || 0,
           } satisfies Reward);
         }
       }
     }
 
     return [allRewards, hasPendingRewards];
-  }, [activeRewards, userRewards]);
+  }, [activeRewards, aprByRewardToken, userRewards]);
   const balanceInWallet = useAppSelector(state =>
     selectUserBalanceOfToken(state, boost.chainId, vault.contractAddress)
   );
@@ -75,17 +79,15 @@ export const ActiveBoost = memo(function ActiveBoost({
     <BoostActionContainer>
       <CardBoostContainer>
         <BoostCountdown>
-          {reward.periodFinish ? (
+          {reward.periodFinish ?
             <Trans
               t={t}
               i18nKey="Boost-Ends"
               components={{ countdown: <StakeCountdown periodFinish={reward.periodFinish} /> }}
             />
-          ) : (
-            '-'
-          )}
+          : '-'}
         </BoostCountdown>
-        <Rewards isInBoost={canUnstake} rewards={rewards} boostId={boostId} />
+        <Rewards isInBoost={canUnstake} rewards={rewards} />
       </CardBoostContainer>
       <ActionConnectSwitch chainId={boost.chainId}>
         {canStake && (

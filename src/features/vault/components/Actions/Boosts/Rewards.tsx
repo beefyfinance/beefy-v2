@@ -9,21 +9,19 @@ import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
 import { useAppSelector } from '../../../../../store.ts';
 import { selectTokenPriceByAddress } from '../../../../data/selectors/tokens.ts';
 import { formatLargePercent, formatLargeUsd } from '../../../../../helpers/format.ts';
-import type { BoostPromoEntity } from '../../../../data/entities/promo.ts';
-import { selectBoostApr } from '../../../../data/selectors/apy.ts';
 
 export type Reward = BoostRewardContractData & {
   pending: BigNumber;
   active: boolean;
+  apr: number;
 };
 
 export type RewardsProps = {
   isInBoost: boolean;
   rewards: Reward[];
-  boostId: BoostPromoEntity['id'];
 };
 
-export const Rewards = memo(function Rewards({ isInBoost, rewards, boostId }: RewardsProps) {
+export const Rewards = memo(function Rewards({ isInBoost, rewards }: RewardsProps) {
   const { t } = useTranslation();
 
   return (
@@ -39,7 +37,7 @@ export const Rewards = memo(function Rewards({ isInBoost, rewards, boostId }: Re
               {reward.token.symbol}
               <TokenImageFromEntity token={reward.token} size={24} />
 
-              <Reward reward={reward} boostId={boostId} />
+              <Reward reward={reward} apr={reward.apr} />
             </Amount>
           ))}
         </RewardsContainer>
@@ -48,13 +46,7 @@ export const Rewards = memo(function Rewards({ isInBoost, rewards, boostId }: Re
   );
 });
 
-const Reward = memo(function Reward({
-  reward,
-  boostId,
-}: {
-  reward: Reward;
-  boostId: BoostPromoEntity['id'];
-}) {
+const Reward = memo(function Reward({ reward, apr }: { reward: Reward; apr: number }) {
   const { token, pending } = reward;
   const { t } = useTranslation();
 
@@ -62,16 +54,14 @@ const Reward = memo(function Reward({
     selectTokenPriceByAddress(state, token.chainId, token.address)
   );
 
-  const boostApy = useAppSelector(state => selectBoostApr(state, boostId));
-
   const pendingUsd = useMemo(() => formatLargeUsd(pending.multipliedBy(price)), [pending, price]);
 
   return (
     <RewardOrApy>
       {pending.gt(BIG_ZERO) ?
         pendingUsd
-      : boostApy !== 0 ?
-        t('Boost-APR', { apr: formatLargePercent(boostApy) })
+      : apr !== 0 ?
+        t('Boost-APR', { apr: formatLargePercent(apr) })
       : null}
     </RewardOrApy>
   );

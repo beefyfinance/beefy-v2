@@ -39,6 +39,7 @@ export const BoostPastActionCard = memo(function BoostPastActionCard({
         periodFinish: undefined,
         rewardRate: BIG_ZERO,
         active: false,
+        apr: 0,
       };
     });
     return [rewards, hasPendingRewards];
@@ -53,14 +54,14 @@ export const BoostPastActionCard = memo(function BoostPastActionCard({
       <CardBoostContainer>
         <BoostEnded>{t('Boost ended')}</BoostEnded>
         <BoostStaked boostId={boostId} />
-        {canClaim && <Rewards isInBoost={true} rewards={rewards} boostId={boostId} />}
+        {canClaim && <Rewards isInBoost={true} rewards={rewards} />}
       </CardBoostContainer>
-      {canClaim || canUnstake ? (
+      {canClaim || canUnstake ?
         <ActionConnectSwitch chainId={vault.chainId}>
           {canClaimOnly && <Claim boostId={boostId} chainId={boost.chainId} />}
           {canUnstake && <Unstake boostId={boostId} chainId={boost.chainId} canClaim={canClaim} />}
         </ActionConnectSwitch>
-      ) : null}
+      : null}
     </BoostPastActionCardContainer>
   );
 });

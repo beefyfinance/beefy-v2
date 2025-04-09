@@ -7,7 +7,7 @@ import { selectWalletAddressIfKnown } from './wallet.ts';
 import {
   selectUserBalanceOfToken,
   selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInShareTokenIncludingBoostsBridged,
+  selectUserVaultBalanceInShareTokenInBoosts,
 } from './balance.ts';
 import {
   type TokenAmount,
@@ -374,10 +374,9 @@ export const selectTransactShouldShowBoostNotification = (
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ): boolean => {
-  const hasDepositedInVaultIncludingBoostsBridged =
-    selectUserVaultBalanceInShareTokenIncludingBoostsBridged(state, vaultId, walletAddress);
+  const balance = selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, walletAddress);
 
-  if (hasDepositedInVaultIncludingBoostsBridged) {
+  if (balance.gt(BIG_ZERO)) {
     return true;
   }
 
