@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { BeefyState } from '../../../redux-types.ts';
-import { getBeefyApi } from '../apis/instances.ts';
+import { getBeefyApi, getBeefyDataApi } from '../apis/instances.ts';
 import {
   isCowcentratedGovVault,
   isCowcentratedVault,
@@ -16,6 +16,7 @@ import { compoundInterest, yearlyToDaily } from '../../../helpers/number.ts';
 import { isDefined } from '../utils/array-utils.ts';
 import { getApiApyDataComponents } from '../../../helpers/apy.ts';
 import type { BeefyAPIApyBreakdownResponse } from '../apis/beefy/beefy-api-types.ts';
+import type { ApiAvgApy } from '../apis/beefy/beefy-data-api-types.ts';
 import {
   isMerklBoostCampaign,
   type MerklRewardsCampaignWithApr,
@@ -38,6 +39,39 @@ export const fetchApyAction = createAsyncThunk<
   const api = await getBeefyApi();
   const prices = await api.getApyBreakdown();
   return { data: prices, state: getState() };
+});
+
+export interface TransformedAvgApy {
+  vaultId: string;
+  avg7d: number;
+  avg30d: number;
+  avg90d: number;
+}
+
+export interface FetchAvgApysFulfilledPayload {
+  data: TransformedAvgApy[];
+  state: BeefyState;
+}
+
+export const fetchAvgApyAction = createAsyncThunk<
+  FetchAvgApysFulfilledPayload,
+  void,
+  {
+    state: BeefyState;
+  }
+>('apy/fetchAvgApy', async (_, { getState }) => {
+  const api = await getBeefyDataApi();
+  const avgApys = await api.getAvgApys();
+
+  // Transform snake_case to camelCase
+  const transformedData = avgApys.map((apy: ApiAvgApy) => ({
+    vaultId: apy.vault_id,
+    avg7d: apy.avg_7d,
+    avg30d: apy.avg_30d,
+    avg90d: apy.avg_90d,
+  }));
+
+  return { data: transformedData, state: getState() };
 });
 
 export type RecalculateTotalApyPayload = {

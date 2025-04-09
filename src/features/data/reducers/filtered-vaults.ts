@@ -5,6 +5,7 @@ import type { PlatformEntity } from '../entities/platform.ts';
 import type { KeysOfType } from '../utils/types-utils.ts';
 import createTransform from 'redux-persist/es/createTransform';
 import type {
+  AvgApySortType,
   SortDirectionType,
   SortType,
   StrategiesType,
@@ -30,6 +31,7 @@ export type FilteredVaultsState = {
    **/
   reseted: boolean;
   sort: SortType;
+  avgApySort: AvgApySortType;
   sortDirection: SortDirectionType;
   vaultCategory: VaultCategoryType[];
   userCategory: UserCategoryType;
@@ -58,6 +60,7 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   reseted: true,
   sort: 'default',
   sortDirection: 'desc',
+  avgApySort: 'default',
   vaultCategory: [],
   userCategory: 'all',
   strategyType: 'all',
@@ -92,6 +95,10 @@ export const filteredVaultsSlice = createSlice({
     setSort(sliceState, action: PayloadAction<FilteredVaultsState['sort']>) {
       sliceState.reseted = false;
       sliceState.sort = action.payload;
+    },
+    setAvgApySort(sliceState, action: PayloadAction<FilteredVaultsState['avgApySort']>) {
+      sliceState.reseted = false;
+      sliceState.avgApySort = action.payload;
     },
     setSortDirection(sliceState, action: PayloadAction<FilteredVaultsState['sortDirection']>) {
       sliceState.reseted = false;

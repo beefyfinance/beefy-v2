@@ -1,15 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { Draft } from 'immer';
 import type { BeefyState } from '../../../redux-types.ts';
-import { fetchApyAction, recalculateTotalApyAction } from '../actions/apy.ts';
+import {
+  fetchApyAction,
+  fetchAvgApyAction,
+  recalculateTotalApyAction,
+  type TransformedAvgApy,
+} from '../actions/apy.ts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
 import type { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types.ts';
 import type { BoostPromoEntity } from '../entities/promo.ts';
-import type { VaultEntity } from '../entities/vault.ts';
+import { type VaultEntity } from '../entities/vault.ts';
 import { selectBoostById } from '../selectors/boosts.ts';
 import { selectTokenPriceByAddress, selectVaultReceiptTokenPrice } from '../selectors/tokens.ts';
-import { selectStandardVaultByAddressOrUndefined } from '../selectors/vaults.ts';
+import {
+  selectStandardVaultByAddressOrUndefined,
+  selectVaultByIdOrUndefined,
+} from '../selectors/vaults.ts';
 import { createIdMap } from '../utils/array-utils.ts';
 import type { BigNumber } from 'bignumber.js';
 import type { ApiApyData } from '../apis/beefy/beefy-api-types.ts';
@@ -53,6 +61,12 @@ export interface TotalApy {
   merklBoostDaily?: number;
 }
 
+export interface AvgApy {
+  avg7d: number;
+  avg30d: number;
+  avg90d: number;
+}
+
 type ExtractAprComponents<T extends string> = T extends `${infer C}Apr` ? C : never;
 export type TotalApyKey = Exclude<keyof TotalApy, 'totalType'>;
 export type TotalApyComponent = ExtractAprComponents<TotalApyKey>;
@@ -78,11 +92,17 @@ export interface ApyState {
       [vaultId: VaultEntity['id']]: TotalApy;
     };
   };
+  avgApy: {
+    byVaultId: {
+      [vaultId: VaultEntity['id']]: AvgApy;
+    };
+  };
 }
 
 export const initialApyState: ApyState = {
   rawApy: { byVaultId: {}, byBoostId: {} },
   totalApy: { byVaultId: {} },
+  avgApy: { byVaultId: {} },
 };
 
 export const apySlice = createSlice({
@@ -111,6 +131,11 @@ export const apySlice = createSlice({
       )
       .addCase(recalculateTotalApyAction.fulfilled, (sliceState, action) => {
         sliceState.totalApy.byVaultId = action.payload.totals;
+      })
+      .addCase(fetchAvgApyAction.fulfilled, (sliceState, action) => {
+        const avgApys = action.payload.data;
+        const state = action.payload.state;
+        transformAvgApys(avgApys, state, sliceState);
       });
   },
 });
@@ -186,4 +211,31 @@ function addContractDataToState(
     // add data to state
     sliceState.rawApy.byBoostId[boost.id] = { apr: totalApr };
   }
+}
+
+function transformAvgApys(
+  avgApys: TransformedAvgApy[],
+  state: BeefyState,
+  sliceState: Draft<ApyState>
+) {
+  const avgApyByVaultId: Record<VaultEntity['id'], AvgApy> = {};
+
+  for (const avgApy of avgApys) {
+    const vault = selectVaultByIdOrUndefined(state, avgApy.vaultId);
+    if (vault && vault.status !== 'active') {
+      avgApyByVaultId[avgApy.vaultId] = {
+        avg7d: 0,
+        avg30d: 0,
+        avg90d: 0,
+      };
+    } else {
+      avgApyByVaultId[avgApy.vaultId] = {
+        avg7d: avgApy.avg7d,
+        avg30d: avgApy.avg30d,
+        avg90d: avgApy.avg90d,
+      };
+    }
+  }
+
+  sliceState.avgApy.byVaultId = avgApyByVaultId;
 }

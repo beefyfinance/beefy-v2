@@ -193,3 +193,8 @@ export const selectVaultIsBoostedForFilter = (state: BeefyState, vaultId: VaultE
   const apy = selectVaultTotalApy(state, vaultId);
   return !!apy && (apy.boostedTotalDaily || 0) > 0;
 };
+
+export const selectAvgApySort = createSelector(
+  selectFilterOptions,
+  filterOptions => filterOptions.avgApySort
+);
