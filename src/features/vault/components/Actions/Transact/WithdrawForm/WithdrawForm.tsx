@@ -26,8 +26,9 @@ import { useDispatch } from 'react-redux';
 import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
 import { styled } from '@repo/styles/jsx';
-
 import { WithdrawBoostNotice } from '../BoostNotices/WithdrawBoostNotice.tsx';
+import { WithdrawQueueLoader } from '../WithdrawQueue/WithdrawQueueLoader.tsx';
+import { FormFooter } from '../FormFooter/FormFooter.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -73,17 +74,15 @@ const WithdrawFormLoader = memo(function WithdrawFormLoader() {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading ?
         <Container>
           <LoadingIndicator text={t('Transact-Loading')} />
         </Container>
-      ) : isError ? (
+      : isError ?
         <Container>
           <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
         </Container>
-      ) : (
-        <Withdraw />
-      )}
+      : <Withdraw />}
     </>
   );
 });
@@ -106,21 +105,23 @@ export const WithdrawForm = memo(function WithdrawForm() {
   const forceSelection = useAppSelector(selectTransactForceSelection);
 
   const i18key = useMemo(() => {
-    return hasOptions
-      ? forceSelection
-        ? 'Transact-SelectToken'
+    return (
+      hasOptions ?
+        forceSelection ? 'Transact-SelectToken'
         : 'Transact-SelectAmount'
-      : 'Transact-Withdraw';
+      : 'Transact-Withdraw'
+    );
   }, [forceSelection, hasOptions]);
 
   return (
     <>
       <WithdrawnInWalletNotice css={styles.notice} />
+      <WithdrawQueueLoader />
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
-          {hasOptions ? (
+          {hasOptions ?
             <img src={zapIcon} alt="Zap" height={12} className={classes.zapIcon} />
-          ) : null}
+          : null}
           {t(i18key)}
         </div>
         <div className={classes.availableLabel}>
@@ -137,6 +138,7 @@ export const WithdrawForm = memo(function WithdrawForm() {
       <Actions>
         <WithdrawActions />
       </Actions>
+      <FormFooter />
     </>
   );
 });

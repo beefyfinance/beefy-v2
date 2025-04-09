@@ -1,7 +1,7 @@
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi.ts';
 import type { VaultGov, VaultStandard } from '../../entities/vault.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import { chunk } from 'lodash-es';
 import type { TokenEntity, TokenErc20 } from '../../entities/token.ts';
@@ -96,11 +96,11 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
             tokenAddress: spendersCalls.tokenAddress,
             spenderAddress,
             allowance:
-              allowance === 0n
-                ? BIG_ZERO
-                : new BigNumber(allowance.toString(10)).shiftedBy(
-                    -tokensByAddress[spendersCalls.tokenAddress.toLowerCase()].decimals
-                  ),
+              allowance === 0n ? BIG_ZERO : (
+                new BigNumber(allowance.toString(10)).shiftedBy(
+                  -tokensByAddress[spendersCalls.tokenAddress.toLowerCase()].decimals
+                )
+              ),
           });
 
           resIdx++;
@@ -179,11 +179,11 @@ export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
             tokenAddress: spendersCalls.tokenAddress,
             spenderAddress,
             allowance:
-              allowance === 0n
-                ? BIG_ZERO
-                : new BigNumber(allowance.toString(10)).shiftedBy(
-                    -tokensByAddress[spendersCalls.tokenAddress.toLowerCase()].decimals
-                  ),
+              allowance === 0n ? BIG_ZERO : (
+                new BigNumber(allowance.toString(10)).shiftedBy(
+                  -tokensByAddress[spendersCalls.tokenAddress.toLowerCase()].decimals
+                )
+              ),
           });
 
           resIdx++;

@@ -1,10 +1,12 @@
 import { useCallback, useMemo } from 'react';
-import { selectVaultUserBalanceInDepositTokenBreakdown } from '../../../../../data/selectors/balance.ts';
+import {
+  selectVaultUserBalanceInDepositTokenBreakdown,
+  type UserVaultBalanceBreakdownBoost,
+  type UserVaultBalanceBreakdownEntry,
+} from '../../../../../data/selectors/balance.ts';
 import { memo } from 'react';
 import { selectTransactVaultId } from '../../../../../data/selectors/transact.ts';
 import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
-import type { TypeToArrayMap } from '../../../DisplacedBalances/DisplacedBalances.tsx';
-import { groupBy } from 'lodash-es';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
@@ -12,7 +14,7 @@ import { styled } from '@repo/styles/jsx';
 import { selectStandardVaultById } from '../../../../../data/selectors/vaults.ts';
 import { useTranslation } from 'react-i18next';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens.ts';
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { selectErc20TokenByAddress } from '../../../../../data/selectors/tokens.ts';
 import { extractTagFromLpSymbol } from '../../../../../../helpers/tokens.ts';
@@ -20,24 +22,24 @@ import { VaultIcon } from '../../../../../../components/VaultIdentity/components
 import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import ChevronRight from '../../../../../../images/icons/chevron-right.svg?react';
 
+const typesToShow = ['boost'] as const satisfies Array<UserVaultBalanceBreakdownEntry['type']>;
+
 export const WithdrawBoostNotice = memo(function WithdrawBoostNotice() {
   const vaultId = useAppSelector(selectTransactVaultId);
+
   const breakdown = useAppSelector(state =>
     selectVaultUserBalanceInDepositTokenBreakdown(state, vaultId)
   );
 
-  const entries = useMemo(
-    () => groupBy(breakdown.entries, 'type') as TypeToArrayMap,
-    [breakdown.entries]
-  );
+  const entriesToShow = useMemo(() => {
+    return breakdown.entries.filter((entry): entry is UserVaultBalanceBreakdownBoost =>
+      typesToShow.some(type => type === entry.type)
+    );
+  }, [breakdown.entries]);
 
   const boostsBalance = useMemo(() => {
-    if (entries.boost) {
-      return entries.boost.reduce((acc, curr) => acc.plus(curr.amount), BIG_ZERO);
-    }
-
-    return BIG_ZERO;
-  }, [entries.boost]);
+    return entriesToShow.reduce((acc, curr) => acc.plus(curr.amount), BIG_ZERO);
+  }, [entriesToShow]);
 
   if (boostsBalance.gt(BIG_ZERO)) {
     return <BoostBalance balance={boostsBalance} vaultId={vaultId} />;
@@ -99,7 +101,7 @@ const WithdrawBoostContainer = styled('button', {
     alignItems: 'center',
     justifyContent: 'center',
     padding: '6px 16px 8px 16px',
-    color: 'text.black',
+    color: 'text.dark',
     background: 'buttons.boost.background',
     borderRadius: '0px 0px 12px 12px',
     width: '100%',

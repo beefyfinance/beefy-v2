@@ -1,13 +1,14 @@
 import type { BeefyState } from '../../../redux-types.ts';
 import {
   isCowcentratedLikeVault,
+  isErc4626Vault,
   isGovVault,
   isStandardVault,
   type VaultEntity,
 } from '../entities/vault.ts';
 import { selectWalletAddress, selectWalletAddressIfKnown } from './wallet.ts';
 import type { TokenEntity } from '../entities/token.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import { selectIsVaultStable, selectVaultById } from './vaults.ts';
 import { selectAllVaultBoostIds } from './boosts.ts';
@@ -40,7 +41,7 @@ import {
   selectGovVaultPendingRewardsWithPrice,
   selectUserDepositedVaultIds,
   selectUserLpBreakdownBalance,
-  selectUserVaultBalanceInUsdIncludingBoostsBridged,
+  selectUserVaultBalanceInUsdIncludingDisplaced,
 } from './balance.ts';
 import { selectIsUserBalanceAvailable } from './data-loader.ts';
 import { selectYieldStatsByVaultId } from './apy.ts';
@@ -144,7 +145,7 @@ export const selectDashboardUserRewardsByVaultId = (
         });
       }
     }
-  } else if (isStandardVault(vault)) {
+  } else if (isStandardVault(vault) || isErc4626Vault(vault)) {
     const pnl = selectStandardGovPnl(state, vaultId, walletAddress);
     if (pnl.totalYield.gt(BIG_ZERO)) {
       rewards.push({
@@ -210,7 +211,7 @@ const selectDashboardYieldRewardDataAvailableByVaultId = (
   }
 
   const vault = selectVaultById(state, vaultId);
-  if (isCowcentratedLikeVault(vault) || isStandardVault(vault)) {
+  if (isCowcentratedLikeVault(vault) || isStandardVault(vault) || isErc4626Vault(vault)) {
     if (!selectIsAnalyticsLoadedByAddress(state, walletAddress)) {
       return DashboardDataStatus.Loading;
     }
@@ -331,7 +332,7 @@ const selectDashboardUserExposure = <
   }
 
   const vaultDeposits = vaultIds.map(vaultId =>
-    selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vaultId, walletAddress)
+    selectUserVaultBalanceInUsdIncludingDisplaced(state, vaultId, walletAddress)
   );
   const totalDeposits = vaultDeposits.reduce((acc, deposit) => acc.plus(deposit), BIG_ZERO);
   const entries = vaultIds

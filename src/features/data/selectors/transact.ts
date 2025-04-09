@@ -14,7 +14,7 @@ import {
   type TransactOption,
   type TransactQuote,
 } from '../apis/transact/transact-types.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { TransactStatus } from '../reducers/wallet/transact-types.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { valueOrThrow } from '../utils/selector-utils.ts';

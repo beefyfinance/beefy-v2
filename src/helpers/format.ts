@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { TotalApy } from '../features/data/reducers/apy.ts';
 import type { ReactNode } from 'react';
 import type { AllValuesAs } from '../features/data/utils/types-utils.ts';
@@ -166,9 +166,8 @@ export function formatPercent(
 ): string {
   const percent = toBigNumber(input).shiftedBy(2);
 
-  return percent.isZero()
-    ? '0%'
-    : percent.toFormat(decimals, roundMode, {
+  return percent.isZero() ? '0%' : (
+      percent.toFormat(decimals, roundMode, {
         prefix: '',
         decimalSeparator: '.',
         groupSeparator: ',',
@@ -177,7 +176,8 @@ export function formatPercent(
         fractionGroupSeparator: '',
         fractionGroupSize: 0,
         suffix: '%',
-      });
+      })
+    );
 }
 
 interface FormatLargeNumberOptions {
@@ -211,9 +211,8 @@ function formatLargeNumber(
   input: BigNumberish,
   options?: Partial<FormatLargeNumberOptions>
 ): string {
-  const { minScale, decimalsUnder, decimals, decimalsMin, decimalsMinAppliesToZero } = options
-    ? { ...defaultFormatLargeNumberOptions, ...options }
-    : defaultFormatLargeNumberOptions;
+  const { minScale, decimalsUnder, decimals, decimalsMin, decimalsMinAppliesToZero } =
+    options ? { ...defaultFormatLargeNumberOptions, ...options } : defaultFormatLargeNumberOptions;
 
   const inputValue = toBigNumber(input);
 
@@ -266,12 +265,14 @@ export function formatLargeUsd(
   input: BigNumberish,
   options?: Partial<FormatLargeUsdOptions>
 ): string {
-  const { zeroPrefix, positivePrefix, negativePrefix, ...largeOptions } = options
-    ? { ...defaultFormatLargeUsdOptions, ...options }
-    : defaultFormatLargeUsdOptions;
+  const { zeroPrefix, positivePrefix, negativePrefix, ...largeOptions } =
+    options ? { ...defaultFormatLargeUsdOptions, ...options } : defaultFormatLargeUsdOptions;
   const value = toBigNumber(input);
 
-  const prefix = value.isZero() ? zeroPrefix : value.isNegative() ? negativePrefix : positivePrefix;
+  const prefix =
+    value.isZero() ? zeroPrefix
+    : value.isNegative() ? negativePrefix
+    : positivePrefix;
   return `${prefix}${formatLargeNumber(value.absoluteValue(), largeOptions)}`;
 }
 
@@ -294,11 +295,9 @@ export function formatTotalApy(
   return Object.fromEntries(
     strictEntries(totalApy).map(([key, value]) => {
       const formattedValue =
-        key === 'totalType'
-          ? value
-          : key.toLowerCase().includes('daily')
-            ? formatLargePercent(value, 4, placeholder)
-            : formatLargePercent(value, 2, placeholder);
+        key === 'totalType' ? value
+        : key.toLowerCase().includes('daily') ? formatLargePercent(value, 4, placeholder)
+        : formatLargePercent(value, 2, placeholder);
       return [key, formattedValue];
     })
   ) as AllValuesAs<TotalApy, string | ReactNode>; // required keys in input so should exist in output

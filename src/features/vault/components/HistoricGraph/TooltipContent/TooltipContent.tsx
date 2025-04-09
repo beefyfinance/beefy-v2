@@ -24,7 +24,7 @@ export type ExtraTooltipContentProps<TStat extends ChartStat> = {
   toggles: LineTogglesState;
   valueFormatter: (value: number) => string;
   avg: number;
-  vaultType: 'standard' | 'gov' | 'cowcentrated';
+  vaultType: 'standard' | 'gov' | 'cowcentrated' | 'erc4626';
 };
 
 export type TooltipContentProps<TStat extends ChartStat> = BaseTooltipProps<TStat> &
@@ -68,17 +68,19 @@ export const TooltipContent = memo(function TooltipContent<TStat extends ChartSt
       <div className={classes.itemContainer}>
         <div className={classes.label}>{t([`Graph-${vaultType}-${stat}`, `Graph-${stat}`])}:</div>
         <div className={classes.value}>
-          {isClmTooltip ? <RangeIndicator ranges={payload.ranges} value={value} /> : null}
+          {isClmTooltip ?
+            <RangeIndicator ranges={payload.ranges} value={value} />
+          : null}
           {valueFormatter(value)}
         </div>
       </div>
-      {toggles.average ? (
+      {toggles.average ?
         <div className={classes.itemContainer}>
           <div className={classes.label}>{t('Average')}:</div>
           <div className={classes.value}>{valueFormatter(avg)}</div>
         </div>
-      ) : null}
-      {toggles.movingAverage ? (
+      : null}
+      {toggles.movingAverage ?
         <div className={classes.itemContainer}>
           <div className={classes.label}>
             <div>{t('Moving-Average')}:</div>
@@ -86,8 +88,10 @@ export const TooltipContent = memo(function TooltipContent<TStat extends ChartSt
           </div>
           <div className={classes.value}>{valueFormatter(movingAverage)}</div>
         </div>
-      ) : null}
-      {isClmTooltip ? <Ranges valueFormatter={valueFormatter} ranges={payload.ranges} /> : null}
+      : null}
+      {isClmTooltip ?
+        <Ranges valueFormatter={valueFormatter} ranges={payload.ranges} />
+      : null}
     </div>
   );
 });

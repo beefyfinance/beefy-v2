@@ -1,6 +1,6 @@
 import type { IAxelarApi } from './axelar-api-types.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { AxelarChain, AxelarGasToken } from './axelar-sdk-types.ts';
 import { getAxelarSdk } from './axelar.ts';
 

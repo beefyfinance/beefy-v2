@@ -8,8 +8,8 @@ import {
 import {
   selectBoostUserBalanceInToken,
   selectUserDepositedVaultIds,
-  selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
-  selectUserVaultBalanceInUsdIncludingBoostsBridged,
+  selectUserVaultBalanceInDepositTokenIncludingDisplaced,
+  selectUserVaultBalanceInUsdIncludingDisplaced,
   selectVaultSharesToDepositTokenData,
 } from './balance.ts';
 import {
@@ -88,7 +88,7 @@ export const selectUserGlobalStats = (state: BeefyState, address?: string) => {
   const userVaults = userVaultIds.map(vaultId => selectVaultById(state, vaultId));
 
   for (const vault of userVaults) {
-    const vaultUsdBalance = selectUserVaultBalanceInUsdIncludingBoostsBridged(
+    const vaultUsdBalance = selectUserVaultBalanceInUsdIncludingDisplaced(
       state,
       vault.id,
       walletAddress
@@ -155,7 +155,7 @@ export const selectYieldStatsByVaultId = (
     };
   }
 
-  const tokenBalance = selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(
+  const tokenBalance = selectUserVaultBalanceInDepositTokenIncludingDisplaced(
     state,
     vault.id,
     walletAddress
@@ -175,8 +175,9 @@ export const selectYieldStatsByVaultId = (
     if (activeBoostId) {
       const sharesInBoost = selectBoostUserBalanceInToken(state, activeBoostId, walletAddress);
       if (sharesInBoost.gt(BIG_ZERO)) {
-        const tokensInBoost = shareData.shareToken
-          ? mooAmountToOracleAmount(
+        const tokensInBoost =
+          shareData.shareToken ?
+            mooAmountToOracleAmount(
               shareData.shareToken,
               shareData.depositToken,
               shareData.ppfs,

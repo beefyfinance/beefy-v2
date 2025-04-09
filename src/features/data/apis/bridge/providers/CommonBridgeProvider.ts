@@ -8,7 +8,7 @@ import type { IBridgeProvider, IBridgeQuote } from './provider-types.ts';
 import type { ChainEntity } from '../../../entities/chain.ts';
 import { BeefyCommonBridgeAbi } from '../../../../../config/abi/BeefyCommonBridgeAbi.ts';
 import { XErc20Abi } from '../../../../../config/abi/XErc20Abi.ts';
-import { BIG_ZERO, fromWeiString, toWeiString } from '../../../../../helpers/big-number.ts';
+import { BIG_ZERO, fromWei, toWeiString } from '../../../../../helpers/big-number.ts';
 import type { BeefyState } from '../../../../../redux-types.ts';
 import { selectChainNativeToken } from '../../../selectors/tokens.ts';
 import {
@@ -18,8 +18,7 @@ import {
 import type { TokenErc20, TokenNative } from '../../../entities/token.ts';
 import type { Step } from '../../../reducers/wallet/stepper.ts';
 import type { TFunction } from 'react-i18next';
-import { walletActions } from '../../../actions/wallet-actions.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { selectWalletAddress } from '../../../selectors/wallet.ts';
 import { isFiniteNumber } from '../../../../../helpers/number.ts';
 import {
@@ -28,6 +27,7 @@ import {
 } from '../../../utils/feature-flags.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import type { Address } from 'abitype';
+import { bridgeViaCommonInterface } from '../../../actions/wallet/bridge.ts';
 
 export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
   implements IBridgeProvider<T>
@@ -111,8 +111,8 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
       };
     }
 
-    const current = fromWeiString(currentResult.toString(10), token.decimals);
-    const max = fromWeiString(maxResult.toString(10), token.decimals);
+    const current = fromWei(currentResult.toString(10), token.decimals);
+    const max = fromWei(maxResult.toString(10), token.decimals);
 
     return { current, max };
   }
@@ -183,7 +183,7 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
         BigInt(inputWei),
         toChain.bridge as Address,
       ]);
-      const fee = fromWeiString(feeWei.toString(10), feeToken.decimals);
+      const fee = fromWei(feeWei.toString(10), feeToken.decimals);
 
       return { token: feeToken, amount: fee };
     } catch (e) {
@@ -196,7 +196,7 @@ export abstract class CommonBridgeProvider<T extends BeefyAnyBridgeConfig>
     return {
       step: 'bridge',
       message: t('Vault-TxnConfirm', { type: t('Bridge-noun') }),
-      action: walletActions.bridgeViaCommonInterface(quote),
+      action: bridgeViaCommonInterface(quote),
       pending: false,
     };
   }

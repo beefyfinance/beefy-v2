@@ -31,7 +31,6 @@ import {
   selectVaultById,
 } from '../../../../../data/selectors/vaults.ts';
 import { ActionConnectSwitch } from '../CommonActions/CommonActions.tsx';
-import type { ActionButtonProps } from '../CommonActions/CommonActions.tsx';
 import { selectGovVaultPendingRewards } from '../../../../../data/selectors/balance.ts';
 import {
   isCowcentratedLikeVault,
@@ -86,10 +85,9 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
 
   return (
     <>
-      {showWithdraw ? (
+      {showWithdraw ?
         <ActionClaimWithdraw quote={quote} vault={vault} />
-      ) : (
-        <ActionConnectSwitch
+      : <ActionConnectSwitch
           css={styles.feesContainer}
           FeesComponent={WithdrawFees}
           chainId={vault.chainId}
@@ -98,19 +96,19 @@ export const WithdrawActionsGov = memo(function WithdrawActionsGov() {
             <ActionWithdrawDisabled />
 
             <div className={classes.feesContainer}>
-              {showClaim ? <ActionClaim vault={vault} /> : null}
+              {showClaim ?
+                <ActionClaim vault={vault} />
+              : null}
               <WithdrawFees />
             </div>
           </div>
         </ActionConnectSwitch>
-      )}
+      }
     </>
   );
 });
 
-const ActionWithdrawDisabled = memo(function ActionWithdrawDisabled({
-  css: cssProp,
-}: ActionButtonProps) {
+const ActionWithdrawDisabled = memo(function ActionWithdrawDisabled() {
   const { t } = useTranslation();
   const classes = useStyles();
   const vaultId = useAppSelector(selectTransactVaultId);
@@ -119,7 +117,7 @@ const ActionWithdrawDisabled = memo(function ActionWithdrawDisabled({
   return (
     <div className={classes.feesContainer}>
       <ActionConnectSwitch chainId={vault.chainId}>
-        <Button variant="success" disabled={true} fullWidth={true} borderless={true} css={cssProp}>
+        <Button variant="success" disabled={true} fullWidth={true} borderless={true}>
           {t('Transact-Withdraw')}
         </Button>
       </ActionConnectSwitch>
@@ -131,7 +129,7 @@ const ActionWithdrawDisabled = memo(function ActionWithdrawDisabled({
 type ActionWithdrawProps = {
   option: TransactOption;
   quote: TransactQuote;
-} & ActionButtonProps;
+};
 const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWithdrawProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -161,7 +159,9 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
 
   return (
     <>
-      {option.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
+      {option.chainId === 'emerald' ?
+        <EmeraldGasNotice />
+      : null}
       <ScreamAvailableLiquidityNotice
         vaultId={option.vaultId}
         onChange={setIsDisabledByScreamLiquidity}
@@ -179,10 +179,16 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
             borderless={true}
             onClick={handleClick}
           >
-            {t(isMaxAll ? 'Transact-WithdrawAll' : 'Transact-Withdraw')}
+            {t(
+              option.async ? 'Transact-RequestWithdraw'
+              : isMaxAll ? 'Transact-WithdrawAll'
+              : 'Transact-Withdraw'
+            )}
           </Button>
         </ActionConnectSwitch>
-        {import.meta.env.DEV ? <TenderlyTransactButton option={option} quote={quote} /> : null}
+        {import.meta.env.DEV ?
+          <TenderlyTransactButton option={option} quote={quote} />
+        : null}
         <WithdrawFees />
       </div>
     </>
@@ -192,7 +198,7 @@ const ActionWithdraw = memo(function ActionWithdraw({ option, quote }: ActionWit
 type ActionClaimWithdrawProps = {
   quote: GovVaultWithdrawQuote | GovComposerZapWithdrawQuote;
   vault: VaultGov;
-} & ActionButtonProps;
+};
 const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
   quote,
   vault,
@@ -220,7 +226,9 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
 
   return (
     <>
-      {option.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
+      {option.chainId === 'emerald' ?
+        <EmeraldGasNotice />
+      : null}
       <PriceImpactNotice quote={quote} onChange={setIsDisabledByPriceImpact} />
       <ConfirmNotice onChange={setIsDisabledByConfirm} />
       <NotEnoughNotice mode="withdraw" onChange={setIsDisabledByNotEnoughInput} />
@@ -238,19 +246,23 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
             onClick={handleWithdraw}
           >
             {t(
-              isMaxAll
-                ? quote.outputs.length > 1 && showClaim
-                  ? 'Transact-Claim-WithdrawAll'
-                  : 'Transact-WithdrawAll'
-                : 'Transact-Withdraw'
+              isMaxAll ?
+                quote.outputs.length > 1 && showClaim ?
+                  'Transact-Claim-WithdrawAll'
+                : 'Transact-WithdrawAll'
+              : 'Transact-Withdraw'
             )}
           </Button>
           <div className={classes.feesContainer}>
-            {showClaim ? <ActionClaim vault={vault} /> : null}
+            {showClaim ?
+              <ActionClaim vault={vault} />
+            : null}
             <WithdrawFees />
           </div>
         </ActionConnectSwitch>
-        {import.meta.env.DEV ? <TenderlyTransactButton option={option} quote={quote} /> : null}
+        {import.meta.env.DEV ?
+          <TenderlyTransactButton option={option} quote={quote} />
+        : null}
       </div>
     </>
   );
@@ -258,7 +270,7 @@ const ActionClaimWithdraw = memo(function ActionClaimWithdraw({
 
 type ActionClaimProps = {
   vault: VaultGov;
-} & ActionButtonProps;
+};
 const ActionClaim = memo(function ActionClaim({ vault }: ActionClaimProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();

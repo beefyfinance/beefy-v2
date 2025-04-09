@@ -1,5 +1,5 @@
 import type { BoostRewardContractData } from '../../../../data/apis/contract-data/contract-data-types.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TokenImageFromEntity } from '../../../../../components/TokenImage/TokenImage.tsx';
@@ -68,11 +68,11 @@ const Reward = memo(function Reward({
 
   return (
     <RewardOrApy>
-      {pending.gt(BIG_ZERO)
-        ? pendingUsd
-        : boostApy !== 0
-          ? t('Boost-APR', { apr: formatLargePercent(boostApy) })
-          : null}
+      {pending.gt(BIG_ZERO) ?
+        pendingUsd
+      : boostApy !== 0 ?
+        t('Boost-APR', { apr: formatLargePercent(boostApy) })
+      : null}
     </RewardOrApy>
   );
 });

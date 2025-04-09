@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { BIG_ZERO, toWeiFromString } from '../../../../helpers/big-number.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type {
@@ -62,16 +62,17 @@ export class AxelarSDK implements IAxelarSDK {
     const srcGasPriceWei = toWeiFromString(sourceToken.gas_price, sourceToken.decimals);
     const srcGasFeeWei = srcGasPriceWei.times(gasLimit);
 
-    const executionFee = destGasFeeWei.gt(minDestGasFeeWei)
-      ? srcGasFeeWei
-      : srcGasFeeWei.times(minDestGasFeeWei).dividedToIntegerBy(destGasFeeWei);
+    const executionFee =
+      destGasFeeWei.gt(minDestGasFeeWei) ? srcGasFeeWei : (
+        srcGasFeeWei.times(minDestGasFeeWei).dividedToIntegerBy(destGasFeeWei)
+      );
 
     const actualGasMultiplier = gasMultiplier === 'auto' ? executeGasMultiplier : gasMultiplier;
 
     const executionFeeWithMultiplier =
-      actualGasMultiplier > 1
-        ? executionFee.times(actualGasMultiplier).decimalPlaces(0, BigNumber.ROUND_FLOOR)
-        : executionFee;
+      actualGasMultiplier > 1 ?
+        executionFee.times(actualGasMultiplier).decimalPlaces(0, BigNumber.ROUND_FLOOR)
+      : executionFee;
 
     const [_l1ExecutionFee, l1ExecutionFeeWithMultiplier] = await this.calculateL1FeeForDestL2(
       destinationChainId,
@@ -157,9 +158,8 @@ export class AxelarSDK implements IAxelarSDK {
       execute_gas_multiplier,
     } = response.result;
     const baseFee = toWeiFromString(source_base_fee_string, source_token.decimals);
-    const expressFee = express_fee_string
-      ? toWeiFromString(express_fee_string, source_token.decimals)
-      : undefined;
+    const expressFee =
+      express_fee_string ? toWeiFromString(express_fee_string, source_token.decimals) : undefined;
 
     return {
       baseFee,

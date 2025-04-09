@@ -35,6 +35,7 @@ import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { Actions } from '../Actions/Actions.tsx';
 import { styled } from '@repo/styles/jsx';
 import { DepositBoostPromotion } from '../BoostNotices/DepositBoostNotice.tsx';
+import { FormFooter } from '../FormFooter/FormFooter.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -79,21 +80,19 @@ const DepositFormLoader = memo(function DepositFormLoader() {
 
   return (
     <>
-      {!isVaultActive(vault) ? (
+      {!isVaultActive(vault) ?
         <Container>
           <RetirePauseReason vaultId={vaultId} />
         </Container>
-      ) : isLoading ? (
+      : isLoading ?
         <Container>
           <LoadingIndicator text={t('Transact-Loading')} />
         </Container>
-      ) : isError ? (
+      : isError ?
         <Container>
           <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
         </Container>
-      ) : (
-        <Deposit />
-      )}
+      : <Deposit />}
     </>
   );
 });
@@ -123,6 +122,7 @@ export const DepositForm = memo(function DepositForm() {
       <Actions>
         <DepositActions />
       </Actions>
+      <FormFooter />
     </>
   );
 });
@@ -136,11 +136,10 @@ const DepositFormInputs = memo(function DepositFormInputs() {
   const availableLabel = t('Transact-Available');
   const firstSelectLabel = useMemo(() => {
     return t(
-      hasOptions
-        ? forceSelection
-          ? 'Transact-SelectToken'
-          : 'Transact-SelectAmount'
-        : 'Transact-Deposit'
+      hasOptions ?
+        forceSelection ? 'Transact-SelectToken'
+        : 'Transact-SelectAmount'
+      : 'Transact-Deposit'
     );
   }, [forceSelection, hasOptions, t]);
 
@@ -165,11 +164,9 @@ const DepositFormInputs = memo(function DepositFormInputs() {
       selectLabel={!multipleInputs && index === 0 ? firstSelectLabel : token.symbol}
       showZapIcon={hasOptions && index === 0}
       tokenAvailable={
-        forceSelection ? (
+        forceSelection ?
           <TokenAmount amount={BIG_ZERO} decimals={18} />
-        ) : (
-          <TokenInWallet token={token} index={index} />
-        )
+        : <TokenInWallet token={token} index={index} />
       }
     />
   ));
@@ -198,16 +195,16 @@ const DepositFormInput = memo(function DepositFormInput({
     <div>
       <div className={classes.labels}>
         <div className={classes.selectLabel}>
-          {showZapIcon ? (
+          {showZapIcon ?
             <img src={zapIcon} alt="Zap" height={12} className={classes.zapIcon} />
-          ) : null}
+          : null}
           {selectLabel}
         </div>
-        {tokenAvailable ? (
+        {tokenAvailable ?
           <div className={classes.availableLabel}>
             {availableLabel} <span className={classes.availableLabelAmount}>{tokenAvailable}</span>
           </div>
-        ) : null}
+        : null}
       </div>
       <div className={classes.amount}>
         <DepositTokenAmountInput token={token} index={index} />

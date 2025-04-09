@@ -18,7 +18,6 @@ import { formatTokenDisplayCondensed } from '../../../../helpers/format.ts';
 import { useAppDispatch, useAppSelector } from '../../../../store.ts';
 import { Button } from '../../../Button/Button.tsx';
 import { TransactionLink } from '../TransactionLink/TransactionLink.tsx';
-import { walletActions } from '../../../../features/data/actions/wallet-actions.ts';
 import { styles } from './styles.ts';
 import { Title } from '../Title/Title.tsx';
 import { ListJoin } from '../../../ListJoin.tsx';
@@ -33,6 +32,7 @@ import { selectChainById } from '../../../../features/data/selectors/chains.ts';
 import { explorerTxUrl } from '../../../../helpers/url.ts';
 import { BIG_ZERO } from '../../../../helpers/big-number.ts';
 import { CircularProgress } from '../../../CircularProgress/CircularProgress.tsx';
+import { resetWallet } from '../../../../features/data/actions/wallet/common.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -47,13 +47,11 @@ export const StepsStartContent = memo(function StepsStartContent() {
     <>
       <Title text={t('Transactn-Confirmed', { currentStep, totalTxs: stepperItems.length })} />
       <div className={classes.message}>
-        {currentStepData ? (
+        {currentStepData ?
           <>
             <CircularProgress size={16} /> {t(`Stepper-${currentStepData.step}-Building-Content`)}
           </>
-        ) : (
-          '...'
-        )}
+        : '...'}
       </div>
     </>
   );
@@ -137,7 +135,7 @@ export const CloseButton = memo(function CloseButton() {
 
   const handleClose = useCallback(() => {
     dispatch(stepperActions.reset());
-    dispatch(walletActions.resetWallet());
+    dispatch(resetWallet());
   }, [dispatch]);
 
   return (
@@ -224,9 +222,9 @@ const BridgeSuccessContent = memo<SuccessContentProps>(function BridgeSuccessCon
           <Trans
             t={t}
             i18nKey={
-              bridgeExplorerUrl
-                ? 'Stepper-bridge-Success-Track-Incoming'
-                : 'Stepper-bridge-Success-Track-Outgoing'
+              bridgeExplorerUrl ?
+                'Stepper-bridge-Success-Track-Incoming'
+              : 'Stepper-bridge-Success-Track-Outgoing'
             }
             components={{
               Link: (
@@ -291,9 +289,9 @@ const BoostUnstakeSuccessContent = memo(function BoostUnstakeSuccessContent({
       title={t(`Stepper-${step.step}-Success-Title`)}
       message={t(`Stepper-${step.step}-Success-Content`, { amount, token })}
       messageHighlight={
-        claimed ? (
+        claimed ?
           <Trans t={t} i18nKey={`Stepper-boost-claim-Rewards`} components={{ claimed }} />
-        ) : undefined
+        : undefined
       }
     />
   );
@@ -374,20 +372,22 @@ const SuccessContentDisplay = memo(function SuccessContentDisplay({
       <Title text={title} />
       <div className={css(styles.content, styles.successContent)}>
         <div className={classes.message}>{message}</div>
-        {messageHighlight ? (
+        {messageHighlight ?
           <div className={classes.messageHighlight}>{messageHighlight}</div>
-        ) : null}
+        : null}
         <TransactionLink />
       </div>
-      {rememberTitle && rememberMessage ? (
+      {rememberTitle && rememberMessage ?
         <div className={classes.rememberContainer}>
           <div className={classes.message}>
             <span>{rememberTitle}</span> {rememberMessage}
           </div>
         </div>
-      ) : null}
+      : null}
       <div className={classes.buttons}>
-        {shareVaultId ? <ShareButton vaultId={shareVaultId} placement="bottom-start" /> : null}
+        {shareVaultId ?
+          <ShareButton vaultId={shareVaultId} placement="bottom-start" />
+        : null}
         <CloseButton />
       </div>
     </>

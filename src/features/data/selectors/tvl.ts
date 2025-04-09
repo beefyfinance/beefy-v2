@@ -11,7 +11,7 @@ import {
   selectTokenByAddress,
 } from './tokens.ts';
 import { selectVaultById } from './vaults.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { TvlBreakdown } from './tvl-types.ts';
 
 export const selectVaultTvl = (state: BeefyState, vaultId: VaultEntity['id']) =>

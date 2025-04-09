@@ -6,9 +6,9 @@ import {
   type ZapQuoteStep,
 } from '../transact-types.ts';
 import type { BeefyState } from '../../../../../redux-types.ts';
-import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
+import { BIG_ZERO, compareBigNumber } from '../../../../../helpers/big-number.ts';
 import { selectTokenPriceByAddress } from '../../../selectors/tokens.ts';
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { QuoteResponse } from '../swap/ISwapProvider.ts';
 
 export const ZERO_FEE: ZapFee = { value: 0 };
@@ -72,5 +72,5 @@ export function highestFeeOrZero(steps: ZapQuoteStep[]): ZapFee {
  * Sort quotes by highest output amount first
  */
 export function sortQuotes(quotes: QuoteResponse[]): QuoteResponse[] {
-  return [...quotes].sort((a, b) => b.toAmount.comparedTo(a.toAmount));
+  return [...quotes].sort((a, b) => compareBigNumber(b.toAmount, a.toAmount));
 }

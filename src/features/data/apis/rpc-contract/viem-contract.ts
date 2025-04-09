@@ -1,7 +1,7 @@
 import type { Address } from 'abitype';
 import type { ChainId } from '../../entities/chain.ts';
 import { rpcClientManager } from './rpc-manager.ts';
-import { getContract, type Abi, type WalletClient } from 'viem';
+import { type Abi, getContract, type PublicClient, type WalletClient } from 'viem';
 
 export const fetchContract = <TAbi extends Abi>(
   address: string,
@@ -17,7 +17,16 @@ export const fetchContract = <TAbi extends Abi>(
 export const fetchWalletContract = <TAbi extends Abi>(
   address: string,
   abi: TAbi,
-  client: WalletClient
+  walletClient: WalletClient,
+  publicClient?: PublicClient
 ) => {
-  return getContract({ address: address as Address, abi, client: client });
+  const client =
+    publicClient ?
+      {
+        wallet: walletClient,
+        public: publicClient,
+      }
+    : walletClient;
+
+  return getContract({ address: address as Address, abi, client });
 };

@@ -1,7 +1,7 @@
 import { BalancerFeature, type IBalancerAllPool, type IBalancerSinglePool } from '../types.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
 import type { PoolConfig, VaultConfig } from '../vault/types.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { fromWei } from '../../../../../../helpers/big-number.ts';
 import { BalancerWeightedPoolAbi } from '../../../../../../config/abi/BalancerWeightedPoolAbi.ts';
 import { PoolExitKind, PoolJoinKind } from '../common/types.ts';

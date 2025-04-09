@@ -1,5 +1,70 @@
 [
   {
+    "id": "aerodrome-weth-over",
+    "name": "WETH-OVER vLP",
+    "type": "standard",
+    "token": "vAMM-WETH/OVER",
+    "tokenAddress": "0xB452f81D9322936C2c8Ac6445f6892cB957aFB4c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseWETH-OVER",
+    "earnedTokenAddress": "0x71cB8befE64C326312b337281282291f3A0EdD3C",
+    "earnContractAddress": "0x71cB8befE64C326312b337281282291f3A0EdD3C",
+    "oracle": "lps",
+    "oracleId": "aerodrome-weth-over",
+    "status": "active",
+    "createdAt": 1743652307,
+    "platformId": "aerodrome",
+    "assets": ["WETH", "OVER"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x4200000000000000000000000000000000000006&token1=0x7750C092e284e2c7366f50C8306F43c7EB2e82a2&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cbbtc-edge",
+    "name": "cbBTC-EDGE vLP",
+    "type": "standard",
+    "token": "vAMM-cbBTC/EDGE",
+    "tokenAddress": "0x594b83709464A83F37aC77E69DDD447a8A33c0EE",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBasecbBTC-EDGE",
+    "earnedTokenAddress": "0xb0fbF668CDd01548973B74dA2001B2f78B6da99e",
+    "earnContractAddress": "0xb0fbF668CDd01548973B74dA2001B2f78B6da99e",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cbbtc-edge",
+    "status": "active",
+    "createdAt": 1743652307,
+    "platformId": "aerodrome",
+    "assets": ["cbBTC", "EDGE"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "CONTRACTS_VERIFIED",
+      "AUDIT"
+    ],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf&token1=0xED6E000dEF95780fb89734c07EE2ce9F6dcAf110&type=-1",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-ytryb-usdc",
     "name": "yTRYB-USDC vLP",
     "type": "standard",

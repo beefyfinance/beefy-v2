@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../../../../../components/Button/Button.tsx';
 import { ActionConnectSwitch } from '../../../CommonActions/CommonActions.tsx';
 import { useAppDispatch, useAppSelector } from '../../../../../../../../store.ts';
-import { walletActions } from '../../../../../../../data/actions/wallet-actions.ts';
 import { startStepperWithSteps } from '../../../../../../../data/actions/stepper.ts';
 import { selectFetchStellaSwapRewardsLastDispatched } from '../../../../../../../data/selectors/data-loader.ts';
 import { styles } from './styles.ts';
@@ -13,6 +12,7 @@ import { selectIsStepperStepping } from '../../../../../../../data/selectors/ste
 import type { VaultEntity } from '../../../../../../../data/entities/vault.ts';
 import { TenderlyStellaSwapClaimButton } from '../../../../../../../../components/Tenderly/Buttons/TenderlyStellaSwapClaimButton.tsx';
 import { TimeCountdown } from '../../TimeCountdown/TimeCountdown.tsx';
+import { claimStellaSwap } from '../../../../../../../data/actions/wallet/offchain.ts';
 
 const STELLA_SWAP_MIN_TIME_BETWEEN_REQUESTS_MS = 5000;
 
@@ -39,7 +39,7 @@ export const Claim = memo(function Claim({ chainId, vaultId, withChain }: ClaimP
           {
             step: 'claim-rewards',
             message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
-            action: walletActions.claimStellaSwap(chainId, vaultId),
+            action: claimStellaSwap(chainId, vaultId),
             pending: false,
           },
         ],
@@ -69,18 +69,17 @@ export const Claim = memo(function Claim({ chainId, vaultId, withChain }: ClaimP
           disabled={disable}
           css={styles.claim}
         >
-          {!isStepping && shouldWait ? (
+          {!isStepping && shouldWait ?
             <TimeCountdown until={lastDispatched + STELLA_SWAP_MIN_TIME_BETWEEN_REQUESTS_MS} />
-          ) : (
-            t(withChain ? 'Rewards-Claim-stellaswap-chain' : 'Rewards-Claim-stellaswap', {
+          : t(withChain ? 'Rewards-Claim-stellaswap-chain' : 'Rewards-Claim-stellaswap', {
               chain: chain.name,
             })
-          )}
+          }
         </Button>
       </ActionConnectSwitch>
-      {import.meta.env.DEV ? (
+      {import.meta.env.DEV ?
         <TenderlyStellaSwapClaimButton vaultId={vaultId} chainId={chainId} disabled={disable} />
-      ) : null}
+      : null}
     </>
   );
 });

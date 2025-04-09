@@ -1,12 +1,19 @@
 export class FetchError extends Error {
-  constructor(message: string, public readonly cause?: Error) {
+  constructor(
+    message: string,
+    public readonly cause?: Error
+  ) {
     super(message, { cause });
     this.name = 'FetchError';
   }
 }
 
 export class FetchResponseError extends FetchError {
-  public constructor(public readonly response: Response, message?: string, cause?: Error) {
+  public constructor(
+    public readonly response: Response,
+    message?: string,
+    cause?: Error
+  ) {
     super(message ?? `${response.status} ${response.statusText}`, cause);
     this.name = 'FetchResponseError';
   }

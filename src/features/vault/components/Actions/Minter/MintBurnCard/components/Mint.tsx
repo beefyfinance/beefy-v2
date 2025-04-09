@@ -19,7 +19,6 @@ import {
   askForNetworkChange,
   askForWalletConnection,
 } from '../../../../../../data/actions/wallet.ts';
-import { walletActions } from '../../../../../../data/actions/wallet-actions.ts';
 import type { MinterCardParams } from '../../MinterCard.tsx';
 import {
   selectMinterById,
@@ -35,6 +34,8 @@ import iconArrowDown from '../../../../../../../images/icons/arrowDown.svg';
 import { AmountInput } from '../../../Transact/AmountInput/AmountInput.tsx';
 import { useInputForm } from '../../../../../../data/hooks/input.tsx';
 import { Button } from '../../../../../../../components/Button/Button.tsx';
+import { mintDeposit } from '../../../../../../data/actions/wallet/minters.ts';
+import { approve } from '../../../../../../data/actions/wallet/approval.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -111,7 +112,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           step: {
             step: 'approve',
             message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(depositToken, minter.minterAddress, formData.amount),
+            action: approve(depositToken, minter.minterAddress, formData.amount),
             pending: false,
           },
         })
@@ -123,13 +124,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
         step: {
           step: 'mint',
           message: t('Vault-TxnConfirm', { type: t('Mint-noun') }),
-          action: walletActions.mintDeposit(
-            minter,
-            depositToken,
-            mintedToken,
-            formData.amount,
-            formData.max
-          ),
+          action: mintDeposit(minter, depositToken, mintedToken, formData.amount, formData.max),
           pending: false,
         },
       })
@@ -210,25 +205,23 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
         />
       </div>
       <>
-        {isWalletConnected ? (
-          !isWalletOnVaultChain ? (
+        {isWalletConnected ?
+          !isWalletOnVaultChain ?
             <Button onClick={handleNetworkChange} className={classes.btn}>
               {t('Network-Change', { network: chain.name.toUpperCase() })}
             </Button>
-          ) : (
-            <Button
+          : <Button
               disabled={formData.amount.isLessThanOrEqualTo(0) || isStepping}
               onClick={handleDeposit}
               className={classes.btn}
             >
               {t('action', { action: t('mint'), token: minter.mintedToken.symbol })}
             </Button>
-          )
-        ) : (
-          <Button onClick={handleConnectWallet} className={classes.btn}>
+
+        : <Button onClick={handleConnectWallet} className={classes.btn}>
             {t('Network-ConnectWallet')}
           </Button>
-        )}
+        }
       </>
     </CardContent>
   );

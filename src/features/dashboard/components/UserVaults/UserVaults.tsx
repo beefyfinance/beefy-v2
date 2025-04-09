@@ -3,7 +3,7 @@ import { forwardRef, memo, type Ref, useMemo } from 'react';
 import { Section } from '../../../../components/Section/Section.tsx';
 import { Filter } from './components/Filter/Filter.tsx';
 import { Vault } from './components/Vault/Vault.tsx';
-import { useSortedDashboardVaults } from './hook.tsx';
+import { useSortedDashboardVaults } from './hook.ts';
 import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { NoVaults } from './components/NoVaults/NoVaults.tsx';
 import { useBreakpoint } from '../../../../components/MediaQueries/useBreakpoint.ts';
@@ -28,9 +28,8 @@ export const UserVaults = memo(function UserVaults({ address }: UserVaultsProps)
   const { sortedFilteredVaults, sortedOptions, handleSort, searchText, setSearchText } =
     useSortedDashboardVaults(address);
   const mdDown = useBreakpoint({ to: 'sm' });
-  const subTitle = mdDown
-    ? 'Dashboard-Your-Vaults-Subtitle-Mobile'
-    : 'Dashboard-Your-Vaults-Subtitle';
+  const subTitle =
+    mdDown ? 'Dashboard-Your-Vaults-Subtitle-Mobile' : 'Dashboard-Your-Vaults-Subtitle';
 
   return (
     <Section title={t('Dashboard-Your-Vaults-Title')} subTitle={t(subTitle)}>
@@ -41,11 +40,9 @@ export const UserVaults = memo(function UserVaults({ address }: UserVaultsProps)
           handleSearchText={setSearchText}
           searchText={searchText}
         />
-        {sortedFilteredVaults.length === 0 ? (
+        {sortedFilteredVaults.length === 0 ?
           <NoVaults />
-        ) : (
-          <VirtualList address={address} vaultIds={sortedFilteredVaults} />
-        )}
+        : <VirtualList address={address} vaultIds={sortedFilteredVaults} />}
       </div>
     </Section>
   );

@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 
 /**
  * Math library for computing sqrt prices from ticks
@@ -54,9 +54,9 @@ export class TickMath {
     }
 
     let ratio = TickMath.uint256(
-      (absTick & 0x1n) !== 0n
-        ? 0xfffcb933bd6fad37aa2d162d1a594001n
-        : 0x100000000000000000000000000000000n
+      (absTick & 0x1n) !== 0n ?
+        0xfffcb933bd6fad37aa2d162d1a594001n
+      : 0x100000000000000000000000000000000n
     );
 
     if ((absTick & 0x2n) !== 0n)
