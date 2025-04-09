@@ -1570,7 +1570,7 @@
     "oracle": "lps",
     "oracleId": "curve-reusd-scrvusd",
     "status": "active",
-    "createdAt": 1742691023,
+    "createdAt": 1744227062,
     "platformId": "convex",
     "assets": ["reUSD", "scrvUSD"],
     "migrationIds": ["ethereum-convex", "ethereum-curve"],
