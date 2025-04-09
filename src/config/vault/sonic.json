@@ -15,7 +15,7 @@
     "status": "active",
     "createdAt": 1744038202,
     "platformId": "beefy",
-    "assets": ["WS"],
+    "assets": ["beS"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "besonic",
