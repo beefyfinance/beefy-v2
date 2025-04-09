@@ -1,4 +1,4 @@
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { TokenEntity } from '../entities/token.ts';
 
 export type UserStandardPnl = {
@@ -19,6 +19,10 @@ export type UserStandardPnl = {
 
 export type UserGovPnl = {
   type: 'gov';
+} & Omit<UserStandardPnl, 'type'>;
+
+export type UserErc4626Pnl = {
+  type: 'erc4626';
 } & Omit<UserStandardPnl, 'type'>;
 
 export type AmountUsd = {
@@ -96,7 +100,7 @@ export type UserClmPnl = {
   pnl: PnlBreakdown;
 };
 
-export type UserVaultPnl = UserStandardPnl | UserGovPnl | UserClmPnl;
+export type UserVaultPnl = UserStandardPnl | UserGovPnl | UserClmPnl | UserErc4626Pnl;
 
 export function isUserStandardPnl(pnl: UserVaultPnl): pnl is UserStandardPnl {
   return pnl.type === 'standard';

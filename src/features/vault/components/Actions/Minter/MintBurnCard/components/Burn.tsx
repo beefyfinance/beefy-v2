@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { CardContent } from '../../../../Card/CardContent.tsx';
 import { AssetsImage } from '../../../../../../../components/AssetsImage/AssetsImage.tsx';
 import { styles } from '../styles.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { formatTokenDisplayCondensed } from '../../../../../../../helpers/format.ts';
 import { selectVaultById } from '../../../../../../data/selectors/vaults.ts';
 import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance.ts';
@@ -20,7 +20,6 @@ import {
   askForNetworkChange,
   askForWalletConnection,
 } from '../../../../../../data/actions/wallet.ts';
-import { walletActions } from '../../../../../../data/actions/wallet-actions.ts';
 import type { MinterCardParams } from '../../MinterCard.tsx';
 import {
   selectMinterById,
@@ -40,6 +39,8 @@ import { isTokenErc20 } from '../../../../../../data/entities/token.ts';
 import { useInputForm } from '../../../../../../data/hooks/input.tsx';
 import { AmountInput } from '../../../Transact/AmountInput/AmountInput.tsx';
 import { Button } from '../../../../../../../components/Button/Button.tsx';
+import { burnWithdraw } from '../../../../../../data/actions/wallet/minters.ts';
+import { approve } from '../../../../../../data/actions/wallet/approval.ts';
 
 const useStyles = legacyMakeStyles(styles);
 export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) {
@@ -119,7 +120,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           step: {
             step: 'approve',
             message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(mintedToken, minter.burnerAddress!, formData.amount),
+            action: approve(mintedToken, minter.burnerAddress!, formData.amount),
             pending: false,
           },
         })
@@ -130,7 +131,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         step: {
           step: 'burn',
           message: t('Vault-TxnConfirm', { type: t('Burn') }),
-          action: walletActions.burnWithdraw(
+          action: burnWithdraw(
             vault.chainId,
             minter.burnerAddress!,
             depositToken,
@@ -162,7 +163,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           }
         )}
       </div>
-      {minter.canBurn === 'reserves' ? (
+      {minter.canBurn === 'reserves' ?
         <div className={classes.boxReserves}>
           <div className={classes.reservesText}>
             {t('reserves', { token: minter.depositToken.symbol })}
@@ -172,7 +173,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
             {reserves.shiftedBy(-depositToken.decimals).toFixed(2)} {depositToken.symbol}
           </div>
         </div>
-      ) : null}
+      : null}
       <div className={classes.inputContainer}>
         <div className={classes.balances}>
           <div className={classes.label}>
@@ -229,13 +230,12 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         />
       </div>
       <>
-        {isWalletConnected ? (
-          !isWalletOnVaultChain ? (
+        {isWalletConnected ?
+          !isWalletOnVaultChain ?
             <Button onClick={handleNetworkChange} className={classes.btn}>
               {t('Network-Change', { network: chain.name.toUpperCase() })}
             </Button>
-          ) : (
-            <Button
+          : <Button
               disabled={
                 formData.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) ||
                 formData.amount.isLessThanOrEqualTo(0) ||
@@ -246,12 +246,11 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
             >
               {t('action', { action: t('burn'), token: minter.mintedToken.symbol })}
             </Button>
-          )
-        ) : (
-          <Button onClick={handleConnectWallet} className={classes.btn}>
+
+        : <Button onClick={handleConnectWallet} className={classes.btn}>
             {t('Network-ConnectWallet')}
           </Button>
-        )}
+        }
       </>
       {formData.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) && (
         <AlertWarning css={styles.noReserves}>

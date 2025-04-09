@@ -6,7 +6,7 @@ import { selectActiveChainIds } from '../../../../data/selectors/chains.ts';
 import { orderBy } from 'lodash-es';
 import { entries } from '../../../../../helpers/object.ts';
 import type { ChainEntity } from '../../../../data/entities/chain.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { Chain } from './Chain.tsx';
 
 export const Chains = memo(function Chains() {

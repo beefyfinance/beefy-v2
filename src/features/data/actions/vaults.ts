@@ -9,6 +9,8 @@ import {
   type VaultCowcentrated,
   type VaultCowcentratedBaseOnly,
   type VaultEntity,
+  type VaultErc4626,
+  type VaultErc4626BaseOnly,
   type VaultGov,
   type VaultGovBaseOnly,
   type VaultStandard,
@@ -81,6 +83,8 @@ function buildVaultEntitiesForChain(configs: VaultConfig[], chainId: ChainId): V
         return getGovVault(config, chainId, cowcentratedBaseById[idToCowcentratedId[config.id]]);
       case 'cowcentrated':
         return getCowcentratedVault(config, chainId, cowcentratedBaseById[config.id]);
+      case 'erc4626':
+        return getErc4626Vault(config, chainId, cowcentratedBaseById[config.id]);
       default:
         throw new Error(`Unknown vault type ${type}`);
     }
@@ -221,6 +225,40 @@ function getCowcentratedVault(
     assetType: 'clm',
     hidden: !!clmBase.cowcentratedIds.pools.length,
   };
+}
+
+function getErc4626Vault(
+  config: VaultConfig,
+  chainId: ChainEntity['id'],
+  clmBase: VaultCowcentratedBaseOnly | undefined
+): VaultErc4626 {
+  const status = getVaultStatus(config);
+  const base = getVaultBase(config, chainId);
+  const erc4626Base: VaultErc4626BaseOnly = {
+    depositTokenAddress: config.tokenAddress || 'native',
+    receiptTokenAddress: config.earnContractAddress,
+  };
+
+  if (clmBase) {
+    throw new Error(`Erc4626 vault ${config.id} must not have a CLM base`);
+  }
+
+  const subType = config.subType || 'standard';
+  if (!isValidErc4626SubType(subType)) {
+    throw new Error(`Erc4626 vault ${config.id} must have valid subType`);
+  }
+
+  return {
+    ...base,
+    ...status,
+    ...erc4626Base,
+    type: 'erc4626',
+    subType,
+  };
+}
+
+function isValidErc4626SubType(subType: string | undefined): subType is VaultErc4626['subType'] {
+  return subType === 'erc7540:withdraw';
 }
 
 function getCowcentratedBases(configs: VaultConfig[]) {

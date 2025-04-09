@@ -1,7 +1,7 @@
 import type { ChainEntity } from '../../entities/chain.ts';
 import { BeefyCowcentratedLiquidityStrategyAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityStrategyAbi.ts';
 import { BeefyCowcentratedLiquidityVaultAbi } from '../../../../config/abi/BeefyCowcentratedLiquidityVaultAbi.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { isTokenEqual, type TokenEntity } from '../../entities/token.ts';
 import type { InputTokenAmount, TokenAmount } from '../transact/transact-types.ts';
 import { BIG_ONE, BIG_ZERO, bigNumberToBigInt, toWei } from '../../../../helpers/big-number.ts';
@@ -47,8 +47,9 @@ export class BeefyCLMPool {
     const price = new BigNumber(priceResult.toString(10));
     const bal0inToken1 = balance0.times(price).div(this.PRECISION);
 
-    const balancingAmount: TokenAmount = balance1.gt(bal0inToken1)
-      ? {
+    const balancingAmount: TokenAmount =
+      balance1.gt(bal0inToken1) ?
+        {
           token: this.tokens[0],
           amount: balance1.minus(bal0inToken1).times(this.PRECISION).div(price),
         }

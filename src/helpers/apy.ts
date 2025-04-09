@@ -5,7 +5,11 @@ import type {
   TotalApyKey,
   TotalApyYearlyComponent,
 } from '../features/data/reducers/apy.ts';
-import { isCowcentratedGovVault, type VaultEntity } from '../features/data/entities/vault.ts';
+import {
+  isCowcentratedGovVault,
+  isErc4626Vault,
+  type VaultEntity,
+} from '../features/data/entities/vault.ts';
 import { fromKeysMapper } from './object.ts';
 import { ucFirstLetter } from './string.ts';
 import type { ApiApyDataAprComponents } from '../features/data/apis/beefy/beefy-api-types.ts';
@@ -138,6 +142,9 @@ export function getApyLabelsTypeForVault(
 ): ApyLabelsType {
   if (isCowcentratedGovVault(vault) && totalType === 'apy') {
     return 'cowcentrated-compounds';
+  }
+  if (isErc4626Vault(vault)) {
+    return 'standard';
   }
 
   return vault.type;

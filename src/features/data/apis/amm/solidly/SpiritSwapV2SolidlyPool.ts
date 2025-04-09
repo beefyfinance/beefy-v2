@@ -1,7 +1,7 @@
 import type { PairData as BasePairData } from './SolidlyPool.ts';
 import { SolidlyPool } from './SolidlyPool.ts';
 import type { SwapFeeParams } from '../types.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import type { Abi } from 'abitype';
 

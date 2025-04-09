@@ -1,5 +1,5 @@
 import { addressBook } from 'blockchain-addressbook';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { isValidChecksumAddress, maybeChecksumAddress } from './common/utils.ts';
 import { getVaultsIntegrity } from './common/exclude.ts';
 import {
@@ -249,19 +249,17 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
     getVaultsForChain(chainId),
     getPromosForChain(chainId),
   ]);
-  let pools = vaultsAndPromos[0];
+  const allVaults = vaultsAndPromos[0];
+  const poolIds = new Set(allVaults.map(pool => pool.id));
   const promos = vaultsAndPromos[1];
 
-  console.log(`Validating ${pools.length} pools in ${chainId}...`);
+  console.log(`Validating ${allVaults.length} vaults in ${chainId}...`);
 
   let updates: Updates = {};
   let exitCode = 0;
 
   //Governance pools should be separately verified
-  const [govPools, vaultPools] = partition(pools, pool => pool.type === 'gov');
-  pools = vaultPools;
-
-  const poolIds = new Set(pools.map(pool => pool.id));
+  const [govPools, nonGovVaults] = partition(allVaults, pool => pool.type === 'gov');
   const uniqueEarnedToken = new Set();
   const uniqueEarnedTokenAddress = new Set();
   const uniqueOracleId = new Set();
@@ -271,11 +269,11 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
   // Populate some extra data.
   const viemClient = getViemClient(addressBookToAppId(chainId));
   const poolsWithGovData = await populateGovData(chainId, govPools, viemClient);
-  const poolsWithVaultData = await populateVaultsData(chainId, pools, viemClient);
+  const poolsWithVaultData = await populateVaultsData(chainId, nonGovVaults, viemClient);
   const poolsWithStrategyData = override(
     await populateStrategyData(chainId, poolsWithVaultData, viemClient)
   );
-  const clmsWithData = await populateCowcentratedData(chainId, pools, viemClient);
+  const clmsWithData = await populateCowcentratedData(chainId, nonGovVaults, viemClient);
 
   poolsWithStrategyData.forEach(pool => {
     // Errors, should not proceed with build
@@ -472,11 +470,13 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
   });
 
   // Boosts
+  console.log(`Validating ${promos.length} promos in ${chainId}...`);
   const seenPromoIds = new Set();
   promos.forEach(promo => {
     if (seenPromoIds.has(promo.id)) {
       console.error(`Error: Promo ${promo.id}: Promo id duplicated: ${promo.id}`);
       exitCode = 1;
+      return;
     }
     seenPromoIds.add(promo.id);
 
@@ -510,7 +510,7 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
     for (const reward of promo.rewards) {
       if (reward.type !== 'token' || !reward.address) continue;
 
-      const earnedVault = pools.find(pool => pool.earnContractAddress === reward.address);
+      const earnedVault = nonGovVaults.find(pool => pool.earnContractAddress === reward.address);
       if (earnedVault) {
         if (reward.decimals !== 18) {
           console.error(
@@ -524,9 +524,9 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
         const abToken = addressBook[chainId].tokenAddressMap[reward.address];
         if (!abToken) {
           // TODO need to tidy up old boosts before we can make this error
-          console.warn(
-            `Warn: Promo ${promo.id}: Earned token ${reward.symbol} not in addressbook at ${reward.address}`
-          );
+          // console.warn(
+          //   `Warn: Promo ${promo.id}: Earned token ${reward.symbol} not in addressbook at ${reward.address}`
+          // );
           // exitCode = 1;
           //return;
           continue;
@@ -595,7 +595,7 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
     exitCode = 1;
   }
 
-  console.log(`${chainId} active pools: ${activePools}/${pools.length}\n`);
+  console.log(`${chainId} active pools: ${activePools}/${nonGovVaults.length}\n`);
 
   return { chainId, exitCode, updates };
 };
@@ -1166,7 +1166,9 @@ const populateVaultsData = async (
             address: pool.earnContractAddress as Address,
           });
           return await Promise.all([
-            vaultContract.read.strategy(),
+            pool.type === 'erc4626' ?
+              Promise.resolve(pool.earnContractAddress as Address)
+            : await vaultContract.read.strategy(),
             vaultContract.read.owner().catch(e => catchRevertErrorIntoUndefined(e)),
             vaultContract.read.totalSupply(),
           ]);

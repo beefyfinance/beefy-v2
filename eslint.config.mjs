@@ -38,17 +38,14 @@ export default tseslint.config(
       'react-x': reactX,
       'react-dom': reactDom,
       'no-barrel-files': noBarrelFiles,
-      'import': imports,
+      import: imports,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
       ...reactX.configs['recommended-typescript'].rules,
       ...reactDom.configs.recommended.rules,
       // so react-refresh can work (without having to refresh whole page)
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       // faster dev build/refresh
       'no-barrel-files/no-barrel-files': 'error',
       // faster dev build/refresh
@@ -89,8 +86,8 @@ export default tseslint.config(
             },
             {
               name: 'bignumber.js',
-              importNames: ['default'],
-              message: 'Use named imports only for bignumber.js',
+              allowImportNames: ['default'],
+              message: 'There is only a default export for bignumber.js now',
             },
             {
               name: '@floating-ui/react-dom',
@@ -142,5 +139,5 @@ export default tseslint.config(
       // 'react-x/no-children-prop': 'off',
       'react-hooks/exhaustive-deps': 'warn',
     },
-  },
+  }
 );

@@ -1,5 +1,4 @@
-import { type BigNumber } from 'bignumber.js';
-import { WALLET_ACTION, WALLET_ACTION_RESET } from '../../actions/wallet-actions.ts';
+import type BigNumber from 'bignumber.js';
 import type { TokenEntity } from '../../entities/token.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
 import type { IBridgeQuote } from '../../apis/bridge/providers/provider-types.ts';
@@ -7,6 +6,7 @@ import type { BeefyAnyBridgeConfig } from '../../apis/config-types.ts';
 import type { Hash, TransactionReceipt } from 'viem';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import type { MergeObjectUnion } from '../../utils/types-utils.ts';
+import { WALLET_ACTION, WALLET_ACTION_RESET } from '../../actions/wallet/common.ts';
 
 export type TrxHash = string;
 export type TrxError = {

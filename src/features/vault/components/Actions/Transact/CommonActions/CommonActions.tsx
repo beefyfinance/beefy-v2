@@ -11,12 +11,11 @@ import {
 } from '../../../../../data/selectors/wallet.ts';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
 import { css, type CssStyles } from '@repo/styles/css';
+import type { ButtonVariantProps } from '../../../../../../components/Button/styles.ts';
 
-export type ActionButtonProps = {
-  css?: CssStyles;
-};
+type ActionButtonProps = ButtonVariantProps;
 
-export const ActionConnect = memo(function ActionConnect({ css: cssProp }: ActionButtonProps) {
+export const ActionConnect = memo(function ActionConnect(props: ActionButtonProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const isStepping = useAppSelector(selectIsStepperStepping);
@@ -26,10 +25,10 @@ export const ActionConnect = memo(function ActionConnect({ css: cssProp }: Actio
 
   return (
     <Button
+      {...props}
       variant="success"
-      fullWidth={true}
-      borderless={true}
-      css={cssProp}
+      fullWidth={props.fullWidth !== undefined ? props.fullWidth : true}
+      borderless={props.fullWidth !== undefined ? props.borderless : true}
       onClick={handleClick}
       disabled={isStepping}
     >
@@ -41,10 +40,7 @@ export const ActionConnect = memo(function ActionConnect({ css: cssProp }: Actio
 export type ActionSwitchProps = {
   chainId: ChainEntity['id'];
 } & ActionButtonProps;
-export const ActionSwitch = memo(function ActionSwitch({
-  chainId,
-  css: cssProp,
-}: ActionSwitchProps) {
+export const ActionSwitch = memo(function ActionSwitch({ chainId, ...props }: ActionSwitchProps) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const isStepping = useAppSelector(selectIsStepperStepping);
@@ -55,10 +51,10 @@ export const ActionSwitch = memo(function ActionSwitch({
 
   return (
     <Button
+      {...props}
       variant="success"
-      fullWidth={true}
-      borderless={true}
-      css={cssProp}
+      fullWidth={props.fullWidth !== undefined ? props.fullWidth : true}
+      borderless={props.fullWidth !== undefined ? props.borderless : true}
       onClick={handleClick}
       disabled={isStepping}
     >

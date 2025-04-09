@@ -10,13 +10,16 @@ import { selectVaultById } from '../../selectors/vaults.ts';
 import { selectTokenByAddress } from '../../selectors/tokens.ts';
 import { selectUserBalanceToMigrateByVaultId } from '../../selectors/migration.ts';
 import type { Step } from '../../reducers/wallet/stepper.ts';
-import { walletActions } from '../../actions/wallet-actions.ts';
 import { startStepperWithSteps } from '../../actions/stepper.ts';
 import { isTokenErc20 } from '../../entities/token.ts';
 import { selectAllowanceByTokenAddress } from '../../selectors/allowances.ts';
 import type { VaultEntity } from '../../entities/vault.ts';
-import { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { Hash } from 'viem';
+import { fromWei } from '../../../../helpers/big-number.ts';
+import { migrateUnstake } from '../../actions/wallet/migrate.ts';
+import { approve } from '../../actions/wallet/approval.ts';
+import { deposit } from '../../actions/wallet/standard.ts';
 
 export function buildFetchBalance(
   id: string,
@@ -32,7 +35,7 @@ export function buildFetchBalance(
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     const balance = await fetchBalance(vault, walletAddress, state);
-    const fixedBalance = new BigNumber(balance).shiftedBy(-depositToken.decimals);
+    const fixedBalance = fromWei(balance, depositToken.decimals);
     console.debug(id, vault.id, fixedBalance.toNumber());
     return { vaultId, walletAddress, balance: fixedBalance, migrationId: id };
   });
@@ -60,12 +63,7 @@ export function buildExecute(
       steps.push({
         step: 'migration',
         message: t('Vault-MigrationStart'),
-        action: walletActions.migrateUnstake(
-          call,
-          vault,
-          balance.shiftedBy(depositToken.decimals),
-          migrationId
-        ),
+        action: migrateUnstake(call, vault, balance.shiftedBy(depositToken.decimals), migrationId),
         pending: false,
         extraInfo: { vaultId },
       });
@@ -81,7 +79,7 @@ export function buildExecute(
           steps.push({
             step: 'approve',
             message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(depositToken, vault.contractAddress, balance),
+            action: approve(depositToken, vault.contractAddress, balance),
             pending: false,
           });
         }
@@ -90,7 +88,7 @@ export function buildExecute(
       steps.push({
         step: 'deposit',
         message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-        action: walletActions.deposit(vault, balance, true),
+        action: deposit(vault, balance, true),
         pending: false,
         extraInfo: { vaultId: vault.id },
       });

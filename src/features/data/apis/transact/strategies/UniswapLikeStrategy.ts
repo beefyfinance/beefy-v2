@@ -71,11 +71,10 @@ import type {
 import { getTokenAddress, NO_RELAY } from '../helpers/zap.ts';
 import type { ChainEntity } from '../../../entities/chain.ts';
 import { fetchZapAggregatorSwap } from '../zap/swap.ts';
-import { walletActions } from '../../../actions/wallet-actions.ts';
 import { Balances } from '../helpers/Balances.ts';
 import { isStandardVault, type VaultStandard } from '../../../entities/vault.ts';
 import { getVaultWithdrawnFromState } from '../helpers/vault.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { slipBy, tokenAmountToWei } from '../helpers/amounts.ts';
 import type { IUniswapLikePool } from '../../amm/types.ts';
 import { QuoteChangedError } from './error.ts';
@@ -84,6 +83,7 @@ import { type AmmEntityUniswapLike, isUniswapLikeAmm } from '../../../entities/z
 import { isStandardVaultType, type IStandardVaultType } from '../vaults/IVaultType.ts';
 import type { UniswapLikeStrategyConfig } from './strategy-configs.ts';
 import { tokenInList } from '../../../../../helpers/tokens.ts';
+import { zapExecuteOrder } from '../../../actions/wallet/zap.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -208,8 +208,9 @@ export abstract class UniswapLikeStrategy<
         vaultId: this.vault.id,
         chainId: this.vault.chainId,
         selectionId,
-        selectionOrder: tokenInList(token, tokensWithNativeWrapped)
-          ? SelectionOrder.TokenOfPool
+        selectionOrder:
+          tokenInList(token, tokensWithNativeWrapped) ?
+            SelectionOrder.TokenOfPool
           : SelectionOrder.Other,
         inputs,
         wantedOutputs: outputs,
@@ -253,8 +254,9 @@ export abstract class UniswapLikeStrategy<
     const pool = await getUniswapLikePool(option.depositToken.address, this.amm, chain); // TODO we can maybe make pools immutable and share 1 pool between all quotes
 
     // Token allowances
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,
@@ -397,8 +399,9 @@ export abstract class UniswapLikeStrategy<
     const pool = await getUniswapLikePool(depositToken.address, this.amm, chain);
 
     // Token allowances
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,
@@ -416,14 +419,14 @@ export abstract class UniswapLikeStrategy<
 
     // Swap quotes
     const quoteRequestsPerLpToken: (QuoteRequest | undefined)[] = lpTokens.map((lpTokenN, i) =>
-      isTokenEqual(lpTokenN, input.token)
-        ? undefined
-        : {
-            vaultId: this.vault.id,
-            fromToken: input.token,
-            fromAmount: swapInAmounts[i],
-            toToken: lpTokenN,
-          }
+      isTokenEqual(lpTokenN, input.token) ? undefined : (
+        {
+          vaultId: this.vault.id,
+          fromToken: input.token,
+          fromAmount: swapInAmounts[i],
+          toToken: lpTokenN,
+        }
+      )
     );
 
     const quotesPerLpToken = await Promise.all(
@@ -754,6 +757,7 @@ export abstract class UniswapLikeStrategy<
             max: true, // but we call depositAll
           },
         ],
+        from: this.helpers.zap.router,
       });
       steps.push(vaultDeposit.zap);
 
@@ -812,11 +816,7 @@ export abstract class UniswapLikeStrategy<
       };
 
       const expectedTokens = vaultDeposit.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };
@@ -872,8 +872,9 @@ export abstract class UniswapLikeStrategy<
           vaultId: this.vault.id,
           chainId: this.vault.chainId,
           selectionId,
-          selectionOrder: tokenInList(token, tokensWithNativeWrapped)
-            ? SelectionOrder.TokenOfPool
+          selectionOrder:
+            tokenInList(token, tokensWithNativeWrapped) ?
+              SelectionOrder.TokenOfPool
             : SelectionOrder.Other,
           inputs,
           wantedOutputs: outputs,
@@ -1176,6 +1177,7 @@ export abstract class UniswapLikeStrategy<
       // Step 1. Withdraw from vault
       const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
+        from: this.helpers.zap.router,
       });
       if (vaultWithdraw.outputs.length !== 1) {
         throw new Error('Withdraw output count mismatch');
@@ -1267,11 +1269,7 @@ export abstract class UniswapLikeStrategy<
       };
 
       const expectedTokens = quote.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };

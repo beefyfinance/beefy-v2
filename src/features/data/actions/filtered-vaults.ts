@@ -33,7 +33,7 @@ import { selectIsVaultIdSaved } from '../selectors/saved-vaults.ts';
 import {
   selectHasUserDepositInVault,
   selectUserBalanceOfToken,
-  selectUserVaultBalanceInUsdIncludingBoostsBridged,
+  selectUserVaultBalanceInUsdIncludingDisplaced,
   selectUserVaultDepositTokenWalletBalanceInUsd,
 } from '../selectors/balance.ts';
 import { simplifySearchText } from '../../../helpers/string.ts';
@@ -352,7 +352,7 @@ function applyDepositValueSort(
   return orderBy(
     vaults,
     vault => {
-      const value = selectUserVaultBalanceInUsdIncludingBoostsBridged(state, vault.id);
+      const value = selectUserVaultBalanceInUsdIncludingDisplaced(state, vault.id);
       if (!value) {
         return -1;
       }

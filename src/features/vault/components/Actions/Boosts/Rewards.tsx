@@ -1,5 +1,5 @@
 import type { BoostRewardContractData } from '../../../../data/apis/contract-data/contract-data-types.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { Fragment, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { css, type CssStyles } from '@repo/styles/css';
@@ -54,15 +54,13 @@ export const Rewards = memo(function Rewards({
             </div>
           </div>
           <div className={css(styles.rewardValue, reward.active && styles.rewardValueActive)}>
-            {!reward.active ? (
+            {!reward.active ?
               t('ENDED')
-            ) : reward.isPreStake ? (
+            : reward.isPreStake ?
               t('PRE-STAKE')
-            ) : reward.periodFinish ? (
+            : reward.periodFinish ?
               <StakeCountdown periodFinish={reward.periodFinish} />
-            ) : (
-              '-'
-            )}
+            : '-'}
           </div>
         </Fragment>
       ))}

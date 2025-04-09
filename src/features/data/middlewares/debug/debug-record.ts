@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { isObject } from 'lodash-es';
 import type { Action, AnyAction, Dispatch } from 'redux';
 import type { ChainEntity } from '../../entities/chain.ts';

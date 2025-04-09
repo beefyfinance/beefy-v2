@@ -3,7 +3,7 @@ import type { ChainEntity, ChainId } from '../../entities/chain.ts';
 import { makeCustomFallbackTransport } from '../viem/transports/transports.ts';
 import { buildViemChain } from '../viem/chains.ts';
 import { getGasPrice, getFeeHistory } from 'viem/actions';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { ChainConfig } from '../config-types.ts';
 
 type RpcClients = {
@@ -30,9 +30,9 @@ export const getBeefyFeeHistory = async (
   rewardPercentiles: number[]
 ): Promise<BeefyFeeHistory> => {
   const blockNumberParam =
-    typeof newestBlock === 'number'
-      ? { blockNumber: BigInt(newestBlock) }
-      : { blockTag: newestBlock };
+    typeof newestBlock === 'number' ?
+      { blockNumber: BigInt(newestBlock) }
+    : { blockTag: newestBlock };
   const feeHistory = await getFeeHistory(client, {
     blockCount: blockCount,
     ...blockNumberParam,

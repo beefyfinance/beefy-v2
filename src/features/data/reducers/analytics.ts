@@ -11,7 +11,7 @@ import {
 } from '../actions/analytics.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import type { Draft } from 'immer';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { ApiClassicHarvestRow, ApiClmHarvestRow } from '../apis/clm/clm-api-types.ts';
 import { fromUnixTime } from 'date-fns';
 import { orderBy, uniqBy } from 'lodash-es';

@@ -9,11 +9,12 @@ import {
   type UserVaultBalanceBreakdownBoost,
   type UserVaultBalanceBreakdownBridged,
   type UserVaultBalanceBreakdownEntry,
+  type UserVaultBalanceBreakdownPendingWithdrawal,
   type UserVaultBalanceBreakdownVault,
 } from '../../features/data/selectors/balance.ts';
 import { selectTokenPriceByTokenOracleId } from '../../features/data/selectors/tokens.ts';
 import type { TokenEntity } from '../../features/data/entities/token.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { TokenAmount } from '../TokenAmount/TokenAmount.tsx';
 import { formatLargeUsd } from '../../helpers/format.ts';
 import { useTranslation } from 'react-i18next';
@@ -69,6 +70,24 @@ const VaultEntry = memo(function VaultEntry({
   );
 });
 
+const PendingWithdrawalEntry = memo(function PendingWithdrawalEntry({
+  entry,
+  depositToken,
+  price,
+  type,
+}: EntryProps<UserVaultBalanceBreakdownPendingWithdrawal>) {
+  const { t } = useTranslation();
+
+  return (
+    <EntryDisplay
+      entry={entry}
+      depositToken={depositToken}
+      price={price}
+      label={t([`VaultStat-Deposited-${entry.type}-${type}`, `VaultStat-Deposited-${entry.type}`])}
+    />
+  );
+});
+
 const BoostEntry = memo(function BoostEntry({
   entry,
   depositToken,
@@ -112,6 +131,7 @@ const typeToComponent: TypeToComponentMap = {
   vault: VaultEntry,
   boost: BoostEntry,
   bridged: BridgedEntry,
+  'pending-withdrawal': PendingWithdrawalEntry,
 };
 
 type EntryProps<T extends UserVaultBalanceBreakdownEntry = UserVaultBalanceBreakdownEntry> = {

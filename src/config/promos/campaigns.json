@@ -120,5 +120,16 @@
       "telegram": "https://t.me/degentokenbase",
       "twitter": "https://x.com/degentokenbase"
     }
+  },
+  "threshold-boost": {
+    "title": "Beefy × Threshold",
+    "tag": {
+      "text": "Boost"
+    },
+    "description": "Beefy is teaming up with Threshold to reward liquidity providers who deposit in this tBTC vault with mooBIFI and T rewards.",
+    "social": {
+      "telegram": "https://t.me/thresholdnetwork",
+      "twitter": "https://twitter.com/TheTNetwork"
+    }
   }
 }

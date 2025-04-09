@@ -18,6 +18,7 @@ export type ApyPerformanceFeeData = {
   strategist: number;
   treasury: number;
   stakers: number;
+  liquidity?: number;
 };
 export type ApyVaultFeeData = {
   performance: ApyPerformanceFeeData;

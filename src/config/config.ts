@@ -511,7 +511,12 @@ export const config = {
   base: {
     name: 'Base',
     chainId: 8453,
-    rpc: ['https://base-mainnet.public.blastapi.io'],
+    rpc: [
+      'https://base.llamarpc.com',
+      'https://base-mainnet.public.blastapi.io',
+      'https://base.drpc.org',
+      'https://base.api.onfinality.io/public',
+    ],
     explorerUrl: 'https://basescan.org',
     multicallAddress: '0xbA790ec6F95D68123E772A43b314464585B311b4',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -555,6 +560,10 @@ export const config = {
       'msUSD',
       'Bold',
       'USR',
+      'BRZ',
+      'CADC',
+      'yTRB',
+      'IDRX',
     ],
   },
   gnosis: {
@@ -743,10 +752,10 @@ export const config = {
     name: 'Sonic',
     chainId: 146,
     rpc: ['https://rpc.soniclabs.com'],
-    explorerUrl: 'https://sonicscan.org/',
+    explorerUrl: 'https://sonicscan.org',
     multicallAddress: '0x0D17eE2ed4e67b626B43C3695586E5aE6a039949',
     multicall3Address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    appMulticallContractAddress: '0xA73b677308327970808B30D2562DbA613207e41A',
+    appMulticallContractAddress: '0xeb18FDA456Ae7a51Ead79A3BbB93507bb0d1d80d',
     native: { symbol: 'S', oracleId: 'wS', decimals: 18 },
     gas: {
       type: 'eip1559',
@@ -755,7 +764,16 @@ export const config = {
       priorityMinimum: '1000000000',
       baseSafetyMargin: 0.1,
     },
-    stableCoins: ['USDCe', 'scUSD', 'stkscUSD', 'wstkscUSD', 'mooSiloSonicUSDCe', 'USDT', 'frxUSD'],
+    stableCoins: [
+      'USDCe',
+      'scUSD',
+      'stkscUSD',
+      'wstkscUSD',
+      'bUSDCe-20',
+      'mooSiloSonicUSDCe',
+      'USDT',
+      'frxUSD',
+    ],
     brand: {
       icon: 'gradient',
       header: 'gradient',
@@ -774,7 +792,7 @@ export const config = {
     gas: {
       type: 'standard',
     },
-    stableCoins: ['HONEY', 'USDCe', 'BYUSD'],
+    stableCoins: ['HONEY', 'USDCe', 'BYUSD', 'USDbr'],
   },
   aurora: {
     name: 'Aurora',

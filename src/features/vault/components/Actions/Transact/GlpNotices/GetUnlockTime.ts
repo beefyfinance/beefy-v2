@@ -1,6 +1,6 @@
 import type { GlpLikeConfig, UnlockTimeResult } from './types.ts';
 import type { ChainEntity } from '../../../../../data/entities/chain.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { fetchContract } from '../../../../../data/apis/rpc-contract/viem-contract.ts';
 import type { Abi, Address } from 'abitype';
 import { readContract } from 'viem/actions';

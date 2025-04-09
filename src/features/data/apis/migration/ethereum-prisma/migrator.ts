@@ -1,6 +1,6 @@
 import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types.ts';
 import { selectVaultStrategyAddress } from '../../../selectors/vaults.ts';
 import { selectTokenByAddress } from '../../../selectors/tokens.ts';

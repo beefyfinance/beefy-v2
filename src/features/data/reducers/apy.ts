@@ -11,7 +11,7 @@ import { selectBoostById } from '../selectors/boosts.ts';
 import { selectTokenPriceByAddress, selectVaultReceiptTokenPrice } from '../selectors/tokens.ts';
 import { selectStandardVaultByAddressOrUndefined } from '../selectors/vaults.ts';
 import { createIdMap } from '../utils/array-utils.ts';
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { ApiApyData } from '../apis/beefy/beefy-api-types.ts';
 import { isAfter } from 'date-fns';
 import { getBoostStatusFromContractState } from './promos.ts';

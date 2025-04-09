@@ -9,9 +9,9 @@ import { StandardVaultAbi } from '../../../../../../config/abi/StandardVaultAbi.
 import { ERC20Abi } from '../../../../../../config/abi/ERC20Abi.ts';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens.ts';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
-import { BigNumber } from 'bignumber.js';
 import { useAsync } from '../../../../../../helpers/useAsync.ts';
 import { fetchContract } from '../../../../../data/apis/rpc-contract/viem-contract.ts';
+import { fromWei } from '../../../../../../helpers/big-number.ts';
 
 const strategyABI = [
   {
@@ -43,12 +43,8 @@ async function getLiquidity(vault: VaultEntity, chain: ChainEntity, depositToken
     wantTokenContract.read.balanceOf([iTokenAddress]),
   ]);
 
-  const balanceOfStrategy = new BigNumber((strategyBalance || 0n).toString(10)).shiftedBy(
-    -depositToken.decimals
-  );
-  const balanceOfiToken = new BigNumber((iTokenBalance || 0n).toString(10)).shiftedBy(
-    -depositToken.decimals
-  );
+  const balanceOfStrategy = fromWei(strategyBalance || 0n, depositToken.decimals);
+  const balanceOfiToken = fromWei(iTokenBalance || 0n, depositToken.decimals);
   const totalAvailable = balanceOfStrategy.plus(balanceOfiToken);
 
   return totalAvailable.toNumber();
@@ -92,7 +88,7 @@ const ScreamAvailableLiquidityImpl = memo(function ScreamAvailableLiquidityImpl(
   return (
     <AlertWarning>
       <p>There is limited liquidity in the underlying protocol to withdraw.</p>
-      {haveUpdatedOnce ? (
+      {haveUpdatedOnce ?
         <p>
           <strong>Available liquidity:</strong>{' '}
           {(liquidity || 0).toLocaleString('en-US', {
@@ -100,7 +96,7 @@ const ScreamAvailableLiquidityImpl = memo(function ScreamAvailableLiquidityImpl(
           })}{' '}
           {depositToken.symbol}
         </p>
-      ) : null}
+      : null}
     </AlertWarning>
   );
 });

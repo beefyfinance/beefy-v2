@@ -50,12 +50,13 @@ import { first, uniqBy } from 'lodash-es';
 import {
   BIG_ZERO,
   bigNumberToStringDeep,
+  compareBigNumber,
   fromWei,
   toWei,
   toWeiString,
 } from '../../../../../../helpers/big-number.ts';
 import { calculatePriceImpact, highestFeeOrZero } from '../../helpers/quotes.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { BeefyState, BeefyThunk } from '../../../../../../redux-types.ts';
 import type { CurveMethod, CurveTokenOption } from './types.ts';
 import type { QuoteResponse } from '../../swap/ISwapProvider.ts';
@@ -72,7 +73,6 @@ import { Balances } from '../../helpers/Balances.ts';
 import { getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import { slipBy } from '../../helpers/amounts.ts';
 import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
-import { walletActions } from '../../../../actions/wallet-actions.ts';
 import { isStandardVault, type VaultStandard } from '../../../../entities/vault.ts';
 import { getVaultWithdrawnFromState } from '../../helpers/vault.ts';
 import { buildTokenApproveTx } from '../../zap/approve.ts';
@@ -81,6 +81,7 @@ import { isFulfilledResult } from '../../../../../../helpers/promises.ts';
 import { isDefined } from '../../../../utils/array-utils.ts';
 import { isStandardVaultType, type IStandardVaultType } from '../../vaults/IVaultType.ts';
 import type { CurveStrategyConfig } from '../strategy-configs.ts';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -319,7 +320,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
     );
 
     // sort by most liquidity
-    withLiquidity.sort((a, b) => b.output.amount.comparedTo(a.output.amount));
+    withLiquidity.sort((a, b) => compareBigNumber(b.output.amount, a.output.amount));
 
     // Get the one which gives the most liquidity
     return withLiquidity[0];
@@ -348,8 +349,9 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
     }
 
     // Token allowances
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,
@@ -543,6 +545,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
             max: true, // but we call depositAll
           },
         ],
+        from: this.helpers.zap.router,
       });
       console.log('fetchDepositStep::vaultDeposit', vaultDeposit);
       steps.push(vaultDeposit.zap);
@@ -600,11 +603,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
       };
 
       const expectedTokens = vaultDeposit.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };
@@ -735,7 +734,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
     );
 
     // sort by most output
-    withSwaps.sort((a, b) => b.output.amount.comparedTo(a.output.amount));
+    withSwaps.sort((a, b) => compareBigNumber(b.output.amount, a.output.amount));
 
     // Get the one which gives the most output
     return withSwaps[0];
@@ -924,6 +923,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
       // Step 1. Withdraw from vault
       const vaultWithdraw = await this.vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
+        from: this.helpers.zap.router,
       });
       if (vaultWithdraw.outputs.length !== 1) {
         throw new Error('Withdraw output count mismatch');
@@ -1026,11 +1026,7 @@ class CurveStrategyImpl implements IZapStrategy<StrategyId> {
       };
 
       const expectedTokens = quote.outputs.map(output => output.token);
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };

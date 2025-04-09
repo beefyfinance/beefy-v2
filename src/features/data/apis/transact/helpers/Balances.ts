@@ -1,5 +1,5 @@
 import type { TokenAmount } from '../transact-types.ts';
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
 import type { TokenEntity } from '../../../entities/token.ts';
 

@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { SolidlyPairAbi } from '../../../../../config/abi/SolidlyPairAbi.ts';
 import type { ChainEntity } from '../../../entities/chain.ts';
 import {

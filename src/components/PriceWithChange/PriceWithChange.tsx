@@ -2,7 +2,7 @@ import { memo, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store.ts';
 import { selectPriceWithChange } from '../../features/data/selectors/tokens.ts';
 import { formatLargePercent, formatLargeUsd, formatUsd } from '../../helpers/format.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { fetchHistoricalPrices } from '../../features/data/actions/historical.ts';
 import { BIG_ZERO } from '../../helpers/big-number.ts';
 import { css, type CssStyles } from '@repo/styles/css';
@@ -81,10 +81,17 @@ const WithChange = memo(function WithChange({
   const percentChange = diffAbs.div(previousPrice);
   const isPositive = diff.gt(BIG_ZERO);
   const isNegative = diff.lt(BIG_ZERO);
-  const tooltipContent = t(`Price-Change-${isPositive ? 'Up' : isNegative ? 'Down' : 'Flat'}`, {
-    change: formatUsd(diffAbs, diffAbs.gte(0.01) ? 2 : 4),
-    date: format(previousDate, 'MMM d, yyyy h:mm a'),
-  });
+  const tooltipContent = t(
+    `Price-Change-${
+      isPositive ? 'Up'
+      : isNegative ? 'Down'
+      : 'Flat'
+    }`,
+    {
+      change: formatUsd(diffAbs, diffAbs.gte(0.01) ? 2 : 4),
+      date: format(previousDate, 'MMM d, yyyy h:mm a'),
+    }
+  );
 
   return (
     <DivWithTooltip
@@ -96,7 +103,11 @@ const WithChange = memo(function WithChange({
         className={css(styles.change, isPositive && styles.positive, isNegative && styles.negative)}
       >
         <div>
-          {isPositive ? '+' : isNegative ? '-' : ''}
+          {isPositive ?
+            '+'
+          : isNegative ?
+            '-'
+          : ''}
           {formatLargePercent(percentChange, 2)}
         </div>
       </div>

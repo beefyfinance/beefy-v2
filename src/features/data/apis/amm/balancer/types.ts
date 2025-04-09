@@ -1,4 +1,4 @@
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { ZapStep } from '../../transact/zap/types.ts';
 import type { QueryExitPoolResponse, QueryJoinPoolResponse } from './vault/types.ts';
 

@@ -1,11 +1,11 @@
 import {
   add,
+  type Duration,
   fromUnixTime,
   intervalToDuration,
   isAfter,
   isBefore,
   sub,
-  type Duration,
 } from 'date-fns';
 import { zeroPad } from './format.ts';
 import type { DurationSingle } from './date-types.ts';
@@ -26,30 +26,65 @@ export function datesAreEqual(a: Date | undefined, b: Date | undefined): boolean
   return a.getTime() === b.getTime();
 }
 
+export type FormatTimeLabels = {
+  [K in keyof Duration]?: string | ((count: number) => string);
+};
+
+export type FormatTimeUntilOptions = {
+  maxParts?: number;
+  minParts?: number;
+  padLength?: number;
+  from?: Date;
+  labels?: FormatTimeLabels;
+  separator?: string;
+};
+
+const defaultFormatTimeLabels: Required<FormatTimeLabels> = {
+  years: 'y',
+  months: 'm',
+  weeks: 'w',
+  days: 'd',
+  hours: 'h',
+  minutes: 'm',
+  seconds: 's',
+};
+
 export function formatTimeUntil(
   when: Date,
-  maxParts: number = 3,
-  minParts: number = 3,
-  padLength: number = 2,
-  from?: Date
+  {
+    maxParts = 3,
+    minParts = 3,
+    padLength = 2,
+    from,
+    labels = defaultFormatTimeLabels,
+    separator = ' ',
+  }: FormatTimeUntilOptions
 ): string {
   const parts: (keyof Duration)[] = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
   const numParts = parts.length;
   const duration = intervalToDuration({ start: from || new Date(), end: when });
+  const formatLabel = (part: keyof Duration, count: number | undefined) => {
+    const labelOrFn = labels[part] || defaultFormatTimeLabels[part];
+    if (typeof labelOrFn === 'function') {
+      return labelOrFn(count || 0);
+    }
+    return labelOrFn;
+  };
 
   for (let i = 0; i < numParts - minParts; ++i) {
-    if (duration[parts[i]]) {
+    const key = parts[i];
+    if (duration[key]) {
       return parts
         .slice(i, i + maxParts)
-        .map(part => `${zeroPad(duration[part], padLength)}${part[0]}`)
-        .join(' ');
+        .map(part => `${zeroPad(duration[part], padLength)}${formatLabel(part, duration[part])}`)
+        .join(separator);
     }
   }
 
   return parts
     .slice(numParts - minParts)
-    .map(part => `${zeroPad(duration[part] || 0, padLength)}${part[0]}`)
-    .join(' ');
+    .map(part => `${zeroPad(duration[part] || 0, padLength)}${formatLabel(part, duration[part])}`)
+    .join(separator);
 }
 
 export function roundDownMinutes(date: Date) {
@@ -60,7 +95,12 @@ export function roundDownMinutes(date: Date) {
 export function formatMinutesDuration(minutes: number): string {
   const now = new Date();
   const later = add(now, { minutes });
-  return formatTimeUntil(later, 1, 1, 1, now);
+  return formatTimeUntil(later, {
+    maxParts: 1,
+    minParts: 1,
+    padLength: 1,
+    from: now,
+  });
 }
 
 const durationUnits = [
