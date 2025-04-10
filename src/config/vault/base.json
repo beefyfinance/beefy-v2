@@ -1,5 +1,34 @@
 [
   {
+    "id": "aerodrome-ousdt-usdc",
+    "name": "oUSDT-USDC sLP",
+    "type": "standard",
+    "token": "sAMM-oUSDT/USDC",
+    "tokenAddress": "0xc84f7c63742EA1894EE04e5F49fbaE8C3a4a734d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnedToken": "mooAerodromeBaseoUSDT-USDC",
+    "earnedTokenAddress": "0xfAde70ee9b3907Ace0A0B81603b9841c4E46C0F6",
+    "earnContractAddress": "0xfAde70ee9b3907Ace0A0B81603b9841c4E46C0F6",
+    "oracle": "lps",
+    "oracleId": "aerodrome-ousdt-usdc",
+    "status": "active",
+    "createdAt": 1744247396,
+    "platformId": "aerodrome",
+    "assets": ["oUSDT", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=0",
+    "removeLiquidityUrl": "https://aerodrome.finance/withdraw",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "solidly",
+        "ammId": "base-aerodrome"
+      }
+    ]
+  },
+  {
     "id": "aerodrome-weth-over",
     "name": "WETH-OVER vLP",
     "type": "standard",
