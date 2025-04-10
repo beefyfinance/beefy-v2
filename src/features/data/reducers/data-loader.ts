@@ -1,7 +1,7 @@
 import type { ActionReducerMapBuilder, AsyncThunk, SerializedError } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllAllowanceAction } from '../actions/allowance.ts';
-import { fetchApyAction } from '../actions/apy.ts';
+import { fetchApyAction, fetchAvgApyAction } from '../actions/apy.ts';
 import { fetchAllBalanceAction, recalculateDepositedVaultsAction } from '../actions/balance.ts';
 import { initiateBoostForm } from '../actions/boosts.ts';
 import { fetchChainConfigs } from '../actions/chains.ts';
@@ -112,6 +112,7 @@ export const initialDataLoaderState: DataLoaderState = {
     chainConfig: dataLoaderStateInit,
     prices: dataLoaderStateInit,
     apy: dataLoaderStateInit,
+    avgApy: dataLoaderStateInit,
     promos: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
     lastHarvests: dataLoaderStateInit,
@@ -514,6 +515,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, askForNetworkChange, 'wallet', false);
     addGlobalAsyncThunkActions(builder, fetchAllPricesAction, 'prices', true);
     addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy', true);
+    addGlobalAsyncThunkActions(builder, fetchAvgApyAction, 'avgApy', true);
     addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults', true);
     addGlobalAsyncThunkActions(builder, fetchVaultsLastHarvests, 'lastHarvests', true);
     addGlobalAsyncThunkActions(builder, initPromos, 'promos', true);

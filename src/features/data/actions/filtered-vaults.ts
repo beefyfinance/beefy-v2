@@ -40,7 +40,7 @@ import { simplifySearchText } from '../../../helpers/string.ts';
 import type { FilteredVaultsState } from '../reducers/filtered-vaults.ts';
 import { orderBy, sortBy } from 'lodash-es';
 import type { TotalApy } from '../reducers/apy.ts';
-import { selectVaultTotalApy } from '../selectors/apy.ts';
+import { selectVaultAvgApy, selectVaultTotalApy } from '../selectors/apy.ts';
 import { selectVaultTvl, selectVaultUnderlyingTvlUsd } from '../selectors/tvl.ts';
 
 export type RecalculateFilteredVaultsParams = {
@@ -70,9 +70,9 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
     let filteredVaults: VaultEntity[];
     if (dataChanged || filtersChanged) {
       const allChainIds =
-        filterOptions.userCategory === 'deposited' || filterOptions.onlyRetired
-          ? selectAllChainIds(state)
-          : selectActiveChainIds(state);
+        filterOptions.userCategory === 'deposited' || filterOptions.onlyRetired ?
+          selectAllChainIds(state)
+        : selectActiveChainIds(state);
       const visibleChains = new Set(
         filterOptions.chainIds.length === 0 ? allChainIds : filterOptions.chainIds
       );
@@ -266,23 +266,19 @@ function applyDefaultSort(
   // Surface retired, paused and boosted
   if (filters.userCategory === 'deposited') {
     return sortBy(vaults, vault =>
-      vault.status === 'eol'
-        ? -3
-        : vault.status === 'paused'
-          ? -2
-          : vaultsToPin.has(vault.id)
-            ? -1
-            : 1
+      vault.status === 'eol' ? -3
+      : vault.status === 'paused' ? -2
+      : vaultsToPin.has(vault.id) ? -1
+      : 1
     ).map(v => v.id);
   }
 
   // Surface boosted
   return sortBy(vaults, vault =>
-    vaultsToPin.has(vault.id)
-      ? selectIsVaultPrestakedBoost(state, vault.id)
-        ? -Number.MAX_SAFE_INTEGER
-        : -selectVaultsActiveBoostPeriodFinish(state, vault.id).getTime()
-      : 1
+    vaultsToPin.has(vault.id) ?
+      selectIsVaultPrestakedBoost(state, vault.id) ? -Number.MAX_SAFE_INTEGER
+      : -selectVaultsActiveBoostPeriodFinish(state, vault.id).getTime()
+    : 1
   ).map(v => v.id);
 }
 
@@ -304,10 +300,19 @@ function applyApySort(
         return -1;
       }
 
-      for (const field of fields) {
-        const value = apy[field];
+      const avgApy = selectVaultAvgApy(state, vault.id);
+
+      if (filters.avgApySort !== 'default') {
+        const value = avgApy[filters.avgApySort];
         if (value !== undefined) {
           return value || 0;
+        }
+      } else {
+        for (const field of fields) {
+          const value = apy[field];
+          if (value !== undefined) {
+            return value || 0;
+          }
         }
       }
 

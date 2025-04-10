@@ -7,6 +7,8 @@ export type SelectItem<TValue extends string = string> = {
   value: TValue;
   label: string;
   badge?: string;
+  multiple?: boolean;
+  options?: string[];
 };
 
 type CommonProps<TItem extends SelectItem = SelectItem> = Override<
