@@ -15,7 +15,7 @@
     "status": "active",
     "createdAt": 1744247396,
     "platformId": "aerodrome",
-    "assets": ["oUSDT", "USDC"],
+    "assets": ["OUSDT", "USDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
     "addLiquidityUrl": "https://aerodrome.finance/deposit?token0=0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189&token1=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&type=0",
