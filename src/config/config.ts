@@ -769,6 +769,7 @@ export const config = {
       'scUSD',
       'stkscUSD',
       'wstkscUSD',
+      'aSonUSDC',
       'bUSDCe-20',
       'mooSiloSonicUSDCe',
       'USDT',
