@@ -69,18 +69,17 @@ export const Claim = memo(function Claim({ chainId, vaultId, withChain }: ClaimP
           disabled={disable}
           css={styles.claim}
         >
-          {!isStepping && shouldWait ? (
+          {!isStepping && shouldWait ?
             <TimeCountdown until={lastDispatched + STELLA_SWAP_MIN_TIME_BETWEEN_REQUESTS_MS} />
-          ) : (
-            t(withChain ? 'Rewards-Claim-stellaswap-chain' : 'Rewards-Claim-stellaswap', {
+          : t(withChain ? 'Rewards-Claim-stellaswap-chain' : 'Rewards-Claim-stellaswap', {
               chain: chain.name,
             })
-          )}
+          }
         </Button>
       </ActionConnectSwitch>
-      {import.meta.env.DEV ? (
+      {import.meta.env.DEV ?
         <TenderlyStellaSwapClaimButton vaultId={vaultId} chainId={chainId} disabled={disable} />
-      ) : null}
+      : null}
     </>
   );
 });

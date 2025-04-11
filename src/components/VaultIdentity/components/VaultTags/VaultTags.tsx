@@ -41,6 +41,7 @@ import {
 } from '../../../../features/data/selectors/promos.ts';
 import { useBreakpoint } from '../../../MediaQueries/useBreakpoint.ts';
 import { useMediaQuery } from '../../../MediaQueries/useMediaQuery.ts';
+import BoostIcon from '../../../../images/icons/boost.svg?react';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -62,12 +63,11 @@ const VaultPromoTag = memo(function VaultBoostTag({ promoId, onlyIcon }: VaultPr
       disabled={!isOverflowing && !onlyIcon}
       css={styles.vaultTagBoost}
       ref={ref}
+      order="text-icon"
       icon={
-        iconSrc ? (
+        iconSrc ?
           <img src={iconSrc} alt="" className={classes.vaultTagBoostIcon} width={12} height={12} />
-        ) : (
-          <>{'\uD83D\uDD25'}</>
-        )
+        : <BoostIcon style={{ width: '12px', height: '12px' }} />
       }
       text={!onlyIcon && tag.text}
     />
@@ -152,7 +152,7 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
         />
       }
       text={
-        !onlyIcon && (!hideLabel || (!hideFee && fee)) ? (
+        !onlyIcon && (!hideLabel || (!hideFee && fee)) ?
           <>
             {!hideLabel && (
               <div
@@ -170,7 +170,7 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
               </>
             )}
           </>
-        ) : undefined
+        : undefined
       }
     />
   );
@@ -345,15 +345,15 @@ export const VaultTags = memo(function VaultTags({ vaultId }: VaultTagsProps) {
           onlyIcon={onlyShowIcon}
         />
       )}
-      {isVaultRetired(vault) ? (
+      {isVaultRetired(vault) ?
         <VaultTag css={styles.vaultTagRetired} text={t('VaultTag-Retired')} />
-      ) : isVaultPaused(vault) ? (
+      : isVaultPaused(vault) ?
         <VaultTag css={styles.vaultTagPaused} text={t('VaultTag-Paused')} />
-      ) : promo ? (
+      : promo ?
         <VaultPromoTag onlyIcon={onlyShowIcon} promoId={promo.id} />
-      ) : isGov && !isCowcentratedLike ? (
+      : isGov && !isCowcentratedLike ?
         <VaultEarnTag chainId={vault.chainId} earnedTokenAddress={vault.earnedTokenAddresses[0]} /> // TODO support multiple earned tokens [empty = ok, not used when clm-like]
-      ) : null}
+      : null}
       {isVaultEarningPoints(vault) && <PointsTag />}
     </div>
   );

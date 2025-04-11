@@ -25,6 +25,8 @@ import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice/WithdrawnInW
 import { useDispatch } from 'react-redux';
 import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
+import { styled } from '@repo/styles/jsx';
+import { WithdrawBoostNotice } from '../BoostNotices/WithdrawBoostNotice.tsx';
 import { WithdrawQueueLoader } from '../WithdrawQueue/WithdrawQueueLoader.tsx';
 import { FormFooter } from '../FormFooter/FormFooter.tsx';
 
@@ -65,19 +67,33 @@ const DepositedInVault = memo(function DepositedInVault() {
 
 const WithdrawFormLoader = memo(function WithdrawFormLoader() {
   const { t } = useTranslation();
-  const classes = useStyles();
   const status = useAppSelector(selectTransactOptionsStatus);
   const error = useAppSelector(selectTransactOptionsError);
   const isLoading = status === TransactStatus.Idle || status === TransactStatus.Pending;
   const isError = status === TransactStatus.Rejected;
 
   return (
-    <div className={classes.container}>
+    <>
       {isLoading ?
-        <LoadingIndicator text={t('Transact-Loading')} />
+        <Container>
+          <LoadingIndicator text={t('Transact-Loading')} />
+        </Container>
       : isError ?
-        <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
-      : <WithdrawForm />}
+        <Container>
+          <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
+        </Container>
+      : <Withdraw />}
+    </>
+  );
+});
+
+export const Withdraw = memo(function Withdraw() {
+  return (
+    <div>
+      <Container>
+        <WithdrawForm />
+      </Container>
+      <WithdrawBoostNotice />
     </div>
   );
 });
@@ -125,6 +141,15 @@ export const WithdrawForm = memo(function WithdrawForm() {
       <FormFooter />
     </>
   );
+});
+
+const Container = styled('div', {
+  base: {
+    padding: '16px',
+    sm: {
+      padding: '24px',
+    },
+  },
 });
 
 // eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()

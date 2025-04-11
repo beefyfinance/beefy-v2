@@ -1,4 +1,3 @@
-import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../store.ts';
@@ -7,18 +6,15 @@ import {
   selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
 } from '../../../../../data/selectors/balance.ts';
-import { styles } from './styles.ts';
 import { selectStandardVaultById } from '../../../../../data/selectors/vaults.ts';
-import { selectTokenByAddress } from '../../../../../data/selectors/tokens.ts';
 import { selectBoostById } from '../../../../../data/selectors/boosts.ts';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { type Reward, Rewards } from '../Rewards.tsx';
 import { Claim } from '../ActionButton/Claim.tsx';
-import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { Unstake } from '../ActionButton/Unstake.tsx';
 import { ActionConnectSwitch } from '../ActionConnectSwitch.tsx';
-
-const useStyles = legacyMakeStyles(styles);
+import { styled } from '@repo/styles/jsx';
+import { BoostStaked } from '../BoostStaked/BoostStaked.tsx';
 
 interface BoostPastCardActionCardProps {
   boostId: BoostPromoEntity['id'];
@@ -28,7 +24,6 @@ export const BoostPastActionCard = memo(function BoostPastActionCard({
   boostId,
 }: BoostPastCardActionCardProps) {
   const { t } = useTranslation();
-  const classes = useStyles();
   const boost = useAppSelector(state => selectBoostById(state, boostId));
   const vault = useAppSelector(state => selectStandardVaultById(state, boost.vaultId));
   const userRewards = useAppSelector(state => selectBoostUserRewardsInToken(state, boost.id));
@@ -44,40 +39,66 @@ export const BoostPastActionCard = memo(function BoostPastActionCard({
         periodFinish: undefined,
         rewardRate: BIG_ZERO,
         active: false,
+        apr: 0,
       };
     });
     return [rewards, hasPendingRewards];
   }, [userRewards]);
-  const depositToken = useAppSelector(state =>
-    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
-  );
+
   const boostBalance = useAppSelector(state => selectBoostUserBalanceInToken(state, boost.id));
   const canUnstake = boostBalance.gt(0);
   const canClaimOnly = canClaim && (!canUnstake || boost.version >= 2);
 
   return (
-    <div className={classes.expiredBoostContainer}>
-      <div className={classes.title}>
-        <div className={classes.expiredBoostName}>
-          {t('Boost-NameBoost', { name: boost.title })}
-        </div>
-      </div>
-      <div>
-        <div className={classes.label}>{t('Staked')}</div>
-        <div className={classes.value}>
-          <TokenAmount amount={boostBalance} decimals={depositToken.decimals} />
-          {depositToken.symbol}
-        </div>
-      </div>
-      {canClaim && (
-        <Rewards isInBoost={true} rewards={rewards} css={styles.pastRewards} fadeInactive={false} />
-      )}
-      {canClaim || canUnstake ? (
+    <BoostPastActionCardContainer>
+      <CardBoostContainer>
+        <BoostEnded>{t('Boost ended')}</BoostEnded>
+        <BoostStaked boostId={boostId} />
+        {canClaim && <Rewards isInBoost={true} rewards={rewards} />}
+      </CardBoostContainer>
+      {canClaim || canUnstake ?
         <ActionConnectSwitch chainId={vault.chainId}>
           {canClaimOnly && <Claim boostId={boostId} chainId={boost.chainId} />}
           {canUnstake && <Unstake boostId={boostId} chainId={boost.chainId} canClaim={canClaim} />}
         </ActionConnectSwitch>
-      ) : null}
-    </div>
+      : null}
+    </BoostPastActionCardContainer>
   );
+});
+
+const BoostEnded = styled('div', {
+  base: {
+    position: 'absolute',
+    top: '0',
+    right: '0',
+    textStyle: 'body.sm',
+    textTransform: 'none',
+    color: 'text.black',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: 'background.content.gray',
+    borderRadius: '0px 8px 0px 8px',
+    padding: '2px 8px',
+  },
+});
+
+const CardBoostContainer = styled('div', {
+  base: {
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+    background: 'background.content.light',
+    borderRadius: '8px',
+    padding: '16px',
+  },
+});
+
+const BoostPastActionCardContainer = styled('div', {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+  },
 });

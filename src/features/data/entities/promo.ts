@@ -18,7 +18,7 @@ type PromoTokenReward = Override<
   }
 >;
 
-type PromoReward = PromoTokenReward;
+export type PromoReward = PromoTokenReward;
 
 type BasePromoOverrides = {
   by: string;

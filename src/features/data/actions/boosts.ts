@@ -39,8 +39,9 @@ export const initiateBoostForm = createAsyncThunk<
 
   const balanceApi = await getBalanceApi(chain);
 
-  const balanceRes: FetchAllBalancesResult = walletAddress
-    ? await balanceApi.fetchAllBalances(getState(), { boosts: [boost] }, walletAddress)
+  const balanceRes: FetchAllBalancesResult =
+    walletAddress ?
+      await balanceApi.fetchAllBalances(getState(), { boosts: [boost] }, walletAddress)
     : { tokens: [], boosts: [], govVaults: [], erc4626Pending: [] };
 
   const spenderAddress = boost.contractAddress;
@@ -53,14 +54,9 @@ export const initiateBoostForm = createAsyncThunk<
     false
   );
   const allowanceRes =
-    walletAddress && spenderAddress
-      ? await allowanceApi.fetchTokensAllowance(
-          getState(),
-          [mooToken],
-          walletAddress,
-          spenderAddress
-        )
-      : [];
+    walletAddress && spenderAddress ?
+      await allowanceApi.fetchTokensAllowance(getState(), [mooToken], walletAddress, spenderAddress)
+    : [];
 
   return {
     walletAddress,

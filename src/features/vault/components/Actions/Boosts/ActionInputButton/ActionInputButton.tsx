@@ -31,6 +31,7 @@ export interface ActionInputButtonProps {
   title: string;
   balanceLabel: string;
   buttonLabel: string;
+  buttonVariant?: 'default' | 'boost';
 }
 
 export const ActionInputButton = memo(function ActionInputButton({
@@ -42,6 +43,7 @@ export const ActionInputButton = memo(function ActionInputButton({
   title,
   balanceLabel,
   buttonLabel,
+  buttonVariant = 'boost',
 }: ActionInputButtonProps) {
   const classes = useStyles();
   const dispatch = useAppDispatch();
@@ -92,7 +94,12 @@ export const ActionInputButton = memo(function ActionInputButton({
         </button>
         <div className={classes.text}>{title}</div>
         <div className={classes.balance}>
-          {balanceLabel} <TokenAmount amount={balance} decimals={mooToken.decimals} />
+          {balanceLabel}{' '}
+          <TokenAmount
+            amount={balance}
+            decimals={mooToken.decimals}
+            css={{ color: 'text.light' }}
+          />
         </div>
       </div>
       <Collapse in={open}>
@@ -113,7 +120,7 @@ export const ActionInputButton = memo(function ActionInputButton({
               </button>
             }
           />
-          <ActionButton onClick={handleClick} disabled={isDisabled}>
+          <ActionButton onClick={handleClick} disabled={isDisabled} variant={buttonVariant}>
             {buttonLabel}
           </ActionButton>
         </div>

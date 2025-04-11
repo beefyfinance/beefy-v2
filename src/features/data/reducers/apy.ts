@@ -17,8 +17,12 @@ import { isAfter } from 'date-fns';
 import { getBoostStatusFromContractState } from './promos.ts';
 
 // boost is expressed as APR
-interface AprData {
-  apr: number;
+interface BoostAprData {
+  apr: number; //total Boost APR
+  aprByRewardToken: Array<{
+    rewardToken: string;
+    apr: number;
+  }>;
 }
 
 // TODO: this should be reworked
@@ -69,7 +73,7 @@ export interface ApyState {
       [vaultId: VaultEntity['id']]: ApiApyData;
     };
     byBoostId: {
-      [boostId: BoostPromoEntity['id']]: AprData;
+      [boostId: BoostPromoEntity['id']]: BoostAprData;
     };
   };
   totalApy: {
@@ -154,36 +158,49 @@ function addContractDataToState(
     const totalStakedInUsd = boostContractData.totalSupply.times(stakedTokenPrice);
 
     // Sum apr from each active reward
-    const totalApr = activeRewards.reduce((acc, reward) => {
-      // Rewards
-      let rewardTokenPrice: BigNumber;
-      const rewardVault = selectStandardVaultByAddressOrUndefined(
-        state,
-        reward.token.chainId,
-        reward.token.address
-      );
-      if (rewardVault) {
-        // if reward is a mooToken, we need to take account of PPFS
-        rewardTokenPrice = selectVaultReceiptTokenPrice(
-          state,
-          rewardVault.id,
-          vaultDataByVaultId[rewardVault.id]?.pricePerFullShare
-        );
-      } else {
-        // if we don't have a matching vault, it should be a yield from a token that has a price
-        rewardTokenPrice = selectTokenPriceByAddress(
+    const boostAprData = activeRewards.reduce<BoostAprData>(
+      (acc, reward) => {
+        // Rewards
+        let rewardTokenPrice: BigNumber;
+        const rewardVault = selectStandardVaultByAddressOrUndefined(
           state,
           reward.token.chainId,
           reward.token.address
         );
-      }
-      const yearlyRewardsInUsd = reward.rewardRate.times(3600 * 24 * 365).times(rewardTokenPrice);
-      const apr = yearlyRewardsInUsd.dividedBy(totalStakedInUsd).toNumber();
+        if (rewardVault) {
+          // if reward is a mooToken, we need to take account of PPFS
+          rewardTokenPrice = selectVaultReceiptTokenPrice(
+            state,
+            rewardVault.id,
+            vaultDataByVaultId[rewardVault.id]?.pricePerFullShare
+          );
+        } else {
+          // if we don't have a matching vault, it should be a yield from a token that has a price
+          rewardTokenPrice = selectTokenPriceByAddress(
+            state,
+            reward.token.chainId,
+            reward.token.address
+          );
+        }
+        const yearlyRewardsInUsd = reward.rewardRate.times(3600 * 24 * 365).times(rewardTokenPrice);
+        const apr = yearlyRewardsInUsd.dividedBy(totalStakedInUsd).toNumber();
 
-      return isNaN(apr) ? acc : acc + apr;
-    }, 0);
+        // return isNaN(apr) ? acc : acc + apr;
+        return {
+          apr: isNaN(apr) ? acc.apr : acc.apr + apr,
+          aprByRewardToken: [
+            ...acc.aprByRewardToken,
+            {
+              rewardToken: reward.token.address,
+              apr: isNaN(apr) ? 0 : apr,
+            },
+          ],
+        };
+      },
+      { apr: 0, aprByRewardToken: [] }
+    );
 
     // add data to state
-    sliceState.rawApy.byBoostId[boost.id] = { apr: totalApr };
+    sliceState.rawApy.byBoostId[boost.id] = boostAprData;
   }
 }

@@ -49,9 +49,9 @@ const Erc4626Explainer = memo(function Erc4626Explainer({ vaultId }: Erc4626Expl
       links={links}
       description={<Erc4626Description vaultId={vaultId} />}
       details={
-        showApy ? (
+        showApy ?
           <ApyDetails type={getApyLabelsTypeForVault(vault, apys.totalType)} values={apys} />
-        ) : null
+        : null
       }
     />
   );

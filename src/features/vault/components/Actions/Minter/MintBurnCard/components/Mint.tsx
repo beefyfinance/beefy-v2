@@ -205,25 +205,23 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
         />
       </div>
       <>
-        {isWalletConnected ? (
-          !isWalletOnVaultChain ? (
+        {isWalletConnected ?
+          !isWalletOnVaultChain ?
             <Button onClick={handleNetworkChange} className={classes.btn}>
               {t('Network-Change', { network: chain.name.toUpperCase() })}
             </Button>
-          ) : (
-            <Button
+          : <Button
               disabled={formData.amount.isLessThanOrEqualTo(0) || isStepping}
               onClick={handleDeposit}
               className={classes.btn}
             >
               {t('action', { action: t('mint'), token: minter.mintedToken.symbol })}
             </Button>
-          )
-        ) : (
-          <Button onClick={handleConnectWallet} className={classes.btn}>
+
+        : <Button onClick={handleConnectWallet} className={classes.btn}>
             {t('Network-ConnectWallet')}
           </Button>
-        )}
+        }
       </>
     </CardContent>
   );
