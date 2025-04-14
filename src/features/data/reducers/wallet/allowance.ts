@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { fetchAllAllowanceAction, fetchAllowanceAction } from '../../actions/allowance.ts';
 import type { TokenAllowance } from '../../apis/allowance/allowance-types.ts';
 import type { Draft } from 'immer';

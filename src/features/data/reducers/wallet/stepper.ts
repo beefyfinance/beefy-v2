@@ -1,6 +1,6 @@
 import type { PayloadAction, ThunkAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { startStepper } from '../../actions/stepper.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { TokenEntity } from '../../entities/token.ts';
@@ -20,6 +20,9 @@ export type Step = {
     | 'deposit'
     | 'deposit-gov'
     | 'withdraw'
+    | 'deposit-erc4626'
+    | 'request-withdraw' // erc4626 async
+    | 'fulfill-request-withdraw' // erc4626 async
     | 'claim-withdraw' // gov
     | 'claim-gov' // gov
     | 'mint'

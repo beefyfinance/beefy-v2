@@ -1,6 +1,6 @@
 import type { VaultEntity } from '../../entities/vault.ts';
 import type { BeefyStateFn } from '../../../../redux-types.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { ChainEntity } from '../../entities/chain.ts';
 import type { TokenEntity, TokenErc20 } from '../../entities/token.ts';
 import type { Step } from '../../reducers/wallet/stepper.ts';
@@ -78,6 +78,7 @@ type BaseOption = {
   selectionHideIfZeroBalance?: boolean;
   inputs: TokenEntity[];
   wantedOutputs: TokenEntity[];
+  async?: boolean;
 };
 
 type BaseDepositOption = BaseOption & {
@@ -120,6 +121,16 @@ export type CowcentratedVaultDepositOption = BaseDepositOption & {
 export type CowcentratedVaultWithdrawOption = BaseWithdrawOption & {
   strategyId: 'vault';
   vaultType: 'cowcentrated';
+};
+
+export type Erc4626VaultDepositOption = BaseDepositOption & {
+  strategyId: 'vault';
+  vaultType: 'erc4626';
+};
+
+export type Erc4626VaultWithdrawOption = BaseWithdrawOption & {
+  strategyId: 'vault';
+  vaultType: 'erc4626';
 };
 
 export type CowcentratedZapDepositOption = ZapBaseDepositOption & {
@@ -316,6 +327,7 @@ export type RewardPoolToVaultWithdrawOption = ZapBaseWithdrawOption & {
 export type DepositOption =
   | StandardVaultDepositOption
   | GovVaultDepositOption
+  | Erc4626VaultDepositOption
   | CowcentratedVaultDepositOption
   | SolidlyDepositOption
   | UniswapV2DepositOption
@@ -332,6 +344,7 @@ export type DepositOption =
 export type WithdrawOption =
   | StandardVaultWithdrawOption
   | GovVaultWithdrawOption
+  | Erc4626VaultWithdrawOption
   | CowcentratedVaultWithdrawOption
   | SolidlyWithdrawOption
   | UniswapV2WithdrawOption
@@ -495,6 +508,10 @@ export type GovVaultDepositQuote = BaseQuote<GovVaultDepositOption> & {
   vaultType: 'gov';
 };
 
+export type Erc4626VaultDepositQuote = BaseQuote<Erc4626VaultDepositOption> & {
+  vaultType: 'erc4626';
+};
+
 export type CowcentratedVaultDepositQuote = BaseQuote<CowcentratedVaultDepositOption> & {
   vaultType: 'cowcentrated';
   isCalm: boolean;
@@ -572,7 +589,8 @@ export type ConicDepositQuote = BaseZapQuote<ConicDepositOption>;
 export type VaultDepositQuote =
   | StandardVaultDepositQuote
   | GovVaultDepositQuote
-  | CowcentratedVaultDepositQuote;
+  | CowcentratedVaultDepositQuote
+  | Erc4626VaultDepositQuote;
 
 export type ZapDepositQuote =
   | SingleDepositQuote
@@ -595,6 +613,10 @@ export type StandardVaultWithdrawQuote = BaseQuote<StandardVaultWithdrawOption> 
 
 export type GovVaultWithdrawQuote = BaseQuote<GovVaultWithdrawOption> & {
   vaultType: 'gov';
+};
+
+export type Erc4626VaultWithdrawQuote = BaseQuote<Erc4626VaultWithdrawOption> & {
+  vaultType: 'erc4626';
 };
 
 export type CowcentratedVaultWithdrawQuote = BaseQuote<CowcentratedVaultWithdrawOption> & {
@@ -662,7 +684,8 @@ export type GammaWithdrawQuote = GammaBreakWithdrawQuote | GammaAggregatorWithdr
 export type VaultWithdrawQuote =
   | StandardVaultWithdrawQuote
   | GovVaultWithdrawQuote
-  | CowcentratedVaultWithdrawQuote;
+  | CowcentratedVaultWithdrawQuote
+  | Erc4626VaultWithdrawQuote;
 
 export type ConicWithdrawQuote = BaseZapQuote<ConicWithdrawOption>;
 

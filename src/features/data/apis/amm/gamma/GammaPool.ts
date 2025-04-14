@@ -1,7 +1,7 @@
 import type { GammaHypervisorData, IGammaPool } from '../types.ts';
 import type { ChainEntity } from '../../../entities/chain.ts';
 import type { AmmConfigGamma } from '../../config-types.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { GammaHypervisorAbi } from '../../../../../config/abi/GammaHypervisorAbi.ts';
 import { GammaProxyAbi } from '../../../../../config/abi/GammaProxyAbi.ts';
 import { TickMath } from './TickMath.ts';
@@ -11,7 +11,6 @@ import {
   bigNumberToBigInt,
   bigNumberToStringDeep,
   fromWei,
-  fromWeiString,
   toWei,
   toWeiString,
 } from '../../../../../helpers/big-number.ts';
@@ -138,13 +137,13 @@ export class GammaPool implements IGammaPool {
     ]);
 
     const neededToken0AmountsForInput1 = {
-      min: fromWeiString(outputToken0AmountsMinWei.toString(10), inputs[0].token.decimals),
-      max: fromWeiString(outputToken0AmountsMaxWei.toString(10), inputs[0].token.decimals),
+      min: fromWei(outputToken0AmountsMinWei.toString(10), inputs[0].token.decimals),
+      max: fromWei(outputToken0AmountsMaxWei.toString(10), inputs[0].token.decimals),
     };
 
     const neededToken1AmountsForInput0 = {
-      min: fromWeiString(outputToken1AmountsMinWei.toString(10), inputs[1].token.decimals),
-      max: fromWeiString(outputToken1AmountsMaxWei.toString(10), inputs[1].token.decimals),
+      min: fromWei(outputToken1AmountsMinWei.toString(10), inputs[1].token.decimals),
+      max: fromWei(outputToken1AmountsMaxWei.toString(10), inputs[1].token.decimals),
     };
 
     // inputs are within range, we can use as-is
@@ -262,8 +261,9 @@ export class GammaPool implements IGammaPool {
         ] as const satisfies Abi,
         args: [spender as Address, bigNumberToBigInt(amountWei)],
       }),
-      tokens: insertBalance
-        ? [
+      tokens:
+        insertBalance ?
+          [
             {
               token,
               index: getInsertIndex(1), // this has side effect of approving the token to spend itself

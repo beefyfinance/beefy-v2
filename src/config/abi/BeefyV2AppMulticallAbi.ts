@@ -400,4 +400,40 @@ export const BeefyV2AppMulticallAbi = [
     stateMutability: 'view',
     type: 'function',
   },
+  {
+    type: 'function',
+    name: 'getERC4626VaultInfo',
+    inputs: [
+      {
+        name: 'vaults',
+        type: 'address[]',
+        internalType: 'address[]',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple[]',
+        internalType: 'struct ERC4626VaultInfo[]',
+        components: [
+          {
+            name: 'balance',
+            type: 'uint256',
+            internalType: 'uint256',
+          },
+          {
+            name: 'pricePerFullShare',
+            type: 'uint256',
+            internalType: 'uint256',
+          },
+          {
+            name: 'paused',
+            type: 'bool',
+            internalType: 'bool',
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
 ] as const satisfies Abi;

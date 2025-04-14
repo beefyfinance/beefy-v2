@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { SwapFeeParams } from '../types.ts';
 import type { PairData as BasePairData } from './SolidlyPool.ts';
 import { SolidlyPool } from './SolidlyPool.ts';

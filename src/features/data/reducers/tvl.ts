@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
 import type { Draft } from 'immer';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
@@ -150,6 +150,15 @@ function addContractDataToState(
       }
     }
 
+    for (const erc4626ContractData of contractData.erc4626Vaults) {
+      const vault = selectVaultById(state, erc4626ContractData.id);
+      const price = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
+      const rawTvl = erc4626ContractData.balance.times(price);
+      const tvl = rawTvl;
+
+      sliceState.byVaultId[vault.id] = { tvl, rawTvl };
+    }
+
     sliceState.byVaultId[vault.id] = { tvl, rawTvl };
   }
 
@@ -158,6 +167,9 @@ function addContractDataToState(
     [vaultId: VaultEntity['id']]: BigNumber;
   } = {};
   for (const vault of contractData.standardVaults) {
+    ppfsPerVaultId[vault.id] = vault.pricePerFullShare;
+  }
+  for (const vault of contractData.erc4626Vaults) {
     ppfsPerVaultId[vault.id] = vault.pricePerFullShare;
   }
 

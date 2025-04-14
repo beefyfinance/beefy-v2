@@ -30,7 +30,11 @@ export const feesSlice = createSlice({
         // Avoid creating new object/updating state if none of the values have changed
         for (const [key, value] of entries(data.performance)) {
           if (fees[key] !== value) {
-            fees[key] = value;
+            if (value === undefined) {
+              delete fees[key];
+            } else {
+              fees[key] = value;
+            }
           }
         }
 

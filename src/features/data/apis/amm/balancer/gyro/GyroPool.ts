@@ -4,7 +4,7 @@ import type {
   QueryJoinPoolResponse,
   VaultConfig,
 } from '../vault/types.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { BIG_ONE, bigNumberToStringDeep } from '../../../../../../helpers/big-number.ts';
 import { FixedPoint } from '../common/FixedPoint.ts';
 import type { ZapStep } from '../../../transact/zap/types.ts';

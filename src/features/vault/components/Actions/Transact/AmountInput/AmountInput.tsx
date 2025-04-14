@@ -11,7 +11,7 @@ import {
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { styles } from './styles.ts';
 import { css, type CssStyles } from '@repo/styles/css';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { formatLargeUsd, formatTokenInput } from '../../../../../../helpers/format.ts';
 

@@ -1,5 +1,5 @@
 import type { BeefyBridgeConfig } from '../features/data/apis/config-types.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 
 export const beefyBridgeConfig = {
   source: {

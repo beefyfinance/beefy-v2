@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { Draft } from 'immer';
 import { fetchChainConfigs } from '../actions/chains.ts';
 import { fetchAllPricesAction } from '../actions/prices.ts';
@@ -499,13 +499,11 @@ function addVaultToState(sliceState: Draft<TokensState>, config: VaultConfig, en
   // (Only v2 + of gov vaults have a receipt token)
   if (config.type !== 'gov' || (config.version || 1) > 1) {
     // rename clm and clm reward pool receipt tokens to a friendlier name
-    const receiptTokenSymbol = isCowcentratedVault(entity)
-      ? `${entity.names.short} CLM`
-      : isCowcentratedGovVault(entity)
-        ? `${entity.names.short} rCLM`
-        : isCowcentratedStandardVault(entity)
-          ? `${entity.names.short} mooCLM`
-          : config.earnedToken;
+    const receiptTokenSymbol =
+      isCowcentratedVault(entity) ? `${entity.names.short} CLM`
+      : isCowcentratedGovVault(entity) ? `${entity.names.short} rCLM`
+      : isCowcentratedStandardVault(entity) ? `${entity.names.short} mooCLM`
+      : config.earnedToken;
 
     const receiptToken: TokenErc20 = {
       type: 'erc20',

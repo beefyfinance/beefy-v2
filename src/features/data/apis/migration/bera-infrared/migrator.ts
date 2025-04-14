@@ -1,6 +1,6 @@
 import type { Migrator, MigratorUnstakeProps } from '../migration-types.ts';
 import type { VaultEntity } from '../../../entities/vault.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { BeefyState } from '../../../../../redux-types.ts';
 import { ERC20Abi } from '../../../../../config/abi/ERC20Abi.ts';
 import { buildExecute, buildFetchBalance } from '../utils.ts';

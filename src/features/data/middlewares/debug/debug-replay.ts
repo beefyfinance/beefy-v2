@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { isString } from 'lodash-es';
 import { fetchChainConfigs } from '../../actions/chains.ts';
 import { fetchAllVaults } from '../../actions/vaults.ts';

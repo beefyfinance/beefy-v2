@@ -1,5 +1,5 @@
 import type { TokenEntity } from '../entities/token.ts';
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 
 export type UserLpBreakdownBalanceAsset = TokenEntity & {
   totalAmount: BigNumber;

@@ -19,7 +19,7 @@ import {
   selectVaultByIdOrUndefined,
 } from '../selectors/vaults.ts';
 import { createIdMap } from '../utils/array-utils.ts';
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { ApiApyData } from '../apis/beefy/beefy-api-types.ts';
 import { isAfter } from 'date-fns';
 import { getBoostStatusFromContractState } from './promos.ts';

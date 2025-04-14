@@ -32,7 +32,7 @@ import { QuoteTitleRefresh } from '../QuoteTitleRefresh/QuoteTitleRefresh.tsx';
 import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { TransactStatus } from '../../../../../data/reducers/wallet/transact-types.ts';
 import { ZapSlippage } from '../ZapSlippage/ZapSlippage.tsx';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { debounce } from 'lodash-es';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { isCowcentratedLikeVault } from '../../../../../data/entities/vault.ts';
@@ -98,9 +98,15 @@ export const TransactQuote = memo(function TransactQuote({
         title={title}
         enableRefresh={status === TransactStatus.Fulfilled || status === TransactStatus.Rejected}
       />
-      {status === TransactStatus.Pending ? <QuoteLoading /> : null}
-      {status === TransactStatus.Fulfilled ? <QuoteLoaded /> : null}
-      {status === TransactStatus.Rejected ? <QuoteError /> : null}
+      {status === TransactStatus.Pending ?
+        <QuoteLoading />
+      : null}
+      {status === TransactStatus.Fulfilled ?
+        <QuoteLoaded />
+      : null}
+      {status === TransactStatus.Rejected ?
+        <QuoteError />
+      : null}
     </div>
   );
 });
@@ -114,7 +120,7 @@ const QuoteIdle = memo(function QuoteIdle({ title, css: cssProp }: TransactQuote
     <div className={css(styles.disabled, cssProp)}>
       <QuoteTitleRefresh title={title} enableRefresh={true} />
       <div className={classes.tokenAmounts}>
-        {isCowcentratedLikeVault(vault) ? (
+        {isCowcentratedLikeVault(vault) ?
           <div className={classes.amountReturned}>
             {vault.depositTokenAddresses.map(tokenAddress => {
               return (
@@ -128,13 +134,12 @@ const QuoteIdle = memo(function QuoteIdle({ title, css: cssProp }: TransactQuote
               );
             })}
           </div>
-        ) : (
-          <TokenAmountIcon
+        : <TokenAmountIcon
             amount={BIG_ZERO}
             chainId={vault.chainId}
             tokenAddress={vault.depositTokenAddress}
           />
-        )}
+        }
       </div>
     </div>
   );
@@ -179,7 +184,9 @@ const QuoteError = memo(function QuoteError() {
   return (
     <AlertError>
       <p>{t('Transact-Quote-Error')}</p>
-      {error && error.message ? <p>{error.message}</p> : null}
+      {error && error.message ?
+        <p>{error.message}</p>
+      : null}
     </AlertError>
   );
 });
@@ -198,10 +205,9 @@ const QuoteLoaded = memo(function QuoteLoaded() {
   return (
     <>
       <div className={classes.tokenAmounts}>
-        {isCowcentratedDepositQuote(quote) ? (
+        {isCowcentratedDepositQuote(quote) ?
           <CowcentratedLoadedQuote quote={quote} />
-        ) : (
-          <>
+        : <>
             {quote.outputs.map(({ token, amount }) => (
               <TokenAmountIcon
                 key={token.address}
@@ -211,7 +217,7 @@ const QuoteLoaded = memo(function QuoteLoaded() {
               />
             ))}
           </>
-        )}
+        }
       </div>
       {/*      {quote.returned.length ? (
             <div className={classes.returned}>
@@ -228,8 +234,12 @@ const QuoteLoaded = memo(function QuoteLoaded() {
               </div>
             </div>
           ) : null}*/}
-      {isZap ? <ZapRoute quote={quote} css={styles.route} /> : null}
-      {needsSlippage ? <ZapSlippage css={styles.slippage} /> : null}
+      {isZap ?
+        <ZapRoute quote={quote} css={styles.route} />
+      : null}
+      {needsSlippage ?
+        <ZapSlippage css={styles.slippage} />
+      : null}
     </>
   );
 });

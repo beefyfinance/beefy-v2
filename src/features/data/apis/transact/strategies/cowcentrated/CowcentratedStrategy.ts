@@ -63,13 +63,13 @@ import { allTokensAreDistinct, pickTokens } from '../../helpers/tokens.ts';
 import { fetchZapAggregatorSwap } from '../../zap/swap.ts';
 import { getInsertIndex, getTokenAddress, NO_RELAY } from '../../helpers/zap.ts';
 import { mergeTokenAmounts, slipAllBy, slipBy } from '../../helpers/amounts.ts';
-import { walletActions } from '../../../../actions/wallet-actions.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { isCowcentratedVault, type VaultCowcentrated } from '../../../../entities/vault.ts';
 import { type ICowcentratedVaultType, isCowcentratedVaultType } from '../../vaults/IVaultType.ts';
 import type { CowcentratedStrategyConfig } from '../strategy-configs.ts';
 import { QuoteCowcentratedNoSingleSideError, QuoteCowcentratedNotCalmError } from '../error.ts';
 import { encodeFunctionData, type Abi } from 'viem';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -267,11 +267,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const { zapRequest, expectedTokens } = await this.fetchDepositUserlessZapBreakdown(quote);
 
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };
@@ -437,6 +433,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     // Step 1: Withdraw from CLM
     const vaultWithdrawn = await this.vaultType.fetchZapWithdraw({
       inputs: quote.inputs,
+      from: this.helpers.zap.router,
     });
     steps.push(vaultWithdrawn.zap);
 
@@ -520,11 +517,7 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     const zapAction: BeefyThunk = async (dispatch, getState, extraArgument) => {
       const { zapRequest, expectedTokens } = await this.fetchWithdrawUserlessZapBreakdown(quote);
 
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };
@@ -584,8 +577,9 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     const ratios = await clmPool.getDepositRatioData(input, inputPrice, token1Price);
 
     // Token allowances
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,
@@ -603,14 +597,14 @@ class CowcentratedStrategyImpl implements IComposableStrategy<StrategyId> {
     // Swap quotes
     const quoteRequestsPerLpToken: (QuoteRequest | undefined)[] = this.vaultType.depositTokens.map(
       (lpTokenN, i) =>
-        isTokenEqual(lpTokenN, input.token) || swapInAmounts[i].lte(BIG_ZERO)
-          ? undefined
-          : {
-              vaultId: this.vault.id,
-              fromToken: input.token,
-              fromAmount: swapInAmounts[i],
-              toToken: lpTokenN,
-            }
+        isTokenEqual(lpTokenN, input.token) || swapInAmounts[i].lte(BIG_ZERO) ?
+          undefined
+        : {
+            vaultId: this.vault.id,
+            fromToken: input.token,
+            fromAmount: swapInAmounts[i],
+            toToken: lpTokenN,
+          }
     );
 
     const quotesPerLpToken = await Promise.all(
