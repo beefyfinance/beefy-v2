@@ -24,6 +24,7 @@ import { VelodromeV2SolidlyPool } from './solidly/VelodromeV2SolidlyPool.ts';
 import { BVMSolidlyPool } from './solidly/BVMSolidlyPool.ts';
 import { VelodromeV2ModeSolidlyPool } from './solidly/VelodromeV2ModeSolidlyPool.ts';
 import { TokanSolidlyPool } from './solidly/TokanSolidlyPool.ts';
+import { DefiveUniswapV2Pool } from './uniswap-v2/DefiveUniswapV2Pool.ts';
 
 const mapUniswapV2: Record<string, typeof UniswapV2Pool> = {
   'avax-swapsicle': SwapsicleUniswapV2Pool,
@@ -33,6 +34,7 @@ const mapUniswapV2: Record<string, typeof UniswapV2Pool> = {
   'fantom-tombswap': TombSwapUniswapV2Pool,
   'metis-netswap': NetswapUniswapV2Pool,
   'moonbeam-stella': StellaUniswapV2Pool,
+  'sonic-defive': DefiveUniswapV2Pool,
 };
 
 const mapSolidly: Record<string, typeof SolidlyPool> = {
