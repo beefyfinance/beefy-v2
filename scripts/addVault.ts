@@ -41,6 +41,7 @@ async function vaultData(chain: AppChainId, vaultAddress: Address, id: string): 
     : mooToken.startsWith('mooCake') ? 'pancakeswap'
     : mooToken.startsWith('mooThena') ? 'thena'
     : mooToken.startsWith('mooSwapX') ? 'swapx'
+    : mooToken.startsWith('mooBeraPaw') ? 'kodiak'
     : id.substring(0, id.indexOf('-'));
   let platform =
     mooToken.startsWith('mooConvex') ? 'convex'

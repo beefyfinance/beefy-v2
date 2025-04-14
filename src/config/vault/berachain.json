@@ -1,5 +1,64 @@
 [
   {
+    "id": "berapaw-yeet-bera",
+    "name": "YEET-WBERA",
+    "type": "standard",
+    "token": "KODI YEET-WBERA",
+    "tokenAddress": "0xEc8BA456b4e009408d0776cdE8B91f8717D13Fa1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "kodiak",
+    "earnContractAddress": "0xBed4B984E7dC447742C272B63800111d68298008",
+    "earnedToken": "mooBeraPawYEET-WBERA",
+    "earnedTokenAddress": "0xBed4B984E7dC447742C272B63800111d68298008",
+    "oracle": "lps",
+    "oracleId": "berapaw-yeet-bera",
+    "status": "active",
+    "createdAt": 1744626003,
+    "platformId": "kodiak",
+    "assets": ["YEET", "WBERA"],
+    "migrationIds": ["bera-kodiak"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://app.kodiak.finance/#/liquidity/pools/0xEc8BA456b4e009408d0776cdE8B91f8717D13Fa1",
+    "removeLiquidityUrl": "https://app.kodiak.finance/#/liquidity/pools/0xEc8BA456b4e009408d0776cdE8B91f8717D13Fa1",
+    "network": "berachain"
+  },
+  {
+    "id": "berapaw-bera-lbgt",
+    "name": "LBGT-WBERA",
+    "type": "standard",
+    "token": "50WBERA-50LBGT-WEIGHTED",
+    "tokenAddress": "0x705Fc16BA5A1EB67051934F2Fb17EacaE660F6c7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "bex",
+    "earnContractAddress": "0x19c8D0aBf53c65D1d4f0ac9951041EcA6213bEd7",
+    "earnedToken": "mooBeraPawWBERA-LBGT",
+    "earnedTokenAddress": "0x19c8D0aBf53c65D1d4f0ac9951041EcA6213bEd7",
+    "oracle": "lps",
+    "oracleId": "berapaw-bera-lbgt",
+    "status": "active",
+    "createdAt": 1744625992,
+    "platformId": "bex",
+    "assets": ["LBGT", "WBERA"],
+    "migrationIds": [],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://hub.berachain.com/pools/0x705fc16ba5a1eb67051934f2fb17eacae660f6c70002000000000000000000d5/deposit/",
+    "network": "berachain",
+    "zaps": [
+      {
+        "strategyId": "balancer",
+        "ammId": "berachain-beraswap",
+        "poolId": "0x705fc16ba5a1eb67051934f2fb17eacae660f6c70002000000000000000000d5",
+        "poolType": "weighted",
+        "tokens": [
+          "0x6969696969696969696969696969696969696969",
+          "0xBaadCC2962417C01Af99fb2B7C75706B9bd6Babe"
+        ]
+      }
+    ]
+  },
+  {
     "id": "kodiak-bera-honey",
     "name": "WBERA-HONEY",
     "type": "standard",
