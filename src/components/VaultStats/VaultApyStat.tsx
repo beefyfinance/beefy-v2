@@ -23,7 +23,6 @@ import ExclamationWarning from '../../images/icons/exclamation-warning.svg?react
 import { DivWithTooltip } from '../Tooltip/DivWithTooltip.tsx';
 import { styled } from '@repo/styles/jsx';
 import { differenceInDays } from 'date-fns';
-import { css } from '@repo/styles/css';
 
 export type VaultApyStatProps = Omit<
   VaultValueStatProps,
@@ -89,28 +88,33 @@ export const VaultApyStat = memo(function VaultApyStat({
   const showAvgApyTooltip = avgApySort !== 'default' && type === 'yearly';
 
   return (
-    <Container className={css(isBoosted && styles.boosted)}>
-      <VaultValueStat
-        label={label}
-        value={value}
-        subValue={subValue}
-        tooltip={
-          showAvgApyTooltip ?
-            <AvgApyTooltipContent currentApy={formatted[totalKey]} avgApy={avgApy} />
-          : <ApyTooltipContent
-              vaultId={vaultId}
-              type={type}
-              isBoosted={isBoosted}
-              rates={formatted}
-            />
-        }
-        blur={false}
-        loading={false}
-        boosted={isBoosted}
-        {...rest}
-      />
-      {showAvgApyTooltip && <AvgApyTooltipWarning isBoosted={isBoosted} vaultId={vaultId} />}
-    </Container>
+    <VaultValueStat
+      label={label}
+      value={
+        <Container>
+          <DivWithTooltip
+            tooltip={
+              showAvgApyTooltip ?
+                <AvgApyTooltipContent currentApy={formatted[totalKey]} avgApy={avgApy} />
+              : <ApyTooltipContent
+                  vaultId={vaultId}
+                  type={type}
+                  isBoosted={isBoosted}
+                  rates={formatted}
+                />
+            }
+          >
+            {value}
+          </DivWithTooltip>
+          {showAvgApyTooltip && <AvgApyTooltipWarning isBoosted={isBoosted} vaultId={vaultId} />}
+        </Container>
+      }
+      subValue={subValue}
+      blur={false}
+      loading={false}
+      boosted={isBoosted}
+      {...rest}
+    />
   );
 });
 
@@ -240,12 +244,6 @@ export const AvgApyTooltipWarning = memo(function AvgApyTooltipWarning({
   );
 });
 
-const styles = {
-  boosted: css.raw({
-    alignItems: 'baseline',
-  }),
-};
-
 const Warning = styled(ExclamationWarning, {
   base: {
     width: ' 12px;',
@@ -266,6 +264,9 @@ export const Container = styled('div', {
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
+    lg: {
+      justifyContent: 'flex-end',
+    },
   },
 });
