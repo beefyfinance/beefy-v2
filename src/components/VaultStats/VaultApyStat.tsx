@@ -89,7 +89,7 @@ export const VaultApyStat = memo(function VaultApyStat({
   const showAvgApyTooltip = avgApySort !== 'default' && type === 'yearly';
 
   return (
-    <Container>
+    <Container className={css(isBoosted && styles.boosted)}>
       <VaultValueStat
         label={label}
         value={value}
@@ -191,7 +191,7 @@ export const AvgApyTooltipContent = memo(function AvgApyTooltipContent({
     return items;
   }, [currentApy, avgApy.avg7d, avgApy.avg30d, avgApy.avg90d]);
 
-  return <InterestTooltipContent rows={rows} />;
+  return <InterestTooltipContent highLightLast={false} rows={rows} />;
 });
 
 export const AvgApyTooltipWarning = memo(function AvgApyTooltipWarning({
@@ -231,7 +231,6 @@ export const AvgApyTooltipWarning = memo(function AvgApyTooltipWarning({
 
   return (
     <DivWithTooltip
-      className={css(isBoosted && styles.boosted)}
       tooltip={t('AvgApyTooltip-Warning', {
         days: daysSinceCreation,
       })}

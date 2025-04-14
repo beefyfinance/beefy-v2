@@ -1,9 +1,6 @@
 import { Fragment, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { legacyMakeStyles } from '../../helpers/mui.ts';
-import { styles } from './styles.ts';
-
-const useStyles = legacyMakeStyles(styles);
+import { styled } from '@repo/styles/jsx';
 
 export type InterestTooltipContentProps = {
   rows: {
@@ -11,22 +8,66 @@ export type InterestTooltipContentProps = {
     value: string;
     labelTextParams?: Record<string, string>;
   }[];
+  highLightLast?: boolean;
 };
 
 export const InterestTooltipContent = memo(function InterestTooltipContent({
   rows,
+  highLightLast = true,
 }: InterestTooltipContentProps) {
   const { t } = useTranslation();
-  const classes = useStyles();
 
   return (
-    <div className={classes.rows}>
+    <Rows>
       {rows.map(({ label, value, labelTextParams }) => (
         <Fragment key={typeof label === 'string' ? label : label[0]}>
-          <div className={classes.label}>{t(label, labelTextParams)}</div>
-          <div className={classes.value}>{t(value)}</div>
+          <Label highLightLast={highLightLast}>{t(label, labelTextParams)}</Label>
+          <Value highLightLast={highLightLast}>{t(value)}</Value>
         </Fragment>
       ))}
-    </div>
+    </Rows>
   );
+});
+
+const Rows = styled('div', {
+  base: {
+    textStyle: 'body',
+    display: 'grid',
+    rowGap: '8px',
+    columnGap: '48px',
+    gridTemplateColumns: '1fr auto',
+  },
+});
+
+const Label = styled('div', {
+  base: {
+    color: 'colorPalette.text.label',
+  },
+  variants: {
+    highLightLast: {
+      true: {
+        '&:nth-last-child(2)': {
+          fontWeight: 'medium',
+          color: 'colorPalette.text.title',
+        },
+      },
+    },
+  },
+});
+
+const Value = styled('div', {
+  base: {
+    color: 'colorPalette.text.item',
+    textAlign: 'right',
+  },
+  variants: {
+    highLightLast: {
+      true: {
+        '&:last-child': {
+          fontWeight: 'medium',
+          color: 'colorPalette.text.title',
+        },
+      },
+    },
+  },
 });
