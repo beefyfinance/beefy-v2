@@ -1,5 +1,102 @@
 [
   {
+    "id": "shadow-cow-sonic-ws-bes-vault",
+    "name": "beS-wS",
+    "type": "standard",
+    "token": "beS-wS",
+    "tokenAddress": "0xa9dD662358ca26F80c7A1ee12cEaE463a6D6Dd42",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0xB94932EdbD9406c0646c02bAAEa4F768F450f603",
+    "earnedToken": "mooCowShadowSonicbeS-wS",
+    "earnedTokenAddress": "0xB94932EdbD9406c0646c02bAAEa4F768F450f603",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-bes",
+    "status": "active",
+    "createdAt": 1744660816,
+    "platformId": "shadow",
+    "assets": ["beS", "S"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-ws-bes-rp",
+    "name": "beS-wS Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowShadowSonicbeS-wS",
+    "tokenAddress": "0xa9dD662358ca26F80c7A1ee12cEaE463a6D6Dd42",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0x0E9f382e4523B42e503A1A8f0dBFFB272820F893",
+    "earnedToken": "rCowShadowSonicbeS-wS",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [
+      "0x871A101Dcf22fE4fE37be7B654098c801CBA1c88",
+      "0x3333b97138D4b086720b5aE8A7844b1345a33333"
+    ],
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-bes",
+    "status": "active",
+    "createdAt": 1744660815,
+    "platformId": "shadow",
+    "assets": ["beS", "S"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-ws-bes",
+    "name": "beS-wS",
+    "type": "cowcentrated",
+    "token": "beS-wS shadow",
+    "tokenAddress": "0xFc4060dB484F759B822B3AEA7e85826C61F9DFD8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "depositTokenAddresses": [
+      "0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38",
+      "0x871A101Dcf22fE4fE37be7B654098c801CBA1c88"
+    ],
+    "earnContractAddress": "0xa9dD662358ca26F80c7A1ee12cEaE463a6D6Dd42",
+    "earnedToken": "cowShadowSonicbeS-wS",
+    "earnedTokenAddress": "0xa9dD662358ca26F80c7A1ee12cEaE463a6D6Dd42",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-bes",
+    "status": "active",
+    "createdAt": 1744660815,
+    "platformId": "beefy",
+    "feeTier": "0.01",
+    "assets": ["beS", "S"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "defive-ws-five",
     "name": "FIVE-wS",
     "type": "standard",
