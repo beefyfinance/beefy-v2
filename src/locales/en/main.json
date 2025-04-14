@@ -880,5 +880,5 @@
   "RpcModal-InputPlaceholder": "Enter the RPC URL",
   "RpcModal-InvalidRpc": "Please insert a valid RPC",
   "RpcModal-EmptyList": "You can modify Beefy’s default RPC for each chain. Once modified, it will be used for the connection until it is removed.",
-  "AvgApyTooltip-Warning": "This vault has only been live for {{days}} days, so APY is calculated overthat period"
+  "AvgApyTooltip-Warning": "This vault has only been live for {{days}} days, so APY is calculated over that period"
 }

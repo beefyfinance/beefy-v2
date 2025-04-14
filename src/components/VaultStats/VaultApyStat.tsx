@@ -78,6 +78,13 @@ export const VaultApyStat = memo(function VaultApyStat({
     : avgApySort === 'default' ? formatted[totalKey]
     : formatLargePercent(avgApy[avgApySort], 2, '???');
 
+  const subValue =
+    isBoosted ?
+      avgApySort === 'default' ?
+        formatted[totalKey]
+      : formatLargePercent(avgApy[avgApySort], 2, '???')
+    : undefined;
+
   const showAvgApyTooltip = avgApySort !== 'default' && type === 'yearly';
 
   return (
@@ -85,7 +92,7 @@ export const VaultApyStat = memo(function VaultApyStat({
       <VaultValueStat
         label={label}
         value={value}
-        subValue={isBoosted ? formatted[totalKey] : undefined}
+        subValue={subValue}
         tooltip={
           showAvgApyTooltip ?
             <AvgApyTooltipContent currentApy={formatted[totalKey]} avgApy={avgApy} />
