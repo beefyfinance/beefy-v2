@@ -71,10 +71,10 @@ const config = buildConfig(
     // Browserslist for lightningcss
     browserslist: isProduction
       ? [
-          '>0.1% and fully supports es6-module and fully supports es6-module-dynamic-import',
-          'not dead',
-          'not op_mini all',
-        ]
+        '>0.1% and fully supports es6-module and fully supports es6-module-dynamic-import',
+        'not dead',
+        'not op_mini all',
+      ]
       : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
     // Where css variables are defined
     cssVarRoot: ':root',
@@ -569,6 +569,8 @@ const config = buildConfig(
             footer: { value: '{colors.headerFooterBackground}' },
             border: { value: '{colors.bayOfMany}' },
             button: { value: '{colors.bayOfMany}' },
+            darkBlue80: { value: '{colors.darkblue.80}' },
+            darkBlue60: { value: '{colors.darkblue.60}' },
             content: {
               DEFAULT: { value: '{colors.blackMarket}' },
               dark: { value: '{colors.eclipseElixir}' },
