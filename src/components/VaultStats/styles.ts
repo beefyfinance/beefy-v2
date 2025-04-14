@@ -91,6 +91,6 @@ export const styles = {
     color: 'inherit',
   }),
   depositIconNotEarning: css.raw({
-    color: 'orangeBoost',
+    color: 'text.boosted',
   }),
 };

@@ -39,7 +39,7 @@ export const styles = {
     },
   }),
   titleBoost: css.raw({
-    color: 'text.notification',
+    color: 'text.boosted',
   }),
   labelsHolder: css.raw({
     display: 'flex',

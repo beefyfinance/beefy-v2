@@ -11,6 +11,6 @@ export const styles = {
     },
   }),
   boostText: css.raw({
-    color: 'background.vaults.boost',
+    color: 'text.boosted',
   }),
 };

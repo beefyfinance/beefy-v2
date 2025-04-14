@@ -26,7 +26,7 @@ const useStyles = legacyMakeStyles({
   boostedBy: css.raw({
     textStyle: 'h2',
     margin: '0',
-    color: 'background.vaults.boost',
+    color: 'text.boosted',
     flexGrow: '1',
     '& span': {
       color: 'text.light',

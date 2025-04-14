@@ -17,7 +17,7 @@ export const styles = {
     filter: 'blur(.5rem)',
   }),
   boostedValue: css.raw({
-    color: 'background.vaults.boost',
+    color: 'text.boosted',
   }),
   lineThroughValue: css.raw({
     textDecoration: 'line-through',

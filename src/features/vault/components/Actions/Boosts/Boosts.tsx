@@ -1,8 +1,8 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { useAppSelector } from '../../../../../store.ts';
 import {
   selectPastBoostIdsWithUserBalance,
-  selectVaultCurrentBoostIdWithStatus,
+  selectVaultCurrentBoostId,
 } from '../../../../data/selectors/boosts.ts';
 import { ActiveBoost } from './ActiveBoost.tsx';
 import { PastBoosts } from './PastBoosts.tsx';
@@ -11,16 +11,16 @@ import { selectTransactVaultId } from '../../../../data/selectors/transact.ts';
 
 export const Boosts = memo(function Boosts() {
   const vaultId = useAppSelector(selectTransactVaultId);
-  const boost = useAppSelector(state => selectVaultCurrentBoostIdWithStatus(state, vaultId));
+  const boostId = useAppSelector(state => selectVaultCurrentBoostId(state, vaultId));
   const hasPast =
     useAppSelector(state => selectPastBoostIdsWithUserBalance(state, vaultId)).length > 0;
-  const showDivider = useMemo(() => hasPast && boost, [hasPast, boost]);
+  const showDivider = hasPast && !!boostId;
 
   return (
     <Container>
       {hasPast && <PastBoosts vaultId={vaultId} />}
       {showDivider && <Divider />}
-      {boost && <ActiveBoost boostId={boost.id} />}
+      {boostId && <ActiveBoost boostId={boostId} />}
     </Container>
   );
 });

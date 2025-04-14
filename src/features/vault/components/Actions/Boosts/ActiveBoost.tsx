@@ -1,4 +1,4 @@
-import { memo, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { selectVaultById } from '../../../../data/selectors/vaults.ts';
 import { selectBoostActiveRewards, selectBoostById } from '../../../../data/selectors/boosts.ts';
 import type { BoostPromoEntity } from '../../../../data/entities/promo.ts';
@@ -16,10 +16,11 @@ import { Unstake } from './ActionButton/Unstake.tsx';
 import { StakeInput } from './ActionInputButton/StakeInput.tsx';
 import { UnstakeInput } from './ActionInputButton/UnstakeInput.tsx';
 import { styled } from '@repo/styles/jsx';
-import { StakeCountdown } from './StakeCountdown/StakeCountdown.tsx';
 import { Trans, useTranslation } from 'react-i18next';
-import { sortBy } from 'lodash-es';
+import { maxBy } from 'lodash-es';
 import { selectBoostAprByRewardToken } from '../../../../data/selectors/apy.ts';
+import { TimeUntil } from '../../../../../components/TimeUntil/TimeUntil.tsx';
+
 export const ActiveBoost = memo(function ActiveBoost({
   boostId,
 }: {
@@ -69,24 +70,27 @@ export const ActiveBoost = memo(function ActiveBoost({
   const balanceInBoost = useAppSelector(state => selectBoostUserBalanceInToken(state, boost.id));
   const canUnstake = balanceInBoost.gt(BIG_ZERO);
   const [open, toggleOpen] = useAccordion<'stake' | 'unstake'>(canStake ? 'stake' : undefined);
-
-  const reward = useMemo(() => {
-    // get the longest period finish
-    return sortBy(rewards, 'periodFinish').reverse()[0];
-  }, [rewards]);
+  const reward = useMemo(() => maxBy(rewards, r => r.periodFinish?.getTime() || 0), [rewards]);
+  const renderFuture = useCallback(
+    (timeLeft: string) => <Trans t={t} i18nKey="Boost-Ends" values={{ timeLeft }} />,
+    [t]
+  );
 
   return (
     <BoostActionContainer>
       <CardBoostContainer>
-        <BoostCountdown>
-          {reward.periodFinish ?
-            <Trans
-              t={t}
-              i18nKey="Boost-Ends"
-              components={{ countdown: <StakeCountdown periodFinish={reward.periodFinish} /> }}
+        {reward?.periodFinish && (
+          <BoostCountdown>
+            <TimeUntil
+              time={reward.periodFinish}
+              minParts={1}
+              maxParts={3}
+              padLength={2}
+              renderFuture={renderFuture}
+              renderPast={<>{t('Finished')}</>}
             />
-          : '-'}
-        </BoostCountdown>
+          </BoostCountdown>
+        )}
         <Rewards isInBoost={canUnstake} rewards={rewards} />
       </CardBoostContainer>
       <ActionConnectSwitch chainId={boost.chainId}>
@@ -145,17 +149,17 @@ const CardBoostContainer = styled('div', {
 const BoostCountdown = styled('div', {
   base: {
     position: 'absolute',
+    colorPalette: 'status.waiting',
     top: '0',
     right: '0',
     textStyle: 'body.sm',
-    textTransform: 'none',
-    color: 'text.notification',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    background: 'background.content.notification',
-    borderRadius: '0px 8px 0px 8px',
-    padding: '2px 8px',
+    color: 'colorPalette.text',
+    backgroundColor: 'colorPalette.background',
+    borderRadius: '0px 8px 0px 3px',
+    padding: '0px 8px',
   },
 });
 

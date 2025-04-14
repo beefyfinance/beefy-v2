@@ -30,7 +30,7 @@ export const styles = {
   }),
   title: css.raw({
     textStyle: 'h2',
-    color: 'background.vaults.boost',
+    color: 'text.boosted',
     display: 'flex',
     alignItems: 'center',
   }),

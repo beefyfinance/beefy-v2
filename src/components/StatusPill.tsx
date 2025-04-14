@@ -1,7 +1,7 @@
 import { css, cva, type RecipeVariant } from '@repo/styles/css';
 import { type FC, memo, type SVGProps } from 'react';
-import ConfirmationIcon from '../../images/icons/mark-marked.svg?react';
-import TeaserIcon from '../../images/icons/clock.svg?react';
+import ConfirmationIcon from '../images/icons/mark-marked.svg?react';
+import TeaserIcon from '../images/icons/clock.svg?react';
 
 const pillRecipe = cva({
   base: {
@@ -10,23 +10,23 @@ const pillRecipe = cva({
     alignItems: 'center',
     flexShrink: '0',
     gap: '4px',
-    color: 'colorPalette.primary',
+    color: 'colorPalette.text',
     backgroundColor: 'colorPalette.background',
     textStyle: 'body.sm.medium',
     borderRadius: '36px',
   },
   variants: {
     mode: {
-      confirmation: {
-        colorPalette: 'notification.confirmation',
+      ready: {
+        colorPalette: 'status.ready',
       },
-      teaser: {
-        colorPalette: 'notification.teaser',
+      waiting: {
+        colorPalette: 'status.waiting',
       },
     },
   },
   defaultVariants: {
-    mode: 'confirmation',
+    mode: 'ready',
   },
 });
 
@@ -39,8 +39,8 @@ const iconClass = css({
 });
 
 const defaultIcons: Record<Mode, FC<SVGProps<SVGSVGElement>>> = {
-  confirmation: ConfirmationIcon,
-  teaser: TeaserIcon,
+  ready: ConfirmationIcon,
+  waiting: TeaserIcon,
 };
 
 type NotificationPillProps = {
@@ -50,11 +50,11 @@ type NotificationPillProps = {
   mode?: Mode;
 };
 
-export const NotificationPill = memo(function NotificationPill({
+export const StatusPill = memo(function NotificationPill({
   text,
   Icon,
   iconPosition = 'left',
-  mode = 'confirmation',
+  mode = 'ready',
 }: NotificationPillProps) {
   const IconComponent = Icon || defaultIcons[mode];
 

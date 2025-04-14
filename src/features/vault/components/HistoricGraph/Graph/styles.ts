@@ -46,7 +46,7 @@ export const styles = {
     color: 'green',
   }),
   outOfRange: css.raw({
-    color: 'orangeBoost',
+    color: 'text.boosted',
   }),
   value: css.raw({
     textStyle: 'body.medium',

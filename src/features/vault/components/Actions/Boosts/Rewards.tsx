@@ -25,24 +25,20 @@ export const Rewards = memo(function Rewards({ isInBoost, rewards }: RewardsProp
   const { t } = useTranslation();
 
   return (
-    <>
-      <Value>
-        <Label>{t('Boost-Rewards')}</Label>
-        <RewardsContainer>
-          {rewards.map(reward => (
-            <Amount key={reward.token.address}>
-              {isInBoost && (
-                <TokenAmount amount={reward.pending} decimals={reward.token.decimals} />
-              )}
-              {reward.token.symbol}
-              <TokenImageFromEntity token={reward.token} size={24} />
+    <Value>
+      <Label>{t('Boost-Rewards')}</Label>
+      <RewardsContainer>
+        {rewards.map(reward => (
+          <Amount key={reward.token.address}>
+            {isInBoost && <TokenAmount amount={reward.pending} decimals={reward.token.decimals} />}
+            {reward.token.symbol}
+            <TokenImageFromEntity token={reward.token} size={24} />
 
-              <Reward reward={reward} apr={reward.apr} />
-            </Amount>
-          ))}
-        </RewardsContainer>
-      </Value>
-    </>
+            <Reward reward={reward} apr={reward.apr} />
+          </Amount>
+        ))}
+      </RewardsContainer>
+    </Value>
   );
 });
 
