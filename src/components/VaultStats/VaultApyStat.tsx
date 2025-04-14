@@ -23,6 +23,7 @@ import ExclamationWarning from '../../images/icons/exclamation-warning.svg?react
 import { DivWithTooltip } from '../Tooltip/DivWithTooltip.tsx';
 import { styled } from '@repo/styles/jsx';
 import { differenceInDays } from 'date-fns';
+import { css } from '@repo/styles/css';
 
 export type VaultApyStatProps = Omit<
   VaultValueStatProps,
@@ -80,8 +81,8 @@ export const VaultApyStat = memo(function VaultApyStat({
 
   const subValue =
     isBoosted ?
-      avgApySort === 'default' ?
-        formatted[totalKey]
+      type === 'daily' ? formatted[totalKey]
+      : avgApySort === 'default' ? formatted[totalKey]
       : formatLargePercent(avgApy[avgApySort], 2, '???')
     : undefined;
 
@@ -230,6 +231,7 @@ export const AvgApyTooltipWarning = memo(function AvgApyTooltipWarning({
 
   return (
     <DivWithTooltip
+      className={css(isBoosted && styles.boosted)}
       tooltip={t('AvgApyTooltip-Warning', {
         days: daysSinceCreation,
       })}
@@ -238,6 +240,12 @@ export const AvgApyTooltipWarning = memo(function AvgApyTooltipWarning({
     </DivWithTooltip>
   );
 });
+
+const styles = {
+  boosted: css.raw({
+    alignItems: 'baseline',
+  }),
+};
 
 const Warning = styled(ExclamationWarning, {
   base: {
