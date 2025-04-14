@@ -569,8 +569,6 @@ const config = buildConfig(
             footer: { value: '{colors.headerFooterBackground}' },
             border: { value: '{colors.bayOfMany}' },
             button: { value: '{colors.bayOfMany}' },
-            darkBlue80: { value: '{colors.darkblue.80}' },
-            darkBlue60: { value: '{colors.darkblue.60}' },
             content: {
               DEFAULT: { value: '{colors.blackMarket}' },
               dark: { value: '{colors.eclipseElixir}' },

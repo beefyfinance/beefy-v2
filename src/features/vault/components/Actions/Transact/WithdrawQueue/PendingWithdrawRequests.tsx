@@ -84,7 +84,7 @@ const Layout = styled('div', {
 const Divider = styled('div', {
   base: {
     height: '1px',
-    backgroundColor: 'background.darkBlue60',
+    backgroundColor: 'darkblue.60',
     marginTop: '20px',
   },
 });
