@@ -19,7 +19,7 @@ export const styles = {
     },
     md: {
       display: 'grid',
-      gridTemplateColumns: 'minmax(0,666fr) minmax(0,333fr)',
+      gridTemplateColumns: 'minmax(0,666fr) minmax(336px,333fr)',
     },
   }),
   columnActions: css.raw({
