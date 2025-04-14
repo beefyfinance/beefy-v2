@@ -5,9 +5,12 @@ import { orderBy } from 'lodash-es';
 import { selectTokenPriceByAddress } from './tokens.ts';
 import { selectWalletAddressIfKnown } from './wallet.ts';
 import {
+  selectAddressHasVaultPendingWithdrawal,
+  selectBoostUserRewardsInToken,
   selectUserBalanceOfToken,
   selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInShareTokenInBoosts,
+  selectUserVaultBalanceInShareTokenIncludingDisplaced,
+  selectUserVaultBalanceNotInActiveBoostInShareToken,
 } from './balance.ts';
 import {
   type TokenAmount,
@@ -31,10 +34,13 @@ import {
 import { selectVaultById } from './vaults.ts';
 import { isSingleGovVault, type VaultEntity } from '../entities/vault.ts';
 import { extractTagFromLpSymbol } from '../../../helpers/tokens.ts';
-import { selectAllVaultBoostIds, selectPastBoostIdsWithUserBalance } from './boosts.ts';
-import { selectPreStakeOrActiveBoostIds } from './boosts.ts';
-import { selectBoostUserRewardsInToken } from './balance.ts';
+import {
+  selectAllVaultBoostIds,
+  selectPastBoostIdsWithUserBalance,
+  selectPreStakeOrActiveBoostIds,
+} from './boosts.ts';
 import type { BoostReward } from '../apis/balance/balance-types.ts';
+import type { PulseHighlightProps } from '../../vault/components/PulseHighlight/PulseHighlight.tsx';
 
 export const selectTransactStep = (state: BeefyState) => state.ui.transact.step;
 export const selectTransactVaultId = (state: BeefyState) =>
@@ -350,12 +356,18 @@ export const selectTransactShouldShowClaimsNotification = createSelector(
   selectConnectedUserHasGovRewardsForVault,
   selectConnectedUserHasMerklRewardsForVault,
   selectConnectedUserHasStellaSwapRewardsForVault,
-  (userHasUnclaimedGovRewards, userHasUnclaimedMerklRewards, userHasUnclaimedStellaSwapRewards) => {
+  (
+    userHasUnclaimedGovRewards,
+    userHasUnclaimedMerklRewards,
+    userHasUnclaimedStellaSwapRewards
+  ): PulseHighlightProps['variant'] | false => {
     return (
-      userHasUnclaimedGovRewards ||
-      userHasUnclaimedMerklRewards ||
-      userHasUnclaimedStellaSwapRewards
-    );
+        userHasUnclaimedGovRewards ||
+          userHasUnclaimedMerklRewards ||
+          userHasUnclaimedStellaSwapRewards
+      ) ?
+        'success'
+      : false;
   }
 );
 
@@ -373,22 +385,45 @@ export const selectTransactShouldShowBoostNotification = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
-): boolean => {
-  const balance = selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, walletAddress);
-
-  if (balance.gt(BIG_ZERO)) {
-    return true;
-  }
-
-  const boostIds = selectAllVaultBoostIds(state, vaultId);
-
-  // Check each boost for claimable rewards
-  for (const boostId of boostIds) {
-    const userRewards = selectBoostUserRewardsInToken(state, boostId, walletAddress);
-    if (userRewards.some((reward: BoostReward) => reward.amount.gt(BIG_ZERO))) {
-      return true;
+): PulseHighlightProps['variant'] | false => {
+  // unclaimed rewards: green
+  const boosts = selectAllVaultBoostIds(state, vaultId);
+  for (const boostId of boosts) {
+    const boostRewards = selectBoostUserRewardsInToken(state, boostId, walletAddress) || [];
+    if (boostRewards.some((reward: BoostReward) => reward.amount.gt(BIG_ZERO))) {
+      return 'success';
     }
   }
 
+  // in vault but not in boost: yellow
+  if (
+    selectUserVaultBalanceInShareTokenIncludingDisplaced(state, vaultId).gt(BIG_ZERO) &&
+    selectUserVaultBalanceNotInActiveBoostInShareToken(state, vaultId).gt(BIG_ZERO)
+  ) {
+    return 'warning';
+  }
+
   return false;
+};
+
+export const selectTransactShouldShowWithdrawNotification = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+): PulseHighlightProps['variant'] | false => {
+  const requests = selectAddressHasVaultPendingWithdrawal(state, vaultId, walletAddress);
+  switch (requests) {
+    case 'claimable': {
+      return 'success';
+    }
+    case 'pending': {
+      return 'warning';
+    }
+    case false: {
+      return false;
+    }
+    default: {
+      throw new Error(`Unknown pending withdrawal status: ${requests}`);
+    }
+  }
 };

@@ -7,14 +7,15 @@ import {
   selectTransactShouldShowBoostNotification,
   selectTransactShouldShowClaims,
   selectTransactShouldShowClaimsNotification,
+  selectTransactShouldShowWithdrawNotification,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
-import { CardHeaderTabs } from '../../../Card/CardHeaderTabs.tsx';
+import { CardHeaderTabs, type TabOption } from '../../../Card/CardHeaderTabs.tsx';
 import { transactFetchOptions } from '../../../../../data/actions/transact.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
-import { selectUserHasDepositedInActiveBoost } from '../../../../../data/selectors/boosts.ts';
+import type { BeefyState } from '../../../../../../redux-types.ts';
 
 const DepositFormLoader = lazy(() => import('../DepositForm/DepositForm.tsx'));
 const ClaimFormLoader = lazy(() => import('../ClaimForm/ClaimForm.tsx'));
@@ -35,16 +36,6 @@ export const FormStep = memo(function FormStep() {
   const vaultId = useAppSelector(selectTransactVaultId);
   const showClaim = useAppSelector(state => selectTransactShouldShowClaims(state, vaultId));
   const showBoost = useAppSelector(state => selectTransactShouldShowBoost(state, vaultId));
-  const highlightClaim = useAppSelector(state =>
-    selectTransactShouldShowClaimsNotification(state, vaultId)
-  );
-  const highlightBoost = useAppSelector(state =>
-    selectTransactShouldShowBoostNotification(state, vaultId)
-  );
-  const hasDepositedInActiveBoost = useAppSelector(state =>
-    selectUserHasDepositedInActiveBoost(state, vaultId)
-  );
-
   const Component = modeToComponent[mode];
   const handleModeChange = useCallback(
     (newMode: string) => {
@@ -53,32 +44,38 @@ export const FormStep = memo(function FormStep() {
     [dispatch]
   );
   const modeOptions = useMemo(
-    () => [
-      { value: TransactMode.Deposit.toString(), label: t('Transact-Deposit') },
-      ...(showClaim ? [{ value: TransactMode.Claim.toString(), label: t('Transact-Claim') }] : []),
-      ...(showBoost ? [{ value: TransactMode.Boost.toString(), label: t('Transact-Boost') }] : []),
-      { value: TransactMode.Withdraw.toString(), label: t('Transact-Withdraw') },
-    ],
-    [t, showClaim, showBoost]
+    () =>
+      [
+        { value: TransactMode.Deposit.toString(), label: t('Transact-Deposit') },
+        ...(showClaim ?
+          [
+            {
+              value: TransactMode.Claim.toString(),
+              label: t('Transact-Claim'),
+              shouldHighlight: (state: BeefyState) =>
+                selectTransactShouldShowClaimsNotification(state, vaultId),
+            },
+          ]
+        : []),
+        ...(showBoost ?
+          [
+            {
+              value: TransactMode.Boost.toString(),
+              label: t('Transact-Boost'),
+              shouldHighlight: (state: BeefyState) =>
+                selectTransactShouldShowBoostNotification(state, vaultId),
+            },
+          ]
+        : []),
+        {
+          value: TransactMode.Withdraw.toString(),
+          label: t('Transact-Withdraw'),
+          shouldHighlight: (state: BeefyState) =>
+            selectTransactShouldShowWithdrawNotification(state, vaultId),
+        },
+      ] satisfies Array<TabOption>,
+    [t, vaultId, showClaim, showBoost]
   );
-
-  const highlight = useMemo(() => {
-    return highlightBoost
-      ? TransactMode.Boost.toString()
-      : highlightClaim
-        ? TransactMode.Claim.toString()
-        : undefined;
-  }, [highlightBoost, highlightClaim]);
-
-  const highLightClassName = useMemo(() => {
-    return highlight === TransactMode.Claim.toString()
-      ? 'success'
-      : highlight === TransactMode.Boost.toString()
-        ? hasDepositedInActiveBoost
-          ? 'success'
-          : 'warning'
-        : 'loading';
-  }, [hasDepositedInActiveBoost, highlight]);
 
   useEffect(() => {
     // only dispatches if vaultId or mode changes
@@ -91,8 +88,6 @@ export const FormStep = memo(function FormStep() {
         selected={mode.toString()}
         options={modeOptions}
         onChange={handleModeChange}
-        highlight={highlight}
-        variant={highLightClassName}
       />
       <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} />}>
         <Component />
