@@ -1,22 +1,22 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import type { FC, ReactNode } from 'react';
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@repo/styles/jsx';
+import SortArrow from '../../images/icons/sortArrow.svg?react';
 
 type SortIconProps = {
   direction: 'none' | 'asc' | 'desc';
 };
 const SortIcon = memo(function SortIcon({ direction }: SortIconProps) {
+  const isActive = useMemo(() => {
+    return direction !== 'none';
+  }, [direction]);
+
   return (
-    <SortIconContainer xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 9">
-      <path
-        className={css(direction === 'asc' && styles.sortIconHighlight)}
-        d="M2.463.199.097 2.827a.375.375 0 0 0 .279.626h5.066a.375.375 0 0 0 .278-.626L3.355.199a.6.6 0 0 0-.892 0Z"
-      />
-      <path
-        className={css(direction === 'desc' && styles.sortIconHighlight)}
-        d="M3.355 8.208 5.72 5.579a.375.375 0 0 0-.278-.626H.376a.375.375 0 0 0-.279.626l2.366 2.629a.601.601 0 0 0 .892 0Z"
+    <SortIconContainer>
+      <SortArrow
+        className={css(isActive && styles.sortIconHighlight, direction === 'asc' && styles.asc)}
       />
     </SortIconContainer>
   );
@@ -71,17 +71,21 @@ export const SortColumnHeader = memo(function SortColumnHeader<TValue extends st
 
 const styles = {
   sortIconHighlight: css.raw({
-    fill: 'text.light',
+    color: 'text.light',
+  }),
+  asc: css.raw({
+    transform: 'rotate(180deg)',
   }),
 };
 
-const SortIconContainer = styled('svg', {
+const SortIconContainer = styled('div', {
   base: {
-    marginLeft: '8px',
     width: '9px',
     height: '12px',
-    fill: 'currentColor',
-    display: 'block',
+    display: 'flex',
+    color: 'text.dark',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
@@ -96,8 +100,11 @@ const SortColumnButton = styled('button', {
     background: 'transparent',
     border: 'none',
     boxShadow: 'none',
+    gap: '8px',
     padding: '0',
-    cursor: 'pointer',
+    '&:hover': {
+      color: 'text.light',
+    },
   },
 });
 
