@@ -1,6 +1,6 @@
 import { css, type CssStyles } from '@repo/styles/css';
 import type { FC, ReactNode } from 'react';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styled } from '@repo/styles/jsx';
 import SortArrow from '../../images/icons/sortArrow.svg?react';
@@ -9,15 +9,10 @@ type SortIconProps = {
   direction: 'none' | 'asc' | 'desc';
 };
 const SortIcon = memo(function SortIcon({ direction }: SortIconProps) {
-  const isActive = useMemo(() => {
-    return direction !== 'none';
-  }, [direction]);
-
   return (
     <SortIconContainer>
-      <SortArrow
-        className={css(isActive && styles.sortIconHighlight, direction === 'asc' && styles.asc)}
-      />
+      <SortArrow className={css(direction === 'asc' && styles.sortIconHighlight, styles.asc)} />
+      <SortArrow className={css(direction === 'desc' && styles.sortIconHighlight)} />
     </SortIconContainer>
   );
 });
@@ -83,6 +78,8 @@ const SortIconContainer = styled('div', {
     width: '9px',
     height: '12px',
     display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
     color: 'text.dark',
     alignItems: 'center',
     justifyContent: 'center',
