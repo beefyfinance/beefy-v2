@@ -38,6 +38,9 @@ export const styles = {
       order: '10',
     },
   }),
+  titleBoost: css.raw({
+    color: 'text.boosted',
+  }),
   labelsHolder: css.raw({
     display: 'flex',
     rowGap: '24px',

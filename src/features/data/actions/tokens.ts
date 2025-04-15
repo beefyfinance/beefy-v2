@@ -139,8 +139,9 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
     );
 
     const contractDataApi = await getContractDataApi(chain);
-    const contractData: FetchAllContractDataResult = govVault
-      ? await contractDataApi.fetchAllContractData(getState(), {
+    const contractData: FetchAllContractDataResult =
+      govVault ?
+        await contractDataApi.fetchAllContractData(getState(), {
           govVaults: govVaultSingle ? [govVaultSingle] : [],
           govVaultsMulti: govVaultMulti ? [govVaultMulti] : [],
           boosts: boostSingle ? [boostSingle] : [],

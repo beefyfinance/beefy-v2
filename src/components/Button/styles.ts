@@ -9,6 +9,7 @@ export const buttonRecipe = cva({
     backgroundColor: 'colorPalette.background',
     borderColor: 'colorPalette.border',
     borderRadius: '8px',
+    textStyle: 'body.medium',
     _hover: {
       color: 'colorPalette.hover.color',
       backgroundColor: 'colorPalette.hover.background',
@@ -66,7 +67,6 @@ export const buttonRecipe = cva({
       },
       filter: {
         colorPalette: 'buttons.filter',
-        fontWeight: 'medium',
       },
       success: {
         colorPalette: 'buttons.success',

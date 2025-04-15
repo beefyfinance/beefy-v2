@@ -69,8 +69,9 @@ const config = buildConfig(
     // Use lightningcss instead of postcss
     lightningcss: true,
     // Browserslist for lightningcss
-    browserslist: isProduction
-      ? [
+    browserslist:
+      isProduction ?
+        [
           '>0.1% and fully supports es6-module and fully supports es6-module-dynamic-import',
           'not dead',
           'not op_mini all',
@@ -241,12 +242,21 @@ const config = buildConfig(
         fonts: {
           body: { value: sansSerifFontStack },
         },
+        gradients: {
+          boost: {
+            value:
+              'linear-gradient(348.15deg, rgba(255, 255, 255, 0) -166.22%, rgba(255, 255, 255, 0.7) 113.41%), linear-gradient(0deg, #FFD54F, #FFD54F)',
+            description: 'tag.boost',
+          },
+        },
         colors: {
           text: {
             lightest: { value: '#fff' },
             light: { value: '#f5f5f5' },
             middle: { value: '#d0d0da' },
             dark: { value: '#999cb3' },
+            black: { value: '#111321' },
+            boosted: { value: '{colors.gold.30}' },
           },
           modal: { backdrop: { value: '#ffffff33' } },
           alertBaseBackground: { value: '#f5f5ff14' },
@@ -294,8 +304,6 @@ const config = buildConfig(
           modalProgressBarBackground: { value: '#e5e5e5', description: 'txsModal.bgLine' },
           mtPellerin: { value: '#121212' },
           onRampIconLoading: { value: '#ffffff1e' },
-          orangeBoost: { value: '#db8332', description: 'boost button bg + vaults boost' },
-          orangeBoostLight: { value: '#e5a66b', description: 'boost button bg hover' },
           orangeWarning: { value: '#d19847', description: 'indicators.warning' },
           purpleDarkest: { value: '#121421', description: 'app bg + search input bg' },
           redError: { value: '#da5932', description: 'indicators.error' },
@@ -303,7 +311,6 @@ const config = buildConfig(
           selectOptionActiveBackground: { value: '#ffffff28' },
           stepperErrorBackground: { value: '#db323219' },
           stepperSuccessBackground: { value: '#59a66226' },
-          tagBoostBackground: { value: '#775744', description: 'tag.boost' },
           tagClmBackground: { value: '#0052CC', description: 'tag.clm' },
           tagPausedBackground: { value: '#564a46', description: 'tag.paused' },
           tagPlatformClmBackground: { value: '#38428f', description: 'tag.platformClm' },
@@ -573,6 +580,7 @@ const config = buildConfig(
               DEFAULT: { value: '{colors.blackMarket}' },
               dark: { value: '{colors.eclipseElixir}' },
               light: { value: '{colors.contentBackgroundLight}' },
+              gray: { value: '{colors.text.dark}' },
             },
             vaults: {
               standard: { value: '{colors.blackMarket}' },
@@ -582,7 +590,6 @@ const config = buildConfig(
                 pool: { value: '{colors.vaultClmPoolBackground}' },
                 vault: { value: '{colors.vaultClmVaultBackground}' },
               },
-              boost: { value: '{colors.orangeBoost}' },
               inactive: { value: '{colors.vaultInactiveVaultbackground}' },
             },
           },
@@ -598,7 +605,7 @@ const config = buildConfig(
             earnings: { background: { value: '{colors.cornflower}' } },
             retired: { background: { value: '{colors.tagRetiredBackground}' } },
             paused: { background: { value: '{colors.tagPausedBackground}' } },
-            boost: { background: { value: '{colors.tagBoostBackground}' } },
+            boost: { background: { value: '{gradients.boost}' } },
             platform: {
               gov: { background: { value: '{colors.tagPlatformGovBackground}' } },
               clm: { background: { value: '{colors.tagPlatformClmBackground}' } },
@@ -626,12 +633,22 @@ const config = buildConfig(
             info: { value: '{colors.cornflower}' },
           },
           notification: {
-            confirmation: {
-              primary: { value: '{colors.green.40}' },
+            transparent: {
+              text: { value: '{colors.gold.30}' },
+              background: { value: '{colors.gold.80.40}' },
+            },
+            solid: {
+              text: { value: '{colors.text.black}' },
+              background: { value: '{colors.gold.40}' },
+            },
+          },
+          status: {
+            ready: {
+              text: { value: '{colors.green.40}' },
               background: { value: '{colors.green.80.40}' },
             },
-            teaser: {
-              primary: { value: '{colors.gold.40}' },
+            waiting: {
+              text: { value: '{colors.gold.40}' },
               background: { value: '{colors.gold.80.40}' },
             },
           },
@@ -680,6 +697,7 @@ const config = buildConfig(
             },
             button: {
               background: { value: '{colors.bayOfMany}' },
+
               text: {
                 DEFAULT: { value: '{colors.text.light}' },
               },
@@ -866,13 +884,16 @@ const config = buildConfig(
       },
       boost: {
         base: {
-          color: '{colors.text.light}',
-          background: '{colors.orangeBoost}',
-          border: '{colors.orangeBoost}',
+          color: '{colors.text.black}',
+          background: '{colors.gold.50}',
+          border: '{colors.gold.50}',
         },
         hover: {
-          background: '{colors.orangeBoostLight}',
-          border: '{colors.orangeBoostLight}',
+          background: '{colors.gold.30}',
+          border: '{colors.gold.30}',
+        },
+        disabled: {
+          color: '{colors.text.black}',
         },
       },
       filter: {

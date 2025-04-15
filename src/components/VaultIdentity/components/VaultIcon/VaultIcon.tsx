@@ -8,12 +8,18 @@ import { selectVaultTokenSymbols } from '../../../../features/data/selectors/tok
 
 export type VaultIconProps = {
   vaultId: VaultEntity['id'];
+  size?: number;
 };
-export const VaultIcon = memo(function VaultIcon({ vaultId }: VaultIconProps) {
+export const VaultIcon = memo(function VaultIcon({ vaultId, size = 48 }: VaultIconProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const vaultTokenSymbols = useAppSelector(state => selectVaultTokenSymbols(state, vault.id));
 
   return (
-    <AssetsImage css={styles.vaultIcon} assetSymbols={vaultTokenSymbols} chainId={vault.chainId} />
+    <AssetsImage
+      size={size}
+      css={styles.vaultIcon}
+      assetSymbols={vaultTokenSymbols}
+      chainId={vault.chainId}
+    />
   );
 });

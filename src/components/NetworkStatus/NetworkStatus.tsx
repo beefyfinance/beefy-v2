@@ -1,7 +1,7 @@
 import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { css, cx } from '@repo/styles/css';
 import { isEqual, sortedUniq, uniq } from 'lodash-es';
-import { memo, type RefObject, useCallback } from 'react';
+import { memo, type RefObject, useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import type { ChainEntity } from '../../features/data/entities/chain.ts';
 import { dataLoaderActions } from '../../features/data/reducers/data-loader.ts';
@@ -30,6 +30,7 @@ import { styled } from '@repo/styles/jsx';
 import { DropdownTrigger } from '../Dropdown/DropdownTrigger.tsx';
 import { DropdownProvider } from '../Dropdown/DropdownProvider.tsx';
 import { DropdownContent } from '../Dropdown/DropdownContent.tsx';
+import { PulseHighlight } from '../../features/vault/components/PulseHighlight/PulseHighlight.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -97,13 +98,15 @@ export const NetworkStatus = memo(function NetworkStatus({
   const hasAnyLoading =
     rpcPending.length > 0 || beefyPending.length > 0 || configPending.length > 0;
 
-  const colorClasses = cx(
-    !hasAnyError && !hasAnyLoading && 'success',
-    hasAnyError && 'warning',
-    hasAnyLoading && 'loading',
-    !hasAnyLoading && 'notLoading'
+  const variant = useMemo(
+    () =>
+      !hasAnyError && !hasAnyLoading ? 'success'
+      : hasAnyError ? 'warning'
+      : 'loading',
+    [hasAnyError, hasAnyLoading]
   );
-  const pulseClassName = cx(classes.pulseCircle, colorClasses);
+
+  const hidePulse = useMemo(() => !hasAnyError && !hasAnyLoading, [hasAnyError, hasAnyLoading]);
 
   return (
     <DropdownProvider
@@ -114,39 +117,28 @@ export const NetworkStatus = memo(function NetworkStatus({
       reference={anchorEl}
     >
       <DropdownButton onClick={handleToggle}>
-        <div className={classes.circleOuter}>
-          <div className={cx(classes.circle, colorClasses)}>
-            <div className={pulseClassName} />
-            <div className={pulseClassName} />
-            <div className={pulseClassName} />
-            <div className={pulseClassName} />
-          </div>
-        </div>
+        <PulseHighlight variant={variant} size={10} hidePulse={hidePulse} animation="pulse" />
         {isWalletConnected && <ActiveChain chainId={currentChainId} />}
       </DropdownButton>
       <DropdownContent css={styles.dropdown} gap="none">
         <div className={classes.titleContainer}>
           <div className={classes.title}>
-            {isWalletConnected ? (
-              currentChainId ? (
+            {isWalletConnected ?
+              currentChainId ?
                 <Trans
                   t={t}
                   i18nKey="NetworkStatus-Connected-To"
                   components={{ chain: <ConnectedChain chainId={currentChainId} /> }}
                 />
-              ) : (
-                t('Network-Unsupported')
-              )
-            ) : (
-              t('NetworkStatus-NoWallet')
-            )}
+              : t('Network-Unsupported')
+            : t('NetworkStatus-NoWallet')}
           </div>
           <CloseIcon onClick={handleClose} className={classes.cross} />
         </div>
         <div className={classes.content}>
           <div className={classes.contentTitle}>{t('NetworkStatus-Status')}</div>
           <div className={classes.contentDetail}>
-            {hasAnyError ? (
+            {hasAnyError ?
               <>
                 {rpcErrors.map(chainId => (
                   <div className={classes.popoverLine} key={chainId}>
@@ -164,21 +156,20 @@ export const NetworkStatus = memo(function NetworkStatus({
                   {t('NetworkStatus-HelpText-Error')}
                 </div>
               </>
-            ) : hasAnyLoading ? (
+            : hasAnyLoading ?
               <>
                 <div className={classes.popoverLine}>
                   <div className={cx(classes.circle, 'loading', 'circle')} />
                   {t('NetworkStatus-Title-Loading')}
                 </div>
               </>
-            ) : (
-              <>
+            : <>
                 <div className={classes.popoverLine}>
                   <div className={cx(classes.circle, 'success', 'circle')} />
                   {t('NetworkStatus-Title-OK')}
                 </div>
               </>
-            )}
+            }
           </div>
         </div>
       </DropdownContent>

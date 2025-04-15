@@ -204,7 +204,7 @@ export const selectUserVaultPendingWithdrawal = (
 };
 
 export const selectAddressHasVaultPendingWithdrawal = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress: string) =>
+  (state: BeefyState, vaultId: VaultEntity['id'], walletAddress?: string) =>
     selectUserVaultPendingWithdrawalOrUndefined(state, vaultId, walletAddress),
   // only recalculate after 30s if requests state hasn't changed
   (_state: BeefyState) => Math.trunc(Date.now() / 30_000) * 30,
@@ -213,7 +213,7 @@ export const selectAddressHasVaultPendingWithdrawal = createSelector(
       return false;
     }
     const now = getUnixNow();
-    return pending.requests.some(request => request.claimableTimestamp >= now) ?
+    return pending.requests.some(request => now >= request.claimableTimestamp) ?
         'claimable'
       : 'pending';
   }

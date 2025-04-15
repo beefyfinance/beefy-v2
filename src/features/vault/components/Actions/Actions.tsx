@@ -1,7 +1,6 @@
 import { lazy, memo } from 'react';
 import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { Transact } from './Transact/Transact.tsx';
-import { Boosts } from './Boosts/Boosts.tsx';
 import { Minters } from './Minter/Minters.tsx';
 import { Migration } from '../Migation/Migration.tsx';
 import { DisplacedBalances } from '../DisplacedBalances/DisplacedBalances.tsx';
@@ -22,7 +21,6 @@ export const Actions = memo(function Actions({ vaultId }: ActionsProps) {
       <DisplacedBalances vaultId={vaultId} />
       <NoSafuRisks vaultId={vaultId} isTitle={true} />
       <Transact vaultId={vaultId} />
-      <Boosts vaultId={vaultId} />
       <Minters vaultId={vaultId} />
     </>
   );

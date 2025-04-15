@@ -329,19 +329,20 @@ function getCowcentratedBases(configs: VaultConfig[]) {
 }
 
 function getVaultStatus(apiVault: VaultConfig): VaultStatus {
-  return apiVault.status === 'active'
-    ? { status: 'active' }
-    : apiVault.status === 'eol'
-      ? {
-          status: 'eol',
-          retireReason: apiVault.retireReason || 'default',
-          retiredAt: apiVault.retiredAt || 0,
-        }
-      : {
-          status: 'paused',
-          pauseReason: apiVault.pauseReason || 'default',
-          pausedAt: apiVault.pausedAt || 0,
-        };
+  return (
+    apiVault.status === 'active' ? { status: 'active' }
+    : apiVault.status === 'eol' ?
+      {
+        status: 'eol',
+        retireReason: apiVault.retireReason || 'default',
+        retiredAt: apiVault.retiredAt || 0,
+      }
+    : {
+        status: 'paused',
+        pauseReason: apiVault.pauseReason || 'default',
+        pausedAt: apiVault.pausedAt || 0,
+      }
+  );
 }
 
 function getVaultRisks(apiVault: VaultConfig): string[] {
