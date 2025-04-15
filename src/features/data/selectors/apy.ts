@@ -26,6 +26,7 @@ import { isEmpty } from '../../../helpers/utils.ts';
 import { selectWalletAddress } from './wallet.ts';
 import { first } from 'lodash-es';
 import { mooAmountToOracleAmount } from '../utils/ppfs.ts';
+import type { BoostPromoEntity } from '../entities/promo.ts';
 
 const EMPTY_TOTAL_APY: TotalApy = {
   totalApy: 0,
@@ -305,3 +306,11 @@ export function selectApyVaultUIData(
     boosted: 'boostedTotalDaily' in values ? 'active' : undefined,
   };
 }
+
+export const selectBoostAprByRewardToken = (state: BeefyState, boostId: BoostPromoEntity['id']) => {
+  return state.biz.apy.rawApy.byBoostId[boostId]?.aprByRewardToken || [];
+};
+
+export const selectBoostApr = (state: BeefyState, boostId: string): number => {
+  return state.biz.apy.rawApy.byBoostId[boostId]?.apr || 0;
+};

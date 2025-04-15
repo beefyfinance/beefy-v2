@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectTransactQuoteStatus,
   selectTransactSelectedQuoteOrUndefined,
+  selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import {
   isCowcentratedDepositQuote,
@@ -25,6 +26,7 @@ import { GlpDepositNotice } from '../GlpNotices/GlpNotices.tsx';
 import { NotEnoughNotice } from '../NotEnoughNotice/NotEnoughNotice.tsx';
 import { VaultFees } from '../VaultFees/VaultFees.tsx';
 import { TenderlyTransactButton } from '../../../../../../components/Tenderly/Buttons/TenderlyTransactButton.tsx';
+import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -41,14 +43,18 @@ export const DepositActions = memo(function DepositActions() {
 });
 
 const ActionDepositDisabled = memo(function ActionDepositDisabled() {
+  const vaultId = useAppSelector(selectTransactVaultId);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const { t } = useTranslation();
   const classes = useStyles();
 
   return (
     <div className={classes.feesContainer}>
-      <Button variant="success" disabled={true} fullWidth={true} borderless={true}>
-        {t('Transact-Deposit')}
-      </Button>
+      <ActionConnectSwitch chainId={vault.chainId}>
+        <Button variant="success" disabled={true} fullWidth={true} borderless={true}>
+          {t('Transact-Deposit')}
+        </Button>
+      </ActionConnectSwitch>
       <VaultFees />
     </div>
   );

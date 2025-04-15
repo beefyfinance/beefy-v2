@@ -67,18 +67,17 @@ export const Claim = memo(function Claim({ chainId, withChain }: ClaimProps) {
           disabled={disable}
           css={styles.claim}
         >
-          {!isStepping && shouldWait ? (
+          {!isStepping && shouldWait ?
             <TimeCountdown until={lastDispatched + MERKL_MIN_TIME_BETWEEN_REQUESTS_MS} />
-          ) : (
-            t(withChain ? 'Rewards-Claim-merkl-chain' : 'Rewards-Claim-merkl', {
+          : t(withChain ? 'Rewards-Claim-merkl-chain' : 'Rewards-Claim-merkl', {
               chain: chain.name,
             })
-          )}
+          }
         </Button>
       </ActionConnectSwitch>
-      {import.meta.env.DEV ? (
+      {import.meta.env.DEV ?
         <TenderlyMerklClaimButton chainId={chainId} disabled={disable} />
-      ) : null}
+      : null}
     </>
   );
 });

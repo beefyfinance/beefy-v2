@@ -7,12 +7,14 @@ type ActionButtonProps = {
   onClick: () => void;
   children: ReactNode;
   disabled?: boolean;
+  variant?: 'boost' | 'default' | 'success';
 };
 
 export const ActionButton = memo(function ActionButton({
   disabled,
   onClick,
   children,
+  variant = 'boost',
 }: ActionButtonProps) {
   const isStepping = useAppSelector(selectIsStepperStepping);
 
@@ -22,7 +24,7 @@ export const ActionButton = memo(function ActionButton({
       onClick={onClick}
       fullWidth={true}
       borderless={true}
-      variant="boost"
+      variant={variant}
     >
       {children}
     </Button>

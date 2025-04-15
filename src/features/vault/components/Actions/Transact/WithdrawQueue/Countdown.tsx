@@ -4,7 +4,7 @@ import { DivWithTooltip } from '../../../../../../components/Tooltip/DivWithTool
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent.tsx';
 import { TimeUntil } from '../../../../../../components/TimeUntil/TimeUntil.tsx';
 import type { FormatTimeLabels } from '../../../../../../helpers/date.ts';
-import { NotificationPill } from '../../../../../components/NotificationPill.tsx';
+import { StatusPill } from '../../../../../../components/StatusPill.tsx';
 
 type CountdownProps = {
   until: number;
@@ -26,7 +26,7 @@ export const Countdown = memo(function Countdown({ until, children }: CountdownP
       time: date,
       renderFuture: (timeLeft: string) => (
         <DivWithTooltip tooltip={<BasicTooltipContent title={formatted} />}>
-          <NotificationPill mode="teaser" text={timeLeft} />
+          <StatusPill mode="waiting" text={timeLeft} />
         </DivWithTooltip>
       ),
     };

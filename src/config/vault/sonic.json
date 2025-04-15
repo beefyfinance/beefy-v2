@@ -1,5 +1,272 @@
 [
   {
+    "id": "swapx-ichi-sts-swpx",
+    "name": "stS-SWPx",
+    "type": "standard",
+    "token": "IV-SWAPX-98-stS-SWPx",
+    "tokenAddress": "0x8063B7e5Ee1d772B38B13a80a1AD3feA538ee8D5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapx",
+    "earnContractAddress": "0xeB538A9A6a46421bB8fBA5ec69373Ae44C12a4D8",
+    "earnedToken": "mooSwapX-Ichi-stS-SWPx",
+    "earnedTokenAddress": "0xeB538A9A6a46421bB8fBA5ec69373Ae44C12a4D8",
+    "oracle": "lps",
+    "oracleId": "swapx-ichi-sts-swpx",
+    "status": "active",
+    "createdAt": 1744710400,
+    "platformId": "ichi",
+    "assets": ["stS", "SWPx"],
+    "migrationIds": ["sonic-swapx"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://swapx.fi/earn",
+    "removeLiquidityUrl": "https://swapx.fi/earn?ownerType=my-positions&filter=my-lp",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic"
+  },
+  {
+    "id": "shadow-cow-sonic-ws-bes-vault",
+    "name": "beS-wS",
+    "type": "standard",
+    "token": "beS-wS",
+    "tokenAddress": "0xa9dD662358ca26F80c7A1ee12cEaE463a6D6Dd42",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0xB94932EdbD9406c0646c02bAAEa4F768F450f603",
+    "earnedToken": "mooCowShadowSonicbeS-wS",
+    "earnedTokenAddress": "0xB94932EdbD9406c0646c02bAAEa4F768F450f603",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-bes",
+    "status": "active",
+    "createdAt": 1744663202,
+    "platformId": "shadow",
+    "assets": ["beS", "S"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-ws-bes-rp",
+    "name": "beS-wS Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowShadowSonicbeS-wS",
+    "tokenAddress": "0xa9dD662358ca26F80c7A1ee12cEaE463a6D6Dd42",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0x0E9f382e4523B42e503A1A8f0dBFFB272820F893",
+    "earnedToken": "rCowShadowSonicbeS-wS",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [
+      "0x871A101Dcf22fE4fE37be7B654098c801CBA1c88",
+      "0x3333b97138D4b086720b5aE8A7844b1345a33333"
+    ],
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-bes",
+    "status": "active",
+    "createdAt": 1744663202,
+    "platformId": "shadow",
+    "assets": ["beS", "S"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-ws-bes",
+    "name": "beS-wS",
+    "type": "cowcentrated",
+    "token": "beS-wS shadow",
+    "tokenAddress": "0xFc4060dB484F759B822B3AEA7e85826C61F9DFD8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "depositTokenAddresses": [
+      "0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38",
+      "0x871A101Dcf22fE4fE37be7B654098c801CBA1c88"
+    ],
+    "earnContractAddress": "0xa9dD662358ca26F80c7A1ee12cEaE463a6D6Dd42",
+    "earnedToken": "cowShadowSonicbeS-wS",
+    "earnedTokenAddress": "0xa9dD662358ca26F80c7A1ee12cEaE463a6D6Dd42",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-ws-bes",
+    "status": "active",
+    "createdAt": 1744663202,
+    "platformId": "beefy",
+    "feeTier": "0.01",
+    "assets": ["beS", "S"],
+    "risks": ["IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "defive-ws-five",
+    "name": "FIVE-wS",
+    "type": "standard",
+    "token": "FIVE-wS",
+    "tokenAddress": "0x969481d58C45DA5AcAc07CD50cE287c850a2A240",
+    "tokenDecimals": 18,
+    "tokenProviderId": "defive",
+    "earnedToken": "mooDefivewS-FIVE",
+    "earnedTokenAddress": "0x6c9F512c379120BCB0bBe89B8817E74d2BC061B0",
+    "earnContractAddress": "0x6c9F512c379120BCB0bBe89B8817E74d2BC061B0",
+    "oracle": "lps",
+    "oracleId": "defive-ws-five",
+    "createdAt": 1744660905,
+    "status": "active",
+    "platformId": "defive",
+    "assets": ["FIVE", "S"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://defive.com/pools/add/S/0xb0695ce12c56AAe40894235e2d1888D0b62Dd110",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "sonic-defive"
+      }
+    ]
+  },
+  {
+    "id": "defive-ws-usdc.e",
+    "name": "wS-USDC.e",
+    "type": "standard",
+    "token": "wS-USDC.e",
+    "tokenAddress": "0x6eB32C8dB5Ff2878acbCB6a1Ec5e301F60884dA4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "defive",
+    "earnedToken": "mooDefivewS-USDC.e",
+    "earnedTokenAddress": "0x8cdAABBB2844227dCc2CDBd1a5bd8b974A022622",
+    "earnContractAddress": "0x8cdAABBB2844227dCc2CDBd1a5bd8b974A022622",
+    "oracle": "lps",
+    "oracleId": "defive-ws-usdc.e",
+    "createdAt": 1744660905,
+    "status": "active",
+    "platformId": "defive",
+    "assets": ["S", "USDCe"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://defive.com/pools/add/S/0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "sonic-defive"
+      }
+    ]
+  },
+  {
+    "id": "defive-ws-eurc.e",
+    "name": "wS-EURC.e",
+    "type": "standard",
+    "token": "wS-EURC.e",
+    "tokenAddress": "0x6cA85F19C4b3bfD45f537fe0e95e0357ea823FCd",
+    "tokenDecimals": 18,
+    "tokenProviderId": "defive",
+    "earnedToken": "mooDefivewS-EURC.e",
+    "earnedTokenAddress": "0xE224968E8D4a86426Fb1770fB11CE99Ee9348f51",
+    "earnContractAddress": "0xE224968E8D4a86426Fb1770fB11CE99Ee9348f51",
+    "oracle": "lps",
+    "oracleId": "defive-ws-eurc.e",
+    "createdAt": 1744660905,
+    "status": "active",
+    "platformId": "defive",
+    "assets": ["S", "EURC"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://defive.com/pools/add/S/0xe715cbA7B5cCb33790ceBFF1436809d36cb17E57",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "sonic-defive"
+      }
+    ]
+  },
+  {
+    "id": "defive-ws-weth",
+    "name": "wS-WETH",
+    "type": "standard",
+    "token": "wS-WETH",
+    "tokenAddress": "0x0f4dD4c3cCB1729f099b79d83540049758a5E9ff",
+    "tokenDecimals": 18,
+    "tokenProviderId": "defive",
+    "earnedToken": "mooDefivewS-WETH",
+    "earnedTokenAddress": "0x0D93C40e96326E8C24d31CdecF0F8fFB6cE62E40",
+    "earnContractAddress": "0x0D93C40e96326E8C24d31CdecF0F8fFB6cE62E40",
+    "oracle": "lps",
+    "oracleId": "defive-ws-weth",
+    "createdAt": 1744660905,
+    "status": "active",
+    "platformId": "defive",
+    "assets": ["S", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://defive.com/pools/add/S/0x50c42dEAcD8Fc9773493ED674b675bE577f2634b",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "sonic-defive"
+      }
+    ]
+  },
+  {
+    "id": "defive-usdc.e-weth",
+    "name": "USDC.e-WETH",
+    "type": "standard",
+    "token": "USDC.e-WETH",
+    "tokenAddress": "0x7E50357098dA4d25735127128B2ffce21A269913",
+    "tokenDecimals": 18,
+    "tokenProviderId": "defive",
+    "earnedToken": "mooDefiveUSDC.e-WETH",
+    "earnedTokenAddress": "0x95912f56ce4F05A085b9Fbee9Dc481DE72E2c38f",
+    "earnContractAddress": "0x95912f56ce4F05A085b9Fbee9Dc481DE72E2c38f",
+    "oracle": "lps",
+    "oracleId": "defive-usdc.e-weth",
+    "createdAt": 1744660905,
+    "status": "active",
+    "platformId": "defive",
+    "assets": ["USDCe", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://defive.com/pools/add/0x29219dd400f2Bf60E5a23d13Be72B486D4038894/0x50c42dEAcD8Fc9773493ED674b675bE577f2634b",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "sonic-defive"
+      }
+    ]
+  },
+  {
     "id": "swapx-ichi-bes-os",
     "name": "beS-OS",
     "type": "standard",

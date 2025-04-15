@@ -1,5 +1,19 @@
 [
   {
+    "id": "sonic-defive",
+    "name": "Defive",
+    "type": "uniswap-v2",
+    "routerAddress": "0xC159D904cA8C2449df0AE4836197278f2f68C725",
+    "factoryAddress": "0x47524ca6578E172878aBf6fD6f3E1Cd106c551e6",
+    "pairInitHash": "0xa2bd630981c20599e374cdb7af13220e18e2422c7dde970eff313f36d739c801",
+    "minimumLiquidity": "1000",
+    "mintFeeNumerator": "1",
+    "mintFeeDenominator": "3",
+    "swapFeeNumerator": "18",
+    "swapFeeDenominator": "10000",
+    "getAmountOutMode": "getAmountOut"
+  },
+  {
     "id": "sonic-equalizer",
     "name": "Equalizer",
     "type": "solidly",
