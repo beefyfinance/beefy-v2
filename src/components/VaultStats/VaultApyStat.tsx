@@ -253,7 +253,7 @@ const Warning = styled(ExclamationWarning, {
   variants: {
     isBoosted: {
       true: {
-        color: 'background.vaults.boost',
+        color: 'text.boosted',
       },
     },
   },
