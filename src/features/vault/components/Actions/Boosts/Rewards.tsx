@@ -33,7 +33,6 @@ export const Rewards = memo(function Rewards({ isInBoost, rewards }: RewardsProp
             {isInBoost && <TokenAmount amount={reward.pending} decimals={reward.token.decimals} />}
             {reward.token.symbol}
             <TokenImageFromEntity token={reward.token} size={24} />
-
             <Reward reward={reward} apr={reward.apr} />
           </Amount>
         ))}
