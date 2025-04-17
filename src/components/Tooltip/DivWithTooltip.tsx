@@ -8,12 +8,13 @@ export type DivWithTooltipProps = TooltipOptions & {
   tooltip: ReactNode;
   children: ReactNode;
   className?: string;
+  contentClassName?: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
 export const DivWithTooltip = memo(
   forwardRef<HTMLDivElement, DivWithTooltipProps>(function DivWithTooltip(
-    { children, tooltip, onClick, className, ...rest },
+    { children, tooltip, onClick, className, contentClassName, ...rest },
     ref
   ) {
     return (
@@ -21,7 +22,7 @@ export const DivWithTooltip = memo(
         <TooltipTrigger.div onClick={onClick} className={className} ref={ref}>
           {children}
         </TooltipTrigger.div>
-        <TooltipContent>{tooltip}</TooltipContent>
+        <TooltipContent className={contentClassName}>{tooltip}</TooltipContent>
       </TooltipProvider>
     );
   })

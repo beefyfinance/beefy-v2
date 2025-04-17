@@ -40,7 +40,7 @@ import { simplifySearchText } from '../../../helpers/string.ts';
 import type { FilteredVaultsState } from '../reducers/filtered-vaults.ts';
 import { orderBy, sortBy } from 'lodash-es';
 import type { TotalApy } from '../reducers/apy.ts';
-import { selectVaultTotalApy } from '../selectors/apy.ts';
+import { selectVaultAvgApy, selectVaultTotalApy } from '../selectors/apy.ts';
 import { selectVaultTvl, selectVaultUnderlyingTvlUsd } from '../selectors/tvl.ts';
 
 export type RecalculateFilteredVaultsParams = {
@@ -300,10 +300,19 @@ function applyApySort(
         return -1;
       }
 
-      for (const field of fields) {
-        const value = apy[field];
+      const avgApy = selectVaultAvgApy(state, vault.id);
+
+      if (filters.avgApySort !== 'default') {
+        const value = avgApy[filters.avgApySort];
         if (value !== undefined) {
           return value || 0;
+        }
+      } else {
+        for (const field of fields) {
+          const value = apy[field];
+          if (value !== undefined) {
+            return value || 0;
+          }
         }
       }
 

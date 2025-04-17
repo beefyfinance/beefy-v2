@@ -1,4 +1,5 @@
 import type {
+  ApiAvgApys,
   ApiChartData,
   ApiCowcentratedChartData,
   ApiRanges,
@@ -61,6 +62,12 @@ export class BeefyDataApi implements IBeefyDataApi {
     return await getJson<ApiCowcentratedChartData>({
       url: `${this.data}/clmRanges`,
       params: { vaultAddress, chain: chainId, bucket },
+    });
+  }
+
+  async getAvgApys(): Promise<ApiAvgApys> {
+    return await getJson<ApiAvgApys>({
+      url: `${this.data}/apys/avg`,
     });
   }
 

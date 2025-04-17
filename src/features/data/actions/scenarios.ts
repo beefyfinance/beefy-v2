@@ -3,7 +3,7 @@ import type { ChainEntity } from '../entities/chain.ts';
 import { selectIsWalletKnown, selectWalletAddress } from '../selectors/wallet.ts';
 import type { PollStop } from '../utils/async-utils.ts';
 import { createFulfilledActionCapturer, poll } from '../utils/async-utils.ts';
-import { fetchApyAction } from './apy.ts';
+import { fetchApyAction, fetchAvgApyAction } from './apy.ts';
 import { fetchChainConfigs } from './chains.ts';
 import { fetchAllPricesAction } from './prices.ts';
 import { fetchAllVaults, fetchVaultsLastHarvests } from './vaults.ts';
@@ -78,6 +78,8 @@ export async function initAppData(store: BeefyStore) {
     store.dispatch(fetchVaultsLastHarvests());
 
     store.dispatch(fetchOffChainCampaignsAction());
+
+    store.dispatch(fetchAvgApyAction());
 
     // Zap (we need the data to know if zap is available for each vault)
     store.dispatch(fetchZapConfigsAction());

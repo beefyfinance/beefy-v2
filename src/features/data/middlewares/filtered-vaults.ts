@@ -8,7 +8,7 @@ import {
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens.ts';
 import { fetchAllVaults } from '../actions/vaults.ts';
 import { fetchAllPricesAction } from '../actions/prices.ts';
-import { fetchApyAction } from '../actions/apy.ts';
+import { fetchApyAction, fetchAvgApyAction } from '../actions/apy.ts';
 import { fetchPlatforms } from '../actions/platforms.ts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data.ts';
 import { calculateZapAvailabilityAction } from '../actions/zap.ts';
@@ -45,6 +45,7 @@ const hasDataLoaded = isFulfilled(fetchChainConfigs, fetchAllVaults, fetchPlatfo
 const hasDataChanged = isFulfilled(
   fetchAllPricesAction,
   fetchApyAction,
+  fetchAvgApyAction,
   fetchAllBalanceAction,
   fetchBalanceAction,
   fetchAllContractDataByChainAction,
@@ -70,7 +71,8 @@ const hasFiltersChanged = isAnyOf(
 const hasSortChanged = isAnyOf(
   filteredVaultsActions.setSort,
   filteredVaultsActions.setSortDirection,
-  filteredVaultsActions.setSortFieldAndDirection
+  filteredVaultsActions.setSortFieldAndDirection,
+  filteredVaultsActions.setAvgApySort
 );
 
 const hasWalletChanged = isAnyOf(

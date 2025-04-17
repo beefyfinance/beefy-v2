@@ -20,3 +20,5 @@ export type UserCategoryType = 'all' | 'saved' | 'deposited';
 export function isValidUserCategory(category: string): category is UserCategoryType {
   return ['all', 'saved', 'deposited'].includes(category);
 }
+
+export type AvgApySortType = 'avg7d' | 'avg30d' | 'avg90d' | 'default';

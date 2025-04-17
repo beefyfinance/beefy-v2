@@ -5,9 +5,13 @@ import { styled } from '@repo/styles/jsx';
 
 type TooltipContentProps = {
   children: ReactNode;
+  className?: string;
 };
 
-export const TooltipContent = memo(function TooltipContent({ children }: TooltipContentProps) {
+export const TooltipContent = memo(function TooltipContent({
+  children,
+  className,
+}: TooltipContentProps) {
   const { open, refs, floatingStyles, getFloatingProps, context, arrow, variant, layer, size } =
     useTooltipContext();
 
@@ -23,6 +27,7 @@ export const TooltipContent = memo(function TooltipContent({ children }: Tooltip
         style={floatingStyles}
         variant={variant}
         layer={layer}
+        className={className}
       >
         <TooltipArrow {...arrow} context={context} />
         <TooltipInner size={size}>{children}</TooltipInner>

@@ -52,12 +52,12 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
           chainId={vault.chainId}
           css={!!isCowcentratedLike && styles.titleAssetClm}
         />
-        {isCowcentratedLike ? (
+        {isCowcentratedLike ?
           <VaultClmLikeTag
             vault={vault}
             hideFee={isCowcentratedGovVault(vault) ? true : undefined}
           />
-        ) : null}
+        : null}
       </div>
       <div className={classes.labelsHolder}>
         <div className={classes.platformLabel}>
@@ -71,9 +71,9 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
         </div>
         <div className={classes.shareHolder}>
           <SaveButton vaultId={vaultId} />
-          {vault.status === 'active' ? (
+          {vault.status === 'active' ?
             <ShareButton hideText={true} vaultId={vaultId} mobileAlternative={true} />
-          ) : null}
+          : null}
         </div>
       </div>
     </div>

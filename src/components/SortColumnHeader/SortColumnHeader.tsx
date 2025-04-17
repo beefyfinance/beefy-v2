@@ -1,29 +1,19 @@
-import { legacyMakeStyles } from '../../helpers/mui.ts';
 import { css, type CssStyles } from '@repo/styles/css';
-import type { ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { styles } from './styles.ts';
-
-const useStyles = legacyMakeStyles(styles);
+import { styled } from '@repo/styles/jsx';
+import SortArrow from '../../images/icons/sortArrow.svg?react';
 
 type SortIconProps = {
   direction: 'none' | 'asc' | 'desc';
 };
 const SortIcon = memo(function SortIcon({ direction }: SortIconProps) {
-  const classes = useStyles();
-
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 9" className={classes.sortIcon}>
-      <path
-        className={direction === 'asc' ? classes.sortIconHighlight : undefined}
-        d="M2.463.199.097 2.827a.375.375 0 0 0 .279.626h5.066a.375.375 0 0 0 .278-.626L3.355.199a.6.6 0 0 0-.892 0Z"
-      />
-      <path
-        className={direction === 'desc' ? classes.sortIconHighlight : undefined}
-        d="M3.355 8.208 5.72 5.579a.375.375 0 0 0-.278-.626H.376a.375.375 0 0 0-.279.626l2.366 2.629a.601.601 0 0 0 .892 0Z"
-      />
-    </svg>
+    <SortIconContainer>
+      <SortArrow className={css(direction === 'asc' && styles.sortIconHighlight, styles.asc)} />
+      <SortArrow className={css(direction === 'desc' && styles.sortIconHighlight)} />
+    </SortIconContainer>
   );
 });
 
@@ -34,6 +24,7 @@ type SortColumnHeaderProps<TValue extends string = string> = {
   onChange?: (field: TValue) => void;
   tooltip?: ReactNode;
   css?: CssStyles;
+  ExtraComponent?: FC;
 };
 
 export const SortColumnHeader = memo(function SortColumnHeader<TValue extends string = string>({
@@ -43,6 +34,7 @@ export const SortColumnHeader = memo(function SortColumnHeader<TValue extends st
   onChange,
   tooltip,
   css: cssProp,
+  ExtraComponent,
 }: SortColumnHeaderProps<TValue>) {
   const { t } = useTranslation();
   const handleChange = useCallback(() => {
@@ -52,10 +44,72 @@ export const SortColumnHeader = memo(function SortColumnHeader<TValue extends st
   }, [sortKey, onChange]);
 
   return (
-    <button type="button" className={css(styles.sortColumn, cssProp)} onClick={handleChange}>
-      {t(label)}
-      {tooltip}
-      <SortIcon direction={sorted} />
-    </button>
+    <>
+      {ExtraComponent ?
+        <SortColumn className={css(cssProp)}>
+          <ExtraComponent />
+          <SortColumnButton type="button" onClick={handleChange}>
+            {t(label)}
+            {tooltip}
+            <SortIcon direction={sorted} />
+          </SortColumnButton>
+        </SortColumn>
+      : <SortColumnButton type="button" className={css(cssProp)} onClick={handleChange}>
+          {t(label)}
+          {tooltip}
+          <SortIcon direction={sorted} />
+        </SortColumnButton>
+      }
+    </>
   );
+});
+
+const styles = {
+  sortIconHighlight: css.raw({
+    color: 'text.light',
+  }),
+  asc: css.raw({
+    transform: 'rotate(180deg)',
+  }),
+};
+
+const SortIconContainer = styled('div', {
+  base: {
+    width: '9px',
+    height: '12px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+    color: 'text.dark',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+const SortColumnButton = styled('button', {
+  base: {
+    textStyle: 'subline.sm',
+    color: 'text.dark',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    textAlign: 'right',
+    background: 'transparent',
+    border: 'none',
+    boxShadow: 'none',
+    gap: '8px',
+    padding: '0',
+    '&:hover': {
+      color: 'text.light',
+    },
+  },
+});
+
+const SortColumn = styled('div', {
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    justifyContent: 'flex-end',
+  },
 });

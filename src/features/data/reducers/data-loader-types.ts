@@ -58,6 +58,7 @@ export interface DataLoaderState {
     chainConfig: LoaderState;
     prices: LoaderState;
     apy: LoaderState;
+    avgApy: LoaderState;
     vaults: LoaderState;
     lastHarvests: LoaderState;
     fees: LoaderState;

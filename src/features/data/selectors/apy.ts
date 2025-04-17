@@ -21,7 +21,7 @@ import { selectTokenPriceByAddress } from './tokens.ts';
 import { selectVaultById } from './vaults.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { selectActiveVaultBoostIds, selectVaultCurrentBoostIdWithStatus } from './boosts.ts';
-import type { TotalApy } from '../reducers/apy.ts';
+import type { AvgApy, TotalApy } from '../reducers/apy.ts';
 import { isEmpty } from '../../../helpers/utils.ts';
 import { selectWalletAddress } from './wallet.ts';
 import { first } from 'lodash-es';
@@ -33,6 +33,12 @@ const EMPTY_TOTAL_APY: TotalApy = {
   totalMonthly: 0,
   totalDaily: 0,
   totalType: 'apy',
+};
+
+const EMPTY_AVG_APY: AvgApy = {
+  avg7d: 0,
+  avg30d: 0,
+  avg90d: 0,
 };
 
 export const selectVaultTotalApyOrUndefined = (
@@ -47,6 +53,20 @@ export const selectVaultTotalApy = (
   vaultId: VaultEntity['id']
 ): Readonly<TotalApy> => {
   return selectVaultTotalApyOrUndefined(state, vaultId) || EMPTY_TOTAL_APY;
+};
+
+export const selectVaultAvgApyOrUndefined = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): Readonly<AvgApy> | undefined => {
+  return state.biz.apy.avgApy.byVaultId[vaultId] || undefined;
+};
+
+export const selectVaultAvgApy = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): Readonly<AvgApy> => {
+  return selectVaultAvgApyOrUndefined(state, vaultId) || EMPTY_AVG_APY;
 };
 
 export const selectDidAPIReturnValuesForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
