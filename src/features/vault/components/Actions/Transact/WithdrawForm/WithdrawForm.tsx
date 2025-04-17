@@ -76,7 +76,7 @@ const WithdrawFormLoader = memo(function WithdrawFormLoader() {
     <>
       {isLoading ?
         <Container>
-          <LoadingIndicator text={t('Transact-Loading')} />
+          <LoadingIndicator text={t('Transact-Loading')} height={344} />
         </Container>
       : isError ?
         <Container>
