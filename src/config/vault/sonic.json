@@ -1,5 +1,99 @@
 [
   {
+    "id": "shadow-cow-sonic-usdc.e-bes-vault",
+    "name": "beS-USDC.e",
+    "type": "standard",
+    "token": "beS-USDC.e",
+    "tokenAddress": "0x8c0919AE1fAcD6695Ad236Ea618d1018e5c4d42c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0x91D2cB866C64089B72AA749bAF69592b50ab724f",
+    "earnedToken": "mooCowShadowSonicbeS-USDCe",
+    "earnedTokenAddress": "0x91D2cB866C64089B72AA749bAF69592b50ab724f",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-bes",
+    "status": "active",
+    "createdAt": 1744887453,
+    "platformId": "shadow",
+    "assets": ["beS", "USDCe"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-usdc.e-bes-rp",
+    "name": "beS-USDC.e Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowShadowSonicbeS-USDCe",
+    "tokenAddress": "0x8c0919AE1fAcD6695Ad236Ea618d1018e5c4d42c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "earnContractAddress": "0x35768877220cae8492020957C35E4d9F96D2770c",
+    "earnedToken": "rCowShadowSonicbeS-USDCe",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-bes",
+    "status": "active",
+    "createdAt": 1744887452,
+    "platformId": "shadow",
+    "assets": ["beS", "USDCe"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "shadow-cow-sonic-usdc.e-bes",
+    "name": "beS-USDC.e",
+    "type": "cowcentrated",
+    "token": "beS-USDC.e shadow",
+    "tokenAddress": "0x0157699E0A26dbdf42a0a1DcF7426d0Df408C60e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "shadow",
+    "depositTokenAddresses": [
+      "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+      "0x871A101Dcf22fE4fE37be7B654098c801CBA1c88"
+    ],
+    "earnContractAddress": "0x8c0919AE1fAcD6695Ad236Ea618d1018e5c4d42c",
+    "earnedToken": "cowShadowSonicbeS-USDCe",
+    "earnedTokenAddress": "0x8c0919AE1fAcD6695Ad236Ea618d1018e5c4d42c",
+    "oracle": "lps",
+    "oracleId": "shadow-cow-sonic-usdc.e-bes",
+    "status": "active",
+    "createdAt": 1744887452,
+    "platformId": "beefy",
+    "feeTier": "0.30",
+    "assets": ["beS", "USDCe"],
+    "risks": ["IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "defive-ws-bes",
     "name": "beS-wS",
     "type": "standard",
