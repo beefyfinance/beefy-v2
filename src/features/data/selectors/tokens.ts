@@ -462,6 +462,26 @@ export const selectVaultTokenSymbols = createCachedSelector(
   }
 )((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
+export const selectVaultIcons = createCachedSelector(
+  selectVaultById,
+  (state: BeefyState) => state.entities.tokens.byChainId,
+  (vault, tokensByChainId) => {
+    if (vault.icons?.length) {
+      return vault.icons;
+    }
+
+    return vault.assetIds.map(assetId => {
+      const address = tokensByChainId[vault.chainId]?.byId[assetId];
+      if (!address) {
+        return assetId;
+      }
+
+      const token = tokensByChainId[vault.chainId]?.byAddress[address];
+      return token?.symbol || assetId;
+    });
+  }
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
 export const selectCurrentCowcentratedRangesByOracleId = (
   state: BeefyState,
   oracleId: TokenEntity['oracleId']

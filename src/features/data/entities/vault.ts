@@ -35,6 +35,8 @@ export type VaultBase = {
   id: string;
   /** name of the vault (as in the config) */
   name: string;
+  /** icons to use instead of assets */
+  icons?: string[];
   /** variations of name used in different contexts */
   names: VaultNames;
   /** contract version, increased when app needs to behave differently for the same vault type */
