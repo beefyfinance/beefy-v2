@@ -283,6 +283,11 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
       exitCode = 1;
     }
 
+    if (!isValidVaultId(pool.id)) {
+      console.error(`Error: ${pool.id} : Pool id has invalid format: "${pool.id}"`);
+      exitCode = 1;
+    }
+
     if (uniqueEarnedToken.has(pool.earnedToken)) {
       console.error(`Error: ${pool.id} : Pool earnedToken duplicated: ${pool.earnedToken}`);
       exitCode = 1;
@@ -481,6 +486,12 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
     }
     seenPromoIds.add(promo.id);
 
+    if (!isValidVaultId(promo.id)) {
+      console.error(`Error: Promo ${promo.id}: Promo id has invalid format: "${promo.id}"`);
+      exitCode = 1;
+      return;
+    }
+
     if (!poolIds.has(promo.vaultId)) {
       console.error(`Error: Promo ${promo.id}: Promo has non-existent vault id ${promo.vaultId}.`);
       exitCode = 1;
@@ -554,6 +565,16 @@ const validateSingleChain = async (chainId: AddressBookChainId, uniquePoolId: Se
 
   // Gov Pools
   poolsWithGovData.forEach(pool => {
+    if (uniquePoolId.has(pool.id)) {
+      console.error(`Error: ${pool.id} : Pool id duplicated: ${pool.id}`);
+      exitCode = 1;
+    }
+
+    if (!isValidVaultId(pool.id)) {
+      console.error(`Error: ${pool.id} : Pool id has invalid format: "${pool.id}"`);
+      exitCode = 1;
+    }
+
     if (!pool.strategyTypeId) {
       console.error(`Error: ${pool.id} : strategyTypeId missing gov strategy type`);
       exitCode = 1;
@@ -1346,6 +1367,22 @@ const override = (pools: VaultConfigWithStrategyData[]): VaultConfigWithStrategy
   });
   return pools;
 };
+
+/** @dev do not add to this list */
+const allowOldInvalidIds = new Set([
+  'quick-hbar[0x]-mimatic-eol',
+  'moo_curve-poly-atricrypto3-metavault trade',
+  'cakev2-arpa-bnb=eol',
+  'cakev2-perl-bnb=eol',
+]);
+/** vault ids should not require %-encoded urls */
+function isValidVaultId(vaultId: string) {
+  // same as encodeURIComponent (but allows + which strictly speaking doesn't need % encoding)
+  return (
+    allowOldInvalidIds.has(vaultId) ||
+    vaultId.trim().match(/^([a-z]|[A-Z]|[0-9]|[_.!~*'()+-])+$/) !== null
+  );
+}
 
 validatePools()
   .then(exitCode => process.exit(exitCode))

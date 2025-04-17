@@ -1,6 +1,6 @@
 [
   {
-    "id": "uniswap-cow-base-weth-base is for everyone-rp",
+    "id": "uniswap-cow-base-weth-base-is-for-everyone-rp",
     "name": "Base is for everyone-WETH Reward Pool",
     "type": "gov",
     "version": 2,
@@ -13,7 +13,7 @@
     "earnedTokenDecimals": 18,
     "earnedTokenAddresses": [],
     "oracle": "lps",
-    "oracleId": "uniswap-cow-base-weth-base is for everyone",
+    "oracleId": "uniswap-cow-base-weth-base-is-for-everyone",
     "status": "active",
     "createdAt": 1744888537,
     "platformId": "uniswap",
@@ -28,7 +28,7 @@
     ]
   },
   {
-    "id": "uniswap-cow-base-weth-base is for everyone",
+    "id": "uniswap-cow-base-weth-base-is-for-everyone",
     "name": "Base is for everyone-WETH",
     "type": "cowcentrated",
     "token": "WETH-Base is for everyone uniswap",
@@ -43,7 +43,7 @@
     "earnedToken": "cowUniswapBaseBase is for everyone-WETH",
     "earnedTokenAddress": "0xF315b9Bde1E18E71F879dD47b32697a01b3671fb",
     "oracle": "lps",
-    "oracleId": "uniswap-cow-base-weth-base is for everyone",
+    "oracleId": "uniswap-cow-base-weth-base-is-for-everyone",
     "status": "active",
     "createdAt": 1744888537,
     "platformId": "beefy",
