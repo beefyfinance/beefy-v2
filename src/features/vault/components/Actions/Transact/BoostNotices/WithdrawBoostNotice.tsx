@@ -11,7 +11,7 @@ import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import { styled } from '@repo/styles/jsx';
-import { selectStandardVaultById } from '../../../../../data/selectors/vaults.ts';
+import { selectVaultByIdWithReceipt } from '../../../../../data/selectors/vaults.ts';
 import { useTranslation } from 'react-i18next';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens.ts';
 import type BigNumber from 'bignumber.js';
@@ -56,7 +56,7 @@ const BoostBalance = memo(function BoostBalance({
   vaultId: VaultEntity['id'];
 }) {
   const { t } = useTranslation();
-  const vault = useAppSelector(state => selectStandardVaultById(state, vaultId));
+  const vault = useAppSelector(state => selectVaultByIdWithReceipt(state, vaultId));
   const mooToken = useAppSelector(state =>
     selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress)
   );

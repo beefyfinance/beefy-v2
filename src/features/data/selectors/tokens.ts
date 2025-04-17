@@ -12,6 +12,7 @@ import {
   selectCowcentratedLikeVaultById,
   selectGovVaultById,
   selectVaultById,
+  selectVaultByIdWithReceiptOrUndefined,
   selectVaultPricePerFullShare,
 } from './vaults.ts';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
@@ -246,8 +247,8 @@ export const selectVaultReceiptTokenPrice = (
   vaultId: VaultEntity['id'],
   ppfs?: BigNumber
 ) => {
-  const vault = selectVaultById(state, vaultId);
-  if (!isStandardVault(vault)) {
+  const vault = selectVaultByIdWithReceiptOrUndefined(state, vaultId);
+  if (!vault) {
     return BIG_ZERO;
   }
   const receiptTokenPPFS = ppfs || selectVaultPricePerFullShare(state, vaultId);

@@ -254,6 +254,14 @@ export type VaultCowcentratedLike =
 export type VaultErc4626AsyncWithdraw = MakeVault<'erc4626', VaultErc4626AsyncWithdrawOnly>;
 export type VaultErc4626 = VaultErc4626AsyncWithdraw;
 
+export type VaultWithPricePerFullShare = VaultStandard | VaultErc4626;
+export type VaultWithReceipt =
+  | VaultStandard
+  | VaultGovMulti
+  | VaultGovCowcentrated
+  | VaultCowcentrated
+  | VaultErc4626;
+
 export type VaultEntity = VaultStandard | VaultGov | VaultCowcentrated | VaultErc4626;
 export type VaultEntityActive = Extract<VaultEntity, VaultActive>;
 export type VaultEntityPaused = Extract<VaultEntity, VaultPaused>;
@@ -321,6 +329,16 @@ export function isErc4626AsyncWithdrawVault(
   vault: VaultEntity
 ): vault is VaultErc4626AsyncWithdraw {
   return isErc4626Vault(vault) && vault.subType === 'erc7540:withdraw';
+}
+
+export function isVaultWithReceipt(vault: VaultEntity): vault is VaultWithReceipt {
+  return !isSingleGovVault(vault);
+}
+
+export function isVaultWithPricePerFullShare(
+  vault: VaultEntity
+): vault is VaultWithPricePerFullShare {
+  return isStandardVault(vault) || isErc4626Vault(vault);
 }
 
 export function isVaultRetired(vault: VaultEntity): vault is VaultEntityRetired {
