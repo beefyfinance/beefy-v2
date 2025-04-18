@@ -8,7 +8,6 @@ import { selectBoostById } from '../../../../../data/selectors/boosts.ts';
 import { selectIsAddressBookLoaded } from '../../../../../data/selectors/data-loader.ts';
 import { selectIsStepperStepping } from '../../../../../data/selectors/stepper.ts';
 import { selectErc20TokenByAddress } from '../../../../../data/selectors/tokens.ts';
-import { selectStandardVaultById } from '../../../../../data/selectors/vaults.ts';
 import { selectIsWalletKnown, selectWalletAddress } from '../../../../../data/selectors/wallet.ts';
 import { styles } from './styles.ts';
 import { isLoaderFulfilled } from '../../../../../data/selectors/data-loader-helpers.ts';
@@ -19,6 +18,7 @@ import type BigNumber from 'bignumber.js';
 import { TokenAmount } from '../../../../../../components/TokenAmount/TokenAmount.tsx';
 import { ActionButton } from '../ActionButton/ActionButton.tsx';
 import { Collapse } from '../../../../../../components/Collapse/Collapse.tsx';
+import { selectVaultByIdWithReceipt } from '../../../../../data/selectors/vaults.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -48,7 +48,7 @@ export const ActionInputButton = memo(function ActionInputButton({
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const boost = useAppSelector(state => selectBoostById(state, boostId));
-  const vault = useAppSelector(state => selectStandardVaultById(state, boost.vaultId));
+  const vault = useAppSelector(state => selectVaultByIdWithReceipt(state, boost.vaultId));
   const mooToken = useAppSelector(state =>
     selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress)
   );

@@ -6,7 +6,7 @@ import {
   selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
 } from '../../../../../data/selectors/balance.ts';
-import { selectStandardVaultById } from '../../../../../data/selectors/vaults.ts';
+import { selectVaultByIdWithReceipt } from '../../../../../data/selectors/vaults.ts';
 import { selectBoostById } from '../../../../../data/selectors/boosts.ts';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { type Reward, Rewards } from '../Rewards.tsx';
@@ -25,7 +25,7 @@ export const BoostPastActionCard = memo(function BoostPastActionCard({
 }: BoostPastCardActionCardProps) {
   const { t } = useTranslation();
   const boost = useAppSelector(state => selectBoostById(state, boostId));
-  const vault = useAppSelector(state => selectStandardVaultById(state, boost.vaultId));
+  const vault = useAppSelector(state => selectVaultByIdWithReceipt(state, boost.vaultId));
   const userRewards = useAppSelector(state => selectBoostUserRewardsInToken(state, boost.id));
   const [rewards, canClaim] = useMemo(() => {
     let hasPendingRewards = false;

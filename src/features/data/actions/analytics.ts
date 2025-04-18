@@ -367,6 +367,15 @@ function handleClassicVaultTimeline(
   const vaultTxsWithId: Array<TimelineEntryCowcentratedVault | TimelineEntryStandard> = sortBy(
     vaultTxs
       .map(tx => {
+        // skip direct deposits/withdraws to/from boosts
+        if (
+          tx.shareDiff.isZero() &&
+          (tx.actions.includes('CLASSIC_REWARD_POOL_STAKE') ||
+            tx.actions.includes('CLASSIC_REWARD_POOL_UNSTAKE'))
+        ) {
+          return undefined;
+        }
+
         const vault = selectVaultByAddressOrUndefined(state, tx.chain, tx.vaultAddress);
         if (!vault) {
           return undefined;

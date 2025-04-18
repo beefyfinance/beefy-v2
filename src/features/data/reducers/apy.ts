@@ -9,7 +9,7 @@ import type { BoostPromoEntity } from '../entities/promo.ts';
 import type { VaultEntity } from '../entities/vault.ts';
 import { selectBoostById } from '../selectors/boosts.ts';
 import { selectTokenPriceByAddress, selectVaultReceiptTokenPrice } from '../selectors/tokens.ts';
-import { selectStandardVaultByAddressOrUndefined } from '../selectors/vaults.ts';
+import { selectVaultWithReceiptByAddressOrUndefined } from '../selectors/vaults.ts';
 import { createIdMap } from '../utils/array-utils.ts';
 import type BigNumber from 'bignumber.js';
 import type { ApiApyData } from '../apis/beefy/beefy-api-types.ts';
@@ -162,7 +162,7 @@ function addContractDataToState(
       (acc, reward) => {
         // Rewards
         let rewardTokenPrice: BigNumber;
-        const rewardVault = selectStandardVaultByAddressOrUndefined(
+        const rewardVault = selectVaultWithReceiptByAddressOrUndefined(
           state,
           reward.token.chainId,
           reward.token.address

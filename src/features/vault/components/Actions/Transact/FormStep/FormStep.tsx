@@ -89,7 +89,7 @@ export const FormStep = memo(function FormStep() {
         options={modeOptions}
         onChange={handleModeChange}
       />
-      <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} />}>
+      <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} height={344} />}>
         <Component />
       </Suspense>
     </div>

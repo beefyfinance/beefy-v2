@@ -22,8 +22,8 @@ import {
   isCowcentratedVault,
   isErc4626Vault,
   isGovVault,
-  isSingleGovVault,
   isStandardVault,
+  isVaultWithReceipt,
   type VaultEntity,
 } from '../../entities/vault.ts';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
@@ -184,7 +184,7 @@ function txError(
   const { additionalData } = context;
   const txError = getWalletErrorMessage(error);
   if (from) {
-    console.error(from, txError);
+    console.error(from, txError, error);
   }
   dispatch(createWalletActionErrorAction(txError, additionalData));
   dispatch(stepperActions.setStepContent({ stepContent: StepContent.ErrorTx }));
@@ -280,8 +280,7 @@ export function selectVaultTokensToRefresh(state: BeefyState, vault: VaultEntity
   }
 
   // receipt token
-  // gov v1 vaults do not have a receipt token
-  if (!isSingleGovVault(vault)) {
+  if (isVaultWithReceipt(vault)) {
     tokens.push(selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress));
   }
 

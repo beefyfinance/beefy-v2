@@ -8,7 +8,7 @@ import {
 } from './common.ts';
 import { selectWalletAddress } from '../../selectors/wallet.ts';
 import { selectBoostById } from '../../selectors/boosts.ts';
-import { selectStandardVaultById } from '../../selectors/vaults.ts';
+import { selectVaultByIdWithReceipt } from '../../selectors/vaults.ts';
 import { selectErc20TokenByAddress, selectTokenByAddress } from '../../selectors/tokens.ts';
 import { getWalletConnectionApi } from '../../apis/instances.ts';
 import { rpcClientManager } from '../../apis/rpc-contract/rpc-manager.ts';
@@ -35,7 +35,7 @@ export const claimBoost = (boostId: BoostPromoEntity['id']) => {
       return;
     }
     const boost = selectBoostById(state, boostId);
-    const vault = selectStandardVaultById(state, boost.vaultId);
+    const vault = selectVaultByIdWithReceipt(state, boost.vaultId);
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
     const walletApi = await getWalletConnectionApi();
@@ -75,6 +75,7 @@ export const claimBoost = (boostId: BoostPromoEntity['id']) => {
     );
   });
 };
+
 export const exitBoost = (boostId: BoostPromoEntity['id']) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -86,7 +87,7 @@ export const exitBoost = (boostId: BoostPromoEntity['id']) => {
 
     const boost = selectBoostById(state, boostId);
     const boostAmount = selectBoostUserBalanceInToken(state, boost.id);
-    const vault = selectStandardVaultById(state, boost.vaultId);
+    const vault = selectVaultByIdWithReceipt(state, boost.vaultId);
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
     const walletApi = await getWalletConnectionApi();
@@ -138,6 +139,7 @@ export const exitBoost = (boostId: BoostPromoEntity['id']) => {
     );
   });
 };
+
 export const startStakeBoostSteps = (
   boostId: BoostPromoEntity['id'],
   t: TFunction,
@@ -146,7 +148,7 @@ export const startStakeBoostSteps = (
   return captureWalletErrors(async (dispatch, getState) => {
     const state = getState();
     const boost = selectBoostById(state, boostId);
-    const vault = selectStandardVaultById(state, boost.vaultId);
+    const vault = selectVaultByIdWithReceipt(state, boost.vaultId);
     const needsApproval = selectIsApprovalNeededForBoostStaking(state, boost, amount);
     const receiptToken = selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
     const steps: Step[] = [];
@@ -170,6 +172,7 @@ export const startStakeBoostSteps = (
     dispatch(startStepperWithSteps(steps, boost.chainId));
   });
 };
+
 export const stakeBoost = (boostId: BoostPromoEntity['id'], amount: BigNumber) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -180,7 +183,7 @@ export const stakeBoost = (boostId: BoostPromoEntity['id'], amount: BigNumber) =
     }
 
     const boost = selectBoostById(state, boostId);
-    const vault = selectStandardVaultById(state, boost.vaultId);
+    const vault = selectVaultByIdWithReceipt(state, boost.vaultId);
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
     const walletApi = await getWalletConnectionApi();
@@ -215,6 +218,7 @@ export const stakeBoost = (boostId: BoostPromoEntity['id'], amount: BigNumber) =
     );
   });
 };
+
 export const startUnstakeBoostSteps = (
   boostId: BoostPromoEntity['id'],
   t: TFunction,
@@ -246,6 +250,7 @@ export const startUnstakeBoostSteps = (
     dispatch(startStepperWithSteps(steps, boost.chainId));
   });
 };
+
 export const unstakeBoost = (boostId: BoostPromoEntity['id'], amount: BigNumber) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -255,7 +260,7 @@ export const unstakeBoost = (boostId: BoostPromoEntity['id'], amount: BigNumber)
       return;
     }
     const boost = selectBoostById(state, boostId);
-    const vault = selectStandardVaultById(state, boost.vaultId);
+    const vault = selectVaultByIdWithReceipt(state, boost.vaultId);
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
 
     const walletApi = await getWalletConnectionApi();

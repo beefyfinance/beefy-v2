@@ -18,12 +18,22 @@ import { selectErc20TokenByAddress, selectTokenByAddress } from '../../selectors
 import { fetchWalletContract } from '../../apis/rpc-contract/viem-contract.ts';
 import { getGasPriceOptions } from '../../utils/gas-utils.ts';
 import { fromWei, toWeiBigInt } from '../../../../helpers/big-number.ts';
-import { getAddress } from 'viem';
+import {
+  type Address,
+  getAddress,
+  type getContract,
+  parseAbiItem,
+  type PublicClient,
+  type Transport,
+  type WalletClient,
+} from 'viem';
 import { isTokenErc20 } from '../../entities/token.ts';
 import { Erc4626VaultAbi } from '../../../../config/abi/Erc4626VaultAbi.ts';
 import { selectUserVaultPendingWithdrawal } from '../../selectors/balance.ts';
 import { selectVaultById } from '../../selectors/vaults.ts';
 import { formatTokenDisplay } from '../../../../helpers/format.ts';
+import { bigintRange } from '../../../../helpers/bigint.ts';
+import { readContract } from 'viem/actions';
 
 export const deposit = (vault: VaultEntity, amount: BigNumber) => {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -75,6 +85,43 @@ export const deposit = (vault: VaultEntity, amount: BigNumber) => {
   });
 };
 
+async function checkSlashedNotRealized(
+  contract: ReturnType<
+    typeof getContract<
+      Transport,
+      Address,
+      typeof Erc4626VaultAbi,
+      { public: PublicClient; wallet: WalletClient }
+    >
+  >,
+  publicClient: PublicClient
+) {
+  const numValidators = await contract.read.validatorsLength();
+  const validators = await Promise.all(
+    bigintRange(0n, numValidators).map(
+      async (i: bigint) => await contract.read.validatorByIndex([i])
+    )
+  );
+  // ignore empty, and ignore any that had checkForSlashedValidatorsAndUndelegate called
+  const toCheck = validators.filter(v => v.slashedDelegations === 0n && v.delegations > 0n);
+  const isSlashed = await Promise.all(
+    toCheck.map(async v =>
+      readContract(publicClient, {
+        address: '0xFC00FACE00000000000000000000000000000000',
+        args: [v.id],
+        functionName: 'isSlashed',
+        abi: [parseAbiItem('function isSlashed(uint256) view returns (bool)')],
+      })
+    )
+  );
+  const anySlashed = isSlashed.some(v => v);
+  if (anySlashed) {
+    throw new Error(
+      'An underlying validator with deposits was slashed. Please wait before withdrawing or use the emergency redeem function.'
+    );
+  }
+}
+
 export const requestRedeem = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => {
   return captureWalletErrors(async (dispatch, getState) => {
     txStart(dispatch);
@@ -104,6 +151,8 @@ export const requestRedeem = (vault: VaultEntity, oracleAmount: BigNumber, max: 
       walletClient,
       publicClient
     );
+
+    await checkSlashedNotRealized(contract, publicClient);
 
     const wantedAssets = toWeiBigInt(oracleAmount, depositToken.decimals);
     const [wantedShares, maxShares] = await Promise.all([

@@ -12,6 +12,7 @@ import {
   selectCowcentratedLikeVaultById,
   selectGovVaultById,
   selectVaultById,
+  selectVaultByIdWithReceiptOrUndefined,
   selectVaultPricePerFullShare,
 } from './vaults.ts';
 import type { ApiTimeBucket } from '../apis/beefy/beefy-data-api-types.ts';
@@ -246,8 +247,8 @@ export const selectVaultReceiptTokenPrice = (
   vaultId: VaultEntity['id'],
   ppfs?: BigNumber
 ) => {
-  const vault = selectVaultById(state, vaultId);
-  if (!isStandardVault(vault)) {
+  const vault = selectVaultByIdWithReceiptOrUndefined(state, vaultId);
+  if (!vault) {
     return BIG_ZERO;
   }
   const receiptTokenPPFS = ppfs || selectVaultPricePerFullShare(state, vaultId);
@@ -450,6 +451,26 @@ export const selectVaultTokenSymbols = createCachedSelector(
   selectVaultById,
   (state: BeefyState) => state.entities.tokens.byChainId,
   (vault, tokensByChainId) => {
+    return vault.assetIds.map(assetId => {
+      const address = tokensByChainId[vault.chainId]?.byId[assetId];
+      if (!address) {
+        return assetId;
+      }
+
+      const token = tokensByChainId[vault.chainId]?.byAddress[address];
+      return token?.symbol || assetId;
+    });
+  }
+)((_: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectVaultIcons = createCachedSelector(
+  selectVaultById,
+  (state: BeefyState) => state.entities.tokens.byChainId,
+  (vault, tokensByChainId) => {
+    if (vault.icons?.length) {
+      return vault.icons;
+    }
+
     return vault.assetIds.map(assetId => {
       const address = tokensByChainId[vault.chainId]?.byId[assetId];
       if (!address) {

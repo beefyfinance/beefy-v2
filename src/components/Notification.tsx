@@ -6,13 +6,11 @@ export const Notification = styled('div', {
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-    padding: '8px 16px',
+    padding: '6px 24px 8px 24px',
     color: 'colorPalette.text',
     textStyle: 'body.medium',
     backgroundColor: 'colorPalette.background',
-    sm: {
-      padding: '8px 24px',
-    },
+    textWrap: 'wrap balance',
   },
   variants: {
     background: {

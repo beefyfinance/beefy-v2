@@ -15,6 +15,7 @@ import {
   isVaultPaused,
   isVaultPausedOrRetired,
   isVaultRetired,
+  isVaultWithReceipt,
   type VaultCowcentrated,
   type VaultCowcentratedLike,
   type VaultEntity,
@@ -53,6 +54,23 @@ export const selectVaultById = (state: BeefyState, vaultId: VaultEntity['id']) =
   valueOrThrow(
     selectVaultByIdOrUndefined(state, vaultId),
     `selectVaultById: Unknown vault id ${vaultId}`
+  );
+
+export const selectVaultByIdWithReceiptOrUndefined = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => {
+  const vault = state.entities.vaults.byId[vaultId] || undefined;
+  if (vault && isVaultWithReceipt(vault)) {
+    return vault;
+  }
+  return undefined;
+};
+
+export const selectVaultByIdWithReceipt = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  valueOrThrow(
+    selectVaultByIdWithReceiptOrUndefined(state, vaultId),
+    `selectVaultByIdWithReceipt: Unknown vault id ${vaultId} or not a vault with a receipt`
   );
 
 export const selectVaultByAddressOrUndefined = (
@@ -368,6 +386,16 @@ export const selectStandardVaultByAddressOrUndefined = (
       contractAddress.toLowerCase()
     ];
   return vaultId ? selectStandardVaultById(state, vaultId) : undefined;
+};
+
+export const selectVaultWithReceiptByAddressOrUndefined = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  contractAddress: VaultStandard['contractAddress']
+) => {
+  const vaultId =
+    state.entities.vaults.byChainId[chainId]?.byAddress[contractAddress.toLowerCase()];
+  return vaultId ? selectVaultByIdWithReceiptOrUndefined(state, vaultId) : undefined;
 };
 
 export const selectAllActiveVaultIds = (state: BeefyState) => state.entities.vaults.allActiveIds;

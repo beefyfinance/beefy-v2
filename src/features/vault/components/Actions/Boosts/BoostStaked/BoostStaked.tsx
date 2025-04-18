@@ -6,7 +6,7 @@ import {
   selectErc20TokenByAddress,
   selectTokenByAddress,
 } from '../../../../../data/selectors/tokens.ts';
-import { selectStandardVaultById } from '../../../../../data/selectors/vaults.ts';
+import { selectVaultByIdWithReceipt } from '../../../../../data/selectors/vaults.ts';
 import { selectBoostUserBalanceInToken } from '../../../../../data/selectors/balance.ts';
 import { useAppSelector } from '../../../../../../store.ts';
 import { selectBoostById } from '../../../../../data/selectors/boosts.ts';
@@ -20,7 +20,7 @@ export const BoostStaked = memo(function BoostStaked({
 }) {
   const { t } = useTranslation();
   const boost = useAppSelector(state => selectBoostById(state, boostId));
-  const vault = useAppSelector(state => selectStandardVaultById(state, boost.vaultId));
+  const vault = useAppSelector(state => selectVaultByIdWithReceipt(state, boost.vaultId));
   const boostBalance = useAppSelector(state => selectBoostUserBalanceInToken(state, boost.id));
   const mooToken = useAppSelector(state =>
     selectErc20TokenByAddress(state, vault.chainId, vault.receiptTokenAddress)
