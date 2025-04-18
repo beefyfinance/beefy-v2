@@ -1,5 +1,27 @@
 [
   {
+    "id": "balancerv3-avalanche-waavasavax-ggavax-waavawavax",
+    "name": "sAVAX/ggAVAX/WAVAX LP",
+    "type": "standard",
+    "token": "sAVAX/ggAVAX/WAVAX LP",
+    "tokenAddress": "0x99a9a471DBe0Dcc6855b4cD4bbabECCb1280F5e8",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerAvalanchewaAvaWAVAX/ggAVAX/waAvaSAVAX",
+    "earnedTokenAddress": "0x636af4eE2B7D0390dCc0073C0e832FccD4C8dB0f",
+    "earnContractAddress": "0x636af4eE2B7D0390dCc0073C0e832FccD4C8dB0f",
+    "oracle": "lps",
+    "oracleId": "balancerv3-avalanche-waavasavax-ggavax-waavawavax",
+    "createdAt": 1744980874,
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["waAvaSAVAX", "ggAVAX", "waAvaWAVAX"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://balancer.fi/pools/avalanche/v3/0x99a9a471dbe0dcc6855b4cd4bbabeccb1280f5e8/add-liquidity",
+    "network": "avax"
+  },
+  {
     "id": "pharaoh-cow-usdt-usdc-vault",
     "name": "USDt-USDC",
     "type": "standard",
