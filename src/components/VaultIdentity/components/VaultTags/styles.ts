@@ -75,8 +75,8 @@ export const styles = {
     },
   }),
   vaultTagClmIcon: css.raw({
-    width: '16',
-    height: '16',
+    width: '12',
+    height: '12',
     display: 'block',
   }),
   vaultTagClmTextAutoHide: css.raw({

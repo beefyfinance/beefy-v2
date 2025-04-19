@@ -18,7 +18,7 @@ import { SaveButton } from '../SaveButton/SaveButton.tsx';
 import { selectVaultTokenSymbols } from '../../../data/selectors/tokens.ts';
 import { VaultClmLikeTag } from '../../../../components/VaultIdentity/components/VaultTags/VaultTags.tsx';
 import { css } from '@repo/styles/css';
-import { selectActivePromoForVault } from '../../../data/selectors/promos.ts';
+import { selectVaultIsBoostedForFilter } from '../../../data/selectors/filtered-vaults.ts';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -32,7 +32,7 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const vaultTokenSymbols = useAppSelector(state => selectVaultTokenSymbols(state, vaultId));
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
-  const promo = useAppSelector(state => selectActivePromoForVault(state, vaultId));
+  const isBoosted = useAppSelector(state => selectVaultIsBoostedForFilter(state, vaultId));
 
   return (
     <div className={classes.header}>
@@ -41,7 +41,7 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
           className={css(
             styles.title,
             !!isCowcentratedLike && styles.titleClm,
-            promo?.type === 'boost' && styles.titleBoost
+            isBoosted && styles.titleBoost
           )}
         >
           {punctuationWrap(vault.names.list)}
@@ -52,12 +52,12 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
           chainId={vault.chainId}
           css={!!isCowcentratedLike && styles.titleAssetClm}
         />
-        {isCowcentratedLike ? (
+        {isCowcentratedLike ?
           <VaultClmLikeTag
             vault={vault}
             hideFee={isCowcentratedGovVault(vault) ? true : undefined}
           />
-        ) : null}
+        : null}
       </div>
       <div className={classes.labelsHolder}>
         <div className={classes.platformLabel}>
@@ -71,9 +71,9 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
         </div>
         <div className={classes.shareHolder}>
           <SaveButton vaultId={vaultId} />
-          {vault.status === 'active' ? (
+          {vault.status === 'active' ?
             <ShareButton hideText={true} vaultId={vaultId} mobileAlternative={true} />
-          ) : null}
+          : null}
         </div>
       </div>
     </div>
