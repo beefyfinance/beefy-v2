@@ -333,9 +333,9 @@ export const selectNonGovVaultIdsByDepositTokenAddress = createCachedSelector(
     state.entities.vaults.byChainId,
   (chainId, tokenAddress, byChainId) =>
     arrayOrStaticEmpty(
-      (byChainId[chainId]?.byType.standard.byDepositTokenAddress[tokenAddress] || []).concat(
-        byChainId[chainId]?.byType.cowcentrated.byDepositTokenAddress[tokenAddress] || []
-      )
+      (byChainId[chainId]?.byType.standard.byDepositTokenAddress[tokenAddress] || [])
+        .concat(byChainId[chainId]?.byType.cowcentrated.byDepositTokenAddress[tokenAddress] || [])
+        .concat(byChainId[chainId]?.byType.erc4626.byDepositTokenAddress[tokenAddress] || [])
     )
 )(
   (_state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>

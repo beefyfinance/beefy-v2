@@ -9,16 +9,15 @@ import { useAppSelector } from '../../../../store.ts';
 import { selectChainById } from '../../../data/selectors/chains.ts';
 import { useTranslation } from 'react-i18next';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
-import { AssetsImage } from '../../../../components/AssetsImage/AssetsImage.tsx';
 import { VaultPlatform } from '../../../../components/VaultPlatform/VaultPlatform.tsx';
 import { styles } from './styles.ts';
 import { ShareButton } from '../ShareButton/ShareButton.tsx';
 import { punctuationWrap } from '../../../../helpers/string.ts';
 import { SaveButton } from '../SaveButton/SaveButton.tsx';
-import { selectVaultTokenSymbols } from '../../../data/selectors/tokens.ts';
 import { VaultClmLikeTag } from '../../../../components/VaultIdentity/components/VaultTags/VaultTags.tsx';
 import { css } from '@repo/styles/css';
 import { selectVaultIsBoostedForFilter } from '../../../data/selectors/filtered-vaults.ts';
+import { VaultIdImage } from '../../../../components/TokenImage/TokenImage.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -30,7 +29,6 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
-  const vaultTokenSymbols = useAppSelector(state => selectVaultTokenSymbols(state, vaultId));
   const isCowcentratedLike = isCowcentratedLikeVault(vault);
   const isBoosted = useAppSelector(state => selectVaultIsBoostedForFilter(state, vaultId));
 
@@ -46,10 +44,9 @@ export const VaultHeader = memo(function VaultHeader({ vaultId }: VaultHeaderPro
         >
           {punctuationWrap(vault.names.list)}
         </div>
-        <AssetsImage
-          assetSymbols={vaultTokenSymbols}
+        <VaultIdImage
+          vaultId={vaultId}
           size={48}
-          chainId={vault.chainId}
           css={!!isCowcentratedLike && styles.titleAssetClm}
         />
         {isCowcentratedLike ?

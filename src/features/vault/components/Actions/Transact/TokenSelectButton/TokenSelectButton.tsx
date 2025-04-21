@@ -47,9 +47,10 @@ export const TokenSelectButton = memo(function TokenSelectButton({
   }, [dispatch]);
 
   const tokenSymbol = useMemo(() => {
-    return vault.assetIds.length > 1 &&
-      vault.depositTokenAddress === selection.tokens[index].address
-      ? 'LP'
+    return (
+        vault.assetIds.length > 1 && vault.depositTokenAddress === selection.tokens[index].address
+      ) ?
+        'LP'
       : selection.tokens[index].symbol;
   }, [selection.tokens, vault.assetIds.length, vault.depositTokenAddress, index]);
 
@@ -67,17 +68,16 @@ export const TokenSelectButton = memo(function TokenSelectButton({
       onClick={canSwitchToTokenSelect ? handleClick : undefined}
       className={css(styles.button, cssProp, canSwitchToTokenSelect && styles.buttonMore)}
     >
-      {forceSelection ? (
+      {forceSelection ?
         <div className={css(styles.select, styles.forceSelection)}>
           <div className={classes.zapIcon}>
             <img src={zapIcon} alt="zap" />
           </div>
           {t('Select')}
         </div>
-      ) : isBreakLp ? (
+      : isBreakLp ?
         <BreakLp tokens={selection.tokens} />
-      ) : (
-        <div className={classes.select}>
+      : <div className={classes.select}>
           <TokensImage
             tokens={isMultiDeposit ? [selection.tokens[index]] : selection.tokens}
             css={styles.iconAssets}
@@ -85,8 +85,10 @@ export const TokenSelectButton = memo(function TokenSelectButton({
           />
           {tokenSymbol}
         </div>
-      )}
-      {canSwitchToTokenSelect ? <ExpandMore className={classes.iconMore} /> : null}
+      }
+      {canSwitchToTokenSelect ?
+        <ExpandMore className={classes.iconMore} />
+      : null}
     </button>
   );
 });
@@ -97,9 +99,9 @@ const BreakLp = memo(function BreakLp({ tokens }: { tokens: TokenEntity[] }) {
     const [token0, token1] = tokens;
     return (
       <div className={classes.breakLp}>
-        <TokenImage tokenAddress={token0.address} chainId={token0.chainId} size={16} />
+        <TokenImage address={token0.address} chainId={token0.chainId} size={16} />
         +
-        <TokenImage tokenAddress={token1.address} chainId={token1.chainId} size={16} />
+        <TokenImage address={token1.address} chainId={token1.chainId} size={16} />
       </div>
     );
   }

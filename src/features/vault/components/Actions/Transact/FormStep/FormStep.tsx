@@ -16,6 +16,7 @@ import { transactFetchOptions } from '../../../../../data/actions/transact.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
 import type { BeefyState } from '../../../../../../redux-types.ts';
+import { FormStepFooter } from '../FormStepFooter/FormStepFooter.tsx';
 
 const DepositFormLoader = lazy(() => import('../DepositForm/DepositForm.tsx'));
 const ClaimFormLoader = lazy(() => import('../ClaimForm/ClaimForm.tsx'));
@@ -91,6 +92,7 @@ export const FormStep = memo(function FormStep() {
       />
       <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} height={344} />}>
         <Component />
+        <FormStepFooter />
       </Suspense>
     </div>
   );

@@ -146,6 +146,20 @@ export const selectUserVaultBalanceInShareTokenInBoosts = createSelector(
 );
 
 /**
+ * Only includes shares deposited in boosts, converted to deposit token
+ */
+export const selectUserVaultBalanceInDepositTokenInBoosts = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id'], maybeWalletAddress?: string) =>
+    selectUserVaultBalanceInShareTokenInBoosts(state, vaultId, maybeWalletAddress),
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    selectVaultSharesToDepositTokenData(state, vaultId),
+  (shares, shareData) =>
+    shareData.shareToken ?
+      mooAmountToOracleAmount(shareData.shareToken, shareData.depositToken, shareData.ppfs, shares)
+    : shares
+)((_state: BeefyState, vaultId: VaultEntity['id'], _maybeWalletAddress?: string) => vaultId);
+
+/**
  * Only includes shares deposited in current boost
  */
 export const selectUserVaultBalanceInShareTokenInCurrentBoost = createSelector(

@@ -34,7 +34,6 @@ import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.t
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { Actions } from '../Actions/Actions.tsx';
 import { styled } from '@repo/styles/jsx';
-import { DepositBoostPromotion } from '../BoostNotices/DepositBoostNotice.tsx';
 import { FormFooter } from '../FormFooter/FormFooter.tsx';
 
 const useStyles = legacyMakeStyles(styles);
@@ -79,36 +78,19 @@ const DepositFormLoader = memo(function DepositFormLoader() {
   const isError = status === TransactStatus.Rejected;
 
   return (
-    <>
+    <Container>
       {!isVaultActive(vault) ?
-        <Container>
-          <RetirePauseReason vaultId={vaultId} />
-        </Container>
+        <RetirePauseReason vaultId={vaultId} />
       : isLoading ?
-        <Container>
-          <LoadingIndicator text={t('Transact-Loading')} height={344} />
-        </Container>
+        <LoadingIndicator text={t('Transact-Loading')} height={344} />
       : isError ?
-        <Container>
-          <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
-        </Container>
-      : <Deposit />}
-    </>
+        <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
+      : <DepositForm />}
+    </Container>
   );
 });
 
-export const Deposit = memo(function Deposit() {
-  return (
-    <div>
-      <Container>
-        <DepositForm />
-      </Container>
-      <DepositBoostPromotion />
-    </div>
-  );
-});
-
-export const DepositForm = memo(function DepositForm() {
+const DepositForm = memo(function DepositForm() {
   const { t } = useTranslation();
   const classes = useStyles();
 

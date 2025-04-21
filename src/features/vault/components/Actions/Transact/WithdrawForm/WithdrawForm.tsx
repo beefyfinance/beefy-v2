@@ -26,7 +26,6 @@ import { useDispatch } from 'react-redux';
 import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
 import { styled } from '@repo/styles/jsx';
-import { WithdrawBoostNotice } from '../BoostNotices/WithdrawBoostNotice.tsx';
 import { WithdrawQueueLoader } from '../WithdrawQueue/WithdrawQueueLoader.tsx';
 import { FormFooter } from '../FormFooter/FormFooter.tsx';
 
@@ -73,32 +72,17 @@ const WithdrawFormLoader = memo(function WithdrawFormLoader() {
   const isError = status === TransactStatus.Rejected;
 
   return (
-    <>
+    <Container>
       {isLoading ?
-        <Container>
-          <LoadingIndicator text={t('Transact-Loading')} height={344} />
-        </Container>
+        <LoadingIndicator text={t('Transact-Loading')} height={344} />
       : isError ?
-        <Container>
-          <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
-        </Container>
-      : <Withdraw />}
-    </>
+        <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
+      : <WithdrawForm />}
+    </Container>
   );
 });
 
-export const Withdraw = memo(function Withdraw() {
-  return (
-    <div>
-      <Container>
-        <WithdrawForm />
-      </Container>
-      <WithdrawBoostNotice />
-    </div>
-  );
-});
-
-export const WithdrawForm = memo(function WithdrawForm() {
+const WithdrawForm = memo(function WithdrawForm() {
   const { t } = useTranslation();
   const classes = useStyles();
   const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
