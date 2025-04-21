@@ -64,7 +64,7 @@ const BoostPromotionNotification = memo(function BoostPromotionNotification({
         t={t}
         values={{ count: rewardTokens.length }}
         components={{
-          Tokens: <TokensList rewardTokens={rewardTokens} />,
+          Tokens: <TokensList rewardTokens={rewardTokens} arrow={deposited} />,
         }}
       />
     );
@@ -73,10 +73,7 @@ const BoostPromotionNotification = memo(function BoostPromotionNotification({
   if (deposited) {
     return (
       <PromotionNotification padding="none" direction={rewardTokens.length > 1 ? 'column' : 'row'}>
-        <PromotionButton onClick={handleTab}>
-          {inner}
-          <ChevronRight preserveAspectRatio="xMaxYMid" className={inlineIcon} />
-        </PromotionButton>
+        <PromotionButton onClick={handleTab}>{inner}</PromotionButton>
       </PromotionNotification>
     );
   }
@@ -88,7 +85,13 @@ const BoostPromotionNotification = memo(function BoostPromotionNotification({
   );
 });
 
-const TokensList = memo(function TokensList({ rewardTokens }: { rewardTokens: PromoReward[] }) {
+const TokensList = memo(function TokensList({
+  rewardTokens,
+  arrow = false,
+}: {
+  rewardTokens: PromoReward[];
+  arrow?: boolean;
+}) {
   return (
     <RewardTokens>
       <ListJoin
@@ -99,6 +102,7 @@ const TokensList = memo(function TokensList({ rewardTokens }: { rewardTokens: Pr
           </RewardToken>
         ))}
       />
+      {arrow && <ChevronRight preserveAspectRatio="xMaxYMid" className={inlineIcon} />}
     </RewardTokens>
   );
 });

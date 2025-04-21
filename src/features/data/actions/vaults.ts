@@ -364,6 +364,7 @@ function getVaultBase(config: VaultConfig, chainId: ChainEntity['id']): VaultBas
     id: config.id,
     name: config.id === 'bifi-vault' ? names.long : config.name,
     names,
+    icons: config.icons,
     version: config.version || 1,
     chainId: chainId,
     contractAddress: config.earnContractAddress,

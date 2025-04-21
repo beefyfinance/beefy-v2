@@ -1,5 +1,63 @@
 [
   {
+    "id": "defive-ws-bes",
+    "name": "beS-wS",
+    "type": "standard",
+    "token": "beS-wS",
+    "tokenAddress": "0x6885DAdc124B281b3AAbBDB7F2F35C789D87C3EF",
+    "tokenDecimals": 18,
+    "tokenProviderId": "defive",
+    "earnedToken": "mooDefivewS-beS",
+    "earnedTokenAddress": "0x3e3F36eE9EBd776ccDC32e8670CE37b9B00c0a45",
+    "earnContractAddress": "0x3e3F36eE9EBd776ccDC32e8670CE37b9B00c0a45",
+    "oracle": "lps",
+    "oracleId": "defive-ws-bes",
+    "createdAt": 1744815689,
+    "status": "active",
+    "platformId": "defive",
+    "assets": ["beS", "S"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://defive.com/pools/add/S/0x871A101Dcf22fE4fE37be7B654098c801CBA1c88",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "sonic-defive"
+      }
+    ]
+  },
+  {
+    "id": "defive-usdc.e-bes",
+    "name": "beS-USDC.e",
+    "type": "standard",
+    "token": "beS-USDC.e",
+    "tokenAddress": "0x0d0e7C58ac2a52cca1385E105a0A91652328Afa4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "defive",
+    "earnedToken": "mooDefiveUSDC.e-beS",
+    "earnedTokenAddress": "0xa5dcb39359F8b67e2C6E7125fCBe0752e558a52a",
+    "earnContractAddress": "0xa5dcb39359F8b67e2C6E7125fCBe0752e558a52a",
+    "oracle": "lps",
+    "oracleId": "defive-usdc.e-bes",
+    "createdAt": 1744815689,
+    "status": "active",
+    "platformId": "defive",
+    "assets": ["beS", "USDCe"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://defive.com/pools/add/0x29219dd400f2Bf60E5a23d13Be72B486D4038894/0x871A101Dcf22fE4fE37be7B654098c801CBA1c88",
+    "pointStructureIds": ["sonic-points"],
+    "network": "sonic",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "sonic-defive"
+      }
+    ]
+  },
+  {
     "id": "swapx-ichi-sts-swpx",
     "name": "stS-SWPx",
     "type": "standard",
@@ -419,6 +477,7 @@
   {
     "id": "beefy-besonic",
     "name": "beS",
+    "icons": ["beS"],
     "type": "erc4626",
     "subType": "erc7540:withdraw",
     "token": "WS",
@@ -432,7 +491,7 @@
     "status": "active",
     "createdAt": 1744038202,
     "platformId": "beefy",
-    "assets": ["beS"],
+    "assets": ["wS"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "besonic",
@@ -441,7 +500,10 @@
     "zaps": [
       {
         "strategyId": "single",
-        "disableWithdraw": true
+        "disableWithdraw": true,
+        "swap": {
+          "blockTokens": ["beS", "beefy-besonic"]
+        }
       }
     ]
   },

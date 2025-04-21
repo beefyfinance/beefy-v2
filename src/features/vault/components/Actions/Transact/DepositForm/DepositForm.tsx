@@ -86,7 +86,7 @@ const DepositFormLoader = memo(function DepositFormLoader() {
         </Container>
       : isLoading ?
         <Container>
-          <LoadingIndicator text={t('Transact-Loading')} />
+          <LoadingIndicator text={t('Transact-Loading')} height={344} />
         </Container>
       : isError ?
         <Container>
