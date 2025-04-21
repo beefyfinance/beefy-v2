@@ -500,7 +500,10 @@
     "zaps": [
       {
         "strategyId": "single",
-        "disableWithdraw": true
+        "disableWithdraw": true,
+        "swap": {
+          "blockTokens": ["beS", "beefy-besonic"]
+        }
       }
     ]
   },
