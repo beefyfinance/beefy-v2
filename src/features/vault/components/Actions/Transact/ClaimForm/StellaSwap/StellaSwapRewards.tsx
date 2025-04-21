@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../../../store.ts';
 import type { ChainEntity, ChainId } from '../../../../../../data/entities/chain.ts';
 import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
 import { Claim } from './Claim/Claim.tsx';
-import { RewardList } from '../RewardList/RewardList.tsx';
+import { RewardList } from '../RewardList.tsx';
 import { Source } from '../Source/Source.tsx';
 import { isNonEmptyArray, type NonEmptyArray } from '../../../../../../data/utils/array-utils.ts';
 import { selectChainById } from '../../../../../../data/selectors/chains.ts';
@@ -73,7 +73,7 @@ export const StellaSwapRewards = memo(function StellaSwapRewards({
 
   return (
     <>
-      {hasClaimable && walletAddress ? (
+      {hasClaimable && walletAddress ?
         <ClaimableRewards
           vaultChainId={chainId}
           vaultId={vaultId}
@@ -81,8 +81,7 @@ export const StellaSwapRewards = memo(function StellaSwapRewards({
           walletAddress={walletAddress}
           deposited={deposited}
         />
-      ) : (
-        <Source
+      : <Source
           key={chainId}
           title={t('Transact-Claim-Rewards-stellaswap')}
           refresh={
@@ -91,7 +90,7 @@ export const StellaSwapRewards = memo(function StellaSwapRewards({
         >
           <RewardList chainId={chainId} rewards={vaultRewards} deposited={deposited} />
         </Source>
-      )}
+      }
     </>
   );
 });
@@ -170,9 +169,9 @@ const ClaimableChainRewards = memo(function ClaimableChainRewards({
         }
       )}
       claim={
-        hasClaimable ? (
+        hasClaimable ?
           <Claim chainId={chainId} vaultId={vaultId} withChain={withChain} />
-        ) : undefined
+        : undefined
       }
       refresh={withRefresh ? <UserRewardsRefreshButton walletAddress={walletAddress} /> : undefined}
     >
@@ -209,20 +208,22 @@ const UserRewardsRefreshButton = memo(function UserRewardsRefreshButton({
   return (
     <RefreshButton
       title={t(
-        status.isError
-          ? 'Transact-Claim-Refresh-StellaSwap-Error'
-          : status.isLoading
-            ? 'Transact-Claim-Refresh-StellaSwap-Loading'
-            : 'Transact-Claim-Refresh-StellaSwap-Loaded'
+        status.isError ? 'Transact-Claim-Refresh-StellaSwap-Error'
+        : status.isLoading ? 'Transact-Claim-Refresh-StellaSwap-Loading'
+        : 'Transact-Claim-Refresh-StellaSwap-Loaded'
       )}
       text={
-        status.isLoading
-          ? undefined
-          : canRefresh
-            ? t('Transact-Claim-Refresh')
-            : t('Transact-Claim-Refresh-Wait')
+        status.isLoading ? undefined
+        : canRefresh ?
+          t('Transact-Claim-Refresh')
+        : t('Transact-Claim-Refresh-Wait')
       }
-      status={status.isError ? 'error' : status.isLoading ? 'loading' : 'loaded'}
+      status={
+        status.isError ? 'error'
+        : status.isLoading ?
+          'loading'
+        : 'loaded'
+      }
       disabled={!canRefresh}
       onClick={status.handleLoad}
     />

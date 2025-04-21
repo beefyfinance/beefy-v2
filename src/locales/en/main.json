@@ -605,6 +605,7 @@
   "Stepper-migration-Building-Content": "Building migration transaction...",
   "How-It-Works": "How It Works",
   "Earn": "Earn {{symbol}}",
+  "Earning": "Earning {{symbol}}",
   "Explorer": "Explorer",
   "Add-To-Wallet": "Add to Wallet",
   "Add-Token-To-Wallet": "Add {{token}} to Wallet",
