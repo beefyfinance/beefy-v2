@@ -9,14 +9,17 @@ import {
   isCowcentratedLikeVault,
   isCowcentratedStandardVault,
   isCowcentratedVault,
+  isErc4626Vault,
   isGovVault,
   isStandardVault,
   isVaultPaused,
   isVaultPausedOrRetired,
   isVaultRetired,
+  isVaultWithReceipt,
   type VaultCowcentrated,
   type VaultCowcentratedLike,
   type VaultEntity,
+  type VaultErc4626,
   type VaultGov,
   type VaultGovCowcentrated,
   type VaultStandard,
@@ -51,6 +54,23 @@ export const selectVaultById = (state: BeefyState, vaultId: VaultEntity['id']) =
   valueOrThrow(
     selectVaultByIdOrUndefined(state, vaultId),
     `selectVaultById: Unknown vault id ${vaultId}`
+  );
+
+export const selectVaultByIdWithReceiptOrUndefined = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => {
+  const vault = state.entities.vaults.byId[vaultId] || undefined;
+  if (vault && isVaultWithReceipt(vault)) {
+    return vault;
+  }
+  return undefined;
+};
+
+export const selectVaultByIdWithReceipt = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  valueOrThrow(
+    selectVaultByIdWithReceiptOrUndefined(state, vaultId),
+    `selectVaultByIdWithReceipt: Unknown vault id ${vaultId} or not a vault with a receipt`
   );
 
 export const selectVaultByAddressOrUndefined = (
@@ -238,6 +258,16 @@ export const selectStandardOrCowcentratedVaultById = createCachedSelector(
   }
 )((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
+export const selectErc4626VaultById = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  vault => {
+    if (!isErc4626Vault(vault)) {
+      throw new Error(`selectErc4626VaultById: Vault ${vault.id} is not a erc4626 vault`);
+    }
+    return vault;
+  }
+)((_state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
 export const selectVaultIdsByChainIdIncludingHidden = createSelector(
   (state: BeefyState, chainId: ChainEntity['id']) => state.entities.vaults.byChainId[chainId],
   vaultsChainId => (vaultsChainId ? vaultsChainId.allIds : [])
@@ -286,6 +316,14 @@ export const selectAllCowcentratedVaultsByChainId = createSelector(
     vaultIds ? vaultIds.map(id => byIds[id]!).filter(isCowcentratedVault) : []
 );
 
+export const selectAllErc4626VaultsByChainId = createSelector(
+  (state: BeefyState) => state.entities.vaults.byId,
+  (state: BeefyState, chainId: ChainEntity['id']) =>
+    state.entities.vaults.byChainId[chainId]?.byType.erc4626.allIds || undefined,
+  (byIds, vaultIds): VaultErc4626[] =>
+    vaultIds ? vaultIds.map(id => byIds[id]!).filter(isErc4626Vault) : []
+);
+
 export const selectNonGovVaultIdsByDepositTokenAddress = createCachedSelector(
   (_state: BeefyState, chainId: ChainEntity['id'], _tokenAddress: TokenEntity['address']) =>
     chainId,
@@ -295,9 +333,9 @@ export const selectNonGovVaultIdsByDepositTokenAddress = createCachedSelector(
     state.entities.vaults.byChainId,
   (chainId, tokenAddress, byChainId) =>
     arrayOrStaticEmpty(
-      (byChainId[chainId]?.byType.standard.byDepositTokenAddress[tokenAddress] || []).concat(
-        byChainId[chainId]?.byType.cowcentrated.byDepositTokenAddress[tokenAddress] || []
-      )
+      (byChainId[chainId]?.byType.standard.byDepositTokenAddress[tokenAddress] || [])
+        .concat(byChainId[chainId]?.byType.cowcentrated.byDepositTokenAddress[tokenAddress] || [])
+        .concat(byChainId[chainId]?.byType.erc4626.byDepositTokenAddress[tokenAddress] || [])
     )
 )(
   (_state: BeefyState, chainId: ChainEntity['id'], tokenAddress: TokenEntity['address']) =>
@@ -348,6 +386,16 @@ export const selectStandardVaultByAddressOrUndefined = (
       contractAddress.toLowerCase()
     ];
   return vaultId ? selectStandardVaultById(state, vaultId) : undefined;
+};
+
+export const selectVaultWithReceiptByAddressOrUndefined = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  contractAddress: VaultStandard['contractAddress']
+) => {
+  const vaultId =
+    state.entities.vaults.byChainId[chainId]?.byAddress[contractAddress.toLowerCase()];
+  return vaultId ? selectVaultByIdWithReceiptOrUndefined(state, vaultId) : undefined;
 };
 
 export const selectAllActiveVaultIds = (state: BeefyState) => state.entities.vaults.allActiveIds;

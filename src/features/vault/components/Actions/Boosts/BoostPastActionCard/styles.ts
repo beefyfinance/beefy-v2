@@ -20,10 +20,6 @@ export const styles = {
   pastRewards: css.raw({
     padding: '0',
   }),
-  label: css.raw({
-    textStyle: 'subline.sm',
-    color: 'text.dark',
-  }),
   value: css.raw({
     textStyle: 'body.medium',
     color: 'text.middle',

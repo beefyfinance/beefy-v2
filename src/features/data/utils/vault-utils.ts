@@ -9,12 +9,14 @@ const typeToSuffix: Record<VaultEntity['type'], string> = {
   standard: 'Vault',
   gov: 'Pool',
   cowcentrated: 'CLM',
+  erc4626: 'Vault',
 };
 
 const typeToSuffixRegex: Record<VaultEntity['type'], RegExp> = {
   standard: / (Vault)$/i,
   gov: / ((?:(?:Earnings|Migration|Reward) )?Pool)$/i,
   cowcentrated: / (CLM)$/i,
+  erc4626: / (Vault)$/i,
 };
 
 function getSuffix(name: string, type: VaultEntity['type']) {
@@ -47,6 +49,7 @@ export function getCowcentratedAddressFromCowcentratedLikeVault(
   vault: VaultCowcentratedLike
 ): string {
   return (
-    isCowcentratedVault(vault) ? vault.receiptTokenAddress : vault.depositTokenAddress
-  ).toLowerCase();
+    isCowcentratedVault(vault) ?
+      vault.receiptTokenAddress
+    : vault.depositTokenAddress).toLowerCase();
 }

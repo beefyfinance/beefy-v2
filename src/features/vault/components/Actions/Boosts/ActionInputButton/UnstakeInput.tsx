@@ -3,7 +3,8 @@ import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../../../../../store.ts';
 import { ActionInputButton, type ActionInputButtonProps } from './ActionInputButton.tsx';
-import { startUnstakeBoostSteps } from '../../../../../data/actions/wallet-actions.ts';
+
+import { startUnstakeBoostSteps } from '../../../../../data/actions/wallet/boost.ts';
 
 type UnstakeInputProps = StakeInputProps;
 
@@ -33,8 +34,9 @@ export const UnstakeInput = memo(function UnstakeInput({
       onSubmit={handleUnstake}
       balance={balance}
       title={t('Boost-Button-Unstake')}
-      balanceLabel={t('Staked')}
+      balanceLabel={t('Available')}
       buttonLabel={t('Boost-Button-Unstake')}
+      buttonVariant="default"
     />
   );
 });

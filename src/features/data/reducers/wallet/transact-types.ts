@@ -6,7 +6,7 @@ import type {
 import type { VaultEntity } from '../../entities/vault.ts';
 import type { TokenEntity } from '../../entities/token.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { SerializedError } from '../../apis/transact/strategies/error-types.ts';
 
 export enum TransactStep {
@@ -20,6 +20,7 @@ export enum TransactMode {
   Deposit,
   Withdraw,
   Claim,
+  Boost,
 }
 
 export enum TransactStatus {

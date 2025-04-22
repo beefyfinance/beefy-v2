@@ -6,7 +6,7 @@ import type {
 import { UniswapV2Pool } from './UniswapV2Pool.ts';
 import { ZERO_ADDRESS } from '../../../../../helpers/addresses.ts';
 import { BIG_ZERO } from '../../../../../helpers/big-number.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import type { Abi } from 'abitype';
 

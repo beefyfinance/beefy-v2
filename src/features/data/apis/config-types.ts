@@ -4,14 +4,16 @@ import type { TokenEntity } from '../entities/token.ts';
 import type { PlatformEntity } from '../entities/platform.ts';
 import type { ZapFee } from './transact/transact-types.ts';
 import type { ChangeTypeOfKeys } from '../utils/types-utils.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { Address } from 'viem';
 import type { ZapStrategyConfig } from './transact/strategies/strategy-configs.ts';
 
 export interface VaultConfig {
   id: string;
   name: string;
-  type: 'standard' | 'gov' | 'cowcentrated';
+  icons?: string[];
+  type: 'standard' | 'erc4626' | 'gov' | 'cowcentrated';
+  subType?: 'standard' | 'cowcentrated' | 'gov' | 'multi-gov' | 'erc7540:withdraw';
   /** version of vault type defaults to 1 */
   version?: number;
   token: string;

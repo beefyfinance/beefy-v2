@@ -1,5 +1,487 @@
 [
   {
+    "id": "uniswap-cow-gnosis-bcspx-sdai-rp",
+    "name": "bCSPX-sDAI Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapGnosisbCSPX-sDAI",
+    "tokenAddress": "0x69E857CCF70324969748f7cF176F5912f7013BA6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedTokenAddresses": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowUniswapGnosisbCSPX-sDAI",
+    "earnContractAddress": "0xEFe7a711e7C794D3C8934C243631720dBec522Eb",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-gnosis-bcspx-sdai",
+    "status": "active",
+    "createdAt": 1744216500,
+    "platformId": "uniswap",
+    "assets": ["bCSPX", "sDAI"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "gnosis",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-gnosis-bcspx-sdai",
+    "name": "bCSPX-sDAI",
+    "token": "bCSPX-sDAI uniswap",
+    "tokenAddress": "0x0439847E20dac107DDACc19A4530c694c465E9C0",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x1e2C4fb7eDE391d116E6B41cD0608260e8801D59",
+      "0xaf204776c7245bF4147c2612BF6e5972Ee483701"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapGnosisbCSPX-sDAI",
+    "earnedTokenAddress": "0x69E857CCF70324969748f7cF176F5912f7013BA6",
+    "earnContractAddress": "0x69E857CCF70324969748f7cF176F5912f7013BA6",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-gnosis-bcspx-sdai",
+    "status": "active",
+    "createdAt": 1744216500,
+    "platformId": "beefy",
+    "assets": ["bCSPX", "sDAI"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "gnosis",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-gnosis-wbtsla-sdai-vault",
+    "name": "wbTSLA-sDAI",
+    "type": "standard",
+    "token": "wbTSLA-sDAI",
+    "tokenAddress": "0xdC5cF03C6AaF579a64E3e367fd6447e3ae312165",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x72685de19A82398496521872FF60FC85bF0b0d34",
+    "earnedToken": "mooBeefyUniswapGnosiswbTSLA-sDAI",
+    "earnedTokenAddress": "0x72685de19A82398496521872FF60FC85bF0b0d34",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-gnosis-wbtsla-sdai",
+    "status": "active",
+    "createdAt": 1744216500,
+    "platformId": "uniswap",
+    "assets": ["wbTSLA", "sDAI"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "gnosis",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-gnosis-wbtsla-sdai-rp",
+    "name": "wbTSLA-sDAI Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapGnosiswbTSLA-sDAI",
+    "tokenAddress": "0xdC5cF03C6AaF579a64E3e367fd6447e3ae312165",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedTokenAddresses": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowUniswapGnosiswbTSLA-sDAI",
+    "earnContractAddress": "0xa651c7c43a53328284747C89c56Ef5fB15A7161d",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-gnosis-wbtsla-sdai",
+    "status": "active",
+    "createdAt": 1744216500,
+    "platformId": "uniswap",
+    "assets": ["wbTSLA", "sDAI"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "gnosis",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-gnosis-wbtsla-sdai",
+    "name": "wbTSLA-sDAI",
+    "token": "wbTSLA-sDAI uniswap",
+    "tokenAddress": "0x0Cf44132a7Df09ba82D5c4010e73e151d31a42Ae",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x1f82284C1658Ad71C576f7230E6C2DEE7901c1FA",
+      "0xaf204776c7245bF4147c2612BF6e5972Ee483701"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapGnosiswbTSLA-sDAI",
+    "earnedTokenAddress": "0xdC5cF03C6AaF579a64E3e367fd6447e3ae312165",
+    "earnContractAddress": "0xdC5cF03C6AaF579a64E3e367fd6447e3ae312165",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-gnosis-wbtsla-sdai",
+    "status": "active",
+    "createdAt": 1744216500,
+    "platformId": "beefy",
+    "assets": ["wbTSLA", "sDAI"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "gnosis",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-gnosis-usdc.e-sdai-rp",
+    "name": "USDC.e-sDAI Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapGnosissDAI-USDCe",
+    "tokenAddress": "0xde675EFa57d38d19429e56cF5f1114A7F9E26f8E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedTokenAddresses": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowUniswapGnosissDAI-USDCe",
+    "earnContractAddress": "0x5f1b787F702910262CC2f820A63b0C474d9B0F80",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-gnosis-usdc.e-sdai",
+    "status": "active",
+    "createdAt": 1744216500,
+    "platformId": "uniswap",
+    "assets": ["USDCe", "sDAI"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "gnosis",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-gnosis-usdc.e-sdai",
+    "name": "USDC.e-sDAI",
+    "token": "USDC.e-sDAI uniswap",
+    "tokenAddress": "0x5a2Fb66e66b2aF7F1c2F71c6c695492FaAB2E587",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x2a22f9c3b484c3629090FeED35F17Ff8F88f76F0",
+      "0xaf204776c7245bF4147c2612BF6e5972Ee483701"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapGnosissDAI-USDCe",
+    "earnedTokenAddress": "0xde675EFa57d38d19429e56cF5f1114A7F9E26f8E",
+    "earnContractAddress": "0xde675EFa57d38d19429e56cF5f1114A7F9E26f8E",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-gnosis-usdc.e-sdai",
+    "status": "active",
+    "createdAt": 1744216500,
+    "platformId": "beefy",
+    "assets": ["USDCe", "sDAI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "BATTLE_TESTED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "pool",
+    "network": "gnosis",
+    "type": "cowcentrated",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-gnosis-weth-wsteth-rp",
+    "name": "WETH-wstETH Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapGnosiswstETH-WETH",
+    "tokenAddress": "0x8bC032a7d63BA3420C941aC82b96b1D21C83Cc76",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedTokenAddresses": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowUniswapGnosiswstETH-WETH",
+    "earnContractAddress": "0x267b2D785576D595b33De861aE48eA94cFD257c7",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-gnosis-weth-wsteth",
+    "status": "active",
+    "createdAt": 1744216500,
+    "platformId": "uniswap",
+    "assets": ["WETH", "wstETH"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "gnosis",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-gnosis-weth-wsteth",
+    "name": "WETH-wstETH",
+    "token": "WETH-wstETH uniswap",
+    "tokenAddress": "0xBeB0a58E627FeE7AFc795eE9BaaF9E4C934913d7",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1",
+      "0x6C76971f98945AE98dD7d4DFcA8711ebea946eA6"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapGnosiswstETH-WETH",
+    "earnedTokenAddress": "0x8bC032a7d63BA3420C941aC82b96b1D21C83Cc76",
+    "earnContractAddress": "0x8bC032a7d63BA3420C941aC82b96b1D21C83Cc76",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-gnosis-weth-wsteth",
+    "status": "active",
+    "createdAt": 1744216500,
+    "platformId": "beefy",
+    "assets": ["WETH", "wstETH"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "BATTLE_TESTED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "pool",
+    "network": "gnosis",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-gnosis-usdc.e-wxdai-rp",
+    "name": "USDC.e-WXDAI Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapGnosisUSDCe-WXDAI",
+    "tokenAddress": "0xDcfd113031dCd122d004021fBd48de867E616C49",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedTokenAddresses": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowUniswapGnosisUSDCe-WXDAI",
+    "earnContractAddress": "0xaD3DCDCF0C01D838CBC43C67961365281d6cAD96",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-gnosis-usdc.e-wxdai",
+    "status": "active",
+    "createdAt": 1744216500,
+    "platformId": "uniswap",
+    "assets": ["USDCe", "WXDAI"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "gnosis",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-gnosis-usdc.e-wxdai",
+    "name": "USDC.e-WXDAI",
+    "token": "USDC.e-WXDAI uniswap",
+    "tokenAddress": "0xf5E40cC12f69121B0329c256A99F4ab3ebDfAA2E",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x2a22f9c3b484c3629090FeED35F17Ff8F88f76F0",
+      "0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapGnosisUSDCe-WXDAI",
+    "earnedTokenAddress": "0xDcfd113031dCd122d004021fBd48de867E616C49",
+    "earnContractAddress": "0xDcfd113031dCd122d004021fBd48de867E616C49",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-gnosis-usdc.e-wxdai",
+    "status": "active",
+    "createdAt": 1744216500,
+    "platformId": "beefy",
+    "assets": ["USDCe", "WXDAI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "BATTLE_TESTED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "pool",
+    "network": "gnosis",
+    "type": "cowcentrated",
+    "feeTier": "0.01",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-gnosis-wsteth-sdai-rp",
+    "name": "wstETH-sDAI Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapGnosissDAI-wstETH",
+    "tokenAddress": "0x7740eDe700D96CE8A7EeD17C06AB82A6ec556eAe",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnedTokenAddresses": [],
+    "earnedTokenDecimals": [18],
+    "earnedToken": "rCowUniswapGnosissDAI-wstETH",
+    "earnContractAddress": "0xD56941F8d19b013ddB89a118fdD9B0AC7e481b55",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-gnosis-wsteth-sdai",
+    "status": "active",
+    "createdAt": 1744216500,
+    "platformId": "uniswap",
+    "assets": ["wstETH", "sDAI"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "gnosis",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-gnosis-wsteth-sdai",
+    "name": "wstETH-sDAI",
+    "token": "wstETH-sDAI uniswap",
+    "tokenAddress": "0xe8a249626d3f3B876B887C30A3355513CB3FA9e4",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x6C76971f98945AE98dD7d4DFcA8711ebea946eA6",
+      "0xaf204776c7245bF4147c2612BF6e5972Ee483701"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapGnosissDAI-wstETH",
+    "earnedTokenAddress": "0x7740eDe700D96CE8A7EeD17C06AB82A6ec556eAe",
+    "earnContractAddress": "0x7740eDe700D96CE8A7EeD17C06AB82A6ec556eAe",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-gnosis-wsteth-sdai",
+    "status": "active",
+    "createdAt": 1744216500,
+    "platformId": "beefy",
+    "assets": ["wstETH", "sDAI"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "BATTLE_TESTED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "pool",
+    "network": "gnosis",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-gnosis-wsteth-gno-rp",
+    "name": "wstETH-GNO Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapGnosisGNO-wstETH",
+    "tokenAddress": "0x2DE9aF4E68c0980e84c5B54Ce677FA4368b299F2",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0x56F130Cc51cE0CA96454f44BF66f1299C89ccAe7",
+    "earnedToken": "rCowUniswapGnosisGNO-wstETH",
+    "earnedTokenDecimals": [18],
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-gnosis-wsteth-gno",
+    "status": "active",
+    "createdAt": 1744216500,
+    "platformId": "uniswap",
+    "assets": ["wstETH", "GNO"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "gnosis",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-gnosis-wsteth-gno",
+    "name": "wstETH-GNO",
+    "token": "wstETH-GNO uniswap",
+    "tokenAddress": "0x46f2dA8A69A150390a87Db78e7AaD8572c564963",
+    "tokenDecimals": 18,
+    "depositTokenAddresses": [
+      "0x6C76971f98945AE98dD7d4DFcA8711ebea946eA6",
+      "0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb"
+    ],
+    "tokenProviderId": "uniswap",
+    "earnedToken": "cowUniswapGnosisGNO-wstETH",
+    "earnedTokenAddress": "0x2DE9aF4E68c0980e84c5B54Ce677FA4368b299F2",
+    "earnContractAddress": "0x2DE9aF4E68c0980e84c5B54Ce677FA4368b299F2",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-gnosis-wsteth-gno",
+    "status": "active",
+    "createdAt": 1744216500,
+    "platformId": "beefy",
+    "assets": ["wstETH", "GNO"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "BATTLE_TESTED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "strategyTypeId": "compounds",
+    "network": "gnosis",
+    "type": "cowcentrated",
+    "feeTier": "0.05",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "balancerv3-gnosis-wagwsteth-waggno",
     "name": "wstETH/GNO LP",
     "type": "standard",
@@ -527,7 +1009,9 @@
     "earnedTokenAddress": "0x5F603C60aDb40691939B9a740beeCeF4B0f5C146",
     "oracle": "lps",
     "oracleId": "aura-gnosis-wsteth-gno",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1743199524,
+    "retireReason": "rewards",
     "createdAt": 1698264180,
     "platformId": "aura",
     "assets": ["wstETH", "GNO"],

@@ -1,12 +1,14 @@
 import { BeefyV2AppMulticallAbi } from '../../../../config/abi/BeefyV2AppMulticallAbi.ts';
 import type {
   VaultCowcentrated,
+  VaultErc4626,
   VaultGov,
   VaultGovMulti,
-  VaultStandard,
+  VaultStandardBeefy,
+  VaultStandardCowcentrated,
 } from '../../entities/vault.ts';
 import type { ChainEntity } from '../../entities/chain.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type { BoostPromoEntity } from '../../entities/promo.ts';
 import { chunk, pick, sortBy } from 'lodash-es';
 import type {
@@ -15,6 +17,9 @@ import type {
   BoostRewardContractData,
   CowVaultContractData,
   CowVaultRawContractData,
+  Erc4626VaultContractData,
+  Erc4626VaultRawContractData,
+  FetchAllContractDataEntities,
   FetchAllContractDataResult,
   GovVaultContractData,
   GovVaultMultiContractData,
@@ -33,7 +38,7 @@ import type { BeefyState } from '../../../../redux-types.ts';
 import { selectVaultById } from '../../selectors/vaults.ts';
 import { selectTokenByAddress, selectTokenByAddressOrUndefined } from '../../selectors/tokens.ts';
 import { isFiniteNumber } from '../../../../helpers/number.ts';
-import { BIG_ZERO } from '../../../../helpers/big-number.ts';
+import { BIG_ZERO, fromWei } from '../../../../helpers/big-number.ts';
 import { addDays } from 'date-fns';
 import { fetchContract } from '../rpc-contract/viem-contract.ts';
 import type { Address } from 'abitype';
@@ -43,12 +48,15 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
   public async fetchAllContractData(
     state: BeefyState,
-    standardVaults: VaultStandard[],
-    govVaults: VaultGov[],
-    govVaultsMulti: VaultGovMulti[],
-    cowVaults: VaultCowcentrated[],
-    boosts: BoostPromoEntity[],
-    boostsMulti: BoostPromoEntity[]
+    {
+      standardVaults = [],
+      erc4626Vaults = [],
+      govVaults = [],
+      govVaultsMulti = [],
+      cowVaults = [],
+      boosts = [],
+      boostsMulti = [],
+    }: FetchAllContractDataEntities
   ): Promise<FetchAllContractDataResult> {
     const multicallContract = fetchContract(
       this.chain.appMulticallContractAddress,
@@ -64,6 +72,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const govVaultMultiBatches = chunk(govVaultsMulti, CHUNK_SIZE);
     const vaultBatches = chunk(standardVaults, CHUNK_SIZE);
     const cowVaultBatches = chunk(cowVaults, CHUNK_SIZE);
+    const erc4626VaultBatches = chunk(erc4626Vaults, CHUNK_SIZE);
 
     const boostRequests = boostBatches.map(batch =>
       multicallContract.read.getBoostInfo([batch.map(boost => boost.contractAddress as Address)])
@@ -87,6 +96,11 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const cowVaultRequests = cowVaultBatches.map(batch =>
       multicallContract.read.getCowVaultInfo([batch.map(vault => vault.contractAddress as Address)])
     );
+    const erc4626VaultRequests = erc4626VaultBatches.map(batch =>
+      multicallContract.read.getERC4626VaultInfo([
+        batch.map(vault => vault.contractAddress as Address),
+      ])
+    );
 
     const [
       boostResults,
@@ -95,6 +109,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       govVaultResults,
       govVaultMultiResults,
       cowVaultResults,
+      erc4626VaultResults,
     ] = await Promise.all([
       Promise.all(boostRequests),
       Promise.all(boostMultiRequests),
@@ -102,6 +117,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       Promise.all(govVaultRequests),
       Promise.all(govVaultMultiRequests),
       Promise.all(cowVaultRequests),
+      Promise.all(erc4626VaultRequests),
     ]);
 
     const res: FetchAllContractDataResult = {
@@ -110,6 +126,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       govVaultsMulti: [],
       standardVaults: [],
       cowVaults: [],
+      erc4626Vaults: [],
     };
 
     boostBatches.forEach((boostBatch, idx) => {
@@ -152,27 +169,50 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       });
     });
 
+    erc4626VaultBatches.forEach((erc4626VaultBatch, idx) => {
+      erc4626VaultBatch.forEach((erc4626Vault, elemidx) => {
+        res.erc4626Vaults.push(
+          this.erc4626VaultFormatter(state, erc4626VaultResults[idx][elemidx], erc4626Vault)
+        );
+      });
+    });
+
     return res;
   }
 
   protected standardVaultFormatter(
     state: BeefyState,
     result: StandardVaultRawContractData,
-    standardVault: VaultStandard
+    standardVault: VaultStandardBeefy | VaultStandardCowcentrated
   ) {
     const vault = selectVaultById(state, standardVault.id);
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     return {
       id: standardVault.id,
-      balance: new BigNumber(result.balance.toString(10)).shiftedBy(-depositToken.decimals),
+      balance: fromWei(result.balance, depositToken.decimals),
       /** always 18 decimals for PPFS */
-      pricePerFullShare: new BigNumber(result.pricePerFullShare.toString(10)).shiftedBy(
-        -mooToken.decimals
-      ),
+      pricePerFullShare: fromWei(result.pricePerFullShare, mooToken.decimals),
       strategy: result.strategy,
       paused: result.paused,
     } satisfies StandardVaultContractData;
+  }
+
+  protected erc4626VaultFormatter(
+    state: BeefyState,
+    result: Erc4626VaultRawContractData,
+    erc4626Vault: VaultErc4626
+  ) {
+    const vault = selectVaultById(state, erc4626Vault.id);
+    const mooToken = selectTokenByAddress(state, vault.chainId, vault.contractAddress);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+
+    return {
+      id: erc4626Vault.id,
+      balance: fromWei(result.balance, depositToken.decimals),
+      pricePerFullShare: fromWei(result.pricePerFullShare, mooToken.decimals),
+      paused: result.paused,
+    } satisfies Erc4626VaultContractData;
   }
 
   protected govVaultFormatter(
@@ -184,7 +224,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const token = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     return {
       id: govVault.id,
-      totalSupply: new BigNumber(result.totalSupply.toString(10)).shiftedBy(-token.decimals),
+      totalSupply: fromWei(result.totalSupply, token.decimals),
     } satisfies GovVaultContractData;
   }
 
@@ -215,7 +255,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
       rewards.push({
         token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
-        rewardRate: new BigNumber(rate.toString(10)).shiftedBy(-rewardToken.decimals),
+        rewardRate: fromWei(rate, rewardToken.decimals),
         periodFinish: this.periodFinishToDate(periodFinish?.toString(10))!,
         index,
       });
@@ -223,7 +263,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
     return {
       id: govVault.id,
-      totalSupply: new BigNumber(result.totalSupply.toString(10)).shiftedBy(-token.decimals),
+      totalSupply: fromWei(result.totalSupply, token.decimals),
       rewards,
     };
   }
@@ -239,8 +279,8 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     return {
       id: cowVault.id,
       balances: [
-        new BigNumber(result.token0Balance.toString(10)).shiftedBy(-tokens[0].decimals),
-        new BigNumber(result.token1Balance.toString(10)).shiftedBy(-tokens[1].decimals),
+        fromWei(result.token0Balance, tokens[0].decimals),
+        fromWei(result.token1Balance, tokens[1].decimals),
       ],
       strategy: result.strategy,
       paused: result.paused,
@@ -265,13 +305,11 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       id: boost.id,
       periodFinish,
       isPreStake: result.isPreStake,
-      totalSupply: new BigNumber(result.totalSupply.toString(10)).shiftedBy(-depositToken.decimals),
+      totalSupply: fromWei(result.totalSupply, depositToken.decimals),
       rewards: [
         {
           token: pick(earnedToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
-          rewardRate: new BigNumber(result.rewardRate.toString(10)).shiftedBy(
-            -earnedToken.decimals
-          ),
+          rewardRate: fromWei(result.rewardRate, earnedToken.decimals),
           periodFinish,
           isPreStake: result.isPreStake,
           index: 0,
@@ -310,7 +348,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
 
       rewards.push({
         token: pick(rewardToken, ['address', 'symbol', 'decimals', 'oracleId', 'chainId']),
-        rewardRate: new BigNumber(rate.toString(10)).shiftedBy(-rewardToken.decimals),
+        rewardRate: fromWei(rate, rewardToken.decimals),
         periodFinish: this.periodFinishToDate(periodFinish?.toString(10)),
         isPreStake: false,
         index,
@@ -349,16 +387,16 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     // ending soonest, ending furthest, ended recently, ended furthest, never active
     const sortedRewards = sortBy(rewards, ({ periodFinish }) =>
-      periodFinish
-        ? periodFinish.getTime() > now.getTime()
-          ? Number.MIN_SAFE_INTEGER + periodFinish.getTime()
-          : -periodFinish.getTime()
-        : Number.MAX_SAFE_INTEGER
+      periodFinish ?
+        periodFinish.getTime() > now.getTime() ?
+          Number.MIN_SAFE_INTEGER + periodFinish.getTime()
+        : -periodFinish.getTime()
+      : Number.MAX_SAFE_INTEGER
     );
 
     return {
       id: boost.id,
-      totalSupply: new BigNumber(result.totalSupply.toString(10)).shiftedBy(-depositToken.decimals),
+      totalSupply: fromWei(result.totalSupply, depositToken.decimals),
       isPreStake: sortedRewards[0].isPreStake,
       periodFinish: sortedRewards[0].periodFinish,
       rewards: sortedRewards,

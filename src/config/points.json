@@ -878,7 +878,7 @@
     "eligibility": [
       {
         "type": "token-holding",
-        "tokens": ["scUSD", "scETH"]
+        "tokens": ["wstkscUSD", "stkscUSD", "scUSD", "scETH"]
       }
     ],
     "accounting": [
@@ -1035,6 +1035,41 @@
         "id": "lisk-points",
         "role": "Distribution of rewards",
         "type": "airdrop",
+        "url": "TODO"
+      }
+    ]
+  },
+  {
+    "id": "infrared",
+    "docs": "TODO",
+    "points": [
+      {
+        "id": "infrared-points",
+        "name": "Infrared Points"
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "platform",
+        "platformId": "infrared",
+        "liveAfter": "2025-04-01"
+      }
+    ],
+    "accounting": [
+      {
+        "id": "beefy-balances-subgraph",
+        "role": "Indexing of all balances of all beefy products",
+        "url": "https://github.com/beefyfinance/beefy-balances-subgraph"
+      },
+      {
+        "id": "beefy-lrt-api",
+        "role": "API for the LRT subgraph. Provides stable API.",
+        "url": "https://github.com/beefyfinance/beefy-lrt-api"
+      },
+      {
+        "id": "infrared-points",
+        "role": "Distribution of rewards",
+        "type": "claim-rewards",
         "url": "TODO"
       }
     ]

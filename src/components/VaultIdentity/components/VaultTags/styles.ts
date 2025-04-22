@@ -14,6 +14,7 @@ export const styles = {
   }),
   vaultTag: css.raw({
     textStyle: 'subline.sm',
+    fontWeight: 600,
     color: 'text.middle',
     backgroundColor: 'bayOfMany',
     padding: '2px 8px',
@@ -30,6 +31,9 @@ export const styles = {
   }),
   vaultTagIcon: css.raw({
     flex: '0 0 auto',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   }),
   vaultTagText: css.raw({
     flexShrink: '1',
@@ -38,7 +42,8 @@ export const styles = {
     minWidth: '0',
   }),
   vaultTagBoost: css.raw({
-    backgroundColor: 'tags.boost.background',
+    background: 'tags.boost.background',
+    color: 'background.content',
   }),
   vaultTagBoostIcon: css.raw({
     width: '12px',
@@ -70,8 +75,8 @@ export const styles = {
     },
   }),
   vaultTagClmIcon: css.raw({
-    width: '16',
-    height: '16',
+    width: '12',
+    height: '12',
     display: 'block',
   }),
   vaultTagClmTextAutoHide: css.raw({
@@ -93,5 +98,8 @@ export const styles = {
   }),
   flexWrap: css.raw({
     flexWrap: 'wrap',
+  }),
+  inverted: css.raw({
+    flexDirection: 'row-reverse',
   }),
 };

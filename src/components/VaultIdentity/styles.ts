@@ -19,7 +19,7 @@ export const styles = {
     textDecoration: 'none',
   }),
   vaultNameBoosted: css.raw({
-    color: 'background.vaults.boost',
+    color: 'text.boosted',
   }),
   vaultNetwork: css.raw({
     position: 'absolute',

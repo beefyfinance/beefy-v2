@@ -16,8 +16,8 @@ import {
 import type { TenderlySimulateRequest, TenderlySimulateResponse } from '../apis/tenderly/types.ts';
 import { selectChainById } from '../selectors/chains.ts';
 import type { VaultEntity } from '../entities/vault.ts';
-import { walletActions } from './wallet-actions.ts';
 import type { EIP1193Provider } from '@web3-onboard/core';
+import { claimMerkl, claimStellaSwap } from './wallet/offchain.ts';
 
 export type TenderlyTxCallRequest = {
   data: string;
@@ -221,7 +221,7 @@ export const tenderlySimulateStellaSwapClaim = createAsyncThunk<
     {
       step: 'claim-rewards',
       message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
-      action: walletActions.claimStellaSwap(chainId, vaultId),
+      action: claimStellaSwap(chainId, vaultId),
       pending: false,
     },
   ];
@@ -245,7 +245,7 @@ export const tenderlySimulateMerklClaim = createAsyncThunk<
     {
       step: 'claim-rewards',
       message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
-      action: walletActions.claimMerkl(chainId),
+      action: claimMerkl(chainId),
       pending: false,
     },
   ];

@@ -27,7 +27,7 @@ import { AlertError } from '../../../../../../components/Alerts/Alerts.tsx';
 import { useTranslation } from 'react-i18next';
 import { formatMinutesDuration } from '../../../../../../helpers/date.ts';
 import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -219,9 +219,9 @@ const QuotesError = memo(function QuotesError() {
     return (
       <AlertError>
         {t(
-          errorLimits.canWait
-            ? 'Bridge-Quotes-AllRateLimited-Wait'
-            : 'Bridge-Quotes-AllRateLimited',
+          errorLimits.canWait ?
+            'Bridge-Quotes-AllRateLimited-Wait'
+          : 'Bridge-Quotes-AllRateLimited',
           {
             current: formatTokenDisplayCondensed(errorLimits.current, 18, 4),
             max: formatTokenDisplayCondensed(errorLimits.max, 18, 4),
@@ -245,7 +245,9 @@ const QuotesHolder = memo(function QuotesHolder({ status }: QuotesHolderProps) {
   return (
     <div className={classes.quotesHolder}>
       <div className={classes.quotesTitle}>{t('Bridge-Quotes-Title')}</div>
-      {status === 'fulfilled' ? <Quotes /> : <QuotesLoading />}
+      {status === 'fulfilled' ?
+        <Quotes />
+      : <QuotesLoading />}
     </div>
   );
 });
@@ -263,7 +265,9 @@ export const QuoteSelector = memo(function QuoteSelector({ css: cssProp }: Quote
 
   return (
     <div className={css(styles.container, cssProp)}>
-      {status === 'rejected' ? <QuotesError /> : <QuotesHolder status={status} />}
+      {status === 'rejected' ?
+        <QuotesError />
+      : <QuotesHolder status={status} />}
     </div>
   );
 });

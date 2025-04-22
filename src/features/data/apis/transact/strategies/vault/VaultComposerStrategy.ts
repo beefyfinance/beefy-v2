@@ -48,9 +48,9 @@ import { pickTokens } from '../../helpers/tokens.ts';
 import { toWeiString } from '../../../../../../helpers/big-number.ts';
 import { slipBy } from '../../helpers/amounts.ts';
 import { uniqBy } from 'lodash-es';
-import { walletActions } from '../../../../actions/wallet-actions.ts';
 import { NO_RELAY } from '../../helpers/zap.ts';
 import { onlyOneInput } from '../../helpers/options.ts';
+import { zapExecuteOrder } from '../../../../actions/wallet/zap.ts';
 
 const strategyId = 'vault-composer';
 type StrategyId = typeof strategyId;
@@ -222,6 +222,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
       if (quote.underlyingQuote.strategyId === 'vault') {
         const depositZap = await this.underlyingVaultType.fetchZapDeposit({
           inputs: underlyingQuote.inputs,
+          from: this.helpers.zap.router,
         });
 
         const vaultDepositZap = await this.vaultType.fetchZapDeposit({
@@ -232,6 +233,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
               max: true, // but we call depositAll
             },
           ],
+          from: this.helpers.zap.router,
         });
 
         const dustOutputs: OrderOutput[] = pickTokens(
@@ -267,11 +269,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
 
         const expectedTokens = quote.outputs.map(output => output.token);
 
-        const walletAction = walletActions.zapExecuteOrder(
-          this.vault.id,
-          zapRequest,
-          expectedTokens
-        );
+        const walletAction = zapExecuteOrder(this.vault.id, zapRequest, expectedTokens);
         return walletAction(dispatch, getState, extraArgument);
       } else {
         if (!this.isMatchingDepositQuote(underlyingQuote)) {
@@ -289,6 +287,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
               max: true, // but we call depositAll
             },
           ],
+          from: this.helpers.zap.router,
         });
 
         zapRequest.steps.push(vaultDepositZap.zap);
@@ -311,11 +310,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
         );
 
         const expectedTokens = vaultDepositZap.outputs.map(output => output.token);
-        const walletAction = walletActions.zapExecuteOrder(
-          this.vault.id,
-          zapRequest,
-          expectedTokens
-        );
+        const walletAction = zapExecuteOrder(this.vault.id, zapRequest, expectedTokens);
         return walletAction(dispatch, getState, extraArgument);
       }
     };
@@ -470,11 +465,13 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
 
       const vaultWithdrawZap = await this.vaultType.fetchZapWithdraw({
         inputs: quote.inputs,
+        from: this.helpers.zap.router,
       });
 
       if (quote.subStrategy === 'vault') {
         const cowWithdraw = await this.underlyingVaultType.fetchZapWithdraw({
           inputs: underlyingQuote.inputs,
+          from: this.helpers.zap.router,
         });
 
         const steps: ZapStep[] = [];
@@ -515,11 +512,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
           steps,
         };
 
-        const walletAction = walletActions.zapExecuteOrder(
-          this.vault.id,
-          zapRequest,
-          expectedTokens
-        );
+        const walletAction = zapExecuteOrder(this.vault.id, zapRequest, expectedTokens);
         return walletAction(dispatch, getState, extraArgument);
       } else {
         if (!this.isMatchingWithdrawQuote(underlyingQuote)) {
@@ -540,11 +533,7 @@ class VaultComposerStrategyImpl implements IComposerStrategy<StrategyId> {
           minOutputAmount: '0',
         });
 
-        const walletAction = walletActions.zapExecuteOrder(
-          this.vault.id,
-          zapRequest,
-          expectedTokens
-        );
+        const walletAction = zapExecuteOrder(this.vault.id, zapRequest, expectedTokens);
         return walletAction(dispatch, getState, extraArgument);
       }
     };

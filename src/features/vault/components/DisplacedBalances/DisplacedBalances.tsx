@@ -1,16 +1,12 @@
-import { type FC, memo, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { styles } from './styles.ts';
 import { legacyMakeStyles } from '../../../../helpers/mui.ts';
 import type { VaultEntity } from '../../../data/entities/vault.ts';
 import { useAppSelector } from '../../../../store.ts';
 import {
-  selectUserVaultBalanceInDepositToken,
-  selectUserVaultBalanceInDepositTokenIncludingBoostsBridged,
   selectVaultUserBalanceInDepositTokenBreakdown,
-  type UserVaultBalanceBreakdownBoost,
   type UserVaultBalanceBreakdownBridged,
   type UserVaultBalanceBreakdownEntry,
-  type UserVaultBalanceBreakdownVault,
 } from '../../../data/selectors/balance.ts';
 import type { TokenEntity } from '../../../data/entities/token.ts';
 import { TokenImage } from '../../../../components/TokenImage/TokenImage.tsx';
@@ -18,49 +14,16 @@ import { Trans, useTranslation } from 'react-i18next';
 import { TokenAmountFromEntity } from '../../../../components/TokenAmount/TokenAmount.tsx';
 import { groupBy } from 'lodash-es';
 import { css } from '@repo/styles/css';
-import { selectBoostById } from '../../../data/selectors/boosts.ts';
 import { selectChainById } from '../../../data/selectors/chains.ts';
 import { Link } from 'react-router';
 
 const useStyles = legacyMakeStyles(styles);
+const typesToShow = ['bridged'] as const satisfies Array<UserVaultBalanceBreakdownEntry['type']>;
 
 type EntryProps<T extends UserVaultBalanceBreakdownEntry = UserVaultBalanceBreakdownEntry> = {
   entry: T;
   depositToken: TokenEntity;
 };
-
-const BoostEntry = memo(function BoostEntry({
-  entry,
-  depositToken,
-}: EntryProps<UserVaultBalanceBreakdownBoost>) {
-  const classes = useStyles();
-  const { t } = useTranslation();
-  const boost = useAppSelector(state => selectBoostById(state, entry.boostId));
-
-  return (
-    <div className={classes.entry}>
-      <TokenImage
-        chainId={depositToken.chainId}
-        tokenAddress={depositToken.address}
-        css={styles.icon}
-      />
-      <div className={classes.text}>
-        <Trans
-          t={t}
-          i18nKey="Transact-Displaced-boost"
-          values={{
-            symbol: depositToken.symbol,
-            boost: boost.title,
-          }}
-          components={{
-            amount: <TokenAmountFromEntity amount={entry.amount} token={depositToken} />,
-            orange: <span className={classes.tokenAmount} />,
-          }}
-        />
-      </div>
-    </div>
-  );
-});
 
 const BridgedEntry = memo(function BridgedEntry({
   entry,
@@ -72,11 +35,7 @@ const BridgedEntry = memo(function BridgedEntry({
 
   return (
     <div className={classes.entry}>
-      <TokenImage
-        chainId={depositToken.chainId}
-        tokenAddress={depositToken.address}
-        css={styles.icon}
-      />
+      <TokenImage chainId={depositToken.chainId} address={depositToken.address} css={styles.icon} />
       <div className={classes.text}>
         <Trans
           t={t}
@@ -101,19 +60,6 @@ type EntriesProps<T extends UserVaultBalanceBreakdownEntry = UserVaultBalanceBre
   depositToken: TokenEntity;
 };
 
-const BoostEntries = memo(function BoostEntries({
-  entries,
-  depositToken,
-}: EntriesProps<UserVaultBalanceBreakdownBoost>) {
-  return (
-    <div className={css(styles.entries)}>
-      {entries.map(entry => (
-        <BoostEntry key={entry.id} entry={entry} depositToken={depositToken} />
-      ))}
-    </div>
-  );
-});
-
 const BridgedEntries = memo(function BridgedEntries({
   entries,
   depositToken,
@@ -127,27 +73,12 @@ const BridgedEntries = memo(function BridgedEntries({
   );
 });
 
-type TypeToComponentMap = Omit<
-  {
-    [T in UserVaultBalanceBreakdownEntry['type']]: FC<
-      EntriesProps<Extract<UserVaultBalanceBreakdownEntry, { type: T }>>
-    >;
-  },
-  'vault'
->;
+type TypesToShow = (typeof typesToShow)[number];
 
-const typeToComponent: TypeToComponentMap = {
-  boost: BoostEntries,
-  bridged: BridgedEntries,
+type EntriesToShow = Extract<UserVaultBalanceBreakdownEntry, { type: TypesToShow }>;
+type TypeToArrayMap = {
+  [T in TypesToShow]: Extract<EntriesToShow, { type: T }>[];
 };
-
-const Entries = memo(function Entries({
-  entries,
-  depositToken,
-}: EntriesProps<Exclude<UserVaultBalanceBreakdownEntry, UserVaultBalanceBreakdownVault>>) {
-  const Component = typeToComponent[entries[0].type] as FC<EntriesProps>;
-  return <Component entries={entries} depositToken={depositToken} />;
-});
 
 interface DisplacedBalancesProps {
   vaultId: VaultEntity['id'];
@@ -156,46 +87,39 @@ interface DisplacedBalancesProps {
 export const DisplacedBalances = memo(function DisplacedBalances({
   vaultId,
 }: DisplacedBalancesProps) {
-  const total = useAppSelector(state =>
-    selectUserVaultBalanceInDepositTokenIncludingBoostsBridged(state, vaultId)
-  );
-  const vaultOnly = useAppSelector(state => selectUserVaultBalanceInDepositToken(state, vaultId));
-
-  if (vaultOnly.gte(total)) {
-    return null;
-  }
-
-  return <DisplacedBalancesImpl vaultId={vaultId} />;
-});
-
-interface DisplacedBalancesProps {
-  vaultId: VaultEntity['id'];
-}
-
-type TypeToArrayMap = {
-  [T in UserVaultBalanceBreakdownEntry as T['type']]: T[];
-};
-
-export const DisplacedBalancesImpl = memo(function DisplacedBalancesImpl({
-  vaultId,
-}: DisplacedBalancesProps) {
-  const classes = useStyles();
   const breakdown = useAppSelector(state =>
     selectVaultUserBalanceInDepositTokenBreakdown(state, vaultId)
   );
-  const entries = useMemo(
-    () => groupBy(breakdown.entries, 'type') as TypeToArrayMap,
-    [breakdown.entries]
-  );
+  const entriesToShow = useMemo(() => {
+    return breakdown.entries.filter((entry): entry is EntriesToShow =>
+      typesToShow.some(type => type === entry.type)
+    );
+  }, [breakdown.entries]);
+
+  if (entriesToShow.length === 0) {
+    return null;
+  }
+
+  return <DisplacedBalancesList entries={entriesToShow} depositToken={breakdown.depositToken} />;
+});
+
+interface DisplacedBalancesListProps {
+  entries: EntriesToShow[];
+  depositToken: TokenEntity;
+}
+
+const DisplacedBalancesList = memo(function DisplacedBalancesList({
+  entries,
+  depositToken,
+}: DisplacedBalancesListProps) {
+  const classes = useStyles();
+  const byType = useMemo(() => groupBy(entries, 'type') as TypeToArrayMap, [entries]);
 
   return (
     <div className={classes.container}>
-      {entries.boost ? (
-        <Entries entries={entries.boost} depositToken={breakdown.depositToken} />
-      ) : null}
-      {entries.bridged ? (
-        <Entries entries={entries.bridged} depositToken={breakdown.depositToken} />
-      ) : null}
+      {byType.bridged ?
+        <BridgedEntries entries={byType.bridged} depositToken={depositToken} />
+      : null}
     </div>
   );
 });

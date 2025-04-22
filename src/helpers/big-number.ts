@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { mapValues } from 'lodash-es';
 import type { TokenAmount } from '../features/data/apis/transact/transact-types.ts';
 import type { TokenEntity } from '../features/data/entities/token.ts';
@@ -96,6 +96,10 @@ export function toWei(value: BigNumber, decimals: number): BigNumber {
   return value.shiftedBy(decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR);
 }
 
+export function toWeiBigInt(value: BigNumber, decimals: number): bigint {
+  return BigInt(value.shiftedBy(decimals).decimalPlaces(0, BigNumber.ROUND_FLOOR).toString(10));
+}
+
 export function toWeiFromString(value: string, decimals: number): BigNumber {
   return toWei(new BigNumber(value), decimals);
 }
@@ -108,15 +112,13 @@ export function toWeiString(value: BigNumber, decimals: number): string {
   return toWei(value, decimals).toString(10);
 }
 
-export function fromWei(value: BigNumber, decimals: number): BigNumber {
-  return value.shiftedBy(-decimals).decimalPlaces(decimals, BigNumber.ROUND_FLOOR);
+export function fromWei(value: BigNumber.Value, decimals: number): BigNumber {
+  return (isBigNumber(value) ? value : new BigNumber(value))
+    .shiftedBy(-decimals)
+    .decimalPlaces(decimals, BigNumber.ROUND_FLOOR);
 }
 
-export function fromWeiString(value: string, decimals: number): BigNumber {
-  return fromWei(new BigNumber(value), decimals);
-}
-
-export function fromWeiToTokenAmount(value: BigNumber, token: TokenEntity): TokenAmount {
+export function fromWeiToTokenAmount(value: BigNumber.Value, token: TokenEntity): TokenAmount {
   return {
     token,
     amount: fromWei(value, token.decimals),
@@ -153,7 +155,8 @@ export function isFiniteBigNumber(value: unknown): value is BigNumber {
 }
 
 export function compareBigNumber(a: BigNumber, b: BigNumber): number {
-  return a.comparedTo(b);
+  const result = a.comparedTo(b);
+  return result === null ? 0 : result;
 }
 
 export function orderByBigNumber<T>(
@@ -162,8 +165,8 @@ export function orderByBigNumber<T>(
   direction: 'asc' | 'desc' = 'asc'
 ): T[] {
   return [...items].sort(
-    direction === 'asc'
-      ? (a, b) => compareBigNumber(extractor(a), extractor(b))
-      : (a, b) => compareBigNumber(extractor(b), extractor(a))
+    direction === 'asc' ?
+      (a, b) => compareBigNumber(extractor(a), extractor(b))
+    : (a, b) => compareBigNumber(extractor(b), extractor(a))
   );
 }

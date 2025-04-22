@@ -1,4 +1,4 @@
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { PlatformEntity } from '../entities/platform.ts';
 
 export type TvlBreakdownBase = {

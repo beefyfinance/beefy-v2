@@ -5,7 +5,7 @@ import { useAppSelector } from '../../../../../../../store.ts';
 import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
 import { selectUserGovVaultUnifiedRewards } from '../../../../../../data/selectors/user-rewards.ts';
 import { Claim } from './Claim/Claim.tsx';
-import { RewardList } from '../RewardList/RewardList.tsx';
+import { RewardList } from '../RewardList.tsx';
 import { Source } from '../Source/Source.tsx';
 import { useTranslation } from 'react-i18next';
 

@@ -2,7 +2,7 @@ import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { memo } from 'react';
 import { SortColumnHeader } from '../../../../../../components/SortColumnHeader/SortColumnHeader.tsx';
 import { styles } from './styles.ts';
-import type { SortedOptions } from '../../hook.tsx';
+import type { SortedOptions } from '../../hook.ts';
 import { SearchInput } from '../../../../../../components/Form/Input/SearchInput.tsx';
 import { css } from '@repo/styles/css';
 

@@ -10,13 +10,13 @@ import {
   type TimelineEntryCowcentratedVault,
   type TimelineEntryStandard,
   type TimelineEntryToEntity,
+  type UnprocessedTimelineEntryClassicVault,
   type UnprocessedTimelineEntryCowcentratedPool,
-  type UnprocessedTimelineEntryCowcentratedVault,
   type UnprocessedTimelineEntryCowcentratedWithoutRewardPoolPart,
   type UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart,
   type UnprocessedTimelineEntryStandard,
 } from '../entities/analytics.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import type {
   DatabarnProductPriceRow,
   DatabarnTimeBucket,
@@ -26,6 +26,7 @@ import {
   getCowcentratedPool,
   isCowcentratedLikeVault,
   isCowcentratedStandardVault,
+  isErc4626Vault,
   isStandardVault,
   isVaultRetired,
   type VaultEntity,
@@ -37,7 +38,7 @@ import {
   selectStandardCowcentratedVaultById,
   selectVaultByAddressOrUndefined,
   selectVaultById,
-  selectVaultStrategyAddressOrUndefined,
+  selectVaultStrategyAddress,
 } from '../selectors/vaults.ts';
 import { selectCowcentratedLikeVaultDepositTokens } from '../selectors/tokens.ts';
 import { groupBy, keyBy, mapValues, omitBy, partition, pick, sortBy, values } from 'lodash-es';
@@ -63,7 +64,7 @@ import type {
   ClmTimelineEntryClm,
 } from '../apis/clm/clm-api-types.ts';
 import type { TokenEntity } from '../entities/token.ts';
-import { getUnixTime, isAfter, subHours } from 'date-fns';
+import { fromUnixTime, getUnixTime, isAfter, subHours } from 'date-fns';
 import {
   selectDashboardShouldLoadBalanceForChainUser,
   selectIsClmHarvestsForUserChainPending,
@@ -137,14 +138,25 @@ function omitEmptyTimelines<T extends AnyTimelineEntry>(
 }
 
 function mergeAndPartitionTimelines(
-  standardById: Record<VaultEntity['id'], TimelineEntryStandard[]>,
-  clmPoolById: Record<VaultEntity['id'], TimelineEntryCowcentratedPool[]>,
-  clmVaultById: Record<VaultEntity['id'], TimelineEntryCowcentratedVault[]>
+  ...entriesById: Array<Record<VaultEntity['id'], AnyTimelineEntry[]>>
 ): Record<VaultEntity['id'], AnyTimelineEntity> {
-  const standardPartitioned = mapValues(omitEmptyTimelines(standardById), partitionTimeline);
-  const clmPoolPartitioned = mapValues(omitEmptyTimelines(clmPoolById), partitionTimeline);
-  const clmVaultPartitioned = mapValues(omitEmptyTimelines(clmVaultById), partitionTimeline);
-  return { ...standardPartitioned, ...clmPoolPartitioned, ...clmVaultPartitioned };
+  return entriesById
+    .map(
+      byId =>
+        mapValues(omitEmptyTimelines(byId), partitionTimeline) as Record<
+          VaultEntity['id'],
+          AnyTimelineEntity
+        >
+    )
+    .reduce(
+      (accum, entitiesById) => {
+        return {
+          ...accum,
+          ...entitiesById,
+        };
+      },
+      {} as Record<VaultEntity['id'], AnyTimelineEntity>
+    );
 }
 
 function handleDatabarnTimeline(
@@ -224,16 +236,16 @@ function handleDatabarnTimeline(
 
         tx.shareBalance = prevTx.shareBalance.plus(tx.shareDiff);
 
-        const underlyingPerShare = tx.shareDiff.isZero()
-          ? BIG_ZERO
+        const underlyingPerShare =
+          tx.shareDiff.isZero() ?
+            BIG_ZERO
           : tx.underlyingDiff.dividedBy(tx.shareDiff).absoluteValue();
         tx.underlyingBalance = tx.shareBalance.multipliedBy(underlyingPerShare);
 
         // usd can be null if price was missing
         if (tx.usdDiff) {
-          const shareToUsd = tx.shareDiff.isZero()
-            ? BIG_ZERO
-            : tx.usdDiff.dividedBy(tx.shareDiff).absoluteValue();
+          const shareToUsd =
+            tx.shareDiff.isZero() ? BIG_ZERO : tx.usdDiff.dividedBy(tx.shareDiff).absoluteValue();
           tx.usdBalance = tx.shareBalance.multipliedBy(shareToUsd);
         } else {
           tx.usdBalance = prevTx.usdBalance;
@@ -256,19 +268,22 @@ function handleCowcentratedPoolTimeline(
     vaultTxs.flatMap(tx => {
       if (tx.hasRewardPool) {
         // share:underlying is 1:1 for pools (not vaults)
-        const underlying0PerShare = tx.shareBalance.isZero()
-          ? tx.shareDiff.isZero()
-            ? BIG_ZERO
+        const underlying0PerShare =
+          tx.shareBalance.isZero() ?
+            tx.shareDiff.isZero() ?
+              BIG_ZERO
             : tx.underlying0Diff.dividedBy(tx.shareDiff)
           : tx.underlying0Balance.dividedBy(tx.shareBalance);
-        const underlying1PerShare = tx.shareBalance.isZero()
-          ? tx.shareDiff.isZero()
-            ? BIG_ZERO
+        const underlying1PerShare =
+          tx.shareBalance.isZero() ?
+            tx.shareDiff.isZero() ?
+              BIG_ZERO
             : tx.underlying1Diff.dividedBy(tx.shareDiff)
           : tx.underlying1Balance.dividedBy(tx.shareBalance);
-        const shareToUsd = tx.shareBalance.isZero()
-          ? tx.shareDiff.isZero()
-            ? BIG_ZERO
+        const shareToUsd =
+          tx.shareBalance.isZero() ?
+            tx.shareDiff.isZero() ?
+              BIG_ZERO
             : tx.usdDiff.dividedBy(tx.shareDiff)
           : tx.usdBalance.dividedBy(tx.shareBalance);
 
@@ -326,9 +341,9 @@ function handleCowcentratedPoolTimeline(
               vaultId: pool.id,
 
               rewardPoolClaimedDetails:
-                tx.claimedRewardPool?.toLowerCase() === rp.address.toLowerCase()
-                  ? tx.rewardPoolClaimedDetails
-                  : [],
+                tx.claimedRewardPool?.toLowerCase() === rp.address.toLowerCase() ?
+                  tx.rewardPoolClaimedDetails
+                : [],
             };
           })
           .filter(isDefined);
@@ -342,76 +357,119 @@ function handleCowcentratedPoolTimeline(
   return groupBy(txsForPools, tx => tx.vaultId);
 }
 
-/** CLM Vaults */
-function handleCowcentratedVaultTimeline(
-  timeline: UnprocessedTimelineEntryCowcentratedVault[],
+/** CLM Vaults or ERC4626 Vaults */
+function handleClassicVaultTimeline(
+  timeline: UnprocessedTimelineEntryClassicVault[],
   state: BeefyState
-): Record<VaultEntity['id'], TimelineEntryCowcentratedVault[]> {
+): Record<VaultEntity['id'], Array<TimelineEntryCowcentratedVault | TimelineEntryStandard>> {
   const vaultTxs = timeline.filter(tx => tx.productKey.startsWith('beefy:vault:'));
 
-  const vaultTxsWithId: TimelineEntryCowcentratedVault[] = sortBy(
+  const vaultTxsWithId: Array<TimelineEntryCowcentratedVault | TimelineEntryStandard> = sortBy(
     vaultTxs
       .map(tx => {
+        // skip direct deposits/withdraws to/from boosts
+        if (
+          tx.shareDiff.isZero() &&
+          (tx.actions.includes('CLASSIC_REWARD_POOL_STAKE') ||
+            tx.actions.includes('CLASSIC_REWARD_POOL_UNSTAKE'))
+        ) {
+          return undefined;
+        }
+
         const vault = selectVaultByAddressOrUndefined(state, tx.chain, tx.vaultAddress);
-        if (!vault || !isCowcentratedStandardVault(vault)) {
+        if (!vault) {
           return undefined;
         }
 
-        if (tx.underlyingBreakdown.length !== 2) {
-          console.error(
-            `Unexpected underlying breakdown length, got ${tx.underlyingBreakdown.length}, expected 2`
-          );
-          return undefined;
+        if (isCowcentratedStandardVault(vault)) {
+          if (tx.underlyingBreakdown.length !== 2) {
+            console.error(
+              `Unexpected underlying breakdown length, got ${tx.underlyingBreakdown.length}, expected 2`
+            );
+            return undefined;
+          }
+
+          return {
+            ...pick(tx, [
+              'transactionId',
+              'datetime',
+              'productKey',
+              'chain',
+              'transactionHash',
+              'shareBalance',
+              'shareDiff',
+              'usdBalance',
+              'usdDiff',
+              'actions',
+            ]),
+            vaultId: vault.id,
+            timeline: 'current' as const,
+            type: 'cowcentrated-vault' as const,
+            displayName: vault.names.long,
+            isEol: isVaultRetired(vault),
+            isDashboardEol:
+              isVaultRetired(vault) && isLessThanDurationAgoUnix(vault.retiredAt, { days: 30 }),
+
+            shareToUsd: tx.shareToUnderlyingPrice.multipliedBy(tx.underlyingToUsdPrice),
+
+            underlyingToUsd: tx.underlyingToUsdPrice,
+            underlyingBalance: tx.shareBalance.multipliedBy(tx.shareToUnderlyingPrice),
+            underlyingDiff: tx.shareDiff.multipliedBy(tx.shareToUnderlyingPrice),
+            underlyingPerShare: tx.shareToUnderlyingPrice,
+
+            token0ToUsd: tx.underlyingBreakdown[0].tokenToUsd,
+            underlying0Balance: tx.shareBalance
+              .multipliedBy(tx.shareToUnderlyingPrice)
+              .multipliedBy(tx.underlyingBreakdown[0].underlyingToToken),
+            underlying0Diff: tx.shareDiff
+              .multipliedBy(tx.shareToUnderlyingPrice)
+              .multipliedBy(tx.underlyingBreakdown[0].underlyingToToken),
+            underlying0PerUnderlying: tx.underlyingBreakdown[0].underlyingToToken,
+
+            token1ToUsd: tx.underlyingBreakdown[1].tokenToUsd,
+            underlying1Balance: tx.shareBalance
+              .multipliedBy(tx.shareToUnderlyingPrice)
+              .multipliedBy(tx.underlyingBreakdown[1].underlyingToToken),
+            underlying1Diff: tx.shareDiff
+              .multipliedBy(tx.shareToUnderlyingPrice)
+              .multipliedBy(tx.underlyingBreakdown[1].underlyingToToken),
+            underlying1PerUnderlying: tx.underlyingBreakdown[1].underlyingToToken,
+            //TODO: once we have rewardpool claims for vaults, add them here
+            rewardPoolClaimedDetails: [],
+          };
         }
 
-        return {
-          ...pick(tx, [
-            'transactionId',
-            'datetime',
-            'productKey',
-            'chain',
-            'transactionHash',
-            'shareBalance',
-            'shareDiff',
-            'usdBalance',
-            'usdDiff',
-            'actions',
-          ]),
-          vaultId: vault.id,
-          timeline: 'current' as const,
-          type: 'cowcentrated-vault' as const,
-          displayName: vault.names.long,
-          isEol: isVaultRetired(vault),
-          isDashboardEol:
-            isVaultRetired(vault) && isLessThanDurationAgoUnix(vault.retiredAt, { days: 30 }),
+        if (isErc4626Vault(vault)) {
+          return {
+            type: 'standard' as const,
+            vaultId: vault.id,
+            transactionId: tx.transactionId,
+            datetime: tx.datetime,
+            productKey: tx.productKey,
+            displayName: vault.names.long,
+            chain: tx.chain,
+            isEol: isVaultRetired(vault),
+            isDashboardEol:
+              isVaultRetired(vault) && isLessThanDurationAgoUnix(vault.retiredAt, { days: 30 }),
+            transactionHash: tx.transactionHash,
 
-          shareToUsd: tx.shareToUnderlyingPrice.multipliedBy(tx.underlyingToUsdPrice),
+            shareBalance: tx.shareBalance,
+            shareDiff: tx.shareDiff,
+            shareToUnderlyingPrice: tx.shareToUnderlyingPrice,
 
-          underlyingToUsd: tx.underlyingToUsdPrice,
-          underlyingBalance: tx.shareBalance.multipliedBy(tx.shareToUnderlyingPrice),
-          underlyingDiff: tx.shareDiff.multipliedBy(tx.shareToUnderlyingPrice),
-          underlyingPerShare: tx.shareToUnderlyingPrice,
+            underlyingBalance: tx.shareBalance.multipliedBy(tx.shareToUnderlyingPrice),
+            underlyingDiff: tx.shareDiff.multipliedBy(tx.shareToUnderlyingPrice),
+            underlyingToUsdPrice: tx.underlyingToUsdPrice,
 
-          token0ToUsd: tx.underlyingBreakdown[0].tokenToUsd,
-          underlying0Balance: tx.shareBalance
-            .multipliedBy(tx.shareToUnderlyingPrice)
-            .multipliedBy(tx.underlyingBreakdown[0].underlyingToToken),
-          underlying0Diff: tx.shareDiff
-            .multipliedBy(tx.shareToUnderlyingPrice)
-            .multipliedBy(tx.underlyingBreakdown[0].underlyingToToken),
-          underlying0PerUnderlying: tx.underlyingBreakdown[0].underlyingToToken,
+            usdBalance: tx.usdBalance,
+            usdDiff: tx.usdDiff,
 
-          token1ToUsd: tx.underlyingBreakdown[1].tokenToUsd,
-          underlying1Balance: tx.shareBalance
-            .multipliedBy(tx.shareToUnderlyingPrice)
-            .multipliedBy(tx.underlyingBreakdown[1].underlyingToToken),
-          underlying1Diff: tx.shareDiff
-            .multipliedBy(tx.shareToUnderlyingPrice)
-            .multipliedBy(tx.underlyingBreakdown[1].underlyingToToken),
-          underlying1PerUnderlying: tx.underlyingBreakdown[1].underlyingToToken,
-          //TODO: once we have rewardpool claims for vaults, add them here
-          rewardPoolClaimedDetails: [],
-        };
+            timeline: 'current' as const,
+          } satisfies TimelineEntryStandard;
+        }
+
+        console.error(`Unexpected vault type for classic timeline entry`, vault, tx);
+        return undefined;
       })
       .filter(isDefined),
     tx => tx.datetime.getTime()
@@ -444,8 +502,9 @@ export const fetchWalletTimeline = createAsyncThunk<
     }
 
     const databarnTimeline = isFulfilledResult(databarnResult) ? databarnResult.value : [];
-    const [classicTimeline, clmTimeline] = isFulfilledResult(clmResult)
-      ? partition(clmResult.value, isClmTimelineEntryClassic)
+    const [classicTimeline, clmTimeline] =
+      isFulfilledResult(clmResult) ?
+        partition(clmResult.value, isClmTimelineEntryClassic)
       : [[], []];
     const state = getState();
 
@@ -466,8 +525,9 @@ export const fetchWalletTimeline = createAsyncThunk<
           shareToUnderlyingPrice: new BigNumber(row.share_to_underlying_price),
           underlyingBalance: new BigNumber(row.underlying_balance),
           underlyingDiff: new BigNumber(row.underlying_diff),
-          underlyingToUsdPrice: isFiniteNumber(row.underlying_to_usd_price)
-            ? new BigNumber(row.underlying_to_usd_price)
+          underlyingToUsdPrice:
+            isFiniteNumber(row.underlying_to_usd_price) ?
+              new BigNumber(row.underlying_to_usd_price)
             : null,
           usdBalance: isFiniteNumber(row.usd_balance) ? new BigNumber(row.usd_balance) : null,
           usdDiff: isFiniteNumber(row.usd_diff) ? new BigNumber(row.usd_diff) : null,
@@ -480,8 +540,9 @@ export const fetchWalletTimeline = createAsyncThunk<
       clmTimeline.map((row): UnprocessedTimelineEntryCowcentratedPool => {
         const rewardPoolDetails:
           | UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart['rewardPoolDetails'][0][]
-          | undefined = isNonEmptyArray(row.reward_pool_details)
-          ? row.reward_pool_details.map(rp => ({
+          | undefined =
+          isNonEmptyArray(row.reward_pool_details) ?
+            row.reward_pool_details.map(rp => ({
               address: rp.reward_pool_address,
               balance: new BigNumber(rp.reward_pool_balance),
               diff: new BigNumber(rp.reward_pool_diff),
@@ -490,20 +551,20 @@ export const fetchWalletTimeline = createAsyncThunk<
         const rewardPoolParts:
           | UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart
           | UnprocessedTimelineEntryCowcentratedWithoutRewardPoolPart =
-          row.reward_pool_total && row.reward_pool_details && isNonEmptyArray(rewardPoolDetails)
-            ? {
-                hasRewardPool: true,
-                rewardPoolBalance: new BigNumber(row.reward_pool_total.reward_pool_balance || 0),
-                rewardPoolDiff: new BigNumber(row.reward_pool_total.reward_pool_diff || 0),
-                rewardPoolDetails,
-                rewardPoolClaimedDetails: row.reward_pool_claim_details.map(claim => ({
-                  address: claim.reward_address,
-                  rewardToUsd: new BigNumber(claim.reward_to_usd),
-                  claimedAmount: new BigNumber(claim.claimed_amount),
-                })),
-                claimedRewardPool: row.claimed_reward_pool,
-              }
-            : { hasRewardPool: false };
+          row.reward_pool_total && row.reward_pool_details && isNonEmptyArray(rewardPoolDetails) ?
+            {
+              hasRewardPool: true,
+              rewardPoolBalance: new BigNumber(row.reward_pool_total.reward_pool_balance || 0),
+              rewardPoolDiff: new BigNumber(row.reward_pool_total.reward_pool_diff || 0),
+              rewardPoolDetails,
+              rewardPoolClaimedDetails: row.reward_pool_claim_details.map(claim => ({
+                address: claim.reward_address,
+                rewardToUsd: new BigNumber(claim.reward_to_usd),
+                claimedAmount: new BigNumber(claim.claimed_amount),
+              })),
+              claimedRewardPool: row.claimed_reward_pool,
+            }
+          : { hasRewardPool: false };
 
         return {
           type: 'cowcentrated',
@@ -542,12 +603,13 @@ export const fetchWalletTimeline = createAsyncThunk<
       state
     );
 
-    const clmVaultTimelineProcessed = handleCowcentratedVaultTimeline(
-      classicTimeline.map((row): UnprocessedTimelineEntryCowcentratedVault => {
+    const classicVaultTimelineProcessed = handleClassicVaultTimeline(
+      classicTimeline.map((row): UnprocessedTimelineEntryClassicVault => {
         const rewardPoolDetails:
           | UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart['rewardPoolDetails'][0][]
-          | undefined = isNonEmptyArray(row.reward_pool_details)
-          ? row.reward_pool_details.map(rp => ({
+          | undefined =
+          isNonEmptyArray(row.reward_pool_details) ?
+            row.reward_pool_details.map(rp => ({
               address: rp.reward_pool_address,
               balance: new BigNumber(rp.reward_pool_balance),
               diff: new BigNumber(rp.reward_pool_diff),
@@ -556,16 +618,16 @@ export const fetchWalletTimeline = createAsyncThunk<
         const rewardPoolParts:
           | UnprocessedTimelineEntryCowcentratedWithRewardPoolsPart
           | UnprocessedTimelineEntryCowcentratedWithoutRewardPoolPart =
-          row.reward_pool_total && row.reward_pool_details && isNonEmptyArray(rewardPoolDetails)
-            ? {
-                hasRewardPool: true,
-                rewardPoolBalance: new BigNumber(row.reward_pool_total.reward_pool_balance || 0),
-                rewardPoolDiff: new BigNumber(row.reward_pool_total.reward_pool_diff || 0),
-                rewardPoolDetails,
-                rewardPoolClaimedDetails: [],
-                claimedRewardPool: undefined,
-              }
-            : { hasRewardPool: false };
+          row.reward_pool_total && row.reward_pool_details && isNonEmptyArray(rewardPoolDetails) ?
+            {
+              hasRewardPool: true,
+              rewardPoolBalance: new BigNumber(row.reward_pool_total.reward_pool_balance || 0),
+              rewardPoolDiff: new BigNumber(row.reward_pool_total.reward_pool_diff || 0),
+              rewardPoolDetails,
+              rewardPoolClaimedDetails: [],
+              claimedRewardPool: undefined,
+            }
+          : { hasRewardPool: false };
 
         return {
           type: 'classic',
@@ -610,7 +672,7 @@ export const fetchWalletTimeline = createAsyncThunk<
       timelines: mergeAndPartitionTimelines(
         databarnTimelineProcessed,
         clmTimelineProcessed,
-        clmVaultTimelineProcessed
+        classicVaultTimelineProcessed
       ),
       walletAddress: walletAddress.toLowerCase(),
     };
@@ -644,14 +706,42 @@ export const fetchShareToUnderlying = createAsyncThunk<
   async ({ timeBucket, vaultId }, { getState, fulfillWithValue }) => {
     const state = getState();
     const vault = selectVaultById(state, vaultId);
-    const api = await getDatabarnApi();
-    const data = await api.getVaultPrices(
-      'vault',
-      'share_to_underlying',
-      timeBucket,
-      vault.contractAddress,
-      vault.chainId
-    );
+    let data: DataBarnPricesFulfilled['data'];
+
+    if (isStandardVault(vault)) {
+      const api = await getDatabarnApi();
+      data = await api.getVaultPrices(
+        'vault',
+        'share_to_underlying',
+        timeBucket,
+        vault.contractAddress,
+        vault.chainId
+      );
+    } else if (isErc4626Vault(vault)) {
+      // Convert ClmPriceHistoryEntryClassic to DatabarnProductPriceRow
+      const api = await getClmApi();
+      const since = getDataApiBucketRangeStartDate(timeBucket);
+      const classicHistory = await api.getPriceHistoryForVaultSince<ClmPriceHistoryEntryClassic>(
+        vault.chainId,
+        vault.contractAddress,
+        since,
+        getDataApiBucketIntervalKey(timeBucket)
+      );
+      data = classicHistory.map(entry => {
+        // convertToAssets(1e18) -> Math.mulDiv(x, y, denominator, 0)
+        const x = BIG_ONE.shiftedBy(18);
+        const y = new BigNumber(entry.totalUnderlyingAmount).plus(BIG_ONE);
+        const denominator = new BigNumber(entry.totalSupply).plus(BIG_ONE);
+        const pricePerFullShare = x.multipliedBy(y).dividedToIntegerBy(denominator);
+
+        return {
+          date: fromUnixTime(entry.timestamp),
+          value: pricePerFullShare.shiftedBy(-18),
+        } satisfies DatabarnProductPriceRow;
+      });
+    } else {
+      throw new Error(`Invalid vault type for fetchShareToUnderlying: ${vault.type}`);
+    }
 
     return fulfillWithValue(
       {
@@ -1086,11 +1176,11 @@ export const recalculateClmPoolHarvestsForUserVaultId = createAsyncThunk<
         amounts,
         amountsUsd,
         totalUsd,
-        cumulativeAmounts: previous
-          ? amounts.map((a, i) => a.plus(previous.cumulativeAmounts[i]))
-          : amounts,
-        cumulativeAmountsUsd: previous
-          ? amountsUsd.map((a, i) => a.plus(previous.cumulativeAmountsUsd[i]))
+        cumulativeAmounts:
+          previous ? amounts.map((a, i) => a.plus(previous.cumulativeAmounts[i])) : amounts,
+        cumulativeAmountsUsd:
+          previous ?
+            amountsUsd.map((a, i) => a.plus(previous.cumulativeAmountsUsd[i]))
           : amountsUsd,
         cumulativeTotalUsd: previous ? previous.cumulativeTotalUsd.plus(totalUsd) : totalUsd,
       });
@@ -1224,11 +1314,11 @@ export const recalculateClmVaultHarvestsForUserVaultId = createAsyncThunk<
           amounts,
           amountsUsd,
           totalUsd,
-          cumulativeAmounts: previous
-            ? amounts.map((a, i) => a.plus(previous.cumulativeAmounts[i]))
-            : amounts,
-          cumulativeAmountsUsd: previous
-            ? amountsUsd.map((a, i) => a.plus(previous.cumulativeAmountsUsd[i]))
+          cumulativeAmounts:
+            previous ? amounts.map((a, i) => a.plus(previous.cumulativeAmounts[i])) : amounts,
+          cumulativeAmountsUsd:
+            previous ?
+              amountsUsd.map((a, i) => a.plus(previous.cumulativeAmountsUsd[i]))
             : amountsUsd,
           cumulativeTotalUsd: previous ? previous.cumulativeTotalUsd.plus(totalUsd) : totalUsd,
         });
@@ -1263,10 +1353,7 @@ export const fetchClmPendingRewards = createAsyncThunk<
   const state = getState();
   const vault = selectCowcentratedLikeVaultById(state, vaultId);
   const [token0, token1] = selectCowcentratedLikeVaultDepositTokens(state, vaultId);
-  const clmStrategyAddress = selectVaultStrategyAddressOrUndefined(
-    state,
-    vault.cowcentratedIds.clm
-  );
+  const clmStrategyAddress = selectVaultStrategyAddress(state, vault.cowcentratedIds.clm);
   const chain = selectChainById(state, vault.chainId);
   const api = await getClmApi();
 

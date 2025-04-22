@@ -3,7 +3,7 @@ import type { InputTokenAmount, TokenAmount } from '../../transact/transact-type
 import type { ChainEntity } from '../../../entities/chain.ts';
 import type { BeefyState } from '../../../../../redux-types.ts';
 import type { TokenErc20, TokenNative } from '../../../entities/token.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { Step } from '../../../reducers/wallet/stepper.ts';
 import type { TFunction } from 'react-i18next';
 

@@ -1,8 +1,8 @@
 import { type CurveTokenOption, getMethodSignaturesForType } from './types.ts';
 import { getInsertIndex, getTokenAddress } from '../../helpers/zap.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import type { TokenAmount } from '../../transact-types.ts';
-import { fromWeiString, toWeiString } from '../../../../../../helpers/big-number.ts';
+import { fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
 import { isTokenNative, type TokenEntity } from '../../../../entities/token.ts';
 import type { ZapStep } from '../../zap/types.ts';
@@ -43,7 +43,7 @@ export class CurvePool {
 
     return {
       token: this.depositToken,
-      amount: fromWeiString(amount.toString(10), this.depositToken.decimals),
+      amount: fromWei(amount.toString(10), this.depositToken.decimals),
     };
   }
 
@@ -106,8 +106,9 @@ export class CurvePool {
         abi: methodAbi,
         args: methodParams,
       }),
-      tokens: insertBalance
-        ? [
+      tokens:
+        insertBalance ?
+          [
             {
               token: getTokenAddress(this.option.token),
               index: tokenIndexes[this.option.index],
@@ -207,7 +208,7 @@ export class CurvePool {
 
     return {
       token: this.option.token,
-      amount: fromWeiString(withdrawn.toString(10), this.option.token.decimals),
+      amount: fromWei(withdrawn.toString(10), this.option.token.decimals),
     };
   }
 
@@ -262,8 +263,9 @@ export class CurvePool {
         abi: methodAbi,
         args: methodParams,
       }),
-      tokens: insertBalance
-        ? [
+      tokens:
+        insertBalance ?
+          [
             {
               token: this.depositToken.address,
               index: this.typeToRemoveLiquidityTokenIndex(this.option.type),

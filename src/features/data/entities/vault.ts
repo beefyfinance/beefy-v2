@@ -15,7 +15,7 @@ export type VaultTag =
   | 'eol'
   | 'paused';
 
-export type VaultType = 'standard' | 'gov' | 'cowcentrated';
+export type VaultType = 'standard' | 'gov' | 'cowcentrated' | 'erc4626';
 
 export type VaultNames = {
   /** w/out Vault/Pool/CLM suffix */
@@ -35,6 +35,8 @@ export type VaultBase = {
   id: string;
   /** name of the vault (as in the config) */
   name: string;
+  /** icons to use instead of assets */
+  icons?: string[];
   /** variations of name used in different contexts */
   names: VaultNames;
   /** contract version, increased when app needs to behave differently for the same vault type */
@@ -194,6 +196,25 @@ type VaultStandardCowcentratedOnly = VaultCowcentratedBaseOnly &
     receiptTokenAddress: string;
   };
 
+/**
+ * @see {https://eips.ethereum.org/EIPS/eip-4626}
+ */
+export type VaultErc4626BaseOnly = {
+  /** address of token required to deposit in this vault */
+  depositTokenAddress: string;
+  /** address of receipt token (=== vault contract address)*/
+  receiptTokenAddress: string;
+};
+
+/**
+ * Async version of ERC4626
+ * For this subType, only the `withdraw` method is async
+ * @see {https://eips.ethereum.org/EIPS/eip-7540}
+ */
+type VaultErc4626AsyncWithdrawOnly = VaultErc4626BaseOnly & {
+  subType: 'erc7540:withdraw';
+};
+
 type MakeVaultActive<TVaultType extends VaultType, TOnly> = {
   type: TVaultType;
 } & VaultBase &
@@ -215,9 +236,9 @@ type MakeVault<TVaultType extends VaultType, TOnly> =
   | MakeVaultRetired<TVaultType, TOnly>
   | MakeVaultPaused<TVaultType, TOnly>;
 
-export type VaultStandardNotCowcentrated = MakeVault<'standard', VaultStandardOnly>;
+export type VaultStandardBeefy = MakeVault<'standard', VaultStandardOnly>;
 export type VaultStandardCowcentrated = MakeVault<'standard', VaultStandardCowcentratedOnly>;
-export type VaultStandard = VaultStandardNotCowcentrated | VaultStandardCowcentrated;
+export type VaultStandard = VaultStandardBeefy | VaultStandardCowcentrated;
 
 export type VaultGovSingle = MakeVault<'gov', VaultGovSingleOnly>;
 export type VaultGovMulti = MakeVault<'gov', VaultGovMultiOnly>;
@@ -230,7 +251,18 @@ export type VaultCowcentratedLike =
   | VaultGovCowcentrated
   | VaultStandardCowcentrated;
 
-export type VaultEntity = VaultStandard | VaultGov | VaultCowcentrated;
+export type VaultErc4626AsyncWithdraw = MakeVault<'erc4626', VaultErc4626AsyncWithdrawOnly>;
+export type VaultErc4626 = VaultErc4626AsyncWithdraw;
+
+export type VaultWithPricePerFullShare = VaultStandard | VaultErc4626;
+export type VaultWithReceipt =
+  | VaultStandard
+  | VaultGovMulti
+  | VaultGovCowcentrated
+  | VaultCowcentrated
+  | VaultErc4626;
+
+export type VaultEntity = VaultStandard | VaultGov | VaultCowcentrated | VaultErc4626;
 export type VaultEntityActive = Extract<VaultEntity, VaultActive>;
 export type VaultEntityPaused = Extract<VaultEntity, VaultPaused>;
 export type VaultEntityRetired = Extract<VaultEntity, VaultRetired>;
@@ -267,6 +299,10 @@ export function isStandardVault(vault: VaultEntity): vault is VaultStandard {
   return vault.type === 'standard';
 }
 
+export function isStandardBeefyVault(vault: VaultEntity): vault is VaultStandardBeefy {
+  return isStandardVault(vault) && vault.subType === 'standard';
+}
+
 export function isCowcentratedStandardVault(
   vault: VaultEntity
 ): vault is VaultStandardCowcentrated {
@@ -283,6 +319,26 @@ export function isCowcentratedLikeVault(vault: VaultEntity): vault is VaultCowce
     isCowcentratedGovVault(vault) ||
     isCowcentratedStandardVault(vault)
   );
+}
+
+export function isErc4626Vault(vault: VaultEntity): vault is VaultErc4626 {
+  return vault.type === 'erc4626';
+}
+
+export function isErc4626AsyncWithdrawVault(
+  vault: VaultEntity
+): vault is VaultErc4626AsyncWithdraw {
+  return isErc4626Vault(vault) && vault.subType === 'erc7540:withdraw';
+}
+
+export function isVaultWithReceipt(vault: VaultEntity): vault is VaultWithReceipt {
+  return !isSingleGovVault(vault);
+}
+
+export function isVaultWithPricePerFullShare(
+  vault: VaultEntity
+): vault is VaultWithPricePerFullShare {
+  return isStandardVault(vault) || isErc4626Vault(vault);
 }
 
 export function isVaultRetired(vault: VaultEntity): vault is VaultEntityRetired {

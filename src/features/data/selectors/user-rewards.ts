@@ -2,8 +2,7 @@ import type { BeefyState } from '../../../redux-types.ts';
 import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault.ts';
 import type { ChainEntity } from '../entities/chain.ts';
 import type { MerklVaultReward } from '../reducers/wallet/user-rewards-types.ts';
-import type { BigNumber } from 'bignumber.js';
-import type { TokenEntity } from '../entities/token.ts';
+import type BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { selectTokenByAddressOrUndefined, selectTokenPriceByTokenOracleId } from './tokens.ts';
@@ -12,11 +11,10 @@ import {
   selectVaultActiveGovRewards,
   selectVaultActiveMerklCampaigns,
   selectVaultActiveStellaSwapCampaigns,
+  type UnifiedRewardToken,
 } from './rewards.ts';
 import { selectGovVaultPendingRewards, selectGovVaultPendingRewardsWithPrice } from './balance.ts';
 import { isNonEmptyArray } from '../utils/array-utils.ts';
-
-type UnifiedRewardToken = Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'chainId'>;
 
 export type UnifiedReward = {
   active: boolean;
@@ -59,8 +57,9 @@ export function selectUserMerklUnifiedRewardsForVault(
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ) {
-  const unclaimedRewards = walletAddress
-    ? state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byVaultId[vaultId] ||
+  const unclaimedRewards =
+    walletAddress ?
+      state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.merkl.byVaultId[vaultId] ||
       undefined
     : undefined;
   const activeCampaigns = selectVaultActiveMerklCampaigns(state, vaultId);
@@ -69,9 +68,8 @@ export function selectUserMerklUnifiedRewardsForVault(
     return undefined;
   }
 
-  const rewards: UnifiedReward[] = isNonEmptyArray(unclaimedRewards)
-    ? selectUnifiedMerklRewards(state, unclaimedRewards)
-    : [];
+  const rewards: UnifiedReward[] =
+    isNonEmptyArray(unclaimedRewards) ? selectUnifiedMerklRewards(state, unclaimedRewards) : [];
 
   if (isNonEmptyArray(activeCampaigns)) {
     for (const campaign of activeCampaigns) {
@@ -141,8 +139,9 @@ export function selectUserStellaSwapUnifiedRewardsForVault(
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ) {
-  const unclaimedRewards = walletAddress
-    ? state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.stellaswap.byVaultId[
+  const unclaimedRewards =
+    walletAddress ?
+      state.user.rewards.byUser[walletAddress.toLowerCase()]?.byProvider.stellaswap.byVaultId[
         vaultId
       ] || undefined
     : undefined;
@@ -152,9 +151,8 @@ export function selectUserStellaSwapUnifiedRewardsForVault(
     return undefined;
   }
 
-  const rewards: UnifiedReward[] = isNonEmptyArray(unclaimedRewards)
-    ? selectUnifiedMerklRewards(state, unclaimedRewards)
-    : [];
+  const rewards: UnifiedReward[] =
+    isNonEmptyArray(unclaimedRewards) ? selectUnifiedMerklRewards(state, unclaimedRewards) : [];
 
   if (isNonEmptyArray(activeCampaigns)) {
     for (const campaign of activeCampaigns) {
@@ -223,14 +221,14 @@ export const selectUserGovVaultUnifiedRewards = createSelector(
     selectVaultActiveGovRewards(state, vaultId),
   (pendingRewards, activeRewards): UnifiedReward[] => {
     const rewards: UnifiedReward[] =
-      pendingRewards && pendingRewards.length
-        ? pendingRewards.map(r => ({
-            ...r,
-            amount: r.amount,
-            active: false,
-            apr: undefined,
-          }))
-        : [];
+      pendingRewards && pendingRewards.length ?
+        pendingRewards.map(r => ({
+          ...r,
+          amount: r.amount,
+          active: false,
+          apr: undefined,
+        }))
+      : [];
 
     if (activeRewards && activeRewards.length) {
       for (const reward of activeRewards) {

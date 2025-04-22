@@ -32,7 +32,7 @@ export const styles = {
   }),
   tokenAmount: css.raw({
     fontWeight: 'medium',
-    color: 'background.vaults.boost',
+    color: 'text.boosted',
   }),
   link: css.raw({
     textDecoration: 'none',

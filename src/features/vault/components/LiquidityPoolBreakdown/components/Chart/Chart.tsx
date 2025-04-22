@@ -90,7 +90,7 @@ export const Chart = memo(function Chart({ assets, isUnderlying }: ChartProps) {
   const dataKey = useMemo(() => (isUnderlying ? 'underlyingPercent' : 'percent'), [isUnderlying]);
 
   const ActiveShapeConstructor = useCallback(
-    // eslint-disable-next-line react-x/no-nested-components
+    // eslint-disable-next-line react-x/no-nested-component-definitions
     (props: PieSectorDataItem): ReactElement<SVGProps<SVGElement>> => {
       return <ActiveShapeComponent {...props} dataKey={dataKey} />;
     },

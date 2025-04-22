@@ -4,7 +4,7 @@ import type {
   TreasuryHoldingEntity,
 } from '../../../../../data/entities/treasury.ts';
 import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 
 type SortedAssetCategories = {
   staked: TreasuryHoldingEntity[];

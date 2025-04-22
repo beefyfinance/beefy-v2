@@ -11,23 +11,7 @@ import { loadJson, saveJson } from './common/files.ts';
 
 let vaultsFile = './src/config/vault/$chain.json';
 
-type VaultParams = {
-  want: string;
-  mooToken: string;
-};
-
-type TokenParams = {
-  token: string;
-  tokenDecimals: number;
-};
-
-type VaultData = VaultParams &
-  TokenParams & { provider: string; platform: string; points: string[] } & Pick<
-  VaultConfig,
-  'migrationIds' | 'oracleId' | 'addLiquidityUrl' | 'removeLiquidityUrl'
->;
-
-async function vaultData(chain: AppChainId, vaultAddress: Address, id: string): Promise<VaultData> {
+async function vaultData(chain: AppChainId, vaultAddress: Address, id: string): Promise<any> {
   const viemClient = getViemClient(chain);
   const abi = [...StandardVaultAbi, ...StratAbi] as const satisfies Abi;
 
@@ -46,69 +30,67 @@ async function vaultData(chain: AppChainId, vaultAddress: Address, id: string): 
     abi: ERC20Abi,
     client: viemClient,
   });
-  const [token, tokenDecimals] = await Promise.all([
+  const [tokenSymbol, tokenDecimals] = await Promise.all([
     tokenContract.read.symbol(),
     tokenContract.read.decimals(),
   ]);
 
-  let provider = mooToken.startsWith('mooCurveLend')
-    ? 'curve-lend'
-    : mooToken.startsWith('mooCurve') || mooToken.startsWith('mooConvex')
-      ? 'curve'
-      : mooToken.startsWith('mooCake')
-        ? 'pancakeswap'
-        : mooToken.startsWith('mooThena')
-          ? 'thena'
-          : mooToken.startsWith('mooSwapX')
-            ? 'swapx'
-            : id.substring(0, id.indexOf('-'));
-  let platform = mooToken.startsWith('mooConvex')
-    ? 'convex'
-    : provider === 'swapx'
-      ? 'ichi'
-      : provider;
+  let provider =
+    mooToken.startsWith('mooCurveLend') ? 'curve-lend'
+    : mooToken.startsWith('mooCurve') || mooToken.startsWith('mooConvex') ? 'curve'
+    : mooToken.startsWith('mooCake') ? 'pancakeswap'
+    : mooToken.startsWith('mooThena') ? 'thena'
+    : mooToken.startsWith('mooSwapX') ? 'swapx'
+    : mooToken.startsWith('mooBeraPaw') ? 'kodiak'
+    : id.substring(0, id.indexOf('-'));
+  let platform =
+    mooToken.startsWith('mooConvex') ? 'convex'
+    : provider === 'swapx' ? 'ichi'
+    : mooToken.startsWith('mooBeraPaw') ? 'berapaw'
+    : provider === 'kodiak' ? 'infrared'
+    : provider;
   if (provider === 'pendle') {
     platform = 'magpie';
     if (id.startsWith('pendle-eqb')) platform = 'equilibria';
   }
   if (platform === 'equilibria') provider = 'pendle';
   const migrationIds =
-    ['curve', 'curve-lend'].includes(provider) && chain === 'ethereum'
-      ? ['ethereum-convex', 'ethereum-curve']
-      : ['curve', 'curve-lend'].includes(provider)
-        ? ['l2-convex', 'l2-curve']
-        : ['pendle'].includes(provider)
-          ? ['magpie']
-          : provider === 'swapx'
-            ? ['sonic-swapx']
-            : [];
+    ['curve', 'curve-lend'].includes(provider) && chain === 'ethereum' ?
+      ['ethereum-convex', 'ethereum-curve']
+    : ['curve', 'curve-lend'].includes(provider) ? ['l2-convex', 'l2-curve']
+    : ['pendle'].includes(provider) ? ['magpie']
+    : provider === 'swapx' ? ['sonic-swapx']
+    : platform === 'berapaw' ? ['bera-kodiak']
+    : provider === 'kodiak' ? ['bera-infrared', 'bera-kodiak']
+    : [];
 
-  let tokenToUse = token;
+  let tokenName = tokenSymbol.slice(tokenSymbol.lastIndexOf(' ') + 1);
+  let token = tokenSymbol;
   if (provider === 'pendle') {
-    tokenToUse = mooToken.slice(mooToken.indexOf('-') + 1);
+    token = mooToken.slice(mooToken.indexOf('-') + 1);
+    tokenName = token;
   }
   let oracleId = id;
   if (id.startsWith('pendle-eqb')) oracleId = id.replace('pendle-eqb', 'pendle');
 
   const addLiquidityUrl =
-    provider === 'pendle'
-      ? `https://app.pendle.finance/trade/pools/${want}/zap/in?chain=${chain}`
-      : provider === 'swapx'
-        ? 'https://swapx.fi/earn'
-        : 'XXX';
+    provider === 'pendle' ? `https://app.pendle.finance/trade/pools/${want}/zap/in?chain=${chain}`
+    : provider === 'swapx' ? 'https://swapx.fi/earn'
+    : provider === 'kodiak' ? `https://app.kodiak.finance/#/liquidity/pools/${want}`
+    : 'XXX';
   const removeLiquidityUrl =
-    provider === 'pendle'
-      ? `https://app.pendle.finance/trade/pools/${want}/zap/out?chain=${chain}`
-      : provider === 'swapx'
-        ? 'https://swapx.fi/earn?ownerType=my-positions&filter=my-lp'
-        : 'XXX';
+    provider === 'pendle' ? `https://app.pendle.finance/trade/pools/${want}/zap/out?chain=${chain}`
+    : provider === 'swapx' ? 'https://swapx.fi/earn?ownerType=my-positions&filter=my-lp'
+    : provider === 'kodiak' ? `https://app.kodiak.finance/#/liquidity/pools/${want}`
+    : 'XXX';
 
-  const points = provider === 'pearl' ? ['pearl'] : chain === 'sonic' ? ['sonic-points'] : [];
+  const points = chain === 'sonic' ? ['sonic-points'] : [];
 
   return {
     mooToken,
     want,
-    token: tokenToUse,
+    tokenName,
+    token,
     tokenDecimals,
     provider,
     platform,
@@ -129,7 +111,7 @@ async function generateVault() {
   const data = await vaultData(chain, vaultAddress, id);
   const vault: VaultConfig = {
     id: id,
-    name: data.token,
+    name: data.tokenName,
     type: 'standard' as const,
     token: data.token,
     tokenAddress: data.want,
@@ -142,7 +124,7 @@ async function generateVault() {
     oracleId: data.oracleId,
     status: 'active',
     platformId: data.platform,
-    assets: [data.token],
+    assets: [data.tokenName],
     migrationIds: data.migrationIds,
     strategyTypeId: 'multi-lp',
     risks: ['COMPLEXITY_LOW', 'IL_NONE', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],

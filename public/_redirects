@@ -14,3 +14,5 @@
 /moonbeam / 301
 /:chain/vault/:vaultId /vault/:vaultId 301
 /%23/:chain/vault/:vaultId /vault/:vaultId 301
+/vault/uniswap-cow-base-weth-base%20is%20for%20everyone /vault/uniswap-cow-base-weth-base-is-for-everyone 301
+/vault/uniswap-cow-base-weth-base%20is%20for%20everyone-rp /vault/uniswap-cow-base-weth-base-is-for-everyone-rp 301

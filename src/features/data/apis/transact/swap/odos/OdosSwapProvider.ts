@@ -1,5 +1,5 @@
 import { ZERO_ADDRESS } from '../../../../../../helpers/addresses.ts';
-import { fromWeiString, toWeiString } from '../../../../../../helpers/big-number.ts';
+import { fromWei, toWeiString } from '../../../../../../helpers/big-number.ts';
 import type { BeefyState } from '../../../../../../redux-types.ts';
 import type { ChainEntity } from '../../../../entities/chain.ts';
 import { isTokenNative, type TokenEntity } from '../../../../entities/token.ts';
@@ -72,7 +72,7 @@ export class OdosSwapProvider implements ISwapProvider {
       fromToken: request.fromToken,
       fromAmount: request.fromAmount,
       toToken: request.toToken,
-      toAmount: fromWeiString(quote.outAmounts[0], request.toToken.decimals),
+      toAmount: fromWei(quote.outAmounts[0], request.toToken.decimals),
       fee: config.fee,
       extra: quote.pathId,
     };
@@ -96,8 +96,8 @@ export class OdosSwapProvider implements ISwapProvider {
       chainId,
       'odos'
     );
-    return config.blockedTokens.length
-      ? possibleTokens.filter(token => !config.blockedTokens.includes(token.id))
+    return config.blockedTokens.length ?
+        possibleTokens.filter(token => !config.blockedTokens.includes(token.id))
       : possibleTokens;
   }
 
@@ -122,9 +122,9 @@ export class OdosSwapProvider implements ISwapProvider {
       fromToken: quote.fromToken,
       fromAmount: quote.fromAmount,
       toToken: quote.toToken,
-      toAmount: fromWeiString(swap.outputTokens[0].amount, quote.toToken.decimals),
+      toAmount: fromWei(swap.outputTokens[0].amount, quote.toToken.decimals),
       toAmountMin: slipBy(
-        fromWeiString(swap.outputTokens[0].amount, quote.toToken.decimals),
+        fromWei(swap.outputTokens[0].amount, quote.toToken.decimals),
         slippage,
         quote.toToken.decimals
       ),

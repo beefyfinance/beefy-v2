@@ -20,6 +20,8 @@ export type OptionalStrategySwapConfig = {
 
 export type SingleStrategyConfig = {
   strategyId: 'single';
+  disableDeposit?: boolean;
+  disableWithdraw?: boolean;
 } & OptionalStrategySwapConfig;
 
 export type UniswapLikeStrategyConfig<TAmm extends AmmEntity> = {

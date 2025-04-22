@@ -33,6 +33,7 @@ const vaultTypeBuildersById: TypeToConstructorMap = {
   cowcentrated: makeLazyLoader(
     async () => (await import('./CowcentratedVaultType.ts')).CowcentratedVaultType
   ),
+  erc4626: makeLazyLoader(async () => (await import('./Erc4626VaultType.ts')).Erc4626VaultType),
 };
 
 export function getVaultTypeBuilder<T extends VaultEntity>(vault: T): VaultTypeBuilderFromVault<T> {

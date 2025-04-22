@@ -9,6 +9,7 @@ export const buttonRecipe = cva({
     backgroundColor: 'colorPalette.background',
     borderColor: 'colorPalette.border',
     borderRadius: '8px',
+    textStyle: 'body.medium',
     _hover: {
       color: 'colorPalette.hover.color',
       backgroundColor: 'colorPalette.hover.background',
@@ -28,6 +29,11 @@ export const buttonRecipe = cva({
   },
   variants: {
     size: {
+      xs: {
+        padding: '3px 9px',
+        borderRadius: '4px',
+        textStyle: 'body.sm.medium',
+      },
       sm: {
         padding: '8px 16px',
       },
@@ -61,7 +67,6 @@ export const buttonRecipe = cva({
       },
       filter: {
         colorPalette: 'buttons.filter',
-        fontWeight: 'medium',
       },
       success: {
         colorPalette: 'buttons.success',
@@ -78,6 +83,13 @@ export const buttonRecipe = cva({
     },
   },
   compoundVariants: [
+    {
+      size: 'xs',
+      borderless: false,
+      css: {
+        padding: '1px 7px',
+      },
+    },
     {
       size: 'sm',
       borderless: false,

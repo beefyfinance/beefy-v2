@@ -8,7 +8,6 @@ import type {
   VaultConfig,
 } from '../../src/features/data/apis/config-types.ts';
 import type { PromoConfig } from '../../src/features/data/apis/promos/types.ts';
-import { fileExists } from './files.ts';
 
 /** Harmony->One to match addressbook */
 const chainConfigs = chains.reduce(
@@ -88,8 +87,10 @@ export const excludeChains: ChainMap<{ count: number; hash: string }> = {
   },
 };
 
-export const excludedChainIds = Object.keys(excludeChains) as AddressBookChainId[];
 export const allChainIds = Object.keys(chainConfigs) as AddressBookChainId[];
+export const excludedChainIds = (Object.keys(excludeChains) as AddressBookChainId[]).filter(
+  k => !!chainConfigs[k]
+);
 export const chainIds = allChainIds.filter(chainId => !(chainId in excludeChains));
 
 const chainRpcs = allChainIds.reduce(
@@ -138,15 +139,18 @@ export async function getVaultsForChain(chainId: string): Promise<VaultConfig[]>
     .default as VaultConfig[]);
 }
 
+const promosImporters = import.meta.glob<PromoConfig[]>('../../src/config/promos/chain/*.json', {
+  import: 'default',
+});
 const promosByChainId: AppChainMap<PromoConfig[]> = {};
 
 export async function getPromosForChain(chainId: string): Promise<PromoConfig[]> {
   const id = addressBookToAppId(chainId);
 
   if (!(id in promosByChainId)) {
-    const path = `../../src/config/promos/chain/${id}.json`;
-    if (await fileExists(path)) {
-      promosByChainId[id] = (await import(path)).default;
+    const importer = promosImporters[`../../src/config/promos/chain/${id}.json`];
+    if (importer) {
+      promosByChainId[id] = await importer();
     } else {
       promosByChainId[id] = [];
     }
@@ -191,7 +195,7 @@ export function appToAddressBookId(chainId: string): AddressBookChainId {
 
 export function addressBookToAppId(chainId: string): AppChainId {
   if (chainId === 'one') {
-    return 'harmony';
+    return 'harmony' as AppChainId;
   }
   if (chainId in config) {
     return chainId as AppChainId;

@@ -24,7 +24,7 @@ import {
   selectGovVaultPendingRewardsWithPrice,
   selectUserDepositedVaultIds,
   selectUserLpBreakdownBalance,
-  selectUserVaultBalanceInShareTokenIncludingBoostsBridged,
+  selectUserVaultBalanceInShareTokenIncludingDisplaced,
 } from './balance.ts';
 import { selectWalletAddress } from './wallet.ts';
 import { selectIsConfigAvailable } from './data-loader.ts';
@@ -42,12 +42,13 @@ import {
   type TokenEntryNow,
   type UsdChange,
   type UserClmPnl,
+  type UserErc4626Pnl,
   type UserGovPnl,
   type UserStandardPnl,
   type UserVaultPnl,
 } from './analytics-types.ts';
 import { selectFeesByVaultId } from './fees.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import {
   createAddressDataSelector,
   hasLoaderFulfilledOnce,
@@ -177,7 +178,7 @@ export const selectStandardGovPnl = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
-): UserStandardPnl | UserGovPnl => {
+): UserStandardPnl | UserGovPnl | UserErc4626Pnl => {
   const vault = selectVaultById(state, vaultId);
   if (isCowcentratedLikeVault(vault)) {
     throw new Error('This function should not be called for cowcentrated vaults');
@@ -286,7 +287,7 @@ export const selectClmPnl = (
   const vault = selectCowcentratedLikeVaultById(state, vaultId);
   const sortedTimeline = selectUserDepositedTimelineByVaultId(state, vaultId, walletAddress);
   const shareToken = selectTokenByAddress(state, vault.chainId, vault.receiptTokenAddress);
-  const sharesNow = selectUserVaultBalanceInShareTokenIncludingBoostsBridged(
+  const sharesNow = selectUserVaultBalanceInShareTokenIncludingDisplaced(
     state,
     vaultId,
     walletAddress
@@ -403,9 +404,9 @@ export const selectClmPnl = (
   const stellaSwapRewards = selectUserStellaSwapRewardsForVault(state, vaultId, walletAddress);
   const offChainRewards = [
     ...(merklRewards ? merklRewards.map(r => ({ ...r, source: 'merkl' as const })) : []),
-    ...(stellaSwapRewards
-      ? stellaSwapRewards.map(r => ({ ...r, source: 'stellaswap' as const }))
-      : []),
+    ...(stellaSwapRewards ?
+      stellaSwapRewards.map(r => ({ ...r, source: 'stellaswap' as const }))
+    : []),
   ];
   for (const reward of offChainRewards) {
     const claimedAmount = reward.accumulated.minus(reward.unclaimed);
@@ -590,8 +591,9 @@ export const selectHasDataToShowGraphByVaultId = createCachedSelector(
     selectVaultById(state, vaultId),
   (userVaults, isLoaded, timeline, vault) => {
     // show clm data for 1 month after vault is retired
-    const statusCondition = isCowcentratedLikeVault(vault)
-      ? vault.status !== 'eol' ||
+    const statusCondition =
+      isCowcentratedLikeVault(vault) ?
+        vault.status !== 'eol' ||
         (vault.status === 'eol' && Date.now() / 1000 - (vault.retiredAt || 0) <= 60 * 60 * 24 * 30)
       : vault.status === 'active';
 
@@ -632,8 +634,8 @@ export const selectUserClmHarvestTimelineByVaultId = createCachedSelector(
       return undefined;
     }
 
-    return isCowcentratedStandardVault(vault)
-      ? userAnalytics.clmVaultHarvests.byVaultId[vault.id] || undefined
+    return isCowcentratedStandardVault(vault) ?
+        userAnalytics.clmVaultHarvests.byVaultId[vault.id] || undefined
       : userAnalytics.clmHarvests.byVaultId[vault.id] || undefined;
   }
 )((_state: BeefyState, vaultId: VaultEntity['id'], _address?: string) => vaultId);
@@ -661,11 +663,13 @@ export const selectClmAutocompoundedPendingFeesByVaultId = (
   const { price: token1Price, symbol: token1Symbol, decimals: token1Decimals } = token1;
 
   const vault = selectCowcentratedLikeVaultById(state, vaultId);
-  const harvestTimeline = isCowcentratedStandardVault(vault)
-    ? selectUserClmVaultHarvestTimelineByVaultId(state, vaultId, walletAddress)
+  const harvestTimeline =
+    isCowcentratedStandardVault(vault) ?
+      selectUserClmVaultHarvestTimelineByVaultId(state, vaultId, walletAddress)
     : selectUserClmHarvestTimelineByVaultId(state, vaultId, walletAddress);
-  const compoundedYield = harvestTimeline
-    ? {
+  const compoundedYield =
+    harvestTimeline ?
+      {
         token0AccruedRewards: harvestTimeline.totals[0],
         token1AccruedRewards: harvestTimeline.totals[1],
         token0AccruedRewardsToUsd: harvestTimeline.totalsUsd[0],
@@ -688,7 +692,7 @@ export const selectClmAutocompoundedPendingFeesByVaultId = (
     totalPending: BIG_ZERO,
   };
   const pendingRewards = selectClmPendingRewardsByVaultId(state, vaultId);
-  const currentMooTokenBalance = selectUserVaultBalanceInShareTokenIncludingBoostsBridged(
+  const currentMooTokenBalance = selectUserVaultBalanceInShareTokenIncludingDisplaced(
     state,
     vaultId,
     walletAddress

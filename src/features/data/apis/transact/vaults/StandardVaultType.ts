@@ -49,9 +49,8 @@ import {
 } from '../../../../../helpers/big-number.ts';
 import { selectFeesByVaultId } from '../../../selectors/fees.ts';
 import { StandardVaultAbi } from '../../../../../config/abi/StandardVaultAbi.ts';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { getInsertIndex, getTokenAddress } from '../helpers/zap.ts';
-import { walletActions } from '../../../actions/wallet-actions.ts';
 import type { Namespace, TFunction } from 'react-i18next';
 import type { Step } from '../../../reducers/wallet/stepper.ts';
 import { getVaultWithdrawnFromContract, getVaultWithdrawnFromState } from '../helpers/vault.ts';
@@ -59,6 +58,7 @@ import { selectWalletAddressOrThrow } from '../../../selectors/wallet.ts';
 import type { ZapStep } from '../zap/types.ts';
 import { fetchContract } from '../../rpc-contract/viem-contract.ts';
 import { encodeFunctionData } from 'viem';
+import { deposit, withdraw } from '../../../actions/wallet/standard.ts';
 
 export class StandardVaultType implements IStandardVaultType {
   public readonly id = 'standard';
@@ -87,8 +87,8 @@ export class StandardVaultType implements IStandardVaultType {
   protected calculateDepositFee(input: TokenAmount, state: BeefyState): BigNumber {
     const fees = selectFeesByVaultId(state, this.vault.id);
     const depositFeePercent = fees?.deposit || 0;
-    return depositFeePercent > 0
-      ? input.amount
+    return depositFeePercent > 0 ?
+        input.amount
           .multipliedBy(depositFeePercent)
           .decimalPlaces(input.token.decimals, BigNumber.ROUND_FLOOR)
       : BIG_ZERO;
@@ -127,8 +127,9 @@ export class StandardVaultType implements IStandardVaultType {
       inputs: request.inputs,
       outputs,
       minOutputs: outputs,
-      zap: isTokenNative(input.token)
-        ? this.fetchNativeZapDeposit(this.vault.contractAddress, input.token, input.amount)
+      zap:
+        isTokenNative(input.token) ?
+          this.fetchNativeZapDeposit(this.vault.contractAddress, input.token, input.amount)
         : this.fetchErc20ZapDeposit(
             this.vault.contractAddress,
             input.token,
@@ -270,8 +271,9 @@ export class StandardVaultType implements IStandardVaultType {
       token: input.token,
       amount: input.amount.minus(fee),
     };
-    const allowances = isTokenErc20(input.token)
-      ? [
+    const allowances =
+      isTokenErc20(input.token) ?
+        [
           {
             token: input.token,
             amount: input.amount,
@@ -301,7 +303,7 @@ export class StandardVaultType implements IStandardVaultType {
     return {
       step: 'deposit',
       message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-      action: walletActions.deposit(this.vault, input.amount, input.max),
+      action: deposit(this.vault, input.amount, input.max),
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };
@@ -370,7 +372,7 @@ export class StandardVaultType implements IStandardVaultType {
     return {
       step: 'withdraw',
       message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-      action: walletActions.withdraw(this.vault, input.amount, input.max),
+      action: withdraw(this.vault, input.amount, input.max),
       pending: false,
       extraInfo: { zap: false, vaultId: quote.option.vaultId },
     };
@@ -409,8 +411,9 @@ export class StandardVaultType implements IStandardVaultType {
       inputs,
       outputs,
       minOutputs: outputs,
-      zap: isTokenNative(this.depositToken)
-        ? this.fetchNativeZapWithdraw(
+      zap:
+        isTokenNative(this.depositToken) ?
+          this.fetchNativeZapWithdraw(
             this.vault.contractAddress,
             this.shareToken,
             sharesToWithdrawWei,

@@ -58,7 +58,6 @@ import {
 import { selectChainById } from '../../../selectors/chains.ts';
 import { ZERO_FEE } from '../helpers/quotes.ts';
 import type { BeefyState, BeefyThunk } from '../../../../../redux-types.ts';
-import { walletActions } from '../../../actions/wallet-actions.ts';
 import type { ChainEntity } from '../../../entities/chain.ts';
 import { getInsertIndex, NO_RELAY } from '../helpers/zap.ts';
 import type {
@@ -68,11 +67,12 @@ import type {
   ZapStepRequest,
   ZapStepResponse,
 } from '../zap/types.ts';
-import { type BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { selectTransactSlippage } from '../../../selectors/transact.ts';
 import { uniqBy } from 'lodash-es';
 import { slipBy } from '../helpers/amounts.ts';
 import { encodeFunctionData, type Abi } from 'viem';
+import { zapExecuteOrder } from '../../../actions/wallet/zap.ts';
 
 type ZapHelpers = {
   chain: ChainEntity;
@@ -395,8 +395,8 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
   ): Promise<Step> {
     await this.connectSecondVaultEntity();
 
-    return isCowcentratedStandardVault(this.mainVault)
-      ? this.fetchRewardPoolToVaultDepositStep(quote, t)
+    return isCowcentratedStandardVault(this.mainVault) ?
+        this.fetchRewardPoolToVaultDepositStep(quote, t)
       : this.fetchVaultToRewardPoolDepositStep(quote, t);
   }
 
@@ -421,6 +421,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
       const unstakeZap = await this.fetchZapUnstakeStep(unstakeStep, zapHelpers);
       const depositZap = await this.vaultType!.fetchZapDeposit({
         inputs: depositStep.inputs.map(i => ({ ...i, max: true })),
+        from: this.helpers.zap.router,
       }); // assuming connectSecondVaultEntity was called
 
       const dustOutputs: OrderOutput[] = unstakeZap.outputs.map(output => ({
@@ -452,11 +453,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
 
       const expectedTokens = quote.outputs.map(output => output.token);
 
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };
@@ -491,6 +488,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
 
       const withdrawZap = await this.vaultType!.fetchZapWithdraw({
         inputs: quote.inputs.map(i => ({ ...i, token: this.depositToken })),
+        from: this.helpers.zap.router,
       }); // assuming connectSecondVaultEntity was called
       const stakeZap = await this.fetchZapStakeStep(withdrawZap.outputs, zapHelpers);
 
@@ -523,11 +521,7 @@ export class RewardPoolToVaultStrategy implements IZapStrategy<StrategyId> {
 
       const expectedTokens = quote.outputs.map(output => output.token);
 
-      const walletAction = walletActions.zapExecuteOrder(
-        quote.option.vaultId,
-        zapRequest,
-        expectedTokens
-      );
+      const walletAction = zapExecuteOrder(quote.option.vaultId, zapRequest, expectedTokens);
 
       return walletAction(dispatch, getState, extraArgument);
     };

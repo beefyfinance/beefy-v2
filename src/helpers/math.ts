@@ -1,4 +1,4 @@
-import type { BigNumber } from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 import { toBigNumber } from './big-number.ts';
 import { createFactory } from '../features/data/utils/factory-utils.ts';
 
