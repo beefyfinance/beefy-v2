@@ -1,62 +1,53 @@
 import { styled } from '@repo/styles/jsx';
 import { memo } from 'react';
+import type { StyledVariantProps } from '@repo/styles/types';
+
+type SizerVariantProps = StyledVariantProps<typeof Sizer>;
+type CircleVariantProps = StyledVariantProps<typeof Circle>;
 
 export type PulseHighlightProps = {
   innerCircles?: number;
   size?: number;
-  variant?: 'loading' | 'success' | 'warning';
-  hidePulse?: boolean;
-  animation?: 'indicator' | 'pulse';
+  variant?: SizerVariantProps['variant'];
+  state?: CircleVariantProps['state'];
 };
 
 export const PulseHighlight = memo<PulseHighlightProps>(function PulseHighlight({
   variant = 'loading',
-  innerCircles = 4,
-  size = 8,
-  hidePulse = false,
-  animation = 'indicator',
+  size = 20,
+  state = 'playing',
 }) {
   return (
-    <CircleOuter>
-      <Circle style={{ width: size, height: size }} variant={variant}>
-        {Array.from({ length: innerCircles }).map((_, index) => (
-          <PulseCircle
-            style={{ width: size, height: size }}
-            variant={variant}
-            key={index}
-            hidePulse={hidePulse}
-            animation={animation}
-          />
-        ))}
-      </Circle>
-    </CircleOuter>
+    <Sizer style={{ width: size, height: size }} variant={variant}>
+      <Circle slot={3} state={state} />
+      <Circle slot={2} state={state} />
+      <Circle slot={1} state={state} />
+    </Sizer>
   );
 });
 
-const CircleOuter = styled('div', {
+const Sizer = styled('div', {
   base: {
-    width: '16px',
+    width: '20px',
+    height: '20px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-});
-
-const Circle = styled('div', {
-  base: {
-    borderRadius: '30px',
     position: 'relative',
   },
   variants: {
     variant: {
       loading: {
-        backgroundColor: 'indicators.loading',
+        colorPalette: 'indicators.loading',
       },
       success: {
-        backgroundColor: 'indicators.success',
+        colorPalette: 'indicators.success',
       },
       warning: {
-        backgroundColor: 'indicators.warning',
+        colorPalette: 'indicators.warning',
+      },
+      error: {
+        colorPalette: 'indicators.error',
       },
     },
   },
@@ -65,51 +56,66 @@ const Circle = styled('div', {
   },
 });
 
-const PulseCircle = styled('div', {
+const Circle = styled('div', {
   base: {
     borderRadius: '50%',
     position: 'absolute',
-    opacity: '0',
-    '&:nth-child(1)': {
-      animationDelay: '0s',
-    },
-    '&:nth-child(2)': {
-      animationDelay: '1s',
-    },
-    '&:nth-child(3)': {
-      animationDelay: '2s',
-    },
-    '&:nth-child(4)': {
-      animationDelay: '3s',
-    },
+    width: '100%',
+    height: '100%',
+    animationDuration: '700ms',
+    animationDelay: '1ms',
+    animationTimingFunction: 'ease-out',
+    animationIterationCount: 'infinite',
   },
   variants: {
-    animation: {
-      indicator: {
-        animation: 'loadingPulse 1s infinite ease-out',
+    slot: {
+      // there are "state 2" from figma and we ease-out to "state 1"
+      1: {
+        backgroundColor: 'colorPalette.bg',
+        transform: 'scale(0.3)', // 6px
+        opacity: '1',
       },
-      pulse: {
-        animation: 'loadingPulse 4s infinite cubic-bezier(.36, .11, .89, .32)',
+      2: {
+        backgroundColor: 'colorPalette.fg',
+        transform: 'scale(0.3)', // 6px
+        opacity: '1',
+      },
+      3: {
+        backgroundColor: 'colorPalette.fg',
+        transform: 'scale(0)', // 0px
       },
     },
-    hidePulse: {
-      true: {
-        display: 'none',
+    state: {
+      stopped: {
+        animationName: 'none',
       },
-    },
-    variant: {
-      loading: {
-        backgroundColor: 'indicators.loading',
-      },
-      success: {
-        backgroundColor: 'indicators.success',
-      },
-      warning: {
-        backgroundColor: 'indicators.warning',
-      },
+      playing: {},
     },
   },
+  compoundVariants: [
+    {
+      slot: 1,
+      state: 'playing',
+      css: {
+        animationName: 'pulse1',
+      },
+    },
+    {
+      slot: 2,
+      state: 'playing',
+      css: {
+        animationName: 'pulse2',
+      },
+    },
+    {
+      slot: 3,
+      state: 'playing',
+      css: {
+        animationName: 'pulse3',
+      },
+    },
+  ],
   defaultVariants: {
-    variant: 'loading',
+    state: 'playing',
   },
 });

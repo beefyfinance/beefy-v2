@@ -5,10 +5,16 @@ import { getUnixTime, isAfter } from 'date-fns';
 import { selectVaultRawTvl } from './tvl.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import type { MerklRewardsCampaign, StellaSwapRewardsCampaign } from '../reducers/rewards-types.ts';
+import { isNonEmptyArray } from '../utils/array-utils.ts';
+import { uniqBy } from 'lodash-es';
+import type { TokenEntity } from '../entities/token.ts';
+
+export type UnifiedRewardToken = Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'chainId'>;
 
 export type MerklRewardsCampaignWithApr = MerklRewardsCampaign & {
   apr: number;
 };
+
 export type StellaSwapRewardsCampaignWithApr = StellaSwapRewardsCampaign & {
   apr: number;
 };
@@ -121,4 +127,28 @@ export const selectVaultActiveGovRewards = createSelector(
 export const selectVaultHasActiveGovRewards = createSelector(
   selectVaultActiveGovRewards,
   rewards => !!rewards && rewards.length > 0
+);
+
+export const selectVaultActiveExtraRewardTokens = createSelector(
+  selectVaultActiveMerklCampaigns,
+  selectVaultActiveStellaSwapCampaigns,
+  // TODO - add a selector for 'extra' gov rewards once we have the data
+  (merklCampaigns, stellaSwapCampaigns): UnifiedRewardToken[] | undefined => {
+    if (!isNonEmptyArray(merklCampaigns) && !isNonEmptyArray(stellaSwapCampaigns)) {
+      return undefined;
+    }
+
+    const tokens: UnifiedRewardToken[] = [];
+
+    for (const campaign of [...(merklCampaigns || []), ...(stellaSwapCampaigns || [])]) {
+      tokens.push({
+        address: campaign.rewardToken.address,
+        symbol: campaign.rewardToken.symbol,
+        decimals: campaign.rewardToken.decimals,
+        chainId: campaign.rewardToken.chainId,
+      });
+    }
+
+    return uniqBy(tokens, t => `${t.chainId}-${t.address}`);
+  }
 );

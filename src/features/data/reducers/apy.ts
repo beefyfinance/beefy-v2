@@ -15,8 +15,8 @@ import { type VaultEntity } from '../entities/vault.ts';
 import { selectBoostById } from '../selectors/boosts.ts';
 import { selectTokenPriceByAddress, selectVaultReceiptTokenPrice } from '../selectors/tokens.ts';
 import {
-  selectStandardVaultByAddressOrUndefined,
   selectVaultByIdOrUndefined,
+  selectVaultWithReceiptByAddressOrUndefined,
 } from '../selectors/vaults.ts';
 import { createIdMap } from '../utils/array-utils.ts';
 import type BigNumber from 'bignumber.js';
@@ -187,7 +187,7 @@ function addContractDataToState(
       (acc, reward) => {
         // Rewards
         let rewardTokenPrice: BigNumber;
-        const rewardVault = selectStandardVaultByAddressOrUndefined(
+        const rewardVault = selectVaultWithReceiptByAddressOrUndefined(
           state,
           reward.token.chainId,
           reward.token.address

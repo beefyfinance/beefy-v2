@@ -14,8 +14,7 @@ import {
 import type { VaultEntity } from '../../../../../data/entities/vault.ts';
 import { selectVaultById } from '../../../../../data/selectors/vaults.ts';
 import { styles } from './styles.ts';
-import { TokenImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
-import { selectVaultTokenSymbols } from '../../../../../data/selectors/tokens.ts';
+import { TokenImage, VaultImage } from '../../../../../../components/TokenImage/TokenImage.tsx';
 import { useMediaQuery } from '../../../../../../components/MediaQueries/useMediaQuery.ts';
 import { DivWithTooltip } from '../../../../../../components/Tooltip/DivWithTooltip.tsx';
 
@@ -66,7 +65,7 @@ export const AssetInfo = memo(function AssetInfo({ chainId, token }: AssetInfoPr
   return (
     <AssetContainer token={token}>
       <>
-        <TokenImage size={24} tokenAddress={token.address} chainId={chainId} />
+        <TokenImage size={24} address={token.address} chainId={chainId} />
         <AssetName name={token.symbol} />
       </>
     </AssetContainer>
@@ -96,11 +95,10 @@ interface VaultNameProps {
 
 export const VaultIdentity = memo(function VaultIdentity({ vaultId }: VaultNameProps) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const vaultTokenSymbols = useAppSelector(state => selectVaultTokenSymbols(state, vault.id));
 
   return (
     <>
-      <AssetsImage size={24} chainId={vault.chainId} assetSymbols={vaultTokenSymbols} />
+      <VaultImage vault={vault} size={24} />
       <AssetName name={vault.names.list} />
     </>
   );

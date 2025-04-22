@@ -117,7 +117,7 @@ export const NetworkStatus = memo(function NetworkStatus({
       reference={anchorEl}
     >
       <DropdownButton onClick={handleToggle}>
-        <PulseHighlight variant={variant} size={10} hidePulse={hidePulse} animation="pulse" />
+        <PulseHighlight variant={variant} state={hidePulse ? 'stopped' : 'playing'} />
         {isWalletConnected && <ActiveChain chainId={currentChainId} />}
       </DropdownButton>
       <DropdownContent css={styles.dropdown} gap="none">

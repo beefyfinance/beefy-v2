@@ -137,6 +137,7 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
 
   return (
     <VaultTagWithTooltip
+      order="text-icon"
       tooltip={
         <BasicTooltipContent title={longLabel} content={`${platformName} trading fee: ${fee}`} />
       }
@@ -145,8 +146,8 @@ const BaseVaultClmTag = memo(function BaseVaultClmTag({
       icon={
         <img
           src={getIcon('clm')}
-          height={16}
-          width={16}
+          height={12}
+          width={12}
           className={classes.vaultTagClmIcon}
           alt={hideLabel ? label : undefined}
         />

@@ -239,6 +239,7 @@ export const config = {
       'omultiwUSDR',
       'sFRAX',
       'crvUSD',
+      'scrvUSD',
       'USDV',
       'sDAI',
       'aOptUSDC',
@@ -564,6 +565,10 @@ export const config = {
       'CADC',
       'yTRB',
       'IDRX',
+      'waBasGHO',
+      'waBasUSDC',
+      'sUSDS',
+      'smUSDC',
     ],
   },
   gnosis: {

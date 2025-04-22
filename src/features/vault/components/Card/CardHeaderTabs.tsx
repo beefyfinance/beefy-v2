@@ -77,7 +77,7 @@ const Tab = memo(function Tab<T extends string = string>({
 
   return (
     <StyledButton selected={selected} onClick={handleClick}>
-      {label} {highlight && <PulseHighlight variant={highlight} innerCircles={1} />}
+      {label} {highlight && <PulseHighlight variant={highlight} />}
     </StyledButton>
   );
 });
@@ -93,7 +93,7 @@ const StyledButton = styled('button', {
     paddingBlock: '16px',
     display: 'flex',
     alignItems: 'center',
-    gap: '4px',
+    gap: '6px',
     _hover: {
       color: 'text.middle',
     },
