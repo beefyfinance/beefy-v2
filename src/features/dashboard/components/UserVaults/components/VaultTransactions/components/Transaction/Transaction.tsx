@@ -136,7 +136,7 @@ const TokenIconAmount = memo(function IconTokenAmount({
     >
       <TokenImage
         css={styles.tokenIcon}
-        tokenAddress={token.address}
+        address={token.address}
         chainId={token.chainId}
         size={16}
       />

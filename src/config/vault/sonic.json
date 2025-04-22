@@ -571,6 +571,7 @@
   {
     "id": "beefy-besonic",
     "name": "beS",
+    "icons": ["beS"],
     "type": "erc4626",
     "subType": "erc7540:withdraw",
     "token": "WS",
@@ -584,7 +585,7 @@
     "status": "active",
     "createdAt": 1744038202,
     "platformId": "beefy",
-    "assets": ["beS"],
+    "assets": ["WS"],
     "migrationIds": [],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "besonic",
@@ -593,7 +594,10 @@
     "zaps": [
       {
         "strategyId": "single",
-        "disableWithdraw": true
+        "disableWithdraw": true,
+        "swap": {
+          "blockTokens": ["beS", "beefy-besonic"]
+        }
       }
     ]
   },

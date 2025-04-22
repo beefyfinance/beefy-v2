@@ -3,7 +3,6 @@ import { isCowcentratedLikeVault, type VaultEntity } from '../entities/vault.ts'
 import type { ChainEntity } from '../entities/chain.ts';
 import type { MerklVaultReward } from '../reducers/wallet/user-rewards-types.ts';
 import type BigNumber from 'bignumber.js';
-import type { TokenEntity } from '../entities/token.ts';
 import { BIG_ZERO } from '../../../helpers/big-number.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { selectTokenByAddressOrUndefined, selectTokenPriceByTokenOracleId } from './tokens.ts';
@@ -12,11 +11,10 @@ import {
   selectVaultActiveGovRewards,
   selectVaultActiveMerklCampaigns,
   selectVaultActiveStellaSwapCampaigns,
+  type UnifiedRewardToken,
 } from './rewards.ts';
 import { selectGovVaultPendingRewards, selectGovVaultPendingRewardsWithPrice } from './balance.ts';
 import { isNonEmptyArray } from '../utils/array-utils.ts';
-
-type UnifiedRewardToken = Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'chainId'>;
 
 export type UnifiedReward = {
   active: boolean;

@@ -16,7 +16,7 @@ import { formatUsd } from '../../../../../../../helpers/format.ts';
 import { BIG_ZERO } from '../../../../../../../helpers/big-number.ts';
 import { Claim } from './Claim/Claim.tsx';
 import { styles } from './styles.ts';
-import { RewardList } from '../RewardList/RewardList.tsx';
+import { RewardList } from '../RewardList.tsx';
 import { Source } from '../Source/Source.tsx';
 import { isNonEmptyArray, type NonEmptyArray } from '../../../../../../data/utils/array-utils.ts';
 import { selectChainById } from '../../../../../../data/selectors/chains.ts';
@@ -81,15 +81,14 @@ export const MerklRewards = memo(function MerklRewards({
 
   return (
     <>
-      {hasClaimable && walletAddress ? (
+      {hasClaimable && walletAddress ?
         <ClaimableRewards
           vaultChainId={chainId}
           vaultRewards={vaultRewards}
           walletAddress={walletAddress}
           deposited={deposited}
         />
-      ) : (
-        <Source
+      : <Source
           key={chainId}
           title={t('Transact-Claim-Rewards-merkl')}
           refresh={
@@ -98,7 +97,7 @@ export const MerklRewards = memo(function MerklRewards({
         >
           <RewardList chainId={chainId} rewards={vaultRewards} deposited={deposited} />
         </Source>
-      )}
+      }
     </>
   );
 });
@@ -172,9 +171,9 @@ const ClaimableChainRewards = memo(function ClaimableChainRewards({
       refresh={withRefresh ? <UserRewardsRefreshButton walletAddress={walletAddress} /> : undefined}
     >
       <RewardList chainId={vaultChainId} rewards={vaultRewards} deposited={deposited} />
-      {hasClaimable ? (
+      {hasClaimable ?
         <OtherRewards chainId={chainId} vaultRewards={vaultRewards} walletAddress={walletAddress} />
-      ) : undefined}
+      : undefined}
     </Source>
   );
 });
@@ -213,8 +212,8 @@ const OtherRewards = memo(function OtherRewards({
       .filter(reward => reward.amount.gt(BIG_ZERO));
   }, [vaultRewards, chainRewards]);
   const otherRewardsUsd = useMemo(() => {
-    return otherRewards
-      ? otherRewards.reduce((sum, reward) => {
+    return otherRewards ?
+        otherRewards.reduce((sum, reward) => {
           return sum.plus(reward.price ? reward.price.multipliedBy(reward.amount) : BIG_ZERO);
         }, BIG_ZERO)
       : BIG_ZERO;
@@ -231,20 +230,13 @@ const OtherRewards = memo(function OtherRewards({
     <div className={classes.otherRewards}>
       <button type="button" onClick={onToggle} className={classes.otherRewardsToggle}>
         {t('Rewards-OtherRewards', { value: formatUsd(otherRewardsUsd) })}
-        {otherOpen ? (
+        {otherOpen ?
           <ExpandLess className={classes.otherRewardsToggleIcon} viewBox="5 7.59 16.43 9.41" />
-        ) : (
-          <ExpandMore className={classes.otherRewardsToggleIcon} viewBox="5 7.59 16.43 9.41" />
-        )}
+        : <ExpandMore className={classes.otherRewardsToggleIcon} viewBox="5 7.59 16.43 9.41" />}
       </button>
-      {otherOpen ? (
-        <RewardList
-          chainId={chainId}
-          css={styles.otherRewardsList}
-          rewards={otherRewards}
-          deposited={false}
-        />
-      ) : null}
+      {otherOpen ?
+        <RewardList chainId={chainId} rewards={otherRewards} deposited={false} />
+      : null}
     </div>
   );
 });
@@ -277,20 +269,22 @@ const UserRewardsRefreshButton = memo(function UserRewardsRefreshButton({
   return (
     <RefreshButton
       title={t(
-        status.isError
-          ? 'Transact-Claim-Refresh-Merkl-Error'
-          : status.isLoading
-            ? 'Transact-Claim-Refresh-Merkl-Loading'
-            : 'Transact-Claim-Refresh-Merkl-Loaded'
+        status.isError ? 'Transact-Claim-Refresh-Merkl-Error'
+        : status.isLoading ? 'Transact-Claim-Refresh-Merkl-Loading'
+        : 'Transact-Claim-Refresh-Merkl-Loaded'
       )}
       text={
-        status.isLoading
-          ? undefined
-          : canRefresh
-            ? t('Transact-Claim-Refresh')
-            : t('Transact-Claim-Refresh-Wait')
+        status.isLoading ? undefined
+        : canRefresh ?
+          t('Transact-Claim-Refresh')
+        : t('Transact-Claim-Refresh-Wait')
       }
-      status={status.isError ? 'error' : status.isLoading ? 'loading' : 'loaded'}
+      status={
+        status.isError ? 'error'
+        : status.isLoading ?
+          'loading'
+        : 'loaded'
+      }
       disabled={!canRefresh}
       onClick={status.handleLoad}
     />
