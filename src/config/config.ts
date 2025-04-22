@@ -239,6 +239,7 @@ export const config = {
       'omultiwUSDR',
       'sFRAX',
       'crvUSD',
+      'scrvUSD',
       'USDV',
       'sDAI',
       'aOptUSDC',
