@@ -1,5 +1,55 @@
 [
   {
+    "id": "euler-sonic-mevcapital-usdc.e",
+    "name": "USDC.e (MEV Capital)",
+    "token": "USDC.e",
+    "tokenAddress": "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xC1e3ff64D95AeA97C0Bc15a6C3E2DEE87a5cD2eA",
+    "earnedToken": "mooEulerMEVCapital-USDC.e",
+    "earnedTokenAddress": "0xC1e3ff64D95AeA97C0Bc15a6C3E2DEE87a5cD2eA",
+    "oracle": "tokens",
+    "oracleId": "USDCe",
+    "status": "active",
+    "createdAt": 1745352178,
+    "platformId": "euler",
+    "assets": ["USDCe"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "euler-sonic-re7labs-usdc.e",
+    "name": "USDC.e (Re7 Labs)",
+    "token": "USDC.e",
+    "tokenAddress": "0x29219dd400f2Bf60E5a23d13Be72B486D4038894",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x0356485CbFC04E69DAba736C29AFE0b90393d521",
+    "earnedToken": "mooEulerRe7Labs-USDC.e",
+    "earnedTokenAddress": "0x0356485CbFC04E69DAba736C29AFE0b90393d521",
+    "oracle": "tokens",
+    "oracleId": "USDCe",
+    "status": "active",
+    "createdAt": 1745352178,
+    "platformId": "euler",
+    "assets": ["USDCe"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "sonic",
+    "pointStructureIds": ["sonic-points"],
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "shadow-cow-sonic-usdc.e-bes-vault",
     "name": "beS-USDC.e",
     "type": "standard",

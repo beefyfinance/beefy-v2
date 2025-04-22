@@ -1438,5 +1438,14 @@
     "documentation": "https://docs.berapaw.com/",
     "description": "BeraPaw is an innovative liquid staking protocol that converts Berachain’s native token into a more versatile and liquid asset, providing users with a seamless and hassle-free experience",
     "type": "farm"
+  },
+  {
+    "id": "euler",
+    "name": "Euler",
+    "website": "https://euler.finance/",
+    "twitter": "eulerfinance",
+    "documentation": "https://docs.euler.finance/",
+    "description": "Euler is a flexible platform for decentralized lending and borrowing, designed to adapt and grow with the evolving world of DeFi.",
+    "type": "money-market"
   }
 ]

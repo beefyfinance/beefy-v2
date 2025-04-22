@@ -1,5 +1,53 @@
 [
   {
+    "id": "euler-avax-re7labs-usdc",
+    "name": "USDC (Re7 Labs)",
+    "token": "USDC",
+    "tokenAddress": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0xdA640bE4588C469C9DB45D082B36913490924c08",
+    "earnedToken": "mooEulerRe7Labs-USDC",
+    "earnedTokenAddress": "0xdA640bE4588C469C9DB45D082B36913490924c08",
+    "oracle": "tokens",
+    "oracleId": "USDC",
+    "status": "active",
+    "createdAt": 1745352178,
+    "platformId": "euler",
+    "assets": ["USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "euler-avax-k3capital-usdt",
+    "name": "USDT (K3 Capital)",
+    "token": "USDT",
+    "tokenAddress": "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
+    "tokenDecimals": 6,
+    "earnContractAddress": "0x030A407dAAF2016d92Bb2EA1c317D5b2F92e9194",
+    "earnedToken": "mooEulerK3Capital-USDT",
+    "earnedTokenAddress": "0x030A407dAAF2016d92Bb2EA1c317D5b2F92e9194",
+    "oracle": "tokens",
+    "oracleId": "USDT",
+    "status": "active",
+    "createdAt": 1745352178,
+    "platformId": "euler",
+    "assets": ["USDT"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "avax",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
     "id": "balancerv3-avalanche-waavaweth-waavawavax",
     "name": "Gyroscope WAVAX/WETH V3",
     "type": "standard",
