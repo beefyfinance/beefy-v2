@@ -16,11 +16,6 @@ type Token = Pick<TokenEntity, 'address' | 'symbol' | 'decimals' | 'chainId'>;
 
 export type RewardItemProps = {
   chainId: ChainEntity['id'];
-  /**
-   * if user is deposited
-   * true: we show their rewards if available or "Earning % apr" if not,
-   * false we show "Earn % apr"
-   */
   deposited: boolean;
   reward: {
     active: boolean;
@@ -31,24 +26,18 @@ export type RewardItemProps = {
   };
 };
 
-export const RewardItem = memo(function RewardItem({
-  chainId,
-  deposited,
-  reward,
-}: RewardItemProps) {
+export const RewardItem = memo(function RewardItem({ chainId, reward }: RewardItemProps) {
   const { t } = useTranslation();
   const { amount, token, price, apr, active } = reward;
   const showAmount = amount && !amount.isZero();
   const showChain = token.chainId !== chainId;
   const showValue = showAmount && !!price && !price.isZero();
   const showApr = !showValue && active && apr !== undefined;
-  const symbol =
-    showAmount ? token.symbol : t(deposited ? 'Earning' : 'Earn', { symbol: token.symbol });
 
   return (
     <Row>
       {showAmount && <TokenAmount amount={amount} decimals={token.decimals} />}
-      {symbol}
+      {token.symbol}
       <TokenImageFromEntity token={token} size={24} />
       {showChain && <ClaimableChain symbol={token.symbol} chainId={token.chainId} />}
       <PullRight>
