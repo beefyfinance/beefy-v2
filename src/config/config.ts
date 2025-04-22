@@ -317,6 +317,9 @@ export const config = {
       'GYD',
       'GHO',
       'stataArbGHOn',
+      'waArbUSDCn',
+      'waArbUSDT',
+      'waArbGHO',
     ],
   },
   avax: {
