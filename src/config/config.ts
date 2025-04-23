@@ -572,6 +572,7 @@ export const config = {
       'waBasUSDC',
       'sUSDS',
       'smUSDC',
+      'oUSDT',
     ],
   },
   gnosis: {
