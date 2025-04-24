@@ -1,5 +1,59 @@
 [
   {
+    "id": "true-true",
+    "name": "TRUE",
+    "type": "standard",
+    "token": "TRUE",
+    "tokenAddress": "0x21CFCFc3d8F98fC728f48341D10Ad8283F6EB7AB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "true",
+    "earnedToken": "mooTrueTRUE",
+    "earnedTokenAddress": "0x7DaB05b3340CF7DD3c7De9a0A77416B7eDd03Ddf",
+    "earnContractAddress": "0x7DaB05b3340CF7DD3c7De9a0A77416B7eDd03Ddf",
+    "oracle": "tokens",
+    "oracleId": "TRUE",
+    "createdAt": 1745532338,
+    "status": "active",
+    "platformId": "true",
+    "assets": ["TRUE"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "true-true-weth",
+    "name": "TRUE-WETH",
+    "type": "standard",
+    "token": "TRUE-WETH",
+    "tokenAddress": "0x1FAE246b1b2D0ce47126bBb109850Da355352D77",
+    "tokenDecimals": 18,
+    "tokenProviderId": "true",
+    "earnedToken": "mooTrueTRUE-WETH",
+    "earnedTokenAddress": "0xd2878E0857267aE4B79081C4079426d259E4c035",
+    "earnContractAddress": "0xd2878E0857267aE4B79081C4079426d259E4c035",
+    "oracle": "lps",
+    "oracleId": "true-true-weth",
+    "createdAt": 1745532338,
+    "status": "active",
+    "platformId": "true",
+    "assets": ["TRUE", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://truemarkets.org/en/true-token/oracle-dashboard",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "base-true"
+      }
+    ]
+  },
+  {
     "id": "uniswap-cow-base-zora-usdc-rp",
     "name": "ZORA-USDC Reward Pool",
     "type": "gov",

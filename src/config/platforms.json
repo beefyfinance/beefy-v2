@@ -1447,5 +1447,14 @@
     "documentation": "https://docs.euler.finance/",
     "description": "Euler is a flexible platform for decentralized lending and borrowing, designed to adapt and grow with the evolving world of DeFi.",
     "type": "money-market"
+  },
+  {
+    "id": "true",
+    "name": "True",
+    "website": "https://truemarkets.org/",
+    "twitter": "Truemarketsorg",
+    "documentation": "https://truemarkets.gitbook.io/",
+    "description": "Truemarkets is a news and information source on the frontier of alternative media. At its core, it is a decentralized prediction market that enables users to forecast outcomes of real world events.",
+    "type": "farm"
   }
 ]
