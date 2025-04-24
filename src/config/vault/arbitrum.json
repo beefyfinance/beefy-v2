@@ -1,5 +1,45 @@
 [
   {
+    "id": "curve-arb-usdc-eure",
+    "name": "EURe/USDC",
+    "type": "standard",
+    "token": "EUReUSDC",
+    "tokenAddress": "0x590f7e2b211Fa5Ff7840Dd3c425B543363797701",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnContractAddress": "0xC1326074ce77E8cA526388345eF378974C7448AB",
+    "earnedToken": "mooCurveUSDC-EURe",
+    "earnedTokenAddress": "0xC1326074ce77E8cA526388345eF378974C7448AB",
+    "oracle": "lps",
+    "oracleId": "curve-arb-usdc-eure",
+    "status": "active",
+    "createdAt": 1745482141,
+    "platformId": "curve",
+    "assets": ["EURe", "USDC"],
+    "migrationIds": ["l2-convex", "l2-curve"],
+    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "multi-lp",
+    "addLiquidityUrl": "https://curve.fi/dex/arbitrum/pools/factory-twocrypto-89/deposit/",
+    "removeLiquidityUrl": "https://curve.fi/dex/arbitrum/pools/factory-twocrypto-89/withdraw",
+    "network": "arbitrum",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x590f7e2b211Fa5Ff7840Dd3c425B543363797701",
+        "methods": [
+          {
+            "type": "fixed-deposit-uint256",
+            "target": "0x590f7e2b211Fa5Ff7840Dd3c425B543363797701",
+            "coins": [
+              "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+              "0x0c06cCF38114ddfc35e07427B9424adcca9F44F8"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "balancerv3-arbitrum-waarbweth-waarbwsteth",
     "name": "WETH/wstETH V3",
     "type": "standard",

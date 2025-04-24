@@ -316,6 +316,7 @@ export const config = {
       'sUSDe',
       'GYD',
       'GHO',
+      'EURe',
       'stataArbGHOn',
       'waArbUSDCn',
       'waArbUSDT',

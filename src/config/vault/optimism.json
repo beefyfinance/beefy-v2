@@ -21,7 +21,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/dex/optimism/pools/factory-stable-ng-63/deposit/",
     "removeLiquidityUrl": "https://curve.fi/dex/optimism/pools/factory-stable-ng-63/withdraw",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x00D09CccDA09bB97132293c571EAd11630d57A71",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x00D09CccDA09bB97132293c571EAd11630d57A71",
+            "coins": [
+              "0xC52D7F23a2e460248Db6eE192Cb23dD12bDDCbf6",
+              "0x289f635106d5b822A505b39AC237A0AE9189335B"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "velodrome-v2-weth-over",
