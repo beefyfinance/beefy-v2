@@ -36,6 +36,7 @@ import { selectBoostById, selectIsVaultPreStakedOrBoosted } from '../selectors/b
 import { selectUserVaultBalanceInShareTokenInBoosts } from '../selectors/balance.ts';
 import { transactActions } from '../reducers/wallet/transact.ts';
 import { TransactMode, TransactStep } from '../reducers/wallet/transact-types.ts';
+import { isVaultActive } from '../entities/vault.ts';
 
 const transactListener = createListenerMiddleware<BeefyState>();
 
@@ -197,8 +198,13 @@ transactListener.startListening({
       return;
     }
 
-    // switch from boost tab to withdraw tab after unstaking from all boosts of this vault
-    dispatch(transactActions.switchMode(TransactMode.Withdraw));
+    // switch to deposit if vault still active, otherwise withdraw tab
+    const vault = selectVaultById(state, vaultId);
+    dispatch(
+      transactActions.switchMode(
+        isVaultActive(vault) ? TransactMode.Deposit : TransactMode.Withdraw
+      )
+    );
   },
 });
 
