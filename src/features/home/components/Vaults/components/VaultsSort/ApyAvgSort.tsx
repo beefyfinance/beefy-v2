@@ -5,7 +5,8 @@ import { selectAvgApySort } from '../../../../../data/selectors/filtered-vaults.
 import { useTranslation } from 'react-i18next';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults.ts';
 import { type AvgApySortType } from '../../../../../data/reducers/filtered-vaults-types.ts';
-const sortOptions: AvgApySortType[] = ['default', 'avg7d', 'avg30d', 'avg90d'];
+//temp remove 30/90 d
+const sortOptions: AvgApySortType[] = ['default', 'avg7d'];
 
 export const ApyAvgSort = memo(function ApyAvgSort() {
   const { t } = useTranslation();
