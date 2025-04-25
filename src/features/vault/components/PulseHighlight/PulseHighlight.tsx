@@ -69,20 +69,21 @@ const Circle = styled('div', {
   },
   variants: {
     slot: {
-      // there are "state 2" from figma and we ease-out to "state 1"
-      1: {
-        backgroundColor: 'colorPalette.bg',
+      3: {
+        // marker-1/03
+        backgroundColor: 'colorPalette.fg',
         transform: 'scale(0.3)', // 6px
-        opacity: '1',
       },
       2: {
+        // marker-1/02
         backgroundColor: 'colorPalette.fg',
-        transform: 'scale(0.3)', // 6px
-        opacity: '1',
+        transform: 'scale(1)', // 20px
+        opacity: '0',
       },
-      3: {
-        backgroundColor: 'colorPalette.fg',
-        transform: 'scale(0)', // 0px
+      1: {
+        // marker-1/01
+        backgroundColor: 'colorPalette.bg',
+        transform: 'scale(1)', // 20px
       },
     },
     state: {
@@ -94,10 +95,10 @@ const Circle = styled('div', {
   },
   compoundVariants: [
     {
-      slot: 1,
+      slot: 3,
       state: 'playing',
       css: {
-        animationName: 'pulse1',
+        animationName: 'pulse3',
       },
     },
     {
@@ -108,10 +109,10 @@ const Circle = styled('div', {
       },
     },
     {
-      slot: 3,
+      slot: 1,
       state: 'playing',
       css: {
-        animationName: 'pulse3',
+        animationName: 'pulse1',
       },
     },
   ],
