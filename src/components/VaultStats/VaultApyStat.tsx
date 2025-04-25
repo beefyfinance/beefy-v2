@@ -182,19 +182,19 @@ export const AvgApyTooltipContent = memo(function AvgApyTooltipContent({
         label: '7 Day Avg APY',
         value: formatLargePercent(avgApy.avg7d, 2, '???'),
       },
-      {
-        label: '30 Day Avg APY',
-        value: formatLargePercent(avgApy.avg30d, 2, '???'),
-      },
-      {
-        label: '90 Day Avg APY',
-        value: formatLargePercent(avgApy.avg90d, 2, '???'),
-        last: true,
-      },
+      // {
+      //   label: '30 Day Avg APY',
+      //   value: formatLargePercent(avgApy.avg30d, 2, '???'),
+      // },
+      // {
+      //   label: '90 Day Avg APY',
+      //   value: formatLargePercent(avgApy.avg90d, 2, '???'),
+      //   last: true,
+      // },
     ];
 
     return items;
-  }, [currentApy, avgApy.avg7d, avgApy.avg30d, avgApy.avg90d]);
+  }, [currentApy, avgApy.avg7d]);
 
   return <InterestTooltipContent highLightLast={false} rows={rows} />;
 });
