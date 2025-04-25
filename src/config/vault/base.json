@@ -1,5 +1,209 @@
 [
   {
+    "id": "true-true",
+    "name": "TRUE",
+    "type": "standard",
+    "token": "TRUE",
+    "tokenAddress": "0x21CFCFc3d8F98fC728f48341D10Ad8283F6EB7AB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "true",
+    "earnedToken": "mooTrueTRUE",
+    "earnedTokenAddress": "0x7DaB05b3340CF7DD3c7De9a0A77416B7eDd03Ddf",
+    "earnContractAddress": "0x7DaB05b3340CF7DD3c7De9a0A77416B7eDd03Ddf",
+    "oracle": "tokens",
+    "oracleId": "TRUE",
+    "createdAt": 1745532338,
+    "status": "active",
+    "platformId": "true",
+    "assets": ["TRUE"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "single",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "single"
+      }
+    ]
+  },
+  {
+    "id": "true-true-weth",
+    "name": "TRUE-WETH",
+    "type": "standard",
+    "token": "TRUE-WETH",
+    "tokenAddress": "0x1FAE246b1b2D0ce47126bBb109850Da355352D77",
+    "tokenDecimals": 18,
+    "tokenProviderId": "true",
+    "earnedToken": "mooTrueTRUE-WETH",
+    "earnedTokenAddress": "0xd2878E0857267aE4B79081C4079426d259E4c035",
+    "earnContractAddress": "0xd2878E0857267aE4B79081C4079426d259E4c035",
+    "oracle": "lps",
+    "oracleId": "true-true-weth",
+    "createdAt": 1745532338,
+    "status": "active",
+    "platformId": "true",
+    "assets": ["TRUE", "WETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "lp",
+    "addLiquidityUrl": "https://truemarkets.org/en/true-token/oracle-dashboard",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "uniswap-v2",
+        "ammId": "base-true"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-zora-usdc-rp",
+    "name": "ZORA-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowUniswapBaseZORA-USDC",
+    "tokenAddress": "0xbF7e7f77224Bee020Cf92bD4b14bDCeBD9182641",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "earnContractAddress": "0xc1CE1429703695E7B551D5CA132d026aad1eB30b",
+    "earnedToken": "rCowUniswapBaseZORA-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": [],
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-zora-usdc",
+    "status": "active",
+    "createdAt": 1745434159,
+    "platformId": "uniswap",
+    "assets": ["ZORA", "USDC"],
+    "risks": [],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      }
+    ]
+  },
+  {
+    "id": "uniswap-cow-base-zora-usdc",
+    "name": "ZORA-USDC",
+    "type": "cowcentrated",
+    "token": "ZORA-USDC uniswap",
+    "tokenAddress": "0x36B4869995672DF7E3aFc36BE795Dbb998Bc639d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "uniswap",
+    "depositTokenAddresses": [
+      "0x1111111111166b7FE7bd91427724B487980aFc69",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0xbF7e7f77224Bee020Cf92bD4b14bDCeBD9182641",
+    "earnedToken": "cowUniswapBaseZORA-USDC",
+    "earnedTokenAddress": "0xbF7e7f77224Bee020Cf92bD4b14bDCeBD9182641",
+    "oracle": "lps",
+    "oracleId": "uniswap-cow-base-zora-usdc",
+    "status": "active",
+    "createdAt": 1745434159,
+    "platformId": "uniswap",
+    "feeTier": "1",
+    "assets": ["ZORA", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "compounds",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-zora-usdc-vault",
+    "name": "ZORA-USDC",
+    "type": "standard",
+    "token": "ZORA-USDC",
+    "tokenAddress": "0x39079221508989999578cA3B0005130E5e451D14",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x7Ac9F45317ECE6964D176bb8850A654C328539C8",
+    "earnedToken": "mooCowAerodromeZORA-USDC",
+    "earnedTokenAddress": "0x7Ac9F45317ECE6964D176bb8850A654C328539C8",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-zora-usdc",
+    "status": "active",
+    "createdAt": 1745434158,
+    "platformId": "aerodrome",
+    "assets": ["ZORA", "USDC"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_MICRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "vault-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-zora-usdc-rp",
+    "name": "ZORA-USDC Reward Pool",
+    "type": "gov",
+    "version": 2,
+    "token": "cowAerodromeZORA-USDC",
+    "tokenAddress": "0x39079221508989999578cA3B0005130E5e451D14",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "earnContractAddress": "0x79C26EAF080958A86eB82c0E24F9AD8DF979E2Ae",
+    "earnedToken": "rCowAerodromeZORA-USDC",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddresses": ["0x79C26EAF080958A86eB82c0E24F9AD8DF979E2Ae"],
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-zora-usdc",
+    "status": "active",
+    "createdAt": 1745434158,
+    "platformId": "aerodrome",
+    "assets": ["ZORA", "USDC"],
+    "risks": [],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "gov-composer"
+      },
+      {
+        "strategyId": "reward-pool-to-vault"
+      }
+    ]
+  },
+  {
+    "id": "aerodrome-cow-base-zora-usdc",
+    "name": "ZORA-USDC",
+    "type": "cowcentrated",
+    "token": "ZORA-USDC aerodrome",
+    "tokenAddress": "0x3f53f1Fd5b7723DDf38D93a584D280B9b94C3111",
+    "tokenDecimals": 18,
+    "tokenProviderId": "aerodrome",
+    "depositTokenAddresses": [
+      "0x1111111111166b7FE7bd91427724B487980aFc69",
+      "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    ],
+    "earnContractAddress": "0x39079221508989999578cA3B0005130E5e451D14",
+    "earnedToken": "cowAerodromeZORA-USDC",
+    "earnedTokenAddress": "0x39079221508989999578cA3B0005130E5e451D14",
+    "oracle": "lps",
+    "oracleId": "aerodrome-cow-base-zora-usdc",
+    "status": "active",
+    "createdAt": 1745434158,
+    "platformId": "aerodrome",
+    "feeTier": "0.27",
+    "assets": ["ZORA", "USDC"],
+    "risks": ["IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "strategyTypeId": "pool",
+    "network": "base",
+    "zaps": [
+      {
+        "strategyId": "cowcentrated"
+      }
+    ]
+  },
+  {
     "id": "balancerv3-base-susds-smusdc",
     "name": "sUSDS/USDC V3",
     "type": "standard",

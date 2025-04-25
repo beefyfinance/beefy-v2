@@ -316,7 +316,11 @@ export const config = {
       'sUSDe',
       'GYD',
       'GHO',
+      'EURe',
       'stataArbGHOn',
+      'waArbUSDCn',
+      'waArbUSDT',
+      'waArbGHO',
     ],
   },
   avax: {
@@ -569,6 +573,7 @@ export const config = {
       'waBasUSDC',
       'sUSDS',
       'smUSDC',
+      'OUSDT',
     ],
   },
   gnosis: {
