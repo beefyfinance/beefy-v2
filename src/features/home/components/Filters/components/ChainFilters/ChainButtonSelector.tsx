@@ -34,7 +34,9 @@ const ChainButton = memo(function ChainButton({ id, selected, onChange }: ChainB
       className={css(styles.button, selected && styles.selected)}
       variant="dark"
     >
-      {chain.new ? <NewBadge css={styles.badge} /> : null}
+      {chain.new ?
+        <NewBadge css={styles.badge} />
+      : null}
       <Icon
         className={cx(classes.icon, !selected && classes.unselectedIcon)}
         width={24}

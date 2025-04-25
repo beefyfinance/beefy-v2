@@ -11,6 +11,7 @@ import Clear from '../../../../../../images/icons/mui/Clear.svg?react';
 import { legacyMakeStyles } from '../../../../../../helpers/mui.ts';
 import { styles } from './styles.ts';
 import { type CssStyles } from '@repo/styles/css';
+import { styled } from '@repo/styles/jsx';
 
 const useStyles = legacyMakeStyles(styles);
 
@@ -30,13 +31,17 @@ export const ClearFiltersButton = memo(function ClearFiltersButton({
   }, [dispatch]);
 
   return (
-    <Button css={cssProp} variant="filter" size="sm" disabled={!active} onClick={handleReset}>
-      {count > 0 ? (
+    <ClearFilter css={cssProp} variant="filter" size="sm" disabled={!active} onClick={handleReset}>
+      {count > 0 ?
         <span className={classes.badge} data-count={count} />
-      ) : (
-        <Clear className={classes.icon} />
-      )}
+      : <Clear className={classes.icon} />}
       {t('Filter-ClearAll')}
-    </Button>
+    </ClearFilter>
   );
+});
+
+const ClearFilter = styled(Button, {
+  base: {
+    marginLeft: 'auto',
+  },
 });

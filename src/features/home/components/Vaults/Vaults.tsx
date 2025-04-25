@@ -13,11 +13,8 @@ export const Vaults = memo(function Vaults() {
 });
 
 const vaultsClass = css({
-  marginTop: '20px',
+  marginTop: '12px',
   borderRadius: '12px',
   border: 'solid 2px {colors.background.content.dark}',
   contain: 'paint',
-  sm: {
-    marginTop: '32px',
-  },
 });

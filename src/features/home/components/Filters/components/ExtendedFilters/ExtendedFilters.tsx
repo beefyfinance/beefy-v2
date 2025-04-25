@@ -27,19 +27,18 @@ export const ExtendedFilters = memo(function ExtendedFilters({
   return (
     <div className={classes.extendedFilters}>
       <ShownVaultsCount css={styles.shownVaultsCount} />
-      <CheckboxFilter filter="onlyBoosted" label={t('Filter-Boost')} />
       <CheckboxFilter filter="onlyEarningPoints" label={t('Filter-Points')} />
       <CheckboxFilter filter="onlyZappable" label={t('Filter-Zappable')} />
       <CheckboxFilter filter="onlyRetired" label={t('Filter-Retired')} />
       <CheckboxFilter filter="onlyPaused" label={t('Filter-Paused')} />
       <MinTvlFilter />
-      {!desktopView ? (
+      {!desktopView ?
         <>
           <VaultCategoryDropdownFilter layer={1} />
           <AssetTypeDropdownFilter layer={1} />
           <StrategyTypeDropdownFilter layer={1} />
         </>
-      ) : null}
+      : null}
       <PlatformDropdownFilter placement={platformFilterPlacement} />
     </div>
   );

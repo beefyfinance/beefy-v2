@@ -54,10 +54,6 @@ export const buttonRecipe = cva({
         width: '100%',
       },
     },
-    active: {
-      false: {},
-      true: {},
-    },
     variant: {
       default: {
         colorPalette: 'buttons.default',
@@ -101,7 +97,7 @@ export const buttonRecipe = cva({
       size: 'lg',
       borderless: false,
       css: {
-        padding: '10px 22px',
+        padding: '8px 12px',
       },
     },
   ],
@@ -109,6 +105,5 @@ export const buttonRecipe = cva({
     size: 'lg',
     borderless: false,
     fullWidth: false,
-    active: false,
   },
 });

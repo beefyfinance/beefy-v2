@@ -17,20 +17,6 @@ export const styles = {
     border: '0',
     borderRadius: '6px',
     cursor: 'pointer',
-    '&::before': {
-      content: '""',
-      display: 'block',
-      position: 'absolute',
-      top: '50%',
-      left: '-1px',
-      margin: '-10px 0 0 0',
-      height: '20px',
-      width: '1px',
-      backgroundColor: 'bayOfMany',
-    },
-    '&:first-child::before': {
-      display: 'none',
-    },
   }),
   selected: css.raw({
     backgroundColor: 'background.content.dark',
@@ -49,5 +35,9 @@ export const styles = {
     marginTop: '-12px',
     marginLeft: '4px',
     zIndex: 'badge',
+    md: {
+      marginTop: '-32px',
+      marginLeft: '-24px',
+    },
   }),
 };

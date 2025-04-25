@@ -195,7 +195,6 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
 
         // Underlying TVL
         if (
-          filterOptions.showMinimumUnderlyingTvl &&
           filterOptions.minimumUnderlyingTvl.gt(0) &&
           selectVaultUnderlyingTvlUsd(state, vault.id).lt(filterOptions.minimumUnderlyingTvl)
         ) {

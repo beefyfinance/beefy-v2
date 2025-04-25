@@ -54,7 +54,7 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.sort !== 'default' ? 1 : 0) +
     filterOptions.chainIds.length +
     filterOptions.platformIds.length +
-    (filterOptions.showMinimumUnderlyingTvl && filterOptions.minimumUnderlyingTvl.gt(0) ? 1 : 0)
+    (filterOptions.minimumUnderlyingTvl.gt(0) ? 1 : 0)
 );
 
 export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
@@ -72,7 +72,7 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.searchText !== '' ||
     filterOptions.platformIds.length > 0 ||
     filterOptions.chainIds.length > 0 ||
-    (filterOptions.showMinimumUnderlyingTvl && filterOptions.minimumUnderlyingTvl.gt(0))
+    filterOptions.minimumUnderlyingTvl.gt(0)
 );
 
 export const selectHasActiveFilter = createSelector(

@@ -7,20 +7,29 @@ export const Button = styled('button', {
   base: {
     textStyle: 'inherit',
     backgroundColor: 'transparent',
-    borderRadius: '6px',
+    borderRadius: '0px',
     paddingBlock: '6px',
-    paddingInline: '8px',
+    paddingInline: '12px',
     flexGrow: 1,
     flexShrink: 0,
     position: 'relative',
     _hover: {
       color: 'colorPalette.hover.color',
     },
+    '&:first-child': {
+      borderTopLeftRadius: '4px',
+      borderBottomLeftRadius: '4px',
+    },
+
+    '&:last-child': {
+      borderTopRightRadius: '4px',
+      borderBottomRightRadius: '4px',
+    },
   },
   variants: {
     noBackground: {
       false: {
-        paddingInline: '16px',
+        paddingInline: '12px',
       },
       true: {},
     },
