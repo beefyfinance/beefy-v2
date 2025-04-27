@@ -49,6 +49,7 @@ export function getCowcentratedAddressFromCowcentratedLikeVault(
   vault: VaultCowcentratedLike
 ): string {
   return (
-    isCowcentratedVault(vault) ? vault.receiptTokenAddress : vault.depositTokenAddress
-  ).toLowerCase();
+    isCowcentratedVault(vault) ?
+      vault.receiptTokenAddress
+    : vault.depositTokenAddress).toLowerCase();
 }

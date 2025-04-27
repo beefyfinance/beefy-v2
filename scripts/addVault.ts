@@ -41,10 +41,12 @@ async function vaultData(chain: AppChainId, vaultAddress: Address, id: string): 
     : mooToken.startsWith('mooCake') ? 'pancakeswap'
     : mooToken.startsWith('mooThena') ? 'thena'
     : mooToken.startsWith('mooSwapX') ? 'swapx'
+    : mooToken.startsWith('mooBeraPaw') ? 'kodiak'
     : id.substring(0, id.indexOf('-'));
   let platform =
     mooToken.startsWith('mooConvex') ? 'convex'
     : provider === 'swapx' ? 'ichi'
+    : mooToken.startsWith('mooBeraPaw') ? 'berapaw'
     : provider === 'kodiak' ? 'infrared'
     : provider;
   if (provider === 'pendle') {
@@ -58,6 +60,7 @@ async function vaultData(chain: AppChainId, vaultAddress: Address, id: string): 
     : ['curve', 'curve-lend'].includes(provider) ? ['l2-convex', 'l2-curve']
     : ['pendle'].includes(provider) ? ['magpie']
     : provider === 'swapx' ? ['sonic-swapx']
+    : platform === 'berapaw' ? ['bera-kodiak']
     : provider === 'kodiak' ? ['bera-infrared', 'bera-kodiak']
     : [];
 

@@ -303,25 +303,6 @@ export function formatTotalApy(
   ) as AllValuesAs<TotalApy, string | ReactNode>; // required keys in input so should exist in output
 }
 
-export const formatCountdown = (deadline: number) => {
-  const time = deadline - new Date().getTime();
-
-  const day = Math.floor(time / (1000 * 60 * 60 * 24))
-    .toString()
-    .padStart(2, '0');
-  const hours = Math.floor((time / (1000 * 60 * 60)) % 24)
-    .toString()
-    .padStart(2, '0');
-  const minutes = Math.floor((time / (1000 * 60)) % 60)
-    .toString()
-    .padStart(2, '0');
-  // const seconds = Math.floor((time / 1000) % 60)
-  //   .toString()
-  //   .padStart(2, '0');
-
-  return `${day}d ${hours}h ${minutes}m`;
-};
-
 export function convertAmountToRawNumber(value: BigNumber.Value, decimals = 18) {
   return new BigNumber(value)
     .shiftedBy(decimals)

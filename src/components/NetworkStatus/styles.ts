@@ -13,12 +13,7 @@ export const styles = {
     backgroundColor: 'transparent',
     padding: '0px 16px 0px 0px',
   }),
-  circleOuter: css.raw({
-    width: '16px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }),
+
   circle: css.raw({
     width: '12px',
     height: '12px',
@@ -33,39 +28,6 @@ export const styles = {
       backgroundColor: 'indicators.warning',
     },
     position: 'relative',
-  }),
-  pulseCircle: css.raw({
-    borderRadius: '50%',
-    // w/h same as circle
-    width: '12px',
-    height: '12px',
-    position: 'absolute',
-    opacity: '0',
-    animation: 'loadingPulse 4s infinite cubic-bezier(.36, .11, .89, .32)',
-    '&.loading': {
-      backgroundColor: 'indicators.loading',
-    },
-    '&.success': {
-      backgroundColor: 'indicators.success',
-    },
-    '&.warning': {
-      backgroundColor: 'indicators.warning',
-    },
-    '&.notLoading': {
-      display: 'none',
-    },
-    '&:nth-child(1)': {
-      animationDelay: '0s',
-    },
-    '&:nth-child(2)': {
-      animationDelay: '1s',
-    },
-    '&:nth-child(3)': {
-      animationDelay: '2s',
-    },
-    '&:nth-child(4)': {
-      animationDelay: '3s',
-    },
   }),
   dropdown: css.raw({
     display: 'flex',

@@ -70,9 +70,9 @@ export const recalculateFilteredVaultsAction = createAsyncThunk<
     let filteredVaults: VaultEntity[];
     if (dataChanged || filtersChanged) {
       const allChainIds =
-        filterOptions.userCategory === 'deposited' || filterOptions.onlyRetired
-          ? selectAllChainIds(state)
-          : selectActiveChainIds(state);
+        filterOptions.userCategory === 'deposited' || filterOptions.onlyRetired ?
+          selectAllChainIds(state)
+        : selectActiveChainIds(state);
       const visibleChains = new Set(
         filterOptions.chainIds.length === 0 ? allChainIds : filterOptions.chainIds
       );
@@ -266,23 +266,19 @@ function applyDefaultSort(
   // Surface retired, paused and boosted
   if (filters.userCategory === 'deposited') {
     return sortBy(vaults, vault =>
-      vault.status === 'eol'
-        ? -3
-        : vault.status === 'paused'
-          ? -2
-          : vaultsToPin.has(vault.id)
-            ? -1
-            : 1
+      vault.status === 'eol' ? -3
+      : vault.status === 'paused' ? -2
+      : vaultsToPin.has(vault.id) ? -1
+      : 1
     ).map(v => v.id);
   }
 
   // Surface boosted
   return sortBy(vaults, vault =>
-    vaultsToPin.has(vault.id)
-      ? selectIsVaultPrestakedBoost(state, vault.id)
-        ? -Number.MAX_SAFE_INTEGER
-        : -selectVaultsActiveBoostPeriodFinish(state, vault.id).getTime()
-      : 1
+    vaultsToPin.has(vault.id) ?
+      selectIsVaultPrestakedBoost(state, vault.id) ? -Number.MAX_SAFE_INTEGER
+      : -selectVaultsActiveBoostPeriodFinish(state, vault.id).getTime()
+    : 1
   ).map(v => v.id);
 }
 

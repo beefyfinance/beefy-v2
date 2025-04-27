@@ -10,7 +10,7 @@ import type {
 } from '../apis/promos/types.ts';
 import type { ChainEntity } from './chain.ts';
 
-type PromoTokenReward = Override<
+export type PromoTokenReward = Override<
   PromoTokenRewardConfig,
   {
     chainId: ChainEntity['id'];
@@ -18,7 +18,7 @@ type PromoTokenReward = Override<
   }
 >;
 
-type PromoReward = PromoTokenReward;
+export type PromoReward = PromoTokenReward;
 
 type BasePromoOverrides = {
   by: string;

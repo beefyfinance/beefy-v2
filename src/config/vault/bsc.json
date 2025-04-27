@@ -575,7 +575,9 @@
     "earnedTokenAddress": "0xC9248Ac601F8F38C3a47AE39FF5d59cE5759Fb93",
     "oracle": "lps",
     "oracleId": "thena-qthe-quo",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1744297990,
+    "retireReason": "tvl",
     "createdAt": 1733387508,
     "platformId": "thena",
     "assets": ["qTHE", "QUO"],
@@ -17564,28 +17566,6 @@
         "strategyId": "single"
       }
     ]
-  },
-  {
-    "id": "cake-dusk-bnb",
-    "name": "DUSK-BNB LP",
-    "type": "standard",
-    "token": "DUSK-BNB LP",
-    "tokenAddress": "0xB7918560273FD56e50E9c215CC0DFE8D764C36C5",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pancakeswap",
-    "earnedToken": "mooPancakeDUSK-BNB",
-    "earnedTokenAddress": "0x4BeE93b29e1b3fd90bb3e6EdE9539Fe92E9836Cd",
-    "earnContractAddress": "0x4BeE93b29e1b3fd90bb3e6EdE9539Fe92E9836Cd",
-    "oracle": "lps",
-    "oracleId": "cake-dusk-bnb",
-    "status": "eol",
-    "createdAt": 1616070863,
-    "retiredAt": 1619893987,
-    "platformId": "pancakeswap",
-    "assets": ["DUSK", "BNB"],
-    "strategyTypeId": "lp",
-    "removeLiquidityUrl": "https://v1exchange.pancakeswap.finance/#/remove/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0xb2bd0749dbe21f623d9baba856d3b0f0e1bfec9c",
-    "network": "bsc"
   },
   {
     "id": "squirrel-nuts-bnb-eol",

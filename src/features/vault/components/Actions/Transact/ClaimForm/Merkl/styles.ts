@@ -2,6 +2,9 @@ import { css } from '@repo/styles/css';
 
 export const styles = {
   otherRewards: css.raw({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
     borderTop: '1px solid {colors.background.content}',
   }),
   otherRewardsToggle: css.raw({
@@ -18,9 +21,6 @@ export const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-  }),
-  otherRewardsList: css.raw({
-    paddingTop: '12px',
   }),
   otherRewardsToggleIcon: css.raw({
     width: '16.43px',

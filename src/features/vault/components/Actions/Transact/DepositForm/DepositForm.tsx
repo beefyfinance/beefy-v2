@@ -33,6 +33,7 @@ import { BIG_ZERO } from '../../../../../../helpers/big-number.ts';
 import { TextLoader } from '../../../../../../components/TextLoader/TextLoader.tsx';
 import type { TokenEntity } from '../../../../../data/entities/token.ts';
 import { Actions } from '../Actions/Actions.tsx';
+import { styled } from '@repo/styles/jsx';
 import { FormFooter } from '../FormFooter/FormFooter.tsx';
 
 const useStyles = legacyMakeStyles(styles);
@@ -69,7 +70,6 @@ const TokenInWallet = memo(function TokenInWallet({ token, index }: TokenInWalle
 
 const DepositFormLoader = memo(function DepositFormLoader() {
   const { t } = useTranslation();
-  const classes = useStyles();
   const status = useAppSelector(selectTransactOptionsStatus);
   const error = useAppSelector(selectTransactOptionsError);
   const vaultId = useAppSelector(selectTransactVaultId);
@@ -78,19 +78,19 @@ const DepositFormLoader = memo(function DepositFormLoader() {
   const isError = status === TransactStatus.Rejected;
 
   return (
-    <div className={classes.container}>
+    <Container>
       {!isVaultActive(vault) ?
         <RetirePauseReason vaultId={vaultId} />
       : isLoading ?
-        <LoadingIndicator text={t('Transact-Loading')} />
+        <LoadingIndicator text={t('Transact-Loading')} height={344} />
       : isError ?
         <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
       : <DepositForm />}
-    </div>
+    </Container>
   );
 });
 
-export const DepositForm = memo(function DepositForm() {
+const DepositForm = memo(function DepositForm() {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -193,6 +193,15 @@ const DepositFormInput = memo(function DepositFormInput({
       </div>
     </div>
   );
+});
+
+const Container = styled('div', {
+  base: {
+    padding: '16px',
+    sm: {
+      padding: '24px',
+    },
+  },
 });
 
 // eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()

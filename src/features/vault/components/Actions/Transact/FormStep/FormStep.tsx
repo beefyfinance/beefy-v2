@@ -3,24 +3,31 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store.ts';
 import {
   selectTransactMode,
+  selectTransactShouldShowBoost,
+  selectTransactShouldShowBoostNotification,
   selectTransactShouldShowClaims,
   selectTransactShouldShowClaimsNotification,
+  selectTransactShouldShowWithdrawNotification,
   selectTransactVaultId,
 } from '../../../../../data/selectors/transact.ts';
 import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
-import { CardHeaderTabs } from '../../../Card/CardHeaderTabs.tsx';
+import { CardHeaderTabs, type TabOption } from '../../../Card/CardHeaderTabs.tsx';
 import { transactFetchOptions } from '../../../../../data/actions/transact.ts';
 import { TransactMode } from '../../../../../data/reducers/wallet/transact-types.ts';
 import { LoadingIndicator } from '../../../../../../components/LoadingIndicator/LoadingIndicator.tsx';
+import type { BeefyState } from '../../../../../../redux-types.ts';
+import { FormStepFooter } from '../FormStepFooter/FormStepFooter.tsx';
 
 const DepositFormLoader = lazy(() => import('../DepositForm/DepositForm.tsx'));
 const ClaimFormLoader = lazy(() => import('../ClaimForm/ClaimForm.tsx'));
 const WithdrawFormLoader = lazy(() => import('../WithdrawForm/WithdrawForm.tsx'));
+const BoostForm = lazy(() => import('../../Boosts/Boosts.tsx'));
 
 const modeToComponent: Record<TransactMode, ComponentType> = {
   [TransactMode.Deposit]: DepositFormLoader,
   [TransactMode.Claim]: ClaimFormLoader,
   [TransactMode.Withdraw]: WithdrawFormLoader,
+  [TransactMode.Boost]: BoostForm,
 };
 
 export const FormStep = memo(function FormStep() {
@@ -29,9 +36,7 @@ export const FormStep = memo(function FormStep() {
   const mode = useAppSelector(selectTransactMode);
   const vaultId = useAppSelector(selectTransactVaultId);
   const showClaim = useAppSelector(state => selectTransactShouldShowClaims(state, vaultId));
-  const highlightClaim = useAppSelector(state =>
-    selectTransactShouldShowClaimsNotification(state, vaultId)
-  );
+  const showBoost = useAppSelector(state => selectTransactShouldShowBoost(state, vaultId));
   const Component = modeToComponent[mode];
   const handleModeChange = useCallback(
     (newMode: string) => {
@@ -40,12 +45,37 @@ export const FormStep = memo(function FormStep() {
     [dispatch]
   );
   const modeOptions = useMemo(
-    () => [
-      { value: TransactMode.Deposit.toString(), label: t('Transact-Deposit') },
-      ...(showClaim ? [{ value: TransactMode.Claim.toString(), label: t('Transact-Claim') }] : []),
-      { value: TransactMode.Withdraw.toString(), label: t('Transact-Withdraw') },
-    ],
-    [t, showClaim]
+    () =>
+      [
+        { value: TransactMode.Deposit.toString(), label: t('Transact-Deposit') },
+        ...(showClaim ?
+          [
+            {
+              value: TransactMode.Claim.toString(),
+              label: t('Transact-Claim'),
+              shouldHighlight: (state: BeefyState) =>
+                selectTransactShouldShowClaimsNotification(state, vaultId),
+            },
+          ]
+        : []),
+        ...(showBoost ?
+          [
+            {
+              value: TransactMode.Boost.toString(),
+              label: t('Transact-Boost'),
+              shouldHighlight: (state: BeefyState) =>
+                selectTransactShouldShowBoostNotification(state, vaultId),
+            },
+          ]
+        : []),
+        {
+          value: TransactMode.Withdraw.toString(),
+          label: t('Transact-Withdraw'),
+          shouldHighlight: (state: BeefyState) =>
+            selectTransactShouldShowWithdrawNotification(state, vaultId),
+        },
+      ] satisfies Array<TabOption>,
+    [t, vaultId, showClaim, showBoost]
   );
 
   useEffect(() => {
@@ -59,10 +89,10 @@ export const FormStep = memo(function FormStep() {
         selected={mode.toString()}
         options={modeOptions}
         onChange={handleModeChange}
-        highlight={highlightClaim ? TransactMode.Claim.toString() : undefined}
       />
-      <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} />}>
+      <Suspense fallback={<LoadingIndicator text={t('Transact-Loading')} height={344} />}>
         <Component />
+        <FormStepFooter />
       </Suspense>
     </div>
   );

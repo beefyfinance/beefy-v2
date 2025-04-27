@@ -20,8 +20,9 @@ export const fetchWalletContract = <TAbi extends Abi>(
   walletClient: WalletClient,
   publicClient?: PublicClient
 ) => {
-  const client = publicClient
-    ? {
+  const client =
+    publicClient ?
+      {
         wallet: walletClient,
         public: publicClient,
       }

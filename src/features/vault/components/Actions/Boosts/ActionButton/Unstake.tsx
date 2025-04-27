@@ -37,7 +37,7 @@ export const Unstake = memo(function Claim({ boostId, chainId, disabled, canClai
   }, [dispatch, boostId, chainId, t, canClaim]);
 
   return (
-    <ActionButton disabled={disabled} onClick={handleClick}>
+    <ActionButton disabled={disabled} onClick={handleClick} variant={'default'}>
       {t(canClaim ? 'Boost-Button-Claim-Unstake' : 'Boost-Button-Unstake')}
     </ActionButton>
   );

@@ -11,6 +11,7 @@ import type { ZapStrategyConfig } from './transact/strategies/strategy-configs.t
 export interface VaultConfig {
   id: string;
   name: string;
+  icons?: string[];
   type: 'standard' | 'erc4626' | 'gov' | 'cowcentrated';
   subType?: 'standard' | 'cowcentrated' | 'gov' | 'multi-gov' | 'erc7540:withdraw';
   /** version of vault type defaults to 1 */

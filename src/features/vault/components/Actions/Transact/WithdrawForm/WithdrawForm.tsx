@@ -25,6 +25,7 @@ import { WithdrawnInWalletNotice } from '../WithdrawnInWalletNotice/WithdrawnInW
 import { useDispatch } from 'react-redux';
 import { transactActions } from '../../../../../data/reducers/wallet/transact.ts';
 import { Actions } from '../Actions/Actions.tsx';
+import { styled } from '@repo/styles/jsx';
 import { WithdrawQueueLoader } from '../WithdrawQueue/WithdrawQueueLoader.tsx';
 import { FormFooter } from '../FormFooter/FormFooter.tsx';
 
@@ -65,24 +66,23 @@ const DepositedInVault = memo(function DepositedInVault() {
 
 const WithdrawFormLoader = memo(function WithdrawFormLoader() {
   const { t } = useTranslation();
-  const classes = useStyles();
   const status = useAppSelector(selectTransactOptionsStatus);
   const error = useAppSelector(selectTransactOptionsError);
   const isLoading = status === TransactStatus.Idle || status === TransactStatus.Pending;
   const isError = status === TransactStatus.Rejected;
 
   return (
-    <div className={classes.container}>
+    <Container>
       {isLoading ?
-        <LoadingIndicator text={t('Transact-Loading')} />
+        <LoadingIndicator text={t('Transact-Loading')} height={344} />
       : isError ?
         <AlertError>{t('Transact-Options-Error', { error: errorToString(error) })}</AlertError>
       : <WithdrawForm />}
-    </div>
+    </Container>
   );
 });
 
-export const WithdrawForm = memo(function WithdrawForm() {
+const WithdrawForm = memo(function WithdrawForm() {
   const { t } = useTranslation();
   const classes = useStyles();
   const hasOptions = useAppSelector(selectTransactNumTokens) > 1;
@@ -125,6 +125,15 @@ export const WithdrawForm = memo(function WithdrawForm() {
       <FormFooter />
     </>
   );
+});
+
+const Container = styled('div', {
+  base: {
+    padding: '16px',
+    sm: {
+      padding: '24px',
+    },
+  },
 });
 
 // eslint-disable-next-line no-restricted-syntax -- default export required for React.lazy()

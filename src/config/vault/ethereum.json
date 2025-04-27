@@ -158,7 +158,9 @@
     "oracle": "lps",
     "oracleId": "balancerv3-ethereum-waethusdt-waethusde",
     "createdAt": 1739298993,
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1744297973,
+    "retireReason": "rewards",
     "platformId": "aura",
     "assets": ["waEthUSDT", "waEthUSDe"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -180,7 +182,9 @@
     "oracle": "lps",
     "oracleId": "balancerv3-ethereum-waethusdc-waethusdt",
     "createdAt": 1739298761,
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1744297973,
+    "retireReason": "rewards",
     "platformId": "aura",
     "assets": ["waEthUSDT", "waEthUSDC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
@@ -3838,7 +3842,8 @@
     "network": "ethereum",
     "bridged": {
       "optimism": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
-      "base": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434"
+      "base": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434",
+      "sonic": "0xc55E93C62874D8100dBd2DfE307EDc1036ad5434"
     },
     "zaps": [
       {

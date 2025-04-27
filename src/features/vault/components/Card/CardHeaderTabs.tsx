@@ -1,30 +1,39 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { CardHeader } from './CardHeader.tsx';
 import { styled } from '@repo/styles/jsx';
+import { PulseHighlight, type PulseHighlightProps } from '../PulseHighlight/PulseHighlight.tsx';
+import type { BeefyState } from '../../../../redux-types.ts';
+import { useAppSelector } from '../../../../store.ts';
 
-export type CardHeaderTabsProps = {
-  selected: string;
-  options: { value: string; label: string }[];
-  onChange: (value: string) => void;
-  highlight?: string;
+type HighlightFn = (state: BeefyState) => PulseHighlightProps['variant'] | false | undefined | null;
+
+export type TabOption<T extends string = string> = {
+  value: T;
+  label: string;
+  shouldHighlight?: HighlightFn;
 };
 
-export const CardHeaderTabs = memo<CardHeaderTabsProps>(function CardHeaderTabs({
+export type CardHeaderTabsProps<T extends TabOption = TabOption> = {
+  selected: T['value'];
+  options: T[];
+  onChange: (value: T['value']) => void;
+};
+
+export const CardHeaderTabs = memo(function CardHeaderTabs<T extends TabOption = TabOption>({
   selected,
   options,
   onChange,
-  highlight,
-}) {
+}: CardHeaderTabsProps<T>) {
   return (
     <StyledCardHeader>
-      {options.map(({ value, label }) => (
+      {options.map(({ value, label, shouldHighlight }) => (
         <Tab
           key={value}
           label={label}
           value={value}
           onChange={onChange}
           selected={selected === value}
-          highlight={highlight === value}
+          shouldHighlight={shouldHighlight}
         />
       ))}
     </StyledCardHeader>
@@ -41,21 +50,34 @@ const StyledCardHeader = styled(CardHeader, {
   },
 });
 
-type TabProps = {
-  value: string;
+type TabProps<T extends string = string> = {
+  value: T;
   label: string;
-  onChange: (selected: string) => void;
+  onChange: (selected: T) => void;
   selected: boolean;
-  highlight?: boolean;
+  shouldHighlight?: TabOption['shouldHighlight'];
 };
-const Tab = memo<TabProps>(function Tab({ value, label, onChange, selected, highlight }) {
+
+const Tab = memo(function Tab<T extends string = string>({
+  value,
+  label,
+  onChange,
+  selected,
+  shouldHighlight,
+}: TabProps<T>) {
   const handleClick = useCallback(() => {
     onChange(value);
   }, [value, onChange]);
+  // @dev we can't conditionally use a hook, so create a dummy selector if no shouldHighlight is provided
+  const selectShouldHighlight: HighlightFn = useMemo(
+    () => shouldHighlight ?? ((_state: BeefyState) => false),
+    [shouldHighlight]
+  );
+  const highlight = useAppSelector(state => selectShouldHighlight(state));
 
   return (
-    <StyledButton selected={selected} highlighted={highlight} onClick={handleClick}>
-      {label}
+    <StyledButton selected={selected} onClick={handleClick}>
+      {label} {highlight && <PulseHighlight variant={highlight} />}
     </StyledButton>
   );
 });
@@ -69,6 +91,9 @@ const StyledButton = styled('button', {
     flexShrink: 0,
     color: 'text.dark',
     paddingBlock: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
     _hover: {
       color: 'text.middle',
     },
@@ -96,21 +121,6 @@ const StyledButton = styled('button', {
         pointerEvents: 'none',
         '&::before': {
           backgroundColor: 'text.dark',
-        },
-      },
-    },
-    highlighted: {
-      true: {
-        '&::after': {
-          content: '""',
-          display: 'block',
-          backgroundColor: 'indicators.error',
-          padding: '0',
-          borderRadius: '100%',
-          height: '8px',
-          width: '8px',
-          pointerEvents: 'none',
-          transform: 'translate(0, -0.4em)',
         },
       },
     },

@@ -65,7 +65,7 @@ function getRunArgs() {
     helpArg: 'help',
     headerContentSections: [
       {
-        header: 'yarn setVaultStatus',
+        header: 'npm run setVaultStatus',
         content: 'Update the status of vaults in a chain json file',
       },
     ],

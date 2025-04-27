@@ -1420,5 +1420,41 @@
     "documentation": "https://infrared.finance/docs",
     "description": "Infrared is focused on building infrastructure around the Proof of Liquidity (PoL) mechanism pioneered by Berachain. The protocol aims to maximize value capture by providing easy-to-use liquid staking solutions for BGT and BERA, node infrastructure, and vaults. Through building solutions around Proof of Liquidity (PoL), Infrared is dedicated to enhancing the user experience and driving the growth of the Berachain ecosystem.",
     "type": "farm"
+  },
+  {
+    "id": "defive",
+    "name": "DeFive",
+    "website": "https://defive.com/",
+    "twitter": "0xDeFive",
+    "documentation": "https://docs.defive.com/overview",
+    "description": "DeFive, previously known as WigoSwap on Fantom (with over $1 billion in transaction volume), is a redefined and progressive DeFi platform built on Sonic.",
+    "type": "amm"
+  },
+  {
+    "id": "berapaw",
+    "name": "BeraPaw",
+    "website": "https://www.berapaw.com",
+    "twitter": "0xberapaw",
+    "documentation": "https://docs.berapaw.com/",
+    "description": "BeraPaw is an innovative liquid staking protocol that converts Berachain’s native token into a more versatile and liquid asset, providing users with a seamless and hassle-free experience",
+    "type": "farm"
+  },
+  {
+    "id": "euler",
+    "name": "Euler",
+    "website": "https://euler.finance/",
+    "twitter": "eulerfinance",
+    "documentation": "https://docs.euler.finance/",
+    "description": "Euler is a flexible platform for decentralized lending and borrowing, designed to adapt and grow with the evolving world of DeFi.",
+    "type": "money-market"
+  },
+  {
+    "id": "true",
+    "name": "True",
+    "website": "https://truemarkets.org/",
+    "twitter": "Truemarketsorg",
+    "documentation": "https://truemarkets.gitbook.io/",
+    "description": "Truemarkets is a news and information source on the frontier of alternative media. At its core, it is a decentralized prediction market that enables users to forecast outcomes of real world events.",
+    "type": "farm"
   }
 ]

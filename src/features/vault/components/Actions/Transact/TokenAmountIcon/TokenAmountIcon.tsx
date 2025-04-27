@@ -54,7 +54,7 @@ export const TokenAmountIcon = memo(function TokenAmountIcon({
       tokenIcon={
         <TokenImage
           chainId={token.chainId}
-          tokenAddress={token.address}
+          address={token.address}
           css={styles.icon}
           size={tokenImageSize}
         />
