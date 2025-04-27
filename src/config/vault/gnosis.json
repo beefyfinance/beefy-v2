@@ -59,35 +59,6 @@
     ]
   },
   {
-    "id": "uniswap-cow-gnosis-wbtsla-sdai-vault",
-    "name": "wbTSLA-sDAI",
-    "type": "standard",
-    "token": "wbTSLA-sDAI",
-    "tokenAddress": "0xdC5cF03C6AaF579a64E3e367fd6447e3ae312165",
-    "tokenDecimals": 18,
-    "tokenProviderId": "uniswap",
-    "earnContractAddress": "0x72685de19A82398496521872FF60FC85bF0b0d34",
-    "earnedToken": "mooBeefyUniswapGnosiswbTSLA-sDAI",
-    "earnedTokenAddress": "0x72685de19A82398496521872FF60FC85bF0b0d34",
-    "oracle": "lps",
-    "oracleId": "uniswap-cow-gnosis-wbtsla-sdai",
-    "status": "active",
-    "createdAt": 1744216500,
-    "platformId": "uniswap",
-    "assets": ["wbTSLA", "sDAI"],
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_SMALL", "AUDIT", "CONTRACTS_VERIFIED"],
-    "strategyTypeId": "pool",
-    "network": "gnosis",
-    "zaps": [
-      {
-        "strategyId": "vault-composer"
-      },
-      {
-        "strategyId": "reward-pool-to-vault"
-      }
-    ]
-  },
-  {
     "id": "uniswap-cow-gnosis-wbtsla-sdai-rp",
     "name": "wbTSLA-sDAI Reward Pool",
     "type": "gov",
