@@ -9,6 +9,7 @@ import { selectVaultTotalApy } from '../selectors/apy.ts';
 import { selectVaultCurrentBoostId } from '../selectors/boosts.ts';
 import { selectVaultHasActiveOffchainCampaigns } from '../selectors/rewards.ts';
 import { getUnixNow } from '../../../helpers/date.ts';
+import { sortBy } from 'lodash-es';
 
 export type FulfilledInitPromosPayload = {
   promos: PromoEntity[];
@@ -77,8 +78,9 @@ export const initPromos = createAsyncThunk<FulfilledInitPromosPayload>('promos/i
         oracle: reward.oracle || 'tokens',
       }));
 
-      const promoPartners = promo.partners
-        ? promo.partners.filter(partner => {
+      const promoPartners =
+        promo.partners ?
+          promo.partners.filter(partner => {
             const exists = !!partnersById[partner];
             if (!exists) {
               console.warn(`Partner ${partner} not found for promo ${promo.id}`);
@@ -192,6 +194,36 @@ function selectVaultMatchesAnyCondition(
   return conditions.some(condition => selectVaultMatchesCondition(state, vaultId, condition));
 }
 
+function makePRNG(seed: number) {
+  // SplitMix32
+  return function () {
+    seed |= 0;
+    seed = (seed + 0x9e3779b9) | 0;
+    let num = seed ^ (seed >>> 16);
+    num = Math.imul(num, 0x21f0aaad);
+    num = num ^ (num >>> 15);
+    num = Math.imul(num, 0x735a2d97);
+    return ((num = num ^ (num >>> 15)) >>> 0) / 4294967296;
+  };
+}
+
+function limitIds(ids: string[], limit: number | undefined, periodSeconds: number = 21600) {
+  if (limit === undefined) {
+    return ids;
+  }
+  if (limit < 1) {
+    return [];
+  }
+  if (ids.length <= limit) {
+    return ids;
+  }
+
+  ids.sort();
+  const rng = makePRNG(Math.floor(Date.now() / (periodSeconds * 1000)) + ids.length);
+  const sorted = sortBy(ids, () => rng());
+  return sorted.slice(0, limit);
+}
+
 export const promosRecalculatePinned = createAsyncThunk<
   FulfilledVaultsPinnedPayload,
   void,
@@ -203,14 +235,15 @@ export const promosRecalculatePinned = createAsyncThunk<
   const allVaultIds = selectAllVisibleVaultIds(state);
 
   for (const config of configs) {
-    const ids = config.id
-      ? (Array.isArray(config.id) ? config.id : [config.id]).filter(id => allVaultIds.includes(id))
+    const ids =
+      config.id ?
+        (Array.isArray(config.id) ? config.id : [config.id]).filter(id => allVaultIds.includes(id))
       : allVaultIds;
     if (!ids.length) {
       console.warn(`No active vaults found for pinned config`, config);
       continue;
     }
-
+    const matching = new Set<string>();
     const mode = config.mode || 'all';
 
     for (const id of ids) {
@@ -228,8 +261,13 @@ export const promosRecalculatePinned = createAsyncThunk<
         (mode === 'all' && selectVaultMatchesAllConditions(state, id, config.conditions)) ||
         (mode === 'any' && selectVaultMatchesAnyCondition(state, id, config.conditions))
       ) {
-        byId[id] = true;
+        matching.add(id);
       }
+    }
+
+    const limited = limitIds(Array.from(matching), config.limit);
+    for (const id of limited) {
+      byId[id] = true;
     }
   }
 
