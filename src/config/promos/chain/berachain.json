@@ -1,0 +1,25 @@
+[
+  {
+    "id": "moo_kodiak-ohm-honey",
+    "title": "Beefy",
+    "vaultId": "kodiak-ohm-honey",
+    "assets": ["OHM", "HONEY"],
+    "tokenAddress": "0x2b59b672569A6bb4D0058b569a13aF87c6bB9a3b",
+    "type": "boost",
+    "version": 2,
+    "contractAddress": "0x2e4fC0AB310A5dE0AE48D0DDF6Fd6e1099e8f00C",
+    "tag": {
+      "text": "DAO Boost"
+    },
+    "campaign": "dao-rewards",
+    "rewards": [
+      {
+        "type": "token",
+        "address": "0x549943e04f40284185054145c6E4e9568C1D3241",
+        "symbol": "USDCe",
+        "decimals": 6,
+        "oracleId": "USDCe"
+      }
+    ]
+  }
+]

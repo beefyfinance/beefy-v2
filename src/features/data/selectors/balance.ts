@@ -25,7 +25,12 @@ import {
   selectTokenPriceByAddress,
   selectTokensByChainId,
 } from './tokens.ts';
-import { selectAllCowcentratedVaults, selectGovVaultById, selectVaultById } from './vaults.ts';
+import {
+  selectAllCowcentratedVaults,
+  selectGovVaultById,
+  selectVaultById,
+  selectVaultIdsByChainIdIncludingHidden,
+} from './vaults.ts';
 import { selectWalletAddress } from './wallet.ts';
 import { BIG_ONE, BIG_ZERO } from '../../../helpers/big-number.ts';
 import BigNumber from 'bignumber.js';
@@ -81,6 +86,16 @@ export const selectUserDepositedVaultIdsForAsset = (state: BeefyState, asset: st
     return vault.assetIds.includes(asset);
   });
 };
+
+export const selectHasUserDepositedOnChain = createSelector(
+  (state: BeefyState, _chainId: ChainEntity['id'], walletAddress?: string) =>
+    selectUserDepositedVaultIds(state, walletAddress),
+  (state: BeefyState, chainId: ChainEntity['id']) =>
+    selectVaultIdsByChainIdIncludingHidden(state, chainId),
+  (depositedIds, chainVaultIds) => {
+    return depositedIds && depositedIds.some(depositedId => chainVaultIds.includes(depositedId));
+  }
+);
 
 export const selectHasUserDepositInVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const walletBalance = _selectWalletBalance(state);

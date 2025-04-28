@@ -14,7 +14,6 @@ import { InsuranceCards } from './components/InsuranceCards/InsuranceCards.tsx';
 import { LeverageCards } from './components/LeverageCards/LeverageCards.tsx';
 import { Actions } from './components/Actions/Actions.tsx';
 import { VaultHeader } from './components/VaultHeader/VaultHeader.tsx';
-import { BusdBannerVault } from '../../components/Banners/BusdBanner/BusdBannerVault.tsx';
 import { VaultsStats } from './components/VaultsStats/VaultsStats.tsx';
 import { HistoricGraphsLoader } from './components/HistoricGraph/HistoricGraphsLoader.tsx';
 import { VaultMeta } from '../../components/Meta/VaultMeta.tsx';
@@ -23,9 +22,8 @@ import { Explainer } from './components/Explainer/Explainer.tsx';
 import { GamingCards } from './components/GamingCards/GamingCards.tsx';
 import { Container } from '../../components/Container/Container.tsx';
 import { Details } from './components/Details/Details.tsx';
-import { RetiredSuggestClmBanner } from '../../components/Banners/RetiredSuggestClmBanner/RetiredSuggestClmBanner.tsx';
 import { Hidden } from '../../components/MediaQueries/Hidden.tsx';
-import { UnstakedClmBannerVault } from '../../components/Banners/UnstakedClmBanner/UnstakedClmBannerVault.tsx';
+import { VaultBanners } from './components/Banners/VaultBanners.tsx';
 
 const useStyles = legacyMakeStyles(styles);
 const NotFoundPage = lazy(() => import('../../features/pagenotfound/NotFoundPage.tsx'));
@@ -56,9 +54,7 @@ const VaultContent = memo(function VaultContent({ vaultId }: VaultContentProps) 
   return (
     <Container maxWidth="lg" className={classes.page}>
       <VaultMeta vaultId={vaultId} />
-      <BusdBannerVault vaultId={vaultId} />
-      <UnstakedClmBannerVault vaultId={vaultId} fromVault={true} />
-      <RetiredSuggestClmBanner vaultId={vaultId} />
+      <VaultBanners vaultId={vaultId} />
       <VaultHeader vaultId={vaultId} />
       <VaultsStats vaultId={vaultId} />
       <div className={classes.contentColumns}>
