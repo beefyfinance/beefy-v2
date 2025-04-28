@@ -21,7 +21,23 @@
     "strategyTypeId": "multi-lp",
     "addLiquidityUrl": "https://curve.fi/dex/optimism/pools/factory-stable-ng-63/deposit/",
     "removeLiquidityUrl": "https://curve.fi/dex/optimism/pools/factory-stable-ng-63/withdraw",
-    "network": "optimism"
+    "network": "optimism",
+    "zaps": [
+      {
+        "strategyId": "curve",
+        "poolAddress": "0x00D09CccDA09bB97132293c571EAd11630d57A71",
+        "methods": [
+          {
+            "type": "dynamic-deposit",
+            "target": "0x00D09CccDA09bB97132293c571EAd11630d57A71",
+            "coins": [
+              "0xC52D7F23a2e460248Db6eE192Cb23dD12bDDCbf6",
+              "0x289f635106d5b822A505b39AC237A0AE9189335B"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "velodrome-v2-weth-over",
@@ -1241,7 +1257,9 @@
     "earnedTokenAddresses": [],
     "oracle": "lps",
     "oracleId": "uniswap-cow-op-usdc-susd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1744925964,
+    "retireReason": "tvl",
     "createdAt": 1725021320,
     "platformId": "uniswap",
     "assets": ["sUSD", "USDC"],
@@ -1270,7 +1288,9 @@
     "earnContractAddress": "0xEE1CA97823F6f359eBF1c37cbD245b4CD3B664af",
     "oracle": "lps",
     "oracleId": "uniswap-cow-op-usdc-susd",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1744925964,
+    "retireReason": "tvl",
     "createdAt": 1725021320,
     "platformId": "beefy",
     "assets": ["sUSD", "USDC"],
@@ -1905,7 +1925,9 @@
     "earnContractAddress": "0x8dEd5835072D008E45395aBbd87B3b867D0A8f5c",
     "oracle": "lps",
     "oracleId": "velo-cow-op-susd-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1744925964,
+    "retireReason": "tvl",
     "platformId": "velodrome",
     "assets": ["sUSD", "USDC"],
     "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
@@ -2643,7 +2665,9 @@
     "earnedOracleIds": ["VELOV2", "OP"],
     "oracle": "lps",
     "oracleId": "velo-cow-op-susd-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1744925964,
+    "retireReason": "tvl",
     "createdAt": 1719965838,
     "platformId": "velodrome",
     "assets": ["sUSD", "USDC"],
@@ -2675,7 +2699,9 @@
     "earnContractAddress": "0x688EFffb4212E98D47d6617665575EAe7b7dc85B",
     "oracle": "lps",
     "oracleId": "velo-cow-op-susd-usdc",
-    "status": "active",
+    "status": "eol",
+    "retiredAt": 1744925964,
+    "retireReason": "tvl",
     "createdAt": 1719965838,
     "platformId": "beefy",
     "assets": ["sUSD", "USDC"],

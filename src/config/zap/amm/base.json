@@ -101,5 +101,19 @@
     "name": "Balancer",
     "vaultAddress": "0xBA12222222228d8Ba445958a75a0704d566BF2C8",
     "queryAddress": "0x300Ab2038EAc391f26D9F895dc61F8F66a548833"
+  },
+  {
+    "id": "base-true",
+    "type": "uniswap-v2",
+    "name": "True",
+    "routerAddress": "0x4752ba5DBc23f44D87826276BF6Fd6b1C372aD24",
+    "factoryAddress": "0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6",
+    "pairInitHash": "0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f",
+    "minimumLiquidity": "1000",
+    "mintFeeNumerator": "1",
+    "mintFeeDenominator": "5",
+    "swapFeeNumerator": "3",
+    "swapFeeDenominator": "1000",
+    "getAmountOutMode": "getAmountOut"
   }
 ]
