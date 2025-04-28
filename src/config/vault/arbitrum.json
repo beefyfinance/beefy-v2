@@ -58,7 +58,7 @@
     "assets": ["waArbWETH", "waArbwstETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/pool/0xc072880E1BC0bcDdc99Db882c7f3e7A839281CF4?chain=arbitrum",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0xc072880e1bc0bcdcc99db882c7f3e7a839281cf4",
     "network": "arbitrum"
   },
   {
@@ -80,7 +80,7 @@
     "assets": ["waArbezETH", "waArbwstETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/pool/0x9C5F17d96ca66748B459788148B7357220F2d100?chain=arbitrum",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0x9c5f17d96ca66748b459788148b7357220f2d100",
     "network": "arbitrum"
   },
   {
@@ -102,7 +102,7 @@
     "assets": ["orbETH", "waArbWETH"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/pool/0x2ecE6781BAce5e37386aDEf7a3d45D0bB05F8FCE?chain=arbitrum",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0x2ecE6781BAce5e37386aDEf7a3d45D0bB05F8FCE",
     "network": "arbitrum"
   },
   {
@@ -124,7 +124,7 @@
     "assets": ["waArbUSDCn", "waArbUSDT", "waArbGHO"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/pool/0x19B001e6Bc2d89154c18e2216eec5C8c6047b6d8?chain=arbitrum",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0x19b001e6bc2d89154c18e2216eec5c8c6047b6d8",
     "network": "arbitrum"
   },
   {
@@ -146,7 +146,7 @@
     "assets": ["eBTC", "waArbWBTC"],
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "strategyTypeId": "lp",
-    "addLiquidityUrl": "https://app.balancer.fi/pool/0x10F9E54AeEA2FeFA124238087DCFD919BA32f14d?chain=arbitrum",
+    "addLiquidityUrl": "https://balancer.fi/pools/arbitrum/v3/0x10f9e54aeea2fefa124238087dcfd919ba32f14d",
     "network": "arbitrum"
   },
   {
