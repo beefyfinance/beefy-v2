@@ -219,7 +219,7 @@ function limitIds(ids: string[], limit: number | undefined, periodSeconds: numbe
   }
 
   ids.sort();
-  const rng = makePRNG(Math.floor(Date.now() / (periodSeconds * 1000)) + ids.length);
+  const rng = makePRNG(Math.floor(Date.now() / (periodSeconds * 1000)));
   const sorted = sortBy(ids, () => rng());
   return sorted.slice(0, limit);
 }
